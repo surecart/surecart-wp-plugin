@@ -23,6 +23,41 @@ class AffiliationRequestsRestServiceProvider extends RestServiceProvider impleme
 	protected $controller = AffiliationRequestsController::class;
 
 	/**
+	 * Register REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/approve',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'approve' ),
+					'permission_callback' => [ $this, 'approve_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/deny',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'deny' ),
+					'permission_callback' => [ $this, 'deny_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
@@ -89,6 +124,26 @@ class AffiliationRequestsRestServiceProvider extends RestServiceProvider impleme
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_affiliates' );
+	}
+
+	/**
+	 * Approve item.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function approve_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_affiliates' );
+	}
+
+	/**
+	 * Deny item.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function deny_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_affiliates' );
 	}
 
