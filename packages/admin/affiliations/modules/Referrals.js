@@ -70,6 +70,9 @@ export default ({ affiliationId }) => {
 					label: __('Date', 'surecart'),
 					width: '100px',
 				},
+				view: {
+					width: '50px',
+				},
 			}}
 			data={referrals}
 			isLoading={loading}
