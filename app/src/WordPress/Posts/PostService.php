@@ -16,6 +16,28 @@ class PostService {
 	public $post;
 
 	/**
+	 * Get the form post from a page.
+	 *
+	 * @param \WP_Post|int|null $post The form or post type post.
+	 *
+	 * @return WP_Post|null
+	 */
+	public function getFormPostFromBlock( $post = null ) {
+		$this->post = get_post( $post ?? $this->post );
+
+		// we don't have a post.
+		if ( empty( $this->post->ID ) ) {
+			return null;
+		}
+
+		// get the checkout form block.
+		$block = wp_get_first_block( parse_blocks( $this->post->post_content ), 'surecart/checkout-form' );
+
+		// get the post.
+		return get_post( $block['attrs']['id'] ?? null );
+	}
+
+	/**
 	 * Get the form block.
 	 *
 	 * @param WP_Post|null $post The form or post type post.
