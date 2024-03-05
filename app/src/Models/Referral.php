@@ -126,7 +126,7 @@ class Referral extends Model {
 		}
 
 		$reviewing = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/make-reviewing',
+			$this->endpoint . '/' . $this->attributes['id'] . '/make_reviewing',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
