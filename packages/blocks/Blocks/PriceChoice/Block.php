@@ -43,7 +43,7 @@ class Block extends BaseBlock {
 			]
 		);
 
-		if ( $attributes['checked'] ) {
+		if ( !empty($attributes['checked']) ) {
 			sc_initial_state(
 				[
 					'checkout' => [
