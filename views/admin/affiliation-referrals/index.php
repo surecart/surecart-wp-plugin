@@ -9,6 +9,7 @@
 		'layouts/partials/admin-index-header',
 		[
 			'title' => __( 'Affiliate Referrals', 'surecart' ),
+			'new_link' => \SureCart::getUrl()->edit( 'affiliate-referral' ),
 		]
 	);
 	?>
