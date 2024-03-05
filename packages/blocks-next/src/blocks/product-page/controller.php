@@ -36,6 +36,7 @@ wp_interactivity_state(
 			// These are needed in order to SSR directives.
 			'busy' => false,
 			'selectedPrice' => $selected_price,
+			'buttonText' => __('Add To Cart', 'surecart'),
 			'selectedVariant' => $product->first_variant_with_stock,
 			'selectedDisplayAmount' => $product->display_amount,
 			'selectedScratchDisplayAmount' => $selected_price->scratch_display_amount,
