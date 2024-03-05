@@ -16,13 +16,71 @@ class ProductsListTable extends ListTable {
 	public $checkbox = true;
 	public $error    = '';
 	public $pages    = array();
+	public $bulk_actions = array();
+	public $bulk_actions_data = array();
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 		parent::__construct();
+		$this->bulk_actions = ! empty( $_COOKIE['sc_bulk_actions'] ) ? json_decode( stripslashes( $_COOKIE['sc_bulk_actions'] ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$this->bulk_actions_data = $this->get_bulk_actions_data();
+		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
+		add_action( 'admin_notices', [ $this, 'showNotice' ] );
 		$this->process_bulk_action();
+	}
+
+	/**
+	 * Show bulk action admin notice.
+	 */
+	public function show_bulk_action_admin_notice() {
+		$count_of_succeded_deletions = count( $this->get_succeeded_record_ids('delete_products') );
+		
+		if ( ! empty( $this->bulk_actions_data ) ) {
+			echo wp_kses_post(
+				\SureCart::notices()->render(
+					[
+						'type'  => 'success',
+						'title' => esc_html__( 'SureCart bulk product deletion.', 'surecart' ),
+						'text'  => esc_html__( 'Successfully deleted ' . $count_of_succeded_deletions . ' products.', 'surecart' ),
+						'text'  => '<p>' . esc_html__( 'Successfully deleted ' . $count_of_succeded_deletions . ' products.', 'surecart' ) . '</p>',
+					]
+				)
+			);
+		}
+	}
+
+	/**
+	 * Get the bulk actions data.
+	 *
+	 * @return array
+	 */
+	public function get_bulk_actions_data() {
+		$bulk_actions = array();
+		if( ! empty( $this->bulk_actions ) && is_array( $this->bulk_actions ) ) {
+			foreach( $this->bulk_actions as $bulk_action_id ) {
+				$bulk_action = BulkAction::find( $bulk_action_id );
+				if( ! is_wp_error( $bulk_action ) ) {
+					$bulk_actions[$bulk_action->action_type][$bulk_action->status][] = $bulk_action;
+				}
+			}
+			
+		}
+		return $bulk_actions;
+	}
+
+	/**
+	 * Get succeeded record_ids
+	 */
+	public function get_succeeded_record_ids( $action_type ) {
+		$record_ids = array();
+		if( ! empty( $this->bulk_actions_data[$action_type]['succeeded'] ) ) {
+			foreach( $this->bulk_actions_data[$action_type]['succeeded'] as $bulk_action ) {
+				array_push( $record_ids, ...$bulk_action->record_ids );
+			}
+		}
+		return $record_ids;
 	}
 
 	/**
@@ -42,11 +100,9 @@ class ProductsListTable extends ListTable {
 				'record_ids' => $product_ids
 			]);
 
-			$bulk_actions = ! empty( $_COOKIE['sc_bulk_actions'] ) ? json_decode( stripslashes( $_COOKIE['sc_bulk_actions'] ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$this->bulk_actions[] = $bulk_action->id;
 
-			$bulk_actions[] = $bulk_action->id;
-
-			setcookie( 'sc_bulk_actions', wp_json_encode( $bulk_actions ), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+			setcookie( 'sc_bulk_actions', wp_json_encode( $this->bulk_actions ), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
 
 			wp_safe_redirect( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
 			exit;
@@ -407,6 +463,12 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
+		$is_queued_for_deletion = false;
+		$succeeded_record_ids = $this->get_succeeded_record_ids('delete_products');
+		if( ! empty( $succeeded_record_ids ) ) {
+			$is_queued_for_deletion = in_array( $product->id, $succeeded_record_ids );
+		}
+
 		ob_start();
 		?>
 
@@ -422,17 +484,19 @@ class ProductsListTable extends ListTable {
 		<?php } ?>
 
 		<div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo ! $is_queued_for_deletion ? esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) : ''; ?>">
 			<?php echo esc_html( $product->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			array_filter(
-				array(
+				! $is_queued_for_deletion ? array(
 					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 					'trash'        => $this->action_toggle_archive( $product ),
 					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				) : array(
+					'queued_for_deletion' => '<span>' . esc_html__( 'Queued for deletion', 'surecart' ) . '</span>',
 				)
 			),
 		);
