@@ -369,7 +369,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
-
 \SureCart::route()
 ->where( 'admin', 'sc-affiliate-clicks' )
 ->middleware( 'user.can:edit_sc_affiliates' )
@@ -381,11 +380,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
-/*
-|--------------------------------------------------------------------------
-| Affiliate Referrals
-|--------------------------------------------------------------------------
-*/
 \SureCart::route()
 ->where( 'admin', 'sc-affiliate-referrals' )
 ->middleware( 'user.can:edit_sc_affiliates' )
