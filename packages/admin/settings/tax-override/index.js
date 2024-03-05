@@ -32,7 +32,7 @@ export default ({ region, taxProtocol, registrations, hasLoadedItem }) => {
 	return (
 		<>
 			<SettingsBox
-				title={__('Tax Rates and Exemptions', 'surecart')}
+				title={__('Tax Rate Overrides', 'surecart')}
 				description={__(
 					'You can specify unique tax rates for a collection of products or on shipping charges.',
 					'surecart'
