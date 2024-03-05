@@ -23,13 +23,6 @@ class AffiliationRequestsRestServiceProvider extends RestServiceProvider impleme
 	protected $controller = AffiliationRequestsController::class;
 
 	/**
-	 * Methods allowed for the model.
-	 *
-	 * @var array
-	 */
-	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
-
-	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
