@@ -50,7 +50,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		};
 
 		$app->alias( 'blocks', 'blocks' );
-		$app->alias( 'block_mode_switcher', 'blocks.mode_switcher' );
+		$app->alias( 'blockModeSwitcher', 'blocks.mode_switcher' );
 
 		$app->alias(
 			'block',

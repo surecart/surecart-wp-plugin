@@ -15,18 +15,19 @@ class CheckoutsController {
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function changeMode( $request ) {
-		$post_id = get_query_var( 'sc_checkout_change_mode' );
+		$form_post_id     = get_query_var( 'sc_checkout_change_mode' );
+		$checkout_post_id = $request->getQueryParams()['sc_checkout_post'] ?? null;
 
-		if ( ! $post_id ) {
+		if ( ! $form_post_id || ! $checkout_post_id ) {
 			return;
 		}
 
-		$post = get_post( $post_id );
+		$post = get_post( $form_post_id );
 		if ( ! $post ) {
 			return;
 		}
 
-		$checkout_form_post = \SureCart::block_mode_switcher()->getBlockFromPost( $post );
+		$checkout_form_post = \SureCart::blockModeSwitcher()->getBlockFromPost( $post );
 		if ( ! $checkout_form_post ) {
 			return;
 		}
@@ -39,13 +40,13 @@ class CheckoutsController {
 		// Update the post.
 		wp_update_post(
 			[
-				'ID'           => $post_id,
+				'ID'           => $form_post_id,
 				'post_content' => serialize_blocks( [ $checkout_form_post ] ),
 			]
 		);
 
 		// Redirect to the previous page.
-		$redirect_url = sanitize_text_field( wp_unslash( $_GET[ 'sc_redirect_url' ] ) );
+		$redirect_url = get_permalink( $checkout_post_id );
 
 		if ( $redirect_url ) {
 			return \SureCart::redirect()->to( $redirect_url );

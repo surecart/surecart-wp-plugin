@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SureCart\BlockLibrary;
 
+use SureCart;
 use SureCartCore\Application\Application;
 
 /**
@@ -51,10 +52,11 @@ class BlockModeSwitcherService {
 		/**
 		 * @var \WP_Post
 		 */
-		$post = $this->getCheckoutFormPost();
-		$checkout_form_post = $this->getBlockFromPost( $post );
+		$post               = $this->getCheckoutFormPost();
+		$main_checkout_post = get_post()->ID ?? null;
+		$checkout_form_post = SureCart::post()->getFormBlock( $post );
 
-		if ( ! $checkout_form_post ) {
+		if ( ! $checkout_form_post || ! $main_checkout_post ) {
 			return;
 		}
 
@@ -73,8 +75,8 @@ class BlockModeSwitcherService {
 		$url = add_query_arg(
 			[
 				'sc_checkout_change_mode' => $post->ID,
+				'sc_checkout_post'        => $main_checkout_post,
 				'nonce'                   => wp_create_nonce( 'update_checkout_mode' ),
-				'sc_redirect_url'         => remove_query_arg( 'sc_checkout_change_mode' ),
 			],
 			get_home_url( null, 'surecart/change-checkout-mode' )
 		);
@@ -110,10 +112,7 @@ class BlockModeSwitcherService {
 	 * @return object|null
 	 */
 	public function getCheckoutFormPost() {
-		$post_id = get_the_ID();
-
-		// Get post.
-		$post = get_post( $post_id );
+		$post = get_post();
 
 		if ( ! $post ) {
 			return null;
@@ -126,15 +125,10 @@ class BlockModeSwitcherService {
 			return null;
 		}
 
-		$checkout_form_block = array_filter(
-			$blocks,
-			function ( $block ) {
-				return 'surecart/checkout-form' === $block['blockName'];
-			}
-		);
+		$checkout_form_block = wp_get_first_block( $blocks, 'surecart/checkout-form' );
 
 		// Get the form post id.
-		$checkout_form_post_id = $checkout_form_block[0]['attrs']['id'] ?? null;
+		$checkout_form_post_id = $checkout_form_block['attrs']['id'] ?? null;
 
 		if ( ! $checkout_form_post_id ) {
 			return null;
@@ -157,12 +151,7 @@ class BlockModeSwitcherService {
 
 		$checkout_form_inner_block = parse_blocks( $checkout_form_post->post_content );
 
-		// Find the block with surecart/form.
-		return array_filter(
-			$checkout_form_inner_block,
-			function ( $block ) {
-				return 'surecart/form' === $block['blockName'];
-			}
-		)[0] ?? null;
+		// Find the surecart/form block.
+		return wp_get_first_block( $checkout_form_inner_block, 'surecart/form' );
 	}
 }
