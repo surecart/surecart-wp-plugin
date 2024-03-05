@@ -89,11 +89,12 @@ class AffiliationRequestsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'          => '<input type="checkbox" />',
-			'name'   => __( 'Name', 'surecart' ),
-			'email'  => __( 'Email', 'surecart' ),
-			'status' => __( 'Status', 'surecart' ),
-			'date'   => __( 'Date', 'surecart' ),
+			// 'cb'        => '<input type="checkbox" />',
+			'name'         => __( 'Name', 'surecart' ),
+			'email'        => __( 'Email', 'surecart' ),
+			'payout_email' => __( 'Payout Email', 'surecart' ),
+			'status'       => __( 'Status', 'surecart' ),
+			'date'         => __( 'Date', 'surecart' ),
 		);
 	}
 
@@ -198,6 +199,7 @@ class AffiliationRequestsListTable extends ListTable {
 
 			case 'description':
 			case 'email':
+			case 'payout_email':
 				return $affiliate_request->$column_name ?? '';
 		}
 	}
