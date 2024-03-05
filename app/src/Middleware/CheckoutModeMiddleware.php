@@ -23,7 +23,10 @@ class CheckoutModeMiddleware {
 		}
 
 		// Check permission to edit the post.
-		if ( ! current_user_can( 'edit_post',  get_the_ID() ) ) {
+		if (
+			! current_user_can( 'edit_post',  $request->query( 'sc_checkout_post' ) ) ||
+			! current_user_can( 'edit_post', $request->query( 'sc_checkout_change_mode' ) )
+		) {
 			wp_die( __( 'You do not have permission do this.', 'surecart' ) );
 		}
 
