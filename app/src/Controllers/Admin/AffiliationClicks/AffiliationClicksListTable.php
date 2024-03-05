@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\AffiliationClicks;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Click;
+use SureCart\Support\TimeDate;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -105,22 +106,20 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $click ) {
-		ob_start();
-		echo date_i18n( get_option( 'date_format' ), $click->created_at );
-		?>
-		<div class="row-actions">
-			<?php
-			echo $this->row_actions(
-				array_filter(
-					array(
-						'view_click' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-clicks', $click->id ) ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
-					)
-				),
-			);
-			?>
-		</div>
-		<?php
-		return ob_get_clean();
+		$created = sprintf(
+			'<time datetime="%1$s" title="%2$s">%3$s</time>',
+			esc_attr( $click->created_at ),
+			esc_html( TimeDate::formatDateAndTime( $click->created_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $click->created_at ) )
+		);
+		$updated = sprintf(
+			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
+			( strtotime( $click->expires_at ) < time() ) ? __( 'Expired' ) : __( 'Expires' ),
+			esc_attr( $click->expires_at ),
+			esc_html( TimeDate::formatDateAndTime( $click->expires_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $click->expires_at ) )
+		);
+		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
 	/**

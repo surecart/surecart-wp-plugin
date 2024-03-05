@@ -8,8 +8,6 @@
 	);
 	?>
 
-	<?php $table->search_form( __( 'Search Affiliate Clicks', 'surecart' ), 'sc-search-affiliate-requests' ); ?>
-
 	<?php $table->views(); ?>
 	<?php $table->display(); ?>
 </div>
