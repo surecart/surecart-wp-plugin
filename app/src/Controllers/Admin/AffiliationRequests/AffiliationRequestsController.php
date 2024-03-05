@@ -17,7 +17,7 @@ class AffiliationRequestsController extends AdminController {
 		$table->prepare_items();
 		$this->withHeader(
 			[
-				'affiliate_requests' => [
+				'affiliate-requests' => [
 					'title' => __( 'Affiliate Requests', 'surecart' ),
 				],
 			]

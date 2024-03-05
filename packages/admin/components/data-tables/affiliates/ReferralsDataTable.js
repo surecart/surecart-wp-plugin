@@ -1,13 +1,19 @@
 /**
  * External dependencies.
  */
-import { __, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import { ScFormatDate, ScFormatNumber, ScText } from '@surecart/components-react';
+import {
+	ScButton,
+	ScFormatDate,
+	ScFormatNumber,
+	ScText,
+} from '@surecart/components-react';
 import StatusBadge from '../../StatusBadge';
 
 export default ({
@@ -38,14 +44,32 @@ export default ({
 						description,
 						commission_amount,
 						currency,
+						checkout,
 					}) => {
 						return {
 							status: <StatusBadge status={status} />,
 							description: (
 								<ScText truncate>{description}</ScText>
 							),
-							// TODO: Order while API is ready.
-							order: <ScText>-</ScText>,
+							order: (
+								<>
+									{!!checkout?.order?.id ? (
+										<ScButton
+											href={addQueryArgs('admin.php', {
+												page: 'sc-orders',
+												action: 'edit',
+												id: id,
+											})}
+											type="text"
+											size="small"
+										>
+											#{checkout?.order?.id}
+										</ScButton>
+									) : (
+										'-'
+									)}
+								</>
+							),
 							commission_amount: (
 								<ScFormatNumber
 									type="currency"
