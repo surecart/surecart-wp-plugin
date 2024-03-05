@@ -33,13 +33,13 @@ class FormModeSwitcherService {
 		}
 
 		/**
-		 * @var \WP_Post
+		 * The checkout form post.
+		 *
+		 * @var \WP_Post $checkout_form_post
 		 */
-		$checkout_form_post  = $this->getCheckoutFormPost();
-		$checkout_post_id    = get_post()->ID ?? null;
-		$checkout_form_block = SureCart::post()->getFormBlock( $checkout_form_post );
-
-		if ( ! $checkout_form_post || ! $checkout_post_id || ! $checkout_form_block ) {
+		$form_post           = \SureCart::post()->getFormPostFromBlock( get_post() );
+		$checkout_form_block = wp_get_first_block( parse_blocks( $form_post->post_content ), 'surecart/form' );
+		if ( empty( $checkout_form_block ) ) {
 			return;
 		}
 
@@ -47,18 +47,17 @@ class FormModeSwitcherService {
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'sc_change_checkout_mode',
-				'title' => '<span style="color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) . '; font-weight: bold; font-size: 25px; line-height: 1;">•</span> '
-					. '<span style="color: ' . ( 'test' === $mode ? '#fef3c7' : '#fff' ) . ';">'
+				'title' => '<span style="color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) . '; font-weight: bold; font-size: 16px; line-height: 1;">•</span> '
+					. '<span style="color: ' . ( 'test' === $mode ? '#FEF3C7' : '#DCFCE7' ) . ';">'
 					. __( 'Checkout Form', 'surecart' )
-					. ' (' . ( 'test' === $mode ? __( 'Test', 'surecart' ) : __( 'Live', 'surecart' ) ) . ')'
 					. '</span>',
 			]
 		);
 
 		$url = add_query_arg(
 			[
-				'sc_checkout_change_mode' => $checkout_form_post->ID,
-				'sc_checkout_post'        => $checkout_post_id,
+				'sc_checkout_change_mode' => $form_post->ID,
+				'sc_checkout_post'        => get_the_ID(),
 				'nonce'                   => wp_create_nonce( 'update_checkout_mode' ),
 			],
 			get_home_url( null, 'surecart/change-checkout-mode' )
@@ -67,12 +66,12 @@ class FormModeSwitcherService {
 		$sub_items = [
 			[
 				'id'    => 'sc_live_mode',
-				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #49de80; font-weight: bold; font-size: 25px; line-height: 1;">• ' . '</span><span>' . __( 'Live Mode', 'surecart' ) . '</div><div>' . ( $mode === 'live' ? ' ✓' : '' ) . '</span></div></div>',
+				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #49de80; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #DCFCE7;">' . __( 'Live Mode', 'surecart' ) . '</div><div>' . ( 'live' === $mode ? ' ✓' : '' ) . '</span></div></div>',
 				'href'  => 'live' === $mode ? '#' : $url . '&mode=live',
 			],
 			[
 				'id'    => 'sc_test_mode',
-				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #fbbf24; font-weight: bold; font-size: 25px; line-height: 1;">• ' . '</span><span style="color: #fef3c7;">' . __( 'Test Mode', 'surecart' ) . '</div><div>' . ( $mode === 'test' ? ' ✓' : '' ) . '</span></div></div>',
+				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #fbbf24; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #FEF3C7;">' . __( 'Test Mode', 'surecart' ) . '</div><div>' . ( 'test' === $mode ? ' ✓' : '' ) . '</span></div></div>',
 				'href'  => 'test' === $mode ? '#' : $url . '&mode=test',
 			],
 		];
