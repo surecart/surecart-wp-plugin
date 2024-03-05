@@ -43,7 +43,7 @@ export default ({ upsell, onUpdate }) => {
 					{__('Skip if in order', 'surecart')}
 					<span slot="description">
 						{__(
-							"Don't show if already in the current order.",
+							"Don't show if already being purchased in the current order.",
 							'surecart'
 						)}
 					</span>
@@ -60,7 +60,7 @@ export default ({ upsell, onUpdate }) => {
 					{__('Skip if purchased', 'surecart')}
 					<span slot="description">
 						{__(
-							"Don't show if they have ever purchased.",
+							"Don't show if ever purchased, including the current order.",
 							'surecart'
 						)}
 					</span>
