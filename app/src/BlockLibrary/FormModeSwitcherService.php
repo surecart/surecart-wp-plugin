@@ -5,28 +5,11 @@ declare(strict_types=1);
 namespace SureCart\BlockLibrary;
 
 use SureCart;
-use SureCartCore\Application\Application;
 
 /**
  * Provide general block-related functionality.
  */
-class BlockModeSwitcherService {
-	/**
-	 * View engine.
-	 *
-	 * @var Application
-	 */
-	protected $app = null;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param Application $app Application Instance.
-	 */
-	public function __construct( Application $app ) {
-		$this->app = $app;
-	}
-
+class FormModeSwitcherService {
 	/**
 	 * Bootstrap the service.
 	 *
