@@ -7,7 +7,7 @@
  * @package SureCart
  */
 
-use SureCart\Middleware\CheckoutModeEditMiddleware;
+use SureCart\Middleware\CheckoutModeMiddleware;
 use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardRedirectMiddleware;
 use SureCart\Middleware\LoginLinkMiddleware;
@@ -61,8 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 	->get()
 	->where( 'query_var', 'sc_checkout_change_mode' )
-	->middleware( 'nonce:update_checkout_mode' )
-	// ->middleware( CheckoutModeEditMiddleware::class )
+	->middleware( CheckoutModeMiddleware::class )
 	->handle( 'CheckoutsController@changeMode' );
 
 /*

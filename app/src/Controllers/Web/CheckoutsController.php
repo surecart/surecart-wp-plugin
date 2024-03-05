@@ -16,7 +16,7 @@ class CheckoutsController {
 	 */
 	public function changeMode( $request ) {
 		$form_post_id     = get_query_var( 'sc_checkout_change_mode' );
-		$checkout_post_id = $request->getQueryParams()['sc_checkout_post'] ?? null;
+		$checkout_post_id = $request->query( 'sc_checkout_post' ) ?? null;
 
 		if ( ! $form_post_id || ! $checkout_post_id ) {
 			return;

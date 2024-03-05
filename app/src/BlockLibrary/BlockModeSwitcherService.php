@@ -52,15 +52,15 @@ class BlockModeSwitcherService {
 		/**
 		 * @var \WP_Post
 		 */
-		$post               = $this->getCheckoutFormPost();
-		$main_checkout_post = get_post()->ID ?? null;
-		$checkout_form_post = SureCart::post()->getFormBlock( $post );
+		$checkout_form_post  = $this->getCheckoutFormPost();
+		$checkout_post_id    = get_post()->ID ?? null;
+		$checkout_form_block = SureCart::post()->getFormBlock( $checkout_form_post );
 
-		if ( ! $checkout_form_post || ! $main_checkout_post ) {
+		if ( ! $checkout_form_post || ! $checkout_post_id || ! $checkout_form_block ) {
 			return;
 		}
 
-		$mode = $checkout_form_post['attrs']['mode'] ?? 'live';
+		$mode = $checkout_form_block['attrs']['mode'] ?? 'live';
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'sc_change_checkout_mode',
@@ -74,8 +74,8 @@ class BlockModeSwitcherService {
 
 		$url = add_query_arg(
 			[
-				'sc_checkout_change_mode' => $post->ID,
-				'sc_checkout_post'        => $main_checkout_post,
+				'sc_checkout_change_mode' => $checkout_form_post->ID,
+				'sc_checkout_post'        => $checkout_post_id,
 				'nonce'                   => wp_create_nonce( 'update_checkout_mode' ),
 			],
 			get_home_url( null, 'surecart/change-checkout-mode' )
