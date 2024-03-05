@@ -182,7 +182,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		self::$instance++;
+		self::$instance = wp_unique_id( 'sc-product-item-list-' );
 
 		// check for inner blocks.
 		$product_inner_blocks = $this->block->parsed_block['innerBlocks'] ?? [];
@@ -224,14 +224,14 @@ class Block extends BaseBlock {
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
-				'id'    => 'selector-' . self::$instance,
+				'id'    => self::$instance,
 				'style' => $style,
 			)
 		);
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
-			'#selector-' . self::$instance,
+			'#' . self::$instance,
 			[
 				'layoutConfig'         => $layout_config,
 				'paginationAlignment'  => $attributes['pagination_alignment'],
