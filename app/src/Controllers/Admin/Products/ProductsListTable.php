@@ -13,11 +13,12 @@ use SureCart\Models\BulkAction;
  */
 class ProductsListTable extends ListTable {
 
-	public $checkbox = true;
-	public $error    = '';
-	public $pages    = array();
-	public $bulk_actions = array();
+	public $checkbox          = true;
+	public $error             = '';
+	public $pages             = array();
+	public $bulk_actions      = array();
 	public $bulk_actions_data = array();
+	public $statuses          = array( 'succeeded', 'processing', 'pending', 'invalid', 'completed' );
 
 	/**
 	 * Constructor.
@@ -25,26 +26,49 @@ class ProductsListTable extends ListTable {
 	public function __construct() {
 		parent::__construct();
 		$this->bulk_actions = ! empty( $_COOKIE['sc_bulk_actions'] ) ? json_decode( stripslashes( $_COOKIE['sc_bulk_actions'] ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$this->bulk_actions_data = $this->get_bulk_actions_data();
+		if ( ! empty( $this->bulk_actions ) ) {
+			$this->set_bulk_actions_data();
+			$this->delete_succeeded_bulk_actions();
+		}
+
 		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
-		add_action( 'admin_notices', [ $this, 'showNotice' ] );
+
 		$this->process_bulk_action();
 	}
 
 	/**
+	 * Delete succeeded bulk actions from the cookie.
+	 */
+	public function delete_succeeded_bulk_actions() {
+		$this->bulk_actions = array_filter(
+			$this->bulk_actions,
+			function( $bulk_action_id ) {
+				return ! in_array( $bulk_action_id, $this->bulk_actions_data['delete_products']['succeeded_bulk_actions'], true );
+			}
+		);
+		setcookie( 'sc_bulk_actions', wp_json_encode( $this->bulk_actions ), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+	}
+	/**
 	 * Show bulk action admin notice.
 	 */
 	public function show_bulk_action_admin_notice() {
-		$count_of_succeded_deletions = count( $this->get_succeeded_record_ids('delete_products') );
-		
-		if ( ! empty( $this->bulk_actions_data ) ) {
+		$status_parts = [];
+		foreach ( $this->statuses as $status ) {
+			$count = count( $this->bulk_actions_data['delete_products'][ $status . '_record_ids' ] );
+			if ( $count > 0 ) {
+				// translators: %1$d is Count of specific deletions, %2$s is bulk deletion progress status.
+				$status_parts[] = sprintf( esc_html__( '%1$d %2$s', 'surecart' ), $count, $status );
+			}
+		}
+
+		if ( ! empty( $status_parts ) ) {
+			$status_summary = esc_html__( 'Deletion Summary:', 'surecart' ) . ' ' . implode( ', ', $status_parts ) . '.';
 			echo wp_kses_post(
 				\SureCart::notices()->render(
 					[
-						'type'  => 'success',
-						'title' => esc_html__( 'SureCart bulk product deletion.', 'surecart' ),
-						'text'  => esc_html__( 'Successfully deleted ' . $count_of_succeded_deletions . ' products.', 'surecart' ),
-						'text'  => '<p>' . esc_html__( 'Successfully deleted ' . $count_of_succeded_deletions . ' products.', 'surecart' ) . '</p>',
+						'type'  => 'info',
+						'title' => esc_html__( 'SureCart bulk product deletion progress status.', 'surecart' ),
+						'text'  => '<p>' . $status_summary . '</p>',
 					]
 				)
 			);
@@ -54,33 +78,29 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Get the bulk actions data.
 	 *
-	 * @return array
 	 */
-	public function get_bulk_actions_data() {
+	public function set_bulk_actions_data() {
 		$bulk_actions = array();
-		if( ! empty( $this->bulk_actions ) && is_array( $this->bulk_actions ) ) {
-			foreach( $this->bulk_actions as $bulk_action_id ) {
+
+		if ( ! empty( $this->bulk_actions ) && is_array( $this->bulk_actions ) ) {
+			foreach ( $this->bulk_actions as $bulk_action_id ) {
 				$bulk_action = BulkAction::find( $bulk_action_id );
-				if( ! is_wp_error( $bulk_action ) ) {
-					$bulk_actions[$bulk_action->action_type][$bulk_action->status][] = $bulk_action;
+				foreach ( $this->statuses as $status ) {
+					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] ) ) {
+						$bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] = array();
+					}
+					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] ) ) {
+						$bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] = array();
+					}
+				}
+				if ( ! is_wp_error( $bulk_action ) ) {
+					$bulk_actions[ $bulk_action->action_type ][ $bulk_action->status ][] = $bulk_action;
+					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_bulk_actions' ], $bulk_action->id );
+					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_record_ids' ], ...$bulk_action->record_ids );
 				}
 			}
-			
 		}
-		return $bulk_actions;
-	}
-
-	/**
-	 * Get succeeded record_ids
-	 */
-	public function get_succeeded_record_ids( $action_type ) {
-		$record_ids = array();
-		if( ! empty( $this->bulk_actions_data[$action_type]['succeeded'] ) ) {
-			foreach( $this->bulk_actions_data[$action_type]['succeeded'] as $bulk_action ) {
-				array_push( $record_ids, ...$bulk_action->record_ids );
-			}
-		}
-		return $record_ids;
+		$this->bulk_actions_data = $bulk_actions;
 	}
 
 	/**
@@ -92,13 +112,15 @@ class ProductsListTable extends ListTable {
 		if ( ! $action ) {
 			return;
 		}
-		
+
 		if ( 'delete' === $action ) {
-			$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$bulk_action = BulkAction::create([
-				'action_type' => 'delete_products',
-				'record_ids' => $product_ids
-			]);
+			$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$bulk_action = BulkAction::create(
+				[
+					'action_type' => 'delete_products',
+					'record_ids'  => $product_ids,
+				]
+			);
 
 			$this->bulk_actions[] = $bulk_action->id;
 
@@ -189,7 +211,7 @@ class ProductsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			'cb'          => '<input type="checkbox" />',
+			'cb'                  => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
 			'quantity'            => __( 'Quantity', 'surecart' ),
@@ -463,11 +485,7 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$is_queued_for_deletion = false;
-		$succeeded_record_ids = $this->get_succeeded_record_ids('delete_products');
-		if( ! empty( $succeeded_record_ids ) ) {
-			$is_queued_for_deletion = in_array( $product->id, $succeeded_record_ids );
-		}
+		$is_queued_for_deletion = ! empty( $this->bulk_actions_data['delete_products'] ) && ( in_array( $product->id, $this->bulk_actions_data['delete_products']['processing_record_ids'] ) || in_array( $product->id, $this->bulk_actions_data['delete_products']['pending_record_ids'] ) );
 
 		ob_start();
 		?>
@@ -499,6 +517,7 @@ class ProductsListTable extends ListTable {
 					'queued_for_deletion' => '<span>' . esc_html__( 'Queued for deletion', 'surecart' ) . '</span>',
 				)
 			),
+			$is_queued_for_deletion
 		);
 		?>
 		</div>
@@ -602,11 +621,11 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	protected function get_bulk_actions() {
-		$actions       = array();
-		$actions['delete'] = __( 'Delete permanently' );	
+		$actions           = array();
+		$actions['delete'] = __( 'Delete permanently' );
 		return $actions;
 	}
-	
+
 	/**
 	 * Gets the current action selected from the bulk actions dropdown.
 	 *
