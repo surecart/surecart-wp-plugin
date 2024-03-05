@@ -8,7 +8,7 @@ use SureCartCore\Requests\RequestInterface;
 /**
  * Middleware for handling checkout mode.
  */
-class CheckoutModeMiddleware {
+class CheckoutFormModeMiddleware {
 	/**
 	 * Enqueue component assets.
 	 *
@@ -18,13 +18,13 @@ class CheckoutModeMiddleware {
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
 		// Check nonce.
-		if ( ! $request->query( 'nonce' ) || ! wp_verify_nonce( $request->query( 'nonce' ), "update_checkout_mode" ) ) {
+		if ( ! $request->query( 'nonce' ) || ! wp_verify_nonce( $request->query( 'nonce' ), 'update_checkout_mode' ) ) {
 			wp_die( __( 'Your session expired - please try again.', 'surecart' ) );
 		}
 
 		// Check permission to edit the post.
 		if (
-			! current_user_can( 'edit_post',  $request->query( 'sc_checkout_post' ) ) ||
+			! current_user_can( 'edit_post', $request->query( 'sc_checkout_post' ) ) ||
 			! current_user_can( 'edit_post', $request->query( 'sc_checkout_change_mode' ) )
 		) {
 			wp_die( __( 'You do not have permission do this.', 'surecart' ) );

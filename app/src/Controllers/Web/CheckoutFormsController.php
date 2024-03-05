@@ -7,7 +7,7 @@ namespace SureCart\Controllers\Web;
 /**
  * Handles Checkout related routes.
  */
-class CheckoutsController {
+class CheckoutFormsController {
 
 	/**
 	 * Change the mode of the checkout form.
@@ -39,10 +39,10 @@ class CheckoutsController {
 
 		// Update the post.
 		wp_update_post(
-			[
+			array(
 				'ID'           => $form_post_id,
-				'post_content' => serialize_blocks( [ $checkout_form_post ] ),
-			]
+				'post_content' => serialize_blocks( array( $checkout_form_post ) ),
+			)
 		);
 
 		// Redirect to the previous page.
