@@ -9,11 +9,11 @@
 		class="wp-block-button__link wp-element-button sc-button__link"
 		data-wp-bind--href="state.checkoutUrl"
 		data-wp-bind--disabled="state.isUnavailable"
-		data-wp-on--click="actions.addToCart"
-		data-wp-class--sc-button__link--busy="state.busy"
+		<?php echo ($attributes['add_to_cart'] ?? false) ? 'data-wp-on--click="actions.addToCart"' : ''; ?>
+		<?php echo ($attributes['add_to_cart'] ?? false) ? 'data-wp-class--sc-button__link--busy="state.busy"' : ''; ?>
 	>
 		<span class="sc-spinner" aria-hidden="true"></span>
-		<span class="sc-button__link-text" data-wp-bind--text="state.buttonText">
+		<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			<?php echo wp_kses_post( $attributes['text'] ?? __('Add To Cart', 'surecart') ); ?>
 		</span>
 	</a>
