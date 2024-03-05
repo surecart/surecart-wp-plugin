@@ -41,8 +41,15 @@ class ProductsListTable extends ListTable {
 				'action_type' => 'delete_products',
 				'record_ids' => $product_ids
 			]);
-			var_dump($bulk_action);
-			die();
+
+			$bulk_actions = ! empty( $_COOKIE['sc_bulk_actions'] ) ? json_decode( stripslashes( $_COOKIE['sc_bulk_actions'] ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+			$bulk_actions[] = $bulk_action->id;
+
+			setcookie( 'sc_bulk_actions', wp_json_encode( $bulk_actions ), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+
+			wp_safe_redirect( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
+			exit;
 		}
 	}
 	/**
