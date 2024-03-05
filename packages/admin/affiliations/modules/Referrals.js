@@ -25,6 +25,7 @@ export default ({ affiliationId }) => {
 				{
 					context: 'edit',
 					affiliation_ids: [affiliationId],
+					expand: ['checkout', 'checkout.order'],
 					page,
 					per_page: perPage,
 				},
