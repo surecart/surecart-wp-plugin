@@ -82,7 +82,7 @@ class ProductsListTable extends ListTable {
 	public function set_bulk_actions_data() {
 		$bulk_actions = array();
 
-		if ( ! empty( $this->bulk_actions ) && is_array( $this->bulk_actions ) ) {
+		if ( is_array( $this->bulk_actions ) ) {
 			foreach ( $this->bulk_actions as $bulk_action_id ) {
 				$bulk_action = BulkAction::find( $bulk_action_id );
 				foreach ( $this->statuses as $status ) {
