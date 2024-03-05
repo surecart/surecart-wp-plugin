@@ -159,6 +159,7 @@ class AffiliationReferralsController extends AdminController {
 			'success',
 			__( 'Affiliate referral is now in review.', 'surecart' )
 		);
+
 		return $this->redirectBack( $request );
 	}
 }
