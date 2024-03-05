@@ -1,3 +1,8 @@
+<style>
+	.row-actions .approve {
+		display: inline !important;
+	}
+</style>
 <div class="wrap">
 	<?php
 	\SureCart::render(
@@ -7,8 +12,6 @@
 		]
 	);
 	?>
-
-	<?php $table->search_form( __( 'Search Affiliate Referrals', 'surecart' ), 'sc-search-affiliate-referrals' ); ?>
 
 	<?php $table->views(); ?>
 	<?php $table->display(); ?>

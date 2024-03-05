@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Admin\AffiliationReferrals;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\Click;
 use SureCart\Models\Referral;
 
 /**
@@ -38,7 +37,7 @@ class AffiliationReferralsListTable extends ListTable {
 		$this->set_pagination_args(
 			array(
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'affiliate_clicks' ),
+				'per_page'    => $this->get_items_per_page( 'affiliate_referrals' ),
 			)
 		);
 
@@ -53,7 +52,7 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$link = admin_url( 'admin.php?page=sc-affiliate-clicks' );
+		$link = admin_url( 'admin.php?page=sc-affiliate-referrals' );
 
 		foreach ( $this->getStatuses() as $status => $label ) {
 			$current_link_attributes = '';
@@ -109,17 +108,37 @@ class AffiliationReferralsListTable extends ListTable {
 		ob_start();
 		echo date_i18n( get_option( 'date_format' ), $referral->created_at );
 		?>
-		<div class="row-actions">
 		<?php
-		echo $this->row_actions(
-			array_filter(
-				array(
-					'view_click' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-clicks', $referral->id ) ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+			echo wp_kses_post(
+				$this->row_actions(
+					array_filter(
+						array(
+							'edit'           => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-referrals', $referral->id ) ) . '" aria-label="' . esc_attr__( 'Edit', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+							'approve'        => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'approve' ) ) . '" aria-label="' . esc_attr__( 'Approve', 'surecart' ) . '">' . esc_html__( 'Approve', 'surecart' ) . '</a>',
+							'deny'           => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'deny' ) ) . '" aria-label="' . esc_attr__( 'Deny', 'surecart' ) . '">' . esc_html__( 'Deny', 'surecart' ) . '</a>',
+							'make_reviewing' => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'make_reviewing' ) ) . '" aria-label="' . esc_attr__( 'Make Reviewing', 'surecart' ) . '">' . esc_html__( 'Make Reviewing', 'surecart' ) . '</a>',
+							'delete'         => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'delete' ) ) . '" aria-label="' . esc_attr__( 'Delete', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>',
+						),
+						function ( $action, $key ) use ( $referral ) {
+							if ( 'approve' === $key && 'approved' === $referral->status ) {
+								return false;
+							}
+
+							if ( 'deny' === $key && 'denied' === $referral->status ) {
+								return false;
+							}
+
+							if ( 'make_reviewing' === $key && 'reviewing' === $referral->status ) {
+								return false;
+							}
+
+							return true;
+						},
+						ARRAY_FILTER_USE_BOTH
+					)
 				)
-			),
-		);
+			)
 		?>
-		</div>
 		<?php
 		return ob_get_clean();
 	}
@@ -240,8 +259,8 @@ class AffiliationReferralsListTable extends ListTable {
 	private function table_data() {
 		$affiliate_referrals_query = Referral::where(
 			array(
-				// 'converted' => $this->getFilteredStatus(),
 				'query'  => $this->get_search_query(),
+				'status' => [ $this->getFilteredStatus() ],
 				'expand' => [
 					'affiliation',
 					'checkout',
@@ -303,11 +322,7 @@ class AffiliationReferralsListTable extends ListTable {
 			return null;
 		}
 
-		if ( 'converted' === $_GET['status'] ) {
-			return true;
-		}
-
-		return false;
+		return sanitize_text_field( wp_unslash( $_GET['status'] ) );
 	}
 
 	/**
@@ -317,12 +332,33 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
-			'all' => __( 'All', 'surecart' ),
+			'all'       => __( 'All', 'surecart' ),
 			'reviewing' => __( 'Reviewing', 'surecart' ),
-			'approved' => __( 'Approved', 'surecart' ),
-			'denied' => __( 'Denied', 'surecart' ),
-			'canceled' => __( 'Canceled', 'surecart' ),
-			'paid' => __( 'Paid Out', 'surecart' ),
+			'approved'  => __( 'Approved', 'surecart' ),
+			'denied'    => __( 'Denied', 'surecart' ),
+			'canceled'  => __( 'Canceled', 'surecart' ),
+			'paid'      => __( 'Paid Out', 'surecart' ),
+		);
+	}
+
+	/**
+	 * Get action url.
+	 *
+	 * @param int    $id     The id.
+	 * @param string $action The action.
+	 *
+	 * @return string
+	 */
+	public function get_action_url( $id, $action ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => $action,
+					'nonce'  => wp_create_nonce( $action . '_affiliation' ),
+					'id'     => $id,
+				],
+				esc_url_raw( admin_url( 'admin.php?page=sc-affiliate-referrals' ) )
+			)
 		);
 	}
 }

@@ -389,6 +389,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function() {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationReferralsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationReferralsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_affiliation' )->handle( 'AffiliationReferralsController@delete' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'approve', 'action' )->middleware( 'nonce:approve_affiliation' )->handle( 'AffiliationReferralsController@approve' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'deny', 'action' )->middleware( 'nonce:deny_affiliation' )->handle( 'AffiliationReferralsController@deny' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'make_reviewing', 'action' )->middleware( 'nonce:make_reviewing_affiliation' )->handle( 'AffiliationReferralsController@makeReviewing' );
 	}
 );
 
