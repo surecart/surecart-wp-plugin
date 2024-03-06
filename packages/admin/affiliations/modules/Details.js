@@ -13,47 +13,53 @@ import StatusBadge from '../../components/StatusBadge';
 import { ScFormatDate } from '@surecart/components-react';
 
 export default ({ affiliation, loading }) => {
+	const {
+		first_name,
+		last_name,
+		email,
+		payout_email,
+		active,
+		created_at,
+		updated_at,
+	} = affiliation;
+
 	return (
 		<Box title={__('Affiliate Details', 'surecart')} loading={loading}>
 			<Fragment>
 				<Definition title={__('Name', 'surecart')}>
-					{affiliation?.first_name + ' ' + affiliation?.last_name}
+					{first_name + ' ' + last_name}
 				</Definition>
 
-				<Definition title={__('Email', 'surecart')}>
-					{affiliation?.email}
-				</Definition>
+				<Definition title={__('Email', 'surecart')}>{email}</Definition>
 
 				<Definition title={__('Payout Email', 'surecart')}>
-					{affiliation?.payout_email}
+					{payout_email}
 				</Definition>
 
 				<Definition title={__('Status', 'surecart')}>
-					<StatusBadge
-						status={!!affiliation?.active ? 'active' : 'inactive'}
-					/>
+					<StatusBadge status={active ? 'active' : 'inactive'} />
 				</Definition>
 
 				<hr />
 
-				{!!affiliation?.updated_at && (
+				{updated_at && (
 					<Definition title={__('Last Updated', 'surecart')}>
 						<ScFormatDate
 							month="short"
 							day="numeric"
 							year="numeric"
-							date={affiliation.updated_at}
+							date={updated_at}
 						/>
 					</Definition>
 				)}
 
-				{!!affiliation?.created_at && (
+				{created_at && (
 					<Definition title={__('Created', 'surecart')}>
 						<ScFormatDate
 							month="short"
 							day="numeric"
 							year="numeric"
-							date={affiliation.created_at}
+							date={created_at}
 						/>
 					</Definition>
 				)}

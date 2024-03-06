@@ -200,7 +200,7 @@ export default () => {
 			}
 			sidebar={
 				<Details
-					affiliation={affiliation}
+					affiliation={affiliation || {}}
 					loading={!hasLoadedAffiliation}
 				/>
 			}

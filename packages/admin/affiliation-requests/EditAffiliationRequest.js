@@ -35,7 +35,8 @@ export default () => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
+		useDispatch(coreStore);
 	const { saveDirtyRecords } = useDirty();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 
@@ -45,6 +46,7 @@ export default () => {
 		loadError,
 		saveError,
 		deleteError,
+		isDeleting,
 		hasLoadedAffiliationRequest,
 	} = useSelect(
 		(select) => {
@@ -62,6 +64,9 @@ export default () => {
 				),
 				loadError: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
+					...entityData
+				),
+				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
 					...entityData
 				),
 				deleteError: select(coreStore)?.getLastEntityDeleteError(
@@ -266,10 +271,11 @@ export default () => {
 				margin="80px"
 			/>
 			<Details
-				affiliationRequest={affiliationRequest}
+				affiliationRequest={affiliationRequest || {}}
 				updateAffiliationRequest={updateAffiliationRequest}
 				loading={!hasLoadedAffiliationRequest}
 				saving={isSaving}
+				deleting={isDeleting}
 			/>
 		</UpdateModel>
 	);

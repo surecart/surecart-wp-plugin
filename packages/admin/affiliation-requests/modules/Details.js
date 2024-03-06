@@ -26,11 +26,13 @@ export default ({
 	saving,
 	deleting,
 }) => {
+	const { status, first_name, last_name, email, payout_email, bio } =
+		affiliationRequest;
 	return (
 		<Box
 			title={__('Affiliate Request Details', 'surecart')}
 			loading={loading}
-			header_action={<StatusBadge status={affiliationRequest?.status} />}
+			header_action={<StatusBadge status={status} />}
 		>
 			<div
 				css={css`
@@ -48,7 +50,7 @@ export default ({
 								'surecart'
 							)}
 							attribute="first_name"
-							value={affiliationRequest?.first_name}
+							value={first_name}
 							onScInput={(e) =>
 								updateAffiliationRequest({
 									first_name: e.target.value,
@@ -65,7 +67,7 @@ export default ({
 								'surecart'
 							)}
 							attribute="last_name"
-							value={affiliationRequest?.last_name}
+							value={last_name}
 							onScInput={(e) =>
 								updateAffiliationRequest({
 									last_name: e.target.value,
@@ -83,7 +85,7 @@ export default ({
 								"Your affiliate request's email address.",
 								'surecart'
 							)}
-							value={affiliationRequest?.email}
+							value={email}
 							name="email"
 							required
 							onScInput={(e) =>
@@ -101,7 +103,7 @@ export default ({
 								"Your affiliate request's payout email address.",
 								'surecart'
 							)}
-							value={affiliationRequest?.payout_email}
+							value={payout_email}
 							name="payout_email"
 							required
 							onScInput={(e) =>
@@ -125,7 +127,7 @@ export default ({
 									bio: e.target.value,
 								})
 							}
-							value={affiliationRequest?.bio}
+							value={bio}
 							name="bio-text"
 						/>
 					</ScColumn>
