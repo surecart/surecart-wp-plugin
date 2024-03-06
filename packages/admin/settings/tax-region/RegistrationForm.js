@@ -30,7 +30,6 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [type, setType] = useState('other');
-	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const [taxType, setTaxType] = useState(
 		registration?.manual_rate ? 'manual' : 'automatic'
@@ -109,10 +108,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			onSubmitted();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -132,10 +128,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			onDeleted();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
