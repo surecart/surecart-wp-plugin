@@ -17,7 +17,7 @@ export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(5);
 
-	const { referrals, loading, updating } = useSelect(
+	const { referrals, loading, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -38,7 +38,7 @@ export default ({ affiliationId }) => {
 			return {
 				referrals,
 				loading: loading && page === 1,
-				updating: loading && page !== 1,
+				fetching: loading && page !== 1,
 			};
 		},
 		[affiliationId, page, perPage]
@@ -76,7 +76,7 @@ export default ({ affiliationId }) => {
 			}}
 			data={referrals}
 			isLoading={loading}
-			isFetching={updating}
+			isFetching={fetching}
 			perPage={perPage}
 			page={page}
 			setPage={setPage}
@@ -92,7 +92,7 @@ export default ({ affiliationId }) => {
 						page={page}
 						setPage={setPage}
 						perPage={perPage}
-						loading={updating}
+						loading={fetching}
 					/>
 				)
 			}
