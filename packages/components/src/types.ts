@@ -647,6 +647,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  updated_at: number;
   variant: string;
 }
 
@@ -1113,7 +1114,6 @@ export interface GoogleAnalyticsItem {
   currency: string;
   discount?: number;
 }
-
 
 export interface ProductState {
   formId: number;

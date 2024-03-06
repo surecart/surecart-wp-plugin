@@ -20,10 +20,9 @@ on('get', prop => {
   }
 });
 
-
 on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
   if (key !== 'checkout') return; // we only care about checkout
-  if (!checkout) return; // we only care about checkout
+  if (!oldCheckout || !checkout) return; // checkout was not updated.
   if (checkout?.total_amount === oldCheckout?.total_amount && checkout?.amount_due === oldCheckout?.total_amount) return; // we only care about total_amount and amount_due
 
   const amountDue = getFormattedPrice({
@@ -35,18 +34,23 @@ on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
     currency: checkout.currency,
   });
 
+  const couponCodeAdded = checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code && checkout?.discount?.promotion?.code;
+  const couponCodeRemoved = checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code && !checkout?.discount?.promotion?.code;
+
   const messages = [
-    checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code &&
-      checkout?.discount?.promotion?.code &&
-      sprintf(
-        // Translators: %1$s is the coupon code, %2$s is the human readable discount.
-        __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
-        checkout?.discount?.promotion?.code,
-        getHumanDiscount(checkout?.discount?.coupon),
-      ),
-    checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code && !checkout?.discount?.promotion?.code && __('Coupon code removed.', 'sc-coupon-form'),
+    ...(couponCodeRemoved ? [__('Coupon code removed.', 'sc-coupon-form')] : []),
+    ...(couponCodeAdded
+      ? [
+          sprintf(
+            // Translators: %1$s is the coupon code, %2$s is the human readable discount.
+            __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
+            checkout?.discount?.promotion?.code,
+            getHumanDiscount(checkout?.discount?.coupon),
+          ),
+        ]
+      : []),
     sprintf(__('Checkout updated. The total amount for the checkout is %1$s and the amount due is %1$s.', 'surecart'), totalAmount, amountDue),
   ];
 
-  speak(messages.filter(message => !!message).join(' '));
+  speak(messages.join(' '));
 });
