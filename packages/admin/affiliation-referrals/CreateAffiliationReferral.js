@@ -26,7 +26,7 @@ export default ({ onCreateReferral }) => {
 			return { ...currentState, ...newState };
 		},
 		{
-			commission_amount: 0,
+			commission_amount: '',
 			description: '',
 			affiliation: '',
 		}
