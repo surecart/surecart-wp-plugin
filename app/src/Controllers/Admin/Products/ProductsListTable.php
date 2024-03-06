@@ -43,7 +43,11 @@ class ProductsListTable extends ListTable {
 		$this->bulk_actions = array_filter(
 			$this->bulk_actions,
 			function( $bulk_action_id ) {
-				return ! in_array( $bulk_action_id, $this->bulk_actions_data['delete_products']['succeeded_bulk_actions'], true );
+				return ! in_array(
+					$bulk_action_id,
+					$this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] ?? [],
+					true
+				);
 			}
 		);
 		setcookie( 'sc_bulk_actions', wp_json_encode( $this->bulk_actions ), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
@@ -54,7 +58,7 @@ class ProductsListTable extends ListTable {
 	public function show_bulk_action_admin_notice() {
 		$status_parts = [];
 		foreach ( $this->statuses as $status ) {
-			$count = count( $this->bulk_actions_data['delete_products'][ $status . '_record_ids' ] );
+			$count = count( $this->bulk_actions_data['delete_products'][ $status . '_record_ids' ] ?? [] );
 			if ( $count > 0 ) {
 				// translators: %1$d is Count of specific deletions, %2$s is bulk deletion progress status.
 				$status_parts[] = sprintf( esc_html__( '%1$d %2$s', 'surecart' ), $count, $status );
