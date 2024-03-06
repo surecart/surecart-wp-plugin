@@ -292,6 +292,7 @@ export default () => {
 				region={region}
 				open={dialog}
 				registration={dialog}
+				registrations={registrations}
 				onRequestClose={() => setDialog(null)}
 			/>
 		</Fragment>
