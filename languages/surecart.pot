@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-03-05T20:01:11+00:00\n"
+"POT-Creation-Date: 2024-03-06T17:19:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -6384,8 +6384,6 @@ msgstr ""
 #: product-groups/modules/NewProduct.js:45
 #: products/CreateProduct.js:45
 #: products/modules/Prices/NewPrice/index.js:64
-#: settings/tax-region/RegistrationForm.js:112
-#: settings/tax-region/RegistrationForm.js:135
 #: store/notices/reducer.js:25
 #: store/ui/reducer.js:130
 #: upsell-funnels/CreateFunnel.js:39
@@ -6474,7 +6472,7 @@ msgstr ""
 #: settings/subscription-preservation/Reason.js:111
 #: settings/tax-override/TaxOverrideDeleteModal.js:120
 #: settings/tax-override/TaxOverrideRows.js:71
-#: settings/tax-region/RegistrationForm.js:250
+#: settings/tax-region/RegistrationForm.js:256
 #: upsell-funnels/EditFunnel.js:243
 #: sc-payment-methods-list.js:156
 #: sc-payment-methods-list.js:183
@@ -12269,12 +12267,13 @@ msgid "Product Collection"
 msgstr ""
 
 #: settings/tax-override/TaxOverrideModal.js:212
-#: settings/tax-region/RegistrationForm.js:156
+#: settings/tax-region/RegistrationForm.js:162
+#: settings/tax-region/TaxRegionSettings.js:213
 msgid "Region"
 msgstr ""
 
 #: settings/tax-override/TaxOverrideModal.js:244
-#: settings/tax-region/RegistrationForm.js:194
+#: settings/tax-region/RegistrationForm.js:200
 #: settings/tax-region/TaxRegionSettings.js:220
 msgid "Tax Rate"
 msgstr ""
@@ -12298,7 +12297,7 @@ msgstr ""
 
 #: settings/tax-region/RegionSettings.js:38
 #: settings/tax-region/RegionSettings.js:104
-#: settings/tax-region/RegistrationForm.js:210
+#: settings/tax-region/RegistrationForm.js:216
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
@@ -12324,7 +12323,7 @@ msgid "Enable this if your business makes up to €10,000 EUR in sales to other 
 msgstr ""
 
 #: settings/tax-region/RegistrationDialog.js:17
-#: settings/tax-region/RegistrationForm.js:255
+#: settings/tax-region/RegistrationForm.js:261
 #: settings/tax-region/TaxRegionSettings.js:204
 #: subscriptions/show/modules/Tax.js:60
 msgid "Collect Tax"
@@ -12333,7 +12332,6 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:22
 #: settings/tax-region/RegistrationForm.js:23
 #: settings/tax-region/RegistrationForm.js:24
-#: settings/tax-region/TaxRegionSettings.js:213
 #: Blocks/Address/edit.js:155
 #: sc-address2.js:122
 #: sc-order-shipping-address2.js:33
@@ -12350,24 +12348,24 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:171
+#: settings/tax-region/RegistrationForm.js:177
 msgid "Tax Calculation"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:177
+#: settings/tax-region/RegistrationForm.js:183
 msgid "Manual"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:181
+#: settings/tax-region/RegistrationForm.js:187
 #: settings/tax-region/TaxRegionSettings.js:247
 msgid "Automatic"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:236
+#: settings/tax-region/RegistrationForm.js:242
 msgid "Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:240
+#: settings/tax-region/RegistrationForm.js:246
 msgid "Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
