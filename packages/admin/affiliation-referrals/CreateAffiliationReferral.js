@@ -12,6 +12,7 @@ import {
 	ScForm,
 	ScFormControl,
 	ScPriceInput,
+	ScTextarea,
 } from '@surecart/components-react';
 import Box from '../ui/Box';
 import ModelSelector from '../components/ModelSelector';
@@ -73,7 +74,7 @@ export default ({ onCreateReferral }) => {
 						`}
 					>
 						<ScFormControl
-							label={__('Affiliation', 'surecart')}
+							label={__('Affiliate', 'surecart')}
 							required
 						>
 							<ModelSelector
@@ -104,6 +105,21 @@ export default ({ onCreateReferral }) => {
 								});
 							}}
 							required
+						/>
+
+						<ScTextarea
+							label={__('Description', 'surecart')}
+							onScChange={(e) =>
+								setReferral({
+									description: e.target.value,
+								})
+							}
+							value={referral?.description}
+							name="description"
+							placeholder={__(
+								'A brief description of what this referral is for.',
+								'surecart'
+							)}
 						/>
 
 						<div
