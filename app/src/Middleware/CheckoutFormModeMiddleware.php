@@ -10,7 +10,7 @@ use SureCartCore\Requests\RequestInterface;
  */
 class CheckoutFormModeMiddleware {
 	/**
-	 * Enqueue component assets.
+	 * Handle the request.
 	 *
 	 * @param RequestInterface $request Request.
 	 * @param Closure          $next Next.
