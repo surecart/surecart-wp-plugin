@@ -88,7 +88,6 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'          => '<input type="checkbox" />',
 			'name'         => __( 'Name', 'surecart' ),
 			'email'        => __( 'Email', 'surecart' ),
 			'status'       => __( 'Status', 'surecart' ),
@@ -99,19 +98,7 @@ class AffiliationsListTable extends ListTable {
 	}
 
 	/**
-	 * Displays the checkbox column.
-	 *
-	 * @param Affiliation $affiliation The current affiliates.
-	 */
-	public function column_cb( $affiliation ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $affiliation['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $affiliation['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $affiliation['id'] ); ?>" />
-		<?php
-	}
-
-	/**
-	 * Define which columns are hidden
+	 * Define which columns are hidden.
 	 *
 	 * @return array
 	 */
@@ -120,12 +107,12 @@ class AffiliationsListTable extends ListTable {
 	}
 
 	/**
-	 * Get the table data
+	 * Get the table data.
 	 *
 	 * @return array
 	 */
 	private function table_data() {
-		$affiates_query = Affiliation::where(
+		$affiliates_query = Affiliation::where(
 			array(
 				'active' => $this->getFilteredStatus(),
 				'query'  => $this->get_search_query(),
@@ -136,9 +123,9 @@ class AffiliationsListTable extends ListTable {
 			)
 		);
 
-		return $affiates_query->paginate(
+		return $affiliates_query->paginate(
 			array(
-				'per_page' => $this->get_items_per_page( 'affiate' ),
+				'per_page' => $this->get_items_per_page( 'affiliate' ),
 				'page'     => $this->get_pagenum(),
 			)
 		);
@@ -166,15 +153,7 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function column_status( $affiliation ) {
 		ob_start();
-		$status_type = '';
-		switch ( $affiliation->active ) {
-			case true:
-				$status_type = 'success';
-				break;
-			case false:
-				$status_type = 'warning';
-				break;
-		}
+		$status_type = $affiliation->active ? 'success' : 'warning';
 		?>
 		<sc-tag type="<?php echo esc_attr( $status_type ); ?>">
 			<?php echo esc_html( $this->getStatuses()[ $affiliation->active ? 'active' : 'inactive' ] ); ?>
@@ -284,6 +263,7 @@ class AffiliationsListTable extends ListTable {
 		$link            = $this->get_toggle_activate_url( $affiliation->id, $affiliation->active ? 'deactivate' : 'activate');
 
 		return sprintf(
+			// translators: %1s: confirm message, %2s: link, %3s: aria label, %4s: text.
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
 			esc_attr( $confirm_message ),
 			esc_url( $link ),
@@ -319,16 +299,19 @@ class AffiliationsListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		if ( ! empty( $_GET['status'] ) ) {
-			$status = sanitize_text_field( wp_unslash( $_GET['status'] ) );
-			if ( 'all' === $status ) {
-				return null;
-			}
-
-			return 'active' === $status ? '1' : '0';
+		if ( empty( $_GET['status'] ) ) {
+			return '1';
 		}
 
-		return '1';
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ) );
+
+		$transforms = [
+			'all'      => null,
+			'active'   => '1',
+			'inactive' => '0'
+		];
+
+		return $transforms[ $status ] ?? null;
 	}
 
 	/**
