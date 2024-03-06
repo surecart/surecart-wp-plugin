@@ -24,7 +24,6 @@ import {
 import { store as dataStore } from '@surecart/data';
 import Error from '../components/Error';
 import useDirty from '../hooks/useDirty';
-import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Clicks from './modules/Clicks';
@@ -41,11 +40,19 @@ export default () => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { saveDirtyRecords } = useDirty();
 	const id = useSelect((select) => select(dataStore).selectPageId());
-	const {
-		item: affiliation,
-		editItem: editAffiliation,
-		hasLoadedItem: hasLoadedAffiliation,
-	} = useEntity('affiliation', id);
+
+	const { affiliation, hasLoadedAffiliation } = useSelect(
+		(select) => {
+			const entityData = ['surecart', 'affiliation', id];
+			return {
+				affiliation: select(coreStore).getEntityRecord(...entityData),
+				hasLoadedAffiliation: select(
+					coreStore
+				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
+			};
+		},
+		[id]
+	);
 
 	/**
 	 * Handle the form submission

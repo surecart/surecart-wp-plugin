@@ -1,11 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 
 /**
