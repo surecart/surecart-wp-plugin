@@ -210,7 +210,7 @@ export default () => {
 					<ScCard no-padding style={{ position: 'relative' }}>
 						<ScTable>
 							<ScTableCell slot="head">
-								{__('Country', 'surecart')}
+								{__('Region', 'surecart')}
 							</ScTableCell>
 							{hasManualTax && (
 								<ScTableCell
