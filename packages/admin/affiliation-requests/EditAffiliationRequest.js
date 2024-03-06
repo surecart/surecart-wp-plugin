@@ -24,7 +24,6 @@ import {
 import { store as dataStore } from '@surecart/data';
 import Error from '../components/Error';
 import useDirty from '../hooks/useDirty';
-import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
@@ -36,21 +35,49 @@ export default () => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { saveDirtyRecords } = useDirty();
 	const id = useSelect((select) => select(dataStore).selectPageId());
-	const {
-		item: affiliationRequest,
-		editItem: editAffiliationRequest,
-		deleteItem: deleteAffiliationRequest,
-		hasLoadedItem: hasLoadedAffiliationRequest,
-		deletingItem: deletingAffiliationRequest,
-		savingItem: savingAffiliationRequest,
-	} = useEntity('affiliation-request', id);
 
-	/**
-	 * Handle the form submission
-	 */
+	const {
+		affiliationRequest,
+		isSaving,
+		loadError,
+		saveError,
+		deleteError,
+		hasLoadedAffiliationRequest,
+	} = useSelect(
+		(select) => {
+			const entityData = ['surecart', 'affiliation-request', id];
+
+			return {
+				affiliationRequest: select(coreStore).getEditedEntityRecord(
+					...entityData
+				),
+				isSaving: select(coreStore)?.isSavingEntityRecord?.(
+					...entityData
+				),
+				saveError: select(coreStore)?.getLastEntitySaveError(
+					...entityData
+				),
+				loadError: select(coreStore)?.getResolutionError?.(
+					'getEditedEntityRecord',
+					...entityData
+				),
+				deleteError: select(coreStore)?.getLastEntityDeleteError(
+					...entityData
+				),
+				hasLoadedAffiliationRequest: select(
+					coreStore
+				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
+			};
+		},
+		[id]
+	);
+
+	const updateAffiliationRequest = (data) =>
+		editEntityRecord('surecart', 'affiliation-request', id, data);
+
 	const onSubmit = async () => {
 		try {
 			await saveDirtyRecords();
@@ -91,7 +118,15 @@ export default () => {
 
 		try {
 			setError(null);
-			await deleteAffiliationRequest({ throwOnError: true });
+			await deleteEntityRecord(
+				'surecart',
+				'affiliation-request',
+				id,
+				undefined,
+				{
+					throwOnError: true,
+				}
+			);
 			window.location.assign('admin.php?page=sc-affiliate-requests');
 		} catch (e) {
 			console.error(e);
@@ -225,13 +260,16 @@ export default () => {
 				</div>
 			}
 		>
-			<Error error={error} setError={setError} margin="80px" />
+			<Error
+				error={error || loadError || saveError || deleteError}
+				setError={setError}
+				margin="80px"
+			/>
 			<Details
 				affiliationRequest={affiliationRequest}
-				updateAffiliationRequest={editAffiliationRequest}
+				updateAffiliationRequest={updateAffiliationRequest}
 				loading={!hasLoadedAffiliationRequest}
-				saving={savingAffiliationRequest}
-				delete={deleteAffiliationRequest}
+				saving={isSaving}
 			/>
 		</UpdateModel>
 	);
