@@ -1,14 +1,21 @@
 /** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
 
-import Box from '../../ui/Box';
+/**
+ * Internal dependencies.
+ */
 import {
 	ScColumn,
 	ScColumns,
 	ScInput,
 	ScTextarea,
 } from '@surecart/components-react';
-import { css, jsx } from '@emotion/core';
+import Box from '../../ui/Box';
 import StatusBadge from '../../components/StatusBadge';
 import SaveButton from '../../templates/SaveButton';
 
@@ -23,7 +30,7 @@ export default ({
 		<Box
 			title={__('Affiliate Request Details', 'surecart')}
 			loading={loading}
-			header_action={<StatusBadge status={affiliationRequest.status} />}
+			header_action={<StatusBadge status={affiliationRequest?.status} />}
 		>
 			<div
 				css={css`
