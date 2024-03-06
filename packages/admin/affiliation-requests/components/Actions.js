@@ -14,18 +14,20 @@ export default ({
 	onAffiliationRequestApprove,
 	onAffiliationRequestDeny,
 }) => {
+	const confirmApprove = () =>
+		confirm(__('Are you sure to approve affiliate request?', 'surecart'));
+
+	const confirmDeny = () =>
+		confirm(__('Are you sure to reject affiliate request?', 'surecart'));
+
 	return (
 		<>
 			{['pending', 'denied'].includes(affiliationRequest?.status) && (
 				<ScButton
-					type="primary"
+					type="success"
+					outline={true}
 					onClick={() =>
-						confirm(
-							__(
-								'Are you sure to approve affiliate request?',
-								'surecart'
-							)
-						) && onAffiliationRequestApprove()
+						confirmApprove() && onAffiliationRequestApprove()
 					}
 					loading={loading}
 				>
@@ -37,16 +39,9 @@ export default ({
 			{['pending', 'approved'].includes(affiliationRequest?.status) && (
 				<ScButton
 					type="danger"
-					onClick={() =>
-						confirm(
-							__(
-								'Are you sure to reject affiliate request?',
-								'surecart'
-							)
-						) && onAffiliationRequestDeny()
-					}
-					loading={loading}
 					outline={true}
+					onClick={() => confirmDeny() && onAffiliationRequestDeny()}
+					loading={loading}
 				>
 					<ScIcon slot="prefix" name="x-circle" />
 					{__('Reject', 'surecart')}
