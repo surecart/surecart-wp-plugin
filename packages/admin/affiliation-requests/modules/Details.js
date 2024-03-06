@@ -129,7 +129,7 @@ export default ({
 						margin-top: var(--sc-spacing-medium);
 					`}
 				>
-					<SaveButton loading={loading || saving || deleting}>
+					<SaveButton busy={loading || saving || deleting}>
 						{__('Save', 'surecart')}
 					</SaveButton>
 				</div>
