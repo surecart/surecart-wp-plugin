@@ -14,24 +14,11 @@ import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 import StatusBadge from '../../components/StatusBadge';
+import { ScFormatDate } from '@surecart/components-react';
 
 export default ({ affiliation, loading }) => {
-	console.log('affiliation', affiliation);
 	return (
-		<Box
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-					`}
-				>
-					{__('Affiliate Details', 'surecart')}
-				</div>
-			}
-			loading={loading}
-		>
+		<Box title={__('Affiliate Details', 'surecart')} loading={loading}>
 			<Fragment>
 				<Definition title={__('Name', 'surecart')}>
 					{affiliation?.first_name + ' ' + affiliation?.last_name}
@@ -55,19 +42,23 @@ export default ({ affiliation, loading }) => {
 
 				{!!affiliation?.updated_at && (
 					<Definition title={__('Last Updated', 'surecart')}>
-						{format(
-							'F j, Y',
-							new Date(affiliation.updated_at * 1000)
-						)}
+						<ScFormatDate
+							month="short"
+							day="numeric"
+							year="numeric"
+							date={affiliation.updated_at}
+						/>
 					</Definition>
 				)}
 
 				{!!affiliation?.created_at && (
 					<Definition title={__('Created', 'surecart')}>
-						{format(
-							'F j, Y',
-							new Date(affiliation.created_at * 1000)
-						)}
+						<ScFormatDate
+							month="short"
+							day="numeric"
+							year="numeric"
+							date={affiliation.created_at}
+						/>
 					</Definition>
 				)}
 			</Fragment>
