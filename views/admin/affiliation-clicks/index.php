@@ -3,7 +3,7 @@
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title' => __( 'Affiliate Clicks', 'surecart' ),
+			'title' => __( 'Clicks', 'surecart' ),
 		]
 	);
 	?>
