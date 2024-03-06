@@ -26,7 +26,13 @@ const zoneName = {
 	us: __('State', 'surecart'),
 };
 
-export default ({ region, registration, onSubmitted, onDeleted }) => {
+export default ({
+	region,
+	registration,
+	registrations,
+	onSubmitted,
+	onDeleted,
+}) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [type, setType] = useState('other');
@@ -134,6 +140,13 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 		}
 	};
 
+	const isZoneRegistered = (zone) =>
+		(registrations || []).some((r) => r.tax_zone?.id === zone.id);
+
+	const availableZones = (zones || []).filter(
+		(zone) => !isZoneRegistered(zone)
+	);
+
 	return (
 		<ScForm
 			onScSubmit={onSubmit}
@@ -148,7 +161,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				unselect={false}
 				label={zoneName[region] || __('Region', 'surecart')}
 				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(zones || [])
+				choices={(availableZones || [])
 					.reverse()
 					.map(({ state_name, country_name, id }) => {
 						return {
