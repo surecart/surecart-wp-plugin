@@ -232,6 +232,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 - Improvement: Product collection list page loading performance.
 - Improvement: Update customer display conditions wording on upsells to be more descriptive.
 - Fix: Issue with using product collection and product list shortcodes on the same page.
+- Fix: Issue where a merchant could select a region to register for taxes that already exists, causing a save error.
 - Fix: Cart incorrectly using subtotal instead of total.
 
 = 2.19.4 - March 1st, 2024 =
