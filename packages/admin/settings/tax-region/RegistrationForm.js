@@ -18,7 +18,7 @@ const types = {
 	eu: 'eu_vat',
 	uk: 'gb_vat',
 };
-const zoneName = {
+export const zoneName = {
 	au: __('Country', 'surecart'),
 	eu: __('Country', 'surecart'),
 	uk: __('Country', 'surecart'),
@@ -60,7 +60,7 @@ export default ({
 		(select) => {
 			const queryArgs = [
 				'surecart',
-				'tax_zone',
+				'tax-zone',
 				{ context: 'edit', regions: [region], per_page: 100 },
 			];
 			return {
@@ -102,7 +102,7 @@ export default ({
 			setLoading(true);
 			await saveEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				{
 					...(registration?.id ? { id: registration?.id } : {}),
 					...data,
@@ -126,7 +126,7 @@ export default ({
 			setLoading(true);
 			await deleteEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				registration?.id,
 				{},
 				{ throwOnError: true }

@@ -17,6 +17,7 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import RegistrationDialog from './RegistrationDialog';
 import RegionSettings from './RegionSettings';
+import TaxOverrides from '../tax-override';
 
 const zoneIconName = {
 	au: 'australia-flag',
@@ -105,7 +106,7 @@ export default () => {
 	const { registrations, fetching } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
-			'tax_registration',
+			'tax-registration',
 			{ context: 'edit', per_page: 100 },
 		];
 		const registrations = select(coreStore).getEntityRecords(...queryArgs);
@@ -209,7 +210,7 @@ export default () => {
 					<ScCard no-padding style={{ position: 'relative' }}>
 						<ScTable>
 							<ScTableCell slot="head">
-								{__('Country', 'surecart')}
+								{__('Region', 'surecart')}
 							</ScTableCell>
 							{hasManualTax && (
 								<ScTableCell
@@ -279,6 +280,13 @@ export default () => {
 						{fetching && <sc-block-ui spinner></sc-block-ui>}
 					</ScCard>
 				</SettingsBox>
+
+				<TaxOverrides
+					region={region}
+					taxProtocol={item}
+					registrations={registrations}
+					hasLoadedItem={hasLoadedItem}
+				/>
 			</SettingsTemplate>
 			<RegistrationDialog
 				region={region}

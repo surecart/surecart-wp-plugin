@@ -2219,6 +2219,10 @@ export namespace Components {
          */
         "gbVatLabel": string;
         /**
+          * Help text
+         */
+        "helpText": string;
+        /**
           * Other zones label
          */
         "otherLabel": string;
@@ -2227,6 +2231,10 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes": string | string[];
     }
     interface ScOrdersList {
         "allLink": string;
@@ -3847,6 +3855,10 @@ export namespace Components {
           * The status
          */
         "status": 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes": string[];
         /**
           * Type of tax id
          */
@@ -8336,6 +8348,10 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
+          * Help text
+         */
+        "helpText"?: string;
+        /**
           * Other zones label
          */
         "otherLabel"?: string;
@@ -8343,6 +8359,10 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes"?: string | string[];
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -10131,6 +10151,10 @@ declare namespace LocalJSX {
           * The status
          */
         "status"?: 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes"?: string[];
         /**
           * Type of tax id
          */
