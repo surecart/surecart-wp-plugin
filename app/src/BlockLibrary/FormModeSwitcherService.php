@@ -5,28 +5,11 @@ declare(strict_types=1);
 namespace SureCart\BlockLibrary;
 
 use SureCart;
-use SureCartCore\Application\Application;
 
 /**
  * Provide general block-related functionality.
  */
-class BlockModeSwitcherService {
-	/**
-	 * View engine.
-	 *
-	 * @var Application
-	 */
-	protected $app = null;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param Application $app Application Instance.
-	 */
-	public function __construct( Application $app ) {
-		$this->app = $app;
-	}
-
+class FormModeSwitcherService {
 	/**
 	 * Bootstrap the service.
 	 *
@@ -64,8 +47,8 @@ class BlockModeSwitcherService {
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'sc_change_checkout_mode',
-				'title' => '<span style="color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) .'; font-weight: bold; font-size: 25px; line-height: 1;">•</span> '
-					. '<span style="color: ' . ( 'test' === $mode ? '#fef3c7' : '#fff' ) .';">'
+				'title' => '<span style="color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) . '; font-weight: bold; font-size: 25px; line-height: 1;">•</span> '
+					. '<span style="color: ' . ( 'test' === $mode ? '#fef3c7' : '#fff' ) . ';">'
 					. __( 'Checkout Form', 'surecart' )
 					. ' (' . ( 'test' === $mode ? __( 'Test', 'surecart' ) : __( 'Live', 'surecart' ) ) . ')'
 					. '</span>',
@@ -89,7 +72,7 @@ class BlockModeSwitcherService {
 			],
 			[
 				'id'    => 'sc_test_mode',
-				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #fbbf24; font-weight: bold; font-size: 25px; line-height: 1;">• ' . '</span><span style="color: #fef3c7;">' . __( 'Test Mode', 'surecart' ) . '</div><div>' . ( $mode === 'test' ? ' ✓' : '' ). '</span></div></div>',
+				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #fbbf24; font-weight: bold; font-size: 25px; line-height: 1;">• ' . '</span><span style="color: #fef3c7;">' . __( 'Test Mode', 'surecart' ) . '</div><div>' . ( $mode === 'test' ? ' ✓' : '' ) . '</span></div></div>',
 				'href'  => 'test' === $mode ? '#' : $url . '&mode=test',
 			],
 		];

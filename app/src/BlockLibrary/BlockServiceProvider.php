@@ -46,7 +46,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		};
 
 		$container['blocks.mode_switcher'] = function () use ( $app ) {
-			return new BlockModeSwitcherService( $app );
+			return new FormModeSwitcherService( $app );
 		};
 
 		$app->alias( 'blocks', 'blocks' );

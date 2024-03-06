@@ -18,33 +18,33 @@ class PostService {
 	/**
 	 * Get the form block.
 	 *
-	 * @param WP_Post|null $post The form post.
+	 * @param WP_Post|null $post The form or post type post.
 	 * @return array|null
 	 */
 	public function getFormBlock( $post = null ) {
-		$this->post = $this->getPostByIdOrObject( $post ?? $this->post );
+		$this->post = get_post( $post ?? $this->post );
 
+		// we don't have a post.
 		if ( empty( $this->post->ID ) ) {
 			return null;
+		}
+
+		// this is not the block we are are looking for.
+		if ( ! has_block( 'surecart/checkout-form', $this->post ) && ! has_block( 'surecart/form', $this->post ) ) {
+			return null;
+		}
+
+		$blocks = parse_blocks( $this->post->post_content );
+
+		// we have a checkout form block.
+		if ( has_block( 'surecart/checkout-form', $post ) ) {
+			$block = wp_get_first_block( $blocks, 'surecart/checkout-form' );
+			// Get the form post id.
+			$this->post = get_post( $block['attrs']['id'] ?? null );
 		}
 
 		$blocks = parse_blocks( $this->post->post_content );
 
 		return wp_get_first_block( $blocks, 'surecart/form' );
 	}
-
-	/**
-     * Retrieves a valid WP_Post object.
-     *
-     * @param WP_Post|int|null $post The post to validate.
-     *
-     * @return WP_Post|null
-     */
-    private function getPostByIdOrObject( $post ) {
-        if ( is_numeric( $post ) ) {
-            $post = get_post( $post );
-        }
-
-        return $post instanceof WP_Post ? $post : get_post();
-    }
 }
