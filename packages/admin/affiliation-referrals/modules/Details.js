@@ -5,18 +5,14 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
-import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
-import Definition from '../../ui/Definition';
-import StatusBadge from '../../components/StatusBadge';
+import { ScPriceInput, ScTextarea } from '@surecart/components-react';
 
-export default ({ affiliation, loading }) => {
-	console.log('affiliation', affiliation);
+export default ({ referral, updateReferral, loading }) => {
 	return (
 		<Box
 			title={
@@ -27,50 +23,38 @@ export default ({ affiliation, loading }) => {
 						justify-content: space-between;
 					`}
 				>
-					{__('Affiliate Details', 'surecart')}
+					{__('Referral Details', 'surecart')}
 				</div>
 			}
 			loading={loading}
 		>
-			<Fragment>
-				<Definition title={__('Name', 'surecart')}>
-					{affiliation?.first_name + ' ' + affiliation?.last_name}
-				</Definition>
+			<ScPriceInput
+				label={__('Commission Amount', 'surecart')}
+				placeholder={__('Enter an Amount', 'surecart')}
+				currencyCode={scData.currency_code}
+				value={referral.commission_amount}
+				onScInput={(e) => {
+					updateReferral({
+						commission_amount: e.target.value,
+					});
+				}}
+				required
+			/>
 
-				<Definition title={__('Email', 'surecart')}>
-					{affiliation?.email}
-				</Definition>
-
-				<Definition title={__('Payout Email', 'surecart')}>
-					{affiliation?.payout_email}
-				</Definition>
-
-				<Definition title={__('Status', 'surecart')}>
-					<StatusBadge
-						status={!!affiliation?.active ? 'active' : 'inactive'}
-					/>
-				</Definition>
-
-				<hr />
-
-				{!!affiliation?.updated_at && (
-					<Definition title={__('Last Updated', 'surecart')}>
-						{format(
-							'F j, Y',
-							new Date(affiliation.updated_at * 1000)
-						)}
-					</Definition>
+			<ScTextarea
+				label={__('Description', 'surecart')}
+				onScChange={(e) =>
+					updateReferral({
+						description: e.target.value,
+					})
+				}
+				value={referral?.description}
+				name="description"
+				placeholder={__(
+					'A brief description of what this referral is for.',
+					'surecart'
 				)}
-
-				{!!affiliation?.created_at && (
-					<Definition title={__('Created', 'surecart')}>
-						{format(
-							'F j, Y',
-							new Date(affiliation.created_at * 1000)
-						)}
-					</Definition>
-				)}
-			</Fragment>
+			/>
 		</Box>
 	);
 };

@@ -8,7 +8,7 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import ViewAffiliationReferral from './ViewAffiliationReferral';
+import EditAffiliationReferral from './EditAffiliationReferral';
 import { store } from '@surecart/data';
 import CreateAffiliationReferral from './CreateAffiliationReferral';
 
@@ -44,7 +44,7 @@ export default () => {
 	const id = useSelect((select) => select(store).selectPageId());
 
 	return id ? (
-		<ViewAffiliationReferral id={id} />
+		<EditAffiliationReferral id={id} />
 	) : (
 		<CreateAffiliationReferral
 			onCreateReferral={(id) => {

@@ -1,0 +1,315 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
+import { store as coreStore } from '@wordpress/core-data';
+import { Fragment, useState } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies.
+ */
+import {
+	ScBreadcrumb,
+	ScBreadcrumbs,
+	ScButton,
+	ScDropdown,
+	ScFlex,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
+import Logo from '../templates/Logo';
+import Details from './modules/Details';
+import Template from '../templates/UpdateModel';
+import SaveButton from '../templates/SaveButton';
+import useSave from '../settings/UseSave';
+import Summary from './modules/Summary';
+import Affiliation from './modules/Affiliation';
+
+export default ({ id }) => {
+	const { save } = useSave();
+	const [changingStatus, setChangingStatus] = useState(false);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
+	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } =
+		useDispatch(coreStore);
+
+	const { referral, isLoading } = useSelect((select) => {
+		const entityData = [
+			'surecart',
+			'referral',
+			id,
+			{
+				expand: ['affiliation'],
+			},
+		];
+
+		return {
+			referral: select(coreStore).getEditedEntityRecord(...entityData),
+			isLoading: select(coreStore)?.isResolving?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
+		};
+	});
+
+	/**
+	 * Update
+	 */
+	const updateReferral = (data) =>
+		editEntityRecord('surecart', 'referral', id, data);
+
+	/**
+	 * Handle the form submission
+	 */
+	const onSubmit = async () => {
+		try {
+			save({ successMessage: __('Referral updated.', 'surecart') });
+		} catch (e) {
+			console.log(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		}
+	};
+
+	/**
+	 * Approve Referral
+	 */
+	const approveReferral = async () => {
+		try {
+			setChangingStatus(true);
+			const approved = await apiFetch({
+				method: 'PATCH',
+				path: `/surecart/v1/referrals/${id}/approve`,
+			});
+
+			createSuccessNotice(__('Affiliate request approved.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			receiveEntityRecords(
+				'surecart',
+				'referral',
+				{
+					...approved,
+					status: 'approved',
+				},
+				undefined,
+				false,
+				{
+					status: 'approved',
+				}
+			);
+		} catch (e) {
+			console.log(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setChangingStatus(false);
+		}
+	};
+
+	/**
+	 * Mark Referral as Reviewing
+	 */
+	const markReferralAsReviewing = async () => {
+		try {
+			setChangingStatus(true);
+			const reviewing = await apiFetch({
+				method: 'PATCH',
+				path: `/surecart/v1/referrals/${id}/make_reviewing`,
+			});
+
+			createSuccessNotice(
+				__('Affiliate request marked as reviewing.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+
+			receiveEntityRecords(
+				'surecart',
+				'referral',
+				{
+					...reviewing,
+					status: 'reviewing',
+				},
+				undefined,
+				false,
+				{
+					status: 'reviewing',
+				}
+			);
+		} catch (e) {
+			console.log(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setChangingStatus(false);
+		}
+	};
+
+	/**
+	 * Deny Referral
+	 */
+	const denyReferral = async () => {
+		try {
+			setChangingStatus(true);
+			const denied = await apiFetch({
+				method: 'PATCH',
+				path: `/surecart/v1/referrals/${id}/deny`,
+			});
+
+			createSuccessNotice(__('Affiliate request denied.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			receiveEntityRecords(
+				'surecart',
+				'referral',
+				{
+					...denied,
+					status: 'denied',
+				},
+				undefined,
+				false,
+				{
+					status: 'denied',
+				}
+			);
+		} catch (e) {
+			console.log(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setChangingStatus(false);
+		}
+	};
+
+	/**
+	 * Delete Referral
+	 */
+	const deleteReferral = async () => {
+		const r = confirm(
+			__(
+				'Permanently delete this referral? You cannot undo this action.',
+				'surecart'
+			)
+		);
+		if (!r) return;
+
+		try {
+			await deleteEntityRecord('surecart', 'referral', id, {
+				throwOnError: true,
+			});
+			createSuccessNotice(__('Referral deleted.', 'surecart'));
+			window.location.assign('admin.php?page=sc-affiliate-referrals');
+		} catch (e) {
+			console.log(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		}
+	};
+
+	return (
+		<Template
+			onSubmit={onSubmit}
+			title={
+				<ScFlex style={{ gap: '1em' }} align-items="center">
+					<ScButton
+						circle
+						size="small"
+						href="admin.php?page=sc-affiliate-referrals"
+					>
+						<ScIcon name="arrow-left" />
+					</ScButton>
+					<ScBreadcrumbs>
+						<ScBreadcrumb>
+							<Logo display="block" />
+						</ScBreadcrumb>
+						<ScBreadcrumb href="admin.php?page=sc-affiliate-referrals">
+							{__('Referrals', 'surecart')}
+						</ScBreadcrumb>
+						<ScBreadcrumb>
+							<ScFlex style={{ gap: '1em' }}>
+								{__('View Referral', 'surecart')}
+							</ScFlex>
+						</ScBreadcrumb>
+					</ScBreadcrumbs>
+				</ScFlex>
+			}
+			button={
+				isLoading ? (
+					<sc-skeleton
+						style={{
+							width: '120px',
+							height: '35px',
+							display: 'inline-block',
+						}}
+					/>
+				) : (
+					<ScFlex justifyContent="flex-start">
+						<ScDropdown placement="bottom-end">
+							<ScButton type="text" slot="trigger">
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								{referral?.status !== 'approved' && (
+									<ScMenuItem onClick={approveReferral}>
+										{__('Approve', 'surecart')}
+									</ScMenuItem>
+								)}
+								{referral?.status !== 'reviewing' && (
+									<ScMenuItem
+										onClick={() =>
+											markReferralAsReviewing()
+										}
+									>
+										{__('Make Reviewing', 'surecart')}
+									</ScMenuItem>
+								)}
+								{referral?.status !== 'denied' && (
+									<ScMenuItem onClick={() => denyReferral()}>
+										{__('Deny', 'surecart')}
+									</ScMenuItem>
+								)}
+								<ScMenuItem onClick={() => deleteReferral()}>
+									{__('Delete', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+
+						<SaveButton>
+							{__('Update Referral', 'surecart')}
+						</SaveButton>
+					</ScFlex>
+				)
+			}
+			sidebar={
+				<Fragment>
+					<Summary
+						referral={referral}
+						loading={isLoading}
+						changingStatus={changingStatus}
+					/>
+					<Affiliation
+						referral={referral}
+						loading={isLoading}
+						updateReferral={updateReferral}
+					/>
+				</Fragment>
+			}
+		>
+			<Details
+				referral={referral}
+				updateReferral={updateReferral}
+				loading={isLoading}
+			/>
+
+			{/* <Clicks affiliationId={affiliation?.id} />
+			<Referrals affiliationId={affiliation?.id} />
+			<Payouts affiliationId={affiliation?.id} /> */}
+		</Template>
+	);
+};
