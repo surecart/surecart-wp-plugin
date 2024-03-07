@@ -34,6 +34,7 @@ import Summary from './modules/Summary';
 import Affiliation from './modules/Affiliation';
 import ReferralItems from './modules/ReferralItems';
 import Click from './modules/Click';
+import Order from './modules/Order';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -46,6 +47,7 @@ export default ({ id }) => {
 		'surecart',
 		'referral'
 	);
+	const expanded = ['affiliation', 'click', 'checkout'];
 
 	const { referral, isLoading } = useSelect((select) => {
 		const entityData = [
@@ -53,7 +55,7 @@ export default ({ id }) => {
 			'referral',
 			id,
 			{
-				expand: ['affiliation'],
+				expand: expanded,
 			},
 		];
 
@@ -309,10 +311,17 @@ export default ({ id }) => {
 						loading={isLoading}
 						changingStatus={changingStatus}
 					/>
+
 					<Affiliation
 						referral={referral}
 						loading={isLoading}
 						updateReferral={updateReferral}
+						expanded={expanded}
+					/>
+					<Order
+						referral={referral}
+						loading={isLoading}
+						expanded={expanded}
 					/>
 					<Click referral={referral} loading={isLoading} />
 				</Fragment>

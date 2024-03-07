@@ -11,6 +11,12 @@ export default ({ referral, loading, changingStatus }) => {
 			<Definition title={__('Status', 'surecart')}>
 				<StatusBadge status={referral?.status} />
 			</Definition>
+			<Definition title={__('Creation Mode', 'surecart')}>
+				{referral?.manual
+					? __('Manual', 'surecart')
+					: __('Automatic', 'surecart')}
+			</Definition>
+
 			<hr />
 
 			{!!referral?.updated_at && (

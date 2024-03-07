@@ -12,7 +12,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 
-export default ({ referral, loading }) => {
+export default ({ referral, loading, expanded }) => {
 	const [saving, setSaving] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
@@ -29,7 +29,7 @@ export default ({ referral, loading }) => {
 			const saved = await apiFetch({
 				method: 'POST',
 				path: addQueryArgs(`${baseURL}/${referral.id}`, {
-					expand: ['affiliation'],
+					expand: expanded,
 				}),
 				data: {
 					id: referral.id,
@@ -89,7 +89,7 @@ export default ({ referral, loading }) => {
 					`}
 				>
 					<ScButton slot="trigger" size="small">
-						Change
+						{__('Change', 'surecart')}
 					</ScButton>
 				</ModelSelector>
 			</ScFlex>

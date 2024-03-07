@@ -10,14 +10,7 @@ import { Fragment } from '@wordpress/element';
 export default ({ referral, loading }) => {
 	const render = () => {
 		if (!referral?.click?.id) {
-			return (
-				<div>
-					{__(
-						'This referral is not associated to any click.',
-						'surecart'
-					)}
-				</div>
-			);
+			return <div>{__('Not associated to any click.', 'surecart')}</div>;
 		}
 
 		return (
