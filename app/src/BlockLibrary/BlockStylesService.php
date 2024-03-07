@@ -183,7 +183,6 @@ class BlockStylesService {
 					'color'   => $this->getColorValues(),
 				),
 				array(
-					'selector' => '.test-selector',
 					'context' => 'block-supports',
 				)
 			);

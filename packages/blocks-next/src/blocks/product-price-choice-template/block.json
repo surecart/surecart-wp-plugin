@@ -36,11 +36,11 @@
 		"color": {
 			"gradients": true,
 			"text": true,
-			"background": false,
+			"background": true,
 			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"text": true,
-				"button": true
+				"background": true
 			}
 		},
 		"shadow": {
@@ -48,6 +48,7 @@
 		}
 	},
 	"textdomain": "surecart",
+	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"viewScriptModule": "@surecart/product-page",
 	"style": ["file:../../styles/choice.css"]

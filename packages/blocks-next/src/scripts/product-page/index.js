@@ -74,8 +74,8 @@ const { state, callbacks } = store('surecart/product', {
 		},
 		/** Is the price selected? */
 		get isPriceSelected() {
-			const { priceId } = getContext();
-			return state.selectedPrice?.id === priceId;
+			const { price } = getContext();
+			return state.selectedPrice?.id === price?.id;
 		},
 		/** Get the selected option. */
 		get getSelectedOption() {
@@ -178,9 +178,9 @@ const { state, callbacks } = store('surecart/product', {
 		},
 		/** Set the option. */
 		setPrice: () => {
-			const { priceId } = getContext();
+			const { price } = getContext();
 			const selectedPrice = state.product.prices?.data.find(
-				(price) => price.id === priceId
+				(p) => p.id === price?.id
 			);
 			update({ selectedPrice });
 		},

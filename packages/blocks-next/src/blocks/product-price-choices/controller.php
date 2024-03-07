@@ -19,8 +19,8 @@ if ( empty( $product->id ) ) {
 	return;
 }
 
+// get only active prices.
 $prices = $product->active_prices;
-
 if ( empty( $prices ) ) {
 	return;
 }
