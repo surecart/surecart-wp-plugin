@@ -11,7 +11,6 @@
 	justify-content: stretch;
 	min-width: 0;
 	align-self: stretch;
-	height: 100%;
 	background: var(--sc-choice-background-color);
 	font-family: var(--sc-input-font-family);
 	font-size: var(--sc-input-font-size-medium);
@@ -32,7 +31,6 @@
 	position: relative;
 	text-decoration: none;
 	color: var(--sc-choice-text-color, var(--sc-input-color));
-	height: 100%; // TODO: test this.
 	transition: background-color 150ms ease, border-color 150ms ease,
 		color 150ms ease, box-shadow 150ms ease;
 	box-sizing: border-box;
