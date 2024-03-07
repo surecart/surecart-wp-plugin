@@ -89,7 +89,7 @@ export default ({ referral, loading, expanded }) => {
 						}`
 					}
 					css={css`
-						min-width: 200px;
+						min-width: 370px;
 					`}
 				>
 					<ScButton slot="trigger" size="small">
