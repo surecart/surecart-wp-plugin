@@ -33,6 +33,7 @@ import useSave from '../settings/UseSave';
 import Summary from './modules/Summary';
 import Affiliation from './modules/Affiliation';
 import ReferralItems from './modules/ReferralItems';
+import Click from './modules/Click';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -313,6 +314,7 @@ export default ({ id }) => {
 						loading={isLoading}
 						updateReferral={updateReferral}
 					/>
+					<Click referral={referral} loading={isLoading} />
 				</Fragment>
 			}
 		>

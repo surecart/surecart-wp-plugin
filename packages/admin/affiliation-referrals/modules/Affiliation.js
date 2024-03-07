@@ -12,7 +12,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 
-export default ({ referral, loading, updateReferral }) => {
+export default ({ referral, loading }) => {
 	const [saving, setSaving] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
