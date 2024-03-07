@@ -89,9 +89,12 @@ export default ({ id }) => {
 				path: `/surecart/v1/referrals/${id}/approve`,
 			});
 
-			createSuccessNotice(__('Affiliate request approved.', 'surecart'), {
-				type: 'snackbar',
-			});
+			createSuccessNotice(
+				__('Affiliate referral approved.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 
 			receiveEntityRecords(
 				'surecart',
@@ -126,7 +129,7 @@ export default ({ id }) => {
 			});
 
 			createSuccessNotice(
-				__('Affiliate request marked as reviewing.', 'surecart'),
+				__('Affiliate referral marked as reviewing.', 'surecart'),
 				{
 					type: 'snackbar',
 				}
@@ -164,7 +167,7 @@ export default ({ id }) => {
 				path: `/surecart/v1/referrals/${id}/deny`,
 			});
 
-			createSuccessNotice(__('Affiliate request denied.', 'surecart'), {
+			createSuccessNotice(__('Affiliate referral denied.', 'surecart'), {
 				type: 'snackbar',
 			});
 
