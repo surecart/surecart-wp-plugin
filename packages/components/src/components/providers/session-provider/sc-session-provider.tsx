@@ -260,7 +260,7 @@ export class ScSessionProvider {
       return this.loadUpdate({
         id,
         discount: { promotion_code },
-        refresh_price_versions: true,
+        refresh_line_items: true,
       });
     }
 
@@ -330,7 +330,7 @@ export class ScSessionProvider {
     clearCheckout();
     return this.loadUpdate({
       line_items,
-      refresh_price_versions: true,
+      refresh_line_items: true,
       ...(promotion_code ? { discount: { promotion_code } } : {}),
       ...(address?.defaultCountry
         ? {
@@ -383,7 +383,7 @@ export class ScSessionProvider {
         id,
         data: {
           ...(promotion_code ? { discount: { promotion_code } } : {}),
-          refresh_price_versions: true,
+          refresh_line_items: true,
           ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
         },
       })) as Checkout;
@@ -409,7 +409,7 @@ export class ScSessionProvider {
         id: checkoutState?.checkout?.id,
         data: {
           status: 'draft',
-          refresh_price_versions: true,
+          refresh_line_items: true,
         },
       });
       createInfoNotice(__('The price a product in your order has changed. We have adjusted your order to the new price.', 'surecart'));
