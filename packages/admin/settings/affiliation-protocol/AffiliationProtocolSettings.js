@@ -22,12 +22,14 @@ import {
 import { useCopyToClipboard } from '@wordpress/compose';
 import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
+import useAccount from '../../mixins/useAccount';
 
 export default () => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [error, setError] = useState(null);
 	const [trackingScriptDialog, setTrackingScriptDialog] = useState(false);
 	const { save } = useSave();
+	const { slug } = useAccount();
 	const {
 		item: affiliationProtocolItem,
 		itemError: affiliationProtocolItemError,
@@ -35,16 +37,13 @@ export default () => {
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
 
-	const { item: accountItem } = useEntity('store', 'account');
-
 	const type = affiliationProtocolItem?.amount_commission
 		? 'fixed'
 		: 'percentage';
 
 	const [commisionType, setCommisionType] = useState(null);
 
-	const signupsUrl =
-		'https://affiliates.surecart.com/join/' + accountItem?.slug;
+	const signupsUrl = 'https://affiliates.surecart.com/join/' + slug;
 	const successFunction = () => {
 		setTrackingScriptDialog(false);
 		createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
