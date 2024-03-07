@@ -3,8 +3,11 @@ import { css, jsx } from '@emotion/core';
 import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import useAccount from '../mixins/useAccount';
 
 export default ({ onRequestClose }) => {
+	const { id } = useAccount();
+
 	return (
 		<Modal
 			css={css`
@@ -31,7 +34,9 @@ export default ({ onRequestClose }) => {
 				style={{
 					'--sc-color-primary-500': 'var(--sc-color-brand-primary)',
 				}}
-				href={scData?.upgrade_url || 'https://app.surecart.com'}
+				href={`${
+					scData?.upgrade_url || 'https://app.surecart.com'
+				}?switch_account_id=${id ?? null}`}
 				type="primary"
 				target="_blank"
 				full
