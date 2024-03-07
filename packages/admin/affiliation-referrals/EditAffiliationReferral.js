@@ -10,6 +10,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { Fragment, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -90,7 +91,9 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const approved = await apiFetch({
 				method: 'PATCH',
-				path: `${baseURL}/${id}/approve`,
+				path: addQueryArgs(`${baseURL}/${id}/approve`, {
+					expand: ['affiliation'],
+				}),
 			});
 
 			createSuccessNotice(
@@ -129,7 +132,9 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const reviewing = await apiFetch({
 				method: 'PATCH',
-				path: `${baseURL}/${id}/make_reviewing`,
+				path: addQueryArgs(`${baseURL}/${id}/reviewing`, {
+					expand: ['affiliation'],
+				}),
 			});
 
 			createSuccessNotice(
@@ -168,7 +173,9 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const denied = await apiFetch({
 				method: 'PATCH',
-				path: `${baseURL}/${id}/deny`,
+				path: addQueryArgs(`${baseURL}/${id}/deny`, {
+					expand: ['affiliation'],
+				}),
 			});
 
 			createSuccessNotice(__('Affiliate referral denied.', 'surecart'), {
