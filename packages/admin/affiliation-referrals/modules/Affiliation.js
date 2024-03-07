@@ -63,7 +63,11 @@ export default ({ referral, loading, expanded }) => {
 
 	return (
 		<Box title="Affiliate" loading={loading}>
-			<ScFlex alignItems="center" justifyContent="space-between">
+			<ScFlex
+				alignItems="center"
+				justifyContent="flex-start"
+				style={{ gap: '1em' }}
+			>
 				<div>
 					<div>{`${referral?.affiliation?.first_name} ${
 						referral?.affiliation?.last_name || ''

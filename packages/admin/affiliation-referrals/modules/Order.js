@@ -68,7 +68,7 @@ export default ({ referral, loading }) => {
 				})}
 				size="small"
 			>
-				{__('Remove', 'surecart')}
+				{__('View', 'surecart')}
 			</ScButton>
 		</ScFlex>;
 	};

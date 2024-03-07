@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import { ScFormatDate, ScTag } from '@surecart/components-react';
 import Box from '../../ui/Box';
 

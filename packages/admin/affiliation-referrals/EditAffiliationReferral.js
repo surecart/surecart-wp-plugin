@@ -35,6 +35,7 @@ import Affiliation from './modules/Affiliation';
 import ReferralItems from './modules/ReferralItems';
 import Click from './modules/Click';
 import Order from './modules/Order';
+import Payout from './modules/Payout';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -135,7 +136,7 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const reviewing = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}/reviewing`, {
+				path: addQueryArgs(`${baseURL}/${id}/make_reviewing`, {
 					expand: ['affiliation'],
 				}),
 			});
@@ -311,19 +312,13 @@ export default ({ id }) => {
 						loading={isLoading}
 						changingStatus={changingStatus}
 					/>
-
-					<Affiliation
-						referral={referral}
-						loading={isLoading}
-						updateReferral={updateReferral}
-						expanded={expanded}
-					/>
 					<Order
 						referral={referral}
 						loading={isLoading}
 						expanded={expanded}
 					/>
 					<Click referral={referral} loading={isLoading} />
+					<Payout referral={referral} loading={isLoading} />
 				</Fragment>
 			}
 		>
@@ -331,6 +326,12 @@ export default ({ id }) => {
 				referral={referral}
 				updateReferral={updateReferral}
 				loading={isLoading}
+			/>
+			<Affiliation
+				referral={referral}
+				loading={isLoading}
+				updateReferral={updateReferral}
+				expanded={expanded}
 			/>
 			<ReferralItems referralId={id} loading={isLoading} />
 		</Template>
