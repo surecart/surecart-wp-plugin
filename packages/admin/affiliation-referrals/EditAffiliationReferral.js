@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { Fragment, useState } from '@wordpress/element';
@@ -40,6 +40,10 @@ export default ({ id }) => {
 		useDispatch(noticesStore);
 	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } =
 		useDispatch(coreStore);
+	const { baseURL } = select(coreStore).getEntityConfig(
+		'surecart',
+		'referral'
+	);
 
 	const { referral, isLoading } = useSelect((select) => {
 		const entityData = [
@@ -86,7 +90,7 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const approved = await apiFetch({
 				method: 'PATCH',
-				path: `/surecart/v1/referrals/${id}/approve`,
+				path: `${baseURL}/${id}/approve`,
 			});
 
 			createSuccessNotice(
@@ -125,7 +129,7 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const reviewing = await apiFetch({
 				method: 'PATCH',
-				path: `/surecart/v1/referrals/${id}/make_reviewing`,
+				path: `${baseURL}/${id}/make_reviewing`,
 			});
 
 			createSuccessNotice(
@@ -164,7 +168,7 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const denied = await apiFetch({
 				method: 'PATCH',
-				path: `/surecart/v1/referrals/${id}/deny`,
+				path: `${baseURL}/${id}/deny`,
 			});
 
 			createSuccessNotice(__('Affiliate referral denied.', 'surecart'), {
