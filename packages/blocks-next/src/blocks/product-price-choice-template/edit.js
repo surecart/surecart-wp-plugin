@@ -18,6 +18,7 @@ import {
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 	__experimentalUseBorderProps as useBorderProps,
 	getTypographyClassesAndStyles as useTypographyProps,
+	__experimentalGetGapCSSValue as getGapCSSValue,
 	useBlockProps,
 	useInnerBlocksProps,
 	store as blockEditorStore,
@@ -111,11 +112,33 @@ export default function PostTemplateEdit({
 	attributes,
 	setAttributes,
 	clientId,
-	attributes: { layout },
+	attributes: { layout, style },
 	__unstableLayoutClassNames,
 }) {
 	const { type: layoutType, columnCount = 2 } = layout || {};
 	const [activeBlockContextId, setActiveBlockContextId] = useState();
+
+	const shadowProps = useShadowProps(attributes);
+	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
+	const borderProps = useBorderProps(attributes);
+	const typographyProps = useTypographyProps(attributes);
+
+	const classes = {
+		...colorProps.className,
+		...spacingProps.className,
+		...borderProps.className,
+		...typographyProps.className,
+		...shadowProps.className,
+	};
+
+	const styles = {
+		...colorProps.style,
+		...spacingProps.style,
+		...borderProps.style,
+		...typographyProps.style,
+		...shadowProps.style,
+	};
 
 	const blocks = useSelect(
 		(select) => select(blockEditorStore).getBlocks(clientId),
@@ -132,6 +155,9 @@ export default function PostTemplateEdit({
 			[`columns-${columnCount}`]: layoutType === 'grid' && columnCount, // Ensure column count is flagged via classname for backwards compatibility.
 			'sc-choices': true,
 		}),
+		style: {
+			gap: getGapCSSValue(style?.spacing?.blockGap),
+		},
 	});
 
 	const setDisplayLayout = (newDisplayLayout) =>
@@ -157,32 +183,6 @@ export default function PostTemplateEdit({
 			isActive: layoutType === 'grid',
 		},
 	];
-
-	const { count, style } = attributes;
-	const { blockGap } = style?.spacing || {};
-
-	const shadowProps = useShadowProps(attributes);
-	const colorProps = useColorProps(attributes);
-	const spacingProps = useSpacingProps(attributes);
-	const borderProps = useBorderProps(attributes);
-	const typographyProps = useTypographyProps(attributes);
-
-	const classes = {
-		...colorProps.className,
-		...spacingProps.className,
-		...borderProps.className,
-		...typographyProps.className,
-		...shadowProps.className,
-		[`block-gap-${blockGap}`]: blockGap,
-	};
-
-	const styles = {
-		...colorProps.style,
-		...spacingProps.style,
-		...borderProps.style,
-		...typographyProps.style,
-		...shadowProps.style,
-	};
 
 	// To avoid flicker when switching active block contexts, a preview is rendered
 	// for each block context, but the preview for the active block context is hidden.
