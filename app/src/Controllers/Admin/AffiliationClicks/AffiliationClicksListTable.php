@@ -90,11 +90,11 @@ class AffiliationClicksListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			'date'          => __( 'Date', 'surecart' ),
-			'landing_url'   => __( 'Landing URL', 'surecart' ),
-			'referring_url' => __( 'Referring URL', 'surecart' ),
-			'affiliate'     => __( 'Affiliate', 'surecart' ),
-			'converted'     => __( 'Converted', 'surecart' ),
+			'date'      => __( 'Date', 'surecart' ),
+			'url'       => __( 'Landing URL', 'surecart' ),
+			'referrer'  => __( 'Referring URL', 'surecart' ),
+			'affiliate' => __( 'Affiliate', 'surecart' ),
+			'converted' => __( 'Converted', 'surecart' ),
 		);
 	}
 
@@ -122,27 +122,6 @@ class AffiliationClicksListTable extends ListTable {
 		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
-	/**
-	 * Handle the landing_url column.
-	 *
-	 * @param \SureCart\Models\Click $click The Click model.
-	 *
-	 * @return string
-	 */
-	public function column_landing_url( $click ) {
-		return esc_html( $click->url );
-	}
-
-	/**
-	 * Handle the referring_url column.
-	 *
-	 * @param \SureCart\Models\Click $click The Click model.
-	 *
-	 * @return string
-	 */
-	public function column_referring_url( $click ) {
-		return esc_html( $click->referrer );
-	}
 
 	/**
 	 * Handle the affiliate column.
@@ -177,8 +156,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_converted( $click ) {
-		// TODO: How to now if it is converted?
-		return __( 'No', 'surecart' );
+		return $click->converted ? __( 'Yes', 'surecart' ) : __( 'No', 'surecart' );
 	}
 
 
@@ -199,7 +177,7 @@ class AffiliationClicksListTable extends ListTable {
 	private function table_data() {
 		$affiliate_clicks_query = Click::where(
 			array(
-				'converted' => $this->getFilteredStatus(),
+				'converted' => $this->get_filtered_status(),
 				'query'     => $this->get_search_query(),
 				'expand'    => [
 					'affiliation',
@@ -258,7 +236,7 @@ class AffiliationClicksListTable extends ListTable {
 	 *
 	 * @return string|null
 	 */
-	private function getFilteredStatus() {
+	private function get_filtered_status() {
 		if ( empty( $_GET['status'] ) || 'all' === $_GET['status'] ) {
 			return null;
 		}
@@ -268,6 +246,10 @@ class AffiliationClicksListTable extends ListTable {
 		}
 
 		return false;
+	}
+
+	public function column_default( $item, $column_name ) {
+		return $item->$column_name ?? '';
 	}
 
 	/**

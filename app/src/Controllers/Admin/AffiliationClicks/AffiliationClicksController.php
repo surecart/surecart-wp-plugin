@@ -5,11 +5,11 @@ namespace SureCart\Controllers\Admin\AffiliationClicks;
 use SureCart\Controllers\Admin\AdminController;
 
 /**
- * Handles affiliate requests admin routes.
+ * Handles affiliate clicks admin routes.
  */
 class AffiliationClicksController extends AdminController {
 	/**
-	 * Affiliate Requests index.
+	 * Affiliate Clicks index.
 	 */
 	public function index() {
 		$table = new AffiliationClicksListTable();
@@ -17,7 +17,7 @@ class AffiliationClicksController extends AdminController {
 		$this->withHeader(
 			[
 				'affiliate_clicks' => [
-					'title' => __( 'Affiliate Clicks', 'surecart' ),
+					'title' => __( 'Clicks', 'surecart' ),
 				],
 			]
 		);
