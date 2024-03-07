@@ -315,6 +315,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'referral-item',
+		kind: 'surecart',
+		label: __('Referral Items', 'surecart'),
+		baseURL: '/surecart/v1/referral_items',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'payout',
 		kind: 'surecart',
 		label: __('Payouts', 'surecart'),

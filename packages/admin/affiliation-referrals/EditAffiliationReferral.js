@@ -31,6 +31,7 @@ import SaveButton from '../templates/SaveButton';
 import useSave from '../settings/UseSave';
 import Summary from './modules/Summary';
 import Affiliation from './modules/Affiliation';
+import ReferralItems from './modules/ReferralItems';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -306,10 +307,7 @@ export default ({ id }) => {
 				updateReferral={updateReferral}
 				loading={isLoading}
 			/>
-
-			{/* <Clicks affiliationId={affiliation?.id} />
-			<Referrals affiliationId={affiliation?.id} />
-			<Payouts affiliationId={affiliation?.id} /> */}
+			<ReferralItems referralId={id} loading={isLoading} />
 		</Template>
 	);
 };

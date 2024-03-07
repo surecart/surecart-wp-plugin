@@ -13,55 +13,60 @@ import PrevNextButtons from '../../ui/PrevNextButtons';
 import ReferralsDataTable from '../../components/data-tables/affiliates/ReferralsDataTable';
 import usePagination from '../../hooks/usePagination';
 
-export default ({ affiliationId }) => {
+export default ({ referralId, loading }) => {
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(5);
+	const perPage = 5;
 
-	const { referrals, loading, updating } = useSelect(
+	const { referralItems, loadingItems } = useSelect(
 		(select) => {
+			if (!referralId) {
+				return {
+					referrals: [],
+					loading: false,
+				};
+			}
 			const queryArgs = [
 				'surecart',
-				'referral',
+				'referral-item',
 				{
 					context: 'edit',
-					affiliation_ids: [affiliationId],
-					expand: ['checkout', 'checkout.order'],
+					referral_ids: [referralId],
 					page,
 					per_page: perPage,
+					expand: [
+						'line_item',
+						'line_item.price',
+						'line_item.product',
+						'product.featured_product_media',
+						'line_item.variant',
+					],
 				},
 			];
-			const referrals = select(coreStore).getEntityRecords(...queryArgs);
-			const loading = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			);
+
 			return {
-				referrals,
-				loading: loading && page === 1,
-				updating: loading && page !== 1,
+				referralItems: select(coreStore).getEntityRecords(...queryArgs),
+				loadingItems:
+					select(coreStore).isResolving(
+						'getEntityRecords',
+						queryArgs
+					) && page === 1,
 			};
 		},
-		[affiliationId, page, perPage]
+		[referralId, page, perPage]
 	);
 
 	const { hasPagination } = usePagination({
-		data: referrals,
+		data: referralItems,
 		page,
 		perPage,
 	});
 
 	return (
 		<ReferralsDataTable
-			title={__('Referrals', 'surecart')}
+			title={__('Referral Items', 'surecart')}
 			columns={{
-				status: {
-					label: __('Status', 'surecart'),
-				},
-				description: {
-					label: __('Description', 'surecart'),
-				},
-				order: {
-					label: __('Order', 'surecart'),
+				purchase: {
+					label: __('Purchase', 'surecart'),
 				},
 				commission_amount: {
 					label: __('Commission', 'surecart'),
@@ -71,9 +76,8 @@ export default ({ affiliationId }) => {
 					width: '100px',
 				},
 			}}
-			data={referrals}
-			isLoading={loading}
-			isFetching={updating}
+			data={referralItems}
+			isLoading={loading || loadingItems}
 			perPage={perPage}
 			page={page}
 			setPage={setPage}
@@ -85,11 +89,10 @@ export default ({ affiliationId }) => {
 			footer={
 				hasPagination && (
 					<PrevNextButtons
-						data={referrals}
+						data={referralItems}
 						page={page}
 						setPage={setPage}
 						perPage={perPage}
-						loading={updating}
 					/>
 				)
 			}
