@@ -51,6 +51,6 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"viewModule": "@surecart/product-page",
+	"viewScriptModule": "@surecart/product-page",
 	"style": ["file:../../styles/tag.css"]
 }

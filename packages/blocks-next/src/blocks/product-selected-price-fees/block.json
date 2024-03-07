@@ -31,5 +31,5 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": "file:./style-index.css",
-	"viewModule": ["@surecart/product-page"]
+	"viewScriptModule": ["@surecart/product-page"]
 }
