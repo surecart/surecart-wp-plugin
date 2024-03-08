@@ -286,7 +286,7 @@ class AffiliationReferralsListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No affiliate clicks found.', 'surecart' );
+		echo esc_html_e( 'No affiliate referrals found.', 'surecart' );
 	}
 
 	/**
