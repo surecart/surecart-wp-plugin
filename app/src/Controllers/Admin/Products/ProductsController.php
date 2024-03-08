@@ -6,16 +6,23 @@ use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
 use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
+use SureCart\Models\BulkAction;
 
 /**
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
+
+	public $bulk_actions_data = [];
+	public $bulk_actions      = [];
+	public $statuses          = array( 'succeeded', 'processing', 'pending', 'invalid', 'completed' );
+
 	/**
 	 * Products index.
 	 */
 	public function index() {
-		$table = new ProductsListTable();
+		$this->initBulkActions();
+		$table = new ProductsListTable( $this );
 		$table->prepare_items();
 		$this->withHeader(
 			[
@@ -25,6 +32,77 @@ class ProductsController extends AdminController {
 			]
 		);
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
+	}
+
+	/**
+	 * Initiate Bulk Actions Processing.
+	 */
+	public function initBulkActions() {
+		$this->bulk_actions = ! empty( $_COOKIE['sc_bulk_actions'] ) ? json_decode( stripslashes( $_COOKIE['sc_bulk_actions'] ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! empty( $this->bulk_actions ) ) {
+			$this->set_bulk_actions_data();
+			$this->delete_succeeded_bulk_actions();
+		}
+	}
+
+	/**
+	 * Get the bulk actions data.
+	 */
+	public function set_bulk_actions_data() {
+		$bulk_actions = array();
+
+		if ( is_array( $this->bulk_actions ) ) {
+			foreach ( $this->bulk_actions as $bulk_action_id ) {
+				$bulk_action = BulkAction::find( $bulk_action_id );
+				foreach ( $this->statuses as $status ) {
+					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] ) ) {
+						$bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] = array();
+					}
+					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] ) ) {
+						$bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] = array();
+					}
+				}
+				if ( ! is_wp_error( $bulk_action ) ) {
+					$bulk_actions[ $bulk_action->action_type ][ $bulk_action->status ][] = $bulk_action;
+					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_bulk_actions' ], $bulk_action->id );
+					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_record_ids' ], ...$bulk_action->record_ids );
+				}
+			}
+		}
+		$this->bulk_actions_data = $bulk_actions;
+	}
+
+	/**
+	 * Delete succeeded bulk actions from the cookie.
+	 */
+	public function delete_succeeded_bulk_actions() {
+		$this->bulk_actions = array_filter(
+			$this->bulk_actions,
+			function( $bulk_action_id ) {
+				return ! in_array(
+					$bulk_action_id,
+					$this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] ?? [],
+					true
+				);
+			}
+		);
+		setcookie(
+			'sc_bulk_actions',
+			wp_json_encode( $this->bulk_actions ),
+			time() + DAY_IN_SECONDS,
+			COOKIEPATH,
+			COOKIE_DOMAIN,
+			is_ssl(),
+			true
+		);
+	}
+
+	/**
+	 * Bulk Delete.
+	 */
+	public function bulkDelete() {
+		$table = new ProductsListTable( $this );
+		$table->process_bulk_action();
 	}
 
 	/**

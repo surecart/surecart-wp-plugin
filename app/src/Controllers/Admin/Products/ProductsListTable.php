@@ -13,23 +13,17 @@ use SureCart\Models\BulkAction;
  */
 class ProductsListTable extends ListTable {
 
-	public $checkbox          = true;
-	public $error             = '';
-	public $pages             = array();
-	public $bulk_actions      = array();
-	public $bulk_actions_data = array();
-	public $statuses          = array( 'succeeded', 'processing', 'pending', 'invalid', 'completed' );
+	public $checkbox   = true;
+	public $controller = null;
+	public $error      = '';
+	public $pages      = array();
 
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	public function __construct( $controller ) {
+		$this->controller = $controller;
 		parent::__construct();
-		$this->bulk_actions = ! empty( $_COOKIE['sc_bulk_actions'] ) ? json_decode( stripslashes( $_COOKIE['sc_bulk_actions'] ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! empty( $this->bulk_actions ) ) {
-			$this->set_bulk_actions_data();
-			$this->delete_succeeded_bulk_actions();
-		}
 
 		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
 
@@ -37,28 +31,12 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
-	 * Delete succeeded bulk actions from the cookie.
-	 */
-	public function delete_succeeded_bulk_actions() {
-		$this->bulk_actions = array_filter(
-			$this->bulk_actions,
-			function( $bulk_action_id ) {
-				return ! in_array(
-					$bulk_action_id,
-					$this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] ?? [],
-					true
-				);
-			}
-		);
-		setcookie( 'sc_bulk_actions', wp_json_encode( $this->bulk_actions ), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
-	}
-	/**
 	 * Show bulk action admin notice.
 	 */
 	public function show_bulk_action_admin_notice() {
 		$status_parts = [];
-		foreach ( $this->statuses as $status ) {
-			$count = count( $this->bulk_actions_data['delete_products'][ $status . '_record_ids' ] ?? [] );
+		foreach ( $this->controller->statuses as $status ) {
+			$count = count( $this->controller->bulk_actions_data['delete_products'][ $status . '_record_ids' ] ?? [] );
 			if ( $count > 0 ) {
 				// translators: %1$d is Count of specific deletions, %2$s is bulk deletion progress status.
 				$status_parts[] = sprintf( esc_html__( '%1$d %2$s', 'surecart' ), $count, $status );
@@ -80,34 +58,6 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
-	 * Get the bulk actions data.
-	 *
-	 */
-	public function set_bulk_actions_data() {
-		$bulk_actions = array();
-
-		if ( is_array( $this->bulk_actions ) ) {
-			foreach ( $this->bulk_actions as $bulk_action_id ) {
-				$bulk_action = BulkAction::find( $bulk_action_id );
-				foreach ( $this->statuses as $status ) {
-					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] ) ) {
-						$bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] = array();
-					}
-					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] ) ) {
-						$bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] = array();
-					}
-				}
-				if ( ! is_wp_error( $bulk_action ) ) {
-					$bulk_actions[ $bulk_action->action_type ][ $bulk_action->status ][] = $bulk_action;
-					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_bulk_actions' ], $bulk_action->id );
-					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_record_ids' ], ...$bulk_action->record_ids );
-				}
-			}
-		}
-		$this->bulk_actions_data = $bulk_actions;
-	}
-
-	/**
 	 * Process the bulk action.
 	 */
 	public function process_bulk_action() {
@@ -126,9 +76,21 @@ class ProductsListTable extends ListTable {
 				]
 			);
 
-			$this->bulk_actions[] = $bulk_action->id;
+			if ( is_wp_error( $bulk_action ) ) {
+				wp_die( implode( ' ', array_map( 'esc_html', $bulk_action->get_error_messages() ) ) );
+			}
 
-			setcookie( 'sc_bulk_actions', wp_json_encode( $this->bulk_actions ), time() + DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+			$bulk_actions[] = $bulk_action->id;
+
+			setcookie(
+				'sc_bulk_actions',
+				wp_json_encode( $bulk_actions ),
+				time() + DAY_IN_SECONDS,
+				COOKIEPATH,
+				COOKIE_DOMAIN,
+				is_ssl(),
+				true
+			);
 
 			wp_safe_redirect( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
 			exit;
@@ -489,7 +451,7 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$is_queued_for_deletion = ! empty( $this->bulk_actions_data['delete_products'] ) && ( in_array( $product->id, $this->bulk_actions_data['delete_products']['processing_record_ids'] ) || in_array( $product->id, $this->bulk_actions_data['delete_products']['pending_record_ids'] ) );
+		$is_queued_for_deletion = (bool) ! empty( $this->controller->bulk_actions_data['delete_products'] ) && ( in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['processing_record_ids'] ) || in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['pending_record_ids'] ) );
 
 		ob_start();
 		?>
@@ -626,7 +588,7 @@ class ProductsListTable extends ListTable {
 	 */
 	protected function get_bulk_actions() {
 		$actions           = array();
-		$actions['delete'] = __( 'Delete permanently' );
+		$actions['delete'] = __( 'Delete permanently', 'surecart' );
 		return $actions;
 	}
 
