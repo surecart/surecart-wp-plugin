@@ -403,16 +403,24 @@ export class ScSessionProvider {
       return this.handleNewCheckout(false);
     }
 
-    // one of these is an old price version error.
-    if ((e?.additional_errors || []).some(error => error?.code == 'checkout.price.old_version')) {
+    const hasPriceVersionChangeError = (e?.additional_errors || []).some(error => {
+      const purchasableStatuses = error?.data?.options?.purchasable_statuses || [];
+      return ['price_old_version', 'variant_old_version'].some(status => purchasableStatuses.includes(status));
+    });
+
+    if (hasPriceVersionChangeError) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
+        refresh_line_items: true,
         data: {
           status: 'draft',
-          refresh_line_items: true,
         },
       });
-      createInfoNotice(__('The price a product in your order has changed. We have adjusted your order to the new price.', 'surecart'));
+      createInfoNotice(
+        e?.additional_errors?.[0]?.message ||
+          __('Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment.', 'surecart'),
+      );
+      updateFormState('REJECT');
       return;
     }
 

@@ -37,7 +37,7 @@ export const expand = [
 ];
 
 /** Default data we send with every request. */
-export const withDefaultData = (data: { metadata?: any } = {}) => ({
+export const withDefaultData = (data: { metadata?: any; refresh_line_items?: boolean } = {}) => ({
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
   abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
@@ -48,6 +48,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
     page_url: window.location.href,
   },
   ...(checkoutState?.checkout?.email && { email: checkoutState?.checkout?.email }),
+  ...(data?.refresh_line_items && { refresh_line_items: true }),
   ...data,
 });
 
