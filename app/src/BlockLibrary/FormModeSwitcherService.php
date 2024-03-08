@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SureCart\BlockLibrary;
 
-use SureCart;
-
 /**
  * Provide general block-related functionality.
  */
@@ -47,7 +45,9 @@ class FormModeSwitcherService {
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'sc_change_checkout_mode',
-				'title' => '<span style="color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) . '; font-weight: bold; font-size: 16px; line-height: 1;">•</span> '
+				'title' => '<span style="color: #000; background-color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) . '; font-size: 12px; line-height: 1; border-radius: 4px; padding: 2px 6px;">'
+					. ( 'live' === $mode ? __('LIVE', 'surecart') : __('TEST', 'surecart') )
+					. '</span> '
 					. '<span style="color: ' . ( 'test' === $mode ? '#FEF3C7' : '#DCFCE7' ) . ';">'
 					. __( 'Checkout Form', 'surecart' )
 					. '</span>',
