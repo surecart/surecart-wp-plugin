@@ -49,7 +49,9 @@ on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
           ),
         ]
       : []),
-    sprintf(__('Checkout updated. The total amount for the checkout is %1$s and the amount due is %1$s.', 'surecart'), totalAmount, amountDue),
+    checkout.total_amount === checkout.amount_due
+      ? sprintf(__('Checkout updated. The amount due is %1$s.', 'surecart'), amountDue)
+      : sprintf(__('Checkout updated. The total amount for the checkout is %1$s and the amount due is %1$s.', 'surecart'), totalAmount, amountDue),
   ];
 
   speak(messages.join(' '));
