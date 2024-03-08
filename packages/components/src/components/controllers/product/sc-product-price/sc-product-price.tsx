@@ -73,7 +73,7 @@ export class ScProductPrice {
             return this.renderPrice(state[this.productId].selectedPrice);
           }
 
-          if (state[this.productId]?.prices.length) {
+          if (state[this.productId]?.prices?.length) {
             return this.renderRange();
           }
 

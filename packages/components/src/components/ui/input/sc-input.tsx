@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
+import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host, Listen } from '@stencil/core';
 import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
@@ -164,6 +164,14 @@ export class ScInput {
     return this.input.blur();
   }
 
+  /** Prevent mouse scroll wheel from modifying input value */
+  @Listen('wheel')
+  handleWheel() {
+    if (this.type === 'number') {
+      this.input?.blur();
+    }
+  }
+
   /** Selects all the text in the input. */
   select() {
     return this.input.select();
@@ -301,7 +309,7 @@ export class ScInput {
                 // onInvalid={this.handleInvalid}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
-                onKeyDown={(e) => e.stopPropagation()}
+                onKeyDown={e => e.stopPropagation()}
               />
             </slot>
 

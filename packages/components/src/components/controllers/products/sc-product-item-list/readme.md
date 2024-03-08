@@ -11,13 +11,14 @@
 | ---------------------- | ------------------------ | --------------------------------------------------------- | ------------------------------------------- | ----------------------------------------- |
 | `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`                                    |
 | `collectionEnabled`    | `collection-enabled`     | Should allow collection filter                            | `boolean`                                   | `true`                                    |
-| `collectionId`         | `collection-id`          | Show for a specific collection                            | `string`                                    | `null`                                    |
+| `collectionId`         | `collection-id`          | Show for a specific collection                            | `string`                                    | `undefined`                               |
 | `featured`             | `featured`               | Show only featured products.                              | `boolean`                                   | `false`                                   |
 | `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`                               |
 | `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`                               |
 | `limit`                | `limit`                  |                                                           | `number`                                    | `15`                                      |
 | `page`                 | `page`                   |                                                           | `number`                                    | `1`                                       |
-| `pagination`           | --                       |                                                           | `{ total: number; total_pages: number; }`   | `{     total: 0,     total_pages: 0,   }` |
+| `pageTitle`            | `page-title`             | The page title                                            | `string`                                    | `undefined`                               |
+| `pagination`           | --                       | Pagination                                                | `{ total: number; total_pages: number; }`   | `{     total: 0,     total_pages: 0,   }` |
 | `paginationAlignment`  | `pagination-alignment`   |                                                           | `string`                                    | `'center'`                                |
 | `paginationAutoScroll` | `pagination-auto-scroll` | Should we auto-scroll to the top when paginating via ajax | `boolean`                                   | `true`                                    |
 | `paginationEnabled`    | `pagination-enabled`     | Should we paginate?                                       | `boolean`                                   | `true`                                    |
@@ -30,9 +31,10 @@
 
 ## Events
 
-| Event        | Description          | Type                                  |
-| ------------ | -------------------- | ------------------------------------- |
-| `scSearched` | Product was searched | `CustomEvent<ProductsSearchedParams>` |
+| Event              | Description          | Type                                  |
+| ------------------ | -------------------- | ------------------------------------- |
+| `scProductsViewed` | Products viewed      | `CustomEvent<ProductsViewedParams>`   |
+| `scSearched`       | Product was searched | `CustomEvent<ProductsSearchedParams>` |
 
 
 ## Dependencies

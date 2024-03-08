@@ -243,6 +243,7 @@ class Block extends BaseBlock {
 				'sortEnabled'          => ! ! $attributes['sort_enabled'],
 				'collectionEnabled'    => false,
 				'collectionId'         => $collection_id,
+				'pageTitle'            => get_the_title(),
 			]
 		);
 

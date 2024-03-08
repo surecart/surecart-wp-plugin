@@ -27,4 +27,6 @@ on('set', (key, newState) => {
     speak(__('Cart Closed', 'surecart'), 'assertive');
   }
 });
+
+export { on };
 export default store;
