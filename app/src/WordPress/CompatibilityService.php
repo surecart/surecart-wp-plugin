@@ -33,8 +33,9 @@ class CompatibilityService {
 
 		// Show gutenberg active notice.
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
+
 		// Load Blocks Global Styles if enabled by Merchant in the setting.
-		if ( get_option( 'surecart_theme_style_support', true ) ) {
+		if ( (bool) get_option( 'surecart_load_blocks_style_on_demand', false ) ) {
 			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 		}
 	}

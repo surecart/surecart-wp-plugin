@@ -70,12 +70,6 @@ export default () => {
 		'surecart_shop_admin_menu'
 	);
 
-	const [themeStyleSupport, setThemeStyleSupport] = useEntityProp(
-		'root',
-		'site',
-		'surecart_theme_style_support'
-	);
-
 	const [cartMenu, setCartMenu] = useEntityProp(
 		'root',
 		'site',
@@ -140,6 +134,23 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={item?.load_blocks_style_on_demand}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							load_blocks_style_on_demand: !item?.load_blocks_style_on_demand,
+						});
+					}}
+				>
+					{__('Load Block Styles on Demand', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							"Enabling this option will load SureCart's block styles only on the pages where SureCart blocks are used. This can help improve your site's performance. Please check your pages after you enable this option in a private browser window as this might change the order of CSS loads in the head section.",
 							'surecart'
 						)}
 					</span>
@@ -363,31 +374,6 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							"Use Stripe's Card Element instead of the Payment Element in all forms.",
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-			</SettingsBox>
-
-			<SettingsBox
-				title={__('Theme Style Support', 'surecart')}
-				description={__(
-					'This will enable the theme to support SureCart block styles.',
-					'surecart'
-				)}
-				loading={!hasLoadedItem}
-			>
-				<ScSwitch
-					checked={themeStyleSupport}
-					onClick={(e) => {
-						e.preventDefault();
-						setThemeStyleSupport(!themeStyleSupport);
-					}}
-				>
-					{__('Load Block Styles from SureCart', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							"Load SureCart's block styles on your theme.",
 							'surecart'
 						)}
 					</span>
