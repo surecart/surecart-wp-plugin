@@ -52,8 +52,13 @@ class ProductsController extends AdminController {
 		$bulk_actions = array();
 
 		if ( is_array( $this->bulk_actions ) ) {
-			foreach ( $this->bulk_actions as $bulk_action_id ) {
-				$bulk_action = BulkAction::find( $bulk_action_id );
+			$bulk_actions_expanded = BulkAction::where(
+				[
+					'ids[]' => $this->bulk_actions,
+				]
+			)->get();
+
+			foreach ( $bulk_actions_expanded as $bulk_action ) {
 				foreach ( $this->statuses as $status ) {
 					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] ) ) {
 						$bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] = array();
@@ -101,7 +106,7 @@ class ProductsController extends AdminController {
 	 * Bulk Delete.
 	 */
 	public function bulkDelete() {
-		$table = new ProductsListTable( $this );
+		$table = new ProductsListTable();
 		$table->process_bulk_action();
 	}
 

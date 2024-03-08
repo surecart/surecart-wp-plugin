@@ -21,7 +21,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Constructor.
 	 */
-	public function __construct( $controller ) {
+	public function __construct( $controller = null ) {
 		$this->controller = $controller;
 		parent::__construct();
 
@@ -34,6 +34,10 @@ class ProductsListTable extends ListTable {
 	 * Show bulk action admin notice.
 	 */
 	public function show_bulk_action_admin_notice() {
+		if ( empty( $this->controller ) ) {
+			return;
+		}
+
 		$status_parts = [];
 		foreach ( $this->controller->statuses as $status ) {
 			$count = count( $this->controller->bulk_actions_data['delete_products'][ $status . '_record_ids' ] ?? [] );
@@ -451,7 +455,7 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$is_queued_for_deletion = (bool) ! empty( $this->controller->bulk_actions_data['delete_products'] ) && ( in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['processing_record_ids'] ) || in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['pending_record_ids'] ) );
+		$is_queued_for_deletion = (bool) ! empty( $this->controller ) && ! empty( $this->controller->bulk_actions_data['delete_products'] ) && ( in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['processing_record_ids'] ) || in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['pending_record_ids'] ) );
 
 		ob_start();
 		?>
