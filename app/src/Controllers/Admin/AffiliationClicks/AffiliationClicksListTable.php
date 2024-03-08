@@ -112,14 +112,16 @@ class AffiliationClicksListTable extends ListTable {
 			esc_html( TimeDate::formatDateAndTime( $click->created_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $click->created_at ) )
 		);
-		$updated = sprintf(
+
+		$is_expired = $click->expires_at < time();
+		$expires = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			( strtotime( $click->expires_at ) < time() ) ? __( 'Expired' ) : __( 'Expires' ),
+			$is_expired ? __( 'Expired' ) : __( 'Expires on' ),
 			esc_attr( $click->expires_at ),
 			esc_html( TimeDate::formatDateAndTime( $click->expires_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $click->expires_at ) )
+			esc_html( $is_expired? TimeDate::humanTimeDiff( $click->expires_at ) : TimeDate::formatDate( $click->expires_at ))
 		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
+		return $created . '<br /><small style="opacity: 0.75">' . $expires . '</small>';
 	}
 
 
