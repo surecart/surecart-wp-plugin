@@ -56,7 +56,9 @@ export default () => {
 		hasLoadedCustomer,
 		deletingCustomer,
 		savingCustomer,
-	} = useEntity('customer', id, { expand: ['balances', 'shipping_address', 'affiliation'] });
+	} = useEntity('customer', id, {
+		expand: ['balances', 'shipping_address'],
+	});
 
 	/**
 	 * Handle the form submission
