@@ -138,23 +138,25 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScSwitch
-					checked={item?.load_blocks_style_on_demand}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							load_blocks_style_on_demand: !item?.load_blocks_style_on_demand,
-						});
-					}}
-				>
-					{__('Load Block Styles on Demand', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							"Enabling this option will load SureCart's block styles only on the pages where SureCart blocks are used. This can help improve your site's performance. Please check your pages after you enable this option in a private browser window as this might change the order of CSS loads in the head section.",
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
+				{!scData?.is_loading_separate_block_assets && (
+					<ScSwitch
+						checked={item?.load_blocks_style_on_demand}
+						onClick={(e) => {
+							e.preventDefault();
+							editItem({
+								load_blocks_style_on_demand: !item?.load_blocks_style_on_demand,
+							});
+						}}
+					>
+						{__('Load Block Styles on Demand', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								"Enabling this option will load SureCart's block styles only on the pages where SureCart blocks are used. This can help improve your site's performance. Please check your pages after you enable this option in a private browser window as this might change the order of CSS loads in the head section.",
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
