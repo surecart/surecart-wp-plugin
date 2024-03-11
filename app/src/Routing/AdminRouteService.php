@@ -51,6 +51,8 @@ class AdminRouteService {
 		'affiliate-referrals' => 'sc-affiliate-referrals',
 		'affiliate-requests'  => 'sc-affiliate-requests',
 		'affiliate-request'   => 'sc-affiliate-requests',
+		'affiliate-payouts'   => 'sc-affiliate-payouts',
+		'affiliate-payout'    => 'sc-affiliate-payouts',
 	];
 
 	/**
