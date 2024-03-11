@@ -144,14 +144,15 @@ export default () => {
 						onClick={(e) => {
 							e.preventDefault();
 							editItem({
-								load_blocks_style_on_demand: !item?.load_blocks_style_on_demand,
+								load_blocks_style_on_demand:
+									!item?.load_blocks_style_on_demand,
 							});
 						}}
 					>
-						{__('Load Block Styles on Demand', 'surecart')}
+						{__('On Demand Block Assets', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								"Enabling this option will load SureCart's block styles only on the pages where SureCart blocks are used. This can help improve your site's performance. Please check your pages after you enable this option in a private browser window as this might change the order of CSS loads in the head section.",
+								'Enabling this option will load block assets only when they are rendered. This will happen for ALL blocks on your website, not just SureCart blocks. Please check your pages after you enable this option in a private browser window as this might change the CSS load order.',
 								'surecart'
 							)}
 						</span>
