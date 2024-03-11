@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch
 import { state as checkoutState } from '@store/checkout';
 import { clearCheckout } from '@store/checkout/mutations';
 import { state as selectedProcessor } from '@store/selected-processor';
+import { state as processorsState } from '@store/processors';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { updateFormState } from '@store/form/mutations';
@@ -75,6 +76,23 @@ export class ScSessionProvider {
     removeNotice();
 
     updateFormState('FINALIZE');
+
+    if (selectedProcessor?.id === 'stripe' && processorsState.config.stripe.paymentElement) {
+      // not initialized.
+      if (typeof processorsState?.instances?.stripeElements === undefined) {
+        updateFormState('REJECT');
+        this.handleErrorResponse({ message: 'Stripe Elements not found.', code: 'stripe_elements_not_found' });
+        return new Error('Stripe Elements not found.');
+      }
+      // submit the elements.
+      const { error } = await processorsState?.instances?.stripeElements.submit();
+      if (error) {
+        console.error({ error });
+        updateFormState('REJECT');
+        createErrorNotice(error);
+        return;
+      }
+    }
 
     // Get current form state.
     let data = await this.getFormData();
