@@ -110,12 +110,11 @@ export class ScStripePaymentElement {
 
     // we need to listen to the form state and pay when the form state enters the paying state.
     this.unlistenToFormState = onChangeFormState('formState', () => {
+      // payment method is not required.
       if (!checkoutState?.checkout?.payment_method_required) return;
-      if ('finalizing' === currentFormState()) {
-        this.submit();
-      }
+      // we are at the paying state.
       if ('paying' === currentFormState()) {
-        this.maybeConfirmOrder();
+        this.submit();
       }
     });
   }
@@ -249,6 +248,13 @@ export class ScStripePaymentElement {
   async submit() {
     // this processor is not selected.
     if (selectedProcessor?.id !== 'stripe') return;
+    // must be a stripe session
+    if (checkoutState.checkout?.payment_intent?.processor_type !== 'stripe') return;
+    // need an external_type
+    if (!checkoutState.checkout?.payment_intent?.processor_data?.stripe?.type) return;
+    // we need a client secret.
+    if (!checkoutState.checkout?.payment_intent?.processor_data?.stripe?.client_secret) return;
+
     // submit the elements.
     const { error } = await this.elements.submit();
     if (error) {
@@ -258,21 +264,8 @@ export class ScStripePaymentElement {
       this.error = error.message;
       return;
     }
-  }
 
-  /**
-   * Watch order status and maybe confirm the order.
-   */
-  async maybeConfirmOrder() {
-    // this processor is not selected.
-    if (selectedProcessor?.id !== 'stripe') return;
-    // must be a stripe session
-    if (checkoutState.checkout?.payment_intent?.processor_type !== 'stripe') return;
-    // need an external_type
-    if (!checkoutState.checkout?.payment_intent?.processor_data?.stripe?.type) return;
-    // we need a client secret.
-    if (!checkoutState.checkout?.payment_intent?.processor_data?.stripe?.client_secret) return;
-    // confirm the intent.
+    // confirm the order.
     return await this.confirm(checkoutState.checkout?.payment_intent?.processor_data?.stripe?.type);
   }
 
