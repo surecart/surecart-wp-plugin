@@ -706,6 +706,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  updated_at: number;
   variant: string;
   upsells_expire_at?: number;
 }
