@@ -14,9 +14,9 @@ use SureCart\Models\BulkAction;
 class ProductsListTable extends ListTable {
 
 	public $checkbox   = true;
-	public $controller = null;
 	public $error      = '';
 	public $pages      = array();
+	public $controller = null;
 
 	/**
 	 * Constructor.
@@ -27,7 +27,6 @@ class ProductsListTable extends ListTable {
 
 		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
 
-		$this->process_bulk_action();
 	}
 
 	/**
