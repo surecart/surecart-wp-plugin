@@ -37,28 +37,7 @@ class ProductsListTable extends ListTable {
 		if ( empty( $this->controller ) ) {
 			return;
 		}
-
-		$status_parts = [];
-		foreach ( $this->controller->statuses as $status ) {
-			$count = count( $this->controller->bulk_actions_data['delete_products'][ $status . '_record_ids' ] ?? [] );
-			if ( $count > 0 ) {
-				// translators: %1$d is Count of specific deletions, %2$s is bulk deletion progress status.
-				$status_parts[] = sprintf( esc_html__( '%1$d %2$s', 'surecart' ), $count, $status );
-			}
-		}
-
-		if ( ! empty( $status_parts ) ) {
-			$status_summary = esc_html__( 'Deletion Summary:', 'surecart' ) . ' ' . implode( ', ', $status_parts ) . '.';
-			echo wp_kses_post(
-				\SureCart::notices()->render(
-					[
-						'type'  => 'info',
-						'title' => esc_html__( 'SureCart bulk product deletion progress status.', 'surecart' ),
-						'text'  => '<p>' . $status_summary . '</p>',
-					]
-				)
-			);
-		}
+		$this->controller->showBulkActionAdminNotice( 'delete_products' );
 	}
 
 	/**
@@ -73,29 +52,7 @@ class ProductsListTable extends ListTable {
 
 		if ( 'delete' === $action ) {
 			$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$bulk_action = BulkAction::create(
-				[
-					'action_type' => 'delete_products',
-					'record_ids'  => $product_ids,
-				]
-			);
-
-			if ( is_wp_error( $bulk_action ) ) {
-				wp_die( implode( ' ', array_map( 'esc_html', $bulk_action->get_error_messages() ) ) );
-			}
-
-			$bulk_actions[] = $bulk_action->id;
-
-			setcookie(
-				'sc_bulk_actions',
-				wp_json_encode( $bulk_actions ),
-				time() + DAY_IN_SECONDS,
-				COOKIEPATH,
-				COOKIE_DOMAIN,
-				is_ssl(),
-				true
-			);
-
+			\SureCart::bulkAction()->createBulkAction( 'delete_products', $product_ids );
 			wp_safe_redirect( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
 			exit;
 		}
@@ -455,7 +412,8 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$is_queued_for_deletion = (bool) ! empty( $this->controller ) && ! empty( $this->controller->bulk_actions_data['delete_products'] ) && ( in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['processing_record_ids'] ) || in_array( $product->id, $this->controller->bulk_actions_data['delete_products']['pending_record_ids'] ) );
+		$pending_record_ids     = $this->controller->getPendingRecordIds( 'delete_products' );
+		$is_queued_for_deletion = (bool) ! empty( $this->controller ) && ! empty( $pending_record_ids ) && in_array( $product->id, $pending_record_ids );
 
 		ob_start();
 		?>
