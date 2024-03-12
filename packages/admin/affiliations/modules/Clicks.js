@@ -15,7 +15,7 @@ import usePagination from '../../hooks/usePagination';
 
 export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(5);
+	const perPage = 5;
 
 	const { clicks, loading, fetching } = useSelect(
 		(select) => {
@@ -40,7 +40,7 @@ export default ({ affiliationId }) => {
 				fetching: loading && page !== 1,
 			};
 		},
-		[affiliationId, page, perPage]
+		[affiliationId, page]
 	);
 
 	const { hasPagination } = usePagination({
