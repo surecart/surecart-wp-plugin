@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-02-22T18:59:34",
+  "timestamp": "2024-02-29T20:29:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -11184,22 +11184,6 @@
       "usage": {},
       "props": [
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "debug",
           "type": "boolean",
           "mutable": false,
@@ -11232,25 +11216,6 @@
           "required": false
         },
         {
-          "name": "formId",
-          "type": "number | string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "hasPaymentOptions",
           "type": "boolean",
           "mutable": true,
@@ -11261,21 +11226,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
             }
           ],
           "optional": false,
@@ -24654,7 +24604,6 @@
           "reflectToAttr": false,
           "docs": "Show for a specific collection",
           "docsTags": [],
-          "default": "null",
           "values": [
             {
               "type": "string"
@@ -24745,11 +24694,27 @@
           "required": false
         },
         {
+          "name": "pageTitle",
+          "type": "string",
+          "mutable": false,
+          "attr": "page-title",
+          "reflectToAttr": false,
+          "docs": "The page title",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "pagination",
           "type": "{ total: number; total_pages: number; }",
           "mutable": true,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Pagination",
           "docsTags": [],
           "default": "{\n    total: 0,\n    total_pages: 0,\n  }",
           "values": [
@@ -24896,6 +24861,15 @@
       ],
       "methods": [],
       "events": [
+        {
+          "event": "scProductsViewed",
+          "detail": "ProductsViewedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Products viewed",
+          "docsTags": []
+        },
         {
           "event": "scSearched",
           "detail": "ProductsSearchedParams",
@@ -29781,23 +29755,6 @@
           "required": false
         },
         {
-          "name": "currencyCode",
-          "type": "string",
-          "mutable": false,
-          "attr": "currency-code",
-          "reflectToAttr": false,
-          "docs": "Currency",
-          "docsTags": [],
-          "default": "'usd'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "debug",
           "type": "boolean",
           "mutable": false,
@@ -29830,25 +29787,6 @@
           "required": false
         },
         {
-          "name": "formId",
-          "type": "number | string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "This is required to validate the form on the server",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -29866,42 +29804,11 @@
           "required": false
         },
         {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Checkout Session",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "paymentMethod",
-          "type": "string",
-          "mutable": false,
-          "attr": "payment-method",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "prices",
           "type": "{ [id: string]: Price; }",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Prices",
           "docsTags": [],
           "values": [
             {

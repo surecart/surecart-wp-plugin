@@ -73,16 +73,7 @@ export class ScCustomerLastname {
   /** Don't allow a blank space as an input here. */
   @Method()
   async reportValidity() {
-    if (!this.required) {
-      return await this.input?.reportValidity?.();
-    }
-    this.input?.setCustomValidity?.('');
-
-    if (!this.input?.value.trim().length) {
-      this.input.setCustomValidity(__('Field must not be empty.', 'surecart'));
-    }
-
-    return await this.input?.reportValidity?.();
+    return this.input.reportValidity();
   }
 
   /** Silently update the checkout when the input changes. */
