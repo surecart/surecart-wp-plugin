@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.19.4
+Stable tag: 2.20.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,15 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.20.0 - March 6th, 2024 =
+- New: Add tax and shipping overrides based on product collections.
+- Improvement: Limit the tax ids shown in the tax id form input.
+- Improvement: Product collection list page loading performance.
+- Improvement: Update customer display conditions wording on upsells to be more descriptive.
+- Fix: Issue with using product collection and product list shortcodes on the same page.
+- Fix: Issue where a merchant could select a region to register for taxes that already exists, causing a save error.
+- Fix: Cart incorrectly using subtotal instead of total.
 
 = 2.19.4 - March 1st, 2024 =
 - Improvement: Prevent mouse wheel scroll on percent and other number inputs.
