@@ -63,16 +63,30 @@ class FormModeSwitcherService {
 			get_home_url( null, 'surecart/change-checkout-mode' )
 		);
 
+		$confirm_message = esc_js( __( "Notice: Cart Contents Will Be Mode-Specific. \n\nYou are about to switch your checkout mode. It's important to note that cart items are specific to each mode and will not be transferred between them.", 'surecart' ) );
+		$live_mode_text  = esc_html__( 'Live Mode', 'surecart' );
+		$test_mode_text  = esc_html__( 'Test Mode', 'surecart' );
+
 		$sub_items = [
 			[
 				'id'    => 'sc_live_mode',
-				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #49de80; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #DCFCE7;">' . __( 'Live Mode', 'surecart' ) . '</div><div>' . ( 'live' === $mode ? ' ✓' : '' ) . '</span></div></div>',
-				'href'  => 'live' === $mode ? '#' : $url . '&mode=live',
+				'title' => sprintf(
+					'<div %1$s style="display:flex; justify-content: space-between;"><div><span style="color: #49de80; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #DCFCE7;">%2$s</div><div>%3$s</span></div></div>',
+					'live' === $mode ? '' : sprintf('onclick="event.preventDefault(); if(confirm(\'%1$s\')) { window.location.href = \'%2$s\'; }"', $confirm_message, esc_url($url . '&mode=live')),
+					$live_mode_text,
+					'live' === $mode ? ' ✓' : ''
+				),
+				'href'  => '#',
 			],
 			[
 				'id'    => 'sc_test_mode',
-				'title' => '<div style="display:flex; justify-content: space-between;"><div><span style="color: #fbbf24; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #FEF3C7;">' . __( 'Test Mode', 'surecart' ) . '</div><div>' . ( 'test' === $mode ? ' ✓' : '' ) . '</span></div></div>',
-				'href'  => 'test' === $mode ? '#' : $url . '&mode=test',
+				'title' => sprintf(
+					'<div %1$s style="display:flex; justify-content: space-between;"><div><span style="color: #fbbf24; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #FEF3C7;">%2$s</div><div>%3$s</span></div></div>',
+					'test' === $mode ? '' : sprintf('onclick="event.preventDefault(); if(confirm(\'%1$s\')) { window.location.href = \'%2$s\'; }"', $confirm_message, esc_url($url . '&mode=test')),
+					$test_mode_text,
+					'test' === $mode ? ' ✓' : ''
+				),
+				'href'  => '#',
 			],
 		];
 
