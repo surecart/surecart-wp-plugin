@@ -19,14 +19,27 @@
 
 ## Events
 
-| Event            | Description | Type                                                     |
-| ---------------- | ----------- | -------------------------------------------------------- |
-| `scAfterHide`    |             | `CustomEvent<void>`                                      |
-| `scAfterShow`    |             | `CustomEvent<void>`                                      |
-| `scHide`         |             | `CustomEvent<void>`                                      |
-| `scInitialFocus` |             | `CustomEvent<void>`                                      |
-| `scRequestClose` |             | `CustomEvent<"close-button" \| "keyboard" \| "overlay">` |
-| `scShow`         |             | `CustomEvent<void>`                                      |
+| Event            | Description | Type                                                                 |
+| ---------------- | ----------- | -------------------------------------------------------------------- |
+| `scAfterHide`    |             | `CustomEvent<void>`                                                  |
+| `scAfterShow`    |             | `CustomEvent<void>`                                                  |
+| `scHide`         |             | `CustomEvent<void>`                                                  |
+| `scInitialFocus` |             | `CustomEvent<void>`                                                  |
+| `scRequestClose` |             | `CustomEvent<"close-button" \| "keyboard" \| "method" \| "overlay">` |
+| `scShow`         |             | `CustomEvent<void>`                                                  |
+
+
+## Methods
+
+### `requestClose(source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Shadow Parts

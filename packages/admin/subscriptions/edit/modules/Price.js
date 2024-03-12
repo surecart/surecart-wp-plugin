@@ -195,7 +195,14 @@ export default ({
 											{coupon?.name}
 										</ScTag>
 									),
-									total: <>{getHumanDiscount(coupon)}</>,
+									total: (
+										<>
+											{getHumanDiscount(
+												coupon,
+												coupon?.currency
+											)}
+										</>
+									),
 								},
 						  ]
 						: []),

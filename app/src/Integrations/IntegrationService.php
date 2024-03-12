@@ -179,8 +179,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	public function onPurchaseUpdated( Purchase $purchase, $request ) {
 		$this->purchase = $purchase;
 
-		$data     = $request->data->object ?? null;
-		$previous = $request->data->previous_attributes ?? null;
+		$data     = (object) $request['data']['object'] ?? null;
+		$previous = (object) $request['data']['previous_attributes'] ?? null;
 
 		// we need data or a previous.
 		if ( empty( $data ) || empty( $previous ) ) {
@@ -319,6 +319,11 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
 		foreach ( $integrations as $integration ) {
 			if ( ! $integration->id ) {
+				continue;
+			}
+
+			// If the integration has a price_id or variant_id, then we need to match with specific price or variant.
+			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $purchase ) ) {
 				continue;
 			}
 

@@ -1,4 +1,4 @@
-import { ScFormatNumber, ScProductPrice } from '@surecart/components-react';
+import { ScPrice } from '@surecart/components-react';
 import {
 	AlignmentControl,
 	BlockControls,
@@ -7,7 +7,6 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
 import classNames from 'classnames';
 
 export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
@@ -16,11 +15,6 @@ export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 			[`has-text-align-${alignment}`]: alignment,
 		}),
 	});
-
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
 
 	return (
 		<>
@@ -37,7 +31,7 @@ export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 					<TextControl
 						label={__('Sale Text', 'surecart')}
 						help={__(
-							'This text will be displayed if there is a compare at price selected.',
+							'This will be displayed if there is a compare at price, or an upsell discount.',
 							'surecart'
 						)}
 						value={sale_text}
@@ -47,13 +41,12 @@ export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScProductPrice>
-					<ScFormatNumber
-						type="currency"
-						currency={scBlockData?.currency}
-						value={8900}
-					/>
-				</ScProductPrice>
+				<ScPrice
+					currency={scBlockData?.currency}
+					amount={7900}
+					scratchAmount={9900}
+					saleText={sale_text}
+				/>
 			</div>
 		</>
 	);

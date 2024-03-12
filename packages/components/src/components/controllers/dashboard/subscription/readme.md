@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                       | Type                   | Default     |
-| ---------------- | ----------------- | --------------------------------- | ---------------------- | ----------- |
-| `heading`        | `heading`         | Heading to display                | `string`               | `undefined` |
-| `protocol`       | --                | The subscription protocol         | `SubscriptionProtocol` | `undefined` |
-| `query`          | --                | Query to pass to the API          | `object`               | `undefined` |
-| `showCancel`     | `show-cancel`     | Whether to show the cancel button | `boolean`              | `undefined` |
-| `subscription`   | --                | The subscription                  | `Subscription`         | `undefined` |
-| `subscriptionId` | `subscription-id` | The subscription ID               | `string`               | `undefined` |
+| Property                 | Attribute                   | Description                       | Type                   | Default     |
+| ------------------------ | --------------------------- | --------------------------------- | ---------------------- | ----------- |
+| `heading`                | `heading`                   | Heading to display                | `string`               | `undefined` |
+| `protocol`               | --                          | The subscription protocol         | `SubscriptionProtocol` | `undefined` |
+| `query`                  | --                          | Query to pass to the API          | `object`               | `undefined` |
+| `showCancel`             | `show-cancel`               | Whether to show the cancel button | `boolean`              | `undefined` |
+| `subscription`           | --                          | The subscription                  | `Subscription`         | `undefined` |
+| `subscriptionId`         | `subscription-id`           | The subscription ID               | `string`               | `undefined` |
+| `updatePaymentMethodUrl` | `update-payment-method-url` | Update the payment method url     | `string`               | `undefined` |
 
 
 ## Dependencies

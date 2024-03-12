@@ -7,11 +7,46 @@ use SureCart\Models\Product;
 use SureCart\Models\Subscription;
 use SureCart\Models\SubscriptionProtocol;
 use SureCart\Models\User;
-
+use SureCartBlocks\Controllers\Middleware\MissingPaymentMethodMiddleware;
+use SureCartBlocks\Controllers\Middleware\UpdateSubscriptionMiddleware;
+use SureCartBlocks\Controllers\Middleware\SubscriptionPermissionsControllerMiddleware;
+use SureCartBlocks\Controllers\Middleware\SubscriptionNonceVerificationMiddleware;
 /**
  * The subscription controller.
  */
 class SubscriptionController extends BaseController {
+	/**
+	 * The middleware for this controller.
+	 *
+	 * @var array
+	 */
+	protected $middleware = [
+		'confirm'               => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'confirm_amount'        => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'confirm_variation'     => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'update_payment_method' => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+	];
+
 	/**
 	 * Render the block
 	 *
@@ -152,10 +187,21 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'      => __( 'Current Plan', 'surecart' ),
-						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
-						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
-						'subscription' => $subscription,
+						'heading'                => __( 'Current Plan', 'surecart' ),
+						'showCancel'             => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
+						'protocol'               => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
+						'subscription'           => $subscription,
+						'updatePaymentMethodUrl' => esc_url_raw(
+							home_url(
+								add_query_arg(
+									[
+										'tab'    => $this->getTab(),
+										'action' => 'update_payment_method',
+										'nonce'  => wp_create_nonce( 'subscription-switch' ),
+									]
+								)
+							)
+						),
 					]
 				)->render()
 			);
@@ -171,8 +217,20 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'        => __( 'Update Plan', 'surecart' ),
 						'productId'      => $subscription->price->product->id,
-						'productGroupId' => $subscription->price->product->product_group->archived ? null : $subscription->price->product->product_group->id,
+						'productGroupId' => ( $subscription->price->product->product_group
+						? ( $subscription->price->product->product_group->archived
+						   ? null
+						   : $subscription->price->product->product_group->id )
+						: null ),
 						'subscription'   => $subscription,
+						'successUrl'     => home_url(
+							add_query_arg(
+								[
+									'tab'   => $this->getTab(),
+									'nonce' => wp_create_nonce( 'subscription-switch' ),
+								]
+							)
+						),
 					]
 				)->render()
 			);

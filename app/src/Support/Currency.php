@@ -106,7 +106,6 @@ class Currency {
 				'LYD' => '&#x644;.&#x62f;',
 				'MAD' => '&#x62f;.&#x645;.',
 				'MDL' => 'MDL',
-				'MGA' => 'Ar',
 				'MKD' => '&#x434;&#x435;&#x43d;',
 				'MMK' => 'Ks',
 				'MNT' => '&#x20ae;',
@@ -328,6 +327,7 @@ class Currency {
 			'fjd' => __( 'Fijian Dollar', 'surecart' ),
 			'gmd' => __( 'Gambian Dalasi', 'surecart' ),
 			'gel' => __( 'Georgian Lari', 'surecart' ),
+			'ghs' => __( 'Ghanaian Cedi', 'surecart' ),
 			'gip' => __( 'Gibraltar Pound', 'surecart' ),
 			'gtq' => __( 'Guatemalan Quetzal', 'surecart' ),
 			'gnf' => __( 'Guinean Franc', 'surecart' ),
@@ -351,7 +351,6 @@ class Currency {
 			'lrd' => __( 'Liberian Dollar', 'surecart' ),
 			'mop' => __( 'Macanese Pataca', 'surecart' ),
 			'mkd' => __( 'Macedonian Denar', 'surecart' ),
-			'mga' => __( 'Malagasy Ariary', 'surecart' ),
 			'mwk' => __( 'Malawian Kwacha', 'surecart' ),
 			'myr' => __( 'Malaysian Ringgit', 'surecart' ),
 			'mvr' => __( 'Maldivian Rufiyaa', 'surecart' ),
@@ -416,6 +415,7 @@ class Currency {
 			'xof' => __( 'West African Cfa Franc', 'surecart' ),
 			'yer' => __( 'Yemeni Rial', 'surecart' ),
 			'zmw' => __( 'Zambian Kwacha', 'surecart' ),
+			'tnd' => __( 'Tunisian Dinar', 'surecart' ),
 		];
 	}
 
