@@ -41,6 +41,10 @@ class LineItemStateService {
 		$merged_line_items = array_filter(
 			$line_items,
 			function ( $line_item ) use ( $initial_items ) {
+				// if the price id is not set, don't add it.
+				if ( empty( $line_item['price_id'] ) ) {
+					return false;
+				}
 				// if the line item does not exist, add it.
 				return ! $this->lineItemExists( $line_item, $initial_items );
 			}
