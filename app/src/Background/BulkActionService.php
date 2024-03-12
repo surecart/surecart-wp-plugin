@@ -79,8 +79,8 @@ class BulkActionService {
 				}
 				if ( ! is_wp_error( $bulk_action ) ) {
 					$bulk_actions[ $bulk_action->action_type ][ $bulk_action->status ][] = $bulk_action;
-					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_bulk_actions' ], $bulk_action->id );
-					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_record_ids' ], ...$bulk_action->record_ids );
+					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_bulk_actions' ], $bulk_action->id ); // Saves the bulks actions ids for each status.
+					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_record_ids' ], ...$bulk_action->record_ids ); // Saves the record ids for each status.
 				}
 			}
 		}
@@ -91,11 +91,13 @@ class BulkActionService {
 	 * Delete succeeded bulk actions from the cookie.
 	 */
 	public function deleteSucceededBulkActions() {
-		if ( empty( $this->bulk_actions_data['delete_products'] ) || empty( $this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] ) ) {
+		$succeeded_bulk_actions = $this->getSucceededBulkActions();
+
+		if ( empty( $succeeded_bulk_actions ) ) {
 			return;
 		}
 
-		foreach ( $this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] as $bulk_action_id ) {
+		foreach ( $succeeded_bulk_actions as $bulk_action_id ) {
 			setcookie(
 				'sc_bulk_action_' . $bulk_action_id,
 				'',
@@ -194,5 +196,26 @@ class BulkActionService {
 		}
 
 		return $pending_record_ids;
+	}
+
+	/**
+	 * Get the succeeded bulk actions.
+	 *
+	 * @return array
+	 */
+	public function getSucceededBulkActions() {
+		if ( empty( $this->bulk_actions_data ) ) {
+			return [];
+		}
+
+		$succeeded_bulk_actions = [];
+
+		foreach ( $this->bulk_actions_data as $action_type => $bulk_action_data ) {
+			if ( ! empty( $bulk_action_data['succeeded_bulk_actions'] ) ) {
+				$succeeded_bulk_actions = array_merge( $succeeded_bulk_actions, $bulk_action_data['succeeded_bulk_actions'] );
+			}
+		}
+
+		return $succeeded_bulk_actions;
 	}
 }
