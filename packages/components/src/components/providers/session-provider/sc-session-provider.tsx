@@ -77,7 +77,7 @@ export class ScSessionProvider {
 
     updateFormState('FINALIZE');
 
-    if (selectedProcessor?.id === 'stripe' && processorsState.config.stripe.paymentElement) {
+    if (checkoutState?.checkout?.payment_method_required && selectedProcessor?.id === 'stripe' && processorsState.config.stripe.paymentElement) {
       // not initialized.
       if (typeof processorsState?.instances?.stripeElements === undefined) {
         updateFormState('REJECT');
