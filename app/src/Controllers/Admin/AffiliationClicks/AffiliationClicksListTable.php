@@ -114,12 +114,12 @@ class AffiliationClicksListTable extends ListTable {
 		);
 
 		$is_expired = $click->expires_at < time();
-		$expires = sprintf(
+		$expires    = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
 			$is_expired ? __( 'Expired' ) : __( 'Expires on' ),
 			esc_attr( $click->expires_at ),
 			esc_html( TimeDate::formatDateAndTime( $click->expires_at ) ),
-			esc_html( $is_expired? TimeDate::humanTimeDiff( $click->expires_at ) : TimeDate::formatDate( $click->expires_at ))
+			esc_html( $is_expired ? TimeDate::humanTimeDiff( $click->expires_at ) : TimeDate::formatDate( $click->expires_at ) )
 		);
 		return $created . '<br /><small style="opacity: 0.75">' . $expires . '</small>';
 	}
@@ -138,12 +138,14 @@ class AffiliationClicksListTable extends ListTable {
 			return '';
 		}
 
+		$name = ! empty( $affiliation->first_name . $affiliation->last_name ) ? $affiliation->first_name . ' ' . $affiliation->last_name : $affiliation->email;
+
 		ob_start();
 		?>
 
 		<div class="sc-affiliate-name">
 			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
-				<?php echo esc_html( $affiliation->first_name . ' ' . $affiliation->last_name ); ?>
+				<?php echo esc_html( $name ); ?>
 			</a>
 		</div>
 		<?php
@@ -158,7 +160,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_converted( $click ) {
-		return $click->converted ? __( 'Yes', 'surecart' ) : __( 'No', 'surecart' );
+		return '<sc-icon style="font-size: 30px; line-height:1; height: 20px;" name="' . ( $click->converted ? 'check-circle' : 'minus-circle' ) . '" />';
 	}
 
 
