@@ -21,7 +21,6 @@ import {
 	ScFlex,
 	ScIcon,
 } from '@surecart/components-react';
-import { store as dataStore } from '@surecart/data';
 import Error from '../components/Error';
 import useDirty from '../hooks/useDirty';
 import Logo from '../templates/Logo';
@@ -32,14 +31,13 @@ import Details from './modules/Details';
 import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
 
-export default () => {
+export default ({ id }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { saveDirtyRecords } = useDirty();
-	const id = useSelect((select) => select(dataStore).selectPageId());
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -127,12 +125,9 @@ export default () => {
 				method: 'PATCH',
 			});
 
-			createSuccessNotice(
-				__('Affiliate user de-activated.', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
+			createSuccessNotice(__('Affiliate user deactivated.', 'surecart'), {
+				type: 'snackbar',
+			});
 
 			receiveEntityRecords(
 				'surecart',
