@@ -12,7 +12,7 @@ import ConnectAffiliate from './ConnectAffiliate';
 import ViewAffiliate from './ViewAffiliate';
 import Box from '../../ui/Box';
 
-export default ({ item, updateItem, loading }) => {
+export default ({ item, updateItem, loading, commissionText }) => {
 	const { affiliation, fetching } = useSelect(
 		(select) => {
 			if (!item?.affiliation) {
@@ -50,6 +50,7 @@ export default ({ item, updateItem, loading }) => {
 					updateItem={updateItem}
 					affiliation={affiliation}
 					loading={fetching || loading}
+					commissionText={commissionText}
 				/>
 			)}
 		</Box>

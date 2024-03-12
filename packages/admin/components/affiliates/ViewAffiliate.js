@@ -26,7 +26,7 @@ import {
 import UpdateExpireAtModal from './UpdateExpireAtModal';
 import useAvatar from '../../hooks/useAvatar';
 
-export default ({ item, updateItem, affiliation }) => {
+export default ({ item, updateItem, affiliation, commissionText }) => {
 	const [modal, setModal] = useState(false);
 	const avatarUrl = useAvatar({ email: affiliation?.email });
 
@@ -97,7 +97,7 @@ export default ({ item, updateItem, affiliation }) => {
 							margin-bottom: var(--sc-spacing-x-small);
 						`}
 					>
-						{__('Commissions On All Purchases', 'surecart')}
+						{commissionText}
 					</ScText>
 					{!item?.affiliation_expires_at ? (
 						<ScText

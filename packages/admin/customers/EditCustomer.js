@@ -166,6 +166,10 @@ export default () => {
 						item={customer}
 						updateItem={editCustomer}
 						loading={!hasLoadedCustomer}
+						commissionText={__(
+							'Commissions On All Purchases',
+							'surecart'
+						)}
 					/>
 					<ShippingAddress
 						shippingAddress={customer?.shipping_address}

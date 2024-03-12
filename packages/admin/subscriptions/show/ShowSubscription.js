@@ -42,6 +42,7 @@ import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
 import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
+import Affiliates from '../../components/affiliates';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -377,6 +378,15 @@ export default () => {
 					<Tax
 						subscription={subscription}
 						loading={!hasLoadedSubscription}
+					/>
+					<Affiliates
+						item={subscription}
+						updateItem={editSubscription}
+						loading={!hasLoadedSubscription}
+						commissionText={__(
+							'Commission On This Subscription',
+							'surecart'
+						)}
 					/>
 				</>
 			}
