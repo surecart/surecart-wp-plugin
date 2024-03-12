@@ -30,6 +30,7 @@ return [
 		\SureCart\WordPress\Shortcodes\ShortcodesServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
+		\SureCart\WordPress\CLI\CLIServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
 		\SureCart\Routing\PermalinkServiceProvider::class,
 		\SureCart\Routing\RouteConditionsServiceProvider::class,
