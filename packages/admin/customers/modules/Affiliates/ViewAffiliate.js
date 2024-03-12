@@ -18,7 +18,6 @@ import {
 	ScDropdown,
 	ScFlex,
 	ScFormatDate,
-	// ScFormatDate,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,

@@ -1,8 +1,14 @@
-import { ScButton, ScDialog } from '@surecart/components-react';
+/**
+ * External dependencies.
+ */
 import { DateTimePicker } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { useEffect } from 'react';
+
+/**
+ * Internal dependencies.
+ */
+import { ScButton, ScDialog } from '@surecart/components-react';
 
 export default ({ open, onRequestClose, customer, updateCustomer }) => {
 	const oldAffiliationExpiresAt = customer?.affiliation_expires_at;
@@ -12,7 +18,7 @@ export default ({ open, onRequestClose, customer, updateCustomer }) => {
 
 	useEffect(() => {
 		if (customer?.affiliation_expires_at) {
-			setAffiliationExpiresAt(new Date(customer.affiliation_expires_at));
+			setAffiliationExpiresAt(new Date(customer.affiliation_expires_at * 1000));
 		}
 	}, [customer?.affiliation_expires_at]);
 
