@@ -15,13 +15,16 @@ class AffiliationPayoutsController extends AdminController {
 	public function index() {
 		$table = new AffiliationPayoutsListTable();
 		$table->prepare_items();
+
 		$this->withHeader(
 			[
 				'affiliate_payouts' => [
 					'title' => __( 'Affiliate Payouts', 'surecart' ),
 				],
-			]
+			],
+			'<sc-button href="' . esc_url( admin_url( 'admin.php?page=sc-affiliate-payouts&action=export' ) ) . '"  type="default">' . __( 'Export Payouts', 'surecart' ) . '</sc-button>',
 		);
+
 		return \SureCart::view( 'admin/affiliation-payouts/index' )->with( [ 'table' => $table ] );
 	}
 
@@ -41,7 +44,30 @@ class AffiliationPayoutsController extends AdminController {
 				'/wp/v2/users/me',
 				'/wp/v2/types?context=view',
 				'/wp/v2/types?context=edit',
-				'/surecart/v1/affiliation_clicks/' . $request->query( 'id' ) . '?context=edit',
+				'/surecart/v1/affiliation_payouts/' . $request->query( 'id' ) . '?context=edit',
+			]
+		);
+
+		// return view.
+		return '<div id="app"></div>';
+	}
+
+	/**
+	 * Export affiliate payouts.
+	 *
+	 * @param \SureCartCore\Http\Request $request Request object.
+	 *
+	 * @return string
+	 */
+	public function export( $request ) {
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( AffiliationPayoutsScriptsController::class, 'enqueue' ) );
+
+		$this->preloadPaths(
+			[
+				'/wp/v2/users/me',
+				'/wp/v2/types?context=view',
+				'/wp/v2/types?context=edit',
+				'/surecart/v1/affiliation_payouts/' . $request->query( 'id' ) . '?context=edit',
 			]
 		);
 

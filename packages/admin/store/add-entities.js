@@ -104,6 +104,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'export',
+		kind: 'surecart',
+		label: __('Export', 'surecart'),
+		baseURL: '/surecart/v1/exports',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'fulfillment',
 		kind: 'surecart',
 		label: __('Fulfillment', 'surecart'),

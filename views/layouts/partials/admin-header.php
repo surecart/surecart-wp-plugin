@@ -35,5 +35,10 @@
 				<?php endforeach; ?>
 			</sc-breadcrumbs>
 		<?php endif; ?>
+		<?php
+		if ( ! empty( $suffix ) ) {
+			echo wp_kses_post( $suffix );
+		}
+		?>
 	</div>
 </div>

@@ -405,6 +405,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function() {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationPayoutsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationPayoutsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'export', 'action' )->handle( 'AffiliationPayoutsController@export' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_affiliation_payout' )->handle( 'AffiliationPayoutsController@delete' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'complete', 'action' )->middleware( 'nonce:complete_affiliation_payout' )->handle( 'AffiliationPayoutsController@complete' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'make_processing', 'action' )->middleware( 'nonce:make_processing_affiliation_payout' )->handle( 'AffiliationPayoutsController@makeProcessing' );

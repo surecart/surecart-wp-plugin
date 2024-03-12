@@ -124,6 +124,7 @@ return [
 		\SureCart\Rest\ReferralsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationsRestServiceProvider::class,
+		\SureCart\Rest\ExportsRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
