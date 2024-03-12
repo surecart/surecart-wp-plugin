@@ -258,8 +258,8 @@ class AffiliationsListTable extends ListTable {
 	 * @return string
 	 */
 	public function action_toggle_activate( $affiliation ) {
-		$text            = $affiliation->active ? __( 'De-activate', 'surecart' ) : __( 'Activate', 'surecart' );
-		$confirm_message = $affiliation->active ? __( 'Are you sure you want to de-activate this affilate?', 'surecart' ) : __( 'Are you sure you want to activate this affiliate?', 'surecart' );
+		$text            = $affiliation->active ? __( 'Deactivate', 'surecart' ) : __( 'Activate', 'surecart' );
+		$confirm_message = $affiliation->active ? __( 'Are you sure you want to deactivate this affilate?', 'surecart' ) : __( 'Are you sure you want to activate this affiliate?', 'surecart' );
 		$link            = $this->get_toggle_activate_url( $affiliation->id, $affiliation->active ? 'deactivate' : 'activate');
 
 		return sprintf(

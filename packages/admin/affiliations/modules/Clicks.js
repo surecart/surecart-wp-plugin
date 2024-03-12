@@ -54,10 +54,10 @@ export default ({ affiliationId }) => {
 			title={__('Clicks', 'surecart')}
 			columns={{
 				url: {
-					label: __('Landing Url', 'surecart'),
+					label: __('Landing URL', 'surecart'),
 				},
 				referrer: {
-					label: __('Referrer', 'surecart'),
+					label: __('Referring URL', 'surecart'),
 				},
 				date: {
 					label: __('Date', 'surecart'),

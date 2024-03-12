@@ -17,7 +17,7 @@ export default ({ loading, affiliation, onActivate, onDeactivate }) => {
 
 	const confirmDeactivate = () =>
 		confirm(
-			__('Are you sure to de-activate the affiliate user?', 'surecart')
+			__('Are you sure to deactivate the affiliate user?', 'surecart')
 		);
 
 	if (affiliation?.active) {
@@ -29,7 +29,7 @@ export default ({ loading, affiliation, onActivate, onDeactivate }) => {
 				onClick={() => confirmDeactivate() && onDeactivate()}
 			>
 				<ScIcon slot="prefix" name="x-circle" />
-				{__('De-activate', 'surecart')}
+				{__('Deactivate', 'surecart')}
 			</ScButton>
 		);
 	}

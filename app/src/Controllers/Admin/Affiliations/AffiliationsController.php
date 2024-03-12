@@ -74,7 +74,7 @@ class AffiliationsController extends AdminController {
 	}
 
 	/**
-	 * De-activate the affiliation.
+	 * Deactivate the affiliation.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return void

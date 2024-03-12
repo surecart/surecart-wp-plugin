@@ -22,8 +22,8 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
+import useSave from '../settings/UseSave';
 import Error from '../components/Error';
-import useDirty from '../hooks/useDirty';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
@@ -35,9 +35,9 @@ export default () => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
-	const { saveDirtyRecords } = useDirty();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 
 	const {
@@ -85,10 +85,8 @@ export default () => {
 
 	const onSubmit = async () => {
 		try {
-			await saveDirtyRecords();
-			// save success.
-			createSuccessNotice(__('Affiliate request updated.', 'surecart'), {
-				type: 'snackbar',
+			save({
+				successMessage: __('Affiliate request updated.', 'surecart'),
 			});
 		} catch (e) {
 			createErrorNotice(

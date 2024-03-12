@@ -13,8 +13,8 @@ const statusTagTypes = {
 };
 
 export default ({ status }) => {
-	const tagType = statusTagTypes[status] || 'success';
 	const displayStatus = status || 'active';
+	const tagType = statusTagTypes[displayStatus];
 
 	return <sc-tag type={tagType}>{translate(displayStatus)}</sc-tag>;
 };
