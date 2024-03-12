@@ -42,7 +42,7 @@ class CompatibilityService {
 	 */
 	public function yoastSEOFix( $presenters ) {
 		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_upsell' ) ) {
-			return [];
+			return apply_filters( 'sc_wpseo_frontend_presenters', [], $presenters );
 		}
 	}
 
