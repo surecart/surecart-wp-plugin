@@ -10,9 +10,26 @@ use SureCart\Models\BulkAction;
  */
 class BulkActionService {
 
+	/**
+	 * The bulk actions data.
+	 *
+	 * @var array
+	 */
 	public $bulk_actions_data = [];
-	public $bulk_actions      = [];
-	public $statuses          = array( 'succeeded', 'processing', 'pending', 'invalid', 'completed' );
+
+	/**
+	 * The bulk actions.
+	 *
+	 * @var array
+	 */
+	public $bulk_actions = [];
+
+	/**
+	 * The bulk action statuses.
+	 *
+	 * @var array
+	 */
+	public $statuses = array( 'succeeded', 'processing', 'pending', 'invalid', 'completed' );
 
 	/**
 	 * Bootstrap any actions.
@@ -20,10 +37,21 @@ class BulkActionService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		$this->bulk_actions = ! empty( $_COOKIE['sc_bulk_actions'] ) ? json_decode( stripslashes( $_COOKIE['sc_bulk_actions'] ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$this->setBulkActions();
 		if ( ! empty( $this->bulk_actions ) ) {
 			$this->setBulkActionsData();
 			$this->deleteSucceededBulkActions();
+		}
+	}
+
+	/**
+	 * Set the bulk actions.
+	 */
+	public function setBulkActions() {
+		foreach ( $_COOKIE as $key => $value ) {
+			if ( 0 === strpos( $key, 'sc_bulk_action_' ) ) {
+				$this->bulk_actions[] = $value;
+			}
 		}
 	}
 
@@ -63,25 +91,21 @@ class BulkActionService {
 	 * Delete succeeded bulk actions from the cookie.
 	 */
 	public function deleteSucceededBulkActions() {
-		$this->bulk_actions = array_filter(
-			$this->bulk_actions,
-			function( $bulk_action_id ) {
-				return ! in_array(
-					$bulk_action_id,
-					$this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] ?? [],
-					true
-				);
-			}
-		);
-		setcookie(
-			'sc_bulk_actions',
-			wp_json_encode( $this->bulk_actions ),
-			time() + DAY_IN_SECONDS,
-			COOKIEPATH,
-			COOKIE_DOMAIN,
-			is_ssl(),
-			true
-		);
+		if ( empty( $this->bulk_actions_data['delete_products'] ) || empty( $this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] ) ) {
+			return;
+		}
+
+		foreach ( $this->bulk_actions_data['delete_products']['succeeded_bulk_actions'] as $bulk_action_id ) {
+			setcookie(
+				'sc_bulk_action_' . $bulk_action_id,
+				'',
+				time() - DAY_IN_SECONDS,
+				COOKIEPATH,
+				COOKIE_DOMAIN,
+				is_ssl(),
+				true
+			);
+		}
 	}
 
 	/**
@@ -141,8 +165,8 @@ class BulkActionService {
 		$bulk_actions[] = $bulk_action->id;
 
 		setcookie(
-			'sc_bulk_actions',
-			wp_json_encode( $bulk_actions ),
+			'sc_bulk_action_' . $bulk_action->id,
+			$bulk_action->id,
 			time() + DAY_IN_SECONDS,
 			COOKIEPATH,
 			COOKIE_DOMAIN,
