@@ -6,18 +6,18 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import ModelSelector from '../../../components/ModelSelector';
 import { ScFormControl } from '@surecart/components-react';
+import ModelSelector from '../ModelSelector';
 
-export default ({ customer, updateCustomer }) => {
+export default ({ item, updateItem }) => {
 	return (
 		<ScFormControl label={__('Connect an affiliate', 'surecart')}>
 			<ModelSelector
 				unselect={false}
 				name="affiliation"
-				value={customer?.affiliation?.id || customer?.affiliation}
+				value={item?.affiliation?.id || item?.affiliation}
 				onSelect={(affiliation) =>
-					updateCustomer({
+					updateItem({
 						affiliation,
 					})
 				}

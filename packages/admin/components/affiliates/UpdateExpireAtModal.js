@@ -10,17 +10,19 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScButton, ScDialog } from '@surecart/components-react';
 
-export default ({ open, onRequestClose, customer, updateCustomer }) => {
-	const oldAffiliationExpiresAt = customer?.affiliation_expires_at;
+export default ({ open, onRequestClose, item, updateItem }) => {
+	const oldAffiliationExpiresAt = item?.affiliation_expires_at;
 	const [affiliationExpiresAt, setAffiliationExpiresAt] = useState(
 		new Date()
 	);
 
 	useEffect(() => {
-		if (customer?.affiliation_expires_at) {
-			setAffiliationExpiresAt(new Date(customer.affiliation_expires_at * 1000));
+		if (item?.affiliation_expires_at) {
+			setAffiliationExpiresAt(
+				new Date(item.affiliation_expires_at * 1000)
+			);
 		}
-	}, [customer?.affiliation_expires_at]);
+	}, [item?.affiliation_expires_at]);
 
 	const cancel = () => {
 		setAffiliationExpiresAt(oldAffiliationExpiresAt);
@@ -57,7 +59,7 @@ export default ({ open, onRequestClose, customer, updateCustomer }) => {
 				type="primary"
 				slot="footer"
 				onClick={() => {
-					updateCustomer({
+					updateItem({
 						affiliation_expires_at:
 							Date.parse(affiliationExpiresAt) / 1000,
 					});

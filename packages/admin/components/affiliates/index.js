@@ -8,20 +8,20 @@ import { store as coreStore } from '@wordpress/core-data';
 /**
  * Internal dependencies.
  */
-import Box from '../../../ui/Box';
 import ConnectAffiliate from './ConnectAffiliate';
 import ViewAffiliate from './ViewAffiliate';
+import Box from '../../ui/Box';
 
-export default ({ customer, updateCustomer, loading }) => {
+export default ({ item, updateItem, loading }) => {
 	const { affiliation, fetching } = useSelect(
 		(select) => {
-			if (!customer?.affiliation) {
+			if (!item?.affiliation) {
 				return {
 					affiliation: null,
 					fetching: false,
 				};
 			}
-			const queryArgs = ['surecart', 'affiliation', customer.affiliation];
+			const queryArgs = ['surecart', 'affiliation', item.affiliation];
 			return {
 				affiliation: select(coreStore).getEntityRecord(...queryArgs),
 				fetching: select(coreStore).isResolving(
@@ -30,7 +30,7 @@ export default ({ customer, updateCustomer, loading }) => {
 				),
 			};
 		},
-		[customer?.affiliation]
+		[item?.affiliation]
 	);
 
 	return (
@@ -40,14 +40,14 @@ export default ({ customer, updateCustomer, loading }) => {
 		>
 			{!affiliation?.id ? (
 				<ConnectAffiliate
-					customer={customer}
-					updateCustomer={updateCustomer}
+					item={item}
+					updateItem={updateItem}
 					loading={fetching || loading}
 				/>
 			) : (
 				<ViewAffiliate
-					customer={customer}
-					updateCustomer={updateCustomer}
+					item={item}
+					updateItem={updateItem}
 					affiliation={affiliation}
 					loading={fetching || loading}
 				/>

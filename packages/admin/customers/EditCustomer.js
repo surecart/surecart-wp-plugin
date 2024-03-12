@@ -35,7 +35,7 @@ import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
 import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
 import TaxSettings from './modules/TaxSettings';
 import Licenses from './modules/Licenses';
-import Affiliates from './modules/Affiliates';
+import Affiliates from '../components/affiliates';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -163,8 +163,8 @@ export default () => {
 					<Purchases customerId={id} />
 					<Licenses customerId={id} />
 					<Affiliates
-						customer={customer}
-						updateCustomer={editCustomer}
+						item={customer}
+						updateItem={editCustomer}
 						loading={!hasLoadedCustomer}
 					/>
 					<ShippingAddress

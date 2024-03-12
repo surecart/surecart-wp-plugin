@@ -23,10 +23,10 @@ import {
 	ScMenuItem,
 	ScText,
 } from '@surecart/components-react';
-import useAvatar from '../../../hooks/useAvatar';
 import UpdateExpireAtModal from './UpdateExpireAtModal';
+import useAvatar from '../../hooks/useAvatar';
 
-export default ({ customer, affiliation, updateCustomer }) => {
+export default ({ item, updateItem, affiliation }) => {
 	const [modal, setModal] = useState(false);
 	const avatarUrl = useAvatar({ email: affiliation?.email });
 
@@ -73,7 +73,7 @@ export default ({ customer, affiliation, updateCustomer }) => {
 					<ScMenu>
 						<ScMenuItem
 							onClick={() => {
-								updateCustomer({
+								updateItem({
 									affiliation: null,
 								});
 							}}
@@ -99,7 +99,7 @@ export default ({ customer, affiliation, updateCustomer }) => {
 					>
 						{__('Commissions On All Purchases', 'surecart')}
 					</ScText>
-					{!customer?.affiliation_expires_at ? (
+					{!item?.affiliation_expires_at ? (
 						<ScText
 							css={css`
 								color: var(--sc-color-gray-500);
@@ -116,7 +116,7 @@ export default ({ customer, affiliation, updateCustomer }) => {
 							{__('Until', 'surecart')}{' '}
 							<ScFormatDate
 								type="timestamp"
-								date={customer?.affiliation_expires_at}
+								date={item?.affiliation_expires_at}
 								month="short"
 								day="numeric"
 								year="numeric"
@@ -138,10 +138,10 @@ export default ({ customer, affiliation, updateCustomer }) => {
 							></ScIcon>
 							{__('Update', 'surecart')}
 						</ScMenuItem>
-						{customer?.affiliation_expires_at && (
+						{item?.affiliation_expires_at && (
 							<ScMenuItem
 								onClick={() =>
-									updateCustomer({
+									updateItem({
 										affiliation_expires_at: null,
 									})
 								}
@@ -161,8 +161,8 @@ export default ({ customer, affiliation, updateCustomer }) => {
 			<UpdateExpireAtModal
 				open={modal}
 				onRequestClose={() => setModal(false)}
-				customer={customer}
-				updateCustomer={updateCustomer}
+				item={item}
+				updateItem={updateItem}
 			/>
 		</div>
 	);
