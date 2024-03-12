@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.20.0
+Stable tag: 2.20.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,12 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.20.1 - March 12th, 2024 =
+- Accesibility: Checkout amount changes will now speak the new amount(s) when using a screen reader.
+- Fix: Issue with apple pay not working on some accounts.
+- Fix: Issue with initially checked price option not always working properly on custom checkouts.
+- Fix: Validate initial line items in case a price or variant is changed.
 
 = 2.20.0 - March 6th, 2024 =
 - New: Add tax and shipping overrides based on product collections.
