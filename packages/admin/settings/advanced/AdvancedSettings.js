@@ -17,7 +17,6 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import CustomerSyncModal from './components/CustomerSyncModal';
 import { useEntityProp } from '@wordpress/core-data';
-import useAccount from '../../mixins/useAccount';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -85,7 +84,6 @@ export default () => {
 		'site',
 		'surecart_dashboard_admin_menu'
 	);
-	const { id } = useAccount();
 
 	/**
 	 * Form is submitted.
@@ -425,7 +423,7 @@ export default () => {
 			>
 				<ScButton
 					type="danger"
-					href={`https://app.surecart.com/account/edit?switch_account_id=${id}`}
+					href={`https://app.surecart.com/account/edit?switch_account_id=${scData?.account_id}`}
 					target="_blank"
 					outline
 				>

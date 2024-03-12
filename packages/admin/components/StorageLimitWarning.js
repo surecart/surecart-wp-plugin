@@ -2,7 +2,6 @@
 import { css, jsx } from '@emotion/core';
 import { ScButton, ScFormatBytes, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import useAccount from '../mixins/useAccount';
 
 /**
  *
@@ -11,7 +10,6 @@ import useAccount from '../mixins/useAccount';
 
 export default (props) => {
 	const { mediaUsageDetails, mediaUsagePercentage } = props;
-	const { id } = useAccount();
 
 	return (
 		<div
@@ -96,7 +94,7 @@ export default (props) => {
 					target="_blank"
 					href={`${
 						scData?.upgrade_url || 'https://app.surecart.com'
-					}?switch_account_id=${id ?? null}`}
+					}?switch_account_id=${scData?.account_id}`}
 					size="small"
 					type="warning"
 				>

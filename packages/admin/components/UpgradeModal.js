@@ -3,11 +3,8 @@ import { css, jsx } from '@emotion/core';
 import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import useAccount from '../mixins/useAccount';
 
 export default ({ onRequestClose }) => {
-	const { id } = useAccount();
-
 	return (
 		<Modal
 			css={css`
@@ -36,7 +33,7 @@ export default ({ onRequestClose }) => {
 				}}
 				href={`${
 					scData?.upgrade_url || 'https://app.surecart.com'
-				}?switch_account_id=${id ?? null}`}
+				}?switch_account_id=${scData?.account_id}`}
 				type="primary"
 				target="_blank"
 				full

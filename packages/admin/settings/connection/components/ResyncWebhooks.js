@@ -7,13 +7,11 @@ import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { formatTime } from '../../../util/time';
-import useAccount from '../../../mixins/useAccount';
 
 export default ({ webhook }) => {
 	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const { id } = useAccount();
 
 	const resync = async () => {
 		try {
@@ -67,7 +65,7 @@ export default ({ webhook }) => {
 					)}
 					<br />
 					<ScButton
-						href={`${scData.app_url}/webhook_endpoints?switch_account_id=${id}`}
+						href={`${scData.app_url}/webhook_endpoints?switch_account_id=${scData?.account_id}`}
 						target="_blank"
 					>
 						{__('View Logs', 'surecart')}

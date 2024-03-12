@@ -13,15 +13,13 @@ import {
 	ScTag,
 	ScText,
 } from '@surecart/components-react';
-import useAccount from '../../mixins/useAccount';
 
 export default ({ processor }) => {
 	const { icon, description, isBeta, status } = processor;
-	const { id } = useAccount();
 
 	const link = scData?.claim_url
 		? scData?.claim_url
-		: `${scData?.app_url}/processors?switch_account_id=${id}`;
+		: `${scData?.app_url}/processors?switch_account_id=${scData?.account_id}`;
 
 	return (
 		<ScStackedListRow
