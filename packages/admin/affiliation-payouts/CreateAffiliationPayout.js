@@ -7,15 +7,11 @@ import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 
 import CreateTemplate from '../templates/CreateModel';
-import {
-	ScButton,
-	ScForm,
-	ScFormControl,
-	ScInput,
-} from '@surecart/components-react';
+import { ScButton, ScForm, ScFormControl } from '@surecart/components-react';
 import Box from '../ui/Box';
 import ModelSelector from '../components/ModelSelector';
 import Error from '../components/Error';
+import { BaseControl, DateTimePicker } from '@wordpress/components';
 
 export default () => {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -27,7 +23,7 @@ export default () => {
 		},
 		{
 			affiliation: '',
-			end_date: '',
+			end_date: Math.round(new Date().getTime() / 1000),
 		}
 	);
 
@@ -61,6 +57,12 @@ export default () => {
 			setIsSaving(false);
 		}
 	};
+
+	console.log(
+		'end date',
+		payout?.end_date,
+		new Date(payout?.end_date * 1000)
+	);
 
 	return (
 		<CreateTemplate>
@@ -96,17 +98,26 @@ export default () => {
 							/>
 						</ScFormControl>
 
-						<ScInput
-							label={__('Period End', 'surecart')}
-							type="date"
-							required
-							value={payout.end_date}
-							onScInput={(e) => {
-								setPayout({
-									end_date: e.target.value,
-								});
-							}}
-						/>
+						<div
+							css={css`
+								width: 50%;
+								margin-top: var(--sc-spacing-large);
+							`}
+						>
+							<BaseControl.VisualLabel>
+								{__('Period End:', 'surecart')}
+							</BaseControl.VisualLabel>
+							<DateTimePicker
+								currentDate={new Date(payout.end_date * 1000)}
+								onChange={(end_date) =>
+									setPayout({
+										end_date:
+											Date.parse(new Date(end_date)) /
+											1000,
+									})
+								}
+							/>
+						</div>
 
 						<div
 							css={css`
