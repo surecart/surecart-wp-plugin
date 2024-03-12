@@ -71,6 +71,7 @@ class FormModeSwitcherService {
 			[
 				'id'    => 'sc_live_mode',
 				'title' => sprintf(
+					/* translators: 1: onclick attribute 2: live mode text 3: checkmark if mode is live */
 					'<div %1$s style="display:flex; justify-content: space-between;"><div><span style="color: #49de80; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #DCFCE7;">%2$s</div><div>%3$s</span></div></div>',
 					'live' === $mode ? '' : sprintf('onclick="event.preventDefault(); if(confirm(\'%1$s\')) { window.location.href = \'%2$s\'; }"', $confirm_message, esc_url($url . '&mode=live')),
 					$live_mode_text,
@@ -81,6 +82,7 @@ class FormModeSwitcherService {
 			[
 				'id'    => 'sc_test_mode',
 				'title' => sprintf(
+					/* translators: 1: onclick attribute 2: test mode text 3: checkmark if mode is test */
 					'<div %1$s style="display:flex; justify-content: space-between;"><div><span style="color: #fbbf24; font-weight: bold; font-size: 16px; line-height: 1;">• </span><span style="color: #FEF3C7;">%2$s</div><div>%3$s</span></div></div>',
 					'test' === $mode ? '' : sprintf('onclick="event.preventDefault(); if(confirm(\'%1$s\')) { window.location.href = \'%2$s\'; }"', $confirm_message, esc_url($url . '&mode=test')),
 					$test_mode_text,
