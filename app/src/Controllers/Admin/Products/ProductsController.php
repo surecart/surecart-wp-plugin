@@ -6,7 +6,6 @@ use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
 use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
-use SureCart\Models\BulkAction;
 use SureCart\Background\BulkActionService;
 
 /**
