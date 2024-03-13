@@ -9,6 +9,13 @@ use SureCart\Models\BulkAction;
  */
 class BulkActionService {
 	/**
+	 * The cookie prefix.
+	 *
+	 * @var string
+	 */
+	public $cookie_prefix = 'sc_bulk_action_';
+
+	/**
 	 * The bulk actions data.
 	 *
 	 * @var array
@@ -44,17 +51,21 @@ class BulkActionService {
 
 	/**
 	 * Set the bulk actions.
+	 *
+	 * @return void
 	 */
 	public function setBulkActions() {
 		foreach ( $_COOKIE as $key => $value ) {
-			if ( 0 === strpos( $key, 'sc_bulk_action_' ) ) {
+			if ( 0 === strpos( $key, $this->cookie_prefix ) ) {
 				$this->bulk_actions[] = sanitize_text_field( $value );
 			}
 		}
 	}
 
 	/**
-	 * Get the bulk actions data.
+	 * Set the bulk actions data.
+	 *
+	 * @return void
 	 */
 	public function setBulkActionsData() {
 		$bulk_actions = array();
@@ -87,6 +98,8 @@ class BulkActionService {
 
 	/**
 	 * Delete succeeded bulk actions from the cookie.
+	 *
+	 * @return void
 	 */
 	public function deleteSucceededBulkActions() {
 		$succeeded_bulk_actions = $this->getSucceededBulkActions();
@@ -97,7 +110,7 @@ class BulkActionService {
 
 		foreach ( $succeeded_bulk_actions as $bulk_action_id ) {
 			setcookie(
-				'sc_bulk_action_' . $bulk_action_id,
+				$this->cookie_prefix . $bulk_action_id,
 				'',
 				time() - DAY_IN_SECONDS,
 				COOKIEPATH,
@@ -165,7 +178,7 @@ class BulkActionService {
 		$bulk_actions[] = $bulk_action->id;
 
 		setcookie(
-			'sc_bulk_action_' . $bulk_action->id,
+			$this->cookie_prefix . $bulk_action->id,
 			$bulk_action->id,
 			time() + DAY_IN_SECONDS,
 			COOKIEPATH,
@@ -187,10 +200,11 @@ class BulkActionService {
 			return [];
 		}
 
-		$pending_record_ids = $this->bulk_actions_data[ $action_type ]['pending_record_ids'] ?? [];
+		$action_data        = $this->bulk_actions_data[ $action_type ] ?? [];
+		$pending_record_ids = $action_data['pending_record_ids'] ?? [];
 
-		if ( ! empty( $this->bulk_actions_data[ $action_type ]['processing_record_ids'] ) ) {
-			$pending_record_ids = array_merge( $pending_record_ids, $this->bulk_actions_data[ $action_type ]['processing_record_ids'] );
+		if ( ! empty( $action_data['processing_record_ids'] ) ) {
+			$pending_record_ids = array_merge( $pending_record_ids, $action_data['processing_record_ids'] );
 		}
 
 		return $pending_record_ids;
@@ -208,7 +222,7 @@ class BulkActionService {
 
 		$succeeded_bulk_actions = [];
 
-		foreach ( $this->bulk_actions_data as $action_type => $bulk_action_data ) {
+		foreach ( $this->bulk_actions_data as $bulk_action_data ) {
 			if ( ! empty( $bulk_action_data['succeeded_bulk_actions'] ) ) {
 				$succeeded_bulk_actions = array_merge( $succeeded_bulk_actions, $bulk_action_data['succeeded_bulk_actions'] );
 			}
