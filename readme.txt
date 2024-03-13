@@ -227,7 +227,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.20.2 - March 13th, 2024 =
-- Fix: Issue with initial form line items not being added to forms.
+- Fix: Issue with initial form line items not being added on some forms.
 
 = 2.20.1 - March 12th, 2024 =
 - Accesibility: Checkout amount changes will now speak the new amount(s) when using a screen reader.
