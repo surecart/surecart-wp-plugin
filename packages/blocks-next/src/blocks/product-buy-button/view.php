@@ -1,10 +1,9 @@
 <div <?php echo get_block_wrapper_attributes(['class' => 'wp-block-button']); ?>
-	data-wp-context='<?php echo wp_json_encode([
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [
 		'checkoutUrl' =>  esc_url( \SureCart::pages()->url( 'checkout' ) ),
 		'text' => esc_attr($attributes['text'] ?? __('Add To Cart', 'surecart')),
 		'outOfStockText' => esc_attr($attributes['out_of_stock_text'] ?? __('Sold Out', 'surecart')),
-	], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP ); ?>'
-	>
+	 ] ) ); ?>>
 	<a
 		class="wp-block-button__link wp-element-button sc-button__link"
 		data-wp-bind--href="state.checkoutUrl"

@@ -102,8 +102,8 @@ class Price extends Model {
 	public function getTrialTextAttribute() {
 		return $this->trial_duration_days ? sprintf(
 				_n(
-					'Starting in %s day.',
-					'Starting in %s days.',
+					'Starting in %s day',
+					'Starting in %s days',
 					$this->trial_duration_days,
 					'surecart'
 				),
@@ -120,7 +120,7 @@ class Price extends Model {
 			return '';
 		}
 		return sprintf(
-			__('%1s %2s.', 'surecart'),
+			__('%1s %2s', 'surecart'),
 			Currency::format( $this->setup_fee_amount, $this->currency ),
 			$this->setup_fee_name ?? __('Setup Fee', 'surecart')
 		);
@@ -143,13 +143,13 @@ class Price extends Model {
 	 *
 	 * @return string
 	 */
-	public function getIntervalTextAttribute() {
-		$intervals = [
+	public function getIntervalTextAttribute( $intervals = [] ) {
+		$intervals = wp_parse_args( $intervals, [
 			'day'   => __('day', 'surecart'),
 			'week'  => __('week', 'surecart'),
 			'month' => __('month', 'surecart'),
 			'year'  => __('year', 'surecart'),
-		];
+		] );
 
 		if ( empty($intervals[$this->recurring_interval]) ) {
 			return '';
@@ -160,5 +160,19 @@ class Price extends Model {
 			$intervals[$this->recurring_interval],
 			(int) $this->recurring_interval_count,
 		);
+	}
+
+	/**
+	 * Get the short interval text attribute
+	 *
+	 * @return string
+	 */
+	public function getShortIntervalTextAttribute() {
+		return $this->getIntervalTextAttribute( [
+			'day'   => __('day', 'surecart'),
+			'week'  => __('wk', 'surecart'),
+			'month' => __('mo', 'surecart'),
+			'year'  => __('yr', 'surecart'),
+		] );
 	}
 }

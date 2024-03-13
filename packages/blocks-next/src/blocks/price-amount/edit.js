@@ -1,0 +1,17 @@
+import { useBlockProps } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
+
+export default ({ context }) => {
+	const blockProps = useBlockProps();
+	const { display_amount, short_interval_text } = context['surecart/price'];
+
+	if (display_amount) {
+		return (
+			<div {...blockProps}>
+				{display_amount} {short_interval_text}
+			</div>
+		);
+	}
+
+	return <div {...blockProps}>$10 / mo</div>;
+};
