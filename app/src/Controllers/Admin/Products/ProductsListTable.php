@@ -414,11 +414,14 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$pending_record_ids   = $this->bulk_actions->getRecordIds( 'delete_products', 'pending' );
-		$succeeded_record_ids = $this->bulk_actions->getRecordIds( 'delete_products', 'succeeded' );
-		$bulk_status          = '';
+		$pending_record_ids    = $this->bulk_actions->getRecordIds( 'delete_products', 'pending' );
+		$processing_record_ids = $this->bulk_actions->getRecordIds( 'delete_products', 'processing' );
+		$succeeded_record_ids  = $this->bulk_actions->getRecordIds( 'delete_products', 'succeeded' );
+		$bulk_status           = '';
 		if ( ! empty( $pending_record_ids ) && in_array( $product->id, $pending_record_ids ) ) {
 			$bulk_status = 'pending';
+		} elseif ( ! empty( $processing_record_ids ) && in_array( $product->id, $processing_record_ids ) ) {
+			$bulk_status = 'processing';
 		} elseif ( ! empty( $succeeded_record_ids ) && in_array( $product->id, $succeeded_record_ids ) ) {
 			$bulk_status = 'succeeded';
 		}
@@ -462,7 +465,7 @@ class ProductsListTable extends ListTable {
 			return '<div>' . esc_html__( 'Successfully deleted.', 'surecart' ) . '</div>';
 		}
 
-		if ( 'pending' === $bulk_status ) {
+		if ( 'pending' === $bulk_status || 'processing' === $bulk_status ) {
 			return '<div>' . esc_html__( 'Queued for deletion.', 'surecart' ) . '</div>';
 		}
 
