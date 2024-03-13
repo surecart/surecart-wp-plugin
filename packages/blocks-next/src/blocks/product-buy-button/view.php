@@ -5,7 +5,8 @@
 		'outOfStockText' => esc_attr($attributes['out_of_stock_text'] ?? __('Sold Out', 'surecart')),
 	 ] ) ); ?>>
 	<a
-		class="wp-block-button__link wp-element-button sc-button__link"
+		class="wp-block-button__link wp-element-button sc-button__link <?php echo esc_attr($class); ?>"
+		style="<?php echo esc_attr($style); ?>"
 		data-wp-bind--href="state.checkoutUrl"
 		data-wp-bind--disabled="state.isUnavailable"
 		<?php echo ($attributes['add_to_cart'] ?? false) ? 'data-wp-on--click="actions.addToCart"' : ''; ?>
@@ -17,3 +18,22 @@
 		</span>
 	</a>
 </div>
+
+
+
+<button data-wp-on--click="surecart/dialog::callbacks.toggle" data-target="#dialog">open dialog</button>
+<dialog id="dialog" class="sc-dialog" data-wp-on--click="surecart/dialog::callbacks.closeOverlay">
+	<div class="sc-dialog__header">
+		<h2 class="sc-dialog__title">Test</h2>
+		<div class="sc-dialog__close" data-wp-on--click="surecart/dialog::callbacks.toggle" tabindex="0"></div>
+	</div>
+
+	<div part="body" class="sc-dialog__body">
+		<input type="text"></input>
+	</div>
+
+	<footer class="sc-dialog__footer">
+		<button data-wp-on--click="surecart/dialog::callbacks.toggle" class="wp-block-button__link wp-element-button sc-button__link" autofocus>Close</button>
+	</footer>
+</dialog>
+
