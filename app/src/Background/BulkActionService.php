@@ -119,6 +119,9 @@ class BulkActionService {
 				true
 			);
 		}
+
+		// make sure to clear cache since these are now deleted.
+		\SureCart::account()->clearCache();
 	}
 
 	/**
