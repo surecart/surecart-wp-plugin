@@ -416,17 +416,19 @@ class ProductsListTable extends ListTable {
 		</a>
 
 		<?php
-		echo $this->row_actions(
-			array_filter(
-				! $is_queued_for_deletion ? array(
-					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
-					'trash'        => $this->action_toggle_archive( $product ),
-					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
-				) : array(
-					'queued_for_deletion' => '<span>' . esc_html__( 'Queued for deletion', 'surecart' ) . '</span>',
-				)
-			),
-			$is_queued_for_deletion
+		echo wp_kses_post(
+			$this->row_actions(
+				array_filter(
+					! $is_queued_for_deletion ? array(
+						'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+						'trash'        => $this->action_toggle_archive( $product ),
+						'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+					) : array(
+						'queued_for_deletion' => '<span>' . esc_html__( 'Queued for deletion', 'surecart' ) . '</span>',
+					)
+				),
+				(bool) $is_queued_for_deletion
+			)
 		);
 		?>
 		</div>
