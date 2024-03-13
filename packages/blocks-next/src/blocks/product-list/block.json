@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-list",
+	"keywords": ["product", "list", "raj"],
+	"title": "New Product List",
+	"description": "Displays products list.",
+	"version": "1.0.0",
+	"category": "surecart",
+	"icon": "media-interactive",
+	"example": {
+		"attributes": {}
+	},
+	"attributes": {
+		"product_id": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js"
+}
