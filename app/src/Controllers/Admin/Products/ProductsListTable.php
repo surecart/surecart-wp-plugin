@@ -26,7 +26,6 @@ class ProductsListTable extends ListTable {
 		parent::__construct();
 
 		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
-
 	}
 
 	/**
@@ -39,23 +38,6 @@ class ProductsListTable extends ListTable {
 		$this->controller->showBulkActionAdminNotice( 'delete_products' );
 	}
 
-	/**
-	 * Process the bulk action.
-	 */
-	public function process_bulk_action() {
-		$action = $this->current_action();
-
-		if ( ! $action ) {
-			return;
-		}
-
-		if ( 'delete' === $action ) {
-			$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			\SureCart::bulkAction()->createBulkAction( 'delete_products', $product_ids );
-			wp_safe_redirect( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
-			exit;
-		}
-	}
 	/**
 	 * Prepare the items for the table to process
 	 *

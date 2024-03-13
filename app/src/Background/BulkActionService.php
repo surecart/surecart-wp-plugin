@@ -171,11 +171,10 @@ class BulkActionService {
 				'record_ids'  => $record_ids,
 			]
 		);
-		if ( is_wp_error( $bulk_action ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $bulk_action->get_error_messages() ) ) );
-		}
 
-		$bulk_actions[] = $bulk_action->id;
+		if ( is_wp_error( $bulk_action ) ) {
+			return $bulk_action;
+		}
 
 		setcookie(
 			$this->cookie_prefix . $bulk_action->id,
@@ -186,6 +185,8 @@ class BulkActionService {
 			is_ssl(),
 			true
 		);
+
+		return $bulk_action;
 	}
 
 	/**

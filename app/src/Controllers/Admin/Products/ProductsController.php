@@ -33,9 +33,17 @@ class ProductsController extends AdminController {
 	/**
 	 * Bulk Delete.
 	 */
-	public function bulkAction() {
-		$table = new ProductsListTable();
-		$table->process_bulk_action();
+	public function bulkDelete() {
+		$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$action      = \SureCart::bulkAction()->createBulkAction( 'delete_products', $product_ids );
+
+		// handle error.
+		if ( is_wp_error( $action ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $action->get_error_messages() ) ) );
+		}
+
+		// redirect.
+		return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
 	}
 
 	/**
