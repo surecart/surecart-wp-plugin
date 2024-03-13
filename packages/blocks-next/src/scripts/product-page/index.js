@@ -5,7 +5,7 @@ import { store, getContext } from '@wordpress/interactivity';
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
-const { state, callbacks } = store('surecart/product', {
+const { state, callbacks, actions } = store('surecart/product', {
 	state: {
 		/**
 		 * Product contextual state.
@@ -144,6 +144,15 @@ const { state, callbacks } = store('surecart/product', {
 	},
 
 	actions: {
+		handlePurchaseClick(e) {
+			const { addToCart } = getContext();
+			if (addToCart) {
+				e.preventDefault();
+				return actions.addToCart(e);
+			}
+			update({ busy: true });
+			return true;
+		},
 		*addToCart(e) {
 			e.preventDefault();
 			try {

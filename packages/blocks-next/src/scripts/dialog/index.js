@@ -17,5 +17,10 @@ store('surecart/dialog', {
 				e.currentTarget.close();
 			}
 		},
+		actions: {
+			toggle: (target) => {
+				target.open ? target.close() : target.showModal();
+			},
+		},
 	},
 });
