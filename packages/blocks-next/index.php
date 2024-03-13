@@ -99,32 +99,14 @@ add_action('init', function() {
 	);
 
 	// instead, use a static loader that injects the script at runtime.
-	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/api/checkout/index.asset.php';
+	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/dialog/index.asset.php';
 	wp_register_script_module(
-		'@surecart/checkout-api',
-		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/api/checkout/index.js',
-		[
-			[
-				'id' => '@surecart/api-fetch',
-				'import' => 'dynamic'
-			]
-		],
+		'@surecart/dialog',
+		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dialog/index.js',
+		[],
 		$static_assets['version']
 	);
 
-		// instead, use a static loader that injects the script at runtime.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout/index.asset.php';
-		wp_register_script_module(
-			'@surecart/checkout',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout/index.js',
-			[
-				[
-					'id' => '@surecart/checkout-api',
-					'import' => 'dynamic'
-				]
-			],
-			$static_assets['version']
-		);
 
 	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
@@ -132,9 +114,8 @@ add_action('init', function() {
 		'@surecart/product-page',
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
 		[
-			'@surecart/checkout',
 			[
-				'id' => '@surecart/checkout-api',
+				'id' => '@surecart/dialog',
 				'import' => 'dynamic'
 			]
 		],
