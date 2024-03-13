@@ -42,58 +42,85 @@ class BulkActionService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		$this->setBulkActions();
-		if ( ! empty( $this->bulk_actions ) ) {
-			$this->setBulkActionsData();
-			$this->deleteSucceededBulkActions();
+		// we will only do this in the admin or if there are bulk actions to check.
+		if ( ! $this->hasBulkActionsToCheck() || ! is_admin() ) {
+			return;
 		}
+
+		// store the bulk actions in the object.
+		$this->bulk_actions = BulkAction::where(
+			[
+				'ids' => $this->getBulkActionsToCheck(),
+			]
+		)->get();
+
+		// delete any succeeded bulk actions.
+		$this->deleteCompletedBulkActions();
 	}
 
 	/**
-	 * Set the bulk actions.
+	 * Get the active bulk actions.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	public function setBulkActions() {
+	protected function getBulkActionsToCheck() {
+		$actions = [];
 		foreach ( $_COOKIE as $key => $value ) {
 			if ( 0 === strpos( $key, $this->cookie_prefix ) ) {
-				$this->bulk_actions[] = sanitize_text_field( $value );
+				$actions[] = sanitize_text_field( $value );
 			}
 		}
+		return $actions;
 	}
 
 	/**
-	 * Set the bulk actions data.
+	 * Do we have processing bulk actions?
 	 *
-	 * @return void
+	 * @return boolean
 	 */
-	public function setBulkActionsData() {
-		$bulk_actions = array();
+	protected function hasBulkActionsToCheck() {
+		return ! empty( $this->getBulkActionsToCheck() );
+	}
 
-		if ( is_array( $this->bulk_actions ) ) {
-			$bulk_actions_expanded = BulkAction::where(
-				[
-					'ids[]' => $this->bulk_actions,
-				]
-			)->get();
-
-			foreach ( $bulk_actions_expanded as $bulk_action ) {
+	/**
+	 * Group the bulk actions data by action type and status.
+	 *
+	 * @return array
+	 */
+	public function groupedBulkActions() {
+		$sorted_bulk_actions = [];
+		if ( ! empty( $this->bulk_actions ) ) {
+			foreach ( $this->bulk_actions as $bulk_action ) {
 				foreach ( $this->statuses as $status ) {
-					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] ) ) {
-						$bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] = array();
+					if ( ! isset( $sorted_bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] ) ) {
+						$sorted_bulk_actions[ $bulk_action->action_type ][ $status . '_record_ids' ] = array();
 					}
-					if ( ! isset( $bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] ) ) {
-						$bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] = array();
+					if ( ! isset( $sorted_bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] ) ) {
+						$sorted_bulk_actions[ $bulk_action->action_type ][ $status . '_bulk_actions' ] = array();
 					}
 				}
 				if ( ! is_wp_error( $bulk_action ) ) {
-					$bulk_actions[ $bulk_action->action_type ][ $bulk_action->status ][] = $bulk_action;
-					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_bulk_actions' ], $bulk_action->id ); // Saves the bulks actions ids for each status.
-					array_push( $bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_record_ids' ], ...$bulk_action->record_ids ); // Saves the record ids for each status.
+					$sorted_bulk_actions[ $bulk_action->action_type ][ $bulk_action->status ][] = $bulk_action;
+					array_push( $sorted_bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_bulk_actions' ], $bulk_action->id ); // Saves the bulks actions ids for each status.
+					array_push( $sorted_bulk_actions[ $bulk_action->action_type ][ $bulk_action->status . '_record_ids' ], ...$bulk_action->record_ids ); // Saves the record ids for each status.
 				}
 			}
 		}
-		$this->bulk_actions_data = $bulk_actions;
+		return $sorted_bulk_actions;
+	}
+
+	/**
+	 * Get the completed bulk actions.
+	 *
+	 * @return array
+	 */
+	public function getCompletedBulkActions() {
+		return array_filter(
+			$this->bulk_actions,
+			function( $action ) {
+				return in_array( $action->status, [ 'pending', 'processing' ] );
+			}
+		);
 	}
 
 	/**
@@ -101,23 +128,30 @@ class BulkActionService {
 	 *
 	 * @return void
 	 */
-	public function deleteSucceededBulkActions() {
-		$succeeded_bulk_actions = $this->getSucceededBulkActions();
+	public function deleteCompletedBulkActions() {
+		// get any bulk actions that are processing.
+		$processing = array_filter(
+			$this->bulk_actions,
+			function( $action ) {
+				return in_array( $action->status, [ 'pending', 'processing' ] );
+			}
+		);
 
-		if ( empty( $succeeded_bulk_actions ) ) {
-			return;
-		}
-
-		foreach ( $succeeded_bulk_actions as $bulk_action_id ) {
-			setcookie(
-				$this->cookie_prefix . $bulk_action_id,
-				'',
-				time() - DAY_IN_SECONDS,
-				COOKIEPATH,
-				COOKIE_DOMAIN,
-				is_ssl(),
-				true
-			);
+		// for each of our cookies, if the bulk action is not processing, delete the cookie.
+		foreach ( $_COOKIE as $key => $value ) {
+			if ( 0 === strpos( $key, $this->cookie_prefix ) ) {
+				if ( ! in_array( $value, array_column( $processing, 'id' ) ) ) {
+					setcookie(
+						$key,
+						'',
+						time() - DAY_IN_SECONDS,
+						COOKIEPATH,
+						COOKIE_DOMAIN,
+						is_ssl(),
+						true
+					);
+				}
+			}
 		}
 
 		// make sure to clear cache since these are now deleted.
@@ -136,9 +170,11 @@ class BulkActionService {
 			return;
 		}
 
+		$actions = $this->groupedBulkActions();
+
 		$status_parts = [];
 		foreach ( $this->statuses as $status ) {
-			$count = count( $this->bulk_actions_data[ $action_type ][ $status . '_record_ids' ] ?? [] );
+			$count = count( $actions[ $action_type ][ $status . '_record_ids' ] ?? [] );
 			if ( $count > 0 ) {
 				// translators: %1$d is Count of specific deletions, %2$s is bulk deletion progress status.
 				$status_parts[] = sprintf( esc_html__( '%1$d %2$s', 'surecart' ), $count, $status );
@@ -162,6 +198,9 @@ class BulkActionService {
 	/**
 	 * Create a bulk action.
 	 *
+	 * This creates a bulk action and stores the id in
+	 * a cookie so it can be checked later.
+	 *
 	 * @param string $action_type The action type.
 	 * @param array  $record_ids  The record ids.
 	 *
@@ -180,7 +219,7 @@ class BulkActionService {
 		}
 
 		setcookie(
-			$this->cookie_prefix . $bulk_action->id,
+			$this->cookie_prefix . '_' . $bulk_action->id,
 			$bulk_action->id,
 			time() + DAY_IN_SECONDS,
 			COOKIEPATH,
@@ -193,45 +232,23 @@ class BulkActionService {
 	}
 
 	/**
-	 * Get the pending record ids for a specific action type.
+	 * Get the record ids for a specific action type and status.
 	 *
 	 * @param string $action_type The action type.
+	 * @param string $status      The status.
 	 *
 	 * @return array
 	 */
-	public function getPendingRecordIds( $action_type ) {
-		if ( empty( $action_type ) || empty( $this->bulk_actions_data[ $action_type ] ) ) {
+	public function getRecordIds( $action_type, $status ) {
+		$actions = $this->groupedBulkActions();
+
+		if ( empty( $action_type ) || empty( $actions[ $action_type ] ) ) {
 			return [];
 		}
 
-		$action_data        = $this->bulk_actions_data[ $action_type ] ?? [];
-		$pending_record_ids = $action_data['pending_record_ids'] ?? [];
+		$action_data = $actions[ $action_type ] ?? [];
+		$record_ids  = $action_data[ $status . '_record_ids' ] ?? [];
 
-		if ( ! empty( $action_data['processing_record_ids'] ) ) {
-			$pending_record_ids = array_merge( $pending_record_ids, $action_data['processing_record_ids'] );
-		}
-
-		return $pending_record_ids;
-	}
-
-	/**
-	 * Get the succeeded bulk actions.
-	 *
-	 * @return array
-	 */
-	public function getSucceededBulkActions() {
-		if ( empty( $this->bulk_actions_data ) ) {
-			return [];
-		}
-
-		$succeeded_bulk_actions = [];
-
-		foreach ( $this->bulk_actions_data as $bulk_action_data ) {
-			if ( ! empty( $bulk_action_data['succeeded_bulk_actions'] ) ) {
-				$succeeded_bulk_actions = array_merge( $succeeded_bulk_actions, $bulk_action_data['succeeded_bulk_actions'] );
-			}
-		}
-
-		return $succeeded_bulk_actions;
+		return $record_ids;
 	}
 }
