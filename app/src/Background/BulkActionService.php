@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SureCart\Background;
 
 use SureCart\Models\BulkAction;
@@ -9,7 +8,6 @@ use SureCart\Models\BulkAction;
  * Handled the business logic for Bulk Actions.
  */
 class BulkActionService {
-
 	/**
 	 * The bulk actions data.
 	 *
@@ -50,7 +48,7 @@ class BulkActionService {
 	public function setBulkActions() {
 		foreach ( $_COOKIE as $key => $value ) {
 			if ( 0 === strpos( $key, 'sc_bulk_action_' ) ) {
-				$this->bulk_actions[] = $value;
+				$this->bulk_actions[] = sanitize_text_field( $value );
 			}
 		}
 	}
