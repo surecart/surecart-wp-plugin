@@ -13,7 +13,7 @@
 
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-		<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
+		<div <?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionNumber' => (int) $key + 1 ] ) ); ?>>
 			<label class="sc-form-label">
 				<?php echo wp_kses_post( $option->name ); ?>
 			</label>
@@ -23,7 +23,7 @@
 					<button
 						class="sc-pill-option__button <?php echo esc_attr( $styles['classnames'] ?? '' ); ?>"
 						value="<?php echo esc_attr( $name ); ?>"
-						data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }'
+						<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionValue' => esc_attr( $name ) ] ) ); ?>
 						data-wp-on--click="callbacks.setOption"
 						data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
 						data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
