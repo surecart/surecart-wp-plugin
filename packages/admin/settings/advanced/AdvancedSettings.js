@@ -140,12 +140,12 @@ export default () => {
 				</ScSwitch>
 				{scData?.is_block_theme && (
 					<ScSwitch
-						checked={item?.load_blocks_style_on_demand}
+						checked={item?.load_block_assets_on_deomand}
 						onClick={(e) => {
 							e.preventDefault();
 							editItem({
-								load_blocks_style_on_demand:
-									!item?.load_blocks_style_on_demand,
+								load_block_assets_on_deomand:
+									!item?.load_block_assets_on_deomand,
 							});
 						}}
 					>
