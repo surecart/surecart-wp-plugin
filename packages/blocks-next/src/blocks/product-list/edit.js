@@ -6,6 +6,7 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { Spinner, Placeholder } from '@wordpress/components';
+import MultiEdit from '../../components/MultiEdit';
 
 import { __ } from '@wordpress/i18n';
 import { memo, useMemo, useState, useEffect } from '@wordpress/element';
@@ -143,7 +144,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 	console.log(products);
 	return (
 		<div {...innerBlocksProps} >
-		{ blockContexts &&
+		{/* { blockContexts &&
 			blockContexts.map( ( blockContext ) => (
 				<BlockContextProvider
 					key={ blockContext.id }
@@ -167,7 +168,13 @@ export default ({ attributes, setAttributes, clientId }) => {
 						}
 					/>
 				</BlockContextProvider>
-			) ) }
+			) ) } */}
+
+			<MultiEdit
+				template={TEMPLATE}
+				blockContexts={blockContexts}
+				clientId={clientId}
+			/>
 		</div>
 	);
 };
