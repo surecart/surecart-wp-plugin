@@ -31,6 +31,21 @@ class ProductsController extends AdminController {
 	}
 
 	/**
+	 * Confirm Bulk Delete.
+	 */
+	public function confirmBulkDelete() {
+		$this->withHeader(
+			[
+				'delete' => [
+					'title' => __( 'Delete', 'surecart' ),
+				],
+			]
+		);
+
+		return \SureCart::view( 'admin/products/confirm-bulk-delete' );
+	}
+
+	/**
 	 * Bulk Delete.
 	 */
 	public function bulkDelete() {
