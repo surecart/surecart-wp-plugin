@@ -162,7 +162,7 @@ export default () => {
 								}}
 							>
 								{__(
-									"Note: This option is usually enabled by the theme. If it is already enabled by the theme, then this setting won't have any effect.",
+									"Note: This option is sometimes enabled by the theme. If it is already enabled by the theme, then this setting won't have any effect.",
 									'surecart'
 								)}
 							</div>
