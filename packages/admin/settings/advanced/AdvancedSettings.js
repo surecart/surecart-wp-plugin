@@ -138,7 +138,7 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				{scData?.is_block_theme && (
+				{!scData?.is_block_theme && (
 					<ScSwitch
 						checked={item?.load_block_assets_on_demand}
 						onClick={(e) => {
