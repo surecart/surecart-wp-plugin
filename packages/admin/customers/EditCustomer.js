@@ -162,15 +162,6 @@ export default () => {
 					<Balance customer={customer} loading={!hasLoadedCustomer} />
 					<Purchases customerId={id} />
 					<Licenses customerId={id} />
-					<Affiliates
-						item={customer}
-						updateItem={editCustomer}
-						loading={!hasLoadedCustomer}
-						commissionText={__(
-							'Commissions On All Purchases',
-							'surecart'
-						)}
-					/>
 					<ShippingAddress
 						shippingAddress={customer?.shipping_address}
 						loading={!hasLoadedCustomer}
@@ -191,6 +182,15 @@ export default () => {
 						customer={customer}
 						updateCustomer={editCustomer}
 						loading={!hasLoadedCustomer}
+					/>
+					<Affiliates
+						item={customer}
+						updateItem={editCustomer}
+						loading={!hasLoadedCustomer}
+						commissionText={__(
+							'Commissions On All Purchases',
+							'surecart'
+						)}
 					/>
 				</>
 			}

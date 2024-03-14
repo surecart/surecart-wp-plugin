@@ -6,7 +6,6 @@ import { css, jsx } from '@emotion/react';
  */
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -14,26 +13,22 @@ import { useState } from '@wordpress/element';
 import {
 	ScAvatar,
 	ScButton,
-	ScDivider,
 	ScDropdown,
 	ScFlex,
-	ScFormatDate,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
 	ScText,
 } from '@surecart/components-react';
-import UpdateExpireAtModal from './UpdateExpireAtModal';
 import useAvatar from '../../hooks/useAvatar';
 
-export default ({ item, updateItem, affiliation, commissionText }) => {
-	const [modal, setModal] = useState(false);
+export default ({ updateItem, affiliation }) => {
 	const avatarUrl = useAvatar({ email: affiliation?.email });
 
 	return (
 		<div>
-			<ScFlex>
-				<ScFlex>
+			<ScFlex alignItems="center">
+				<ScFlex alignItems="center">
 					<div>
 						<ScAvatar
 							image={avatarUrl}
@@ -52,9 +47,7 @@ export default ({ item, updateItem, affiliation, commissionText }) => {
 								id: affiliation?.id,
 							})}
 						>
-							{affiliation?.first_name +
-								' ' +
-								affiliation?.last_name}
+							{`${affiliation?.first_name}  ${affiliation?.last_name}`}
 						</a>
 						<ScText
 							css={css`
@@ -72,98 +65,22 @@ export default ({ item, updateItem, affiliation, commissionText }) => {
 					</ScButton>
 					<ScMenu>
 						<ScMenuItem
-							onClick={() => {
+							onClick={() =>
 								updateItem({
 									affiliation: null,
-								});
-							}}
+								})
+							}
 						>
 							<ScIcon
 								slot="prefix"
 								style={{ opacity: 0.5 }}
 								name="x-square"
-							></ScIcon>
+							/>
 							{__('Remove', 'surecart')}
 						</ScMenuItem>
 					</ScMenu>
 				</ScDropdown>
 			</ScFlex>
-			<ScDivider style={{ '--spacing': 'var(--sc-spacing-medium)' }} />
-			<ScFlex>
-				<div>
-					<ScText
-						css={css`
-							font-weight: 600;
-							margin-bottom: var(--sc-spacing-x-small);
-						`}
-					>
-						{commissionText}
-					</ScText>
-					{!item?.affiliation_expires_at ? (
-						<ScText
-							css={css`
-								color: var(--sc-color-gray-500);
-							`}
-						>
-							{__('Forever', 'surecart')}
-						</ScText>
-					) : (
-						<span
-							css={css`
-								color: var(--sc-color-gray-500);
-							`}
-						>
-							{__('Until', 'surecart')}{' '}
-							<ScFormatDate
-								type="timestamp"
-								date={item?.affiliation_expires_at}
-								month="short"
-								day="numeric"
-								year="numeric"
-							/>
-						</span>
-					)}
-				</div>
-
-				<ScDropdown placement="bottom-end">
-					<ScButton type="text" slot="trigger">
-						<ScIcon name="more-horizontal" />
-					</ScButton>
-					<ScMenu>
-						<ScMenuItem onClick={() => setModal(true)}>
-							<ScIcon
-								slot="prefix"
-								style={{ opacity: 0.5 }}
-								name="calendar"
-							></ScIcon>
-							{__('Update', 'surecart')}
-						</ScMenuItem>
-						{item?.affiliation_expires_at && (
-							<ScMenuItem
-								onClick={() =>
-									updateItem({
-										affiliation_expires_at: null,
-									})
-								}
-							>
-								<ScIcon
-									slot="prefix"
-									style={{ opacity: 0.5 }}
-									name="x-square"
-								></ScIcon>
-								{__('Remove Limit', 'surecart')}
-							</ScMenuItem>
-						)}
-					</ScMenu>
-				</ScDropdown>
-			</ScFlex>
-
-			<UpdateExpireAtModal
-				open={modal}
-				onRequestClose={() => setModal(false)}
-				item={item}
-				updateItem={updateItem}
-			/>
 		</div>
 	);
 };

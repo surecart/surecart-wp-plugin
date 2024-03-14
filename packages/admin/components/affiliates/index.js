@@ -11,6 +11,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import ConnectAffiliate from './ConnectAffiliate';
 import ViewAffiliate from './ViewAffiliate';
 import Box from '../../ui/Box';
+import AffiliateFooter from './AffiliateFooter';
 
 export default ({ item, updateItem, loading, commissionText }) => {
 	const { affiliation, fetching } = useSelect(
@@ -37,6 +38,15 @@ export default ({ item, updateItem, loading, commissionText }) => {
 		<Box
 			title={__('Affiliate Commissions', 'surecart')}
 			loading={fetching || loading}
+			footer={
+				!!item?.affiliation && (
+					<AffiliateFooter
+						item={item}
+						updateItem={updateItem}
+						commissionText={commissionText}
+					/>
+				)
+			}
 		>
 			{!affiliation?.id ? (
 				<ConnectAffiliate
