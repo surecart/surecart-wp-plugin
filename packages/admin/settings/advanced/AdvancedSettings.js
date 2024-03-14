@@ -138,7 +138,6 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				
 				{scData?.is_block_theme && (
 					<ScSwitch
 						checked={item?.load_blocks_style_on_demand}
