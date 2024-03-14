@@ -34,15 +34,25 @@ class ProductsController extends AdminController {
 	 * Confirm Bulk Delete.
 	 */
 	public function confirmBulkDelete() {
+		$products = Product::where(
+			[
+				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ),
+			]
+		)->get(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( empty( $products ) ) {
+			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $_REQUEST['bulk_action_product_ids'] ), 'surecart' ) ) );
+		}
+
 		$this->withHeader(
 			[
 				'delete' => [
-					'title' => __( 'Delete', 'surecart' ),
+					'title' => _n( 'Delete Product', 'Delete Products.', count( $products ), 'surecart' ),
 				],
 			]
 		);
 
-		return \SureCart::view( 'admin/products/confirm-bulk-delete' );
+		return \SureCart::view( 'admin/products/confirm-bulk-delete' )->with( [ 'products' => $products ] );
 	}
 
 	/**
