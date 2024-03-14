@@ -16,6 +16,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useRef, useEffect, useState } from 'react';
 import Error from '../../components/Error';
 import SelectCustomer from './SelectCustomer';
+import SelectAffiliate from './SelectAffiliate';
 
 export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -107,6 +108,11 @@ export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
 				/>
 
 				<SelectCustomer
+					promotion={promotion}
+					updatePromotion={updatePromotion}
+				/>
+
+				<SelectAffiliate
 					promotion={promotion}
 					updatePromotion={updatePromotion}
 				/>
