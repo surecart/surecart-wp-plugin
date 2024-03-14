@@ -138,7 +138,8 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				{!scData?.is_loading_separate_block_assets && (
+				
+				{scData?.is_block_theme && (
 					<ScSwitch
 						checked={item?.load_blocks_style_on_demand}
 						onClick={(e) => {
@@ -155,6 +156,12 @@ export default () => {
 								'Enabling this option will load block assets only when they are rendered. This will happen for ALL blocks on your website, not just SureCart blocks. Please check your pages after you enable this option in a private browser window as this might change the CSS load order.',
 								'surecart'
 							)}
+							<div style={{ fontStyle: 'italic', marginTop: '0.5em' }}>
+							{__(
+								'Note: This option is usually enabled by the theme. If it is already enabled by the theme, then this setting won\'t have any effect.',
+								'surecart'
+							)}
+							</div>
 						</span>
 					</ScSwitch>
 				)}

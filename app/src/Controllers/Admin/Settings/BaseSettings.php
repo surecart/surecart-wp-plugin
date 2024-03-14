@@ -129,8 +129,6 @@ abstract class BaseSettings {
 
 		wp_set_script_translations( $handle, 'surecart' );
 
-		$is_loading_separate_block_assets = wp_should_load_separate_core_block_assets() || wp_is_block_theme();
-
 		wp_localize_script(
 			$handle,
 			'scData',
@@ -146,7 +144,6 @@ abstract class BaseSettings {
 				'processors'                       => Processor::get(),
 				'is_block_theme'                   => (bool) wp_is_block_theme(),
 				'claim_url'                        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
-				'is_loading_separate_block_assets' => (bool) $is_loading_separate_block_assets,
 			]
 		);
 	}
