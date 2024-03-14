@@ -36,7 +36,7 @@
 					<sc-icon name="trash"></sc-icon>
 					<sc-heading size="large"><?php esc_html_e( 'Delete', 'surecart' ); ?></sc-heading>
 					<sc-text>
-						<?php esc_html_e( 'Are you sure you want to Bulk Delete the products you selected?', 'surecart' ); ?>
+						<?php esc_html_e( 'Are you sure you want to permanently delete the products you selected?', 'surecart' ); ?>
 					</sc-text>
 					<sc-flex class="button-container" justify-content="flex-start">
 						<sc-button size="medium" type="primary" submit><?php esc_html_e( 'Delete', 'surecart' ); ?></sc-button>
