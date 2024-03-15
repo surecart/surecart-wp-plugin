@@ -1,19 +1,11 @@
-import {
-	BlockContextProvider,
-	__experimentalUseBlockPreview as useBlockPreview,
-	useBlockProps,
-	useInnerBlocksProps,
-	store as blockEditorStore,
-} from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { Spinner, Placeholder } from '@wordpress/components';
 import MultiEdit from '../../components/MultiEdit';
 
 import { __ } from '@wordpress/i18n';
-import { memo, useMemo, useState, useEffect } from '@wordpress/element';
+import { useMemo } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch, useSelect } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
+import { useSelect } from '@wordpress/data';
 
 const TEMPLATE = [
 	// [ 'surecart/product-image' ],
@@ -21,63 +13,38 @@ const TEMPLATE = [
 	[ 'surecart/product-price-v2' ],
 ];
 
-export default ({ attributes, setAttributes, clientId }) => {
-	const { product_id } = attributes;
-	const [isLoading, setIsLoading] = useState(false);
-	const [ activeBlockContextId, setActiveBlockContextId ] = useState();
-	const [products, setProducts] = useState([]);
+export default ({ clientId }) => {
 	const blockProps = useBlockProps();
 
-	useEffect(() => {
-		fetchProducts();
-	}, []);
-
+	const { products, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'product',
+				{
+					archived: false,
+					status: ['published'],
+				},
+			];
+			return {
+				products: select(coreStore).getEntityRecords(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		}
+	);
+	
 	const blockContexts = useMemo(
 		() =>
 		products?.map( ( product ) => ( {
-				id: product?.id,
-				name: product?.name,
-				image: product?.image_url,
-				metrics: product?.metrics,
-				prices: product?.prices,
+				'surecart/product-list/id': product?.id,
 			} ) ),
 		[ products ]
 	);
 	
-	const fetchProducts = async () => {
-		const { baseURL } = select(coreStore).getEntityConfig('surecart', 'product');
-		if (!baseURL) return;
-
-		const queryArgs = {
-			page: 1,
-			per_page: 10,
-			archived: false,
-			expand: ['prices'],
-			status: ['published'],
-		};
-
-		try {
-			setIsLoading(true);
-
-			// fetch.
-			const response = await apiFetch({
-				path: addQueryArgs(baseURL, queryArgs),
-				parse: false,
-			});
-
-			// get response.
-			const data = await response.json();
-
-			setProducts(data);
-	
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	if (isLoading) {
+	if (loading) {
 		return (
 			<Placeholder>
 				<Spinner />

@@ -1,29 +1,62 @@
-/**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
- * WordPress dependencies
- */
-import {
-	AlignmentControl,
-	BlockControls,
-	useBlockProps,
-} from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { Spinner, Placeholder } from '@wordpress/components';
+import { PanelBody, ToggleControl } from '@wordpress/components';
+import { getProductDisplayPrice } from '../../utilities/product-price';
 
-/**
- * Internal dependencies
- */
-import HeadingLevelDropdown from '../../components/HeadingLebelDropdown';
-
-export default ({ attributes: { level, textAlign }, setAttributes, context: { metrics }, }) => {
+export default ({ attributes: {range}, setAttributes, context: { 'surecart/product-list/id': productId }, }) => {
 	const blockProps = useBlockProps();
+
+	const { product, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'product',
+				productId,
+				{
+					expand: [
+						'prices',
+						'featured_product_media',
+						'product_media.media',
+					],
+				},
+			];
+			return {
+				product: select(coreStore).getEntityRecord(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		}
+	);
+
+	if (loading) {
+		return (
+			<Placeholder>
+				<Spinner />
+			</Placeholder>
+		);
+	}
 
 	return (
 		<>
-			<p {...blockProps}>{metrics?.max_price_amount}</p>
+			<InspectorControls>
+				<PanelBody title={__('Options', 'surecart')}>
+					<ToggleControl
+						label={__('Price Range', 'surecart')}
+						help={__(
+							'Show a range of prices if multiple prices are available or has variable products.',
+							'surecart'
+						)}
+						checked={range}
+						onChange={(range) => setAttributes({ range })}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<p {...blockProps}>{getProductDisplayPrice(product?.prices?.data, product?.metrics, range)}</p>
 		</>
 	);
 };

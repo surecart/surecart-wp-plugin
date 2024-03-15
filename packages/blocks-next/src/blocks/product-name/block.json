@@ -8,7 +8,7 @@
 	"category": "surecart",
 	"icon": "media-interactive",
 	"example": {},
-	"usesContext": ["name"],
+	"usesContext": ["surecart/product-list/id"],
 	"ancestor": [ "surecart/product-list" ],
 	"attributes": {
 		"textAlign": {
