@@ -28,13 +28,19 @@ import useAvatar from '../../hooks/useAvatar';
 export default ({ promotion, updatePromotion }) => {
 	const { affiliation, loading } = useSelect(
 		(select) => {
-			if (!promotion?.affiliation?.id && !promotion?.affiliation)
-				return {};
+			if (!promotion?.affiliation?.id && !promotion?.affiliation) {
+				return {
+					affiliation: null,
+					loading: false,
+				};
+			}
+
 			const queryArgs = [
 				'surecart',
 				'affiliation',
 				promotion?.affiliation?.id || promotion?.affiliation,
 			];
+
 			return {
 				affiliation: select(coreStore).getEntityRecord(...queryArgs),
 				loading: select(coreStore).isResolving(

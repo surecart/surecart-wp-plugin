@@ -1,18 +1,23 @@
+/**
+ * External dependencies.
+ */
 import { sprintf, __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useState, Fragment } from '@wordpress/element';
 
+/**
+ * Internal dependencies.
+ */
 import Box from '../../ui/Box';
 import {
 	ScBlockUi,
 	ScButton,
-	ScEmpty,
 	ScFlex,
 	ScIcon,
 	ScSwitch,
 } from '@surecart/components-react';
-import { useState, Fragment } from '@wordpress/element';
 import Code from './Code';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import EditPromotionCode from './EditPromotionCode';
 
 export default ({ id }) => {
@@ -27,7 +32,6 @@ export default ({ id }) => {
 				{
 					coupon_ids: [id],
 					per_page: 100,
-					expand: ['affiliation', 'customer'],
 				},
 			];
 			const promotions = select(coreStore).getEntityRecords(...queryArgs);
