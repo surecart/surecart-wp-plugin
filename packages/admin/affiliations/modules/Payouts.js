@@ -55,21 +55,22 @@ export default ({ affiliationId }) => {
 			columns={{
 				status: {
 					label: __('Status', 'surecart'),
+					width: '100px',
 				},
-				// TODO: Add the column when API is ready.
-				// payout_email: {
-				// 	label: __('Payout Email', 'surecart'),
-				// },
+				payout_email: {
+					label: __('Payout Email', 'surecart'),
+				},
 				total_commission_amount: {
 					label: __('Commission', 'surecart'),
+					width: '90px',
 				},
 				end_date: {
 					label: __('Period End', 'surecart'),
-					width: '100px',
+					width: '90px',
 				},
 				date: {
 					label: __('Date', 'surecart'),
-					width: '100px',
+					width: '90px',
 				},
 			}}
 			data={payouts}

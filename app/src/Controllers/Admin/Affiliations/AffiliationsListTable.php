@@ -60,7 +60,7 @@ class AffiliationsListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'active' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -299,19 +299,14 @@ class AffiliationsListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		if ( empty( $_GET['status'] ) ) {
-			return '1';
-		}
-
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ) );
-
+		$status     = sanitize_text_field( wp_unslash( $_GET['status'] ?? '' ) );
 		$transforms = [
 			'all'      => null,
 			'active'   => '1',
 			'inactive' => '0'
 		];
 
-		return $transforms[ $status ] ?? null;
+		return $transforms[$status] ?? null;
 	}
 
 	/**
@@ -321,9 +316,9 @@ class AffiliationsListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
+			'all'      => __( 'All', 'surecart' ),
 			'active'   => __( 'Active', 'surecart' ),
 			'inactive' => __( 'Inactive', 'surecart' ),
-			'all'      => __( 'All', 'surecart' ),
 		);
 	}
 }
