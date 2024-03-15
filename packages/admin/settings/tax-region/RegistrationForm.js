@@ -203,29 +203,23 @@ export default ({
 			{region !== 'other' && (
 				<>
 					{requiresManualTaxOverride ? (
-						<ScFormControl
-							label={__('Tax Calculation', 'surecart')}
+						<ScText
 							css={css`
-								margin-bottom: var(--sc-spacing-medium);
-								display: block;
+								color: var(--sc-input-help-text-color);
 							`}
 						>
-							<ScText
-								css={css`
-									color: var(--sc-input-help-text-color);
-								`}
-							>
-								{sprintf(
-									/* translators: %s: region name */
-									__(
-										'Automatic tax calculation is currently unavailable for this %s. Please manually input the tax rate.',
-										'surecart'
-									),
-									zoneName[region]?.toLowerCase() ||
-										__('region', 'surecart')
-								)}
-							</ScText>
-						</ScFormControl>
+							{sprintf(
+								/* translators: %s: region name */
+								__(
+									'%s requires a manual tax rate. Please enter a tax rate for %s.',
+									'surecart'
+								),
+								selectedZone?.state_name ||
+									selectedZone?.country_name,
+								selectedZone?.state_name ||
+									selectedZone?.country_name
+							)}
+						</ScText>
 					) : (
 						<ScSelect
 							label={__('Tax Calculation', 'surecart')}
