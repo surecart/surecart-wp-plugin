@@ -110,11 +110,6 @@ class BlockTemplatesService {
 			return $query_result;
 		}
 
-		// supports block templates, don't use parts.
-		if ( 'wp_template_part' === $template_type && $this->utility->supportsBlockTemplates() ) {
-			return $query_result;
-		}
-
 		$post_type = $query['post_type'] ?? '';
 		$slugs     = $query['slug__in'] ?? [];
 
@@ -128,6 +123,11 @@ class BlockTemplatesService {
 				isset( $template_file->post_types ) &&
 				! in_array( $post_type, $template_file->post_types, true )
 			) {
+				continue;
+			}
+
+			// this supports block templates and the template is not available in the site editor.
+			if ( $this->utility->supportsBlockTemplates() && ! $this->utility->isBlockAvailableInSiteEditor( $template_file->slug ) ) {
 				continue;
 			}
 
@@ -219,6 +219,19 @@ class BlockTemplatesService {
 					$template->title
 				);
 				$template->description = __( 'Template used for specific single SureCart collection pages.', 'surecart' );
+			}
+		}
+
+		if ( preg_match( '/(sc-upsell)-(.+)/', $template->slug, $matches ) ) {
+			$type = $matches[1];
+
+			if ( 'sc-upsell' === $type ) {
+				$template->title = sprintf(
+					// translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
+					__( 'Upsell: %s', 'surecart' ),
+					$template->title
+				);
+				$template->description = __( 'Template used for specific single SureCart upsell pages.', 'surecart' );
 			}
 		}
 		return $template;

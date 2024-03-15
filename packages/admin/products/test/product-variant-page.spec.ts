@@ -10,42 +10,48 @@ test.describe('Product Page With Variant', () => {
 		// Wait for the page to load.
 		await page.waitForLoadState('networkidle');
 
-		expect(await page.locator('button').getByText('Small')).toHaveAttribute(
-			'aria-checked',
-			'true'
-		);
-		expect(await page.locator('button').getByText('Black')).toHaveAttribute(
-			'aria-disabled',
-			'true'
-		);
+		expect(
+			await page.getByRole('radio', {
+				name: 'Select Size: Small.',
+			})
+		).toHaveAttribute('aria-checked', 'true');
+
+		expect(
+			await page.getByRole('radio', { name: 'Select Color: Black.' })
+		).toHaveAttribute('aria-disabled', 'true');
 
 		expect(await page.getByText('Add To Cart').first()).toBeVisible();
 
-		await page.locator('button').getByText('Large').click({ force: true });
+		await page
+			.getByRole('radio', { name: 'Select Size: Large.' })
+			.click({ force: true });
 
-		expect(await page.locator('button').getByText('Red')).toHaveAttribute(
-			'aria-disabled',
-			'true'
-		);
-		expect(await page.locator('button').getByText('Red')).toHaveAttribute(
-			'aria-checked',
-			'true'
-		);
-		expect(await page.locator('button').getByText('Blue')).toHaveAttribute(
-			'aria-disabled',
-			'true'
-		);
+		expect(
+			await page.getByRole('radio', { name: 'Select Color: Red' })
+		).toHaveAttribute('aria-disabled', 'true');
+		expect(
+			await page.getByRole('radio', { name: 'Select Color: Red' })
+		).toHaveAttribute('aria-checked', 'true');
+		expect(
+			await page.getByRole('radio', { name: 'Select Color: Blue' })
+		).toHaveAttribute('aria-disabled', 'true');
 
 		expect(await page.getByText('Sold Out').first()).toBeVisible();
 
-		await page.locator('button').getByText('Blue').click({ force: true });
+		await page
+			.getByRole('radio', { name: 'Select Color: Blue' })
+			.click({ force: true });
 
 		expect(await page.getByText('Unavailable').first()).toBeVisible();
 
-		await page.locator('button').getByText('Small').click({ force: true });
-		await page.locator('button').getByText('Red').click({ force: true });
+		await page
+			.getByRole('radio', { name: 'Select Size: Small' })
+			.click({ force: true });
+		await page
+			.getByRole('radio', { name: 'Select Color: Red' })
+			.click({ force: true });
 
-		await page.getByText('Add To Cart').first().click({ force: true });
+		await page.getByRole('link', { name: 'Add To Cart' }).click();
 
 		// expect the cart to have the product.
 		await expect(page.locator('#sc-cart')).toContainText('Test Product');
@@ -137,7 +143,9 @@ export const createVariantProduct = async (requestUtils) => {
 				data: price,
 			})
 		)
-	);
+	).catch((e) => {
+		console.error(e);
+	});
 
 	return product;
 };

@@ -9,8 +9,7 @@ export const productNameWithPrice = (price) => {
  * Get the product SKU text.
  *
  * If product has a variant, return the variant SKU.
- * If product does not have a variant and has product SKU return the product SKU.
- * Otherwise return nothing. We don't show any fallback SKU if variant SKU is not set.
+ * Otherwise return the product SKU and if not return empty string.
  *
  * @param {object} lineItem
  * @param {string} variantLabel

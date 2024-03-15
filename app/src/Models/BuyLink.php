@@ -49,6 +49,18 @@ class BuyLink {
 	}
 
 	/**
+	 * Get the success url.
+	 *
+	 * @return string
+	 */
+	public function getSuccessUrl() {
+		if ( 'true' !== ( $this->product->metadata->wp_buy_link_success_page_enabled ?? '' ) ) {
+			return '';
+		}
+		return $this->product->metadata->wp_buy_link_success_page_url ?? '';
+	}
+
+	/**
 	 * Should we show this item?
 	 *
 	 * @param string $item The name of the item.

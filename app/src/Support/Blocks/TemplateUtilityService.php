@@ -53,6 +53,16 @@ class TemplateUtilityService {
 			'product-info'            => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+				'site-editor' => false,
+			],
+			'single-upsell'           => [
+				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
+			],
+			'upsell-info'             => [
+				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
+				'site-editor' => false,
 			],
 			'product-collection'      => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
@@ -61,6 +71,11 @@ class TemplateUtilityService {
 			'product-collection-part' => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
+				'site-editor' => false,
+			],
+			'cart'                    => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
+				'description' => __( 'The slide-out cart template.', 'surecart' ),
 			],
 		];
 	}
@@ -221,7 +236,7 @@ class TemplateUtilityService {
 		$template->status         = $post->post_status;
 		$template->has_theme_file = $has_theme_file;
 		$template->is_custom      = false;
-		$template->post_types     = array( 'sc_product', 'sc_collection' ); // Don't appear in any Edit Post template selector dropdown.
+		$template->post_types     = array( 'sc_product', 'sc_collection', 'sc_upsell' ); // Don't appear in any Edit Post template selector dropdown.
 
 		if ( 'wp_template_part' === $post->post_type ) {
 			$type_terms = get_the_terms( $post, 'wp_template_part_area' );
@@ -338,7 +353,7 @@ class TemplateUtilityService {
 		$template->has_theme_file = true;
 		$template->origin         = $template_file->source;
 		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
-		$template->post_types     = [ 'sc_product', 'sc_collection' ]; // Don't appear in any Edit Post template selector dropdown.
+		$template->post_types     = [ 'sc_product', 'sc_collection', 'sc_bump' ]; // Don't appear in any Edit Post template selector dropdown.
 		$template->area           = 'uncategorized';
 		return $template;
 	}
@@ -371,6 +386,20 @@ class TemplateUtilityService {
 	}
 
 	/**
+	 * Returns whether a block template is available in the site editor.
+	 *
+	 * @param string $template_slug The templates slug (e.g. single-product).
+	 *
+	 * @return boolean
+	 */
+	public function isBlockAvailableInSiteEditor( $template_slug ) {
+		if ( isset( $this->plugin_template_types[ $template_slug ] ) ) {
+			return ! isset( $this->plugin_template_types[ $template_slug ]['site-editor'] ) || $this->plugin_template_types[ $template_slug ]['site-editor'];
+		}
+		return true;
+	}
+
+	/**
 	 * Build a new template object so that we can make SureCart Blocks default templates available in the current theme should they not have any.
 	 *
 	 * @param string $template_file Block template file path.
@@ -393,7 +422,7 @@ class TemplateUtilityService {
 			'source'      => $template_is_from_theme ? 'theme' : 'plugin',
 			'title'       => $this->getBlockTemplateTitle( $template_slug ),
 			'description' => $this->getBlockTemplateDescription( $template_slug ),
-			'post_types'  => array( 'sc_product', 'sc_collection' ), // Don't appear in any Edit Post template selector dropdown.
+			'post_types'  => array( 'sc_product', 'sc_collection', 'sc_bump' ), // Don't appear in any Edit Post template selector dropdown.
 		);
 
 		return (object) $new_template_item;

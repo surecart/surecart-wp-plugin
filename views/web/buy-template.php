@@ -116,6 +116,7 @@
 			<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total">
 				<span slot="title"><?php esc_html_e( 'Total', 'surecart' ); ?></span>
 				<span slot="subscription-title"><?php esc_html_e( 'Total Due Today', 'surecart' ); ?></span>
+				<span slot="due-amount-description"><?php esc_html_e( 'Total Due', 'surecart' ); ?></span>
 			</sc-line-item-total>
 			<!-- /wp:surecart/total -->
 		</sc-order-summary>

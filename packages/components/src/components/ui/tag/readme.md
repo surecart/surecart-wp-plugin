@@ -44,11 +44,13 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillment-shipping-status-badge](../fulfillment-shipping-status-badge)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-fulfillment-badge](../order-fulfillment-badge)
+ - [sc-order-return-badge](../order-return-badge)
  - [sc-order-shipment-badge](../order-shipment-badge)
  - [sc-order-status-badge](../order-status-badge)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -56,8 +58,8 @@
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-premium-tag](../sc-premium-tag)
+ - [sc-price](../price)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
- - [sc-product-price](../../controllers/product/sc-product-price)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-status-badge](../subscription-status-badge)
@@ -75,11 +77,13 @@ graph TD;
   sc-downloads-list --> sc-tag
   sc-fulfillment-shipping-status-badge --> sc-tag
   sc-invoices-list --> sc-tag
+  sc-license --> sc-tag
   sc-licenses-list --> sc-tag
   sc-order --> sc-tag
   sc-order-confirmation-details --> sc-tag
   sc-order-confirmation-totals --> sc-tag
   sc-order-fulfillment-badge --> sc-tag
+  sc-order-return-badge --> sc-tag
   sc-order-shipment-badge --> sc-tag
   sc-order-status-badge --> sc-tag
   sc-orders-list --> sc-tag
@@ -87,8 +91,8 @@ graph TD;
   sc-payment-method --> sc-tag
   sc-payment-methods-list --> sc-tag
   sc-premium-tag --> sc-tag
+  sc-price --> sc-tag
   sc-product-item-list --> sc-tag
-  sc-product-price --> sc-tag
   sc-subscription-details --> sc-tag
   sc-subscription-payment-method --> sc-tag
   sc-subscription-status-badge --> sc-tag

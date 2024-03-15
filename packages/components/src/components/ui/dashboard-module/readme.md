@@ -43,6 +43,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -56,10 +57,12 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -82,6 +85,7 @@ graph TD;
   sc-downloads-list --> sc-dashboard-module
   sc-fulfillments --> sc-dashboard-module
   sc-invoices-list --> sc-dashboard-module
+  sc-license --> sc-dashboard-module
   sc-licenses-list --> sc-dashboard-module
   sc-order --> sc-dashboard-module
   sc-order-confirm-provider --> sc-dashboard-module
@@ -95,10 +99,12 @@ graph TD;
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-payment --> sc-dashboard-module
   sc-subscription-payment-method --> sc-dashboard-module
+  sc-subscription-reactivate --> sc-dashboard-module
   sc-subscription-switch --> sc-dashboard-module
   sc-subscription-variation-confirm --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module
   sc-upcoming-invoice --> sc-dashboard-module
+  sc-upsell --> sc-dashboard-module
   sc-wordpress-password-edit --> sc-dashboard-module
   sc-wordpress-user --> sc-dashboard-module
   sc-wordpress-user-edit --> sc-dashboard-module

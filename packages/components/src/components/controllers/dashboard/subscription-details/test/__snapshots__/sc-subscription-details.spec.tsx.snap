@@ -5,7 +5,7 @@ exports[`sc-subscription-details renders 1`] = `
   <mock:shadow-root>
     <div class="subscription-details">
       <sc-flex alignitems="center" justifycontent="flex-start">
-        <sc-text style="--font-weight: var(--sc-font-weight-bold);"></sc-text>
+        <sc-text aria-label="Plan name - " style="--font-weight: var(--sc-font-weight-bold);"></sc-text>
       </sc-flex>
       <div>
         <sc-subscription-status-badge></sc-subscription-status-badge>

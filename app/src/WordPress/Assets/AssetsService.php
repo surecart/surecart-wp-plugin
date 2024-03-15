@@ -101,12 +101,6 @@ class AssetsService {
 	 * @return void
 	 */
 	public function enqueueGlobals() {
-		if ( \SureCart::account()->affiliation_protocol->wordpress_plugin_tracking_enabled || ( defined( 'SURECART_ENABLE_AFFILIATE_SCRIPT' ) && ! empty( SURECART_ENABLE_AFFILIATE_SCRIPT ) ) ) {
-			if ( \SureCart::account()->entitlements->affiliates ) {
-				wp_enqueue_script( 'surecart-affiliate-tracking' );
-			}
-		}
-
 		if ( is_page_template( 'pages/template-surecart-dashboard.php' ) ) {
 			// enqueue it.
 			wp_enqueue_style( 'surecart-themes-default' );
@@ -118,6 +112,18 @@ class AssetsService {
 				[ 'surecart-themes-default' ],
 				$asset_file['version'],
 			);
+		}
+
+		$account = \SureCart::account();
+		if ( ! $account->isConnected() ) {
+			return;
+		}
+
+		$tracking_enabled         = $account->affiliation_protocol->wordpress_plugin_tracking_enabled ?? false;
+		$affiliate_script_defined = defined( 'SURECART_ENABLE_AFFILIATE_SCRIPT' ) && ! empty( SURECART_ENABLE_AFFILIATE_SCRIPT );
+
+		if ( ( $tracking_enabled || $affiliate_script_defined ) && $account->entitlements->affiliates ) {
+			wp_enqueue_script( 'surecart-affiliate-tracking' );
 		}
 	}
 

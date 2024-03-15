@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type      | Default     |
-| ----------- | ------------ | ----------- | --------- | ----------- |
-| `label`     | `label`      |             | `string`  | `undefined` |
-| `showPrice` | `show-price` |             | `boolean` | `undefined` |
+| Property    | Attribute    | Description                    | Type      | Default     |
+| ----------- | ------------ | ------------------------------ | --------- | ----------- |
+| `label`     | `label`      | The product price choice label | `string`  | `undefined` |
+| `productId` | `product-id` | The product id                 | `string`  | `undefined` |
+| `showPrice` | `show-price` | Whether to show the price      | `boolean` | `undefined` |
 
 
 ## Dependencies

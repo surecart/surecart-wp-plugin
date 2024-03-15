@@ -6,7 +6,7 @@
 	"description": "Display an order confirmation section.",
 	"category": "surecart",
 	"keywords": ["thank", "thank you", "confirm"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -18,7 +18,7 @@
 		},
 		"description": {
 			"type": "string",
-			"default": "Thank you for your order!"
+			"default": "Thank you!"
 		},
 		"button_enabled": {
 			"type": "boolean",

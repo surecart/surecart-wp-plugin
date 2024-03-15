@@ -1,11 +1,12 @@
-import { Component, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
-import { state as checkoutState } from '@store/checkout';
+import { Component, h, Method, Prop, State } from '@stencil/core';
+import { state as checkoutState, onChange } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { openWormhole } from 'stencil-wormhole';
 
-import { Address, Checkout, TaxStatus } from '../../../../types';
+import { Address, Checkout } from '../../../../types';
+import { fullShippingAddressRequired } from '@store/checkout/getters';
+import { formLoading } from '@store/form/getters';
 
 @Component({
   tag: 'sc-order-shipping-address',
@@ -20,21 +21,6 @@ export class ScOrderShippingAddress {
 
   /** Is this required (defaults to false) */
   @Prop({ mutable: true, reflect: true }) required: boolean = false;
-
-  /** Is this loading. */
-  @Prop() loading: boolean;
-
-  /** Holds the customer's billing address */
-  @Prop() shippingAddress: Address;
-
-  /** Tax status of the order */
-  @Prop() taxStatus: TaxStatus;
-
-  /** Tax enabled status of the order */
-  @Prop() taxEnabled: boolean;
-
-  /** Is shipping enabled for this order? */
-  @Prop() shippingEnabled: boolean;
 
   /** Show the   address */
   @Prop({ mutable: true }) full: boolean;
@@ -68,12 +54,6 @@ export class ScOrderShippingAddress {
     state: __('State/Province/Region', 'surecart'),
   };
 
-  /** Make a request to update the order. */
-  @Event() scUpdateOrder: EventEmitter<{
-    data: Partial<Checkout>;
-    options?: { silent?: boolean };
-  }>;
-
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
     country: null,
@@ -83,14 +63,6 @@ export class ScOrderShippingAddress {
     postal_code: null,
     state: null,
   };
-
-  /** When the shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
-  @Watch('shippingAddress')
-  handleCustomerAddressChange(val, old) {
-    if (val?.id && !old) {
-      this.address = { ...this.address, ...val };
-    }
-  }
 
   async updateAddressState(address: Partial<Address>) {
     if (JSON.stringify(address) === JSON.stringify(this.address)) return; // no change, don't update.
@@ -120,28 +92,19 @@ export class ScOrderShippingAddress {
       this.address.country = this.defaultCountry;
     }
 
-    this.handleRequirementChange();
-    this.handleNameChange();
-  }
-
-  @Watch('shippingEnabled')
-  @Watch('taxEnabled')
-  handleRequirementChange() {
-    if (this.shippingEnabled || this.taxEnabled) {
-      this.required = true;
-    }
-  }
-
-  @Watch('requireName')
-  @Watch('showName')
-  handleNameChange() {
-    if (this.requireName || this.showName) {
-      this.full = true;
-    }
+    onChange('checkout', () => {
+      // check if address keys are empty, if so, update them.
+      const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
+      const emptyAddressKeys = addressKeys.filter(key => !this.address[key]);
+      if (emptyAddressKeys.length === addressKeys.length) {
+        this.address = { ...this.address, ...(checkoutState.checkout?.shipping_address as Address) };
+      }
+    });
   }
 
   render() {
-    if (this.shippingEnabled || this.full) {
+    // use full if checkout requires it, it's set, or we're showing/requiring name field.
+    if (fullShippingAddressRequired() || this.full || this.requireName || this.showName) {
       return (
         <sc-address
           exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
@@ -157,7 +120,7 @@ export class ScOrderShippingAddress {
             state: this.statePlaceholder,
           }}
           required={this.required}
-          loading={this.loading}
+          loading={formLoading()}
           address={this.address}
           show-name={this.showName}
           require-name={this.requireName}
@@ -169,7 +132,7 @@ export class ScOrderShippingAddress {
       <sc-compact-address
         ref={el => (this.input = el as any)}
         required={this.required}
-        loading={this.loading}
+        loading={formLoading()}
         address={this.address}
         placeholders={{
           name: this.namePlaceholder,
@@ -186,5 +149,3 @@ export class ScOrderShippingAddress {
     );
   }
 }
-
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'taxEnabled', 'shippingEnabled'], false);

@@ -20,5 +20,6 @@
 			"type": "string",
 			"default": "500px"
 		}
-	}
+	},
+	"editorStyle": "file:./editor.css"
 }

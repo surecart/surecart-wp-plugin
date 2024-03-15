@@ -13,6 +13,7 @@ onChange('formState', () => {
   const { formState } = state;
   const { value } = formState;
   if (state.text.loading[value] === undefined) return;
+
   speak(state.text.loading[value], 'assertive');
 });
 

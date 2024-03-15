@@ -7,7 +7,8 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import state, { NoticeType, ScNoticeStore } from './store';
+import state from './store';
+import { NoticeType, ScNoticeStore } from '../../types';
 
 /**
  * Default notice options.

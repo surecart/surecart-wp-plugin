@@ -14,6 +14,7 @@
 | `invalid`     | `invalid`      | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean`                        | `false`     |
 | `name`        | `name`         | The choice name attribute                                                                                 | `string`                         | `undefined` |
 | `required`    | `required`     | Is this required                                                                                          | `boolean`                        | `false`     |
+| `role`        | `role`         | Role of radio/checkbox control                                                                            | `string`                         | `undefined` |
 | `showControl` | `show-control` | Show the radio/checkbox control                                                                           | `boolean`                        | `true`      |
 | `size`        | `size`         | The size.                                                                                                 | `"large" \| "medium" \| "small"` | `'medium'`  |
 | `type`        | `type`         | The choice name attribute                                                                                 | `"checkbox" \| "radio"`          | `'radio'`   |
@@ -89,12 +90,18 @@ Type: `Promise<void>`
 
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-choice-container](../sc-price-choice-container)
+ - [sc-product-donation-amount-choice](../../controllers/checkout-form/product-donation-amount-choice)
+ - [sc-product-donation-custom-amount](../../controllers/checkout-form/product-donation-custom-amount)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-price-choice --> sc-choice-container
   sc-price-choice-container --> sc-choice-container
+  sc-product-donation-amount-choice --> sc-choice-container
+  sc-product-donation-custom-amount --> sc-choice-container
+  sc-recurring-price-choice-container --> sc-choice-container
   style sc-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

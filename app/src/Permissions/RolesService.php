@@ -118,6 +118,8 @@ class RolesService {
 			$wp_roles->add_cap( 'sc_shop_manager', 'view_sc_shop_sensitive_data' );
 			$wp_roles->add_cap( 'sc_shop_manager', 'export_sc_shop_reports' );
 			$wp_roles->add_cap( 'sc_shop_manager', 'manage_sc_shop_settings' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'list_users' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'edit_user' );
 
 			$wp_roles->add_cap( 'administrator', 'view_sc_shop_reports' );
 			$wp_roles->add_cap( 'administrator', 'view_sc_shop_sensitive_data' );
@@ -125,7 +127,7 @@ class RolesService {
 			$wp_roles->add_cap( 'administrator', 'manage_sc_shop_settings' );
 			$wp_roles->add_cap( 'administrator', 'manage_sc_account_settings' );
 
-			// Add the main model capabilities
+			// Add the main model capabilities.
 			$capabilities = $this->getModelCaps();
 			foreach ( $capabilities as $cap_group ) {
 				foreach ( $cap_group as $cap ) {

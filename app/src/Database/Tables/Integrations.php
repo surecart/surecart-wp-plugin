@@ -22,7 +22,7 @@ class Integrations {
 	 *
 	 * @var integer
 	 */
-	protected $version = 1;
+	protected $version = 2;
 
 	/**
 	 * Table name.
@@ -45,7 +45,7 @@ class Integrations {
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		global $wpdb;
 		return $wpdb->prefix . $this->name;
 	}
@@ -63,6 +63,8 @@ class Integrations {
             id bigint(20) unsigned NOT NULL auto_increment,
 			model_name varchar(155) NULL,
 			model_id varchar(155) NOT NULL,
+			price_id varchar(155) NULL,
+			variant_id varchar(155) NULL,
 			integration_id varchar(155) NULL,
 			provider varchar(155) NOT NULL,
 			created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -83,7 +85,7 @@ class Integrations {
 	 *
 	 * @return boolean
 	 */
-	public function uninstall() {
+	public function uninstall(): bool {
 		return $this->table->drop( $this->getName() );
 	}
 
@@ -92,7 +94,7 @@ class Integrations {
 	 *
 	 * @return boolean
 	 */
-	public function exists() {
+	public function exists(): bool {
 		return $this->table->exists( $this->name );
 	}
 }

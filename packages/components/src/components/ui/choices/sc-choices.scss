@@ -8,14 +8,14 @@
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--sc-choices-gap, 10px);
   }
 }
 .choices:not(.choices--auto-width) {
   ::slotted(div) {
     margin: 0;
     display: grid;
-    gap: 10px;
+    gap: var(--sc-choices-gap, 10px);
   }
 }
 
@@ -30,14 +30,14 @@
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--sc-choices-gap, 10px);
   }
 }
 
 .choices:not(.choices--auto-width) {
   .choices__items {
     display: grid;
-    gap: 10px;
+    gap: var(--sc-choices-gap, 10px);
   }
 }
 
@@ -59,7 +59,7 @@
 
 .choices__items {
   display: grid;
-  gap: 10px;
+  gap: var(--sc-choices-gap, 10px);
   grid-auto-rows: 1fr;
 }
 

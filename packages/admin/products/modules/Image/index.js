@@ -32,6 +32,7 @@ export default ({ post, loading }) => {
 						? 'repeat(4, 1fr)'
 						: '1fr'};
 				`}
+				draggedItemClassName="sc-dragging"
 				onSortEnd={onDragStop}
 			>
 				{loading ? (

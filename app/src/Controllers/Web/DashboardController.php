@@ -42,7 +42,7 @@ class DashboardController {
 	public function getData() {
 		return [
 			'show_logo'          => get_post_meta( get_the_ID(), '_surecart_dashboard_show_logo', true ),
-			'logo_url'           => \SureCart::account()->brand->logo_url,
+			'logo_url'           => \SureCart::account()->brand->logo_url ?? null,
 			'logo_width'         => get_post_meta( get_the_ID(), '_surecart_dashboard_logo_width', true ),
 			'current_url'        => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 			'user'               => wp_get_current_user(),

@@ -2,6 +2,7 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
 import { TaxProtocol } from '../../../types';
+import { shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -43,7 +44,7 @@ export class ScFormComponentsValidator {
     if (this.disabled) return;
 
     // make sure to add the address field if it's not there.
-    if (checkoutState.checkout?.tax_status === 'address_invalid' || checkoutState.checkout?.shipping_enabled || checkoutState.checkout?.shipping_address_required) {
+    if (shippingAddressRequired()) {
       this.addAddressField();
     }
 

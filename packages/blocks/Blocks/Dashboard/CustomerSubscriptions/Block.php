@@ -103,9 +103,9 @@ class Block extends DashboardPage {
 			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Plans', 'surecart' ),
+				'heading'    => $attributes['title'] ?? __( 'Plans', 'surecart' ),
 				'isCustomer' => User::current()->isCustomer(),
-				'query'   => [
+				'query'      => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing' ],
 					'page'         => 1,

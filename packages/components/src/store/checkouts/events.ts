@@ -1,6 +1,7 @@
 import { on } from './store';
+import { on as onUIChange } from '@store/ui';
+import { state as checkoutState } from '@store/checkout';
 import { Checkout, LineItem } from 'src/types';
-// import { maybeConvertAmount } from '../../functions/currency';
 
 // Listen to all stored checkouts and handle line item changes.
 on('set', (_, value, oldValue) => Object.keys(value || {}).forEach(key => handleCheckoutLineItemChange(value[key] as Checkout, oldValue?.[key])));
@@ -46,12 +47,31 @@ export const handleCheckoutLineItemChange = (checkout: Checkout, oldCheckout: Ch
   });
 
   // check if line items have changed.
-  if (JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
+  if (!checkoutState?.isCheckoutPage && JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
     // emit an event here with the checkout state updates.
-    const event = new CustomEvent<[Checkout, Checkout]>('scCartUpdated', {
-      detail: [checkout, oldCheckout],
+    const event = new CustomEvent<{ currentCart: Checkout; previousCart: Checkout }>('scCartUpdated', {
+      detail: {
+        currentCart: checkout,
+        previousCart: oldCheckout,
+      },
       bubbles: true,
     });
     document.dispatchEvent(event);
   }
 };
+
+/**
+ * Handle view cart event.
+ */
+onUIChange('set', (key: string, newValue: { open: boolean }, oldValue: { open: boolean }) => {
+  if (key !== 'cart') return; // we only care about cart.
+  if (newValue?.open === oldValue?.open) return; // we only care about open state changes.
+
+  if (newValue?.open) {
+    const event = new CustomEvent('scViewedCart', {
+      detail: checkoutState.checkout,
+      bubbles: true,
+    });
+    document.dispatchEvent(event);
+  }
+});

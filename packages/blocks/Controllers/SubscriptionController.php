@@ -7,11 +7,46 @@ use SureCart\Models\Product;
 use SureCart\Models\Subscription;
 use SureCart\Models\SubscriptionProtocol;
 use SureCart\Models\User;
-
+use SureCartBlocks\Controllers\Middleware\MissingPaymentMethodMiddleware;
+use SureCartBlocks\Controllers\Middleware\UpdateSubscriptionMiddleware;
+use SureCartBlocks\Controllers\Middleware\SubscriptionPermissionsControllerMiddleware;
+use SureCartBlocks\Controllers\Middleware\SubscriptionNonceVerificationMiddleware;
 /**
  * The subscription controller.
  */
 class SubscriptionController extends BaseController {
+	/**
+	 * The middleware for this controller.
+	 *
+	 * @var array
+	 */
+	protected $middleware = [
+		'confirm'               => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'confirm_amount'        => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'confirm_variation'     => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'update_payment_method' => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+	];
+
 	/**
 	 * Render the block
 	 *
@@ -34,12 +69,15 @@ class SubscriptionController extends BaseController {
 						],
 						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					),
-					'query'      => [
-						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'active', 'trialing', 'past_due', 'canceled' ],
-						'page'         => 1,
-						'per_page'     => 5,
-					],
+					'query'      => apply_filters(
+						'surecart/dashboard/subscription_list/query',
+						[
+							'customer_ids' => array_values( User::current()->customerIds() ),
+							'status'       => [ 'active', 'trialing', 'past_due', 'canceled' ],
+							'page'         => 1,
+							'per_page'     => 5,
+						]
+					),
 				]
 			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
 		);
@@ -57,12 +95,15 @@ class SubscriptionController extends BaseController {
 			[
 				'heading'    => $attributes['title'] ?? __( 'Plans', 'surecart' ),
 				'isCustomer' => User::current()->isCustomer(),
-				'query'      => [
-					'customer_ids' => array_values( User::current()->customerIds() ),
-					'status'       => [ 'active', 'trialing', 'canceled' ],
-					'page'         => 1,
-					'per_page'     => 20,
-				],
+				'query'      => apply_filters(
+					'surecart/dashboard/subscription_list/query',
+					[
+						'customer_ids' => array_values( User::current()->customerIds() ),
+						'status'       => [ 'active', 'trialing', 'canceled' ],
+						'page'         => 1,
+						'per_page'     => 20,
+					]
+				),
 			]
 		);
 		ob_start();
@@ -99,6 +140,7 @@ class SubscriptionController extends BaseController {
 			[
 				'price',
 				'price.product',
+				'product.product_group',
 				'current_period',
 				'period.checkout',
 				'purchase',
@@ -145,10 +187,21 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'      => __( 'Current Plan', 'surecart' ),
-						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
-						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
-						'subscription' => $subscription,
+						'heading'                => __( 'Current Plan', 'surecart' ),
+						'showCancel'             => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
+						'protocol'               => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
+						'subscription'           => $subscription,
+						'updatePaymentMethodUrl' => esc_url_raw(
+							home_url(
+								add_query_arg(
+									[
+										'tab'    => $this->getTab(),
+										'action' => 'update_payment_method',
+										'nonce'  => wp_create_nonce( 'subscription-switch' ),
+									]
+								)
+							)
+						),
 					]
 				)->render()
 			);
@@ -164,8 +217,20 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'        => __( 'Update Plan', 'surecart' ),
 						'productId'      => $subscription->price->product->id,
-						'productGroupId' => $subscription->price->product->product_group,
+						'productGroupId' => ( $subscription->price->product->product_group
+						? ( $subscription->price->product->product_group->archived
+						   ? null
+						   : $subscription->price->product->product_group->id )
+						: null ),
 						'subscription'   => $subscription,
+						'successUrl'     => home_url(
+							add_query_arg(
+								[
+									'tab'   => $this->getTab(),
+									'nonce' => wp_create_nonce( 'subscription-switch' ),
+								]
+							)
+						),
 					]
 				)->render()
 			);
@@ -351,7 +416,7 @@ class SubscriptionController extends BaseController {
 					[
 						'heading' => __( 'Enter An Amount', 'surecart' ),
 						'price'   => $price,
-						'variant' => $this->getParam( 'variant' )
+						'variant' => $this->getParam( 'variant' ),
 					]
 				)->render()
 			);
@@ -370,7 +435,7 @@ class SubscriptionController extends BaseController {
 	 */
 	public function confirm_variation() {
 		$price = Price::find( $this->getParam( 'price_id' ) );
-		$id = $this->getId();
+		$id    = $this->getId();
 
 		if ( ! $id ) {
 			return $this->notFound();
@@ -383,7 +448,7 @@ class SubscriptionController extends BaseController {
 				'price.product',
 			]
 		)->find( $id );
-		
+
 		if ( ! $subscription ) {
 			return $this->notFound();
 		}
@@ -391,9 +456,9 @@ class SubscriptionController extends BaseController {
 		// fetch subscription product.
 		$product = Product::with(
 			[
-				'variants', 
-				'variant_options', 
-				'prices'
+				'variants',
+				'variant_options',
+				'prices',
 			]
 		)->find( $price->product );
 
@@ -434,10 +499,10 @@ class SubscriptionController extends BaseController {
 				->id( 'subscription-ad-hoc-confirm' )
 				->with(
 					[
-						'heading' => __( 'Choose a Variation', 'surecart' ),
-						'product' => $product,
+						'heading'      => __( 'Choose a Variation', 'surecart' ),
+						'product'      => $product,
 						'subscription' => $subscription,
-						'price' => $price
+						'price'        => $price,
 					]
 				)->render()
 			);

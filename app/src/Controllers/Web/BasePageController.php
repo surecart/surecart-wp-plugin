@@ -103,6 +103,9 @@ abstract class BasePageController {
 		<meta name="title" content="<?php echo esc_attr( sanitize_text_field( $this->model->page_title ) ); ?>">
 		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $this->model->meta_description ) ); ?>">
 
+		<!-- Canonical -->
+		<link rel="canonical" href="<?php echo esc_url( $this->model->permalink ); ?>">
+
 		<!-- Open Graph -->
 		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>" />
 		<meta property="og:type" content="website" />

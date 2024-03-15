@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
-Requires at least: 6.2
+Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.12.0
+Stable tag: 2.20.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,163 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.20.2 - March 13th, 2024 =
+- Fix: Issue with initial form line items not being added on some forms.
+
+= 2.20.1 - March 12th, 2024 =
+- Accesibility: Checkout amount changes will now speak the new amount(s) when using a screen reader.
+- Fix: Issue with apple pay not working on some accounts.
+- Fix: Issue with initially checked price option not always working properly on custom checkouts.
+- Fix: Validate initial line items in case a price or variant is changed.
+
+= 2.20.0 - March 6th, 2024 =
+- New: Add tax and shipping overrides based on product collections.
+- Improvement: Limit the tax ids shown in the tax id form input.
+- Improvement: Product collection list page loading performance.
+- Improvement: Update customer display conditions wording on upsells to be more descriptive.
+- Fix: Issue with using product collection and product list shortcodes on the same page.
+- Fix: Issue where a merchant could select a region to register for taxes that already exists, causing a save error.
+- Fix: Cart incorrectly using subtotal instead of total.
+
+= 2.19.4 - March 1st, 2024 =
+- Improvement: Prevent mouse wheel scroll on percent and other number inputs.
+- Fix: Issue with SureMembers integration not working on subscription update in some instances.
+- Fix: Issue with Elementor product page template overriding the upsell template.
+- Fix: Issue with PayPal sometimes not loading on checkout when an upsell is applicable and all the checkout line items are non-recurring.
+
+= 2.19.3 - February 29th, 2024 =
+- New: WP CLI command to seed a new account.
+- Improvement: Add additional eCommerce events for Google Analytics.
+- Fix: Issue with affiliate signup link not correct on admin settings page.
+- Fix: First name and last name not showing client side validation errors with PayPal if they were required.
+- Fix: Issue with express checkout button not showing in some instances.
+- Fix: Issue with shipping showing incorrect courier name based on tracking code.
+- Fix: Remove unsupported MGA currency from plugin.
+
+= 2.19.2 - February 21st, 2024 =
+- Fix: Search not waiting for enter on shop pages.
+- Fix: Search not translated.
+
+= 2.19.1 - February 21st, 2024 =
+- Improvement: Serve updated translations remotely during plugin and WordPress updates.
+- Fix: Update script loading to account for upcoming changes in WordPress 6.5.
+- Fix: Product price and product collection badges sometimes collapsing in product edit screen.
+- Fix: Conflict with Yoast SEO adding duplicate open graph and canonical tags to product and collection pages.
+
+= 2.19.0 - February 20th, 2024 =
+- Improvement: Add ability for customers to manage license activations on the customer dashboard
+- Improvement: Add licenses and edit license links on admin customer page.
+- Improvement: Manage affiliate settings from plugin settings page.
+- Improvement:  Update onboarding flow to use new seeding option.
+- Improvement: Add a different message to the Subscription Saver when user tries to cancel Subscription after applying the Subscription Saver discount before
+- Improvement: Add TND currency to currency list.
+- Improvement: Update getting started links on customer dashboard.
+- Improvement: Show coupon validation issues inline.
+- Improvement: Use FSE theme spacing product page.
+- Fix: Product variant purchase integrations not working in some cases.
+- Fix: Issue with free subscriptions not able to upgrade with no payment method.
+- Fix: Jetpack compatibility with hotkeys in some instances.
+
+= 2.18.0 - February 19th, 2024 =
+- New: 1-click upsells - add post-purchase funnels to your checkout flows.
+
+= 2.17.2 - February 13th, 2024 =
+- Improvement: Improve product list page loading performance.
+- Improvement: Better fallback image for products without images.
+- Improvement: Add javascript event that triggers whenever a checkout or cart changes.
+- Improvement: Display shipping method information on order details and order list page.
+- Improvement: Add css variable to change shipping price display (--sc-shipping-choice-price-display).
+- Change: Deprecate Stripe express payment button in favor of Stripe payment element.
+- Fix: Archived prices not showing on admin product page.
+- Fix: Variant thumbnails were not being used on customer order summary in customer dashboard.
+- Fix: Some strings not translatable.
+- Fix: Edge case where disconnecting a WP user from a customer caused first and last name to be removed.
+
+= 2.17.1 - January 31st, 2024 =
+- Improvement: Add confirmation modal when deleting customer.
+- Fix: Ensure the out of stock modal does not get too narrow on some themes.
+- Fix: Shop manager role was not able to update customers and WordPress users.
+- Fix: Honor Rankmath's sitemap exclusions for products and collections.
+- Fix: Coupon price restriction should not exclude variant product prices.
+
+= 2.17.0 - January 30th, 2024 =
+- New: Add automatic facebook tracking for eCommerce events.
+- New: Add Expire access setting to prices.
+- New: Add Ghanian Cedi to supported currencies.
+- Improvement: Make publishing product pages easier when creating new products.
+- Improvement: 1-click restore deleted SureCart pages.
+- Improvement: Allow HTML in manual payment description.
+- Improvement: Sort subscription update options by price.
+- Improvement: Show notice if currency needs to be changed by support.
+- Improvement: Renamed "Initial Discount" to "Setup Discount".
+- Fix: The placeholder for search country in the address component is not translated.
+- Fix: When fix saving issue when setup fee is toggled off with value entered.
+- Fix: Loading text translation on forms is not working for Japanese characters.
+- Fix: Product availability sometimes showing NaN in New Order create page.
+- Fix: Donation custom amount input does not let us add value on some mobile devices.
+- Fix: You must spend at least x to use this coupon sometimes does not use correct currency.
+- Fix: Translation issue for billing details and downloads strings in customer dashboard.
+- Fix: The order by oldest in the product list block (shop page) was not working.
+- Fix: Template issue with switching from hybrid/classic theme to full site editing theme.
+- Fix: Ensure product page image is responsive in case theme does not make images responsive by default.
+- Fix: Issue with product list block sometimes showing blank in admin.
+
+= 2.16.3 - January 16th, 2024 =
+- Fix: Issue with carts sometimes getting cleared on checkout page if default checkout is used with a shortcode.
+
+= 2.16.2 - January 15th, 2024 =
+- Fix: Prevent issue with sites having timeout requests and potential downtime in case of degraded platform performance.
+- Fix: Scratch amount missing on admin order details page.
+
+= 2.16.1 - January 12th, 2024 =
+- Fix: Issue with instant checkout not loading for some users.
+- Fix: Z-index issue with drawer and sticky top bar on some admin screens.
+
+= 2.16.0 - January 11th, 2024 =
+- New: Add initial discount to price.
+- New: Add a custom thank you page link to instant checkout.
+- Improvement: Removing storing carts on custom forms and use url for cart persistance.
+- Improvement: Update slide out cart template to template part to prevent accidental deletion.
+- Fix: Issue with order bump sometimes not appearing on slide out cart.
+
+= 2.15.1 - January 10th, 2024 =
+- Fix: Issue with switching Products to show from Handpicked to All/Featured.
+- Fix: Incorrect price display on merchant admin for donation subscriptions.
+- Fix: Show full address if shipping address is required.
+
+= 2.15.0 - January 4th, 2024 =
+- New: Use product shortcodes outside of product pages.
+- New: Checkout form product price/variant selector block.
+- Improvement: Allow integrations to work for specific prices and variants.
+- Improvement: Ability to turn off tax for specific customers.
+- Improvement: Buy now and add to cart button placeholder improvements.
+- Fix: Issue with product media taking up too much space on product template edit page.
+- Fix: 2FA conflicts with SureCart sign-in.
+- Fix: Issue with php notice showing when account is not connected on certain pages.
+- Fix: Issue with Stripe showing "Your Card Nubmer Is Incomplete" after some free purchases are made.
+- Fix: Quantity selector styling issue on iOS.
+- Fix: UI bug when adding product restrictions to coupon where product price and image were not loading.
+
+= 2.14.1 - December 21st, 2023 =
+- Improvement: Allow customers to add payment methods on subscriptions without payment methods on customer dashboard.
+- Fix: Issue with canceled orders not able to be filtered on merchant admin.
+- Fix: Issue with recurring prices being combined in price selector showing wrong label.
+
+= 2.14.0 - December 14th, 2023 =
+- New: Donations block to accept one-time and recurring donations.
+- New: Added user option to reactivate canceled subscriptions on customer dashboard.
+- Improvement: Display price and variant name on subscription index page.
+- Improvement: Updated address fields to not inherit the store's country.
+- Improvement: Improved error handling for 'Add to Cart' on product pages.
+- Improvement: Updated checkout totals for installments and trial periods to be more clear.
+- Improvement: Make default loading text less specific to account for different payment options.
+- Fix: Fixed currency symbol issue in dropdowns not appearing properly for some users in the admin.
+- Fix: Corrected a typo in the Order Bump feature.
+
+= 2.13.0 - December 11th, 2023 =
+* Fix: Issue with upgrade group cache not clearing on merchant admin when updating status.
+* Fix: Issue with upgrade group incorrectly showing in customer dashboard when archived.
 
 = 2.12.0 - December 5th, 2023 =
 * New: Returns - create and manage return requests on the admin order screen.

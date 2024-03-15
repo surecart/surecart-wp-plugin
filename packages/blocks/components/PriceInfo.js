@@ -11,31 +11,36 @@ import LineItemLabel from '../../admin/ui/LineItemLabel';
 import { ScFormatNumber } from '@surecart/components-react';
 
 export default ({ price_id, variant_id }) => {
-	const { price, product, variant, loading } = useSelect((select) => {
-		const queryArgs = [
-			'root',
-			'price',
-			price_id,
-			{
-				expand: ['product'],
-			},
-		];
-		const price = select(coreStore).getEntityRecord(...queryArgs);
-		const variant = select(coreStore).getEntityRecord(
-			'surecart',
-			'variant',
-			variant_id
-		);
-		return {
-			price,
-			variant,
-			product: price?.product,
-			loading: select(coreStore).isResolving(
-				'getEntityRecord',
-				queryArgs
-			),
-		};
-	});
+	const { price, product, variant, loading } = useSelect(
+		(select) => {
+			const queryArgs = ['surecart', 'price', price_id];
+			const price = select(coreStore).getEntityRecord(...queryArgs);
+			const product = select(coreStore).getEntityRecord(
+				'surecart',
+				'product',
+				price?.product
+			);
+
+			const variant = !!variant_id
+				? select(coreStore).getEntityRecord(
+						'surecart',
+						'variant',
+						variant_id
+				  )
+				: null;
+
+			return {
+				price,
+				variant,
+				product,
+				loading: select(coreStore).isResolving(
+					'getEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[price_id, variant_id]
+	);
 
 	if (loading) {
 		return <Spinner />;

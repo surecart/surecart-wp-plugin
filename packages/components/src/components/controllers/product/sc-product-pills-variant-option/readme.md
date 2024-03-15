@@ -11,6 +11,7 @@
 | -------------- | --------------- | -------------------- | ------------- | ----------- |
 | `label`        | `label`         | Label                | `string`      | `undefined` |
 | `optionNumber` | `option-number` | Which option number? | `1 \| 2 \| 3` | `1`         |
+| `productId`    | `product-id`    | The product id       | `string`      | `undefined` |
 
 
 ## Dependencies

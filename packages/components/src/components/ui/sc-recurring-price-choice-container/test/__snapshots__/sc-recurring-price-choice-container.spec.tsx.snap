@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-recurring-price-choice-container It should render the Price choices with the Label 1`] = `
+<sc-recurring-price-choice-container>
+  <!---->
+  <sc-choice-container role="button" type="radio">
+    <div class="recurring-price-choice">
+      <div class="recurring-price-choice__control">
+        <div class="recurring-price-choice__name">
+          <slot-fb>
+            Subscribe and Save
+          </slot-fb>
+        </div>
+        <div class="recurring-price-choice__description">
+          <sc-dropdown style="--panel-width: max(100%, 11rem); --sc-menu-item-white-space: wrap;">
+            <button aria-label="Press Up/Down Arrow &amp; select the recurring interval you want." class="recurring-price-choice__button" slot="trigger">
+              Monthly
+              <sc-icon name="chevron-down" style="min-width: var(--width);"></sc-icon>
+            </button>
+            <sc-menu aria-label="Recurring Interval selection Dropdown opened, Press Up/Down Arrow &amp; select the recurring interval you want.">
+              <sc-menu-item aria-label="Monthly" checked="">
+                Monthly
+                <span slot="suffix">
+                  <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
+                </span>
+              </sc-menu-item>
+              <sc-menu-item aria-label="Yearly">
+                Yearly
+                <span slot="suffix">
+                  <sc-format-number currency="usd" type="currency" value="20000"></sc-format-number>
+                </span>
+              </sc-menu-item>
+              <sc-menu-item aria-label="Weekly">
+                Weekly
+                <span slot="suffix">
+                  <sc-format-number currency="usd" type="currency" value="1200"></sc-format-number>
+                </span>
+              </sc-menu-item>
+            </sc-menu>
+          </sc-dropdown>
+        </div>
+      </div>
+      <div class="recurring-price-choice__details">
+        <div class="recurring-price-choice__price">
+          <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
+        </div>
+      </div>
+    </div>
+  </sc-choice-container>
+</sc-recurring-price-choice-container>
+`;
+
+exports[`sc-recurring-price-choice-container renders 1`] = `
+<sc-recurring-price-choice-container style="display: none;">
+  <!---->
+</sc-recurring-price-choice-container>
+`;

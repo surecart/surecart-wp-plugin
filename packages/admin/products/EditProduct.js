@@ -3,9 +3,10 @@ import { css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { getQueryArg } from '@wordpress/url';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -30,7 +31,7 @@ import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 
-export default ({ id }) => {
+export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord, saveEntityRecord } = useDispatch(coreStore);
@@ -76,6 +77,22 @@ export default ({ id }) => {
 	);
 
 	/**
+	 * Whether the product should be published.
+	 */
+	const willPublish = () =>
+		select(coreStore).getEntityRecordEdits('surecart', 'product', id)
+			?.status === 'published';
+
+	useEffect(() => {
+		if (
+			getQueryArg(window.location.href, 'status') === 'publish' &&
+			hasLoadedProduct
+		) {
+			editProduct({ status: 'published' });
+		}
+	}, [hasLoadedProduct]);
+
+	/**
 	 * Handle the form submission
 	 */
 	const onSubmit = async (e) => {
@@ -117,6 +134,8 @@ export default ({ id }) => {
 				throw new Error('Saving failed.');
 			}
 
+			// remove all args from the url.
+			setBrowserURL({ id });
 			// save success.
 			createSuccessNotice(__('Product updated.', 'surecart'), {
 				type: 'snackbar',
@@ -249,7 +268,9 @@ export default ({ id }) => {
 							!hasLoadedProduct
 						}
 					>
-						{__('Save Product', 'surecart')}
+						{willPublish()
+							? __('Save & Publish', 'surecart')
+							: __('Save Product', 'surecart')}
 					</SaveButton>
 				</div>
 			}
@@ -320,7 +341,7 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 
-				<Integrations id={id} />
+				<Integrations id={id} product={product} />
 
 				<Downloads
 					id={id}

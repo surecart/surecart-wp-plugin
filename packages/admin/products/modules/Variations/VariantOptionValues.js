@@ -53,6 +53,7 @@ export default ({ values, onChange, canAddValue }) => {
 	return (
 		<SortableList
 			onSortEnd={applySort}
+			draggedItemClassName="sc-dragging"
 			css={css`
 				display: grid;
 				gap: 1em;

@@ -21,6 +21,7 @@ export class ScSubscriptionSwitch {
   @Prop() productId: string;
   @Prop() subscription: Subscription;
   @Prop() filterAbove: number = 4;
+  @Prop() successUrl: string = window.location.href;
 
   /** The currently selected price. */
   @State() selectedPrice: Price;
@@ -137,9 +138,10 @@ export class ScSubscriptionSwitch {
     if (this.subscription?.variant_options?.length) {
       this.busy = true;
       return window.location.assign(
-        addQueryArgs(window.location.href, {
+        addQueryArgs(this.successUrl, {
           action: 'confirm_variation',
           price_id: plan,
+          ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
         }),
       );
     }
@@ -148,9 +150,10 @@ export class ScSubscriptionSwitch {
     if (price?.ad_hoc) {
       this.busy = true;
       return window.location.assign(
-        addQueryArgs(window.location.href, {
+        addQueryArgs(this.successUrl, {
           action: 'confirm_amount',
           price_id: plan,
+          ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
         }),
       );
     }
@@ -158,9 +161,10 @@ export class ScSubscriptionSwitch {
     // confirm plan.
     this.busy = true;
     window.location.assign(
-      addQueryArgs(window.location.href, {
+      addQueryArgs(this.successUrl, {
         action: 'confirm',
         price_id: plan,
+        ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
       }),
     );
   }
@@ -243,6 +247,7 @@ export class ScSubscriptionSwitch {
           {(this.prices || [])
             .filter(price => !price.archived)
             .filter(price => price?.currency === this.subscription?.currency)
+            .sort((a, b) => a.amount - b.amount)
             .map(price => {
               const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
               const product = this.products.find(product => product.id === price?.product);

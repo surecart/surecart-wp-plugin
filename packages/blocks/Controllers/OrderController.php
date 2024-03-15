@@ -29,12 +29,15 @@ class OrderController extends BaseController {
 						]
 					),
 					'isCustomer' => User::current()->isCustomer(),
-					'query'      => [
-						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid', 'processing', 'payment_failed', 'canceled', 'void' ],
-						'page'         => 1,
-						'per_page'     => 5,
-					],
+					'query'      => apply_filters(
+						'surecart/dashboard/order_list/query',
+						[
+							'customer_ids' => array_values( User::current()->customerIds() ),
+							'status'       => [ 'paid', 'processing', 'payment_failed', 'canceled', 'void' ],
+							'page'         => 1,
+							'per_page'     => 5,
+						]
+					),
 				]
 			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
 		);
@@ -68,12 +71,15 @@ class OrderController extends BaseController {
 				[
 					'heading'    => __( 'Order History', 'surecart' ),
 					'isCustomer' => User::current()->isCustomer(),
-					'query'      => [
-						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid', 'processing', 'payment_failed', 'canceled', 'void' ],
-						'page'         => 1,
-						'per_page'     => 10,
-					],
+					'query'      => apply_filters(
+						'surecart/dashboard/order_list/query',
+						[
+							'customer_ids' => array_values( User::current()->customerIds() ),
+							'status'       => [ 'paid', 'processing', 'payment_failed', 'canceled', 'void' ],
+							'page'         => 1,
+							'per_page'     => 10,
+						]
+					),
 				]
 			)->render()
 		);

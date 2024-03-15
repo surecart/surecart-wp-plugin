@@ -3,7 +3,6 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 import { __ } from '@wordpress/i18n';
 
 import apiFetch from '../../../functions/fetch';
-import { hasSubscription } from '../../../functions/line-items';
 import { fetchCheckout } from '../../../services/session';
 import { Checkout, PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from './functions';
@@ -95,7 +94,7 @@ export class ScPaypalButtons {
 
   /** Render the buttons. */
   renderButtons(paypal) {
-    const createFunc = hasSubscription(this.order) ? 'createBillingAgreement' : 'createOrder';
+    const createFunc = this.order.reusable_payment_method_required ? 'createBillingAgreement' : 'createOrder';
 
     const config = {
       /**

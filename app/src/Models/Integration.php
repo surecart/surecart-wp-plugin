@@ -26,5 +26,5 @@ class Integration extends DatabaseModel {
 	 *
 	 * @var array
 	 */
-	protected $fillable = [ 'id', 'model_name', 'model_id', 'integration_id', 'integration_slug', 'provider', 'integration_type', 'created_at', 'updated_at', 'deleted_at' ];
+	protected $fillable = [ 'id', 'model_name', 'model_id', 'price_id', 'variant_id', 'integration_id', 'integration_slug', 'provider', 'integration_type', 'created_at', 'updated_at', 'deleted_at' ];
 }

@@ -189,10 +189,10 @@ class CartPostTypeService {
 		);
 
 		if ( empty( $posts ) ) {
-			$post = $this->createPost();
-		} else {
-			$post = $posts[0];
+			return;
 		}
+
+		$post = $posts[0];
 
 		if ( 'publish' !== $post->post_status ) {
 			$post_id = wp_update_post(

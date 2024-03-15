@@ -1,8 +1,10 @@
 import { createLocalStore } from '../local';
 import { createStore } from '@stencil/store';
+import { getSerializedState } from '@store/utils';
 import { getQueryArg } from '@wordpress/url';
+const { checkout } = getSerializedState();
 
-const notPersistCart = !!window?.scData?.do_not_persist_cart || !!getQueryArg(window.location.href, 'no_cart');
+const notPersistCart = checkout?.persist !== 'browser' || !!getQueryArg(window.location.href, 'no_cart');
 
 const store = notPersistCart
   ? createStore<{ live: any; test: any }>({

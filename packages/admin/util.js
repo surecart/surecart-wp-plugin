@@ -34,11 +34,15 @@ export const maybeConvertAmount = (amount, currency) => {
 		: amount / 100;
 };
 
-export const getHumanDiscount = (coupon) => {
-	if (coupon?.amount_off && coupon?.currency) {
-		return getFormattedPrice({
-			amount: coupon.amount_off,
-		});
+export const getHumanDiscount = (coupon, currency = 'usd') => {
+	if (coupon?.amount_off && currency) {
+		return sprintf(
+			__('%s off', 'surecart'),
+			getFormattedPrice({
+				amount: coupon.amount_off,
+				currency,
+			})
+		);
 	}
 
 	if (coupon?.percent_off) {
@@ -66,11 +70,11 @@ export const formatNumber = (value, currency = '') =>
 
 // get the currency symbol for a currency code.
 export const getCurrencySymbol = (code = 'usd') => {
-	const [currency] = new Intl.NumberFormat(undefined, {
+	const formattedParts = new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency: code,
 	}).formatToParts();
-	return currency?.value;
+	return formattedParts.find((part) => part.type === 'currency')?.value;
 };
 
 export const translate = (key) => {

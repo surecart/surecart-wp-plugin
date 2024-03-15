@@ -25,6 +25,7 @@
  - [sc-stripe-element](../stripe-element)
  - [sc-stripe-payment-element](../stripe-payment-element)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
@@ -38,6 +39,7 @@ graph TD;
   sc-stripe-element --> sc-text
   sc-stripe-payment-element --> sc-text
   sc-subscription-details --> sc-text
+  sc-subscription-reactivate --> sc-text
   sc-upcoming-invoice --> sc-text
   style sc-text fill:#f9f,stroke:#333,stroke-width:4px
 ```

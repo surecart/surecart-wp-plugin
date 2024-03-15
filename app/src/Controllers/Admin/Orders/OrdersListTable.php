@@ -48,7 +48,14 @@ class OrdersListTable extends ListTable {
 		// loop through each purchase.
 		if ( ! empty( $order->checkout->purchases->data ) ) {
 			foreach ( $order->checkout->purchases->data as $purchase ) {
-				$output .= $this->productIntegrationsList( $purchase->product );
+				// TODO: eager load this to prevent n+1 queries.
+				$output .= $this->productIntegrationsList(
+					[
+						'product_id' => $purchase->product,
+						'price_id'   => $purchase->price->id ?? $purchase->price ?? null,
+						'variant_id' => $purchase->variant->id ?? $purchase->variant ?? null,
+					]
+				);
 			}
 		}
 
@@ -158,7 +165,7 @@ class OrdersListTable extends ListTable {
 				'shipment_status'    => ! empty( $_GET['shipment_status'] ) ? [ $_GET['shipment_status'] ] : [],
 				'query'              => $this->get_search_query(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'checkout.selected_shipping_choice', 'shipping_choice.shipping_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -184,7 +191,7 @@ class OrdersListTable extends ListTable {
 			return [ 'processing' ];
 		}
 		if ( 'canceled' === $status ) {
-			return [ 'canceled' ];
+			return [ 'void' ];
 		}
 		if ( 'all' === $status ) {
 			return [];
@@ -283,12 +290,17 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_shipment_status( $order ) {
+		$shipping_method_name = ! empty( $order->checkout->selected_shipping_choice->shipping_method->name ) ? $order->checkout->selected_shipping_choice->shipping_method->name : false;
+
 		ob_start();
 		?>
 		<?php if ( 'unshippable' === $order->shipment_status ) : ?>
 			-
 		<?php else : ?>
 			<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
+			<?php if ( $shipping_method_name ) : ?>
+				<div><small>(<?php echo esc_attr( $shipping_method_name ); ?>)</small></div>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php
 		return ob_get_clean();

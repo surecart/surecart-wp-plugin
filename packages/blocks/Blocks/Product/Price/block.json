@@ -10,6 +10,9 @@
 			"type": "string",
 			"default": "Sale"
 		},
+		"id": {
+			"type": "string"
+		},
 		"alignment": {
 			"type": "string",
 			"default": "left"

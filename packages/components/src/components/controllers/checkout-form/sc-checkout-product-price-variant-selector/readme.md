@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description              | Type      | Default     |
-| --------- | --------- | ------------------------ | --------- | ----------- |
-| `label`   | `label`   | The label for the price. | `string`  | `undefined` |
-| `product` | --        | The product.             | `Product` | `undefined` |
+| Property        | Attribute        | Description                                | Type      | Default     |
+| --------------- | ---------------- | ------------------------------------------ | --------- | ----------- |
+| `label`         | `label`          | The label for the price.                   | `string`  | `undefined` |
+| `product`       | --               | The product.                               | `Product` | `undefined` |
+| `selectorTitle` | `selector-title` | The title for price and variant selections | `string`  | `undefined` |
 
 
 ## Methods

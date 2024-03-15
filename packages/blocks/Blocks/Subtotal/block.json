@@ -5,7 +5,7 @@
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],
 	"keywords": ["submit", "button"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
@@ -15,6 +15,14 @@
 		"text": {
 			"type": "string",
 			"default": "Subtotal"
+		},
+		"total_payments_text": {
+			"type": "string",
+			"default": "Total Installment Payments"
+		},
+		"first_payment_subtotal_text": {
+			"type": "string",
+			"default": "Initial Payment"
 		}
 	}
 }

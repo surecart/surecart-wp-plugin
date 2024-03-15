@@ -1,7 +1,7 @@
 {
 	"name": "@surecart/components-react",
 	"sideEffects": false,
-	"version": "1.0.1",
+	"version": "2.19.0",
 	"description": "React specific wrapper for surecart/components",
 	"repository": {
 		"type": "git",
@@ -24,7 +24,7 @@
 		"src/"
 	],
 	"dependencies": {
-		"@surecart/components": "^1.0.0"
+		"@surecart/components": "^2"
 	},
 	"devDependencies": {
 		"@types/node": "^20.2.1",

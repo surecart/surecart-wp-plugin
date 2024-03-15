@@ -48,6 +48,9 @@ export class ScChoiceContainer {
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = true;
 
+  /** Role of radio/checkbox control */
+  @Prop() role: string;
+
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
@@ -127,6 +130,7 @@ export class ScChoiceContainer {
   }
 
   handleKeyDown(event: KeyboardEvent) {
+    if ((event.target as HTMLDivElement).contentEditable === 'true') return;
     // On arrow key press.
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const choices = this.getAllChoices().filter(choice => !choice.disabled);
@@ -147,12 +151,6 @@ export class ScChoiceContainer {
       this.checked = true;
       this.scChange.emit(this.input.checked);
     }
-  }
-
-  // Prevent clicks on the label from briefly blurring the input
-  handleMouseDown(event: MouseEvent) {
-    event.preventDefault();
-    this.input.focus();
   }
 
   componentDidLoad() {
@@ -188,14 +186,13 @@ export class ScChoiceContainer {
           'choice--is-rtl': isRtl(),
           [`choice--size-${this.size}`]: true,
         }}
-        role='radio'
+        role="radio"
         aria-checked={this.checked ? 'true' : 'false'}
         aria-disabled={this.disabled ? 'true' : 'false'}
         onKeyDown={e => this.handleKeyDown(e)}
-        onMouseDown={e => this.handleMouseDown(e)}
       >
         <slot name="header" />
-        <label class="choice__content" part="content" htmlFor={this.inputId}>
+        <div class="choice__content" part="content">
           <span
             part="control"
             class={{
@@ -243,12 +240,13 @@ export class ScChoiceContainer {
               onBlur={() => this.handleBlur()}
               onFocus={() => this.handleFocus()}
               onChange={() => this.handleClickEvent()}
+              role={this.role}
             />
           </span>
-          <span part="label" id={this.labelId} class="choice__label">
+          <label part="label" id={this.labelId} class="choice__label">
             <slot />
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     );
   }
