@@ -65,7 +65,7 @@ export default ({ promotion, updatePromotion }) => {
 	return (
 		<>
 			<ScFormControl
-				label={__('Limit To A Specific Affiliate', 'surecart')}
+				label={__('Link to Affiliate', 'surecart')}
 				style={{ display: 'block' }}
 			>
 				{affiliation?.id ? (
