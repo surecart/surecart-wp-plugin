@@ -130,11 +130,9 @@ export default ({ promotion, updatePromotion }) => {
 						name="affiliation"
 						placeholder={__('Any Affiliate', 'surecart')}
 						display={(item) =>
-							`${
-								!!item?.first_name
-									? `${item?.last_name} - `
-									: ''
-							}${item.email}`
+							`${item?.first_name || ''} ${
+								item?.last_name || ''
+							} - ${item?.email || ''}`
 						}
 						value={
 							promotion?.affiliation?.id || promotion?.affiliation
