@@ -160,7 +160,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_converted( $click ) {
-		return '<sc-icon style="font-size: 30px; line-height:1; height: 20px;" name="' . ( $click->converted ? 'check-circle' : 'minus-circle' ) . '" />';
+		return '<sc-icon style="font-size: 30px; line-height:1; height: 20px; color: var(' . ( $click->converted ? '--sc-color-success-600' : '--sc-color-gray-600' ) . ');"  name="' . ( $click->converted ? 'check-circle' : 'minus-circle' ) . '" />';
 	}
 
 
