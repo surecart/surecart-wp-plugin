@@ -451,7 +451,16 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getRangeDisplayAmountAttribute() {
-		return  empty( $this->scratch_amount ) ? '' : Currency::format( $this->scratch_amount, $this->currency );
+		if ( ! $this->metrics || empty( $this->metrics->min_price_amount ) || empty( $this->metrics->max_price_amount ) ) {
+			return '';
+		}
+	
+		if ( $this->metrics->min_price_amount === $this->metrics->max_price_amount ) {
+			return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency );
+		}
+	
+		return  Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' . 
+			    Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
 	}
 
 	/**
