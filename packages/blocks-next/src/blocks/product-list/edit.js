@@ -18,51 +18,8 @@ import { addQueryArgs } from '@wordpress/url';
 const TEMPLATE = [
 	// [ 'surecart/product-image' ],
 	[ 'surecart/product-name' ],
-	// [ 'surecart/product-price-v2' ],
+	[ 'surecart/product-price-v2' ],
 ];
-
-function PostTemplateInnerBlocks() {
-	const innerBlocksProps = useInnerBlocksProps(
-		{ template: TEMPLATE }
-	);
-	return <div { ...innerBlocksProps } />;
-}
-
-function PostTemplateBlockPreview( {
-	blocks,
-	blockContextId,
-	isHidden,
-	setActiveBlockContextId,
-} ) {
-	const blockPreviewProps = useBlockPreview( {
-		blocks,
-		props: {
-			className: 'wp-block-product-list',
-		},
-	} );
-
-	const handleOnClick = () => {
-		setActiveBlockContextId( blockContextId );
-	};
-
-	const style = {
-		display: isHidden ? 'none' : undefined,
-	};
-
-	return (
-		<div
-			{ ...blockPreviewProps }
-			tabIndex={ 0 }
-			// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-			role="button"
-			onClick={ handleOnClick }
-			onKeyPress={ handleOnClick }
-			style={ style }
-		/>
-	);
-}
-
-const MemoizedPostTemplateBlockPreview = memo( PostTemplateBlockPreview );
 
 export default ({ attributes, setAttributes, clientId }) => {
 	const { product_id } = attributes;
@@ -70,24 +27,10 @@ export default ({ attributes, setAttributes, clientId }) => {
 	const [ activeBlockContextId, setActiveBlockContextId ] = useState();
 	const [products, setProducts] = useState([]);
 	const blockProps = useBlockProps();
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		template: TEMPLATE,
-	});
+
 	useEffect(() => {
 		fetchProducts();
 	}, []);
-
-	const { blocks } = useSelect(
-		( select ) => {
-			const { getBlocks } = select( blockEditorStore );
-			return {
-				blocks: getBlocks( clientId ),
-			};
-		},
-		[
-			clientId,
-		]
-	);
 
 	const blockContexts = useMemo(
 		() =>
@@ -100,7 +43,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 			} ) ),
 		[ products ]
 	);
-	console.log(blockContexts);
+	
 	const fetchProducts = async () => {
 		const { baseURL } = select(coreStore).getEntityConfig('surecart', 'product');
 		if (!baseURL) return;
@@ -141,35 +84,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 			</Placeholder>
 		);
 	}
-	console.log(products);
+	
 	return (
-		<div {...innerBlocksProps} >
-		{/* { blockContexts &&
-			blockContexts.map( ( blockContext ) => (
-				<BlockContextProvider
-					key={ blockContext.id }
-					value={ blockContext }
-				>
-					{ blockContext.id ===
-					( activeBlockContextId ||
-						blockContexts[ 0 ]?.id ) ? (
-						<PostTemplateInnerBlocks />
-					) : null }
-					<MemoizedPostTemplateBlockPreview
-						blocks={ blocks }
-						blockContextId={ blockContext.id }
-						setActiveBlockContextId={
-							setActiveBlockContextId
-						}
-						isHidden={
-							blockContext.id ===
-							( activeBlockContextId ||
-								blockContexts[ 0 ]?.id )
-						}
-					/>
-				</BlockContextProvider>
-			) ) } */}
-
+		<div {...blockProps} >
 			<MultiEdit
 				template={TEMPLATE}
 				blockContexts={blockContexts}
