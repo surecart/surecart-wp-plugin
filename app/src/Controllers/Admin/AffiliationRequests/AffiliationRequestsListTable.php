@@ -9,7 +9,6 @@ use SureCart\Models\AffiliationRequest;
  * Create a new table class that will extend the WP_List_Table
  */
 class AffiliationRequestsListTable extends ListTable {
-
 	public $checkbox = true;
 	public $error    = '';
 	public $pages    = array();
@@ -61,7 +60,7 @@ class AffiliationRequestsListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'pending' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -115,7 +114,8 @@ class AffiliationRequestsListTable extends ListTable {
 		$affiliate_request_query = AffiliationRequest::where(
 			array(
 				'status[]' => $this->getFilteredStatus(),
-				'query'    => $this->get_search_query()
+				'query'    => $this->get_search_query(),
+				'used'     => false,
 			)
 		);
 
@@ -217,15 +217,9 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		if ( ! empty( $_GET['status'] ) ) {
-			if ( 'all' === $_GET['status'] ) {
-				return null;
-			}
-
-			return sanitize_text_field( wp_unslash( $_GET['status'] ) );
-		}
-
-		return 'pending';
+		return ! empty( $_GET['status'] ) && 'all' !== $_GET['status']
+			? sanitize_text_field( wp_unslash( $_GET['status'] ) )
+			: null;
 	}
 
 	/**
@@ -235,10 +229,10 @@ class AffiliationRequestsListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
-			'pending'  => __( 'Pending', 'surecart' ),
+			'all'      => __( 'All', 'surecart' ),
 			'approved' => __( 'Approved', 'surecart' ),
 			'denied'   => __( 'Denied', 'surecart' ),
-			'all'      => __( 'All', 'surecart' ),
+			'pending'  => __( 'Pending', 'surecart' ),
 		);
 	}
 }

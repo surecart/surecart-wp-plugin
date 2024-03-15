@@ -7,7 +7,11 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import { ScFormatDate, ScFormatNumber } from '@surecart/components-react';
+import {
+	ScFormatDate,
+	ScFormatNumber,
+	ScText,
+} from '@surecart/components-react';
 import StatusBadge from '../../StatusBadge';
 
 export default ({
@@ -34,6 +38,7 @@ export default ({
 				.map(
 					({
 						status,
+						payout_email,
 						total_commission_amount,
 						currency,
 						end_date,
@@ -48,8 +53,9 @@ export default ({
 									value={total_commission_amount}
 								></ScFormatNumber>
 							),
-							// TODO: Add the column when API is ready.
-							// payout_email: <ScText>-</ScText>,
+							payout_email: (
+								<ScText truncate>{payout_email}</ScText>
+							),
 							end_date: (
 								<ScFormatDate
 									type="timestamp"

@@ -9,6 +9,7 @@ const statusTagTypes = {
 	denied: 'danger',
 	inactive: 'danger',
 	approved: 'success',
+	active: 'success',
 	paid: 'success',
 };
 
