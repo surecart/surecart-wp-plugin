@@ -106,6 +106,5 @@
 		"file:../../styles/wp-button.css",
 		"file:../../styles/spinner.css",
 		"file:../../styles/dialog.css"
-	],
-	"viewScriptModule": ["@surecart/dialog"]
+	]
 }
