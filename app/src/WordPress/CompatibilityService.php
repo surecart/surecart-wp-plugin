@@ -50,6 +50,8 @@ class CompatibilityService {
 			);
 			return apply_filters( 'sc_wpseo_frontend_presenters', $title_presenters, $presenters );
 		}
+
+		return $presenters;
 	}
 
 	/**
