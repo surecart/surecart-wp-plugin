@@ -18,7 +18,7 @@ import {
 } from '@wordpress/block-editor';
 import { ToolbarGroup } from '@wordpress/components';
 import { list, grid } from '@wordpress/icons';
-import MultiEdit from '../../components/MultiEdit';
+import TemplateListEdit from '../../components/TemplateListEdit';
 
 const TEMPLATE = [
 	[
@@ -111,7 +111,7 @@ export default ({
 				/>
 			</BlockControls>
 
-			<MultiEdit
+			<TemplateListEdit
 				className={classnames(__unstableLayoutClassNames, {
 					[`columns-${columnCount}`]:
 						layoutType === 'grid' && columnCount, // Ensure column count is flagged via classname for backwards compatibility.
@@ -122,8 +122,21 @@ export default ({
 				}}
 				template={TEMPLATE}
 				blockContexts={[
-					{ postType: 'post', id: 1 },
-					{ postType: 'post', id: 2 },
+					{
+						id: 'price1',
+						'surecart/price': {
+							name: 'One Time',
+							display_amount: '$10',
+						},
+					},
+					{
+						id: 'price2',
+						'surecart/price': {
+							name: 'Subscribe & Save',
+							display_amount: '$8',
+							short_interval_text: '/ mo',
+						},
+					},
 				]}
 				itemProps={{
 					className: classes,

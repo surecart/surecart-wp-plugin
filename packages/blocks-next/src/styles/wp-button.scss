@@ -8,6 +8,8 @@
 }
 
 .sc-button__link {
+	text-align: center;
+
 	.sc-button__link-text {
 		transition: opacity 0.25s ease;
 	}
@@ -32,4 +34,18 @@
 			visibility: visible;
 		}
 	}
+}
+
+.sc-button__link.sc-button__width-100 {
+	width: 100%;
+	flex-basis: 100%;
+}
+.sc-button__link.sc-button__width-25 {
+	width: 25%;
+}
+.sc-button__link.sc-button__width-50 {
+	width: 50%;
+}
+.sc-button__link.sc-button__width-75 {
+	width: 75%;
 }

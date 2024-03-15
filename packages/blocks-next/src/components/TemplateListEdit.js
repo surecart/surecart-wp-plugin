@@ -85,12 +85,12 @@ export default function MultiEdit({
 						value={blockContext}
 					>
 						{blockContext.id ===
-						(activeBlockContextId || blockContexts[0]?.id) ? (
+							(activeBlockContextId || blockContexts[0]?.id) && (
 							<PostTemplateInnerBlocks
 								template={template}
 								{...itemProps}
 							/>
-						) : null}
+						)}
 						<MemoizedPostTemplateBlockPreview
 							blocks={blocks}
 							blockContextId={blockContext.id}

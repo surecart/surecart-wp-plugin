@@ -16,13 +16,13 @@ $product = $block->context['surecart/product'];
 
 // make sure we have a product.
 if ( empty( $product->id ) ) {
-	return;
+	return '';
 }
 
 // get only active prices.
 $prices = $product->active_prices;
-if ( empty( $prices ) ) {
-	return;
+if ( empty( $prices ) || count( $prices ) < 2 ) {
+	return '';
 }
 
 // return the view.
