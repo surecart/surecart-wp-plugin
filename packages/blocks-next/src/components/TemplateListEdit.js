@@ -33,6 +33,7 @@ function PostTemplateBlockPreview({
 	});
 
 	const handleOnClick = () => {
+		console.log('handleOnClick', blockContextId);
 		setActiveBlockContextId(blockContextId);
 	};
 
@@ -40,6 +41,7 @@ function PostTemplateBlockPreview({
 		<div
 			{...blockPreviewProps}
 			tabIndex={0}
+			rajat="rajat"
 			// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
 			role="button"
 			onClick={handleOnClick}

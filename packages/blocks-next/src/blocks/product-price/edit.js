@@ -6,7 +6,7 @@ import { Spinner, Placeholder } from '@wordpress/components';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 import { getProductDisplayPrice } from '../../utilities/product-price';
 
-export default ({ attributes: {range}, setAttributes, context: { 'surecart/product-list/id': productId }, }) => {
+export default ({ attributes: {range}, setAttributes, context: { 'surecart/productId': productId }, }) => {
 	const blockProps = useBlockProps();
 
 	const { product, loading } = useSelect(

@@ -1,6 +1,6 @@
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { Spinner, Placeholder } from '@wordpress/components';
-import MultiEdit from '../../components/MultiEdit';
+import TemplateListEdit from '../../components/TemplateListEdit';
 
 import { __ } from '@wordpress/i18n';
 import { useMemo } from '@wordpress/element';
@@ -15,6 +15,10 @@ const TEMPLATE = [
 
 export default ({ clientId }) => {
 	const blockProps = useBlockProps();
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		template: TEMPLATE,
+		templateLock: 'all',
+	});
 
 	const { products, loading } = useSelect(
 		(select) => {
@@ -39,7 +43,8 @@ export default ({ clientId }) => {
 	const blockContexts = useMemo(
 		() =>
 		products?.map( ( product ) => ( {
-				'surecart/product-list/id': product?.id,
+				id: product?.id,
+				'surecart/productId': product?.id,
 			} ) ),
 		[ products ]
 	);
@@ -53,8 +58,8 @@ export default ({ clientId }) => {
 	}
 	
 	return (
-		<div {...blockProps} >
-			<MultiEdit
+		<div {...innerBlocksProps} >
+			<TemplateListEdit
 				template={TEMPLATE}
 				blockContexts={blockContexts}
 				clientId={clientId}

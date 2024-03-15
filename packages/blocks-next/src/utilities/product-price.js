@@ -7,7 +7,6 @@ export const getProductDisplayPrice = ( prices, metrics, range = false ) => {
 
     if ( ! range ) {
         const price = ( prices || [] ).sort( ( a, b ) => a?.position - b?.position ).find( price => ! price?.archived );
-        console.log(price);
         return price ? getFormattedPrice( { amount: price?.amount, currency: price?.currency } ) : '';
     }
 

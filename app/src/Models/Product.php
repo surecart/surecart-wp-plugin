@@ -446,6 +446,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get Price Range Display Amount.
+	 *
+	 * @return string
+	 */
+	public function getRangeDisplayAmountAttribute() {
+		return  empty( $this->scratch_amount ) ? '' : Currency::format( $this->scratch_amount, $this->currency );
+	}
+
+	/**
 	 * Get the product page initial state
 	 *
 	 * @param array $args Array of arguments.

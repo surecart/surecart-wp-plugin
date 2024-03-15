@@ -121,4 +121,17 @@ add_action('init', function() {
 		],
 		$static_assets['version']
 	);
+
+	// instead, use a static loader that injects the script at runtime.
+	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-list/index.asset.php';
+	wp_register_script_module(
+		'@surecart/product-list',
+		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-list/index.js',
+		[
+			[
+				'import' => 'dynamic'
+			]
+		],
+		$static_assets['version']
+	);
 });

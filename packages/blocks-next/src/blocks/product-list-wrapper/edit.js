@@ -21,6 +21,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
+		templateLock: 'all',
 	});
 	return (
 		<div {...innerBlocksProps} />
