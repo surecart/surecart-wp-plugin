@@ -30,6 +30,7 @@ import Actions from './components/Actions';
 import Details from './modules/Details';
 import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
+import Promotions from './modules/Promotions';
 
 export default ({ id }) => {
 	const [loading, setLoading] = useState(false);
@@ -204,6 +205,7 @@ export default ({ id }) => {
 			<Clicks affiliationId={affiliation?.id} />
 			<Referrals affiliationId={affiliation?.id} />
 			<Payouts affiliationId={affiliation?.id} />
+			<Promotions affiliationId={affiliation?.id} />
 		</UpdateModel>
 	);
 };
