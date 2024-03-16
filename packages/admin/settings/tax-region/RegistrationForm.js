@@ -16,11 +16,10 @@ import {
 	ScAlert,
 	ScButton,
 	ScForm,
-	ScFormControl,
+	ScIcon,
 	ScInput,
 	ScSelect,
 	ScTaxIdInput,
-	ScText,
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 
@@ -203,23 +202,31 @@ export default ({
 			{region !== 'other' && (
 				<>
 					{requiresManualTaxOverride ? (
-						<ScText
+						<div
 							css={css`
 								color: var(--sc-input-help-text-color);
+								display: flex;
 							`}
 						>
-							{sprintf(
-								/* translators: %s: region name */
-								__(
-									'%s requires a manual tax rate. Please enter a tax rate for %s.',
-									'surecart'
-								),
-								selectedZone?.state_name ||
-									selectedZone?.country_name,
-								selectedZone?.state_name ||
-									selectedZone?.country_name
-							)}
-						</ScText>
+							<ScIcon name="info" />
+							<span
+								css={css`
+									margin-left: var(--sc-spacing-small);
+								`}
+							>
+								{sprintf(
+									/* translators: %s: state/region name */
+									__(
+										'Please specify a tax rate for %s, as it requires manual entry',
+										'surecart'
+									),
+									selectedZone?.state_name ||
+										selectedZone?.country_name,
+									selectedZone?.state_name ||
+										selectedZone?.country_name
+								)}
+							</span>
+						</div>
 					) : (
 						<ScSelect
 							label={__('Tax Calculation', 'surecart')}
