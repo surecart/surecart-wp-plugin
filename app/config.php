@@ -269,7 +269,7 @@ return [
 	 * Links used.
 	 */
 	'links'                  => [
-		'purchase' => 'https://app.surecart.com/billing',
+		'purchase' => 'https://app.surecart.com/plans',
 	],
 
 	/**
