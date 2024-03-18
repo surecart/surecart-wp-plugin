@@ -7,7 +7,9 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
 import { getProductDisplayPrice } from '../../utilities/product-price';
 
 export default ({ attributes: {range}, setAttributes, context: { 'surecart/productId': productId }, }) => {
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: 'product-price',
+	});
 
 	const { product, loading } = useSelect(
 		(select) => {
@@ -15,13 +17,6 @@ export default ({ attributes: {range}, setAttributes, context: { 'surecart/produ
 				'surecart',
 				'product',
 				productId,
-				{
-					expand: [
-						'prices',
-						'featured_product_media',
-						'product_media.media',
-					],
-				},
 			];
 			return {
 				product: select(coreStore).getEntityRecord(...queryArgs),
@@ -56,7 +51,7 @@ export default ({ attributes: {range}, setAttributes, context: { 'surecart/produ
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<p {...blockProps}>{getProductDisplayPrice(product?.prices?.data, product?.metrics, range)}</p>
+			<div {...blockProps}>{getProductDisplayPrice(product?.prices?.data, product?.metrics, range)}</div>
 		</>
 	);
 };

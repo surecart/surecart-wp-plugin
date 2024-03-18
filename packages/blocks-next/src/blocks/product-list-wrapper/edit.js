@@ -10,8 +10,15 @@ const TEMPLATE = [
 		'surecart/product-list',
 		{},
 		[
-			[ 'surecart/product-name' ],
-			[ 'surecart/product-price-v2' ]
+			[ 
+				'surecart/product-item-v2',
+				{},
+				[
+					[ 'surecart/product-image' ],
+					[ 'surecart/product-name' ],
+					[ 'surecart/product-price-v2' ]
+				]
+			] 
 		]
 	],
 ];

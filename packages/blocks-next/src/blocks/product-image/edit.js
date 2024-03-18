@@ -1,14 +1,23 @@
 import {
 	useBlockProps,
 } from '@wordpress/block-editor';
+import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { Spinner, Placeholder } from '@wordpress/components';
+import { getImageSrc, getFeaturedProductMediaAttributes } from '../../utilities/product-image';
 
-export default ({ context: { 'surecart/productId': productId } }) => {
+export default ({ attributes: { sizing }, context: { 'surecart/productId': productId } }) => {
+
+	const classes = classnames({
+		'product-img': true,
+		'is_contained': sizing === 'contain',
+		'is_covered': sizing === 'cover',
+	});
+
 	const blockProps = useBlockProps({
-		className: 'product-item-title',
+		className: classes,
 	});
 
 	const { product, loading } = useSelect(
@@ -36,9 +45,11 @@ export default ({ context: { 'surecart/productId': productId } }) => {
 		);
 	}
 
+	const { alt, title } = getFeaturedProductMediaAttributes(product);
+
 	return (
-		<>
-			<div {...blockProps}>{product?.name || "Product Name"}</div>
-		</>
+		<div {...blockProps}>
+			{!!getImageSrc(product) ? <img src={getImageSrc(product)} alt={alt} {...(title ? { title } : {})} /> : <div class="product-img_placeholder" />}
+		</div>
 	);
 };

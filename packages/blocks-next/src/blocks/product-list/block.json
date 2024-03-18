@@ -14,12 +14,27 @@
 	"attributes": {
 		"product_id": {
 			"type": "string"
+		},
+		"columns": {
+			"type": "number",
+			"default": 4
+		},
+		"limit": {
+			"type": "number",
+			"default": 15
 		}
 	},
 	"supports": {
-		"interactivity": true
+		"interactivity": true,
+		"spacing": {
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"blockGap": true
+			}
+		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-list"
+	"viewScriptModule": "@surecart/product-list",
+	"style": ["file:../../styles/product-item-list.css", "file:../../styles/product-item.css"]
 }

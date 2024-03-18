@@ -17,9 +17,24 @@
 		}
 	},
 	"supports": {
-		"interactivity": true
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"render": "file:./view.php"
+	"render": "file:./view.php",
+	"style": ["file:../../styles/product-item-price.css"]
 }
