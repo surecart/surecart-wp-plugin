@@ -128,7 +128,11 @@ export default ({ promotion, updatePromotion }) => {
 				) : (
 					<ModelSelector
 						name="affiliation"
-						placeholder={__('Any Affiliate', 'surecart')}
+						placeholder={__('None', 'surecart')}
+						help={__(
+							'Select an affiliate to link this promotion to.',
+							'surecart'
+						)}
 						display={(item) =>
 							`${item?.first_name || ''} ${
 								item?.last_name || ''

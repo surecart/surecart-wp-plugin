@@ -153,6 +153,10 @@ export default ({ promotion, updatePromotion }) => {
 					<ModelSelector
 						name="customer"
 						placeholder={__('Any Customer', 'surecart')}
+						help={__(
+							'Select a customer to limit this promotion to.',
+							'surecart'
+						)}
 						prefix={
 							<div slot="prefix">
 								<ScMenuItem
