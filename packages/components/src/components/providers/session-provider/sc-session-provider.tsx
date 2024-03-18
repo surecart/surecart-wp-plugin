@@ -383,8 +383,8 @@ export class ScSessionProvider {
         id,
         data: {
           ...(promotion_code ? { discount: { promotion_code } } : {}),
-          refresh_line_items: true,
           ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
+          refresh_line_items: true,
         },
       })) as Checkout;
       updateFormState('RESOLVE');
@@ -412,9 +412,7 @@ export class ScSessionProvider {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
         refresh_line_items: true,
-        data: {
-          status: 'draft',
-        },
+        status: 'draft',
       });
       createInfoNotice(
         e?.additional_errors?.[0]?.message ||
@@ -434,9 +432,7 @@ export class ScSessionProvider {
     if (['order.invalid_status_transition'].includes(e?.code)) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
-        data: {
-          status: 'draft',
-        },
+        status: 'draft',
       });
       this.handleFormSubmit();
       return;
