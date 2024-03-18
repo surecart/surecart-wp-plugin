@@ -51,6 +51,30 @@ abstract class AdminController {
 	}
 
 	/**
+	 * Add notices.
+	 *
+	 * @param array $items The notices.
+	 *
+	 * @return void
+	 */
+	public function withNotices( $items ) {
+		add_action(
+			'admin_notices',
+			function() use ( $items ) {
+				foreach ( $items as $key => $item ) {
+					if ( (bool) ( $_REQUEST[ $key ] ?? false ) ) {
+						?>
+						<div class="notice notice-success is-dismissible">
+							<p><?php echo esc_html( $item ); ?></p>
+						</div>
+						<?php
+					}
+				}
+			}
+		);
+	}
+
+	/**
 	 * Redirect back to the previous page.
 	 *
 	 * @param @param \SureCartCore\Requests\RequestInterface $request Request.
