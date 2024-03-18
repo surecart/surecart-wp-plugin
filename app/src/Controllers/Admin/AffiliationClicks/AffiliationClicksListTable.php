@@ -218,7 +218,7 @@ class AffiliationClicksListTable extends ListTable {
 	 */
 	protected function extra_tablenav( $which ) {
 		?>
-		<input type="hidden" name="page" value="sc-affiliate-requests" />
+		<input type="hidden" name="page" value="sc-affiliate-clicks" />
 
 		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
@@ -227,11 +227,11 @@ class AffiliationClicksListTable extends ListTable {
 		<?php
 		/**
 		 * Fires immediately following the closing "actions" div in the tablenav
-		 * for the affiliate_requests list table.
+		 * for the affiliate_clicks list table.
 		 *
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
-		do_action( 'manage_affiliate_requests_extra_tablenav', $which );
+		do_action( 'manage_affiliate_clicks_extra_tablenav', $which );
 	}
 
 
@@ -252,6 +252,14 @@ class AffiliationClicksListTable extends ListTable {
 		return false;
 	}
 
+	/**
+	 * Define what data to show on each column of the table
+	 *
+	 * @param \SureCart\Models\AffiliationClick $affiliation_click AffiliationClick model.
+	 * @param string                            $column_name - Current column name.
+	 *
+	 * @return mixed
+	 */
 	public function column_default( $item, $column_name ) {
 		return $item->$column_name ?? '';
 	}
