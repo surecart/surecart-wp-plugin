@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
@@ -18,8 +19,12 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScButtonGroup,
+	ScDropdown,
 	ScFlex,
 	ScIcon,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import useSave from '../settings/UseSave';
@@ -27,12 +32,11 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
-import Delete from './components/Delete';
-import Actions from './components/Actions';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [modal, setModal] = useState(false);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { save } = useSave();
@@ -80,9 +84,12 @@ export default () => {
 		[id]
 	);
 
-	const updateAffiliationRequest = (data) =>
+	const updateRequest = (data) =>
 		editEntityRecord('surecart', 'affiliation-request', id, data);
 
+	/**
+	 * Update the affiliation request.
+	 */
 	const onSubmit = async () => {
 		try {
 			save({
@@ -105,20 +112,7 @@ export default () => {
 	/**
 	 * Delete the affiliation request.
 	 */
-	const onAffiliationRequestDelete = async () => {
-		const r = confirm(
-			sprintf(
-				__(
-					'Permanently delete %s? You cannot undo this action.',
-					'surecart'
-				),
-				affiliationRequest?.name ||
-					affiliationRequest?.email ||
-					__('this affiliate request', 'surecart')
-			)
-		);
-		if (!r) return;
-
+	const onDelete = async () => {
 		try {
 			setError(null);
 			await deleteEntityRecord(
@@ -140,7 +134,7 @@ export default () => {
 	/**
 	 * Approve the affiliation request.
 	 */
-	const onAffiliationRequestApprove = async () => {
+	const onApprove = async () => {
 		try {
 			setLoading(true);
 			setError(null);
@@ -177,7 +171,7 @@ export default () => {
 	/**
 	 * Deny the affiliation request.
 	 */
-	const onAffiliationRequestDeny = async () => {
+	const onDeny = async () => {
 		try {
 			setLoading(true);
 			setError(null);
@@ -232,7 +226,7 @@ export default () => {
 						</ScBreadcrumb>
 						<ScBreadcrumb>
 							<ScFlex style={{ gap: '1em' }}>
-								{__('Edit Affiliate Request', 'surecart')}
+								{__('Affiliate Request', 'surecart')}
 							</ScFlex>
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
@@ -246,20 +240,48 @@ export default () => {
 						gap: 0.5em;
 					`}
 				>
-					<Actions
-						affiliationRequest={affiliationRequest}
-						loading={loading}
-						onAffiliationRequestApprove={
-							onAffiliationRequestApprove
-						}
-						onAffiliationRequestDeny={onAffiliationRequestDeny}
-					/>
+					<ScButtonGroup>
+						{['pending', 'denied'].includes(
+							affiliationRequest?.status
+						) && (
+							<ScButton
+								type="primary"
+								onClick={() => setModal('approve')}
+								loading={loading}
+							>
+								{__('Approve Request', 'surecart')}
+							</ScButton>
+						)}
 
-					<Delete
-						affiliationRequest={affiliationRequest}
-						onDelete={onAffiliationRequestDelete}
-						loading={loading}
-					/>
+						{['pending', 'approved'].includes(
+							affiliationRequest?.status
+						) && (
+							<ScButton
+								type="default"
+								outline={true}
+								onClick={() => setModal('deny')}
+								loading={loading}
+							>
+								{__('Deny Request', 'surecart')}
+							</ScButton>
+						)}
+					</ScButtonGroup>
+
+					<ScDropdown slot="suffix" placement="bottom-end">
+						<ScButton type="text" slot="trigger">
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={() => setModal('delete')}>
+								<ScIcon
+									slot="prefix"
+									style={{ opacity: 0.5 }}
+									name="trash"
+								/>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
 				</div>
 			}
 		>
@@ -270,11 +292,46 @@ export default () => {
 			/>
 			<Details
 				affiliationRequest={affiliationRequest || {}}
-				updateAffiliationRequest={updateAffiliationRequest}
+				onUpdate={updateRequest}
 				loading={!hasLoadedAffiliationRequest}
 				saving={isSaving}
 				deleting={isDeleting}
 			/>
+			<ConfirmDialog
+				isOpen={'approve' === modal}
+				onConfirm={() => {
+					onApprove();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__('Are you sure to approve affiliate request?', 'surecart')}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'deny' === modal}
+				onConfirm={() => {
+					onDeny();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__('Are you sure to deny this affiliate request?', 'surecart')}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'delete' === modal}
+				onConfirm={() => {
+					onDelete();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Permanently delete this affiliate request? You cannot undo this action.',
+					'surecart'
+				)}
+			</ConfirmDialog>
 		</UpdateModel>
 	);
 };
