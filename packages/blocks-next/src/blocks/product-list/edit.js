@@ -7,54 +7,45 @@ import {
 	PanelBody,
 	RangeControl,
 	Notice,
-	Spinner, 
+	Spinner,
 	Placeholder,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
 
-const TEMPLATE = [
-	[ 'surecart/product-item-v2']
-];
+const TEMPLATE = [['surecart/product-item-v2']];
 
-export default ({ clientId, attributes: { columns, limit }, setAttributes }) => {
-	const { products, loading } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'product',
-				{
-					expand: [
-						'prices', 
-						'featured_product_media', 
-						'product_medias', 
-						'product_media.media', 
-						'variants'
-					],
-					archived: false,
-					status: ['published'],
-				},
-			];
-			return {
-				products: select(coreStore).getEntityRecords(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		}
-	);
-	
-	const blockContexts = useMemo(
-		() =>
-		products?.map( ( product ) => ( {
-				id: product?.id,
-				'surecart/productId': product?.id,
-			} ) ),
-		[ products ]
-	);
-	
+export default ({
+	clientId,
+	attributes: { columns, limit },
+	setAttributes,
+}) => {
+	const { products, loading } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'product',
+			{
+				expand: [
+					'prices',
+					'featured_product_media',
+					'product_medias',
+					'product_media.media',
+					'variants',
+				],
+				archived: false,
+				status: ['published'],
+			},
+		];
+		return {
+			products: select(coreStore).getEntityRecords(...queryArgs),
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
+	});
+
 	if (loading) {
 		return (
 			<Placeholder>
@@ -62,7 +53,7 @@ export default ({ clientId, attributes: { columns, limit }, setAttributes }) => 
 			</Placeholder>
 		);
 	}
-	
+
 	return (
 		<>
 			<InspectorControls>
@@ -97,18 +88,21 @@ export default ({ clientId, attributes: { columns, limit }, setAttributes }) => 
 					/>
 				</PanelBody>
 			</InspectorControls>
+
 			<TemplateListEdit
 				template={TEMPLATE}
-				blockContexts={blockContexts}
+				blockContexts={products?.map((product) => ({
+					id: product?.id,
+					'surecart/productId': product?.id,
+				}))}
 				clientId={clientId}
 				itemProps={{
 					className: 'product-item',
 				}}
-				className= 'product-item-list'
+				className="product-item-list"
 				style={{
 					borderStyle: 'none',
-					'--sc-product-item-list-column':
-						columns,
+					'--sc-product-item-list-column': columns,
 					'--sc-product-item-list-gap': '40px',
 				}}
 			/>
