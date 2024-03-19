@@ -11,13 +11,7 @@
 	"example": {
 		"attributes": {}
 	},
-	"providesContext": {
-		"surecart/productId": "product_id"
-	},
 	"attributes": {
-		"product_id": {
-			"type": "string"
-		},
 		"columns": {
 			"type": "number",
 			"default": 4
@@ -39,5 +33,8 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"viewScriptModule": "@surecart/product-list",
-	"style": ["file:../../styles/product-item-list.css", "file:../../styles/product-item.css"]
+	"style": [
+		"file:../../styles/product-item-list.css",
+		"file:../../styles/product-item.css"
+	]
 }
