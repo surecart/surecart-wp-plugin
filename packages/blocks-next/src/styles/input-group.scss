@@ -1,0 +1,69 @@
+.sc-input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+
+    >.sc-form-control {
+        position: relative;
+        flex: 1 1 auto;
+        width: 1%;
+        min-width: 0;
+    }
+
+    >.sc-form-control:focus {
+        z-index: 5;
+    }
+}
+
+.sc-input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sc-spacing-small);
+    font-size: var(--sc-font-size-medium);
+    font-weight: var(--sc-font-weight-normal);
+    line-height: var(--sc-line-height-normal);
+    color: var(--sc-color-gray-700);
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--sc-color-gray-100);
+    border: var(--sc-input-border-width) solid var(--sc-color-gray-300);
+    border-radius: var(--sc-border-radius-medium);
+}
+
+.sc-input-group-lg>.sc-form-control,
+.sc-input-group-lg>.sc-input-group-text {
+    padding: var(--sc-spacing-medium) var(--sc-spacing-large);
+    font-size: var(--sc-font-size-large);
+    border-radius: var(--sc-border-radius-large);
+}
+
+.sc-input-group-lg>.sc-input-group-text {
+    padding: var(--sc-spacing-xx-small) var(--sc-spacing-small);
+}
+
+.sc-input-group-sm>.sc-form-control,
+.sc-input-group-sm>.sc-input-group-text {
+    padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-small);
+    font-size: var(--sc-font-size-x-small);
+    border-radius: var(--sc-border-radius-small);
+}
+
+// Override the default border-radius for the first and last child of the input group.
+.sc-input-group {
+    > :not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    > :nth-last-child(n + 3) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    > :not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
