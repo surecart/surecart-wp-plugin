@@ -13,8 +13,18 @@ export default ({
 		className: 'product-price',
 	});
 
-	const product = useSelect((select) =>
-		select(coreStore).getEntityRecord('surecart', 'product', productId)
+	const product = useSelect(
+		(select) => {
+			if (!productId) {
+				return null;
+			}
+			return select(coreStore).getEntityRecord(
+				'surecart',
+				'product',
+				productId
+			);
+		},
+		[productId]
 	);
 
 	return (
@@ -33,7 +43,13 @@ export default ({
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>{product?.display_amount || '$10'}</div>
+			<div {...blockProps}>
+				{product?.id
+					? range
+						? product?.range_display_amount
+						: product?.display_amount
+					: '$10'}
+			</div>
 		</>
 	);
 };
