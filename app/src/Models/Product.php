@@ -237,7 +237,7 @@ class Product extends Model implements PageModel {
 		return (object) array(
 			'alt'   => $featured_product_media->media->alt ?? $this->title ?? $this->name ?? '',
 			'title' => $featured_product_media->media->title ?? '',
-			'url'   => $featured_product_media->media->url ?? $this->image_url,
+			'src'   => $featured_product_media->media->url ?? $this->image_url,
 		);
 	}
 
