@@ -18,8 +18,11 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScDropdown,
 	ScFlex,
 	ScIcon,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import Error from '../components/Error';
 import useDirty from '../hooks/useDirty';
@@ -34,6 +37,7 @@ import Promotions from './modules/Promotions';
 
 export default ({ id }) => {
 	const [loading, setLoading] = useState(false);
+	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
@@ -80,7 +84,7 @@ export default ({ id }) => {
 	/**
 	 * Activate the affiliation.
 	 */
-	const onAffiliationActivate = async () => {
+	const onActivate = async () => {
 		try {
 			setLoading(true);
 			setError(null);
@@ -117,7 +121,7 @@ export default ({ id }) => {
 	/**
 	 * Deactivate the affiliation.
 	 */
-	const onAffiliationDeactivate = async () => {
+	const onDeactivate = async () => {
 		try {
 			setLoading(true);
 			setError(null);
@@ -186,12 +190,42 @@ export default ({ id }) => {
 						gap: 0.5em;
 					`}
 				>
-					<Actions
-						affiliation={affiliation}
-						onActivate={onAffiliationActivate}
-						onDeactivate={onAffiliationDeactivate}
-						loading={loading}
-					/>
+					<ScDropdown
+						position="bottom-right"
+						style={{ '--panel-width': '14em' }}
+					>
+						<ScButton
+							type="primary"
+							slot="trigger"
+							caret
+							loading={loading}
+						>
+							{affiliation?.active
+								? __('Active', 'surecart')
+								: __('Inactive', 'surecart')}
+						</ScButton>
+						<ScMenu>
+							{!affiliation?.active ? (
+								<ScMenuItem>
+									<ScIcon
+										slot="prefix"
+										style={{ opacity: 0.65 }}
+										name="check-circle"
+									/>
+									{__('Activate', 'surecart')}
+								</ScMenuItem>
+							) : (
+								<ScMenuItem>
+									<ScIcon
+										slot="prefix"
+										style={{ opacity: 0.65 }}
+										name="x-circle"
+									/>
+									{__('Deactivate', 'surecart')}
+								</ScMenuItem>
+							)}
+						</ScMenu>
+					</ScDropdown>
 				</div>
 			}
 			sidebar={
@@ -206,6 +240,34 @@ export default ({ id }) => {
 			<Referrals affiliationId={affiliation?.id} />
 			<Payouts affiliationId={affiliation?.id} />
 			<Promotions affiliationId={affiliation?.id} />
+
+			<ConfirmDialog
+				isOpen={'activate' === modal}
+				onConfirm={() => {
+					onActivate();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Permanently delete this affiliate request? You cannot undo this action.',
+					'surecart'
+				)}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'deactivate' === modal}
+				onConfirm={() => {
+					onDeactivate();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Permanently delete this affiliate request? You cannot undo this action.',
+					'surecart'
+				)}
+			</ConfirmDialog>
 		</UpdateModel>
 	);
 };
