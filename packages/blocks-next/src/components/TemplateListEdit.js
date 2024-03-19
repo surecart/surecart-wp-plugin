@@ -71,7 +71,6 @@ export default function MultiEdit({
 		className,
 		style,
 	});
-
 	// To avoid flicker when switching active block contexts, a preview is rendered
 	// for each block context, but the preview for the active block context is hidden.
 	// This ensures that when it is displayed again, the cached rendering of the
@@ -79,7 +78,8 @@ export default function MultiEdit({
 	return (
 		<div {...blockProps}>
 			{blockContexts &&
-				blockContexts.map((blockContext) => (
+				blockContexts.map((blockContext) => {
+					return (
 					<BlockContextProvider
 						key={blockContext.id}
 						value={blockContext}
@@ -102,7 +102,8 @@ export default function MultiEdit({
 							{...itemProps}
 						/>
 					</BlockContextProvider>
-				))}
+					);
+				})}
 		</div>
 	);
 }

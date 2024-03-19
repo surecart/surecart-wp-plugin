@@ -11,6 +11,9 @@
 	"example": {
 		"attributes": {}
 	},
+	"providesContext": {
+		"surecart/productId": "product_id"
+	},
 	"attributes": {
 		"product_id": {
 			"type": "string"

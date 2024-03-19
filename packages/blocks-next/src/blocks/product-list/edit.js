@@ -15,9 +15,7 @@ import {
 import { InspectorControls } from '@wordpress/block-editor';
 
 const TEMPLATE = [
-	[ 'surecart/product-image' ],
-	[ 'surecart/product-name' ],
-	[ 'surecart/product-price-v2' ],
+	[ 'surecart/product-item-v2']
 ];
 
 export default ({ clientId, attributes: { columns, limit }, setAttributes }) => {

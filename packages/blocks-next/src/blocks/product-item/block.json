@@ -39,7 +39,6 @@
 			}
 		}
 	},
-	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js"
 }

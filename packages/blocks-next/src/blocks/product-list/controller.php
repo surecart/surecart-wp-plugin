@@ -9,8 +9,6 @@ use SureCart\Models\Product;
  *     $block (WP_Block): The block instance.
  */
 
-$products = wp_interactivity_state( 'surecart/product-list' );
-
 $products = Product::where(
 	[
 		'archived' => false,
@@ -22,6 +20,17 @@ $products = Product::where(
 		],
 	]
 )->get();
+
+wp_interactivity_state(
+	'surecart/product-list',
+	array(
+		'products' => $products,
+	),
+);
+
+$styles = sc_get_block_styles();
+$style = $styles['css'] ?? '';
+$class = $styles['classnames'] ?? '';
 
 // return the view.
 return 'file:./view.php';

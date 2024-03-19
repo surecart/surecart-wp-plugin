@@ -44,8 +44,9 @@ export default ({ attributes: { sizing }, context: { 'surecart/productId': produ
 			</Placeholder>
 		);
 	}
-
-	const { alt, title } = getFeaturedProductMediaAttributes(product);
+	
+	const alt = product?.featured_media?.alt || '';
+	const title = product?.featured_media?.title || '';
 
 	return (
 		<div {...blockProps}>
