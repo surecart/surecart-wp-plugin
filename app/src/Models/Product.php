@@ -9,7 +9,7 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model implements PageModel {
-	use Traits\HasImageSizes;
+	use Traits\HasImageSizes, Traits\HasPurchase;
 
 	/**
 	 * Rest API endpoint
@@ -114,13 +114,13 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Set the product attribute
+	 * Set the featured product media attribute.
 	 *
 	 * @param  string $value Product properties.
 	 * @return void
 	 */
-	public function setPurchaseAttribute( $value ) {
-		$this->setRelation( 'purchase', $value, Purchase::class );
+	public function setFeaturedProductMediaAttribute( $value ) {
+		$this->setRelation( 'featured_product_media', $value, ProductMedia::class );
 	}
 
 	/**
