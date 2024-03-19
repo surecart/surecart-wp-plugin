@@ -29,7 +29,7 @@
     &:focus {
         color: var(--sc-input-color-focus);
         background-color: var(--sc-input-background-color-focus);
-        border-color: var(--sc-input-border-color-focus);
+        border-color: var(--sc-input-border-color-focus) !important;
         outline: 0;
         box-shadow: var(--sc-shadow-small), var(--sc-shadow-medium);
     }
