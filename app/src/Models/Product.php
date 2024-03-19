@@ -348,7 +348,7 @@ class Product extends Model implements PageModel {
 	 */
 	public function getFirstVariantWithStockAttribute() {
 		// stock is enabled.
-		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases ) {
+		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases && !empty( $this->variants->data ) ) {
 			foreach ( $this->variants->data as $variant ) {
 				if ( $variant->available_stock > 0 ) {
 					return $variant;
@@ -454,12 +454,12 @@ class Product extends Model implements PageModel {
 		if ( ! $this->metrics || empty( $this->metrics->min_price_amount ) || empty( $this->metrics->max_price_amount ) ) {
 			return '';
 		}
-	
+
 		if ( $this->metrics->min_price_amount === $this->metrics->max_price_amount ) {
 			return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency );
 		}
-	
-		return  Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' . 
+
+		return  Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' .
 			    Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
 	}
 
