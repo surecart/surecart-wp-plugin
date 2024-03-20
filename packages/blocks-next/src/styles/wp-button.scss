@@ -1,6 +1,7 @@
 .sc-button__link {
 	position: relative;
 	display: inline-block;
+	box-sizing: border-box;
 
 	[disabled] {
 		pointer-events: none;
