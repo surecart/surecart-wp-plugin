@@ -6,6 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
@@ -29,7 +30,6 @@ import useDirty from '../hooks/useDirty';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Clicks from './modules/Clicks';
-import Actions from './components/Actions';
 import Details from './modules/Details';
 import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
@@ -206,7 +206,9 @@ export default ({ id }) => {
 						</ScButton>
 						<ScMenu>
 							{!affiliation?.active ? (
-								<ScMenuItem>
+								<ScMenuItem
+									onClick={() => setModal('activate')}
+								>
 									<ScIcon
 										slot="prefix"
 										style={{ opacity: 0.65 }}
@@ -215,7 +217,9 @@ export default ({ id }) => {
 									{__('Activate', 'surecart')}
 								</ScMenuItem>
 							) : (
-								<ScMenuItem>
+								<ScMenuItem
+									onClick={() => setModal('deactivate')}
+								>
 									<ScIcon
 										slot="prefix"
 										style={{ opacity: 0.65 }}
@@ -249,10 +253,7 @@ export default ({ id }) => {
 				}}
 				onCancel={() => setModal(false)}
 			>
-				{__(
-					'Permanently delete this affiliate request? You cannot undo this action.',
-					'surecart'
-				)}
+				{__('Are you sure to activate the affiliate user?', 'surecart')}
 			</ConfirmDialog>
 
 			<ConfirmDialog
@@ -264,7 +265,7 @@ export default ({ id }) => {
 				onCancel={() => setModal(false)}
 			>
 				{__(
-					'Permanently delete this affiliate request? You cannot undo this action.',
+					'Are you sure to deactivate the affiliate user?',
 					'surecart'
 				)}
 			</ConfirmDialog>
