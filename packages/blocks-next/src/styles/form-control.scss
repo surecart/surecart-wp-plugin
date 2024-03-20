@@ -92,80 +92,55 @@
     &:hover:not(:disabled):not([readonly])::file-selector-button {
         opacity: 0.9;
     }
-}
 
-.sc-form-control-sm {
-    padding: 0 var(--sc-input-spacing-small);
-    height: calc(var(--sc-input-height-small) - var(--sc-input-border-width) * 2);
-    font-size: var(--sc-font-size-small);
-    border-radius: var(--sc-border-radius-small);
+    // Small form control.
+    &-sm {
+        padding: 0 var(--sc-input-spacing-small);
+        height: calc(var(--sc-input-height-small) - var(--sc-input-border-width) * 2);
+        font-size: var(--sc-font-size-small);
+        border-radius: var(--sc-border-radius-small);
 
-    &[type="file"] {
-        &:not(:disabled):not([readonly]) {
-            padding: 2px 8px !important;
+        &[type="file"] {
+            &:not(:disabled):not([readonly]) {
+                padding: 2px 8px !important;
+            }
+        }
+
+        &::file-selector-button {
+            padding: var(--sc-spacing-small);
+            margin: calc(var(--sc-spacing-small) * -1);
+            margin-inline-end: var(--sc-spacing-small);
         }
     }
 
-    &::file-selector-button {
-        padding: var(--sc-spacing-small);
-        margin: calc(var(--sc-spacing-small) * -1);
-        margin-inline-end: var(--sc-spacing-small);
+    // Large form control.
+    &-lg {
+        padding: 0 var(--sc-spacing-large);
+        font-size: var(--sc-font-size-large);
+        border-radius: var(--sc-border-radius-medium);
+
+        &::file-selector-button {
+            padding: var(--sc-spacing-large);
+            margin: calc(var(--sc-spacing-large) * -1);
+            margin-inline-end: var(--sc-spacing-large);
+        }
     }
 }
 
-.sc-form-control-lg {
-    padding: 0 var(--sc-spacing-large);
-    font-size: var(--sc-font-size-large);
-    border-radius: var(--sc-border-radius-medium);
-
-    &::file-selector-button {
-        padding: var(--sc-spacing-large);
-        margin: calc(var(--sc-spacing-large) * -1);
-        margin-inline-end: var(--sc-spacing-large);
-    }
-}
-
+// Form control compatibility for textarea.
 textarea {
     &.sc-form-control {
         min-height: var(--sc-input-height);
         height: auto;
-    }
 
-    &.sc-form-control-sm {
-        min-height: var(--sc-input-height-small);
-        height: auto;
-    }
+        &-sm {
+            min-height: var(--sc-input-height-small);
+            height: auto;
+        }
 
-    &.sc-form-control-lg {
-        min-height: var(--sc-input-height-large);
-        height: auto;
-    }
-}
-
-.sc-form-control-color {
-    width: var(--sc-form-color-width);
-    height: var(--sc-input-height);
-    padding: var(--sc-spacing-medium);
-
-    &:not(:disabled):not([readonly]) {
-        cursor: pointer;
-    }
-
-    &::-moz-color-swatch {
-        border: 0;
-        border-radius: var(--sc-border-radius-medium);
-    }
-
-    &::-webkit-color-swatch {
-        border: 0;
-        border-radius: var(--sc-border-radius-medium);
-    }
-
-    &.sc-form-control-sm {
-        height: var(--sc-input-height-small);
-    }
-
-    &.sc-form-control-lg {
-        height: var(--sc-input-height-large);
+        &-lg {
+            min-height: var(--sc-input-height-large);
+            height: auto;
+        }
     }
 }

@@ -44,6 +44,7 @@
         z-index: 8;
     }
 
+    // Override Form control styles.
     >.sc-form-control {
         position: relative;
         flex: 1 1 auto;
@@ -63,6 +64,7 @@
         }
     }
 
+    // Addon Text.
     &-text {
         display: flex;
         align-items: center;
@@ -75,28 +77,34 @@
         white-space: nowrap;
         opacity: 0.5;
     }
-}
 
-.sc-input-group-lg>.sc-form-control,
-.sc-input-group-lg>.sc-input-group-text {
-    padding: var(--sc-spacing-medium) var(--sc-spacing-large);
-    font-size: var(--sc-font-size-large);
-    border-radius: var(--sc-border-radius-large);
-}
+    // Large input group.
+    &-lg {
 
-.sc-input-group-lg>.sc-input-group-text {
-    padding: var(--sc-spacing-xx-small) var(--sc-spacing-small);
-}
+        >.sc-form-control,
+        >.sc-input-group-text {
+            padding: var(--sc-spacing-medium) var(--sc-spacing-large);
+            font-size: var(--sc-font-size-large);
+            border-radius: var(--sc-border-radius-large);
+        }
 
-.sc-input-group-sm>.sc-form-control,
-.sc-input-group-sm>.sc-input-group-text {
-    padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-small);
-    font-size: var(--sc-font-size-x-small);
-    border-radius: var(--sc-border-radius-small);
-}
+        >.sc-input-group-text {
+            padding: var(--sc-spacing-xx-small) var(--sc-spacing-small);
+        }
+    }
 
-.sc-input-group {
+    // Small input group.
+    &-sm {
 
+        >.sc-form-control,
+        >.sc-input-group-text {
+            padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-small);
+            font-size: var(--sc-font-size-x-small);
+            border-radius: var(--sc-border-radius-small);
+        }
+    }
+
+    // More padding for addon-text.
     > :not(:last-child),
     > :nth-last-child(n + 3) {
         padding-right: var(--sc-spacing-x-small);
