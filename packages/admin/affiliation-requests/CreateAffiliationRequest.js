@@ -126,6 +126,7 @@ export default ({ id, setId }) => {
 								onScChange={(e) => {
 									setPayoutEmail(e.target.value);
 								}}
+								required
 								value={payoutEmail}
 								name="payout_email"
 								type="email"

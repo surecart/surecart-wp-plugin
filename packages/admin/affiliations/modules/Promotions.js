@@ -10,32 +10,33 @@ import { store as coreStore } from '@wordpress/core-data';
  * Internal dependencies.
  */
 import PrevNextButtons from '../../ui/PrevNextButtons';
-import PayoutsDataTable from '../../components/data-tables/affiliates/PayoutsDataTable';
+import PromotionsDataTable from '../../components/data-tables/affiliates/PromotionsDataTable';
 import usePagination from '../../hooks/usePagination';
 
 export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
 	const perPage = 5;
 
-	const { payouts, loading, fetching } = useSelect(
+	const { promotions, loading, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
-				'payout',
+				'promotion',
 				{
 					context: 'edit',
 					affiliation_ids: [affiliationId],
 					page,
 					per_page: perPage,
+					expand: ['coupon'],
 				},
 			];
-			const payouts = select(coreStore).getEntityRecords(...queryArgs);
+			const promotions = select(coreStore).getEntityRecords(...queryArgs);
 			const loading = select(coreStore).isResolving(
 				'getEntityRecords',
 				queryArgs
 			);
 			return {
-				payouts,
+				promotions,
 				loading: loading && page === 1,
 				fetching: loading && page !== 1,
 			};
@@ -44,36 +45,29 @@ export default ({ affiliationId }) => {
 	);
 
 	const { hasPagination } = usePagination({
-		data: payouts,
+		data: promotions,
 		page,
 		perPage,
 	});
 
 	return (
-		<PayoutsDataTable
-			title={__('Payouts', 'surecart')}
+		<PromotionsDataTable
+			title={__('Promotion Codes', 'surecart')}
 			columns={{
-				payout_email: {
-					label: __('Payout Email', 'surecart'),
+				code: {
+					label: __('Code', 'surecart'),
 				},
 				status: {
 					label: __('Status', 'surecart'),
-					width: '100px',
 				},
-				total_commission_amount: {
-					label: __('Commission', 'surecart'),
-					width: '90px',
+				uses: {
+					label: __('Uses', 'surecart'),
 				},
-				end_date: {
-					label: __('Period End', 'surecart'),
-					width: '90px',
-				},
-				date: {
-					label: __('Date', 'surecart'),
-					width: '90px',
+				view: {
+					label: __('', 'surecart'),
 				},
 			}}
-			data={payouts}
+			data={promotions}
 			isLoading={loading}
 			isFetching={fetching}
 			perPage={perPage}
@@ -81,13 +75,13 @@ export default ({ affiliationId }) => {
 			setPage={setPage}
 			empty={
 				page > 1
-					? __('No more payouts.', 'surecart')
+					? __('No more promotions.', 'surecart')
 					: __('None found.', 'surecart')
 			}
 			footer={
 				hasPagination && (
 					<PrevNextButtons
-						data={payouts}
+						data={promotions}
 						page={page}
 						setPage={setPage}
 						perPage={perPage}
