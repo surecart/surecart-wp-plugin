@@ -54,11 +54,11 @@ export default ({ affiliationId }) => {
 		<ReferralsDataTable
 			title={__('Referrals', 'surecart')}
 			columns={{
-				status: {
-					label: __('Status', 'surecart'),
-				},
 				description: {
 					label: __('Description', 'surecart'),
+				},
+				status: {
+					label: __('Status', 'surecart'),
 				},
 				order: {
 					label: __('Order', 'surecart'),

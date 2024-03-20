@@ -88,12 +88,14 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			'name'         => __( 'Name', 'surecart' ),
-			'email'        => __( 'Email', 'surecart' ),
-			'status'       => __( 'Status', 'surecart' ),
-			'clicks'       => __( 'Clicks', 'surecart' ),
-			'referrals'    => __( 'Referrals', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
+			'name'                             => __( 'Name', 'surecart' ),
+			'email'                            => __( 'Email', 'surecart' ),
+			'status'                           => __( 'Status', 'surecart' ),
+			'clicks'                           => __( 'Clicks', 'surecart' ),
+			'referrals'                        => __( 'Referrals', 'surecart' ),
+			'total_commission_amount'          => __( 'Total Earnings', 'surecart' ),
+			'total_not_paid_commission_amount' => __( 'Unpaid Earnings', 'surecart' ),
+			'date'                             => __( 'Date', 'surecart' ),
 		);
 	}
 
@@ -180,6 +182,28 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function column_referrals( $affiliation ) {
 		return esc_html( $affiliation->referrals->pagination->count ?? 0);
+	}
+
+	/**
+	 * Total commission amount column.
+	 *
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
+	 * @return string
+	 */
+	public function column_total_commission_amount( $affiliation ) {
+		$store_currency = \SureCart::account()->currency ?? 'usd';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $store_currency ) ) . '" value="' . (float) $affiliation->total_commission_amount . '"></sc-format-number>';
+	}
+
+	/**
+	 * Total unpaid commission amount column.
+	 *
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
+	 * @return string
+	 */
+	public function column_total_not_paid_commission_amount( $affiliation ) {
+		$store_currency = \SureCart::account()->currency ?? 'usd';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $store_currency ) ) . '" value="' . (float) $affiliation->total_not_paid_commission_amount . '"></sc-format-number>';
 	}
 
 	/**
