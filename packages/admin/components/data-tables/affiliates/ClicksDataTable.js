@@ -61,7 +61,7 @@ export default ({
 								`}
 								ref={urlRef}
 							>
-								{!!url && <ScIcon name="link" />}
+								{!!url && <ScIcon name="copy" />}
 								{' '} {url}
 							</ScText>
 						),
@@ -74,7 +74,7 @@ export default ({
 								`}
 								ref={referrerRef}
 							>
-								{!!referrer && <ScIcon name="link" />}
+								{!!referrer && <ScIcon name="copy" />}
 								{' '}{referrer}
 							</ScText>
 						),
