@@ -194,4 +194,25 @@ class BlockStylesService {
 			'color'   => wp_style_engine_get_styles( [ 'color' => $this->getColorValues() ] ),
 		];
 	}
+
+	/**
+	 * Get the spacing preset css variable.
+	 *
+	 * @param string $value The value.
+	 *
+	 * @return string|void
+	 */
+	public function getBlockGapPresetCssVar( $value ) {
+		if ( ! $value ) {
+			return;
+		}
+
+		preg_match( '/var:preset\|spacing\|(.+)/', $value, $matches );
+
+		if ( ! $matches ) {
+			return $value;
+		}
+
+		return "var(--wp--preset--spacing--$matches[1])";
+	}
 }

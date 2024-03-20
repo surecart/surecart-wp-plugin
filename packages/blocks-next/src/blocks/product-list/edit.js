@@ -12,13 +12,13 @@ import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, __experimentalGetGapCSSValue as getGapCSSValue } from '@wordpress/block-editor';
 
 const TEMPLATE = [['surecart/product-item-v2']];
 
 export default ({
 	clientId,
-	attributes: { columns, limit },
+	attributes: { columns, limit, style },
 	setAttributes,
 }) => {
 	const { products, loading } = useSelect((select) => {
@@ -103,7 +103,7 @@ export default ({
 				style={{
 					borderStyle: 'none',
 					'--sc-product-item-list-column': columns,
-					'--sc-product-item-list-gap': '40px',
+					gap: getGapCSSValue(style?.spacing?.blockGap)
 				}}
 			/>
 		</>

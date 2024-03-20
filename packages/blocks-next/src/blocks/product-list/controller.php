@@ -31,6 +31,8 @@ wp_interactivity_state(
 $styles = sc_get_block_styles();
 $style = $styles['css'] ?? '';
 $class = $styles['classnames'] ?? '';
+$columns = $attributes['columns'] ?? 4;
+$block_gap_css_var = $attributes['style']['spacing']['blockGap'] ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
 
 // return the view.
 return 'file:./view.php';
