@@ -6,7 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
@@ -96,6 +96,7 @@ export default () => {
 				successMessage: __('Affiliate request updated.', 'surecart'),
 			});
 		} catch (e) {
+			console.error(e);
 			createErrorNotice(
 				e?.message || __('Something went wrong', 'surecart')
 			);
@@ -138,8 +139,13 @@ export default () => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliation_requests/${id}/approve`,
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'affiliation-request'
+			);
+
+			const approvedRequest = await apiFetch({
+				path: `${baseURL}/${id}/approve`,
 				method: 'PATCH',
 			});
 
@@ -151,7 +157,7 @@ export default () => {
 				'surecart',
 				'affiliation-request',
 				{
-					...affiliationRequest,
+					...approvedRequest,
 					status: 'approved',
 				},
 				undefined,
@@ -175,8 +181,13 @@ export default () => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliation_requests/${id}/deny`,
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'affiliation-request'
+			);
+
+			const deniedRequest = await apiFetch({
+				path: `${baseURL}/${id}/deny`,
 				method: 'PATCH',
 			});
 
@@ -188,7 +199,7 @@ export default () => {
 				'surecart',
 				'affiliation-request',
 				{
-					...affiliationRequest,
+					...deniedRequest,
 					status: 'denied',
 				},
 				undefined,
@@ -244,27 +255,27 @@ export default () => {
 						{['pending', 'denied'].includes(
 							affiliationRequest?.status
 						) && (
-							<ScButton
-								type="primary"
-								onClick={() => setModal('approve')}
-								loading={loading}
-							>
-								{__('Approve Request', 'surecart')}
-							</ScButton>
-						)}
+								<ScButton
+									type="primary"
+									onClick={() => setModal('approve')}
+									loading={loading}
+								>
+									{__('Approve Request', 'surecart')}
+								</ScButton>
+							)}
 
 						{['pending', 'approved'].includes(
 							affiliationRequest?.status
 						) && (
-							<ScButton
-								type="default"
-								outline={true}
-								onClick={() => setModal('deny')}
-								loading={loading}
-							>
-								{__('Deny Request', 'surecart')}
-							</ScButton>
-						)}
+								<ScButton
+									type="default"
+									outline={true}
+									onClick={() => setModal('deny')}
+									loading={loading}
+								>
+									{__('Deny Request', 'surecart')}
+								</ScButton>
+							)}
 					</ScButtonGroup>
 
 					<ScDropdown slot="suffix" placement="bottom-end">
