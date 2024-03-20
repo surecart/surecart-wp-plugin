@@ -10,7 +10,9 @@ const TEMPLATE = [
 ];
 
 export default () => {
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: 'product-item',
+	});
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
 	});

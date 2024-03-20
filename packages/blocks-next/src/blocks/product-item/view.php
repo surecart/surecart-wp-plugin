@@ -1,5 +1,5 @@
 <div 
-	<?php echo wp_kses_data(get_block_wrapper_attributes()); ?> 
+	<?php echo wp_kses_data(get_block_wrapper_attributes( array( 'class' => 'product-item' ) )); ?> 
 >
-	<?php var_dump( $content); ?>
+	<?php echo( $content); ?>
 </div>

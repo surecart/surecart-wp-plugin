@@ -12,7 +12,8 @@
 	"ancestor": [ "surecart/product-list" ],
 	"attributes": {
 		"sizing": {
-			"type": "string"
+			"type": "string",
+			"default": "cover"
 		}
 	},
 	"supports": {

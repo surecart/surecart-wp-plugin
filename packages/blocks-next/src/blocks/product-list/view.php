@@ -9,7 +9,6 @@
 >
 	<?php foreach ($products as $product) : ?>
 		<div
-			class="product-item" 
 			<?php echo wp_kses_data(
 					wp_interactivity_data_wp_context(
 						[

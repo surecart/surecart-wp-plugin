@@ -96,9 +96,6 @@ export default ({
 					'surecart/productId': product?.id,
 				}))}
 				clientId={clientId}
-				itemProps={{
-					className: 'product-item',
-				}}
 				className="product-item-list"
 				style={{
 					borderStyle: 'none',
