@@ -4,32 +4,77 @@
     flex-wrap: wrap;
     align-items: stretch;
     width: 100%;
+    border: var(--sc-input-border-width) solid var(--sc-color-gray-300);
+    border-radius: var(--sc-border-radius-medium);
+    transition: var(--sc-transition-medium);
+    box-sizing: border-box;
+    box-shadow: var(--sc-input-box-shadow);
+    transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+        var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+        -webkit-appearance: none;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+        box-shadow: 0 0 0 var(--sc-input-height-large) var(--sc-input-background-color-hover) inset !important;
+        -webkit-text-fill-color: var(--sc-input-color);
+    }
+
+    &:hover {
+        background-color: var(--sc-input-background-color-hover);
+        border-color: var(--sc-input-border-color-hover);
+        z-index: 7;
+
+        .sc-form-control {
+            color: var(--sc-input-color-hover);
+        }
+    }
+
+    &:focus-within {
+        background-color: var(--sc-input-background-color-focus);
+        border-color: var(--sc-input-border-color-focus);
+        box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+        z-index: 8;
+    }
 
     >.sc-form-control {
         position: relative;
         flex: 1 1 auto;
         width: 1%;
         min-width: 0;
+        border: 0 !important;
+        box-shadow: none !important;
+        padding: 0 var(--sc-input-spacing-medium);
+        background-color: transparent;
+        border-radius: 0 !important;
+
+        &:focus {
+            z-index: 5;
+            box-shadow: none;
+            border: 0;
+            color: var(--sc-input-color-focus);
+        }
     }
 
-    >.sc-form-control:focus {
-        z-index: 5;
+    &-text {
+        display: flex;
+        align-items: center;
+        padding: 0 var(--sc-spacing-small);
+        font-size: var(--sc-font-size-medium);
+        font-weight: var(--sc-font-weight-normal);
+        line-height: var(--sc-line-height-normal);
+        color: var(--sc-input-color);
+        text-align: center;
+        white-space: nowrap;
+        opacity: 0.5;
     }
-}
-
-.sc-input-group-text {
-    display: flex;
-    align-items: center;
-    padding: 0 var(--sc-spacing-small);
-    font-size: var(--sc-font-size-medium);
-    font-weight: var(--sc-font-weight-normal);
-    line-height: var(--sc-line-height-normal);
-    color: var(--sc-color-gray-700);
-    text-align: center;
-    white-space: nowrap;
-    background-color: var(--sc-color-gray-100);
-    border: var(--sc-input-border-width) solid var(--sc-color-gray-300);
-    border-radius: var(--sc-border-radius-medium);
 }
 
 .sc-input-group-lg>.sc-form-control,
@@ -50,20 +95,14 @@
     border-radius: var(--sc-border-radius-small);
 }
 
-// Override the default border-radius for the first and last child of the input group.
 .sc-input-group {
-    > :not(:last-child) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
 
+    > :not(:last-child),
     > :nth-last-child(n + 3) {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
+        padding-right: var(--sc-spacing-x-small);
     }
 
     > :not(:first-child) {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+        padding-left: var(--sc-spacing-x-small);
     }
 }
