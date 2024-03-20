@@ -57,11 +57,12 @@ export default ({
 								css={css`
 									cursor: pointer;
 									word-break: break-word;
+									line-break: anywhere;
 								`}
 								ref={urlRef}
 							>
-								{url} {' '}
-								{!!url && <ScIcon name="copy" />}
+								{!!url && <ScIcon name="link" />}
+								{' '} {url}
 							</ScText>
 						),
 						referrer: (
@@ -69,11 +70,12 @@ export default ({
 								css={css`
 									cursor: pointer;
 									word-break: break-word;
+									line-break: anywhere;
 								`}
 								ref={referrerRef}
 							>
-								{referrer} {' '}
-								{!!referrer && <ScIcon name="copy" />}
+								{!!referrer && <ScIcon name="link" />}
+								{' '}{referrer}
 							</ScText>
 						),
 						date: (
