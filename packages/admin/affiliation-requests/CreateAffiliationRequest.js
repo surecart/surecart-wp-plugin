@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useState, useReducer } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -25,11 +25,18 @@ import CreateTemplate from '../templates/CreateModel';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [payoutEmail, setPayoutEmail] = useState('');
-	const [bio, setBio] = useState('');
+	const [request, updateRequest] = useReducer(
+		(currentState, newState) => {
+			return { ...currentState, ...newState };
+		},
+		{
+			first_name: '',
+			last_name: '',
+			email: '',
+			payout_email: '',
+			bio: '',
+		}
+	);
 	const [error, setError] = useState(null);
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -41,13 +48,7 @@ export default ({ id, setId }) => {
 			const affiliationRequest = await saveEntityRecord(
 				'surecart',
 				'affiliation-request',
-				{
-					first_name: firstName,
-					last_name: lastName,
-					email,
-					payout_email: payoutEmail,
-					bio,
-				},
+				request,
 				{ throwOnError: true }
 			);
 			setId(affiliationRequest.id);
@@ -78,10 +79,8 @@ export default ({ id, setId }) => {
 									"Affiliate request's first name.",
 									'surecart'
 								)}
-								onScChange={(e) => {
-									setFirstName(e.target.value);
-								}}
-								value={firstName}
+								onScChange={(e) => updateRequest({ first_name: e.target.value })}
+								value={request.first_name}
 								name="first_name"
 								required
 								autofocus
@@ -93,10 +92,8 @@ export default ({ id, setId }) => {
 									"Affiliate request's last name.",
 									'surecart'
 								)}
-								onScChange={(e) => {
-									setLastName(e.target.value);
-								}}
-								value={lastName}
+								onScChange={(e) => updateRequest({ last_name: e.target.value })}
+								value={request.last_name}
 								name="last_name"
 							/>
 						</ScFormRow>
@@ -108,10 +105,8 @@ export default ({ id, setId }) => {
 									"Affiliate request's email.",
 									'surecart'
 								)}
-								onScChange={(e) => {
-									setEmail(e.target.value);
-								}}
-								value={email}
+								onScChange={(e) => updateRequest({ email: e.target.value })}
+								value={request.email}
 								name="email"
 								type="email"
 								required
@@ -123,11 +118,9 @@ export default ({ id, setId }) => {
 									"Affiliate request's payout email.",
 									'surecart'
 								)}
-								onScChange={(e) => {
-									setPayoutEmail(e.target.value);
-								}}
+								onScChange={(e) => updateRequest({ payout_email: e.target.value })}
 								required
-								value={payoutEmail}
+								value={request.payout_email}
 								name="payout_email"
 								type="email"
 							/>
@@ -140,10 +133,8 @@ export default ({ id, setId }) => {
 									'Short blurb from this affiliate describing how they will promote this store.',
 									'surecart'
 								)}
-								onScChange={(e) => {
-									setBio(e.target.value);
-								}}
-								value={bio}
+								onScChange={(e) => updateRequest({ bio: e.target.value })}
+								value={request.bio}
 								name="bio"
 								required
 							/>
