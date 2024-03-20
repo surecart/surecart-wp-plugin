@@ -1,6 +1,5 @@
 <div 
 	<?php echo wp_kses_data(get_block_wrapper_attributes( array( 'class' => 'product-item-list' . $class ) ) ); ?>
-	data-wp-interactive='{ "namespace": "surecart/product-list" }'
 	style="<?php 
 		echo '--sc-product-item-list-column:' . $columns . '; ';
 		echo 'gap:' . $block_gap_css_var . '; ';  

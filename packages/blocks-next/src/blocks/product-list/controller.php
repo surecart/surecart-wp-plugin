@@ -9,6 +9,11 @@ use SureCart\Models\Product;
  *     $block (WP_Block): The block instance.
  */
 
+$block_id = $block->context["surecart/product-list/blockId"];
+$page_key = isset( $block->context["surecart/product-list/blockId"] ) ? 'products-' . $block->context["surecart/product-list/blockId"] . '-page' : 'products-page';
+$page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+$per_page = $block->context["surecart/product-list/limit"] ?? 15;
+
 $products = Product::where(
 	[
 		'archived' => false,
@@ -19,19 +24,18 @@ $products = Product::where(
 			'product_media.media'
 		],
 	]
-)->get();
-
-wp_interactivity_state(
-	'surecart/product-list',
-	array(
-		'products' => $products,
-	),
+)->paginate(
+	[
+		'per_page' => $per_page,
+		'page'     => $page,
+	]
 );
+$products = $products->data;
 
 $styles = sc_get_block_styles();
 $style = $styles['css'] ?? '';
 $class = $styles['classnames'] ?? '';
-$columns = $attributes['columns'] ?? 4;
+$columns = $block->context["surecart/product-list/columns"] ?? 4;
 $block_gap_css_var = $attributes['style']['spacing']['blockGap'] ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
 
 // return the view.

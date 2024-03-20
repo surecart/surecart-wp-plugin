@@ -1,0 +1,53 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-pagination",
+	"title": "Product Pagination",
+	"description": "Display the product pagination.",
+	"version": "1.0.0",
+	"category": "surecart",
+	"icon": "media-interactive",
+	"example": {},
+	"usesContext": ["surecart/product-list/blockId"],
+	"ancestor": [ "surecart/product-list-wrapper" ],
+	"allowedBlocks": [
+		"surecart/product-pagination-previous",
+		"surecart/product-pagination-numbers",
+		"surecart/product-pagination-next"
+	],
+	"attributes": {
+		"paginationArrow": {
+			"type": "string",
+			"default": "none"
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"providesContext": {
+		"paginationArrow": "paginationArrow",
+		"showLabel": "showLabel"
+	},
+	"supports": {
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": ["file:../../styles/product-pagination.css"]
+}

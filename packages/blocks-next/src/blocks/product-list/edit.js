@@ -1,6 +1,5 @@
 import TemplateListEdit from '../../components/TemplateListEdit';
 import { __ } from '@wordpress/i18n';
-import { useMemo } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import {
@@ -14,12 +13,12 @@ import {
 } from '@wordpress/components';
 import { InspectorControls, __experimentalGetGapCSSValue as getGapCSSValue } from '@wordpress/block-editor';
 
-const TEMPLATE = [['surecart/product-item-v2']];
+const TEMPLATE = [ ['surecart/product-item-v2'] ];
 
 export default ({
 	clientId,
-	attributes: { columns, limit, style },
-	setAttributes,
+	attributes: { style },
+	context: { 'surecart/product-list/columns': columns },
 }) => {
 	const { products, loading } = useSelect((select) => {
 		const queryArgs = [
@@ -55,54 +54,19 @@ export default ({
 	}
 
 	return (
-		<>
-			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<RangeControl
-						label={__('Columns', 'surecart')}
-						value={columns}
-						onChange={(columns) => setAttributes({ columns })}
-						min={1}
-						max={10}
-					/>
-					{columns > 6 && (
-						<Notice
-							status="warning"
-							isDismissible={false}
-							css={css`
-								margin-bottom: 20px;
-							`}
-						>
-							{__(
-								'This column count exceeds the recommended amount and may cause visual breakage.'
-							)}
-						</Notice>
-					)}
-					<RangeControl
-						label={__('Products Per Page', 'surecart')}
-						value={limit}
-						onChange={(limit) => setAttributes({ limit })}
-						step={1}
-						min={1}
-						max={40}
-					/>
-				</PanelBody>
-			</InspectorControls>
-
-			<TemplateListEdit
-				template={TEMPLATE}
-				blockContexts={products?.map((product) => ({
-					id: product?.id,
-					'surecart/productId': product?.id,
-				}))}
-				clientId={clientId}
-				className="product-item-list"
-				style={{
-					borderStyle: 'none',
-					'--sc-product-item-list-column': columns,
-					gap: getGapCSSValue(style?.spacing?.blockGap)
-				}}
-			/>
-		</>
+		<TemplateListEdit
+			template={TEMPLATE}
+			blockContexts={products?.map((product) => ({
+				id: product?.id,
+				'surecart/productId': product?.id,
+			}))}
+			clientId={clientId}
+			className="product-item-list"
+			style={{
+				borderStyle: 'none',
+				'--sc-product-item-list-column': columns,
+				gap: getGapCSSValue(style?.spacing?.blockGap)
+			}}
+		/>
 	);
 };

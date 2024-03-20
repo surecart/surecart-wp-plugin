@@ -11,16 +11,12 @@
 	"example": {
 		"attributes": {}
 	},
-	"attributes": {
-		"columns": {
-			"type": "number",
-			"default": 4
-		},
-		"limit": {
-			"type": "number",
-			"default": 15
-		}
-	},
+	"ancestor": [ "surecart/product-list-wrapper" ],
+	"usesContext": [
+		"surecart/product-list/blockId",
+		"surecart/product-list/columns",
+		"surecart/product-list/limit"
+	],
 	"supports": {
 		"interactivity": true,
 		"spacing": {

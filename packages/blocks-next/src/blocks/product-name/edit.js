@@ -6,7 +6,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { Spinner, Placeholder } from '@wordpress/components';
 
-export default ({ context, context: { 'surecart/productId': productId } }) => {
+export default ({ context: { 'surecart/productId': productId } }) => {
 	const blockProps = useBlockProps({
 		className: 'product-item-title',
 	});
@@ -35,7 +35,7 @@ export default ({ context, context: { 'surecart/productId': productId } }) => {
 			</Placeholder>
 		);
 	}
-console.log(context);
+
 	return (
 		<>
 			<div {...blockProps}>{product?.name || "Product Name"}</div>

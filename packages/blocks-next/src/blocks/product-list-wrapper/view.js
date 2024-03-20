@@ -28,7 +28,7 @@ store(
 				if ( isValidLink( ref ) && isValidEvent( event ) ) {
 					event.preventDefault();
 
-					const { actions } = yield import( /* webpackIgnore: true */
+					const { actions } = yield import(
 						'@wordpress/interactivity-router'
 					);
 					yield actions.navigate( ref.href );
@@ -38,7 +38,7 @@ store(
 			*prefetch() {
 				const { ref } = getElement();
 				if ( isValidLink( ref ) ) {
-					const { actions } = yield import( /* webpackIgnore: true */
+					const { actions } = yield import(
 						'@wordpress/interactivity-router'
 					);
 					yield actions.prefetch( ref.href );
@@ -50,7 +50,7 @@ store(
 				const { url } = getContext();
 				const { ref } = getElement();
 				if ( url && isValidLink( ref ) ) {
-					const { actions } = yield import( /* webpackIgnore: true */
+					const { actions } = yield import(
 						'@wordpress/interactivity-router'
 					);
 					yield actions.prefetch( ref.href );
