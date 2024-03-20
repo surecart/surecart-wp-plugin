@@ -1,13 +1,19 @@
+/** @jsx jsx   */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
 import { __, _n } from '@wordpress/i18n';
+import { useCopyToClipboard } from '@wordpress/compose';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import { ScFormatDate, ScText } from '@surecart/components-react';
+import { ScFormatDate, ScIcon, ScText } from '@surecart/components-react';
 
 export default ({
 	data,
@@ -23,6 +29,8 @@ export default ({
 	empty,
 	...props
 }) => {
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
 	return (
 		<DataTable
 			title={title || __('Clicks', 'surecart')}
@@ -31,12 +39,43 @@ export default ({
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
 				.map(({ created_at, url, referrer }) => {
+					const urlRef = useCopyToClipboard(url, () => {
+						createSuccessNotice(__('Landing URL Copied to clipboard.', 'surecart'), {
+							type: 'snackbar',
+						})
+					});
+
+					const referrerRef = useCopyToClipboard(referrer, () => {
+						createSuccessNotice(__('Referring URL Copied to clipboard.', 'surecart'), {
+							type: 'snackbar',
+						})
+					});
+
 					return {
-						url: <ScText truncate>{url}</ScText>,
-
-						// TODO: Add referrer while API is ready.
-						referrer: <ScText truncate>{referrer}</ScText>,
-
+						url: (
+							<ScText
+								css={css`
+									cursor: pointer;
+									word-break: break-word;
+								`}
+								ref={urlRef}
+							>
+								{url} {' '}
+								{!!url && <ScIcon name="copy" />}
+							</ScText>
+						),
+						referrer: (
+							<ScText
+								css={css`
+									cursor: pointer;
+									word-break: break-word;
+								`}
+								ref={referrerRef}
+							>
+								{referrer} {' '}
+								{!!referrer && <ScIcon name="copy" />}
+							</ScText>
+						),
 						date: (
 							<ScFormatDate
 								type="timestamp"
