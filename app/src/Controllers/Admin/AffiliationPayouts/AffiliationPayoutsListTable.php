@@ -160,7 +160,20 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_affiliate( $payout ) {
-		return $payout->affiliation->display_name;
+		$affiliation = $payout->affiliation ?? null;
+		if ( empty( $affiliation->id ) ) {
+			return '';
+		}
+
+		ob_start();
+		?>
+		<div class="sc-affiliate-name">
+			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
+				<?php echo esc_html( $affiliation->display_name ); ?>
+			</a>
+		</div>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
