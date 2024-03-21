@@ -122,7 +122,12 @@ const { state, callbacks, actions } = store('surecart/product', {
 					1
 				),
 				...(state.selectedPrice?.ad_hoc
-					? { ad_hoc_amount: state.adHocAmount }
+					? {
+							ad_hoc_amount: !state?.selectedPrice
+								?.is_zero_decimal
+								? state.adHocAmount * 100
+								: state.adHocAmount,
+					  }
 					: {}),
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
@@ -133,10 +138,6 @@ const { state, callbacks, actions } = store('surecart/product', {
 		get disabled() {
 			return state?.selectedPrice?.archived || state?.product?.archived;
 		},
-		/** Get the ad_hoc amount. */
-		get adHocAmount() {
-			return state?.selectedPrice?.amount || null;
-		},
 		/** Get the selected variant id. */
 		get selectedVariantId() {
 			return state.selectedVariant?.id;
@@ -144,15 +145,6 @@ const { state, callbacks, actions } = store('surecart/product', {
 	},
 
 	actions: {
-		handlePurchaseClick(e) {
-			const { addToCart } = getContext();
-			if (addToCart) {
-				e.preventDefault();
-				return actions.addToCart(e);
-			}
-			update({ busy: true });
-			return true;
-		},
 		*addToCart(e) {
 			e.preventDefault();
 			try {
@@ -175,6 +167,9 @@ const { state, callbacks, actions } = store('surecart/product', {
 			const { productId } = getContext();
 			return state[productId]?.[prop] || false;
 		},
+		handleSubmit(e) {
+			return actions.addToCart(e);
+		},
 		/** Set the option. */
 		setOption: (e) => {
 			const { optionNumber, optionValue } = getContext();
@@ -192,6 +187,12 @@ const { state, callbacks, actions } = store('surecart/product', {
 				(p) => p.id === price?.id
 			);
 			update({ selectedPrice });
+		},
+		setAdHocAmount: (e) => {
+			state.adHocAmount = parseFloat(e.target.value);
+		},
+		formatAdHocAmount: (e) => {
+			state.adHocAmount = parseFloat(e.target.value).toFixed(2);
 		},
 		/** Update variant and values. */
 		updateSelectedVariant: () => {
