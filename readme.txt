@@ -24,7 +24,7 @@ Meet [SureCart](https://surecart.com/) — the modern, intuitive ecommerce plugi
 
 [youtube https://www.youtube.com/watch?v=biTedATyVPg]
 
-[What's New](https://surecart.com/whats-new/) | [Docs](https://surecart.com/docs/) | [Video Tutorials](https://www.youtube.com/@SureCartOfficial/) | [Get Help](https://surecart.com/) | [Community](https://www.facebook.com/groups/surecrafted)
+[What's New](https://surecart.com/whats-new/) | [Docs](https://surecart.com/docs/) | [Video Tutorials](https://www.youtube.com/@SureCartOfficial/) | [Get Help](https://surecart.com/support/open-a-ticket/) | [Community](https://www.facebook.com/groups/surecrafted)
 
 ## Who Is SureCart For? ##
 Each year we send all of our users a survey, so here are the 2024 results of who is using SureCart.
