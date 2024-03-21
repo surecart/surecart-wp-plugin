@@ -58,12 +58,6 @@ export default () => {
 		}
 	};
 
-	console.log(
-		'end date',
-		payout?.end_date,
-		new Date(payout?.end_date * 1000)
-	);
-
 	return (
 		<CreateTemplate>
 			<Box title={__('Create New Payout', 'surecart')}>
@@ -107,6 +101,9 @@ export default () => {
 							</BaseControl.VisualLabel>
 							<DateTimePicker
 								currentDate={new Date(payout.end_date * 1000)}
+								isInvalidDate={(date) =>
+									Date.parse(date) > Date.now()
+								}
 								onChange={(end_date) =>
 									setPayout({
 										end_date:
