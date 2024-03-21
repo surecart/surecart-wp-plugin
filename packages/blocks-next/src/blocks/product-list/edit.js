@@ -65,7 +65,7 @@ export default ({
 			style={{
 				borderStyle: 'none',
 				'--sc-product-item-list-column': columns,
-				gap: getGapCSSValue(style?.spacing?.blockGap)
+				gap: getGapCSSValue(style?.spacing?.blockGap) || '40px',
 			}}
 		/>
 	);

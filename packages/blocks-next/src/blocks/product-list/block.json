@@ -18,7 +18,9 @@
 		"surecart/product-list/limit"
 	],
 	"supports": {
-		"interactivity": true,
+		"interactivity": {
+			"clientNavigation": true
+		},
 		"spacing": {
 			"blockGap": true,
 			"__experimentalDefaultControls": {

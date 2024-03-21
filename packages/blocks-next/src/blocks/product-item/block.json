@@ -12,7 +12,9 @@
 	"ancestor": [ "surecart/product-list" ],
 	"attributes": {},
 	"supports": {
-		"interactivity": true,
+		"interactivity": {
+			"clientNavigation": true
+		},
 		"reusable": false,
 		"html": false,
 		"spacing": {
@@ -40,5 +42,6 @@
 		}
 	},
 	"textdomain": "surecart",
+	"viewScriptModule": "@surecart/product-page",
 	"editorScript": "file:./index.js"
 }

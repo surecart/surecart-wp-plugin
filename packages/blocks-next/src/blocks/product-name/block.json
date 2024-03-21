@@ -21,7 +21,9 @@
 		}
 	},
 	"supports": {
-		"interactivity": true,
+		"interactivity": {
+			"clientNavigation": true
+		},
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]
@@ -40,5 +42,6 @@
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
+	"viewScriptModule": "@surecart/product-page",
 	"style": ["file:../../styles/product-item-title.css"]
 }
