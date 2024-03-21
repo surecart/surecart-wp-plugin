@@ -124,6 +124,20 @@ class AffiliationClicksListTable extends ListTable {
 		return $created . '<br /><small style="opacity: 0.75">' . $expires . '</small>';
 	}
 
+	/**
+	 * Handle the url column.
+	 */
+	public function column_url( $click ) {
+		return '<a href="' . esc_url( $click->url ) . '" target="_blank">' . esc_html( $click->url ) . '</a>';
+	}
+
+	/**
+	 * Handle the referrer column.
+	 */
+	public function column_referrer( $click ) {
+		return $click->referrer ?? '';
+	}
+
 
 	/**
 	 * Handle the affiliate column.
@@ -138,14 +152,11 @@ class AffiliationClicksListTable extends ListTable {
 			return '';
 		}
 
-		$name = ! empty( $affiliation->first_name . $affiliation->last_name ) ? $affiliation->first_name . ' ' . $affiliation->last_name : $affiliation->email;
-
 		ob_start();
 		?>
-
 		<div class="sc-affiliate-name">
 			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
-				<?php echo esc_html( $name ); ?>
+				<?php echo esc_html( $affiliation->getDisplayNameAttribute() ); ?>
 			</a>
 		</div>
 		<?php
