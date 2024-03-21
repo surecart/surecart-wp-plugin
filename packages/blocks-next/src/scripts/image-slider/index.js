@@ -1,32 +1,72 @@
 /**
  * Wordpress dependencies
  */
-import { store } from '@wordpress/interactivity';
+import { store, getElement, getContext } from '@wordpress/interactivity';
 
 /**
  * External dependencies
  */
-import Swiper from 'swiper';
+import Swiper, { Navigation } from 'swiper';
 
 // controls the slider
-const { state } = store('surecart/image-slider', {
-	state: {},
+store('surecart/image-slider', {
 	actions: {
-		init: () => {
-			// get a reference to the element that called this action
-			const swiperContainer = document.querySelector('.swiper');
+		initImageSwiper: () => {
+			const { ref } = getElement();
+			const context = getContext();
 
-			if (swiperContainer) {
-				const swiper = new Swiper(swiperContainer, {
-					loop: true,
-					autoplay: {
-						delay: 5000,
+			context.swiper = new Swiper(ref, {
+				direction: 'horizontal',
+				loop: false,
+				autoHeight: true,
+				centeredSlides: true,
+				on: {
+					slideChange: (swiper) => {
+						context.currentSliderIndex = swiper.activeIndex;
 					},
-					navigation: {
-						nextEl: '.swiper-button-next',
-						prevEl: '.swiper-button-prev',
-					},
-				});
+				},
+			});
+		},
+		initThumbsSwiper: () => {
+			const { ref } = getElement();
+			const context = getContext();
+
+			context.thumbsSwiper = new Swiper(ref, {
+				modules: [Navigation],
+				direction: 'horizontal',
+				loop: false,
+				slidesPerView: 5, // thumbnailsPerPage
+				slidesPerGroup: 5, // thumbnailsPerPage
+				spaceBetween: 10,
+				centerInsufficientSlides: true,
+				slideToClickedSlide: true,
+				navigation: {
+					nextEl: ref.querySelector('image-slider--is-prev'),
+					prevEl: ref.querySelector('image-slider--is-next'),
+				},
+			});
+		},
+		onThumbClick: () => {
+			// check how the context is passed from the variant choices
+			const { ref } = getElement();
+			const index = Number.parseInt(ref.getAttribute('thumb-index'));
+
+			// set the current slider index
+			const context = getContext();
+			context.currentSliderIndex = index;
+		},
+		onSliderChange: () => {
+			const context = getContext();
+			context.swiper.slideTo(context.currentSliderIndex || 0);
+
+			const slideInView =
+				context.currentSliderIndex >=
+					context.thumbsSwiper.activeIndex &&
+				context.currentSliderIndex <
+					context.thumbsSwiper.activeIndex +
+						context.thumbnailsPerPage;
+			if (!slideInView) {
+				context.thumbsSwiper.slideTo(context.currentSliderIndex);
 			}
 		},
 	},
