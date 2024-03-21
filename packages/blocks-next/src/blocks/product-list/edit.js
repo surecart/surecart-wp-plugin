@@ -1,80 +1,73 @@
-import TemplateListEdit from '../../components/TemplateListEdit';
+import {
+	useBlockProps,
+	useInnerBlocksProps,
+	InspectorControls
+} from '@wordpress/block-editor';
+
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import {
 	PanelBody,
 	RangeControl,
 	Notice,
-	Spinner,
-	Placeholder,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
-import { useBlockProps, __experimentalGetGapCSSValue as getGapCSSValue } from '@wordpress/block-editor';
+
+import { useEffect } from '@wordpress/element';
 
 const TEMPLATE = [
-	[ 'surecart/product-image' ],
-	[ 'surecart/product-name' ],
-	[ 'surecart/product-price-v2' ]
+	[ 'surecart/product-template' ],
+	[ 'surecart/product-pagination' ],
 ];
 
-export default ({
-	clientId,
-	attributes: { style },
-	context: { 'surecart/product-list/columns': columns },
-}) => {
-	const blockProps = useBlockProps({
-		className: 'product-item',
-	});
-	const { products, loading } = useSelect((select) => {
-		const queryArgs = [
-			'surecart',
-			'product',
-			{
-				expand: [
-					'prices',
-					'featured_product_media',
-					'product_medias',
-					'product_media.media',
-					'variants',
-				],
-				archived: false,
-				status: ['published'],
-			},
-		];
-		return {
-			products: select(coreStore).getEntityRecords(...queryArgs),
-			loading: select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			),
-		};
+export default ({ setAttributes, attributes: { blockId, columns, limit }, clientId }) => {
+	useEffect(() => {
+		if (!blockId) {
+			setAttributes({ blockId: clientId });
+		}
+	}, []);
+
+	const blockProps = useBlockProps();
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		template: TEMPLATE,
+		templateLock: 'all',
 	});
 
-	if (loading) {
-		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
-		);
-	}
-
-	return (
-		<TemplateListEdit
-			template={TEMPLATE}
-			blockContexts={products?.map((product) => ({
-				id: product?.id,
-				'surecart/productId': product?.id,
-			}))}
-			itemProps={blockProps}
-			clientId={clientId}
-			className="product-item-list"
-			style={{
-				borderStyle: 'none',
-				'--sc-product-item-list-column': columns,
-				gap: getGapCSSValue(style?.spacing?.blockGap) || '40px',
-			}}
-		/>
+	return ( 
+		<>
+			<InspectorControls>
+				<PanelBody title={__('Attributes', 'surecart')}>
+					<RangeControl
+						label={__('Columns', 'surecart')}
+						value={columns}
+						onChange={(columns) => setAttributes({ columns })}
+						min={1}
+						max={10}
+					/>
+					{columns > 6 && (
+						<Notice
+							status="warning"
+							isDismissible={false}
+							css={css`
+								margin-bottom: 20px;
+							`}
+						>
+							{__(
+								'This column count exceeds the recommended amount and may cause visual breakage.'
+							)}
+						</Notice>
+					)}
+					<RangeControl
+						label={__('Products Per Page', 'surecart')}
+						value={limit}
+						onChange={(limit) => setAttributes({ limit })}
+						step={1}
+						min={1}
+						max={40}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...innerBlocksProps}/>
+		</>
 	);
 };

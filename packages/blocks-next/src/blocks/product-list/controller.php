@@ -1,18 +1,18 @@
+
 <?php
 use SureCart\Models\Product;
-/**
- * PHP controller to use when rendering the block type on the server to show on the front end.
- *
- * The following variables are exposed to the file:
- *     $attributes (array): The block attributes.
- *     $content (string): The block default content.
- *     $block (WP_Block): The block instance.
- */
 
-$block_id = $block->context["surecart/product-list/blockId"];
-$page_key = isset( $block->context["surecart/product-list/blockId"] ) ? 'products-' . $block->context["surecart/product-list/blockId"] . '-page' : 'products-page';
+wp_interactivity_state(
+	'surecart/product-list',
+	array(
+		'products' => $products,
+	),
+);
+
+$block_id = $attributes['blockId'] ?? '';
+$page_key = $block_id ? 'products-' . $block_id . '-page' : 'products-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
-$per_page = $block->context["surecart/product-list/limit"] ?? 15;
+$per_page = $attributes['limit'] ?? 15;
 
 $products = Product::where(
 	[
@@ -30,13 +30,9 @@ $products = Product::where(
 		'page'     => $page,
 	]
 );
-$products = $products->data;
+$total_pages = ceil( $products->pagination->count / $per_page );
 
-$styles = sc_get_block_styles();
-$style = $styles['css'] ?? '';
-$class = $styles['classnames'] ?? '';
-$columns = $block->context["surecart/product-list/columns"] ?? 4;
-$block_gap_css_var = $attributes['style']['spacing']['blockGap'] ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
+$block_id = $attributes['blockId'] ?? 4;
 
 // return the view.
 return 'file:./view.php';

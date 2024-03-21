@@ -19,7 +19,7 @@ const isValidEvent = ( event ) =>
 	! event.defaultPrevented;
 
 store(
-	'surecart/product-list-wrapper',
+	'surecart/product-list',
 	{
 		actions: {
 			*navigate( event ) {

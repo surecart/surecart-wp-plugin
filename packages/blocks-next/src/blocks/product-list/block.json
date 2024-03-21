@@ -2,56 +2,42 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-list",
-	"keywords": ["product", "list", "raj"],
-	"title": "New Product List",
-	"description": "Displays products list.",
+	"title": "Product List",
+	"description": "Display the products.",
 	"version": "1.0.0",
 	"category": "surecart",
 	"icon": "media-interactive",
-	"example": {
-		"attributes": {}
+	"example": {},
+	"providesContext": {
+		"surecart/product-list/blockId": "blockId",
+		"surecart/product-list/columns": "columns",
+		"surecart/product-list/limit": "limit"
+
 	},
-	"ancestor": [ "surecart/product-list-wrapper" ],
-	"usesContext": [
-		"surecart/product-list/blockId",
-		"surecart/product-list/columns",
-		"surecart/product-list/limit"
+	"attributes": {
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"columns": {
+			"type": "number",
+			"default": 4
+		},
+		"limit": {
+			"type": "number",
+			"default": 15
+		}
+	},
+	"allowedBlocks": [
+		"surecart/product-template",
+		"surecart/product-pagination"
 	],
 	"supports": {
 		"interactivity": {
 			"clientNavigation": true
-		},
-		"spacing": {
-			"padding": true,
-			"margin": true,
-			"blockGap": true,
-			"__experimentalDefault": "2em",
-			"__experimentalDefaultControls": {
-				"padding": true,
-				"margin": true,
-				"blockGap": true
-			}
-		},
-		"color": {
-			"text": false,
-			"background": true
-		},
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"width": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"width": true
-			}
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-list",
-	"style": [
-		"file:../../styles/product-item-list.css",
-		"file:../../styles/product-item.css"
-	]
+	"viewScriptModule": "@surecart/product-page"
 }

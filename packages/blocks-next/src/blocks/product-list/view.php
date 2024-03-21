@@ -1,23 +1,15 @@
 <div 
-	<?php echo wp_kses_data(get_block_wrapper_attributes( array( 'class' => 'product-item-list' . $class ) ) ); ?>
-	style="<?php 
-		echo '--sc-product-item-list-column:' . $columns . '; ';
-		echo 'gap:' . $block_gap_css_var . '; ';  
-		echo esc_attr($style); 
-	?>"
+    <?php echo get_block_wrapper_attributes(); ?> 
+    data-wp-interactive='{ "namespace": "surecart/product-list" }'
+    data-wp-router-region="<?php echo 'products-' . $block_id ?>"
+    data-wp-init="callbacks.setQueryRef"
+    <?php echo wp_kses_data(
+        wp_interactivity_data_wp_context(
+            [
+                'total_pages' => $total_pages,
+            ]
+        )
+    ); ?>
 >
-	<?php foreach ($products as $product) : ?>
-		<div
-			<?php echo wp_kses_data(
-					wp_interactivity_data_wp_context(
-						[
-							'product' => $product,
-						]
-					)
-			); ?>
-			class="product-item"
-		>
-			<?php echo $content ?>
-		</div>
-	<?php endforeach; ?>
+    <?php echo $content; ?>
 </div>

@@ -5,7 +5,7 @@ $page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-p
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 
 echo sprintf(
-    '<a href="%1$s" %2$s style="%3$s" data-wp-key="product-pagination-previous" data-wp-on--click="surecart/product-list-wrapper::actions.navigate" data-wp-on--mouseenter="surecart/product-list-wrapper::actions.prefetch" data-wp-watch="surecart/product-list-wrapper::callbacks.prefetch">%4$s</a>',
+    '<a href="%1$s" %2$s style="%3$s" data-wp-key="product-pagination-previous" data-wp-on--click="surecart/product-list::actions.navigate" data-wp-on--mouseenter="surecart/product-list::actions.prefetch" data-wp-watch="surecart/product-list::callbacks.prefetch">%4$s</a>',
     esc_url( add_query_arg( $page_key, $page - 1 ) ),
     get_block_wrapper_attributes(),
     esc_attr( $style ),
