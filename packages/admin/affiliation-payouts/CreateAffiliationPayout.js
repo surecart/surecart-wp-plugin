@@ -124,7 +124,9 @@ export default () => {
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-affiliate-payouts'}
+								href={addQueryArgs('admin.php', {
+									page: 'sc-affiliate-payouts',
+								})}
 								type="text"
 							>
 								{__('Cancel', 'surecart')}
