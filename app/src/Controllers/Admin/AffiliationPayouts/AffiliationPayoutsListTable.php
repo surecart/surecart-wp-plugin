@@ -143,8 +143,13 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $payout ) {
-		$type = 'completed' === $payout->status ? 'success' : 'warning';
-		return '<sc-tag type="' . $type . '">' . esc_html( $payout->status ) . ' </sc-tag>';
+		$type     = 'completed' === $payout->status ? 'success' : 'warning';
+		$statuses = array(
+			'completed'  => __( 'Completed', 'surecart' ),
+			'processing' => __( 'Processing', 'surecart' ),
+		);
+
+		return '<sc-tag type="' . $type . '">' . esc_html( $statuses[ $payout->status ] ) . ' </sc-tag>';
 	}
 
 	/**
@@ -155,11 +160,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_affiliate( $payout ) {
-		if ( empty( $payout->affiliation->first_name ) ) {
-			return '';
-		}
-
-		return esc_html( $payout->affiliation->first_name . ' ' . $payout->affiliation->last_name );
+		return $payout->affiliation->getDisplayNameAttribute();
 	}
 
 	/**
