@@ -193,7 +193,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_referrals( $payout ) {
-		return esc_html( $payout->referrals->pagination->count ?? 0 );
+		return esc_html( (int) $payout->referrals->pagination->count );
 	}
 
 	/**
