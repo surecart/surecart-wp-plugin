@@ -86,7 +86,10 @@ export default () => {
 		}
 	};
 
-	const editSubscription = async (data) => {
+	const editSubscription = async (data, successMessage = null) => {
+		successMessage =
+			successMessage || __('Payment method updated.', 'surecart');
+
 		try {
 			await saveEntityRecord(
 				'surecart',
@@ -94,7 +97,7 @@ export default () => {
 				{ id, ...data },
 				{ throwOnError: true }
 			);
-			createSuccessNotice(__('Payment method updated.', 'surecart'), {
+			createSuccessNotice(successMessage, {
 				type: 'snackbar',
 			});
 		} catch (e) {
@@ -381,7 +384,12 @@ export default () => {
 					/>
 					<Affiliates
 						item={subscription}
-						updateItem={editSubscription}
+						updateItem={(data) =>
+							editSubscription(
+								data,
+								__('Affiliate commissions updated.', 'surecart')
+							)
+						}
 						loading={!hasLoadedSubscription}
 						commissionText={__(
 							'Commission On This Subscription',
