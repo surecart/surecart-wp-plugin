@@ -129,6 +129,7 @@ add_action('init', function() {
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-list/index.js',
 		[
 			[
+				'id' => '@wordpress/interactivity-router',
 				'import' => 'dynamic'
 			]
 		],

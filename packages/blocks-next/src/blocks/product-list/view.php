@@ -17,8 +17,7 @@
 			); ?>
 			class="product-item"
 		>
-		sdf
-			<?php var_dump($content); ?>
+			<?php echo $content ?>
 		</div>
 	<?php endforeach; ?>
 </div>
