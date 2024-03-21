@@ -11,15 +11,22 @@ import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
-import { InspectorControls, __experimentalGetGapCSSValue as getGapCSSValue } from '@wordpress/block-editor';
+import { useBlockProps, __experimentalGetGapCSSValue as getGapCSSValue } from '@wordpress/block-editor';
 
-const TEMPLATE = [ ['surecart/product-item-v2'] ];
+const TEMPLATE = [
+	[ 'surecart/product-image' ],
+	[ 'surecart/product-name' ],
+	[ 'surecart/product-price-v2' ]
+];
 
 export default ({
 	clientId,
 	attributes: { style },
 	context: { 'surecart/product-list/columns': columns },
 }) => {
+	const blockProps = useBlockProps({
+		className: 'product-item',
+	});
 	const { products, loading } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
@@ -60,6 +67,7 @@ export default ({
 				id: product?.id,
 				'surecart/productId': product?.id,
 			}))}
+			itemProps={blockProps}
 			clientId={clientId}
 			className="product-item-list"
 			style={{

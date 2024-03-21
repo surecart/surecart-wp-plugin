@@ -15,8 +15,10 @@
 						]
 					)
 			); ?>
+			class="product-item"
 		>
-			<?php echo $content; ?>
+		sdf
+			<?php var_dump($content); ?>
 		</div>
 	<?php endforeach; ?>
 </div>

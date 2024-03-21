@@ -22,9 +22,28 @@
 			"clientNavigation": true
 		},
 		"spacing": {
+			"padding": true,
+			"margin": true,
 			"blockGap": true,
+			"__experimentalDefault": "2em",
 			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
 				"blockGap": true
+			}
+		},
+		"color": {
+			"text": false,
+			"background": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
 			}
 		}
 	},
