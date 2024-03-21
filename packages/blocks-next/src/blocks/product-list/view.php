@@ -6,7 +6,8 @@
     <?php echo wp_kses_data(
         wp_interactivity_data_wp_context(
             [
-                'total_pages' => $total_pages,
+                'hasPreviousPage' => $products->hasPreviousPage(), 
+                'hasNextPage' => $products->hasNextPage()
             ]
         )
     ); ?>

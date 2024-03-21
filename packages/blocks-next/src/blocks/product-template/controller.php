@@ -14,6 +14,8 @@ $page_key = isset( $block->context["surecart/product-list/blockId"] ) ? 'product
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 $per_page = $block->context["surecart/product-list/limit"] ?? 15;
 
+$products = wp_interactivity_state( 'surecart/product-list' );
+
 $products = Product::where(
 	[
 		'archived' => false,
@@ -30,6 +32,7 @@ $products = Product::where(
 		'page'     => $page,
 	]
 );
+
 $products = $products->data;
 
 $styles = sc_get_block_styles();

@@ -2,13 +2,6 @@
 <?php
 use SureCart\Models\Product;
 
-wp_interactivity_state(
-	'surecart/product-list',
-	array(
-		'products' => $products,
-	),
-);
-
 $block_id = $attributes['blockId'] ?? '';
 $page_key = $block_id ? 'products-' . $block_id . '-page' : 'products-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
@@ -30,8 +23,13 @@ $products = Product::where(
 		'page'     => $page,
 	]
 );
-$total_pages = ceil( $products->pagination->count / $per_page );
 
+wp_interactivity_state(
+	'surecart/product-list',
+	array(
+		'products' => $products,
+	),
+);
 $block_id = $attributes['blockId'] ?? 4;
 
 // return the view.

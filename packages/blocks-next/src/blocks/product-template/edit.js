@@ -3,9 +3,6 @@ import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import {
-	PanelBody,
-	RangeControl,
-	Notice,
 	Spinner,
 	Placeholder,
 	UnitControl as __stableUnitControl,
@@ -22,7 +19,7 @@ const TEMPLATE = [
 export default ({
 	clientId,
 	attributes: { style },
-	context: { 'surecart/product-list/columns': columns },
+	context: { 'surecart/product-list/columns': columns, 'surecart/product-list/limit': limit },
 }) => {
 	const blockProps = useBlockProps({
 		className: 'product-item',
@@ -41,6 +38,8 @@ export default ({
 				],
 				archived: false,
 				status: ['published'],
+				page: 1,
+				per_page: limit || 15,
 			},
 		];
 		return {
