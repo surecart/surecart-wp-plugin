@@ -8,7 +8,7 @@ exports[`sc-feature-demo-banner renders 1`] = `
         <slot>
           This is a feature demo. In order to use it, you must upgrade your plan.
         </slot>
-        <a href="https://app.surecart.com/billing" target="_blank">
+        <a href="https://app.surecart.com/plans" target="_blank">
           <slot name="link">
             Upgrade Your Plan
             <sc-icon name="arrow-right"></sc-icon>

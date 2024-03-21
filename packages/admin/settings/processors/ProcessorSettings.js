@@ -30,10 +30,6 @@ export default () => {
 		};
 	});
 
-	const link = scData?.claim_url
-		? scData?.claim_url
-		: `${scData?.app_url}/processors`;
-
 	const renderStatus = (type) => {
 		const test = (processors || []).some(
 			(p) =>
