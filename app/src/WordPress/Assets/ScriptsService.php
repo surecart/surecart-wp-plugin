@@ -4,6 +4,7 @@ namespace SureCart\WordPress\Assets;
 
 use SureCart\Models\ManualPaymentMethod;
 use SureCart\Models\Processor;
+use SureCart\Support\Currency;
 
 /**
  * Handles the component theme.
@@ -112,6 +113,7 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
+					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
@@ -339,6 +341,7 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
+					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
