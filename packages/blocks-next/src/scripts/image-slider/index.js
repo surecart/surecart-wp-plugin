@@ -11,63 +11,51 @@ import Swiper, { Navigation } from 'swiper';
 // controls the slider
 store('surecart/image-slider', {
 	actions: {
-		initImageSwiper: () => {
+		init: () => {
 			const { ref } = getElement();
 			const context = getContext();
 
-			context.swiper = new Swiper(ref, {
-				direction: 'horizontal',
-				loop: false,
-				autoHeight: true,
-				centeredSlides: true,
-				on: {
-					slideChange: (swiper) => {
-						context.currentSliderIndex = swiper.activeIndex;
+			const thumbsSwiper = new Swiper(
+				ref.querySelector('.image-slider__thumbs-swiper'),
+				{
+					direction: 'horizontal',
+					loop: false,
+					slidesPerView: context.thumbnailsPerPage,
+					slidesPerGroup: context.thumbnailsPerPage,
+					spaceBetween: 10,
+					centerInsufficientSlides: true,
+					slideToClickedSlide: true,
+				}
+			);
+
+			const imageSwiper = new Swiper(
+				ref.querySelector('.image-slider__swiper'),
+				{
+					direction: 'horizontal',
+					loop: false,
+					autoHeight: true,
+					centeredSlides: true,
+					thumbs: {
+						swiper: thumbsSwiper,
 					},
-				},
-			});
-		},
-		initThumbsSwiper: () => {
-			const { ref } = getElement();
-			const context = getContext();
+				}
+			);
 
-			context.thumbsSwiper = new Swiper(ref, {
-				modules: [Navigation],
-				direction: 'horizontal',
-				loop: false,
-				slidesPerView: 5, // thumbnailsPerPage
-				slidesPerGroup: 5, // thumbnailsPerPage
-				spaceBetween: 10,
-				centerInsufficientSlides: true,
-				slideToClickedSlide: true,
-				navigation: {
-					nextEl: ref.querySelector('image-slider--is-prev'),
-					prevEl: ref.querySelector('image-slider--is-next'),
-				},
-			});
-		},
-		onThumbClick: () => {
-			// check how the context is passed from the variant choices
-			const { ref } = getElement();
-			const index = Number.parseInt(ref.getAttribute('thumb-index'));
+			// imageSwiper.on(
+			// 	'slideChange',
+			// 	() =>
+			// 		thumbsSwiper.activeIndex !== imageSwiper.activeIndex &&
+			// 		thumbsSwiper.slideTo(imageSwiper.activeIndex)
+			// );
 
-			// set the current slider index
-			const context = getContext();
-			context.currentSliderIndex = index;
-		},
-		onSliderChange: () => {
-			const context = getContext();
-			context.swiper.slideTo(context.currentSliderIndex || 0);
+			// thumbsSwiper.on(
+			// 	'slideChange',
+			// 	() =>
+			// 		thumbsSwiper.activeIndex !== imageSwiper.activeIndex &&
+			// 		imageSwiper.slideTo(thumbsSwiper.activeIndex)
+			// );
 
-			const slideInView =
-				context.currentSliderIndex >=
-					context.thumbsSwiper.activeIndex &&
-				context.currentSliderIndex <
-					context.thumbsSwiper.activeIndex +
-						context.thumbnailsPerPage;
-			if (!slideInView) {
-				context.thumbsSwiper.slideTo(context.currentSliderIndex);
-			}
+			context.swiper = imageSwiper;
 		},
 	},
 });
