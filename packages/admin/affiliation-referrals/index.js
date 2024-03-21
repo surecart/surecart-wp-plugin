@@ -7,9 +7,11 @@ import '../store/add-entities';
  * App
  */
 import AffiliationReferral from './AffiliationReferral';
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 
 /**
  * Render
  */
-render(<AffiliationReferral />, document.getElementById('app'));
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<AffiliationReferral />);
