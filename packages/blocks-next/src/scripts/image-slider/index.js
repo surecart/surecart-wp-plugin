@@ -6,7 +6,8 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
 /**
  * External dependencies
  */
-import Swiper, { Navigation } from 'swiper';
+import Swiper from 'swiper';
+import { Thumbs } from 'swiper/modules';
 
 // controls the slider
 store('surecart/image-slider', {
@@ -31,6 +32,7 @@ store('surecart/image-slider', {
 			const imageSwiper = new Swiper(
 				ref.querySelector('.image-slider__swiper'),
 				{
+					modules: [Thumbs],
 					direction: 'horizontal',
 					loop: false,
 					autoHeight: true,

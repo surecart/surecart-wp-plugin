@@ -132,7 +132,7 @@
 		"react-virtuoso": "^4.6.0",
 		"sass-loader": "^10",
 		"svg-sprite-loader": "^4.2.5",
-		"swiper": "^9.2.2",
+		"swiper": "^11",
 		"swr": "^1.2.2",
 		"thread-loader": "^3.0.4",
 		"tmp": "^0.2.1"
