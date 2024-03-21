@@ -18,7 +18,7 @@
 		var(--sc-input-transition, var(--sc-transition-medium)) border,
 		var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
-	&[type="file"] {
+	&[type='file'] {
 		overflow: hidden;
 
 		&:not(:disabled):not([readonly]) {
@@ -27,8 +27,15 @@
 		}
 	}
 
-	[type="number"] {
+	/** Disable number input spinner on firefox */
+	&[type='number'] {
 		-moz-appearance: textfield;
+	}
+	/** Disable number input spinner on other browsers */
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
 	}
 
 	&::-webkit-search-decoration,
@@ -107,7 +114,7 @@
 		font-size: var(--sc-font-size-small);
 		border-radius: var(--sc-border-radius-small);
 
-		&[type="file"] {
+		&[type='file'] {
 			&:not(:disabled):not([readonly]) {
 				padding: 2px 8px !important;
 			}
@@ -154,7 +161,7 @@ textarea {
 
 // Form Label style.
 .sc-form-label {
-	margin-bottom: var(--sc-spacing-medium);
+	margin-bottom: var(--sc-input-label-margin);
 	font-style: normal;
 	font-size: var(--sc-input-label-font-size-medium);
 	font-weight: var(--sc-font-weight-normal);
