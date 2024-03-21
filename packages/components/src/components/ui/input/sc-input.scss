@@ -48,7 +48,7 @@
   &.input--focused:not(.input--disabled) {
     background-color: var(--sc-input-background-color-focus);
     border-color: var(--sc-input-border-color-focus);
-    box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+    box-shadow: var(--focus-ring);
     z-index: 8;
 
     .input__control {
