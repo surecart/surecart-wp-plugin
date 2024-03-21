@@ -14,6 +14,7 @@ import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import { useState } from '@wordpress/element';
 import Box from '../ui/Box';
+import Error from '../components/Error';
 
 export default () => {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -51,7 +52,7 @@ export default () => {
 			});
 		} catch (e) {
 			console.log(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 		} finally {
 			setIsSaving(false);
 		}
@@ -59,10 +60,8 @@ export default () => {
 
 	return (
 		<CreateTemplate>
-			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				<span slot="title">{error}</span>
-			</ScAlert>
 			<Box title={__('Export Payouts', 'surecart')}>
+				<Error error={error} setError={setError} />
 				<ScForm onScSubmit={onSubmit}>
 					<ScInput
 						type="email"
