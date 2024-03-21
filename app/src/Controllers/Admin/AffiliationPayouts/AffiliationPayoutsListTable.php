@@ -160,7 +160,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_affiliate( $payout ) {
-		return $payout->affiliation->getDisplayNameAttribute();
+		return $payout->affiliation->display_name;
 	}
 
 	/**
