@@ -79,7 +79,7 @@ class ExportsRestServiceProvider extends RestServiceProvider implements RestServ
 		$type = $request->get_params()['type'] ?? '';
 
 		if ( 'payouts' === $type ) {
-			return 'affiliates';
+			return current_user_can( 'publish_sc_affiliates' );
 		}
 
 		return current_user_can( 'publish_sc_' . $type );
