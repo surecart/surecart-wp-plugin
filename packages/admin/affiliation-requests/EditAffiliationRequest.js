@@ -32,13 +32,14 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
+import useSnackbarErrors from '../hooks/useSnackbarErrors';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { createErrorNotice } = useSnackbarErrors();
 	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
@@ -92,21 +93,11 @@ export default () => {
 	 */
 	const onSubmit = async () => {
 		try {
-			save({
+			await save({
 				successMessage: __('Affiliate request updated.', 'surecart'),
 			});
 		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			createErrorNotice(e);
 		}
 	};
 
@@ -255,27 +246,27 @@ export default () => {
 						{['pending', 'denied'].includes(
 							affiliationRequest?.status
 						) && (
-								<ScButton
-									type="primary"
-									onClick={() => setModal('approve')}
-									loading={loading}
-								>
-									{__('Approve Request', 'surecart')}
-								</ScButton>
-							)}
+							<ScButton
+								type="primary"
+								onClick={() => setModal('approve')}
+								loading={loading}
+							>
+								{__('Approve Request', 'surecart')}
+							</ScButton>
+						)}
 
 						{['pending', 'approved'].includes(
 							affiliationRequest?.status
 						) && (
-								<ScButton
-									type="default"
-									outline={true}
-									onClick={() => setModal('deny')}
-									loading={loading}
-								>
-									{__('Deny Request', 'surecart')}
-								</ScButton>
-							)}
+							<ScButton
+								type="default"
+								outline={true}
+								onClick={() => setModal('deny')}
+								loading={loading}
+							>
+								{__('Deny Request', 'surecart')}
+							</ScButton>
+						)}
 					</ScButtonGroup>
 
 					<ScDropdown slot="suffix" placement="bottom-end">

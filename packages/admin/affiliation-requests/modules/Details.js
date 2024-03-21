@@ -50,6 +50,7 @@ export default ({
 						'surecart'
 					)}
 					value={first_name}
+					required
 					onScInput={(e) =>
 						onUpdate({
 							first_name: e.target.value,
