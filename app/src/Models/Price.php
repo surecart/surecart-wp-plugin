@@ -73,6 +73,9 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getDisplayAmountAttribute() {
+		if ( $this->ad_hoc ) {
+			return esc_html__('Custom Amount', 'surecart');
+		}
 		return empty( $this->amount ) ? '' : Currency::format( $this->amount, $this->currency );
 	}
 
