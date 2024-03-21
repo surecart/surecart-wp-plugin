@@ -112,14 +112,30 @@ class AffiliationClicksListTable extends ListTable {
 			esc_html( TimeDate::formatDateAndTime( $click->created_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $click->created_at ) )
 		);
-		$updated = sprintf(
+
+		$is_expired = $click->expires_at < time();
+		$expires    = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			( strtotime( $click->expires_at ) < time() ) ? __( 'Expired' ) : __( 'Expires' ),
+			$is_expired ? __( 'Expired' ) : __( 'Expires on' ),
 			esc_attr( $click->expires_at ),
 			esc_html( TimeDate::formatDateAndTime( $click->expires_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $click->expires_at ) )
+			esc_html( $is_expired ? TimeDate::humanTimeDiff( $click->expires_at ) : TimeDate::formatDate( $click->expires_at ) )
 		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
+		return $created . '<br /><small style="opacity: 0.75">' . $expires . '</small>';
+	}
+
+	/**
+	 * Handle the url column.
+	 */
+	public function column_url( $click ) {
+		return '<a href="' . esc_url( $click->url ) . '" target="_blank">' . esc_html( $click->url ) . '</a>';
+	}
+
+	/**
+	 * Handle the referrer column.
+	 */
+	public function column_referrer( $click ) {
+		return $click->referrer ?? '';
 	}
 
 
@@ -138,10 +154,9 @@ class AffiliationClicksListTable extends ListTable {
 
 		ob_start();
 		?>
-
 		<div class="sc-affiliate-name">
 			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
-				<?php echo esc_html( $affiliation->first_name . ' ' . $affiliation->last_name ); ?>
+				<?php echo esc_html( $affiliation->getDisplayNameAttribute() ); ?>
 			</a>
 		</div>
 		<?php
@@ -156,7 +171,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_converted( $click ) {
-		return $click->converted ? __( 'Yes', 'surecart' ) : __( 'No', 'surecart' );
+		return '<sc-icon style="font-size: 30px; line-height:1; height: 20px; color: var(' . ( $click->converted ? '--sc-color-success-600' : '--sc-color-gray-600' ) . ');"  name="' . ( $click->converted ? 'check-circle' : 'minus-circle' ) . '" />';
 	}
 
 
@@ -214,7 +229,7 @@ class AffiliationClicksListTable extends ListTable {
 	 */
 	protected function extra_tablenav( $which ) {
 		?>
-		<input type="hidden" name="page" value="sc-affiliate-requests" />
+		<input type="hidden" name="page" value="sc-affiliate-clicks" />
 
 		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
@@ -223,11 +238,11 @@ class AffiliationClicksListTable extends ListTable {
 		<?php
 		/**
 		 * Fires immediately following the closing "actions" div in the tablenav
-		 * for the affiliate_requests list table.
+		 * for the affiliate_clicks list table.
 		 *
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
-		do_action( 'manage_affiliate_requests_extra_tablenav', $which );
+		do_action( 'manage_affiliate_clicks_extra_tablenav', $which );
 	}
 
 
@@ -248,6 +263,14 @@ class AffiliationClicksListTable extends ListTable {
 		return false;
 	}
 
+	/**
+	 * Define what data to show on each column of the table
+	 *
+	 * @param \SureCart\Models\AffiliationClick $affiliation_click AffiliationClick model.
+	 * @param string                            $column_name - Current column name.
+	 *
+	 * @return mixed
+	 */
 	public function column_default( $item, $column_name ) {
 		return $item->$column_name ?? '';
 	}
