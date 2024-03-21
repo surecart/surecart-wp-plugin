@@ -53,6 +53,9 @@ const { state, callbacks, actions } = store('surecart/product', {
 		},
 		/** Is the product on sale? */
 		get isOnSale() {
+			if (state?.selectedPrice?.ad_hoc) {
+				return false;
+			}
 			return state.selectedPrice.scratch_amount > state.selectedAmount;
 		},
 		/** Is the option unavailable */
