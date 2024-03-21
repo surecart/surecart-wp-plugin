@@ -16,6 +16,7 @@ import {
 } from '@surecart/components-react';
 import Box from '../ui/Box';
 import ModelSelector from '../components/ModelSelector';
+import Error from '../components/Error';
 
 export default ({ onCreateReferral }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -54,7 +55,7 @@ export default ({ onCreateReferral }) => {
 			onCreateReferral(savedReferral.id);
 		} catch (e) {
 			console.log(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 		} finally {
 			setIsSaving(false);
 		}
@@ -62,10 +63,8 @@ export default ({ onCreateReferral }) => {
 
 	return (
 		<CreateTemplate>
-			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				<span slot="title">{error}</span>
-			</ScAlert>
 			<Box title={__('Create New Referral', 'surecart')}>
+				<Error error={error} setError={setError} />
 				<ScForm onScSubmit={onSubmit}>
 					<div
 						css={css`
