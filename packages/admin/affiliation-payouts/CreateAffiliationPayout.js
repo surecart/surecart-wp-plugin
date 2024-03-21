@@ -91,9 +91,7 @@ export default () => {
 									});
 								}}
 								display={(affiliation) =>
-									`${affiliation.first_name} ${
-										affiliation.last_name || ''
-									}`
+									affiliation.display_name
 								}
 							/>
 						</ScFormControl>
