@@ -40,7 +40,7 @@ wp_interactivity_state(
 			'selectedVariant' => $product->first_variant_with_stock,
 			'selectedDisplayAmount' => $product->display_amount,
 			'selectedScratchDisplayAmount' => $selected_price->scratch_display_amount,
-			'isOnSale' => $product->initial_amount < $product->scratch_amount,
+			'isOnSale' => $product->is_on_sale,
 		)
 	)
 );

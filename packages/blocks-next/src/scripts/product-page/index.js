@@ -86,7 +86,10 @@ const { state, callbacks, actions } = store('surecart/product', {
 			return state.variantValues[`option_${optionNumber}`];
 		},
 		get checkoutUrl() {
-			const { checkoutUrl } = getContext();
+			const { checkoutUrl, addToCart } = getContext();
+			if (addToCart) {
+				return '';
+			}
 			return addQueryArgs(checkoutUrl, {
 				line_items: [state.lineItem],
 				no_cart: true,

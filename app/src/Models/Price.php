@@ -94,6 +94,9 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getIsOnSaleAttribute() {
+		if ( $this->ad_hoc ) {
+			return false;
+		}
 		return empty( $this->scratch_amount ) ? false : $this->scratch_amount > $this->amount;
 	}
 
