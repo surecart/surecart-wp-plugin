@@ -32,14 +32,12 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
-import useSnackbarErrors from '../hooks/useSnackbarErrors';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { createErrorNotice } = useSnackbarErrors();
 	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
@@ -49,8 +47,6 @@ export default () => {
 		affiliationRequest,
 		isSaving,
 		loadError,
-		saveError,
-		deleteError,
 		isDeleting,
 		hasLoadedAffiliationRequest,
 	} = useSelect(
@@ -64,17 +60,11 @@ export default () => {
 				isSaving: select(coreStore)?.isSavingEntityRecord?.(
 					...entityData
 				),
-				saveError: select(coreStore)?.getLastEntitySaveError(
-					...entityData
-				),
 				loadError: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
 					...entityData
 				),
 				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
-					...entityData
-				),
-				deleteError: select(coreStore)?.getLastEntityDeleteError(
 					...entityData
 				),
 				hasLoadedAffiliationRequest: select(
@@ -88,6 +78,10 @@ export default () => {
 	const updateRequest = (data) =>
 		editEntityRecord('surecart', 'affiliation-request', id, data);
 
+	const getBaseUrl = () =>
+		select(coreStore).getEntityConfig('surecart', 'affiliation-request')
+			?.baseURL;
+
 	/**
 	 * Update the affiliation request.
 	 */
@@ -97,7 +91,8 @@ export default () => {
 				successMessage: __('Affiliate request updated.', 'surecart'),
 			});
 		} catch (e) {
-			createErrorNotice(e);
+			console.error(e);
+			setError(e);
 		}
 	};
 
@@ -130,13 +125,9 @@ export default () => {
 		try {
 			setLoading(true);
 			setError(null);
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'affiliation-request'
-			);
 
 			const approvedRequest = await apiFetch({
-				path: `${baseURL}/${id}/approve`,
+				path: `${getBaseUrl()}/${id}/approve`,
 				method: 'PATCH',
 			});
 
@@ -172,13 +163,9 @@ export default () => {
 		try {
 			setLoading(true);
 			setError(null);
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'affiliation-request'
-			);
 
 			const deniedRequest = await apiFetch({
-				path: `${baseURL}/${id}/deny`,
+				path: `${getBaseUrl()}/${id}/deny`,
 				method: 'PATCH',
 			});
 
@@ -288,7 +275,7 @@ export default () => {
 			}
 		>
 			<Error
-				error={error || loadError || saveError || deleteError}
+				error={error || loadError}
 				setError={setError}
 				margin="80px"
 			/>

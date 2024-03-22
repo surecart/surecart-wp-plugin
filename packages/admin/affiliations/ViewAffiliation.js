@@ -40,8 +40,7 @@ export default ({ id }) => {
 	const [loading, setLoading] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
@@ -57,23 +56,20 @@ export default ({ id }) => {
 		[id]
 	);
 
+	const getBaseUrl = () =>
+		select(coreStore).getEntityConfig('surecart', 'affiliation')?.baseURL;
+
 	/**
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
 		try {
-			save({ successMessage: __('Affiliate updated.', 'surecart') });
+			await save({
+				successMessage: __('Affiliate updated.', 'surecart'),
+			});
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			console.error(e);
+			setError(e);
 		}
 	};
 
@@ -85,13 +81,8 @@ export default ({ id }) => {
 			setLoading(true);
 			setError(null);
 
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'affiliation'
-			);
-
 			const activated = await apiFetch({
-				path: `${baseURL}/${id}/activate`,
+				path: `${getBaseUrl()}/${id}/activate`,
 				method: 'PATCH',
 			});
 
@@ -128,13 +119,8 @@ export default ({ id }) => {
 			setLoading(true);
 			setError(null);
 
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'affiliation'
-			);
-
 			const deactivated = await apiFetch({
-				path: `${baseURL}/${id}/deactivate`,
+				path: `${getBaseUrl()}/${id}/deactivate`,
 				method: 'PATCH',
 			});
 
