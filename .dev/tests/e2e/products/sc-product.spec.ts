@@ -39,15 +39,6 @@ test.describe('Product', () => {
 			scratch_amount: 3000,
 			product_collection_ids: [collection2.id],
 		});
-
-		// Go to permalink settings page and set the shop page.
-		await admin.page.goto('/wp-admin/options-permalink.php');
-
-		// Click on Post name radio button permalink.
-		await admin.page.getByText('Post name').click();
-
-		// Click on Save Changes button.
-		await admin.page.locator('input[type="submit"]').click();
 	});
 
 	test('Product page - Product List', async ({ page }) => {
