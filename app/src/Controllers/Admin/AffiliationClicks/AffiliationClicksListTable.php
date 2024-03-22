@@ -135,7 +135,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * Handle the referrer column.
 	 */
 	public function column_referrer( $click ) {
-		return $click->referrer ?? '';
+		return $click->referrer ?? '-';
 	}
 
 
