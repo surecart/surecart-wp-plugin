@@ -1,7 +1,7 @@
 <div
 	class="image-slider"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
-	data-wp-context='{ "currentSliderIndex": 0 , "thumbnailsPerPage": 6}'
+	data-wp-context='{ "currentSliderIndex": 0 , "thumbnailsPerPage": 5}'
 	data-wp-init="surecart/image-slider::actions.init"
  >
 	<div class="swiper image-slider__swiper">
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 
-			 <div class="swiper-slide image-slider__slider">
+			<div class="swiper-slide image-slider__slider">
 				<div class="swiper-slide-img">
 					<img src="https://swiperjs.com/demos/images/nature-1.jpg" />
 				</div>
@@ -32,19 +32,20 @@
 			<div class="swiper-slide image-slider__slider">
 				<div class="swiper-slide-img">
 					<img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+				</div>
 			</div>
-<!--
+
 			<div class="swiper-slide image-slider__slider">
 				<div class="swiper-slide-img">
 					<img src="https://swiperjs.com/demos/images/nature-3.jpg" />
 				</div>
-			</div> -->
+			</div>
 
-			<!-- <div class="swiper-slide image-slider__slider">
+			<div class="swiper-slide image-slider__slider">
 				<div class="swiper-slide-img">
 					<img src="https://swiperjs.com/demos/images/nature-4.jpg" />
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 
@@ -95,14 +96,14 @@
 				<button class="swiper-slide image-slider__thumb" role="radio" aria-checked="false" tabindex="0">
 					<img src="https://swiperjs.com/demos/images/nature-2.jpg" width="960" height="960" />
 				</button>
-<!--
+
 				<button class="swiper-slide image-slider__thumb" role="radio" aria-checked="false" tabindex="0">
 					<img src="https://swiperjs.com/demos/images/nature-3.jpg" width="960" height="960" />
-				</button> -->
+				</button>
 
-				<!-- <button class="swiper-slide image-slider__thumb" role="radio" aria-checked="false" tabindex="0">
+				<button class="swiper-slide image-slider__thumb" role="radio" aria-checked="false" tabindex="0">
 					<img src="https://swiperjs.com/demos/images/nature-4.jpg" width="960" height="960" />
-				</button> -->
+				</button>
 			</div>
 		</div>
 

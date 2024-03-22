@@ -6,8 +6,7 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
 /**
  * External dependencies
  */
-import Swiper from 'swiper';
-import { Thumbs } from 'swiper/modules';
+import Swiper, { Thumbs, Navigation } from 'swiper';
 
 // controls the slider
 store('surecart/image-slider', {
@@ -19,6 +18,7 @@ store('surecart/image-slider', {
 			const thumbsSwiper = new Swiper(
 				ref.querySelector('.image-slider__thumbs-swiper'),
 				{
+					modules: [Navigation],
 					direction: 'horizontal',
 					loop: false,
 					slidesPerView: context.thumbnailsPerPage,
@@ -26,6 +26,14 @@ store('surecart/image-slider', {
 					spaceBetween: 10,
 					centerInsufficientSlides: true,
 					slideToClickedSlide: true,
+					navigation: {
+						nextEl: ref.querySelector(
+							'.image-slider__thumbs .image-slider--is-next'
+						),
+						prevEl: ref.querySelector(
+							'.image-slider__thumbs .image-slider--is-prev'
+						),
+					},
 				}
 			);
 
@@ -42,20 +50,6 @@ store('surecart/image-slider', {
 					},
 				}
 			);
-
-			// imageSwiper.on(
-			// 	'slideChange',
-			// 	() =>
-			// 		thumbsSwiper.activeIndex !== imageSwiper.activeIndex &&
-			// 		thumbsSwiper.slideTo(imageSwiper.activeIndex)
-			// );
-
-			// thumbsSwiper.on(
-			// 	'slideChange',
-			// 	() =>
-			// 		thumbsSwiper.activeIndex !== imageSwiper.activeIndex &&
-			// 		imageSwiper.slideTo(thumbsSwiper.activeIndex)
-			// );
 
 			context.swiper = imageSwiper;
 		},
