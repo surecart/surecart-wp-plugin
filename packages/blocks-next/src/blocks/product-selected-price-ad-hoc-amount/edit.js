@@ -1,17 +1,10 @@
 import { __ } from '@wordpress/i18n';
 
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
-
-import { RichText } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
 	const blockProps = useBlockProps();
-
-	const TEMPLATE = [['surecart/product-price-choice-template']];
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		template: TEMPLATE,
-	});
 
 	return (
 		<div {...blockProps}>
@@ -25,8 +18,11 @@ export default ({ attributes, setAttributes }) => {
 				withoutInteractiveFormatting
 				allowedFormats={['core/bold', 'core/italic']}
 			/>
-			<div className="sc-choices">
-				<div {...innerBlocksProps} />
+			<div class="sc-input-group">
+				<span class="sc-input-group-text" id="basic-addon1">
+					{scData?.currency_symbol}
+				</span>
+				<input class="sc-form-control" type="number" step="0.01" />
 			</div>
 		</div>
 	);

@@ -21,6 +21,7 @@
 			<div class="sc-pill-option__wrapper">
 				<?php foreach ( $option->values as $name ) : ?>
 					<button
+						type="button"
 						class="sc-pill-option__button <?php echo esc_attr( $styles['classnames'] ?? '' ); ?>"
 						value="<?php echo esc_attr( $name ); ?>"
 						<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionValue' => esc_attr( $name ) ] ) ); ?>

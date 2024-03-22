@@ -73,6 +73,9 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getDisplayAmountAttribute() {
+		if ( $this->ad_hoc ) {
+			return esc_html__('Custom Amount', 'surecart');
+		}
 		return empty( $this->amount ) ? '' : Currency::format( $this->amount, $this->currency );
 	}
 
@@ -126,6 +129,11 @@ class Price extends Model {
 		);
 	}
 
+	/**
+	 * Get the recurring text attribute
+	 *
+	 * @return string
+	 */
 	public function getPaymentsTextAttribute() {
 		return empty( $this->recurring_period_count ) || $this->recurring_period_count > 1 ? sprintf(
 			_n(
@@ -174,5 +182,23 @@ class Price extends Model {
 			'month' => __('mo', 'surecart'),
 			'year'  => __('yr', 'surecart'),
 		] );
+	}
+
+	/**
+	 * Is this a zero decimal currency price?
+	 *
+	 * @return boolean
+	 */
+	public function getIsZeroDecimalAttribute() {
+		return Currency::isZeroDecimal($this->currency);
+	}
+
+	/**
+	 * Get the currency symbol attribute
+	 *
+	 * @return string
+	 */
+	public function getCurrencySymbolAttribute() {
+		return html_entity_decode( Currency::getCurrencySymbol($this->currency) );
 	}
 }

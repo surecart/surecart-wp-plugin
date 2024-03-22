@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-page-block-validator",
+	"title": "Product Page Block Validator",
+	"description": "Handles any missing required blocks.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"example": {},
+	"supports": {
+		"interactivity": true
+	},
+	"usesContext": [
+		"surecart/has-ad-hoc-block",
+		"surecart/has-variant-choices"
+	],
+	"blockHooks": {
+		"surecart/product-buy-button-v2": "before"
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"viewScript": ["wp-url", "wp-api-fetch"],
+	"viewScriptModule": ["@surecart/product-page"]
+}
