@@ -22,6 +22,5 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-page",
 	"style": ["file:../../styles/choice.css", "file:../../styles/label.css"]
 }

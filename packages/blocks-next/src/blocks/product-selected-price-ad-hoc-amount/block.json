@@ -36,7 +36,6 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": ["@surecart/product-page"],
 	"style": [
 		"file:../../styles/form-control.css",
 		"file:../../styles/input-group.css"
