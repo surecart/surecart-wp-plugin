@@ -148,8 +148,7 @@ const { state, callbacks, actions } = store('surecart/product', {
 	},
 
 	actions: {
-		*addToCart(e) {
-			e.preventDefault();
+		*addToCart() {
 			try {
 				update({ busy: true });
 				// TODO: replace with interactivity when available.
@@ -171,7 +170,13 @@ const { state, callbacks, actions } = store('surecart/product', {
 			return state[productId]?.[prop] || false;
 		},
 		handleSubmit(e) {
-			return actions.addToCart(e);
+			e.preventDefault(); // prevent the form from submitting.
+			// if the button hdoes not have a value, add to cart.
+			if (!e?.submitter?.value) {
+				return actions.addToCart(e);
+			}
+			// otherwise, redirect to the provided url.
+			return window.location.assign(e.submitter.value);
 		},
 		/** Set the option. */
 		setOption: (e) => {

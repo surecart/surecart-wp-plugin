@@ -42,6 +42,12 @@
 		color 150ms ease, box-shadow 150ms ease;
 	box-sizing: border-box;
 
+	&:focus-visible {
+		outline-color: var(--sc-color-primary-500);
+		outline-offset: 4px;
+		outline-width: 2px;
+	}
+
 	&--is-rtl {
 		text-align: right;
 	}
