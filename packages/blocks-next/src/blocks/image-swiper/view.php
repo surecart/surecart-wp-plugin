@@ -1,115 +1,138 @@
+<?php
+
+$attributes = [
+	'thumbnails_per_page' => 5,
+	'auto_height'         => false,
+	'height'              => '600px',
+	'has_thumbnails'      => true,
+];
+
+/**
+ * Get images for the product.
+ *
+ * @param object $product The product object.
+ * @param int    $width The image width.
+ * @param array  $srcset The image srcset.
+ *
+ * @return array
+ */
+function get_images( $product, $width, $srcset = [] ) {
+		$width = $width ?? 1170;
+
+		return array_map(
+			function ( $product_media ) use ( $product, $width ) {
+				$items = [
+					'src'    => esc_url( $product_media->getUrl( $width ) ),
+					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
+					'title'  => $product_media->media->title ?? '',
+					'width'  => $product_media->width,
+					'height' => $product_media->height,
+				];
+				if ( ! empty( $srcset ) ) {
+					$items['srcset'] = $product_media->getSrcset( $srcset );
+				}
+				return $items;
+			},
+			$product->product_medias->data
+		);
+}
+
+$product    = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( 'bfa320d8-48c0-41b5-9dc4-02df69a0b7de' );
+$images     = get_images( $product, $content_width ?? 1170 );
+$thumbnails = get_images( $product, 240, array( 90, 120, 240 ) );
+
+$context = array(
+	'currentSliderIndex' => 0,
+	'thumbnailsPerPage'  => $attributes['thumbnails_per_page'] ?? 5,
+	'autoHeight'         => ! empty( $attributes['auto_height'] ),
+	'isFixedHeight'      => empty( $attributes['auto_height'] ),
+	'hasThumbnails'      => $attributes['has_thumbnails'],
+)
+?>
+
 <div
 	class="image-slider"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
-	data-wp-context='{ "currentSliderIndex": 0 , "thumbnailsPerPage": 5}'
 	data-wp-init="surecart/image-slider::actions.init"
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
+	data-wp-class-image-slider--is-fixed-height="surecart/image-slider::context.isFixedHeight"
+	style="--sc-product-slider-height: <?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) ); ?>"
  >
 	<div class="swiper image-slider__swiper">
 		<div class="swiper-wrapper">
-			<div  class="swiper-slide image-slider__slider">
-				<div class="swiper-slide-img">
-					<img src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80" />
+			<?php
+			$image_index = 0;
+			foreach ( $images as $image ) {
+				?>
+				<div class="swiper-slide image-slider__slider">
+					<div class="swiper-slide-img">
+						<img
+							src="<?php echo esc_url( $image['src'] ); ?>"
+							alt="<?php echo esc_attr( $image['alt'] ); ?>"
+							srcset="<?php echo esc_attr( $image['srcset'] ); ?>"
+							width="<?php echo esc_attr( $image['width'] ); ?>"
+							height="<?php echo esc_attr( $image['height'] ); ?>"
+							title="<?php echo esc_attr( $image['title'] ); ?>"
+							loading="<?php echo esc_attr( $image_index > 0 ? 'lazy' : 'eager' ); ?>"
+							data-wp-key="<?php echo esc_attr( $image['title'] . '-slide-' . $image_index ); ?>"
+						/>
+					</div>
 				</div>
-			</div>
-
-			<div  class="swiper-slide image-slider__slider">
-				<div class="swiper-slide-img">
-					<img src="https://images.unsplash.com/photo-1598951092651-653c21f5d0b9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" />
-				</div>
-			</div>
-
-			<div  class="swiper-slide image-slider__slider">
-				<div class="swiper-slide-img">
-					<img src="https://images.unsplash.com/photo-1598946423291-ce029c687a42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" />
-				</div>
-			</div>
-
-			<div class="swiper-slide image-slider__slider">
-				<div class="swiper-slide-img">
-					<img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-				</div>
-			</div>
-			<div class="swiper-slide image-slider__slider">
-				<div class="swiper-slide-img">
-					<img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-				</div>
-			</div>
-
-			<div class="swiper-slide image-slider__slider">
-				<div class="swiper-slide-img">
-					<img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-				</div>
-			</div>
-
-			<div class="swiper-slide image-slider__slider">
-				<div class="swiper-slide-img">
-					<img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-				</div>
-			</div>
+				<?php
+				$image_index++;
+			}
+			?>
 		</div>
 	</div>
 
-	<div class="image-slider__thumbs image-slider__thumbs--has-navigation">
+	<?php
+	if ( $context['hasThumbnails'] ) {
+		?>
+		<div class="image-slider__thumbs image-slider__thumbs--has-navigation">
 		<button class="image-slider__navigation image-slider--is-prev">
 			<sc-visually-hidden><?php echo esc_html( __( 'Go to previous product slide.', 'surecart' ) ); ?></sc-visually-hidden>
 			<sc-icon name="chevron-left" aria-hidden="true" tab-index="0"  />
 		</button>
 
 		<div class="swiper swiper image-slider__thumbs-swiper">
+			<?php // translators: Products slide options section. There are %d options present. ?>
 			<div class="swiper-wrapper" role="radiogroup" aria-label="<?php esc_attr( sprintf( __( 'Products slide options section. There are %d options present.', 'surecart' ), 4 ) ); ?>">
-				<button
-					class="swiper-slide image-slider__thumb"
-					role="radio"
-					aria-checked="false"
-					tabindex="0"
-				>
-					<img src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80" width="960" height="960" />
-				</button>
-
-				<button
-					class="swiper-slide image-slider__thumb"
-					role="radio"
-					aria-checked="false"
-					tabindex="0"
-				>
-					<img src="https://images.unsplash.com/photo-1598951092651-653c21f5d0b9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" width="960" height="960" />
-				</button>
-
-				<button
-					class="swiper-slide image-slider__thumb"
-					role="radio"
-					aria-checked="false"
-					tabindex="0"
-				>
-					<img src="https://images.unsplash.com/photo-1598946423291-ce029c687a42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" width="960" height="960" />
-				</button>
-
-				<button
-					class="swiper-slide image-slider__thumb"
-					role="radio"
-					aria-checked="false"
-					tabindex="0"
-				>
-					<img src="https://swiperjs.com/demos/images/nature-1.jpg" width="960" height="960" />
-				</button>
-
-				<button class="swiper-slide image-slider__thumb" role="radio" aria-checked="false" tabindex="0">
-					<img src="https://swiperjs.com/demos/images/nature-2.jpg" width="960" height="960" />
-				</button>
-
-				<button class="swiper-slide image-slider__thumb" role="radio" aria-checked="false" tabindex="0">
-					<img src="https://swiperjs.com/demos/images/nature-3.jpg" width="960" height="960" />
-				</button>
-
-				<button class="swiper-slide image-slider__thumb" role="radio" aria-checked="false" tabindex="0">
-					<img src="https://swiperjs.com/demos/images/nature-4.jpg" width="960" height="960" />
-				</button>
+				<?php
+				$thumb_index = 0;
+				foreach ( $thumbnails as $thumbnail ) {
+					?>
+					<button
+						class="swiper-slide image-slider__thumb"
+						role="radio"
+						aria-checked="surecart/image-slider::context.isActiveSlide"
+						tabindex="0"
+						<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'slideIndex' => $thumb_index ] ) ); ?>
+					>
+						<img
+							src="<?php echo esc_url( $thumbnail['src'] ); ?>"
+							<?php // translators: Product image number %1$1d, %2$2s. ?>
+							alt="<?php echo esc_attr( sprintf( __( 'Product image number %1$1d, %2$2s.', 'surecart' ), $thumb_index + 1, $thumbnail['alt'] ) ); ?>"
+							title="<?php echo esc_attr( $thumbnail['title'] ); ?>"
+							srcset="<?php echo esc_attr( $thumbnail['srcset'] ); ?>"
+							width="<?php echo esc_attr( $thumbnail['width'] ); ?>"
+							height="<?php echo esc_attr( $thumbnail['height'] ); ?>"
+							loading="<?php echo esc_attr( $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager' ); ?>"
+							data-wp-key="<?php echo esc_attr( $thumbnail['title'] . '-thumb-' . $thumb_index ); ?>"
+						/>
+					</button>
+					<?php
+					$thumb_index++;
+				}
+				?>
 			</div>
 		</div>
 
 		<button class="image-slider__navigation image-slider--is-next">
-			<sc-visually-hidden><?php echo __( 'Go to next product slide.', 'surecart' ); ?></sc-visually-hidden>
+			<sc-visually-hidden><?php echo esc_html( __( 'Go to next product slide.', 'surecart' ) ); ?></sc-visually-hidden>
 			<sc-icon name="chevron-right" aria-hidden="true" tab-index="0" />
 		</button>
 	</div>
+		<?php
+	}
+	?>
 </div>
