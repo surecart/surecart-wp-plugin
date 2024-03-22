@@ -8,18 +8,24 @@ import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
-import { useBlockProps, __experimentalGetGapCSSValue as getGapCSSValue } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	__experimentalGetGapCSSValue as getGapCSSValue,
+} from '@wordpress/block-editor';
 
 const TEMPLATE = [
-	[ 'surecart/product-image' ],
-	[ 'surecart/product-name' ],
-	[ 'surecart/product-price-v2' ]
+	['surecart/product-image'],
+	['surecart/product-name'],
+	['surecart/product-price-v2'],
 ];
 
 export default ({
 	clientId,
 	attributes: { style },
-	context: { 'surecart/product-list/columns': columns, 'surecart/product-list/limit': limit },
+	context: {
+		'surecart/product-list/columns': columns,
+		'surecart/product-list/limit': limit,
+	},
 }) => {
 	const blockProps = useBlockProps({
 		className: 'product-item',

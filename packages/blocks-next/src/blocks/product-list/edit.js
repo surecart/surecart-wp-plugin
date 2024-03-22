@@ -1,7 +1,7 @@
 import {
 	useBlockProps,
 	useInnerBlocksProps,
-	InspectorControls
+	InspectorControls,
 } from '@wordpress/block-editor';
 
 import { __ } from '@wordpress/i18n';
@@ -16,11 +16,15 @@ import {
 import { useEffect } from '@wordpress/element';
 
 const TEMPLATE = [
-	[ 'surecart/product-template' ],
-	[ 'surecart/product-pagination' ],
+	['surecart/product-template'],
+	['surecart/product-pagination'],
 ];
 
-export default ({ setAttributes, attributes: { blockId, columns, limit }, clientId }) => {
+export default ({
+	setAttributes,
+	attributes: { blockId, columns, limit },
+	clientId,
+}) => {
 	useEffect(() => {
 		if (!blockId) {
 			setAttributes({ blockId: clientId });
@@ -33,7 +37,7 @@ export default ({ setAttributes, attributes: { blockId, columns, limit }, client
 		templateLock: 'all',
 	});
 
-	return ( 
+	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
@@ -67,7 +71,7 @@ export default ({ setAttributes, attributes: { blockId, columns, limit }, client
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...innerBlocksProps}/>
+			<div {...innerBlocksProps} />
 		</>
 	);
 };

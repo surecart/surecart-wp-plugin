@@ -12,7 +12,6 @@
 		"surecart/product-list/blockId": "blockId",
 		"surecart/product-list/columns": "columns",
 		"surecart/product-list/limit": "limit"
-
 	},
 	"attributes": {
 		"blockId": {

@@ -1,6 +1,4 @@
-import {
-	useBlockProps,
-} from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
@@ -11,23 +9,17 @@ export default ({ context: { 'surecart/productId': productId } }) => {
 		className: 'product-item-title',
 	});
 
-	const { product, loading } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'product',
-				productId,
-			];
-			return {
-				product: select(coreStore).getEntityRecord(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		}
-	);
-	
+	const { product, loading } = useSelect((select) => {
+		const queryArgs = ['surecart', 'product', productId];
+		return {
+			product: select(coreStore).getEntityRecord(...queryArgs),
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
+	});
+
 	if (loading) {
 		return (
 			<Placeholder>
@@ -36,9 +28,5 @@ export default ({ context: { 'surecart/productId': productId } }) => {
 		);
 	}
 
-	return (
-		<>
-			<div {...blockProps}>{product?.name || "Product Name"}</div>
-		</>
-	);
+	return <div {...blockProps}>{product?.name || 'Product Name'}</div>;
 };

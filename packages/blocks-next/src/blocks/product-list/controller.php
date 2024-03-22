@@ -11,7 +11,7 @@ $products = Product::where(
 	[
 		'archived' => false,
 		'status'   => ['published'],
-		'expand'   => [
+		'expand' => [
 			'prices',
 			'featured_product_media',
 			'product_media.media'

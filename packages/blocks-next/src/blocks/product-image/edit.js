@@ -12,7 +12,7 @@ import {
 export default ({
 	attributes: { sizing },
 	context: { 'surecart/productId': productId },
-	setAttributes
+	setAttributes,
 }) => {
 	const classes = classnames({
 		'product-img': true,

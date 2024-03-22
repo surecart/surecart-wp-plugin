@@ -16,7 +16,7 @@
 		"surecart/product-name",
 		"surecart/product-price-v2"
 	],
-	"ancestor": [ "surecart/product-list" ],
+	"ancestor": ["surecart/product-list"],
 	"usesContext": [
 		"surecart/product-list/blockId",
 		"surecart/product-list/columns",

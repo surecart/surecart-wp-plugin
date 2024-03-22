@@ -9,7 +9,7 @@
 	"icon": "media-interactive",
 	"example": {},
 	"usesContext": ["surecart/product-list/blockId"],
-	"ancestor": [ "surecart/product-list" ],
+	"ancestor": ["surecart/product-list"],
 	"allowedBlocks": [
 		"surecart/product-pagination-previous",
 		"surecart/product-pagination-numbers",

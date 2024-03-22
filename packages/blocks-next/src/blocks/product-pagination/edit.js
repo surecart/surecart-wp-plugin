@@ -13,65 +13,70 @@ import { QueryPaginationArrowControls } from './query-pagination-arrow-controls'
 import { QueryPaginationLabelControl } from './query-pagination-label-control';
 
 const TEMPLATE = [
-	[ 'surecart/product-pagination-previous' ],
+	['surecart/product-pagination-previous'],
 	// [ 'surecart/product-pagination-numbers' ],
-	[ 'surecart/product-pagination-next' ],
+	['surecart/product-pagination-next'],
 ];
 
-export default ({ context: { 'surecart/product-list/blockId': blockId }, clientId, attributes: { paginationArrow, showLabel }, setAttributes }) => {
+export default ({
+	context: { 'surecart/product-list/blockId': blockId },
+	clientId,
+	attributes: { paginationArrow, showLabel },
+	setAttributes,
+}) => {
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
 	});
 
 	// Always show label text if paginationArrow is set to 'none'.
-	useEffect( () => {
-		if ( paginationArrow === 'none' && ! showLabel ) {
-			setAttributes( { showLabel: true } );
+	useEffect(() => {
+		if (paginationArrow === 'none' && !showLabel) {
+			setAttributes({ showLabel: true });
 		}
-	}, [ paginationArrow, setAttributes, showLabel ] );
+	}, [paginationArrow, setAttributes, showLabel]);
 
 	const hasNextPreviousBlocks = useSelect(
-		( select ) => {
-			const { getBlocks } = select( blockEditorStore );
-			const innerBlocks = getBlocks( clientId );
+		(select) => {
+			const { getBlocks } = select(blockEditorStore);
+			const innerBlocks = getBlocks(clientId);
 			/**
 			 * Show the `paginationArrow` and `showLabel` controls only if a
 			 * `ProductPaginationNext/Previous` block exists.
 			 */
-			return innerBlocks?.find( ( innerBlock ) => {
+			return innerBlocks?.find((innerBlock) => {
 				return [
 					'surecart/product-pagination-next',
 					'surecart/product-pagination-previous',
-				].includes( innerBlock.name );
-			} );
+				].includes(innerBlock.name);
+			});
 		},
-		[ clientId ]
+		[clientId]
 	);
 
-	return ( 
+	return (
 		<>
-			{ hasNextPreviousBlocks && (
+			{hasNextPreviousBlocks && (
 				<InspectorControls>
-					<PanelBody title={ __( 'Settings' ) }>
+					<PanelBody title={__('Settings')}>
 						<QueryPaginationArrowControls
-							value={ paginationArrow }
-							onChange={ ( value ) => {
-								setAttributes( { paginationArrow: value } );
-							} }
+							value={paginationArrow}
+							onChange={(value) => {
+								setAttributes({ paginationArrow: value });
+							}}
 						/>
-						{ paginationArrow !== 'none' && (
+						{paginationArrow !== 'none' && (
 							<QueryPaginationLabelControl
-								value={ showLabel }
-								onChange={ ( value ) => {
-									setAttributes( { showLabel: value } );
-								} }
+								value={showLabel}
+								onChange={(value) => {
+									setAttributes({ showLabel: value });
+								}}
 							/>
-						) }
+						)}
 					</PanelBody>
 				</InspectorControls>
-			) }
-			<nav {...innerBlocksProps}/>
+			)}
+			<nav {...innerBlocksProps} />
 		</>
 	);
 };
