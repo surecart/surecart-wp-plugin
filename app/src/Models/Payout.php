@@ -44,7 +44,7 @@ class Payout extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function complete( $id = null ) {
+	protected function complete( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -83,7 +83,7 @@ class Payout extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function make_processing( $id = null ) {
+	protected function make_processing( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}

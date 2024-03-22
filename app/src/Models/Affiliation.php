@@ -32,7 +32,7 @@ class Affiliation extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function activate( $id = null ) {
+	protected function activate( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -71,7 +71,7 @@ class Affiliation extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function deactivate( $id = null ) {
+	protected function deactivate( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
