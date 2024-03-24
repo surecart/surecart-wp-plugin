@@ -9,6 +9,7 @@ use SureCart\Models\Payout;
  * Handles affiliate payout admin routes.
  */
 class AffiliationPayoutsController extends AdminController {
+
 	/**
 	 * Affiliate Payout index.
 	 */
@@ -24,6 +25,15 @@ class AffiliationPayoutsController extends AdminController {
 			],
 			'<sc-button href="' . esc_url( admin_url( 'admin.php?page=sc-affiliate-payouts&action=export' ) ) . '"  type="default">' . __( 'Export Payouts', 'surecart' ) . '</sc-button>',
 		);
+
+		$this->withNotices(
+			array(
+				'processing' => __( 'Affiliate payout marked processing.', 'surecart' ),
+				'completed'  => __( 'Affiliate payout marked completed.', 'surecart' ),
+				'deleted'    => __( 'Affiliate payout deleted.', 'surecart' ),
+			)
+		);
+
 
 		return \SureCart::view( 'admin/affiliation-payouts/index' )->with( [ 'table' => $table ] );
 	}
@@ -89,12 +99,7 @@ class AffiliationPayoutsController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $deleted->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate payout deleted.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( array( 'deleted' => true ), \SureCart::getUrl()->index( 'affiliate-payouts' ) ) );
 	}
 
 	/**
@@ -111,12 +116,7 @@ class AffiliationPayoutsController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $completed->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate payout marked completed.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( array( 'completed' => true ), \SureCart::getUrl()->index( 'affiliate-payouts' ) ) );
 	}
 
 	/**
@@ -133,11 +133,6 @@ class AffiliationPayoutsController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $processed->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate payout marked processing.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( array( 'processing' => true ), \SureCart::getUrl()->index( 'affiliate-payouts' ) ) );
 	}
 }
