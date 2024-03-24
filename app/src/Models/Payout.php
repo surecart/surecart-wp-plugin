@@ -114,4 +114,13 @@ class Payout extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Get status display
+	 *
+	 * @return string
+	 */
+	protected function getStatusDisplayTextAttribute() {
+		return 'completed' === $this->status ? esc_html__( 'Completed', 'surecart' ) : esc_html__( 'Processing', 'surecart' );
+	}
 }

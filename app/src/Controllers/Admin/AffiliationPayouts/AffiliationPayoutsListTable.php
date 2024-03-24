@@ -143,13 +143,9 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $payout ) {
-		$type     = 'completed' === $payout->status ? 'success' : 'warning';
-		$statuses = array(
-			'completed'  => __( 'Completed', 'surecart' ),
-			'processing' => __( 'Processing', 'surecart' ),
-		);
+		$type = 'completed' === $payout->status ? 'success' : 'warning';
 
-		return '<sc-tag type="' . $type . '">' . esc_html( $statuses[ $payout->status ] ) . ' </sc-tag>';
+		return '<sc-tag type="' . $type . '">' . $payout->display_status_text . ' </sc-tag>';
 	}
 
 	/**
