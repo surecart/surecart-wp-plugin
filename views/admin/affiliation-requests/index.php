@@ -4,6 +4,7 @@
 		'layouts/partials/admin-index-header',
 		[
 			'title' => __( 'Affiliate Requests', 'surecart' ),
+			'new_link' => \SureCart::getUrl()->edit( 'affiliate-requests' ),
 		]
 	);
 	?>

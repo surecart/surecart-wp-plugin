@@ -18,30 +18,22 @@ class AffiliationRequestsController extends RestController {
 	/**
 	 * Approve an affiliation request.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param \WP_REST_Request $request  Request object.
+	 *
 	 * @return \SureCart\Models\AffiliationRequest|\WP_Error
 	 */
 	public function approve( \WP_REST_Request $request ) {
-		$affiliation_request = AffiliationRequest::find( $request['id'] );
-		if ( is_wp_error( $affiliation_request ) ) {
-			return $affiliation_request;
-		}
-
-		return $affiliation_request->approve( $request['id'] );
+		return AffiliationRequest::approve( $request['id'] );
 	}
 
 	/**
 	 * Deny an affiliation request.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param \WP_REST_Request $request Request object.
+	 *
 	 * @return \SureCart\Models\AffiliationRequest|\WP_Error
 	 */
 	public function deny( \WP_REST_Request $request ) {
-		$affiliation_request = AffiliationRequest::find( $request['id'] );
-		if ( is_wp_error( $affiliation_request ) ) {
-			return $affiliation_request;
-		}
-
-		return $affiliation_request->deny( $request['id'] );
+		return AffiliationRequest::deny( $request['id'] );
 	}
 }

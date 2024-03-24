@@ -39,6 +39,7 @@ export default ({
 				.sort((a, b) => b.created_at - a.created_at)
 				.map(
 					({
+						id,
 						created_at,
 						status,
 						description,
@@ -85,6 +86,18 @@ export default ({
 									year="numeric"
 									date={created_at}
 								></ScFormatDate>
+							),
+							view: (
+								<ScButton
+									href={addQueryArgs('admin.php', {
+										page: 'sc-referrals',
+										action: 'edit',
+										id,
+									})}
+									size="small"
+								>
+									{__('View', 'surecart')}
+								</ScButton>
 							),
 						};
 					}

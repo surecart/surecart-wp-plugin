@@ -9,6 +9,7 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import EditAffiliationRequest from './EditAffiliationRequest';
+import CreateAffiliationRequest from './CreateAffiliationRequest';
 import { store } from '@surecart/data';
 
 /**
@@ -39,8 +40,18 @@ export default () => {
 		setHistoryId(id);
 	};
 
-	// get the id from the url.
+	const setId = (id) => {
+		if (id && id !== historyId) {
+			setBrowserURL(id);
+		}
+	};
+
+	// Get the id from the page url.
 	const id = useSelect((select) => select(store).selectPageId());
 
-	return id ? <EditAffiliationRequest id={id} /> : null;
+	return id ? (
+		<EditAffiliationRequest id={id} />
+	) : (
+		<CreateAffiliationRequest setId={setId} />
+	);
 };
