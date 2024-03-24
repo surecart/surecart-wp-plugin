@@ -10,9 +10,26 @@ use SureCart\Models\Payout;
  */
 class AffiliationPayoutsListTable extends ListTable {
 
+	/**
+	 * Checkbox column.
+	 *
+	 * @var boolean
+	 */
 	public $checkbox = true;
-	public $error    = '';
-	public $pages    = array();
+
+	/**
+	 * Error message.
+	 *
+	 * @var string
+	 */
+	public $error = '';
+
+	/**
+	 * Pages.
+	 *
+	 * @var array
+	 */
+	public $pages = array();
 
 	/**
 	 * Prepare the items for the table to process
@@ -78,7 +95,7 @@ class AffiliationPayoutsListTable extends ListTable {
 		*
 		*  @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine','Pending', 'Approved', 'Spam', and 'Trash'.
 		* */
-		return apply_filters( 'comment_status_links', $status_links );
+		return apply_filters( 'payout_status_links', $status_links );
 	}
 
 	/**
@@ -202,7 +219,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_referrals( $payout ) {
-		return esc_html( (int) $payout->referrals->pagination->count );
+		return (int) $payout->referrals->pagination->count;
 	}
 
 	/**
@@ -219,10 +236,10 @@ class AffiliationPayoutsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return \SureCart\Models\Collection
 	 */
 	private function table_data() {
-		$affiliate_payouts_query = Payout::where(
+		return Payout::where(
 			array(
 				'query'  => $this->get_search_query(),
 				'status' => [ $this->getFilteredStatus() ],
@@ -231,9 +248,7 @@ class AffiliationPayoutsListTable extends ListTable {
 					'referrals',
 				],
 			)
-		);
-
-		return $affiliate_payouts_query->paginate(
+		)->paginate(
 			array(
 				'per_page' => $this->get_items_per_page( 'affiliate_payouts' ),
 				'page'     => $this->get_pagenum(),
@@ -251,7 +266,7 @@ class AffiliationPayoutsListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No affiliate clicks found.', 'surecart' );
+		echo esc_html_e( 'No affiliate payouts found.', 'surecart' );
 	}
 
 	/**
@@ -261,7 +276,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 */
 	protected function extra_tablenav( $which ) {
 		?>
-		<input type="hidden" name="page" value="sc-affiliate-requests" />
+		<input type="hidden" name="page" value="sc-affiliate-payouts" />
 
 		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
@@ -270,11 +285,11 @@ class AffiliationPayoutsListTable extends ListTable {
 		<?php
 		/**
 		 * Fires immediately following the closing "actions" div in the tablenav
-		 * for the affiliate_requests list table.
+		 * for the affiliate_payouts list table.
 		 *
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
-		do_action( 'manage_affiliate_requests_extra_tablenav', $which );
+		do_action( 'manage_affiliate_payouts_extra_tablenav', $which );
 	}
 
 	/**
