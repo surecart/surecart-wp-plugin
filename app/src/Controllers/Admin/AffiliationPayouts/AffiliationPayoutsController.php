@@ -83,13 +83,7 @@ class AffiliationPayoutsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function delete( $request ) {
-		$payout = Payout::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $payout ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $payout->get_error_messages() ) ) );
-		}
-
-		$deleted = $payout->delete( $request->query( 'id' ) );
+		$deleted = Payout::delete( $request->query( 'id' ) );
 
 		if ( is_wp_error( $deleted ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $deleted->get_error_messages() ) ) );
@@ -101,7 +95,6 @@ class AffiliationPayoutsController extends AdminController {
 		);
 
 		return $this->redirectBack( $request );
-
 	}
 
 	/**
@@ -112,13 +105,7 @@ class AffiliationPayoutsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function complete( $request ) {
-		$payout = Payout::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $payout ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $payout->get_error_messages() ) ) );
-		}
-
-		$completed = $payout->complete( $request->query( 'id' ) );
+		$completed = Payout::complete( $request->query( 'id' ) );
 
 		if ( is_wp_error( $completed ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $completed->get_error_messages() ) ) );
@@ -140,13 +127,7 @@ class AffiliationPayoutsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function makeProcessing( $request ) {
-		$payout = Payout::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $payout ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $payout->get_error_messages() ) ) );
-		}
-
-		$processed = $payout->make_processing( $request->query( 'id' ) );
+		$processed = Payout::make_processing( $request->query( 'id' ) );
 
 		if ( is_wp_error( $processed ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $processed->get_error_messages() ) ) );
