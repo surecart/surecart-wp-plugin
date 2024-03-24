@@ -34,7 +34,7 @@ class Referral extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function approve( $id = null ) {
+	protected function approve( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -73,7 +73,7 @@ class Referral extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function deny( $id = null ) {
+	protected function deny( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -112,7 +112,7 @@ class Referral extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function make_reviewing( $id = null ) {
+	protected function make_reviewing( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
