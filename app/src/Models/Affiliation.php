@@ -32,7 +32,7 @@ class Affiliation extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function activate( $id = null ) {
+	protected function activate( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -71,7 +71,7 @@ class Affiliation extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function deactivate( $id = null ) {
+	protected function deactivate( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -106,11 +106,24 @@ class Affiliation extends Model {
 	/**
 	 * Set the clicks attribute
 	 *
-	 * @param object $value Array of click objects
+	 * @param object $value Array of click objects.
 	 *
 	 * @return void
 	 */
 	public function setClicksAttribute( $value ) {
 		$this->setCollection( 'clicks', $value, Click::class );
+	}
+
+	/**
+	 * Get the display name
+	 *
+	 * @return string
+	 */
+	protected function getDisplayNameAttribute() {
+		if ( ! empty( $this->first_name . $this->last_name ) ) {
+			return $this->first_name . ' ' . $this->last_name;
+		}
+
+		return $this->email;
 	}
 }

@@ -60,7 +60,7 @@ class AffiliationsListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'active' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -88,30 +88,19 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'          => '<input type="checkbox" />',
-			'name'         => __( 'Name', 'surecart' ),
-			'email'        => __( 'Email', 'surecart' ),
-			'status'       => __( 'Status', 'surecart' ),
-			'clicks'       => __( 'Clicks', 'surecart' ),
-			'referrals'    => __( 'Referrals', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
+			'name'                             => __( 'Name', 'surecart' ),
+			'email'                            => __( 'Email', 'surecart' ),
+			'status'                           => __( 'Status', 'surecart' ),
+			'clicks'                           => __( 'Clicks', 'surecart' ),
+			'referrals'                        => __( 'Referrals', 'surecart' ),
+			'total_commission_amount'          => __( 'Total Earnings', 'surecart' ),
+			'total_not_paid_commission_amount' => __( 'Unpaid Earnings', 'surecart' ),
+			'date'                             => __( 'Date', 'surecart' ),
 		);
 	}
 
 	/**
-	 * Displays the checkbox column.
-	 *
-	 * @param Affiliation $affiliation The current affiliates.
-	 */
-	public function column_cb( $affiliation ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $affiliation['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $affiliation['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $affiliation['id'] ); ?>" />
-		<?php
-	}
-
-	/**
-	 * Define which columns are hidden
+	 * Define which columns are hidden.
 	 *
 	 * @return array
 	 */
@@ -120,12 +109,12 @@ class AffiliationsListTable extends ListTable {
 	}
 
 	/**
-	 * Get the table data
+	 * Get the table data.
 	 *
 	 * @return array
 	 */
 	private function table_data() {
-		$affiates_query = Affiliation::where(
+		$affiliates_query = Affiliation::where(
 			array(
 				'active' => $this->getFilteredStatus(),
 				'query'  => $this->get_search_query(),
@@ -136,9 +125,9 @@ class AffiliationsListTable extends ListTable {
 			)
 		);
 
-		return $affiates_query->paginate(
+		return $affiliates_query->paginate(
 			array(
-				'per_page' => $this->get_items_per_page( 'affiate' ),
+				'per_page' => $this->get_items_per_page( 'affiliate' ),
 				'page'     => $this->get_pagenum(),
 			)
 		);
@@ -166,15 +155,7 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function column_status( $affiliation ) {
 		ob_start();
-		$status_type = '';
-		switch ( $affiliation->active ) {
-			case true:
-				$status_type = 'success';
-				break;
-			case false:
-				$status_type = 'warning';
-				break;
-		}
+		$status_type = $affiliation->active ? 'success' : 'warning';
 		?>
 		<sc-tag type="<?php echo esc_attr( $status_type ); ?>">
 			<?php echo esc_html( $this->getStatuses()[ $affiliation->active ? 'active' : 'inactive' ] ); ?>
@@ -201,6 +182,28 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function column_referrals( $affiliation ) {
 		return esc_html( $affiliation->referrals->pagination->count ?? 0);
+	}
+
+	/**
+	 * Total commission amount column.
+	 *
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
+	 * @return string
+	 */
+	public function column_total_commission_amount( $affiliation ) {
+		$store_currency = \SureCart::account()->currency ?? 'usd';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $store_currency ) ) . '" value="' . (float) $affiliation->total_commission_amount . '"></sc-format-number>';
+	}
+
+	/**
+	 * Total unpaid commission amount column.
+	 *
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
+	 * @return string
+	 */
+	public function column_total_not_paid_commission_amount( $affiliation ) {
+		$store_currency = \SureCart::account()->currency ?? 'usd';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $store_currency ) ) . '" value="' . (float) $affiliation->total_not_paid_commission_amount . '"></sc-format-number>';
 	}
 
 	/**
@@ -279,11 +282,12 @@ class AffiliationsListTable extends ListTable {
 	 * @return string
 	 */
 	public function action_toggle_activate( $affiliation ) {
-		$text            = $affiliation->active ? __( 'De-activate', 'surecart' ) : __( 'Activate', 'surecart' );
-		$confirm_message = $affiliation->active ? __( 'Are you sure you want to de-activate this affilate?', 'surecart' ) : __( 'Are you sure you want to activate this affiliate?', 'surecart' );
+		$text            = $affiliation->active ? __( 'Deactivate', 'surecart' ) : __( 'Activate', 'surecart' );
+		$confirm_message = $affiliation->active ? __( 'Are you sure you want to deactivate this affilate?', 'surecart' ) : __( 'Are you sure you want to activate this affiliate?', 'surecart' );
 		$link            = $this->get_toggle_activate_url( $affiliation->id, $affiliation->active ? 'deactivate' : 'activate');
 
 		return sprintf(
+			// translators: %1s: confirm message, %2s: link, %3s: aria label, %4s: text.
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
 			esc_attr( $confirm_message ),
 			esc_url( $link ),
@@ -319,16 +323,14 @@ class AffiliationsListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		if ( ! empty( $_GET['status'] ) ) {
-			$status = sanitize_text_field( wp_unslash( $_GET['status'] ) );
-			if ( 'all' === $status ) {
-				return null;
-			}
+		$status     = sanitize_text_field( wp_unslash( $_GET['status'] ?? '' ) );
+		$transforms = [
+			'all'      => null,
+			'active'   => '1',
+			'inactive' => '0'
+		];
 
-			return 'active' === $status ? '1' : '0';
-		}
-
-		return '1';
+		return $transforms[$status] ?? null;
 	}
 
 	/**
@@ -338,9 +340,9 @@ class AffiliationsListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
+			'all'      => __( 'All', 'surecart' ),
 			'active'   => __( 'Active', 'surecart' ),
 			'inactive' => __( 'Inactive', 'surecart' ),
-			'all'      => __( 'All', 'surecart' ),
 		);
 	}
 }
