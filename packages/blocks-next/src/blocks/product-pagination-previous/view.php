@@ -16,7 +16,7 @@ echo sprintf(
         data-wp-on--click="surecart/product-list::actions.navigate" 
         data-wp-on--mouseenter="surecart/product-list::actions.prefetch" 
         data-wp-watch="surecart/product-list::callbacks.prefetch" 
-        data-wp-bind--hidden="!context.hasPreviousPage"
+        data-wp-class--disabled="!context.hasPreviousPage"
     >
         %4$s
     </a>',

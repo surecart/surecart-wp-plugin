@@ -14,7 +14,7 @@ import { QueryPaginationLabelControl } from './query-pagination-label-control';
 
 const TEMPLATE = [
 	['surecart/product-pagination-previous'],
-	// [ 'surecart/product-pagination-numbers' ],
+	['surecart/product-pagination-numbers'],
 	['surecart/product-pagination-next'],
 ];
 

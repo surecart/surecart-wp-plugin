@@ -1,0 +1,41 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-pagination-numbers",
+	"title": "Numbers",
+	"description": "Display the product pagination numbers.",
+	"version": "1.0.0",
+	"category": "surecart",
+	"icon": "media-interactive",
+	"example": {},
+	"ancestor": ["surecart/product-pagination"],
+	"usesContext": [
+		"surecart/product-list/blockId",
+		"surecart/product-list/limit",
+		"paginationArrow",
+		"showLabel"
+	],
+	"supports": {
+		"interactivity": {
+			"clientNavigation": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"viewScriptModule": "@surecart/product-page",
+	"editorScript": "file:./index.js"
+}

@@ -32,5 +32,13 @@ wp_interactivity_state(
 );
 $block_id = $attributes['blockId'] ?? 4;
 
+for ($i = 1; $i <= $products->totalPages(); $i++) {
+	$pages[] = [
+		'href' => esc_url( add_query_arg( $page_key, $i ) ),
+		'name' => $i,
+		'key'  => 'product-pagination-numbers' . $i,
+	];
+}
+
 // return the view.
 return 'file:./view.php';

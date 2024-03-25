@@ -7,7 +7,8 @@
         wp_interactivity_data_wp_context(
             [
                 'hasPreviousPage' => $products->hasPreviousPage(), 
-                'hasNextPage' => $products->hasNextPage()
+                'hasNextPage' => $products->hasNextPage(),
+                'pages' => $pages,
             ]
         )
     ); ?>

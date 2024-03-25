@@ -46,6 +46,13 @@
 			"text": true,
 			"background": false,
 			"enableContrastChecker": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
 		}
 	},
 	"render": "file:./view.php",
