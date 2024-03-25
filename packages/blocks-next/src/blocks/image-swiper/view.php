@@ -59,7 +59,7 @@ $context = array(
 		<div class="image-slider__thumbs image-slider__thumbs--has-navigation">
 		<button class="image-slider__navigation image-slider--is-prev">
 			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to previous product slide.', 'surecart' ) ); ?></span>
-			<sc-icon name="chevron-left" aria-hidden="true" tab-index="0"  />
+			<sc-icon name="chevron-left" aria-hidden="true"  />
 		</button>
 
 		<div class="swiper swiper image-slider__thumbs-swiper">
@@ -95,7 +95,7 @@ $context = array(
 
 		<button class="image-slider__navigation image-slider--is-next">
 			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to next product slide.', 'surecart' ) ); ?></span>
-			<sc-icon name="chevron-right" aria-hidden="true" tab-index="0" />
+			<sc-icon name="chevron-right" aria-hidden="true" />
 		</button>
 	</div>
 		<?php
