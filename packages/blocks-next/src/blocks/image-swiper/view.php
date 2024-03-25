@@ -8,8 +8,8 @@ $attributes = array(
 );
 
 $product    = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ) )->find( 'bfa320d8-48c0-41b5-9dc4-02df69a0b7de' );
-$images     = $product->getImages( $content_width ?? 1170 );
-$thumbnails = $product->getImages( 240, array( 90, 120, 240 ) );
+$images     = $product->getDisplayImages( $content_width ?? 1170 );
+$thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 
 $context = array(
 	'currentSliderIndex' => 0,

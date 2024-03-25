@@ -483,7 +483,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return array
 	 */
-	public function getImages( $width, $srcset = array() ) {
+	public function getDisplayImages( $width, $srcset = array() ) {
 		$width = $width ?? 1170;
 
 		return array_map(
