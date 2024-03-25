@@ -84,6 +84,7 @@ export default () => {
 					account_currency: accountCurrency,
 					email,
 					seed: !!selectedTemplate,
+					source: 'surecart_wp',
 				},
 				{
 					throwOnError: true,
