@@ -6,7 +6,8 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
 /**
  * External dependencies
  */
-import Swiper, { Thumbs, Navigation } from 'swiper';
+import Swiper from 'swiper';
+import { Thumbs, Navigation } from 'swiper/modules';
 
 // controls the slider
 store('surecart/image-slider', {
