@@ -58,7 +58,7 @@ $context = array(
 		?>
 		<div class="image-slider__thumbs image-slider__thumbs--has-navigation">
 		<button class="image-slider__navigation image-slider--is-prev">
-			<sc-visually-hidden><?php echo esc_html( __( 'Go to previous product slide.', 'surecart' ) ); ?></sc-visually-hidden>
+			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to previous product slide.', 'surecart' ) ); ?></span>
 			<sc-icon name="chevron-left" aria-hidden="true" tab-index="0"  />
 		</button>
 
@@ -94,7 +94,7 @@ $context = array(
 		</div>
 
 		<button class="image-slider__navigation image-slider--is-next">
-			<sc-visually-hidden><?php echo esc_html( __( 'Go to next product slide.', 'surecart' ) ); ?></sc-visually-hidden>
+			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to next product slide.', 'surecart' ) ); ?></span>
 			<sc-icon name="chevron-right" aria-hidden="true" tab-index="0" />
 		</button>
 	</div>
