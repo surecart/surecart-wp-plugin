@@ -42,6 +42,5 @@
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-page",
 	"style": ["file:../../styles/product-item-title.css"]
 }

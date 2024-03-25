@@ -37,6 +37,5 @@
 		}
 	},
 	"textdomain": "surecart",
-	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-page"
+	"editorScript": "file:./index.js"
 }

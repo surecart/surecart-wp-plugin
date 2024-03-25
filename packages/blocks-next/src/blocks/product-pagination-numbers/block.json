@@ -36,6 +36,5 @@
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
-	"viewScriptModule": "@surecart/product-page",
 	"editorScript": "file:./index.js"
 }
