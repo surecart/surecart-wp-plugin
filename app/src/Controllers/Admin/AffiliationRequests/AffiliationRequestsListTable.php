@@ -9,7 +9,6 @@ use SureCart\Models\AffiliationRequest;
  * Create a new table class that will extend the WP_List_Table
  */
 class AffiliationRequestsListTable extends ListTable {
-
 	public $checkbox = true;
 	public $error    = '';
 	public $pages    = array();
@@ -61,7 +60,7 @@ class AffiliationRequestsListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'pending' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -89,25 +88,12 @@ class AffiliationRequestsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'        => '<input type="checkbox" />',
 			'name'         => __( 'Name', 'surecart' ),
 			'email'        => __( 'Email', 'surecart' ),
 			'payout_email' => __( 'Payout Email', 'surecart' ),
 			'status'       => __( 'Status', 'surecart' ),
 			'date'         => __( 'Date', 'surecart' ),
 		);
-	}
-
-	/**
-	 * Displays the checkbox column.
-	 *
-	 * @param AffiliationRequest $affiliate_request The current affiliate request.
-	 */
-	public function column_cb( $affiliate_request ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $affiliate_request['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $affiliate_request['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $affiliate_request['id'] ); ?>" />
-		<?php
 	}
 
 	/**
@@ -125,16 +111,17 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @return array
 	 */
 	private function table_data() {
-		$affiate_request_query = AffiliationRequest::where(
+		$affiliate_request_query = AffiliationRequest::where(
 			array(
 				'status[]' => $this->getFilteredStatus(),
-				'query'    => $this->get_search_query()
+				'query'    => $this->get_search_query(),
+				'used'     => false,
 			)
 		);
 
-		return $affiate_request_query->paginate(
+		return $affiliate_request_query->paginate(
 			array(
-				'per_page' => $this->get_items_per_page( 'affiate_requests' ),
+				'per_page' => $this->get_items_per_page( 'affiliate_requests' ),
 				'page'     => $this->get_pagenum(),
 			)
 		);
@@ -186,22 +173,18 @@ class AffiliationRequestsListTable extends ListTable {
 	 * Define what data to show on each column of the table
 	 *
 	 * @param \SureCart\Models\AffiliationRequest $affiliate_request AffiliationRequest model.
-	 * @param string                            $column_name - Current column name.
+	 * @param string                              $column_name - Current column name.
 	 *
 	 * @return mixed
 	 */
 	public function column_default( $affiliate_request, $column_name ) {
-		switch ( $column_name ) {
-			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'affiliate-request', $affiliate_request->id ) . '">'
-					. $affiliate_request->first_name . ' ' . $affiliate_request->last_name
-					. '</a>';
-
-			case 'description':
-			case 'email':
-			case 'payout_email':
-				return $affiliate_request->$column_name ?? '';
+		if ( 'name' === $column_name ) {
+			return '<a href="' . \SureCart::getUrl()->edit( 'affiliate-request', $affiliate_request->id ) . '">'
+				. $affiliate_request->first_name . ' ' . $affiliate_request->last_name
+				. '</a>';
 		}
+
+		return $affiliate_request->$column_name ?? '';
 	}
 
 	/**
@@ -234,15 +217,9 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		if ( ! empty( $_GET['status'] ) ) {
-			if ( 'all' === $_GET['status'] ) {
-				return null;
-			}
-
-			return sanitize_text_field( wp_unslash( $_GET['status'] ) );
-		}
-
-		return 'pending';
+		return ! empty( $_GET['status'] ) && 'all' !== $_GET['status']
+			? sanitize_text_field( wp_unslash( $_GET['status'] ) )
+			: null;
 	}
 
 	/**
@@ -252,10 +229,10 @@ class AffiliationRequestsListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
-			'pending'  => __( 'Pending', 'surecart' ),
+			'all'      => __( 'All', 'surecart' ),
 			'approved' => __( 'Approved', 'surecart' ),
 			'denied'   => __( 'Denied', 'surecart' ),
-			'all'      => __( 'All', 'surecart' ),
+			'pending'  => __( 'Pending', 'surecart' ),
 		);
 	}
 }

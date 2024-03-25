@@ -15,9 +15,9 @@ import usePagination from '../../hooks/usePagination';
 
 export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(5);
+	const perPage = 5;
 
-	const { referrals, loading, updating } = useSelect(
+	const { referrals, loading, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -38,10 +38,10 @@ export default ({ affiliationId }) => {
 			return {
 				referrals,
 				loading: loading && page === 1,
-				updating: loading && page !== 1,
+				fetching: loading && page !== 1,
 			};
 		},
-		[affiliationId, page, perPage]
+		[affiliationId, page]
 	);
 
 	const { hasPagination } = usePagination({
@@ -54,11 +54,11 @@ export default ({ affiliationId }) => {
 		<ReferralsDataTable
 			title={__('Referrals', 'surecart')}
 			columns={{
-				status: {
-					label: __('Status', 'surecart'),
-				},
 				description: {
 					label: __('Description', 'surecart'),
+				},
+				status: {
+					label: __('Status', 'surecart'),
 				},
 				order: {
 					label: __('Order', 'surecart'),
@@ -70,10 +70,13 @@ export default ({ affiliationId }) => {
 					label: __('Date', 'surecart'),
 					width: '100px',
 				},
+				view: {
+					width: '50px',
+				},
 			}}
 			data={referrals}
 			isLoading={loading}
-			isFetching={updating}
+			isFetching={fetching}
 			perPage={perPage}
 			page={page}
 			setPage={setPage}
@@ -89,7 +92,7 @@ export default ({ affiliationId }) => {
 						page={page}
 						setPage={setPage}
 						perPage={perPage}
-						loading={updating}
+						loading={fetching}
 					/>
 				)
 			}

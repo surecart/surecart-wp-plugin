@@ -15,9 +15,9 @@ import usePagination from '../../hooks/usePagination';
 
 export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(5);
+	const perPage = 5;
 
-	const { payouts, loading, updating } = useSelect(
+	const { payouts, loading, fetching } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -37,10 +37,10 @@ export default ({ affiliationId }) => {
 			return {
 				payouts,
 				loading: loading && page === 1,
-				updating: loading && page !== 1,
+				fetching: loading && page !== 1,
 			};
 		},
-		[affiliationId, page, perPage]
+		[affiliationId, page]
 	);
 
 	const { hasPagination } = usePagination({
@@ -53,28 +53,29 @@ export default ({ affiliationId }) => {
 		<PayoutsDataTable
 			title={__('Payouts', 'surecart')}
 			columns={{
+				payout_email: {
+					label: __('Payout Email', 'surecart'),
+				},
 				status: {
 					label: __('Status', 'surecart'),
+					width: '100px',
 				},
-				// TODO: Add the column when API is ready.
-				// payout_email: {
-				// 	label: __('Payout Email', 'surecart'),
-				// },
 				total_commission_amount: {
 					label: __('Commission', 'surecart'),
+					width: '90px',
 				},
 				end_date: {
 					label: __('Period End', 'surecart'),
-					width: '100px',
+					width: '90px',
 				},
 				date: {
 					label: __('Date', 'surecart'),
-					width: '100px',
+					width: '90px',
 				},
 			}}
 			data={payouts}
 			isLoading={loading}
-			isFetching={updating}
+			isFetching={fetching}
 			perPage={perPage}
 			page={page}
 			setPage={setPage}
@@ -90,7 +91,7 @@ export default ({ affiliationId }) => {
 						page={page}
 						setPage={setPage}
 						perPage={perPage}
-						loading={updating}
+						loading={fetching}
 					/>
 				)
 			}

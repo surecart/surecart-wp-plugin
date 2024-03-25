@@ -1,11 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 
 /**
@@ -14,60 +10,59 @@ import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 import StatusBadge from '../../components/StatusBadge';
+import { ScFormatDate } from '@surecart/components-react';
 
 export default ({ affiliation, loading }) => {
-	console.log('affiliation', affiliation);
+	const {
+		first_name,
+		last_name,
+		email,
+		payout_email,
+		active,
+		created_at,
+		updated_at,
+	} = affiliation;
+
 	return (
-		<Box
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-					`}
-				>
-					{__('Affiliate Details', 'surecart')}
-				</div>
-			}
-			loading={loading}
-		>
+		<Box title={__('Affiliate Details', 'surecart')} loading={loading}>
 			<Fragment>
 				<Definition title={__('Name', 'surecart')}>
-					{affiliation?.first_name + ' ' + affiliation?.last_name}
+					{first_name + ' ' + last_name}
 				</Definition>
 
-				<Definition title={__('Email', 'surecart')}>
-					{affiliation?.email}
-				</Definition>
+				<Definition title={__('Email', 'surecart')}>{email}</Definition>
 
 				<Definition title={__('Payout Email', 'surecart')}>
-					{affiliation?.payout_email}
+					{payout_email}
 				</Definition>
 
 				<Definition title={__('Status', 'surecart')}>
-					<StatusBadge
-						status={!!affiliation?.active ? 'active' : 'inactive'}
-					/>
+					<StatusBadge status={active ? 'active' : 'inactive'} />
 				</Definition>
 
 				<hr />
 
-				{!!affiliation?.updated_at && (
+				{updated_at && (
 					<Definition title={__('Last Updated', 'surecart')}>
-						{format(
-							'F j, Y',
-							new Date(affiliation.updated_at * 1000)
-						)}
+						<ScFormatDate
+							type="timestamp"
+							month="short"
+							day="numeric"
+							year="numeric"
+							date={updated_at}
+						/>
 					</Definition>
 				)}
 
-				{!!affiliation?.created_at && (
+				{created_at && (
 					<Definition title={__('Created', 'surecart')}>
-						{format(
-							'F j, Y',
-							new Date(affiliation.created_at * 1000)
-						)}
+						<ScFormatDate
+							type="timestamp"
+							month="short"
+							day="numeric"
+							year="numeric"
+							date={created_at}
+						/>
 					</Definition>
 				)}
 			</Fragment>

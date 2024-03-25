@@ -156,7 +156,7 @@ class AffiliationClicksListTable extends ListTable {
 		?>
 		<div class="sc-affiliate-name">
 			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
-				<?php echo esc_html( $affiliation->getDisplayNameAttribute() ); ?>
+				<?php echo esc_html( $affiliation->display_name ); ?>
 			</a>
 		</div>
 		<?php

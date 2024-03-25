@@ -23,6 +23,16 @@ class AffiliationReferralsController extends AdminController {
 				],
 			]
 		);
+
+		$this->withNotices(
+			array(
+				'approved'  => 'Affiliate referral approved.',
+				'denied'    => 'Affiliate referral denied.',
+				'deleted'   => 'Affiliate referral deleted.',
+				'reviewing' => 'Affiliate referral is now in review.',
+			)
+		);
+
 		return \SureCart::view( 'admin/affiliation-referrals/index' )->with( [ 'table' => $table ] );
 	}
 
@@ -39,15 +49,15 @@ class AffiliationReferralsController extends AdminController {
 
 		$this->preloadPaths(
 			[
-				'/wp/v2/users/me',
-				'/wp/v2/types?context=view',
-				'/wp/v2/types?context=edit',
-				'/surecart/v1/affiliation_clicks/' . $request->query( 'id' ) . '?context=edit',
+				' / wp / v2 / users / me',
+				' / wp / v2 / types ? context = view',
+				' / wp / v2 / types ? context = edit',
+				' / surecart / v1 / affiliation_clicks / ' . $request->query( 'id' ) . ' ? context = edit',
 			]
 		);
 
 		// return view.
-		return '<div id="app"></div>';
+		return '<div id ="app"></div>';
 	}
 
 	/**
@@ -58,25 +68,13 @@ class AffiliationReferralsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function delete( $request ) {
-		$referral = Referral::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $referral ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $referral->get_error_messages() ) ) );
-		}
-
-		$deleted = $referral->delete( $request->query( 'id' ) );
+		$deleted = Referral::delete( $request->query( 'id' ) );
 
 		if ( is_wp_error( $deleted ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $deleted->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate referral deleted.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
-
+		return \SureCart::redirect()->to( add_query_arg( array( 'deleted' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
 
 	/**
@@ -87,24 +85,13 @@ class AffiliationReferralsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function approve( $request ) {
-		$referral = Referral::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $referral ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $referral->get_error_messages() ) ) );
-		}
-
-		$approved = $referral->approve( $request->query( 'id' ) );
+		$approved = Referral::approve( $request->query( 'id' ) );
 
 		if ( is_wp_error( $approved ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $approved->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate referral approved.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( array( 'approved' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
 
 	/**
@@ -115,24 +102,13 @@ class AffiliationReferralsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function deny( $request ) {
-		$referral = Referral::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $referral ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $referral->get_error_messages() ) ) );
-		}
-
-		$denied = $referral->deny( $request->query( 'id' ) );
+		$denied = Referral::deny( $request->query( 'id' ) );
 
 		if ( is_wp_error( $denied ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $denied->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate referral denied.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( array( 'denied' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
 
 	/**
@@ -143,23 +119,12 @@ class AffiliationReferralsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function makeReviewing( $request ) {
-		$referral = Referral::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $referral ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $referral->get_error_messages() ) ) );
-		}
-
-		$reviewing = $referral->make_reviewing( $request->query( 'id' ) );
+		$reviewing = Referral::make_reviewing( $request->query( 'id' ) );
 
 		if ( is_wp_error( $reviewing ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $reviewing->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate referral is now in review.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( array( 'reviewing' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
 }
