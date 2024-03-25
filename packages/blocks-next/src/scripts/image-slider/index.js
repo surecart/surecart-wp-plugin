@@ -69,6 +69,3 @@ store('surecart/image-slider', {
 		},
 	},
 });
-
-/** Is active slide */
-export const isActiveSlide = () => {};
