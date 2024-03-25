@@ -35,12 +35,6 @@ store('surecart/image-slider', {
 					{
 						modules: [Navigation],
 						direction: 'horizontal',
-						loop: false,
-						slidesPerView: context.thumbnailsPerPage,
-						slidesPerGroup: context.thumbnailsPerPage,
-						spaceBetween: 10,
-						centerInsufficientSlides: true,
-						slideToClickedSlide: true,
 						wrapperClass: 'sc-image-slider__swiper-wrapper',
 						navigation: {
 							nextEl: ref.querySelector(
@@ -49,6 +43,19 @@ store('surecart/image-slider', {
 							prevEl: ref.querySelector(
 								'.sc-image-slider__thumbs .sc-image-slider--is-prev'
 							),
+						},
+						loop: false,
+						centerInsufficientSlides: true,
+						slideToClickedSlide: true,
+						slidesPerView: Math.min(3, context.thumbnailsPerPage),
+						slidesPerGroup: Math.min(3, context.thumbnailsPerPage),
+						spaceBetween: 10,
+						breakpointsBase: 'container',
+						breakpoints: {
+							320: {
+								slidesPerView: context.thumbnailsPerPage,
+								slidesPerGroup: context.thumbnailsPerPage,
+							},
 						},
 					}
 				);
