@@ -27,7 +27,7 @@ $context = array(
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
 	data-wp-class-image-slider--is-fixed-height="surecart/image-slider::context.isFixedHeight"
 	style="--sc-product-slider-height: <?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) ); ?>"
- >
+	>
 	<div class="swiper image-slider__swiper">
 		<div class="swiper-wrapper">
 			<?php
