@@ -9,6 +9,7 @@
                 'hasPreviousPage' => $products->hasPreviousPage(), 
                 'hasNextPage' => $products->hasNextPage(),
                 'pages' => $pages,
+                'blockId' => $block_id,
             ]
         )
     ); ?>

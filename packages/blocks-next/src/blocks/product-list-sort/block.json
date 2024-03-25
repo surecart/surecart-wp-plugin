@@ -36,5 +36,6 @@
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"style": ["file:../../styles/dropdown.css"]
 }

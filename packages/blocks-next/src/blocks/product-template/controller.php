@@ -10,8 +10,10 @@ use SureCart\Models\Product;
  */
 
 $block_id = $block->context["surecart/product-list/blockId"];
-$page_key = isset( $block->context["surecart/product-list/blockId"] ) ? 'products-' . $block->context["surecart/product-list/blockId"] . '-page' : 'products-page';
+$page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-page';
+$sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+$sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
 $per_page = $block->context["surecart/product-list/limit"] ?? 15;
 
 $products = wp_interactivity_state( 'surecart/product-list' );
@@ -25,6 +27,7 @@ $products = Product::where(
 			'featured_product_media',
 			'product_media.media'
 		],
+		'sort'     => $sort,
 	]
 )->paginate(
 	[
