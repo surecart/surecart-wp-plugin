@@ -29,27 +29,32 @@ store('surecart/image-slider', {
 
 			const thumbsSwiper =
 				context.hasThumbnails &&
-				new Swiper(ref.querySelector('.image-slider__thumbs-swiper'), {
-					modules: [Navigation],
-					direction: 'horizontal',
-					loop: false,
-					slidesPerView: context.thumbnailsPerPage,
-					slidesPerGroup: context.thumbnailsPerPage,
-					spaceBetween: 10,
-					centerInsufficientSlides: true,
-					slideToClickedSlide: true,
-					navigation: {
-						nextEl: ref.querySelector(
-							'.image-slider__thumbs .image-slider--is-next'
-						),
-						prevEl: ref.querySelector(
-							'.image-slider__thumbs .image-slider--is-prev'
-						),
-					},
-				});
+				new Swiper(
+					ref.querySelector('.sc-image-slider__thumbs-swiper'),
+					{
+						modules: [Navigation],
+						direction: 'horizontal',
+						loop: false,
+						slidesPerView: context.thumbnailsPerPage,
+						slidesPerGroup: context.thumbnailsPerPage,
+						spaceBetween: 10,
+						centerInsufficientSlides: true,
+						slideToClickedSlide: true,
+						wrapperClass: 'sc-image-slider__swiper-wrapper',
+						navigation: {
+							nextEl: ref.querySelector(
+								'.sc-image-slider__thumbs .sc-image-slider--is-next'
+							),
+							prevEl: ref.querySelector(
+								'.sc-image-slider__thumbs .sc-image-slider--is-prev'
+							),
+						},
+					}
+				);
 
-			new Swiper(ref.querySelector('.image-slider__swiper'), {
+			new Swiper(ref.querySelector('.sc-image-slider__swiper'), {
 				modules: [Thumbs],
+				wrapperClass: 'sc-image-slider__swiper-wrapper',
 				direction: 'horizontal',
 				loop: false,
 				autoHeight: context.autoHeight,

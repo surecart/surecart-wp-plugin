@@ -2,8 +2,8 @@
 
 $attributes = array(
 	'thumbnails_per_page' => 5,
-	'auto_height'         => false,
-	'height'              => '600px',
+	'auto_height'         => true,
+	'height'              => '500px',
 	'has_thumbnails'      => true,
 );
 
@@ -21,19 +21,19 @@ $context = array(
 ?>
 
 <div
-	class="image-slider"
+	class="sc-image-slider"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
 	data-wp-init="surecart/image-slider::actions.init"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
-	data-wp-class-image-slider--is-fixed-height="surecart/image-slider::context.isFixedHeight"
+	data-wp-class-sc-image-slider--is-fixed-height="surecart/image-slider::context.isFixedHeight"
 	style="--sc-product-slider-height: <?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) ); ?>"
 	>
-	<div class="swiper image-slider__swiper">
-		<div class="swiper-wrapper">
+	<div class="swiper sc-image-slider__swiper">
+		<div class="sc-image-slider__swiper-wrapper">
 			<?php
 			foreach ( $images as $image_index => $image ) {
 				?>
-				<div class="swiper-slide image-slider__slider">
+				<div class="swiper-slide sc-image-slider__slider">
 					<div class="swiper-slide-img">
 						<img
 							src="<?php echo esc_url( $image['src'] ); ?>"
@@ -56,20 +56,20 @@ $context = array(
 	<?php
 	if ( $context['hasThumbnails'] ) {
 		?>
-		<div class="image-slider__thumbs image-slider__thumbs--has-navigation">
-		<button class="image-slider__navigation image-slider--is-prev">
+		<div class="sc-image-slider__thumbs sc-image-slider__thumbs--has-navigation">
+		<button class="sc-image-slider__navigation sc-image-slider--is-prev">
 			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to previous product slide.', 'surecart' ) ); ?></span>
 			<sc-icon name="chevron-left" aria-hidden="true"  />
 		</button>
 
-		<div class="swiper swiper image-slider__thumbs-swiper">
+		<div class="swiper swiper sc-image-slider__thumbs-swiper">
 			<?php // translators: Products slide options section. There are %d options present. ?>
-			<div class="swiper-wrapper" role="radiogroup" aria-label="<?php esc_attr( sprintf( __( 'Products slide options section. There are %d options present.', 'surecart' ), 4 ) ); ?>">
+			<div class="sc-image-slider__swiper-wrapper" role="radiogroup" aria-label="<?php esc_attr( sprintf( __( 'Products slide options section. There are %d options present.', 'surecart' ), 4 ) ); ?>">
 				<?php
 				foreach ( $thumbnails as $thumb_index => $thumbnail ) {
 					?>
 					<button
-						class="swiper-slide image-slider__thumb"
+						class="swiper-slide sc-image-slider__thumb"
 						role="radio"
 						aria-checked="surecart/image-slider::context.isActiveSlide"
 						tabindex="0"
@@ -93,7 +93,7 @@ $context = array(
 			</div>
 		</div>
 
-		<button class="image-slider__navigation image-slider--is-next">
+		<button class="sc-image-slider__navigation sc-image-slider--is-next">
 			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to next product slide.', 'surecart' ) ); ?></span>
 			<sc-icon name="chevron-right" aria-hidden="true" />
 		</button>

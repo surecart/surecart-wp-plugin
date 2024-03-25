@@ -1,6 +1,6 @@
 @import './swiper.scss';
 
-.image-slider {
+.sc-image-slider {
 	user-select: none;
 
 	&__thumbs {
@@ -12,12 +12,12 @@
 			flex: 1; // important to prevent slideshow from collapsing.
 		}
 
-		.image-slider__navigation {
+		.sc-image-slider__navigation {
 			display: none;
 		}
 
 		&--has-navigation {
-			.image-slider__navigation {
+			.sc-image-slider__navigation {
 				display: flex;
 				outline: none;
 				border: none;
@@ -40,7 +40,7 @@
 			color: var(--sc-color-black);
 		}
 
-		&.image-slider {
+		&.sc-image-slider {
 			&--is-prev {
 				padding-right: 8px;
 			}
@@ -57,8 +57,11 @@
 
 	/** Slider **/
 	&__slider {
-		height: var(--sc-product-slider-height, auto);
 		cursor: grab;
+
+		&.swiper-slide {
+			height: var(--sc-product-slider-height, auto);
+		}
 
 		.swiper-slide-img {
 			width: 100%;
@@ -117,7 +120,7 @@
 		}
 	}
 
-	&--is-fixed-height .image-slider__slider {
+	&--is-fixed-height .sc-image-slider__slider {
 		.swiper-slide-img {
 			background: transparent;
 			img {
