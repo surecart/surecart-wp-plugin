@@ -15,10 +15,7 @@ import {
 
 import { useEffect } from '@wordpress/element';
 
-const TEMPLATE = [
-	['surecart/product-template'],
-	['surecart/product-pagination'],
-];
+import { TEMPLATE } from './template';
 
 export default ({
 	setAttributes,

@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-list-search",
+	"title": "Search",
+	"description": "Display the product search.",
+	"version": "1.0.0",
+	"category": "surecart",
+	"icon": "media-interactive",
+	"example": {},
+	"ancestor": ["surecart/product-list"],
+	"usesContext": ["surecart/product-list/blockId"],
+	"attributes": {
+		"label": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": {
+			"clientNavigation": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js"
+}
