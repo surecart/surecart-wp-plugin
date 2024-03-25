@@ -1,45 +1,15 @@
 <?php
 
-$attributes = [
+$attributes = array(
 	'thumbnails_per_page' => 5,
 	'auto_height'         => false,
 	'height'              => '600px',
 	'has_thumbnails'      => true,
-];
+);
 
-/**
- * Get images for the product.
- *
- * @param object $product The product object.
- * @param int    $width The image width.
- * @param array  $srcset The image srcset.
- *
- * @return array
- */
-function get_images( $product, $width, $srcset = [] ) {
-		$width = $width ?? 1170;
-
-		return array_map(
-			function ( $product_media ) use ( $product, $width ) {
-				$items = [
-					'src'    => esc_url( $product_media->getUrl( $width ) ),
-					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
-					'title'  => $product_media->media->title ?? '',
-					'width'  => $product_media->width,
-					'height' => $product_media->height,
-				];
-				if ( ! empty( $srcset ) ) {
-					$items['srcset'] = $product_media->getSrcset( $srcset );
-				}
-				return $items;
-			},
-			$product->product_medias->data
-		);
-}
-
-$product    = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( 'bfa320d8-48c0-41b5-9dc4-02df69a0b7de' );
-$images     = get_images( $product, $content_width ?? 1170 );
-$thumbnails = get_images( $product, 240, array( 90, 120, 240 ) );
+$product    = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ) )->find( 'bfa320d8-48c0-41b5-9dc4-02df69a0b7de' );
+$images     = $product->getImages( $content_width ?? 1170 );
+$thumbnails = $product->getImages( 240, array( 90, 120, 240 ) );
 
 $context = array(
 	'currentSliderIndex' => 0,
