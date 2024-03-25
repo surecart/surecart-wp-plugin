@@ -375,8 +375,8 @@ class ProductsListTable extends ListTable {
 		?>
 
 		<div class="sc-product-name">
-		<?php if ( $product->featured_media->url ) { ?>
-			<img src="<?php echo esc_url( $product->featured_media->url ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" class="sc-product-image-preview" />
+		<?php if ( $product->featured_media->src ) { ?>
+			<img src="<?php echo esc_url( $product->featured_media->src ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
 			<div class="sc-product-image-preview">
 				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
