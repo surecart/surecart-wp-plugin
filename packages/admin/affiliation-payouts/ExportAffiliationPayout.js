@@ -6,13 +6,14 @@ import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
-import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
+import { ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import Box from '../ui/Box';
 import Error from '../components/Error';
 
@@ -21,6 +22,22 @@ export default () => {
 	const [error, setError] = useState('');
 	const [email, setEmail] = useState('');
 	const [isSaving, setIsSaving] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const fetchAndPrefillEmail = async () => {
+		setIsLoading(true);
+		const currentUser = await apiFetch({
+			path: addQueryArgs('/wp/v2/users/me', {
+				context: 'edit',
+			}),
+		});
+		setEmail(currentUser?.email);
+		setIsLoading(false);
+	};
+
+	useEffect(() => {
+		fetchAndPrefillEmail();
+	}, []);
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -60,7 +77,7 @@ export default () => {
 
 	return (
 		<CreateTemplate>
-			<Box title={__('Export Payouts', 'surecart')}>
+			<Box title={__('Export Payouts', 'surecart')} loading={isLoading}>
 				<Error error={error} setError={setError} />
 				<ScForm onScSubmit={onSubmit}>
 					<ScInput
