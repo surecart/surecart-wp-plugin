@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.20.5 - March 25st, 2024 =
+= 2.20.5 - March 25th, 2024 =
 - Fix: Issue with shipping address not client-side validating on instant checkout for U.S. tax purposes.
 - Fix: Error message if missing tax address information on instant checkout.
 
