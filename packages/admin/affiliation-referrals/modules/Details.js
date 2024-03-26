@@ -43,7 +43,7 @@ export default ({ referral, updateReferral, loading }) => {
 
 			<ScTextarea
 				label={__('Description', 'surecart')}
-				onScChange={(e) =>
+				onScInput={(e) =>
 					updateReferral({
 						description: e.target.value,
 					})
