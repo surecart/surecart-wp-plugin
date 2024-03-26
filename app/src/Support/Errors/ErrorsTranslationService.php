@@ -66,7 +66,10 @@ class ErrorsTranslationService {
 	}
 
 	public function attributeOptionsTranslation( $attribute, $type, $options ) {
+		$store_currency = \SureCart::account()->currency ?? 'usd';
+
 		if ( 'line_items.ad_hoc_amount' === $attribute && 'outside_range' === $type ) {
+			// translators: 1. minimum amount, 2. maximum amount
 			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $options['min'] / 100, $options['max'] / 100 );
 		}
 
@@ -75,17 +78,19 @@ class ErrorsTranslationService {
 				return __( 'The product is out of stock. Please remove it from your cart.', 'surecart' );
 			}
 
+			// translators: minimum quantity.
 			return sprintf( __( 'You must enter a quantity greater than or equal to %s', 'surecart' ), $options['value'] );
 		}
 
 		if ( 'coupon' === $attribute && 'less_than_min_subtotal_amount' === $type ) {
-			$store_currency = \SureCart::account()->currency ?? 'usd';
-			return sprintf( __( 'You must spend at least %1$s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ?? $store_currency ) );
+			// translators: minimum amount for coupon.
+			return sprintf( __( 'You must spend at least %s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'] ?? 0, $options['currency'] ?? $store_currency ) );
 		}
 
 		// Minimum order amount by processor.
 		if ( 'amount_due' === $attribute && 'less_than_currency_minimum' === $type ) {
-			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'], $options['currency'] ) );
+			// translators: minimum amount for processor.
+			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'] ?? 0, $options['currency']?? $store_currency ) );
 		}
 
 		return false;
