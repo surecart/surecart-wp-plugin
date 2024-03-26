@@ -5,17 +5,18 @@ import Definition from '../../ui/Definition';
 
 import { __ } from '@wordpress/i18n';
 
-export default ({ referral, loading, changingStatus }) => {
+export default ({ referral, loading }) => {
 	return (
 		<Box title={__('Summary', 'surecart')} loading={loading}>
 			<Definition title={__('Status', 'surecart')}>
 				<StatusBadge status={referral?.status} />
 			</Definition>
-			<Definition title={__('Creation Mode', 'surecart')}>
-				{referral?.manual
-					? __('Manual', 'surecart')
-					: __('Automatic', 'surecart')}
-			</Definition>
+
+			{referral?.manual && (
+				<Definition title={__('Creation Mode', 'surecart')}>
+					{__('Manual', 'surecart')}
+				</Definition>
+			)}
 
 			<hr />
 
@@ -41,13 +42,6 @@ export default ({ referral, loading, changingStatus }) => {
 						date={referral.created_at}
 					/>
 				</Definition>
-			)}
-			{changingStatus && (
-				<ScBlockUi
-					style={{ '--sc-block-ui-opacity': '0.75' }}
-					zIndex="9"
-					spinner
-				/>
 			)}
 		</Box>
 	);

@@ -16,6 +16,7 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies.
  */
 import {
+	ScBlockUi,
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
@@ -37,6 +38,12 @@ import Click from './modules/Click';
 import Order from './modules/Order';
 import Payout from './modules/Payout';
 
+const STATUS = {
+	approved: __('Approved', 'surecart'),
+	denied: __('Denied', 'surecart'),
+	reviewing: __('Reviewing', 'surecart'),
+};
+
 export default ({ id }) => {
 	const { save } = useSave();
 	const [changingStatus, setChangingStatus] = useState(false);
@@ -48,16 +55,13 @@ export default ({ id }) => {
 		'surecart',
 		'referral'
 	);
-	const expanded = ['affiliation', 'click', 'checkout'];
 
 	const { referral, isLoading } = useSelect((select) => {
 		const entityData = [
 			'surecart',
 			'referral',
 			id,
-			{
-				expand: expanded,
-			},
+			{ expand: ['checkout', 'payout'] },
 		];
 
 		return {
@@ -95,9 +99,7 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const approved = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}/approve`, {
-					expand: ['affiliation'],
-				}),
+				path: `${baseURL}/${id}/approve`,
 			});
 
 			createSuccessNotice(
@@ -136,9 +138,7 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const reviewing = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}/make_reviewing`, {
-					expand: ['affiliation'],
-				}),
+				path: `${baseURL}/${id}/make_reviewing`,
 			});
 
 			createSuccessNotice(
@@ -177,9 +177,7 @@ export default ({ id }) => {
 			setChangingStatus(true);
 			const denied = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}/deny`, {
-					expand: ['affiliation'],
-				}),
+				path: `${baseURL}/${id}/deny`,
 			});
 
 			createSuccessNotice(__('Affiliate referral denied.', 'surecart'), {
@@ -270,8 +268,9 @@ export default ({ id }) => {
 				) : (
 					<ScFlex justifyContent="flex-start">
 						<ScDropdown placement="bottom-end">
-							<ScButton type="text" slot="trigger">
-								<ScIcon name="more-horizontal" />
+							<ScButton type="default" slot="trigger" caret>
+								{STATUS[referral?.status] ??
+									__('Actions', 'surecart')}
 							</ScButton>
 							<ScMenu>
 								{referral?.status !== 'approved' && (
@@ -298,25 +297,14 @@ export default ({ id }) => {
 								</ScMenuItem>
 							</ScMenu>
 						</ScDropdown>
-
-						<SaveButton>
-							{__('Update Referral', 'surecart')}
-						</SaveButton>
+						<SaveButton>{__('Update', 'surecart')}</SaveButton>
 					</ScFlex>
 				)
 			}
 			sidebar={
 				<Fragment>
-					<Summary
-						referral={referral}
-						loading={isLoading}
-						changingStatus={changingStatus}
-					/>
-					<Order
-						referral={referral}
-						loading={isLoading}
-						expanded={expanded}
-					/>
+					<Summary referral={referral} loading={isLoading} />
+					<Order referral={referral} loading={isLoading} />
 					<Click referral={referral} loading={isLoading} />
 					<Payout referral={referral} loading={isLoading} />
 				</Fragment>
@@ -331,9 +319,16 @@ export default ({ id }) => {
 				referral={referral}
 				loading={isLoading}
 				updateReferral={updateReferral}
-				expanded={expanded}
 			/>
 			<ReferralItems referralId={id} loading={isLoading} />
+
+			{changingStatus && (
+				<ScBlockUi
+					style={{ '--sc-block-ui-opacity': '0.75' }}
+					zIndex="9"
+					spinner
+				/>
+			)}
 		</Template>
 	);
 };
