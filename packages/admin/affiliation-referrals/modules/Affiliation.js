@@ -84,7 +84,9 @@ export default ({ referral, updateReferral, loading }) => {
 						onSelect={(affiliation) =>
 							updateReferral({ affiliation })
 						}
-						display={(affiliation) => affiliation.display_name}
+						display={(affiliation) =>
+							`${affiliation.display_name} - ${affiliation.email}`
+						}
 						css={css`
 							min-width: 370px;
 							text-align: right;
