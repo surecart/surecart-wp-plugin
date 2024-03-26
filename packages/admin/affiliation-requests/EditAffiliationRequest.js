@@ -42,6 +42,10 @@ export default () => {
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
+	const baseUrl = select(coreStore).getEntityConfig(
+		'surecart',
+		'affiliation-request'
+	)?.baseURL;
 
 	const {
 		affiliationRequest,
@@ -77,11 +81,6 @@ export default () => {
 
 	const updateRequest = (data) =>
 		editEntityRecord('surecart', 'affiliation-request', id, data);
-
-	const baseUrl = select(coreStore).getEntityConfig(
-		'surecart',
-		'affiliation-request'
-	)?.baseURL;
 
 	/**
 	 * Update the affiliation request.
