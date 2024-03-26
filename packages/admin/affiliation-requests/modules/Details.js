@@ -49,8 +49,8 @@ export default ({
 						"Your affiliate request's first name.",
 						'surecart'
 					)}
-					attribute="first_name"
 					value={first_name}
+					required
 					onScInput={(e) =>
 						onUpdate({
 							first_name: e.target.value,
@@ -62,7 +62,6 @@ export default ({
 					label={__('Last Name', 'surecart')}
 					className="sc-affiliate-request-lname"
 					help={__("Your affiliate request's last name.", 'surecart')}
-					attribute="last_name"
 					value={last_name}
 					onScInput={(e) =>
 						onUpdate({

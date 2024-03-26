@@ -45,6 +45,7 @@ export default ({ affiliation, loading }) => {
 				{updated_at && (
 					<Definition title={__('Last Updated', 'surecart')}>
 						<ScFormatDate
+							type="timestamp"
 							month="short"
 							day="numeric"
 							year="numeric"
@@ -56,6 +57,7 @@ export default ({ affiliation, loading }) => {
 				{created_at && (
 					<Definition title={__('Created', 'surecart')}>
 						<ScFormatDate
+							type="timestamp"
 							month="short"
 							day="numeric"
 							year="numeric"

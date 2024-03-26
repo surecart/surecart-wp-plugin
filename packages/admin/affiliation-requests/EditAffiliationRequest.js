@@ -6,7 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
@@ -37,8 +37,7 @@ export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
@@ -48,8 +47,6 @@ export default () => {
 		affiliationRequest,
 		isSaving,
 		loadError,
-		saveError,
-		deleteError,
 		isDeleting,
 		hasLoadedAffiliationRequest,
 	} = useSelect(
@@ -63,17 +60,11 @@ export default () => {
 				isSaving: select(coreStore)?.isSavingEntityRecord?.(
 					...entityData
 				),
-				saveError: select(coreStore)?.getLastEntitySaveError(
-					...entityData
-				),
 				loadError: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
 					...entityData
 				),
 				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
-					...entityData
-				),
-				deleteError: select(coreStore)?.getLastEntityDeleteError(
 					...entityData
 				),
 				hasLoadedAffiliationRequest: select(
@@ -87,25 +78,21 @@ export default () => {
 	const updateRequest = (data) =>
 		editEntityRecord('surecart', 'affiliation-request', id, data);
 
+	const getBaseUrl = () =>
+		select(coreStore).getEntityConfig('surecart', 'affiliation-request')
+			?.baseURL;
+
 	/**
 	 * Update the affiliation request.
 	 */
 	const onSubmit = async () => {
 		try {
-			save({
+			await save({
 				successMessage: __('Affiliate request updated.', 'surecart'),
 			});
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			console.error(e);
+			setError(e);
 		}
 	};
 
@@ -138,8 +125,9 @@ export default () => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliation_requests/${id}/approve`,
+
+			const approvedRequest = await apiFetch({
+				path: `${getBaseUrl()}/${id}/approve`,
 				method: 'PATCH',
 			});
 
@@ -151,7 +139,7 @@ export default () => {
 				'surecart',
 				'affiliation-request',
 				{
-					...affiliationRequest,
+					...approvedRequest,
 					status: 'approved',
 				},
 				undefined,
@@ -175,8 +163,9 @@ export default () => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliation_requests/${id}/deny`,
+
+			const deniedRequest = await apiFetch({
+				path: `${getBaseUrl()}/${id}/deny`,
 				method: 'PATCH',
 			});
 
@@ -188,7 +177,7 @@ export default () => {
 				'surecart',
 				'affiliation-request',
 				{
-					...affiliationRequest,
+					...deniedRequest,
 					status: 'denied',
 				},
 				undefined,
@@ -286,7 +275,7 @@ export default () => {
 			}
 		>
 			<Error
-				error={error || loadError || saveError || deleteError}
+				error={error || loadError}
 				setError={setError}
 				margin="80px"
 			/>

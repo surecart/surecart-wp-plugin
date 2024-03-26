@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
@@ -25,8 +25,8 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
+import useSave from '../settings/UseSave';
 import Error from '../components/Error';
-import useDirty from '../hooks/useDirty';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Clicks from './modules/Clicks';
@@ -36,13 +36,12 @@ import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
 
 export default ({ id }) => {
+	const { save } = useSave();
 	const [loading, setLoading] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { saveDirtyRecords } = useDirty();
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -57,27 +56,20 @@ export default ({ id }) => {
 		[id]
 	);
 
+	const getBaseUrl = () =>
+		select(coreStore).getEntityConfig('surecart', 'affiliation')?.baseURL;
+
 	/**
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
 		try {
-			await saveDirtyRecords();
-			// save success.
-			createSuccessNotice(__('Affiliate updated.', 'surecart'), {
-				type: 'snackbar',
+			await save({
+				successMessage: __('Affiliate updated.', 'surecart'),
 			});
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			console.error(e);
+			setError(e);
 		}
 	};
 
@@ -88,8 +80,9 @@ export default ({ id }) => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliations/${id}/activate`,
+
+			const activated = await apiFetch({
+				path: `${getBaseUrl()}/${id}/activate`,
 				method: 'PATCH',
 			});
 
@@ -101,7 +94,7 @@ export default ({ id }) => {
 				'surecart',
 				'affiliation',
 				{
-					...affiliation,
+					...activated,
 					active: true,
 				},
 				undefined,
@@ -125,8 +118,9 @@ export default ({ id }) => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliations/${id}/deactivate`,
+
+			const deactivated = await apiFetch({
+				path: `${getBaseUrl()}/${id}/deactivate`,
 				method: 'PATCH',
 			});
 
@@ -138,7 +132,7 @@ export default ({ id }) => {
 				'surecart',
 				'affiliation',
 				{
-					...affiliation,
+					...deactivated,
 					active: false,
 				},
 				undefined,

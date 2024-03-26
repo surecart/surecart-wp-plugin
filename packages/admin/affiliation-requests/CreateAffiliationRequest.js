@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useState, useReducer } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -24,11 +24,18 @@ import CreateTemplate from '../templates/CreateModel';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [payoutEmail, setPayoutEmail] = useState('');
-	const [bio, setBio] = useState('');
+	const [request, updateRequest] = useReducer(
+		(currentState, newState) => {
+			return { ...currentState, ...newState };
+		},
+		{
+			first_name: '',
+			last_name: '',
+			email: '',
+			payout_email: '',
+			bio: '',
+		}
+	);
 	const [error, setError] = useState(null);
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -40,13 +47,7 @@ export default ({ id, setId }) => {
 			const affiliationRequest = await saveEntityRecord(
 				'surecart',
 				'affiliation-request',
-				{
-					first_name: firstName,
-					last_name: lastName,
-					email,
-					payout_email: payoutEmail,
-					bio,
-				},
+				request,
 				{ throwOnError: true }
 			);
 			setId(affiliationRequest.id);
@@ -70,79 +71,88 @@ export default ({ id, setId }) => {
 							grid-template-columns: 1fr 1fr;
 						`}
 					>
-						<ScInput
-							label={__('First Name', 'surecart')}
-							className="sc-affiliation-request-first-name"
-							help={__(
-								"Affiliate request's first name.",
-								'surecart'
-							)}
-							onScChange={(e) => {
-								setFirstName(e.target.value);
-							}}
-							value={firstName}
-							name="first_name"
-							required
-							autofocus
-						/>
-						<ScInput
-							label={__('Last Name', 'surecart')}
-							className="sc-affiliate-request-last-name"
-							help={__(
-								"Affiliate request's last name.",
-								'surecart'
-							)}
-							onScChange={(e) => {
-								setLastName(e.target.value);
-							}}
-							value={lastName}
-							name="last_name"
-						/>
-						<ScInput
-							label={__('Email', 'surecart')}
-							className="sc-affiliate-request-email"
-							help={__("Affiliate request's email.", 'surecart')}
-							onScChange={(e) => {
-								setEmail(e.target.value);
-							}}
-							value={email}
-							name="email"
-							type="email"
-							required
-						/>
-						<ScInput
-							label={__('Payout Email', 'surecart')}
-							className="sc-affiliate-request-payout-email"
-							help={__(
-								"Affiliate request's payout email.",
-								'surecart'
-							)}
-							onScChange={(e) => {
-								setPayoutEmail(e.target.value);
-							}}
-							required
-							value={payoutEmail}
-							name="payout_email"
-							type="email"
-						/>
-
-						<ScTextarea
-							label={__('Bio', 'surecart')}
-							className="sc-affiliate-request-bio"
-							help={__(
-								'Short blurb from this affiliate describing how they will promote this store.',
-								'surecart'
-							)}
-							onScChange={(e) => {
-								setBio(e.target.value);
-							}}
-							value={bio}
-							name="bio"
-							required
-							css={css`
-								grid-column: 1 / 3;
-							`}
-						/>
+						<ScFormRow>
+							<ScInput
+								label={__('First Name', 'surecart')}
+								className="sc-affiliation-request-first-name"
+								help={__(
+									"Affiliate request's first name.",
+									'surecart'
+								)}
+								onScChange={(e) =>
+									updateRequest({
+										first_name: e.target.value,
+									})
+								}
+								value={request.first_name}
+								name="first_name"
+								required
+								autofocus
+							/>
+							<ScInput
+								label={__('Last Name', 'surecart')}
+								className="sc-affiliate-request-last-name"
+								help={__(
+									"Affiliate request's last name.",
+									'surecart'
+								)}
+								onScChange={(e) =>
+									updateRequest({ last_name: e.target.value })
+								}
+								value={request.last_name}
+								name="last_name"
+							/>
+						</ScFormRow>
+						<ScFormRow>
+							<ScInput
+								label={__('Email', 'surecart')}
+								className="sc-affiliate-request-email"
+								help={__(
+									"Affiliate request's email.",
+									'surecart'
+								)}
+								onScChange={(e) =>
+									updateRequest({ email: e.target.value })
+								}
+								value={request.email}
+								name="email"
+								type="email"
+								required
+							/>
+							<ScInput
+								label={__('Payout Email', 'surecart')}
+								className="sc-affiliate-request-payout-email"
+								help={__(
+									"Affiliate request's payout email.",
+									'surecart'
+								)}
+								onScChange={(e) =>
+									updateRequest({
+										payout_email: e.target.value,
+									})
+								}
+								required
+								value={request.payout_email}
+								name="payout_email"
+								type="email"
+							/>
+						</ScFormRow>
+						<ScFormRow>
+							<ScTextarea
+								label={__('Bio', 'surecart')}
+								className="sc-affiliate-request-bio"
+								help={__(
+									'Short blurb from this affiliate describing how they will promote this store.',
+									'surecart'
+								)}
+								onScChange={(e) =>
+									updateRequest({ bio: e.target.value })
+								}
+								value={request.bio}
+								name="bio"
+								required
+							/>
+						</ScFormRow>
 
 						<div
 							css={css`display: flex gap: var(--sc-spacing-small); justify-content: flex-end; grid-column: 1 / 3;`}
