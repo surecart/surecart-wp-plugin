@@ -6,6 +6,9 @@ $block_id = $attributes['blockId'] ?? '';
 $page_key = $block_id ? 'products-' . $block_id . '-page' : 'products-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 $per_page = $attributes['limit'] ?? 15;
+$filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
+$filter = empty( $_GET[ $filter_key ] ) ? '' : sanitize_text_field( $_GET[ $filter_key ] );
+$collection_ids = $filter ? explode( ',', $filter ) : [];
 
 $products = Product::where(
 	[
@@ -27,7 +30,11 @@ $products = Product::where(
 wp_interactivity_state(
 	'surecart/product-list',
 	array(
-		'products' => $products,
+		$block_id => array (
+			'products' => $products,
+			'filter' => $collection_ids
+
+		)
 	),
 );
 $block_id = $attributes['blockId'] ?? 4;

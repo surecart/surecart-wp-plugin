@@ -19,8 +19,6 @@ $filter = empty( $_GET[ $filter_key ] ) ? '' : sanitize_text_field( $_GET[ $filt
 $collection_ids = $filter ? explode( ',', $filter ) : [];
 $per_page = $block->context["surecart/product-list/limit"] ?? 15;
 
-$products = wp_interactivity_state( 'surecart/product-list' );
-
 $products = Product::where(
 	[
 		'archived' => false,
