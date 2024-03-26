@@ -22,8 +22,9 @@ class CLICommands {
 		}
 		$account = ProvisionalAccount::create(
 			array(
-				'email' => $assoc_args['email'],
-				'seed'  => ! empty( $assoc_args['seed'] ) ? $assoc_args['seed'] : false,
+				'email'  => $assoc_args['email'],
+				'seed'   => ! empty( $assoc_args['seed'] ) ? $assoc_args['seed'] : false,
+				'source' => ! empty( $assoc_args['source'] ) ? $assoc_args['source'] : 'surecart_wp',
 			)
 		);
 		if ( is_wp_error( $account ) ) {
