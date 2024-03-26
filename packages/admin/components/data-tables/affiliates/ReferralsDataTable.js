@@ -45,7 +45,7 @@ export default ({
 						description,
 						commission_amount,
 						currency,
-						checkout,
+						checkout: { order },
 					}) => {
 						return {
 							status: <StatusBadge status={status} />,
@@ -53,23 +53,23 @@ export default ({
 								<ScText truncate>{description}</ScText>
 							),
 							order: (
-								<>
-									{!!checkout?.order?.id ? (
+								<ScText truncate>
+									{!!order?.id ? (
 										<ScButton
 											href={addQueryArgs('admin.php', {
 												page: 'sc-orders',
 												action: 'edit',
-												id: id,
+												id: order?.id,
 											})}
-											type="text"
 											size="small"
+											type="link"
 										>
-											#{checkout?.order?.id}
+											#{order?.number ?? order?.id}
 										</ScButton>
 									) : (
 										'-'
 									)}
-								</>
+								</ScText>
 							),
 							commission_amount: (
 								<ScFormatNumber
