@@ -86,6 +86,11 @@ const { state, callbacks, actions } = store(
 			},
 		},
 		callbacks: {
+			/** Get the contextual state. */
+			getState(prop) {
+				const { blockId } = getContext();
+				return state[blockId]?.[prop] || false;
+			},
 			*prefetch() {
 				const { url } = getContext();
 				const { ref } = getElement();

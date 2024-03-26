@@ -11,10 +11,10 @@ use SureCart\Models\Product;
 
 $block_id = $block->context["surecart/product-list/blockId"];
 $page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-page';
-$sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
-$filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+$sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
 $sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
+$filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
 $filter = empty( $_GET[ $filter_key ] ) ? '' : sanitize_text_field( $_GET[ $filter_key ] );
 $collection_ids = $filter ? explode( ',', $filter ) : [];
 $per_page = $block->context["surecart/product-list/limit"] ?? 15;
