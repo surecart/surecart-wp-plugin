@@ -5,7 +5,8 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
@@ -18,27 +19,29 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
+	ScDropdown,
 	ScFlex,
 	ScIcon,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
+import useSave from '../settings/UseSave';
 import Error from '../components/Error';
-import useDirty from '../hooks/useDirty';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Clicks from './modules/Clicks';
-import Actions from './components/Actions';
 import Details from './modules/Details';
 import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
 
 export default ({ id }) => {
+	const { save } = useSave();
 	const [loading, setLoading] = useState(false);
+	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { saveDirtyRecords } = useDirty();
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -53,39 +56,35 @@ export default ({ id }) => {
 		[id]
 	);
 
+	const baseUrl = select(coreStore).getEntityConfig(
+		'surecart',
+		'affiliation'
+	)?.baseURL;
+
 	/**
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
 		try {
-			await saveDirtyRecords();
-			// save success.
-			createSuccessNotice(__('Affiliate updated.', 'surecart'), {
-				type: 'snackbar',
+			await save({
+				successMessage: __('Affiliate updated.', 'surecart'),
 			});
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			console.error(e);
+			setError(e);
 		}
 	};
 
 	/**
 	 * Activate the affiliation.
 	 */
-	const onAffiliationActivate = async () => {
+	const onActivate = async () => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliations/${id}/activate`,
+
+			const activated = await apiFetch({
+				path: `${baseUrl}/${id}/activate`,
 				method: 'PATCH',
 			});
 
@@ -97,7 +96,7 @@ export default ({ id }) => {
 				'surecart',
 				'affiliation',
 				{
-					...affiliation,
+					...activated,
 					active: true,
 				},
 				undefined,
@@ -117,12 +116,13 @@ export default ({ id }) => {
 	/**
 	 * Deactivate the affiliation.
 	 */
-	const onAffiliationDeactivate = async () => {
+	const onDeactivate = async () => {
 		try {
 			setLoading(true);
 			setError(null);
-			await apiFetch({
-				path: `/surecart/v1/affiliations/${id}/deactivate`,
+
+			const deactivated = await apiFetch({
+				path: `${baseUrl}/${id}/deactivate`,
 				method: 'PATCH',
 			});
 
@@ -134,7 +134,7 @@ export default ({ id }) => {
 				'surecart',
 				'affiliation',
 				{
-					...affiliation,
+					...deactivated,
 					active: false,
 				},
 				undefined,
@@ -186,12 +186,46 @@ export default ({ id }) => {
 						gap: 0.5em;
 					`}
 				>
-					<Actions
-						affiliation={affiliation}
-						onActivate={onAffiliationActivate}
-						onDeactivate={onAffiliationDeactivate}
-						loading={loading}
-					/>
+					<ScDropdown
+						position="bottom-right"
+						style={{ '--panel-width': '14em' }}
+					>
+						<ScButton
+							type="primary"
+							slot="trigger"
+							caret
+							loading={loading}
+						>
+							{affiliation?.active
+								? __('Active', 'surecart')
+								: __('Inactive', 'surecart')}
+						</ScButton>
+						<ScMenu>
+							{!affiliation?.active ? (
+								<ScMenuItem
+									onClick={() => setModal('activate')}
+								>
+									<ScIcon
+										slot="prefix"
+										style={{ opacity: 0.65 }}
+										name="check-circle"
+									/>
+									{__('Activate', 'surecart')}
+								</ScMenuItem>
+							) : (
+								<ScMenuItem
+									onClick={() => setModal('deactivate')}
+								>
+									<ScIcon
+										slot="prefix"
+										style={{ opacity: 0.65 }}
+										name="x-circle"
+									/>
+									{__('Deactivate', 'surecart')}
+								</ScMenuItem>
+							)}
+						</ScMenu>
+					</ScDropdown>
 				</div>
 			}
 			sidebar={
@@ -206,6 +240,31 @@ export default ({ id }) => {
 			<Referrals affiliationId={affiliation?.id} />
 			<Payouts affiliationId={affiliation?.id} />
 			<Promotions affiliationId={affiliation?.id} />
+
+			<ConfirmDialog
+				isOpen={'activate' === modal}
+				onConfirm={() => {
+					onActivate();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__('Are you sure to activate the affiliate user?', 'surecart')}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'deactivate' === modal}
+				onConfirm={() => {
+					onDeactivate();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Are you sure to deactivate the affiliate user?',
+					'surecart'
+				)}
+			</ConfirmDialog>
 		</UpdateModel>
 	);
 };

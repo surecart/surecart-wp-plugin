@@ -1,4 +1,9 @@
 /**
+ * External dependencies.
+ */
+import { createRoot } from '@wordpress/element';
+
+/**
  * register store and entities.
  */
 import '../store/add-entities';
@@ -7,9 +12,10 @@ import '../store/add-entities';
  * App
  */
 import Affiliation from './Affiliation';
-import { render } from '@wordpress/element';
 
 /**
  * Render
  */
-render(<Affiliation />, document.getElementById('app'));
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<Affiliation />);

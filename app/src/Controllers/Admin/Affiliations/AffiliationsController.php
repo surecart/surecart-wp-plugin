@@ -16,6 +16,7 @@ class AffiliationsController extends AdminController {
 	public function index() {
 		$table = new AffiliationsListTable();
 		$table->prepare_items();
+
 		$this->withHeader(
 			[
 				'affiliates' => [
@@ -23,6 +24,14 @@ class AffiliationsController extends AdminController {
 				],
 			]
 		);
+
+		$this->withNotices(
+			[
+				'activated'   => __( 'Affiliation activated successfully.', 'surecart' ),
+				'deactivated' => __( 'Affiliation deactivated successfully.', 'surecart' ),
+			]
+		);
+
 		return \SureCart::view( 'admin/affiliations/index' )->with( [ 'table' => $table ] );
 	}
 
@@ -50,53 +59,33 @@ class AffiliationsController extends AdminController {
 	 * Activate the affiliation.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return void
+	 *
+	 * @return \SureCartCore\Requests\RequestInterface
 	 */
 	public function activate( $request ) {
-		$affiliation = Affiliation::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $affiliation ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $affiliation->get_error_messages() ) ) );
-		}
-
-		$activated = $affiliation->activate( $request->query( 'id' ) );
+		$activated = Affiliation::activate( $request->query( 'id' ) );
 
 		if ( is_wp_error( $activated ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $activated->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate user activated.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( [ 'activated' => true ], \SureCart::getUrl()->index( 'affiliates' ) ) );
 	}
 
 	/**
 	 * Deactivate the affiliation.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return void
+	 *
+	 * @return \SureCartCore\Requests\RequestInterface
 	 */
 	public function deactivate( $request ) {
-		$affiliation = Affiliation::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $affiliation ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $affiliation->get_error_messages() ) ) );
-		}
-
-		$deactivated = $affiliation->deactivate( $request->query( 'id' ) );
+		$deactivated = Affiliation::deactivate( $request->query( 'id' ) );
 
 		if ( is_wp_error( $deactivated ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $deactivated->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			__( 'Affiliate user deactivated.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to( add_query_arg( [ 'deactivated' => true ], \SureCart::getUrl()->index( 'affiliates' ) ) );
 	}
 }

@@ -82,6 +82,7 @@ return array(
 	'tax_protocol.tax_enabled.invalid_address'             => __( 'You cannot enable taxes unless a valid tax address is provided', 'surecart' ),
 	'media.restrict_dependent_destroy.has_one'             => __( 'You cannot delete this media item because it is currently being used.', 'surecart' ),
 	'media.content_type.unsupported'                       => __( 'This file type is not supported.', 'surecart' ),
+	'product_media.product.limit_reached'                  => __( 'Your storage limit has been reached. Please remove some media items before adding more.', 'surecart' ),
 	'verification_code.email.blocked_duplicate'            => __( 'You have already requested a code in the last 60 seconds. Please wait before requesting again.', 'surecart' ),
 	'variant_option.name.taken'                            => __( 'This option name is already taken. Please use a different name.', 'surecart' ),
 	'product.variant_options.product.limit_reached'        => __( 'You have reached the maximum number of options for this product.', 'surecart' ),
@@ -135,4 +136,8 @@ return array(
 	'line_item.upsell.already_applied'                     => __( 'This upsell has already been applied.', 'surecart' ),
 	'line_item.upsell.expired'                             => __( 'This upsell has expired.', 'surecart' ),
 	'upsell_funnel.enabled.initial_upsell_blank'           => __( 'Please select an initial upsell offer.', 'surecart' ),
+	'affiliation_request.name.blank'                       => __( 'The affiliate request\'s name cannot be blank.', 'surecart' ),
+	'affiliation_request.email.blank'                      => __( 'The affiliate request\'s email cannot be blank.', 'surecart' ),
+	'affiliation_request.bio.blank'                        => __( 'The affiliate request\'s bio cannot be blank.', 'surecart' ),
+	'affiliation_request.email.taken'                      => __( 'The affiliate request\'s email is already in use.', 'surecart' ),
 );
