@@ -62,16 +62,14 @@ export default ({ referral, loading, expanded }) => {
 	};
 
 	return (
-		<Box title="Affiliate" loading={loading}>
+		<Box title={__('Affiliate', 'surecart')} loading={loading}>
 			<ScFlex
 				alignItems="center"
 				justifyContent="flex-start"
 				style={{ gap: '1em' }}
 			>
 				<div>
-					<div>{`${referral?.affiliation?.first_name} ${
-						referral?.affiliation?.last_name || ''
-					}`}</div>
+					<div>{referral?.affiliation?.display_name}</div>
 					<div>{referral?.affiliation?.email}</div>
 				</div>
 
@@ -83,11 +81,7 @@ export default ({ referral, loading, expanded }) => {
 						archived: false,
 					}}
 					onSelect={(affiliation) => onSelectAffiliation(affiliation)}
-					display={(affiliation) =>
-						`${affiliation.first_name} ${
-							affiliation.last_name || ''
-						}`
-					}
+					display={(affiliation) => affiliation.display_name}
 					css={css`
 						min-width: 370px;
 					`}
@@ -97,6 +91,7 @@ export default ({ referral, loading, expanded }) => {
 					</ScButton>
 				</ModelSelector>
 			</ScFlex>
+
 			{saving && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
