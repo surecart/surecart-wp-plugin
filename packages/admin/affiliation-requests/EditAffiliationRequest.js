@@ -42,6 +42,10 @@ export default () => {
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
+	const baseUrl = select(coreStore).getEntityConfig(
+		'surecart',
+		'affiliation-request'
+	)?.baseURL;
 
 	const {
 		affiliationRequest,
@@ -77,10 +81,6 @@ export default () => {
 
 	const updateRequest = (data) =>
 		editEntityRecord('surecart', 'affiliation-request', id, data);
-
-	const getBaseUrl = () =>
-		select(coreStore).getEntityConfig('surecart', 'affiliation-request')
-			?.baseURL;
 
 	/**
 	 * Update the affiliation request.
@@ -127,7 +127,7 @@ export default () => {
 			setError(null);
 
 			const approvedRequest = await apiFetch({
-				path: `${getBaseUrl()}/${id}/approve`,
+				path: `${baseUrl}/${id}/approve`,
 				method: 'PATCH',
 			});
 
@@ -165,7 +165,7 @@ export default () => {
 			setError(null);
 
 			const deniedRequest = await apiFetch({
-				path: `${getBaseUrl()}/${id}/deny`,
+				path: `${baseUrl}/${id}/deny`,
 				method: 'PATCH',
 			});
 
@@ -234,7 +234,8 @@ export default () => {
 							affiliationRequest?.status
 						) && (
 							<ScButton
-								type="primary"
+								type="default"
+								outline={true}
 								onClick={() => setModal('approve')}
 								loading={loading}
 							>

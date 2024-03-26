@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { Stripe, StripeElementChangeEvent } from '@stripe/stripe-js';
+import { StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -8,6 +8,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
+import { state as processorsState } from '@store/processors';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
@@ -25,14 +26,8 @@ export class ScStripePaymentElement {
   /** Holds the element container. */
   private container: HTMLDivElement;
 
-  /** holds the elements instance. */
-  private elements: any;
-
   /** holds the stripe element. */
   private element: any;
-
-  /** holds the stripe instance. */
-  private stripe: Stripe;
 
   private unlistenToFormState: () => void;
   private unlistenToCheckout: () => void;
@@ -92,7 +87,7 @@ export class ScStripePaymentElement {
     const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
-      this.stripe = await loadStripe(processor_data?.publishable_key, { stripeAccount: processor_data?.account_id });
+      processorsState.instances.stripe = await loadStripe(processor_data?.publishable_key, { stripeAccount: processor_data?.account_id });
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
       // don't continue.
@@ -111,9 +106,6 @@ export class ScStripePaymentElement {
     // we need to listen to the form state and pay when the form state enters the paying state.
     this.unlistenToFormState = onChangeFormState('formState', () => {
       if (!checkoutState?.checkout?.payment_method_required) return;
-      if ('finalizing' === currentFormState()) {
-        this.submit();
-      }
       if ('paying' === currentFormState()) {
         this.maybeConfirmOrder();
       }
@@ -157,17 +149,17 @@ export class ScStripePaymentElement {
   createOrUpdateElements() {
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
-    if (!this.stripe) return;
+    if (!processorsState.instances.stripe) return;
 
     // create the elements if they have not yet been created.
-    if (!this.elements) {
+    if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
-      this.elements = this.stripe.elements(this.getElementsConfig() as any);
+      processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
 
       const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
 
       // create the payment element.
-      this.elements
+      (processorsState.instances.stripeElements as any)
         .create('payment', {
           defaultValues: {
             billingDetails: {
@@ -191,7 +183,7 @@ export class ScStripePaymentElement {
         })
         .mount(this.container);
 
-      this.element = this.elements.getElement('payment');
+      this.element = processorsState.instances.stripeElements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
       this.element.on('change', (event: StripeElementChangeEvent) => {
         if (event.complete) {
@@ -212,7 +204,7 @@ export class ScStripePaymentElement {
       });
       return;
     }
-    this.elements.update(this.getElementsConfig());
+    processorsState.instances.stripeElements.update(this.getElementsConfig());
   }
 
   /** Update the default attributes of the element when they cahnge. */
@@ -250,7 +242,7 @@ export class ScStripePaymentElement {
     // this processor is not selected.
     if (selectedProcessor?.id !== 'stripe') return;
     // submit the elements.
-    const { error } = await this.elements.submit();
+    const { error } = await (processorsState.instances.stripeElements as any).submit();
     if (error) {
       console.error({ error });
       updateFormState('REJECT');
@@ -279,7 +271,7 @@ export class ScStripePaymentElement {
   @Method()
   async confirm(type, args = {}) {
     const confirmArgs = {
-      elements: this.elements,
+      elements: processorsState.instances.stripeElements,
       clientSecret: checkoutState.checkout?.payment_intent?.processor_data?.stripe?.client_secret,
       confirmParams: {
         return_url: addQueryArgs(window.location.href, {
@@ -299,11 +291,12 @@ export class ScStripePaymentElement {
     if (this.confirming) return;
 
     // stripe must be loaded.
-    if (!this.stripe) return;
+    if (!processorsState.instances.stripe) return;
 
     try {
       this.scSetState.emit('PAYING');
-      const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
+      const response =
+        type === 'setup' ? await processorsState.instances.stripe.confirmSetup(confirmArgs as any) : await processorsState.instances.stripe.confirmPayment(confirmArgs as any);
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;

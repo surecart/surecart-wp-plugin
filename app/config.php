@@ -96,6 +96,7 @@ return [
 		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
 		\SureCart\Rest\TaxZoneRestServiceProvider::class,
+		\SureCart\Rest\TaxOverrideRestServiceProvider::class,
 		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\CheckoutRestServiceProvider::class,
@@ -275,7 +276,7 @@ return [
 	 * Links used.
 	 */
 	'links'                  => [
-		'purchase' => 'https://app.surecart.com/billing',
+		'purchase' => 'https://app.surecart.com/plans',
 	],
 
 	/**

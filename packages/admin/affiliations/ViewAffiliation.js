@@ -56,8 +56,10 @@ export default ({ id }) => {
 		[id]
 	);
 
-	const getBaseUrl = () =>
-		select(coreStore).getEntityConfig('surecart', 'affiliation')?.baseURL;
+	const baseUrl = select(coreStore).getEntityConfig(
+		'surecart',
+		'affiliation'
+	)?.baseURL;
 
 	/**
 	 * Handle the form submission
@@ -82,7 +84,7 @@ export default ({ id }) => {
 			setError(null);
 
 			const activated = await apiFetch({
-				path: `${getBaseUrl()}/${id}/activate`,
+				path: `${baseUrl}/${id}/activate`,
 				method: 'PATCH',
 			});
 
@@ -120,7 +122,7 @@ export default ({ id }) => {
 			setError(null);
 
 			const deactivated = await apiFetch({
-				path: `${getBaseUrl()}/${id}/deactivate`,
+				path: `${baseUrl}/${id}/deactivate`,
 				method: 'PATCH',
 			});
 

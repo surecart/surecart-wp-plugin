@@ -35,16 +35,13 @@ export default () => {
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
 
-	const { item: accountItem } = useEntity('store', 'account');
-
 	const type = affiliationProtocolItem?.amount_commission
 		? 'fixed'
 		: 'percentage';
 
 	const [commisionType, setCommisionType] = useState(null);
 
-	const signupsUrl =
-		'https://affiliates.surecart.com/join/' + accountItem?.slug;
+	const signupsUrl = `https://affiliates.surecart.com/join/${scData?.account_slug}`;
 	const successFunction = () => {
 		setTrackingScriptDialog(false);
 		createSuccessNotice(__('Copied to clipboard.', 'surecart'), {

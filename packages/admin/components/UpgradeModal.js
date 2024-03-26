@@ -31,7 +31,9 @@ export default ({ onRequestClose }) => {
 				style={{
 					'--sc-color-primary-500': 'var(--sc-color-brand-primary)',
 				}}
-				href={scData?.upgrade_url || 'https://app.surecart.com'}
+				href={`${
+					scData?.upgrade_url || 'https://app.surecart.com'
+				}?switch_account_id=${scData?.account_id}`}
 				type="primary"
 				target="_blank"
 				full
