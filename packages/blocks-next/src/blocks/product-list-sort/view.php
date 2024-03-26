@@ -4,7 +4,11 @@ $sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-s
 $sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
 ?>
 
-<select class="sc-dropdown" data-wp-on--input="surecart/product-list::actions.sort">
+<select 
+    <?php echo get_block_wrapper_attributes( array( 'class' => $class . ' sc-dropdown' ) ); ?> 
+    style="<?php echo esc_attr( $style ); ?>" 
+    data-wp-on--input="surecart/product-list::actions.sort"
+>
     <option value="created_at:desc" <?php selected($sort, 'created_at:desc'); ?>> <?php esc_html_e('Latest', 'surecart') ?> </option>
     <option value="created_at:asc" <?php selected($sort, 'created_at:asc'); ?>> <?php esc_html_e('Oldest', 'surecart') ?> </option>
     <option value="name:asc" <?php selected($sort, 'name:asc'); ?>> <?php esc_html_e('Alphabetical, A-Z', 'surecart') ?> </option>

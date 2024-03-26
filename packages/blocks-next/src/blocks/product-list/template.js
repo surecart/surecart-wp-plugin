@@ -7,6 +7,13 @@ export const TEMPLATE = [
 				flexWrap: 'nowrap',
 				justifyContent: 'space-between',
 			},
+			style: {
+				spacing: {
+					margin: {
+						bottom: '10px',
+					},
+				},
+			},
 		},
 		[
 			[
@@ -27,6 +34,23 @@ export const TEMPLATE = [
 				[['surecart/product-list-search', {}]],
 			],
 		],
+	],
+	[
+		'core/group',
+		{
+			layout: {
+				type: 'flex',
+				flexWrap: 'nowrap',
+			},
+			style: {
+				spacing: {
+					margin: {
+						bottom: '10px',
+					},
+				},
+			},
+		},
+		[['surecart/product-list-filter-tags']],
 	],
 	['surecart/product-template'],
 	['surecart/product-pagination'],
