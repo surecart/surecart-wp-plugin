@@ -26,10 +26,10 @@ class AffiliationReferralsController extends AdminController {
 
 		$this->withNotices(
 			array(
-				'approved'  => 'Affiliate referral approved.',
-				'denied'    => 'Affiliate referral denied.',
-				'deleted'   => 'Affiliate referral deleted.',
-				'reviewing' => 'Affiliate referral is now in review.',
+				'approved'  => esc_html__( 'Affiliate referral approved.', 'surecart' ),
+				'denied'    => esc_html__( 'Affiliate referral denied.', 'surecart' ),
+				'deleted'   => esc_html__( 'Affiliate referral deleted.', 'surecart' ),
+				'reviewing' => esc_html__( 'Affiliate referral is now in review.', 'surecart' ),
 			)
 		);
 
