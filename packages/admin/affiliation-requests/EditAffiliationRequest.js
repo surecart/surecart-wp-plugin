@@ -78,9 +78,10 @@ export default () => {
 	const updateRequest = (data) =>
 		editEntityRecord('surecart', 'affiliation-request', id, data);
 
-	const getBaseUrl = () =>
-		select(coreStore).getEntityConfig('surecart', 'affiliation-request')
-			?.baseURL;
+	const baseUrl = select(coreStore).getEntityConfig(
+		'surecart',
+		'affiliation-request'
+	)?.baseURL;
 
 	/**
 	 * Update the affiliation request.
@@ -127,7 +128,7 @@ export default () => {
 			setError(null);
 
 			const approvedRequest = await apiFetch({
-				path: `${getBaseUrl()}/${id}/approve`,
+				path: `${baseUrl}/${id}/approve`,
 				method: 'PATCH',
 			});
 
@@ -165,7 +166,7 @@ export default () => {
 			setError(null);
 
 			const deniedRequest = await apiFetch({
-				path: `${getBaseUrl()}/${id}/deny`,
+				path: `${baseUrl}/${id}/deny`,
 				method: 'PATCH',
 			});
 
