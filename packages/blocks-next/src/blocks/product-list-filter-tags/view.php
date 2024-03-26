@@ -28,7 +28,7 @@ $block_gap_css_var = $attributes['style']['spacing']['blockGap'] ? sc_get_block_
 	?>"
 >
 	<?php foreach ( $product_collections as $product_collection ) : ?>
-        <button class="sc-tag sc-tag--primary tag--clearable">
+        <button id="<?php echo esc_attr( $product_collection->id ); ?>" class="sc-tag sc-tag--primary tag--clearable" data-wp-on--click="actions.removeFilter">
             <span class="tag__content">
                 <?php echo esc_html( $product_collection->name ); ?>
             </span>

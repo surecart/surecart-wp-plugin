@@ -84,6 +84,34 @@ const { state, callbacks, actions } = store(
 				);
 				actions.navigate(url.toString());
 			},
+			*removeFilter(event) {
+				// navigate to new url
+				const { actions, state: routerState } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+				const { ref } = getElement();
+				// remove filter id from state
+				const ctx = getContext();
+				const filterId = ref?.id;
+				const currentFilter = state[ctx.blockId]?.filter || [];
+				const updatedFilter = currentFilter.filter(
+					(id) => id !== filterId
+				);
+				const url = new URL(routerState?.url);
+				if (updatedFilter.length === 0) {
+					url.searchParams.delete(`products-${ctx?.blockId}-filter`);
+				} else {
+					url.searchParams.set(
+						`products-${ctx?.blockId}-filter`,
+						updatedFilter.join(',')
+					);
+				}
+				update({
+					filter: updatedFilter,
+				});
+				actions.navigate(url.toString());
+			},
 		},
 		callbacks: {
 			/** Get the contextual state. */
