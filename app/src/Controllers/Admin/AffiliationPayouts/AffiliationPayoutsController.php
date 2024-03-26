@@ -34,7 +34,6 @@ class AffiliationPayoutsController extends AdminController {
 			)
 		);
 
-
 		return \SureCart::view( 'admin/affiliation-payouts/index' )->with( [ 'table' => $table ] );
 	}
 
@@ -74,7 +73,7 @@ class AffiliationPayoutsController extends AdminController {
 
 		$this->preloadPaths(
 			[
-				'/wp/v2/users/me',
+				'/wp/v2/users/me?context=edit',
 				'/wp/v2/types?context=view',
 				'/wp/v2/types?context=edit',
 				'/surecart/v1/affiliation_payouts/' . $request->query( 'id' ) . '?context=edit',
