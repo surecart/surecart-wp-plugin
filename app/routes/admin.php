@@ -340,6 +340,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Affiliations
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-affiliates' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Affiliations\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'activate', 'action' )->middleware( 'nonce:activate_affiliation' )->handle( 'AffiliationsController@activate' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'deactivate', 'action' )->middleware( 'nonce:deactivate_affiliation' )->handle( 'AffiliationsController@deactivate' );
+	}
+);
+
+\SureCart::route()
+->where( 'admin', 'sc-affiliate-requests' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationRequests\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationRequestsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationRequestsController@edit' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Settings
 |--------------------------------------------------------------------------
 */
