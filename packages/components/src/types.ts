@@ -32,6 +32,8 @@ declare global {
     scData: {
       cdn_root: string;
       root_url: string;
+      account_id: string;
+      account_slug: string;
       api_url: string;
       plugin_url: string;
       page_id: string;
@@ -706,6 +708,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  updated_at: number;
   variant: string;
   upsells_expire_at?: number;
 }
