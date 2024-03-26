@@ -83,6 +83,11 @@ class ErrorsTranslationService {
 			return sprintf( __( 'You must spend at least %1$s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ?? $store_currency ) );
 		}
 
+		// Minimum order amount by processor.
+		if ( 'amount_due' === $attribute && 'less_than_currency_minimum' === $type ) {
+			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'], $options['currency'] ) );
+		}
+
 		return false;
 	}
 
