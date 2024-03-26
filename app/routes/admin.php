@@ -369,6 +369,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+
+\SureCart::route()
+->where( 'admin', 'sc-affiliate-clicks' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationClicks\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationClicksController@index' );
+	}
+);
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Settings
