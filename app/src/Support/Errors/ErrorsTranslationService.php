@@ -90,7 +90,7 @@ class ErrorsTranslationService {
 		// Minimum order amount by processor.
 		if ( 'amount_due' === $attribute && 'less_than_currency_minimum' === $type ) {
 			// translators: minimum amount for processor.
-			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'] ?? 0, $options['currency']?? $store_currency ) );
+			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'] ?? 0, $options['currency'] ?? $store_currency ) );
 		}
 
 		return false;
