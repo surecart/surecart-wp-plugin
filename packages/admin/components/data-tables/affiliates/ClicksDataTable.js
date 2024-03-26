@@ -40,13 +40,13 @@ export default ({
 				.sort((a, b) => b.created_at - a.created_at)
 				.map(({ created_at, url, referrer }) => {
 					const urlRef = useCopyToClipboard(url, () => {
-						createSuccessNotice(__('Landing URL Copied to clipboard.', 'surecart'), {
+						createSuccessNotice(__('Landing URL copied to clipboard.', 'surecart'), {
 							type: 'snackbar',
 						})
 					});
 
 					const referrerRef = useCopyToClipboard(referrer, () => {
-						createSuccessNotice(__('Referring URL Copied to clipboard.', 'surecart'), {
+						createSuccessNotice(__('Referring URL copied to clipboard.', 'surecart'), {
 							type: 'snackbar',
 						})
 					});
