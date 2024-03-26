@@ -1,11 +1,8 @@
 import { __ } from '@wordpress/i18n';
 
-export default ({
-	context: { 'surecart/product-list/blockId': blockId },
-	clientId,
-}) => {
+export default () => {
 	return (
-		<select className="sc-dropdown" name={`product-list-sort-${blockId}`}>
+		<select className="sc-dropdown">
 			<option value="created_at:desc">{__('Latest', 'surecart')}</option>
 			<option value="created_at:asc">{__('Oldest', 'surecart')}</option>
 			<option value="name:asc">

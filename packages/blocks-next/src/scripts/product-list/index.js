@@ -18,7 +18,7 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
-store(
+const { state, callbacks, actions } = store(
 	'surecart/product-list',
 	{
 		actions: {
@@ -48,13 +48,41 @@ store(
 			},
 			*sort(event) {
 				const ctx = getContext();
-				const { actions } = yield import(
+				const { actions, state: routerState } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
 				);
-				actions.navigate(
-					`?products-${ctx?.blockId}-sort=${event?.target?.value}`
+				const url = new URL(routerState?.url);
+				url.searchParams.set(
+					`products-${ctx?.blockId}-sort`,
+					event?.target?.value
 				);
+				actions.navigate(url.toString());
+			},
+			*filter(event) {
+				const { actions, state: routerState } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+				const ctx = getContext();
+				const newValue = event.target.value;
+				const url = new URL(routerState?.url);
+				const existingParams = url.searchParams.getAll(
+					`products-${ctx?.blockId}-filter`
+				);
+				const currentFilter = state[ctx.blockId]?.filter || [];
+				const updatedFilter = [
+					...new Set([...currentFilter, newValue, ...existingParams]),
+				];
+				const filtersString = updatedFilter.join(',');
+				update({
+					filter: updatedFilter,
+				});
+				url.searchParams.set(
+					`products-${ctx?.blockId}-filter`,
+					filtersString
+				);
+				actions.navigate(url.toString());
 			},
 		},
 		callbacks: {
@@ -73,3 +101,14 @@ store(
 	},
 	{ lock: true }
 );
+
+/**
+ * Update state.
+ */
+export const update = (data) => {
+	const { blockId } = getContext();
+	state[blockId] = {
+		...state?.[blockId],
+		...data,
+	};
+};

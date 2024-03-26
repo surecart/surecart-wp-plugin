@@ -6,6 +6,11 @@
 		echo esc_attr($style); 
 	?>"
 >
+	<?php if ( empty( $products ) ) : ?>
+		<div class="no-products-found">
+			<?php esc_html_e( 'No products found.', 'surecart' ); ?>
+		</div>
+	<?php endif; ?>
 	<?php foreach ($products as $product) : ?>
 		<div
 			<?php echo wp_kses_data(
