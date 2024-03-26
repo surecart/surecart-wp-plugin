@@ -57,6 +57,9 @@ export default ({ affiliationId }) => {
 				code: {
 					label: __('Code', 'surecart'),
 				},
+				discount_amount: {
+					label: __('Discount', 'surecart'),
+				},
 				status: {
 					label: __('Status', 'surecart'),
 				},
