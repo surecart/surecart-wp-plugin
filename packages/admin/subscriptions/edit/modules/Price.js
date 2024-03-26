@@ -28,6 +28,7 @@ export default ({
 	updateSubscription,
 	refresh,
 	setRefresh,
+	setUpdateBehavior,
 	upcoming,
 	loading,
 }) => {
@@ -63,7 +64,13 @@ export default ({
 					!edits?.price && (
 						<ScSwitch
 							checked={refresh}
-							onScChange={(e) => setRefresh(e.target.checked)}
+							onScChange={(e) => {
+								setRefresh(e.target.checked);
+								setUpdateBehavior('immediate');
+								updateSubscription({
+									refresh: e.target.checked,
+								});
+							}}
 						>
 							{__(
 								'Use the most recent version of this price',

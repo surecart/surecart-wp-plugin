@@ -306,6 +306,7 @@ export default () => {
 					priceId={subscription?.price?.id || subscription?.price}
 					refresh={refreshPriceVersion}
 					setRefresh={setRefreshPriceVersion}
+					setUpdateBehavior={setUpdateBehavior}
 				/>
 				<Trial
 					subscription={subscription}
