@@ -234,7 +234,8 @@ export default () => {
 							affiliationRequest?.status
 						) && (
 							<ScButton
-								type="primary"
+								type="default"
+								outline={true}
 								onClick={() => setModal('approve')}
 								loading={loading}
 							>
