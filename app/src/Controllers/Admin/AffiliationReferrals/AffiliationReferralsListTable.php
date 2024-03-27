@@ -234,12 +234,11 @@ class AffiliationReferralsListTable extends ListTable {
 	public function column_order( $referral ) {
 		$checkout = $referral->checkout ?? null;
 		if ( empty( $checkout->id ) ) {
-			return '_';
+			return '-';
 		}
-
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order ) ); ?>">
+		<a aria-label="<?php echo esc_attr__( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order ) ); ?>">
 			#<?php echo esc_html( $checkout->number ?? $checkout->order ); ?>
 		</a>
 		<?php
