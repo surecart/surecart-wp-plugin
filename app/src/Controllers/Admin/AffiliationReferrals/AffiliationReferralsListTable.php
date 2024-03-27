@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\AffiliationReferrals;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Referral;
+use SureCart\Support\Currency;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -183,7 +184,7 @@ class AffiliationReferralsListTable extends ListTable {
 		}
 		ob_start();
 		?>
-		<sc-tag type="<?php echo esc_attr( $referral->display_type ); ?>">
+		<sc-tag type="<?php echo esc_attr( $referral->status_type ); ?>">
 			<?php echo esc_html( $referral->display_status ); ?>
 		</sc-tag>
 		<?php
@@ -200,7 +201,7 @@ class AffiliationReferralsListTable extends ListTable {
 	public function column_affiliate( $referral ) {
 		$affiliation = $referral->affiliation ?? null;
 		if ( empty( $affiliation->id ) ) {
-			return '';
+			return '-';
 		}
 		ob_start();
 		?>
@@ -233,13 +234,13 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	public function column_order( $referral ) {
 		$checkout = $referral->checkout ?? null;
-		if ( empty( $checkout->id ) ) {
+		if ( empty( $checkout->order->id ) ) {
 			return '-';
 		}
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr__( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order ) ); ?>">
-			#<?php echo esc_html( $checkout->number ?? $checkout->order ); ?>
+		<a aria-label="<?php echo esc_attr__( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order->id ) ); ?>">
+			#<?php echo esc_html( $checkout->order->number ?? $checkout->order->id ); ?>
 		</a>
 		<?php
 		return ob_get_clean();
@@ -253,7 +254,7 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_commission( $referral ) {
-		return '<sc-format-number type="currency" currency="' . $referral->currency . '" value="' . $referral->commission_amount . '"></sc-format-number>';
+		return Currency::format( $referral->commission_amount, $referral->currency );
 	}
 
 	/**
@@ -269,6 +270,7 @@ class AffiliationReferralsListTable extends ListTable {
 				'expand' => [
 					'affiliation',
 					'checkout',
+					'checkout.order',
 				],
 			)
 		)->paginate(

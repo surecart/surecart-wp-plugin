@@ -184,6 +184,6 @@ class Referral extends Model {
 			'cancelled' => 'info',
 			'approved'  => 'success',
 		];
-		return $types[ $this->status ] ?? '';
+		return $types[ $this->status ] ?? 'default';
 	}
 }
