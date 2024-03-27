@@ -66,10 +66,10 @@ export default ({ referralId, loading }) => {
 
 	return (
 		<ReferralItemsDataTable
-			title={__('Referral Items', 'surecart')}
+			title={__('Purchases', 'surecart')}
 			columns={{
 				purchase: {
-					label: __('Purchase', 'surecart'),
+					label: __('Item', 'surecart'),
 				},
 				quantity: {
 					label: __('Quantity', 'surecart'),
