@@ -1,76 +1,34 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import {
-	ScBlockUi,
-	ScButton,
-	ScFlex,
-	ScFormatDate,
-	ScOrderStatusBadge,
-	ScText,
-} from '@surecart/components-react';
+import { jsx } from '@emotion/core';
+import { ScFlex, ScOrderStatusBadge } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import Definition from '../../ui/Definition';
 
 export default ({ referral, loading }) => {
 	const renderOrderDisplay = () => {
 		const order = referral?.checkout;
-		<ScFlex alignItems="center" justifyContent="space-between">
-			<div>
-				<div>
-					<ScButton
-						type="link"
-						style={{
-							'--font-weight': 'var(--sc-font-weight-semibold)',
-						}}
+
+		return (
+			<ScFlex flexDirection="column">
+				<Definition title={__('Order Number', 'surecart')}>
+					<a
+						href={addQueryArgs('admin.php', {
+							page: 'sc-orders',
+							action: 'edit',
+							id: order?.id,
+						})}
 					>
 						{`#${order?.number || order?.id}`}
-					</ScButton>
-				</div>
-				<div>
-					<ScText
-						truncate
-						style={{
-							'--color': 'var(--sc-color-gray-500)',
-						}}
-					>
-						{sprintf(
-							_n(
-								'%s item',
-								'%s items',
-								order?.line_items?.pagination?.count || 0,
-								'surecart'
-							),
-							order?.line_items?.pagination?.count || 0
-						)}
-					</ScText>
-				</div>
-				<div>
+					</a>
+				</Definition>
+				<Definition title={__('Status', 'surecart')}>
 					<ScOrderStatusBadge status={order?.status} />
-				</div>
-				<div>
-					<ScFormatDate
-						type="timestamp"
-						month="short"
-						day="numeric"
-						year="numeric"
-						date={order?.created_at}
-					/>
-				</div>
-			</div>
-
-			<ScButton
-				href={addQueryArgs('admin.php', {
-					page: 'sc-orders',
-					action: 'edit',
-					id: order?.id,
-				})}
-				size="small"
-			>
-				{__('View', 'surecart')}
-			</ScButton>
-		</ScFlex>;
+				</Definition>
+			</ScFlex>
+		);
 	};
 
 	const renderEmpty = () => {
