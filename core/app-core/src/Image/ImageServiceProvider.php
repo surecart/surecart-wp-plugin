@@ -24,10 +24,6 @@ class ImageServiceProvider implements ServiceProviderInterface {
 		$container['surecart_app_core.image.image'] = function() {
 			return new Image();
 		};
-
-		$app = $container[ SURECART_APPLICATION_KEY ];
-
-		$app->alias( 'image', 'surecart_app_core.image.image' );
 	}
 
 	/**
