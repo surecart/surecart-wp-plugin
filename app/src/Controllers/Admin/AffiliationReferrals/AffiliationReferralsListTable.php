@@ -114,6 +114,7 @@ class AffiliationReferralsListTable extends ListTable {
 			'description' => esc_html__( 'Description', 'surecart' ),
 			'order'       => esc_html__( 'Order', 'surecart' ),
 			'commission'  => esc_html__( 'Commission', 'surecart' ),
+			'mode'        => '',
 		);
 	}
 

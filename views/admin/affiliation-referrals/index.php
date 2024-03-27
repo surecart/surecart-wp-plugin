@@ -4,6 +4,8 @@
 	}
 </style>
 
+<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
+
 <div class="wrap">
 	<?php
 	\SureCart::render(
