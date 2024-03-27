@@ -14,6 +14,7 @@ return [
 	'providers'              => [
 		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
 		\SureCartAppCore\Config\ConfigServiceProvider::class,
+		\SureCartAppCore\Image\ImageServiceProvider::class,
 		\SureCart\Support\UtilityServiceProvider::class,
 		\SureCart\Database\MigrationsServiceProvider::class,
 		\SureCart\Database\UpdateMigrationServiceProvider::class,
