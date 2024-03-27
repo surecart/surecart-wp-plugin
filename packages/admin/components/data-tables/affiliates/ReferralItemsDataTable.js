@@ -31,8 +31,9 @@ export default ({
 			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
-				.map(({ commission_amount, line_item }) => {
+				.map(({ commission_amount, line_item, id }) => {
 					return {
+						key: id,
 						purchase: <ProductLineItem lineItem={line_item} />,
 						quantity: <span>{line_item?.quantity}</span>,
 						commission_amount: (
