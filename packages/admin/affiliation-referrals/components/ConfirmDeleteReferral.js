@@ -19,6 +19,7 @@ import {
 	ScFlex,
 } from '@surecart/components-react';
 import Error from '../../components/Error';
+import { select } from '@wordpress/data';
 
 export default ({ onRequestClose, open, referralId }) => {
 	const [error, setError] = useState(null);
@@ -27,8 +28,14 @@ export default ({ onRequestClose, open, referralId }) => {
 	const onDeleteReferral = async () => {
 		try {
 			setDeleting(true);
+
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'referral'
+			);
+
 			await apiFetch({
-				path: `/surecart/v1/referrals/${referralId}`,
+				path: `${baseURL}/${referralId}`,
 				method: 'DELETE',
 			});
 
