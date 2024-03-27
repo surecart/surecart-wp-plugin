@@ -81,6 +81,7 @@ class AssetsService {
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/product-item-list', [ $this, 'enqueueComponents' ] );
 	}
 
 	public function preloadBlockAssets() {
