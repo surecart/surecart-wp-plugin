@@ -239,18 +239,16 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_order( $referral ) {
-		$order = $referral->checkout ?? null;
-		if ( empty( $order->id ) ) {
+		$checkout = $referral->checkout ?? null;
+		if ( empty( $checkout->id ) ) {
 			return '_';
 		}
 
 		ob_start();
 		?>
-		<div class="sc-order-id">
-			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'orders', $order->id ) ); ?>">
-				<?php echo esc_html( $order->id ); ?>
-			</a>
-		</div>
+		<a aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order ) ); ?>">
+			#<?php echo sanitize_text_field( $checkout->number ?? $checkout->order ); ?>
+		</a>
 		<?php
 		return ob_get_clean();
 	}
