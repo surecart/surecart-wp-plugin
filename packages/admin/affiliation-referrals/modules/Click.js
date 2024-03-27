@@ -50,7 +50,7 @@ export default ({ referral, loading }) => {
 						date={click?.created_at}
 					/>
 				</Definition>
-				<Definition title={__('Expiry date', 'surecart')}>
+				<Definition title={__('Expires on', 'surecart')}>
 					<ScFormatDate
 						type="timestamp"
 						month="short"
