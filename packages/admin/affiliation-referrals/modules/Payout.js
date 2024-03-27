@@ -43,7 +43,7 @@ export default ({ referral, loading }) => {
 				href={addQueryArgs('admin.php', {
 					page: 'sc-affiliate-payouts',
 					action: 'edit',
-					id: order?.id,
+					id: payout?.id,
 				})}
 				size="small"
 			>
