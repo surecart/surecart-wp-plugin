@@ -305,6 +305,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.21.0 - March 28th, 2024 =
+- New: Bulk delete products.
+- New: Load separate block assets control for themes that don't provide support.
+- Improvement: Improve error messaging for minimum values accepted by processors.
+- Improvement: Internal line items refresh logic on checkout.
+- Improvement: Shipping style background to match input backgrounds.
+- Fix: Conflict with SureMembers when trying to restrict product pages that causes a fatal error in some instances.
+
 = 2.20.6 - March 27th, 2024 =
 - Fix: Issue with checkout error caused when tax or shipping is enabled, but totals block is not present.
 
