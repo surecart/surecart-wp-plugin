@@ -181,31 +181,11 @@ class AffiliationReferralsListTable extends ListTable {
 		if ( empty( $referral->display_status ) ) {
 			return '';
 		}
-		$status_display = [
-			'reviewing' => [
-				'label' => __( 'Reviewing', 'surecart' ),
-				'type'  => 'warning',
-			],
-			'paid'      => [
-				'label' => __( 'Paid', 'surecart' ),
-				'type'  => 'success',
-			],
-			'denied'    => [
-				'label' => __( 'Denied', 'surecart' ),
-				'type'  => 'danger',
-			],
-			'canceled'  => [
-				'label' => __( 'Canceled', 'surecart' ),
-				'type'  => 'info',
-			],
-			'approved'  => [
-				'label' => __( 'Approved', 'surecart' ),
-				'type'  => 'success',
-			],
-		];
 		ob_start();
 		?>
-		<sc-tag type="<?php echo esc_attr( $referral->display_type ); ?>"><?php echo esc_html( $referral->display_status ); ?></sc-tag>
+		<sc-tag type="<?php echo esc_attr( $referral->display_type ); ?>">
+			<?php echo esc_html( $referral->display_status ); ?>
+		</sc-tag>
 		<?php
 		return ob_get_clean();
 	}
