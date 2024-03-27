@@ -1,23 +1,17 @@
-/** @jsx jsx */
-
 /**
  * WordPress dependencies.
  */
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
-import { jsx } from '@emotion/core';
-import {
-	ScBlockUi,
-	ScButton,
-	ScDialog,
-	ScFlex,
-} from '@surecart/components-react';
+import { ScBlockUi } from '@surecart/components-react';
 import Error from '../../components/Error';
 import { select } from '@wordpress/data';
 
@@ -46,27 +40,21 @@ export default ({ onRequestClose, open, referralId }) => {
 				})
 			);
 		} catch (e) {
-			setError(e);
-		} finally {
 			setDeleting(false);
+			setError(e);
 		}
 	};
 
 	return (
-		<ScDialog label="Are you sure?" open={open}>
-			<Error error={error} setError={setError} />
-			{__(
-				'Are you sure you want to delete this referral? This action cannot be undone.',
-				'surecart'
-			)}
-			<ScFlex justifyContent="flex-end" gap="1em">
-				<ScButton type="text" onClick={onRequestClose}>
-					{__('Cancel', 'surecart')}
-				</ScButton>
-				<ScButton type="primary" onClick={onDeleteReferral}>
-					{__('Delete', 'surecart')}
-				</ScButton>
-			</ScFlex>
+		<ConfirmDialog
+			isOpen={open}
+			onConfirm={() => {
+				onDeleteReferral();
+			}}
+			onCancel={onRequestClose}
+		>
+			<Error error={error} />
+			{__('Are you sure? This action cannot be undone.', 'surecart')}
 			{deleting && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
@@ -74,6 +62,6 @@ export default ({ onRequestClose, open, referralId }) => {
 					spinner
 				/>
 			)}
-		</ScDialog>
+		</ConfirmDialog>
 	);
 };
