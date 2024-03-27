@@ -67,6 +67,8 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @global int $post_id
 	 * @global string $comment_status
 	 * @global string $comment_type
+	 *
+	 * @return string
 	 */
 	protected function get_views() {
 		$link = admin_url( 'admin.php?page=sc-affiliate-referrals' );
@@ -137,18 +139,22 @@ class AffiliationReferralsListTable extends ListTable {
 							'delete'         => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'delete' ) ) . '" aria-label="' . esc_attr__( 'Delete', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>',
 						),
 						function ( $action, $key ) use ( $referral ) {
+							// don't edit paid referral.
 							if ( 'paid' === $referral->status && 'edit' !== $key ) {
-								return false; // skip paid referrals.
+								return false;
 							}
 
+							// don't approve approved referral.
 							if ( 'approve' === $key && 'approved' === $referral->status ) {
 								return false;
 							}
 
+							// don't deny denied referral.
 							if ( 'deny' === $key && 'denied' === $referral->status ) {
 								return false;
 							}
 
+							// don't make reviewing reviewing referral.
 							if ( 'make_reviewing' === $key && 'reviewing' === $referral->status ) {
 								return false;
 							}
@@ -172,6 +178,9 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $referral ) {
+		if ( empty( $referral->display_status ) ) {
+			return '';
+		}
 		$status_display = [
 			'reviewing' => [
 				'label' => __( 'Reviewing', 'surecart' ),
@@ -196,7 +205,7 @@ class AffiliationReferralsListTable extends ListTable {
 		];
 		ob_start();
 		?>
-		<sc-tag type="<?php echo esc_attr( $status_display[ $referral->status ?? '' ]['type'] ?? '' ); ?>"><?php echo esc_html( $status_display[ $referral->status ?? '' ]['label'] ?? '' ); ?></sc-tag>
+		<sc-tag type="<?php echo esc_attr( $referral->display_type ); ?>"><?php echo esc_html( $referral->display_status ); ?></sc-tag>
 		<?php
 		return ob_get_clean();
 	}
