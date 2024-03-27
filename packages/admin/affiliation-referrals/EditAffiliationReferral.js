@@ -61,7 +61,7 @@ export default ({ id }) => {
 			'surecart',
 			'referral',
 			id,
-			{ expand: ['checkout', 'payout'] },
+			{ expand: ['checkout', 'payout', 'attributed_click'] },
 		];
 
 		return {
