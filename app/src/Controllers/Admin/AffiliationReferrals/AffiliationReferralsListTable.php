@@ -137,6 +137,10 @@ class AffiliationReferralsListTable extends ListTable {
 							'delete'         => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'delete' ) ) . '" aria-label="' . esc_attr__( 'Delete', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>',
 						),
 						function ( $action, $key ) use ( $referral ) {
+							if ( 'paid' === $referral->status && 'edit' !== $key ) {
+								return false; // skip paid referrals.
+							}
+
 							if ( 'approve' === $key && 'approved' === $referral->status ) {
 								return false;
 							}

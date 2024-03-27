@@ -250,24 +250,35 @@ export default ({ id }) => {
 									__('Actions', 'surecart')}
 							</ScButton>
 							<ScMenu>
-								{referral?.status !== 'approved' && (
-									<ScMenuItem onClick={approveReferral}>
-										{__('Approve', 'surecart')}
-									</ScMenuItem>
-								)}
-								{referral?.status !== 'reviewing' && (
-									<ScMenuItem
-										onClick={() =>
-											markReferralAsReviewing()
-										}
-									>
-										{__('Make Reviewing', 'surecart')}
-									</ScMenuItem>
-								)}
-								{referral?.status !== 'denied' && (
-									<ScMenuItem onClick={() => denyReferral()}>
-										{__('Deny', 'surecart')}
-									</ScMenuItem>
+								{referral?.status !== 'paid' && (
+									<>
+										{referral?.status !== 'approved' && (
+											<ScMenuItem
+												onClick={approveReferral}
+											>
+												{__('Approve', 'surecart')}
+											</ScMenuItem>
+										)}
+										{referral?.status !== 'reviewing' && (
+											<ScMenuItem
+												onClick={() =>
+													markReferralAsReviewing()
+												}
+											>
+												{__(
+													'Make Reviewing',
+													'surecart'
+												)}
+											</ScMenuItem>
+										)}
+										{referral?.status !== 'denied' && (
+											<ScMenuItem
+												onClick={() => denyReferral()}
+											>
+												{__('Deny', 'surecart')}
+											</ScMenuItem>
+										)}
+									</>
 								)}
 								<ScMenuItem
 									onClick={() =>
