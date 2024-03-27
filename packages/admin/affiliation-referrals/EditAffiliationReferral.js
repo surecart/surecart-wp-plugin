@@ -10,7 +10,6 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { Fragment, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -37,6 +36,7 @@ import ReferralItems from './modules/ReferralItems';
 import Click from './modules/Click';
 import Order from './modules/Order';
 import Payout from './modules/Payout';
+import ConfirmDeleteReferral from './components/ConfirmDeleteReferral';
 
 const STATUS = {
 	approved: __('Approved', 'surecart'),
@@ -55,6 +55,7 @@ export default ({ id }) => {
 		'surecart',
 		'referral'
 	);
+	const [currentModal, setCurrentModal] = useState(null);
 
 	const { referral, isLoading } = useSelect((select) => {
 		const entityData = [
@@ -205,30 +206,6 @@ export default ({ id }) => {
 		}
 	};
 
-	/**
-	 * Delete Referral
-	 */
-	const deleteReferral = async () => {
-		const r = confirm(
-			__(
-				'Permanently delete this referral? You cannot undo this action.',
-				'surecart'
-			)
-		);
-		if (!r) return;
-
-		try {
-			await deleteEntityRecord('surecart', 'referral', id, {
-				throwOnError: true,
-			});
-			createSuccessNotice(__('Referral deleted.', 'surecart'));
-			window.location.assign('admin.php?page=sc-affiliate-referrals');
-		} catch (e) {
-			console.log(e);
-			createErrorNotice(e?.message, { type: 'snackbar' });
-		}
-	};
-
 	return (
 		<Template
 			onSubmit={onSubmit}
@@ -292,7 +269,11 @@ export default ({ id }) => {
 										{__('Deny', 'surecart')}
 									</ScMenuItem>
 								)}
-								<ScMenuItem onClick={() => deleteReferral()}>
+								<ScMenuItem
+									onClick={() =>
+										setCurrentModal('delete_referral')
+									}
+								>
 									{__('Delete', 'surecart')}
 								</ScMenuItem>
 							</ScMenu>
@@ -328,6 +309,16 @@ export default ({ id }) => {
 					zIndex="9"
 					spinner
 				/>
+			)}
+
+			{currentModal && (
+				<>
+					<ConfirmDeleteReferral
+						open={currentModal === 'delete_referral'}
+						onRequestClose={() => setCurrentModal(null)}
+						referralId={id}
+					/>
+				</>
 			)}
 		</Template>
 	);
