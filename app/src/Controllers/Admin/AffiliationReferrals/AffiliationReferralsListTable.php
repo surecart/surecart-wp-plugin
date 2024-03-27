@@ -206,7 +206,7 @@ class AffiliationReferralsListTable extends ListTable {
 		?>
 		<div class="sc-affiliate-name">
 			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
-				<?php echo esc_html( $affiliation->first_name . ' ' . $affiliation->last_name ); ?>
+				<?php echo esc_html( $affiliation->display_name ); ?>
 			</a>
 		</div>
 		<?php
