@@ -8,6 +8,6 @@ $show_logo = $show_logo ?? true;
 		style="max-width: <?php echo esc_attr( $logo_width ?? '130px' ); ?>; width: 100%; height: auto;"
 		alt="<?php echo esc_attr( get_bloginfo() ); ?>"
 	/>
-<?php else : ?>
+<?php elseif ( ! $logo_url ) : ?>
 	<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
 <?php endif; ?>
