@@ -14,8 +14,6 @@ export default ({ referral, loading }) => {
 			return <div>{__('Not associated to any click.', 'surecart')}</div>;
 		}
 
-		console.log('click', click);
-
 		return (
 			<Fragment>
 				<Definition title={__('Domain', 'surecart')}>
