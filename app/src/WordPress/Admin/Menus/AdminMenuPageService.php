@@ -117,7 +117,7 @@ class AdminMenuPageService {
 			#toplevel_page_sc-dashboard li {
 				clear: both;
 			}
-			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-customers"]:after {
+			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-affiliates"]:after {
 				border-bottom: 1px solid hsla(0,0%,100%,.2);
 				display: block;
 				float: left;
