@@ -65,7 +65,7 @@ export default ({ webhook }) => {
 					)}
 					<br />
 					<ScButton
-						href={`${scData.app_url}/developer`}
+						href={`${scData.app_url}/webhook_endpoints?switch_account_id=${scData?.account_id}`}
 						target="_blank"
 					>
 						{__('View Logs', 'surecart')}

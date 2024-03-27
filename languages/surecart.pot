@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-02-29T20:30:03+00:00\n"
+"POT-Creation-Date: 2024-03-06T17:19:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -339,8 +339,8 @@ msgstr ""
 #: invoices/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:160
 #: products/modules/Prices/Price/Header.js:87
-#: store/add-entities.js:327
-#: store/add-entities.js:334
+#: store/add-entities.js:354
+#: store/add-entities.js:361
 #: subscriptions/edit/EditSubscription.js:224
 #: sc-subscription-details2.js:92
 #: sc-subscription.js:151
@@ -358,7 +358,7 @@ msgstr ""
 #: src/Controllers/Admin/Tables/ListTable.php:74
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:222
 #: settings/shipping/profile/ShippingProfile.js:114
-#: settings/tax-region/TaxRegionSettings.js:226
+#: settings/tax-region/TaxRegionSettings.js:227
 msgid "Updated"
 msgstr ""
 
@@ -386,6 +386,7 @@ msgstr ""
 #: settings/shipping/zone/ShippingZone.js:138
 #: settings/shipping/zone/ShippingZone.js:205
 #: settings/subscription-preservation/Reason.js:103
+#: settings/tax-override/TaxOverrideRows.js:67
 #: upsell-funnels/components/SelectTemplate/index.js:117
 #: upsell-funnels/components/SelectTemplatePart/index.js:117
 #: upsell-funnels/modules/Upsell/EditUpsell.js:96
@@ -2029,6 +2030,7 @@ msgstr ""
 #: src/Rest/StatisticRestServiceProvider.php:53
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:82
 #: src/Rest/SubscriptionRestServiceProvider.php:157
+#: src/Rest/TaxOverrideRestServiceProvider.php:46
 #: src/Rest/TaxProtocolRestServiceProvider.php:81
 #: src/Rest/TaxRegistrationRestServiceProvider.php:46
 #: src/Rest/TaxZoneRestServiceProvider.php:46
@@ -5392,6 +5394,7 @@ msgstr ""
 #: settings/SettingsBox.js:54
 #: settings/SettingsTemplate.js:77
 #: settings/shipping/zone/ShippingZoneForm.js:237
+#: settings/tax-override/TaxOverrideModal.js:272
 #: sc-customer-edit.js:120
 #: sc-order-bump2.js:79
 #: sc-wordpress-user-edit.js:61
@@ -5730,6 +5733,8 @@ msgstr ""
 #: settings/shipping/zone/ConfirmDeleteZone.js:49
 #: settings/shipping/zone/ShippingZoneForm.js:245
 #: settings/subscription-preservation/EditReason.js:149
+#: settings/tax-override/TaxOverrideDeleteModal.js:116
+#: settings/tax-override/TaxOverrideModal.js:263
 #: subscriptions/edit/modules/Modals/UpdateAmount.js:41
 #: subscriptions/edit/modules/Modals/UpdatePrice.js:50
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:98
@@ -6379,8 +6384,6 @@ msgstr ""
 #: product-groups/modules/NewProduct.js:45
 #: products/CreateProduct.js:45
 #: products/modules/Prices/NewPrice/index.js:64
-#: settings/tax-region/RegistrationForm.js:112
-#: settings/tax-region/RegistrationForm.js:135
 #: store/notices/reducer.js:25
 #: store/ui/reducer.js:130
 #: upsell-funnels/CreateFunnel.js:39
@@ -6467,7 +6470,9 @@ msgstr ""
 #: settings/shipping/zone/ConfirmDeleteZone.js:56
 #: settings/shipping/zone/ShippingZone.js:219
 #: settings/subscription-preservation/Reason.js:111
-#: settings/tax-region/RegistrationForm.js:250
+#: settings/tax-override/TaxOverrideDeleteModal.js:120
+#: settings/tax-override/TaxOverrideRows.js:71
+#: settings/tax-region/RegistrationForm.js:256
 #: upsell-funnels/EditFunnel.js:243
 #: sc-payment-methods-list.js:156
 #: sc-payment-methods-list.js:183
@@ -7006,16 +7011,16 @@ msgid "Edit Tax ID"
 msgstr ""
 
 #: checkouts/modules/Tax/TaxIdDisplay.js:5
-#: Blocks/TaxIdInput/deprecated.js:9
-#: Blocks/TaxIdInput/edit.js:24
+#: Blocks/TaxIdInput/deprecated.js:8
+#: Blocks/TaxIdInput/edit.js:45
 #: sc-tax-id-input2.js:33
 #: tax.js:3
 msgid "GST Number"
 msgstr ""
 
 #: checkouts/modules/Tax/TaxIdDisplay.js:6
-#: Blocks/TaxIdInput/deprecated.js:10
-#: Blocks/TaxIdInput/edit.js:34
+#: Blocks/TaxIdInput/deprecated.js:9
+#: Blocks/TaxIdInput/edit.js:55
 #: sc-tax-id-input2.js:34
 #: tax.js:7
 msgid "ABN Number"
@@ -8822,7 +8827,7 @@ msgid "Returned on"
 msgstr ""
 
 #: orders/modules/ReturnRequest/ReturnReasonsSelector.js:14
-#: store/add-entities.js:369
+#: store/add-entities.js:396
 msgid "Return Reason"
 msgstr ""
 
@@ -8831,26 +8836,30 @@ msgid "Choose an option"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:7
+#: Blocks/TaxIdInput/edit.js:30
 #: tax.js:4
 msgid "CA GST"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:8
+#: Blocks/TaxIdInput/edit.js:31
 #: tax.js:8
 msgid "AU ABN"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:9
-#: Blocks/TaxIdInput/deprecated.js:11
-#: Blocks/TaxIdInput/edit.js:44
+#: Blocks/TaxIdInput/deprecated.js:10
+#: Blocks/TaxIdInput/edit.js:32
+#: Blocks/TaxIdInput/edit.js:65
 #: sc-tax-id-input2.js:35
 #: tax.js:12
 msgid "UK VAT"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:10
-#: Blocks/TaxIdInput/deprecated.js:12
-#: Blocks/TaxIdInput/edit.js:54
+#: Blocks/TaxIdInput/deprecated.js:11
+#: Blocks/TaxIdInput/edit.js:33
+#: Blocks/TaxIdInput/edit.js:75
 #: sc-tax-id-input2.js:36
 #: tax.js:16
 msgid "EU VAT"
@@ -8860,6 +8869,7 @@ msgstr ""
 #: orders/modules/TaxInfo.js:23
 #: Blocks/Donation/edit.js:210
 #: Blocks/Donation/save.js:17
+#: Blocks/TaxIdInput/edit.js:34
 #: tax.js:20
 msgid "Other"
 msgstr ""
@@ -9832,7 +9842,7 @@ msgstr ""
 
 #: products/modules/Prices/Price/BuyLink.js:30
 #: products/modules/Variations/Variants.js:116
-#: store/add-entities.js:355
+#: store/add-entities.js:382
 msgid "Variant"
 msgstr ""
 
@@ -10196,7 +10206,7 @@ msgstr ""
 #: settings/shipping/ShippingSettings.js:91
 #: settings/subscription-preservation/PreservationSettings.js:135
 #: settings/subscription/SubscriptionSettings.js:43
-#: settings/tax-region/TaxRegionSettings.js:134
+#: settings/tax-region/TaxRegionSettings.js:135
 #: settings/tax/TaxSettings.js:32
 #: settings/upgrade/UpgradeSettings.js:27
 msgid "Settings Updated."
@@ -11705,7 +11715,7 @@ msgid "Maximum weight"
 msgstr ""
 
 #: settings/shipping/rate/ShippingRateForm.js:336
-#: store/add-entities.js:313
+#: store/add-entities.js:340
 msgid "Shipping Method"
 msgstr ""
 
@@ -12159,8 +12169,117 @@ msgstr ""
 msgid "Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page."
 msgstr ""
 
+#: settings/tax-override/index.js:35
+msgid "Tax Rate Overrides"
+msgstr ""
+
+#: settings/tax-override/index.js:36
+msgid "You can specify unique tax rates for a collection of products or on shipping charges."
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:54
+msgid "Remove shipping override for %s"
+msgstr ""
+
+#. translators: %1$s: product collection name, %2$s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:60
+msgid "Remove override for %1$s collection in %2$s"
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:71
+msgid "If you remove this override, then you'll charge the standard tax rate for shipping in %s."
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:80
+msgid "If you remove this override, then you'll charge the standard tax rate for this collection in %s."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:118
+msgid "Shipping Overrides"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:119
+msgid "Product Overrides"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:124
+msgid "Please enable tax collection to add tax overrides."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:134
+msgid "Specify a unique tax rate for shipping charges."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:138
+msgid "Specify a unique tax rate for a collection of products."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:144
+#: settings/tax-override/TaxOverrideList.js:163
+#: settings/tax-override/TaxOverrideModal.js:273
+msgid "Add Override"
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideModal.js:104
+msgid "Edit shipping override for %s"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:107
+msgid "Add shipping tax override"
+msgstr ""
+
+#. translators: %1$s: product collection name, %2$s: tax zone country name
+#: settings/tax-override/TaxOverrideModal.js:112
+msgid "Edit override for %1$s collection in %2$s"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:119
+msgid "Add product tax override"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:147
+msgid "You've already added an override for each region where you collect sales tax. You can edit or delete an existing override."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:162
+msgid "Add a custom tax rate for shipping."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:168
+msgid "Add a custom sales tax rate for a collection of products."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:172
+msgid "Select an existing collection or "
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:180
+msgid "create a new one"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:190
+#: Blocks/ProductCollection/edit.js:305
+msgid "Product Collection"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:212
+#: settings/tax-region/RegistrationForm.js:162
+#: settings/tax-region/TaxRegionSettings.js:213
+msgid "Region"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:244
+#: settings/tax-region/RegistrationForm.js:200
+#: settings/tax-region/TaxRegionSettings.js:220
+msgid "Tax Rate"
+msgstr ""
+
 #: settings/tax-region/RegionSettings.js:9
-#: settings/tax-region/TaxRegionSettings.js:39
+#: settings/tax-region/TaxRegionSettings.js:40
 msgid "Canada GST/HST"
 msgstr ""
 
@@ -12178,7 +12297,7 @@ msgstr ""
 
 #: settings/tax-region/RegionSettings.js:38
 #: settings/tax-region/RegionSettings.js:104
-#: settings/tax-region/RegistrationForm.js:210
+#: settings/tax-region/RegistrationForm.js:216
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
@@ -12204,8 +12323,8 @@ msgid "Enable this if your business makes up to €10,000 EUR in sales to other 
 msgstr ""
 
 #: settings/tax-region/RegistrationDialog.js:17
-#: settings/tax-region/RegistrationForm.js:255
-#: settings/tax-region/TaxRegionSettings.js:203
+#: settings/tax-region/RegistrationForm.js:261
+#: settings/tax-region/TaxRegionSettings.js:204
 #: subscriptions/show/modules/Tax.js:60
 msgid "Collect Tax"
 msgstr ""
@@ -12213,7 +12332,6 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:22
 #: settings/tax-region/RegistrationForm.js:23
 #: settings/tax-region/RegistrationForm.js:24
-#: settings/tax-region/TaxRegionSettings.js:212
 #: Blocks/Address/edit.js:155
 #: sc-address2.js:122
 #: sc-order-shipping-address2.js:33
@@ -12230,144 +12348,131 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:156
-msgid "Region"
-msgstr ""
-
-#: settings/tax-region/RegistrationForm.js:171
+#: settings/tax-region/RegistrationForm.js:177
 msgid "Tax Calculation"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:177
+#: settings/tax-region/RegistrationForm.js:183
 msgid "Manual"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:181
-#: settings/tax-region/TaxRegionSettings.js:246
+#: settings/tax-region/RegistrationForm.js:187
+#: settings/tax-region/TaxRegionSettings.js:247
 msgid "Automatic"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:194
-#: settings/tax-region/TaxRegionSettings.js:219
-msgid "Tax Rate"
-msgstr ""
-
-#: settings/tax-region/RegistrationForm.js:236
+#: settings/tax-region/RegistrationForm.js:242
 msgid "Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:240
+#: settings/tax-region/RegistrationForm.js:246
 msgid "Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
-#: settings/tax-region/store/register.js:9
-#: settings/tax-region/TaxRegionSettings.js:190
-msgid "Tax Registration"
-msgstr ""
-
-#: settings/tax-region/store/register.js:16
-msgid "Tax Zone"
-msgstr ""
-
-#: settings/tax-region/TaxRegionSettings.js:29
+#: settings/tax-region/TaxRegionSettings.js:30
 #: settings/tax/TaxSettings.js:229
 #: address.js:26
 msgid "Australia"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:30
+#: settings/tax-region/TaxRegionSettings.js:31
 #: settings/tax/TaxSettings.js:239
 msgid "European Union"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:31
+#: settings/tax-region/TaxRegionSettings.js:32
 #: settings/tax/TaxSettings.js:244
 #: address.js:245
 msgid "United Kingdom"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:32
+#: settings/tax-region/TaxRegionSettings.js:33
 #: settings/tax/TaxSettings.js:234
 #: address.js:53
 msgid "Canada"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:33
+#: settings/tax-region/TaxRegionSettings.js:34
 #: settings/tax/TaxSettings.js:249
 #: address.js:246
 msgid "United States"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:34
+#: settings/tax-region/TaxRegionSettings.js:35
 #: settings/tax/TaxSettings.js:254
 msgid "Rest Of The World"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:38
+#: settings/tax-region/TaxRegionSettings.js:39
 msgid "GST Registration"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:40
+#: settings/tax-region/TaxRegionSettings.js:41
 msgid "Country-Specific VAT Registrations"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:41
+#: settings/tax-region/TaxRegionSettings.js:42
 msgid "VAT Registration"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:42
+#: settings/tax-region/TaxRegionSettings.js:43
 msgid "State Sales Tax Registrations"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:46
+#: settings/tax-region/TaxRegionSettings.js:47
 msgid "If you do business in Australia, you may be required to collect GST on sales in Australia."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:50
+#: settings/tax-region/TaxRegionSettings.js:51
 msgid "If you need to collect provincial tax (British Columbia, Manitoba, Quebec, and Saskatchewan) in addition to GST/HST, then you'll need to setup registrations for each province."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:54
+#: settings/tax-region/TaxRegionSettings.js:55
 msgid "If you plan to submit a separate VAT return to each EU country, then you'll need to setup tax registrations for each country."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:58
+#: settings/tax-region/TaxRegionSettings.js:59
 msgid "If you do business in the United Kingdom, you may be required to collect Value Added Tax (VAT)."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:62
+#: settings/tax-region/TaxRegionSettings.js:63
 msgid "You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:66
+#: settings/tax-region/TaxRegionSettings.js:67
 msgid "Add custom manual tax rates for specific countries."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:73
+#: settings/tax-region/TaxRegionSettings.js:74
 msgid "You're not collecting GST in Australia. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:77
+#: settings/tax-region/TaxRegionSettings.js:78
 msgid "You're not collecting any provincial tax in Canada. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:81
+#: settings/tax-region/TaxRegionSettings.js:82
 msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:85
+#: settings/tax-region/TaxRegionSettings.js:86
 msgid "You're not collecting VAT in the UK. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:89
+#: settings/tax-region/TaxRegionSettings.js:90
 msgid "You're not collecting sales tax for any states. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:162
+#: settings/tax-region/TaxRegionSettings.js:163
 msgid "%s Tax Region"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:272
+#: settings/tax-region/TaxRegionSettings.js:191
+#: store/add-entities.js:291
+msgid "Tax Registration"
+msgstr ""
+
+#: settings/tax-region/TaxRegionSettings.js:273
 msgid "You don't have any tax registrations. Add a tax registration to start collecting tax."
 msgstr ""
 
@@ -12565,38 +12670,47 @@ msgid "Promotion"
 msgstr ""
 
 #: store/add-entities.js:278
+#: store/add-entities.js:284
 msgid "Shipping Protocol"
 msgstr ""
 
-#: store/add-entities.js:285
+#: store/add-entities.js:298
+msgid "Tax Zone"
+msgstr ""
+
+#: store/add-entities.js:305
+msgid "Tax Override"
+msgstr ""
+
+#: store/add-entities.js:312
 msgid "Affiliation Protocol"
 msgstr ""
 
-#: store/add-entities.js:292
+#: store/add-entities.js:319
 msgid "Shipping Profile"
 msgstr ""
 
-#: store/add-entities.js:299
+#: store/add-entities.js:326
 msgid "Shipping Zone"
 msgstr ""
 
-#: store/add-entities.js:306
+#: store/add-entities.js:333
 msgid "Shipping Rate"
 msgstr ""
 
-#: store/add-entities.js:320
+#: store/add-entities.js:347
 msgid "Statistic"
 msgstr ""
 
-#: store/add-entities.js:341
+#: store/add-entities.js:368
 msgid "Incoming Webhook"
 msgstr ""
 
-#: store/add-entities.js:348
+#: store/add-entities.js:375
 msgid "Variant Option"
 msgstr ""
 
-#: store/add-entities.js:362
+#: store/add-entities.js:389
 msgid "Return Request"
 msgstr ""
 
@@ -13239,7 +13353,7 @@ msgid "Skip if in order"
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/DisplayConditions.js:45
-msgid "Don't show if already in the current order."
+msgid "Don't show if already being purchased in the current order."
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/DisplayConditions.js:60
@@ -13247,7 +13361,7 @@ msgid "Skip if purchased"
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/DisplayConditions.js:62
-msgid "Don't show if they have ever purchased."
+msgid "Don't show if ever purchased, including the current order."
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/EditUpsell.js:21
@@ -13598,7 +13712,7 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:13
 #: Blocks/Switch/components/Inspector.js:13
 #: Blocks/Switch/edit.js:26
-#: Blocks/TaxIdInput/edit.js:19
+#: Blocks/TaxIdInput/edit.js:40
 #: Blocks/Textarea/edit.js:25
 #: Blocks/Total/edit.js:18
 #: Blocks/Totals/edit.js:82
@@ -14966,10 +15080,6 @@ msgstr ""
 msgid "This controls the font size of the pagination."
 msgstr ""
 
-#: Blocks/ProductCollection/edit.js:305
-msgid "Product Collection"
-msgstr ""
-
 #: Blocks/ProductCollection/edit.js:306
 msgid "Display your products from a collection in a grid."
 msgstr ""
@@ -15309,32 +15419,44 @@ msgstr ""
 msgid "Add some text..."
 msgstr ""
 
-#: Blocks/TaxIdInput/deprecated.js:8
-#: Blocks/TaxIdInput/edit.js:64
+#: Blocks/TaxIdInput/deprecated.js:7
+#: Blocks/TaxIdInput/edit.js:85
 #: sc-tax-id-input2.js:32
-#: sc-tax-id-input2.js:65
+#: sc-tax-id-input2.js:90
 #: tax.js:19
 msgid "Tax ID"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:22
+#: Blocks/TaxIdInput/edit.js:43
 msgid "CA GST Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:32
+#: Blocks/TaxIdInput/edit.js:53
 msgid "AU ABN Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:42
+#: Blocks/TaxIdInput/edit.js:63
 msgid "UK VAT Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:52
+#: Blocks/TaxIdInput/edit.js:73
 msgid "EU VAT Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:62
+#: Blocks/TaxIdInput/edit.js:83
 msgid "Other Label"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:93
+msgid "Help Text"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:102
+msgid "Tax types"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:110
+msgid "Limit tax types"
 msgstr ""
 
 #: Blocks/Total/edit.js:21
@@ -18287,7 +18409,7 @@ msgstr ""
 msgid "Cart Closed"
 msgstr ""
 
-#: paypal-buttons.js:89
+#: paypal-buttons.js:88
 #: sc-paypal-add-method.js:61
 #: sc-paypal-add-method.js:66
 #: sc-paypal-add-method.js:72
@@ -18295,12 +18417,12 @@ msgstr ""
 msgid "The payment did not process. Please try again."
 msgstr ""
 
-#: paypal-buttons.js:103
-#: paypal-buttons.js:109
+#: paypal-buttons.js:102
+#: paypal-buttons.js:108
 msgid "Payment processing failed. Kindly attempt the transaction once more."
 msgstr ""
 
-#: paypal-buttons.js:144
+#: paypal-buttons.js:143
 msgid "Something went wrong. Please contact us for payment."
 msgstr ""
 
@@ -19528,15 +19650,15 @@ msgstr ""
 msgid "Summary %1$s"
 msgstr ""
 
-#: sc-tax-id-input2.js:65
+#: sc-tax-id-input2.js:90
 msgid "Enter Tax ID"
 msgstr ""
 
-#: sc-tax-id-input2.js:77
+#: sc-tax-id-input2.js:102
 msgid "Select number type"
 msgstr ""
 
-#: sc-tax-id-input2.js:100
+#: sc-tax-id-input2.js:125
 msgid "%s selected"
 msgstr ""
 

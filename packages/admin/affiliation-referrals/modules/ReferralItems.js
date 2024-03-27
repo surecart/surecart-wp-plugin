@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -10,8 +13,8 @@ import { store as coreStore } from '@wordpress/core-data';
  * Internal dependencies.
  */
 import PrevNextButtons from '../../ui/PrevNextButtons';
-import ReferralsDataTable from '../../components/data-tables/affiliates/ReferralsDataTable';
 import usePagination from '../../hooks/usePagination';
+import ReferralItemsDataTable from '../../components/data-tables/affiliates/ReferralItemsDataTable';
 
 export default ({ referralId, loading }) => {
 	const [page, setPage] = useState(1);
@@ -36,7 +39,7 @@ export default ({ referralId, loading }) => {
 					expand: [
 						'line_item',
 						'line_item.price',
-						'line_item.product',
+						'price.product',
 						'product.featured_product_media',
 						'line_item.variant',
 					],
@@ -62,18 +65,27 @@ export default ({ referralId, loading }) => {
 	});
 
 	return (
-		<ReferralsDataTable
-			title={__('Referral Items', 'surecart')}
+		<ReferralItemsDataTable
+			title={__('Purchases', 'surecart')}
 			columns={{
 				purchase: {
-					label: __('Purchase', 'surecart'),
+					label: __('Item', 'surecart'),
+				},
+				quantity: {
+					label: __('Quantity', 'surecart'),
+					width: '75px',
 				},
 				commission_amount: {
-					label: __('Commission', 'surecart'),
-				},
-				date: {
-					label: __('Date', 'surecart'),
-					width: '100px',
+					label: (
+						<div
+							css={css`
+								display: flex;
+								justify-content: flex-end;
+							`}
+						>
+							{__('Commission', 'surecart')}
+						</div>
+					),
 				},
 			}}
 			data={referralItems}

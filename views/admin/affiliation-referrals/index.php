@@ -3,12 +3,13 @@
 		display: inline !important;
 	}
 </style>
+
 <div class="wrap">
 	<?php
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title' => __( 'Affiliate Referrals', 'surecart' ),
+			'title'    => __( 'Affiliate Referrals', 'surecart' ),
 			'new_link' => \SureCart::getUrl()->edit( 'affiliate-referral' ),
 		]
 	);

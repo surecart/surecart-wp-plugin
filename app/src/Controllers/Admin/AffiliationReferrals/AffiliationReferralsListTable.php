@@ -10,9 +10,26 @@ use SureCart\Models\Referral;
  */
 class AffiliationReferralsListTable extends ListTable {
 
+	/**
+	 * Checkbox
+	 *
+	 * @var boolean
+	 */
 	public $checkbox = true;
-	public $error    = '';
-	public $pages    = array();
+
+	/**
+	 * Error
+	 *
+	 * @var string
+	 */
+	public $error = '';
+
+	/**
+	 * Pages
+	 *
+	 * @var array
+	 */
+	public $pages = array();
 
 	/**
 	 * Prepare the items for the table to process
@@ -71,14 +88,14 @@ class AffiliationReferralsListTable extends ListTable {
 		}
 
 		/**
-		 * Filters the comment status links.
+		 * Filters the sc_affiliation_referrals status links.
 		 *
 		* @since 2.5.0
 		* @since 5.1.0 The 'Mine' link was added.
 		*
-		*  @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine','Pending', 'Approved', 'Spam', and 'Trash'.
+		*  @param string[] $status_links An associative array of fully-formed sc_affiliation_referrals status links. Includes 'All', 'Mine','Pending', 'Approved', 'Spam', and 'Trash'.
 		* */
-		return apply_filters( 'comment_status_links', $status_links );
+		return apply_filters( 'sc_affiliation_referrals_status_links', $status_links );
 	}
 
 	/**
@@ -88,12 +105,12 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			'date'        => __( 'Date', 'surecart' ),
-			'status'      => __( 'Status', 'surecart' ),
-			'affiliate'   => __( 'Affiliate', 'surecart' ),
-			'description' => __( 'Description', 'surecart' ),
-			'order'       => __( 'Order', 'surecart' ),
-			'commission'  => __( 'Commission', 'surecart' ),
+			'date'        => esc_html__( 'Date', 'surecart' ),
+			'status'      => esc_html__( 'Status', 'surecart' ),
+			'affiliate'   => esc_html__( 'Affiliate', 'surecart' ),
+			'description' => esc_html__( 'Description', 'surecart' ),
+			'order'       => esc_html__( 'Order', 'surecart' ),
+			'commission'  => esc_html__( 'Commission', 'surecart' ),
 		);
 	}
 
@@ -106,7 +123,7 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	public function column_date( $referral ) {
 		ob_start();
-		echo date_i18n( get_option( 'date_format' ), $referral->created_at );
+		echo wp_kses_post( date_i18n( get_option( 'date_format' ), $referral->created_at ) );
 		?>
 		<?php
 			echo wp_kses_post(
@@ -151,7 +168,6 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $referral ) {
-
 		$status_display = [
 			'reviewing' => [
 				'label' => __( 'Reviewing', 'surecart' ),
@@ -193,7 +209,6 @@ class AffiliationReferralsListTable extends ListTable {
 		if ( empty( $affiliation->id ) ) {
 			return '';
 		}
-
 		ob_start();
 		?>
 		<div class="sc-affiliate-name">
@@ -224,18 +239,16 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_order( $referral ) {
-		$order = $referral->checkout ?? null;
-		if ( empty( $order->id ) ) {
+		$checkout = $referral->checkout ?? null;
+		if ( empty( $checkout->id ) ) {
 			return '_';
 		}
 
 		ob_start();
 		?>
-		<div class="sc-order-id">
-			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'orders', $order->id ) ); ?>">
-				<?php echo esc_html( $order->id ); ?>
-			</a>
-		</div>
+		<a aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order ) ); ?>">
+			#<?php echo sanitize_text_field( $checkout->number ?? $checkout->order ); ?>
+		</a>
 		<?php
 		return ob_get_clean();
 	}
@@ -254,10 +267,10 @@ class AffiliationReferralsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return \SureCart\Models\Collection;
 	 */
 	private function table_data() {
-		$affiliate_referrals_query = Referral::where(
+		return Referral::where(
 			array(
 				'query'  => $this->get_search_query(),
 				'status' => [ $this->getFilteredStatus() ],
@@ -266,9 +279,7 @@ class AffiliationReferralsListTable extends ListTable {
 					'checkout',
 				],
 			)
-		);
-
-		return $affiliate_referrals_query->paginate(
+		)->paginate(
 			array(
 				'per_page' => $this->get_items_per_page( 'affiliate_referrals' ),
 				'page'     => $this->get_pagenum(),

@@ -8,7 +8,7 @@
 	);
 	?>
 
-	<?php $table->search_form( __( 'Search Affiliates', 'surecart' ), 'sc-search-affiliates' ); ?>
+	<?php $table->search_form( __( 'Search', 'surecart' ), 'sc-search-affiliates' ); ?>
 
 	<form id="affiliates-filter" method="get">
 		<?php $table->views(); ?>

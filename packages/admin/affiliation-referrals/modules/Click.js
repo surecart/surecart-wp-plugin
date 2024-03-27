@@ -9,23 +9,24 @@ import { Fragment } from '@wordpress/element';
 
 export default ({ referral, loading }) => {
 	const render = () => {
-		if (!referral?.click?.id) {
+		const click = referral?.attributed_click;
+		if (!click?.id) {
 			return <div>{__('Not associated to any click.', 'surecart')}</div>;
 		}
 
 		return (
 			<Fragment>
 				<Definition title={__('Domain', 'surecart')}>
-					{referral?.click?.domain}
+					{click?.domain}
 				</Definition>
 				<Definition title={__('Referring URL', 'surecart')}>
-					{referral?.click?.referrer}
+					{click?.referrer || '_'}
 				</Definition>
 				<Definition title={__('Landing URL', 'surecart')}>
-					{referral?.click?.url}
+					{click?.url}
 				</Definition>
 				<Definition title={__('Status', 'surecart')}>
-					{referral?.click?.converted ? (
+					{click?.converted ? (
 						<ScTag type="success" size="small">
 							{__('Converted', 'surecart')}
 						</ScTag>
@@ -44,16 +45,16 @@ export default ({ referral, loading }) => {
 						month="short"
 						day="numeric"
 						year="numeric"
-						date={referral?.click?.created_at}
+						date={click?.created_at}
 					/>
 				</Definition>
-				<Definition title={__('Expiry date', 'surecart')}>
+				<Definition title={__('Expires on', 'surecart')}>
 					<ScFormatDate
 						type="timestamp"
 						month="short"
 						day="numeric"
 						year="numeric"
-						date={referral?.click?.created_at}
+						date={click?.expires_at}
 					/>
 				</Definition>
 			</Fragment>

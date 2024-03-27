@@ -1,109 +1,103 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScBlockUi, ScButton, ScFlex } from '@surecart/components-react';
+import { ScButton, ScCard } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import ModelSelector from '../../components/ModelSelector';
 
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
+import { useSelect } from '@wordpress/data';
+import useAvatar from '../../hooks/useAvatar';
 
-export default ({ referral, loading, expanded }) => {
-	const [saving, setSaving] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+export default ({ referral, updateReferral, loading }) => {
+	const { affiliation, loadingAffiliation } = useSelect(
+		(select) => {
+			if (!referral?.affiliation) return {};
+			const queryArgs = [
+				'surecart',
+				'affiliation',
+				referral?.affiliation,
+			];
+			return {
+				affiliation: select(coreStore).getEntityRecord(...queryArgs),
+				loadingAffiliation: select(coreStore).isResolving(
+					'getEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[referral?.affiliation]
+	);
 
-	const onSelectAffiliation = async (affiliation) => {
-		const { baseURL } = select(coreStore).getEntityConfig(
-			'surecart',
-			'referral'
-		);
-
-		try {
-			setSaving(true);
-			const saved = await apiFetch({
-				method: 'POST',
-				path: addQueryArgs(`${baseURL}/${referral.id}`, {
-					expand: expanded,
-				}),
-				data: {
-					id: referral.id,
-					affiliation,
-				},
-			});
-
-			if (saved?.id) {
-				createSuccessNotice(__('Affiliate changed successfully.'));
-				receiveEntityRecords(
-					'surecart',
-					'referral',
-					{
-						...referral,
-						affiliation: saved.affiliation,
-					},
-					undefined,
-					false,
-					{
-						affiliation: saved.affiliation,
-					}
-				);
-			}
-		} catch (e) {
-			console.log(e);
-			createErrorNotice(e?.message, { type: 'snackbar' });
-		} finally {
-			setSaving(false);
-		}
-	};
+	const avatarUrl = useAvatar({ email: affiliation?.email });
 
 	return (
-		<Box title="Affiliate" loading={loading}>
-			<ScFlex
-				alignItems="center"
-				justifyContent="flex-start"
-				style={{ gap: '1em' }}
-			>
-				<div>
-					<div>{`${referral?.affiliation?.first_name} ${
-						referral?.affiliation?.last_name || ''
-					}`}</div>
-					<div>{referral?.affiliation?.email}</div>
-				</div>
-
-				<ModelSelector
-					unselect={false}
-					name="affiliation"
-					value={referral.affiliation}
-					requestQuery={{
-						archived: false,
-					}}
-					onSelect={(affiliation) => onSelectAffiliation(affiliation)}
-					display={(affiliation) =>
-						`${affiliation.first_name} ${
-							affiliation.last_name || ''
-						}`
-					}
+		<Box
+			title={__('Affiliate', 'surecart')}
+			loading={loading || loadingAffiliation}
+		>
+			<ScCard>
+				<div
 					css={css`
-						min-width: 370px;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						gap: 2em;
 					`}
 				>
-					<ScButton slot="trigger" size="small">
-						{__('Change', 'surecart')}
-					</ScButton>
-				</ModelSelector>
-			</ScFlex>
-			{saving && (
-				<ScBlockUi
-					style={{ '--sc-block-ui-opacity': '0.75' }}
-					zIndex="9"
-					spinner
-				/>
-			)}
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: flex-start;
+							gap: 1em;
+							flex: 1;
+						`}
+					>
+						<div>
+							<img
+								src={avatarUrl}
+								css={css`
+									width: 36px;
+									height: 36px;
+									border-radius: var(
+										--sc-border-radius-medium
+									);
+								`}
+							/>
+						</div>
+						<div>
+							<div>
+								<strong>{affiliation?.display_name}</strong>
+							</div>
+							<div>{affiliation?.email}</div>
+						</div>
+					</div>
+
+					<ModelSelector
+						unselect={false}
+						name="affiliation"
+						value={affiliation?.id}
+						requestQuery={{
+							archived: false,
+						}}
+						onSelect={(affiliation) =>
+							updateReferral({ affiliation })
+						}
+						display={(affiliation) =>
+							`${affiliation.display_name} - ${affiliation.email}`
+						}
+						css={css`
+							min-width: 370px;
+							text-align: right;
+						`}
+					>
+						<ScButton slot="trigger" size="small">
+							{__('Change', 'surecart')}
+						</ScButton>
+					</ModelSelector>
+				</div>
+			</ScCard>
 		</Box>
 	);
 };

@@ -20,6 +20,7 @@ export default ({
 	loading,
 	saving,
 	deleting,
+	...props
 }) => {
 	const { status, first_name, last_name, email, payout_email, bio } =
 		affiliationRequest;
@@ -34,6 +35,7 @@ export default ({
 					{__('Save', 'surecart')}
 				</SaveButton>
 			}
+			{...props}
 		>
 			<div
 				css={css`
@@ -79,6 +81,7 @@ export default ({
 					)}
 					value={email}
 					name="email"
+					type="email"
 					required
 					onScInput={(e) =>
 						onUpdate({
@@ -96,6 +99,7 @@ export default ({
 					)}
 					value={payout_email}
 					name="payout_email"
+					type="email"
 					required
 					onScInput={(e) =>
 						onUpdate({
@@ -110,7 +114,7 @@ export default ({
 					`}
 					label={__('Bio', 'surecart')}
 					help={__(
-						'A short blurb from this affiliate describing how they will promote this store',
+						'A short blurb from this affiliate describing how they will promote this store.',
 						'surecart'
 					)}
 					onScInput={(e) =>

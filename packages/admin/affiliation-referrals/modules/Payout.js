@@ -43,7 +43,7 @@ export default ({ referral, loading }) => {
 				href={addQueryArgs('admin.php', {
 					page: 'sc-affiliate-payouts',
 					action: 'edit',
-					id: order?.id,
+					id: payout?.id,
 				})}
 				size="small"
 			>
@@ -57,8 +57,8 @@ export default ({ referral, loading }) => {
 	};
 
 	return (
-		<Box title="Payout" loading={loading}>
-			{referral?.checkout?.id ? renderPayoutDisplay() : renderEmpty()}
+		<Box title={__('Payout', 'surecart')} loading={loading}>
+			{referral?.payout?.id ? renderPayoutDisplay() : renderEmpty()}
 		</Box>
 	);
 };

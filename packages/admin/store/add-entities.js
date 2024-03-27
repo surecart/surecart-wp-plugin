@@ -287,6 +287,33 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		kind: 'surecart',
+		label: __('Shipping Protocol', 'surecart'),
+		baseURL: '/surecart/v1/shipping_protocol',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'tax-registration',
+		kind: 'surecart',
+		label: __('Tax Registration', 'surecart'),
+		baseURL: 'surecart/v1/tax_registrations',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'tax-zone',
+		kind: 'surecart',
+		label: __('Tax Zone', 'surecart'),
+		baseURL: 'surecart/v1/tax_zones',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'tax-override',
+		kind: 'surecart',
+		label: __('Tax Override', 'surecart'),
+		baseURL: 'surecart/v1/tax_overrides',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'affiliation-protocol',
 		kind: 'surecart',
 		label: __('Affiliation Protocol', 'surecart'),

@@ -47,10 +47,6 @@ class AffiliationClicksListTable extends ListTable {
 
 	/**
 	 * Get views for the list table status links.
-	 *
-	 * @global int $post_id
-	 * @global string $comment_status
-	 * @global string $comment_type
 	 */
 	protected function get_views() {
 		$link = admin_url( 'admin.php?page=sc-affiliate-clicks' );
@@ -72,15 +68,14 @@ class AffiliationClicksListTable extends ListTable {
 		}
 
 		/**
-		 * Filters the comment status links.
+		 * Filters the status links.
 		 *
 		 * @since 2.5.0
 		 * @since 5.1.0 The 'Mine' link was added.
 		 *
-		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
+		 * @param string[] $status_links An associative array of fully-formed comment status links.
 		 */
-		return apply_filters( 'comment_status_links', $status_links );
+		return apply_filters( 'sc_affiliate_clicks_status_links', $status_links );
 	}
 
 	/**
@@ -121,11 +116,16 @@ class AffiliationClicksListTable extends ListTable {
 			esc_html( TimeDate::formatDateAndTime( $click->expires_at ) ),
 			esc_html( $is_expired ? TimeDate::humanTimeDiff( $click->expires_at ) : TimeDate::formatDate( $click->expires_at ) )
 		);
+
 		return $created . '<br /><small style="opacity: 0.75">' . $expires . '</small>';
 	}
 
 	/**
 	 * Handle the url column.
+	 *
+	 * @param \SureCart\Models\Click $click The Click model.
+	 *
+	 * @return string
 	 */
 	public function column_url( $click ) {
 		return '<a href="' . esc_url( $click->url ) . '" target="_blank">' . esc_html( $click->url ) . '</a>';
@@ -133,9 +133,13 @@ class AffiliationClicksListTable extends ListTable {
 
 	/**
 	 * Handle the referrer column.
+	 *
+	 * @param \SureCart\Models\Click $click The Click model.
+	 *
+	 * @return string
 	 */
 	public function column_referrer( $click ) {
-		return $click->referrer ?? '-';
+		return ! empty( $click->referrer ) ? $click->referrer : '-';
 	}
 
 
@@ -174,7 +178,6 @@ class AffiliationClicksListTable extends ListTable {
 		return '<sc-icon style="font-size: 30px; line-height:1; height: 20px; color: var(' . ( $click->converted ? '--sc-color-success-600' : '--sc-color-gray-600' ) . ');"  name="' . ( $click->converted ? 'check-circle' : 'minus-circle' ) . '" />';
 	}
 
-
 	/**
 	 * Define which columns are hidden
 	 *
@@ -190,7 +193,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return array
 	 */
 	private function table_data() {
-		$affiliate_clicks_query = Click::where(
+		return Click::where(
 			array(
 				'converted' => $this->get_filtered_status(),
 				'query'     => $this->get_search_query(),
@@ -198,9 +201,7 @@ class AffiliationClicksListTable extends ListTable {
 					'affiliation',
 				],
 			)
-		);
-
-		return $affiliate_clicks_query->paginate(
+		)->paginate(
 			array(
 				'per_page' => $this->get_items_per_page( 'affiliate_clicks' ),
 				'page'     => $this->get_pagenum(),

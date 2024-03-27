@@ -63,9 +63,24 @@ export default ({ onCreateReferral }) => {
 
 	return (
 		<CreateTemplate>
-			<Box title={__('Create New Referral', 'surecart')}>
-				<Error error={error} setError={setError} />
-				<ScForm onScSubmit={onSubmit}>
+			<ScForm onScSubmit={onSubmit}>
+				<Box
+					title={__('Create New Referral', 'surecart')}
+					footer={
+						<div>
+							<ScButton type="primary" submit loading={isSaving}>
+								{__('Create', 'surecart')}
+							</ScButton>
+							<ScButton
+								href={'admin.php?page=sc-affiliate-referrals'}
+								type="text"
+							>
+								{__('Cancel', 'surecart')}
+							</ScButton>
+						</div>
+					}
+				>
+					<Error error={error} setError={setError} />
 					<div
 						css={css`
 							display: grid;
@@ -88,8 +103,9 @@ export default ({ onCreateReferral }) => {
 									});
 								}}
 								display={(affiliation) =>
-									`${affiliation.first_name} ${affiliation.last_name}`
+									`${affiliation.display_name} - ${affiliation.email}`
 								}
+								required
 							/>
 						</ScFormControl>
 
@@ -120,23 +136,9 @@ export default ({ onCreateReferral }) => {
 								'surecart'
 							)}
 						/>
-
-						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
-						>
-							<ScButton type="primary" submit loading={isSaving}>
-								{__('Create', 'surecart')}
-							</ScButton>
-							<ScButton
-								href={'admin.php?page=sc-affiliate-referrals'}
-								type="text"
-							>
-								{__('Cancel', 'surecart')}
-							</ScButton>
-						</div>
 					</div>
-				</ScForm>
-			</Box>
+				</Box>
+			</ScForm>
 		</CreateTemplate>
 	);
 };
