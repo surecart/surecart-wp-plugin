@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.20.5
+Stable tag: 2.20.6
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,9 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.20.6 - March 27th, 2024 =
+- Fix: Issue with checkout error caused when tax or shipping is enabled, but totals block is not present.
 
 = 2.20.5 - March 25th, 2024 =
 - Fix: Issue with shipping address not client-side validating on instant checkout for U.S. tax purposes.
