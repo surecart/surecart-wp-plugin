@@ -240,7 +240,7 @@ class AffiliationReferralsListTable extends ListTable {
 		ob_start();
 		?>
 		<a aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order ) ); ?>">
-			#<?php echo sanitize_text_field( $checkout->number ?? $checkout->order ); ?>
+			#<?php echo esc_html( $checkout->number ?? $checkout->order ); ?>
 		</a>
 		<?php
 		return ob_get_clean();
