@@ -177,6 +177,8 @@ export class ScFormComponentsValidator {
     let insertBeforeElement: Element = this.el.querySelector('sc-line-item-tax');
     const total = this.el.querySelector('sc-line-item-total[total=total]');
 
+    if (!total) return;
+
     if (!insertBeforeElement) {
       insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER' ? total.previousElementSibling : total;
     }
