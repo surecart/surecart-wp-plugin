@@ -144,6 +144,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->group(
 	function() {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->handle( 'ProductsController@confirmBulkDelete' );
+		\SureCart::route()->post()->middleware( 'nonce:bulk_delete_nonce' )->handle( 'ProductsController@bulkDelete' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductsController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 	}
