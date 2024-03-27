@@ -112,6 +112,23 @@ const { state, callbacks, actions } = store(
 				});
 				actions.navigate(url.toString());
 			},
+			*onSearchSubmit(event) {
+				const { actions, state: routerState } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+				const { ref } = getElement();
+				// remove filter id from state
+				const ctx = getContext();
+				const searchValue =
+					ref?.parentElement?.querySelector('input')?.value;
+				const url = new URL(routerState?.url);
+				url.searchParams.set(
+					`products-${ctx?.blockId}-search`,
+					searchValue
+				);
+				actions.navigate(url.toString());
+			},
 		},
 		callbacks: {
 			/** Get the contextual state. */

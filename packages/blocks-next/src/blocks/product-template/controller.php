@@ -14,6 +14,8 @@ $page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-p
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 $sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
 $sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
+$search_key = isset( $block_id ) ? 'products-' . $block_id . '-search' : 'products-search';
+$search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $search_key ] );
 $filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
 $filter = empty( $_GET[ $filter_key ] ) ? '' : sanitize_text_field( $_GET[ $filter_key ] );
 $collection_ids = $filter ? explode( ',', $filter ) : [];
@@ -30,6 +32,7 @@ $products = Product::where(
 		],
 		'sort'     => $sort,
 		'product_collection_ids' => $collection_ids,
+		'query'    => $search,
 	]
 )->paginate(
 	[

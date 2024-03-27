@@ -32,6 +32,11 @@
 			"text": true,
 			"background": false,
 			"enableContrastChecker": true
+		},
+		"layout": {
+			"default": {
+				"type": "flex"
+			}
 		}
 	},
 	"render": "file:./view.php",
