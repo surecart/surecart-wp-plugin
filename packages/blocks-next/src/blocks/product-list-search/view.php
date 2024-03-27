@@ -2,7 +2,11 @@
     <?php echo get_block_wrapper_attributes( array( 'class' => $class ) ); ?> 
     style="<?php echo esc_attr( $style ); ?>"
 >
-    <input class="wp-block-search__input" type="search" />
+    <input 
+        class="wp-block-search__input" 
+        type="search"
+        data-wp-on--search="actions.onSearchClear"
+    />
     <button 
         class="wp-element-button wp-block-search__button" 
         type="button" 

@@ -129,6 +129,18 @@ const { state, callbacks, actions } = store(
 				);
 				actions.navigate(url.toString());
 			},
+			*onSearchClear(event) {
+				if (!event.target.value) {
+					const { actions, state: routerState } = yield import(
+						/* webpackIgnore: true */
+						'@wordpress/interactivity-router'
+					);
+					const ctx = getContext();
+					const url = new URL(routerState?.url);
+					url.searchParams.delete(`products-${ctx?.blockId}-search`);
+					actions.navigate(url.toString());
+				}
+			},
 		},
 		callbacks: {
 			/** Get the contextual state. */
