@@ -20,7 +20,7 @@ export default ({ referral, loading }) => {
 					{click?.domain}
 				</Definition>
 				<Definition title={__('Referring URL', 'surecart')}>
-					{click?.referrer || '_'}
+					{click?.referrer || '-'}
 				</Definition>
 				<Definition title={__('Landing URL', 'surecart')}>
 					{click?.url}
