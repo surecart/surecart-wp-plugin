@@ -86,8 +86,13 @@ export default () => {
 		subscription?.discount,
 		skipProration,
 		updateBehavior,
-		refreshPriceVersion,
 	]);
+
+	useEffect(() => {
+		if (subscription?.id && refreshPriceVersion) {
+			onSubmit();
+		}
+	}, [refreshPriceVersion]);
 
 	const fetchUpcomingPeriod = async () => {
 		setLoadingUpcoming(true);

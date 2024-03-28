@@ -1,7 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
@@ -14,19 +12,18 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScTag,
-	ScSwitch,
 } from '@surecart/components-react';
 import LineItemLabel from '../../components/LineItemLabel';
 import DataTable from '../../../components/DataTable';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
+import UpdateRecentPrice from './Modals/UpdateRecentPrice';
 import { getHumanDiscount } from '../../../util';
 import { intervalString } from '../../../util/translations';
 
 export default ({
 	subscription,
 	updateSubscription,
-	refresh,
 	setRefresh,
 	setUpdateBehavior,
 	upcoming,
@@ -45,14 +42,6 @@ export default ({
 	const coupon =
 		upcoming?.checkout?.discount?.coupon || subscription?.discount?.coupon;
 
-	const edits = useSelect((select) =>
-		select(coreStore).getEntityRecordEdits(
-			'surecart',
-			'subscription',
-			subscription?.id
-		)
-	);
-
 	return (
 		<div
 			css={css`
@@ -60,25 +49,6 @@ export default ({
 			`}
 		>
 			<DataTable
-				footer={
-					!edits?.price && (
-						<ScSwitch
-							checked={refresh}
-							onScChange={(e) => {
-								setRefresh(e.target.checked);
-								setUpdateBehavior('immediate');
-								updateSubscription({
-									refresh: e.target.checked,
-								});
-							}}
-						>
-							{__(
-								'Use the most recent version of this price',
-								'surecart'
-							)}
-						</ScSwitch>
-					)
-				}
 				loading={price === null}
 				title={__('Pricing', 'surecart')}
 				columns={{
@@ -128,6 +98,14 @@ export default ({
 											{intervalString(price, {
 												labels: { interval: '/' },
 											})}
+											{!price?.current_version && (
+												<ScTag type="warning" pill>
+													{__(
+														'Old Price',
+														'surecart'
+													)}
+												</ScTag>
+											)}
 										</div>
 									</LineItemLabel>
 								</div>
@@ -156,6 +134,18 @@ export default ({
 										>
 											{__('Change Price', 'surecart')}
 										</ScMenuItem>
+										{!price?.current_version && (
+											<ScMenuItem
+												onClick={() =>
+													setDialog('recent_price')
+												}
+											>
+												{__(
+													'Update Recent Price',
+													'surecart'
+												)}
+											</ScMenuItem>
+										)}
 									</ScMenu>
 								</ScDropdown>
 							</div>
@@ -236,6 +226,19 @@ export default ({
 					});
 				}}
 				open={dialog === 'price'}
+				onRequestClose={() => setDialog(null)}
+			/>
+
+			<UpdateRecentPrice
+				price={price}
+				subscription={subscription}
+				onUpdateRecentVersion={(updateBehavior = null) => {
+					setRefresh(true);
+					if (updateBehavior) {
+						setUpdateBehavior('immediate');
+					}
+				}}
+				open={dialog === 'recent_price'}
 				onRequestClose={() => setDialog(null)}
 			/>
 		</div>
