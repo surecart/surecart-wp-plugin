@@ -1,15 +1,53 @@
 /** @jsx jsx */
+/**
+ * External dependencies.
+ */
 import { jsx } from '@emotion/core';
+
+/**
+ * Internal dependencies.
+ */
 import { ScFlex, ScOrderStatusBadge } from '@surecart/components-react';
 import Box from '../../ui/Box';
-
-import { __, _n } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import Definition from '../../ui/Definition';
 
+/**
+ * Wordpress dependencies.
+ */
+import { __, _n } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+
 export default ({ referral, loading }) => {
+	const { checkout, loadingCheckout } = useSelect(
+		(select) => {
+			if (!referral?.checkout) {
+				return {};
+			}
+
+			const queryArgs = [
+				'surecart',
+				'checkout',
+				referral?.checkout,
+				{
+					expand: ['order'],
+				},
+			];
+
+			return {
+				checkout: select(coreStore).getEntityRecord(...queryArgs),
+				loadingCheckout: select(coreStore).isResolving(
+					'getEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[referral?.checkout]
+	);
+
 	const renderOrderDisplay = () => {
-		const order = referral?.checkout;
+		const order = checkout?.order;
 
 		return (
 			<ScFlex flexDirection="column">
@@ -36,8 +74,8 @@ export default ({ referral, loading }) => {
 	};
 
 	return (
-		<Box title="Order" loading={loading}>
-			{referral?.checkout?.id ? renderOrderDisplay() : renderEmpty()}
+		<Box title="Order" loading={loading || loadingCheckout}>
+			{checkout?.order?.id ? renderOrderDisplay() : renderEmpty()}
 		</Box>
 	);
 };
