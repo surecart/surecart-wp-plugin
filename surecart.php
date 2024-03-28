@@ -29,6 +29,7 @@ define( 'SURECART_PLUGIN_DIR', __DIR__ );
 
 define( 'SURECART_PLUGIN_DIR_NAME', dirname( plugin_basename( SURECART_PLUGIN_FILE ) ) );
 define( 'SURECART_LANGUAGE_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'languages' );
+define( 'SURECART_DIST_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'dist' );
 define( 'SURECART_VENDOR_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'vendor' );
 
 // define host url.
