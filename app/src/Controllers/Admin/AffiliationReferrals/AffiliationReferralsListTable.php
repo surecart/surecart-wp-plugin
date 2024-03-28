@@ -272,9 +272,10 @@ class AffiliationReferralsListTable extends ListTable {
 	private function table_data() {
 		return Referral::where(
 			array(
-				'query'  => $this->get_search_query(),
-				'status' => [ $this->getFilteredStatus() ],
-				'expand' => [
+				'query'     => $this->get_search_query(),
+				'status'    => [ $this->getFilteredStatus() ],
+				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'expand'    => [
 					'affiliation',
 					'checkout',
 					'checkout.order',
