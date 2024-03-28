@@ -91,12 +91,12 @@ class AffiliationReferralsListTable extends ListTable {
 		}
 
 		/**
-		 * Filters the sc_affiliation_referrals status links.
+		 * Filters the affiliation referrals status links.
 		 *
 		* @since 2.5.0
 		* @since 5.1.0 The 'Mine' link was added.
 		*
-		*  @param string[] $status_links An associative array of fully-formed sc_affiliation_referrals status links. Includes 'All', 'Mine','Pending', 'Approved', 'Spam', and 'Trash'.
+		*  @param string[] $status_links An associative array of fully-formed affiliation referrals status links. Includes 'All', 'Reviewing', 'Approved', 'Denied', 'Cancelled' and 'Paid Out'.
 		* */
 		return apply_filters( 'sc_affiliation_referrals_status_links', $status_links );
 	}
@@ -134,6 +134,7 @@ class AffiliationReferralsListTable extends ListTable {
 				$this->row_actions(
 					array_filter(
 						array(
+							'view'           => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-referrals', $referral->id ) ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
 							'edit'           => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-referrals', $referral->id ) ) . '" aria-label="' . esc_attr__( 'Edit', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 							'approve'        => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'approve' ) ) . '" aria-label="' . esc_attr__( 'Approve', 'surecart' ) . '">' . esc_html__( 'Approve', 'surecart' ) . '</a>',
 							'deny'           => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'deny' ) ) . '" aria-label="' . esc_attr__( 'Deny', 'surecart' ) . '">' . esc_html__( 'Deny', 'surecart' ) . '</a>',
@@ -141,8 +142,13 @@ class AffiliationReferralsListTable extends ListTable {
 							'delete'         => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'delete' ) ) . '" aria-label="' . esc_attr__( 'Delete', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>',
 						),
 						function ( $action, $key ) use ( $referral ) {
-							// don't edit paid referral.
-							if ( 'paid' === $referral->status && 'edit' !== $key ) {
+							// only view a paid referral.
+							if ( 'view' === $key && 'paid' !== $referral->status ) {
+								return false;
+							}
+
+							// don't edit a paid referral.
+							if ( 'paid' === $referral->status && 'view' !== $key ) {
 								return false;
 							}
 
@@ -311,11 +317,11 @@ class AffiliationReferralsListTable extends ListTable {
 		<?php
 		/**
 		 * Fires immediately following the closing "actions" div in the tablenav
-		 * for the affiliate_requests list table.
+		 * for the affiliate referrals list table.
 		 *
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
-		do_action( 'manage_affiliate_requests_extra_tablenav', $which );
+		do_action( 'manage_affiliate_referrals_extra_tablenav', $which );
 	}
 
 	/**

@@ -59,7 +59,6 @@ export default ({ id }) => {
 		'referral'
 	);
 	const [currentModal, setCurrentModal] = useState(null);
-
 	const { referral, isLoading } = useSelect((select) => {
 		const entityData = ['surecart', 'referral', id];
 
@@ -241,54 +240,47 @@ export default ({ id }) => {
 						}}
 					/>
 				) : (
-					<ScFlex justifyContent="flex-start">
-						<ScDropdown placement="bottom-end">
-							<ScButton type="default" slot="trigger" caret>
-								{STATUS[referral?.status] ??
-									__('Actions', 'surecart')}
-							</ScButton>
-							<ScMenu>
-								{referral?.status !== 'paid' && (
-									<>
-										{referral?.status !== 'approved' && (
-											<ScMenuItem
-												onClick={approveReferral}
-											>
-												{__('Approve', 'surecart')}
-											</ScMenuItem>
-										)}
-										{referral?.status !== 'reviewing' && (
-											<ScMenuItem
-												onClick={() =>
-													markReferralAsReviewing()
-												}
-											>
-												{__(
-													'Make Reviewing',
-													'surecart'
-												)}
-											</ScMenuItem>
-										)}
-										{referral?.status !== 'denied' && (
-											<ScMenuItem
-												onClick={() => denyReferral()}
-											>
-												{__('Deny', 'surecart')}
-											</ScMenuItem>
-										)}
-									</>
-								)}
-								<ScMenuItem
-									onClick={() =>
-										setCurrentModal('delete_referral')
-									}
-								>
-									{__('Delete', 'surecart')}
-								</ScMenuItem>
-							</ScMenu>
-						</ScDropdown>
-						<SaveButton>{__('Update', 'surecart')}</SaveButton>
-					</ScFlex>
+					referral?.editable && (
+						<ScFlex justifyContent="flex-start">
+							<ScDropdown placement="bottom-end">
+								<ScButton type="default" slot="trigger" caret>
+									{STATUS[referral?.status] ??
+										__('Actions', 'surecart')}
+								</ScButton>
+								<ScMenu>
+									{referral?.status !== 'approved' && (
+										<ScMenuItem onClick={approveReferral}>
+											{__('Approve', 'surecart')}
+										</ScMenuItem>
+									)}
+									{referral?.status !== 'reviewing' && (
+										<ScMenuItem
+											onClick={() =>
+												markReferralAsReviewing()
+											}
+										>
+											{__('Make Reviewing', 'surecart')}
+										</ScMenuItem>
+									)}
+									{referral?.status !== 'denied' && (
+										<ScMenuItem
+											onClick={() => denyReferral()}
+										>
+											{__('Deny', 'surecart')}
+										</ScMenuItem>
+									)}
+									<ScMenuItem
+										onClick={() =>
+											setCurrentModal('delete_referral')
+										}
+									>
+										{__('Delete', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
+							<SaveButton>{__('Update', 'surecart')}</SaveButton>
+						</ScFlex>
+					)
 				)
 			}
 			sidebar={
