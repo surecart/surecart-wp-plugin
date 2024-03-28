@@ -17,7 +17,13 @@ export default ({ title, children }) => {
 			>
 				{title}
 			</div>
-			<div>{children}</div>
+			<div
+				css={css`
+					text-align: right;
+				`}
+			>
+				{children}
+			</div>
 		</div>
 	);
 };

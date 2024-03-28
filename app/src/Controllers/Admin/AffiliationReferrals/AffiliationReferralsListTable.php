@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\AffiliationReferrals;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Referral;
+use SureCart\Support\Currency;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -67,6 +68,8 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @global int $post_id
 	 * @global string $comment_status
 	 * @global string $comment_type
+	 *
+	 * @return string
 	 */
 	protected function get_views() {
 		$link = admin_url( 'admin.php?page=sc-affiliate-referrals' );
@@ -88,12 +91,12 @@ class AffiliationReferralsListTable extends ListTable {
 		}
 
 		/**
-		 * Filters the sc_affiliation_referrals status links.
+		 * Filters the affiliation referrals status links.
 		 *
 		* @since 2.5.0
 		* @since 5.1.0 The 'Mine' link was added.
 		*
-		*  @param string[] $status_links An associative array of fully-formed sc_affiliation_referrals status links. Includes 'All', 'Mine','Pending', 'Approved', 'Spam', and 'Trash'.
+		*  @param string[] $status_links An associative array of fully-formed affiliation referrals status links. Includes 'All', 'Reviewing', 'Approved', 'Denied', 'Cancelled' and 'Paid Out'.
 		* */
 		return apply_filters( 'sc_affiliation_referrals_status_links', $status_links );
 	}
@@ -111,6 +114,7 @@ class AffiliationReferralsListTable extends ListTable {
 			'description' => esc_html__( 'Description', 'surecart' ),
 			'order'       => esc_html__( 'Order', 'surecart' ),
 			'commission'  => esc_html__( 'Commission', 'surecart' ),
+			'mode'        => '',
 		);
 	}
 
@@ -130,6 +134,7 @@ class AffiliationReferralsListTable extends ListTable {
 				$this->row_actions(
 					array_filter(
 						array(
+							'view'           => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-referrals', $referral->id ) ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
 							'edit'           => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-referrals', $referral->id ) ) . '" aria-label="' . esc_attr__( 'Edit', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 							'approve'        => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'approve' ) ) . '" aria-label="' . esc_attr__( 'Approve', 'surecart' ) . '">' . esc_html__( 'Approve', 'surecart' ) . '</a>',
 							'deny'           => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'deny' ) ) . '" aria-label="' . esc_attr__( 'Deny', 'surecart' ) . '">' . esc_html__( 'Deny', 'surecart' ) . '</a>',
@@ -137,14 +142,27 @@ class AffiliationReferralsListTable extends ListTable {
 							'delete'         => '<a href="' . esc_url( $this->get_action_url( $referral->id, 'delete' ) ) . '" aria-label="' . esc_attr__( 'Delete', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>',
 						),
 						function ( $action, $key ) use ( $referral ) {
+							// only view a paid referral.
+							if ( 'view' === $key && 'paid' !== $referral->status ) {
+								return false;
+							}
+
+							// don't edit a paid referral.
+							if ( 'paid' === $referral->status && 'view' !== $key ) {
+								return false;
+							}
+
+							// don't approve approved referral.
 							if ( 'approve' === $key && 'approved' === $referral->status ) {
 								return false;
 							}
 
+							// don't deny denied referral.
 							if ( 'deny' === $key && 'denied' === $referral->status ) {
 								return false;
 							}
 
+							// don't make reviewing reviewing referral.
 							if ( 'make_reviewing' === $key && 'reviewing' === $referral->status ) {
 								return false;
 							}
@@ -168,31 +186,14 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $referral ) {
-		$status_display = [
-			'reviewing' => [
-				'label' => __( 'Reviewing', 'surecart' ),
-				'type'  => 'warning',
-			],
-			'paid'      => [
-				'label' => __( 'Paid', 'surecart' ),
-				'type'  => 'success',
-			],
-			'denied'    => [
-				'label' => __( 'Denied', 'surecart' ),
-				'type'  => 'danger',
-			],
-			'canceled'  => [
-				'label' => __( 'Canceled', 'surecart' ),
-				'type'  => 'info',
-			],
-			'approved'  => [
-				'label' => __( 'Approved', 'surecart' ),
-				'type'  => 'success',
-			],
-		];
+		if ( empty( $referral->display_status ) ) {
+			return '';
+		}
 		ob_start();
 		?>
-		<sc-tag type="<?php echo esc_attr( $status_display[ $referral->status ?? '' ]['type'] ?? '' ); ?>"><?php echo esc_html( $status_display[ $referral->status ?? '' ]['label'] ?? '' ); ?></sc-tag>
+		<sc-tag type="<?php echo esc_attr( $referral->status_type ); ?>">
+			<?php echo esc_html( $referral->display_status ); ?>
+		</sc-tag>
 		<?php
 		return ob_get_clean();
 	}
@@ -207,13 +208,13 @@ class AffiliationReferralsListTable extends ListTable {
 	public function column_affiliate( $referral ) {
 		$affiliation = $referral->affiliation ?? null;
 		if ( empty( $affiliation->id ) ) {
-			return '';
+			return '-';
 		}
 		ob_start();
 		?>
 		<div class="sc-affiliate-name">
 			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
-				<?php echo esc_html( $affiliation->first_name . ' ' . $affiliation->last_name ); ?>
+				<?php echo esc_html( $affiliation->display_name ); ?>
 			</a>
 		</div>
 		<?php
@@ -240,14 +241,13 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	public function column_order( $referral ) {
 		$checkout = $referral->checkout ?? null;
-		if ( empty( $checkout->id ) ) {
-			return '_';
+		if ( empty( $checkout->order->id ) ) {
+			return '-';
 		}
-
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order ) ); ?>">
-			#<?php echo sanitize_text_field( $checkout->number ?? $checkout->order ); ?>
+		<a aria-label="<?php echo esc_attr__( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order->id ) ); ?>">
+			#<?php echo esc_html( $checkout->order->number ?? $checkout->order->id ); ?>
 		</a>
 		<?php
 		return ob_get_clean();
@@ -261,7 +261,7 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_commission( $referral ) {
-		return '<sc-format-number type="currency" currency="' . $referral->currency . '" value="' . $referral->commission_amount . '"></sc-format-number>';
+		return Currency::format( $referral->commission_amount, $referral->currency );
 	}
 
 	/**
@@ -277,6 +277,7 @@ class AffiliationReferralsListTable extends ListTable {
 				'expand' => [
 					'affiliation',
 					'checkout',
+					'checkout.order',
 				],
 			)
 		)->paginate(
@@ -316,11 +317,11 @@ class AffiliationReferralsListTable extends ListTable {
 		<?php
 		/**
 		 * Fires immediately following the closing "actions" div in the tablenav
-		 * for the affiliate_requests list table.
+		 * for the affiliate referrals list table.
 		 *
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
-		do_action( 'manage_affiliate_requests_extra_tablenav', $which );
+		do_action( 'manage_affiliate_referrals_extra_tablenav', $which );
 	}
 
 	/**

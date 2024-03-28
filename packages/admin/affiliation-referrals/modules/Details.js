@@ -39,6 +39,7 @@ export default ({ referral, updateReferral, loading }) => {
 					});
 				}}
 				required
+				disabled={!referral?.editable}
 			/>
 
 			<ScTextarea
@@ -54,6 +55,7 @@ export default ({ referral, updateReferral, loading }) => {
 					'A brief description of what this referral is for.',
 					'surecart'
 				)}
+				disabled={!referral?.editable}
 			/>
 		</Box>
 	);

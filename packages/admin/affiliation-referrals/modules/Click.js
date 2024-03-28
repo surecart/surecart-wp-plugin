@@ -1,15 +1,46 @@
 /** @jsx jsx */
+
+/**
+ * External dependencies
+ */
 import { jsx } from '@emotion/core';
+
+/**
+ * Internal dependencies
+ */
 import { ScFormatDate, ScTag } from '@surecart/components-react';
 import Box from '../../ui/Box';
-
-import { __ } from '@wordpress/i18n';
 import Definition from '../../ui/Definition';
+
+/**
+ * Wordpress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
 export default ({ referral, loading }) => {
+	const { click, loadingClick } = useSelect(
+		(select) => {
+			if (!referral?.attributed_click) {
+				return {};
+			}
+
+			const queryArgs = ['surecart', 'click', referral?.attributed_click];
+
+			return {
+				click: select(coreStore).getEntityRecord(...queryArgs),
+				loadingClick: select(coreStore).isResolving(
+					'getEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[referral?.attributed_click]
+	);
+
 	const render = () => {
-		const click = referral?.attributed_click;
 		if (!click?.id) {
 			return <div>{__('Not associated to any click.', 'surecart')}</div>;
 		}
@@ -61,7 +92,7 @@ export default ({ referral, loading }) => {
 		);
 	};
 	return (
-		<Box title="Click" loading={loading}>
+		<Box title="Click" loading={loading || loadingClick}>
 			{render()}
 		</Box>
 	);

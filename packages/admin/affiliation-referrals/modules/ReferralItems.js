@@ -24,10 +24,11 @@ export default ({ referralId, loading }) => {
 		(select) => {
 			if (!referralId) {
 				return {
-					referrals: [],
+					referralItems: [],
 					loading: false,
 				};
 			}
+
 			const queryArgs = [
 				'surecart',
 				'referral-item',

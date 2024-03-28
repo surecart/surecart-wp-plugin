@@ -92,7 +92,15 @@ export default ({ referral, updateReferral, loading }) => {
 							text-align: right;
 						`}
 					>
-						<ScButton slot="trigger" size="small">
+						<ScButton
+							slot="trigger"
+							size="small"
+							css={css`
+								visibility: ${referral?.editable
+									? 'visible'
+									: 'hidden'};
+							`}
+						>
 							{__('Change', 'surecart')}
 						</ScButton>
 					</ModelSelector>

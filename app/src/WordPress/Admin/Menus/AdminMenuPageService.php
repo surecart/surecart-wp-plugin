@@ -113,15 +113,16 @@ class AdminMenuPageService {
 	 * @return void
 	 */
 	public function adminMenuCSS(): void {
+		$shop_id = \SureCart::pages()->getId( 'shop' );
 		echo '<style>
 			#toplevel_page_sc-dashboard li {
 				clear: both;
 			}
-			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-customers"]:after {
-				border-bottom: 1px solid hsla(0,0%,100%,.2);
+			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="post.php?post=' . (int) $shop_id . '&action=edit"]:before {
+				border-top: 1px solid hsla(0,0%,100%,.2);
 				display: block;
 				float: left;
-				margin: 13px -15px 8px;
+				margin: 8px -15px 13px;
 				content: "";
 				width: calc(100% + 26px);
 			}
