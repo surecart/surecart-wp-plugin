@@ -15,9 +15,6 @@
 		"surecart/has-ad-hoc-block",
 		"surecart/has-variant-choices"
 	],
-	"blockHooks": {
-		"surecart/product-buy-button-v2": "before"
-	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js"

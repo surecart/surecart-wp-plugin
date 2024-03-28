@@ -17,6 +17,10 @@
 			"default": "Enter an amount"
 		}
 	},
+	"usesContext": ["surecart/has-ad-hoc-block"],
+	"blockHooks": {
+		"surecart/product-buy-button-v2": "before"
+	},
 	"supports": {
 		"interactivity": true,
 		"color": {
