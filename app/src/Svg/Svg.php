@@ -19,7 +19,7 @@ class Svg {
 			return '';
 		}
 
-		$svg = file_get_contents( $plugin_dir . '/' . $filename . '.svg' );
+		$svg = file_get_contents( $file_path );
 
 		// Initialize the SVG tag processor.
 		$update_svg = new \WP_HTML_Tag_Processor( $svg );
