@@ -36,4 +36,5 @@ window.sc = {
   },
 };
 
+export { on };
 export default store;

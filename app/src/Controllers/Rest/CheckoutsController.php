@@ -167,6 +167,11 @@ class CheckoutsController extends RestController {
 		$finalized = $checkout->where( $request->get_query_params() )
 		->finalize( $request->get_body_params() );
 
+		// bail if error.
+		if ( is_wp_error( $finalized ) ) {
+			return $finalized;
+		}
+
 		// validate the finalized request.
 		$finalized = $this->validateFinalizeRequest( $finalized, $request );
 

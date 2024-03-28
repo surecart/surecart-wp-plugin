@@ -253,11 +253,9 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 									)}
 								</div>
 								{(fulfillment?.trackings?.data || []).map(
-									({ courier_name, number, url }) => (
+									({ number, url }) => (
 										<a href={url} target="_blank">
 											{number}
-											{!!courier_name &&
-												` (${courier_name})`}
 										</a>
 									)
 								)}

@@ -92,7 +92,9 @@ export default (props) => {
 				</ScTag>
 				<ScButton
 					target="_blank"
-					href={scData?.upgrade_url || 'https://app.surecart.com'}
+					href={`${
+						scData?.upgrade_url || 'https://app.surecart.com'
+					}?switch_account_id=${scData?.account_id}`}
 					size="small"
 					type="warning"
 				>

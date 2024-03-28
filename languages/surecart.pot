@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-02-22T19:00:29+00:00\n"
+"POT-Creation-Date: 2024-03-06T17:19:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -159,8 +159,8 @@ msgstr ""
 #: components/PriceChoices.js:21
 #: sc-order-confirmation-totals2.js:35
 #: sc-order.js:167
-#: sc-stripe-payment-request2.js:100
-#: sc-stripe-payment-request2.js:138
+#: sc-stripe-payment-request2.js:97
+#: sc-stripe-payment-request2.js:135
 #: sc-upsell-totals.js:29
 msgid "Total"
 msgstr ""
@@ -339,8 +339,8 @@ msgstr ""
 #: invoices/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:160
 #: products/modules/Prices/Price/Header.js:87
-#: store/add-entities.js:327
-#: store/add-entities.js:334
+#: store/add-entities.js:354
+#: store/add-entities.js:361
 #: subscriptions/edit/EditSubscription.js:224
 #: sc-subscription-details2.js:92
 #: sc-subscription.js:151
@@ -358,7 +358,7 @@ msgstr ""
 #: src/Controllers/Admin/Tables/ListTable.php:74
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:222
 #: settings/shipping/profile/ShippingProfile.js:114
-#: settings/tax-region/TaxRegionSettings.js:226
+#: settings/tax-region/TaxRegionSettings.js:227
 msgid "Updated"
 msgstr ""
 
@@ -386,6 +386,7 @@ msgstr ""
 #: settings/shipping/zone/ShippingZone.js:138
 #: settings/shipping/zone/ShippingZone.js:205
 #: settings/subscription-preservation/Reason.js:103
+#: settings/tax-override/TaxOverrideRows.js:67
 #: upsell-funnels/components/SelectTemplate/index.js:117
 #: upsell-funnels/components/SelectTemplatePart/index.js:117
 #: upsell-funnels/modules/Upsell/EditUpsell.js:96
@@ -993,7 +994,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:448
 #: src/Controllers/Admin/Products/ProductsListTable.php:485
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Filter"
 msgstr ""
 
@@ -1131,7 +1132,7 @@ msgid "%d Available"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:229
-#: sc-product-item-list.js:245
+#: sc-product-item-list.js:275
 msgid "No products found."
 msgstr ""
 
@@ -1287,7 +1288,7 @@ msgid "Remaining Payments"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:202
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "None"
 msgstr ""
 
@@ -1929,7 +1930,7 @@ msgid "You do not have permission to access this page."
 msgstr ""
 
 #: src/Middleware/UpsellMiddleware.php:21
-#: sc-cart-form.js:124
+#: sc-cart-form.js:123
 #: sc-dashboard-module2.js:17
 #: sc-paypal-add-method.js:109
 #: sc-paystack-add-method.js:72
@@ -2029,6 +2030,7 @@ msgstr ""
 #: src/Rest/StatisticRestServiceProvider.php:53
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:82
 #: src/Rest/SubscriptionRestServiceProvider.php:157
+#: src/Rest/TaxOverrideRestServiceProvider.php:46
 #: src/Rest/TaxProtocolRestServiceProvider.php:81
 #: src/Rest/TaxRegistrationRestServiceProvider.php:46
 #: src/Rest/TaxZoneRestServiceProvider.php:46
@@ -2759,551 +2761,547 @@ msgstr ""
 msgid "No theme is defined for this template."
 msgstr ""
 
-#: src/Support/Currency.php:284
+#: src/Support/Currency.php:283
 msgid "Albanian Lek"
 msgstr ""
 
-#: src/Support/Currency.php:285
+#: src/Support/Currency.php:284
 msgid "Algerian Dinar"
 msgstr ""
 
-#: src/Support/Currency.php:286
+#: src/Support/Currency.php:285
 msgid "Angolan Kwanza"
 msgstr ""
 
-#: src/Support/Currency.php:287
+#: src/Support/Currency.php:286
 msgid "Argentine Peso"
 msgstr ""
 
-#: src/Support/Currency.php:288
+#: src/Support/Currency.php:287
 msgid "Armenian Dram"
 msgstr ""
 
-#: src/Support/Currency.php:289
+#: src/Support/Currency.php:288
 msgid "Aruban Florin"
 msgstr ""
 
-#: src/Support/Currency.php:290
+#: src/Support/Currency.php:289
 msgid "Australian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:291
+#: src/Support/Currency.php:290
 msgid "Azerbaijani Manat"
 msgstr ""
 
-#: src/Support/Currency.php:292
+#: src/Support/Currency.php:291
 msgid "Bahamian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:293
+#: src/Support/Currency.php:292
 msgid "Bangladeshi Taka"
 msgstr ""
 
-#: src/Support/Currency.php:294
+#: src/Support/Currency.php:293
 msgid "Barbadian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:295
+#: src/Support/Currency.php:294
 msgid "Belarusian Ruble"
 msgstr ""
 
-#: src/Support/Currency.php:296
+#: src/Support/Currency.php:295
 msgid "Belize Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:297
+#: src/Support/Currency.php:296
 msgid "Bermudian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:298
+#: src/Support/Currency.php:297
 msgid "Bolivian Boliviano"
 msgstr ""
 
-#: src/Support/Currency.php:299
+#: src/Support/Currency.php:298
 msgid "Bosnia and Herzegovina Convertible Mark"
 msgstr ""
 
-#: src/Support/Currency.php:300
+#: src/Support/Currency.php:299
 msgid "Botswana Pula"
 msgstr ""
 
-#: src/Support/Currency.php:301
+#: src/Support/Currency.php:300
 msgid "Brazilian Real"
 msgstr ""
 
-#: src/Support/Currency.php:302
+#: src/Support/Currency.php:301
 msgid "British Pound"
 msgstr ""
 
-#: src/Support/Currency.php:303
+#: src/Support/Currency.php:302
 msgid "Brunei Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:304
+#: src/Support/Currency.php:303
 msgid "Bulgarian Lev"
 msgstr ""
 
-#: src/Support/Currency.php:305
+#: src/Support/Currency.php:304
 msgid "Burundian Franc"
 msgstr ""
 
-#: src/Support/Currency.php:306
+#: src/Support/Currency.php:305
 msgid "Cambodian Riel"
 msgstr ""
 
-#: src/Support/Currency.php:307
+#: src/Support/Currency.php:306
 msgid "Canadian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:308
+#: src/Support/Currency.php:307
 msgid "Cape Verdean Escudo"
 msgstr ""
 
-#: src/Support/Currency.php:309
+#: src/Support/Currency.php:308
 msgid "Cayman Islands Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:310
+#: src/Support/Currency.php:309
 msgid "Central African Cfa Franc"
 msgstr ""
 
-#: src/Support/Currency.php:311
+#: src/Support/Currency.php:310
 msgid "Cfp Franc"
 msgstr ""
 
-#: src/Support/Currency.php:312
+#: src/Support/Currency.php:311
 msgid "Chilean Peso"
 msgstr ""
 
-#: src/Support/Currency.php:313
+#: src/Support/Currency.php:312
 msgid "Chinese Renminbi Yuan"
 msgstr ""
 
-#: src/Support/Currency.php:314
+#: src/Support/Currency.php:313
 msgid "Colombian Peso"
 msgstr ""
 
-#: src/Support/Currency.php:315
+#: src/Support/Currency.php:314
 msgid "Comorian Franc"
 msgstr ""
 
-#: src/Support/Currency.php:316
+#: src/Support/Currency.php:315
 msgid "Congolese Franc"
 msgstr ""
 
-#: src/Support/Currency.php:317
+#: src/Support/Currency.php:316
 msgid "Costa Rican Colón"
 msgstr ""
 
-#: src/Support/Currency.php:318
+#: src/Support/Currency.php:317
 msgid "Croatian Kuna"
 msgstr ""
 
-#: src/Support/Currency.php:319
+#: src/Support/Currency.php:318
 msgid "Czech Koruna"
 msgstr ""
 
-#: src/Support/Currency.php:320
+#: src/Support/Currency.php:319
 msgid "Danish Krone"
 msgstr ""
 
-#: src/Support/Currency.php:321
+#: src/Support/Currency.php:320
 msgid "Djiboutian Franc"
 msgstr ""
 
-#: src/Support/Currency.php:322
+#: src/Support/Currency.php:321
 msgid "Dominican Peso"
 msgstr ""
 
-#: src/Support/Currency.php:323
+#: src/Support/Currency.php:322
 msgid "East Caribbean Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:324
+#: src/Support/Currency.php:323
 msgid "Egyptian Pound"
 msgstr ""
 
-#: src/Support/Currency.php:325
+#: src/Support/Currency.php:324
 msgid "Ethiopian Birr"
 msgstr ""
 
-#: src/Support/Currency.php:326
+#: src/Support/Currency.php:325
 msgid "Euro"
 msgstr ""
 
-#: src/Support/Currency.php:327
+#: src/Support/Currency.php:326
 msgid "Falkland Pound"
 msgstr ""
 
-#: src/Support/Currency.php:328
+#: src/Support/Currency.php:327
 msgid "Fijian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:329
+#: src/Support/Currency.php:328
 msgid "Gambian Dalasi"
 msgstr ""
 
-#: src/Support/Currency.php:330
+#: src/Support/Currency.php:329
 msgid "Georgian Lari"
 msgstr ""
 
-#: src/Support/Currency.php:331
+#: src/Support/Currency.php:330
 msgid "Ghanaian Cedi"
 msgstr ""
 
-#: src/Support/Currency.php:332
+#: src/Support/Currency.php:331
 msgid "Gibraltar Pound"
 msgstr ""
 
-#: src/Support/Currency.php:333
+#: src/Support/Currency.php:332
 msgid "Guatemalan Quetzal"
 msgstr ""
 
-#: src/Support/Currency.php:334
+#: src/Support/Currency.php:333
 msgid "Guinean Franc"
 msgstr ""
 
-#: src/Support/Currency.php:335
+#: src/Support/Currency.php:334
 msgid "Guyanese Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:336
+#: src/Support/Currency.php:335
 msgid "Haitian Gourde"
 msgstr ""
 
-#: src/Support/Currency.php:337
+#: src/Support/Currency.php:336
 msgid "Honduran Lempira"
 msgstr ""
 
-#: src/Support/Currency.php:338
+#: src/Support/Currency.php:337
 msgid "Hong Kong Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:339
+#: src/Support/Currency.php:338
 msgid "Hungarian Forint"
 msgstr ""
 
-#: src/Support/Currency.php:340
+#: src/Support/Currency.php:339
 msgid "Icelandic Króna"
 msgstr ""
 
-#: src/Support/Currency.php:341
+#: src/Support/Currency.php:340
 msgid "Indian Rupee"
 msgstr ""
 
-#: src/Support/Currency.php:342
+#: src/Support/Currency.php:341
 msgid "Indonesian Rupiah"
 msgstr ""
 
-#: src/Support/Currency.php:343
+#: src/Support/Currency.php:342
 msgid "Israeli New Sheqel"
 msgstr ""
 
-#: src/Support/Currency.php:344
+#: src/Support/Currency.php:343
 msgid "Jamaican Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:345
+#: src/Support/Currency.php:344
 msgid "Japanese Yen"
 msgstr ""
 
-#: src/Support/Currency.php:346
+#: src/Support/Currency.php:345
 msgid "Kazakhstani Tenge"
 msgstr ""
 
-#: src/Support/Currency.php:347
+#: src/Support/Currency.php:346
 msgid "Kenyan Shilling"
 msgstr ""
 
-#: src/Support/Currency.php:348
+#: src/Support/Currency.php:347
 msgid "Kyrgyzstani Som"
 msgstr ""
 
-#: src/Support/Currency.php:349
+#: src/Support/Currency.php:348
 msgid "Lao Kip"
 msgstr ""
 
-#: src/Support/Currency.php:350
+#: src/Support/Currency.php:349
 msgid "Lebanese Pound"
 msgstr ""
 
-#: src/Support/Currency.php:351
+#: src/Support/Currency.php:350
 msgid "Lesotho Loti"
 msgstr ""
 
-#: src/Support/Currency.php:352
+#: src/Support/Currency.php:351
 msgid "Liberian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:353
+#: src/Support/Currency.php:352
 msgid "Macanese Pataca"
 msgstr ""
 
-#: src/Support/Currency.php:354
+#: src/Support/Currency.php:353
 msgid "Macedonian Denar"
 msgstr ""
 
-#: src/Support/Currency.php:355
-msgid "Malagasy Ariary"
-msgstr ""
-
-#: src/Support/Currency.php:356
+#: src/Support/Currency.php:354
 msgid "Malawian Kwacha"
 msgstr ""
 
-#: src/Support/Currency.php:357
+#: src/Support/Currency.php:355
 msgid "Malaysian Ringgit"
 msgstr ""
 
-#: src/Support/Currency.php:358
+#: src/Support/Currency.php:356
 msgid "Maldivian Rufiyaa"
 msgstr ""
 
-#: src/Support/Currency.php:359
+#: src/Support/Currency.php:357
 msgid "Mauritanian Ouguiya"
 msgstr ""
 
-#: src/Support/Currency.php:360
+#: src/Support/Currency.php:358
 msgid "Mauritian Rupee"
 msgstr ""
 
-#: src/Support/Currency.php:361
+#: src/Support/Currency.php:359
 msgid "Mexican Peso"
 msgstr ""
 
-#: src/Support/Currency.php:362
+#: src/Support/Currency.php:360
 msgid "Moldovan Leu"
 msgstr ""
 
-#: src/Support/Currency.php:363
+#: src/Support/Currency.php:361
 msgid "Mongolian Tögrög"
 msgstr ""
 
-#: src/Support/Currency.php:364
+#: src/Support/Currency.php:362
 msgid "Moroccan Dirham"
 msgstr ""
 
-#: src/Support/Currency.php:365
+#: src/Support/Currency.php:363
 msgid "Mozambican Metical"
 msgstr ""
 
-#: src/Support/Currency.php:366
+#: src/Support/Currency.php:364
 msgid "Myanmar Kyat"
 msgstr ""
 
-#: src/Support/Currency.php:367
+#: src/Support/Currency.php:365
 msgid "Namibian Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:368
+#: src/Support/Currency.php:366
 msgid "Nepalese Rupee"
 msgstr ""
 
-#: src/Support/Currency.php:369
+#: src/Support/Currency.php:367
 msgid "Netherlands Antillean Gulden"
 msgstr ""
 
-#: src/Support/Currency.php:370
+#: src/Support/Currency.php:368
 msgid "New Taiwan Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:371
+#: src/Support/Currency.php:369
 msgid "New Zealand Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:372
+#: src/Support/Currency.php:370
 msgid "Nicaraguan Córdoba"
 msgstr ""
 
-#: src/Support/Currency.php:373
+#: src/Support/Currency.php:371
 msgid "Nigerian Naira"
 msgstr ""
 
-#: src/Support/Currency.php:374
+#: src/Support/Currency.php:372
 msgid "Norwegian Krone"
 msgstr ""
 
-#: src/Support/Currency.php:375
+#: src/Support/Currency.php:373
 msgid "Pakistani Rupee"
 msgstr ""
 
-#: src/Support/Currency.php:376
+#: src/Support/Currency.php:374
 msgid "Panamanian Balboa"
 msgstr ""
 
-#: src/Support/Currency.php:377
+#: src/Support/Currency.php:375
 msgid "Papua New Guinean Kina"
 msgstr ""
 
-#: src/Support/Currency.php:378
+#: src/Support/Currency.php:376
 msgid "Paraguayan Guaraní"
 msgstr ""
 
-#: src/Support/Currency.php:379
+#: src/Support/Currency.php:377
 msgid "Peruvian Sol"
 msgstr ""
 
-#: src/Support/Currency.php:380
+#: src/Support/Currency.php:378
 msgid "Philippine Peso"
 msgstr ""
 
-#: src/Support/Currency.php:381
+#: src/Support/Currency.php:379
 msgid "Polish Złoty"
 msgstr ""
 
-#: src/Support/Currency.php:382
+#: src/Support/Currency.php:380
 msgid "Qatari Riyal"
 msgstr ""
 
-#: src/Support/Currency.php:383
+#: src/Support/Currency.php:381
 msgid "Romanian Leu"
 msgstr ""
 
-#: src/Support/Currency.php:384
+#: src/Support/Currency.php:382
 msgid "Russian Ruble"
 msgstr ""
 
-#: src/Support/Currency.php:385
+#: src/Support/Currency.php:383
 msgid "Rwandan Franc"
 msgstr ""
 
-#: src/Support/Currency.php:386
+#: src/Support/Currency.php:384
 msgid "Saint Helenian Pound"
 msgstr ""
 
-#: src/Support/Currency.php:387
+#: src/Support/Currency.php:385
 msgid "Samoan Tala"
 msgstr ""
 
-#: src/Support/Currency.php:388
+#: src/Support/Currency.php:386
 msgid "Saudi Riyal"
 msgstr ""
 
-#: src/Support/Currency.php:389
+#: src/Support/Currency.php:387
 msgid "Serbian Dinar"
 msgstr ""
 
-#: src/Support/Currency.php:390
+#: src/Support/Currency.php:388
 msgid "Seychellois Rupee"
 msgstr ""
 
-#: src/Support/Currency.php:391
+#: src/Support/Currency.php:389
 msgid "Sierra Leonean Leone"
 msgstr ""
 
-#: src/Support/Currency.php:392
+#: src/Support/Currency.php:390
 msgid "Singapore Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:393
+#: src/Support/Currency.php:391
 msgid "Solomon Islands Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:394
+#: src/Support/Currency.php:392
 msgid "Somali Shilling"
 msgstr ""
 
-#: src/Support/Currency.php:395
+#: src/Support/Currency.php:393
 msgid "South African Rand"
 msgstr ""
 
-#: src/Support/Currency.php:396
+#: src/Support/Currency.php:394
 msgid "South Korean Won"
 msgstr ""
 
-#: src/Support/Currency.php:397
+#: src/Support/Currency.php:395
 msgid "Sri Lankan Rupee"
 msgstr ""
 
-#: src/Support/Currency.php:398
+#: src/Support/Currency.php:396
 msgid "Surinamese Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:399
+#: src/Support/Currency.php:397
 msgid "Swazi Lilangeni"
 msgstr ""
 
-#: src/Support/Currency.php:400
+#: src/Support/Currency.php:398
 msgid "Swedish Krona"
 msgstr ""
 
-#: src/Support/Currency.php:401
+#: src/Support/Currency.php:399
 msgid "Swiss Franc"
 msgstr ""
 
-#: src/Support/Currency.php:402
+#: src/Support/Currency.php:400
 msgid "São Tomé and Príncipe Dobra"
 msgstr ""
 
-#: src/Support/Currency.php:403
+#: src/Support/Currency.php:401
 msgid "Tajikistani Somoni"
 msgstr ""
 
-#: src/Support/Currency.php:404
+#: src/Support/Currency.php:402
 msgid "Tanzanian Shilling"
 msgstr ""
 
-#: src/Support/Currency.php:405
+#: src/Support/Currency.php:403
 msgid "Thai Baht"
 msgstr ""
 
-#: src/Support/Currency.php:406
+#: src/Support/Currency.php:404
 msgid "Tongan Paʻanga"
 msgstr ""
 
-#: src/Support/Currency.php:407
+#: src/Support/Currency.php:405
 msgid "Trinidad and Tobago Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:408
+#: src/Support/Currency.php:406
 msgid "Turkish Lira"
 msgstr ""
 
-#: src/Support/Currency.php:409
+#: src/Support/Currency.php:407
 msgid "Ugandan Shilling"
 msgstr ""
 
-#: src/Support/Currency.php:410
+#: src/Support/Currency.php:408
 msgid "Ukrainian Hryvnia"
 msgstr ""
 
-#: src/Support/Currency.php:411
+#: src/Support/Currency.php:409
 msgid "United Arab Emirates Dirham"
 msgstr ""
 
-#: src/Support/Currency.php:412
+#: src/Support/Currency.php:410
 msgid "United States Dollar"
 msgstr ""
 
-#: src/Support/Currency.php:413
+#: src/Support/Currency.php:411
 msgid "Uruguayan Peso"
 msgstr ""
 
-#: src/Support/Currency.php:414
+#: src/Support/Currency.php:412
 msgid "Uzbekistan Som"
 msgstr ""
 
-#: src/Support/Currency.php:415
+#: src/Support/Currency.php:413
 msgid "Vanuatu Vatu"
 msgstr ""
 
-#: src/Support/Currency.php:416
+#: src/Support/Currency.php:414
 msgid "Vietnamese Đồng"
 msgstr ""
 
-#: src/Support/Currency.php:417
+#: src/Support/Currency.php:415
 msgid "West African Cfa Franc"
 msgstr ""
 
-#: src/Support/Currency.php:418
+#: src/Support/Currency.php:416
 msgid "Yemeni Rial"
 msgstr ""
 
-#: src/Support/Currency.php:419
+#: src/Support/Currency.php:417
 msgid "Zambian Kwacha"
 msgstr ""
 
-#: src/Support/Currency.php:420
+#: src/Support/Currency.php:418
 msgid "Tunisian Dinar"
 msgstr ""
 
@@ -4746,6 +4744,14 @@ msgstr ""
 msgid "Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions."
 msgstr ""
 
+#: src/WordPress/CLI/CLICommands.php:21
+msgid "Email is required to seed an account."
+msgstr ""
+
+#: src/WordPress/CLI/CLICommands.php:32
+msgid "Account seeded successfully."
+msgstr ""
+
 #: src/WordPress/CompatibilityService.php:139
 msgid "<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, consider disabling the Gutenberg plugin.<p>"
 msgstr ""
@@ -5388,6 +5394,7 @@ msgstr ""
 #: settings/SettingsBox.js:54
 #: settings/SettingsTemplate.js:77
 #: settings/shipping/zone/ShippingZoneForm.js:237
+#: settings/tax-override/TaxOverrideModal.js:272
 #: sc-customer-edit.js:120
 #: sc-order-bump2.js:79
 #: sc-wordpress-user-edit.js:61
@@ -5726,6 +5733,8 @@ msgstr ""
 #: settings/shipping/zone/ConfirmDeleteZone.js:49
 #: settings/shipping/zone/ShippingZoneForm.js:245
 #: settings/subscription-preservation/EditReason.js:149
+#: settings/tax-override/TaxOverrideDeleteModal.js:116
+#: settings/tax-override/TaxOverrideModal.js:263
 #: subscriptions/edit/modules/Modals/UpdateAmount.js:41
 #: subscriptions/edit/modules/Modals/UpdatePrice.js:50
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:98
@@ -6124,7 +6133,7 @@ msgstr ""
 #: subscriptions/show/modules/Tax.js:42
 #: subscriptions/show/ShowSubscription.js:101
 #: upsell-funnels/modules/Upsell/Product.js:54
-#: sc-cart-form.js:74
+#: sc-cart-form.js:73
 #: sc-charges-list.js:74
 #: sc-customer-edit.js:89
 #: sc-dashboard-customer-details.js:54
@@ -6224,7 +6233,7 @@ msgstr ""
 #: abandoned-checkouts/components/Link.js:53
 #: licenses/modules/Details/Copy.js:21
 #: products/modules/Prices/Price/CopyInput.js:32
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:294
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:297
 #: sc-license.js:139
 msgid "Copy"
 msgstr ""
@@ -6375,8 +6384,6 @@ msgstr ""
 #: product-groups/modules/NewProduct.js:45
 #: products/CreateProduct.js:45
 #: products/modules/Prices/NewPrice/index.js:64
-#: settings/tax-region/RegistrationForm.js:112
-#: settings/tax-region/RegistrationForm.js:135
 #: store/notices/reducer.js:25
 #: store/ui/reducer.js:130
 #: upsell-funnels/CreateFunnel.js:39
@@ -6463,7 +6470,9 @@ msgstr ""
 #: settings/shipping/zone/ConfirmDeleteZone.js:56
 #: settings/shipping/zone/ShippingZone.js:219
 #: settings/subscription-preservation/Reason.js:111
-#: settings/tax-region/RegistrationForm.js:250
+#: settings/tax-override/TaxOverrideDeleteModal.js:120
+#: settings/tax-override/TaxOverrideRows.js:71
+#: settings/tax-region/RegistrationForm.js:256
 #: upsell-funnels/EditFunnel.js:243
 #: sc-payment-methods-list.js:156
 #: sc-payment-methods-list.js:183
@@ -6563,7 +6572,7 @@ msgid "Discount Amount"
 msgstr ""
 
 #: bumps/modules/Discount.js:49
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:397
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:400
 msgid "Percentage"
 msgstr ""
 
@@ -7002,16 +7011,16 @@ msgid "Edit Tax ID"
 msgstr ""
 
 #: checkouts/modules/Tax/TaxIdDisplay.js:5
-#: Blocks/TaxIdInput/deprecated.js:9
-#: Blocks/TaxIdInput/edit.js:24
+#: Blocks/TaxIdInput/deprecated.js:8
+#: Blocks/TaxIdInput/edit.js:45
 #: sc-tax-id-input2.js:33
 #: tax.js:3
 msgid "GST Number"
 msgstr ""
 
 #: checkouts/modules/Tax/TaxIdDisplay.js:6
-#: Blocks/TaxIdInput/deprecated.js:10
-#: Blocks/TaxIdInput/edit.js:34
+#: Blocks/TaxIdInput/deprecated.js:9
+#: Blocks/TaxIdInput/edit.js:55
 #: sc-tax-id-input2.js:34
 #: tax.js:7
 msgid "ABN Number"
@@ -8602,7 +8611,7 @@ msgstr ""
 #: orders/modules/Fulfillment/CreateFulfillment.js:53
 #: products/modules/BuyLink.js:60
 #: products/modules/Prices/Price/CopyInput.js:12
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:47
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:50
 msgid "Copied to clipboard."
 msgstr ""
 
@@ -8670,7 +8679,7 @@ msgstr ""
 msgid "Fulfilled on"
 msgstr ""
 
-#: orders/modules/Fulfillment/Fulfilled.js:281
+#: orders/modules/Fulfillment/Fulfilled.js:279
 #: orders/modules/Fulfillment/Unfulfilled.js:107
 #: orders/modules/ReturnRequest/ReturnItems.js:265
 #: ui/ProductLineItem.js:55
@@ -8818,7 +8827,7 @@ msgid "Returned on"
 msgstr ""
 
 #: orders/modules/ReturnRequest/ReturnReasonsSelector.js:14
-#: store/add-entities.js:369
+#: store/add-entities.js:396
 msgid "Return Reason"
 msgstr ""
 
@@ -8827,26 +8836,30 @@ msgid "Choose an option"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:7
+#: Blocks/TaxIdInput/edit.js:30
 #: tax.js:4
 msgid "CA GST"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:8
+#: Blocks/TaxIdInput/edit.js:31
 #: tax.js:8
 msgid "AU ABN"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:9
-#: Blocks/TaxIdInput/deprecated.js:11
-#: Blocks/TaxIdInput/edit.js:44
+#: Blocks/TaxIdInput/deprecated.js:10
+#: Blocks/TaxIdInput/edit.js:32
+#: Blocks/TaxIdInput/edit.js:65
 #: sc-tax-id-input2.js:35
 #: tax.js:12
 msgid "UK VAT"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:10
-#: Blocks/TaxIdInput/deprecated.js:12
-#: Blocks/TaxIdInput/edit.js:54
+#: Blocks/TaxIdInput/deprecated.js:11
+#: Blocks/TaxIdInput/edit.js:33
+#: Blocks/TaxIdInput/edit.js:75
 #: sc-tax-id-input2.js:36
 #: tax.js:16
 msgid "EU VAT"
@@ -8856,6 +8869,7 @@ msgstr ""
 #: orders/modules/TaxInfo.js:23
 #: Blocks/Donation/edit.js:210
 #: Blocks/Donation/save.js:17
+#: Blocks/TaxIdInput/edit.js:34
 #: tax.js:20
 msgid "Other"
 msgstr ""
@@ -9308,7 +9322,7 @@ msgid "Expiring access will revoke integrations and licenses."
 msgstr ""
 
 #: products/components/price/parts/RevokeAfterDays.js:47
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:344
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:347
 msgid "days"
 msgstr ""
 
@@ -9357,8 +9371,8 @@ msgstr ""
 #: products/components/price/parts/Trial.js:53
 #: settings/abandoned/AbandonedSettings.js:240
 #: settings/abandoned/AbandonedSettings.js:360
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:485
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:526
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:488
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:529
 msgid "Days"
 msgstr ""
 
@@ -9828,7 +9842,7 @@ msgstr ""
 
 #: products/modules/Prices/Price/BuyLink.js:30
 #: products/modules/Variations/Variants.js:116
-#: store/add-entities.js:355
+#: store/add-entities.js:382
 msgid "Variant"
 msgstr ""
 
@@ -10184,7 +10198,7 @@ msgstr ""
 #: settings/abandoned/AbandonedSettings.js:62
 #: settings/account/AccountSettings.js:98
 #: settings/advanced/AdvancedSettings.js:95
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:68
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:71
 #: settings/brand/BrandSettings.js:71
 #: settings/connection/ConnectionSettings.js:38
 #: settings/customer/CustomerSettings.js:36
@@ -10192,7 +10206,7 @@ msgstr ""
 #: settings/shipping/ShippingSettings.js:91
 #: settings/subscription-preservation/PreservationSettings.js:135
 #: settings/subscription/SubscriptionSettings.js:43
-#: settings/tax-region/TaxRegionSettings.js:134
+#: settings/tax-region/TaxRegionSettings.js:135
 #: settings/tax/TaxSettings.js:32
 #: settings/upgrade/UpgradeSettings.js:27
 msgid "Settings Updated."
@@ -10662,209 +10676,209 @@ msgstr ""
 msgid "Start Sync"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:78
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:81
 msgid "Affiliates Settings"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:88
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:91
 msgid "Affiliate Signups"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:89
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:92
 msgid "Configure how affiliates signup and get approved to promote products in your store."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:104
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:107
 msgid "Allow New Affiliate Signups"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:106
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:109
 msgid "Do you want to allow new affiliates to sign up?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:113
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:116
 msgid "Program Description"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:114
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:117
 msgid "Let affiliates know any specifics about your program and what to expect from being an affiliate. This is shown to affiliates when they sign up for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:128
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:131
 msgid "Signup Question"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:129
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:132
 msgid "What question do you want to ask affiliates on the signup form? If blank, the default question \"How will you promote this store?\" will be used."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:133
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:136
 msgid "How will you promote this store?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:148
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:151
 msgid "Affiliate Terms URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:149
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:152
 msgid "Where can affiliates find the terms and conditions for your affiliate program? If provided, this URL will be shown to affiliates when they sign up for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:174
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:177
 msgid "Payout Email Field on Signup"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:176
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:179
 msgid "Do you want to include the payout email field on the signup form?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:192
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:195
 msgid "Auto Approve New Affiliates"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:194
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:197
 msgid "Do you want to automatically approve new affiliate signups? If disabled, you will need to manually approve each affiliate signup."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:201
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:204
 msgid "Signup URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:202
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:205
 msgid "This is where you will send affiliates to signup for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:222
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:225
 msgid "Referral Tracking"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:223
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:226
 msgid "Configure how clicks are tracked and how referrals are credited to affiliates."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:241
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:244
 msgid "Tracking"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:251
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:254
 msgid "Track affiliate referrals on this site."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:266
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:269
 msgid "Want to add tracking to a different site?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:276
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:279
 msgid "Tracking Script"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:279
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:282
 msgid "Copy and paste the tracking code into the <head> section or just before the closing </body> tag of your website. Ensure this is only added to sites that don't already have the script included via the WordPress plugin."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:315
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:318
 msgid "First"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:319
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:322
 msgid "Last"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:322
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:325
 msgid "Referrer Type"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:323
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:326
 msgid "Should the first or last referrer be credited?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:330
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:333
 msgid "Tracking Length"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:331
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:334
 msgid "How many days should the tracking code last for?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:357
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:360
 msgid "Auto Approve New Referrals"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:359
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:362
 msgid "Do you want to automatically approve new referrals? If disabled, you will need to manually approve each referral."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:366
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:369
 msgid "Affiliate Referral URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:367
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:370
 msgid "Where should affiliates send their traffic? This URL will be used to generate the affiliate referral link for each affiliate with their unique affiliate code."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:382
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:385
 msgid "Commissions & Payouts"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:383
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:386
 msgid "Configure how affiliates earn commissions and how they get paid."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:390
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:393
 msgid "Select a commission type"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:400
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:403
 #: settings/shipping/rate/ShippingRateCondition.js:53
 #: settings/shipping/rate/ShippingRateForm.js:421
 msgid "Flat Rate"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:410
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:413
 msgid "Percent Commission"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:429
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:432
 msgid "Amount Commission"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:456
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:459
 msgid "Subscription Commissions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:458
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:461
 msgid "Do you want to award commissions on subscription renewal payments?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:466
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:469
 msgid "Subscription Commission Duration"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:470
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:473
 msgid "For how long should subscription commissions be awarded? (Leave empty if you want to award commissions forever.)"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:500
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:503
 msgid "Lifetime Commissions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:502
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:505
 msgid "Do you want to award commissions on future purchases?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:510
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:513
 msgid "Lifetime Commission Duration"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:511
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:514
 msgid "For how long should future purchase commissions be awarded? (Leave empty if you want to award commission forever.)"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:530
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:533
 msgid "Payout Instructions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:531
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:534
 msgid "Let affiliates know how they will be paid, how often, and any terms or conditions for payment. These details will be shown to affiliates so they know what to expect."
 msgstr ""
 
@@ -11701,7 +11715,7 @@ msgid "Maximum weight"
 msgstr ""
 
 #: settings/shipping/rate/ShippingRateForm.js:336
-#: store/add-entities.js:313
+#: store/add-entities.js:340
 msgid "Shipping Method"
 msgstr ""
 
@@ -12155,8 +12169,117 @@ msgstr ""
 msgid "Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page."
 msgstr ""
 
+#: settings/tax-override/index.js:35
+msgid "Tax Rate Overrides"
+msgstr ""
+
+#: settings/tax-override/index.js:36
+msgid "You can specify unique tax rates for a collection of products or on shipping charges."
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:54
+msgid "Remove shipping override for %s"
+msgstr ""
+
+#. translators: %1$s: product collection name, %2$s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:60
+msgid "Remove override for %1$s collection in %2$s"
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:71
+msgid "If you remove this override, then you'll charge the standard tax rate for shipping in %s."
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideDeleteModal.js:80
+msgid "If you remove this override, then you'll charge the standard tax rate for this collection in %s."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:118
+msgid "Shipping Overrides"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:119
+msgid "Product Overrides"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:124
+msgid "Please enable tax collection to add tax overrides."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:134
+msgid "Specify a unique tax rate for shipping charges."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:138
+msgid "Specify a unique tax rate for a collection of products."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideList.js:144
+#: settings/tax-override/TaxOverrideList.js:163
+#: settings/tax-override/TaxOverrideModal.js:273
+msgid "Add Override"
+msgstr ""
+
+#. translators: %s: tax zone country name
+#: settings/tax-override/TaxOverrideModal.js:104
+msgid "Edit shipping override for %s"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:107
+msgid "Add shipping tax override"
+msgstr ""
+
+#. translators: %1$s: product collection name, %2$s: tax zone country name
+#: settings/tax-override/TaxOverrideModal.js:112
+msgid "Edit override for %1$s collection in %2$s"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:119
+msgid "Add product tax override"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:147
+msgid "You've already added an override for each region where you collect sales tax. You can edit or delete an existing override."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:162
+msgid "Add a custom tax rate for shipping."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:168
+msgid "Add a custom sales tax rate for a collection of products."
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:172
+msgid "Select an existing collection or "
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:180
+msgid "create a new one"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:190
+#: Blocks/ProductCollection/edit.js:305
+msgid "Product Collection"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:212
+#: settings/tax-region/RegistrationForm.js:162
+#: settings/tax-region/TaxRegionSettings.js:213
+msgid "Region"
+msgstr ""
+
+#: settings/tax-override/TaxOverrideModal.js:244
+#: settings/tax-region/RegistrationForm.js:200
+#: settings/tax-region/TaxRegionSettings.js:220
+msgid "Tax Rate"
+msgstr ""
+
 #: settings/tax-region/RegionSettings.js:9
-#: settings/tax-region/TaxRegionSettings.js:39
+#: settings/tax-region/TaxRegionSettings.js:40
 msgid "Canada GST/HST"
 msgstr ""
 
@@ -12174,7 +12297,7 @@ msgstr ""
 
 #: settings/tax-region/RegionSettings.js:38
 #: settings/tax-region/RegionSettings.js:104
-#: settings/tax-region/RegistrationForm.js:210
+#: settings/tax-region/RegistrationForm.js:216
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
@@ -12200,8 +12323,8 @@ msgid "Enable this if your business makes up to €10,000 EUR in sales to other 
 msgstr ""
 
 #: settings/tax-region/RegistrationDialog.js:17
-#: settings/tax-region/RegistrationForm.js:255
-#: settings/tax-region/TaxRegionSettings.js:203
+#: settings/tax-region/RegistrationForm.js:261
+#: settings/tax-region/TaxRegionSettings.js:204
 #: subscriptions/show/modules/Tax.js:60
 msgid "Collect Tax"
 msgstr ""
@@ -12209,7 +12332,6 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:22
 #: settings/tax-region/RegistrationForm.js:23
 #: settings/tax-region/RegistrationForm.js:24
-#: settings/tax-region/TaxRegionSettings.js:212
 #: Blocks/Address/edit.js:155
 #: sc-address2.js:122
 #: sc-order-shipping-address2.js:33
@@ -12226,144 +12348,131 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:156
-msgid "Region"
-msgstr ""
-
-#: settings/tax-region/RegistrationForm.js:171
+#: settings/tax-region/RegistrationForm.js:177
 msgid "Tax Calculation"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:177
+#: settings/tax-region/RegistrationForm.js:183
 msgid "Manual"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:181
-#: settings/tax-region/TaxRegionSettings.js:246
+#: settings/tax-region/RegistrationForm.js:187
+#: settings/tax-region/TaxRegionSettings.js:247
 msgid "Automatic"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:194
-#: settings/tax-region/TaxRegionSettings.js:219
-msgid "Tax Rate"
-msgstr ""
-
-#: settings/tax-region/RegistrationForm.js:236
+#: settings/tax-region/RegistrationForm.js:242
 msgid "Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:240
+#: settings/tax-region/RegistrationForm.js:246
 msgid "Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
-#: settings/tax-region/store/register.js:9
-#: settings/tax-region/TaxRegionSettings.js:190
-msgid "Tax Registration"
-msgstr ""
-
-#: settings/tax-region/store/register.js:16
-msgid "Tax Zone"
-msgstr ""
-
-#: settings/tax-region/TaxRegionSettings.js:29
+#: settings/tax-region/TaxRegionSettings.js:30
 #: settings/tax/TaxSettings.js:229
 #: address.js:26
 msgid "Australia"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:30
+#: settings/tax-region/TaxRegionSettings.js:31
 #: settings/tax/TaxSettings.js:239
 msgid "European Union"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:31
+#: settings/tax-region/TaxRegionSettings.js:32
 #: settings/tax/TaxSettings.js:244
 #: address.js:245
 msgid "United Kingdom"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:32
+#: settings/tax-region/TaxRegionSettings.js:33
 #: settings/tax/TaxSettings.js:234
 #: address.js:53
 msgid "Canada"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:33
+#: settings/tax-region/TaxRegionSettings.js:34
 #: settings/tax/TaxSettings.js:249
 #: address.js:246
 msgid "United States"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:34
+#: settings/tax-region/TaxRegionSettings.js:35
 #: settings/tax/TaxSettings.js:254
 msgid "Rest Of The World"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:38
+#: settings/tax-region/TaxRegionSettings.js:39
 msgid "GST Registration"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:40
+#: settings/tax-region/TaxRegionSettings.js:41
 msgid "Country-Specific VAT Registrations"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:41
+#: settings/tax-region/TaxRegionSettings.js:42
 msgid "VAT Registration"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:42
+#: settings/tax-region/TaxRegionSettings.js:43
 msgid "State Sales Tax Registrations"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:46
+#: settings/tax-region/TaxRegionSettings.js:47
 msgid "If you do business in Australia, you may be required to collect GST on sales in Australia."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:50
+#: settings/tax-region/TaxRegionSettings.js:51
 msgid "If you need to collect provincial tax (British Columbia, Manitoba, Quebec, and Saskatchewan) in addition to GST/HST, then you'll need to setup registrations for each province."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:54
+#: settings/tax-region/TaxRegionSettings.js:55
 msgid "If you plan to submit a separate VAT return to each EU country, then you'll need to setup tax registrations for each country."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:58
+#: settings/tax-region/TaxRegionSettings.js:59
 msgid "If you do business in the United Kingdom, you may be required to collect Value Added Tax (VAT)."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:62
+#: settings/tax-region/TaxRegionSettings.js:63
 msgid "You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:66
+#: settings/tax-region/TaxRegionSettings.js:67
 msgid "Add custom manual tax rates for specific countries."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:73
+#: settings/tax-region/TaxRegionSettings.js:74
 msgid "You're not collecting GST in Australia. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:77
+#: settings/tax-region/TaxRegionSettings.js:78
 msgid "You're not collecting any provincial tax in Canada. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:81
+#: settings/tax-region/TaxRegionSettings.js:82
 msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:85
+#: settings/tax-region/TaxRegionSettings.js:86
 msgid "You're not collecting VAT in the UK. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:89
+#: settings/tax-region/TaxRegionSettings.js:90
 msgid "You're not collecting sales tax for any states. Add a tax registration to start collecting tax."
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:162
+#: settings/tax-region/TaxRegionSettings.js:163
 msgid "%s Tax Region"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:272
+#: settings/tax-region/TaxRegionSettings.js:191
+#: store/add-entities.js:291
+msgid "Tax Registration"
+msgstr ""
+
+#: settings/tax-region/TaxRegionSettings.js:273
 msgid "You don't have any tax registrations. Add a tax registration to start collecting tax."
 msgstr ""
 
@@ -12561,38 +12670,47 @@ msgid "Promotion"
 msgstr ""
 
 #: store/add-entities.js:278
+#: store/add-entities.js:284
 msgid "Shipping Protocol"
 msgstr ""
 
-#: store/add-entities.js:285
+#: store/add-entities.js:298
+msgid "Tax Zone"
+msgstr ""
+
+#: store/add-entities.js:305
+msgid "Tax Override"
+msgstr ""
+
+#: store/add-entities.js:312
 msgid "Affiliation Protocol"
 msgstr ""
 
-#: store/add-entities.js:292
+#: store/add-entities.js:319
 msgid "Shipping Profile"
 msgstr ""
 
-#: store/add-entities.js:299
+#: store/add-entities.js:326
 msgid "Shipping Zone"
 msgstr ""
 
-#: store/add-entities.js:306
+#: store/add-entities.js:333
 msgid "Shipping Rate"
 msgstr ""
 
-#: store/add-entities.js:320
+#: store/add-entities.js:347
 msgid "Statistic"
 msgstr ""
 
-#: store/add-entities.js:341
+#: store/add-entities.js:368
 msgid "Incoming Webhook"
 msgstr ""
 
-#: store/add-entities.js:348
+#: store/add-entities.js:375
 msgid "Variant Option"
 msgstr ""
 
-#: store/add-entities.js:362
+#: store/add-entities.js:389
 msgid "Return Request"
 msgstr ""
 
@@ -13235,7 +13353,7 @@ msgid "Skip if in order"
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/DisplayConditions.js:45
-msgid "Don't show if already in the current order."
+msgid "Don't show if already being purchased in the current order."
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/DisplayConditions.js:60
@@ -13243,7 +13361,7 @@ msgid "Skip if purchased"
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/DisplayConditions.js:62
-msgid "Don't show if they have ever purchased."
+msgid "Don't show if ever purchased, including the current order."
 msgstr ""
 
 #: upsell-funnels/modules/Upsell/EditUpsell.js:21
@@ -13594,7 +13712,7 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:13
 #: Blocks/Switch/components/Inspector.js:13
 #: Blocks/Switch/edit.js:26
-#: Blocks/TaxIdInput/edit.js:19
+#: Blocks/TaxIdInput/edit.js:40
 #: Blocks/Textarea/edit.js:25
 #: Blocks/Total/edit.js:18
 #: Blocks/Totals/edit.js:82
@@ -14931,7 +15049,7 @@ msgstr ""
 
 #: Blocks/ProductCollection/edit.js:260
 #: Blocks/ProductItemList/edit.js:307
-#: sc-product-item-list.js:204
+#: sc-product-item-list.js:230
 msgid "Sort"
 msgstr ""
 
@@ -14942,7 +15060,8 @@ msgstr ""
 
 #: Blocks/ProductCollection/edit.js:273
 #: Blocks/ProductItemList/edit.js:320
-#: sc-product-item-list.js:243
+#: sc-product-item-list.js:264
+#: sc-product-item-list.js:273
 msgid "Search"
 msgstr ""
 
@@ -14959,10 +15078,6 @@ msgstr ""
 #: Blocks/ProductCollection/edit.js:290
 #: Blocks/ProductItemList/edit.js:347
 msgid "This controls the font size of the pagination."
-msgstr ""
-
-#: Blocks/ProductCollection/edit.js:305
-msgid "Product Collection"
 msgstr ""
 
 #: Blocks/ProductCollection/edit.js:306
@@ -15304,32 +15419,44 @@ msgstr ""
 msgid "Add some text..."
 msgstr ""
 
-#: Blocks/TaxIdInput/deprecated.js:8
-#: Blocks/TaxIdInput/edit.js:64
+#: Blocks/TaxIdInput/deprecated.js:7
+#: Blocks/TaxIdInput/edit.js:85
 #: sc-tax-id-input2.js:32
-#: sc-tax-id-input2.js:65
+#: sc-tax-id-input2.js:90
 #: tax.js:19
 msgid "Tax ID"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:22
+#: Blocks/TaxIdInput/edit.js:43
 msgid "CA GST Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:32
+#: Blocks/TaxIdInput/edit.js:53
 msgid "AU ABN Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:42
+#: Blocks/TaxIdInput/edit.js:63
 msgid "UK VAT Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:52
+#: Blocks/TaxIdInput/edit.js:73
 msgid "EU VAT Label"
 msgstr ""
 
-#: Blocks/TaxIdInput/edit.js:62
+#: Blocks/TaxIdInput/edit.js:83
 msgid "Other Label"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:93
+msgid "Help Text"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:102
+msgid "Tax types"
+msgstr ""
+
+#: Blocks/TaxIdInput/edit.js:110
+msgid "Limit tax types"
 msgstr ""
 
 #: Blocks/Total/edit.js:21
@@ -18249,8 +18376,8 @@ msgid "The response is not a valid JSON response."
 msgstr ""
 
 #: fetch.js:737
-#: sc-product-item-list.js:134
-#: sc-product-item-list.js:189
+#: sc-product-item-list.js:160
+#: sc-product-item-list.js:215
 msgid "An unknown error occurred."
 msgstr ""
 
@@ -18274,7 +18401,15 @@ msgstr ""
 msgid "This offer has expired."
 msgstr ""
 
-#: paypal-buttons.js:89
+#: mutations2.js:154
+msgid "Cart Opened"
+msgstr ""
+
+#: mutations2.js:157
+msgid "Cart Closed"
+msgstr ""
+
+#: paypal-buttons.js:88
 #: sc-paypal-add-method.js:61
 #: sc-paypal-add-method.js:66
 #: sc-paypal-add-method.js:72
@@ -18282,12 +18417,12 @@ msgstr ""
 msgid "The payment did not process. Please try again."
 msgstr ""
 
-#: paypal-buttons.js:103
-#: paypal-buttons.js:109
+#: paypal-buttons.js:102
+#: paypal-buttons.js:108
 msgid "Payment processing failed. Kindly attempt the transaction once more."
 msgstr ""
 
-#: paypal-buttons.js:144
+#: paypal-buttons.js:143
 msgid "Something went wrong. Please contact us for payment."
 msgstr ""
 
@@ -18412,7 +18547,7 @@ msgstr ""
 msgid "Additional Comments"
 msgstr ""
 
-#: sc-cart-button.js:46
+#: sc-cart-button.js:45
 msgid "Open Cart Menu Icon with %d items."
 msgstr ""
 
@@ -18420,11 +18555,11 @@ msgstr ""
 msgid "Close Cart"
 msgstr ""
 
-#: sc-cart-icon.js:41
+#: sc-cart-icon.js:40
 msgid "Open Cart Floating Icon with %s items"
 msgstr ""
 
-#: sc-cart-icon.js:41
+#: sc-cart-icon.js:40
 msgid "Close Cart Floating Icon"
 msgstr ""
 
@@ -18574,12 +18709,6 @@ msgstr ""
 
 #: sc-customer-email.js:91
 msgid "You won't receive further emails from us."
-msgstr ""
-
-#: sc-customer-firstname.js:46
-#: sc-customer-lastname.js:43
-#: sc-customer-name.js:42
-msgid "Field must not be empty."
 msgstr ""
 
 #. translators: Close this modal window.
@@ -19089,91 +19218,99 @@ msgstr ""
 msgid "Enter a custom amount."
 msgstr ""
 
-#: sc-product-item-list.js:181
+#: sc-product-item-list.js:75
+msgid "Page %d"
+msgstr ""
+
+#: sc-product-item-list.js:77
+msgid "Search results"
+msgstr ""
+
+#: sc-product-item-list.js:207
 msgid "%s products found"
 msgstr ""
 
-#: sc-product-item-list.js:196
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:222
+#: sc-product-item-list.js:257
 msgid "Latest"
 msgstr ""
 
-#: sc-product-item-list.js:198
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:224
+#: sc-product-item-list.js:257
 msgid "Oldest"
 msgstr ""
 
-#: sc-product-item-list.js:200
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:226
+#: sc-product-item-list.js:257
 msgid "Alphabetical, A-Z"
 msgstr ""
 
-#: sc-product-item-list.js:202
 #: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Alphabetical, Z-A"
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Dropdown to sort products."
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "selected."
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Sort Products"
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Sort by latest"
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Sort by oldest"
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Sort by name, A to Z"
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Sort by name, Z to A"
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Dropdown to filter products by collection. %s selected."
 msgstr ""
 
-#: sc-product-item-list.js:228
+#: sc-product-item-list.js:257
 msgid "Filter products"
 msgstr ""
 
-#: sc-product-item-list.js:229
+#: sc-product-item-list.js:258
 msgid "Filter by %s"
 msgstr ""
 
-#: sc-product-item-list.js:231
+#: sc-product-item-list.js:260
 msgid "Search Results:"
 msgstr ""
 
-#: sc-product-item-list.js:235
+#: sc-product-item-list.js:264
 msgid "Searched for %s. Press space to clear search."
 msgstr ""
 
-#: sc-product-item-list.js:245
+#: sc-product-item-list.js:275
 msgid "Product list"
 msgstr ""
 
-#: sc-product-item-list.js:268
+#: sc-product-item-list.js:308
 msgid "You have reached the end of product list. %s"
 msgstr ""
 
-#: sc-product-item-list.js:268
+#: sc-product-item-list.js:308
 msgid "Press tab to browse more products using pagination."
 msgstr ""
 
-#: sc-product-item-list.js:268
+#: sc-product-item-list.js:308
 msgid "No more products to browse."
 msgstr ""
 
@@ -19306,8 +19443,8 @@ msgstr ""
 
 #: sc-stripe-add-method.js:40
 #: sc-stripe-element.js:45
-#: sc-stripe-payment-element.js:64
-#: sc-stripe-payment-request2.js:60
+#: sc-stripe-payment-element.js:60
+#: sc-stripe-payment-request2.js:57
 msgid "Stripe could not be loaded"
 msgstr ""
 
@@ -19315,15 +19452,15 @@ msgstr ""
 msgid "Save Payment Method"
 msgstr ""
 
-#: sc-stripe-payment-request2.js:166
+#: sc-stripe-payment-request2.js:165
 msgid "You must serve this page over HTTPS to display express payment buttons."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:172
+#: sc-stripe-payment-request2.js:171
 msgid "You do not have any wallets set up in your browser."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:288
+#: sc-stripe-payment-request2.js:290
 msgid "Express Payment"
 msgstr ""
 
@@ -19513,15 +19650,15 @@ msgstr ""
 msgid "Summary %1$s"
 msgstr ""
 
-#: sc-tax-id-input2.js:65
+#: sc-tax-id-input2.js:90
 msgid "Enter Tax ID"
 msgstr ""
 
-#: sc-tax-id-input2.js:77
+#: sc-tax-id-input2.js:102
 msgid "Select number type"
 msgstr ""
 
-#: sc-tax-id-input2.js:100
+#: sc-tax-id-input2.js:125
 msgid "%s selected"
 msgstr ""
 
@@ -19569,14 +19706,6 @@ msgstr ""
 msgid "Account Email"
 msgstr ""
 
-#: ui.js:18
-msgid "Cart Opened"
-msgstr ""
-
-#: ui.js:21
-msgid "Cart Closed"
-msgstr ""
-
-#: watchers.js:199
+#: watchers.js:200
 msgid "There are just %d items left in stock, and the quantity has been adjusted to %d."
 msgstr ""
