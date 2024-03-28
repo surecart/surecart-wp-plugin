@@ -186,4 +186,13 @@ class Referral extends Model {
 		];
 		return $types[ $this->status ] ?? 'default';
 	}
+
+	/**
+	 * Get the editable attribute.
+	 *
+	 * @return bool
+	 */
+	public function getEditableAttribute() {
+		return 'paid' !== $this->status;
+	}
 }

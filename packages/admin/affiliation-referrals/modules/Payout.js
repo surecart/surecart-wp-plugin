@@ -1,5 +1,12 @@
 /** @jsx jsx */
+/**
+ * External Dependencies
+ */
 import { jsx } from '@emotion/core';
+
+/**
+ * Internal dependencies
+ */
 import {
 	ScButton,
 	ScFlex,
@@ -8,14 +15,34 @@ import {
 	ScOrderStatusBadge,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-
-import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import Definition from '../../ui/Definition';
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+
 export default ({ referral, loading }) => {
+	const { payout, loadingPayout } = useSelect((select) => {
+		if (!referral?.payout) {
+			return {};
+		}
+
+		const queryArgs = ['surecart', 'payout', referral?.payout];
+
+		return {
+			payout: select(coreStore).getEntityRecord(...queryArgs),
+			loadingPayout: select(coreStore).isResolving(
+				'getEntityRecord',
+				queryArgs
+			),
+		};
+	});
+
 	const renderPayoutDisplay = () => {
-		const payout = referral?.payout;
 		<ScFlex alignItems="center" justifyContent="space-between">
 			<div>
 				<Definition title={__('Commission', 'surecart')}>
@@ -57,7 +84,10 @@ export default ({ referral, loading }) => {
 	};
 
 	return (
-		<Box title={__('Payout', 'surecart')} loading={loading}>
+		<Box
+			title={__('Payout', 'surecart')}
+			loading={loading || loadingPayout}
+		>
 			{referral?.payout?.id ? renderPayoutDisplay() : renderEmpty()}
 		</Box>
 	);

@@ -1,8 +1,12 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 
 /**
  * External dependencies.
+ */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelect, select } from '@wordpress/data';
@@ -49,21 +53,14 @@ export default ({ id }) => {
 	const [changingStatus, setChangingStatus] = useState(false);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } =
-		useDispatch(coreStore);
+	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { baseURL } = select(coreStore).getEntityConfig(
 		'surecart',
 		'referral'
 	);
 	const [currentModal, setCurrentModal] = useState(null);
-
 	const { referral, isLoading } = useSelect((select) => {
-		const entityData = [
-			'surecart',
-			'referral',
-			id,
-			{ expand: ['checkout', 'payout', 'attributed_click'] },
-		];
+		const entityData = ['surecart', 'referral', id];
 
 		return {
 			referral: select(coreStore).getEditedEntityRecord(...entityData),
@@ -243,54 +240,47 @@ export default ({ id }) => {
 						}}
 					/>
 				) : (
-					<ScFlex justifyContent="flex-start">
-						<ScDropdown placement="bottom-end">
-							<ScButton type="default" slot="trigger" caret>
-								{STATUS[referral?.status] ??
-									__('Actions', 'surecart')}
-							</ScButton>
-							<ScMenu>
-								{referral?.status !== 'paid' && (
-									<>
-										{referral?.status !== 'approved' && (
-											<ScMenuItem
-												onClick={approveReferral}
-											>
-												{__('Approve', 'surecart')}
-											</ScMenuItem>
-										)}
-										{referral?.status !== 'reviewing' && (
-											<ScMenuItem
-												onClick={() =>
-													markReferralAsReviewing()
-												}
-											>
-												{__(
-													'Make Reviewing',
-													'surecart'
-												)}
-											</ScMenuItem>
-										)}
-										{referral?.status !== 'denied' && (
-											<ScMenuItem
-												onClick={() => denyReferral()}
-											>
-												{__('Deny', 'surecart')}
-											</ScMenuItem>
-										)}
-									</>
-								)}
-								<ScMenuItem
-									onClick={() =>
-										setCurrentModal('delete_referral')
-									}
-								>
-									{__('Delete', 'surecart')}
-								</ScMenuItem>
-							</ScMenu>
-						</ScDropdown>
-						<SaveButton>{__('Update', 'surecart')}</SaveButton>
-					</ScFlex>
+					referral?.editable && (
+						<ScFlex justifyContent="flex-start">
+							<ScDropdown placement="bottom-end">
+								<ScButton type="default" slot="trigger" caret>
+									{STATUS[referral?.status] ??
+										__('Actions', 'surecart')}
+								</ScButton>
+								<ScMenu>
+									{referral?.status !== 'approved' && (
+										<ScMenuItem onClick={approveReferral}>
+											{__('Approve', 'surecart')}
+										</ScMenuItem>
+									)}
+									{referral?.status !== 'reviewing' && (
+										<ScMenuItem
+											onClick={() =>
+												markReferralAsReviewing()
+											}
+										>
+											{__('Make Reviewing', 'surecart')}
+										</ScMenuItem>
+									)}
+									{referral?.status !== 'denied' && (
+										<ScMenuItem
+											onClick={() => denyReferral()}
+										>
+											{__('Deny', 'surecart')}
+										</ScMenuItem>
+									)}
+									<ScMenuItem
+										onClick={() =>
+											setCurrentModal('delete_referral')
+										}
+									>
+										{__('Delete', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
+							<SaveButton>{__('Update', 'surecart')}</SaveButton>
+						</ScFlex>
+					)
 				)
 			}
 			sidebar={

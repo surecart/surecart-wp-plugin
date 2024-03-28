@@ -52,7 +52,7 @@ class AffiliationReferralsController extends AdminController {
 				'/wp/v2/users/me',
 				'/wp/v2/types?context=view',
 				'/wp/v2/types?context=edit',
-				'/surecart/v1/affiliation_clicks/' . $request->query( 'id' ) . '?context=edit',
+				'/surecart/v1/affiliation_referrals/' . $request->query( 'id' ) . '?context=edit',
 			]
 		);
 
