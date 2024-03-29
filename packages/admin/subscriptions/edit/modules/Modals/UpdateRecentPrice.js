@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -12,9 +13,11 @@ import { store as coreStore } from '@wordpress/core-data';
  * Internal dependencies.
  */
 import {
+	ScAlert,
 	ScButton,
 	ScDialog,
 	ScFormatNumber,
+	ScSwitch,
 	ScText,
 } from '@surecart/components-react';
 import { intervalString } from '../../../../util/translations';
@@ -26,8 +29,10 @@ export default ({
 	onUpdateRecentVersion,
 	onRequestClose,
 }) => {
-	const submit = (updateImmediately) => {
-		onUpdateRecentVersion(updateImmediately);
+	const [immediateUpdate, setImmediateUpdate] = useState(false);
+
+	const submit = () => {
+		onUpdateRecentVersion(immediateUpdate);
 		onRequestClose();
 	};
 
@@ -95,39 +100,48 @@ export default ({
 				})}
 			</ScText>
 
-			<div
-				css={css`
-					display: flex;
-					justify-content: space-between;
-				`}
-				slot="footer"
-			>
+			{!subscription?.finite && (
+				<ScText
+					css={css`
+						display: block;
+						margin: var(--sc-spacing-medium) 0;
+					`}
+				>
+					<ScSwitch
+						checked={immediateUpdate}
+						onScChange={(e) => setImmediateUpdate(e.target.checked)}
+					>
+						{__('Update Immediately', 'surecart')}
+					</ScSwitch>
+
+					<ScAlert
+						open={immediateUpdate}
+						type="info"
+						css={css`
+							margin-top: var(--sc-spacing-small);
+						`}
+					>
+						{__(
+							'Choosing to update the subscription immediately will update the subscription price immediately. This will affect the next billing cycle.',
+							'surecart'
+						)}
+					</ScAlert>
+				</ScText>
+			)}
+
+			<div slot="footer">
 				<ScButton type="text" onClick={onRequestClose} slot="footer">
 					{__('Cancel', 'surecart')}
 				</ScButton>
-
-				<div
-					css={css`
-						display: flex;
-						gap: var(--sc-spacing-small);
-					`}
+				<ScButton
+					type="primary"
+					onClick={() => submit(true)}
+					slot="footer"
 				>
-					<ScButton
-						type="primary"
-						onClick={() => submit(true)}
-						slot="footer"
-					>
-						{__('Update Immediately', 'surecart')}
-					</ScButton>
-
-					<ScButton
-						type="primary"
-						onClick={() => submit(false)}
-						slot="footer"
-					>
-						{__('Update on Next Billing', 'surecart')}
-					</ScButton>
-				</div>
+					{immediateUpdate
+						? __('Update Subscription', 'surecart')
+						: __('Schedule Update', 'surecart')}
+				</ScButton>
 			</div>
 		</ScDialog>
 	);
