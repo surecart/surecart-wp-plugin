@@ -22,7 +22,8 @@ class AffiliationReferralsController extends AdminController {
 					'title' => __( 'Affiliate Referrals', 'surecart' ),
 				],
 			],
-			$this->testModeToggle()
+			null,
+			true
 		);
 
 		$this->withNotices(
