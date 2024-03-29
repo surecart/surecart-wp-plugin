@@ -1,14 +1,14 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-list-search",
+	"name": "surecart/product-list-search-button",
 	"title": "Search",
-	"description": "Display the product search.",
+	"description": "Display the product search button.",
 	"version": "1.0.0",
 	"category": "surecart",
 	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-list"],
+	"ancestor": ["surecart/product-list-search"],
 	"usesContext": ["surecart/product-list/blockId"],
 	"attributes": {
 		"label": {
@@ -35,8 +35,7 @@
 		},
 		"layout": {
 			"default": {
-				"type": "flex",
-				"flexWrap": "nowrap"
+				"type": "flex"
 			}
 		}
 	},

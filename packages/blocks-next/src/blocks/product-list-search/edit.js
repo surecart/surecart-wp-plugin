@@ -1,26 +1,19 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps } from '@wordpress/block-editor';
-import { Icon, search } from '@wordpress/icons';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+
+const TEMPLATE = [
+	['surecart/product-list-search-input'],
+	['surecart/product-list-search-button'],
+];
 
 export default () => {
 	const blockProps = useBlockProps({
 		style: {
-			display: 'flex',
+			flexDirection: 'row',
 		},
 	});
-	return (
-		<div {...blockProps}>
-			<input className="wp-block-search__input" type="search" />
-			<button
-				className="wp-element-button wp-block-search__button"
-				type="button"
-				style={{
-					paddingTop: '0.3em',
-					paddingBottom: '0.3em',
-				}}
-			>
-				<Icon icon={search} />
-			</button>
-		</div>
-	);
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		template: TEMPLATE,
+	});
+	return <div {...innerBlocksProps}></div>;
 };
