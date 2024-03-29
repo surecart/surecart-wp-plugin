@@ -5,6 +5,18 @@
 </style>
 
 <?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
+<?php
+if ( ! empty( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
+	?>
+	<div class="notice notice-info" style="padding-top: var(--sc-spacing-medium);">
+		<sc-text tag="h2" style="--font-size: var(--sc-font-size-x-large);--font-weight:bold;">
+			<?php esc_html_e( 'What are test mode referrals?', 'surecart' ); ?>
+		</sc-text>
+		<p><?php esc_html_e( 'Test mode referrals are created when an order is placed in test mode and an affiliate is associated with the order. These referrals do not impact stats, are not included in payouts, and are not visible to affiliates. They are solely for testing your affiliate setup and can be deleted or ignored.', 'surecart' ); ?></p>
+	</div>
+	<?php
+}
+?>
 
 <div class="wrap">
 	<?php
