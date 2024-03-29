@@ -113,6 +113,7 @@ const { state, callbacks, actions } = store(
 				actions.navigate(url.toString());
 			},
 			*onSearchSubmit(event) {
+				event.preventDefault();
 				const { actions, state: routerState } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
@@ -120,8 +121,9 @@ const { state, callbacks, actions } = store(
 				const { ref } = getElement();
 				// remove filter id from state
 				const ctx = getContext();
-				const searchValue =
-					ref?.parentElement?.querySelector('input')?.value;
+				const searchValue = ref?.querySelector(
+					'.wp-block-surecart-product-list-search-input'
+				)?.value;
 				const url = new URL(routerState?.url);
 				url.searchParams.set(
 					`products-${ctx?.blockId}-search`,

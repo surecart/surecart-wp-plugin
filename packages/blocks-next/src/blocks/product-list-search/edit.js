@@ -8,9 +8,7 @@ const TEMPLATE = [
 
 export default () => {
 	const blockProps = useBlockProps({
-		style: {
-			flexDirection: 'row',
-		},
+		className: 'sc-input-group',
 	});
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,

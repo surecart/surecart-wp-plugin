@@ -3,7 +3,10 @@ import { useBlockProps } from '@wordpress/block-editor';
 
 export default () => {
 	const blockProps = useBlockProps({
-		className: 'sc-form-control',
+		className: 'is-layout-flex sc-form-control',
+		style: {
+			height: 'auto',
+		},
 	});
 	return <input {...blockProps} type="search" />;
 };
