@@ -129,19 +129,4 @@ class AffiliationReferralsController extends AdminController {
 
 		return \SureCart::redirect()->to( add_query_arg( array( 'reviewing' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
-
-	public function testModeToggle() {
-		$test_mode = ! empty( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'];
-
-		ob_start();
-		?>
-		<sc-switch id="live-mode-toggle" checked="<?php echo esc_attr( $test_mode ? 'true' : 'false' ); ?>" >
-			<span style="white-space: nowrap;">
-				<?php esc_html_e( 'Test Mode', 'surecart' ); ?>
-			</span>
-		</sc-switch>
-		<?php
-		return ob_get_clean();
-	}
-
 }
