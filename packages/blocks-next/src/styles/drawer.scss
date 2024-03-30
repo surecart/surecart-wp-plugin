@@ -1,0 +1,44 @@
+.sc-drawer {
+	.sc-dialog {
+		position: absolute;
+		top: 0;
+		right: -50%; // Initial position off-screen
+		width: 50%;
+		height: 100%;
+		border-radius: 0;
+		animation: slide-out 0.25s ease;
+		transition: all;
+
+		&[open] {
+			animation: slide-in 0.25s ease;
+		}
+
+		&:not([open]) {
+			animation: slide-out 0.25s ease;
+		}
+
+		&__header {
+			justify-content: space-between;
+			height: 70px;
+			padding: 4px;
+		}
+	}
+}
+
+@keyframes slide-in {
+	from {
+		right: -100%;
+	}
+	to {
+		right: -50%;
+	}
+}
+
+@keyframes slide-out {
+	from {
+		right: -50%;
+	}
+	to {
+		right: -100%;
+	}
+}

@@ -1,0 +1,19 @@
+.sc-cart {
+    &__button {
+        bottom: var(--sc-cart-icon-bottom, 30px);
+        right: var(--sc-cart-icon-right, 30px);
+        left: var(--sc-cart-icon-left, auto);
+        top: var(--sc-cart-icon-top, auto);
+        background: var(--sc-cart-icon-background, var(--sc-color-primary-500));
+        border-radius: var(--sc-cart-icon-border-radius, var(--sc-input-border-radius-medium));
+        width: var(--sc-cart-icon-width, 60px);
+        height: var(--sc-cart-icon-height, 60px);
+        color: var(--sc-cart-icon-color, var(--sc-color-primary-text, var(--sc-color-white)));
+        font-family: var(--sc-cart-font-family, var(--sc-input-font-family));
+        font-weight: var(--sc-font-weight-semibold);
+        transition: opacity var(--sc-transition-medium) ease;
+        box-shadow: var(--sc-shadow-small);
+        cursor: pointer;
+        border: 0;
+    }
+}
