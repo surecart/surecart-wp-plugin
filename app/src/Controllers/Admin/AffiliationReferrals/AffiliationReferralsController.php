@@ -17,11 +17,14 @@ class AffiliationReferralsController extends AdminController {
 		$table = new AffiliationReferralsListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'affiliate_referrals' => [
-					'title' => __( 'Affiliate Referrals', 'surecart' ),
+			array(
+				'breadcrumbs'      => [
+					'affiliate_referrals' => [
+						'title' => __( 'Affiliate Referrals', 'surecart' ),
+					],
 				],
-			]
+				'test_mode_toggle' => true,
+			)
 		);
 
 		$this->withNotices(

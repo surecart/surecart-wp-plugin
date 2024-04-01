@@ -15,11 +15,13 @@ class AffiliationClicksController extends AdminController {
 		$table = new AffiliationClicksListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'affiliate_clicks' => [
-					'title' => __( 'Clicks', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'affiliate_clicks' => [
+						'title' => __( 'Clicks', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/affiliation-clicks/index' )->with( [ 'table' => $table ] );
 	}

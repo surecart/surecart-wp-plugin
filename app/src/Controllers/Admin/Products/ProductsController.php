@@ -18,11 +18,13 @@ class ProductsController extends AdminController {
 		$table = new ProductsListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'products' => [
-					'title' => __( 'Products', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'products' => [
+						'title' => __( 'Products', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
 	}

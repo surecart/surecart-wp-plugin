@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Admin;
 
+use SureCart\Controllers\Admin\TestModeToggle\TestModeToggleScriptsController;
 use SureCartCore\Responses\RedirectResponse;
 
 abstract class AdminController {
@@ -32,18 +33,25 @@ abstract class AdminController {
 	/**
 	 * The header.
 	 *
+	 * @param array $args The arguments.
+	 *
 	 * @return void
 	 */
-	public function withHeader( $breadcrumbs, $suffix = null ) {
+	public function withHeader( $args ) {
+		if ( ! empty( $args['test_mode_toggle'] ) ) {
+			add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( TestModeToggleScriptsController::class, 'enqueue' ) );
+		}
+
 		add_action(
 			'in_admin_header',
-			function() use ( $breadcrumbs, $suffix ) {
+			function() use ( $args ) {
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
-						'breadcrumbs' => $breadcrumbs,
-						'suffix'      => $suffix,
-						'claim_url'   => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'breadcrumbs'      => $args['breadcrumbs'] ?? [],
+						'suffix'           => $args['suffix'] ?? '',
+						'test_mode_toggle' => $args['test_mode_toggle'] ?? false,
+						'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 					]
 				);
 			}

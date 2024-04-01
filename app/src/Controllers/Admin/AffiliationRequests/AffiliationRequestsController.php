@@ -16,11 +16,13 @@ class AffiliationRequestsController extends AdminController {
 		$table = new AffiliationRequestsListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'affiliate-requests' => [
-					'title' => __( 'Affiliate Requests', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'affiliate-requests' => [
+						'title' => __( 'Affiliate Requests', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/affiliation-requests/index' )->with( [ 'table' => $table ] );
 	}

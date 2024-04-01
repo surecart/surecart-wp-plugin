@@ -18,12 +18,14 @@ class AffiliationPayoutsController extends AdminController {
 		$table->prepare_items();
 
 		$this->withHeader(
-			[
-				'affiliate_payouts' => [
-					'title' => __( 'Affiliate Payouts', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'affiliate_payouts' => [
+						'title' => __( 'Affiliate Payouts', 'surecart' ),
+					],
 				],
-			],
-			'<sc-button href="' . esc_url( admin_url( 'admin.php?page=sc-affiliate-payouts&action=export' ) ) . '"  type="default">' . __( 'Export Payouts', 'surecart' ) . '</sc-button>',
+				'suffix'      => '<sc-button href="' . esc_url( admin_url( 'admin.php?page=sc-affiliate-payouts&action=export' ) ) . '"  type="default">' . __( 'Export Payouts', 'surecart' ) . '</sc-button>',
+			)
 		);
 
 		$this->withNotices(
