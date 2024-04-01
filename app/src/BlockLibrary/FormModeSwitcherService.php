@@ -13,7 +13,14 @@ class FormModeSwitcherService {
 	 *
 	 * @var bool
 	 */
-	protected static $rendered = false;
+	protected $rendered = false;
+
+	/**
+	 * The mode.
+	 *
+	 * @var string
+	 */
+	protected $mode = 'live';
 
 	/**
 	 * Bootstrap the service.
@@ -32,18 +39,18 @@ class FormModeSwitcherService {
 	 *
 	 * @return string
 	 */
-	public function getMenuTitle( $mode = 'live' ) {
+	public function getMenuTitle() {
 		ob_start(); ?>
 
 		<span style="color: #fff;">
-			<?php echo esc_html__( 'Checkout Form', 'surecart' ); ?>
+				<?php echo esc_html__( 'Checkout Form', 'surecart' ); ?>
 		</span>
-		<span style="color: <?php echo 'live' === $mode ? 'var(--sc-color-success-900, #21382a)' : 'var(--sc-color-warning-900, #4d3d11)'; ?>; display: inline-block; background-color: <?php echo 'live' === $mode ? 'var(--sc-color-success-400, #49de80)' : 'var(--sc-color-warning-400, #fbbf24)'; ?>; font-size: 10px; line-height: 1; border-radius: 999px; padding: 3px 6px; margin: 0 5px; text-transform: uppercase; font-weight: bold;">
-			<?php echo 'live' === $mode ? esc_html__( 'Live Mode', 'surecart' ) : esc_html__( 'Test Mode', 'surecart' ); ?>
+		<span style="color: <?php echo 'live' === $this->mode ? 'var(--sc-color-success-900, #21382a)' : 'var(--sc-color-warning-900, #4d3d11)'; ?>; display: inline-block; background-color: <?php echo 'live' === $this->mode ? 'var(--sc-color-success-400, #49de80)' : 'var(--sc-color-warning-400, #fbbf24)'; ?>; font-size: 10px; line-height: 1; border-radius: 999px; padding: 3px 6px; margin: 0 5px; text-transform: uppercase; font-weight: bold;">
+				<?php echo 'live' === $this->mode ? esc_html__( 'Live Mode', 'surecart' ) : esc_html__( 'Test Mode', 'surecart' ); ?>
 		</span>
 
-		<?php
-		return ob_get_clean();
+			<?php
+			return ob_get_clean();
 	}
 
 	/**
@@ -54,18 +61,18 @@ class FormModeSwitcherService {
 	 *
 	 * @return string
 	 */
-	public function getMenuItem( $mode = 'live', $is_selected ) {
+	public function getMenuItem( $mode = 'live' ) {
 		ob_start();
 		?>
 		<span style="display: flex; justify-content: space-between;">
 			<span>
 				<span style="color: <?php echo 'live' === $mode ? 'var(--sc-color-success-400, #21382a)' : 'var(--sc-color-warning-400, #4d3d11)'; ?>; font-weight: bold; font-size: 16px; line-height: 1;">• </span>
 				<span style="color: <?php echo 'live' === $mode ? 'var(--sc-color-success-100, #49de80)' : 'var(--sc-color-warning-100, #fbbf24)'; ?>;">
-					<?php echo 'live' === $mode ? esc_html__( 'Live Mode', 'surecart' ) : esc_html__( 'Test Mode', 'surecart' ); ?>
+				<?php echo 'live' === $mode ? esc_html__( 'Live Mode', 'surecart' ) : esc_html__( 'Test Mode', 'surecart' ); ?>
 				</span>
 			</span>
 			<span>
-				<?php echo $is_selected ? ' ✓' : ''; ?>
+			<?php echo $this->mode === $mode ? ' ✓' : ''; ?>
 			</span>
 		</span>
 		<?php
@@ -96,8 +103,8 @@ class FormModeSwitcherService {
 			return;
 		}
 
-		$mode = $checkout_form_block['attrs']['mode'] ?? 'live';
-		$url  = add_query_arg(
+		$this->mode = $checkout_form_block['attrs']['mode'] ?? 'live';
+		$url        = add_query_arg(
 			[
 				'sc_checkout_change_mode' => $form_post->ID,
 				'sc_checkout_post'        => get_the_ID(),
@@ -109,7 +116,7 @@ class FormModeSwitcherService {
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'sc_change_checkout_mode',
-				'title' => $this->getMenuTitle( $mode ),
+				'title' => $this->getMenuTitle(),
 			]
 		);
 
@@ -117,8 +124,8 @@ class FormModeSwitcherService {
 			[
 				'parent' => 'sc_change_checkout_mode',
 				'id'     => 'sc_live_mode',
-				'title'  => $this->getMenuItem( 'live', 'live' === $mode ),
-				'href'   => 'live' === $mode ? '#' : $url,
+				'title'  => $this->getMenuItem( 'live' ),
+				'href'   => 'live' === $this->mode ? '#' : $url,
 			]
 		);
 
@@ -126,13 +133,13 @@ class FormModeSwitcherService {
 			[
 				'parent' => 'sc_change_checkout_mode',
 				'id'     => 'sc_test_mode',
-				'title'  => $this->getMenuItem( 'test', 'test' === $mode ),
-				'href'   => 'test' === $mode ? '#' : $url,
+				'title'  => $this->getMenuItem( 'test' ),
+				'href'   => 'test' === $this->mode ? '#' : $url,
 			],
 		);
 
 		// Mark as rendered.
-		self::$rendered = true;
+		$this->rendered = true;
 	}
 
 	/**
@@ -141,28 +148,31 @@ class FormModeSwitcherService {
 	 * @return void
 	 */
 	public function confirmScript() {
-		if ( ! self::$rendered ) {
+		if ( ! $this->rendered ) {
 			return;
 		}
+		$mode = 'test' === $this->mode ? esc_html__( 'live mode', 'surecart' ) : esc_html__( 'test mode', 'surecart' );
+		// translators: %s: live mode or test mode.
+		$message = sprintf( esc_html__( "Are you sure you want to change this form to %1\$s? \n\nThis will change the form to %2\$s for EVERYONE, and %3\$s cart contents will be used - your cart contents may not transfer.", 'surecart' ), $mode, $mode, $mode );
 		?>
 		<script>
 			const items = document.querySelectorAll('#wp-admin-bar-sc_change_checkout_mode a:not([href="#"])');
 			(items || []).forEach(item => {
 				item.addEventListener('click', function(e) {
-					if (!confirm('<?php echo esc_js( __( "Notice: Cart Contents Will Be Mode-Specific. \n\nYou are about to switch your checkout mode. It's important to note that cart items are specific to each mode and will not be transferred between them.", 'surecart' ) ); ?>')) {
+					if (!confirm('<?php echo esc_js( $message ); ?>')) {
 						e.preventDefault();
 					}
 				})
 			});
 		</script>
-		<?php
+			<?php
 	}
 
-	/**
-	 * Get checkout form post.
-	 *
-	 * @return object|null
-	 */
+		/**
+		 * Get checkout form post.
+		 *
+		 * @return object|null
+		 */
 	public function getCheckoutFormPost() {
 		$post = get_post();
 
@@ -189,13 +199,13 @@ class FormModeSwitcherService {
 		return get_post( $checkout_form_post_id ) ?? null;
 	}
 
-	/**
-	 * Get block from post.
-	 *
-	 * @param \WP_Post $checkout_form_post The checkout form post.
-	 *
-	 * @return array|null
-	 */
+		/**
+		 * Get block from post.
+		 *
+		 * @param \WP_Post $checkout_form_post The checkout form post.
+		 *
+		 * @return array|null
+		 */
 	public function getBlockFromPost( $checkout_form_post ) {
 		if ( ! $checkout_form_post ) {
 			return null;
