@@ -28,11 +28,4 @@ class TestModeToggleScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/test-mode-toggle';
-
-	/**
-	 * Add the app url to the data.
-	 */
-	public function __construct() {
-		$this->data['api_url'] = \SureCart::requests()->getBaseUrl();
-	}
 }
