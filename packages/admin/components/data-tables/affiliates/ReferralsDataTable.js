@@ -1,6 +1,8 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -55,17 +57,18 @@ export default ({
 							order: (
 								<ScText truncate>
 									{!!order?.id ? (
-										<ScButton
+										<a
 											href={addQueryArgs('admin.php', {
 												page: 'sc-orders',
 												action: 'edit',
 												id: order?.id,
 											})}
-											size="small"
-											type="link"
+											css={css`
+												text-decoration: none;
+											`}
 										>
 											#{order?.number ?? order?.id}
-										</ScButton>
+										</a>
 									) : (
 										'-'
 									)}
@@ -90,7 +93,7 @@ export default ({
 							view: (
 								<ScButton
 									href={addQueryArgs('admin.php', {
-										page: 'sc-referrals',
+										page: 'sc-affiliate-referrals',
 										action: 'edit',
 										id,
 									})}
