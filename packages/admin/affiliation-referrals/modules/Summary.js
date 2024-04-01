@@ -1,5 +1,4 @@
-import { ScBlockUi, ScFormatDate } from '@surecart/components-react';
-import StatusBadge from '../../components/StatusBadge';
+import { ScTag, ScFormatDate } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 
@@ -9,7 +8,9 @@ export default ({ referral, loading }) => {
 	return (
 		<Box title={__('Summary', 'surecart')} loading={loading}>
 			<Definition title={__('Status', 'surecart')}>
-				<StatusBadge status={referral?.status} />
+				<ScTag type={referral?.status_type}>
+					{referral?.status_display_text}
+				</ScTag>
 			</Definition>
 
 			{referral?.manual && (
