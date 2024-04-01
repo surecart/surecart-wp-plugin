@@ -1,44 +1,92 @@
 .sc-drawer {
-	.sc-dialog {
-		position: absolute;
-		top: 0;
-		right: -50%; // Initial position off-screen
-		width: 50%;
-		height: 100%;
-		border-radius: 0;
-		animation: slide-out 0.25s ease;
-		transition: all;
+	position: fixed;
+	box-sizing: border-box;
+	width: var(--sc-drawer-width, 31rem);
+	height: 100%;
+	min-width: var(--sc-drawer-min-width, '300px');
+	background-color: var(--sc-panel-background-color);
+	box-shadow: var(--sc-shadow-x-large);
+	padding: 0;
+	margin: auto;
+	box-shadow: var(--sc-shadow-x-large);
+	border: none;
+	border-radius: 0;
+	outline: none;
+	right: 0;
+	left: auto;
+	bottom: auto;
+	font-family: var(--sc-font-sans);
+	font-weight: var(--sc-font-weight-normal);
+	animation: slide-out 0.25s ease;
+	transition: var(--sc-transition-medium) transform;
 
-		&[open] {
-			animation: slide-in 0.25s ease;
-		}
+	&[open] {
+		animation: slide-in 0.25s ease;
+	}
 
-		&:not([open]) {
-			animation: slide-out 0.25s ease;
-		}
+	&[open]::backdrop {
+		animation: backdrop-fade-in 0.25s ease forwards;
+	}
 
-		&__header {
-			justify-content: space-between;
-			height: 70px;
-			padding: 4px;
-		}
+	&__header {
+		display: flex;
+		align-items: center;
+		padding: var(--sc-drawer-header-spacing, var(--sc-spacing-medium));
+		border-bottom: var(--sc-drawer-border);
+	}
+
+	&__title {
+		flex: 1 1 auto;
+		font: inherit;
+		font-size: var(--sc-font-size-large);
+		line-height: var(--sc-line-height-dense);
+		margin: 0;
+	}
+
+	&__close {
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		font-size: var(--sc-font-size-x-large);
+		color: var(--sc-color-gray-500);
+		cursor: pointer;
+	}
+
+	&__body {
+		flex: 1 1 auto;
+		padding: var(--sc-drawer-body-spacing, var(--sc-spacing-medium));
+	}
+
+	&__footer {
+		border-top: var(--sc-drawer-border);
+		padding: var(--sc-drawer-footer-spacing, var(--sc-spacing-medium));
 	}
 }
 
 @keyframes slide-in {
 	from {
-		right: -100%;
+		right: -200px;
 	}
 	to {
-		right: -50%;
+		right: 0;
 	}
 }
 
 @keyframes slide-out {
 	from {
-		right: -50%;
+		right: 0
 	}
 	to {
-		right: -100%;
+		right: -200px;
+	}
+}
+
+@keyframes backdrop-fade-in {
+	0% {
+		background-color: rgb(0 0 0 / 0%);
+	}
+
+	100% {
+		background-color: rgb(0 0 0 / 25%);
 	}
 }

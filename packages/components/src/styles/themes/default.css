@@ -261,10 +261,6 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-z-index-dropdown: 900;
   --sc-z-index-toast: 950;
   --sc-z-index-tooltip: 1000;
-
-  --sc-drawer-header-spacing: var(--sc-spacing-large);
-  --sc-drawer-body-spacing: var(--sc-spacing-large);
-  --sc-drawer-footer-spacing: var(--sc-spacing-large);
 }
 
 /* You can override the default Infima variables here. */
