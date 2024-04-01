@@ -34,7 +34,7 @@ class Referral extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function approve( $id = null ) {
+	protected function approve( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -73,7 +73,7 @@ class Referral extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function deny( $id = null ) {
+	protected function deny( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -112,7 +112,7 @@ class Referral extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function make_reviewing( $id = null ) {
+	protected function make_reviewing( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -153,5 +153,46 @@ class Referral extends Model {
 	 */
 	public function setAttributedClickAttribute( $value ) {
 		$this->setRelation( 'attributed_click', $value, Click::class );
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayStatusAttribute() {
+		$statuses = [
+			'reviewing' => __( 'Reviewing', 'surecart' ),
+			'paid'      => __( 'Paid', 'surecart' ),
+			'denied'    => __( 'Denied', 'surecart' ),
+			'cancelled' => __( 'Cancelled', 'surecart' ),
+			'approved'  => __( 'Approved', 'surecart' ),
+		];
+		return $statuses[ $this->status ] ?? '';
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusTypeAttribute() {
+		$types = [
+			'reviewing' => 'warning',
+			'paid'      => 'success',
+			'denied'    => 'danger',
+			'cancelled' => 'info',
+			'approved'  => 'success',
+		];
+		return $types[ $this->status ] ?? 'default';
+	}
+
+	/**
+	 * Get the editable attribute.
+	 *
+	 * @return bool
+	 */
+	public function getEditableAttribute() {
+		return 'paid' !== $this->status;
 	}
 }

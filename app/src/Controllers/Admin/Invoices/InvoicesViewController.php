@@ -16,11 +16,13 @@ class InvoicesViewController extends AdminController {
 		$table = new InvoicesListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'invoices' => [
-					'title' => __( 'Invoices', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'invoices' => [
+						'title' => __( 'Invoices', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/invoices/index' )->with(
 			[

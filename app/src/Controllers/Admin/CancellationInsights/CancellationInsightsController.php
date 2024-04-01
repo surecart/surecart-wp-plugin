@@ -17,11 +17,13 @@ class CancellationInsightsController extends AdminController {
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( CancellationInsightsScriptsController::class, 'enqueue' ) );
 
 		$this->withHeader(
-			[
-				'subscriptions' => [
-					'title' => __( 'Subscription Saver & Insights', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'subscriptions' => [
+						'title' => __( 'Subscription Saver & Insights', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 
 		$table = new CancellationInsightsListTable();

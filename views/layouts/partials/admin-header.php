@@ -35,5 +35,17 @@
 				<?php endforeach; ?>
 			</sc-breadcrumbs>
 		<?php endif; ?>
+		<?php
+		if ( ! empty( $suffix ) ) {
+			echo wp_kses_post( $suffix );
+		}
+		?>
+		<?php
+		if ( ! empty( $test_mode_toggle ) ) {
+			?>
+			<div id="sc-test-mode-toggle"></div>
+			<?php
+		}
+		?>
 	</div>
 </div>

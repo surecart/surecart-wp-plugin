@@ -104,6 +104,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'export',
+		kind: 'surecart',
+		label: __('Export', 'surecart'),
+		baseURL: '/surecart/v1/exports',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'fulfillment',
 		kind: 'surecart',
 		label: __('Fulfillment', 'surecart'),
@@ -339,6 +346,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Referral', 'surecart'),
 		baseURL: '/surecart/v1/referrals',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'referral-item',
+		kind: 'surecart',
+		label: __('Referral Items', 'surecart'),
+		baseURL: '/surecart/v1/referral_items',
 		baseURLParams: { context: 'edit' },
 	},
 	{

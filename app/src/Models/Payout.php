@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasAffiliation;
 use SureCart\Models\Traits\HasReferrals;
 
 /**
@@ -9,6 +10,7 @@ use SureCart\Models\Traits\HasReferrals;
  */
 class Payout extends Model {
 	use HasReferrals;
+	use HasAffiliation;
 
 	/**
 	 * Rest API endpoint
@@ -42,7 +44,7 @@ class Payout extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function complete( $id = null ) {
+	protected function complete( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -81,7 +83,7 @@ class Payout extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function make_processing( $id = null ) {
+	protected function make_processing( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -111,5 +113,14 @@ class Payout extends Model {
 		$this->fireModelEvent( 'processed' );
 
 		return $this;
+	}
+
+	/**
+	 * Get status display
+	 *
+	 * @return string
+	 */
+	protected function getStatusDisplayTextAttribute() {
+		return 'completed' === $this->status ? esc_html__( 'Completed', 'surecart' ) : esc_html__( 'Processing', 'surecart' );
 	}
 }
