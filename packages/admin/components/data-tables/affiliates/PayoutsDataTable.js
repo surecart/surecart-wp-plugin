@@ -38,6 +38,7 @@ export default ({
 				.map(
 					({
 						status,
+						status_display_text,
 						payout_email,
 						total_commission_amount,
 						currency,
@@ -45,7 +46,17 @@ export default ({
 						created_at,
 					}) => {
 						return {
-							status: <StatusBadge status={status} />,
+							status: (
+								<sc-tag
+									type={
+										'completed' == status
+											? 'success'
+											: 'warning'
+									}
+								>
+									{status_display_text}
+								</sc-tag>
+							),
 							total_commission_amount: (
 								<ScFormatNumber
 									type="currency"
