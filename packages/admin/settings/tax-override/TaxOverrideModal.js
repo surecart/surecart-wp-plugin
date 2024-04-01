@@ -238,7 +238,7 @@ export default ({
 									type="number"
 									min="0"
 									max="100"
-									step="0.01"
+									step="0.001"
 									disabled={hasNoAvailableZones}
 									required
 									label={__('Tax Rate', 'surecart')}
