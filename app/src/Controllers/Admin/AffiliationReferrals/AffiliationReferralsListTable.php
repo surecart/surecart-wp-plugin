@@ -86,6 +86,9 @@ class AffiliationReferralsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+			if ( isset( $_GET['live_mode'] ) ) {
+				$link = add_query_arg( 'live_mode', $_GET['live_mode'], $link );
+			}
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -350,7 +353,7 @@ class AffiliationReferralsListTable extends ListTable {
 			'approved'  => __( 'Approved', 'surecart' ),
 			'denied'    => __( 'Denied', 'surecart' ),
 			'canceled'  => __( 'Canceled', 'surecart' ),
-			'paid'      => __( 'Paid Out', 'surecart' ),
+			'paid'      => __( 'Paid', 'surecart' ),
 		);
 	}
 
@@ -365,11 +368,14 @@ class AffiliationReferralsListTable extends ListTable {
 	public function get_action_url( $id, $action ) {
 		return esc_url(
 			add_query_arg(
-				[
-					'action' => $action,
-					'nonce'  => wp_create_nonce( $action . '_affiliation' ),
-					'id'     => $id,
-				],
+				array_filter(
+					[
+						'action'    => $action,
+						'nonce'     => wp_create_nonce( $action . '_affiliation' ),
+						'id'        => $id,
+						'live_mode' => $_GET['live_mode'] ?? '',
+					]
+				),
 				esc_url_raw( admin_url( 'admin.php?page=sc-affiliate-referrals' ) )
 			)
 		);

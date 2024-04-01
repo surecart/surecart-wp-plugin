@@ -16,6 +16,7 @@ class AffiliationReferralsController extends AdminController {
 	public function index() {
 		$table = new AffiliationReferralsListTable();
 		$table->prepare_items();
+
 		$this->withHeader(
 			array(
 				'breadcrumbs'      => [
@@ -94,7 +95,14 @@ class AffiliationReferralsController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $approved->get_error_messages() ) ) );
 		}
 
-		return \SureCart::redirect()->to( add_query_arg( array( 'approved' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
+		$args = array_filter(
+			array(
+				'approved'  => true,
+				'live_mode' => $request->query( 'live_mode' ),
+			)
+		);
+
+		return \SureCart::redirect()->to( add_query_arg( $args, \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
 
 	/**
@@ -111,7 +119,14 @@ class AffiliationReferralsController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $denied->get_error_messages() ) ) );
 		}
 
-		return \SureCart::redirect()->to( add_query_arg( array( 'denied' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
+		$args = array_filter(
+			array(
+				'denied'    => true,
+				'live_mode' => $request->query( 'live_mode' ),
+			)
+		);
+
+		return \SureCart::redirect()->to( add_query_arg( $args, \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
 
 	/**
@@ -128,6 +143,13 @@ class AffiliationReferralsController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $reviewing->get_error_messages() ) ) );
 		}
 
-		return \SureCart::redirect()->to( add_query_arg( array( 'reviewing' => true ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
+		$args = array_filter(
+			array(
+				'reviewing' => true,
+				'live_mode' => $request->query( 'live_mode' ),
+			)
+		);
+
+		return \SureCart::redirect()->to( add_query_arg( $args, \SureCart::getUrl()->index( 'affiliate-referrals' ) ) );
 	}
 }
