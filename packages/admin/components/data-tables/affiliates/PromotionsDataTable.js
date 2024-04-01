@@ -38,15 +38,16 @@ export default ({
 						times_redeemed,
 						max_redemptions,
 						archived,
-						coupon: { id },
+						coupon: { id, discount_amount },
 					}) => {
 						return {
+							code: <ScText>{code}</ScText>,
+							discount_amount: <ScText>{discount_amount}</ScText>,
 							status: (
 								<StatusBadge
 									status={archived ? 'archived' : 'active'}
 								/>
 							),
-							code: <ScText>{code}</ScText>,
 							uses: (
 								<ScTag>
 									{times_redeemed}

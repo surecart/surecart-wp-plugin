@@ -396,6 +396,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+\SureCart::route()
+->where( 'admin', 'sc-affiliate-payouts' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationPayouts\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationPayoutsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationPayoutsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'export', 'action' )->handle( 'AffiliationPayoutsController@export' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_affiliation_payout' )->handle( 'AffiliationPayoutsController@delete' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'complete', 'action' )->middleware( 'nonce:complete_affiliation_payout' )->handle( 'AffiliationPayoutsController@complete' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'make_processing', 'action' )->middleware( 'nonce:make_processing_affiliation_payout' )->handle( 'AffiliationPayoutsController@makeProcessing' );
+	}
+);
+
 /*
 |--------------------------------------------------------------------------
 | Settings

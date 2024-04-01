@@ -18,11 +18,13 @@ class UpsellsController extends AdminController {
 		$table = new UpsellsListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'upsells' => [
-					'title' => __( 'Upsell Funnels', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'upsells' => [
+						'title' => __( 'Upsell Funnels', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/upsell-funnels/index' )->with( [ 'table' => $table ] );
 	}

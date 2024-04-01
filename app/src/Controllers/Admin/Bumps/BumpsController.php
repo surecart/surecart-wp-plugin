@@ -19,11 +19,13 @@ class BumpsController extends AdminController {
 		$table = new BumpsListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'bumps' => [
-					'title' => __( 'Bumps', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'bumps' => [
+						'title' => __( 'Bumps', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/bumps/index' )->with( [ 'table' => $table ] );
 	}

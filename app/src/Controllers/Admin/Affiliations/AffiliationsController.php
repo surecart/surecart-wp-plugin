@@ -18,11 +18,13 @@ class AffiliationsController extends AdminController {
 		$table->prepare_items();
 
 		$this->withHeader(
-			[
-				'affiliates' => [
-					'title' => __( 'Affiliates', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'affiliates' => [
+						'title' => __( 'Affiliates', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 
 		$this->withNotices(
