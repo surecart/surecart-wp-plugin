@@ -18,6 +18,9 @@ class PostServiceTest extends SureCartUnitTestCase {
 		], false);
 	}
 
+	/**
+	 * @group forms
+	 */
 	public function test_gets_form_block_from_form_post() {
 		$post_id = $this->factory()->post->create([
 			'post_type' => 'sc_form',
@@ -35,6 +38,9 @@ class PostServiceTest extends SureCartUnitTestCase {
 		$this->assertEquals('surecart/form', $block['blockName']);
 	}
 
+	/**
+	 * @group forms
+	 */
 	public function test_gets_form_block_from_form_checkout_block() {
 		$form_id = $this->factory()->post->create([
 			'post_type' => 'sc_form',
@@ -57,8 +63,8 @@ class PostServiceTest extends SureCartUnitTestCase {
 		$this->assertEquals('surecart/form', $block['blockName']);
 	}
 
-		/**
-	 * @group failing
+	/**
+	 * @group forms
 	 */
 	public function test_gets_form_post_from_page() {
 		$form_id = $this->factory()->post->create([

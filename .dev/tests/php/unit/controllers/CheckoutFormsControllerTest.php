@@ -20,7 +20,7 @@ class CheckoutFormsControllerTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
+	 * @group forms
 	 */
 	public function test_switches_form_mode() {
 		$form_id = $this->factory()->post->create([

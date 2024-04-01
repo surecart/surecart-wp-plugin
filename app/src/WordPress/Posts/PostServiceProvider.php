@@ -30,6 +30,6 @@ class PostServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		//
+		// nothing to bootstrap.
 	}
 }
