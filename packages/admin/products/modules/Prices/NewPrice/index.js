@@ -163,15 +163,27 @@ export default ({ onRequestClose, product }) => {
 				/>
 
 				{type === 'subscription' && (
-					<Subscription price={price} updatePrice={updatePrice} />
+					<Subscription
+						price={price}
+						updatePrice={updatePrice}
+						licensingEnabled={product?.licensing_enabled}
+					/>
 				)}
 
 				{type === 'multiple' && (
-					<Multiple price={price} updatePrice={updatePrice} />
+					<Multiple
+						price={price}
+						updatePrice={updatePrice}
+						licensingEnabled={product?.licensing_enabled}
+					/>
 				)}
 
 				{type === 'once' && (
-					<OneTime price={price} updatePrice={updatePrice} />
+					<OneTime
+						price={price}
+						updatePrice={updatePrice}
+						licensingEnabled={product?.licensing_enabled}
+					/>
 				)}
 
 				<div

@@ -157,15 +157,27 @@ export default ({ price, product }) => {
 				<PriceName price={price} updatePrice={editPrice} />
 
 				{getPriceType() === 'subscription' && (
-					<Subscription price={price} updatePrice={editPrice} />
+					<Subscription
+						price={price}
+						updatePrice={editPrice}
+						licensingEnabled={product?.licensing_enabled}
+					/>
 				)}
 
 				{getPriceType() === 'multiple' && (
-					<Multiple price={price} updatePrice={editPrice} />
+					<Multiple
+						price={price}
+						updatePrice={editPrice}
+						licensingEnabled={product?.licensing_enabled}
+					/>
 				)}
 
 				{getPriceType() === 'once' && (
-					<OneTime price={price} updatePrice={editPrice} />
+					<OneTime
+						price={price}
+						updatePrice={editPrice}
+						licensingEnabled={product?.licensing_enabled}
+					/>
 				)}
 
 				<Tax
