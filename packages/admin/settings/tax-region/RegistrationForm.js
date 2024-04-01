@@ -252,7 +252,7 @@ export default ({
 					type="number"
 					min="0"
 					max="100"
-					step="0.001"
+					step="0.0001"
 					required
 					label={__('Tax Rate', 'surecart')}
 					value={data?.manual_rate}
