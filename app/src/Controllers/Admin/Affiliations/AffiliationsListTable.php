@@ -121,7 +121,7 @@ class AffiliationsListTable extends ListTable {
 				'expand' => [
 					'clicks',
 					'referrals',
-				]
+				],
 			)
 		);
 
@@ -155,10 +155,9 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function column_status( $affiliation ) {
 		ob_start();
-		$status_type = $affiliation->active ? 'success' : 'warning';
 		?>
-		<sc-tag type="<?php echo esc_attr( $status_type ); ?>">
-			<?php echo esc_html( $this->getStatuses()[ $affiliation->active ? 'active' : 'inactive' ] ); ?>
+		<sc-tag type="<?php echo esc_attr( $affiliation->status_type ); ?>">
+			<?php echo esc_html( $affiliation->status_display_text ); ?>
 		</sc-tag>
 		<?php
 		return ob_get_clean();
@@ -171,7 +170,7 @@ class AffiliationsListTable extends ListTable {
 	 * @return int
 	 */
 	public function column_clicks( $affiliation ) {
-		return esc_html( $affiliation->clicks->pagination->count ?? 0);
+		return esc_html( $affiliation->clicks->pagination->count ?? 0 );
 	}
 
 	/**
@@ -181,7 +180,7 @@ class AffiliationsListTable extends ListTable {
 	 * @return int
 	 */
 	public function column_referrals( $affiliation ) {
-		return esc_html( $affiliation->referrals->pagination->count ?? 0);
+		return esc_html( $affiliation->referrals->pagination->count ?? 0 );
 	}
 
 	/**
@@ -221,14 +220,12 @@ class AffiliationsListTable extends ListTable {
 			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
 				<?php echo esc_html( $affiliation->first_name . ' ' . $affiliation->last_name ); ?>
 			</a>
-
 			<?php
 				echo $this->row_actions(
-					array_filter(
-						array(
-							'trash' => $this->action_toggle_activate( $affiliation ),
-						)
-					),
+					array(
+						'view'  => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ) . '" aria-label="' . esc_attr__( 'View Affiliate', 'surecart' ) . '">' . esc_html__( 'View Details', 'surecart' ) . '</a>',
+						'trash' => $this->action_toggle_activate( $affiliation ),
+					)
 				);
 			?>
 		</div>
@@ -284,7 +281,7 @@ class AffiliationsListTable extends ListTable {
 	public function action_toggle_activate( $affiliation ) {
 		$text            = $affiliation->active ? __( 'Deactivate', 'surecart' ) : __( 'Activate', 'surecart' );
 		$confirm_message = $affiliation->active ? __( 'Are you sure you want to deactivate this affilate?', 'surecart' ) : __( 'Are you sure you want to activate this affiliate?', 'surecart' );
-		$link            = $this->get_toggle_activate_url( $affiliation->id, $affiliation->active ? 'deactivate' : 'activate');
+		$link            = $this->get_toggle_activate_url( $affiliation->id, $affiliation->active ? 'deactivate' : 'activate' );
 
 		return sprintf(
 			// translators: %1s: confirm message, %2s: link, %3s: aria label, %4s: text.
@@ -327,10 +324,10 @@ class AffiliationsListTable extends ListTable {
 		$transforms = [
 			'all'      => null,
 			'active'   => '1',
-			'inactive' => '0'
+			'inactive' => '0',
 		];
 
-		return $transforms[$status] ?? null;
+		return $transforms[ $status ] ?? null;
 	}
 
 	/**

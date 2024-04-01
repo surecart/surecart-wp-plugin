@@ -149,21 +149,9 @@ class AffiliationRequestsListTable extends ListTable {
 	 */
 	public function column_status( $affiliate_request ) {
 		ob_start();
-		$status_type = '';
-		switch ( $affiliate_request->status ) {
-			case 'approved':
-				$status_type = 'success';
-				break;
-			case 'pending':
-				$status_type = 'warning';
-				break;
-			case 'denied':
-				$status_type = 'danger';
-				break;
-		}
 		?>
-		<sc-tag type="<?php echo esc_attr( $status_type ); ?>">
-			<?php echo esc_html( $this->getStatuses()[ $affiliate_request->status ] ); ?>
+		<sc-tag type="<?php echo esc_attr( $affiliate_request->status_type ); ?>">
+			<?php echo esc_html( $affiliate_request->status_display_text ); ?>
 		</sc-tag>
 		<?php
 		return ob_get_clean();

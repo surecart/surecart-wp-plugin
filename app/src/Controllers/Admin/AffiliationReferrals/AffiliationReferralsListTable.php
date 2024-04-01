@@ -189,13 +189,13 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $referral ) {
-		if ( empty( $referral->display_status ) ) {
+		if ( empty( $referral->status_display_text ) ) {
 			return '';
 		}
 		ob_start();
 		?>
 		<sc-tag type="<?php echo esc_attr( $referral->status_type ); ?>">
-			<?php echo esc_html( $referral->display_status ); ?>
+			<?php echo esc_html( $referral->status_display_text ); ?>
 		</sc-tag>
 		<?php
 		return ob_get_clean();
