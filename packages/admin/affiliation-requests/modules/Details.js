@@ -9,9 +9,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScInput, ScTextarea } from '@surecart/components-react';
+import { ScInput, ScTextarea, ScTag } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import StatusBadge from '../../components/StatusBadge';
 import SaveButton from '../../templates/SaveButton';
 
 export default ({
@@ -22,14 +21,23 @@ export default ({
 	deleting,
 	...props
 }) => {
-	const { status, first_name, last_name, email, payout_email, bio } =
-		affiliationRequest;
+	const {
+		status_type,
+		status_display_text,
+		first_name,
+		last_name,
+		email,
+		payout_email,
+		bio,
+	} = affiliationRequest;
 
 	return (
 		<Box
 			title={__('Affiliate Request Details', 'surecart')}
 			loading={loading}
-			header_action={<StatusBadge status={status} />}
+			header_action={
+				<ScTag type={status_type}>{status_display_text}</ScTag>
+			}
 			footer={
 				<SaveButton busy={loading || saving || deleting}>
 					{__('Save', 'surecart')}

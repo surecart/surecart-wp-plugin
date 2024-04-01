@@ -12,7 +12,7 @@ import {
 	ScFormatNumber,
 	ScText,
 } from '@surecart/components-react';
-import StatusBadge from '../../StatusBadge';
+import { ScTag } from '@surecart/components-react';
 
 export default ({
 	data,
@@ -47,7 +47,7 @@ export default ({
 					}) => {
 						return {
 							status: (
-								<sc-tag
+								<ScTag
 									type={
 										'completed' == status
 											? 'success'
@@ -55,7 +55,7 @@ export default ({
 									}
 								>
 									{status_display_text}
-								</sc-tag>
+								</ScTag>
 							),
 							total_commission_amount: (
 								<ScFormatNumber

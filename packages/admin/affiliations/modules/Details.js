@@ -9,11 +9,13 @@ import { Fragment } from '@wordpress/element';
  */
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
-import StatusBadge from '../../components/StatusBadge';
 import { ScFormatDate } from '@surecart/components-react';
+import { ScTag } from '@surecart/components-react';
 
 export default ({ affiliation, loading }) => {
 	const {
+		status_type,
+		status_display_text,
 		display_name,
 		email,
 		payout_email,
@@ -36,7 +38,7 @@ export default ({ affiliation, loading }) => {
 				</Definition>
 
 				<Definition title={__('Status', 'surecart')}>
-					<StatusBadge status={active ? 'active' : 'inactive'} />
+					<ScTag type={status_type}>{status_display_text}</ScTag>
 				</Definition>
 
 				<hr />

@@ -15,8 +15,8 @@ import {
 	ScFormatDate,
 	ScFormatNumber,
 	ScText,
+	ScTag,
 } from '@surecart/components-react';
-import StatusBadge from '../../StatusBadge';
 
 export default ({
 	data,
@@ -43,14 +43,19 @@ export default ({
 					({
 						id,
 						created_at,
-						status,
+						status_type,
+						status_display_text,
 						description,
 						commission_amount,
 						currency,
 						checkout: { order } = {},
 					}) => {
 						return {
-							status: <StatusBadge status={status} />,
+							status: (
+								<ScTag type={status_type}>
+									{status_display_text}
+								</ScTag>
+							),
 							description: (
 								<ScText truncate>{description || '-'}</ScText>
 							),
