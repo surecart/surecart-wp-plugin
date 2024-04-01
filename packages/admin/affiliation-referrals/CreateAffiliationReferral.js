@@ -7,10 +7,8 @@ import { store as coreStore } from '@wordpress/core-data';
 
 import CreateTemplate from '../templates/CreateModel';
 import {
-	ScAlert,
 	ScButton,
 	ScForm,
-	ScFormControl,
 	ScPriceInput,
 	ScTextarea,
 } from '@surecart/components-react';
@@ -87,27 +85,23 @@ export default ({ onCreateReferral }) => {
 							gap: var(--sc-spacing-large);
 						`}
 					>
-						<ScFormControl
+						<ModelSelector
 							label={__('Affiliate', 'surecart')}
+							name="affiliation"
+							value={referral.affiliation}
+							requestQuery={{
+								archived: false,
+							}}
+							onSelect={(affiliation) => {
+								setReferral({
+									affiliation,
+								});
+							}}
+							display={(affiliation) =>
+								`${affiliation.display_name} - ${affiliation.email}`
+							}
 							required
-						>
-							<ModelSelector
-								name="affiliation"
-								value={referral.affiliation}
-								requestQuery={{
-									archived: false,
-								}}
-								onSelect={(affiliation) => {
-									setReferral({
-										affiliation,
-									});
-								}}
-								display={(affiliation) =>
-									`${affiliation.display_name} - ${affiliation.email}`
-								}
-								required
-							/>
-						</ScFormControl>
+						/>
 
 						<ScPriceInput
 							label={__('Commission Amount', 'surecart')}
