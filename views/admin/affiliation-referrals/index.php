@@ -5,6 +5,7 @@
 </style>
 
 <?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
+
 <?php
 if ( ! empty( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
 	?>
