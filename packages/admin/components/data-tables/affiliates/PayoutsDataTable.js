@@ -58,12 +58,11 @@ export default ({
 							),
 							end_date: (
 								<ScFormatDate
-									type="timestamp"
 									month="short"
 									day="numeric"
 									year="numeric"
 									date={end_date}
-								></ScFormatDate>
+								/>
 							),
 							date: (
 								<ScFormatDate
@@ -72,7 +71,7 @@ export default ({
 									day="numeric"
 									year="numeric"
 									date={created_at}
-								></ScFormatDate>
+								/>
 							),
 						};
 					}
