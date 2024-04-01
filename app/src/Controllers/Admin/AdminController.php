@@ -33,26 +33,24 @@ abstract class AdminController {
 	/**
 	 * The header.
 	 *
-	 * @param array  $breadcrumbs The breadcrumbs.
-	 * @param string $suffix The suffix.
-	 * @param bool   $test_mode_toggle The test mode toggle.
+	 * @param array $args The arguments.
 	 *
 	 * @return void
 	 */
-	public function withHeader( $breadcrumbs, $suffix = null, $test_mode_toggle = false ) {
-		if ( $test_mode_toggle ) {
+	public function withHeader( $args ) {
+		if ( ! empty( $args['test_mode_toggle'] ) ) {
 			add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( TestModeToggleScriptsController::class, 'enqueue' ) );
 		}
 
 		add_action(
 			'in_admin_header',
-			function() use ( $breadcrumbs, $suffix, $test_mode_toggle ) {
+			function() use ( $args ) {
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
-						'breadcrumbs'      => $breadcrumbs,
-						'suffix'           => $suffix,
-						'test_mode_toggle' => $test_mode_toggle,
+						'breadcrumbs'      => $args['breadcrumbs'] ?? [],
+						'suffix'           => $args['suffix'] ?? '',
+						'test_mode_toggle' => $args['test_mode_toggle'] ?? false,
 						'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 					]
 				);
