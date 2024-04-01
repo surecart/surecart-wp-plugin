@@ -45,9 +45,4 @@ if ( ! empty( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
 			}
 		} );
 	} );
-
-
-	document.querySelector('sc-switch#live-mode-toggle')?.addEventListener('scChange',(e)=>{
-		window.location.assign(e.target.checked ? '<?php echo esc_url_raw( add_query_arg( array( 'live_mode' => 'false' ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) ); ?>' : '<?php echo esc_url_raw( add_query_arg( array( 'live_mode' => 'true' ), \SureCart::getUrl()->index( 'affiliate-referrals' ) ) ); ?>');
-	})
 </script>
