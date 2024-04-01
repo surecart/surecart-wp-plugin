@@ -54,8 +54,7 @@
 		"file:../../styles/wp-button.css",
 		"file:../../styles/spinner.css",
 		"file:../../styles/drawer.css",
-		"file:../../styles/dialog.css",
 		"file:../../styles/cart.css"
 	],
-	"viewScriptModule": ["@surecart/dialog"]
+	"viewScriptModule": ["@surecart/drawer"]
 }
