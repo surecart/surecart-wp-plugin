@@ -18,10 +18,14 @@
 	font-family: var(--sc-font-sans);
 	font-weight: var(--sc-font-weight-normal);
 	animation: slide-out 0.25s ease;
-	transition: var(--sc-transition-medium) transform;
+	transition: var(--sc-transition-medium) all;
 
 	&[open] {
 		animation: slide-in 0.25s ease;
+	}
+
+	&:modal {
+		max-height: 100%;
 	}
 
 	&[open]::backdrop {
@@ -30,6 +34,7 @@
 
 	&__header {
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
 		padding: var(--sc-drawer-header-spacing, var(--sc-spacing-medium));
 		border-bottom: var(--sc-drawer-border);
