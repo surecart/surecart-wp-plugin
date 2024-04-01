@@ -249,7 +249,10 @@ export default ({ id }) => {
 				}}
 				onCancel={() => setModal(false)}
 			>
-				{__('Are you sure to activate the affiliate user?', 'surecart')}
+				{__(
+					'Are you sure you want to activate the affiliate?',
+					'surecart'
+				)}
 			</ConfirmDialog>
 
 			<ConfirmDialog
@@ -261,7 +264,7 @@ export default ({ id }) => {
 				onCancel={() => setModal(false)}
 			>
 				{__(
-					'Are you sure to deactivate the affiliate user?',
+					'Are you sure you want to deactivate the affiliate?',
 					'surecart'
 				)}
 			</ConfirmDialog>
