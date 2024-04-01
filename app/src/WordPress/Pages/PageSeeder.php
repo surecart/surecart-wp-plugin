@@ -138,13 +138,13 @@ class PageSeeder {
 					'name'          => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'         => _x( 'Checkout', 'Page title', 'surecart' ),
 					'content'       => '<!-- wp:surecart/checkout-form {"id":' . (int) ( $form->ID ?? 0 ) . '} --><!-- /wp:surecart/checkout-form -->',
-					'page_template' => 'pages/template-surecart-blank.php',
+					'page_template' => wp_is_block_theme() ? 'templates/checkout' : 'pages/template-surecart-blank.php',
 				],
 				'dashboard' => [
 					'name'          => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
 					'title'         => _x( 'Dashboard', 'Page title', 'surecart' ),
 					'content'       => $customer_dashboard['content'],
-					'page_template' => 'pages/template-surecart-dashboard.php',
+					'page_template' => wp_is_block_theme() ? 'templates/dashboard' : 'pages/template-surecart-dashboard.php',
 				],
 			)
 		);
