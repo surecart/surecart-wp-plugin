@@ -35,6 +35,7 @@ export default () => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
+			setError(false);
 			setIsSaving(true);
 			const savedPayout = await saveEntityRecord(
 				'surecart',
