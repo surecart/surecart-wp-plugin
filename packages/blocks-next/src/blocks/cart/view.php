@@ -1,13 +1,6 @@
-<?php
-$context = array(
-	'isOpen' => false,
-);
-?>
-
 <div
 	class="sc-cart-block"
 	data-wp-interactive='{ "namespace": "surecart/cart-v2" }'
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
 >
 	<button
 		data-wp-on--click='surecart/drawer::actions.toggle'
@@ -17,7 +10,7 @@ $context = array(
 		<?php echo SureCart::svg()->get('shopping-bag'); ?>
 	</button>
 
-	<dialog class="sc-drawer">
+	<dialog class="sc-drawer" data-wp-on--click="surecart/drawer::actions.closeOverlay">
 		<div class="sc-drawer__header">
 			<button
 				autofocus
@@ -28,11 +21,20 @@ $context = array(
 			>
 				<?php echo SureCart::svg()->get('arrow-left'); ?>
 			</button>
-			<p><?php esc_html_e( 'My Cart', 'surecart' ); ?></p>
+			<p><?php esc_html_e( 'My Carts', 'surecart' ); ?></p>
 			<button>1</button>
 		</div>
-		<div class="sc-drawer__body">
+		<div class="sc-drawer__body" style="min-height: 75vh;">
 			<p><?php esc_html_e( 'Cart Items...', 'surecart' ); ?></p>
+		</div>
+		<div class="sc-drawer__footer">
+			<button
+				data-wp-on--click='surecart/drawer::actions.toggle'
+				data--target=".sc-drawer"
+				class="sc-drawer__footer__button"
+			>
+				<?php esc_html_e( 'Close', 'surecart' ); ?>
+			</button>
 		</div>
 	</dialog>
 </div>
