@@ -24,7 +24,7 @@
 			<p><?php esc_html_e( 'My Carts', 'surecart' ); ?></p>
 			<button>1</button>
 		</div>
-		<div class="sc-drawer__body" style="min-height: 75vh;">
+		<div class="sc-drawer__body" style="min-height: 73vh;">
 			<p><?php esc_html_e( 'Cart Items...', 'surecart' ); ?></p>
 		</div>
 		<div class="sc-drawer__footer">
