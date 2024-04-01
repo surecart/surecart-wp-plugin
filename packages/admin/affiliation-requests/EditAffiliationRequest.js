@@ -24,6 +24,7 @@ import {
 	ScFlex,
 	ScIcon,
 	ScMenu,
+	ScMenuDivider,
 	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
@@ -229,39 +230,41 @@ export default () => {
 						gap: 0.5em;
 					`}
 				>
-					<ScButtonGroup>
-						{['pending', 'denied'].includes(
-							affiliationRequest?.status
-						) && (
-							<ScButton
-								type="default"
-								outline={true}
-								onClick={() => setModal('approve')}
-								loading={loading}
-							>
-								{__('Approve Request', 'surecart')}
-							</ScButton>
-						)}
-
-						{['pending', 'approved'].includes(
-							affiliationRequest?.status
-						) && (
-							<ScButton
-								type="default"
-								outline={true}
-								onClick={() => setModal('deny')}
-								loading={loading}
-							>
-								{__('Deny Request', 'surecart')}
-							</ScButton>
-						)}
-					</ScButtonGroup>
-
 					<ScDropdown slot="suffix" placement="bottom-end">
-						<ScButton type="text" slot="trigger">
-							<ScIcon name="more-horizontal" />
+						<ScButton
+							type="primary"
+							slot="trigger"
+							caret
+							loading={loading}
+						>
+							{__('Actions', 'surecart')}
 						</ScButton>
 						<ScMenu>
+							{['pending', 'denied'].includes(
+								affiliationRequest?.status
+							) && (
+								<ScMenuItem onClick={() => setModal('approve')}>
+									<ScIcon
+										slot="prefix"
+										style={{ opacity: 0.5 }}
+										name="thumbs-up"
+									/>
+									{__('Approve', 'surecart')}
+								</ScMenuItem>
+							)}
+							{['pending', 'approved'].includes(
+								affiliationRequest?.status
+							) && (
+								<ScMenuItem onClick={() => setModal('deny')}>
+									<ScIcon
+										slot="prefix"
+										style={{ opacity: 0.5 }}
+										name="thumbs-down"
+									/>
+									{__('Deny', 'surecart')}
+								</ScMenuItem>
+							)}
+							<ScMenuDivider />
 							<ScMenuItem onClick={() => setModal('delete')}>
 								<ScIcon
 									slot="prefix"
