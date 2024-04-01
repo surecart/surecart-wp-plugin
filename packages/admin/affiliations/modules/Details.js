@@ -14,8 +14,7 @@ import { ScFormatDate } from '@surecart/components-react';
 
 export default ({ affiliation, loading }) => {
 	const {
-		first_name,
-		last_name,
+		display_name,
 		email,
 		payout_email,
 		active,
@@ -27,7 +26,7 @@ export default ({ affiliation, loading }) => {
 		<Box title={__('Affiliate Details', 'surecart')} loading={loading}>
 			<Fragment>
 				<Definition title={__('Name', 'surecart')}>
-					{first_name + ' ' + last_name}
+					{display_name}
 				</Definition>
 
 				<Definition title={__('Email', 'surecart')}>{email}</Definition>
