@@ -69,9 +69,8 @@ export default () => {
 			});
 		} catch (e) {
 			console.log(e);
-			setError(e);
-		} finally {
 			setIsSaving(false);
+			setError(e);
 		}
 	};
 
