@@ -15,5 +15,6 @@ export default () => {
 	if (action === 'export') {
 		return <ExportAffiliationPayout />;
 	}
+
 	return <CreateAffiliationReferral />;
 };
