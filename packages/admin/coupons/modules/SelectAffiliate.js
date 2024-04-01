@@ -91,11 +91,7 @@ export default ({ promotion, updatePromotion }) => {
 									/>
 								</div>
 								<div>
-									<div>
-										{affiliation?.first_name +
-											' ' +
-											affiliation?.last_name}
-									</div>
+									<div>{affiliation?.display_name}</div>
 									<div>{affiliation?.email}</div>
 								</div>
 							</ScFlex>
@@ -134,9 +130,7 @@ export default ({ promotion, updatePromotion }) => {
 							'surecart'
 						)}
 						display={(item) =>
-							`${item?.first_name || ''} ${
-								item?.last_name || ''
-							} - ${item?.email || ''}`
+							`${item?.display_name || ''} - ${item?.email || ''}`
 						}
 						value={
 							promotion?.affiliation?.id || promotion?.affiliation
