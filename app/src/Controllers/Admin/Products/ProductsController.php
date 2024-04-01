@@ -6,6 +6,7 @@ use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
 use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
+use SureCart\Background\BulkActionService;
 
 /**
  * Handles product admin requests.
@@ -15,7 +16,9 @@ class ProductsController extends AdminController {
 	 * Products index.
 	 */
 	public function index() {
-		$table = new ProductsListTable();
+		$bulk_action_service = new BulkActionService();
+		$bulk_action_service->bootstrap();
+		$table = new ProductsListTable( $bulk_action_service );
 		$table->prepare_items();
 		$this->withHeader(
 			array(
@@ -27,6 +30,47 @@ class ProductsController extends AdminController {
 			)
 		);
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
+	}
+
+	/**
+	 * Confirm Bulk Delete.
+	 */
+	public function confirmBulkDelete() {
+		$products = Product::where(
+			[
+				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ),
+			]
+		)->get(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( empty( $products ) ) {
+			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $_REQUEST['bulk_action_product_ids'] ), 'surecart' ) ) );
+		}
+
+		$this->withHeader(
+			[
+				'delete' => [
+					'title' => _n( 'Delete Product', 'Delete Products.', count( $products ), 'surecart' ),
+				],
+			]
+		);
+
+		return \SureCart::view( 'admin/products/confirm-bulk-delete' )->with( [ 'products' => $products ] );
+	}
+
+	/**
+	 * Bulk Delete.
+	 */
+	public function bulkDelete() {
+		$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$action      = \SureCart::bulkAction()->createBulkAction( 'delete_products', $product_ids );
+
+		// handle error.
+		if ( is_wp_error( $action ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $action->get_error_messages() ) ) );
+		}
+
+		// redirect.
+		return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
 	}
 
 	/**

@@ -278,7 +278,7 @@ export class ScSessionProvider {
       return this.loadUpdate({
         id,
         discount: { promotion_code },
-        refresh_price_versions: true,
+        refresh_line_items: true,
       });
     }
 
@@ -348,7 +348,7 @@ export class ScSessionProvider {
     clearCheckout();
     return this.loadUpdate({
       line_items,
-      refresh_price_versions: true,
+      refresh_line_items: true,
       ...(promotion_code ? { discount: { promotion_code } } : {}),
       ...(address?.defaultCountry
         ? {
@@ -401,8 +401,8 @@ export class ScSessionProvider {
         id,
         data: {
           ...(promotion_code ? { discount: { promotion_code } } : {}),
-          refresh_price_versions: true,
           ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
+          refresh_line_items: true,
         },
       })) as Checkout;
       updateFormState('RESOLVE');
@@ -421,16 +421,22 @@ export class ScSessionProvider {
       return this.handleNewCheckout(false);
     }
 
-    // one of these is an old price version error.
-    if ((e?.additional_errors || []).some(error => error?.code == 'checkout.price.old_version')) {
+    const hasPriceVersionChangeError = (e?.additional_errors || []).some(error => {
+      const purchasableStatuses = error?.data?.options?.purchasable_statuses || [];
+      return ['price_old_version', 'variant_old_version'].some(status => purchasableStatuses.includes(status));
+    });
+
+    if (hasPriceVersionChangeError) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
-        data: {
-          status: 'draft',
-          refresh_price_versions: true,
-        },
+        refresh_line_items: true,
+        status: 'draft',
       });
-      createInfoNotice(__('The price a product in your order has changed. We have adjusted your order to the new price.', 'surecart'));
+      createInfoNotice(
+        e?.additional_errors?.[0]?.message ||
+          __('Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment.', 'surecart'),
+      );
+      updateFormState('REJECT');
       return;
     }
 
@@ -444,9 +450,7 @@ export class ScSessionProvider {
     if (['order.invalid_status_transition'].includes(e?.code)) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
-        data: {
-          status: 'draft',
-        },
+        status: 'draft',
       });
       this.handleFormSubmit();
       return;
