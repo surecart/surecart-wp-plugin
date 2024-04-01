@@ -45,12 +45,12 @@ export default ({
 						description,
 						commission_amount,
 						currency,
-						checkout: { order },
+						checkout: { order } = {},
 					}) => {
 						return {
 							status: <StatusBadge status={status} />,
 							description: (
-								<ScText truncate>{description}</ScText>
+								<ScText truncate>{description || '-'}</ScText>
 							),
 							order: (
 								<ScText truncate>
