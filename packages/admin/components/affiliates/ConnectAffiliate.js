@@ -22,7 +22,7 @@ export default ({ item, updateItem }) => {
 					})
 				}
 				display={(affiliation) =>
-					`${affiliation.first_name} ${affiliation.last_name || ''}`
+					`${affiliation.display_name} - ${affiliation.email}`
 				}
 				placeholder={__('Select an affiliate', 'surecart')}
 				help={__(
