@@ -121,7 +121,9 @@ export default ({ promotion, updatePromotion }) => {
 									/>
 								</div>
 								<div>
-									<div>{customer?.name}</div>
+									<div>
+										<strong>{customer?.name}</strong>
+									</div>
 									<div>{customer?.email}</div>
 								</div>
 							</ScFlex>

@@ -91,7 +91,11 @@ export default ({ promotion, updatePromotion }) => {
 									/>
 								</div>
 								<div>
-									<div>{affiliation?.display_name}</div>
+									<div>
+										<strong>
+											{affiliation?.display_name}
+										</strong>
+									</div>
 									<div>{affiliation?.email}</div>
 								</div>
 							</ScFlex>
