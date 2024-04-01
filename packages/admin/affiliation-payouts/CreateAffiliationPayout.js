@@ -7,7 +7,12 @@ import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 
 import CreateTemplate from '../templates/CreateModel';
-import { ScButton, ScForm, ScFormControl } from '@surecart/components-react';
+import {
+	ScButton,
+	ScCard,
+	ScForm,
+	ScFormControl,
+} from '@surecart/components-react';
 import Box from '../ui/Box';
 import ModelSelector from '../components/ModelSelector';
 import Error from '../components/Error';
@@ -60,65 +65,16 @@ export default () => {
 
 	return (
 		<CreateTemplate>
-			<Box title={__('Create New Payout', 'surecart')}>
-				<Error error={error} />
-				<ScForm onScSubmit={onSubmit}>
-					<div
-						css={css`
-							display: grid;
-							gap: var(--sc-spacing-large);
-						`}
-					>
-						<ScFormControl
-							label={__('Affiliate', 'surecart')}
-							required
-						>
-							<ModelSelector
-								name="affiliation"
-								value={payout.affiliation}
-								requestQuery={{
-									archived: false,
-								}}
-								onSelect={(affiliation) => {
-									setPayout({
-										affiliation,
-									});
-								}}
-								display={(affiliation) =>
-									`${affiliation.display_name} - ${affiliation.email}`
-								}
-							/>
-						</ScFormControl>
-
+			<ScForm onScSubmit={onSubmit}>
+				<Box
+					title={__('Create New Payout', 'surecart')}
+					css={css`
+						max-width: 500px;
+						margin: auto;
+					`}
+					footer={
 						<div
-							css={css`
-								width: 50%;
-								margin-top: var(--sc-spacing-large);
-							`}
-						>
-							<BaseControl.VisualLabel>
-								{__('Period End:', 'surecart')}
-							</BaseControl.VisualLabel>
-							<DateTimePicker
-								currentDate={new Date(payout.end_date * 1000)}
-								isInvalidDate={(date) =>
-									Date.parse(date) > Date.now()
-								}
-								onChange={(end_date) =>
-									setPayout({
-										end_date:
-											Date.parse(new Date(end_date)) /
-											1000,
-									})
-								}
-							/>
-						</div>
-
-						<div
-							css={css`
-								display: flex;
-								gap: var(--sc-spacing-small);
-							`}
+							css={css`display: flex gap: var(--sc-spacing-small);`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
@@ -132,9 +88,62 @@ export default () => {
 								{__('Cancel', 'surecart')}
 							</ScButton>
 						</div>
+					}
+				>
+					<Error error={error} />
+
+					<div
+						css={css`
+							display: grid;
+							gap: var(--sc-spacing-large);
+						`}
+					>
+						<ModelSelector
+							label={__('Affiliate', 'surecart')}
+							name="affiliation"
+							value={payout.affiliation}
+							requestQuery={{
+								archived: false,
+							}}
+							onSelect={(affiliation) => {
+								setPayout({
+									affiliation,
+								});
+							}}
+							display={(affiliation) =>
+								`${affiliation.display_name} - ${affiliation.email}`
+							}
+							required
+						/>
+						<div
+							css={css`
+								margin-top: var(--sc-spacing-large);
+							`}
+						>
+							<ScFormControl required>
+								{__('Period End', 'surecart')}
+							</ScFormControl>
+							<ScCard>
+								<DateTimePicker
+									currentDate={
+										new Date(payout.end_date * 1000)
+									}
+									isInvalidDate={(date) =>
+										Date.parse(date) > Date.now()
+									}
+									onChange={(end_date) =>
+										setPayout({
+											end_date:
+												Date.parse(new Date(end_date)) /
+												1000,
+										})
+									}
+								/>
+							</ScCard>
+						</div>
 					</div>
-				</ScForm>
-			</Box>
+				</Box>
+			</ScForm>
 		</CreateTemplate>
 	);
 };
