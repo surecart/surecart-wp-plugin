@@ -5,8 +5,11 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import { useEffect, useState } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
 /**
@@ -21,6 +24,7 @@ import {
 	ScText,
 } from '@surecart/components-react';
 import { intervalString } from '../../../../util/translations';
+import { formatNumber } from '../../../../util';
 
 export default ({
 	price,
@@ -30,6 +34,9 @@ export default ({
 	onRequestClose,
 }) => {
 	const [immediateUpdate, setImmediateUpdate] = useState(false);
+	const [upcoming, setUpcoming] = useState();
+	const [loading, setLoading] = useState(false);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const submit = () => {
 		onUpdateRecentVersion(immediateUpdate);
@@ -40,9 +47,45 @@ export default ({
 		select(coreStore).getEntityRecord('surecart', 'price', price?.id)
 	);
 
+	useEffect(() => {
+		if (!open || !immediateUpdate) {
+			return;
+		}
+		fetchUpcomingPeriod();
+	}, [immediateUpdate, open]);
+
+	const fetchUpcomingPeriod = async () => {
+		setLoading(true);
+		try {
+			const response = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(
+					`surecart/v1/subscriptions/${subscription?.id}/upcoming_period`,
+					{
+						update_behavior: immediateUpdate
+							? 'immediate'
+							: 'scheduled',
+						skip_product_group_validation: true,
+						refresh_price_version: true,
+						expand: ['period.checkout'],
+					}
+				),
+				data: {
+					purge_pending_update: false,
+				},
+			});
+			setUpcoming(response);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return (
 		<ScDialog
-			label={__('Update Recent Price', 'surecart')}
+			label={__('Update Price Version', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}
@@ -53,7 +96,7 @@ export default ({
 				`}
 			>
 				{__(
-					'There is a price change for this subscription since the last renewal. Please choose how you would like to update the subscription price.',
+					'Are you sure you want to update this subscription to use the current price? This will change the subscription amount from today onward.',
 					'surecart'
 				)}
 			</ScText>
@@ -65,7 +108,6 @@ export default ({
 					--font-weight: var(--sc-font-weight-bold);
 				`}
 			>
-				{__('Changed Price: ', 'surecart')}
 				<del
 					css={css`
 						color: var(--sc-color-gray-500);
@@ -100,48 +142,57 @@ export default ({
 				})}
 			</ScText>
 
-			{!subscription?.finite && (
-				<ScText
+			{immediateUpdate && !!upcoming?.checkout?.amount_due && (
+				<ScAlert
+					open
+					type="warning"
 					css={css`
-						display: block;
-						margin: var(--sc-spacing-medium) 0;
+						margin-top: var(--sc-spacing-small);
 					`}
 				>
-					<ScSwitch
-						checked={immediateUpdate}
-						onScChange={(e) => setImmediateUpdate(e.target.checked)}
-					>
-						{__('Update Immediately', 'surecart')}
-					</ScSwitch>
-
-					<ScAlert
-						open={immediateUpdate}
-						type="info"
-						css={css`
-							margin-top: var(--sc-spacing-small);
-						`}
-					>
-						{__(
-							'Choosing to update the subscription immediately will update the subscription price immediately. This will affect the next billing cycle.',
+					{sprintf(
+						__(
+							'Changing the subscription price will immediately charge the customer %s.',
 							'surecart'
-						)}
-					</ScAlert>
-				</ScText>
+						),
+						formatNumber(
+							upcoming?.checkout?.amount_due,
+							upcoming?.checkout?.currency ?? 'usd'
+						)
+					)}
+				</ScAlert>
 			)}
 
-			<div slot="footer">
-				<ScButton type="text" onClick={onRequestClose} slot="footer">
-					{__('Cancel', 'surecart')}
-				</ScButton>
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+				`}
+				slot="footer"
+			>
 				<ScButton
 					type="primary"
 					onClick={() => submit(true)}
-					slot="footer"
+					loading={loading}
 				>
 					{immediateUpdate
 						? __('Update Subscription', 'surecart')
 						: __('Schedule Update', 'surecart')}
 				</ScButton>
+				<ScButton type="text" onClick={onRequestClose}>
+					{__('Cancel', 'surecart')}
+				</ScButton>
+				{!subscription?.finite && (
+					<ScSwitch
+						checked={immediateUpdate}
+						onScChange={(e) => setImmediateUpdate(e.target.checked)}
+						css={css`
+							margin-left: auto;
+						`}
+					>
+						{__('Update Immediately', 'surecart')}
+					</ScSwitch>
+				)}
 			</div>
 		</ScDialog>
 	);

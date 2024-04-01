@@ -101,7 +101,7 @@ export default ({
 											{!price?.current_version && (
 												<ScTag type="warning" pill>
 													{__(
-														'Old Price',
+														'Previous Price Version',
 														'surecart'
 													)}
 												</ScTag>
@@ -141,7 +141,7 @@ export default ({
 												}
 											>
 												{__(
-													'Update Recent Price',
+													'Use Current Version',
 													'surecart'
 												)}
 											</ScMenuItem>
