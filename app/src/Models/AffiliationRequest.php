@@ -107,4 +107,32 @@ class AffiliationRequest extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusDisplayTextAttribute() {
+		$statuses = [
+			'approved' => __( 'Approved', 'surecart' ),
+			'pending'  => __( 'Pending', 'surecart' ),
+			'denied'   => __( 'Denied', 'surecart' ),
+		];
+		return $statuses[ $this->status ] ?? '';
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusTypeAttribute() {
+		$types = [
+			'approved' => 'success',
+			'pending'  => 'warning',
+			'denied'   => 'danger',
+		];
+		return $types[ $this->status ] ?? 'default';
+	}
 }

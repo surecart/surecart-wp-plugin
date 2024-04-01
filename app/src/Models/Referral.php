@@ -160,7 +160,7 @@ class Referral extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayStatusAttribute() {
+	public function getStatusDisplayTextAttribute() {
 		$statuses = [
 			'reviewing' => __( 'Reviewing', 'surecart' ),
 			'paid'      => __( 'Paid', 'surecart' ),

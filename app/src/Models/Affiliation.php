@@ -123,7 +123,24 @@ class Affiliation extends Model {
 		if ( ! empty( $this->first_name . $this->last_name ) ) {
 			return $this->first_name . ' ' . $this->last_name;
 		}
-
 		return $this->email;
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusDisplayTextAttribute() {
+		return $this->active ? __( 'Active', 'surecart' ) : __( 'Inactive', 'surecart' );
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusTypeAttribute() {
+		return $this->active ? 'success' : 'default';
 	}
 }
