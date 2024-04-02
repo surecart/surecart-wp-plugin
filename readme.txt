@@ -309,6 +309,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Manage affiliates from the plugin admin.
 - New: Add setting to disable zero dollar commissions.
 - New: Add affiliate promotion codes.
+- New: Ability to edit lifetime and subscription commissions.
 - Improvement: Standardize highlight color across admin pages.
 - Fix: Issue where product list sometimes does not load properly if cart is disabled.
 
