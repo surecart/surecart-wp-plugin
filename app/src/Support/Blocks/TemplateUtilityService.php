@@ -77,6 +77,10 @@ class TemplateUtilityService {
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
 				'description' => __( 'The slide-out cart template.', 'surecart' ),
 			],
+			'checkout'                => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Checkout', 'Template name', 'surecart' ) : _x( 'Checkout', 'Template name', 'surecart' ),
+				'description' => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
+			],
 		];
 	}
 
