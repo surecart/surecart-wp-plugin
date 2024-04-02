@@ -45,7 +45,6 @@ $dummy_options = [
 				data-wp-on--click="actions.selectItem"
 				data-value="<?php echo esc_attr($option['value'] ?? ''); ?>"
 				data-label="<?php echo esc_attr($option['label'] ?? ''); ?>"
-				data-wp-bind--hidden="state.shouldHideOption"
 			>
 				<?php echo esc_html($option['label'] ?? ''); ?>
 			</div>
