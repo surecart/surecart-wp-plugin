@@ -211,7 +211,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		self::$instance++;
+		self::$instance = wp_unique_id( 'sc-product-item-list-' );
 
 		// check for inner blocks.
 		$product_inner_blocks = $this->block->parsed_block['innerBlocks'] ?? [];
@@ -260,7 +260,7 @@ class Block extends BaseBlock {
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
-			'#selector-' . self::$instance,
+			'#' . self::$instance,
 			[
 				'layoutConfig'         => $layout_config,
 				'paginationAlignment'  => $attributes['pagination_alignment'],
@@ -280,10 +280,11 @@ class Block extends BaseBlock {
 				'featured'             => 'featured' === $attributes['type'],
 				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
 				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
+				'pageTitle'            => get_the_title(),
 			]
 		);
 
-		return '<sc-product-item-list id="selector-' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
+		return '<sc-product-item-list id="' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
 	}
 
 	/**

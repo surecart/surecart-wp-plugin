@@ -16,11 +16,13 @@ class OrdersViewController extends AdminController {
 		$table = new OrdersListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'orders' => [
-					'title' => __( 'Orders', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'orders' => [
+						'title' => __( 'Orders', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/orders/index' )->with(
 			[

@@ -43,6 +43,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -84,6 +85,7 @@ graph TD;
   sc-downloads-list --> sc-dashboard-module
   sc-fulfillments --> sc-dashboard-module
   sc-invoices-list --> sc-dashboard-module
+  sc-license --> sc-dashboard-module
   sc-licenses-list --> sc-dashboard-module
   sc-order --> sc-dashboard-module
   sc-order-confirm-provider --> sc-dashboard-module

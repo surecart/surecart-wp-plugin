@@ -61,7 +61,7 @@ export default () => {
 				'surecart',
 				'draft-checkout',
 				id,
-				{ expand, refresh_price_versions: true },
+				{ expand, refresh_line_items: true },
 			];
 
 			const checkout = select(coreStore).getEditedEntityRecord(

@@ -114,7 +114,8 @@ export default ({
 												variant?.available_stock
 										  )
 										: null,
-									disabled: variantUnavailable && !showOutOfStock,
+									disabled:
+										variantUnavailable && !showOutOfStock,
 									variant_id: variant?.id,
 								};
 							});

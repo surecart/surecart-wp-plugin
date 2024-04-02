@@ -7,14 +7,16 @@
 
 ## Properties
 
-| Property     | Attribute      | Description           | Type      | Default     |
-| ------------ | -------------- | --------------------- | --------- | ----------- |
-| `auAbnLabel` | `au-abn-label` | AU zone label         | `string`  | `undefined` |
-| `caGstLabel` | `ca-gst-label` | GST zone label        | `string`  | `undefined` |
-| `euVatLabel` | `eu-vat-label` | EU zone label         | `string`  | `undefined` |
-| `gbVatLabel` | `gb-vat-label` | UK zone label         | `string`  | `undefined` |
-| `otherLabel` | `other-label`  | Other zones label     | `string`  | `undefined` |
-| `show`       | `show`         | Force show the field. | `boolean` | `false`     |
+| Property     | Attribute      | Description                                                 | Type                 | Default     |
+| ------------ | -------------- | ----------------------------------------------------------- | -------------------- | ----------- |
+| `auAbnLabel` | `au-abn-label` | AU zone label                                               | `string`             | `undefined` |
+| `caGstLabel` | `ca-gst-label` | GST zone label                                              | `string`             | `undefined` |
+| `euVatLabel` | `eu-vat-label` | EU zone label                                               | `string`             | `undefined` |
+| `gbVatLabel` | `gb-vat-label` | UK zone label                                               | `string`             | `undefined` |
+| `helpText`   | `help-text`    | Help text                                                   | `string`             | `undefined` |
+| `otherLabel` | `other-label`  | Other zones label                                           | `string`             | `undefined` |
+| `show`       | `show`         | Force show the field.                                       | `boolean`            | `false`     |
+| `taxIdTypes` | `tax-id-types` | Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]' | `string \| string[]` | `undefined` |
 
 
 ## Methods

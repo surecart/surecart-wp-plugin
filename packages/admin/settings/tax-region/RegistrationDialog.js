@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { ScDialog } from '@surecart/components-react';
 import RegistrationForm from './RegistrationForm';
 
-export default ({ region, registration, open, onRequestClose }) => {
+export default ({ region, registration, registrations, open, onRequestClose }) => {
 	return (
 		<div
 			css={css`
@@ -21,6 +21,7 @@ export default ({ region, registration, open, onRequestClose }) => {
 				{open && (
 					<RegistrationForm
 						region={region}
+						registrations={registrations}
 						registration={registration}
 						onSubmitted={onRequestClose}
 						onDeleted={onRequestClose}

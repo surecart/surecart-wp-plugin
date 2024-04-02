@@ -1,9 +1,7 @@
 <?php
 namespace SureCartBlocks\Controllers;
 
-use SureCart\Models\Activation;
 use SureCart\Models\Component;
-use SureCart\Models\PortalSession;
 use SureCart\Models\Purchase;
 use SureCart\Models\User;
 
@@ -161,7 +159,7 @@ class DownloadController extends BaseController {
 						]
 					)->render()
 				);
-				 endif;
+			endif;
 			?>
 
 		</sc-spacing>

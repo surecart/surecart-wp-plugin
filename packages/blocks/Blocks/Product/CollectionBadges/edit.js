@@ -69,7 +69,7 @@ export default ({ attributes, setAttributes }) => {
 
 			<div>
 				<div {...blockProps}>
-					{(collections || FALLBACK_COLLECTIONS)
+					{(collections?.length ? collections : FALLBACK_COLLECTIONS)
 						.map((collection) => collection.name)
 						.slice(0, count)
 						.map((collection) => (

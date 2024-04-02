@@ -3,6 +3,7 @@
 namespace SureCart\WordPress;
 
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
+use function SureCartVendors\Required\Traduttore_Registry\add_project;
 
 /**
  * Register translations.
@@ -58,6 +59,9 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
 		if ( 'surecart' === $domain ) {
+			if ( file_exists( WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json' ) ) {
+				return WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json';
+			}
 			if ( is_string( $file ) ) {
 				if ( false !== strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) ) {
 					$first_part = substr( $file, 0, strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) );
@@ -125,6 +129,14 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 		} else {
 			// Load the default language files.
 			load_plugin_textdomain( 'surecart', false, $lang_dir );
+		}
+		// add translations from translate.surecart.com.
+		if ( defined( 'SURECART_TRANSLATIONS_URL' ) ) {
+			add_project(
+				'plugin',
+				'surecart-wp',
+				SURECART_TRANSLATIONS_URL
+			);
 		}
 	}
 }

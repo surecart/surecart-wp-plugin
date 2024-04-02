@@ -27,8 +27,36 @@ class CompatibilityService {
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
 		// rankmath fix.
 		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
+
+		// Yoast SEO fix.
+		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
+
 		// Show gutenberg active notice.
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
+
+		// Load Blocks Global Styles if enabled by Merchant in the setting.
+		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
+			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
+		}
+	}
+
+	/** Prevent Yoast SEO from outputing SEO meta tags on our custom pages.
+	 *
+	 * @param array $presenters Presenters.
+	 * @return array Empty Array.
+	 */
+	public function yoastSEOFix( $presenters ) {
+		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_upsell' ) ) {
+			$title_presenters = array_filter(
+				$presenters,
+				function( $item ) {
+					return strpos( get_class( $item ), 'SEO\Presenters\Title_Presenter' );
+				}
+			);
+			return apply_filters( 'sc_wpseo_frontend_presenters', $title_presenters, $presenters );
+		}
+
+		return $presenters;
 	}
 
 	/**

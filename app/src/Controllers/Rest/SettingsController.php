@@ -18,13 +18,14 @@ class SettingsController {
 	public function find( \WP_REST_Request $request ) {
 		return rest_ensure_response(
 			[
-				'object'                     => 'settings',
-				'api_token'                  => ApiToken::get(),
-				'uninstall'                  => (bool) get_option( 'sc_uninstall', false ),
-				'stripe_payment_element'     => (bool) get_option( 'sc_stripe_payment_element', true ),
-				'auto_sync_user_to_customer' => (bool) get_option( 'surecart_auto_sync_user_to_customer', false ),
-				'use_esm_loader'             => (bool) get_option( 'surecart_use_esm_loader', false ),
-				'slide_out_cart_disabled'    => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
+				'object'                      => 'settings',
+				'api_token'                   => ApiToken::get(),
+				'uninstall'                   => (bool) get_option( 'sc_uninstall', false ),
+				'stripe_payment_element'      => (bool) get_option( 'sc_stripe_payment_element', true ),
+				'auto_sync_user_to_customer'  => (bool) get_option( 'surecart_auto_sync_user_to_customer', false ),
+				'use_esm_loader'              => (bool) get_option( 'surecart_use_esm_loader', false ),
+				'slide_out_cart_disabled'     => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
+				'load_block_assets_on_demand' => (bool) get_option( 'surecart_load_block_assets_on_demand', false ),
 			]
 		);
 	}
@@ -70,6 +71,11 @@ class SettingsController {
 
 		if ( isset( $request['auto_sync_user_to_customer'] ) ) {
 			update_option( 'surecart_auto_sync_user_to_customer', (bool) $request->get_param( 'auto_sync_user_to_customer' ) );
+		}
+
+		// update load block styles on demand option.
+		if ( isset( $request['load_block_assets_on_demand'] ) ) {
+			update_option( 'surecart_load_block_assets_on_demand', $request->get_param( 'load_block_assets_on_demand' ) );
 		}
 
 		return rest_ensure_response( $this->find( $request ) );
