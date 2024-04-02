@@ -80,6 +80,9 @@ class ExportsRestServiceProviderTest extends SureCartUnitTestCase{
         }
 
         $request = new \WP_REST_Request($method, $route, $args);
+		foreach($args as $key => $arg) {
+			$request->set_param($key, $arg);
+		}
         $response = rest_do_request($request);
         $this->assertSame($status, $response->get_status());
 	}
