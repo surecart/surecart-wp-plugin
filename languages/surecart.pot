@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-01T20:10:10+00:00\n"
+"POT-Creation-Date: 2024-04-02T16:18:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -242,7 +242,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
-#: components/data-tables/affiliates/ClicksDataTable.js:36
+#: components/data-tables/affiliates/ClicksDataTable.js:41
 #: store/add-entities.js:340
 msgid "Clicks"
 msgstr ""
@@ -331,7 +331,6 @@ msgstr ""
 #: affiliation-referrals/modules/Order.js:65
 #: affiliation-referrals/modules/Payout.js:64
 #: affiliation-referrals/modules/Summary.js:10
-#: affiliations/modules/Details.js:40
 #: affiliations/modules/Payouts.js:60
 #: affiliations/modules/Promotions.js:64
 #: affiliations/modules/Referrals.js:61
@@ -355,7 +354,7 @@ msgstr ""
 #: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:111
 #: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:93
 #: affiliation-requests/modules/Details.js:102
-#: affiliations/modules/Details.js:36
+#: affiliations/modules/Details.js:78
 #: affiliations/modules/Payouts.js:57
 msgid "Payout Email"
 msgstr ""
@@ -535,7 +534,7 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:195
 #: src/Controllers/Admin/Products/ProductsListTable.php:476
 #: affiliation-referrals/modules/Payout.js:77
-#: components/data-tables/affiliates/ReferralsDataTable.js:107
+#: components/data-tables/affiliates/ReferralsDataTable.js:109
 #: components/data-tables/licenses-data-table/license-item.js:74
 #: components/data-tables/OrdersDataTable.js:91
 #: components/data-tables/subscriptions-data-table/subscription-item.js:173
@@ -674,7 +673,6 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:91
 #: src/Support/Errors/Translations/attributes.php:11
 #: web/buy-template.php:86
-#: affiliations/modules/Details.js:30
 #: bumps/modules/Name.js:7
 #: licenses/modules/Activations/Activation.js:149
 #: product-collections/components/SelectTemplate/create-modal.js:75
@@ -711,7 +709,6 @@ msgstr ""
 #: web/buy-template.php:83
 #: affiliation-payouts/ExportAffiliationPayout.js:84
 #: affiliation-requests/modules/Details.js:84
-#: affiliations/modules/Details.js:34
 #: checkouts/modules/SelectCustomer/CreateCustomer.js:108
 #: coupons/modules/CustomerSelector.js:132
 #: coupons/modules/SelectCustomer.js:229
@@ -735,7 +732,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:191
 #: admin/affiliations/index.php:6
 #: layouts/partials/admin-settings-sidebar.php:40
-#: affiliations/ViewAffiliation.js:171
+#: affiliations/ViewAffiliation.js:172
 msgid "Affiliates"
 msgstr ""
 
@@ -760,7 +757,7 @@ msgid "No affiliates found."
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:226
-#: affiliations/ViewAffiliation.js:175
+#: affiliations/ViewAffiliation.js:176
 msgid "View Affiliate"
 msgstr ""
 
@@ -770,12 +767,12 @@ msgid "View Details"
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:282
-#: affiliations/ViewAffiliation.js:224
+#: affiliations/ViewAffiliation.js:225
 msgid "Deactivate"
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:282
-#: affiliations/ViewAffiliation.js:213
+#: affiliations/ViewAffiliation.js:214
 #: components/data-tables/subscriptions-data-table/StartPlan.js:73
 msgid "Activate"
 msgstr ""
@@ -801,7 +798,7 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:52
 #: src/Models/Affiliation.php:135
-#: affiliations/ViewAffiliation.js:200
+#: affiliations/ViewAffiliation.js:201
 #: licenses/modules/Details/index.js:14
 #: util.js:88
 #: Blocks/Dashboard/CustomerLicenses/edit.js:75
@@ -814,7 +811,7 @@ msgstr ""
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:342
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: src/Models/Affiliation.php:135
-#: affiliations/ViewAffiliation.js:201
+#: affiliations/ViewAffiliation.js:202
 #: licenses/modules/Details/index.js:20
 #: util.js:89
 #: sc-license.js:114
@@ -1183,7 +1180,7 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
 #: affiliation-referrals/modules/Click.js:73
 #: affiliation-referrals/modules/Summary.js:37
-#: affiliations/modules/Details.js:59
+#: affiliations/modules/Details.js:97
 #: coupons/Sidebar.js:104
 #: customers/modules/Subscriptions.js:64
 #: invoices/modules/Subscriptions.js:19
@@ -6748,6 +6745,7 @@ msgid "Copied!"
 msgstr ""
 
 #: abandoned-checkouts/components/Link.js:53
+#: affiliations/modules/Url.js:30
 #: licenses/modules/Details/Copy.js:21
 #: products/modules/Prices/Price/CopyInput.js:32
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:294
@@ -7041,7 +7039,7 @@ msgstr ""
 #: affiliations/modules/Payouts.js:85
 #: affiliations/modules/Promotions.js:82
 #: affiliations/modules/Referrals.js:86
-#: components/data-tables/affiliates/ClicksDataTable.js:38
+#: components/data-tables/affiliates/ClicksDataTable.js:43
 #: components/data-tables/affiliates/PayoutsDataTable.js:35
 #: components/data-tables/affiliates/PromotionsDataTable.js:32
 #: components/data-tables/affiliates/ReferralItemsDataTable.js:31
@@ -7080,7 +7078,7 @@ msgid "Manual"
 msgstr ""
 
 #: affiliation-referrals/modules/Summary.js:25
-#: affiliations/modules/Details.js:47
+#: affiliations/modules/Details.js:85
 #: coupons/Sidebar.js:95
 #: products/modules/Summary.js:55
 msgid "Last Updated"
@@ -7174,8 +7172,12 @@ msgstr ""
 msgid "No more clicks."
 msgstr ""
 
-#: affiliations/modules/Details.js:28
-msgid "Affiliate Details"
+#: affiliations/modules/Details.js:33
+msgid "Profile"
+msgstr ""
+
+#: affiliations/modules/Details.js:72
+msgid "Referral Code"
 msgstr ""
 
 #: affiliations/modules/Payouts.js:84
@@ -7199,23 +7201,37 @@ msgstr ""
 msgid "No more promotions."
 msgstr ""
 
-#: affiliations/ViewAffiliation.js:70
+#: affiliations/modules/Url.js:20
+#: components/data-tables/affiliates/ClicksDataTable.js:49
+#: components/data-tables/affiliates/ClicksDataTable.js:58
+#: orders/modules/Fulfillment/CreateFulfillment.js:53
+#: products/modules/BuyLink.js:60
+#: products/modules/Prices/Price/CopyInput.js:12
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:47
+msgid "Copied to clipboard."
+msgstr ""
+
+#: affiliations/modules/Url.js:26
+msgid "Referral Url"
+msgstr ""
+
+#: affiliations/ViewAffiliation.js:71
 msgid "Affiliate updated."
 msgstr ""
 
-#: affiliations/ViewAffiliation.js:91
+#: affiliations/ViewAffiliation.js:92
 msgid "Affiliate user activated."
 msgstr ""
 
-#: affiliations/ViewAffiliation.js:129
+#: affiliations/ViewAffiliation.js:130
 msgid "Affiliate user deactivated."
 msgstr ""
 
-#: affiliations/ViewAffiliation.js:252
+#: affiliations/ViewAffiliation.js:259
 msgid "Are you sure you want to activate the affiliate?"
 msgstr ""
 
-#: affiliations/ViewAffiliation.js:266
+#: affiliations/ViewAffiliation.js:273
 msgid "Are you sure you want to deactivate the affiliate?"
 msgstr ""
 
@@ -7823,14 +7839,6 @@ msgstr ""
 #: dashboard/components/GetStarted.js:104
 #: sc-provisional-banner.js:14
 msgid "Complete Setup"
-msgstr ""
-
-#: components/data-tables/affiliates/ClicksDataTable.js:43
-msgid "Landing URL copied to clipboard."
-msgstr ""
-
-#: components/data-tables/affiliates/ClicksDataTable.js:49
-msgid "Referring URL copied to clipboard."
 msgstr ""
 
 #: components/data-tables/affiliates/PromotionsDataTable.js:69
@@ -9361,13 +9369,6 @@ msgstr ""
 msgid "Add another tracking number"
 msgstr ""
 
-#: orders/modules/Fulfillment/CreateFulfillment.js:53
-#: products/modules/BuyLink.js:60
-#: products/modules/Prices/Price/CopyInput.js:12
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:47
-msgid "Copied to clipboard."
-msgstr ""
-
 #: orders/modules/Fulfillment/CreateFulfillment.js:58
 #: products/modules/BuyLink.js:65
 #: products/modules/Prices/Price/CopyInput.js:17
@@ -10115,8 +10116,8 @@ msgstr ""
 #: products/components/price/parts/Trial.js:53
 #: settings/abandoned/AbandonedSettings.js:240
 #: settings/abandoned/AbandonedSettings.js:360
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:485
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:526
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:483
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:544
 msgid "Days"
 msgstr ""
 
@@ -11594,47 +11595,55 @@ msgstr ""
 msgid "Percent Commission"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:429
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:428
 msgid "Amount Commission"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:456
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:454
 msgid "Subscription Commissions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:458
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:456
 msgid "Do you want to award commissions on subscription renewal payments?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:466
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:464
 msgid "Subscription Commission Duration"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:470
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:468
 msgid "For how long should subscription commissions be awarded? (Leave empty if you want to award commissions forever.)"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:500
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:498
 msgid "Lifetime Commissions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:502
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:500
 msgid "Do you want to award commissions on future purchases?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:510
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:518
+msgid "Zero Commission Referrals"
+msgstr ""
+
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:520
+msgid "Whether or not to create a referral from a checkout when the resulting referral has a commission of zero. This is useful for tracking referrals that do not have a commission, such as when a customer uses a coupon code."
+msgstr ""
+
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:528
 msgid "Lifetime Commission Duration"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:511
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:529
 msgid "For how long should future purchase commissions be awarded? (Leave empty if you want to award commission forever.)"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:530
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:548
 msgid "Payout Instructions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:531
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:549
 msgid "Let affiliates know how they will be paid, how often, and any terms or conditions for payment. These details will be shown to affiliates so they know what to expect."
 msgstr ""
 

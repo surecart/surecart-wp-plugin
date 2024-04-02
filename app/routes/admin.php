@@ -71,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->handle( 'OnboardingController@complete' );
 		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'OnboardingController@save' );
 	}
@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Orders\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'OrdersViewController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'OrdersViewController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'OrdersViewController@archive' );
@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Checkouts\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CheckoutsController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CheckoutsController@edit' );
 	}
@@ -124,7 +124,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Invoices\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'InvoicesViewController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'InvoicesViewController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'InvoicesViewController@archive' );
@@ -142,7 +142,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Products\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->handle( 'ProductsController@confirmBulkDelete' );
 		\SureCart::route()->post()->middleware( 'nonce:bulk_delete_nonce' )->handle( 'ProductsController@bulkDelete' );
@@ -162,7 +162,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Coupons\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CouponsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CouponsController@edit' );
 	}
@@ -179,7 +179,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Customers\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CustomersController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CustomersController@edit' );
 	}
@@ -196,7 +196,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Licenses\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'LicensesController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'LicensesController@edit' );
 	}
@@ -213,7 +213,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AbandonedCheckoutViewController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AbandonedCheckoutViewController@edit' );
 	}
@@ -230,7 +230,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'SubscriptionsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'SubscriptionsController@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'SubscriptionsController@edit' );
@@ -248,7 +248,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\CancellationInsights\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CancellationInsightsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'CancellationInsightsController@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CancellationInsightsController@edit' );
@@ -262,7 +262,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Cart\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CartController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'CartController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CartController@edit' );
@@ -280,7 +280,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductGroupsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'ProductGroupsController@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductGroupsController@show' );
@@ -298,7 +298,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductCollections\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductCollectionsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductCollectionsController@edit' );
 	}
@@ -315,7 +315,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Bumps\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'BumpsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'BumpsController@edit' );
 	}
@@ -333,7 +333,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Upsells\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'UpsellsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'UpsellsController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_enabled', 'action' )->middleware( 'archive_model:product' )->handle( 'UpsellsController@toggleEnabled' );
@@ -351,7 +351,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Affiliations\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationsController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'activate', 'action' )->middleware( 'nonce:activate_affiliation' )->handle( 'AffiliationsController@activate' );
@@ -363,9 +363,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-requests' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationRequests\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationRequestsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationRequestsController@edit' );
 	}
@@ -375,9 +376,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-clicks' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationClicks\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationClicksController@index' );
 	}
 );
@@ -386,9 +388,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-referrals' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationReferrals\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationReferralsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationReferralsController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_affiliation' )->handle( 'AffiliationReferralsController@delete' );
@@ -402,9 +405,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-payouts' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationPayouts\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationPayoutsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationPayoutsController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'export', 'action' )->handle( 'AffiliationPayoutsController@export' );
@@ -427,7 +431,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Settings\\' )
 ->group(
-	function() {
+	function () {
 		// limit menu routes if no API token.
 		if ( ! ApiToken::get() ) {
 			// without the var.
@@ -492,7 +496,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->name( 'plugin.show' )->handle( 'PluginSettings@show' );
 		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'PluginSettings@save' );
 	}
@@ -536,7 +540,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Restore\\' )
 ->group(
-	function() {
+	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'RestoreController@index' );
 		\SureCart::route()->post()->middleware( 'nonce:restore_missing_page' )->handle( 'RestoreController@restore' );
 	}
