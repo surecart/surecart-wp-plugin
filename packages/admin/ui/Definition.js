@@ -1,13 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-export default ({ title, children }) => {
+export default ({ title, children, className }) => {
 	return (
 		<div
+			className={className}
 			css={css`
 				display: flex;
 				align-items: baseline;
 				justify-content: space-between;
+				gap: 1em;
 			`}
 		>
 			<div

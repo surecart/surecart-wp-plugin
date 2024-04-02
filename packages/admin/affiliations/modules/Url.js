@@ -1,6 +1,8 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
@@ -24,7 +26,12 @@ export default ({ url, loading }) => {
 
 	return (
 		<Box title={__('Referral Url', 'surecart')} loading={loading}>
-			<Definition title={url}>
+			<Definition
+				title={url}
+				css={css`
+					word-break: break-all;
+				`}
+			>
 				<ScButton ref={ref} slot="suffix" size="small">
 					<ScIcon name="clipboard" slot="prefix" />
 					{__('Copy', 'surecart')}
