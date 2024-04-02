@@ -76,11 +76,12 @@ class AssetsService {
 		add_action( 'wp_head', array( $this, 'maybeEnqueueScriptsForNonBlocks' ) );
 
 		// front-end styles. These only load when the block is being rendered on the page.
-		$this->loader->whenRendered( 'surecart/form', array( $this, 'enqueueForm' ) );
-		$this->loader->whenRendered( 'surecart/buy-button', array( $this, 'enqueueComponents' ) );
-		$this->loader->whenRendered( 'surecart/customer-dashboard', array( $this, 'enqueueComponents' ) );
-		$this->loader->whenRendered( 'surecart/checkout-form', array( $this, 'enqueueComponents' ) );
-		$this->loader->whenRendered( 'surecart/order-confirmation', array( $this, 'enqueueComponents' ) );
+		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
+		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/product-item-list', [ $this, 'enqueueComponents' ] );
 	}
 
 	public function preloadBlockAssets() {
