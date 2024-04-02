@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-02T17:22:26+00:00\n"
+"POT-Creation-Date: 2024-04-02T17:48:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -50,7 +50,7 @@ msgstr ""
 #: src/Integrations/Elementor/Conditions/Conditions.php:38
 #: src/Integrations/Elementor/ElementorServiceProvider.php:131
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:160
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:164
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
 #: src/WordPress/CompatibilityService.php:151
@@ -73,7 +73,7 @@ msgid "SureCart"
 msgstr ""
 
 #: src/Cart/CartService.php:205
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:199
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:203
 #: cart.php:6
 #: shop.php:6
 #: settings/brand/BrandSettings.js:216
@@ -196,7 +196,7 @@ msgid "Email Sent"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:194
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:180
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:184
 #: abandoned-checkouts/modules/Details.js:12
 msgid "Abandoned"
 msgstr ""
@@ -239,7 +239,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationClicks/AffiliationClicksController.php:21
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:94
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:197
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
 #: components/data-tables/affiliates/ClicksDataTable.js:41
@@ -368,7 +368,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:113
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:95
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:194
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:198
 #: affiliation-referrals/EditAffiliationReferral.js:223
 #: affiliations/modules/Referrals.js:55
 #: components/data-tables/affiliates/ReferralsDataTable.js:37
@@ -729,7 +729,7 @@ msgid "Pending"
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:191
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:195
 #: admin/affiliations/index.php:6
 #: layouts/partials/admin-settings-sidebar.php:40
 #: affiliations/ViewAffiliation.js:172
@@ -1002,7 +1002,7 @@ msgid "Coupon Applied"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:186
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:190
 #: admin/coupons/index.php:6
 #: coupons/EditCoupon.js:133
 #: settings/export/ExportSettings.js:19
@@ -1139,7 +1139,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:358
 #: src/Controllers/Admin/Restore/RestoreController.php:26
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:196
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:200
 #: admin/restore/index.php:37
 #: admin/restore/index.php:42
 #: products/modules/Variations/VariantItem.js:281
@@ -1162,7 +1162,7 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:190
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:194
 #: admin/customers/index.php:7
 #: bumps/modules/Conditions.js:79
 #: coupons/modules/Restrictions.js:66
@@ -1260,7 +1260,7 @@ msgid "Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesController.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:191
 #: admin/licenses/index.php:7
 #: components/data-tables/licenses-data-table/index.js:26
 #: licenses/License.js:78
@@ -1363,7 +1363,7 @@ msgid "Plan Renewal"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:246
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:198
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:202
 #: forms/checkout.php:6
 #: store/add-entities.js:74
 msgid "Checkout"
@@ -1443,7 +1443,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:22
 #: src/Controllers/Web/DashboardController.php:127
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:178
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:182
 #: admin/orders/index.php:7
 #: checkouts/CreateCheckout.js:227
 #: components/data-tables/OrdersDataTable.js:28
@@ -1463,7 +1463,7 @@ msgstr ""
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:48
 #: src/Controllers/Admin/Products/ProductsController.php:27
 #: src/Integrations/Elementor/Conditions/ProductSingle.php:56
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:181
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:185
 #: admin/products/index.php:29
 #: bumps/modules/Conditions.js:72
 #: checkouts/modules/Prices.js:189
@@ -1535,7 +1535,7 @@ msgid "Quantity"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:148
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:182
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:186
 #: product-collections/EditProductCollection.js:144
 #: products/modules/Collections/index.js:55
 msgid "Collections"
@@ -1656,7 +1656,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:50
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:28
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:188
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:192
 #: admin/subscriptions/index.php:26
 #: layouts/partials/admin-settings-sidebar.php:30
 #: web/dashboard/orders/show.php:58
@@ -1962,8 +1962,8 @@ msgid "Billing"
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:121
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:160
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:175
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:164
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:179
 #: web/buy.php:56
 #: dashboard/Dashboard.js:62
 #: Blocks/CustomerDashboardButton/Block.php:33
@@ -2091,8 +2091,8 @@ msgid "Select a form"
 msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:60
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:167
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:202
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:171
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:206
 #: layouts/partials/admin-settings-header.php:108
 #: Blocks/CartMenuButton/edit.js:31
 #: Blocks/StoreLogo/edit.js:150
@@ -3066,7 +3066,7 @@ msgid "Default"
 msgstr ""
 
 #: src/Routing/PermalinkServiceProvider.php:33
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:197
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:201
 msgid "Shop"
 msgstr ""
 
@@ -5114,25 +5114,25 @@ msgstr ""
 msgid "Visit Store"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:165
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:169
 msgid "Get Started"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:166
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:176
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:170
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:180
 #: templates/UpdateModel/index.js:40
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:177
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:181
 msgid "Claim Account"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:179
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:183
 msgid "Checkouts"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:179
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:183
 #: layouts/partials/admin-index-header.php:14
 #: checkouts/modules/SelectCustomer/index.js:131
 #: coupons/modules/CustomerSelector.js:77
@@ -5150,61 +5150,61 @@ msgstr ""
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:183
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
 #: bumps/EditBump.js:160
 msgid "Order Bumps"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:184
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:188
 #: settings/order/OrderProtocol.js:145
 msgid "Upsells"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:184
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:188
 #: settings/processors/ProcessorItem.js:38
 msgid "Beta"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:185
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:189
 #: admin/product-groups/index.php:20
 msgid "Upgrade Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:189
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
 msgid "Cancellation Insights"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:189
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
 msgid "Cancellations"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:192
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:196
 msgid "Requests"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:195
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:199
 #: affiliations/modules/Payouts.js:54
 #: components/data-tables/affiliates/PayoutsDataTable.js:33
 #: store/add-entities.js:361
 msgid "Payouts"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:200
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:204
 #: settings/advanced/AdvancedSettings.js:359
 msgid "Customer Area"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:201
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:205
 #: src/WordPress/PostTypes/CartPostTypeService.php:153
 #: src/WordPress/PostTypes/FormPostTypeService.php:97
 msgid "Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:201
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:205
 msgid "Custom Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:227
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:231
 msgid "Deleted"
 msgstr ""
 
