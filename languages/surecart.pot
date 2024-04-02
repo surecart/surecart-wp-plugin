@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-02T16:39:44+00:00\n"
+"POT-Creation-Date: 2024-04-02T17:22:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -5120,7 +5120,7 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:166
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:176
-#: templates/UpdateModel/index.js:41
+#: templates/UpdateModel/index.js:40
 msgid "Complete Signup"
 msgstr ""
 
@@ -5983,7 +5983,7 @@ msgid "Get Subscription Saver"
 msgstr ""
 
 #: admin/cancellation-insights/index.php:24
-#: cancellation-insights/CancellationInsights.js:123
+#: cancellation-insights/CancellationInsights.js:119
 msgid "Cancellation Attempts"
 msgstr ""
 
@@ -6506,102 +6506,102 @@ msgstr ""
 msgid "Open or close account menu"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:158
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:154
 #: ui/InsightsPeriodFilter.js:18
 msgid "Last 30 Days"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:164
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:160
 #: ui/InsightsPeriodFilter.js:24
 msgid "Today"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:170
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:166
 #: ui/InsightsPeriodFilter.js:30
 msgid "Yesterday"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:176
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:172
 #: ui/InsightsPeriodFilter.js:36
 msgid "This Week"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:182
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:178
 #: ui/InsightsPeriodFilter.js:42
 msgid "Last Week"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:188
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:184
 #: ui/InsightsPeriodFilter.js:48
 msgid "This Month"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:194
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:190
 #: ui/InsightsPeriodFilter.js:54
 msgid "Last Month"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:216
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:212
 msgid "Recoverable Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:217
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:213
 msgid "Total Recoverable Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:230
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:226
 msgid "Recovered Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:231
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:227
 msgid "Potential Recovered Checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:233
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:229
 msgid "Total recovered checkouts"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:250
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:246
 msgid "Checkout Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:251
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:247
 msgid "Potential Checkout Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:253
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:249
 msgid "Percentage of checkouts recovered"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:271
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:267
 msgid "Recoverable Revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:272
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:268
 msgid "Total recoverable revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:290
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:286
 msgid "Recovered Revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:291
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:287
 msgid "Potential Recovered Revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:293
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:289
 msgid "Total recovered revenue"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:319
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:315
 msgid "Revenue Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:320
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:316
 msgid "Potential Revenue Recovery Rate"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:322
+#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:318
 msgid "Percentage of revenue recovered"
 msgstr ""
 
@@ -7471,47 +7471,47 @@ msgstr ""
 msgid "High"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:124
+#: cancellation-insights/CancellationInsights.js:120
 msgid "Total Cancellation Attempts"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:139
+#: cancellation-insights/CancellationInsights.js:135
 msgid "Saved Count"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:140
+#: cancellation-insights/CancellationInsights.js:136
 msgid "Total Saved Count"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:154
+#: cancellation-insights/CancellationInsights.js:150
 msgid "Saved By Coupon"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:155
+#: cancellation-insights/CancellationInsights.js:151
 msgid "Total Saved By Coupon"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:172
+#: cancellation-insights/CancellationInsights.js:168
 msgid "Total Lost"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:173
+#: cancellation-insights/CancellationInsights.js:169
 msgid "Total Lost Cancellations"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:190
+#: cancellation-insights/CancellationInsights.js:186
 msgid "Saved Rate"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:191
+#: cancellation-insights/CancellationInsights.js:187
 msgid "Percentage Of Subscriptions Saved"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:207
+#: cancellation-insights/CancellationInsights.js:203
 msgid "Saved Rate By Coupon"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:208
+#: cancellation-insights/CancellationInsights.js:204
 msgid "Percentage Of Subscriptions Saved By Coupon"
 msgstr ""
 
@@ -8212,21 +8212,21 @@ msgstr ""
 msgid "%s available"
 msgstr ""
 
-#: components/SelectPrice.js:135
+#: components/SelectPrice.js:136
 #: subscriptions/edit/modules/Modals/UpdatePrice.js:34
 msgid "Select a price"
 msgstr ""
 
-#: components/SelectPrice.js:136
+#: components/SelectPrice.js:137
 msgid "Search for a price..."
 msgstr ""
 
-#: components/SelectPrice.js:142
+#: components/SelectPrice.js:143
 #: components/SelectPrice.js:184
 msgid "Variant Out of Stock."
 msgstr ""
 
-#: components/SelectPrice.js:158
+#: components/SelectPrice.js:159
 #: components/SelectPrice.js:200
 msgid "Add New Product"
 msgstr ""
@@ -8315,7 +8315,7 @@ msgid "Unlock revenue boosting features when you upgrade your plan!"
 msgstr ""
 
 #: components/UpgradeModal.js:41
-#: templates/UpdateModel/index.js:42
+#: templates/UpdateModel/index.js:41
 #: sc-feature-demo-banner.js:12
 msgid "Upgrade Your Plan"
 msgstr ""
@@ -13498,51 +13498,51 @@ msgstr ""
 msgid "Integration Providers"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:107
+#: subscription-insights/SubscriptionInsights.js:103
 msgid "Total Subscriptions"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:108
+#: subscription-insights/SubscriptionInsights.js:104
 msgid "Total Number Of Subscriptions"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:123
+#: subscription-insights/SubscriptionInsights.js:119
 msgid "New Subscriptions"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:124
+#: subscription-insights/SubscriptionInsights.js:120
 msgid "Number Of New Subscriptions"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:161
+#: subscription-insights/SubscriptionInsights.js:157
 msgid "New Trials"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:162
+#: subscription-insights/SubscriptionInsights.js:158
 msgid "Number Of New Trials"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:173
+#: subscription-insights/SubscriptionInsights.js:169
 msgid "MRR"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:174
+#: subscription-insights/SubscriptionInsights.js:170
 msgid "Total Monthly Recurring Revenue"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:215
+#: subscription-insights/SubscriptionInsights.js:211
 msgid "MRR Lost"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:216
+#: subscription-insights/SubscriptionInsights.js:212
 msgid "Lost Monthly Recurring Revenue"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:235
+#: subscription-insights/SubscriptionInsights.js:231
 msgid "Outstanding Installments"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:236
+#: subscription-insights/SubscriptionInsights.js:232
 msgid "Total Of Installment Payments Remaining"
 msgstr ""
 
@@ -13938,15 +13938,15 @@ msgid "Cancel Pending Update"
 msgstr ""
 
 #: templates/Model.js:177
-#: templates/SingleModel.js:150
+#: templates/SingleModel.js:148
 msgid "Go back."
 msgstr ""
 
-#: templates/UpdateModel/index.js:46
+#: templates/UpdateModel/index.js:45
 msgid "This is a demo of a premium feature. To get this feature, complete your setup and upgrade your plan."
 msgstr ""
 
-#: templates/UpdateModel/index.js:50
+#: templates/UpdateModel/index.js:49
 msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
 msgstr ""
 
