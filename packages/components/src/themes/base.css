@@ -756,19 +756,12 @@ sc-checkout [hidden] {
   word-wrap: normal !important;
 }
 
-span.sc-icon {
-  --width: 1em;
-  --height: 1em;
+svg.sc-icon {
   display: inline-block;
-  width: var(--width);
-  height: var(--height);
+  width: 1em;
+  height: 1em;
   contain: strict;
   box-sizing: content-box !important;
-}
-
-span.sc-icon svg {
   display: block;
-  height: 100%;
-  width: 100%;
   stroke-width: var(--sc-icon-stroke-width, 2px);
 }
