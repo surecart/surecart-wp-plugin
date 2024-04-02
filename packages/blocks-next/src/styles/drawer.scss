@@ -13,23 +13,38 @@
 	border-radius: 0;
 	outline: none;
 	right: 0;
+	top: 0;
 	left: auto;
 	bottom: auto;
 	font-family: var(--sc-font-sans);
 	font-weight: var(--sc-font-weight-normal);
-	animation: slide-out 0.25s ease;
-	transition: var(--sc-transition-medium) all;
+	animation: slide-out
+		var(--sc-drawer-transition-speed, var(--sc-transition-medium))
+		cubic-bezier(0.4, 0, 0.2, 1);
+	z-index: 999999999;
 
 	&[open] {
-		animation: slide-in 0.25s ease;
+		animation: slide-in
+			var(--sc-drawer-transition-speed, var(--sc-transition-medium))
+			cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	&:modal {
 		max-height: 100%;
 	}
 
+	&::backdrop {
+		background: var(--sc-color-gray-900);
+		animation: backdrop-fade-in
+			var(--sc-drawer-transition-speed, var(--sc-transition-medium)) ease
+			backwards;
+		animation-direction: reverse;
+	}
+
 	&[open]::backdrop {
-		animation: backdrop-fade-in 0.25s ease forwards;
+		animation: backdrop-fade-in
+			var(--sc-drawer-transition-speed, var(--sc-transition-medium)) ease
+			forwards;
 	}
 
 	&__header {
@@ -70,28 +85,34 @@
 
 @keyframes slide-in {
 	from {
-		right: -200px;
+		opacity: 0;
+		transform: translateX(100%);
 	}
 	to {
-		right: 0;
+		opacity: 1;
+		transform: translateX(0);
 	}
 }
 
 @keyframes slide-out {
 	from {
-		right: 0;
+		opacity: 1;
+		display: block;
+		transform: translateX(0);
 	}
 	to {
-		right: -200px;
+		opacity: 0;
+		display: none;
+		transform: translateX(100%);
 	}
 }
 
 @keyframes backdrop-fade-in {
 	0% {
-		background-color: rgb(0 0 0 / 0%);
+		opacity: 0;
 	}
 
 	100% {
-		background-color: rgb(0 0 0 / 25%);
+		opacity: var(--sc-drawer-backdrop-opacity, 0.35);
 	}
 }
