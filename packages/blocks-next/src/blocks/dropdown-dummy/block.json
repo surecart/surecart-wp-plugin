@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/dropdown-dummy",
+	"title": "Dropdown Dummy",
+	"description": "Dropdown Dummy",
+	"version": "1.0.0",
+	"category": "surecart",
+	"icon": "media-interactive",
+	"example": {},
+	"supports": {
+		"interactivity": true
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["file:../../styles/dropdown.css", "file:../../styles/button.css"],
+	"viewScriptModule": "@surecart/dropdown"
+}
