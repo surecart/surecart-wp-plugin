@@ -305,6 +305,13 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.22.0 - April 2nd, 2024 =
+- New: Manage affiliates from the plugin admin.
+- New: Add setting to disable zero dollar commissions.
+- New: Add affiliate promotion codes.
+- Improvement: Standardize highlight color across admin pages.
+- Fix: Issue where product list sometimes does not load properly if cart is disabled.
+
 = 2.21.0 - March 28th, 2024 =
 - New: Bulk delete products.
 - New: Load separate block assets control for themes that don't provide support.
