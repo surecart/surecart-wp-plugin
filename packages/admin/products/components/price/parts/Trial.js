@@ -37,7 +37,7 @@ export default ({ className, price, updatePrice }) => {
 			{!!price?.trial_duration_days && (
 				<>
 					<ScInput
-						label={__('Free Trial Days', 'surecart')}
+						label={__('Free trial days', 'surecart')}
 						className={className}
 						type="number"
 						min={1}

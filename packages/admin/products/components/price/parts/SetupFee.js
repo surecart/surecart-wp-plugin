@@ -16,8 +16,8 @@ import {
 } from '@surecart/components-react';
 
 const SETUP_AMOUNT_TYPES = {
-	fee: __('Setup Fee', 'surecart'),
-	discount: __('Setup Discount', 'surecart'),
+	fee: __('Setup fee', 'surecart'),
+	discount: __('Setup discount', 'surecart'),
 };
 
 export default ({ price, updatePrice }) => {
@@ -65,7 +65,7 @@ export default ({ price, updatePrice }) => {
 				>
 					<ScInput
 						label={sprintf(
-							__('%s Name', 'surecart'),
+							__('%s name', 'surecart'),
 							SETUP_AMOUNT_TYPES[amountType]
 						)}
 						value={price?.setup_fee_name}

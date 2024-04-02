@@ -2,19 +2,21 @@ import { ScInput } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ price, updatePrice, className, product }) => {
-	if (!product?.license_activation_limit) {
+	if (!product?.licensing_enabled) {
 		return null;
 	}
 	return (
 		<ScInput
 			className={className}
 			type="number"
-			label={__('License Activation Limit', 'surecart')}
+			label={__('License activation limit', 'surecart')}
 			help={__(
 				'Enter the number of unique activations per license key.',
 				'surecart'
 			)}
-			placeholder={product?.license_activation_limit}
+			placeholder={
+				product?.license_activation_limit || __('Unlimited', 'surecart')
+			}
 			value={price?.license_activation_limit}
 			onScInput={(e) => {
 				updatePrice({
