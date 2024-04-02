@@ -28,14 +28,14 @@ class FormModeSwitcherService {
 	 * @return void
 	 */
 	public function bootstrap(): void {
+		// add the admin bar menu.
 		add_action( 'admin_bar_menu', [ $this, 'addAdminBarMenu' ], 99 );
+		// add the script to confirm changing the cart.
 		add_action( 'wp_after_admin_bar_render', [ $this, 'confirmScript' ] );
 	}
 
 	/**
 	 * Get the menu title.
-	 *
-	 * @param string $mode The mode.
 	 *
 	 * @return string
 	 */
@@ -49,15 +49,14 @@ class FormModeSwitcherService {
 				<?php echo 'live' === $this->mode ? esc_html__( 'Live Mode', 'surecart' ) : esc_html__( 'Test Mode', 'surecart' ); ?>
 		</span>
 
-			<?php
-			return ob_get_clean();
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
 	 * Get the menu item.
 	 *
 	 * @param string $mode The mode.
-	 * @param bool   $is_selected Whether the item is selected.
 	 *
 	 * @return string
 	 */
@@ -103,8 +102,11 @@ class FormModeSwitcherService {
 			return;
 		}
 
+		// get the mode from the block.
 		$this->mode = $checkout_form_block['attrs']['mode'] ?? 'live';
-		$url        = add_query_arg(
+
+		// build the url to change the mode.
+		$url = add_query_arg(
 			[
 				'sc_checkout_change_mode' => $form_post->ID,
 				'sc_checkout_post'        => get_the_ID(),
@@ -113,6 +115,7 @@ class FormModeSwitcherService {
 			get_home_url( null, 'surecart/change-checkout-mode' )
 		);
 
+		// add the top level menu item.
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'sc_change_checkout_mode',
@@ -120,6 +123,7 @@ class FormModeSwitcherService {
 			]
 		);
 
+		// add the live mode menu item.
 		$wp_admin_bar->add_menu(
 			[
 				'parent' => 'sc_change_checkout_mode',
@@ -129,6 +133,7 @@ class FormModeSwitcherService {
 			]
 		);
 
+		// add the test mode menu item.
 		$wp_admin_bar->add_menu(
 			[
 				'parent' => 'sc_change_checkout_mode',
@@ -151,10 +156,13 @@ class FormModeSwitcherService {
 		if ( ! $this->rendered ) {
 			return;
 		}
+
 		$mode = 'test' === $this->mode ? esc_html__( 'live mode', 'surecart' ) : esc_html__( 'test mode', 'surecart' );
+
 		// translators: %s: live mode or test mode.
 		$message = sprintf( esc_html__( "Are you sure you want to change this form to %1\$s? \n\nThis will change the form to %2\$s for EVERYONE, and %3\$s cart contents will be used - your cart contents may not transfer.", 'surecart' ), $mode, $mode, $mode );
 		?>
+
 		<script>
 			const items = document.querySelectorAll('#wp-admin-bar-sc_change_checkout_mode a:not([href="#"])');
 			(items || []).forEach(item => {
@@ -165,14 +173,15 @@ class FormModeSwitcherService {
 				})
 			});
 		</script>
+
 			<?php
 	}
 
-		/**
-		 * Get checkout form post.
-		 *
-		 * @return object|null
-		 */
+	/**
+	 * Get checkout form post.
+	 *
+	 * @return object|null
+	 */
 	public function getCheckoutFormPost() {
 		$post = get_post();
 
@@ -199,13 +208,13 @@ class FormModeSwitcherService {
 		return get_post( $checkout_form_post_id ) ?? null;
 	}
 
-		/**
-		 * Get block from post.
-		 *
-		 * @param \WP_Post $checkout_form_post The checkout form post.
-		 *
-		 * @return array|null
-		 */
+	/**
+	 * Get block from post.
+	 *
+	 * @param \WP_Post $checkout_form_post The checkout form post.
+	 *
+	 * @return array|null
+	 */
 	public function getBlockFromPost( $checkout_form_post ) {
 		if ( ! $checkout_form_post ) {
 			return null;
