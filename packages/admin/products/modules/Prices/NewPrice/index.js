@@ -166,7 +166,7 @@ export default ({ onRequestClose, product }) => {
 					<Subscription
 						price={price}
 						updatePrice={updatePrice}
-						licensingEnabled={product?.licensing_enabled}
+						product={product}
 					/>
 				)}
 
@@ -174,7 +174,7 @@ export default ({ onRequestClose, product }) => {
 					<Multiple
 						price={price}
 						updatePrice={updatePrice}
-						licensingEnabled={product?.licensing_enabled}
+						product={product}
 					/>
 				)}
 
@@ -182,7 +182,7 @@ export default ({ onRequestClose, product }) => {
 					<OneTime
 						price={price}
 						updatePrice={updatePrice}
-						licensingEnabled={product?.licensing_enabled}
+						product={product}
 					/>
 				)}
 
