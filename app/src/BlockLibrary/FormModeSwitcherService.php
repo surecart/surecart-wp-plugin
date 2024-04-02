@@ -45,7 +45,7 @@ class FormModeSwitcherService {
 		<span style="color: #fff;">
 				<?php echo esc_html__( 'Checkout Form', 'surecart' ); ?>
 		</span>
-		<span style="color: <?php echo 'live' === $this->mode ? 'var(--sc-color-success-900, #21382a)' : 'var(--sc-color-warning-900, #4d3d11)'; ?>; display: inline-block; background-color: <?php echo 'live' === $this->mode ? 'var(--sc-color-success-400, #49de80)' : 'var(--sc-color-warning-400, #fbbf24)'; ?>; font-size: 10px; line-height: 1; border-radius: 999px; padding: 3px 6px; margin: 0 5px; text-transform: uppercase; font-weight: bold;">
+		<span style="color: <?php echo 'live' === $this->mode ? 'var(--sc-color-success-900, #21382a)' : 'var(--sc-color-warning-900, #4d3d11)'; ?>; display: inline-block; background-color: <?php echo 'live' === $this->mode ? 'var(--sc-color-success-400, #49de80)' : 'var(--sc-color-warning-400, #fbbf24)'; ?>; font-size: 10px; line-height: 1; border-radius: 999px; padding: 3px 6px; margin: 0 5px; text-transform: uppercase; font-weight: bold; vertical-align: text-bottom;">
 				<?php echo 'live' === $this->mode ? esc_html__( 'Live Mode', 'surecart' ) : esc_html__( 'Test Mode', 'surecart' ); ?>
 		</span>
 
