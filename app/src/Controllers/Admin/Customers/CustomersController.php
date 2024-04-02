@@ -19,11 +19,13 @@ class CustomersController extends AdminController {
 		$table = new CustomersListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'customers' => [
-					'title' => __( 'Customers', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'customers' => [
+						'title' => __( 'Customers', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/customers/index' )->with( [ 'table' => $table ] );
 	}

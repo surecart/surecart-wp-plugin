@@ -8,15 +8,6 @@ export default ({ children, title, end }) => {
 		<Fragment>
 			<Global
 				styles={css`
-					:root {
-						--sc-color-primary-500: var(--sc-color-brand-primary);
-						--sc-focus-ring-color-primary: var(
-							--sc-color-brand-primary
-						);
-						--sc-input-border-color-focus: var(
-							--sc-color-brand-primary
-						);
-					}
 					#wpwrap {
 						background-color: var(--sc-color-brand-main-background);
 					}
