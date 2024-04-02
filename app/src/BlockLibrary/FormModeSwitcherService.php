@@ -91,12 +91,13 @@ class FormModeSwitcherService {
 			return;
 		}
 
-		/**
-		 * The checkout form post.
-		 *
-		 * @var \WP_Post $checkout_form_post
-		 */
-		$form_post           = \SureCart::post()->getFormPostFromBlock( get_post() );
+		// The form post.
+		$form_post = \SureCart::post()->getFormPostFromBlock( get_post() );
+		if ( empty( $form_post->post_content ) ) {
+			return;
+		}
+
+		// Get the checkout form block.
 		$checkout_form_block = wp_get_first_block( parse_blocks( $form_post->post_content ), 'surecart/form' );
 		if ( empty( $checkout_form_block ) ) {
 			return;
