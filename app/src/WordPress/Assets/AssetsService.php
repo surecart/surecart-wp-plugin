@@ -61,19 +61,19 @@ class AssetsService {
 	 */
 	public function bootstrap() {
 		// register assets we will reuse.
-		add_action( 'init', [ $this->scripts, 'register' ] );
-		add_action( 'init', [ $this->styles, 'register' ] );
+		add_action( 'init', array( $this->scripts, 'register' ) );
+		add_action( 'init', array( $this->styles, 'register' ) );
 		// globals.
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueGlobals' ] );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueGlobals' ) );
 
-		add_filter( 'enqueue_block_assets', [ $this, 'preloadBlockAssets' ] );
-		add_filter( 'render_block_data', [ $this, 'preloadComponents' ] );
+		add_filter( 'enqueue_block_assets', array( $this, 'preloadBlockAssets' ) );
+		add_filter( 'render_block_data', array( $this, 'preloadComponents' ) );
 
 		// block editor.
-		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'editorAssets' ) );
 
 		// Shortcode usages scripts load.
-		add_action( 'wp_head', [ $this, 'maybeEnqueueScriptsForNonBlocks' ] );
+		add_action( 'wp_head', array( $this, 'maybeEnqueueScriptsForNonBlocks' ) );
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
@@ -110,7 +110,7 @@ class AssetsService {
 			wp_enqueue_style(
 				'surecart-templates-customer-dashboard',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/customer-dashboard.css',
-				[ 'surecart-themes-default' ],
+				array( 'surecart-themes-default' ),
 				$asset_file['version'],
 			);
 		}
@@ -174,6 +174,15 @@ class AssetsService {
 	}
 
 	/**
+	 * Print admin colors.
+	 *
+	 * @return void
+	 */
+	public function printAdminColors() {
+		$this->styles->addInlineAdminColors( 'surecart-themes-default' );
+	}
+
+	/**
 	 * Output brand colors.
 	 *
 	 * @return void
@@ -206,7 +215,7 @@ class AssetsService {
 	 * @param array  $data Data to add.
 	 * @return void
 	 */
-	public function addComponentData( $tag, $selector, $data = [] ) {
+	public function addComponentData( $tag, $selector, $data = array() ) {
 		if ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) {
 			return $this->outputComponentScript( $tag, $selector, $data );
 		}
@@ -241,7 +250,7 @@ class AssetsService {
 	 * @param string $selector Specific selector (class or id).
 	 * @param array  $data Data to add.
 	 */
-	public function outputComponentScript( $tag, $selector, $data = [] ) {
+	public function outputComponentScript( $tag, $selector, $data = array() ) {
 		?>
 		<script>
 			(async () => {

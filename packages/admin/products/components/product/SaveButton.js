@@ -25,7 +25,6 @@ export default function SaveButton({ onSave, children, busy }) {
 		<ScButton
 			type="primary"
 			submit
-			style={{ '--button-border-radius': '2px' }}
 			aria-disabled={disabled}
 			disabled={disabled || isSaving || busy}
 			busy={isSaving || busy}

@@ -2,7 +2,6 @@
 import Notices from '../../components/Notices';
 import Notifications from '../../components/Notifications';
 import ErrorBoundary from '../../components/error-boundary';
-import admin from '../../styles/admin';
 import UnsavedChangesWarning from './UnsavedChangesWarning';
 import { css, jsx, Global } from '@emotion/core';
 import {
@@ -68,7 +67,6 @@ export default ({
 		<Fragment>
 			<Global
 				styles={css`
-					${admin}
 					#wpwrap {
 						background-color: var(--sc-color-gray-100);
 					}

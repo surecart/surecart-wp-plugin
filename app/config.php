@@ -96,6 +96,7 @@ return [
 		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
 		\SureCart\Rest\TaxZoneRestServiceProvider::class,
+		\SureCart\Rest\TaxOverrideRestServiceProvider::class,
 		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\CheckoutRestServiceProvider::class,
@@ -117,6 +118,14 @@ return [
 		\SureCart\Rest\VariantsRestServiceProvider::class,
 		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
 		\SureCart\Rest\VariantValuesRestServiceProvider::class,
+		\SureCart\Rest\ClicksRestServiceProvider::class,
+		\SureCart\Rest\ReferralItemsRestServiceProvider::class,
+		\SureCart\Rest\PayoutsRestServiceProvider::class,
+		\SureCart\Rest\PayoutGroupsRestServiceProvider::class,
+		\SureCart\Rest\ReferralsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationsRestServiceProvider::class,
+		\SureCart\Rest\ExportsRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -268,7 +277,7 @@ return [
 	 * Links used.
 	 */
 	'links'                  => [
-		'purchase' => 'https://app.surecart.com/billing',
+		'purchase' => 'https://app.surecart.com/plans',
 	],
 
 	/**
@@ -343,6 +352,7 @@ return [
 		'webhooks'            => \SureCart\Middleware\WebhooksMiddleware::class,
 		'assets.components'   => \SureCart\Middleware\ComponentAssetsMiddleware::class,
 		'assets.brand_colors' => \SureCart\Middleware\BrandColorMiddleware::class,
+		'assets.admin_colors' => \SureCart\Middleware\AdminColorMiddleware::class,
 	],
 
 	/**

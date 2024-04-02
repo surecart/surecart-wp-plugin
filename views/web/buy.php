@@ -23,6 +23,9 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 </head>
 
 <body <?php body_class( 'sc-buy-page' ); ?>>
+
+	<?php wp_body_open(); ?>
+
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
 	<header class="sc-buy-header">
