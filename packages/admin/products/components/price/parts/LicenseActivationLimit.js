@@ -6,7 +6,7 @@ export default ({ price, updatePrice, className }) => {
 		<ScInput
 			className={className}
 			type="number"
-			label={__('Activation Limit', 'surecart')}
+			label={__('License Activation Limit', 'surecart')}
 			help={__(
 				'Enter the number of unique activations per license key. Leave blank for infinite.',
 				'surecart'

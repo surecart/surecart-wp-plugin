@@ -1,11 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScFlex,
-	ScInput,
-	ScSelect,
-	ScSwitch,
-} from '@surecart/components-react';
+import { ScInput, ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import SetupFee from './parts/SetupFee';
 
@@ -60,24 +55,13 @@ export default ({ price, updatePrice, licensingEnabled }) => {
 					)}
 				</>
 			)}
-			<ScFlex>
-				<ScratchAmount
-					css={css`
-						flex: 1;
-					`}
+			<ScratchAmount price={price} updatePrice={updatePrice} />
+			{licensingEnabled && (
+				<LicenseActivationLimit
 					price={price}
 					updatePrice={updatePrice}
 				/>
-				{licensingEnabled && (
-					<LicenseActivationLimit
-						price={price}
-						updatePrice={updatePrice}
-						css={css`
-							flex: 1;
-						`}
-					/>
-				)}
-			</ScFlex>
+			)}
 			<AdHoc price={price} updatePrice={updatePrice} />
 			<SetupFee price={price} updatePrice={updatePrice} />
 			<Trial price={price} updatePrice={updatePrice} />
