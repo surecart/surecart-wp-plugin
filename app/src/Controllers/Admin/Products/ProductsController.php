@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
-use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
 
@@ -162,10 +161,8 @@ class ProductsController extends AdminController {
 			$updated->archived ? __( 'Product archived.', 'surecart' ) : __( 'Product restored.', 'surecart' )
 		);
 
-		return $this->redirectBack( $request );
-	}
-
-	public function redirectBack( $request ) {
-		return ( new RedirectResponse( $request ) )->back();
+		// Redirect to the admin product list page.
+		wp_safe_redirect( admin_url( 'admin.php?page=sc-products&status=' . ( $updated->archived ? 'archived' : 'active' ) ) );
+		exit;
 	}
 }
