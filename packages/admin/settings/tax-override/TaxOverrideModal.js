@@ -245,7 +245,7 @@ export default ({
 									value={data?.rate ?? ''}
 									onScInput={(e) => {
 										updateData({
-											rate: parseFloat(e.target.value),
+											rate: e.target.value,
 										});
 									}}
 								>
