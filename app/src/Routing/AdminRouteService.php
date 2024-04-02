@@ -43,6 +43,16 @@ class AdminRouteService {
 		'product_collection'  => 'sc-product-collections',
 		'product_collections' => 'sc-product-collections',
 		'restore'             => 'sc-restore',
+		'affiliates'          => 'sc-affiliates',
+		'affiliate'           => 'sc-affiliate',
+		'affiliate-click'     => 'sc-affiliate-clicks',
+		'affiliate-clicks'    => 'sc-affiliate-clicks',
+		'affiliate-referral'  => 'sc-affiliate-referrals',
+		'affiliate-referrals' => 'sc-affiliate-referrals',
+		'affiliate-requests'  => 'sc-affiliate-requests',
+		'affiliate-request'   => 'sc-affiliate-requests',
+		'affiliate-payouts'   => 'sc-affiliate-payouts',
+		'affiliate-payout'    => 'sc-affiliate-payouts',
 	];
 
 	/**

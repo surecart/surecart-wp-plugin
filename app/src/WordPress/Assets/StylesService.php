@@ -31,7 +31,7 @@ class StylesService {
 		wp_register_style(
 			'surecart-themes-default',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.css',
-			[],
+			array(),
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
 		$brand = \SureCart::account()->brand;
@@ -74,6 +74,34 @@ class StylesService {
 		$this->register();
 		// enqueue it.
 		wp_enqueue_style( 'surecart-themes-default' );
+	}
+
+	/**
+	 * Add inline brand styles to theme.
+	 *
+	 * @param string $handle The handle to add the styles to.
+	 *
+	 * @return void
+	 */
+	public function addInlineAdminColors( $handle ) {
+		ob_start();
+		?>
+		:root:root {
+			--wp-admin-theme-color: #007cba;
+			--sc-color-primary-500: var(--wp-admin-theme-color);
+			--sc-focus-ring-color-primary: var(
+				--wp-admin-theme-color
+			);
+			--sc-input-border-color-focus: var(
+				--wp-admin-theme-color
+			);
+		}
+		<?php
+
+		wp_add_inline_style(
+			$handle,
+			ob_get_clean()
+		);
 	}
 
 	/**

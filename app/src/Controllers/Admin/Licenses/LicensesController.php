@@ -19,11 +19,13 @@ class LicensesController extends AdminController {
 		$table = new LicensesListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'licenses' => [
-					'title' => __( 'Licenses', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'licenses' => [
+						'title' => __( 'Licenses', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/licenses/index' )->with( [ 'table' => $table ] );
 	}

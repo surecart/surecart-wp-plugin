@@ -124,6 +124,7 @@ return array(
 	'payment_method.invalid'                               => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'customer.default_payment_method.invalid'              => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'payment_method.not_detachable'                        => __( 'This payment method cannot be deleted because there are no other valid or reusable saved payment methods available.', 'surecart' ),
+	'payout.end_date.no_applicable_referrals'              => __( 'There are no applicable referrals for this payout.', 'surecart' ),
 	'line_item.price.exceeds_purchase_limit'               => __( 'You have exceeded the purchase limit for this product.', 'surecart' ),
 	'line_item.ad_hoc_amount.outside_range'                => __( 'This amount is outside the allowed amount.', 'surecart' ),
 	'checkout.price.exceeds_purchase_limit'                => __( 'You have exceeded the purchase limit for this product.', 'surecart' ),
@@ -137,4 +138,8 @@ return array(
 	'line_item.upsell.already_applied'                     => __( 'This upsell has already been applied.', 'surecart' ),
 	'line_item.upsell.expired'                             => __( 'This upsell has expired.', 'surecart' ),
 	'upsell_funnel.enabled.initial_upsell_blank'           => __( 'Please select an initial upsell offer.', 'surecart' ),
+	'affiliation_request.name.blank'                       => __( 'The affiliate request\'s name cannot be blank.', 'surecart' ),
+	'affiliation_request.email.blank'                      => __( 'The affiliate request\'s email cannot be blank.', 'surecart' ),
+	'affiliation_request.bio.blank'                        => __( 'The affiliate request\'s bio cannot be blank.', 'surecart' ),
+	'affiliation_request.email.taken'                      => __( 'The affiliate request\'s email is already in use.', 'surecart' ),
 );
