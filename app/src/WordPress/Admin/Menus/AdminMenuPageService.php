@@ -118,13 +118,17 @@ class AdminMenuPageService {
 			#toplevel_page_sc-dashboard li {
 				clear: both;
 			}
-			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="post.php?post=' . (int) $shop_id . '&action=edit"]:before {
+			#toplevel_page_sc-dashboard li a[href^="post.php?post=' . (int) $shop_id . '&action=edit"] {
+				display: inline-block;
+				width: 100%;
+			}
+			#toplevel_page_sc-dashboard li:not(:last-child):has(a[href^="post.php?post=' . (int) $shop_id . '&action=edit"]):before {
 				border-top: 1px solid hsla(0,0%,100%,.2);
 				display: block;
 				float: left;
-				margin: 8px -15px 13px;
+				margin: 8px 0 8px;
 				content: "";
-				width: calc(100% + 26px);
+				width: calc(100% + 16px);
 			}
 			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-dashboard"]:after {
 				border-bottom: 1px solid hsla(0,0%,100%,.2);
