@@ -57,7 +57,9 @@ export default ({
 								</ScTag>
 							),
 							description: (
-								<ScText truncate>{description || '-'}</ScText>
+								<ScText truncate title={description}>
+									{description || '-'}
+								</ScText>
 							),
 							order: (
 								<ScText truncate>
