@@ -1,6 +1,8 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 
@@ -9,7 +11,8 @@ import { Fragment } from '@wordpress/element';
  */
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
-import { ScFormatDate, ScTag } from '@surecart/components-react';
+import { ScAvatar, ScFormatDate, ScTag } from '@surecart/components-react';
+import useAvatar from '../../hooks/useAvatar';
 
 export default ({ affiliation, loading }) => {
 	const {
@@ -23,12 +26,48 @@ export default ({ affiliation, loading }) => {
 		updated_at,
 	} = affiliation;
 
+	const avatarUrl = useAvatar({ email: affiliation?.email });
+
 	return (
-		<Box title={__('Details', 'surecart')} loading={loading}>
+		<Box
+			title={__('Profile', 'surecart')}
+			loading={loading}
+			header_action={
+				<ScTag type={status_type}>{status_display_text}</ScTag>
+			}
+		>
 			<Fragment>
-				<Definition title={__('Name', 'surecart')}>
-					{display_name}
-				</Definition>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						gap: 2em;
+					`}
+				>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: flex-start;
+							gap: 1em;
+							flex: 1;
+						`}
+					>
+						<ScAvatar
+							image={avatarUrl}
+							initials={(display_name || '').charAt(0)}
+						/>
+						<div>
+							<div>
+								<strong>{display_name}</strong>
+							</div>
+							<div>{email}</div>
+						</div>
+					</div>
+				</div>
+
+				<hr />
 
 				<Definition title={__('Referral Code', 'surecart')}>
 					<sc-prose>
@@ -36,14 +75,8 @@ export default ({ affiliation, loading }) => {
 					</sc-prose>
 				</Definition>
 
-				<Definition title={__('Email', 'surecart')}>{email}</Definition>
-
 				<Definition title={__('Payout Email', 'surecart')}>
 					{payout_email}
-				</Definition>
-
-				<Definition title={__('Status', 'surecart')}>
-					<ScTag type={status_type}>{status_display_text}</ScTag>
 				</Definition>
 
 				<hr />
