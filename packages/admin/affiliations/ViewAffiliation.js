@@ -34,6 +34,7 @@ import Details from './modules/Details';
 import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
+import Url from './modules/Url';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -229,17 +230,23 @@ export default ({ id }) => {
 				</div>
 			}
 			sidebar={
-				<Details
-					affiliation={affiliation || {}}
-					loading={!hasLoadedAffiliation}
-				/>
+				<>
+					<Details
+						affiliation={affiliation || {}}
+						loading={!hasLoadedAffiliation}
+					/>
+					<Url
+						url={affiliation?.referral_url}
+						code={affiliation?.code}
+					/>
+				</>
 			}
 		>
 			<Error error={error} setError={setError} margin="80px" />
-			<Clicks affiliationId={affiliation?.id} />
 			<Referrals affiliationId={affiliation?.id} />
 			<Payouts affiliationId={affiliation?.id} />
 			<Promotions affiliationId={affiliation?.id} />
+			<Clicks affiliationId={affiliation?.id} />
 
 			<ConfirmDialog
 				isOpen={'activate' === modal}

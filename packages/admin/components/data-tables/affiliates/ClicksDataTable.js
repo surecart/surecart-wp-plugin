@@ -13,7 +13,12 @@ import { store as noticesStore } from '@wordpress/notices';
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import { ScFormatDate, ScIcon, ScText } from '@surecart/components-react';
+import {
+	ScFormatDate,
+	ScIcon,
+	ScText,
+	ScButton,
+} from '@surecart/components-react';
 
 export default ({
 	data,
@@ -40,43 +45,95 @@ export default ({
 				.sort((a, b) => b.created_at - a.created_at)
 				.map(({ created_at, url, referrer }) => {
 					const urlRef = useCopyToClipboard(url, () => {
-						createSuccessNotice(__('Landing URL copied to clipboard.', 'surecart'), {
-							type: 'snackbar',
-						})
+						createSuccessNotice(
+							__('Copied to clipboard.', 'surecart'),
+							{
+								type: 'snackbar',
+							}
+						);
 					});
 
 					const referrerRef = useCopyToClipboard(referrer, () => {
-						createSuccessNotice(__('Referring URL copied to clipboard.', 'surecart'), {
-							type: 'snackbar',
-						})
+						createSuccessNotice(
+							__('Copied to clipboard.', 'surecart'),
+							{
+								type: 'snackbar',
+							}
+						);
 					});
 
 					return {
 						url: (
-							<ScText
+							<div
 								css={css`
-									cursor: pointer;
-									word-break: break-word;
-									line-break: anywhere;
+									display: flex;
+									gap: 0.5em;
 								`}
-								ref={urlRef}
 							>
-								{!!url && <ScIcon name="copy" />}
-								{' '} {url}
-							</ScText>
+								{!!url && (
+									<ScButton
+										type="text"
+										circle
+										size="small"
+										ref={urlRef}
+										css={css`
+											flex: 1 0 18px;
+											opacity: 0.6;
+										`}
+									>
+										<ScIcon
+											css={css`
+												font-size: 16px;
+											`}
+											name="copy"
+										/>
+									</ScButton>
+								)}{' '}
+								<ScText
+									css={css`
+										word-break: break-word;
+										line-break: anywhere;
+									`}
+								>
+									{url}
+								</ScText>
+							</div>
 						),
 						referrer: (
-							<ScText
+							<div
 								css={css`
-									cursor: pointer;
-									word-break: break-word;
-									line-break: anywhere;
+									display: flex;
+									gap: 0.5em;
 								`}
-								ref={referrerRef}
 							>
-								{!!referrer && <ScIcon name="copy" />}
-								{' '}{referrer}
-							</ScText>
+								{!!referrer && (
+									<ScButton
+										type="text"
+										circle
+										size="small"
+										ref={referrerRef}
+										css={css`
+											flex: 1 0 18px;
+											opacity: 0.6;
+										`}
+									>
+										<ScIcon
+											css={css`
+												font-size: 16px;
+											`}
+											name="copy"
+										/>
+									</ScButton>
+								)}{' '}
+								<ScText
+									css={css`
+										word-break: break-word;
+										line-break: anywhere;
+									`}
+								>
+									{referrer}
+								</ScText>
+							</div>
 						),
 						date: (
 							<ScFormatDate

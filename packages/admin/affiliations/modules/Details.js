@@ -9,8 +9,7 @@ import { Fragment } from '@wordpress/element';
  */
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
-import { ScFormatDate } from '@surecart/components-react';
-import { ScTag } from '@surecart/components-react';
+import { ScFormatDate, ScTag } from '@surecart/components-react';
 
 export default ({ affiliation, loading }) => {
 	const {
@@ -18,17 +17,23 @@ export default ({ affiliation, loading }) => {
 		status_display_text,
 		display_name,
 		email,
+		code,
 		payout_email,
-		active,
 		created_at,
 		updated_at,
 	} = affiliation;
 
 	return (
-		<Box title={__('Affiliate Details', 'surecart')} loading={loading}>
+		<Box title={__('Details', 'surecart')} loading={loading}>
 			<Fragment>
 				<Definition title={__('Name', 'surecart')}>
 					{display_name}
+				</Definition>
+
+				<Definition title={__('Referral Code', 'surecart')}>
+					<sc-prose>
+						<code>{code}</code>
+					</sc-prose>
 				</Definition>
 
 				<Definition title={__('Email', 'surecart')}>{email}</Definition>
