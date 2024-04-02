@@ -41,6 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-claim-account' )
 ->name( 'account.claim' )
 ->middleware( AccountClaimMiddleware::class )
+->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
 ->handle( 'OnboardingController@show' );
 
@@ -54,6 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-dashboard' )
 ->middleware( 'user.can:manage_sc_shop_settings' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->name( 'dashboard.show' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
 ->handle( 'DashboardController@index' );
@@ -87,6 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-orders' )
 ->middleware( 'user.can:edit_sc_orders' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Orders\\' )
 ->group(
 	function () {
@@ -105,6 +108,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-checkouts' )
 ->middleware( 'user.can:edit_sc_orders' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Checkouts\\' )
 ->group(
 	function () {
@@ -122,6 +126,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-invoices' )
 ->middleware( 'user.can:edit_sc_invoices' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Invoices\\' )
 ->group(
 	function () {
@@ -140,6 +145,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-products' )
 ->middleware( 'user.can:edit_sc_products' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Products\\' )
 ->group(
 	function () {
@@ -160,6 +166,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-coupons' )
 ->middleware( 'user.can:edit_sc_coupons' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function () {
@@ -177,6 +184,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-customers' )
 ->middleware( 'user.can:edit_sc_customers' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Customers\\' )
 ->group(
 	function () {
@@ -194,6 +202,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-licenses' )
 ->middleware( 'user.can:edit_sc_products' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Licenses\\' )
 ->group(
 	function () {
@@ -211,6 +220,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-abandoned-checkouts' )
 ->middleware( 'user.can:edit_sc_orders' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function () {
@@ -228,6 +238,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-subscriptions' )
 ->middleware( 'user.can:edit_sc_subscriptions' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
 	function () {
@@ -246,6 +257,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-cancellation-insights' )
 ->middleware( 'user.can:edit_sc_subscriptions' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\CancellationInsights\\' )
 ->group(
 	function () {
@@ -278,6 +290,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-product-groups' )
 ->middleware( 'user.can:edit_sc_products' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
 	function () {
@@ -296,6 +309,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-product-collections' )
 ->middleware( 'user.can:edit_sc_products' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductCollections\\' )
 ->group(
 	function () {
@@ -313,6 +327,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-bumps' )
 ->middleware( 'user.can:edit_sc_products' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Bumps\\' )
 ->group(
 	function () {
@@ -331,6 +346,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-upsell-funnels' )
 ->middleware( 'user.can:edit_sc_products' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Upsells\\' )
 ->group(
 	function () {
@@ -349,6 +365,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliates' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Affiliations\\' )
 ->group(
 	function () {
@@ -363,7 +380,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-requests' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
-->middleware( 'assets.brand_colors' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationRequests\\' )
 ->group(
 	function () {
@@ -376,7 +393,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-clicks' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
-->middleware( 'assets.brand_colors' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationClicks\\' )
 ->group(
 	function () {
@@ -388,7 +405,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-referrals' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
-->middleware( 'assets.brand_colors' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationReferrals\\' )
 ->group(
 	function () {
@@ -405,7 +422,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-payouts' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
-->middleware( 'assets.brand_colors' )
+->middleware( 'assets.admin_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationPayouts\\' )
 ->group(
 	function () {

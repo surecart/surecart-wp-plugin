@@ -352,6 +352,7 @@ return [
 		'webhooks'            => \SureCart\Middleware\WebhooksMiddleware::class,
 		'assets.components'   => \SureCart\Middleware\ComponentAssetsMiddleware::class,
 		'assets.brand_colors' => \SureCart\Middleware\BrandColorMiddleware::class,
+		'assets.admin_colors' => \SureCart\Middleware\AdminColorMiddleware::class,
 	],
 
 	/**

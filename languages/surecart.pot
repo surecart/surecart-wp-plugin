@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-02T16:18:42+00:00\n"
+"POT-Creation-Date: 2024-04-02T16:39:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -6745,7 +6745,7 @@ msgid "Copied!"
 msgstr ""
 
 #: abandoned-checkouts/components/Link.js:53
-#: affiliations/modules/Url.js:30
+#: affiliations/modules/Url.js:37
 #: licenses/modules/Details/Copy.js:21
 #: products/modules/Prices/Price/CopyInput.js:32
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:294
@@ -7201,7 +7201,7 @@ msgstr ""
 msgid "No more promotions."
 msgstr ""
 
-#: affiliations/modules/Url.js:20
+#: affiliations/modules/Url.js:22
 #: components/data-tables/affiliates/ClicksDataTable.js:49
 #: components/data-tables/affiliates/ClicksDataTable.js:58
 #: orders/modules/Fulfillment/CreateFulfillment.js:53
@@ -7211,7 +7211,7 @@ msgstr ""
 msgid "Copied to clipboard."
 msgstr ""
 
-#: affiliations/modules/Url.js:26
+#: affiliations/modules/Url.js:28
 msgid "Referral Url"
 msgstr ""
 
