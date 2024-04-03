@@ -79,8 +79,17 @@ export class ScOrderTaxIdInput {
     }
   }
 
-  componentWillLoad() {
+  async componentWillLoad() {
     this.handleTaxIdTypesChange();
+
+    // If there's only one tax ID type, update the order's tax_identifier
+    // as that triggered only after on change of the number_type.
+    if (this.taxIdTypesData?.length === 1) {
+      await this.updateOrder({
+        number: checkoutState.checkout?.tax_identifier?.number,
+        number_type: this.taxIdTypesData[0],
+      });
+    }
   }
 
   required() {
