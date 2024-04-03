@@ -89,7 +89,7 @@ export default () => {
 					{__('Tax Included', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'If enabled, the tax amount will be included in the product price and shipping rate.',
+							'If enabled, the tax amount will be included in the product price and shipping rates for all products.',
 							'surecart'
 						)}
 					</span>
