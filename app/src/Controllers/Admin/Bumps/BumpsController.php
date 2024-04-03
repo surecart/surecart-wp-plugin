@@ -3,8 +3,6 @@
 namespace SureCart\Controllers\Admin\Bumps;
 
 use SureCart\Controllers\Admin\AdminController;
-use SureCart\Models\Product;
-use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Bumps\BumpsListTable;
 
 /**
