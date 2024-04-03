@@ -207,7 +207,7 @@ export default ({ onRequestClose, product }) => {
 								target="_blank"
 								href="admin.php?page=sc-settings&tab=tax_protocol"
 							>
-								{__('Tax is included in prices', 'surecart')}
+								{__('Tax is included', 'surecart')}
 								<ScIcon name="external-link" slot="suffix" />
 							</ScButton>
 						)}
