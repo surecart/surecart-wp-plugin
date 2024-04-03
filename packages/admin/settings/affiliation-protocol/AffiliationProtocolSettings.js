@@ -503,7 +503,6 @@ export default () => {
 						<span slot="suffix">{__('Days', 'surecart')}</span>
 					</ScInput>
 				)}
-
 				<ScSwitch
 					checked={
 						affiliationProtocolItem?.repeat_customer_commissions_enabled
@@ -524,7 +523,6 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-
 				{affiliationProtocolItem?.repeat_customer_commissions_enabled && (
 					<ScInput
 						label={__('Lifetime Commission Duration', 'surecart')}
