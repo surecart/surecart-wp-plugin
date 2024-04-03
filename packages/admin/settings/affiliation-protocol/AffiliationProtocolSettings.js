@@ -441,6 +441,26 @@ export default () => {
 				)}
 				<ScSwitch
 					checked={
+						affiliationProtocolItem?.zero_commission_amount_referrals_enabled
+					}
+					onClick={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							zero_commission_amount_referrals_enabled:
+								!affiliationProtocolItem?.zero_commission_amount_referrals_enabled,
+						});
+					}}
+				>
+					{__('Zero Commission Referrals', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Whether or not to create a referral from a checkout when the resulting referral has a commission of zero. This is useful for tracking referrals that do not have a commission, such as when a customer uses a coupon code.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={
 						affiliationProtocolItem?.recurring_commissions_enabled
 					}
 					onClick={(e) => {
@@ -483,6 +503,7 @@ export default () => {
 						<span slot="suffix">{__('Days', 'surecart')}</span>
 					</ScInput>
 				)}
+
 				<ScSwitch
 					checked={
 						affiliationProtocolItem?.repeat_customer_commissions_enabled
@@ -503,26 +524,7 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScSwitch
-					checked={
-						affiliationProtocolItem?.zero_commission_amount_referrals_enabled
-					}
-					onClick={(e) => {
-						e.preventDefault();
-						editAffiliationProtocolItem({
-							zero_commission_amount_referrals_enabled:
-								!affiliationProtocolItem?.zero_commission_amount_referrals_enabled,
-						});
-					}}
-				>
-					{__('Zero Commission Referrals', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Whether or not to create a referral from a checkout when the resulting referral has a commission of zero. This is useful for tracking referrals that do not have a commission, such as when a customer uses a coupon code.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
+
 				{affiliationProtocolItem?.repeat_customer_commissions_enabled && (
 					<ScInput
 						label={__('Lifetime Commission Duration', 'surecart')}
