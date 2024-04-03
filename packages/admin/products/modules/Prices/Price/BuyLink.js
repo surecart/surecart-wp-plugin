@@ -13,7 +13,7 @@ import CopyInput from './CopyInput';
 import { formatNumber } from '../../../../util';
 
 export default ({ open, price, variants, stockEnabled, onRequestClose }) => {
-	const [selectedVariant, setSelectedVariant] = useState(variants[0]);
+	const [selectedVariant, setSelectedVariant] = useState(variants?.[0]);
 	const canCopy = !variants?.length || selectedVariant?.status === 'active';
 
 	return (
