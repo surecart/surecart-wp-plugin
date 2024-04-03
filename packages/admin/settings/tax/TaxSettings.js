@@ -75,6 +75,29 @@ export default () => {
 					</span>
 				</ScSwitch>
 				<ScSwitch
+					checked={item?.tax_behavior === 'inclusive'}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							tax_behavior:
+								item?.tax_behavior === 'inclusive'
+									? 'exclusive'
+									: 'inclusive',
+						});
+					}}
+				>
+					{__(
+						'Include Tax In Product Price and Shipping Rate',
+						'surecart'
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If enabled, the tax amount will be included in the product price and shipping rate.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
 					checked={item?.default_tax_enabled}
 					onClick={(e) => {
 						e.preventDefault();
