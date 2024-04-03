@@ -14,6 +14,7 @@ import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ price, product }) => {
 	// are the price details open?
@@ -166,6 +167,26 @@ export default ({ price, product }) => {
 				{getPriceType() === 'once' && (
 					<OneTime price={price} updatePrice={editPrice} />
 				)}
+
+				{product?.tax_enabled &&
+					scData?.tax_protocol?.tax_enabled &&
+					scData?.tax_protocol?.tax_behavior === 'inclusive' && (
+						<span
+							css={css`
+								text-align: right;
+							`}
+						>
+							<ScButton
+								size="small"
+								type="text"
+								target="_blank"
+								href="admin.php?page=sc-settings&tab=tax_protocol"
+							>
+								{__('Tax is included in prices', 'surecart')}
+								<ScIcon name="external-link" slot="suffix" />
+							</ScButton>
+						</span>
+					)}
 			</div>
 		</div>
 	);

@@ -1,11 +1,6 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScForm,
-	ScSelect,
-	ScSwitch,
-} from '@surecart/components-react';
+import { ScButton, ScForm, ScIcon, ScSelect } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -202,6 +197,20 @@ export default ({ onRequestClose, product }) => {
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
+
+					{product?.tax_enabled &&
+						scData?.tax_protocol?.tax_enabled &&
+						scData?.tax_protocol?.tax_behavior === 'inclusive' && (
+							<ScButton
+								size="small"
+								type="text"
+								target="_blank"
+								href="admin.php?page=sc-settings&tab=tax_protocol"
+							>
+								{__('Tax is included in prices', 'surecart')}
+								<ScIcon name="external-link" slot="suffix" />
+							</ScButton>
+						)}
 				</div>
 			</ScForm>
 			{loading && <sc-block-ui spinner></sc-block-ui>}
