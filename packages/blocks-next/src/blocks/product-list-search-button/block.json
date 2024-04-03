@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-list-search-button",
-	"title": "Search",
+	"title": "Button",
 	"description": "Display the product search button.",
 	"version": "1.0.0",
 	"category": "surecart",
