@@ -12,7 +12,6 @@ import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 // components
-import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
 
@@ -167,16 +166,6 @@ export default ({ price, product }) => {
 				{getPriceType() === 'once' && (
 					<OneTime price={price} updatePrice={editPrice} />
 				)}
-
-				<Tax
-					style={{
-						marginTop: '0.5em',
-						display: 'inline-block',
-					}}
-					price={price}
-					product={product}
-					updatePrice={editPrice}
-				/>
 			</div>
 		</div>
 	);

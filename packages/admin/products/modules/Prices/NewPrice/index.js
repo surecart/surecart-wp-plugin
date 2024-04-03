@@ -202,26 +202,6 @@ export default ({ onRequestClose, product }) => {
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
-
-					{product?.tax_enabled && scData?.tax_protocol?.tax_enabled && (
-						<ScSwitch
-							style={{
-								marginTop: '0.5em',
-								display: 'inline-block',
-							}}
-							checked={price?.tax_behavior === 'inclusive'}
-							onScChange={() =>
-								updatePrice({
-									tax_behavior:
-										price?.tax_behavior === 'inclusive'
-											? 'exclusive'
-											: 'inclusive',
-								})
-							}
-						>
-							{__('Tax is included', 'surecart')}
-						</ScSwitch>
-					)}
 				</div>
 			</ScForm>
 			{loading && <sc-block-ui spinner></sc-block-ui>}
