@@ -105,7 +105,8 @@ class UpsellsController extends AdminController {
 			$updated->enabled ? __( 'Funnel enabled.', 'surecart' ) : __( 'Funnel disabled.', 'surecart' )
 		);
 
-		wp_safe_redirect( admin_url( 'admin.php?page=sc-upsell-funnels&status=' . $status ) );
-		exit;
+		return \SureCart::redirect()->to(
+			esc_url_raw( add_query_arg( 'status', $status, admin_url( 'admin.php?page=sc-upsell-funnels' ) ) )
+		);
 	}
 }

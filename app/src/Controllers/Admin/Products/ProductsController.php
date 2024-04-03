@@ -161,8 +161,8 @@ class ProductsController extends AdminController {
 			$updated->archived ? __( 'Product archived.', 'surecart' ) : __( 'Product restored.', 'surecart' )
 		);
 
-		// Redirect to the admin product list page.
-		wp_safe_redirect( admin_url( 'admin.php?page=sc-products&status=' . ( $updated->archived ? 'archived' : 'active' ) ) );
-		exit;
+		return \SureCart::redirect()->to(
+			esc_url_raw( add_query_arg( 'status', ( $updated->archived ? 'archived' : 'active' ), admin_url( 'admin.php?page=sc-products' ) ) )
+		);
 	}
 }
