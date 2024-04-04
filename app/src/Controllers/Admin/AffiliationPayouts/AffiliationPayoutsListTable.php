@@ -208,7 +208,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_period_end( $payout ) {
-		return "<sc-format-date date='$payout->end_date' type='date' month='short' day='numeric' year='numeric' ></sc-format-date>";
+		return "<sc-format-date date='$payout->end_date' type='timestamp' month='short' day='numeric' year='numeric' ></sc-format-date>";
 	}
 
 	/**

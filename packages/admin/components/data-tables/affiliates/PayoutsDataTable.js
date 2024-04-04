@@ -69,6 +69,7 @@ export default ({
 							),
 							end_date: (
 								<ScFormatDate
+									type="timestamp"
 									month="short"
 									day="numeric"
 									year="numeric"
