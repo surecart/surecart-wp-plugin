@@ -8,7 +8,7 @@ import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordp
 import { updateFormState } from '@store/form/mutations';
 
 import { parseFormData } from '../../../functions/form-data';
-import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
+import { createCheckout, createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
 import { createErrorNotice, createInfoNotice, removeNotice } from '@store/notices/mutations';
 
@@ -369,7 +369,7 @@ export class ScSessionProvider {
 
     try {
       updateFormState('FETCH');
-      checkoutState.checkout = (await createOrUpdateCheckout({
+      checkoutState.checkout = (await createCheckout({
         data: {
           ...data,
           ...(promotion_code ? { discount: { promotion_code } } : {}),
