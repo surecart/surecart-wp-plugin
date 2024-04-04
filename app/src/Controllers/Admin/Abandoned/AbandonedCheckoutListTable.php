@@ -119,6 +119,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			[
 				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
 				'page'     => $this->get_pagenum(),
+				'live_mode' => $_GET['live_mode'] ?? '',
 			]
 		);
 	}
