@@ -1,6 +1,6 @@
 <?php
 $label = $attributes['label'] ?? __( 'Previous', 'surecart' );
-$block_id = $block->context["surecart/product-list/blockId"];
+$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
 $page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 $previous_page_url = esc_url(add_query_arg($page_key, $page - 1));

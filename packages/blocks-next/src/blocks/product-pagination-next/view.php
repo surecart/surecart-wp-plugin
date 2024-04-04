@@ -1,6 +1,6 @@
 <?php
 $label = $attributes['label'] ?? __( 'Next', 'surecart' );
-$block_id = $block->context["surecart/product-list/blockId"];
+$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
 $page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 

@@ -9,7 +9,7 @@ use SureCart\Models\Product;
  *     $block (WP_Block): The block instance.
  */
 
-$block_id = $block->context["surecart/product-list/blockId"];
+$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
 $page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 $sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';

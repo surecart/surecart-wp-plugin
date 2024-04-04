@@ -15,8 +15,7 @@
 	},
 	"attributes": {
 		"blockId": {
-			"type": "string",
-			"default": ""
+			"type": "number"
 		},
 		"columns": {
 			"type": "number",

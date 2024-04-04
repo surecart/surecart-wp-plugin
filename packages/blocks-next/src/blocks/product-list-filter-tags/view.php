@@ -1,7 +1,7 @@
 <?php
 use SureCart\Models\ProductCollection;
 
-$block_id = $block->context["surecart/product-list/blockId"];
+$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
 $filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
 $filter = empty( $_GET[ $filter_key ] ) ? '' : sanitize_text_field( $_GET[ $filter_key ] );
 $collection_ids = $filter ? explode( ',', $filter ) : [];

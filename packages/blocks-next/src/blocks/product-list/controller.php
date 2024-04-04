@@ -2,8 +2,8 @@
 <?php
 use SureCart\Models\Product;
 
-$block_id = $attributes['blockId'] ?? '';
-$page_key = $block_id ? 'products-' . $block_id . '-page' : 'products-page';
+$block_id = (int) $attributes['blockId'] ?? '';
+$page_key = 'products-' . $block_id . '-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 $per_page = $attributes['limit'] ?? 15;
 $filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
@@ -37,7 +37,6 @@ wp_interactivity_state(
 		)
 	),
 );
-$block_id = $attributes['blockId'] ?? 4;
 
 for ($i = 1; $i <= $products->totalPages(); $i++) {
 	$pages[] = [
