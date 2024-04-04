@@ -308,6 +308,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 = 2.22.1 - April 2nd, 2024 =
 - Improvement: Global setting for exclusive/inclusive tax.
 - Fix: Issue where subscription updated hooks were failing when caught via webhook.
+- Fix: UI issue with divider when shop page menu item is hidden.
 - Fix: Positioning of zero commission referrals setting.
 - Fix: Tax collection input validation issue for some Canadian provinces.
 - Fix: Payout period end date not parsing correctly.
