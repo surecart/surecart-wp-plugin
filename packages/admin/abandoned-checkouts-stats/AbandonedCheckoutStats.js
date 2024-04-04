@@ -138,10 +138,6 @@ export default () => {
 				display: grid;
 				gap: 1.5em;
 				margin: 1.5em auto;
-
-				--sc-color-primary-500: var(--sc-color-brand-primary);
-				--sc-focus-ring-color-primary: var(--sc-color-brand-primary);
-				--sc-input-border-color-focus: var(--sc-color-brand-primary);
 			`}
 		>
 			<Error error={error} setError={setError} />

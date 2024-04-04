@@ -7,7 +7,7 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScFeatureDemoBanner {
-  @Prop() url: string = 'https://app.surecart.com/billing';
+  @Prop() url: string = 'https://app.surecart.com/plans';
   @Prop() buttonText: string = __('Upgrade Your Plan', 'surecart');
 
   render() {
