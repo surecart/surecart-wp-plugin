@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.22.1 - April 2nd, 2024 =
+= 2.22.1 - April 4th, 2024 =
 - Improvement: Global setting for exclusive/inclusive tax.
 - Fix: Issue where subscription updated hooks were failing when caught via webhook.
 - Fix: UI issue with divider when shop page menu item is hidden.
