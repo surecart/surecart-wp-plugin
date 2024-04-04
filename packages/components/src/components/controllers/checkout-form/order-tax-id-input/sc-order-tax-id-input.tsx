@@ -79,7 +79,7 @@ export class ScOrderTaxIdInput {
     }
   }
 
-  async componentWillLoad() {
+  componentWillLoad() {
     this.handleTaxIdTypesChange();
   }
 
