@@ -2,6 +2,8 @@ import { Checkout } from 'src/types';
 import store from './store';
 import { state as checkoutState } from '@store/checkout';
 import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
+import { getSerializedState } from '@store/utils';
+const { checkout } = getSerializedState();
 
 /** Get the checkout. */
 export const getCheckout = (formId: number | string, mode: 'live' | 'test') => store.state[mode]?.[formId] || {};
@@ -24,5 +26,26 @@ export const setCheckout = (data: Checkout, formId: number | string) => {
 export const clearCheckout = (formId: number | string, mode: 'live' | 'test') => {
   const { [formId]: remove, ...checkouts } = store.state[mode];
   window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
-  return store.set(mode, checkouts);
+  store.set(mode, checkouts);
+
+  // set the current state to default if we are clearing the current checkout.
+  const defaultState = {
+    formId: null,
+    groupId: null,
+    mode: 'live',
+    locks: [],
+    product: null,
+    checkout: null,
+    currencyCode: 'usd',
+    abandonedCheckoutEnabled: true,
+    initialLineItems: [],
+    isCheckoutPage: false,
+    validateStock: false,
+    persist: 'browser',
+    ...checkout,
+  };
+
+  for (const key in defaultState) {
+    checkoutState[key] = defaultState[key];
+  }
 };
