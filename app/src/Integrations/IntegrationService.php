@@ -179,8 +179,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	public function onPurchaseUpdated( Purchase $purchase, $request ) {
 		$this->purchase = $purchase;
 
-		$data     = (object) $request['data']['object'] ?? null;
-		$previous = (object) $request['data']['previous_attributes'] ?? null;
+		$data     = (object) $request->data->object ?? null;
+		$previous = (object) $request->data->previous_attributes ?? null;
 
 		// we need data or a previous.
 		if ( empty( $data ) || empty( $previous ) ) {
