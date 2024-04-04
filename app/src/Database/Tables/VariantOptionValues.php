@@ -62,11 +62,15 @@ class VariantOptionValues {
             id bigint(20) unsigned NOT NULL auto_increment,
 			value varchar(155) NOT NULL,
 			name varchar(155) NOT NULL,
-			post_id bigint(20) unsigned NOT NULL
+			post_id bigint(20) unsigned NOT NULL,
+			created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+            updated_at TIMESTAMP NULL,
 			PRIMARY KEY  (id),
             KEY value (value),
             KEY name (name),
 			KEY post_id (post_id),
+			KEY created_at (created_at),
+            KEY updated_at (updated_at)
 			',
 			$this->version
 		);
