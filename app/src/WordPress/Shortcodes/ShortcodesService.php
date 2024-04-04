@@ -46,7 +46,7 @@ class ShortcodesService {
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
 					foreach ( $attributes as $key => $value ) {
-						if ( strpos( $value, ',' ) !== 0 && is_array( $defaults[ $key ] ) ) {
+						if ( strpos( $value, ',' ) !== 0 && ! empty( $defaults[ $key ] ) && is_array( $defaults[ $key ] ) ) {
 							$attributes[ $key ] = explode( ',', $value );
 						}
 					}
