@@ -69,6 +69,7 @@ export default () => {
 		'site',
 		'surecart_shop_admin_menu'
 	);
+
 	const [cartMenu, setCartMenu] = useEntityProp(
 		'root',
 		'site',
@@ -137,6 +138,37 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				{!scData?.is_block_theme && (
+					<ScSwitch
+						checked={item?.load_block_assets_on_demand}
+						onClick={(e) => {
+							e.preventDefault();
+							editItem({
+								load_block_assets_on_demand:
+									!item?.load_block_assets_on_demand,
+							});
+						}}
+					>
+						{__('On Demand Block Assets', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Enabling this option will load block assets only when they are rendered. This will happen for ALL blocks on your website, not just SureCart blocks. Please check your pages after you enable this option in a private browser window as this might change the CSS load order.',
+								'surecart'
+							)}
+							<div
+								style={{
+									fontStyle: 'italic',
+									marginTop: '0.5em',
+								}}
+							>
+								{__(
+									"Note: This option is sometimes enabled by the theme. If it is already enabled by the theme, then this setting won't have any effect.",
+									'surecart'
+								)}
+							</div>
+						</span>
+					</ScSwitch>
+				)}
 			</SettingsBox>
 
 			<SettingsBox

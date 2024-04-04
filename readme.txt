@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
-Tested up to: 6.4
-Stable tag: 2.20.4
+Tested up to: 6.5
+Stable tag: 2.22.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,29 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.22.0 - April 2nd, 2024 =
+- New: Manage affiliates from the plugin admin.
+- New: Add setting to disable zero dollar commissions.
+- New: Add affiliate promotion codes.
+- New: Ability to edit lifetime and subscription commissions.
+- Improvement: Standardize highlight color across admin pages.
+- Fix: Issue where product list sometimes does not load properly if cart is disabled.
+
+= 2.21.0 - March 28th, 2024 =
+- New: Bulk delete products.
+- New: Load separate block assets control for themes that don't provide support.
+- Improvement: Improve error messaging for minimum values accepted by processors.
+- Improvement: Internal line items refresh logic on checkout.
+- Improvement: Shipping style background to match input backgrounds.
+- Fix: Conflict with SureMembers when trying to restrict product pages that causes a fatal error in some instances.
+
+= 2.20.6 - March 27th, 2024 =
+- Fix: Issue with checkout error caused when tax or shipping is enabled, but totals block is not present.
+
+= 2.20.5 - March 25th, 2024 =
+- Fix: Issue with shipping address not client-side validating on instant checkout for U.S. tax purposes.
+- Fix: Error message if missing tax address information on instant checkout.
 
 = 2.20.4 - March 21st, 2024 =
 - Improvement: Add wp_body_open hook to our plugin templates for greater compatibility.
