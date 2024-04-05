@@ -9,14 +9,11 @@
 	"icon": "media-interactive",
 	"example": {},
 	"providesContext": {
-		"surecart/product-list/blockId": "blockId",
 		"surecart/product-list/columns": "columns",
 		"surecart/product-list/limit": "limit"
 	},
+	"usesContext": ["surecart/product-list/blockId"],
 	"attributes": {
-		"blockId": {
-			"type": "number"
-		},
 		"columns": {
 			"type": "number",
 			"default": 4

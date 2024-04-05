@@ -2,7 +2,7 @@
 <?php
 use SureCart\Models\Product;
 
-$block_id = (int) $attributes['blockId'] ?? '';
+$block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
 $page_key = 'products-' . $block_id . '-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 $per_page = $attributes['limit'] ?? 15;
