@@ -24,6 +24,7 @@ store('surecart/drawer', {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
 				e.currentTarget.close();
+				document.body.classList.remove('sc-scroll-lock');
 			}
 		},
 	},
