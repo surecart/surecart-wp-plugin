@@ -37,17 +37,22 @@ $dummy_options = [
 	<div 
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
+		role="menu"
+		data-wp-watch="callbacks.focusFirstMenuItem"
+		aria-hidden="!context.isMenuOpen"
 	>
 		<?php foreach ($dummy_options as $option) : ?>
 			<div 
-				role="menuitem" 
+				role="menuitem"
+				tabindex="0" 
 				class="sc-dropdown__menu-item"
 				data-wp-on--click="actions.selectItem"
+				data-wp-on--keyup="actions.menuItemKeyUp"
 				data-value="<?php echo esc_attr($option['value'] ?? ''); ?>"
 				data-label="<?php echo esc_attr($option['label'] ?? ''); ?>"
 			>
 				<?php echo esc_html($option['label'] ?? ''); ?>
-			</div>
+		</div>
 		<?php endforeach; ?>
 	</div>
 </div>

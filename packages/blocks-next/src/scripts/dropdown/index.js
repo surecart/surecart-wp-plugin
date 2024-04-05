@@ -4,7 +4,7 @@
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
 // controls the dropdown.
-store('surecart/dropdown', {
+const { state, callbacks, actions } = store('surecart/dropdown', {
 	state: {
 		get getSelectedOptionLabel() {
 			const context = getContext();
@@ -44,18 +44,16 @@ store('surecart/dropdown', {
 			};
 			context.isMenuOpen = false;
 		},
+		menuItemKeyUp: (e) => {
+			if (e.key === 'Enter') {
+				actions.selectItem(e);
+			}
+		},
 	},
 	callbacks: {
 		shouldHideOption: (e) => {
-			console.log(e);
 			const context = getContext();
 			const { ref } = getElement();
-			console.log(ref);
-			console.log(
-				'context.selectedItem?.value',
-				context.selectedItem?.value
-			);
-			console.log('ref.current.dataset.value', ref.current.dataset.value);
 			return context.selectedItem?.value === ref.current.dataset.value;
 		},
 	},
