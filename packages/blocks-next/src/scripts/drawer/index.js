@@ -12,6 +12,13 @@ store('surecart/drawer', {
 				: e.target.closest('dialog');
 
 			dialog?.open ? dialog?.close() : dialog?.showModal();
+
+			// Lock the body scroll when the dialog is open.
+			if (dialog?.open) {
+				document.body.classList.add('sc-scroll-lock');
+			} else {
+				document.body.classList.remove('sc-scroll-lock');
+			}
 		},
 		closeOverlay: (e) => {
 			// If the target is the dialog, close it.
