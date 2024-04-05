@@ -22,9 +22,6 @@ class UpdateMigrationServiceProviderTest extends \WP_UnitTestCase {
 		$this->assertEmpty($template->wp_id);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_cart_post_content_copied_to_template_part(){
 		self::factory()->post->create_and_get(array(
 			'post_type' => 'sc_cart',
