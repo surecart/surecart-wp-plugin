@@ -199,7 +199,37 @@ abstract class PostModel {
 			return $post_id;
 		}
 
-		return $this->find( $post_id );
+		$this->post = get_post( $post_id );
+
+		return $this;
+	}
+
+	/**
+	 * Update the post.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return $this
+	 */
+	protected function update( $model ) {
+		$props = $this->getSchemaMap( $model );
+
+		$post_id = wp_update_post(
+			array_merge(
+				$props,
+				[
+					'ID' => $this->post->ID,
+				]
+			)
+		);
+
+		if ( is_wp_error( $post_id ) ) {
+			return $post_id;
+		}
+
+		$this->post = get_post( $post_id );
+
+		return $this;
 	}
 
 	/**
@@ -210,28 +240,13 @@ abstract class PostModel {
 	 * @return $this
 	 */
 	protected function sync( \SureCart\Models\Model $model ) {
-		$post = $this->findByModelId( $model->id );
+		$this->post = $this->findByModelId( $model->id );
 
-		if ( is_wp_error( $post ) ) {
-			return $post;
+		if ( is_wp_error( $this->post ) ) {
+			return $this->post;
 		}
 
-		if ( empty( $post->ID ) ) {
-			$this->post = $this->create( $model );
-			return $this;
-		}
-
-		$props = $this->getSchemaMap( $model );
-
-		$this->post = wp_update_post(
-			array_merge(
-				$props,
-				[
-					'ID' => $post->ID,
-				]
-			)
-		);
-		return $this;
+		return empty( $this->post->ID ) ? $this->create( $model ) : $this->update( $model );
 	}
 
 	/**
@@ -243,15 +258,16 @@ abstract class PostModel {
 	 * @return array
 	 */
 	protected function getMetaInput( \SureCart\Models\Model $model ) {
-		return array_map(
-			function( $prop ) {
-				// this is a guarded property.
-				// if ( ! empty( $this->guarded[ $prop ] ) ) {
-				// return null;
-				// }
-				return $prop;
-			},
-			$model->toArray(),
+		return array_merge(
+			array_map(
+				function( $prop ) {
+					return $prop;
+				},
+				$model->toArray(),
+			),
+			[
+				'sc_id' => $model->id,
+			]
 		);
 	}
 
@@ -266,6 +282,7 @@ abstract class PostModel {
 		return array_merge(
 			[
 				'post_title'        => $model->name,
+				'post_name'         => $model->slug,
 				'post_type'         => $this->post_type,
 				'post_parent'       => $this->getPostParentId( $model ),
 				'menu_order'        => $model->position ?? 0,

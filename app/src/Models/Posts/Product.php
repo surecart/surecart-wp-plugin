@@ -45,8 +45,8 @@ class Product extends PostModel {
 	 */
 	protected function additionalSchema( $model ) {
 		return [
-			'min_price_amount' => ( (object) $model->metrics )->min_price_amount,
-			'max_price_amount' => ( (object) $model->metrics )->max_price_amount,
+			'min_price_amount' => ( (object) $model->metrics )->min_price_amount ?? 0,
+			'max_price_amount' => ( (object) $model->metrics )->max_price_amount ?? 0,
 			'prices_count'     => ( (object) $model->metrics )->prices_count ?? 0,
 			'post_excerpt'     => $model->description ?? '',
 		];
@@ -72,24 +72,22 @@ class Product extends PostModel {
 			return $this;
 		}
 
-		if ( empty( $this->post->id ) ) {
-			error_log( print_r( $this->post->ID, 1 ) );
+		if ( empty( $this->post->ID ) ) {
 			return $this;
 		}
 
 		// delete existing.
-		VariantOptionValue::where( 'post_id', $this->post->id )->delete();
+		VariantOptionValue::where( 'product_id', $this->post->ID )->delete();
 
 		// create new.
 		foreach ( $model->variant_options->data as $option ) {
-			// error_log( print_r( $option, 1 ) );
-			error_log( print_r( $this->post->id, 1 ) );
 			foreach ( $option->values as $value ) {
 				$created = VariantOptionValue::create(
 					[
-						'value'   => $value,
-						'name'    => $option->name,
-						'post_id' => $this->post->id,
+						'value'      => $value,
+						'name'       => $option->name,
+						'post_id'    => $this->post->id,
+						'product_id' => $this->post->sc_id,
 					]
 				);
 				if ( is_wp_error( $created ) ) {
