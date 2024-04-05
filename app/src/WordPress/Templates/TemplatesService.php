@@ -62,9 +62,9 @@ class TemplatesService {
 		add_action( 'init', [ $this, 'registerMeta' ] );
 
 		// product page query overrides.
-		add_filter( 'posts_pre_query', [ $this, 'overrideProductPostQuery' ], 10, 2 );
-		add_filter( 'query_vars', [ $this, 'addCurrentProductQueryVar' ] );
-		add_filter( 'get_post_metadata', [ $this, 'overrideProductPostMeta' ], 10, 4 );
+		// add_filter( 'posts_pre_query', [ $this, 'overrideProductPostQuery' ], 10, 2 );
+		// add_filter( 'query_vars', [ $this, 'addCurrentProductQueryVar' ] );
+		// add_filter( 'get_post_metadata', [ $this, 'overrideProductPostMeta' ], 10, 4 );
 	}
 
 	/**
