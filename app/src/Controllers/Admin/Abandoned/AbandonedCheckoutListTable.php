@@ -99,6 +99,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			'notification_status' => __( 'Email Status', 'surecart' ),
 			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
 			'total'               => __( 'Total', 'surecart' ),
+			'mode'                => '',
 		];
 	}
 
@@ -117,9 +118,10 @@ class AbandonedCheckoutListTable extends ListTable {
 		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
-				'page'     => $this->get_pagenum(),
+				'per_page'  => $this->get_items_per_page( 'abandoned-checkouts' ),
+				'page'      => $this->get_pagenum(),
 				'live_mode' => $_GET['live_mode'] ?? '',
+				'expand'    => [ 'checkout' ],
 			]
 		);
 	}
@@ -199,6 +201,17 @@ class AbandonedCheckoutListTable extends ListTable {
 				return '<sc-tag type="info">' . __( 'Recovered Before Email Was Sent', 'surecart' ) . '</sc-tag>';
 		}
 		return '<sc-tag type="success">' . $abandoned->recovery_status . '</sc-tag>';
+	}
+
+	/**
+	 * Handle the mode column
+	 *
+	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
+	 *
+	 * @return string
+	 */
+	public function column_mode( $abandoned ) {
+		return empty( $abandoned->checkout->live_mode ) ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
 	}
 
 	/**
