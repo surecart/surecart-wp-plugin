@@ -60,6 +60,10 @@ class AbandonedCheckoutListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 
+			if ( isset( $_GET['live_mode'] ) ) {
+				$link = add_query_arg( 'live_mode', $_GET['live_mode'], $link );
+			}
+
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
 
@@ -110,18 +114,21 @@ class AbandonedCheckoutListTable extends ListTable {
 	 */
 	protected function table_data() {
 		$status = $this->getStatus();
-		$where  = [];
+		$where  = array(
+			'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		);
+
 		if ( $status ) {
 			$where['notification_status'] = [ $status ];
 		}
+
 		return AbandonedCheckout::where( $where )
 		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
 		->paginate(
 			[
-				'per_page'  => $this->get_items_per_page( 'abandoned-checkouts' ),
-				'page'      => $this->get_pagenum(),
-				'live_mode' => $_GET['live_mode'] ?? '',
-				'expand'    => [ 'checkout' ],
+				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
+				'page'     => $this->get_pagenum(),
+				'expand'   => [ 'checkout' ],
 			]
 		);
 	}
