@@ -38,13 +38,6 @@ class Price extends Model {
 	protected $cache_key = 'products_updated_at';
 
 	/**
-	 * The syncable post class.
-	 *
-	 * @var \SureCart\Models\PostModel
-	 */
-	protected $post = PricePost::class;
-
-	/**
 	 * Set the product attribute
 	 *
 	 * @param  string $value Product properties.

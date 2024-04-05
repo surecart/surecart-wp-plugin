@@ -29,13 +29,6 @@ class ProductMedia extends Model {
 	protected $clears_account_cache = true;
 
 	/**
-	 * The syncable post class.
-	 *
-	 * @var \SureCart\Models\PostModel
-	 */
-	protected $post = ProductMediaPost::class;
-
-	/**
 	 * Set the media attribute
 	 *
 	 * @param  string $value Media properties.

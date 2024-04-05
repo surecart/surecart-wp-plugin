@@ -23,13 +23,6 @@ class Variant extends Model {
 	protected $object_name = 'variant';
 
 	/**
-	 * The syncable post class.
-	 *
-	 * @var \SureCart\Models\PostModel
-	 */
-	protected $post = VariantPost::class;
-
-	/**
 	 * Set the product attribute
 	 *
 	 * @param  string $value Product properties.

@@ -23,13 +23,6 @@ class VariantOption extends Model {
 	protected $object_name = 'variant_option';
 
 	/**
-	 * The syncable post class.
-	 *
-	 * @var \SureCart\Models\PostModel
-	 */
-	protected $post = VariantOptionPost::class;
-
-	/**
 	 * Set the product attribute.
 	 *
 	 * @param  string $value Product properties.
