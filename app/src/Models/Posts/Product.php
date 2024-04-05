@@ -1,6 +1,7 @@
 <?php
 namespace SureCart\Models\Posts;
 
+use SureCart\Models\VariantOptionValue;
 use SureCart\Support\Currency;
 
 /**
@@ -29,6 +30,13 @@ class Product extends PostModel {
 	protected $model = \SureCart\Models\Product::class;
 
 	/**
+	 * The attributes that are not mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $guarded = [ 'name', 'position', 'created_at', 'updated_at' ];
+
+	/**
 	 * Additional schema.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
@@ -42,6 +50,55 @@ class Product extends PostModel {
 			'prices_count'     => ( (object) $model->metrics )->prices_count ?? 0,
 			'post_excerpt'     => $model->description ?? '',
 		];
+	}
+
+	/**
+	 * Sync the model with the post.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return $this
+	 */
+	protected function sync( \SureCart\Models\Model $model ) {
+		$synced = parent::sync( $model );
+
+		// handle error.
+		if ( is_wp_error( $synced ) ) {
+			return $synced;
+		}
+
+		// there are no variants.
+		if ( empty( $model->variant_options->data ) ) {
+			return $this;
+		}
+
+		if ( empty( $this->post->id ) ) {
+			error_log( print_r( $this->post->ID, 1 ) );
+			return $this;
+		}
+
+		// delete existing.
+		VariantOptionValue::where( 'post_id', $this->post->id )->delete();
+
+		// create new.
+		foreach ( $model->variant_options->data as $option ) {
+			// error_log( print_r( $option, 1 ) );
+			error_log( print_r( $this->post->id, 1 ) );
+			foreach ( $option->values as $value ) {
+				$created = VariantOptionValue::create(
+					[
+						'value'   => $value,
+						'name'    => $option->name,
+						'post_id' => $this->post->id,
+					]
+				);
+				if ( is_wp_error( $created ) ) {
+					return $created;
+				}
+			}
+		}
+
+		return $this;
 	}
 
 	/**

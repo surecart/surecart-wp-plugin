@@ -28,6 +28,7 @@ class ModelSyncJob extends BackgroundProcess {
 	 */
 	protected $expands = [
 		\SureCart\Models\ProductMedia::class => [ 'media' ],
+		\SureCart\Models\Product::class      => [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ],
 	];
 
 	/**

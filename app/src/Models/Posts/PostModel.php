@@ -38,7 +38,16 @@ abstract class PostModel {
 	protected $model;
 
 	/**
+	 * The attributes that are not mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $guarded = [ 'name', 'position', 'created_at', 'updated_at' ];
+
+	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
+	 *
+	 * @param \WP_Post|null $post The post.
 	 *
 	 * @throws \Exception If the post is not found.
 	 */
@@ -227,21 +236,22 @@ abstract class PostModel {
 
 	/**
 	 * Prepare the model schema for syncing to the post.
+	 * This gets all declared "fillable" model items and inserts them as post meta.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
 	 *
 	 * @return array
 	 */
 	protected function getMetaInput( \SureCart\Models\Model $model ) {
-		return array_filter(
-			array_merge(
-				$model->toArray(),
-				[
-					'sc_id' => $model->id, // this replaces id with sc_id.
-					'id'    => null,
-				]
-			),
-			'is_scalar'
+		return array_map(
+			function( $prop ) {
+				// this is a guarded property.
+				// if ( ! empty( $this->guarded[ $prop ] ) ) {
+				// return null;
+				// }
+				return $prop;
+			},
+			$model->toArray(),
 		);
 	}
 

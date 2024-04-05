@@ -53,10 +53,6 @@ class MigrationService {
 	public function models() {
 		// this one needs it's own batch so they process in order.
 		$this->fetch->push_to_queue( [ 'model' => Product::class ] )->save();
-		$this->fetch->push_to_queue( [ 'model' => ProductMedia::class ] )->save();
-		$this->fetch->push_to_queue( [ 'model' => Price::class ] )->save();
-		$this->fetch->push_to_queue( [ 'model' => Variant::class ] )->save();
-		$this->fetch->push_to_queue( [ 'model' => VariantOption::class ] )->save();
 		return $this->fetch;
 	}
 

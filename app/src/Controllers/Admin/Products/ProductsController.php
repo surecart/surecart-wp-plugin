@@ -44,6 +44,7 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
+				'suffix'      => '<div><a href="' . esc_url( $this->getSyncUrl() ) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
 			)
 		);
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
