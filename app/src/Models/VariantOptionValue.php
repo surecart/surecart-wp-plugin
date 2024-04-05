@@ -26,5 +26,5 @@ class VariantOptionValue extends DatabaseModel {
 	 *
 	 * @var array
 	 */
-	protected $fillable = [ 'id', 'value', 'name', 'post_id', 'updated_at', 'created_at' ];
+	protected $fillable = [ 'id', 'value', 'name', 'post_id', 'product_id', 'updated_at', 'created_at' ];
 }
