@@ -61,9 +61,9 @@ class CollectionTemplatesService {
 		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
 
 		// collection page query overrides.
-		add_filter( 'posts_pre_query', [ $this, 'overrideCollectionPostQuery' ], 10, 2 );
-		add_filter( 'query_vars', [ $this, 'addCurrentCollectionQueryVar' ] );
-		add_filter( 'get_post_metadata', [ $this, 'overrideCollectionPostMeta' ], 10, 4 );
+		// add_filter( 'posts_pre_query', [ $this, 'overrideCollectionPostQuery' ], 10, 2 );
+		// add_filter( 'query_vars', [ $this, 'addCurrentCollectionQueryVar' ] );
+		// add_filter( 'get_post_metadata', [ $this, 'overrideCollectionPostMeta' ], 10, 4 );
 	}
 
 	/**

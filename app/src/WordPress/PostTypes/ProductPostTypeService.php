@@ -25,9 +25,9 @@ class ProductPostTypeService {
 		// register.
 		add_action( 'init', [ $this, 'registerPostType' ] );
 		// add child posts to posts results to prevent n+1 queries.
-		add_action( 'posts_results', [ $this, 'addChildrenToProducts' ], 10, 2 );
+		// add_action( 'posts_results', [ $this, 'addChildrenToProducts' ], 10, 2 );
 		// add necessary data to product.
-		add_action( 'the_post', [ $this, 'addChildrenToProduct' ], 10, 2 );
+		// add_action( 'the_post', [ $this, 'addChildrenToProduct' ], 10, 2 );
 		// register post status.
 		add_action( 'init', [ $this, 'registerPostStatus' ] );
 		// add the rest api meta query.
@@ -35,13 +35,13 @@ class ProductPostTypeService {
 		// register rest fields.
 		add_action( 'rest_api_init', [ $this, 'registerRestFields' ] );
 		// when gallery is updated on the post, set the first as the featured image.
-		add_action( 'updated_post_meta', [ $this, 'automaticallySetFeaturedImage' ], 10, 4 );
+		// add_action( 'updated_post_meta', [ $this, 'automaticallySetFeaturedImage' ], 10, 4 );
 		// add the external media url.
-		add_filter( 'wp_get_attachment_image_src', [ $this, 'externalMediaUrl' ], 10, 3 );
+		// add_filter( 'wp_get_attachment_image_src', [ $this, 'externalMediaUrl' ], 10, 3 );
 		// add the external media metadata.
-		add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
+		// add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
 		// when a product media is deleted, remove it from the gallery.
-		add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+		// add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
 	}
 
 	/**
