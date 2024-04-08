@@ -83,6 +83,28 @@ export default ({ coupon, loading, updateCoupon }) => {
 							}
 						/>
 					</BaseControl>
+					<BaseControl>
+						<ScPriceInput
+							className="sc-coupon-maxium-subtotal-amount"
+							help={__(
+								'The maximum order subtotal amount required to apply this coupon.',
+								'surecart'
+							)}
+							currencyCode={
+								coupon?.currency ||
+								window?.scData?.currency_code
+							}
+							placeholder={__('No Maximum', 'surecart')}
+							attribute="max_subtotal_amount"
+							label={__('Maximum order subtotal', 'surecart')}
+							value={coupon?.max_subtotal_amount || null}
+							onScInput={(e) =>
+								updateCoupon({
+									max_subtotal_amount: e.target.value,
+								})
+							}
+						/>
+					</BaseControl>
 				</div>
 				<div>
 					<ScSwitch
