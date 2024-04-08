@@ -81,10 +81,6 @@ class TemplateUtilityService {
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Checkout', 'Template name', 'surecart' ) : _x( 'Checkout', 'Template name', 'surecart' ),
 				'description' => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
 			],
-			'dashboard' => [
-				'title'       => _x( 'SureCart Dashboard', 'Template name', 'surecart' ),
-				'description' => __( 'Display the customer dashboard content unless a custom template has been applied.', 'surecart' ),
-			],
 		];
 	}
 
@@ -243,8 +239,12 @@ class TemplateUtilityService {
 		$template->title          = $post->post_title;
 		$template->status         = $post->post_status;
 		$template->has_theme_file = $has_theme_file;
-		$template->is_custom      = false;
-		$template->post_types     = array( 'sc_product', 'sc_collection', 'sc_upsell' ); // Don't appear in any Edit Post template selector dropdown.
+		$template->is_custom      = true;
+		$template->post_types     = array( 'sc_product', 'sc_collection', 'sc_upsell', 'page' ); // Don't appear in any Edit Post template selector dropdown.
+
+		if ( 'wp_template' === $template_type && isset( $default_template_types[ $template_file->slug ] ) ) {
+			$template->is_custom = false;
+		}
 
 		if ( 'wp_template_part' === $post->post_type ) {
 			$type_terms = get_the_terms( $post, 'wp_template_part_area' );
@@ -338,7 +338,8 @@ class TemplateUtilityService {
 	 * @return \WP_Block_Template Template.
 	 */
 	public function buildTemplateResultFromFile( $template_file, $template_type ) {
-		$template_file = (object) $template_file;
+		$default_template_types = get_default_block_template_types();
+		$template_file          = (object) $template_file;
 
 		// If the theme has an archive-products.html template but does not have product taxonomy templates
 		// then we will load in the archive-product.html template from the theme to use for product taxonomies on the frontend.
@@ -360,9 +361,14 @@ class TemplateUtilityService {
 		$template->status         = 'publish';
 		$template->has_theme_file = true;
 		$template->origin         = $template_file->source;
-		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
-		$template->post_types     = [ 'sc_product', 'sc_collection', 'sc_bump' ]; // Don't appear in any Edit Post template selector dropdown.
+		$template->is_custom      = true; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
+		$template->post_types     = [ 'sc_product', 'sc_collection', 'sc_bump', 'page' ]; // Don't appear in any Edit Post template selector dropdown.
 		$template->area           = 'uncategorized';
+
+		if ( 'wp_template' === $template_type && isset( $default_template_types[ $template_file->slug ] ) ) {
+			$template->is_custom = false;
+		}
+
 		return $template;
 	}
 
