@@ -24,9 +24,10 @@ $dummy_options = [
 	<button 
 		class="sc-dropdown__trigger button button--standard button--medium button--default button--caret button--has-label"
 		data-wp-on--click="actions.toggleMenu"
+		aria-label="Press Space or Enter to open the dropdown"
 	>
 		<span class="button__label" data-wp-text="state.getSelectedOptionLabel">
-			First Option
+			<?php echo $dummy_options[0]['label'] ?? 'First Option'; ?>
         </span>
 		<span class="button__caret">
 			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
