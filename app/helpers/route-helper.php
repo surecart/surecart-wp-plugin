@@ -7,12 +7,8 @@
  * @param string $name Name of URL var.
  */
 function sc_url_var( $var, $name = 'action' ) {
-	// If action value is -1, set Variable value to -1 to ensure it's not considered empty.
-	if ( isset( $_GET[ $name ] ) && '-1' === sanitize_text_field( wp_unslash( $_GET[ $name ] ) ) ) {
-		$var = '-1';
-	}
-
-	if ( ! $var ) return empty( $_GET[ $name ] ); // phpcs:ignore
+	// it's empty if it's not set or it's set to -1.
+	if ( ! $var ) return empty( $_GET[ $name ] ) || '-1' === $_GET[ $name ]; // phpcs:ignore
 	return ! empty( $_GET[ $name ] ) && $var === $_GET[ $name ]; // phpcs:ignore
 }
 
