@@ -33,7 +33,6 @@ wp_interactivity_state(
 		$block_id => array (
 			'products' => $products,
 			'filter' => $collection_ids
-
 		)
 	),
 );

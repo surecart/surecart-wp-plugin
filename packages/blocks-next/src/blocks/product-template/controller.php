@@ -47,7 +47,7 @@ $styles = sc_get_block_styles();
 $style = $styles['css'] ?? '';
 $class = $styles['classnames'] ?? '';
 $columns = $block->context["surecart/product-list/columns"] ?? 4;
-$block_gap_css_var = $attributes['style']['spacing']['blockGap'] ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
+// $block_gap_css_var = !empty( $attributes['style']['spacing']['blockGap']) ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
 
 // return the view.
 return 'file:./view.php';

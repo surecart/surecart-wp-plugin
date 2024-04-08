@@ -1,9 +1,8 @@
-<div 
-	<?php echo wp_kses_data(get_block_wrapper_attributes( array( 'class' => 'product-item-list' . $class ) ) ); ?>
-	style="<?php 
+<div
+	<?php echo get_block_wrapper_attributes( array( 'class' => 'product-item-list' . $class ) ); ?>
+	style="<?php
 		echo '--sc-product-item-list-column:' . $columns . '; ';
-		echo 'gap:' . $block_gap_css_var . '; ';  
-		echo esc_attr($style); 
+		echo esc_attr($style);
 	?>"
 >
 	<?php if ( empty( $products ) ) : ?>

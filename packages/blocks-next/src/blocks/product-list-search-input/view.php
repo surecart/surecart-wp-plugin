@@ -1,6 +1,5 @@
 <input
-    <?php echo get_block_wrapper_attributes( array( 'class' => $class . "sc-form-control" ) ); ?> 
-    style="<?php echo esc_attr( $style ); ?>" 
+    <?php echo get_block_wrapper_attributes( array( 'class' => "sc-form-control" ) ); ?>
     type="search"
     data-wp-on--search="actions.onSearchClear"
 />
