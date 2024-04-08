@@ -305,6 +305,12 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.23.0 - April 8th, 2024 =
+- New: Live/Test mode admin bar toggle on checkout pages.
+- Change: When no store logo is updated, no longer show the site title on instant checkout and customer dashboard.
+- Fix: Issue with tax input id not selecting correct tax type if only one tax type is added and country is not selected in the address.
+- Fix: PHP notice when using shortcode registrations with incorrect attributes.
+
 = 2.22.1 - April 4th, 2024 =
 - Improvement: Global setting for exclusive/inclusive tax.
 - Fix: Issue where subscription updated hooks were failing when caught via webhook.
