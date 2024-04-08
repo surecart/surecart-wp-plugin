@@ -13,7 +13,6 @@ export const availableProcessors = () =>
     .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.recurring_enabled : true)) // recurring.
     .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true)); // only allow mollie if preset.
 
-
 /**
  * Gets the processor by type
  *
@@ -31,7 +30,8 @@ export const getAvailableProcessor = (type: string) => availableProcessors().fin
 /**
  * Check if there is any available credit card processor except the given processor type.
  */
-export const hasOtherAvailableCreditCardProcessor = (type: string) => availableProcessors().some(({ processor_type }) => processor_type !== type && 'paypal' !== processor_type);
+export const hasOtherAvailableCreditCardProcessor = (type: string) =>
+  availableProcessors().some(({ processor_type }) => processor_type !== type && 'paypal' !== processor_type && 'mock' !== processor_type);
 
 /**
  * Get a sorted array of manual payment methods
@@ -60,7 +60,7 @@ export const hasMultipleProcessorChoices = () => availableProcessorChoices()?.le
 /**
  * Get a combined available payment methods (method types + manual payment methods)
  */
-export const availableMethodChoices = () => [...availableMethodTypes(), ...availableManualPaymentMethods()];
+export const availableMethodChoices = () => [...availableMethodTypes(), ...availableManualPaymentMethods(), ...[getProcessorByType('mock')]].filter(Boolean);
 
 /**
  * Do we have multiple payment methods.
