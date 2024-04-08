@@ -17,7 +17,7 @@ import Error from '../components/Error';
 import Stat from './Stat';
 import Tab from './Tab';
 import { averageProperties, totalProperties } from './util';
-import { getFormattedPrice, maybeConvertAmount } from '../util';
+import { getFormattedPrice } from '../util';
 import { getFilterData } from '../util/filter';
 
 export default () => {
