@@ -2,6 +2,8 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasImageSizes;
+use SureCart\Models\Traits\HasPurchases;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
@@ -9,7 +11,7 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model implements PageModel {
-	use Traits\HasImageSizes, Traits\HasPurchase;
+	use HasImageSizes, HasPurchases;
 
 	/**
 	 * Rest API endpoint
@@ -471,7 +473,7 @@ class Product extends Model implements PageModel {
 		return  Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' .
 			    Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
 	}
-	
+
 	/*
 	 * Is the product on sale?
 	 *
