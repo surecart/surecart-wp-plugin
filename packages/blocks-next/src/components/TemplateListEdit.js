@@ -78,8 +78,7 @@ export default function MultiEdit({
 	return (
 		<div {...blockProps}>
 			{blockContexts &&
-				blockContexts.map((blockContext) => {
-					return (
+				blockContexts.map((blockContext) => (
 					<BlockContextProvider
 						key={blockContext.id}
 						value={blockContext}
@@ -102,8 +101,7 @@ export default function MultiEdit({
 							{...itemProps}
 						/>
 					</BlockContextProvider>
-					);
-				})}
+				))}
 		</div>
 	);
 }
