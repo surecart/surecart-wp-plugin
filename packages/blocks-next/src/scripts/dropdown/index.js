@@ -17,6 +17,10 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 				getElement().ref.current.dataset.value
 			);
 		},
+		get isMenuItemSelected() {
+			const context = getContext();
+			return context.selectedItem?.value === context.value;
+		},
 	},
 	actions: {
 		toggleMenu: () => {
@@ -39,8 +43,8 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 		selectItem: (e) => {
 			const context = getContext();
 			context.selectedItem = {
-				label: e.target.dataset.label,
-				value: e.target.dataset.value,
+				label: context.label,
+				value: context.value,
 			};
 			context.isMenuOpen = false;
 		},

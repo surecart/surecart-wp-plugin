@@ -22,7 +22,7 @@ $dummy_options = [
 	<?php echo get_block_wrapper_attributes(); ?>
 >
 	<button 
-		class="sc-dropdown__trigger button button--standard button--medium button--default button--caret button--has-label"
+		class="sc-dropdown__trigger button button--standard button--medium button--caret button--has-label button--text"
 		data-wp-on--click="actions.toggleMenu"
 		aria-label="Press Space or Enter to open the dropdown"
 	>
@@ -49,10 +49,24 @@ $dummy_options = [
 				class="sc-dropdown__menu-item"
 				data-wp-on--click="actions.selectItem"
 				data-wp-on--keyup="actions.menuItemKeyUp"
-				data-value="<?php echo esc_attr($option['value'] ?? ''); ?>"
-				data-label="<?php echo esc_attr($option['label'] ?? ''); ?>"
+				data-wp-class--checked="state.isMenuItemSelected"
+				<?php echo wp_kses_data(
+					wp_interactivity_data_wp_context(
+						[
+							'value' => $option['value'] ?? '', 
+							'label' => $option['label'] ?? '',
+						]
+					)
+				); ?>
 			>
-				<?php echo esc_html($option['label'] ?? ''); ?>
+				<span class="sc-dropdown__menu-item__label">
+					<?php echo esc_html($option['label'] ?? ''); ?>
+				</span>
+				<span class="menu-item__check">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+						<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+					</svg>
+				</span>
 		</div>
 		<?php endforeach; ?>
 	</div>
