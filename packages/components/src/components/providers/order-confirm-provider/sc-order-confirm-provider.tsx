@@ -81,8 +81,8 @@ export class ScOrderConfirmProvider {
 
       // get success url.
       const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
-      const paymentMethodType = checkoutState.checkout?.payment_intent?.processor_data?.mollie?.payment_method_type;
-      const mollieManualPaymentMethodEnabled = paymentMethodType?.toString() === 'banktransfer'; // TODO: find a better way to check from the processor.
+      const molliePaymentMethodType = checkoutState.checkout?.payment_intent?.processor_data?.mollie?.payment_method_type;
+      const mollieManualPaymentMethodEnabled = molliePaymentMethodType?.toString() === 'banktransfer'; // TODO: find a better way to check from the processor.
       const { is_surecart_payment_redirect } = getQueryArgs(window.location.href);
 
       if (successUrl) {
