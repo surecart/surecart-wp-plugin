@@ -242,10 +242,6 @@ class TemplateUtilityService {
 		$template->is_custom      = true;
 		$template->post_types     = array( 'sc_product', 'sc_collection', 'sc_upsell', 'page' ); // Don't appear in any Edit Post template selector dropdown.
 
-		if ( 'wp_template' === $template_type && isset( $default_template_types[ $template_file->slug ] ) ) {
-			$template->is_custom = false;
-		}
-
 		if ( 'wp_template_part' === $post->post_type ) {
 			$type_terms = get_the_terms( $post, 'wp_template_part_area' );
 			if ( ! is_wp_error( $type_terms ) && false !== $type_terms ) {
