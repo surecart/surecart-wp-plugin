@@ -13,7 +13,6 @@ export const availableProcessors = () =>
     .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.recurring_enabled : true)) // recurring.
     .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true)); // only allow mollie if preset.
 
-
 /**
  * Gets the processor by type
  *

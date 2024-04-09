@@ -749,6 +749,8 @@ export interface ProcessorData {
   mollie?: {
     account_id: 'string';
     checkout_url: 'string';
+    payment_method_type?: 'string';
+    return_url?: 'string';
   };
   paystack: {
     account_id: string;
