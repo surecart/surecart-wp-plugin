@@ -45,10 +45,10 @@ $products = $products->data;
 
 $styles = sc_get_block_styles();
 $style = $styles['css'] ?? '';
-$style = $style . ' --sc-product-item-list-column: ' . $columns . ';';
-$class = $styles['classnames'] ?? '';
 $columns = $block->context["surecart/product-list/columns"] ?? 4;
-// $block_gap_css_var = !empty( $attributes['style']['spacing']['blockGap']) ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
+$block_gap_css_var = !empty( $attributes['style']['spacing']['blockGap']) ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
+$style = $style . ' --sc-product-item-list-column: ' . $columns . '; gap: ' . $block_gap_css_var . ';';
+$class = $styles['classnames'] ?? '';
 
 // return the view.
 return 'file:./view.php';
