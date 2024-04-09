@@ -43,12 +43,9 @@ $products = Product::where(
 
 $products = $products->data;
 
-$styles = sc_get_block_styles();
-$style = $styles['css'] ?? '';
 $columns = $block->context["surecart/product-list/columns"] ?? 4;
 $block_gap_css_var = !empty( $attributes['style']['spacing']['blockGap']) ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '40px';
-$style = $style . ' --sc-product-item-list-column: ' . $columns . '; gap: ' . $block_gap_css_var . ';';
-$class = $styles['classnames'] ?? '';
+$style = ' --sc-product-item-list-column: ' . $columns . '; gap: ' . $block_gap_css_var . ';';
 
 // return the view.
 return 'file:./view.php';

@@ -1,5 +1,5 @@
 <div <?php echo get_block_wrapper_attributes( array(
-	'class' => 'product-item-list' . $class,
+	'class' => 'product-item-list',
 	'style' => esc_attr($style)
 ) ); ?>>
 	<?php if ( empty( $products ) ) : ?>
