@@ -151,7 +151,7 @@ export const getHumanDiscountRedeemableStatus = status => {
     case 'less_than_min_subtotal_amount':
       return __('Minimum not met', 'surecart');
     case 'greater_than_max_subtotal_amount':
-      return __('Maximum exceeded', 'surecart');
+      return __('Order too large', 'surecart');
     case 'not_applicable':
       return __('Product(s) not eligible', 'surecart');
     case 'not_applicable_to_customer':
