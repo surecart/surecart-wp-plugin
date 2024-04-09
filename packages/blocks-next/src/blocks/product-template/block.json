@@ -54,9 +54,5 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-list",
-	"style": [
-		"file:../../styles/product-item-list.css",
-		"file:../../styles/product-item.css"
-	]
+	"viewScriptModule": "@surecart/product-list"
 }

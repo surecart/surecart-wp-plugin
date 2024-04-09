@@ -1,0 +1,213 @@
+.product-item-list {
+	display: grid;
+	grid-template-columns: repeat(var(--sc-product-item-list-column), 1fr);
+	gap: var(--sc-product-item-list-gap);
+
+	&__wrapper {
+		container-type: inline-size;
+		display: grid;
+		gap: var(--sc-spacing-medium);
+
+		@container (max-width: 576px) {
+			.product-item-list {
+				grid-template-columns: 1fr;
+			}
+		}
+		@container (min-width: 576px) and (max-width: 768px) {
+			.product-item-list {
+				grid-template-columns: repeat(3, 1fr);
+			}
+		}
+	}
+
+	&__sort,
+	&__empty,
+	&__search,
+	&__search-tag {
+		font-size: 16px;
+	}
+
+	&__search,
+	&__sort {
+		display: flex;
+		align-items: center;
+		gap: var(--sc-spacing-small);
+	}
+
+	&__controls {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__loader {
+		display: grid;
+		gap: 0.88rem;
+		padding-top: var(--sc-product-item-padding-top);
+		padding-bottom: var(--sc-product-item-padding-bottom);
+		padding-left: var(--sc-product-item-padding-left);
+		padding-right: var(--sc-product-item-padding-right);
+		margin-top: var(--sc-product-item-margin-top);
+		margin-bottom: var(--sc-product-item-margin-bottom);
+		margin-left: var(--sc-product-item-margin-left);
+		margin-right: var(--sc-product-item-margin-right);
+		border: solid var(--sc-product-item-border-width)
+			var(--sc-product-item-border-color);
+		border-radius: var(--sc-product-item-border-radius);
+		color: var(--sc-product-title-text-color);
+		background-color: var(--sc-product-item-background-color);
+		line-height: 1;
+	}
+
+	&__pagination {
+		padding: 40px 0 0;
+		width: 100%;
+		font-size: var(
+			--sc-font-size-small,
+			var(--wp--preset--font-size--x-small)
+		);
+	}
+
+	&__search-tag {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--sc-spacing-small);
+	}
+
+	&__search-label {
+		font-size: var(
+			--sc-font-size-small,
+			var(--wp--preset--font-size--x-small)
+		);
+	}
+}
+
+.search-button,
+.clear-button {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity var(--sc-transition-medium) ease-in-out;
+	cursor: pointer;
+}
+
+.product-item-list__has-search {
+	.search-button,
+	.clear-button {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+sc-pagination {
+	font-size: var(--sc-pagination-font-size);
+}
+
+.product-img {
+	max-width: 100%;
+	aspect-ratio: 1/1.33;
+	overflow: hidden;
+
+	> img {
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		object-fit: contain;
+		display: block;
+		transition: transform var(--sc-transition-medium) ease;
+	}
+	&.is_covered > img {
+		object-fit: cover;
+	}
+	&.is_contained > img {
+		object-fit: contain;
+	}
+	&_placeholder {
+		width: 100%;
+		height: 100%;
+		background-color: var(--sc-color-gray-300);
+	}
+
+	&:hover img {
+		transform: scale(1.05);
+	}
+}
+
+.product-price {
+	padding-top: 6px;
+	font-weight: 500;
+	color: #777777;
+}
+
+.product-item-title {
+	padding-top: 10px;
+	font-weight: 500;
+	color: #222222;
+	line-height: 1.2;
+}
+
+.product-item {
+	text-decoration: none;
+	height: 100%;
+	box-sizing: border-box;
+	display: grid;
+}
+
+$pagination-margin: 0.5em;
+.wp-block-surecart-product-pagination {
+	margin-top: 1em;
+	// Increased specificity to override blocks default margin.
+	> .wp-block-surecart-product-pagination-next,
+	> .wp-block-surecart-product-pagination-previous,
+	> .wp-block-surecart-product-pagination-numbers {
+		/*rtl:ignore*/
+		margin-right: $pagination-margin;
+		margin-bottom: $pagination-margin;
+
+		&:last-child {
+			/*rtl:ignore*/
+			margin-right: 0;
+		}
+		&.disabled {
+			pointer-events: none;
+			text-decoration: none;
+			opacity: 0.5;
+		}
+	}
+
+	// This moves the next link to the right side of the container,
+	// which is important when it's the only block displayed
+	// and the block has a "space-between" justification.
+	&.is-content-justification-space-between {
+		> .wp-block-surecart-product-pagination-next:last-of-type {
+			margin-inline-start: auto;
+		}
+		> .wp-block-surecart-product-pagination-previous:first-child {
+			margin-inline-end: auto;
+		}
+	}
+
+	.wp-block-surecart-product-pagination-previous-arrow {
+		margin-right: 1ch;
+		display: inline-block; // Needed so that the transform works.
+		// chevron(`»`) symbol doesn't need the mirroring by us.
+		&:not(.is-arrow-chevron) {
+			// Flip for RTL.
+			transform: scaleX(1) #{'/*rtl:scaleX(-1);*/'}; // This points the arrow right for LTR and left for RTL.
+		}
+	}
+	.wp-block-surecart-product-pagination-next-arrow {
+		margin-left: 1ch;
+		display: inline-block; // Needed so that the transform works.
+		// chevron(`»`) symbol doesn't need the mirroring by us.
+		&:not(.is-arrow-chevron) {
+			// Flip for RTL.
+			transform: scaleX(1) #{'/*rtl:scaleX(-1);*/'}; // This points the arrow right for LTR and left for RTL.
+		}
+	}
+
+	&.aligncenter {
+		justify-content: center;
+	}
+}

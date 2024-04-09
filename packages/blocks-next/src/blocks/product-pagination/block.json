@@ -57,6 +57,5 @@
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
-	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/product-pagination.css"]
+	"editorScript": "file:./index.js"
 }
