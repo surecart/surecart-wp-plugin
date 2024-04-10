@@ -22,6 +22,8 @@ class AdminRouteService {
 		'checkout'            => 'sc-checkouts',
 		'bump'                => 'sc-bumps',
 		'bumps'               => 'sc-bumps',
+		'upsell'              => 'sc-upsell-funnels',
+		'upsells'             => 'sc-upsell-funnels',
 		'invoice'             => 'sc-invoices',
 		'invoices'            => 'sc-invoices',
 		'customers'           => 'sc-customers',
@@ -40,6 +42,17 @@ class AdminRouteService {
 		'cancellations'       => 'sc-cancellation-insights',
 		'product_collection'  => 'sc-product-collections',
 		'product_collections' => 'sc-product-collections',
+		'restore'             => 'sc-restore',
+		'affiliates'          => 'sc-affiliates',
+		'affiliate'           => 'sc-affiliate',
+		'affiliate-click'     => 'sc-affiliate-clicks',
+		'affiliate-clicks'    => 'sc-affiliate-clicks',
+		'affiliate-referral'  => 'sc-affiliate-referrals',
+		'affiliate-referrals' => 'sc-affiliate-referrals',
+		'affiliate-requests'  => 'sc-affiliate-requests',
+		'affiliate-request'   => 'sc-affiliate-requests',
+		'affiliate-payouts'   => 'sc-affiliate-payouts',
+		'affiliate-payout'    => 'sc-affiliate-payouts',
 	];
 
 	/**

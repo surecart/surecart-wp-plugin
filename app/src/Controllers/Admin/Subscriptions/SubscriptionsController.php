@@ -22,11 +22,13 @@ class SubscriptionsController extends AdminController {
 		$table = new SubscriptionsListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'subscriptions' => [
-					'title' => __( 'Subscriptions', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'subscriptions' => [
+						'title' => __( 'Subscriptions', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/subscriptions/index' )->with(
 			[

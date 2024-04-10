@@ -537,11 +537,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 										? pagination_enabled
 										: false
 								}
-								products={
-									!apiTokenConnected
-										? getDummyProducts(limit)
-										: []
-								}
+								{...(!apiTokenConnected ? { products: getDummyProducts(limit) } : {})}
 								collectionEnabled={collection_enabled}
 							/>
 						)}

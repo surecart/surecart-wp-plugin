@@ -30,6 +30,7 @@ return [
 		\SureCart\WordPress\Shortcodes\ShortcodesServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
+		\SureCart\WordPress\CLI\CLIServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
 		\SureCart\Routing\PermalinkServiceProvider::class,
 		\SureCart\Routing\RouteConditionsServiceProvider::class,
@@ -53,6 +54,8 @@ return [
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\BumpRestServiceProvider::class,
+		\SureCart\Rest\UpsellFunnelRestServiceProvider::class,
+		\SureCart\Rest\UpsellRestServiceProvider::class,
 		\SureCart\Rest\FulfillmentRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
@@ -82,6 +85,7 @@ return [
 		\SureCart\Rest\LicenseRestServiceProvider::class,
 		\SureCart\Rest\LineItemsRestServiceProvider::class,
 		\SureCart\Rest\ActivationRestServiceProvider::class,
+		\SureCart\Rest\AffiliationProtocolRestServiceProvider::class,
 		\SureCart\Rest\MediaRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
@@ -92,6 +96,7 @@ return [
 		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
 		\SureCart\Rest\TaxZoneRestServiceProvider::class,
+		\SureCart\Rest\TaxOverrideRestServiceProvider::class,
 		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\CheckoutRestServiceProvider::class,
@@ -113,6 +118,14 @@ return [
 		\SureCart\Rest\VariantsRestServiceProvider::class,
 		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
 		\SureCart\Rest\VariantValuesRestServiceProvider::class,
+		\SureCart\Rest\ClicksRestServiceProvider::class,
+		\SureCart\Rest\ReferralItemsRestServiceProvider::class,
+		\SureCart\Rest\PayoutsRestServiceProvider::class,
+		\SureCart\Rest\PayoutGroupsRestServiceProvider::class,
+		\SureCart\Rest\ReferralsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationsRestServiceProvider::class,
+		\SureCart\Rest\ExportsRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -163,6 +176,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerLicenses\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboardArea\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
@@ -198,6 +212,13 @@ return [
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
+
+		\SureCartBlocks\Blocks\Upsell\Upsell\Block::class,
+		\SureCartBlocks\Blocks\Upsell\Title\Block::class,
+		\SureCartBlocks\Blocks\Upsell\UpsellTotals\Block::class,
+		\SureCartBlocks\Blocks\Upsell\CountdownTimer\Block::class,
+		\SureCartBlocks\Blocks\Upsell\SubmitButton\Block::class,
+		\SureCartBlocks\Blocks\Upsell\NoThanksButton\Block::class,
 	],
 
 	/** Which components to preload for each block. */
@@ -256,13 +277,14 @@ return [
 	 * Links used.
 	 */
 	'links'                  => [
-		'purchase' => 'https://app.surecart.com/billing',
+		'purchase' => 'https://app.surecart.com/plans',
 	],
 
 	/**
 	* Permission Controllers
 	*/
 	'permission_controllers' => [
+		\SureCart\Permissions\Models\ActivationPermissionsController::class,
 		\SureCart\Permissions\Models\BalanceTransactionPermissionsController::class,
 		\SureCart\Permissions\Models\ChargePermissionsController::class,
 		\SureCart\Permissions\Models\LicensePermissionsController::class,
@@ -330,6 +352,7 @@ return [
 		'webhooks'            => \SureCart\Middleware\WebhooksMiddleware::class,
 		'assets.components'   => \SureCart\Middleware\ComponentAssetsMiddleware::class,
 		'assets.brand_colors' => \SureCart\Middleware\BrandColorMiddleware::class,
+		'assets.admin_colors' => \SureCart\Middleware\AdminColorMiddleware::class,
 	],
 
 	/**
@@ -393,7 +416,7 @@ return [
 	'webhook_events'         => [
 		// 'cancellation_act.updated',
 		// 'customer.created',
-		// 'customer.updated',
+		'customer.updated',
 		// 'order.created',
 		// 'order.made_processing',
 		// 'order.paid', // In doc

@@ -167,6 +167,11 @@ class CheckoutsController extends RestController {
 		$finalized = $checkout->where( $request->get_query_params() )
 		->finalize( $request->get_body_params() );
 
+		// bail if error.
+		if ( is_wp_error( $finalized ) ) {
+			return $finalized;
+		}
+
 		// validate the finalized request.
 		$finalized = $this->validateFinalizeRequest( $finalized, $request );
 
@@ -262,12 +267,6 @@ class CheckoutsController extends RestController {
 	public function validate( $args, $request ) {
 		$errors = new \WP_Error();
 
-		// check if they are trying to sign in.
-		// $valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
-		// if ( is_wp_error( $valid_login ) ) {
-		// $errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
-		// }
-
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
 		if ( $metadata && ! empty( $metadata['get_feedback'] ) ) {
@@ -284,6 +283,66 @@ class CheckoutsController extends RestController {
 		}
 
 		return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );
+	}
+
+	/**
+	 * Cancel an checkout
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function cancel( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->cancel();
+	}
+
+	/**
+	 * Offer the bump (used for analytics).
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function offerBump( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->offerBump( $request['bump_id'] );
+	}
+
+	/**
+	 * Offer the bump (used for analytics).
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function offerUpsell( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->offerUpsell( $request['upsell_id'] );
+	}
+
+	/**
+	 * Offer the bump (used for analytics).
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function declineUpsell( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->declineUpsell( $request['upsell_id'] );
 	}
 
 	/**
@@ -412,20 +471,5 @@ class CheckoutsController extends RestController {
 				'user_password' => $password,
 			]
 		);
-	}
-
-	/**
-	 * Cancel an checkout
-	 *
-	 * @param \WP_REST_Request $request Rest Request.
-	 *
-	 * @return \SureCart\Models\Checkout|\WP_Error
-	 */
-	public function cancel( \WP_REST_Request $request ) {
-		$order = $this->middleware( new $this->class( $request['id'] ), $request );
-		if ( is_wp_error( $order ) ) {
-			return $order;
-		}
-		return $order->where( $request->get_query_params() )->cancel();
 	}
 }

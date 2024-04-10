@@ -90,7 +90,7 @@ class BumpRestServiceProvider extends RestServiceProvider implements RestService
 					'context'     => [ 'view', 'edit' ],
 				],
 				'name'        => [
-					'description' => esc_html__( 'A name for this bump that will be visible to customers. If empty, the product name will be used.', 'surecart' ),
+					'description' => esc_html__( 'This is shown to the customer on invoices and line items.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],

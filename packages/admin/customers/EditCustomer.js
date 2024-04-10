@@ -34,6 +34,8 @@ import ShippingAddress from './modules/ShippingAddress';
 import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
 import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
 import TaxSettings from './modules/TaxSettings';
+import Licenses from './modules/Licenses';
+import Affiliates from '../components/affiliates';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -54,7 +56,9 @@ export default () => {
 		hasLoadedCustomer,
 		deletingCustomer,
 		savingCustomer,
-	} = useEntity('customer', id, { expand: ['balances', 'shipping_address'] });
+	} = useEntity('customer', id, {
+		expand: ['balances', 'shipping_address'],
+	});
 
 	/**
 	 * Handle the form submission
@@ -157,6 +161,7 @@ export default () => {
 				<>
 					<Balance customer={customer} loading={!hasLoadedCustomer} />
 					<Purchases customerId={id} />
+					<Licenses customerId={id} />
 					<ShippingAddress
 						shippingAddress={customer?.shipping_address}
 						loading={!hasLoadedCustomer}
@@ -177,6 +182,15 @@ export default () => {
 						customer={customer}
 						updateCustomer={editCustomer}
 						loading={!hasLoadedCustomer}
+					/>
+					<Affiliates
+						item={customer}
+						updateItem={editCustomer}
+						loading={!hasLoadedCustomer}
+						commissionText={__(
+							'Commissions On All Purchases',
+							'surecart'
+						)}
 					/>
 				</>
 			}
