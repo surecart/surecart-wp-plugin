@@ -755,13 +755,3 @@ sc-checkout [hidden] {
   width: 1px;
   word-wrap: normal !important;
 }
-
-svg.sc-icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  contain: strict;
-  box-sizing: content-box !important;
-  display: block;
-  stroke-width: var(--sc-icon-stroke-width, 2px);
-}
