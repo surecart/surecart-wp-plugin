@@ -20,7 +20,7 @@ interface Store {
   persist: 'browser' | 'url' | false;
 }
 
-const { state, onChange, on, set, get, dispose } = createStore<Store>(
+const { state, onChange, on, set, get, dispose, reset } = createStore<Store>(
   {
     formId: null,
     groupId: null,
@@ -42,4 +42,4 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
 );
 
 export default state;
-export { state, onChange, on, set, get, dispose };
+export { state, onChange, on, set, get, dispose, reset };
