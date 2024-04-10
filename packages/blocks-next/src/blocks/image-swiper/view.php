@@ -43,7 +43,7 @@ $context = array(
 							height="<?php echo esc_attr( $image['height'] ); ?>"
 							title="<?php echo esc_attr( $image['title'] ); ?>"
 							loading="<?php echo esc_attr( $image_index > 0 ? 'lazy' : 'eager' ); ?>"
-							data-wp-key="<?php echo esc_attr( $image['title'] . '-slide-' . (int) $image_index ); ?>"
+							data-wp-key="<?php echo esc_attr( 'swiper-slide-' . $image['id'] ); ?>"
 						/>
 					</div>
 				</div>
@@ -84,7 +84,7 @@ $context = array(
 							width="<?php echo esc_attr( $thumbnail['width'] ); ?>"
 							height="<?php echo esc_attr( $thumbnail['height'] ); ?>"
 							loading="<?php echo esc_attr( $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager' ); ?>"
-							data-wp-key="<?php echo esc_attr( $thumbnail['title'] . '-thumb-' . (int) $thumb_index ); ?>"
+							data-wp-key="<?php echo esc_attr( 'swiper-thumb-' . $thumbnail['id'] ); ?>"
 						/>
 					</button>
 					<?php

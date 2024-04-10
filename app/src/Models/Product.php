@@ -507,6 +507,7 @@ class Product extends Model implements PageModel {
 		return array_map(
 			function ( $product_media ) use ( $width, $srcset ) {
 				$items = array(
+					'id'     => $product_media->id,
 					'src'    => esc_url( $product_media->getUrl( $width ) ),
 					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $this->name ?? '' ),
 					'title'  => $product_media->media->title ?? '',
