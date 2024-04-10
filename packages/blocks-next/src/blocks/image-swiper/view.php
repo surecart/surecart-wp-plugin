@@ -71,7 +71,7 @@ $context = array(
 					<button
 						class="swiper-slide sc-image-slider__thumb"
 						role="radio"
-						aria-checked="surecart/image-slider::context.isActiveSlide"
+						data-wp-bind--aria-checked="surecart/image-slider::context.isActiveSlide"
 						tabindex="0"
 						<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'slideIndex' => (int) $thumb_index ) ) ); ?>
 					>
