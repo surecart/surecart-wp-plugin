@@ -14,6 +14,15 @@
 		"sizing": {
 			"type": "string",
 			"default": "cover"
+		},
+		"aspectRatio": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
 		}
 	},
 	"supports": {
