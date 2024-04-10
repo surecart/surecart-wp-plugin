@@ -38,7 +38,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 			<?php
 			foreach ( $images as $image_index => $image ) {
 				?>
-				<div class="swiper-slide sc-image-slider__slider" data-wp-key="<?php echo esc_attr( 'swiper-slide-' . $image['id'] ); ?>">
+				<div class="swiper-slide sc-image-slider__slider" data-wp-key="<?php echo esc_attr( $image['id'] ); ?>">
 					<div class="swiper-slide-img">
 						<img
 							src="<?php echo esc_url( $image['src'] ); ?>"
