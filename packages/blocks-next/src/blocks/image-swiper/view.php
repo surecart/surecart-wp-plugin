@@ -11,20 +11,25 @@ $product    = \SureCart\Models\Product::with( array( 'image', 'prices', 'product
 $images     = $product->getDisplayImages( $content_width ?? 1170 );
 $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 
-$context = array(
-	'currentSliderIndex' => 0,
-	'thumbnailsPerPage'  => $attributes['thumbnails_per_page'] ?? 5,
-	'autoHeight'         => ! empty( $attributes['auto_height'] ),
-	'isFixedHeight'      => empty( $attributes['auto_height'] ),
-	'hasThumbnails'      => $attributes['has_thumbnails'],
-)
 ?>
 
 <div
 	class="sc-image-slider"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
 	data-wp-init="surecart/image-slider::actions.init"
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
+	<?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			array(
+				'currentSliderIndex' => 0,
+				'thumbnailsPerPage'  => $attributes['thumbnails_per_page'] ?? 5,
+				'autoHeight'         => ! empty( $attributes['auto_height'] ),
+				'isFixedHeight'      => empty( $attributes['auto_height'] ),
+				'hasThumbnails'      => $attributes['has_thumbnails'],
+			)
+		)
+	);
+	?>
 	data-wp-class-sc-image-slider--is-fixed-height="surecart/image-slider::context.isFixedHeight"
 	style="--sc-product-slider-height: <?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) ); ?>"
 	>
@@ -33,7 +38,7 @@ $context = array(
 			<?php
 			foreach ( $images as $image_index => $image ) {
 				?>
-				<div class="swiper-slide sc-image-slider__slider">
+				<div class="swiper-slide sc-image-slider__slider" data-wp-key="<?php echo esc_attr( 'swiper-slide-' . $image['id'] ); ?>">
 					<div class="swiper-slide-img">
 						<img
 							src="<?php echo esc_url( $image['src'] ); ?>"
@@ -43,7 +48,6 @@ $context = array(
 							height="<?php echo esc_attr( $image['height'] ); ?>"
 							title="<?php echo esc_attr( $image['title'] ); ?>"
 							loading="<?php echo esc_attr( $image_index > 0 ? 'lazy' : 'eager' ); ?>"
-							data-wp-key="<?php echo esc_attr( 'swiper-slide-' . $image['id'] ); ?>"
 						/>
 					</div>
 				</div>
@@ -72,7 +76,7 @@ $context = array(
 						class="swiper-slide sc-image-slider__thumb"
 						role="radio"
 						data-wp-bind--aria-checked="surecart/image-slider::context.isActiveSlide"
-						tabindex="0"
+						data-wp-key="<?php echo esc_attr( 'swiper-thumb-' . $thumbnail['id'] ); ?>"
 						<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'slideIndex' => (int) $thumb_index ) ) ); ?>
 					>
 						<img
@@ -84,7 +88,6 @@ $context = array(
 							width="<?php echo esc_attr( $thumbnail['width'] ); ?>"
 							height="<?php echo esc_attr( $thumbnail['height'] ); ?>"
 							loading="<?php echo esc_attr( $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager' ); ?>"
-							data-wp-key="<?php echo esc_attr( 'swiper-thumb-' . $thumbnail['id'] ); ?>"
 						/>
 					</button>
 					<?php
