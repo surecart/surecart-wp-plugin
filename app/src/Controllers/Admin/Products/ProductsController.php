@@ -7,6 +7,7 @@ use SureCart\Models\Product;
 use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
+use SureCart\Models\VariantOptionValue;
 
 /**
  * Handles product admin requests.
@@ -194,6 +195,9 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function sync( $request ) {
+		// TODO: do this only on a full sync.
+		VariantOptionValue::deleteAll();
+
 		\SureCart::migration()->deleteAll();
 		// dispatch job.
 		\SureCart::migration()->models()->dispatch();

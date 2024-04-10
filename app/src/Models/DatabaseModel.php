@@ -832,6 +832,20 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 	}
 
 	/**
+	 * Delete all items.
+	 *
+	 * @return $this|false
+	 */
+	protected function deleteAll() {
+		$delete  = $this->getQuery();
+		$deleted = $delete->delete();
+		if ( false === $deleted ) {
+			return new \WP_Error( 'could_not_delete', 'Could not delete.' );
+		}
+		return $deleted;
+	}
+
+	/**
 	 * Set a model relation.
 	 *
 	 * @prop string $attribute Attribute name.
