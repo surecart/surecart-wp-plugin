@@ -1,4 +1,4 @@
-import { maybeConvertAmount } from 'src/functions/currency';
+import { maybeConvertAmount } from '../../functions/currency';
 import { Checkout, LineItem, Product } from 'src/types';
 
 /**
@@ -38,11 +38,11 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
 window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
   if (!window?.fbq) return;
 
-  const checkout:Checkout = e.detail;
+  const checkout: Checkout = e.detail;
 
   window.fbq('track', 'InitiateCheckout', {
-    content_ids: (checkout?.line_items.data||[])?.map(item => item.id),
-    contents: (checkout?.line_items.data||[])?.map(item => ({ id: item.id, quantity: item.quantity })),
+    content_ids: (checkout?.line_items.data || [])?.map(item => item.id),
+    contents: (checkout?.line_items.data || [])?.map(item => ({ id: item.id, quantity: item.quantity })),
     currency: checkout?.currency,
     num_items: checkout?.line_items?.data?.length || 0,
     value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
