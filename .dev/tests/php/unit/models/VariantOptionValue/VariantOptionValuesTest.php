@@ -17,9 +17,6 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 		], false);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_crud() {
 		$not_found = VariantOptionValue::find(1);
 		$this->assertWPError( $not_found );
@@ -33,11 +30,13 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 			'value'   => 'Red',
 			'name'    => 'Color',
 			'post_id' => $post_id,
+			'product_id' => 'productid',
 		]);
 
 		$this->assertEquals( $created->value,'Red' );
 		$this->assertEquals( $created->name, 'Color');
 		$this->assertEquals( $created->post_id, $post_id);
+		$this->assertEquals( $created->product_id, 'productid');
 		$this->assertNotEmpty($created->id);
 		$this->assertNotEmpty($created->created_at);
 
@@ -45,12 +44,14 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 			'value'   => 'Green',
 			'name'    => 'Color',
 			'post_id' => $post_id,
+			'product_id' => 'productid2',
 		]);
 
 		$found = VariantOptionValue::find($created->id);
 		$this->assertEquals( $created->value,'Green' );
 		$this->assertEquals( $created->name, 'Color');
 		$this->assertEquals( $created->post_id, $post_id);
+		$this->assertEquals( $created->product_id, 'productid2');
 		$this->assertNotEmpty($found->id);
 		$this->assertNotEmpty($found->created_at);
 
@@ -67,8 +68,14 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 		$find = VariantOptionValue::where('value','Green')->first();
 		$this->assertEquals($find->name,'Color');
 
+		$find = VariantOptionValue::where('post_id', $post_id)->first();
+		$this->assertEquals($find->post_id, $post_id);
+
+		$find = VariantOptionValue::where('product_id', 'productid')->first();
+		$this->assertEquals($find->product_id, 'productid');
+
 		// bulk delete
-		$deleted = VariantOptionValue::where('post_id',$post_id)->delete();
+		VariantOptionValue::where('post_id',$post_id)->delete();
 		$get = VariantOptionValue::where('post_id',$post_id)->get();
 		$this->assertCount(0,$get);
 	}

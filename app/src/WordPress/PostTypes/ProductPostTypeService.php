@@ -24,6 +24,10 @@ class ProductPostTypeService {
 	public function bootstrap() {
 		// register.
 		add_action( 'init', [ $this, 'registerPostType' ] );
+
+		// add varition option value query to posts_where
+		add_filter( 'posts_where', [ $this, 'handleVariationOptionValueQuery' ], 10, 2 );
+
 		// add child posts to posts results to prevent n+1 queries.
 		// add_action( 'posts_results', [ $this, 'addChildrenToProducts' ], 10, 2 );
 		// add necessary data to product.
@@ -42,6 +46,50 @@ class ProductPostTypeService {
 		// add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
 		// when a product media is deleted, remove it from the gallery.
 		// add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+	}
+
+	/**
+	 * Handle the variation option value query.
+	 *
+	 * @param string   $where The WHERE clause of the query.
+	 * @param WP_Query $query The WP_Query instance (passed by reference).
+	 *
+	 * @return string
+	 */
+	public function handleVariationOptionValueQuery( $where, $query ) {
+		global $wpdb;
+
+		// not our post type.
+		if ( $query->get( 'post_type' ) !== 'sc_product' ) {
+			return $where;
+		}
+
+		// not our query.
+		$variant_query = $query->get( 'variant_options' );
+		if ( empty( $variant_query ) ) {
+			return $where;
+		}
+
+		// the relation.
+		$relation = $variant_query['relation'] ?? 'AND';
+
+		// add each query.
+		foreach ( $variant_query as $query ) {
+			// not a valid query.
+			if ( ! is_array( $query ) ) {
+				continue;
+			}
+			// get our table.
+			$option_value_table = $wpdb->prefix . 'surecart_variant_option_values';
+			// get values.
+			$values = "'" . implode( "','", $query['values'] ) . "'";
+			// get operator.
+			$operator = $query['operator'] ?? 'IN';
+			// add the where clause.
+			$where .= " $relation {$wpdb->posts}.ID IN (SELECT post_id FROM {$option_value_table} WHERE value $operator ($values))";
+		}
+
+		return $where;
 	}
 
 	/**

@@ -77,7 +77,7 @@ class Product extends PostModel {
 		}
 
 		// delete existing.
-		VariantOptionValue::where( 'product_id', $this->post->ID )->delete();
+		VariantOptionValue::where( 'product_id', $model->id )->delete();
 
 		// create new.
 		foreach ( $model->variant_options->data as $option ) {
@@ -86,7 +86,7 @@ class Product extends PostModel {
 					[
 						'value'      => $value,
 						'name'       => $option->name,
-						'post_id'    => $this->post->id,
+						'post_id'    => $this->post->ID,
 						'product_id' => $this->post->sc_id,
 					]
 				);
@@ -97,6 +97,19 @@ class Product extends PostModel {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Delete the model.
+	 *
+	 * @param integer $id The id.
+	 *
+	 * @return void
+	 */
+	protected function delete( $id = null ) {
+		parent::delete( $id );
+		// delete existing.
+		VariantOptionValue::where( 'product_id', $this->post->ID )->delete();
 	}
 
 	/**

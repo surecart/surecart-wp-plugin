@@ -2,7 +2,6 @@
 
 namespace SureCart\Tests\Models\ProductPost;
 
-use SureCart\Account\AccountService;
 use SureCart\Database\Table;
 use SureCart\Database\Tables\VariantOptionValues;
 use SureCart\Models\Product;
@@ -25,17 +24,17 @@ class ProductPostTest extends SureCartUnitTestCase
 
 		// remove existing.
 		(new VariantOptionValues(new Table()))->uninstall();
-	}
 
-	public function test_can_sync_product()
-	{
 		// mock the account id.
 		\SureCart::alias('account', function () {
 			return (object) [
 				'id' => 'test',
 			];
 		});
+	}
 
+	public function test_can_sync_product()
+	{
 		$product = (new Product(
 			[
 				"id" => "testid",
@@ -113,18 +112,8 @@ class ProductPostTest extends SureCartUnitTestCase
 		$this->assertSame($product->prices['data'][1]['amount'], 9800);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_creates_variant_option_values_in_database()
 	{
-		// mock the account id.
-		\SureCart::alias('account', function () {
-			return (object) [
-				'id' => 'test',
-			];
-		});
-
 		(new Product(
 			[
 				"id" => "testid",
@@ -162,9 +151,12 @@ class ProductPostTest extends SureCartUnitTestCase
 		}
 	}
 
-	public function can_sync_multiple_times()
+	/**
+	 * @group failing
+	 */
+	public function test_can_sync_multiple_times()
 	{
-		(new Product(
+		$product = new Product(
 			[
 				"id" => "testid",
 				"object" => "product",
@@ -192,45 +184,156 @@ class ProductPostTest extends SureCartUnitTestCase
 					]
 				],
 			]
-		))->sync();
+		);
 
-		(new Product(
-			[
-				"id" => "testid",
-				"object" => "product",
-				"name" => "Test",
-				"created_at" => 1624910585,
-				"updated_at" => 1624910585,
-				'variant_options' => (object) [
-					'data' => [
-						(object) [
-							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
-							'object' => 'variant_option',
-							'name' => 'Size',
-							'values' => ['Small', 'Medium', 'Large'],
-							'created_at' => 1624910585,
-							'updated_at' => 1624910585
-						],
-						(object) [
-							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
-							'object' => 'variant_option',
-							'name' => 'Color',
-							'values' => ['Red', 'Green', 'Blue'],
-							'created_at' => 1624910585,
-							'updated_at' => 1624910585
-						]
-					]
-				],
-			]
-		))->sync();
-
-
-		$items = VariantOptionValue::where('product_id', 'testid')->get();
-		$this->assertSame(6, count($items));
+		$product->sync();
+		$product->sync();
 
 		$products = sc_get_products([
 			'sc_id' => 'testid'
 		]);
 		$this->assertSame(1, count($products));
+
+		$items = VariantOptionValue::where('product_id', 'testid')->get();
+		$this->assertSame(6, count($items));
+	}
+
+	/**
+	 * @group failing
+	 */
+	public function test_syncing_adds_taxonomy()
+	{
+		$product = new Product(
+			[
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'variant_options' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Size',
+							'values' => ['Small', 'Medium', 'Large'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Color',
+							'values' => ['Red', 'Green', 'Blue'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		);
+		$product->sync();
+
+		$product = new Product(
+			[
+				"id" => "testid2",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'variant_options' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Size',
+							'values' => ['Small', 'Medium', 'Large'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Color',
+							'values' => ['Orange', 'Red'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		);
+		$product->sync();
+
+		$product = sc_get_products([
+			'variant_options' => [
+				[
+					'name' 		=> 'Size',
+					'values'    =>  ['Small'],
+					'operator' 	=> 'IN',
+				]
+			],
+		]);
+
+		$this->assertCount(2, $product);
+
+		$product = sc_get_products([
+			'variant_options' => [
+				[
+					'name' 		=> 'Color',
+					'values'    =>  ['Orange'],
+					'operator' 	=> 'IN',
+				],
+			]
+		]);
+
+		$this->assertCount(1, $product);
+
+		$product = sc_get_products([
+			'variant_options' => [
+				[
+					'name' 		=> 'Color',
+					'values'    =>  ['Orange', 'Blue'],
+					'operator' 	=> 'IN',
+				],
+			]
+		]);
+
+		$this->assertCount(2, $product);
+
+		$product = sc_get_products([
+			'variant_options' => [
+				'relation' => 'OR',
+				[
+					'name' 		=> 'Color',
+					'values'    =>  ['Orange'],
+					'operator' 	=> 'IN',
+				],
+				[
+					'name' 		=> 'Color',
+					'values'    =>  ['Blue'],
+					'operator' 	=> 'IN',
+				],
+			]
+		]);
+
+		$this->assertCount(2, $product);
+
+		$product = sc_get_products([
+			'variant_options' => [
+				[
+					'name' 		=> 'Color',
+					'values'    =>  ['Orange'],
+					'operator' 	=> 'IN',
+				],
+				[
+					'name' 		=> 'Color',
+					'values'    =>  ['Blue'],
+					'operator' 	=> 'IN',
+				],
+			]
+		]);
+
+		$this->assertCount(0, $product);
 	}
 }

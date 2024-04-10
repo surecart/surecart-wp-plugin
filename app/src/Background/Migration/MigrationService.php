@@ -1,11 +1,7 @@
 <?php
 namespace SureCart\Background\Migration;
 
-use SureCart\Models\Price;
 use SureCart\Models\Product;
-use SureCart\Models\ProductMedia;
-use SureCart\Models\Variant;
-use SureCart\Models\VariantOption;
 
 /**
  * The migration service.

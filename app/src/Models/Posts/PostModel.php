@@ -240,13 +240,31 @@ abstract class PostModel {
 	 * @return $this
 	 */
 	protected function sync( \SureCart\Models\Model $model ) {
-		$this->post = $this->findByModelId( $model->id );
+		$this->findByModelId( $model->id );
 
 		if ( is_wp_error( $this->post ) ) {
 			return $this->post;
 		}
 
 		return empty( $this->post->ID ) ? $this->create( $model ) : $this->update( $model );
+	}
+
+	/**
+	 * Delete the post.
+	 *
+	 * @param integer $id The id.
+	 * @return $this
+	 */
+	protected function delete( $id = null ) {
+		$deleted = wp_delete_post( $id ? $id : $this->post->ID, true );
+
+		if ( is_wp_error( $deleted ) ) {
+			return $deleted;
+		}
+
+		$this->post = null;
+
+		return $this;
 	}
 
 	/**
