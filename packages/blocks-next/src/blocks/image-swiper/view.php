@@ -59,9 +59,7 @@ $context = array(
 		<div class="sc-image-slider__thumbs sc-image-slider__thumbs--has-navigation">
 		<button class="sc-image-slider__navigation sc-image-slider--is-prev">
 			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to previous product slide.', 'surecart' ) ); ?></span>
-			<svg class="sc-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<polyline points="15 18 9 12 15 6"></polyline>
-			</svg>
+			<?php echo \SureCart::svg()->get( 'chevron-left' ); ?>
 		</button>
 
 		<div class="swiper swiper sc-image-slider__thumbs-swiper">
@@ -97,9 +95,7 @@ $context = array(
 
 		<button class="sc-image-slider__navigation sc-image-slider--is-next">
 			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to next product slide.', 'surecart' ) ); ?></span>
-			<svg class="sc-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<polyline points="9 18 15 12 9 6"></polyline>
-			</svg>
+			<?php echo \SureCart::svg()->get( 'chevron-right' ); ?>
 		</button>
 	</div>
 		<?php
