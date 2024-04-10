@@ -12,6 +12,9 @@ Template Name: SureCart
 </head>
 
 <body <?php body_class(); ?>>
+
+<?php wp_body_open(); ?>
+
 <?php do_action( 'surecart_template_blank_body_open' ); ?>
 
 <?php

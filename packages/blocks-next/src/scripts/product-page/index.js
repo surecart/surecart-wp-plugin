@@ -53,6 +53,9 @@ const { state, callbacks, actions } = store('surecart/product', {
 		},
 		/** Is the product on sale? */
 		get isOnSale() {
+			if (state?.selectedPrice?.ad_hoc) {
+				return false;
+			}
 			return state.selectedPrice.scratch_amount > state.selectedAmount;
 		},
 		/** Is the option unavailable */
@@ -83,7 +86,10 @@ const { state, callbacks, actions } = store('surecart/product', {
 			return state.variantValues[`option_${optionNumber}`];
 		},
 		get checkoutUrl() {
-			const { checkoutUrl } = getContext();
+			const { checkoutUrl, addToCart } = getContext();
+			if (addToCart) {
+				return '';
+			}
 			return addQueryArgs(checkoutUrl, {
 				line_items: [state.lineItem],
 				no_cart: true,
@@ -122,7 +128,12 @@ const { state, callbacks, actions } = store('surecart/product', {
 					1
 				),
 				...(state.selectedPrice?.ad_hoc
-					? { ad_hoc_amount: state.adHocAmount }
+					? {
+							ad_hoc_amount: !state?.selectedPrice
+								?.is_zero_decimal
+								? state.adHocAmount * 100
+								: state.adHocAmount,
+					  }
 					: {}),
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
@@ -133,10 +144,6 @@ const { state, callbacks, actions } = store('surecart/product', {
 		get disabled() {
 			return state?.selectedPrice?.archived || state?.product?.archived;
 		},
-		/** Get the ad_hoc amount. */
-		get adHocAmount() {
-			return state?.selectedPrice?.amount || null;
-		},
 		/** Get the selected variant id. */
 		get selectedVariantId() {
 			return state.selectedVariant?.id;
@@ -144,17 +151,7 @@ const { state, callbacks, actions } = store('surecart/product', {
 	},
 
 	actions: {
-		handlePurchaseClick(e) {
-			const { addToCart } = getContext();
-			if (addToCart) {
-				e.preventDefault();
-				return actions.addToCart(e);
-			}
-			update({ busy: true });
-			return true;
-		},
-		*addToCart(e) {
-			e.preventDefault();
+		*addToCart() {
 			try {
 				update({ busy: true });
 				// TODO: replace with interactivity when available.
@@ -175,6 +172,15 @@ const { state, callbacks, actions } = store('surecart/product', {
 			const { productId } = getContext();
 			return state[productId]?.[prop] || false;
 		},
+		handleSubmit(e) {
+			e.preventDefault(); // prevent the form from submitting.
+			// if the button hdoes not have a value, add to cart.
+			if (!e?.submitter?.value) {
+				return actions.addToCart(e);
+			}
+			// otherwise, redirect to the provided url.
+			return window.location.assign(e.submitter.value);
+		},
 		/** Set the option. */
 		setOption: (e) => {
 			const { optionNumber, optionValue } = getContext();
@@ -192,6 +198,12 @@ const { state, callbacks, actions } = store('surecart/product', {
 				(p) => p.id === price?.id
 			);
 			update({ selectedPrice });
+		},
+		setAdHocAmount: (e) => {
+			state.adHocAmount = parseFloat(e.target.value);
+		},
+		formatAdHocAmount: (e) => {
+			state.adHocAmount = parseFloat(e.target.value).toFixed(2);
 		},
 		/** Update variant and values. */
 		updateSelectedVariant: () => {

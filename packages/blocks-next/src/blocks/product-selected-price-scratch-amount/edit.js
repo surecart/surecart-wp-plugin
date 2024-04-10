@@ -11,7 +11,7 @@ export default () => {
 	return (
 		<span {...blockProps}>
 			{getFormattedPrice({
-				amount: 1500,
+				amount: 2000,
 				currency: scData?.currency,
 			})}
 		</span>

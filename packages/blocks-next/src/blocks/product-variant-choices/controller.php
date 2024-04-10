@@ -12,14 +12,10 @@
 $products = wp_interactivity_state( 'surecart/product' );
 
 // get product from initial state.
-$product = $block->context['surecart/product'];
+$product = get_query_var( 'surecart_current_product' );
 
-// make sure we have a product.
-if ( empty( $product->id ) ) {
-	return;
-}
-
-if ( empty( $product->variant_options->data ) ) {
+// make sure we have a product and variant options.
+if ( empty( $product->id ) || empty( $product->variant_options->data ) ) {
 	return;
 }
 

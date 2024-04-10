@@ -359,6 +359,17 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the initial price.
+	 *
+	 * @return string
+	 */
+	public function getInitialPriceAttribute() {
+		$prices = $this->active_prices ?? [];
+		$initial_price =  $prices[0] ?? null;
+		return $initial_price;
+	}
+
+	/**
 	 * Get the initial amount.
 	 *
 	 * @return string
@@ -428,8 +439,6 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the price display amount.
 	 *
-	 * @param array $args Array of arguments.
-	 *
 	 * @return array
 	 */
 	public function getDisplayAmountAttribute() {
@@ -443,6 +452,15 @@ class Product extends Model implements PageModel {
 			return '';
 		}
 		return Currency::format( $initial_price->amount, $initial_price->currency );
+	}
+
+	/**
+	 * Is the product on sale?
+	 *
+	 * @return array
+	 */
+	public function getIsOnSaleAttribute() {
+		return $this->initial_price->is_on_sale ?? false;
 	}
 
 	/**

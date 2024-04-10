@@ -28,9 +28,9 @@ wp_interactivity_state(
 				'selectedVariant' => $product->first_variant_with_stock ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' ) ),
 				'variantValues' => (object) array_filter([
-					'option_1' => $product->first_variant_with_stock->option_1,
-					'option_2' => $product->first_variant_with_stock->option_2,
-					'option_3' => $product->first_variant_with_stock->option_3,
+					'option_1' => $product->first_variant_with_stock->option_1 ?? null,
+					'option_2' => $product->first_variant_with_stock->option_2 ?? null,
+					'option_3' => $product->first_variant_with_stock->option_3 ?? null,
 				])
 			),
 			// These are needed in order to SSR directives.
@@ -40,7 +40,7 @@ wp_interactivity_state(
 			'selectedVariant' => $product->first_variant_with_stock,
 			'selectedDisplayAmount' => $product->display_amount,
 			'selectedScratchDisplayAmount' => $selected_price->scratch_display_amount,
-			'isOnSale' => $product->initial_amount < $product->scratch_amount,
+			'isOnSale' => $product->is_on_sale,
 		)
 	)
 );

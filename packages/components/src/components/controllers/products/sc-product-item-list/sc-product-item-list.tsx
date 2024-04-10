@@ -9,9 +9,10 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { Collection, Product, ProductsSearchedParams } from '../../../../types';
+import { Collection, Product, ProductsSearchedParams, ProductsViewedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 import '@store/product/facebook';
+import '@store/product/google';
 
 export type LayoutConfig = {
   blockName: string;
@@ -44,7 +45,10 @@ export class ScProductItemList {
   @Prop() collectionEnabled: boolean = true;
 
   /** Show for a specific collection */
-  @Prop() collectionId: string | null = null;
+  @Prop() collectionId: string;
+
+  /** The page title */
+  @Prop() pageTitle: string;
 
   /** Show only featured products. */
   @Prop() featured: boolean = false;
@@ -85,8 +89,16 @@ export class ScProductItemList {
   /** Product was searched */
   @Event() scSearched: EventEmitter<ProductsSearchedParams>;
 
+  /** Products viewed */
+  @Event() scProductsViewed: EventEmitter<ProductsViewedParams>;
+
+  /** Current page */
+  @State() currentPage = 1;
+
+  /** Current query */
   @State() currentQuery: string;
 
+  /** Pagination */
   @Prop({ mutable: true }) pagination: {
     total: number;
     total_pages: number;
@@ -101,9 +113,35 @@ export class ScProductItemList {
   /** Selected collections */
   @State() selectedCollections: Collection[] = [];
 
+  @Watch('products')
+  handleProductsChanged(newProducts?: Product[], oldProducts?: Product[]) {
+    const productIds = new Set([...(oldProducts || []).map(product => product.id), ...(newProducts || []).map(product => product.id)]);
+
+    if (newProducts?.length === oldProducts?.length && productIds.size === newProducts.length) {
+      return;
+    }
+
+    const title = [
+      this.pageTitle,
+      this.paginationEnabled ? sprintf(__('Page %d', 'surecart'), this.currentPage) : undefined,
+      this.sort ? this.renderSortName() : undefined,
+      this.query || this.selectedCollections?.length ? __('Search results', 'surecart') : undefined,
+    ]
+      .filter(item => !!item)
+      .join(' - ');
+
+    this.scProductsViewed.emit({
+      products: this.products,
+      pageTitle: title,
+      collectionId: this.collectionId,
+    });
+  }
+
   componentWillLoad() {
     if (!this?.products?.length) {
       this.getProducts();
+    } else {
+      this.handleProductsChanged(this.products);
     }
 
     if (this.collectionEnabled) {
@@ -128,7 +166,9 @@ export class ScProductItemList {
 
   // Fetch all products
   async getProducts() {
-    const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
+    const { 'product-page': page } = getQueryArgs(window.location.href) as {
+      'product-page': string;
+    };
 
     this.page = this.paginationEnabled && page ? parseInt(page) : 1;
 
@@ -146,7 +186,7 @@ export class ScProductItemList {
   async getCollections() {
     try {
       this.collections = (await apiFetch({
-        path: addQueryArgs(`surecart/v1/product_collections/`, {
+        path: addQueryArgs('surecart/v1/product_collections/', {
           per_page: 100,
         }),
       })) as Collection[];
@@ -279,7 +319,12 @@ export class ScProductItemList {
 
   render() {
     return (
-      <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
+      <div
+        class={{
+          'product-item-list__wrapper': true,
+          'product-item-list__has-search': !!this.query,
+        }}
+      >
         {this.error && (
           <sc-alert type="danger" open>
             {this.error}
@@ -361,15 +406,16 @@ export class ScProductItemList {
                   ) : (
                     <sc-input
                       type="text"
-                      placeholder="Search"
+                      placeholder={__('Search', 'surecart')}
                       size="small"
-                      onKeyDown={e => {
+                      onKeyUp={e => {
                         if (e.key === 'Enter') {
+                          this.query = (e.target as any).value;
                           this.updateProducts(true);
                         }
                       }}
                       value={this.query}
-                      onScInput={e => (this.query = e.target.value)}
+                      clearable
                     >
                       {this.query ? (
                         <sc-icon
@@ -430,8 +476,17 @@ export class ScProductItemList {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
                         return (
-                          <div style={{ textAlign: 'var(--sc-product-title-align)' }}>
-                            <sc-skeleton style={{ width: '80%', display: 'inline-block' }}></sc-skeleton>
+                          <div
+                            style={{
+                              textAlign: 'var(--sc-product-title-align)',
+                            }}
+                          >
+                            <sc-skeleton
+                              style={{
+                                width: '80%',
+                                display: 'inline-block',
+                              }}
+                            ></sc-skeleton>
                           </div>
                         );
                       case 'surecart/product-item-image':
@@ -448,8 +503,17 @@ export class ScProductItemList {
                         );
                       case 'surecart/product-item-price':
                         return (
-                          <div style={{ textAlign: 'var(--sc-product-price-align)' }}>
-                            <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+                          <div
+                            style={{
+                              textAlign: 'var(--sc-product-price-align)',
+                            }}
+                          >
+                            <sc-skeleton
+                              style={{
+                                width: '40%',
+                                display: 'inline-block',
+                              }}
+                            ></sc-skeleton>
                           </div>
                         );
                       default:

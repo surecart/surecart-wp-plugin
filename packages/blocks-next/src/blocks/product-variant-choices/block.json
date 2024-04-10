@@ -85,6 +85,5 @@
 	"selectors": {
 		"root": ".sc-pill-option__button"
 	},
-	"viewScriptModule": "@surecart/product-page",
 	"style": ["file:../../styles/pill.css", "file:../../styles/label.css"]
 }
