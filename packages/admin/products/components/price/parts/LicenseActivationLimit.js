@@ -1,28 +1,49 @@
-import { ScInput } from '@surecart/components-react';
+import { ScInput, ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 
 export default ({ price, updatePrice, className, product }) => {
+	const [showLicenseActivationLimit, setShowLicenseActivationLimit] =
+		useState(() => !!price?.license_activation_limit);
+
 	if (!product?.licensing_enabled) {
 		return null;
 	}
+
 	return (
-		<ScInput
-			className={className}
-			type="number"
-			label={__('License activation limit', 'surecart')}
-			help={__(
-				'Enter the number of unique activations per license key.',
-				'surecart'
+		<>
+			<ScSwitch
+				checked={showLicenseActivationLimit}
+				onScChange={(e) => {
+					setShowLicenseActivationLimit(e.target.checked);
+					updatePrice({
+						license_activation_limit: e.target.checked ? 1 : null,
+					});
+				}}
+			>
+				{__('Custom license activation limit', 'surecart')}
+			</ScSwitch>
+			{showLicenseActivationLimit && (
+				<ScInput
+					className={className}
+					type="number"
+					label={__('License activation limit', 'surecart')}
+					help={__(
+						'Enter the number of unique activations per license key.',
+						'surecart'
+					)}
+					placeholder={
+						product?.license_activation_limit ||
+						__('Unlimited', 'surecart')
+					}
+					value={price?.license_activation_limit}
+					onScInput={(e) => {
+						updatePrice({
+							license_activation_limit: e.target.value || null,
+						});
+					}}
+				/>
 			)}
-			placeholder={
-				product?.license_activation_limit || __('Unlimited', 'surecart')
-			}
-			value={price?.license_activation_limit}
-			onScInput={(e) => {
-				updatePrice({
-					license_activation_limit: e.target.value || null,
-				});
-			}}
-		/>
+		</>
 	);
 };
