@@ -1,7 +1,8 @@
-<div <?php echo get_block_wrapper_attributes( array(
-	'class' => 'product-item-list',
-	'style' => esc_attr($style)
-) ); ?>>
+<div <?php echo get_block_wrapper_attributes(
+	[
+		'class' => 'product-item-list',
+	]
+); ?>>
 	<?php if ( empty( $products ) ) : ?>
 		<div class="no-products-found">
 			<?php esc_html_e( 'No products found.', 'surecart' ); ?>

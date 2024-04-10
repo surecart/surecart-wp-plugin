@@ -1,25 +1,4 @@
 .product-item-list {
-	display: grid;
-	grid-template-columns: repeat(var(--sc-product-item-list-column), 1fr);
-	gap: var(--sc-product-item-list-gap);
-
-	&__wrapper {
-		container-type: inline-size;
-		display: grid;
-		gap: var(--sc-spacing-medium);
-
-		@container (max-width: 576px) {
-			.product-item-list {
-				grid-template-columns: 1fr;
-			}
-		}
-		@container (min-width: 576px) and (max-width: 768px) {
-			.product-item-list {
-				grid-template-columns: repeat(3, 1fr);
-			}
-		}
-	}
-
 	&__sort,
 	&__empty,
 	&__search,

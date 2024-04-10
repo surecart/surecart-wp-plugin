@@ -9,15 +9,10 @@
 	"icon": "media-interactive",
 	"example": {},
 	"providesContext": {
-		"surecart/product-list/columns": "columns",
 		"surecart/product-list/limit": "limit"
 	},
 	"usesContext": ["surecart/product-list/blockId"],
 	"attributes": {
-		"columns": {
-			"type": "number",
-			"default": 4
-		},
 		"limit": {
 			"type": "number",
 			"default": 15

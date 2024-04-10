@@ -7,11 +7,12 @@ import {
 	Placeholder,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
+	ToolbarGroup,
 } from '@wordpress/components';
-import {
-	useBlockProps,
-	__experimentalGetGapCSSValue as getGapCSSValue,
-} from '@wordpress/block-editor';
+import { BlockControls } from '@wordpress/block-editor';
+import { list, grid } from '@wordpress/icons';
+import classnames from 'classnames';
+import { useEffect } from '@wordpress/element';
 
 const TEMPLATE = [
 	['surecart/product-image'],
@@ -21,15 +22,22 @@ const TEMPLATE = [
 
 export default ({
 	clientId,
-	attributes: { style },
-	context: {
-		'surecart/product-list/columns': columns,
-		'surecart/product-list/limit': limit,
-	},
+	attributes: { layout },
+	__unstableLayoutClassNames,
+	setAttributes,
+	context: { 'surecart/product-list/limit': limit },
 }) => {
-	const blockProps = useBlockProps({
-		className: 'product-item',
-	});
+	const { type: layoutType, columnCount = 3 } = layout || {};
+
+	useEffect(() => {
+		if (!layoutType) {
+			setDisplayLayout({
+				type: 'grid',
+				columnCount,
+			});
+		}
+	}, [layoutType]);
+
 	const { products, loading } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
@@ -57,6 +65,29 @@ export default ({
 		};
 	});
 
+	const setDisplayLayout = (newDisplayLayout) =>
+		setAttributes({
+			layout: { ...layout, ...newDisplayLayout },
+		});
+
+	const displayLayoutControls = [
+		{
+			icon: list,
+			title: __('List view', 'surecart'),
+			onClick: () => setDisplayLayout({ type: 'default' }),
+			isActive: layoutType === 'default' || layoutType === 'constrained',
+		},
+		{
+			icon: grid,
+			title: __('Grid view', 'surecart'),
+			onClick: () =>
+				setDisplayLayout({
+					type: 'grid',
+					columnCount,
+				}),
+			isActive: layoutType === 'grid',
+		},
+	];
 	if (loading) {
 		return (
 			<Placeholder>
@@ -64,22 +95,28 @@ export default ({
 			</Placeholder>
 		);
 	}
+	const className = classnames(__unstableLayoutClassNames, {
+		'product-item-list': true,
+		[`columns-${columnCount}`]: layoutType === 'grid' && columnCount,
+	});
 
 	return (
-		<TemplateListEdit
-			template={TEMPLATE}
-			blockContexts={products?.map((product) => ({
-				id: product?.id,
-				'surecart/productId': product?.id,
-			}))}
-			itemProps={blockProps}
-			clientId={clientId}
-			className="product-item-list"
-			style={{
-				borderStyle: 'none',
-				'--sc-product-item-list-column': columns,
-				gap: getGapCSSValue(style?.spacing?.blockGap) || '40px',
-			}}
-		/>
+		<>
+			<BlockControls>
+				<ToolbarGroup controls={displayLayoutControls} />
+			</BlockControls>
+			<TemplateListEdit
+				template={TEMPLATE}
+				blockContexts={products?.map((product) => ({
+					id: product?.id,
+					'surecart/productId': product?.id,
+				}))}
+				itemProps={{
+					className: 'product-item',
+				}}
+				clientId={clientId}
+				className={className}
+			/>
+		</>
 	);
 };
