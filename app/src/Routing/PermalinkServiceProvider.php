@@ -139,6 +139,13 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->query( 'index.php?sc_upsell_id=$matches[1]' )
 			->create();
 
+		// Checkout change mode redirection.
+		( new PermalinkService() )
+			->params( [ 'sc_checkout_change_mode', 'sc_checkout_post' ] )
+			->url( 'surecart/change-checkout-mode' )
+			->query( 'index.php?sc_checkout_change_mode=1&sc_checkout_post=1' )
+			->create();
+
 		// Redirect.
 		( new PermalinkService() )
 			->params( [ 'sc_redirect' ] )
