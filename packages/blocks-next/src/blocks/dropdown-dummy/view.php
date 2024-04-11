@@ -7,13 +7,13 @@ $dummy_options = [
 	array('label' => 'Fifth Option', 'value' => 'fifth-option'),
 ];
 ?>
-<div 
-	class="sc-dropdown" 
+<div
+	class="sc-dropdown"
 	data-wp-interactive='{ "namespace": "surecart/dropdown" }'
 	<?php echo wp_kses_data(
         wp_interactivity_data_wp_context(
             [
-                'isMenuOpen' => false, 
+                'isMenuOpen' => false,
                 'selectedItem' => $dummy_options[0] ?? [],
             ]
         )
@@ -21,7 +21,7 @@ $dummy_options = [
 	data-wp-on-document--click="actions.closeMenu"
 	<?php echo get_block_wrapper_attributes(); ?>
 >
-	<button 
+	<button
 		class="sc-dropdown__trigger button button--standard button--medium button--caret button--has-label button--text"
 		data-wp-on--click="actions.toggleMenu"
 		aria-label="Press Space or Enter to open the dropdown"
@@ -35,7 +35,7 @@ $dummy_options = [
 			</svg>
 		</span>
 	</button>
-	<div 
+	<div
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
 		role="menu"
@@ -43,9 +43,9 @@ $dummy_options = [
 		aria-hidden="!context.isMenuOpen"
 	>
 		<?php foreach ($dummy_options as $option) : ?>
-			<div 
+			<div
 				role="menuitem"
-				tabindex="0" 
+				tabindex="0"
 				class="sc-dropdown__menu-item"
 				data-wp-on--click="actions.selectItem"
 				data-wp-on--keyup="actions.menuItemKeyUp"
@@ -53,7 +53,7 @@ $dummy_options = [
 				<?php echo wp_kses_data(
 					wp_interactivity_data_wp_context(
 						[
-							'value' => $option['value'] ?? '', 
+							'value' => $option['value'] ?? '',
 							'label' => $option['label'] ?? '',
 						]
 					)
@@ -71,3 +71,14 @@ $dummy_options = [
 		<?php endforeach; ?>
 	</div>
 </div>
+
+<sc-dropdown style="--panel-width: 400px">
+	<sc-button slot="trigger" caret type="text">Trigger</sc-button>
+	<sc-menu>
+	<?php foreach ($dummy_options as $option) : ?>
+		<sc-menu-item>
+		<?php echo esc_html($option['label'] ?? ''); ?>
+		</sc-menu-item>
+	<?php endforeach; ?>
+	</sc-menu>
+</sc-dropdown>
