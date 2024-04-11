@@ -19,6 +19,7 @@ class ProductPostTest extends SureCartUnitTestCase
 			'providers' => [
 				\SureCart\Database\MigrationsServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
+				\SureCart\WordPress\Taxonomies\TaxonomyServiceProvider::class,
 			]
 		], false);
 
@@ -33,6 +34,57 @@ class ProductPostTest extends SureCartUnitTestCase
 		});
 	}
 
+	/**
+	 * @group sync
+	 */
+	public function test_has_account_term() {
+		$product = (new Product(
+			[
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'variant_options' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Size',
+							'values' => ['Small', 'Medium', 'Large'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Color',
+							'values' => ['Red', 'Green', 'Blue'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		))->sync();
+
+		// get the product post
+		$product = sc_get_product('testid');
+
+		$this->assertNotEmpty($product->ID);
+		$terms = get_terms( array(
+			'taxonomy'   => 'sc_account',
+			'hide_empty' => false,
+		) );
+
+		$terms = get_the_terms($product->ID, 'sc_account');
+		$this->assertNotEmpty($terms);
+		$this->assertSame('test', $terms[0]->slug);
+	}
+
+	/**
+	 * @group sync
+	 */
 	public function test_can_sync_product()
 	{
 		$product = (new Product(
@@ -112,6 +164,9 @@ class ProductPostTest extends SureCartUnitTestCase
 		$this->assertSame($product->prices['data'][1]['amount'], 9800);
 	}
 
+	/**
+	 * @group sync
+	 */
 	public function test_creates_variant_option_values_in_database()
 	{
 		(new Product(
@@ -152,7 +207,7 @@ class ProductPostTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * @group sync
 	 */
 	public function test_can_sync_multiple_times()
 	{
@@ -199,9 +254,9 @@ class ProductPostTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * @group sync
 	 */
-	public function test_syncing_adds_taxonomy()
+	public function test_can_filter_variant_options()
 	{
 		$product = new Product(
 			[

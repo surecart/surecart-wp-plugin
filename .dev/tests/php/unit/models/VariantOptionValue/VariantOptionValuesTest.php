@@ -17,6 +17,9 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 		], false);
 	}
 
+	/**
+	 * @group sync
+	 */
 	public function test_crud() {
 		$not_found = VariantOptionValue::find(1);
 		$this->assertWPError( $not_found );

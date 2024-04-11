@@ -141,13 +141,13 @@ abstract class PostModel {
 				[
 					'post_type'   => $this->post_type,
 					'post_status' => 'publish',
-					'tax_query'   => array(
-						array(
-							'taxonomy' => 'sc_store',
-							'field'    => 'name',
-							'terms'    => \SureCart::account()->id,
-						),
-					),
+					// 'tax_query'   => array(
+					// array(
+					// 'taxonomy' => 'sc_store',
+					// 'field'    => 'slug',
+					// 'terms'    => \SureCart::account()->id,
+					// ),
+					// ),
 				]
 			)
 		);
@@ -161,26 +161,18 @@ abstract class PostModel {
 	 * @return $this
 	 */
 	protected function create( \SureCart\Models\Model $model ) {
-		$props = $this->getSchemaMap( $model );
+		// insert post.
+		$post_id = wp_insert_post( wp_slash( $this->getSchemaMap( $model ) ), true );
 
-		$post_id = wp_insert_post(
-			wp_slash(
-				array_merge(
-					$props,
-					[
-						'tax_input' => [
-							'sc_store' => \SureCart::account()->id,
-						],
-					]
-				)
-			),
-			true
-		);
-
+		// handle errors.
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
 
+		// we need to do this because tax_input checks permissions for some ungodly reason.
+		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
+
+		// set the post on the model.
 		$this->post = get_post( $post_id );
 
 		return $this;

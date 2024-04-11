@@ -11,7 +11,7 @@ class StoreTaxonomyService {
 	 *
 	 * @var string
 	 */
-	protected $slug = 'sc_store';
+	protected $slug = 'sc_account';
 
 	/**
 	 * Bootstrap service.
@@ -30,7 +30,7 @@ class StoreTaxonomyService {
 	public function register() {
 		register_taxonomy(
 			$this->slug,
-			[ 'sc_product', 'sc_price', 'sc_variant_option', 'sc_variant' ],
+			[ 'sc_product' ],
 			[
 				'public'            => false,
 				'hierarchical'      => false,
