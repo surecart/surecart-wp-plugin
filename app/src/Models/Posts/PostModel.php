@@ -38,13 +38,6 @@ abstract class PostModel {
 	protected $model;
 
 	/**
-	 * The attributes that are not mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $guarded = [ 'name', 'position', 'created_at', 'updated_at' ];
-
-	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
 	 *
 	 * @param \WP_Post|null $post The post.
@@ -58,24 +51,6 @@ abstract class PostModel {
 		} else {
 			$this->find( $post );
 		}
-	}
-
-	/**
-	 * Get the model type
-	 *
-	 * @return string
-	 */
-	public function getModelType() {
-		return $this->model::getObjectName();
-	}
-
-	/**
-	 * Get the post type.
-	 *
-	 * @return string
-	 */
-	public function getPostType() {
-		return $this->post_type;
 	}
 
 	/**
@@ -160,15 +135,22 @@ abstract class PostModel {
 	 * @return \WP_Query
 	 */
 	protected function query( $args ) {
-		$args = wp_parse_args(
-			$args,
-			[
-				'post_type'   => $this->post_type,
-				'post_status' => 'publish',
-			]
+		return new \WP_Query(
+			wp_parse_args(
+				$args,
+				[
+					'post_type'   => $this->post_type,
+					'post_status' => 'publish',
+					'tax_query'   => array(
+						array(
+							'taxonomy' => 'sc_store',
+							'field'    => 'name',
+							'terms'    => \SureCart::account()->id,
+						),
+					),
+				]
+			)
 		);
-
-		return new \WP_Query( $args );
 	}
 
 	/**
@@ -186,7 +168,7 @@ abstract class PostModel {
 				array_merge(
 					$props,
 					[
-						'tax_input' => [ // TODO: Add this custom taxonomy. We might want to query by store in case of store switch, or at least warn the user.
+						'tax_input' => [
 							'sc_store' => \SureCart::account()->id,
 						],
 					]
@@ -233,23 +215,6 @@ abstract class PostModel {
 	}
 
 	/**
-	 * Sync the model with the post.
-	 *
-	 * @param \SureCart\Models\Model $model The model.
-	 *
-	 * @return $this
-	 */
-	protected function sync( \SureCart\Models\Model $model ) {
-		$this->findByModelId( $model->id );
-
-		if ( is_wp_error( $this->post ) ) {
-			return $this->post;
-		}
-
-		return empty( $this->post->ID ) ? $this->create( $model ) : $this->update( $model );
-	}
-
-	/**
 	 * Delete the post.
 	 *
 	 * @param integer $id The id.
@@ -265,6 +230,23 @@ abstract class PostModel {
 		$this->post = null;
 
 		return $this;
+	}
+
+	/**
+	 * Sync the model with the post.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return $this
+	 */
+	protected function sync( \SureCart\Models\Model $model ) {
+		$this->findByModelId( $model->id );
+
+		if ( is_wp_error( $this->post ) ) {
+			return $this->post;
+		}
+
+		return empty( $this->post->ID ) ? $this->create( $model ) : $this->update( $model );
 	}
 
 	/**
@@ -302,7 +284,6 @@ abstract class PostModel {
 				'post_title'        => $model->name,
 				'post_name'         => $model->slug,
 				'post_type'         => $this->post_type,
-				'post_parent'       => $this->getPostParentId( $model ),
 				'menu_order'        => $model->position ?? 0,
 				'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 				'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
@@ -335,48 +316,6 @@ abstract class PostModel {
 
 		// default to publish.
 		return 'publish';
-	}
-
-	/**
-	 * Get the id of the post parent.
-	 *
-	 * @param \SureCart\Models\Model $model The model.
-	 *
-	 * @return integer|null
-	 * @throws \Exception If the parent model type is not set.
-	 */
-	protected function getPostParentId( \SureCart\Models\Model $model ) {
-		// there is no parent, so don't set one.
-		if ( empty( $this->parent ) ) {
-			return null;
-		}
-
-		$parent = new $this->parent();
-
-		// get the parent model type.
-		$model_type = $parent->getModelType();
-
-		// model type is not set.
-		if ( empty( $model_type ) ) {
-			throw new \Exception( 'Model not set in' . $this->parent );
-		}
-
-		// We can assume $model->property is the a string of the parent model id.
-		if ( ! is_string( $model->{$model_type} ) ) {
-			throw new \Exception( 'Parent model id is missing or invalid' );
-		}
-
-		// find the post by the parent model id.
-		$post = $parent->findByModelId( $model->{$model_type} );
-
-		// the parent id did not get created, let's create it.
-		if ( empty( $post->ID ) ) {
-			return null;
-			// TODO: something was deleted, re-sync everything.
-		}
-
-		// return the post id.
-		return $post->ID ?? null;
 	}
 
 	/**
