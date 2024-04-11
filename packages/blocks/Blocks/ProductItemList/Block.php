@@ -256,7 +256,12 @@ class Block extends BaseBlock {
 			$attributes['type'] = '';
 		}
 
-		$products = $this->getProducts( $attributes );
+		$product_query = sc_query_products(
+			[
+				'per_page' => 30,
+				'page'     => (int) ( $_GET['product-page'] ?? 1 ),
+			]
+		);
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
@@ -267,8 +272,8 @@ class Block extends BaseBlock {
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
 				'pagination'           => [
-					'total'       => $products->total(),
-					'total_pages' => $products->totalPages(),
+					'total'       => $product_query->found_posts,
+					'total_pages' => $product_query->max_num_pages,
 				],
 				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
@@ -278,7 +283,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
-				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $product_query->posts,
 				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
 				'pageTitle'            => get_the_title(),
 			]
@@ -311,37 +316,5 @@ class Block extends BaseBlock {
 		}
 
 		return $query;
-	}
-
-	/**
-	 * Get the products.
-	 *
-	 * @param  array $attributes Block attributes.
-	 *
-	 * @return \SureCart\Models\Product
-	 */
-	public function getProducts( $attributes ) {
-		$products = Product::where( $this->getQuery( $attributes ) )->paginate(
-			[
-				'per_page' => $attributes['limit'] ?? 30,
-				'page'     => (int) ( $_GET['product-page'] ?? 1 ),
-			]
-		);
-
-		// there is an error or no products.
-		if ( is_wp_error( $products ) || empty( $products->pagination->count ) ) {
-			return new Collection(
-				(object) [
-					'pagination' => [
-						'count' => 0,
-						'limit' => 0,
-						'page'  => 0,
-					],
-					'data'       => [],
-				]
-			);
-		}
-
-		return $products;
 	}
 }
