@@ -9,18 +9,40 @@ describe('sc-order-billing-address', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  it('should not show the billing address input by default', async () => {
+  it('should show billing address when switch is toggled', async () => {
     const page = await newE2EPage();
     await page.setContent('<sc-order-shipping-address></sc-order-shipping-address><sc-order-billing-address></sc-order-billing-address>');
     page.waitForChanges();
 
-    const addressField = await page.find('sc-order-billing-address >>> sc-address');
+    const addressField = await page.find('sc-order-billing-address >>> .order-billing-address__toggle');
     const switchField = await page.find('sc-order-billing-address >>> sc-switch');
 
     // address field is not visible & switch is visible and checked
     expect(addressField).toBeNull();
     expect(switchField).not.toBeNull();
     expect(await switchField.getProperty('checked')).toBeTruthy();
+
+    // toggle switch
+    switchField.setAttribute('checked', false);
+    await page.waitForChanges();
+
+    // address field is visible & switch is visible and not checked
+    expect(addressField).not.toBeNull();
+    expect(switchField).not.toBeNull();
+    expect(await switchField.getProperty('checked')).toBeFalsy();
+  });
+
+  it('should show billing address if shipping address field does not exist', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<sc-order-billing-address></sc-order-billing-address>');
+    page.waitForChanges();
+
+    const addressField = await page.find('sc-order-billing-address >>> sc-address');
+    const switchField = await page.find('sc-order-billing-address >>> sc-switch');
+
+    // address field is visible & switch is not visible
+    expect(addressField).not.toBeNull();
+    expect(switchField).toBeNull();
   });
 
   it('renders custom placeholders', async () => {
