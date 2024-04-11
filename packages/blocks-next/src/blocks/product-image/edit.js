@@ -69,8 +69,17 @@ export default ({
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody>
+			<InspectorControls group="dimensions">
+				<ToolsPanelItem
+					hasValue={() => !!sizing}
+					label={__('Image Cropping', 'surecart')}
+					onDeselect={() => setAttributes({ sizing: undefined })}
+					resetAllFilter={() => ({
+						sizing: undefined,
+					})}
+					isShownByDefault
+					panelId={clientId}
+				>
 					<ToggleGroupControl
 						label={__('Image Cropping', 'surecart')}
 						value={sizing}
@@ -85,6 +94,17 @@ export default ({
 							label={__('Cover', 'surecart')}
 						/>
 					</ToggleGroupControl>
+				</ToolsPanelItem>
+				<ToolsPanelItem
+					hasValue={() => !!aspectRatio}
+					label={__('Aspect ratio', 'surecart')}
+					onDeselect={() => setAttributes({ aspectRatio: undefined })}
+					resetAllFilter={() => ({
+						aspectRatio: undefined,
+					})}
+					isShownByDefault
+					panelId={clientId}
+				>
 					<SelectControl
 						__nextHasNoMarginBottom
 						label={__('Aspect ratio', 'surecart')}
@@ -128,27 +148,27 @@ export default ({
 							setAttributes({ aspectRatio: nextAspectRatio })
 						}
 					/>
-					<UnitControl
-						label={__('Height', 'surecart')}
-						labelPosition="top"
-						value={height || ''}
-						min={0}
-						onChange={(nextHeight) =>
-							onDimensionChange('height', nextHeight)
-						}
-						units={units}
-					/>
-					<UnitControl
-						label={__('Width', 'surecart')}
-						labelPosition="top"
-						value={width || ''}
-						min={0}
-						onChange={(nextWidth) =>
-							onDimensionChange('width', nextWidth)
-						}
-						units={units}
-					/>
-				</PanelBody>
+				</ToolsPanelItem>
+				<UnitControl
+					label={__('Height', 'surecart')}
+					labelPosition="top"
+					value={height || ''}
+					min={0}
+					onChange={(nextHeight) =>
+						onDimensionChange('height', nextHeight)
+					}
+					units={units}
+				/>
+				<UnitControl
+					label={__('Width', 'surecart')}
+					labelPosition="top"
+					value={width || ''}
+					min={0}
+					onChange={(nextWidth) =>
+						onDimensionChange('width', nextWidth)
+					}
+					units={units}
+				/>
 			</InspectorControls>
 			<div {...blockProps}>
 				<img
