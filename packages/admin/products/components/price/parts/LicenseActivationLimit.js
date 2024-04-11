@@ -29,7 +29,7 @@ export default ({ price, updatePrice, className, product }) => {
 					type="number"
 					label={__('License activation limit', 'surecart')}
 					help={__(
-						'Enter the number of unique activations per license key.',
+						'Specify the maximum number of unique activations allowed per license key for this pricing option. If left blank, the default limit set for the product will apply.',
 						'surecart'
 					)}
 					placeholder={
