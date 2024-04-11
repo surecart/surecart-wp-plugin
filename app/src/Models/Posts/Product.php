@@ -122,7 +122,7 @@ class Product extends PostModel {
 	 */
 	protected function getActivePricesAttribute() {
 		return array_filter(
-			$this->prices ?? [],
+			$this->prices->data ?? [],
 			function( $price ) {
 				return ! $price->archived;
 			}
