@@ -257,7 +257,7 @@ class ProductPostTest extends SureCartUnitTestCase
 	/**
 	 * @group sync
 	 */
-	public function test_can_sync_multiple_times()
+	public function test_multiple_syncs_does_not_create_duplicate_records()
 	{
 		$product = new Product(
 			[
