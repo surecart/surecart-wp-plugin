@@ -115,16 +115,7 @@ abstract class PostModel {
 	 */
 	protected function get( $args ) {
 		$query = $this->query( $args );
-
-		// map posts to a collection of post models.
-		$posts = array_map(
-			function( $post ) {
-				return new static( $post );
-			},
-			$query->posts
-		);
-
-		return $posts;
+		return $query->posts;
 	}
 
 	/**
@@ -135,7 +126,7 @@ abstract class PostModel {
 	 * @return \WP_Query
 	 */
 	protected function query( $args ) {
-		return new \WP_Query(
+		$query = new \WP_Query(
 			wp_parse_args(
 				$args,
 				[
@@ -151,6 +142,17 @@ abstract class PostModel {
 				]
 			)
 		);
+
+		// map posts to a collection of post models.
+		$query->posts = array_map(
+			function( $post ) {
+				$model = new static( $post );
+				return new \WP_Post( (object) $model->toArray() );
+			},
+			$query->posts
+		);
+
+		return $query;
 	}
 
 	/**
