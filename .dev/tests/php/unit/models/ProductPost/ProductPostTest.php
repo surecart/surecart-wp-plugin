@@ -4,8 +4,10 @@ namespace SureCart\Tests\Models\ProductPost;
 
 use SureCart\Database\Table;
 use SureCart\Database\Tables\VariantOptionValues;
+use SureCart\Models\Price;
 use SureCart\Models\Product;
 use SureCart\Models\Variant;
+use SureCart\Models\VariantOption;
 use SureCart\Models\VariantOptionValue;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -452,6 +454,19 @@ class ProductPostTest extends SureCartUnitTestCase
 				"name" => "Test",
 				"created_at" => 1624910585,
 				"updated_at" => 1624910585,
+				'prices' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'price',
+							'option_1' => 'Small',
+							'option_2' => 'Orange',
+							'position' => 1,
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+					]
+				],
 				'variants' => (object) [
 					'data' => [
 						(object) [
@@ -504,6 +519,12 @@ class ProductPostTest extends SureCartUnitTestCase
 		$this->assertCount(2, $product->variants->data);
 		foreach($product->variants->data as $variant) {
 			$this->assertInstanceOf(Variant::class, $variant);
+		}
+		foreach($product->variant_options->data as $option) {
+			$this->assertInstanceOf(VariantOption::class, $option);
+		}
+		foreach($product->prices->data as $price) {
+			$this->assertInstanceOf(Price::class, $price);
 		}
 	}
 }
