@@ -122,7 +122,12 @@ add_action('init', function() {
 	wp_register_script_module(
 		'@surecart/dropdown',
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dropdown/index.js',
-		[],
+		[
+			[
+				'id' => '@wordpress/interactivity',
+				'import' => 'dynamic'
+			]
+		],
 		$static_assets['version']
 	);
 
