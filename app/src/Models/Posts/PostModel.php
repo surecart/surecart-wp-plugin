@@ -141,13 +141,13 @@ abstract class PostModel {
 				[
 					'post_type'   => $this->post_type,
 					'post_status' => 'publish',
-					// 'tax_query'   => array(
-					// array(
-					// 'taxonomy' => 'sc_store',
-					// 'field'    => 'slug',
-					// 'terms'    => \SureCart::account()->id,
-					// ),
-					// ),
+					'tax_query'   => array(
+						array(
+							'taxonomy' => 'sc_account',
+							'field'    => 'slug',
+							'terms'    => \SureCart::account()->id,
+						),
+					),
 				]
 			)
 		);

@@ -36,6 +36,7 @@ class ProductPostTest extends SureCartUnitTestCase
 
 	/**
 	 * @group sync
+	 * @group account
 	 */
 	public function test_has_account_term() {
 		$product = (new Product(
@@ -80,6 +81,53 @@ class ProductPostTest extends SureCartUnitTestCase
 		$terms = get_the_terms($product->ID, 'sc_account');
 		$this->assertNotEmpty($terms);
 		$this->assertSame('test', $terms[0]->slug);
+	}
+
+	/**
+	 * @group sync
+	 * @group account
+	 */
+	public function test_should_return_empty_if_account_switches() {
+		(new Product(
+			[
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'variant_options' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Size',
+							'values' => ['Small', 'Medium', 'Large'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Color',
+							'values' => ['Red', 'Green', 'Blue'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		))->sync();
+
+		// account changes.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test2',
+			];
+		});
+
+		// get the product post
+		$products = sc_get_products();
+		$this->assertCount(0, $products);
 	}
 
 	/**
