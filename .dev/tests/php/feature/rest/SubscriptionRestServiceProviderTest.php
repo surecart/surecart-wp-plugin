@@ -178,17 +178,6 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 					];
 				});
 			}],
-
-			// These require option mocks.
-			'Manual Payment Method: Own with option enabled' => ['PUT','/surecart/v1/subscriptions/correct', 200, ['body' => ['manual_payment_method' => 'test']], function() {
-				update_option('surecart_allow_switching_to_manual_payment_for_subscription', true);
-			}],
-			'Manual Payment Method: Others with protocol enabled' => ['PUT','/surecart/v1/subscriptions/wrong', 403, ['body' => ['manual_payment_method' => 'test']], function() {
-				update_option('surecart_allow_switching_to_manual_payment_for_subscription', true);
-			}],
-			'Manual Payment Method: Own with protocol disabled' => ['PUT','/surecart/v1/subscriptions/correct', 403, ['body' => ['manual_payment_method' => 'test']], function() {
-				update_option('surecart_allow_switching_to_manual_payment_for_subscription', false);
-			}],
 		];
 	}
 

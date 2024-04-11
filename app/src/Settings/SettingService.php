@@ -226,16 +226,6 @@ class SettingService {
 				'default'           => true,
 			]
 		);
-		$this->register(
-			'surecart',
-			'allow_switching_to_manual_payment_for_subscription',
-			[
-				'type'              => 'boolean',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'boolval',
-				'default'           => false,
-			]
-		);
 	}
 
 	/**

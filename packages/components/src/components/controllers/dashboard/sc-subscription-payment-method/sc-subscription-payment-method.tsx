@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { allowSwitchingToManualPayment } from '../../../../functions/util';
 import { ManualPaymentMethod, PaymentMethod, Subscription } from '../../../../types';
 
 @Component({
@@ -100,7 +99,7 @@ export class ScSubscriptionPaymentMethod {
         live_mode: this.subscription?.live_mode,
       }),
     })) as ManualPaymentMethod[];
-    
+
     return { paymentMethods, manualPaymentMethods };
   }
 
@@ -125,7 +124,9 @@ export class ScSubscriptionPaymentMethod {
 
   async updateMethod(e) {
     const { payment_method } = await e.target.getFormJson();
-    const currentPaymentMethodId = this.subscription?.manual_payment ? this.subscription?.manual_payment_method : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
+    const currentPaymentMethodId = this.subscription?.manual_payment
+      ? this.subscription?.manual_payment_method
+      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
 
     if (payment_method === currentPaymentMethodId) {
       return;
@@ -136,11 +137,11 @@ export class ScSubscriptionPaymentMethod {
         path: `surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          ...(!this.manualSelected ? {payment_method, manual_payment: false} : {manual_payment_method: payment_method, manual_payment: true}),
+          ...(!this.manualSelected ? { payment_method, manual_payment: false } : { manual_payment_method: payment_method, manual_payment: true }),
         },
       })) as Subscription;
       // remove from view.
-    } catch (e) { 
+    } catch (e) {
       this.error = e?.messsage || __('Something went wrong', 'surecart');
       console.error(this.error);
     } finally {
@@ -184,7 +185,9 @@ export class ScSubscriptionPaymentMethod {
   }
 
   renderList() {
-    const currentPaymentMethodId = this.subscription?.manual_payment ? this.subscription?.manual_payment_method : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
+    const currentPaymentMethodId = this.subscription?.manual_payment
+      ? this.subscription?.manual_payment_method
+      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
 
     const regularPaymentMethods = this.paymentMethods.map(paymentMethod => {
       const { id, card, live_mode, paypal_account } = paymentMethod;
@@ -220,15 +223,11 @@ export class ScSubscriptionPaymentMethod {
       );
     });
 
-    if (!allowSwitchingToManualPayment(this.subscription)) {
-      return regularPaymentMethods;
-    }
-    
     const manualPaymentMethods = this.manualPaymentMethods.map(paymentMethod => {
       const { id } = paymentMethod;
 
       return (
-        <sc-choice checked={currentPaymentMethodId === id} name="payment_method" value={id} required onClick={() => this.manualSelected = true}>
+        <sc-choice checked={currentPaymentMethodId === id} name="payment_method" value={id} required onClick={() => (this.manualSelected = true)}>
           <sc-flex justifyContent="flex-start" align-items="center">
             <sc-manual-payment-method paymentMethod={paymentMethod} showDescription />
           </sc-flex>
@@ -240,7 +239,7 @@ export class ScSubscriptionPaymentMethod {
         </sc-choice>
       );
     });
-    return [...regularPaymentMethods, ...manualPaymentMethods]
+    return [...regularPaymentMethods, ...manualPaymentMethods];
   }
 
   render() {

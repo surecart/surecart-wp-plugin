@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { PaymentMethod, Subscription, ManualPaymentMethod } from '../../../../types';
-import { allowSwitchingToManualPayment } from '../../../../functions/util';
 @Component({
   tag: 'sc-subscription-payment',
   styleUrl: 'sc-subscription-payment.scss',
@@ -76,7 +75,7 @@ export class ScSubscriptionPayment {
         path: `/surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          ...(!this.manualSelected ? {method, manual_payment: false} : {manual_payment_method: method, manual_payment: true}),
+          ...(!this.manualSelected ? { method, manual_payment: false } : { manual_payment_method: method, manual_payment: true }),
         },
       });
       if (this.successUrl) {
@@ -109,10 +108,9 @@ export class ScSubscriptionPayment {
       return this.renderLoading();
     }
 
-    const allowManualPayment = allowSwitchingToManualPayment(this.subscription);
     const modeMethods = this.paymentMethods.filter(method => method?.live_mode === this.subscription?.live_mode);
 
-    if (!modeMethods?.length || (allowManualPayment && !this.manualPaymentMethods?.length && !modeMethods?.length)) {
+    if (!modeMethods?.length || (!this.manualPaymentMethods?.length && !modeMethods?.length)) {
       return (
         <Fragment>
           <sc-empty icon="credit-card">{__('You have no saved payment methods.', 'surecart')}</sc-empty>
@@ -137,9 +135,14 @@ export class ScSubscriptionPayment {
                 </sc-choice>
               );
             })}
-            {allowManualPayment && (this.manualPaymentMethods || []).map(method => {
+            {(this.manualPaymentMethods || []).map(method => {
               return (
-                <sc-choice checked={this.manualSelected && this.subscription?.manual_payment_method === method?.id} name="method" value={method?.id} onClick={() => this.manualSelected = true}>
+                <sc-choice
+                  checked={this.manualSelected && this.subscription?.manual_payment_method === method?.id}
+                  name="method"
+                  value={method?.id}
+                  onClick={() => (this.manualSelected = true)}
+                >
                   <sc-manual-payment-method paymentMethod={method} showDescription />
                 </sc-choice>
               );
