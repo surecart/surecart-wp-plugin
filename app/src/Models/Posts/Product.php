@@ -1,6 +1,9 @@
 <?php
 namespace SureCart\Models\Posts;
 
+use SureCart\Models\Price;
+use SureCart\Models\Variant;
+use SureCart\Models\VariantOption;
 use SureCart\Models\VariantOptionValue;
 use SureCart\Support\Currency;
 
@@ -124,6 +127,39 @@ class Product extends PostModel {
 				return ! $price->archived;
 			}
 		);
+	}
+
+	/**
+	 * Get the variants attribute.
+	 *
+	 * @param array $value The value.
+	 *
+	 * @return array
+	 */
+	protected function getVariantsAttribute( $value ) {
+		return $this->getCollection( $value, Variant::class );
+	}
+
+	/**
+	 * Get the variant options attribute.
+	 *
+	 * @param array $value The value.
+	 *
+	 * @return array
+	 */
+	protected function getVariantOptionsAttribute( $value ) {
+		return $this->getCollection( $value, VariantOption::class );
+	}
+
+	/**
+	 * Get the prices attribute.
+	 *
+	 * @param array $value The value.
+	 *
+	 * @return array
+	 */
+	protected function getPricesAttribute( $value ) {
+		return $this->getCollection( $value, Price::class );
 	}
 
 	/**

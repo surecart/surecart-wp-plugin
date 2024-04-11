@@ -5,6 +5,7 @@ namespace SureCart\Tests\Models\ProductPost;
 use SureCart\Database\Table;
 use SureCart\Database\Tables\VariantOptionValues;
 use SureCart\Models\Product;
+use SureCart\Models\Variant;
 use SureCart\Models\VariantOptionValue;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -438,5 +439,71 @@ class ProductPostTest extends SureCartUnitTestCase
 		]);
 
 		$this->assertCount(0, $product);
+	}
+
+	/**
+	 * @group sync
+	 */
+	public function test_has_nested_variants() {
+		$product = new Product(
+			[
+				"id" => "testid2",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'variants' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant',
+							'option_1' => 'Small',
+							'option_2' => 'Orange',
+							'position' => 1,
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfe1',
+							'object' => 'variant',
+							'option_1' => 'Small',
+							'option_2' => 'Red',
+							'position' => 2,
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+					]
+				],
+				'variant_options' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Size',
+							'values' => ['Small'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'variant_option',
+							'name' => 'Color',
+							'values' => ['Orange', 'Red'],
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		);
+		$product->sync();
+
+		$product = sc_get_product('testid2');
+
+		$this->assertNotEmpty($product->ID);
+		$this->assertCount(2, $product->variants->data);
+		foreach($product->variants->data as $variant) {
+			$this->assertInstanceOf(Variant::class, $variant);
+		}
 	}
 }

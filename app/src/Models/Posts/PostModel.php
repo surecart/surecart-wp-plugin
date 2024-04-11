@@ -250,17 +250,9 @@ abstract class PostModel {
 	 * @return array
 	 */
 	protected function getMetaInput( \SureCart\Models\Model $model ) {
-		return array_merge(
-			array_map(
-				function( $prop ) {
-					return $prop;
-				},
-				$model->toArray(),
-			),
-			[
-				'sc_id' => $model->id,
-			]
-		);
+		$object        = $model->toObject();
+		$object->sc_id = $model->id;
+		return $object;
 	}
 
 	/**
@@ -308,6 +300,25 @@ abstract class PostModel {
 
 		// default to publish.
 		return 'publish';
+	}
+
+	/**
+	 * Set the collection.
+	 *
+	 * @param object $value The value.
+	 * @param string $model The model.
+	 *
+	 * @return $this
+	 */
+	protected function getCollection( $value, $model ) {
+		$models = [];
+		if ( ! empty( $value->data ) && is_array( $value->data ) ) {
+			foreach ( $value->data as $attributes ) {
+				$models[] = is_a( $attributes, $model ) ? $attributes : new $model( $attributes );
+			}
+			$value->data = $models;
+		}
+		return $value;
 	}
 
 	/**
@@ -437,7 +448,7 @@ abstract class PostModel {
 			$attributes,
 			function ( &$value, $key ) {
 				if ( $value instanceof PostModel ) {
-					$value = $value->toArray();
+					$value = $value->toObject();
 				}
 			}
 		);
