@@ -11,7 +11,7 @@ class UpdateMigrationServiceProviderTest extends \WP_UnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
-				\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
 			]
 		], false);
 	}
