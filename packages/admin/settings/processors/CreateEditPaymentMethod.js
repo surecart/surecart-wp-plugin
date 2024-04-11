@@ -6,6 +6,7 @@ import {
 	ScForm,
 	ScInput,
 	ScRichText,
+	ScSwitch,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -48,7 +49,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 			console.error(e);
 			setError(
 				e?.message ||
-				__('Something went wrong. Please try again.', 'surecart')
+					__('Something went wrong. Please try again.', 'surecart')
 			);
 		} finally {
 			setBusy(false);
@@ -122,6 +123,20 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					}
 					required
 				/>
+				<ScSwitch
+					checked={paymentMethod?.reusable}
+					onScChange={(e) =>
+						updateData({ reusable: e.target.checked })
+					}
+				>
+					{__('Allow in Subscriptions/Installments?', 'surecart')}
+					<span slot="description">
+						{__(
+							'Let customers use this manual payment method in subscriptions or installments.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 
 				<div>
 					<ScButton type="primary" submit>
