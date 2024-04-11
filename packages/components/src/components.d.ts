@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -146,6 +146,10 @@ export namespace Components {
         "label": string;
     }
     interface ScButton {
+        /**
+          * Tells the browser to autofocus.
+         */
+        "autofocus": boolean;
         /**
           * Draws the button in a busy state.
          */
@@ -1239,6 +1243,7 @@ export namespace Components {
           * The direction from which the drawer will open.
          */
         "placement": 'top' | 'end' | 'bottom' | 'start';
+        "requestClose": (source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>;
         /**
           * Sticky drawer header
          */
@@ -1300,12 +1305,9 @@ export namespace Components {
         "error": ResponseError | null;
     }
     interface ScExpressPayment {
-        "busy": boolean;
         "debug": boolean;
         "dividerText": string;
-        "formId": number | string;
         "hasPaymentOptions": boolean;
-        "order": Checkout;
         "processor": ProcessorName;
     }
     interface ScFeatureDemoBanner {
@@ -1726,11 +1728,33 @@ export namespace Components {
     per_page: number;
   };
     }
+    interface ScLicense {
+        /**
+          * The license id
+         */
+        "licenseId": string;
+    }
     interface ScLicensesList {
-        "activations": Activation[];
-        "copied": boolean;
+        /**
+          * View all link
+         */
+        "allLink": string;
+        /**
+          * The heading of the licenses
+         */
         "heading": string;
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer": boolean;
         "licenses": License[];
+        /**
+          * Query to fetch licenses
+         */
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**
@@ -1813,6 +1837,10 @@ export namespace Components {
           * Sets focus on the button.
          */
         "setFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * The target of the link.
+         */
+        "target": string;
         /**
           * A unique value to store in the menu item. This can be used as a way to identify menu items when selected.
          */
@@ -2242,6 +2270,10 @@ export namespace Components {
          */
         "gbVatLabel": string;
         /**
+          * Help text
+         */
+        "helpText": string;
+        /**
           * Other zones label
          */
         "otherLabel": string;
@@ -2250,6 +2282,10 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes": string | string[];
     }
     interface ScOrdersList {
         "allLink": string;
@@ -2605,6 +2641,55 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    /**
+     * Internal dependencies.
+     */
+    interface ScPrice {
+        /**
+          * Is the product ad_hoc?
+         */
+        "adHoc": boolean;
+        /**
+          * The amount
+         */
+        "amount": number;
+        /**
+          * The currency.
+         */
+        "currency": string;
+        /**
+          * The recurring interval
+         */
+        "recurringInterval": 'week' | 'month' | 'year' | 'never';
+        /**
+          * The recurring interval count
+         */
+        "recurringIntervalCount": number;
+        /**
+          * The recurring period count
+         */
+        "recurringPeriodCount": number;
+        /**
+          * The sale text
+         */
+        "saleText": string;
+        /**
+          * The scratch amount
+         */
+        "scratchAmount": number;
+        /**
+          * The setup fee amount
+         */
+        "setupFeeAmount": number;
+        /**
+          * The setup fee name
+         */
+        "setupFeeName": string;
+        /**
+          * The trial duration days
+         */
+        "trialDurationDays": number;
+    }
     interface ScPriceChoice {
         /**
           * Is this blank?
@@ -2899,7 +2984,7 @@ export namespace Components {
         /**
           * Show for a specific collection
          */
-        "collectionId": string | null;
+        "collectionId": string;
         /**
           * Show only featured products.
          */
@@ -2910,6 +2995,18 @@ export namespace Components {
         "ids": string[];
         "layoutConfig": LayoutConfig1;
         "limit": number;
+        "page": number;
+        /**
+          * The page title
+         */
+        "pageTitle": string;
+        /**
+          * Pagination
+         */
+        "pagination": {
+    total: number;
+    total_pages: number;
+  };
         "paginationAlignment": string;
         /**
           * Should we auto-scroll to the top when paginating via ajax
@@ -3490,27 +3587,17 @@ export namespace Components {
          */
         "country": string;
         /**
-          * Currency
-         */
-        "currencyCode": string;
-        /**
           * Is this in debug mode.
          */
         "debug": boolean;
         "error": ResponseError | null;
         /**
-          * This is required to validate the form on the server
-         */
-        "formId": number | string;
-        /**
           * Label
          */
         "label": string;
         /**
-          * Checkout Session
+          * Prices
          */
-        "order": Checkout;
-        "paymentMethod": string;
         "prices": Prices;
         /**
           * Stripe publishable key
@@ -3550,6 +3637,10 @@ export namespace Components {
           * The subscription ID
          */
         "subscriptionId": string;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl": string;
     }
     interface ScSubscriptionAdHocConfirm {
         "heading": string;
@@ -3632,6 +3723,7 @@ export namespace Components {
          */
         "query": object;
         "subscription": Subscription;
+        "successUrl": string;
     }
     interface ScSubscriptionVariationConfirm {
         "heading": string;
@@ -3651,6 +3743,16 @@ export namespace Components {
     page: number;
     per_page: number;
   };
+    }
+    interface ScSummary {
+        "busy": boolean;
+        "closedText": string;
+        "collapsed": boolean;
+        "collapsedOnDesktop": boolean;
+        "collapsedOnMobile": boolean;
+        "collapsible": boolean;
+        "loading": boolean;
+        "openText": string;
     }
     interface ScSwitch {
         /**
@@ -3804,6 +3906,10 @@ export namespace Components {
           * The status
          */
         "status": 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes": string[];
         /**
           * Type of tax id
          */
@@ -4021,6 +4127,20 @@ export namespace Components {
           * The tag's size.
          */
         "size": 'small' | 'medium' | 'large';
+    }
+    interface ScUpsell {
+    }
+    interface ScUpsellCountdownTimer {
+        /**
+          * Whether to show the icon.
+         */
+        "showIcon": boolean;
+    }
+    interface ScUpsellNoThanksButton {
+    }
+    interface ScUpsellSubmitButton {
+    }
+    interface ScUpsellTotals {
     }
     interface ScVisuallyHidden {
     }
@@ -4286,6 +4406,10 @@ export interface ScSubscriptionCancelCustomEvent<T> extends CustomEvent<T> {
 export interface ScSubscriptionReactivateCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSubscriptionReactivateElement;
+}
+export interface ScSummaryCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSummaryElement;
 }
 export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4809,6 +4933,12 @@ declare global {
         prototype: HTMLScInvoicesListElement;
         new (): HTMLScInvoicesListElement;
     };
+    interface HTMLScLicenseElement extends Components.ScLicense, HTMLStencilElement {
+    }
+    var HTMLScLicenseElement: {
+        prototype: HTMLScLicenseElement;
+        new (): HTMLScLicenseElement;
+    };
     interface HTMLScLicensesListElement extends Components.ScLicensesList, HTMLStencilElement {
     }
     var HTMLScLicensesListElement: {
@@ -5130,6 +5260,15 @@ declare global {
     var HTMLScPremiumTagElement: {
         prototype: HTMLScPremiumTagElement;
         new (): HTMLScPremiumTagElement;
+    };
+    /**
+     * Internal dependencies.
+     */
+    interface HTMLScPriceElement extends Components.ScPrice, HTMLStencilElement {
+    }
+    var HTMLScPriceElement: {
+        prototype: HTMLScPriceElement;
+        new (): HTMLScPriceElement;
     };
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
@@ -5467,6 +5606,12 @@ declare global {
         prototype: HTMLScSubscriptionsListElement;
         new (): HTMLScSubscriptionsListElement;
     };
+    interface HTMLScSummaryElement extends Components.ScSummary, HTMLStencilElement {
+    }
+    var HTMLScSummaryElement: {
+        prototype: HTMLScSummaryElement;
+        new (): HTMLScSummaryElement;
+    };
     interface HTMLScSwitchElement extends Components.ScSwitch, HTMLStencilElement {
     }
     var HTMLScSwitchElement: {
@@ -5575,6 +5720,36 @@ declare global {
         prototype: HTMLScUpgradeRequiredElement;
         new (): HTMLScUpgradeRequiredElement;
     };
+    interface HTMLScUpsellElement extends Components.ScUpsell, HTMLStencilElement {
+    }
+    var HTMLScUpsellElement: {
+        prototype: HTMLScUpsellElement;
+        new (): HTMLScUpsellElement;
+    };
+    interface HTMLScUpsellCountdownTimerElement extends Components.ScUpsellCountdownTimer, HTMLStencilElement {
+    }
+    var HTMLScUpsellCountdownTimerElement: {
+        prototype: HTMLScUpsellCountdownTimerElement;
+        new (): HTMLScUpsellCountdownTimerElement;
+    };
+    interface HTMLScUpsellNoThanksButtonElement extends Components.ScUpsellNoThanksButton, HTMLStencilElement {
+    }
+    var HTMLScUpsellNoThanksButtonElement: {
+        prototype: HTMLScUpsellNoThanksButtonElement;
+        new (): HTMLScUpsellNoThanksButtonElement;
+    };
+    interface HTMLScUpsellSubmitButtonElement extends Components.ScUpsellSubmitButton, HTMLStencilElement {
+    }
+    var HTMLScUpsellSubmitButtonElement: {
+        prototype: HTMLScUpsellSubmitButtonElement;
+        new (): HTMLScUpsellSubmitButtonElement;
+    };
+    interface HTMLScUpsellTotalsElement extends Components.ScUpsellTotals, HTMLStencilElement {
+    }
+    var HTMLScUpsellTotalsElement: {
+        prototype: HTMLScUpsellTotalsElement;
+        new (): HTMLScUpsellTotalsElement;
+    };
     interface HTMLScVisuallyHiddenElement extends Components.ScVisuallyHidden, HTMLStencilElement {
     }
     var HTMLScVisuallyHiddenElement: {
@@ -5680,6 +5855,7 @@ declare global {
         "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
+        "sc-license": HTMLScLicenseElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
@@ -5733,6 +5909,7 @@ declare global {
         "sc-phone-input": HTMLScPhoneInputElement;
         "sc-pill-option": HTMLScPillOptionElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
+        "sc-price": HTMLScPriceElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choice-container": HTMLScPriceChoiceContainerElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
@@ -5789,6 +5966,7 @@ declare global {
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
         "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
+        "sc-summary": HTMLScSummaryElement;
         "sc-switch": HTMLScSwitchElement;
         "sc-tab": HTMLScTabElement;
         "sc-tab-group": HTMLScTabGroupElement;
@@ -5807,6 +5985,11 @@ declare global {
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
         "sc-upgrade-required": HTMLScUpgradeRequiredElement;
+        "sc-upsell": HTMLScUpsellElement;
+        "sc-upsell-countdown-timer": HTMLScUpsellCountdownTimerElement;
+        "sc-upsell-no-thanks-button": HTMLScUpsellNoThanksButtonElement;
+        "sc-upsell-submit-button": HTMLScUpsellSubmitButtonElement;
+        "sc-upsell-totals": HTMLScUpsellTotalsElement;
         "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
@@ -5953,6 +6136,10 @@ declare namespace LocalJSX {
         "label"?: string;
     }
     interface ScButton {
+        /**
+          * Tells the browser to autofocus.
+         */
+        "autofocus"?: boolean;
         /**
           * Draws the button in a busy state.
          */
@@ -7184,7 +7371,7 @@ declare namespace LocalJSX {
         "onScAfterShow"?: (event: ScDrawerCustomEvent<void>) => void;
         "onScHide"?: (event: ScDrawerCustomEvent<void>) => void;
         "onScInitialFocus"?: (event: ScDrawerCustomEvent<void>) => void;
-        "onScRequestClose"?: (event: ScDrawerCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScRequestClose"?: (event: ScDrawerCustomEvent<'close-button' | 'keyboard' | 'overlay' | 'method'>) => void;
         "onScShow"?: (event: ScDrawerCustomEvent<void>) => void;
         /**
           * Indicates whether or not the drawer is open. You can use this in lieu of the show/hide methods.
@@ -7267,12 +7454,9 @@ declare namespace LocalJSX {
         "onScUpdateError"?: (event: ScErrorCustomEvent<ResponseError>) => void;
     }
     interface ScExpressPayment {
-        "busy"?: boolean;
         "debug"?: boolean;
         "dividerText"?: string;
-        "formId"?: number | string;
         "hasPaymentOptions"?: boolean;
-        "order"?: Checkout;
         "processor"?: ProcessorName;
     }
     interface ScFeatureDemoBanner {
@@ -7713,11 +7897,33 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
+    interface ScLicense {
+        /**
+          * The license id
+         */
+        "licenseId"?: string;
+    }
     interface ScLicensesList {
-        "activations"?: Activation[];
-        "copied"?: boolean;
+        /**
+          * View all link
+         */
+        "allLink"?: string;
+        /**
+          * The heading of the licenses
+         */
         "heading"?: string;
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer"?: boolean;
         "licenses"?: License[];
+        /**
+          * Query to fetch licenses
+         */
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**
@@ -7798,6 +8004,10 @@ declare namespace LocalJSX {
           * Optional link to follow.
          */
         "href"?: string;
+        /**
+          * The target of the link.
+         */
+        "target"?: string;
         /**
           * A unique value to store in the menu item. This can be used as a way to identify menu items when selected.
          */
@@ -8246,6 +8456,10 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
+          * Help text
+         */
+        "helpText"?: string;
+        /**
           * Other zones label
          */
         "otherLabel"?: string;
@@ -8253,6 +8467,10 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes"?: string | string[];
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -8617,6 +8835,55 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    /**
+     * Internal dependencies.
+     */
+    interface ScPrice {
+        /**
+          * Is the product ad_hoc?
+         */
+        "adHoc"?: boolean;
+        /**
+          * The amount
+         */
+        "amount"?: number;
+        /**
+          * The currency.
+         */
+        "currency"?: string;
+        /**
+          * The recurring interval
+         */
+        "recurringInterval"?: 'week' | 'month' | 'year' | 'never';
+        /**
+          * The recurring interval count
+         */
+        "recurringIntervalCount"?: number;
+        /**
+          * The recurring period count
+         */
+        "recurringPeriodCount"?: number;
+        /**
+          * The sale text
+         */
+        "saleText"?: string;
+        /**
+          * The scratch amount
+         */
+        "scratchAmount"?: number;
+        /**
+          * The setup fee amount
+         */
+        "setupFeeAmount"?: number;
+        /**
+          * The setup fee name
+         */
+        "setupFeeName"?: string;
+        /**
+          * The trial duration days
+         */
+        "trialDurationDays"?: number;
+    }
     interface ScPriceChoice {
         /**
           * Is this blank?
@@ -8935,7 +9202,7 @@ declare namespace LocalJSX {
         /**
           * Show for a specific collection
          */
-        "collectionId"?: string | null;
+        "collectionId"?: string;
         /**
           * Show only featured products.
          */
@@ -8947,9 +9214,25 @@ declare namespace LocalJSX {
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
         /**
+          * Products viewed
+         */
+        "onScProductsViewed"?: (event: ScProductItemListCustomEvent<ProductsViewedParams>) => void;
+        /**
           * Product was searched
          */
         "onScSearched"?: (event: ScProductItemListCustomEvent<ProductsSearchedParams>) => void;
+        "page"?: number;
+        /**
+          * The page title
+         */
+        "pageTitle"?: string;
+        /**
+          * Pagination
+         */
+        "pagination"?: {
+    total: number;
+    total_pages: number;
+  };
         "paginationAlignment"?: string;
         /**
           * Should we auto-scroll to the top when paginating via ajax
@@ -9611,18 +9894,10 @@ declare namespace LocalJSX {
          */
         "country"?: string;
         /**
-          * Currency
-         */
-        "currencyCode"?: string;
-        /**
           * Is this in debug mode.
          */
         "debug"?: boolean;
         "error"?: ResponseError | null;
-        /**
-          * This is required to validate the form on the server
-         */
-        "formId"?: number | string;
         /**
           * Label
          */
@@ -9634,10 +9909,8 @@ declare namespace LocalJSX {
         "onScSetState"?: (event: ScStripePaymentRequestCustomEvent<string>) => void;
         "onScUpdateOrderState"?: (event: ScStripePaymentRequestCustomEvent<any>) => void;
         /**
-          * Checkout Session
+          * Prices
          */
-        "order"?: Checkout;
-        "paymentMethod"?: string;
         "prices"?: Prices;
         /**
           * Stripe publishable key
@@ -9677,6 +9950,10 @@ declare namespace LocalJSX {
           * The subscription ID
          */
         "subscriptionId"?: string;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl"?: string;
     }
     interface ScSubscriptionAdHocConfirm {
         "heading"?: string;
@@ -9769,6 +10046,7 @@ declare namespace LocalJSX {
          */
         "query"?: object;
         "subscription"?: Subscription;
+        "successUrl"?: string;
     }
     interface ScSubscriptionVariationConfirm {
         "heading"?: string;
@@ -9788,6 +10066,24 @@ declare namespace LocalJSX {
     page: number;
     per_page: number;
   };
+    }
+    interface ScSummary {
+        "busy"?: boolean;
+        "closedText"?: string;
+        "collapsed"?: boolean;
+        "collapsedOnDesktop"?: boolean;
+        "collapsedOnMobile"?: boolean;
+        "collapsible"?: boolean;
+        "loading"?: boolean;
+        /**
+          * Show the toggle
+         */
+        "onScHide"?: (event: ScSummaryCustomEvent<void>) => void;
+        /**
+          * Show the toggle
+         */
+        "onScShow"?: (event: ScSummaryCustomEvent<void>) => void;
+        "openText"?: string;
     }
     interface ScSwitch {
         /**
@@ -9963,6 +10259,10 @@ declare namespace LocalJSX {
           * The status
          */
         "status"?: 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes"?: string[];
         /**
           * Type of tax id
          */
@@ -10185,6 +10485,20 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScUpsell {
+    }
+    interface ScUpsellCountdownTimer {
+        /**
+          * Whether to show the icon.
+         */
+        "showIcon"?: boolean;
+    }
+    interface ScUpsellNoThanksButton {
+    }
+    interface ScUpsellSubmitButton {
+    }
+    interface ScUpsellTotals {
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -10286,6 +10600,7 @@ declare namespace LocalJSX {
         "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
+        "sc-license": ScLicense;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
@@ -10339,6 +10654,7 @@ declare namespace LocalJSX {
         "sc-phone-input": ScPhoneInput;
         "sc-pill-option": ScPillOption;
         "sc-premium-tag": ScPremiumTag;
+        "sc-price": ScPrice;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choice-container": ScPriceChoiceContainer;
         "sc-price-choices": ScPriceChoices;
@@ -10395,6 +10711,7 @@ declare namespace LocalJSX {
         "sc-subscription-switch": ScSubscriptionSwitch;
         "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
         "sc-subscriptions-list": ScSubscriptionsList;
+        "sc-summary": ScSummary;
         "sc-switch": ScSwitch;
         "sc-tab": ScTab;
         "sc-tab-group": ScTabGroup;
@@ -10413,6 +10730,11 @@ declare namespace LocalJSX {
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
         "sc-upgrade-required": ScUpgradeRequired;
+        "sc-upsell": ScUpsell;
+        "sc-upsell-countdown-timer": ScUpsellCountdownTimer;
+        "sc-upsell-no-thanks-button": ScUpsellNoThanksButton;
+        "sc-upsell-submit-button": ScUpsellSubmitButton;
+        "sc-upsell-totals": ScUpsellTotals;
         "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
@@ -10516,6 +10838,7 @@ declare module "@stencil/core" {
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
+            "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
@@ -10573,6 +10896,10 @@ declare module "@stencil/core" {
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
             "sc-pill-option": LocalJSX.ScPillOption & JSXBase.HTMLAttributes<HTMLScPillOptionElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
+            /**
+             * Internal dependencies.
+             */
+            "sc-price": LocalJSX.ScPrice & JSXBase.HTMLAttributes<HTMLScPriceElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choice-container": LocalJSX.ScPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScPriceChoiceContainerElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
@@ -10629,6 +10956,7 @@ declare module "@stencil/core" {
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
             "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
+            "sc-summary": LocalJSX.ScSummary & JSXBase.HTMLAttributes<HTMLScSummaryElement>;
             "sc-switch": LocalJSX.ScSwitch & JSXBase.HTMLAttributes<HTMLScSwitchElement>;
             "sc-tab": LocalJSX.ScTab & JSXBase.HTMLAttributes<HTMLScTabElement>;
             "sc-tab-group": LocalJSX.ScTabGroup & JSXBase.HTMLAttributes<HTMLScTabGroupElement>;
@@ -10647,6 +10975,11 @@ declare module "@stencil/core" {
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
             "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
+            "sc-upsell": LocalJSX.ScUpsell & JSXBase.HTMLAttributes<HTMLScUpsellElement>;
+            "sc-upsell-countdown-timer": LocalJSX.ScUpsellCountdownTimer & JSXBase.HTMLAttributes<HTMLScUpsellCountdownTimerElement>;
+            "sc-upsell-no-thanks-button": LocalJSX.ScUpsellNoThanksButton & JSXBase.HTMLAttributes<HTMLScUpsellNoThanksButtonElement>;
+            "sc-upsell-submit-button": LocalJSX.ScUpsellSubmitButton & JSXBase.HTMLAttributes<HTMLScUpsellSubmitButtonElement>;
+            "sc-upsell-totals": LocalJSX.ScUpsellTotals & JSXBase.HTMLAttributes<HTMLScUpsellTotalsElement>;
             "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;

@@ -48,10 +48,10 @@ class Subscription extends Model {
 			do_action(
 				'surecart/purchase_updated',
 				$updated->purchase,
-				[
-					'data' => [
-						'object'              => $updated->purchase->toArray(),
-						'previous_attributes' => array_filter(
+				(object) [
+					'data' => (object) [
+						'object'              => (object) $updated->purchase->toArray(),
+						'previous_attributes' => (object) array_filter(
 							[
 								// conditionally have the previous product and quantity as the previous attributes.
 								'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
@@ -439,11 +439,11 @@ class Subscription extends Model {
 		}
 
 		$cancel_window_days = $protocol->cancel_window_days;
-		$now                = (new \DateTime())->format('Y-m-d');
+		$now                = ( new \DateTime() )->format( 'Y-m-d' );
 		$end                = new \DateTime();
 		$end->setTimestamp( $this->attributes['current_period_end_at'] );
 		$end = $end->modify( "-{$cancel_window_days} days" );
-		$end = $end->format('Y-m-d');
+		$end = $end->format( 'Y-m-d' );
 
 		return $now < $end;
 	}

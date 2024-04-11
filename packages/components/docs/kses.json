@@ -75,6 +75,7 @@
     "slot": true
   },
   "sc-button": {
+    "autofocus": true,
     "busy": true,
     "caret": true,
     "circle": true,
@@ -669,12 +670,9 @@
     "slot": true
   },
   "sc-express-payment": {
-    "busy": true,
     "debug": true,
     "divider-text": true,
-    "form-id": true,
     "has-payment-options": true,
-    "order": true,
     "processor": true,
     "style": true,
     "id": true,
@@ -902,11 +900,19 @@
     "class": true,
     "slot": true
   },
+  "sc-license": {
+    "license-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-licenses-list": {
-    "activations": true,
-    "copied": true,
+    "all-link": true,
     "heading": true,
+    "is-customer": true,
     "licenses": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
@@ -998,6 +1004,7 @@
     "checked": true,
     "disabled": true,
     "href": true,
+    "target": true,
     "value": true,
     "style": true,
     "id": true,
@@ -1276,8 +1283,10 @@
     "ca-gst-label": true,
     "eu-vat-label": true,
     "gb-vat-label": true,
+    "help-text": true,
     "other-label": true,
     "show": true,
+    "tax-id-types": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1472,6 +1481,23 @@
     "class": true,
     "slot": true
   },
+  "sc-price": {
+    "ad-hoc": true,
+    "amount": true,
+    "currency": true,
+    "recurring-interval": true,
+    "recurring-interval-count": true,
+    "recurring-period-count": true,
+    "sale-text": true,
+    "scratch-amount": true,
+    "setup-fee-amount": true,
+    "setup-fee-name": true,
+    "trial-duration-days": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-price-choice": {
     "blank": true,
     "checked": true,
@@ -1616,6 +1642,9 @@
     "ids": true,
     "layout-config": true,
     "limit": true,
+    "page": true,
+    "page-title": true,
+    "pagination": true,
     "pagination-alignment": true,
     "pagination-auto-scroll": true,
     "pagination-enabled": true,
@@ -1954,13 +1983,9 @@
   "sc-stripe-payment-request": {
     "amount": true,
     "country": true,
-    "currency-code": true,
     "debug": true,
     "error": true,
-    "form-id": true,
     "label": true,
-    "order": true,
-    "payment-method": true,
     "prices": true,
     "publishable-key": true,
     "stripe-account-id": true,
@@ -1977,6 +2002,7 @@
     "show-cancel": true,
     "subscription": true,
     "subscription-id": true,
+    "update-payment-method-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2065,6 +2091,7 @@
     "product-id": true,
     "query": true,
     "subscription": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2086,6 +2113,20 @@
     "heading": true,
     "is-customer": true,
     "query": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-summary": {
+    "busy": true,
+    "closed-text": true,
+    "collapsed": true,
+    "collapsed-on-desktop": true,
+    "collapsed-on-mobile": true,
+    "collapsible": true,
+    "loading": true,
+    "open-text": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2179,6 +2220,7 @@
     "required": true,
     "show": true,
     "status": true,
+    "tax-id-types": true,
     "type": true,
     "style": true,
     "id": true,
@@ -2285,6 +2327,37 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-countdown-timer": {
+    "show-icon": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-no-thanks-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-submit-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-totals": {
     "style": true,
     "id": true,
     "class": true,

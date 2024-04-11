@@ -9,9 +9,10 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { Collection, Product, ProductsSearchedParams } from '../../../../types';
+import { Collection, Product, ProductsSearchedParams, ProductsViewedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 import '@store/product/facebook';
+import '@store/product/google';
 
 export type LayoutConfig = {
   blockName: string;
@@ -44,7 +45,10 @@ export class ScProductItemList {
   @Prop() collectionEnabled: boolean = true;
 
   /** Show for a specific collection */
-  @Prop() collectionId: string | null = null;
+  @Prop() collectionId: string;
+
+  /** The page title */
+  @Prop() pageTitle: string;
 
   /** Show only featured products. */
   @Prop() featured: boolean = false;
@@ -67,6 +71,9 @@ export class ScProductItemList {
   /* Limit per page */
   @Prop() limit: number = 15;
 
+  /* Current page */
+  @Prop({ mutable: true }) page: number = 1;
+
   /* Product list */
   @Prop({ mutable: true }) products?: Product[];
 
@@ -82,12 +89,17 @@ export class ScProductItemList {
   /** Product was searched */
   @Event() scSearched: EventEmitter<ProductsSearchedParams>;
 
-  /* Current page */
-  @State() currentPage: number = 1;
+  /** Products viewed */
+  @Event() scProductsViewed: EventEmitter<ProductsViewedParams>;
 
+  /** Current page */
+  @State() currentPage = 1;
+
+  /** Current query */
   @State() currentQuery: string;
 
-  @State() pagination: {
+  /** Pagination */
+  @Prop({ mutable: true }) pagination: {
     total: number;
     total_pages: number;
   } = {
@@ -101,9 +113,35 @@ export class ScProductItemList {
   /** Selected collections */
   @State() selectedCollections: Collection[] = [];
 
+  @Watch('products')
+  handleProductsChanged(newProducts?: Product[], oldProducts?: Product[]) {
+    const productIds = new Set([...(oldProducts || []).map(product => product.id), ...(newProducts || []).map(product => product.id)]);
+
+    if (newProducts?.length === oldProducts?.length && productIds.size === newProducts.length) {
+      return;
+    }
+
+    const title = [
+      this.pageTitle,
+      this.paginationEnabled ? sprintf(__('Page %d', 'surecart'), this.currentPage) : undefined,
+      this.sort ? this.renderSortName() : undefined,
+      this.query || this.selectedCollections?.length ? __('Search results', 'surecart') : undefined,
+    ]
+      .filter(item => !!item)
+      .join(' - ');
+
+    this.scProductsViewed.emit({
+      products: this.products,
+      pageTitle: title,
+      collectionId: this.collectionId,
+    });
+  }
+
   componentWillLoad() {
     if (!this?.products?.length) {
       this.getProducts();
+    } else {
+      this.handleProductsChanged(this.products);
     }
 
     if (this.collectionEnabled) {
@@ -115,7 +153,7 @@ export class ScProductItemList {
   doPagination(page: number) {
     // handle ajax pagination
     if (this.ajaxPagination) {
-      this.currentPage = page;
+      this.page = page;
       this.updateProducts();
       this.paginationAutoScroll && this.el.scrollIntoView({ behavior: 'smooth' });
       return;
@@ -128,9 +166,11 @@ export class ScProductItemList {
 
   // Fetch all products
   async getProducts() {
-    const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
+    const { 'product-page': page } = getQueryArgs(window.location.href) as {
+      'product-page': string;
+    };
 
-    this.currentPage = this.paginationEnabled && page ? parseInt(page) : 1;
+    this.page = this.paginationEnabled && page ? parseInt(page) : 1;
 
     try {
       this.loading = true;
@@ -146,7 +186,7 @@ export class ScProductItemList {
   async getCollections() {
     try {
       this.collections = (await apiFetch({
-        path: addQueryArgs(`surecart/v1/product_collections/`, {
+        path: addQueryArgs('surecart/v1/product_collections/', {
           per_page: 100,
         }),
       })) as Collection[];
@@ -157,8 +197,9 @@ export class ScProductItemList {
 
   @Watch('sort')
   @Watch('selectedCollections')
+  @Watch('query')
   async handleSortChange() {
-    this.currentPage = 1;
+    this.page = 1;
     this.updateProducts();
   }
 
@@ -214,7 +255,7 @@ export class ScProductItemList {
           archived: false,
           status: ['published'],
           per_page: this.limit,
-          page: this.currentPage,
+          page: this.page,
           sort: this.sort,
           product_collection_ids: collectionIds,
           ...(this.featured ? { featured: true } : {}),
@@ -278,7 +319,12 @@ export class ScProductItemList {
 
   render() {
     return (
-      <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
+      <div
+        class={{
+          'product-item-list__wrapper': true,
+          'product-item-list__has-search': !!this.query,
+        }}
+      >
         {this.error && (
           <sc-alert type="danger" open>
             {this.error}
@@ -360,15 +406,16 @@ export class ScProductItemList {
                   ) : (
                     <sc-input
                       type="text"
-                      placeholder="Search"
+                      placeholder={__('Search', 'surecart')}
                       size="small"
-                      onKeyDown={e => {
+                      onKeyUp={e => {
                         if (e.key === 'Enter') {
+                          this.query = (e.target as any).value;
                           this.updateProducts(true);
                         }
                       }}
                       value={this.query}
-                      onScInput={e => (this.query = e.target.value)}
+                      clearable
                     >
                       {this.query ? (
                         <sc-icon
@@ -429,8 +476,17 @@ export class ScProductItemList {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
                         return (
-                          <div style={{ textAlign: 'var(--sc-product-title-align)' }}>
-                            <sc-skeleton style={{ width: '80%', display: 'inline-block' }}></sc-skeleton>
+                          <div
+                            style={{
+                              textAlign: 'var(--sc-product-title-align)',
+                            }}
+                          >
+                            <sc-skeleton
+                              style={{
+                                width: '80%',
+                                display: 'inline-block',
+                              }}
+                            ></sc-skeleton>
                           </div>
                         );
                       case 'surecart/product-item-image':
@@ -447,8 +503,17 @@ export class ScProductItemList {
                         );
                       case 'surecart/product-item-price':
                         return (
-                          <div style={{ textAlign: 'var(--sc-product-price-align)' }}>
-                            <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+                          <div
+                            style={{
+                              textAlign: 'var(--sc-product-price-align)',
+                            }}
+                          >
+                            <sc-skeleton
+                              style={{
+                                width: '40%',
+                                display: 'inline-block',
+                              }}
+                            ></sc-skeleton>
                           </div>
                         );
                       default:
@@ -486,13 +551,13 @@ export class ScProductItemList {
             }}
           >
             <sc-pagination
-              page={this.currentPage}
+              page={this.page}
               perPage={this.limit}
               total={this.pagination.total}
               totalPages={this.pagination.total_pages}
               totalShowing={this.limit}
-              onScNextPage={() => this.doPagination(this.currentPage + 1)}
-              onScPrevPage={() => this.doPagination(this.currentPage - 1)}
+              onScNextPage={() => this.doPagination(this.page + 1)}
+              onScPrevPage={() => this.doPagination(this.page - 1)}
             ></sc-pagination>
           </div>
         )}

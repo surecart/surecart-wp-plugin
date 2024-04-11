@@ -3,10 +3,8 @@
 namespace SureCart\Controllers\Admin\Bumps;
 
 use SureCart\Models\Bump;
-use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\Integration;
 
 /**
  * Create a new table class that will extend the WP_List_Table

@@ -37,6 +37,7 @@ graph TD;
   sc-coupon-form --> sc-line-item
   sc-coupon-form --> sc-tag
   sc-coupon-form --> sc-format-number
+  sc-coupon-form --> sc-icon
   sc-coupon-form --> sc-input
   sc-coupon-form --> sc-button
   sc-coupon-form --> sc-alert

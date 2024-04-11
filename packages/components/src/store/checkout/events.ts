@@ -1,7 +1,6 @@
 import '../checkouts/events';
 import state, { on } from './store';
-import { Checkout, CheckoutInitiatedParams, LineItem, Product } from 'src/types';
-import { maybeConvertAmount } from '../../functions/currency';
+import { Checkout, LineItem } from 'src/types';
 
 /**
  * Checkout initiated event.
@@ -12,21 +11,8 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (!checkout?.id) return; // we don't have a saved checkout.
   if (!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
 
-  const event = new CustomEvent<CheckoutInitiatedParams>('scCheckoutInitiated', {
-    detail: {
-      transaction_id: checkout.id,
-      value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
-      currency: (checkout.currency || '').toUpperCase(),
-      ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
-      ...(checkout?.tax_amount ? { tax: maybeConvertAmount(checkout?.tax_amount, checkout?.currency || 'USD') } : {}),
-      items: (checkout?.line_items?.data || []).map(item => ({
-        item_name: (item?.price?.product as Product)?.name || '',
-        item_id: (item?.price?.product as Product)?.id,
-        discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
-        price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
-        quantity: item?.quantity || 1,
-      })),
-    },
+  const event = new CustomEvent<Checkout>('scCheckoutInitiated', {
+    detail: checkout,
     bubbles: true,
   });
 
@@ -62,4 +48,39 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
     const event = new CustomEvent('scSubscriptionStarted', { detail: subscriptionLineItems, bubbles: true });
     document.dispatchEvent(event);
   }
+});
+
+/**
+ * Shipping info added event.
+ */
+on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
+  if (key !== 'checkout') return; // we only care about checkout
+  if (!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
+  if (!checkout?.selected_shipping_choice) return; // we only care about shipping info.
+  if (oldCheckout?.selected_shipping_choice === checkout?.selected_shipping_choice) return; // we only care about new shipping info.
+
+  const event = new CustomEvent<Checkout>('scShippingInfoAdded', {
+    detail: checkout,
+    bubbles: true,
+  });
+  document.dispatchEvent(event);
+});
+
+/**
+ * Checkout updated event.
+ */
+on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
+  if (key !== 'checkout') return; // we only care about checkout
+  if (!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
+  if (!oldCheckout?.id) return; // we don't have a saved checkout.
+  if (JSON.stringify(checkout) === JSON.stringify(oldCheckout)) return; // we only care about changes.
+
+  const event = new CustomEvent('scCheckoutUpdated', {
+    detail: {
+      currentCheckout: checkout,
+      previousCheckout: oldCheckout,
+    },
+    bubbles: true,
+  });
+  document.dispatchEvent(event);
 });

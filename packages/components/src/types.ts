@@ -32,6 +32,10 @@ declare global {
     scData: {
       cdn_root: string;
       root_url: string;
+      account_id: string;
+      account_slug: string;
+      api_url: string;
+      plugin_url: string;
       page_id: string;
       persist_cart: 'browser' | 'url' | false;
       nonce: string;
@@ -147,6 +151,45 @@ export interface Bump {
   updated_at: number;
 }
 
+export interface UpsellFunnel {
+  id: string;
+  object: 'upsell_funnel';
+  archived: boolean;
+  enabled: boolean;
+  filter_match_type: 'all' | 'any' | 'none';
+  filter_price_ids: string[];
+  filter_product_ids: string[];
+  metadata: any;
+  name: string;
+  priority: number;
+  upsells: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Upsell>;
+  };
+  archived_at: number;
+  discarded_at: number;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface Upsell {
+  id: string;
+  object: 'upsell';
+  amount_off: number;
+  metadata: any;
+  fee_description: string;
+  duplicate_purchase_behavior: 'allow' | 'block' | 'block_within_checkout';
+  percent_off: number;
+  price: string | Price;
+  step: 'initial' | 'accepted' | 'declined';
+  upsell_funnel: string | UpsellFunnel;
+  permalink: string;
+  discarded_at: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export type Prices = {
   [id: string]: Price;
 };
@@ -187,6 +230,7 @@ export interface License {
   id: string;
   object: 'license';
   activation_limit: number;
+  activation_count: number;
   key: string;
   activations?: {
     object: 'list';
@@ -390,7 +434,11 @@ export interface LineItem extends Object {
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
+  trial_amount: number;
+  tax_amount: number;
+  fees_amount: number;
   scratch_amount: number;
+  trial: boolean;
   total_savings_amount: number;
   created_at: number;
   updated_at: number;
@@ -412,7 +460,7 @@ export interface Fee {
   object: 'fee';
   amount: number;
   description: string;
-  fee_type: 'manual' | 'bump' | 'setup';
+  fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;
   created_at: number;
   updated_at: number;
@@ -620,6 +668,12 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Bump>;
   };
+  current_upsell: Upsell;
+  recommended_upsells?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Upsell>;
+  };
   metadata?: any;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;
@@ -655,7 +709,9 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  updated_at: number;
   variant: string;
+  upsells_expire_at?: number;
 }
 
 export interface ShippingMethod {
@@ -932,6 +988,7 @@ export interface DiscountResponse {
   id: string;
   object: 'discount';
   promotion: Promotion;
+  redeemable_status: string;
 }
 
 export interface ResponseError {
@@ -978,6 +1035,7 @@ export interface PaymentIntent extends Object {
   customer: Customer | string;
   created_at: number;
   updated_at: number;
+  payment_method: PaymentMethod | string;
 }
 
 export interface PaymentIntents {
@@ -1122,7 +1180,6 @@ export interface GoogleAnalyticsItem {
   discount?: number;
 }
 
-
 export interface ProductState {
   formId: number;
   mode: 'live' | 'test';
@@ -1153,6 +1210,8 @@ export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
   currency: string;
+  total_amount: number;
+  line_items?: lineItems;
   payment_method: {
     billing_details: {
       name: string;
@@ -1180,6 +1239,12 @@ export interface ProductsSearchedParams {
   searchCollections?: string[];
   searchResultCount: number;
   searchResultIds: string[];
+}
+
+export interface ProductsViewedParams {
+  products: Product[];
+  pageTitle: string;
+  collectionId?: string;
 }
 
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';

@@ -113,6 +113,7 @@ class AdminMenuPageService {
 	 * @return void
 	 */
 	public function adminMenuCSS(): void {
+		$shop_id = \SureCart::pages()->getId( 'shop' );
 		echo '<style>
 			#toplevel_page_sc-dashboard li {
 				clear: both;
@@ -168,6 +169,8 @@ class AdminMenuPageService {
 			return;
 		}
 
+		$affiliate_pages = [ 'sc-affiliates', 'sc-affiliate-requests', 'sc-affiliate-clicks', 'sc-affiliate-referrals', 'sc-affiliate-payouts' ];
+
 		$this->pages = [
 			'get-started'         => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
 			'complete-signup'     => \add_submenu_page( '', __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
@@ -176,13 +179,19 @@ class AdminMenuPageService {
 			'checkouts'           => in_array( $_GET['page'] ?? '', [ 'sc-checkouts' ] ) ? \add_submenu_page( $this->slug, __( 'Checkouts', 'surecart' ), '↳ ' . __( 'Add New', 'surecart' ), 'edit_sc_orders', 'sc-checkouts', '__return_false' ) : null,
 			'abandoned'           => in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts', 'sc-checkouts' ], true ) ? \add_submenu_page( $this->slug, __( 'Abandoned', 'surecart' ), '↳ ' . __( 'Abandoned', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-checkouts', '__return_false' ) : null,
 			'products'            => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),
-			'product-collections' => in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-product-collections' ], true ) ? \add_submenu_page( $this->slug, __( 'Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ) : null,
-			'bumps'               => ! empty( $entitlements->bumps ) && in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-product-collections' ] ) ? \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ) : null,
-			'product-groups'      => ! empty( $entitlements->product_groups ) && in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-product-collections' ] ) ? \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ) : null,
+			'product-collections' => in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-upsell-funnels', 'sc-product-collections' ], true ) ? \add_submenu_page( $this->slug, __( 'Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ) : null,
+			'bumps'               => ! empty( $entitlements->bumps ) && in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-upsell-funnels', 'sc-product-collections' ] ) ? \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ) : null,
+			'upsells'             => in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-upsell-funnels', 'sc-product-collections' ] ) ? \add_submenu_page( $this->slug, __( 'Upsells', 'surecart' ), '↳ ' . __( 'Upsells', 'surecart' ) . '<span class="awaiting-mod" style="background-color: rgba(255,255,255,0.1);">' . esc_html__( 'Beta', 'surecart' ) . '</span>', 'edit_sc_products', 'sc-upsell-funnels', '__return_false' ) : null,
+			'product-groups'      => ! empty( $entitlements->product_groups ) && in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-upsell-funnels', 'sc-product-collections' ] ) ? \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ) : null,
 			'coupons'             => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
 			'licenses'            => ! empty( $entitlements->licensing ) ? \add_submenu_page( $this->slug, __( 'Licenses', 'surecart' ), __( 'Licenses', 'surecart' ), 'edit_sc_products', 'sc-licenses', '__return_false' ) : null,
 			'subscriptions'       => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),
 			'cancellations'       => in_array( $_GET['page'] ?? '', [ 'sc-subscriptions', 'sc-cancellation-insights' ] ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
+			'affiliates'          => \add_submenu_page( $this->slug, __( 'Affiliates', 'surecart' ), __( 'Affiliates', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliates', '__return_false' ),
+			'affiliate-requests'  => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Requests', 'surecart' ), '↳ ' . __( 'Requests', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-requests', '__return_false' ) : null,
+			'affiliate-clicks'    => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Clicks', 'surecart' ), '↳ ' . __( 'Clicks', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-clicks', '__return_false' ) : null,
+			'affiliate-referrals' => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Referrals', 'surecart' ), '↳ ' . __( 'Referrals', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-referrals', '__return_false' ) : null,
+			'affiliate-payouts'   => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Payouts', 'surecart' ), '↳ ' . __( 'Payouts', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-payouts', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'restore'             => 'sc-restore' === ( $_GET['page'] ?? '' ) ? \add_submenu_page( null, __( 'Restore', 'surecart' ), __( 'Restore', 'surecart' ), 'manage_options', 'sc-restore', '__return_false' ) : null,
 			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),

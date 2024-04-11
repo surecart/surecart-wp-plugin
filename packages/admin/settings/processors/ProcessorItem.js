@@ -19,7 +19,7 @@ export default ({ processor }) => {
 
 	const link = scData?.claim_url
 		? scData?.claim_url
-		: `${scData?.app_url}/processors`;
+		: `${scData?.app_url}/processors?switch_account_id=${scData?.account_id}`;
 
 	return (
 		<ScStackedListRow

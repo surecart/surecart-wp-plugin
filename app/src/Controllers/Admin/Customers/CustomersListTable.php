@@ -157,26 +157,6 @@ class CustomersListTable extends ListTable {
 	}
 
 	/**
-	 * Toggle archive action link and text.
-	 *
-	 * @param \SureCart\Models\Product $product Product model.
-	 * @return string
-	 */
-	public function action_toggle_archive( $product ) {
-		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
-		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
-		$link            = \SureCart::getUrl()->toggleArchive( 'product', $product->id );
-
-		return sprintf(
-			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
-			esc_attr( $confirm_message ),
-			esc_url( $link ),
-			esc_attr__( 'Toggle Product Archive', 'surecart' ),
-			esc_html( $text )
-		);
-	}
-
-	/**
 	 * Define what data to show on each column of the table
 	 *
 	 * @param \SureCart\Models\Product $product Product model.

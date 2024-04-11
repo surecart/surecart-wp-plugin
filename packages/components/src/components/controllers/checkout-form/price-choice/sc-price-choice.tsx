@@ -6,7 +6,6 @@ import { isPriceInOrder } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
 import { getPricesAndProducts } from '../../../../services/fetch';
 import { LineItemData, Checkout, Price, Prices, Product, Products, ResponseError } from '../../../../types';
-
 @Component({
   tag: 'sc-price-choice',
   styleUrl: 'sc-price-choice.scss',

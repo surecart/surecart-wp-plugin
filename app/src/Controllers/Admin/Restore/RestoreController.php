@@ -20,11 +20,13 @@ class RestoreController  extends AdminController {
 		}
 
 		$this->withHeader(
-			[
-				'restore' => [
-					'title' => __( 'Restore', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'restore' => [
+						'title' => __( 'Restore', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 
 		return \SureCart::view( 'admin/restore/index' )

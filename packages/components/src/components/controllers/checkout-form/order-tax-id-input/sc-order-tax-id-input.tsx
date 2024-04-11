@@ -1,4 +1,4 @@
-import { Component, h, Method, Prop } from '@stencil/core';
+import { Component, h, Method, Prop, State, Watch } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
@@ -35,6 +35,20 @@ export class ScOrderTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string;
 
+  /** Help text */
+  @Prop() helpText: string;
+
+  /** Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]' */
+  @Prop() taxIdTypes: string | string[];
+
+  /** Tax ID Types data as array */
+  @State() taxIdTypesData: string[] = [];
+
+  @Watch('taxIdTypes')
+  handleTaxIdTypesChange() {
+    this.taxIdTypesData = typeof this.taxIdTypes === 'string' ? JSON.parse(this.taxIdTypes) : this.taxIdTypes;
+  }
+
   @Method()
   async reportValidity() {
     return this.input.reportValidity();
@@ -65,6 +79,10 @@ export class ScOrderTaxIdInput {
     }
   }
 
+  componentWillLoad() {
+    this.handleTaxIdTypesChange();
+  }
+
   required() {
     return checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
   }
@@ -75,7 +93,7 @@ export class ScOrderTaxIdInput {
         ref={el => (this.input = el as HTMLScTaxIdInputElement)}
         show={this.show}
         number={checkoutState.checkout?.tax_identifier?.number}
-        type={checkoutState.checkout?.tax_identifier?.number_type}
+        type={checkoutState.checkout?.tax_identifier?.number_type || this.taxIdTypesData?.[0] || 'other'}
         country={(checkoutState.checkout?.shipping_address as Address)?.country}
         status={this.getStatus()}
         loading={formBusy()}
@@ -88,6 +106,8 @@ export class ScOrderTaxIdInput {
         auAbnLabel={this.auAbnLabel}
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
+        help={this.helpText}
+        taxIdTypes={this.taxIdTypesData}
         required={this.required()}
       ></sc-tax-id-input>
     );
