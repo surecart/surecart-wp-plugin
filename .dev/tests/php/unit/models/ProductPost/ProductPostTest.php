@@ -526,5 +526,8 @@ class ProductPostTest extends SureCartUnitTestCase
 		foreach($product->prices->data as $price) {
 			$this->assertInstanceOf(Price::class, $price);
 		}
+		foreach($product as $product) {
+			$this->assertInstanceOf(\WP_Post::class, $price);
+		}
 	}
 }
