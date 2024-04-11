@@ -1107,6 +1107,45 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Convert to object.
+	 *
+	 * @return Object
+	 */
+	public function toObject() {
+		$attributes = (object) $this->attributes;
+
+		// Check if any accessor is available and call it.
+		foreach ( get_class_methods( $this ) as $method ) {
+			if ( method_exists( get_class(), $method ) ) {
+				continue;
+			}
+
+			if ( 'get' === substr( $method, 0, 3 ) && 'Attribute' === substr( $method, -9 ) ) {
+				$key = str_replace( [ 'get', 'Attribute' ], '', $method );
+				if ( $key ) {
+					$pieces           = preg_split( '/(?=[A-Z])/', $key );
+					$pieces           = array_map( 'strtolower', array_filter( $pieces ) );
+					$key              = implode( '_', $pieces );
+					$value            = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
+					$attributes->$key = $this->{$method}( $value );
+				}
+			}
+		}
+
+		// Check if any attribute is a model and call toArray.
+		array_walk_recursive(
+			$this->getAttributes(),
+			function ( &$value, $key ) {
+				if ( $value instanceof Model ) {
+					$value = $value->toObject();
+				}
+			}
+		);
+
+		return $attributes;
+	}
+
+	/**
 	 * Calls accessors during toArray.
 	 *
 	 * @return Array
