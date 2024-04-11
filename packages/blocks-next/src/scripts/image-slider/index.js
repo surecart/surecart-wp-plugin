@@ -47,6 +47,7 @@ store('surecart/image-slider', {
 						loop: false,
 						centerInsufficientSlides: true,
 						slideToClickedSlide: true,
+						watchSlidesProgress: true,
 						slidesPerView: Math.min(3, context.thumbnailsPerPage),
 						slidesPerGroup: Math.min(3, context.thumbnailsPerPage),
 						spaceBetween: 10,
