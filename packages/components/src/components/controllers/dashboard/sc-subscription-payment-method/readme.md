@@ -64,7 +64,7 @@ graph TD;
   sc-payment-method --> sc-cc-logo
   sc-payment-method --> sc-text
   sc-cc-logo --> sc-icon
-  sc-manual-payment-method --> sc-text
+  sc-manual-payment-method --> sc-prose
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner

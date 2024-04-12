@@ -441,7 +441,8 @@ export default () => {
 
 				<Periods subscriptionId={id} />
 
-				{subscription?.payment_method && (
+				{(subscription?.payment_method ||
+					subscription?.manual_payment) && (
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}

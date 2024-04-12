@@ -186,7 +186,7 @@ export class ScSubscription {
 
     return (
       <Fragment>
-        <sc-subscription-next-payment subscription={this.subscription}>
+        <sc-subscription-next-payment subscription={this.subscription} updatePaymentMethodUrl={this.updatePaymentMethodUrl}>
           <sc-subscription-details subscription={this.subscription}></sc-subscription-details>
         </sc-subscription-next-payment>
       </Fragment>

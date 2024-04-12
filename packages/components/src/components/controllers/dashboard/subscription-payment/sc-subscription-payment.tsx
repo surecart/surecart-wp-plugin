@@ -60,6 +60,7 @@ export class ScSubscriptionPayment {
     this.manualPaymentMethods = (await apiFetch({
       path: addQueryArgs(`surecart/v1/manual_payment_methods`, {
         customer_ids: this.customerIds,
+        reusable: true,
         live_mode: this.subscription?.live_mode,
       }),
     })) as ManualPaymentMethod[];

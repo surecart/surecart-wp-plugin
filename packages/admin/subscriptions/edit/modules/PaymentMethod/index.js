@@ -40,9 +40,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 				),
 				hasLoadedPaymentmethod: select(
 					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [
-					...entityData,
-				]),
+				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
 			};
 		},
 		[id]
@@ -52,68 +50,72 @@ export default ({ subscription, updateSubscription, loading }) => {
 		<Box
 			title={__('Payment Method', 'surecart')}
 			loading={loading || !hasLoadedPaymentmethod}
-		>	
-		<>
-			{subscription?.payment_method && (
-				<ScCard>
-					<ScFlex
-						alignItems="center"
-						justifyContent="flex-start"
-						style={{ gap: '0.5em' }}
-					>
-						<ScPaymentMethod paymentMethod={payment_method} />
-						<div>
-							{!!payment_method?.card?.exp_month && (
-								<span>
-									{__('Exp.', 'surecart')}
-									{payment_method?.card?.exp_month}/
-									{payment_method?.card?.exp_year}
-								</span>
-							)}
-							{!!payment_method?.paypal_account?.email &&
-								payment_method?.paypal_account?.email}
-						</div>
-						<ScButton type="text" circle onClick={() => setEdit(true)}>
-							<ScIcon name="edit-2" />
-						</ScButton>
-					</ScFlex>
-				</ScCard>
-			)}
-			{subscription?.manual_payment && (
-				<ManualPaymentMethod
-					subscription={subscription}
-					updateSubscription={updateSubscription}
-					loading={loading}
-					setEdit={setEdit}
-				/>
-			)}
-			<EditPaymentMethod
-				open={edit}
-				setOpen={setEdit}
-				isManualPaymentSelected={subscription?.manual_payment}
-				manualPaymentMethodId={subscription?.manual_payment_method}
-				customerId={
-					subscription?.customer?.id || subscription?.customer
-				}
-				paymentMethodId={
-					subscription?.payment_method?.id ||
-					subscription?.payment_method ||
-					subscription?.manual_payment_method
-				}
-				updatePaymentMethod={(payment_method, manual = false) => {
-					if (manual) {
-						updateSubscription({
-							manual_payment_method: payment_method,
-						});
-					} else {
-						updateSubscription({
-							payment_method,
-						});
+		>
+			<>
+				{subscription?.payment_method && (
+					<ScCard>
+						<ScFlex
+							alignItems="center"
+							justifyContent="flex-start"
+							style={{ gap: '0.5em' }}
+						>
+							<ScPaymentMethod paymentMethod={payment_method} />
+							<div>
+								{!!payment_method?.card?.exp_month && (
+									<span>
+										{__('Exp.', 'surecart')}
+										{payment_method?.card?.exp_month}/
+										{payment_method?.card?.exp_year}
+									</span>
+								)}
+								{!!payment_method?.paypal_account?.email &&
+									payment_method?.paypal_account?.email}
+							</div>
+							<ScButton
+								type="text"
+								circle
+								onClick={() => setEdit(true)}
+							>
+								<ScIcon name="edit-2" />
+							</ScButton>
+						</ScFlex>
+					</ScCard>
+				)}
+				{subscription?.manual_payment && (
+					<ManualPaymentMethod
+						subscription={subscription}
+						updateSubscription={updateSubscription}
+						loading={loading}
+						setEdit={setEdit}
+					/>
+				)}
+				<EditPaymentMethod
+					open={edit}
+					setOpen={setEdit}
+					isManualPaymentSelected={subscription?.manual_payment}
+					manualPaymentMethodId={subscription?.manual_payment_method}
+					customerId={
+						subscription?.customer?.id || subscription?.customer
 					}
-					setEdit(false);
-				}}
-			/>
-		</>
+					paymentMethodId={
+						subscription?.payment_method?.id ||
+						subscription?.payment_method ||
+						subscription?.manual_payment_method
+					}
+					updatePaymentMethod={(payment_method, manual = false) => {
+						if (manual) {
+							updateSubscription({
+								manual_payment_method: payment_method,
+							});
+						} else {
+							updateSubscription({
+								payment_method,
+							});
+						}
+						setEdit(false);
+					}}
+				/>
+			</>
 		</Box>
 	);
 };

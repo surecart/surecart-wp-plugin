@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-02-23T13:27:18",
+  "timestamp": "2024-04-12T12:04:38",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -16297,6 +16297,23 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "showDescription",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-description",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -16311,20 +16328,28 @@
         }
       ],
       "dependents": [
+        "sc-subscription-next-payment",
         "sc-subscription-payment",
-        "sc-subscription-payment-method"
+        "sc-subscription-payment-method",
+        "sc-upcoming-invoice"
       ],
       "dependencies": [
-        "sc-text"
+        "sc-prose"
       ],
       "dependencyGraph": {
         "sc-manual-payment-method": [
-          "sc-text"
+          "sc-prose"
+        ],
+        "sc-subscription-next-payment": [
+          "sc-manual-payment-method"
         ],
         "sc-subscription-payment": [
           "sc-manual-payment-method"
         ],
         "sc-subscription-payment-method": [
+          "sc-manual-payment-method"
+        ],
+        "sc-upcoming-invoice": [
           "sc-manual-payment-method"
         ]
       }
@@ -26367,9 +26392,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-manual-payment-method"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-manual-payment-method": [
+          "sc-prose"
+        ]
+      }
     },
     {
       "filePath": "./src/components/context/provider/sc-provider.tsx",
@@ -30273,6 +30304,7 @@
           "sc-product-line-item",
           "sc-line-item",
           "sc-divider",
+          "sc-manual-payment-method",
           "sc-payment-method",
           "sc-icon"
         ],
@@ -30308,6 +30340,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-manual-payment-method": [
+          "sc-prose"
         ],
         "sc-payment-method": [
           "sc-tooltip",
@@ -30797,6 +30832,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "updatePaymentMethodUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "update-payment-method-url",
+          "reflectToAttr": false,
+          "docs": "Update the payment method url",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -30818,6 +30869,7 @@
         "sc-product-line-item",
         "sc-line-item",
         "sc-divider",
+        "sc-manual-payment-method",
         "sc-payment-method",
         "sc-icon"
       ],
@@ -30832,6 +30884,7 @@
           "sc-product-line-item",
           "sc-line-item",
           "sc-divider",
+          "sc-manual-payment-method",
           "sc-payment-method",
           "sc-icon"
         ],
@@ -30871,6 +30924,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-manual-payment-method": [
+          "sc-prose"
         ],
         "sc-payment-method": [
           "sc-tooltip",
@@ -31051,7 +31107,7 @@
           "sc-icon"
         ],
         "sc-manual-payment-method": [
-          "sc-text"
+          "sc-prose"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -31173,7 +31229,7 @@
           "sc-icon"
         ],
         "sc-manual-payment-method": [
-          "sc-text"
+          "sc-prose"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -33424,7 +33480,6 @@
       "dependents": [
         "sc-charges-list",
         "sc-invoices-list",
-        "sc-manual-payment-method",
         "sc-orders-list",
         "sc-payment-method",
         "sc-payment-methods-list",
@@ -33440,9 +33495,6 @@
           "sc-text"
         ],
         "sc-invoices-list": [
-          "sc-text"
-        ],
-        "sc-manual-payment-method": [
           "sc-text"
         ],
         "sc-orders-list": [
@@ -34840,6 +34892,7 @@
         "sc-coupon-form",
         "sc-divider",
         "sc-flex",
+        "sc-manual-payment-method",
         "sc-payment-method",
         "sc-icon",
         "sc-alert",
@@ -34860,6 +34913,7 @@
           "sc-coupon-form",
           "sc-divider",
           "sc-flex",
+          "sc-manual-payment-method",
           "sc-payment-method",
           "sc-icon",
           "sc-alert",
@@ -34904,6 +34958,9 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-manual-payment-method": [
+          "sc-prose"
         ],
         "sc-payment-method": [
           "sc-tooltip",

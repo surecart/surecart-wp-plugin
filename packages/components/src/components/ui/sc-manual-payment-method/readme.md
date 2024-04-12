@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property        | Attribute | Description | Type                  | Default     |
-| --------------- | --------- | ----------- | --------------------- | ----------- |
-| `paymentMethod` | --        |             | `ManualPaymentMethod` | `undefined` |
+| Property          | Attribute          | Description | Type                  | Default     |
+| ----------------- | ------------------ | ----------- | --------------------- | ----------- |
+| `paymentMethod`   | --                 |             | `ManualPaymentMethod` | `undefined` |
+| `showDescription` | `show-description` |             | `boolean`             | `false`     |
 
 
 ## Shadow Parts
@@ -23,19 +24,23 @@
 
 ### Used by
 
+ - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
 
-- [sc-text](../text)
+- [sc-prose](../sc-prose)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-manual-payment-method --> sc-text
+  sc-manual-payment-method --> sc-prose
+  sc-subscription-next-payment --> sc-manual-payment-method
   sc-subscription-payment --> sc-manual-payment-method
   sc-subscription-payment-method --> sc-manual-payment-method
+  sc-upcoming-invoice --> sc-manual-payment-method
   style sc-manual-payment-method fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
