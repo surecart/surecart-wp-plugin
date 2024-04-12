@@ -163,8 +163,18 @@ abstract class PostModel {
 	 * @return $this
 	 */
 	protected function create( \SureCart\Models\Model $model ) {
+		// don't do these actions as they can slow down the sync.
+		foreach ( [ 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ] as $action ) {
+			remove_all_actions( $action );
+		}
+
+		// we are importing.
+		if ( ! defined( 'WP_IMPORTING' ) ) {
+			define( 'WP_IMPORTING', true );
+		}
+
 		// insert post.
-		$post_id = wp_insert_post( wp_slash( $this->getSchemaMap( $model ) ), true );
+		$post_id = wp_insert_post( wp_slash( $this->getSchemaMap( $model ) ), true, false );
 
 		// handle errors.
 		if ( is_wp_error( $post_id ) ) {
