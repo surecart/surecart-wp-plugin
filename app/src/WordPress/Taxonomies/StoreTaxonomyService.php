@@ -35,7 +35,7 @@ class StoreTaxonomyService {
 				'public'            => false,
 				'hierarchical'      => false,
 				'labels'            => array(
-					'name'          => __( 'Stores', 'surecart' ),
+					'name'          => __( 'Store', 'surecart' ),
 					'singular_name' => __( 'Store', 'surecart' ),
 				),
 				'query_var'         => false,
@@ -43,6 +43,7 @@ class StoreTaxonomyService {
 				'show_ui'           => false,
 				'show_in_nav_menus' => false,
 				'show_in_rest'      => false,
+				'show_admin_column' => true,
 			]
 		);
 	}
