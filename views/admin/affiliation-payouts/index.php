@@ -10,7 +10,6 @@
 		'layouts/partials/admin-index-header',
 		[
 			'title'       => __( 'Affiliate Payouts', 'surecart' ),
-			// 'new_link'    => \SureCart::getUrl()->edit( 'affiliate-payout' ),
 			'after_title' => \SureCart::view( 'admin/affiliation-payouts/new-payout-button' )->toString(),
 		]
 	);
