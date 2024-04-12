@@ -15,7 +15,6 @@
 	);
 	?>
 
-
 	<?php $table->views(); ?>
 	<?php $table->display(); ?>
 </div>
