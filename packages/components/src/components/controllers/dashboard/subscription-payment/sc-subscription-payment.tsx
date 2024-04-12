@@ -111,7 +111,7 @@ export class ScSubscriptionPayment {
 
     const modeMethods = this.paymentMethods.filter(method => method?.live_mode === this.subscription?.live_mode);
 
-    if (!modeMethods?.length || (!this.manualPaymentMethods?.length && !modeMethods?.length)) {
+    if ((!this.paymentMethods?.length && !this.manualPaymentMethods?.length) || (this.paymentMethods?.length && !modeMethods?.length)) {
       return (
         <Fragment>
           <sc-empty icon="credit-card">{__('You have no saved payment methods.', 'surecart')}</sc-empty>

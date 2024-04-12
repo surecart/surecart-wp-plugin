@@ -124,7 +124,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					required
 				/>
 				<ScSwitch
-					checked={paymentMethod?.reusable}
+					checked={data?.reusable}
 					onScChange={(e) =>
 						updateData({ reusable: e.target.checked })
 					}
