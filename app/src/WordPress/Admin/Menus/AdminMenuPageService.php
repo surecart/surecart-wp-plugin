@@ -169,7 +169,7 @@ class AdminMenuPageService {
 			return;
 		}
 
-		$affiliate_pages = [ 'sc-affiliates', 'sc-affiliate-requests', 'sc-affiliate-clicks', 'sc-affiliate-referrals', 'sc-affiliate-payouts' ];
+		$affiliate_pages = [ 'sc-affiliates', 'sc-affiliate-requests', 'sc-affiliate-clicks', 'sc-affiliate-referrals', 'sc-affiliate-payouts', 'sc-affiliate-payout-groups' ];
 
 		$this->pages = [
 			'get-started'         => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
@@ -192,6 +192,7 @@ class AdminMenuPageService {
 			'affiliate-clicks'    => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Clicks', 'surecart' ), '↳ ' . __( 'Clicks', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-clicks', '__return_false' ) : null,
 			'affiliate-referrals' => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Referrals', 'surecart' ), '↳ ' . __( 'Referrals', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-referrals', '__return_false' ) : null,
 			'affiliate-payouts'   => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Payouts', 'surecart' ), '↳ ' . __( 'Payouts', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-payouts', '__return_false' ) : null,
+			'affiliate-payout-groups' => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Payout Groups', 'surecart' ), '', 'edit_sc_affiliates', 'sc-affiliate-payout-groups', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'restore'             => 'sc-restore' === ( $_GET['page'] ?? '' ) ? \add_submenu_page( null, __( 'Restore', 'surecart' ), __( 'Restore', 'surecart' ), 'manage_options', 'sc-restore', '__return_false' ) : null,
 			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),

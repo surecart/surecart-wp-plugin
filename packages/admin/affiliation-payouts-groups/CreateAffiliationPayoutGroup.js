@@ -12,9 +12,9 @@ import {
 	ScCard,
 	ScForm,
 	ScFormControl,
+	ScPriceInput,
 } from '@surecart/components-react';
 import Box from '../ui/Box';
-import ModelSelector from '../components/ModelSelector';
 import Error from '../components/Error';
 import { DateTimePicker } from '@wordpress/components';
 
@@ -27,7 +27,7 @@ export default () => {
 			return { ...currentState, ...newState };
 		},
 		{
-			affiliation: '',
+			min_commission_amount: '',
 			end_date: Math.round(new Date().getTime() / 1000),
 		}
 	);
@@ -37,17 +37,17 @@ export default () => {
 		try {
 			setError(false);
 			setIsSaving(true);
-			const savedPayout = await saveEntityRecord(
+			const savedPayoutGroup = await saveEntityRecord(
 				'surecart',
-				'payout',
+				'payout-group',
 				payout,
 				{ throwOnError: true }
 			);
 
-			if (!savedPayout?.id) {
+			if (!savedPayoutGroup?.id) {
 				throw {
 					message: __(
-						'Could not create payout. Please try again.',
+						'Could not create payout batch. Please try again.',
 						'surecart'
 					),
 				};
@@ -68,14 +68,17 @@ export default () => {
 		<CreateTemplate>
 			<ScForm onScSubmit={onSubmit}>
 				<Box
-					title={__('Create New Payout', 'surecart')}
+					title={__('Create New Payout Batch', 'surecart')}
 					css={css`
 						max-width: 500px;
 						margin: auto;
 					`}
 					footer={
 						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
+							css={css`
+								display: flex;
+								gap: var(--sc-spacing-small);
+							`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
@@ -99,22 +102,19 @@ export default () => {
 							gap: var(--sc-spacing-large);
 						`}
 					>
-						<ModelSelector
-							label={__('Affiliate', 'surecart')}
-							name="affiliation"
-							value={payout.affiliation}
-							requestQuery={{
-								archived: false,
-							}}
-							onSelect={(affiliation) => {
+						<ScPriceInput
+							help={__(
+								'The minimum amount of commission that must be earned by an affiliate to be included in this payout batch.',
+								'surecart'
+							)}
+							currencyCode={window?.scData?.currency_code}
+							label={__('Minimum commission amount', 'surecart')}
+							value={payout.min_commission_amount || null}
+							onScInput={(e) =>
 								setPayout({
-									affiliation,
-								});
-							}}
-							display={(affiliation) =>
-								`${affiliation.display_name} - ${affiliation.email}`
+									min_commission_amount: e.target.value,
+								})
 							}
-							required
 						/>
 						<div
 							css={css`
