@@ -61,52 +61,7 @@ class CollectionTemplatesService {
 		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
 
 		// collection page query overrides.
-		// add_filter( 'posts_pre_query', [ $this, 'overrideCollectionPostQuery' ], 10, 2 );
-		// add_filter( 'query_vars', [ $this, 'addCurrentCollectionQueryVar' ] );
-		// add_filter( 'get_post_metadata', [ $this, 'overrideCollectionPostMeta' ], 10, 4 );
-	}
-
-	/**
-	 * Short-circuits the return value of a meta field for our post type.
-	 *
-	 * @param mixed  $value     The value to return, either a single metadata value or an array
-	 *                          of values depending on the value of `$single`. Default null.
-	 * @param int    $object_id ID of the object metadata is for.
-	 * @param string $meta_key  Metadata key.
-	 * @param bool   $single    Whether to return only the first value of the specified `$meta_key`.
-	 *
-	 * @return mixed
-	 */
-	public function overrideCollectionPostMeta( $value, $object_id, $meta_key, $single ) {
-		// not our meta query.
-		if ( 'sc_id' !== $meta_key && 'sc_slug' !== $meta_key ) {
-			return $value;
-		}
-
-		$collection = get_query_var( 'surecart_current_collection' );
-
-		if ( ! $collection ) {
-			// get the collection in case the collection page id query var is the slug.
-			$collection_id = get_query_var( 'sc_collection_page_id' );
-			$collection    = \SureCart\Models\ProductCollection::with( [ 'image' ] )->find( $collection_id );
-		}
-
-		// we don't have an id or slug.
-		if ( empty( $collection->id ) || empty( $collection->slug ) ) {
-			return $value;
-		}
-
-		// return the id.
-		if ( 'sc_id' === $meta_key ) {
-			return $collection->id;
-		}
-
-		// return the slug.
-		if ( 'sc_slug' === $meta_key ) {
-			return $collection->slug;
-		}
-
-		return $value;
+		add_filter( 'query_vars', [ $this, 'addCurrentCollectionQueryVar' ] );
 	}
 
 	/**
@@ -118,73 +73,6 @@ class CollectionTemplatesService {
 	public function addCurrentCollectionQueryVar( array $vars ): array {
 		$vars[] = 'surecart_current_collection';
 		return $vars;
-	}
-
-	/**
-	 * Filters the posts array before the query takes place to return a product post.
-	 * Return a non-null value to bypass WordPress' default post queries.
-	 *
-	 * Filtering functions that require pagination information are encouraged to set
-	 * the `found_posts` and `max_num_pages` properties of the WP_Query object,
-	 * passed to the filter by reference. If WP_Query does not perform a database
-	 * query, it will not have enough information to generate these values itself.
-	 *
-	 * @param WP_Post[]|int[]|null $posts Return an array of post data to short-circuit WP's query,
-	 *                                    or null to allow WP to run its normal queries.
-	 * @param \WP_Query            $wp_query The WP_Query instance (passed by reference).
-	 *
-	 * @return WP_Post[]|null Array of post data, or null to allow WP to run its normal queries.
-	 */
-	public function overrideCollectionPostQuery( $posts, \WP_Query $wp_query ) {
-		$collection_id = isset( $wp_query->query['sc_collection_page_id'] ) ? $wp_query->query['sc_collection_page_id'] : null;
-		if ( ! $collection_id ) {
-			return $posts;
-		}
-
-		$collection = \SureCart\Models\ProductCollection::with( [ 'image' ] )->find( $collection_id );
-		if ( is_wp_error( $collection ) ) {
-			$wp_query->is_404 = true;
-			return $posts;
-		}
-
-		set_query_var( 'surecart_current_collection', $collection );
-
-		// create a fake post for the collection.
-		$post                    = new \stdClass();
-		$post->post_title        = $collection->name;
-		$post->post_name         = $collection->slug;
-		$post->post_content      = '<div>' . ( $collection->template_part->content ?? '' ) . '</div>';
-		$post->post_status       = 'publish';
-		$post->post_type         = $this->post_type;
-		$post->sc_id             = $collection->id;
-		$post->collection        = $collection;
-		$post->post_author       = 1;
-		$post->post_parent       = 0;
-		$post->comment_count     = 0;
-		$post->comment_status    = 'closed';
-		$post->ping_status       = 'closed';
-		$post->post_password     = '';
-		$post->post_excerpt      = '';
-		$post->post_date         = ( new \DateTime( "@$collection->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
-		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $collection->created_at, true );
-		$post->post_modified     = ( new \DateTime( "@$collection->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
-		$post->post_modified_gmt = date_i18n( 'Y-m-d H:i:s', $collection->updated_at, true );
-		$post->ID                = 999999999;
-		$posts                   = array( $post );
-
-		$wp_query->found_posts       = 1;
-		$wp_query->max_num_pages     = 1;
-		$wp_query->is_singular       = true;
-		$wp_query->is_single         = true;
-		$wp_query->is_archive        = false;
-		$wp_query->is_tax            = false;
-		$wp_query->is_home           = false;
-		$wp_query->is_search         = false;
-		$wp_query->is_404            = false;
-		$wp_query->queried_object    = $post;
-		$wp_query->queried_object_id = $post->ID;
-
-		return $posts;
 	}
 
 	/**

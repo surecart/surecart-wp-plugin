@@ -262,8 +262,28 @@ abstract class PostModel {
 	 * @return array
 	 */
 	protected function getMetaInput( \SureCart\Models\Model $model ) {
-		$object        = $model->toObject();
-		$object->sc_id = $model->id;
+		$object     = new \stdClass();
+		$properties = [
+			'id',
+			'available_stock',
+			'stock_enabled',
+			'featured',
+			'recurring',
+			'shipping_enabled',
+			'variants',
+			'variant_options',
+			'prices',
+		];
+
+		foreach ( $properties as $property ) {
+			if ( isset( $model->$property ) ) {
+				if ( $property === 'id' ) {
+					$object->sc_id = $model->id;
+				} else {
+					$object->$property = $model->$property;
+				}
+			}
+		}
 		return $object;
 	}
 
