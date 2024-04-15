@@ -256,11 +256,20 @@ class Block extends BaseBlock {
 			$attributes['type'] = '';
 		}
 
-		$product_query = sc_query_products(
-			[
-				'per_page' => 30,
-				'page'     => (int) ( $_GET['product-page'] ?? 1 ),
-			]
+		// query posts.
+		$product_query = new \WP_Query(
+			array(
+				'post_type'      => 'sc_product',
+				'posts_per_page' => 10,
+			)
+		);
+
+		// get the product for each post.
+		$products = array_map(
+			function( $post ) {
+				return sc_get_product( $post );
+			},
+			$product_query->posts ?? []
 		);
 
 		\SureCart::assets()->addComponentData(
@@ -283,7 +292,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
-				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $product_query->posts,
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products,
 				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
 				'pageTitle'            => get_the_title(),
 			]

@@ -2,8 +2,6 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Posts\VariantOption as VariantOptionPost;
-
 /**
  * Variant Option model.
  */

@@ -2,7 +2,6 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Posts\ProductMedia as ProductMediaPost;
 /**
  * ProductMedia model
  */

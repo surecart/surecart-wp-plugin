@@ -132,19 +132,9 @@ abstract class PostModel {
 				[
 					'post_type'   => $this->post_type,
 					'post_status' => 'publish',
-					'tax_query'   => array(
-						array(
-							'taxonomy' => 'sc_account',
-							'field'    => 'slug',
-							'terms'    => \SureCart::account()->id,
-						),
-					),
 				]
 			)
 		);
-
-		// map posts to a collection of post models.
-		$query->posts = array_map( fn( $post ) => new static( $post ), $query->posts );
 
 		// return the query.
 		return $query;
@@ -280,6 +270,10 @@ abstract class PostModel {
 				}
 			}
 		}
+
+		// add the product to the object.
+		$object->product = $model->toArray();
+
 		return $object;
 	}
 

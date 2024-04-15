@@ -1,6 +1,6 @@
 <?php
 
-use SureCart\Models\Posts\Product;
+use SureCart\Models\Product;
 
 if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
@@ -10,10 +10,16 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 	 */
 	function sc_get_product( $product = false ) {
 		global $post;
+
 		if ( empty( $product ) ) {
 			$product = $post;
 		}
-		return new Product( $product );
+
+		// make sure to get the post.
+		$product = get_post( $product );
+
+		// return the product object.
+		return new Product( get_post_meta( $product->ID, 'product', true ) );
 	}
 }
 
@@ -28,7 +34,13 @@ if ( ! function_exists( 'sc_get_products' ) ) {
 	 * @return array|stdClass Number of pages and an array of product objects if
 	 */
 	function sc_get_products( $args = [] ) {
-		return Product::get( $args );
+		return get_posts(
+			$args,
+			[
+				'post_type'   => 'sc_product',
+				'post_status' => 'publish',
+			]
+		);
 	}
 }
 
@@ -43,7 +55,15 @@ if ( ! function_exists( 'sc_query_products' ) ) {
 	 * @return \WP_Query The query.
 	 */
 	function sc_query_products( $args = [] ) {
-		return Product::query( $args );
+		return new \WP_Query(
+			[
+				$args,
+				[
+					'post_type'   => 'sc_product',
+					'post_status' => 'publish',
+				],
+			]
+		);
 	}
 }
 
