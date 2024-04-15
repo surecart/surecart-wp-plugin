@@ -2,7 +2,6 @@
 
 namespace SureCart\Background;
 
-use SureCart\Background\Migration\MigrationService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -16,10 +15,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.sync'] = function () use ( $container ) {
-			return new SyncService();
-		};
-
 		$container['surecart.queue'] = function () use ( $container ) {
 			return new QueueService();
 		};
@@ -33,7 +28,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
-		$app->alias( 'sync', 'surecart.sync' );
 		$app->alias( 'queue', 'surecart.queue' );
 		$app->alias( 'async', 'surecart.async.webhooks' );
 		$app->alias( 'bulkAction', 'surecart.bulk_action' );
@@ -46,7 +40,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.sync']->customers()->bootstrap();
 		$container['surecart.async.webhooks']->bootstrap();
 		$container['surecart.bulk_action']->bootstrap();
 	}
