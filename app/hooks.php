@@ -8,10 +8,6 @@
  * @package SureCart
  */
 
-use SureCart\Background\Migration\ProductsSyncProcess;
-use SureCart\Models\Posts\Relation;
-use SureCart\Support\Currency;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

@@ -193,7 +193,7 @@ class Product extends PostModel {
 	 *
 	 * @return string
 	 */
-	protected function getDisplayPriceAttribute() {
+	protected function getDisplayAmountAttribute() {
 		$amount = $this->getAmountAttribute();
 		if ( empty( $amount ) ) {
 			return '';

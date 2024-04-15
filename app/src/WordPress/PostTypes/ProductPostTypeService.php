@@ -24,14 +24,10 @@ class ProductPostTypeService {
 	public function bootstrap() {
 		// register.
 		add_action( 'init', [ $this, 'registerPostType' ] );
-
-		// add varition option value query to posts_where
+		// add varition option value query to posts_where.
 		add_filter( 'posts_where', [ $this, 'handleVariationOptionValueQuery' ], 10, 2 );
-
-		// add child posts to posts results to prevent n+1 queries.
-		// add_action( 'posts_results', [ $this, 'addChildrenToProducts' ], 10, 2 );
-		// add necessary data to product.
-		// add_action( 'the_post', [ $this, 'addChildrenToProduct' ], 10, 2 );
+		// add global $sc_product inside loops.
+		add_action( 'the_post', [ $this, 'setupData' ] );
 		// register post status.
 		add_action( 'init', [ $this, 'registerPostStatus' ] );
 		// add the rest api meta query.
@@ -46,6 +42,34 @@ class ProductPostTypeService {
 		// add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
 		// when a product media is deleted, remove it from the gallery.
 		// add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+	}
+
+	/**
+	 * Setup the product.
+	 *
+	 * @param \WP_Post $post The post.
+	 *
+	 * @return void
+	 */
+	public function setupData( $post ) {
+			// unset existing globals.
+		unset( $GLOBALS['sc_product'] );
+
+		// get post.
+		if ( is_int( $post ) ) {
+			$post = get_post( $post );
+		}
+
+		// check post type.
+		if ( empty( $post->post_type ) || 'sc_product' !== $post->post_type ) {
+			return;
+		}
+
+		// set product.
+		$GLOBALS['sc_product'] = sc_get_product( $post );
+
+		// return product.
+		return $GLOBALS['sc_product'];
 	}
 
 	/**
@@ -324,113 +348,6 @@ class ProductPostTypeService {
 			$args['no_found_rows']  = true;
 		}
 		return $args;
-	}
-
-	/**
-	 * Add children to products.
-	 *
-	 * @param \WP_Post[] $posts The posts.
-	 * @param \WP_Query  $query  The query.
-	 *
-	 * @return \WP_Post[]
-	 */
-	public function addChildrenToProducts( $posts, $query ) {
-		// Check if we're in the main query and dealing with 'sc_product' post type.
-		if ( $this->post_type === $query->get( 'post_type' ) ) {
-			// Gather the IDs of the sc_product posts.
-			$product_ids = wp_list_pluck( $posts, 'ID' );
-
-			// Fetch all sc_price, sc_variant, and sc_variant_option posts whose parent is in the sc_product posts.
-			$child_posts = get_posts(
-				array(
-					'post_type'       => [ 'sc_price', 'sc_variant', 'sc_variant_option' ],
-					'post_parent__in' => $product_ids,
-					'posts_per_page'  => -1,
-					'nopaging'        => true,
-					'orderby'         => 'menu_order',
-					'order'           => 'ASC',
-				)
-			);
-
-			// Map child posts to their respective types.
-			$children_by_type = array(
-				'prices'          => array(),
-				'variants'        => array(),
-				'variant_options' => array(),
-			);
-			foreach ( $child_posts as $child_post ) {
-				switch ( $child_post->post_type ) {
-					case 'sc_price':
-						$children_by_type['prices'][ $child_post->post_parent ][] = $child_post;
-						break;
-					case 'sc_variant':
-						$children_by_type['variants'][ $child_post->post_parent ][] = $child_post;
-						break;
-					case 'sc_variant_option':
-						$children_by_type['variant_options'][ $child_post->post_parent ][] = $child_post;
-						break;
-				}
-			}
-
-			// Assign child posts arrays to each sc_product post.
-			foreach ( $posts as $post ) {
-				$post->prices          = isset( $children_by_type['prices'][ $post->ID ] ) ? $children_by_type['prices'][ $post->ID ] : array();
-				$post->variants        = isset( $children_by_type['variants'][ $post->ID ] ) ? $children_by_type['variants'][ $post->ID ] : array();
-				$post->variant_options = isset( $children_by_type['variant_options'][ $post->ID ] ) ? $children_by_type['variant_options'][ $post->ID ] : array();
-				$post->eager_loaded    = true;
-			}
-		}
-
-		return $posts;
-	}
-
-	/**
-	 * Add children to an individual product.
-	 *
-	 * @param \WP_Post $post The post.
-	 *
-	 * @return void
-	 */
-	public function addChildrenToProduct( $post ) {
-		// Check if the post is an 'sc_product'.
-		if ( 'sc_product' === get_post_type( $post ) ) {
-			// set global product.
-			global $sc_product;
-			$sc_product = sc_get_product( $post );
-
-			// already got it through eager loading.
-			// prevents n+1 queries.
-			if ( ! empty( $post->eager_loaded ) ) {
-				return;
-			}
-
-			// Get the related 'sc_price' posts.
-			$children = get_posts(
-				array(
-					'post_type'      => [ 'sc_price', 'sc_variant', 'sc_variant_option' ],
-					'post_parent'    => $post->ID,
-					'posts_per_page' => -1, // Get all related posts.
-					'nopaging'       => true,
-					'orderby'        => 'menu_order',
-					'order'          => 'ASC',
-				)
-			);
-
-			$post->prices          = [];
-			$post->variants        = [];
-			$post->variant_options = [];
-
-			// add to the post object.
-			foreach ( $children as $child ) {
-				if ( 'sc_price' === $child->post_type ) {
-					$post->prices[] = $child;
-				} elseif ( 'sc_variant' === $child->post_type ) {
-					$post->variants[] = $child;
-				} elseif ( 'sc_variant_option' === $child->post_type ) {
-					$post->variant_options[] = $child;
-				}
-			}
-		}
 	}
 
 	/**

@@ -42,7 +42,17 @@ if ( ! function_exists( 'sc_query_products' ) ) {
 	 * @param  array $args Array of args (above).
 	 * @return \WP_Query The query.
 	 */
-	function sc_query_products( $args ) {
+	function sc_query_products( $args = [] ) {
 		return Product::query( $args );
 	}
+}
+
+/**
+ * Set global $sc_product.
+ *
+ * @param mixed $post Post Object.
+ * @return WC_Product
+ */
+function sc_setup_product_data( $post ) {
+	return \SureCart::productPost()->setupData( $post );
 }

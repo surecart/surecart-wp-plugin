@@ -144,14 +144,9 @@ abstract class PostModel {
 		);
 
 		// map posts to a collection of post models.
-		$query->posts = array_map(
-			function( $post ) {
-				$model = new static( $post );
-				return new \WP_Post( (object) $model->toArray() );
-			},
-			$query->posts
-		);
+		$query->posts = array_map( fn( $post ) => new static( $post ), $query->posts );
 
+		// return the query.
 		return $query;
 	}
 
