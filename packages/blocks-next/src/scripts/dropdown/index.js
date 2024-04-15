@@ -23,7 +23,8 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 		},
 	},
 	actions: {
-		toggleMenu: () => {
+		toggleMenu: (e) => {
+			e.preventDefault();
 			const context = getContext();
 			context.isMenuOpen = !context.isMenuOpen;
 		},
@@ -47,11 +48,47 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 				value: context.value,
 			};
 			context.isMenuOpen = false;
+			e.target
+				.closest('.sc-dropdown')
+				.querySelector('.sc-dropdown__trigger')
+				.focus();
 		},
 		menuItemKeyUp: (e) => {
 			if (e.key === 'Enter') {
 				actions.selectItem(e);
 			}
+			if (e.key === 'ArrowDown') {
+				e.target.nextElementSibling?.focus();
+			}
+			if (e.key === 'ArrowUp') {
+				e.target.previousElementSibling?.focus();
+			}
+		},
+		triggerKeyUp: (e) => {
+			e.preventDefault();
+			const context = getContext();
+			if (e.key === ' ') {
+				context.isMenuOpen = !context.isMenuOpen;
+			}
+			if (e.key === 'Escape') {
+				context.isMenuOpen = false;
+			}
+			if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+				context.isMenuOpen = true;
+				const firstMenuItem =
+					getElement().ref.parentElement.querySelector(
+						'.sc-dropdown__menu-item'
+					);
+				setTimeout(() => {
+					if (firstMenuItem) {
+						firstMenuItem.focus();
+					}
+				});
+			}
+		},
+		hoverMenuItem: (e) => {
+			const context = getContext();
+			context.focused = !context.focused;
 		},
 	},
 	callbacks: {

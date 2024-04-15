@@ -24,6 +24,7 @@ $dummy_options = [
 	<button
 		class="sc-dropdown__trigger button button--standard button--medium button--caret button--has-label button--text"
 		data-wp-on--click="actions.toggleMenu"
+		data-wp-on--keyup="actions.triggerKeyUp"
 		aria-label="Press Space or Enter to open the dropdown"
 	>
 		<span class="button__label" data-wp-text="state.getSelectedOptionLabel">
@@ -49,7 +50,12 @@ $dummy_options = [
 				class="sc-dropdown__menu-item"
 				data-wp-on--click="actions.selectItem"
 				data-wp-on--keyup="actions.menuItemKeyUp"
+				data-wp-on--mouseenter="actions.hoverMenuItem"
+				data-wp-on--mouseleave="actions.hoverMenuItem"
+				data-wp-on--focusin="actions.hoverMenuItem"
+				data-wp-on--focusout="actions.hoverMenuItem"
 				data-wp-class--checked="state.isMenuItemSelected"
+				data-wp-class--menu-item--focused="context.focused"
 				<?php echo wp_kses_data(
 					wp_interactivity_data_wp_context(
 						[
