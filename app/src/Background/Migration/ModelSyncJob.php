@@ -77,16 +77,4 @@ class ModelSyncJob extends BackgroundProcess {
 
 		return false;
 	}
-
-	/**
-	 * Complete processing.
-	 *
-	 * Override if applicable, but ensure that the below actions are
-	 * performed, or, call parent::complete().
-	 */
-	protected function complete() {
-		parent::complete();
-		// All these fetches are complete, so we can now sync the data.
-		// \SureCart::migration()->sync()->dispatch();
-	}
 }
