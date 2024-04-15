@@ -198,9 +198,15 @@ class ProductsController extends AdminController {
 		// TODO: do this only on a full sync.
 		VariantOptionValue::deleteAll();
 
-		\SureCart::migration()->deleteAll();
-		// dispatch job.
-		\SureCart::migration()->models()->dispatch();
+		// enqueue action.
+		as_enqueue_async_action(
+			'surecart/sync/products',
+			[
+				'page'       => 1,
+				'batch_size' => apply_filters( 'surecart/sync/products/batch_size', 5 ),
+			],
+			'surecart'
+		);
 
 		return $this->redirectBack( $request );
 	}
