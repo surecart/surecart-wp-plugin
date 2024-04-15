@@ -54,8 +54,16 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 				.focus();
 		},
 		menuItemKeyUp: (e) => {
+			const context = getContext();
 			if (e.key === 'Enter') {
 				actions.selectItem(e);
+			}
+			if (e.key === 'Escape') {
+				context.isMenuOpen = false;
+				e.target
+					.closest('.sc-dropdown')
+					.querySelector('.sc-dropdown__trigger')
+					.focus();
 			}
 			if (e.key === 'ArrowDown') {
 				e.target.nextElementSibling?.focus();

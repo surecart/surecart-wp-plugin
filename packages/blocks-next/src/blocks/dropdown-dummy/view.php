@@ -25,7 +25,6 @@ $dummy_options = [
 		class="sc-dropdown__trigger button button--standard button--medium button--caret button--has-label button--text"
 		data-wp-on--click="actions.toggleMenu"
 		data-wp-on--keyup="actions.triggerKeyUp"
-		aria-label="Press Space or Enter to open the dropdown"
 	>
 		<span class="button__label" data-wp-text="state.getSelectedOptionLabel">
 			<?php echo $dummy_options[0]['label'] ?? 'First Option'; ?>
