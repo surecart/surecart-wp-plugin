@@ -23,6 +23,7 @@ return [
 		\SureCart\WordPress\ThemeServiceProvider::class,
 		\SureCart\WordPress\Templates\TemplatesServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
+		\SureCart\WordPress\Posts\PostServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
 		\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
@@ -30,6 +31,7 @@ return [
 		\SureCart\WordPress\Shortcodes\ShortcodesServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
+		\SureCart\WordPress\CLI\CLIServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
 		\SureCart\Routing\PermalinkServiceProvider::class,
 		\SureCart\Routing\RouteConditionsServiceProvider::class,
@@ -95,6 +97,7 @@ return [
 		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
 		\SureCart\Rest\TaxZoneRestServiceProvider::class,
+		\SureCart\Rest\TaxOverrideRestServiceProvider::class,
 		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\CheckoutRestServiceProvider::class,
@@ -116,6 +119,14 @@ return [
 		\SureCart\Rest\VariantsRestServiceProvider::class,
 		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
 		\SureCart\Rest\VariantValuesRestServiceProvider::class,
+		\SureCart\Rest\ClicksRestServiceProvider::class,
+		\SureCart\Rest\ReferralItemsRestServiceProvider::class,
+		\SureCart\Rest\PayoutsRestServiceProvider::class,
+		\SureCart\Rest\PayoutGroupsRestServiceProvider::class,
+		\SureCart\Rest\ReferralsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationsRestServiceProvider::class,
+		\SureCart\Rest\ExportsRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -267,7 +278,7 @@ return [
 	 * Links used.
 	 */
 	'links'                  => [
-		'purchase' => 'https://app.surecart.com/billing',
+		'purchase' => 'https://app.surecart.com/plans',
 	],
 
 	/**
@@ -342,6 +353,7 @@ return [
 		'webhooks'            => \SureCart\Middleware\WebhooksMiddleware::class,
 		'assets.components'   => \SureCart\Middleware\ComponentAssetsMiddleware::class,
 		'assets.brand_colors' => \SureCart\Middleware\BrandColorMiddleware::class,
+		'assets.admin_colors' => \SureCart\Middleware\AdminColorMiddleware::class,
 	],
 
 	/**

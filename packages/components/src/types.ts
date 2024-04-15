@@ -32,6 +32,9 @@ declare global {
     scData: {
       cdn_root: string;
       root_url: string;
+      account_id: string;
+      account_slug: string;
+      api_url: string;
       plugin_url: string;
       page_id: string;
       persist_cart: 'browser' | 'url' | false;
@@ -705,6 +708,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  updated_at: number;
   variant: string;
   upsells_expire_at?: number;
 }
@@ -1207,6 +1211,8 @@ export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
   currency: string;
+  total_amount: number;
+  line_items?: lineItems;
   payment_method: {
     billing_details: {
       name: string;
@@ -1234,6 +1240,12 @@ export interface ProductsSearchedParams {
   searchCollections?: string[];
   searchResultCount: number;
   searchResultIds: string[];
+}
+
+export interface ProductsViewedParams {
+  products: Product[];
+  pageTitle: string;
+  collectionId?: string;
 }
 
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';

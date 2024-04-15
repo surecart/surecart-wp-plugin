@@ -1,12 +1,21 @@
 import { translate } from '../util';
 
+const statusTagTypes = {
+	draft: 'info',
+	processing: 'info',
+	archived: 'warning',
+	pending: 'warning',
+	reviewing: 'warning',
+	denied: 'danger',
+	inactive: 'danger',
+	approved: 'success',
+	active: 'success',
+	paid: 'success',
+};
+
 export default ({ status }) => {
-	switch (status) {
-		case 'draft':
-			return <sc-tag type="info">{translate(status)}</sc-tag>;
-		case 'archived':
-			return <sc-tag type="warning">{translate(status)}</sc-tag>;
-		default:
-			return <sc-tag type="success">{translate('active')}</sc-tag>;
-	}
+	const displayStatus = status || 'active';
+	const tagType = statusTagTypes[displayStatus];
+
+	return <sc-tag type={tagType}>{translate(displayStatus)}</sc-tag>;
 };

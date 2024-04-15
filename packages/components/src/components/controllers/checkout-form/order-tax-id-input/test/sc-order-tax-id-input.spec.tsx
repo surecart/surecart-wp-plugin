@@ -66,4 +66,12 @@ describe('sc-order-tax-id-input', () => {
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });
+  it('Renders with Help Text', async () => {
+    const helpText = 'Enter your tax identifier';
+    const page = await newSpecPage({
+      components: [ScOrderTaxIdInput],
+      template: () => <sc-order-tax-id-input helpText={helpText}></sc-order-tax-id-input>,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
 });

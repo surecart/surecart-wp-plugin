@@ -41,7 +41,7 @@ export default () => {
 
 	const [commisionType, setCommisionType] = useState(null);
 
-	const signupsUrl = 'https://affiliates.surecart.com/join/new-test-store';
+	const signupsUrl = `https://affiliates.surecart.com/join/${scData?.account_slug}`;
 	const successFunction = () => {
 		setTrackingScriptDialog(false);
 		createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
@@ -417,7 +417,6 @@ export default () => {
 								amount_commission: null,
 							});
 						}}
-						required={commisionType === 'percentage'}
 					>
 						<span slot="suffix">%</span>
 					</ScInput>
@@ -432,7 +431,6 @@ export default () => {
 							null ||
 							null
 						}
-						required={commisionType === 'fixed'}
 						onScInput={(e) => {
 							editAffiliationProtocolItem({
 								amount_commission: e.target.value,
@@ -441,6 +439,26 @@ export default () => {
 						}}
 					/>
 				)}
+				<ScSwitch
+					checked={
+						affiliationProtocolItem?.zero_commission_amount_referrals_enabled
+					}
+					onClick={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							zero_commission_amount_referrals_enabled:
+								!affiliationProtocolItem?.zero_commission_amount_referrals_enabled,
+						});
+					}}
+				>
+					{__('Zero Commission Referrals', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Whether or not to create a referral from a checkout when the resulting referral has a commission of zero. This is useful for tracking referrals that do not have a commission, such as when a customer uses a coupon code.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 				<ScSwitch
 					checked={
 						affiliationProtocolItem?.recurring_commissions_enabled

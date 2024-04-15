@@ -8243,7 +8243,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; upsells_expire_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -11184,22 +11184,6 @@
       "usage": {},
       "props": [
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "debug",
           "type": "boolean",
           "mutable": false,
@@ -11232,25 +11216,6 @@
           "required": false
         },
         {
-          "name": "formId",
-          "type": "number | string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "hasPaymentOptions",
           "type": "boolean",
           "mutable": true,
@@ -11261,21 +11226,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
             }
           ],
           "optional": false,
@@ -11376,7 +11326,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "'https://app.surecart.com/billing'",
+          "default": "'https://app.surecart.com/plans'",
           "values": [
             {
               "type": "string"
@@ -14793,7 +14743,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "wheel",
+          "capture": false,
+          "passive": true
+        }
+      ],
       "styles": [
         {
           "name": "--focus-ring",
@@ -19816,6 +19772,22 @@
           "required": false
         },
         {
+          "name": "helpText",
+          "type": "string",
+          "mutable": false,
+          "attr": "help-text",
+          "reflectToAttr": false,
+          "docs": "Help text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "otherLabel",
           "type": "string",
           "mutable": false,
@@ -19843,6 +19815,25 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxIdTypes",
+          "type": "string | string[]",
+          "mutable": false,
+          "attr": "tax-id-types",
+          "reflectToAttr": false,
+          "docs": "Tax ID Types which will be shown Eg: '[\"eu_vat\", \"gb_vat\"]'",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string[]"
             }
           ],
           "optional": false,
@@ -24734,7 +24725,6 @@
           "reflectToAttr": false,
           "docs": "Show for a specific collection",
           "docsTags": [],
-          "default": "null",
           "values": [
             {
               "type": "string"
@@ -24825,11 +24815,27 @@
           "required": false
         },
         {
+          "name": "pageTitle",
+          "type": "string",
+          "mutable": false,
+          "attr": "page-title",
+          "reflectToAttr": false,
+          "docs": "The page title",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "pagination",
           "type": "{ total: number; total_pages: number; }",
           "mutable": true,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Pagination",
           "docsTags": [],
           "default": "{\n    total: 0,\n    total_pages: 0,\n  }",
           "values": [
@@ -24976,6 +24982,15 @@
       ],
       "methods": [],
       "events": [
+        {
+          "event": "scProductsViewed",
+          "detail": "ProductsViewedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Products viewed",
+          "docsTags": []
+        },
         {
           "event": "scSearched",
           "detail": "ProductsSearchedParams",
@@ -29867,23 +29882,6 @@
           "required": false
         },
         {
-          "name": "currencyCode",
-          "type": "string",
-          "mutable": false,
-          "attr": "currency-code",
-          "reflectToAttr": false,
-          "docs": "Currency",
-          "docsTags": [],
-          "default": "'usd'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "debug",
           "type": "boolean",
           "mutable": false,
@@ -29916,25 +29914,6 @@
           "required": false
         },
         {
-          "name": "formId",
-          "type": "number | string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "This is required to validate the form on the server",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -29952,42 +29931,11 @@
           "required": false
         },
         {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Checkout Session",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "paymentMethod",
-          "type": "string",
-          "mutable": false,
-          "attr": "payment-method",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "prices",
           "type": "{ [id: string]: Price; }",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Prices",
           "docsTags": [],
           "values": [
             {
@@ -33284,6 +33232,22 @@
             {
               "value": "valid",
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxIdTypes",
+          "type": "string[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Tax ID Types which will be shown",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "string[]"
             }
           ],
           "optional": false,

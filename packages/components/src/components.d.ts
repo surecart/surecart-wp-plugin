@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1305,12 +1305,9 @@ export namespace Components {
         "error": ResponseError | null;
     }
     interface ScExpressPayment {
-        "busy": boolean;
         "debug": boolean;
         "dividerText": string;
-        "formId": number | string;
         "hasPaymentOptions": boolean;
-        "order": Checkout;
         "processor": ProcessorName;
     }
     interface ScFeatureDemoBanner {
@@ -2226,6 +2223,10 @@ export namespace Components {
          */
         "gbVatLabel": string;
         /**
+          * Help text
+         */
+        "helpText": string;
+        /**
           * Other zones label
          */
         "otherLabel": string;
@@ -2234,6 +2235,10 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes": string | string[];
     }
     interface ScOrdersList {
         "allLink": string;
@@ -2932,7 +2937,7 @@ export namespace Components {
         /**
           * Show for a specific collection
          */
-        "collectionId": string | null;
+        "collectionId": string;
         /**
           * Show only featured products.
          */
@@ -2944,6 +2949,13 @@ export namespace Components {
         "layoutConfig": LayoutConfig1;
         "limit": number;
         "page": number;
+        /**
+          * The page title
+         */
+        "pageTitle": string;
+        /**
+          * Pagination
+         */
         "pagination": {
     total: number;
     total_pages: number;
@@ -3528,27 +3540,17 @@ export namespace Components {
          */
         "country": string;
         /**
-          * Currency
-         */
-        "currencyCode": string;
-        /**
           * Is this in debug mode.
          */
         "debug": boolean;
         "error": ResponseError | null;
         /**
-          * This is required to validate the form on the server
-         */
-        "formId": number | string;
-        /**
           * Label
          */
         "label": string;
         /**
-          * Checkout Session
+          * Prices
          */
-        "order": Checkout;
-        "paymentMethod": string;
         "prices": Prices;
         /**
           * Stripe publishable key
@@ -3861,6 +3863,10 @@ export namespace Components {
           * The status
          */
         "status": 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes": string[];
         /**
           * Type of tax id
          */
@@ -7405,12 +7411,9 @@ declare namespace LocalJSX {
         "onScUpdateError"?: (event: ScErrorCustomEvent<ResponseError>) => void;
     }
     interface ScExpressPayment {
-        "busy"?: boolean;
         "debug"?: boolean;
         "dividerText"?: string;
-        "formId"?: number | string;
         "hasPaymentOptions"?: boolean;
-        "order"?: Checkout;
         "processor"?: ProcessorName;
     }
     interface ScFeatureDemoBanner {
@@ -8364,6 +8367,10 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
+          * Help text
+         */
+        "helpText"?: string;
+        /**
           * Other zones label
          */
         "otherLabel"?: string;
@@ -8371,6 +8378,10 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes"?: string | string[];
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -9102,7 +9113,7 @@ declare namespace LocalJSX {
         /**
           * Show for a specific collection
          */
-        "collectionId"?: string | null;
+        "collectionId"?: string;
         /**
           * Show only featured products.
          */
@@ -9114,10 +9125,21 @@ declare namespace LocalJSX {
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
         /**
+          * Products viewed
+         */
+        "onScProductsViewed"?: (event: ScProductItemListCustomEvent<ProductsViewedParams>) => void;
+        /**
           * Product was searched
          */
         "onScSearched"?: (event: ScProductItemListCustomEvent<ProductsSearchedParams>) => void;
         "page"?: number;
+        /**
+          * The page title
+         */
+        "pageTitle"?: string;
+        /**
+          * Pagination
+         */
         "pagination"?: {
     total: number;
     total_pages: number;
@@ -9783,18 +9805,10 @@ declare namespace LocalJSX {
          */
         "country"?: string;
         /**
-          * Currency
-         */
-        "currencyCode"?: string;
-        /**
           * Is this in debug mode.
          */
         "debug"?: boolean;
         "error"?: ResponseError | null;
-        /**
-          * This is required to validate the form on the server
-         */
-        "formId"?: number | string;
         /**
           * Label
          */
@@ -9806,10 +9820,8 @@ declare namespace LocalJSX {
         "onScSetState"?: (event: ScStripePaymentRequestCustomEvent<string>) => void;
         "onScUpdateOrderState"?: (event: ScStripePaymentRequestCustomEvent<any>) => void;
         /**
-          * Checkout Session
+          * Prices
          */
-        "order"?: Checkout;
-        "paymentMethod"?: string;
         "prices"?: Prices;
         /**
           * Stripe publishable key
@@ -10162,6 +10174,10 @@ declare namespace LocalJSX {
           * The status
          */
         "status"?: 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes"?: string[];
         /**
           * Type of tax id
          */
