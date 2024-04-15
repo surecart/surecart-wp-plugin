@@ -262,6 +262,7 @@ abstract class PostModel {
 			'id',
 			'available_stock',
 			'stock_enabled',
+			'allow_out_of_stock_purchases',
 			'featured',
 			'recurring',
 			'shipping_enabled',
