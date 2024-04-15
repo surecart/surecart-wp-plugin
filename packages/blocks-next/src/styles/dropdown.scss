@@ -61,9 +61,8 @@
 			outline: none;
 			background-color: var(
 				--sc-menu-item-background-focused,
-				var(--sc-color-primary-500)
+				var(--sc-color-gray-100)
 			);
-			color: var(--sc-color-white);
 		}
 
 		&.menu-item--disabled {
@@ -83,6 +82,10 @@
 			visibility: hidden;
 			align-items: center;
 			font-size: inherit;
+			svg {
+				width: 1em;
+				height: 1em;
+			}
 		}
 		&.checked .menu-item__check {
 			visibility: visible;
