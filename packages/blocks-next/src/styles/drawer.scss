@@ -2,7 +2,7 @@
 	position: fixed;
 	box-sizing: border-box;
 	width: var(--sc-drawer-width, 31rem);
-	height: 100%;
+	min-height: 100vh;
 	min-width: var(--sc-drawer-min-width, '300px');
 	background-color: var(--sc-panel-background-color);
 	box-shadow: var(--sc-shadow-x-large);
@@ -36,7 +36,9 @@
 	}
 
 	&:modal {
-		max-height: 100%;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
 	}
 
 	&::backdrop {
