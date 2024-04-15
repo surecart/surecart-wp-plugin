@@ -22,14 +22,14 @@ $dummy_options = [
 	<?php echo get_block_wrapper_attributes(); ?>
 >
 	<button
-		class="sc-dropdown__trigger button button--standard button--medium button--caret button--has-label button--text"
+		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"
 		data-wp-on--click="actions.toggleMenu"
 		data-wp-on--keyup="actions.triggerKeyUp"
 	>
-		<span class="button__label" data-wp-text="state.getSelectedOptionLabel">
+		<span class="sc-button__label" data-wp-text="state.getSelectedOptionLabel">
 			<?php echo $dummy_options[0]['label'] ?? 'First Option'; ?>
         </span>
-		<span class="button__caret">
+		<span class="sc-button__caret">
 			<?php echo SureCart::svg()->get( 'chevron-down' ); ?>
 		</span>
 	</button>

@@ -54,6 +54,7 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 				.focus();
 		},
 		menuItemKeyUp: (e) => {
+			e.preventDefault();
 			const context = getContext();
 			if (e.key === 'Enter') {
 				actions.selectItem(e);
