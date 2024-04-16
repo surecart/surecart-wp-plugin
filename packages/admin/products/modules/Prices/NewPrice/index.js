@@ -1,7 +1,12 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
-import { ScButton, ScForm, ScIcon, ScSelect } from '@surecart/components-react';
-import { Modal } from '@wordpress/components';
+import {
+	ScButton,
+	ScForm,
+	ScIcon,
+	ScSelect,
+	ScDrawer,
+} from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
@@ -95,125 +100,105 @@ export default ({ onRequestClose, product }) => {
 	}, [type]);
 
 	return (
-		<Modal
-			title={__('Add A Price', 'surecart')}
-			css={css`
-				width: 100%;
-				box-sizing: border-box;
-			`}
-			overlayClassName={'sc-modal-overflow'}
-			onRequestClose={onClose}
-			shouldCloseOnClickOutside={false}
-		>
-			<Global
-				styles={css`
-					.sc-modal-overflow {
-						box-sizing: border-box;
-						.components-modal__content,
-						.components-modal__frame {
-							/* overflow: visible !important; */
-							box-sizing: border-box;
-							max-width: 600px !important;
-							width: 100%;
-						}
-					}
-				`}
-			/>
-
-			<ScForm
-				onScFormSubmit={onSubmit}
-				css={css`
-					--sc-form-row-spacing: var(--sc-spacing-large);
-				`}
+		<ScForm onScFormSubmit={onSubmit}>
+			<ScDrawer
+				label={__('Add A Price', 'surecart')}
+				style={{ '--sc-drawer-size': '600px' }}
+				onScRequestClose={onClose}
+				open
 			>
-				<sc-alert type="danger" open={error?.length}>
-					<span slot="title">{error}</span>
-					{additionalErrors.map((e) => (
-						<div>{e?.message}</div>
-					))}
-				</sc-alert>
-
-				<PriceName price={price} updatePrice={updatePrice} />
-
-				<ScSelect
-					label={__('Payment type', 'surecart')}
-					required
-					unselect={false}
-					value={type}
-					onScChange={(e) => setType(e.target.value)}
-					choices={[
-						{
-							value: 'once',
-							label: __('One Time', 'surecart'),
-						},
-						{
-							value: 'multiple',
-							label: __('Installment', 'surecart'),
-						},
-						{
-							value: 'subscription',
-							label: __('Subscription', 'surecart'),
-						},
-					]}
-				/>
-
-				{type === 'subscription' && (
-					<Subscription price={price} updatePrice={updatePrice} />
-				)}
-
-				{type === 'multiple' && (
-					<Multiple price={price} updatePrice={updatePrice} />
-				)}
-
-				{type === 'once' && (
-					<OneTime price={price} updatePrice={updatePrice} />
-				)}
-
 				<div
 					css={css`
 						display: flex;
-						align-items: center;
-						justify-content: space-between;
-						gap: 0.5em;
-						margin-top: var(--sc-spacing-xx-large);
+						flex-direction: column;
+						height: 100%;
 					`}
 				>
 					<div
 						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
+							display: grid;
+							gap: var(--sc-spacing-medium);
+							padding: var(--sc-spacing-x-large);
 						`}
 					>
-						<ScButton
-							type="primary"
-							isBusy={loading}
-							disabled={loading}
-							submit
-						>
-							{__('Create Price', 'surecart')}
-						</ScButton>
-						<ScButton type="text" onClick={onClose}>
-							{__('Cancel', 'surecart')}
-						</ScButton>
-					</div>
+						<sc-alert type="danger" open={error?.length}>
+							<span slot="title">{error}</span>
+							{additionalErrors.map((e) => (
+								<div>{e?.message}</div>
+							))}
+						</sc-alert>
 
-					{product?.tax_enabled &&
-						scData?.tax_protocol?.tax_enabled &&
-						scData?.tax_protocol?.tax_behavior === 'inclusive' && (
-							<ScButton
-								size="small"
-								type="text"
-								target="_blank"
-								href="admin.php?page=sc-settings&tab=tax_protocol"
-							>
-								{__('Tax is included', 'surecart')}
-								<ScIcon name="external-link" slot="suffix" />
-							</ScButton>
+						<PriceName price={price} updatePrice={updatePrice} />
+
+						<ScSelect
+							label={__('Payment type', 'surecart')}
+							required
+							unselect={false}
+							value={type}
+							onScChange={(e) => setType(e.target.value)}
+							choices={[
+								{
+									value: 'once',
+									label: __('One Time', 'surecart'),
+								},
+								{
+									value: 'multiple',
+									label: __('Installment', 'surecart'),
+								},
+								{
+									value: 'subscription',
+									label: __('Subscription', 'surecart'),
+								},
+							]}
+						/>
+
+						{type === 'subscription' && (
+							<Subscription
+								price={price}
+								updatePrice={updatePrice}
+							/>
 						)}
+
+						{type === 'multiple' && (
+							<Multiple price={price} updatePrice={updatePrice} />
+						)}
+
+						{type === 'once' && (
+							<OneTime price={price} updatePrice={updatePrice} />
+						)}
+					</div>
 				</div>
-			</ScForm>
-			{loading && <sc-block-ui spinner></sc-block-ui>}
-		</Modal>
+
+				<ScButton
+					type="primary"
+					isBusy={loading}
+					disabled={loading}
+					submit
+					slot="footer"
+				>
+					{__('Create Price', 'surecart')}
+				</ScButton>
+				<ScButton type="text" onClick={onClose} slot="footer">
+					{__('Cancel', 'surecart')}
+				</ScButton>
+
+				{product?.tax_enabled &&
+					scData?.tax_protocol?.tax_enabled &&
+					scData?.tax_protocol?.tax_behavior === 'inclusive' && (
+						<ScButton
+							size="small"
+							type="text"
+							target="_blank"
+							href="admin.php?page=sc-settings&tab=tax_protocol"
+							slot="footer"
+						>
+							{__('Tax is included', 'surecart')}
+							<ScIcon name="external-link" slot="suffix" />
+						</ScButton>
+					)}
+
+				{loading && <sc-block-ui spinner></sc-block-ui>}
+			</ScDrawer>
+		</ScForm>
 	);
 };

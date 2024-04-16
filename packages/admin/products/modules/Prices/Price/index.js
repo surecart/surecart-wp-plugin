@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -14,12 +14,13 @@ import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
-import { ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton, ScIcon, ScDrawer } from '@surecart/components-react';
 
 export default ({ price, product }) => {
 	// are the price details open?
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
+
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	// get any save errors.
@@ -41,10 +42,29 @@ export default ({ price, product }) => {
 		useDispatch(coreStore);
 	const savePrice = (options = {}) =>
 		saveEditedEntityRecord('surecart', 'price', price?.id, options);
+	const isSavingEntityRecord = select(coreStore).isSavingEntityRecord(
+		'surecart',
+		'price',
+		price?.id
+	);
 	const deletePrice = (options = {}) =>
 		deleteEntityRecord('surecart', 'price', price?.id, {}, options);
 	const editPrice = (data) =>
 		editEntityRecord('surecart', 'price', price?.id, data);
+
+	const saveEditedPrice = async () => {
+		try {
+			await savePrice({ throwOnError: true });
+			setIsOpen(false);
+			createSuccessNotice(__('Price saved.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			setIsOpen(false);
+			console.error(e);
+			setError(e);
+		}
+	};
 
 	// toggle the archive.
 	const toggleArchive = async () => {
@@ -143,51 +163,85 @@ export default ({ price, product }) => {
 
 			<Error error={savePriceError || error} setError={setError} />
 
-			<div
-				css={css`
-					gap: var(--sc-form-row-spacing);
-					border-top: 1px solid var(--sc-color-gray-300);
-					padding: var(--sc-spacing-large);
-					background: ${price?.archived
-						? 'var(--sc-color-warning-50)'
-						: 'var(--sc-color-gray-50)'};
-					display: ${isOpen ? 'grid' : 'none'};
-				`}
+			<ScDrawer
+				label={__('Edit Price', 'surecart')}
+				style={{ '--sc-drawer-size': '600px' }}
+				onScRequestClose={() => setIsOpen(false)}
+				open={isOpen}
 			>
-				<PriceName price={price} updatePrice={editPrice} />
+				<div
+					css={css`
+						display: flex;
+						flex-direction: column;
+						height: 100%;
+					`}
+				>
+					<div
+						css={css`
+							display: grid;
+							gap: var(--sc-spacing-medium);
+							padding: var(--sc-spacing-x-large);
+						`}
+					>
+						<PriceName price={price} updatePrice={editPrice} />
 
-				{getPriceType() === 'subscription' && (
-					<Subscription price={price} updatePrice={editPrice} />
-				)}
+						{getPriceType() === 'subscription' && (
+							<Subscription
+								price={price}
+								updatePrice={editPrice}
+							/>
+						)}
 
-				{getPriceType() === 'multiple' && (
-					<Multiple price={price} updatePrice={editPrice} />
-				)}
+						{getPriceType() === 'multiple' && (
+							<Multiple price={price} updatePrice={editPrice} />
+						)}
 
-				{getPriceType() === 'once' && (
-					<OneTime price={price} updatePrice={editPrice} />
-				)}
+						{getPriceType() === 'once' && (
+							<OneTime price={price} updatePrice={editPrice} />
+						)}
 
-				{product?.tax_enabled &&
-					scData?.tax_protocol?.tax_enabled &&
-					scData?.tax_protocol?.tax_behavior === 'inclusive' && (
-						<span
-							css={css`
-								text-align: right;
-							`}
-						>
-							<ScButton
-								size="small"
-								type="text"
-								target="_blank"
-								href="admin.php?page=sc-settings&tab=tax_protocol"
-							>
-								{__('Tax is included', 'surecart')}
-								<ScIcon name="external-link" slot="suffix" />
-							</ScButton>
-						</span>
-					)}
-			</div>
+						{product?.tax_enabled &&
+							scData?.tax_protocol?.tax_enabled &&
+							scData?.tax_protocol?.tax_behavior ===
+								'inclusive' && (
+								<span
+									css={css`
+										text-align: right;
+									`}
+								>
+									<ScButton
+										size="small"
+										type="text"
+										target="_blank"
+										href="admin.php?page=sc-settings&tab=tax_protocol"
+									>
+										{__('Tax is included', 'surecart')}
+										<ScIcon
+											name="external-link"
+											slot="suffix"
+										/>
+									</ScButton>
+								</span>
+							)}
+					</div>
+				</div>
+				<ScButton
+					type="primary"
+					onClick={saveEditedPrice}
+					slot="footer"
+					isBusy={isSavingEntityRecord}
+					disabled={isSavingEntityRecord}
+				>
+					{__('Save Price', 'surecart')}
+				</ScButton>
+				<ScButton
+					type="text"
+					onClick={() => setIsOpen(false)}
+					slot="footer"
+				>
+					{__('Cancel', 'surecart')}
+				</ScButton>
+			</ScDrawer>
 		</div>
 	);
 };
