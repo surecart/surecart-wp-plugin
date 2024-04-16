@@ -65,6 +65,8 @@ graph TD;
   sc-checkout-mollie-payment --> sc-payment-method-choice
   sc-checkout-mollie-payment --> sc-payment-selected
   sc-checkout-mollie-payment --> sc-block-ui
+  sc-checkout-mollie-payment --> sc-icon
+  sc-checkout-mollie-payment --> sc-checkout-paystack-payment-provider
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
   style sc-payment fill:#f9f,stroke:#333,stroke-width:4px

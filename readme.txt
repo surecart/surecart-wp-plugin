@@ -305,6 +305,11 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.24.0 - April 16th, 2024 =
+- New: Test processor for testing SureCart without connecting a payment processor.
+- Improvement: Store checkout form now defaults to test mode.
+- Fix: Issue with loading indicator not clearing when payment fails on offsite payments flow.
+
 = 2.23.0 - April 10th, 2024 =
 - New: Live/Test mode admin bar toggle on checkout pages.
 - Change: When no store logo is updated, no longer show the site title on instant checkout and customer dashboard.
