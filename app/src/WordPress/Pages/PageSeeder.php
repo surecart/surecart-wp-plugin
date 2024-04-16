@@ -144,7 +144,7 @@ class PageSeeder {
 					'name'          => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
 					'title'         => _x( 'Dashboard', 'Page title', 'surecart' ),
 					'content'       => $customer_dashboard['content'],
-					'page_template' => wp_is_block_theme() ? 'dashboard' : 'pages/template-surecart-dashboard.php',
+					'page_template' => 'pages/template-surecart-dashboard.php',
 				],
 			)
 		);
