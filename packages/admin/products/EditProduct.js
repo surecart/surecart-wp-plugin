@@ -319,7 +319,12 @@ export default ({ id, setBrowserURL }) => {
 					loading={!hasLoadedProduct}
 				/>
 
-				<Image post={post} loadingPost={loadingPost} />
+				<Image
+					productId={id}
+					updateProduct={editProduct}
+					post={post}
+					loadingPost={loadingPost}
+				/>
 
 				<Prices
 					productId={id}

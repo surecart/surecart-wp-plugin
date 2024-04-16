@@ -12,7 +12,7 @@ import Error from '../../../components/Error';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
 
-export default ({ post, loading }) => {
+export default ({ post, productId, updateProduct, loading }) => {
 	const [error, setError] = useState();
 	const { editEntityRecord } = useDispatch(coreStore);
 
