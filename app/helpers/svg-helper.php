@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Get the allowed SVG for safe output.
+ *
+ * @return array
+ */
 function sc_allowed_svg_html(): array {
 	$kses_defaults = wp_kses_allowed_html( 'post' );
 
