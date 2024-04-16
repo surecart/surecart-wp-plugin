@@ -107,6 +107,7 @@ export default () => {
 								'The minimum amount of commission that must be earned by an affiliate to be included in this payout batch.',
 								'surecart'
 							)}
+							required
 							currencyCode={window?.scData?.currency_code}
 							label={__('Minimum commission amount', 'surecart')}
 							value={payout.min_commission_amount || null}
@@ -121,26 +122,29 @@ export default () => {
 								margin-top: var(--sc-spacing-large);
 							`}
 						>
-							<ScFormControl required>
-								{__('Period End', 'surecart')}
+							<ScFormControl
+								label={__('Period End', 'surecart')}
+								required
+							>
+								<ScCard>
+									<DateTimePicker
+										currentDate={
+											new Date(payout.end_date * 1000)
+										}
+										isInvalidDate={(date) =>
+											Date.parse(date) > Date.now()
+										}
+										onChange={(end_date) =>
+											setPayout({
+												end_date:
+													Date.parse(
+														new Date(end_date)
+													) / 1000,
+											})
+										}
+									/>
+								</ScCard>
 							</ScFormControl>
-							<ScCard>
-								<DateTimePicker
-									currentDate={
-										new Date(payout.end_date * 1000)
-									}
-									isInvalidDate={(date) =>
-										Date.parse(date) > Date.now()
-									}
-									onChange={(end_date) =>
-										setPayout({
-											end_date:
-												Date.parse(new Date(end_date)) /
-												1000,
-										})
-									}
-								/>
-							</ScCard>
 						</div>
 					</div>
 				</Box>
