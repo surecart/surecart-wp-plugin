@@ -23,10 +23,7 @@
 		"surecart/product-pagination"
 	],
 	"supports": {
-		"interactivity": {
-			"clientNavigation": true,
-			"interactive": true
-		}
+		"interactivity": true
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",

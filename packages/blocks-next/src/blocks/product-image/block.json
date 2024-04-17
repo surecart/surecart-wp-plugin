@@ -26,10 +26,7 @@
 		}
 	},
 	"supports": {
-		"interactivity": {
-			"clientNavigation": true,
-			"interactive": true
-		},
+		"interactivity": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,

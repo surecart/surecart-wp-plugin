@@ -22,10 +22,7 @@
 		"surecart/product-list/limit"
 	],
 	"supports": {
-		"interactivity": {
-			"clientNavigation": true,
-			"interactive": true
-		},
+		"interactivity": true,
 		"layout": {
 			"__experimentalDefault": "grid",
 			"__experimentalDefaultControls": {

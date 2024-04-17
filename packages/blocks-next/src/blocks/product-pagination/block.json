@@ -30,9 +30,7 @@
 		"showLabel": "showLabel"
 	},
 	"supports": {
-		"interactivity": {
-			"clientNavigation": true
-		},
+		"interactivity": true,
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]
