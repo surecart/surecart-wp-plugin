@@ -1,0 +1,58 @@
+$pagination-margin: 0.5em;
+
+.wp-block-surecart-product-pagination {
+	margin-top: 1em;
+	// Increased specificity to override blocks default margin.
+	> .wp-block-surecart-product-pagination-next,
+	> .wp-block-surecart-product-pagination-previous,
+	> .wp-block-surecart-product-pagination-numbers {
+		/*rtl:ignore*/
+		margin-right: $pagination-margin;
+		margin-bottom: $pagination-margin;
+
+		&:last-child {
+			/*rtl:ignore*/
+			margin-right: 0;
+		}
+		&.disabled {
+			pointer-events: none;
+			text-decoration: none;
+			opacity: 0.5;
+		}
+	}
+
+	// This moves the next link to the right side of the container,
+	// which is important when it's the only block displayed
+	// and the block has a "space-between" justification.
+	&.is-content-justification-space-between {
+		> .wp-block-surecart-product-pagination-next:last-of-type {
+			margin-inline-start: auto;
+		}
+		> .wp-block-surecart-product-pagination-previous:first-child {
+			margin-inline-end: auto;
+		}
+	}
+
+	.wp-block-surecart-product-pagination-previous-arrow {
+		margin-right: 1ch;
+		display: inline-block; // Needed so that the transform works.
+		// chevron(`»`) symbol doesn't need the mirroring by us.
+		&:not(.is-arrow-chevron) {
+			// Flip for RTL.
+			transform: scaleX(1) #{'/*rtl:scaleX(-1);*/'}; // This points the arrow right for LTR and left for RTL.
+		}
+	}
+	.wp-block-surecart-product-pagination-next-arrow {
+		margin-left: 1ch;
+		display: inline-block; // Needed so that the transform works.
+		// chevron(`»`) symbol doesn't need the mirroring by us.
+		&:not(.is-arrow-chevron) {
+			// Flip for RTL.
+			transform: scaleX(1) #{'/*rtl:scaleX(-1);*/'}; // This points the arrow right for LTR and left for RTL.
+		}
+	}
+
+	&.aligncenter {
+		justify-content: center;
+	}
+}
