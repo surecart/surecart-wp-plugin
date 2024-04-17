@@ -64,5 +64,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
+	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js"
 }
