@@ -110,7 +110,7 @@ class ProductPostTypeService {
 			// get operator.
 			$operator = $query['operator'] ?? 'IN';
 			// add the where clause.
-			$where .= " $relation {$wpdb->posts}.ID IN (SELECT post_id FROM {$option_value_table} WHERE value $operator ($values))";
+			$where .= " $relation {$wpdb->posts}.ID IN (SELECT post_id FROM {$option_value_table} WHERE value $operator ($values) AND name = '{$query['name']}')";
 		}
 
 		return $where;

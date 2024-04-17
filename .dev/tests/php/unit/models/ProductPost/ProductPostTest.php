@@ -72,16 +72,15 @@ class ProductPostTest extends SureCartUnitTestCase
 			]
 		))->sync();
 
-		// get the product post
-		$product = sc_get_product('testid');
+		$post = $product->post();
 
-		$this->assertNotEmpty($product->ID);
+		$this->assertNotEmpty($post->ID);
 		$terms = get_terms( array(
 			'taxonomy'   => 'sc_account',
 			'hide_empty' => false,
 		) );
 
-		$terms = get_the_terms($product->ID, 'sc_account');
+		$terms = get_the_terms($post->ID, 'sc_account');
 		$this->assertNotEmpty($terms);
 		$this->assertSame('test', $terms[0]->slug);
 	}
@@ -204,15 +203,15 @@ class ProductPostTest extends SureCartUnitTestCase
 		))->sync();
 
 		// get the product post
-		$product = sc_get_product('testid');
+		$post = $product->post();
 
-		$this->assertNotEmpty($product);
-		$this->assertSame('testid', $product->sc_id);
-		$this->assertSame('Other sneakers.', $product->post_title);
-		$this->assertSame('sc_archived', $product->post_status);
-		$this->assertSame('fancy-sneakers', $product->post_name);
-		$this->assertSame($product->prices['data'][0]['amount'], 9900);
-		$this->assertSame($product->prices['data'][1]['amount'], 9800);
+		$this->assertNotEmpty($post);
+		$this->assertSame('testid', $post->sc_id);
+		$this->assertSame('Other sneakers.', $post->post_title);
+		$this->assertSame('sc_archived', $post->post_status);
+		$this->assertSame('fancy-sneakers', $post->post_name);
+		$this->assertSame($post->prices['data'][0]['amount'], 9900);
+		$this->assertSame($post->prices['data'][1]['amount'], 9800);
 	}
 
 	/**
@@ -295,9 +294,13 @@ class ProductPostTest extends SureCartUnitTestCase
 		$product->sync();
 		$product->sync();
 
-		$products = sc_get_products([
-			'sc_id' => 'testid'
+		$products = get_posts([
+			'meta_query' => [
+				'key' => 'sc_id',
+				'value' => 'testid'
+			]
 		]);
+
 		$this->assertSame(1, count($products));
 
 		$items = VariantOptionValue::where('product_id', 'testid')->get();
