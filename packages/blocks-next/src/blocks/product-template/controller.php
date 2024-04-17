@@ -43,5 +43,9 @@ $products = Product::where(
 
 $products = $products->data;
 
+if ( empty( $products ) ) {
+	return 'file:./empty.php';
+}
+
 // return the view.
 return 'file:./view.php';

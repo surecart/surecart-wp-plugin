@@ -88,6 +88,7 @@ export default ({
 			isActive: layoutType === 'grid',
 		},
 	];
+
 	if (loading) {
 		return (
 			<Placeholder>
@@ -111,9 +112,6 @@ export default ({
 					id: product?.id,
 					'surecart/productId': product?.id,
 				}))}
-				itemProps={{
-					className: 'product-item',
-				}}
 				clientId={clientId}
 				className={className}
 			/>

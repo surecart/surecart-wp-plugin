@@ -14,6 +14,7 @@
 	"allowedBlocks": [
 		"surecart/product-image",
 		"surecart/product-name",
+		"surecart/product-title-v2",
 		"surecart/product-price-v2"
 	],
 	"ancestor": ["surecart/product-list"],
@@ -60,5 +61,6 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-list"
+	"viewScriptModule": "@surecart/product-list",
+	"style": "file:./style-index.css"
 }
