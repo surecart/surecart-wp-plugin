@@ -33,15 +33,14 @@ $products = Product::where(
 	]
 );
 
-
-$pages = [];
-for ($i = 1; $i <= $products->totalPages(); $i++) {
-	$pages[] = [
-		'href' => esc_url( add_query_arg( $page_key, $i ) ),
+// build up pagination.
+$pages = array_map(function($i) use ($page_key) {
+	return [
+		'href' => esc_url(add_query_arg($page_key, $i)),
 		'name' => $i,
 		'key'  => 'product-pagination-numbers' . $i,
 	];
-}
+}, range(1, $products->totalPages()));
 
 // return the view.
 return 'file:./view.php';

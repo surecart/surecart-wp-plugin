@@ -18,153 +18,140 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
-const { state, callbacks, actions } = store(
-	'surecart/product-list',
-	{
-		actions: {
-			*navigate(event) {
-				const ctx = getContext();
-				const { ref } = getElement();
-				if (isValidLink(ref) && isValidEvent(event)) {
-					event.preventDefault();
-
-					const { actions } = yield import(
-						/* webpackIgnore: true */
-						'@wordpress/interactivity-router'
-					);
-					yield actions.navigate(ref.href);
-					ctx.url = ref.href;
-				}
-			},
-			*prefetch() {
-				const { ref } = getElement();
-				if (isValidLink(ref)) {
-					const { actions } = yield import(
-						/* webpackIgnore: true */
-						'@wordpress/interactivity-router'
-					);
-					yield actions.prefetch(ref.href);
-				}
-			},
-			*sort(event) {
-				const ctx = getContext();
-				const { actions, state: routerState } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-				const url = new URL(routerState?.url);
-				url.searchParams.set(
-					`products-${ctx?.blockId}-sort`,
-					event?.target?.value
-				);
-				actions.navigate(url.toString());
-			},
-			*filter(event) {
-				const { actions, state: routerState } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-				const ctx = getContext();
-				const newValue = event.target.value;
-				const url = new URL(routerState?.url);
-				const existingParams = url.searchParams.getAll(
-					`products-${ctx?.blockId}-filter`
-				);
-				const currentFilter = state[ctx.blockId]?.filter || [];
-				const updatedFilter = [
-					...new Set([...currentFilter, newValue, ...existingParams]),
-				];
-				const filtersString = updatedFilter.join(',');
-				update({
-					filter: updatedFilter,
-				});
-				url.searchParams.set(
-					`products-${ctx?.blockId}-filter`,
-					filtersString
-				);
-				actions.navigate(url.toString());
-			},
-			*removeFilter(event) {
-				// navigate to new url
-				const { actions, state: routerState } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-				const { ref } = getElement();
-				// remove filter id from state
-				const ctx = getContext();
-				const filterId = ref?.id;
-				const currentFilter = state[ctx.blockId]?.filter || [];
-				const updatedFilter = currentFilter.filter(
-					(id) => id !== filterId
-				);
-				const url = new URL(routerState?.url);
-				if (updatedFilter.length === 0) {
-					url.searchParams.delete(`products-${ctx?.blockId}-filter`);
-				} else {
-					url.searchParams.set(
-						`products-${ctx?.blockId}-filter`,
-						updatedFilter.join(',')
-					);
-				}
-				update({
-					filter: updatedFilter,
-				});
-				actions.navigate(url.toString());
-			},
-			*onSearchSubmit(event) {
+const { state, callbacks, actions } = store('surecart/product-list', {
+	actions: {
+		*navigate(event) {
+			const { url } = getContext();
+			const { ref } = getElement();
+			if (isValidLink(ref) && isValidEvent(event)) {
 				event.preventDefault();
+				const { actions } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+				yield actions.navigate(ref.href);
+				url = ref.href;
+			}
+		},
+		*prefetch() {
+			const { ref } = getElement();
+			if (isValidLink(ref)) {
+				const { actions } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+				yield actions.prefetch(ref.href);
+			}
+		},
+		*sort(event) {
+			const { blockId } = getContext();
+			const { actions, state: routerState } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			const url = new URL(routerState?.url);
+			url.searchParams.set(
+				`products-${blockId}-sort`,
+				event?.target?.value
+			);
+			actions.navigate(url.toString());
+		},
+		*filter(event) {
+			const { actions, state: routerState } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			const { blockId } = getContext();
+			const newValue = event.target.value;
+			const url = new URL(routerState?.url);
+			const existingParams = url.searchParams.getAll(
+				`products-${blockId}-filter`
+			);
+			const currentFilter = state[blockId]?.filter || [];
+			const updatedFilter = [
+				...new Set([...currentFilter, newValue, ...existingParams]),
+			];
+			const filtersString = updatedFilter.join(',');
+			update({
+				filter: updatedFilter,
+			});
+			url.searchParams.set(`products-${blockId}-filter`, filtersString);
+			actions.navigate(url.toString());
+		},
+		*removeFilter() {
+			// navigate to new url
+			const { actions, state: routerState } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			const { ref } = getElement();
+			// remove filter id from state
+			const { blockId } = getContext();
+			const filterId = ref?.id;
+			const currentFilter = state[blockId]?.filter || [];
+			const updatedFilter = currentFilter.filter((id) => id !== filterId);
+			const url = new URL(routerState?.url);
+			if (updatedFilter.length === 0) {
+				url.searchParams.delete(`products-${blockId}-filter`);
+			} else {
+				url.searchParams.set(
+					`products-${blockId}-filter`,
+					updatedFilter.join(',')
+				);
+			}
+			update({
+				filter: updatedFilter,
+			});
+			actions.navigate(url.toString());
+		},
+		*onSearchSubmit(event) {
+			event.preventDefault();
+			const { actions, state: routerState } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			const { ref } = getElement();
+			// remove filter id from state
+			const { blockId } = getContext();
+			const searchValue = ref?.querySelector(
+				'.wp-block-surecart-product-list-search-input'
+			)?.value;
+			const url = new URL(routerState?.url);
+			url.searchParams.set(`products-${blockId}-search`, searchValue);
+			actions.navigate(url.toString());
+		},
+		*onSearchClear(event) {
+			if (!event.target.value) {
 				const { actions, state: routerState } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
 				);
-				const { ref } = getElement();
-				// remove filter id from state
-				const ctx = getContext();
-				const searchValue = ref?.querySelector(
-					'.wp-block-surecart-product-list-search-input'
-				)?.value;
-				const url = new URL(routerState?.url);
-				url.searchParams.set(
-					`products-${ctx?.blockId}-search`,
-					searchValue
-				);
-				actions.navigate(url.toString());
-			},
-			*onSearchClear(event) {
-				if (!event.target.value) {
-					const { actions, state: routerState } = yield import(
-						/* webpackIgnore: true */
-						'@wordpress/interactivity-router'
-					);
-					const ctx = getContext();
-					const url = new URL(routerState?.url);
-					url.searchParams.delete(`products-${ctx?.blockId}-search`);
-					actions.navigate(url.toString());
-				}
-			},
-		},
-		callbacks: {
-			/** Get the contextual state. */
-			getState(prop) {
 				const { blockId } = getContext();
-				return state[blockId]?.[prop] || false;
-			},
-			*prefetch() {
-				const { url } = getContext();
-				const { ref } = getElement();
-				if (url && isValidLink(ref)) {
-					const { actions } = yield import(
-						/* webpackIgnore: true */
-						'@wordpress/interactivity-router'
-					);
-					yield actions.prefetch(ref.href);
-				}
-			},
+				const url = new URL(routerState?.url);
+				url.searchParams.delete(`products-${blockId}-search`);
+				actions.navigate(url.toString());
+			}
 		},
 	},
-	{ lock: true }
-);
+	callbacks: {
+		/** Get the contextual state. */
+		getState(prop) {
+			const { blockId } = getContext();
+			return state[blockId]?.[prop] || false;
+		},
+		*prefetch() {
+			const { url } = getContext();
+			const { ref } = getElement();
+			if (url && isValidLink(ref)) {
+				const { actions } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+				yield actions.prefetch(ref.href);
+			}
+		},
+	},
+});
 
 /**
  * Update state.
