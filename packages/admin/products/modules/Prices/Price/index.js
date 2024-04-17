@@ -209,7 +209,39 @@ export default ({ price, product }) => {
 									updatePrice={editPrice}
 								/>
 							)}
-
+						</div>
+					</div>
+					<div
+						css={css`
+							display: flex;
+							justify-content: space-between;
+						`}
+						slot="footer"
+					>
+						<div>
+							<ScButton
+								type="primary"
+								submit
+								isBusy={isSaving}
+								disabled={isSaving}
+							>
+								{__('Update Price', 'surecart')}
+							</ScButton>
+							<ScButton
+								type="text"
+								onClick={() => {
+									setCurrentPrice(price);
+									setIsOpen(false);
+								}}
+							>
+								{__('Cancel', 'surecart')}
+							</ScButton>
+						</div>
+						<div
+							css={css`
+								align-content: center;
+							`}
+						>
 							{product?.tax_enabled &&
 								scData?.tax_protocol?.tax_enabled &&
 								scData?.tax_protocol?.tax_behavior ===
@@ -235,25 +267,6 @@ export default ({ price, product }) => {
 								)}
 						</div>
 					</div>
-					<ScButton
-						type="primary"
-						submit
-						slot="footer"
-						isBusy={isSaving}
-						disabled={isSaving}
-					>
-						{__('Save Price', 'surecart')}
-					</ScButton>
-					<ScButton
-						type="text"
-						onClick={() => {
-							setCurrentPrice(price);
-							setIsOpen(false);
-						}}
-						slot="footer"
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>
 					{isSaving && <sc-block-ui spinner></sc-block-ui>}
 				</ScDrawer>
 			</ScForm>

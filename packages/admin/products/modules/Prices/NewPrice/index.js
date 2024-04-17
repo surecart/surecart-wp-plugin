@@ -169,34 +169,50 @@ export default ({ onRequestClose, product }) => {
 						)}
 					</div>
 				</div>
-
-				<ScButton
-					type="primary"
-					isBusy={loading}
-					disabled={loading}
-					submit
+				<div
+					css={css`
+						display: flex;
+						justify-content: space-between;
+					`}
 					slot="footer"
 				>
-					{__('Create Price', 'surecart')}
-				</ScButton>
-				<ScButton type="text" onClick={onClose} slot="footer">
-					{__('Cancel', 'surecart')}
-				</ScButton>
-
-				{product?.tax_enabled &&
-					scData?.tax_protocol?.tax_enabled &&
-					scData?.tax_protocol?.tax_behavior === 'inclusive' && (
+					<div>
 						<ScButton
-							size="small"
-							type="text"
-							target="_blank"
-							href="admin.php?page=sc-settings&tab=tax_protocol"
-							slot="footer"
+							type="primary"
+							isBusy={loading}
+							disabled={loading}
+							submit
 						>
-							{__('Tax is included', 'surecart')}
-							<ScIcon name="external-link" slot="suffix" />
+							{__('Create Price', 'surecart')}
 						</ScButton>
-					)}
+						<ScButton type="text" onClick={onClose}>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</div>
+					<div
+						css={css`
+							align-content: center;
+						`}
+					>
+						{product?.tax_enabled &&
+							scData?.tax_protocol?.tax_enabled &&
+							scData?.tax_protocol?.tax_behavior ===
+								'inclusive' && (
+								<ScButton
+									size="small"
+									type="text"
+									target="_blank"
+									href="admin.php?page=sc-settings&tab=tax_protocol"
+								>
+									{__('Tax is included', 'surecart')}
+									<ScIcon
+										name="external-link"
+										slot="suffix"
+									/>
+								</ScButton>
+							)}
+					</div>
+				</div>
 
 				{loading && <sc-block-ui spinner></sc-block-ui>}
 			</ScDrawer>
