@@ -2,10 +2,13 @@
 <?php
 use SureCart\Models\Product;
 
-$block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
-$page_key = 'products-' . $block_id . '-page';
+$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
+$page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-page';
 $page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
-$per_page = $attributes['limit'] ?? 15;
+$sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
+$sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
+$search_key = isset( $block_id ) ? 'products-' . $block_id . '-search' : 'products-search';
+$search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $search_key ] );
 $filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
 $filter = empty( $_GET[ $filter_key ] ) ? '' : sanitize_text_field( $_GET[ $filter_key ] );
 $collection_ids = $filter ? explode( ',', $filter ) : [];
@@ -14,29 +17,24 @@ $products = Product::where(
 	[
 		'archived' => false,
 		'status'   => ['published'],
-		'expand' => [
+		'expand'   => [
 			'prices',
 			'featured_product_media',
 			'product_media.media'
 		],
+		'sort'     => $sort,
+		'product_collection_ids' => $collection_ids,
+		'query'    => $search,
 	]
 )->paginate(
 	[
-		'per_page' => $per_page,
+		'per_page' => $attributes['limit'] ?? 15,
 		'page'     => $page,
 	]
 );
 
-wp_interactivity_state(
-	'surecart/product-list',
-	array(
-		$block_id => array (
-			'products' => $products,
-			'filter' => $collection_ids
-		)
-	),
-);
 
+$pages = [];
 for ($i = 1; $i <= $products->totalPages(); $i++) {
 	$pages[] = [
 		'href' => esc_url( add_query_arg( $page_key, $i ) ),

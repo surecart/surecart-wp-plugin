@@ -1,6 +1,5 @@
 <select
-    <?php echo get_block_wrapper_attributes( array( 'class' => $class . ' sc-dropdown' ) ); ?> 
-    style="<?php echo esc_attr( $style ); ?>" 
+    <?php echo get_block_wrapper_attributes( array( 'class' => 'sc-dropdown' ) ); ?>
     data-wp-on--input="surecart/product-list::actions.filter"
 >
     <option value=""><?php esc_html_e( 'Filter', 'surecart' ); ?></option>

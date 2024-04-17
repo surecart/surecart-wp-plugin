@@ -1,11 +1,9 @@
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<?php foreach ($products as $product) : ?>
-		<div
-			class="product-item"
-			<?php echo wp_interactivity_data_wp_context(['product' => $product]); ?>
-			data-wp-key="<?php echo esc_attr( $product->id ); ?>"
-		>
+	<template
+		data-wp-each--product="context.products"
+		data-wp-each-key="context.product.id">
+		<div class="product-item">
 			<?php echo $content ?>
 		</div>
-	<?php endforeach; ?>
+	</template>
 </div>
