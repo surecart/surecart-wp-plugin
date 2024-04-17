@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { getFormattedPrice } from '../../../../util';
 import BuyLink from './BuyLink';
 import { ScMenuDivider } from '@surecart/components-react';
+import { SortableKnob } from 'react-easy-sort';
 
 export default ({
 	isOpen,
@@ -40,7 +41,7 @@ export default ({
 				{!!price?.trial_duration_days && (
 					<>
 						{' '}
-						<sc-tag type="info" size="small">
+						<sc-tag type="info">
 							{__('Free Trial', 'surecart')}
 						</sc-tag>
 					</>
@@ -55,7 +56,7 @@ export default ({
 				{!!price?.setup_fee_enabled && (
 					<>
 						{' '}
-						<sc-tag type="default" size="small">
+						<sc-tag type="default">
 							{price?.setup_fee_amount < 0
 								? __('Discount', 'surecart')
 								: __('Setup Fee', 'surecart')}
@@ -73,7 +74,6 @@ export default ({
 				return (
 					<sc-tag
 						type="primary"
-						size="small"
 						style={{
 							'--sc-tag-primary-background-color': '#f3e8ff',
 							'--sc-tag-primary-color': '#6b21a8',
@@ -84,16 +84,10 @@ export default ({
 				);
 			}
 			return (
-				<sc-tag type="success" size="small">
-					{__('Subscription', 'surecart')}
-				</sc-tag>
+				<sc-tag type="success">{__('Subscription', 'surecart')}</sc-tag>
 			);
 		}
-		return (
-			<sc-tag type="info" size="small">
-				{__('One Time', 'surecart')}
-			</sc-tag>
-		);
+		return <sc-tag type="info">{__('One Time', 'surecart')}</sc-tag>;
 	};
 
 	/** Header name */
@@ -102,74 +96,98 @@ export default ({
 			<div
 				css={css`
 					display: grid;
-					gap: 4px;
+					gap: 0.75rem;
 				`}
 			>
-				<div>
-					{priceType()}
-					{trial()}
-					{setupFee()}
-				</div>
-
 				<div
 					css={css`
 						display: flex;
 						align-items: center;
-						gap: 0.5em;
+						gap: 0.75rem;
 						flex-wrap: wrap;
 					`}
 				>
-					{!!price?.name && (
-						<div>
-							<strong>{price?.name}</strong> &mdash;
-						</div>
-					)}
-					{price?.ad_hoc ? (
-						__('Custom Amount', 'surecart')
-					) : (
-						<>
-							{!!price?.scratch_amount &&
-								price?.scratch_amount > price?.amount && (
-									<div
-										css={css`
-											font-weight: bold;
-											font-size: 14px;
-											opacity: 0.75;
-											text-decoration: line-through;
-										`}
-									>
-										{getFormattedPrice({
-											amount: price?.scratch_amount,
-											currency:
-												price?.currency ||
-												scData.currency_code,
-										})}
-									</div>
-								)}
-							<div
-								css={css`
-									font-weight: bold;
-									font-size: 14px;
-								`}
-							>
-								{getFormattedPrice({
-									amount: price?.amount,
-									currency:
-										price?.currency || scData.currency_code,
-								})}
-							</div>
-						</>
-					)}{' '}
-					<div
-						css={css`
-							opacity: 0.75;
-							line-height: 1;
-						`}
-					>
-						{intervalString(price, {
-							labels: { interval: __('every', 'surecart') },
-						})}
+					<SortableKnob>
+						<ScIcon
+							name="drag"
+							css={css`
+								font-size: 16px;
+								cursor: grab;
+							`}
+						/>
+					</SortableKnob>
+					<div>
+						{!!price?.name && (
+							<span>
+								<strong>{price?.name}</strong>{' '}
+								<span
+									css={css`
+										padding: 0 2px;
+									`}
+								>
+									&bull;
+								</span>{' '}
+							</span>
+						)}
+						{price?.ad_hoc ? (
+							__('Custom Amount', 'surecart')
+						) : (
+							<>
+								{!!price?.scratch_amount &&
+									price?.scratch_amount > price?.amount && (
+										<>
+											<span
+												css={css`
+													font-weight: bold;
+													font-size: 14px;
+													opacity: 0.75;
+													text-decoration: line-through;
+												`}
+											>
+												{getFormattedPrice({
+													amount: price?.scratch_amount,
+													currency:
+														price?.currency ||
+														scData.currency_code,
+												})}
+											</span>{' '}
+										</>
+									)}
+								<span
+									css={css`
+										font-weight: bold;
+										font-size: 14px;
+									`}
+								>
+									{getFormattedPrice({
+										amount: price?.amount,
+										currency:
+											price?.currency ||
+											scData.currency_code,
+									})}
+								</span>
+							</>
+						)}{' '}
+						<span
+							css={css`
+								opacity: 0.75;
+								line-height: 1;
+							`}
+						>
+							{intervalString(price, {
+								labels: { interval: __('every', 'surecart') },
+							})}
+						</span>
 					</div>
+				</div>
+				<div
+					css={css`
+						font-size: 13px;
+					`}
+				>
+					{priceType()}
+					{trial()}
+					{setupFee()}
 				</div>
 			</div>
 		);
@@ -232,7 +250,10 @@ export default ({
 	const buttons = (
 		<div>
 			{price?.archived ? (
-				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
+				<>
+					<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
+					{renderDropdown()}
+				</>
 			) : (
 				<>
 					{renderDropdown()}

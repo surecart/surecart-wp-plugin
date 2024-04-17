@@ -59,13 +59,19 @@ export default ({ product, productId }) => {
 				title={__('Pricing', 'surecart')}
 				loading={loading}
 				footer={footer()}
+				css={
+					!loading &&
+					css`
+						* {
+							box-sizing: border-box;
+						}
+						.components-card-body {
+							padding: 0;
+						}
+					`
+				}
 			>
-				<div
-					css={css`
-						display: grid;
-						gap: 1em;
-					`}
-				>
+				<div>
 					<List prices={active} product={product}>
 						<ScEmpty icon="shopping-bag">
 							<ScSpacing>

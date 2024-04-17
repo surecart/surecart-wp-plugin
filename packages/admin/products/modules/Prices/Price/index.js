@@ -17,16 +17,16 @@ import Header from './Header';
 import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
 
 export default ({ price, product }) => {
-	// are the price details open?
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
-	const [saveEditedPriceError, setSaveEditedPriceError] = useState();
 	const [isSaving, setIsSaving] = useState(false);
 	const [currentPrice, setCurrentPrice] = useState(price);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
 	};
+
 	// get any save errors.
 	const { savePriceError } = useSelect(
 		(select) => {
@@ -41,14 +41,6 @@ export default ({ price, product }) => {
 		[currentPrice?.id]
 	);
 
-	// dispatchers.
-	const { deleteEntityRecord, saveEditedEntityRecord, saveEntityRecord } =
-		useDispatch(coreStore);
-	const savePrice = (options = {}) =>
-		saveEditedEntityRecord('surecart', 'price', currentPrice?.id, options);
-	const deletePrice = (options = {}) =>
-		deleteEntityRecord('surecart', 'price', currentPrice?.id, {}, options);
-
 	const saveEditedPrice = async (e) => {
 		e.stopPropagation();
 		try {
@@ -62,7 +54,7 @@ export default ({ price, product }) => {
 			});
 		} catch (e) {
 			console.error(e);
-			setSaveEditedPriceError(e);
+			setError(e);
 		} finally {
 			setIsSaving(false);
 		}
@@ -84,8 +76,16 @@ export default ({ price, product }) => {
 		if (!r) return;
 
 		try {
-			await editPrice({ archived: !currentPrice?.archived });
-			await savePrice({ throwOnError: true });
+			await saveEntityRecord(
+				'surecart',
+				'price',
+				{
+					...currentPrice,
+					archived: !currentPrice?.archived,
+				},
+				{ throwOnError: true }
+			);
+
 			createSuccessNotice(
 				currentPrice?.archived
 					? __('Price unarchived.', 'surecart')
@@ -114,7 +114,13 @@ export default ({ price, product }) => {
 
 		try {
 			setError(null);
-			await deletePrice({ throwOnError: true });
+			await deleteEntityRecord(
+				'surecart',
+				'price',
+				currentPrice?.id,
+				null,
+				{ throwOnError: true }
+			);
 			createSuccessNotice(__('Price deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -138,14 +144,13 @@ export default ({ price, product }) => {
 	return (
 		<div
 			css={css`
-				border: 1px solid
-					${currentPrice?.archived
-						? 'var(--sc-color-warning-300)'
-						: 'var(--sc-color-gray-300)'};
-				border-radius: var(--sc-border-radius-medium);
-				box-shadow: var(--sc-shadow-small);
-				display: grid;
-				background: #fff;
+				padding: 28px;
+				background: ${currentPrice?.archived
+					? 'var(--sc-color-warning-50)'
+					: 'white'};
+				border-bottom: 1px solid var(--sc-color-gray-200);
+				border-top: 1px solid var(--sc-color-gray-200);
+				margin-top: -1px;
 			`}
 		>
 			<Header
@@ -157,9 +162,6 @@ export default ({ price, product }) => {
 				variants={product?.variants}
 				stockEnabled={product?.stock_enabled}
 				onDelete={onDelete}
-				css={css`
-					padding: var(--sc-spacing-large);
-				`}
 				collapsible={true}
 			/>
 
@@ -168,7 +170,7 @@ export default ({ price, product }) => {
 			<ScForm onScFormSubmit={saveEditedPrice}>
 				<ScDrawer
 					label={__('Edit Price', 'surecart')}
-					style={{ '--sc-drawer-size': '600px' }}
+					style={{ '--sc-drawer-size': '32rem' }}
 					onScRequestClose={() => setIsOpen(false)}
 					open={isOpen}
 					stickyHeader
@@ -182,20 +184,13 @@ export default ({ price, product }) => {
 					>
 						<div
 							css={css`
+								padding: 30px;
 								display: grid;
-								gap: var(--sc-spacing-medium);
-								padding: var(--sc-spacing-x-large);
+								gap: 2em;
 							`}
 						>
-							{(saveEditedPriceError?.length ||
-								savePriceError?.length) && (
-								<Error
-									error={
-										savePriceError || saveEditedPriceError
-									}
-									setError={setSaveEditedPriceError}
-								/>
-							)}
+							<Error error={error} setError={setError} />
+
 							<PriceName
 								price={currentPrice}
 								updatePrice={editPrice}
@@ -223,6 +218,7 @@ export default ({ price, product }) => {
 							)}
 						</div>
 					</div>
+
 					<div
 						css={css`
 							display: flex;

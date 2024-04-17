@@ -36,15 +36,6 @@ export default ({
 					letter-spacing: var(--sc-input-label-letter-spacing, 0);
 				`}
 			>
-				<SortableKnob>
-					<ScIcon
-						name="drag"
-						css={css`
-							font-size: 16px;
-							cursor: grab;
-						`}
-					/>
-				</SortableKnob>
 				{children}
 			</div>
 			<div
@@ -63,12 +54,12 @@ export default ({
 				</div>
 				{collapsible && (
 					<ScButton
-						type="text"
-						circle
 						onClick={() => setIsOpen && setIsOpen(!isOpen)}
-						title={__('Edit Price', 'surecart')}
+						css={css`
+							margin-left: 10px;
+						`}
 					>
-						<ScIcon name="edit" />
+						{__('Edit', 'surecart')}
 					</ScButton>
 				)}
 			</div>

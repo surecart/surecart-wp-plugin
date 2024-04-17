@@ -13,7 +13,12 @@ import { ScInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ price, updatePrice }) => {
 	return (
-		<>
+		<div
+			css={css`
+				display: grid;
+				gap: var(--sc-spacing-medium);
+			`}
+		>
 			<ScSwitch
 				checked={price?.revoke_after_days}
 				onScChange={(e) =>
@@ -23,6 +28,12 @@ export default ({ price, updatePrice }) => {
 				}
 			>
 				{__('Expire access', 'surecart')}
+				<span slot="description">
+					{__(
+						'Automatically expire access to integrations and licenses after a set number of days.',
+						'surecart'
+					)}
+				</span>
 			</ScSwitch>
 			{!!price?.revoke_after_days && (
 				<ScInput
@@ -47,6 +58,6 @@ export default ({ price, updatePrice }) => {
 					<span slot="suffix">{__('days', 'surecart')}</span>
 				</ScInput>
 			)}
-		</>
+		</div>
 	);
 };

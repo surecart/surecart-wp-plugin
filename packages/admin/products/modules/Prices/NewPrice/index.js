@@ -101,7 +101,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 		<ScForm onScFormSubmit={onSubmit}>
 			<ScDrawer
 				label={__('Add A Price', 'surecart')}
-				style={{ '--sc-drawer-size': '600px' }}
+				style={{ '--sc-drawer-size': '32rem' }}
 				onScRequestClose={onClose}
 				open={isOpen}
 				stickyHeader
@@ -115,9 +115,9 @@ export default ({ isOpen, onRequestClose, product }) => {
 				>
 					<div
 						css={css`
+							padding: 30px;
 							display: grid;
-							gap: var(--sc-spacing-medium);
-							padding: var(--sc-spacing-x-large);
+							gap: 2em;
 						`}
 					>
 						<Error error={error} setError={setError} />
