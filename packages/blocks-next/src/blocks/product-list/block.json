@@ -24,7 +24,8 @@
 	],
 	"supports": {
 		"interactivity": {
-			"clientNavigation": true
+			"clientNavigation": true,
+			"interactive": true
 		}
 	},
 	"textdomain": "surecart",

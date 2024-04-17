@@ -23,7 +23,8 @@
 	],
 	"supports": {
 		"interactivity": {
-			"clientNavigation": true
+			"clientNavigation": true,
+			"interactive": true
 		},
 		"layout": {
 			"__experimentalDefault": "grid",
@@ -61,5 +62,6 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"viewScriptModule": "@surecart/product-list",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"render": "file:./view.php"
 }
