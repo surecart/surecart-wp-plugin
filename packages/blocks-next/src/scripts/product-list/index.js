@@ -27,7 +27,6 @@ const isValidEvent = (event) =>
 const { state } = store('surecart/product-list', {
 	actions: {
 		*navigate(event) {
-			const { url } = getContext();
 			const { ref } = getElement();
 			if (isValidLink(ref) && isValidEvent(event)) {
 				event.preventDefault();
@@ -36,7 +35,6 @@ const { state } = store('surecart/product-list', {
 					'@wordpress/interactivity-router'
 				);
 				yield actions.navigate(ref.href);
-				url = ref.href;
 			}
 		},
 		*prefetch() {

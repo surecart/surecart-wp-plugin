@@ -16,6 +16,10 @@
 		"limit": {
 			"type": "number",
 			"default": 15
+		},
+		"pagination_auto_scroll": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"allowedBlocks": [
@@ -25,7 +29,12 @@
 	"supports": {
 		"interactivity": true,
 		"layout": true,
-		"align": true
+		"align": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"],
+			"blockGap": true
+		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",

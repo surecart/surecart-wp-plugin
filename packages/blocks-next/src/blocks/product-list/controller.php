@@ -42,5 +42,8 @@ $pages = array_map(function($i) use ($page_key) {
 	];
 }, range(1, $products->totalPages()));
 
+$next_page_link = $products->hasNextPage() ? esc_url(add_query_arg($page_key, $page + 1)) : "";
+$previous_page_link =$products->hasPreviousPage() ? esc_url(add_query_arg($page_key, $page - 1)) : "";
+
 // return the view.
 return 'file:./view.php';

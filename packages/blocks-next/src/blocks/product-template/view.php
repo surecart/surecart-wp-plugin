@@ -3,7 +3,9 @@
 		data-wp-each--product="context.products"
 		data-wp-each-key="context.product.id">
 		<div class="product-item">
-			<?php echo $content ?>
+			<a data-wp-bind--href="context.product.permalink" class="product-item-link">
+				<?php echo $content ?>
+			</a>
 		</div>
 	</template>
 </div>

@@ -1,22 +1,25 @@
-.wp-block-surecart-product-image {
-	max-width: 100%;
-	aspect-ratio: 4 / 3;
+.wp-block-surecart-product-image__wrapper {
 	overflow: hidden;
 
-	> img {
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-		object-fit: contain;
-		display: block;
-		transition: transform var(--sc-transition-medium) ease;
+	&:hover img {
+		transform: scale(1.05);
 	}
+}
+.wp-block-surecart-product-image {
+	max-width: 100%;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	object-fit: contain;
+	display: block;
+	aspect-ratio: 4 / 3;
+	transition: transform var(--sc-transition-medium) ease;
 
-	&.sc-is-covered > img {
+	&.sc-is-covered {
 		object-fit: cover;
 	}
 
-	&.sc-is-contained > img {
+	&.sc-is-contained {
 		object-fit: contain;
 	}
 
@@ -24,9 +27,5 @@
 		width: 100%;
 		height: 100%;
 		background-color: var(--sc-color-gray-300);
-	}
-
-	&:hover img {
-		transform: scale(1.05);
 	}
 }

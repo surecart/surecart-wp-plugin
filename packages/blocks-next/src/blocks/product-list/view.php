@@ -5,11 +5,11 @@
     data-wp-init="callbacks.setQueryRef"
     <?php echo  wp_interactivity_data_wp_context(
 		[
-			'hasPreviousPage' => $products->hasPreviousPage(),
-			'hasNextPage' => $products->hasNextPage(),
-			'totalPages' => $products->totalPages(),
+			'nextPageLink' => $next_page_link,
+			'previousPageLink' => $previous_page_link,
 			'pages' => $pages,
 			'blockId' => $block_id,
+			'autoScroll' => (bool) $attributes['pagination_auto_scroll'] ?? true,
 			'products' => $products->data
 		]
 	); ?>

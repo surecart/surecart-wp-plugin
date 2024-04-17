@@ -1,5 +1,38 @@
 .product-item {
 	height: 100%;
 	box-sizing: border-box;
-	display: grid;
+	opacity: 0;
+	animation-duration: var(--sc-transition-fast);
+	animation-fill-mode: both;
+	animation-name: fadeInUp;
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-item-link {
+	box-sizing: border-box;
+	display: block;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 20px, 0);
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion) {
+	.product-item {
+		opacity: 1;
+		animation-name: none;
+	}
 }
