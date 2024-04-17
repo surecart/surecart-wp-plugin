@@ -121,13 +121,14 @@ export default ({ onRequestClose, product }) => {
 							padding: var(--sc-spacing-x-large);
 						`}
 					>
-						<sc-alert type="danger" open={error?.length}>
-							<span slot="title">{error}</span>
-							{additionalErrors.map((e) => (
-								<div>{e?.message}</div>
-							))}
-						</sc-alert>
-
+						{error?.length && (
+							<sc-alert type="danger" open={error?.length}>
+								<span slot="title">{error}</span>
+								{additionalErrors.map((e) => (
+									<div>{e?.message}</div>
+								))}
+							</sc-alert>
+						)}
 						<PriceName price={price} updatePrice={updatePrice} />
 
 						<ScSelect
