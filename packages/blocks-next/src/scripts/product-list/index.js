@@ -3,6 +3,9 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
+/**
+ * Check if the link is valid.
+ */
 const isValidLink = (ref) =>
 	ref &&
 	ref instanceof window.HTMLAnchorElement &&
@@ -10,6 +13,9 @@ const isValidLink = (ref) =>
 	(!ref.target || ref.target === '_self') &&
 	ref.origin === window.location.origin;
 
+/**
+ * Check if the event is a valid click event.
+ */
 const isValidEvent = (event) =>
 	event.button === 0 && // Left clicks only.
 	!event.metaKey && // Open in new tab (Mac).
@@ -18,7 +24,7 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
-const { state, callbacks, actions } = store('surecart/product-list', {
+const { state } = store('surecart/product-list', {
 	actions: {
 		*navigate(event) {
 			const { url } = getContext();
@@ -134,11 +140,6 @@ const { state, callbacks, actions } = store('surecart/product-list', {
 		},
 	},
 	callbacks: {
-		/** Get the contextual state. */
-		getState(prop) {
-			const { blockId } = getContext();
-			return state[blockId]?.[prop] || false;
-		},
 		*prefetch() {
 			const { url } = getContext();
 			const { ref } = getElement();
