@@ -14,7 +14,8 @@
 	"allowedBlocks": [
 		"surecart/product-image",
 		"surecart/product-title-v2",
-		"surecart/product-price-v2"
+		"surecart/product-price-v2",
+		"core/group"
 	],
 	"ancestor": ["surecart/product-list"],
 	"usesContext": [
