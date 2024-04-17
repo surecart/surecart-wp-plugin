@@ -44,7 +44,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 	};
 
 	const onSubmit = async (e) => {
-		e.preventDefault();
+		e.stopPropagation();
 		try {
 			setLoading(true);
 			await saveEntityRecord(
@@ -56,7 +56,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 				},
 				{ throwOnError: true }
 			);
-			createSuccessNotice(__('Price created.', 'surecart'), {
+			createSuccessNotice(__('Price added.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -107,6 +107,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 				style={{ '--sc-drawer-size': '600px' }}
 				onScRequestClose={onClose}
 				open={isOpen}
+				stickyHeader
 			>
 				<div
 					css={css`
