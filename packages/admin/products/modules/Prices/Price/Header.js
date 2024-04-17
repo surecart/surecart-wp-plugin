@@ -181,7 +181,12 @@ export default ({
 
 		return (
 			<ScDropdown slot="suffix" placement="bottom-end">
-				<ScButton type="text" slot="trigger" circle>
+				<ScButton
+					type="text"
+					slot="trigger"
+					circle
+					title={__('More Options', 'surecart')}
+				>
 					<ScIcon
 						name="more-horizontal"
 						style={{ fontSize: '18px' }}
@@ -226,19 +231,20 @@ export default ({
 				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
 			) : (
 				<>
+					{renderDropdown()}
 					{!!scData?.checkout_page_url && price?.id && (
 						<ScButton
 							className={'sc-price-copy'}
-							size="small"
+							circle
+							type="text"
 							onClick={() => setCopyDialog(true)}
+							title={__('Copy Links', 'surecart')}
 						>
-							<ScIcon name="clipboard" slot="prefix" />
-							{__('Copy Links', 'surecart')}
+							<ScIcon name="clipboard" />
 						</ScButton>
 					)}
 				</>
 			)}
-			{renderDropdown()}
 		</div>
 	);
 

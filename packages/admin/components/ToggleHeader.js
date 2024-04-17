@@ -66,6 +66,7 @@ export default ({
 						type="text"
 						circle
 						onClick={() => setIsOpen && setIsOpen(!isOpen)}
+						title={__('Edit Price', 'surecart')}
 					>
 						<ScIcon name="edit" />
 					</ScButton>
