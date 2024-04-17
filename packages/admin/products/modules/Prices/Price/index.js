@@ -49,14 +49,15 @@ export default ({ price, product }) => {
 	const deletePrice = (options = {}) =>
 		deleteEntityRecord('surecart', 'price', currentPrice?.id, {}, options);
 
-	const saveEditedPrice = async () => {
+	const saveEditedPrice = async (e) => {
+		e.stopPropagation();
 		try {
 			setIsSaving(true);
 			await saveEntityRecord('surecart', 'price', currentPrice, {
 				throwOnError: true,
 			});
 			setIsOpen(false);
-			createSuccessNotice(__('Price saved.', 'surecart'), {
+			createSuccessNotice(__('Price updated.', 'surecart'), {
 				type: 'snackbar',
 			});
 		} catch (e) {
@@ -163,12 +164,14 @@ export default ({ price, product }) => {
 			/>
 
 			<Error error={savePriceError || error} setError={setError} />
+
 			<ScForm onScFormSubmit={saveEditedPrice}>
 				<ScDrawer
 					label={__('Edit Price', 'surecart')}
 					style={{ '--sc-drawer-size': '600px' }}
 					onScRequestClose={() => setIsOpen(false)}
 					open={isOpen}
+					stickyHeader
 				>
 					<div
 						css={css`
@@ -184,7 +187,8 @@ export default ({ price, product }) => {
 								padding: var(--sc-spacing-x-large);
 							`}
 						>
-							{saveEditedPriceError?.length && (
+							{(saveEditedPriceError?.length ||
+								savePriceError?.length) && (
 								<Error
 									error={
 										savePriceError || saveEditedPriceError
