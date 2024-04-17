@@ -96,7 +96,7 @@ class Block extends ProductBlock {
 		return array_map(
 			function( $product_media ) use ( $product, $width ) {
 				$items = [
-					'src'    => esc_url( ( $product_media->getUrl( $width ) ) ),
+					'src'    => esc_url( $product_media->getUrl( $width ) ),
 					'alt'    => esc_attr( $product_media->media->alt ?? esc_url( $product_media->media->filename ) ?? $product->name ?? '' ),
 					'title'  => $product_media->media->title ?? '',
 					'width'  => $product_media->width,
