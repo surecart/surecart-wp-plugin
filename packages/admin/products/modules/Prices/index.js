@@ -105,8 +105,9 @@ export default ({ product, productId }) => {
 				{updating && <ScBlockUi spinner></ScBlockUi>}
 			</Box>
 
-			{!!newPriceModal && product?.id && (
+			{!!product?.id && (
 				<NewPrice
+					isOpen={newPriceModal}
 					onRequestClose={() => setNewPriceModal(false)}
 					product={product}
 				/>

@@ -21,7 +21,7 @@ const SETUP_AMOUNT_TYPES = {
 };
 
 export default ({ price, updatePrice }) => {
-	const amountType = price.setup_fee_amount < 0 ? 'discount' : 'fee';
+	const amountType = price?.setup_fee_amount < 0 ? 'discount' : 'fee';
 
 	return (
 		<ScUpgradeRequired
@@ -32,7 +32,7 @@ export default ({ price, updatePrice }) => {
 			`}
 		>
 			<ScSwitch
-				checked={price.setup_fee_enabled}
+				checked={price?.setup_fee_enabled}
 				onScChange={(e) =>
 					updatePrice({
 						setup_fee_enabled: e.target.checked,
@@ -52,7 +52,7 @@ export default ({ price, updatePrice }) => {
 				)}
 			</ScSwitch>
 
-			{price.setup_fee_enabled && (
+			{price?.setup_fee_enabled && (
 				<div
 					css={css`
 						display: flex;

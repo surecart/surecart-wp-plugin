@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, Global, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
 	ScForm,
@@ -18,7 +18,7 @@ import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 
-export default ({ onRequestClose, product }) => {
+export default ({ isOpen, onRequestClose, product }) => {
 	const [error, setError] = useState(null);
 	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -39,6 +39,7 @@ export default ({ onRequestClose, product }) => {
 			);
 			if (!r) return;
 		}
+		setPrice(null);
 		onRequestClose();
 	};
 
@@ -105,7 +106,7 @@ export default ({ onRequestClose, product }) => {
 				label={__('Add A Price', 'surecart')}
 				style={{ '--sc-drawer-size': '600px' }}
 				onScRequestClose={onClose}
-				open
+				open={isOpen}
 			>
 				<div
 					css={css`

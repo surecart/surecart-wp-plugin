@@ -18,7 +18,7 @@ export default ({ className, price, updatePrice }) => {
 			`}
 		>
 			<ScSwitch
-				checked={!!price.trial_duration_days}
+				checked={!!price?.trial_duration_days}
 				onScChange={(e) =>
 					updatePrice({
 						trial_duration_days: e.target.checked ? 15 : null,
