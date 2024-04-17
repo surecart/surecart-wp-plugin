@@ -13,7 +13,6 @@
 	},
 	"allowedBlocks": [
 		"surecart/product-image",
-		"surecart/product-name",
 		"surecart/product-title-v2",
 		"surecart/product-price-v2"
 	],

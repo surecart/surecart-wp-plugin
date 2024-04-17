@@ -13,16 +13,25 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
  */
 import HeadingLevelDropdown from '../../components/HeadingLebelDropdown';
-import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	PanelBody,
+	Placeholder,
+	Spinner,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 
 export default ({
 	attributes: { level, textAlign, isLink, rel, linkTarget },
 	setAttributes,
+	context: { 'surecart/productId': productId },
 }) => {
 	const TagName = 0 === level ? 'p' : 'h' + level;
 
@@ -31,6 +40,28 @@ export default ({
 			[`has-text-align-${textAlign}`]: textAlign,
 		}),
 	});
+
+	const { product, loading } = useSelect(
+		(select) => {
+			const queryArgs = ['surecart', 'product', productId];
+			return {
+				product: select(coreStore).getEntityRecord(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[productId]
+	);
+
+	if (loading) {
+		return (
+			<Placeholder>
+				<Spinner />
+			</Placeholder>
+		);
+	}
 
 	return (
 		<>
@@ -79,7 +110,9 @@ export default ({
 				</PanelBody>
 			</InspectorControls>
 
-			<TagName {...blockProps}>{__('Product Title', 'surecart')}</TagName>
+			<TagName {...blockProps}>
+				{product?.name || __('Product Name', 'surecart')}
+			</TagName>
 		</>
 	);
 };

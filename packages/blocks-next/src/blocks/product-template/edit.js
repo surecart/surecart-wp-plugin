@@ -16,7 +16,17 @@ import { useEffect } from '@wordpress/element';
 
 const TEMPLATE = [
 	['surecart/product-image'],
-	['surecart/product-name'],
+	[
+		'surecart/product-title-v2',
+		{
+			level: 2,
+			isLink: true,
+			style: {
+				typography: { fontSize: '1.25em' },
+				spacing: { margin: { top: '5px', bottom: '5px' } },
+			},
+		},
+	],
 	['surecart/product-price-v2'],
 ];
 
