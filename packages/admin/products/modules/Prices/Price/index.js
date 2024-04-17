@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -22,6 +22,7 @@ export default ({ price, product }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [currentPrice, setCurrentPrice] = useState(price);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const ref = useRef(null);
 	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
@@ -173,6 +174,7 @@ export default ({ price, product }) => {
 					style={{ '--sc-drawer-size': '32rem' }}
 					onScRequestClose={() => setIsOpen(false)}
 					open={isOpen}
+					onScAfterShow={() => ref.current.triggerFocus()}
 					stickyHeader
 				>
 					<div
@@ -194,6 +196,7 @@ export default ({ price, product }) => {
 							<PriceName
 								price={currentPrice}
 								updatePrice={editPrice}
+								ref={ref}
 							/>
 
 							{getPriceType() === 'subscription' && (

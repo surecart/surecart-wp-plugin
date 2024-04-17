@@ -9,7 +9,7 @@ import {
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -26,6 +26,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 	const [type, setType] = useState('once');
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const ref = useRef(null);
 
 	// update the price.
 	const updatePrice = (data) => {
@@ -105,6 +106,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 				onScRequestClose={onClose}
 				open={isOpen}
 				stickyHeader
+				onScAfterShow={() => ref.current.triggerFocus()}
 			>
 				<div
 					css={css`
@@ -122,7 +124,11 @@ export default ({ isOpen, onRequestClose, product }) => {
 					>
 						<Error error={error} setError={setError} />
 
-						<PriceName price={price} updatePrice={updatePrice} />
+						<PriceName
+							price={price}
+							updatePrice={updatePrice}
+							ref={ref}
+						/>
 
 						<ScSelect
 							label={__('Payment type', 'surecart')}
