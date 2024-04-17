@@ -17,6 +17,7 @@ import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
 import { getFormattedPrice } from '../../../../util';
 import BuyLink from './BuyLink';
+import { ScMenuDivider } from '@surecart/components-react';
 
 export default ({
 	isOpen,
@@ -194,18 +195,21 @@ export default ({
 				</ScButton>
 				<ScMenu>
 					{price?.id && !!onArchive && (
-						<ScMenuItem onClick={onArchive}>
-							<ScIcon
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-								name="archive"
-							/>
-							{price?.archived
-								? __('Un-Archive', 'surecart')
-								: __('Archive', 'surecart')}
-						</ScMenuItem>
+						<>
+							<ScMenuItem onClick={onArchive}>
+								<ScIcon
+									slot="prefix"
+									style={{
+										opacity: 0.5,
+									}}
+									name="archive"
+								/>
+								{price?.archived
+									? __('Un-Archive', 'surecart')
+									: __('Archive', 'surecart')}
+							</ScMenuItem>
+							<ScMenuDivider />
+						</>
 					)}
 					{!!onDelete && (
 						<ScMenuItem onClick={onDelete}>
