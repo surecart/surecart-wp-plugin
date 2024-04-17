@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.23.0
+Stable tag: 2.24.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,10 +305,12 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.24.0 - April 16th, 2024 =
-- New: Test processor for testing SureCart without connecting a payment processor.
-- Improvement: Store checkout form now defaults to test mode.
+= 2.24.0 - April 17th, 2024 =
+- New: Test processor for testing checkout flow without connecting a payment processor.
+- New: Restrict coupons to a maximum order subtotal.
+- Improvement: Store checkout form now defaults to test mode for new stores.
 - Fix: Issue with loading indicator not clearing when payment fails on offsite payments flow.
+- Fix: Issue with upsells always showing totals in USD in some cases.
 
 = 2.23.0 - April 10th, 2024 =
 - New: Live/Test mode admin bar toggle on checkout pages.
