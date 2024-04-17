@@ -17,10 +17,10 @@ import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
+import Error from '../../../../components/Error';
 
 export default ({ isOpen, onRequestClose, product }) => {
 	const [error, setError] = useState(null);
-	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [price, setPrice] = useState({});
 	const [type, setType] = useState('once');
@@ -62,10 +62,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -123,14 +120,8 @@ export default ({ isOpen, onRequestClose, product }) => {
 							padding: var(--sc-spacing-x-large);
 						`}
 					>
-						{error?.length && (
-							<sc-alert type="danger" open={error?.length}>
-								<span slot="title">{error}</span>
-								{additionalErrors.map((e) => (
-									<div>{e?.message}</div>
-								))}
-							</sc-alert>
-						)}
+						<Error error={error} setError={setError} />
+
 						<PriceName price={price} updatePrice={updatePrice} />
 
 						<ScSelect
