@@ -19,7 +19,6 @@ export const MockProcessor: FunctionalComponent<{ processor: Processor }> = ({ p
           {__('This is a test payment processor used to simulate test transactions. It is only available in test mode.', 'surecart')}
         </sc-payment-selected>
       </sc-card>
-      <sc-checkout-paystack-payment-provider />
     </sc-payment-method-choice>
   );
 };
