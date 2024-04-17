@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -20,6 +20,7 @@ export default ({ price, product }) => {
 	// are the price details open?
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
+	const [saveEditedPriceError, setSaveEditedPriceError] = useState();
 	const [isSaving, setIsSaving] = useState(false);
 	const [currentPrice, setCurrentPrice] = useState(price);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -59,9 +60,8 @@ export default ({ price, product }) => {
 				type: 'snackbar',
 			});
 		} catch (e) {
-			setIsOpen(false);
 			console.error(e);
-			setError(e);
+			setSaveEditedPriceError(e);
 		} finally {
 			setIsSaving(false);
 		}
@@ -184,6 +184,14 @@ export default ({ price, product }) => {
 								padding: var(--sc-spacing-x-large);
 							`}
 						>
+							{saveEditedPriceError?.length && (
+								<Error
+									error={
+										savePriceError || saveEditedPriceError
+									}
+									setError={setSaveEditedPriceError}
+								/>
+							)}
 							<PriceName
 								price={currentPrice}
 								updatePrice={editPrice}
