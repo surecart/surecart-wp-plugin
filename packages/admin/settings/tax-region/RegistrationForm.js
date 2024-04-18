@@ -18,7 +18,7 @@ const types = {
 	eu: 'eu_vat',
 	uk: 'gb_vat',
 };
-const zoneName = {
+export const zoneName = {
 	au: __('Country', 'surecart'),
 	eu: __('Country', 'surecart'),
 	uk: __('Country', 'surecart'),
@@ -26,11 +26,16 @@ const zoneName = {
 	us: __('State', 'surecart'),
 };
 
-export default ({ region, registration, onSubmitted, onDeleted }) => {
+export default ({
+	region,
+	registration,
+	registrations,
+	onSubmitted,
+	onDeleted,
+}) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [type, setType] = useState('other');
-	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const [taxType, setTaxType] = useState(
 		registration?.manual_rate ? 'manual' : 'automatic'
@@ -55,7 +60,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 		(select) => {
 			const queryArgs = [
 				'surecart',
-				'tax_zone',
+				'tax-zone',
 				{ context: 'edit', regions: [region], per_page: 100 },
 			];
 			return {
@@ -97,7 +102,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			setLoading(true);
 			await saveEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				{
 					...(registration?.id ? { id: registration?.id } : {}),
 					...data,
@@ -109,10 +114,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			onSubmitted();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -124,7 +126,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			setLoading(true);
 			await deleteEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				registration?.id,
 				{},
 				{ throwOnError: true }
@@ -132,14 +134,18 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			onDeleted();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
 	};
+
+	const isZoneRegistered = (zone) =>
+		(registrations || []).some((r) => r.tax_zone?.id === zone.id);
+
+	const availableZones = (zones || []).filter(
+		(zone) => !isZoneRegistered(zone)
+	);
 
 	return (
 		<ScForm
@@ -155,7 +161,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				unselect={false}
 				label={zoneName[region] || __('Region', 'surecart')}
 				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(zones || [])
+				choices={(availableZones || [])
 					.reverse()
 					.map(({ state_name, country_name, id }) => {
 						return {

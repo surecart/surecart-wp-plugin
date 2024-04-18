@@ -130,6 +130,8 @@ abstract class AdminModelEditController {
 		// pass app url.
 		$this->data['upgrade_url']          = \SureCart::config()->links->purchase;
 		$this->data['surecart_app_url']     = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
+		$this->data['account_id']           = \SureCart::account()->id ?? '';
+		$this->data['account_slug']         = \SureCart::account()->slug ?? '';
 		$this->data['api_url']              = \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']           = \SureCart::core()->assets()->getUrl();
 		$this->data['home_url']             = untrailingslashit( get_home_url() );

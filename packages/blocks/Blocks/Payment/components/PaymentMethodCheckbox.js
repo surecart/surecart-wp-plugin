@@ -8,6 +8,10 @@ export default ({
 	disabled,
 	id,
 }) => {
+	const helpTextElement = (
+		<div dangerouslySetInnerHTML={{ __html: help }}></div>
+	);
+
 	return (
 		<CheckboxControl
 			style={{
@@ -15,7 +19,7 @@ export default ({
 				opacity: disabled ? '0.5' : '1',
 			}}
 			label={name}
-			help={help}
+			help={helpTextElement}
 			disabled={disabled}
 			checked={!(disabled_methods || []).includes(id)}
 			onChange={(checked) => {

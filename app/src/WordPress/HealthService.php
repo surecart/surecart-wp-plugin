@@ -187,7 +187,7 @@ class HealthService {
 			),
 			'actions'     => 'critical' === $status ? sprintf(
 				'<a href="%s" class="button" target="_blank">%s</a>',
-				esc_url( untrailingslashit( SURECART_APP_URL ) . '/developer' ),
+				esc_url( untrailingslashit( SURECART_APP_URL ) . '/developer?switch_account_id=' . \SureCart::account()->id ),
 				__( 'Troubleshoot Connection', 'surecart' )
 			) : '',
 			'test'        => 'surecart_webhooks_test',

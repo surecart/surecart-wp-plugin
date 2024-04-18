@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
 
 import { Address, Checkout } from '../../../../types';
-import { fullShippingAddressRequired } from '@store/checkout/getters';
+import { fullShippingAddressRequired, shippingAddressRequired } from '@store/checkout/getters';
 import { formLoading } from '@store/form/getters';
 
 @Component({
@@ -119,7 +119,7 @@ export class ScOrderShippingAddress {
             postal_code: this.postalCodePlaceholder,
             state: this.statePlaceholder,
           }}
-          required={this.required}
+          required={this.required || shippingAddressRequired()}
           loading={formLoading()}
           address={this.address}
           show-name={this.showName}
@@ -131,7 +131,7 @@ export class ScOrderShippingAddress {
     return (
       <sc-compact-address
         ref={el => (this.input = el as any)}
-        required={this.required}
+        required={this.required || shippingAddressRequired()}
         loading={formLoading()}
         address={this.address}
         placeholders={{

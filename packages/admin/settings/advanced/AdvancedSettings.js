@@ -423,7 +423,7 @@ export default () => {
 			>
 				<ScButton
 					type="danger"
-					href={'https://app.surecart.com/account/edit'}
+					href={`https://app.surecart.com/account/edit?switch_account_id=${scData?.account_id}`}
 					target="_blank"
 					outline
 				>

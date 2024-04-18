@@ -48,6 +48,10 @@ add_filter(
 		$settings['render_callback'] = static function ( $attributes, $content, $block ) use ( $controller_path, $metadata ) {
 			$view = require $controller_path;
 
+			if ( ! $view ) {
+				return '';
+			}
+
 			// if not using 'file:', then it's content output.
 			$view_path = remove_block_asset_path_prefix( $view );
 			if ( $view_path === $view ) {
