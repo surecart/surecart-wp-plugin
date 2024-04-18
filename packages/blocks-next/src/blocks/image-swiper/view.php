@@ -65,11 +65,8 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 					?>
 					<div
 						class="swiper-slide sc-image-slider__thumb"
-						role="radio"
-						data-wp-bind--aria-checked="surecart/image-slider::context.isActiveSlide"
 						data-wp-key="<?php echo esc_attr( 'swiper-thumb-' . $thumbnail['id'] ); ?>"
 						<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'slideIndex' => (int) $thumb_index ) ) ); ?>
-						tabindex="0"
 					>
 						<img
 							src="<?php echo esc_url( $thumbnail['src'] ); ?>"
