@@ -2,12 +2,13 @@
  * Wordpress dependencies
  */
 import { store, getElement, getContext } from '@wordpress/interactivity';
+const { __, sprintf } = wp.i18n;
 
 /**
  * External dependencies
  */
 import Swiper from 'swiper';
-import { Thumbs, Navigation } from 'swiper/modules';
+import { Thumbs, Navigation, A11y } from 'swiper/modules';
 
 // controls the slider
 store('surecart/image-slider', {
@@ -62,12 +63,42 @@ store('surecart/image-slider', {
 				);
 
 			new Swiper(ref.querySelector('.sc-image-slider__swiper'), {
-				modules: [Thumbs],
+				modules: [Thumbs, A11y],
 				wrapperClass: 'sc-image-slider__swiper-wrapper',
 				direction: 'horizontal',
 				loop: false,
 				autoHeight: context.autoHeight,
 				centeredSlides: true,
+				a11y: {
+					enabled: true,
+					containerMessage: sprintf(
+						__(
+							'Products slide options section. There are %d options present.',
+							'surecart'
+						),
+						context.slideCount
+					),
+					prevSlideMessage: __(
+						'Go to previous product slide.',
+						'surecart'
+					),
+					firstSlideMessage: __(
+						'This is the first product slide.',
+						'surecart'
+					),
+					lastSlideMessage: __(
+						'This is the last product slide.',
+						'surecart'
+					),
+					nextSlideMessage: __(
+						'Go to next product slide.',
+						'surecart'
+					),
+					slideLabelMessage: __(
+						'Product slide {{index}} of {{slidesLength}}.',
+						'surecart'
+					),
+				},
 				...(context.hasThumbnails &&
 					thumbsSwiper && {
 						thumbs: {

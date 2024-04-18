@@ -15,7 +15,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 <div
 	class="sc-image-slider"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
-	data-wp-init="actions.init"
+	data-wp-init="surecart/image-slider::actions.init"
 	<?php
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
@@ -25,6 +25,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 				'autoHeight'         => ! empty( $attributes['auto_height'] ),
 				'isFixedHeight'      => empty( $attributes['auto_height'] ),
 				'hasThumbnails'      => $attributes['has_thumbnails'],
+				'slideCount'         => count( $images ),
 			)
 		)
 	);
@@ -53,13 +54,12 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 		?>
 		<div class="sc-image-slider__thumbs sc-image-slider__thumbs--has-navigation">
 		<div class="sc-image-slider__navigation sc-image-slider--is-prev" tabindex="0" role="button">
-			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to previous product slide.', 'surecart' ) ); ?></span>
 			<?php echo \SureCart::svg()->get( 'chevron-left' ); ?>
 		</div>
 
 		<div class="swiper swiper sc-image-slider__thumbs-swiper">
 			<?php // translators: Products slide options section. There are %d options present. ?>
-			<div class="sc-image-slider__swiper-wrapper" role="radiogroup" aria-label="<?php esc_attr( sprintf( __( 'Products slide options section. There are %d options present.', 'surecart' ), 4 ) ); ?>">
+			<div class="sc-image-slider__swiper-wrapper" role="radiogroup">
 				<?php
 				foreach ( $thumbnails as $thumb_index => $thumbnail ) {
 					?>
@@ -69,6 +69,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 						data-wp-bind--aria-checked="surecart/image-slider::context.isActiveSlide"
 						data-wp-key="<?php echo esc_attr( 'swiper-thumb-' . $thumbnail['id'] ); ?>"
 						<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'slideIndex' => (int) $thumb_index ) ) ); ?>
+						tabindex="0"
 					>
 						<img
 							src="<?php echo esc_url( $thumbnail['src'] ); ?>"
@@ -88,7 +89,6 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 		</div>
 
 		<div class="sc-image-slider__navigation sc-image-slider--is-next" tabindex="0" role="button">
-			<span class="sc-screen-reader-text"><?php echo esc_html( __( 'Go to next product slide.', 'surecart' ) ); ?></span>
 			<?php echo \SureCart::svg()->get( 'chevron-right' ); ?>
 		</div>
 	</div>
