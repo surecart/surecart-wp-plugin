@@ -55,7 +55,7 @@ class RestoreController  extends AdminController {
 
 		$post_status = get_post_status( $page_id );
 
-		if ( ! empty( get_post_status_object( $post_status )->label ) ) {
+		if ( ! empty( get_post_status_object( $post_status )->label ) && ! empty( $page_id ) ) {
 			$restored = wp_update_post(
 				[
 					'ID'          => $page_id,
