@@ -16,10 +16,10 @@ export default ({ price, updatePrice }) => {
 				checked={price?.ad_hoc}
 				onScChange={(e) => updatePrice({ ad_hoc: e.target.checked })}
 			>
-				{__('Customer chooses amount', 'surecart')}
+				{__('Pay what you want', 'surecart')}
 				<span slot="description">
 					{__(
-						'Allow customers to pay any amount they want.',
+						'Allow customers to pay any amount they want, ideal for donations or perceived value they place on your cause or service.',
 						'surecart'
 					)}
 				</span>

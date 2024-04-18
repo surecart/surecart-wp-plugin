@@ -30,7 +30,7 @@ export default ({ price, updatePrice }) => {
 				{__('Expire access', 'surecart')}
 				<span slot="description">
 					{__(
-						'Automatically expire access to integrations and licenses after a set number of days.',
+						'Access ends after the number of days you set. Integrations and licenses will deactivate automatically.',
 						'surecart'
 					)}
 				</span>
