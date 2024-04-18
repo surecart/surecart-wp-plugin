@@ -75,14 +75,26 @@
 		}
 	}
 
+	@media (min-width: 432px) {
+		@for $i from 2 through 12 {
+			.sc-has-#{$i}-thumbs .swiper-slide {
+				width: calc(100% / #{$i} - 8px);
+			}
+		}
+	}
+
 	/** Thumbnails **/
 	&__thumb {
 		cursor: pointer;
-		width: 100%;
+		margin-right: 10px;
 		background: rgba(0, 0, 0, 0.1);
 		border-radius: var(--sc-border-radius-medium);
 		border: none;
 		padding: 0;
+
+		&.swiper-slide {
+			width: calc(33.3333% - 8px);
+		}
 
 		img {
 			width: 100%;
@@ -112,10 +124,5 @@
 			background: rgba(0, 0, 0, 0.1);
 			border: none;
 		}
-	}
-
-	&__thumb.swiper-slide {
-		max-width: 200px;
-		margin-right: 10px;
 	}
 }
