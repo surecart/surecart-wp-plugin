@@ -113,4 +113,9 @@
 			border: none;
 		}
 	}
+
+	&__thumb.swiper-slide {
+		max-width: 200px;
+		margin-right: 10px;
+	}
 }

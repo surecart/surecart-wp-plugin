@@ -7,7 +7,7 @@ $attributes = array(
 	'has_thumbnails'      => true,
 );
 
-$product    = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ) )->find( 'b29dd028-b331-4ac9-896b-537ff39e8fc2' );
+$product    = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ) )->find( '78b2e3ec-4d3c-4976-886e-73f2c13f82ea' );
 $images     = $product->getDisplayImages( $content_width ?? 1170 );
 $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 ?>
