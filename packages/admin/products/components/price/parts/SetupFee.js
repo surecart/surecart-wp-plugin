@@ -34,6 +34,7 @@ export default ({ price, updatePrice }) => {
 				onScChange={(e) =>
 					updatePrice({
 						setup_fee_enabled: e.target.checked,
+						setup_fee_amount: 0,
 						...(!e.target.checked && {
 							setup_fee_name: null,
 							setup_fee_amount: 0,
