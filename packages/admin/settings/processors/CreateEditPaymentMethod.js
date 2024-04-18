@@ -129,10 +129,10 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 						updateData({ reusable: e.target.checked })
 					}
 				>
-					{__('Allow in Subscriptions/Installments?', 'surecart')}
+					{__('Allow in subscriptions or installments', 'surecart')}
 					<span slot="description">
 						{__(
-							'Let customers use this manual payment method in subscriptions or installments.',
+							'Let customers use this manual payment method for purchasing subscriptions or installments.',
 							'surecart'
 						)}
 					</span>
