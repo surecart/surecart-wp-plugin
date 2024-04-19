@@ -38,7 +38,7 @@ class AdminMenuPageService {
 	 *
 	 * @var array
 	 */
-	const MENU_HIDDEN_PAGES = array(
+	const MENU_CURRENT_OVERRIDES = array(
 		'sc-affiliate-payout-groups' => 'sc-affiliate-payouts',
 	);
 
@@ -49,6 +49,7 @@ class AdminMenuPageService {
 		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
 		add_action( 'admin_head', [ $this, 'adminMenuCSS' ] );
 		add_filter( 'parent_file', [ $this, 'forceSelect' ] );
+		add_filter( 'parent_file', [ $this, 'applyMenuOverrides' ] );
 
 		// Admin bar menus.
 		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
@@ -211,8 +212,6 @@ class AdminMenuPageService {
 			'forms'                   => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
 			'settings'                => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		];
-
-		add_filter( 'parent_file', array( $this, 'selectMenuHiddenPages' ) );
 	}
 
 	/**
@@ -302,12 +301,12 @@ class AdminMenuPageService {
 	 *
 	 * @return string
 	 */
-	public function selectMenuHiddenPages( $file ) {
+	public function applyMenuOverrides( $file ) {
 		global $plugin_page;
 
-		foreach ( self::MENU_HIDDEN_PAGES as $key => $value ) {
+		foreach ( self::MENU_CURRENT_OVERRIDES as $key => $value ) {
 			if ( $key === $plugin_page ) {
-				$plugin_page = $value;
+				$plugin_page = $value; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			}
 		}
 
