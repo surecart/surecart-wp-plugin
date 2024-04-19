@@ -79,6 +79,10 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 								height="<?php echo esc_attr( $thumbnail['height'] ); ?>"
 								loading="<?php echo esc_attr( $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager' ); ?>"
 							/>
+
+							<?php if ($thumb_index > $attributes['thumbnails_per_page']) : ?>
+								<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+							<?php endif; ?>
 						</div>
 						<?php
 					}
