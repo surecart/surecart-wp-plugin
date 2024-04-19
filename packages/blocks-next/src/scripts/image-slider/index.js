@@ -2,7 +2,7 @@
  * Wordpress dependencies
  */
 import { store, getElement, getContext } from '@wordpress/interactivity';
-const { __, sprintf } = wp.i18n;
+const { __ } = wp.i18n;
 
 /**
  * External dependencies
@@ -28,81 +28,96 @@ store('surecart/image-slider', {
 		init: () => {
 			const { ref } = getElement();
 			const context = getContext();
+			const { sliderOptions, thumbSliderOptions } = context;
 
+			const a11y = {
+				enabled: true,
+				prevSlideMessage: __('Go to previous slide.', 'surecart'),
+				firstSlideMessage: __('This is the first slide.', 'surecart'),
+				lastSlideMessage: __('This is the last slide.', 'surecart'),
+				nextSlideMessage: __('Go to next slide.', 'surecart'),
+				slideLabelMessage: __(
+					'Slide {{index}} of {{slidesLength}}.',
+					'surecart'
+				),
+			};
+
+			// get the thumbs container.
+			const thumbsContainer = ref.querySelector(
+				'.sc-image-slider__thumbs'
+			);
+			const thumbs = thumbsContainer.querySelector(
+				'.sc-image-slider__thumbs .swiper'
+			);
+
+			// if we have a thumbs container.
 			const thumbsSwiper =
-				context.hasThumbnails &&
-				new Swiper(
-					ref.querySelector('.sc-image-slider__thumbs-swiper'),
-					{
-						modules: [Navigation],
-						direction: 'horizontal',
-						wrapperClass: 'sc-image-slider__swiper-wrapper',
-						navigation: {
-							nextEl: ref.querySelector(
-								'.sc-image-slider--is-next'
+				!!thumbs &&
+				new Swiper(thumbs, {
+					modules: [Navigation],
+					direction: 'horizontal',
+					navigation: {
+						nextEl:
+							thumbsContainer.querySelector(
+								'.sc-image-slider-button__next'
+							) ||
+							thumbsContainer.querySelector(
+								'.swiper-button-next'
 							),
-							prevEl: ref.querySelector(
-								'.sc-image-slider--is-prev'
+						prevEl:
+							thumbsContainer.querySelector(
+								'.sc-image-slider-button__prev'
+							) ||
+							thumbsContainer.querySelector(
+								'.swiper-button-prev'
 							),
-						},
-						loop: false,
-						centerInsufficientSlides: true,
-						slideToClickedSlide: true,
-						watchSlidesProgress: true,
-						slidesPerView: Math.min(3, context.thumbnailsPerPage),
-						slidesPerGroup: Math.min(3, context.thumbnailsPerPage),
-						spaceBetween: 10,
-						breakpointsBase: 'container',
-						breakpoints: {
-							320: {
-								slidesPerView: context.thumbnailsPerPage,
-								slidesPerGroup: context.thumbnailsPerPage,
-							},
-						},
-					}
-				);
-
-			new Swiper(ref.querySelector('.sc-image-slider__swiper'), {
-				modules: [Thumbs, A11y, Navigation],
-				wrapperClass: 'sc-image-slider__swiper-wrapper',
-				direction: 'horizontal',
-				loop: false,
-				autoHeight: context.autoHeight,
-				centeredSlides: true,
-				a11y: {
-					enabled: true,
-					prevSlideMessage: __('Go to previous slide.', 'surecart'),
-					firstSlideMessage: __(
-						'This is the first slide.',
-						'surecart'
-					),
-					lastSlideMessage: __('This is the last slide.', 'surecart'),
-					nextSlideMessage: __('Go to next slide.', 'surecart'),
-					slideLabelMessage: __(
-						'Slide {{index}} of {{slidesLength}}.',
-						'surecart'
-					),
-				},
-				navigation: {
-					nextEl: ref.querySelector(
-						'.sc-image-slider__swiper .swiper-button-next'
-					),
-					prevEl: ref.querySelector(
-						'.sc-image-slider__swiper .swiper-button-prev'
-					),
-				},
-				...(context.hasThumbnails &&
-					thumbsSwiper && {
-						thumbs: {
-							swiper: thumbsSwiper,
-						},
-					}),
-				on: {
-					slideChange: (swiper) => {
-						context.currentSliderIndex = swiper.activeIndex;
 					},
-				},
-			});
+					a11y,
+					loop: false,
+					centerInsufficientSlides: true,
+					slideToClickedSlide: true,
+					watchSlidesProgress: true,
+					slidesPerView: 3,
+					slidesPerGroup: 3,
+					spaceBetween: 10,
+					breakpointsBase: 'container',
+					breakpoints: {
+						320: {
+							slidesPerView: 5,
+							slidesPerGroup: 5,
+						},
+					},
+					...(thumbSliderOptions || {}),
+				});
+
+			new Swiper(
+				ref.querySelector(
+					'.swiper:not(.sc-image-slider__thumbs .swiper)'
+				),
+				{
+					modules: [Thumbs, A11y, Navigation],
+					direction: 'horizontal',
+					loop: false,
+					centeredSlides: true,
+					a11y,
+					navigation: {
+						nextEl: ref.querySelector('.swiper-button-next'),
+						prevEl: ref.querySelector('.swiper-button-prev'),
+					},
+					...(!!thumbs &&
+						thumbsSwiper && {
+							thumbs: {
+								swiper: thumbsSwiper,
+							},
+						}),
+					on: {
+						slideChange: (swiper) => {
+							context.currentSliderIndex = swiper.activeIndex;
+						},
+					},
+					...(sliderOptions || {}),
+				}
+			);
 		},
 	},
 });
