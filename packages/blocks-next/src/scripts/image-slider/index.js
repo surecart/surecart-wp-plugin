@@ -76,7 +76,7 @@ store('surecart/image-slider', {
 							'Products slide options section. There are %d options present.',
 							'surecart'
 						),
-						context.slideCount
+						context.slidesCount
 					),
 					prevSlideMessage: __(
 						'Go to previous product slide.',

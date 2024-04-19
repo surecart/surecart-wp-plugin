@@ -23,9 +23,8 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 				'currentSliderIndex' => 0,
 				'thumbnailsPerPage'  => $attributes['thumbnails_per_page'] ?? 5,
 				'autoHeight'         => ! empty( $attributes['auto_height'] ),
-				'isFixedHeight'      => empty( $attributes['auto_height'] ),
 				'hasThumbnails'      => $attributes['has_thumbnails'],
-				'slideCount'         => count( $images ),
+				'slidesCount'        => count( $images ),
 			)
 		)
 	);
@@ -55,9 +54,9 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 	<?php
 	if ( $attributes['has_thumbnails'] ) {
 		?>
-		<div class="sc-image-slider__thumbs sc-image-slider__thumbs--has-navigation">
+		<div class="sc-image-slider__thumbs <?php echo esc_attr( count( $images ) > 5 ? 'sc-image-slider__thumbs--has-navigation' : '' ) ?>">
 		<div class="sc-image-slider__navigation sc-image-slider--is-prev" tabindex="0" role="button">
-			<?php echo wp_kses( SureCart::svg()->get('chevron-left'), sc_allowed_svg_html() ); ?>
+			<?php echo wp_kses( SureCart::svg()->get( 'chevron-left' ), sc_allowed_svg_html() ); ?>
 		</div>
 
 		<div class="swiper swiper sc-image-slider__thumbs-swiper">
@@ -88,7 +87,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 		</div>
 
 		<div class="sc-image-slider__navigation sc-image-slider--is-next" tabindex="0" role="button">
-			<?php echo wp_kses( SureCart::svg()->get('chevron-right'), sc_allowed_svg_html() ); ?>
+			<?php echo wp_kses( SureCart::svg()->get( 'chevron-right' ), sc_allowed_svg_html() ); ?>
 		</div>
 	</div>
 		<?php
