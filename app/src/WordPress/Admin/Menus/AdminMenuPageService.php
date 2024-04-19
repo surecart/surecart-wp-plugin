@@ -34,6 +34,15 @@ class AdminMenuPageService {
 	];
 
 	/**
+	 * Menu hidden pages.
+	 *
+	 * @var array
+	 */
+	const MENU_HIDDEN_PAGES = array(
+		'sc-affiliate-payout-groups' => 'sc-affiliate-payouts',
+	);
+
+	/**
 	 * Add menu items.
 	 */
 	public function bootstrap() {
@@ -202,6 +211,8 @@ class AdminMenuPageService {
 			'forms'                   => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
 			'settings'                => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		];
+
+		add_filter( 'parent_file', array( $this, 'selectMenuHiddenPages' ) );
 	}
 
 	/**
@@ -282,5 +293,24 @@ class AdminMenuPageService {
 			),
 			''
 		);
+	}
+
+	/**
+	 * Select menu item.
+	 *
+	 * @param string $file The file.
+	 *
+	 * @return string
+	 */
+	public function selectMenuHiddenPages( $file ) {
+		global $plugin_page;
+
+		foreach ( self::MENU_HIDDEN_PAGES as $key => $value ) {
+			if ( $key === $plugin_page ) {
+				$plugin_page = $value;
+			}
+		}
+
+		return $file;
 	}
 }
