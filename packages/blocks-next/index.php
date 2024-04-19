@@ -118,15 +118,6 @@ add_action('init', function() {
 	);
 
 	// instead, use a static loader that injects the script at runtime.
-	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/drawer/index.asset.php';
-	wp_register_script_module(
-		'@surecart/drawer',
-		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/drawer/index.js',
-		[],
-		$static_assets['version']
-	);
-
-	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
 	wp_register_script_module(
 		'@surecart/product-page',

@@ -56,5 +56,5 @@
 		"file:../../styles/drawer.css",
 		"file:../../styles/cart.css"
 	],
-	"viewScriptModule": ["@surecart/drawer"]
+	"viewScriptModule": ["@surecart/dialog"]
 }

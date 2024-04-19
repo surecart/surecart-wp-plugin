@@ -1,11 +1,6 @@
 <div
 	class="sc-cart-block"
-	data-wp-interactive='{ "namespace": "surecart/drawer" }'
-	<?php
-		echo wp_interactivity_data_wp_context([
-			'drawerTarget' => '.sc-drawer',
-		]);
-	?>
+	data-wp-interactive='{ "namespace": "surecart/dialog" }'
 >
 	<button
 		data-wp-on--click='actions.toggle'
