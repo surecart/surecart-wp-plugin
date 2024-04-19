@@ -40,6 +40,10 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 							loading="<?php echo esc_attr( $index > 0 ? 'lazy' : 'eager' ); ?>"
 							style="height: <?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) ); ?>"
 						/>
+
+						<?php if ($index > 0) : ?>
+							<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+						<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
 		</div>
