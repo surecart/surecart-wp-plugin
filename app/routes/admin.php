@@ -483,6 +483,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'shipping_protocol', 'tab' )->where( 'sc_url_var', 'shipping_profile', 'type' )->name( 'settings.shipping.profile' )->handle( 'ShippingProfileSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'shipping_protocol', 'tab' )->name( 'settings.shipping' )->handle( 'ShippingSettings@show' );
 
+		// Cache.
+		\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
+
 		// Connection.
 		\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->name( 'settings.connection' )->handle( 'ConnectionSettings@show' );
 		\SureCart::route()->post()->where( 'sc_url_var', 'connection', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.connection.save' )->handle( 'ConnectionSettings@save' );
@@ -496,9 +499,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Export.
 		\SureCart::route()->get()->where( 'sc_url_var', 'export', 'tab' )->name( 'settings.export' )->handle( 'ExportSettings@show' );
-
-		// Cache.
-		\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
 	}
 );
 
