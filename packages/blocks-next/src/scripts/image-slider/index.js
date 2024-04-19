@@ -71,31 +71,15 @@ store('surecart/image-slider', {
 				centeredSlides: true,
 				a11y: {
 					enabled: true,
-					containerMessage: sprintf(
-						__(
-							'Products slide options section. There are %d options present.',
-							'surecart'
-						),
-						context.slidesCount
-					),
-					prevSlideMessage: __(
-						'Go to previous product slide.',
-						'surecart'
-					),
+					prevSlideMessage: __('Go to previous slide.', 'surecart'),
 					firstSlideMessage: __(
-						'This is the first product slide.',
+						'This is the first slide.',
 						'surecart'
 					),
-					lastSlideMessage: __(
-						'This is the last product slide.',
-						'surecart'
-					),
-					nextSlideMessage: __(
-						'Go to next product slide.',
-						'surecart'
-					),
+					lastSlideMessage: __('This is the last slide.', 'surecart'),
+					nextSlideMessage: __('Go to next slide.', 'surecart'),
 					slideLabelMessage: __(
-						'Product slide {{index}} of {{slidesLength}}.',
+						'Slide {{index}} of {{slidesLength}}.',
 						'surecart'
 					),
 				},
