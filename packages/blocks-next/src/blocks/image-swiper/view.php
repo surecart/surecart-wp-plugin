@@ -54,7 +54,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 		?>
 		<div class="sc-image-slider__thumbs sc-image-slider__thumbs--has-navigation">
 		<div class="sc-image-slider__navigation sc-image-slider--is-prev" tabindex="0" role="button">
-			<?php echo \SureCart::svg()->get( 'chevron-left' ); ?>
+			<?php echo wp_kses( SureCart::svg()->get('chevron-left'), sc_allowed_svg_html() ); ?>
 		</div>
 
 		<div class="swiper swiper sc-image-slider__thumbs-swiper">
@@ -86,7 +86,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 		</div>
 
 		<div class="sc-image-slider__navigation sc-image-slider--is-next" tabindex="0" role="button">
-			<?php echo \SureCart::svg()->get( 'chevron-right' ); ?>
+			<?php echo wp_kses( SureCart::svg()->get('chevron-right'), sc_allowed_svg_html() ); ?>
 		</div>
 	</div>
 		<?php
