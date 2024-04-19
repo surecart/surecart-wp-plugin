@@ -39,10 +39,10 @@ store('surecart/image-slider', {
 						wrapperClass: 'sc-image-slider__swiper-wrapper',
 						navigation: {
 							nextEl: ref.querySelector(
-								'.sc-image-slider__thumbs .sc-image-slider--is-next'
+								'.sc-image-slider--is-next'
 							),
 							prevEl: ref.querySelector(
-								'.sc-image-slider__thumbs .sc-image-slider--is-prev'
+								'.sc-image-slider--is-prev'
 							),
 						},
 						loop: false,

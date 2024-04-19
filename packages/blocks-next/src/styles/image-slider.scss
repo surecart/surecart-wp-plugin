@@ -3,6 +3,10 @@
 .sc-image-slider {
 	user-select: none;
 
+	.swiper-button-lock {
+		display: none;
+	}
+
 	&__thumbs {
 		margin-top: var(--sc-slider-spacing, var(--sc-spacing-small));
 		display: flex;
@@ -10,10 +14,6 @@
 
 		.swiper {
 			flex: 1; // important to prevent slideshow from collapsing.
-		}
-
-		.sc-image-slider__navigation {
-			display: none;
 		}
 
 		&--has-navigation {
