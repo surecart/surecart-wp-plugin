@@ -17,15 +17,11 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
 	data-wp-init="surecart/image-slider::actions.init"
 	<?php
-	echo wp_kses_data(
-		wp_interactivity_data_wp_context(
-			array(
-				'currentSliderIndex' => 0,
-				'thumbnailsPerPage'  => $attributes['thumbnails_per_page'] ?? 5,
-				'autoHeight'         => ! empty( $attributes['auto_height'] ),
-				'hasThumbnails'      => $attributes['has_thumbnails'],
-				'slidesCount'        => count( $images ),
-			)
+	echo wp_interactivity_data_wp_context(
+		array(
+			'thumbnailsPerPage'  => $attributes['thumbnails_per_page'] ?? 5,
+			'autoHeight'         => ! empty( $attributes['auto_height'] ),
+			'hasThumbnails'      => $attributes['has_thumbnails'],
 		)
 	);
 	?>
