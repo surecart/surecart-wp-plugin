@@ -63,7 +63,7 @@ store('surecart/image-slider', {
 				);
 
 			new Swiper(ref.querySelector('.sc-image-slider__swiper'), {
-				modules: [Thumbs, A11y],
+				modules: [Thumbs, A11y, Navigation],
 				wrapperClass: 'sc-image-slider__swiper-wrapper',
 				direction: 'horizontal',
 				loop: false,
@@ -97,6 +97,14 @@ store('surecart/image-slider', {
 					slideLabelMessage: __(
 						'Product slide {{index}} of {{slidesLength}}.',
 						'surecart'
+					),
+				},
+				navigation: {
+					nextEl: ref.querySelector(
+						'.sc-image-slider__swiper .swiper-button-next'
+					),
+					prevEl: ref.querySelector(
+						'.sc-image-slider__swiper .swiper-button-prev'
 					),
 				},
 				...(context.hasThumbnails &&

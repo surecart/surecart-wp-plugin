@@ -29,7 +29,8 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 			)
 		)
 	);
-	?>>
+	?>
+	>
 	<div class="swiper sc-image-slider__swiper">
 		<div class="sc-image-slider__swiper-wrapper">
 			<?php foreach ( $images as $index => $image ) : ?>
@@ -47,6 +48,8 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 				</div>
 			<?php endforeach; ?>
 		</div>
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
 	</div>
 
 	<?php
@@ -58,8 +61,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 		</div>
 
 		<div class="swiper swiper sc-image-slider__thumbs-swiper">
-			<?php // translators: Products slide options section. There are %d options present. ?>
-			<div class="sc-image-slider__swiper-wrapper <?php echo esc_attr('sc-has-' . $attributes['thumbnails_per_page'] . '-thumbs' ); ?>" role="radiogroup">
+			<div class="sc-image-slider__swiper-wrapper <?php echo esc_attr('sc-has-' . $attributes['thumbnails_per_page'] . '-thumbs' ); ?>">
 				<?php
 				foreach ( $thumbnails as $thumb_index => $thumbnail ) {
 					?>
