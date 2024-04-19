@@ -29,8 +29,8 @@ export default ({
 	});
 	const classes = classnames({
 		'product-img': true,
-		is_contained: sizing === 'contain',
-		is_covered: sizing === 'cover',
+		'sc-is-contained': sizing === 'contain',
+		'sc-is-covered': sizing === 'cover',
 	});
 
 	const blockProps = useBlockProps({
@@ -170,11 +170,12 @@ export default ({
 					units={units}
 				/>
 			</InspectorControls>
-			<div {...blockProps}>
+			<div class="wp-block-surecart-product-image__wrapper">
 				<img
 					src={product?.featured_media?.src}
 					alt={alt}
 					{...(title ? { title } : {})}
+					{...blockProps}
 				/>
 			</div>
 		</>
