@@ -13,7 +13,6 @@ export const availableProcessors = () =>
     .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.recurring_enabled : true)) // recurring.
     .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true)); // only allow mollie if preset.
 
-
 /**
  * Gets the processor by type
  *
@@ -38,7 +37,9 @@ export const hasOtherAvailableCreditCardProcessor = (type: string) => availableP
  * based on recurring requirements.
  */
 export const availableManualPaymentMethods = () =>
-  sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods).filter(processor => !(state.disabled.processors || []).includes(processor?.id));
+  sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods)
+    .filter(processor => !(state.disabled.processors || []).includes(processor?.id))
+    .filter(processor => processor?.reusable);
 
 /**
  * Get a sorted array of mollie payment method types.
