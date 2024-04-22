@@ -34,6 +34,13 @@ class ProductPostTypeService {
 		add_action( "rest_{$this->post_type}_query", [ $this, 'addMetaQuery' ], 10, 2 );
 		// register rest fields.
 		add_action( 'rest_api_init', [ $this, 'registerRestFields' ] );
+
+		add_action(
+			'get_post_metadata',
+			[ $this, 'migrateDefaultGalleryMetaData' ],
+			10,
+			4
+		);
 		// when gallery is updated on the post, set the first as the featured image.
 		// add_action( 'updated_post_meta', [ $this, 'automaticallySetFeaturedImage' ], 10, 4 );
 		// add the external media url.
@@ -42,6 +49,43 @@ class ProductPostTypeService {
 		// add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
 		// when a product media is deleted, remove it from the gallery.
 		// add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+	}
+
+	public function migrateDefaultGalleryMetaData( $value, $object_id, $meta_key, $single ) {
+		// only for gallery.
+		if ( 'gallery' !== $meta_key ) {
+			return $value;
+		}
+
+		// only for our post type.
+		if ( get_post_type( $object_id ) !== $this->post_type ) {
+			return;
+		}
+
+		// only if empty.
+		remove_filter( 'get_post_metadata', [ $this, __FUNCTION__ ], 10 );
+		$has_meta = get_post_meta( $object_id, $meta_key, true );
+		add_filter( 'get_post_metadata', [ $this, __FUNCTION__ ], 10, 4 );
+		if ( ! empty( $has_meta ) ) {
+			return $value;
+		}
+
+		// get the synced product.
+		$product = sc_get_product( $object_id );
+
+		// push the existing media to the gallery.
+		return [
+			array_filter(
+				array_map(
+					function( $media ) {
+						return (object) [
+							'id' => $media->id,
+						];
+					},
+					$product->product_medias->data ?? []
+				)
+			),
+		];
 	}
 
 	/**
@@ -322,7 +366,7 @@ class ProductPostTypeService {
 					'description' => __( 'Product gallery', 'surecart' ),
 					'type'        => 'array',
 					'items'       => [
-						'type' => 'integer',
+						'type' => 'object',
 					],
 				],
 			]
