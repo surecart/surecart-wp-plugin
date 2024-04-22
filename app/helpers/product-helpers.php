@@ -19,7 +19,7 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 		$product = get_post( $product );
 
 		// return the product object.
-		return new Product( get_post_meta( $product->ID, 'product', true ) );
+		return get_post_meta( $product->ID, 'product', true );
 	}
 }
 
