@@ -125,6 +125,7 @@ return [
 		\SureCart\Rest\PayoutGroupsRestServiceProvider::class,
 		\SureCart\Rest\ReferralsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationProductsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationsRestServiceProvider::class,
 		\SureCart\Rest\ExportsRestServiceProvider::class,
 

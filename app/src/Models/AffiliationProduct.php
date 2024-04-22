@@ -5,9 +5,9 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCommissionStructure;
 
 /**
- * Holds the data of the current Affiliation protocol.
+ * AffiliationProduct Model
  */
-class AffiliationProtocol extends Model {
+class AffiliationProduct extends Model {
 	use HasCommissionStructure;
 
 	/**
@@ -15,12 +15,12 @@ class AffiliationProtocol extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'affiliation_protocol';
+	protected $endpoint = 'affiliation_products';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'affiliation_protocol';
+	protected $object_name = 'affiliation_product';
 }
