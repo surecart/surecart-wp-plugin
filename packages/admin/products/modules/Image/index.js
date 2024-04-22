@@ -9,11 +9,12 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useState } from 'react';
 import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
-import ImageDisplay from './ImageDisplay';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
 import Error from '../../../components/Error';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
+import WordPressMedia from './WordPressMedia';
+import ProductMedia from './ProductMedia';
 
 const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
@@ -138,7 +139,7 @@ export default ({ post, productId, updateProduct }) => {
 					})
 				) : (
 					<>
-						{(post?.gallery || []).map(({ id }) => (
+						{(post?.gallery || []).map(({ id }, index) => (
 							<SortableItem key={id}>
 								<div
 									css={css`
@@ -147,9 +148,17 @@ export default ({ post, productId, updateProduct }) => {
 									`}
 								>
 									{typeof id === 'string' ? (
-										<>{id}</>
+										<ProductMedia
+											id={id}
+											onRemove={() => {}}
+											isFeatured={index === 0}
+										/>
 									) : (
-										<>{id}</>
+										<WordPressMedia
+											id={id}
+											onRemove={() => {}}
+											isFeatured={index === 0}
+										/>
 									)}
 								</div>
 							</SortableItem>

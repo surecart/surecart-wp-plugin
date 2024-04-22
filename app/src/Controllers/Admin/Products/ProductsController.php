@@ -111,26 +111,36 @@ class ProductsController extends AdminController {
 		}
 
 		if ( ! empty( $product ) ) {
+			$gallery_paths = [];
+			$gallery       = $product->post()->gallery;
+			foreach ( $gallery as $item ) {
+				if ( is_int( $item['id'] ) ) {
+					$gallery_paths[] = '/wp/v2/media/' . $item['id'] . '?context=edit';
+				}
+			}
 			$this->preloadPaths(
-				[
-					[ '/wp/v2/templates', 'OPTIONS' ],
-					'/wp/v2/settings',
-					'/wp/v2/types/wp_template?context=edit',
-					'/wp/v2/types/wp_template-part?context=edit',
-					'/wp/v2/templates?context=edit&per_page=-1',
-					'/wp/v2/template-parts?context=edit&per_page=-1',
-					'/wp/v2/users/me',
-					'/wp/v2/types?context=view',
-					'/wp/v2/types?context=edit',
-					'/wp/v2/templates/' . $product->template_id . '?context=edit',
-					'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
-					'/surecart/v1/products/' . $product->id . '?context=edit',
-					// '/surecart/v1/product_medias?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
-					// '/surecart/v1/prices?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
-					'/surecart/v1/integrations?context=edit&model_ids[0]=' . $product->id . '&per_page=50',
-					'/surecart/v1/integration_providers?context=edit',
-					'/surecart/v1/integration_provider_items?context=edit',
-				]
+				array_merge(
+					[
+						[ '/wp/v2/templates', 'OPTIONS' ],
+						'/wp/v2/settings',
+						'/wp/v2/types/wp_template?context=edit',
+						'/wp/v2/types/wp_template-part?context=edit',
+						'/wp/v2/templates?context=edit&per_page=-1',
+						'/wp/v2/template-parts?context=edit&per_page=-1',
+						'/wp/v2/users/me',
+						'/wp/v2/types?context=view',
+						'/wp/v2/types?context=edit',
+						'/wp/v2/templates/' . $product->template_id . '?context=edit',
+						'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
+						'/surecart/v1/products/' . $product->id . '?context=edit',
+						// '/surecart/v1/product_medias?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
+						// '/surecart/v1/prices?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
+						'/surecart/v1/integrations?context=edit&model_ids[0]=' . $product->id . '&per_page=50',
+						'/surecart/v1/integration_providers?context=edit',
+						'/surecart/v1/integration_provider_items?context=edit',
+					],
+					$gallery_paths
+				)
 			);
 		}
 
