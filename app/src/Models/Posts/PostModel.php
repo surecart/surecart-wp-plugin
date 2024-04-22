@@ -263,7 +263,7 @@ abstract class PostModel {
 
 		foreach ( $properties as $property ) {
 			if ( isset( $model->$property ) ) {
-				if ( $property === 'id' ) {
+				if ( 'id' === $property ) {
 					$object->sc_id = $model->id;
 				} else {
 					$object->$property = $model->$property;
@@ -272,7 +272,7 @@ abstract class PostModel {
 		}
 
 		// add the product to the object.
-		$object->product = $model->toArray();
+		$object->product = $model;
 
 		return $object;
 	}
