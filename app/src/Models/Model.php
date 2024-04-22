@@ -454,6 +454,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Get the attached post.
+	 *
+	 * @return int|false
+	 */
+	public function getPostAttribute() {
+		return $this->post();
+	}
+
+	/**
 	 * Sets an attribute
 	 * Optionally calls a mutator based on set{Attribute}Attribute
 	 *
