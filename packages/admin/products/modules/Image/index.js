@@ -28,64 +28,34 @@ export default ({ post, productId, updateProduct }) => {
 	const { editEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const { loading, fetching, saving, productMedia } = useSelect(
+	const onDragStop = (oldIndex, newIndex) => {
+		const gallery = arrayMove(post?.gallery || [], oldIndex, newIndex);
+		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
+	};
+
+	const { media, loading } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
 				'product-media',
 				{
 					product_ids: [productId],
+					context: 'edit',
 					per_page: 100,
 				},
 			];
-
-			const medias =
-				select(coreStore).getEntityRecords(...queryArgs) || [];
+			const media = select(coreStore).getEntityRecords(...queryArgs);
 			const loading = select(coreStore).isResolving(
 				'getEntityRecords',
 				queryArgs
 			);
-
-			// are we saving any product media?
-			const saving = (
-				select(coreStore)?.__experimentalGetEntitiesBeingSaved?.() || []
-			).find((entity) => entity.name === 'product-media');
-
-			// for all medias, merge with edits
-			// we always show the edited version of the media.
-			const productMedia = (medias || [])
-				.map((media) => {
-					return {
-						...media,
-						...select(coreStore).getRawEntityRecord(
-							'surecart',
-							'product-media',
-							media?.id
-						),
-						...select(coreStore).getEntityRecordEdits(
-							'surecart',
-							'product-media',
-							media?.id
-						),
-					};
-				})
-				// sort by position.
-				.sort((a, b) => a?.position - b?.position);
-
 			return {
-				productMedia,
-				loading: loading && !productMedia?.length,
-				fetching: loading && productMedia?.length,
-				saving,
+				media,
+				loading,
 			};
 		},
 		[productId]
 	);
-
-	const onDragStop = (oldIndex, newIndex) => {
-		const gallery = arrayMove(post?.gallery || [], oldIndex, newIndex);
-		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
-	};
 
 	const saveProductMedia = async (media) => {
 		return saveEntityRecord(
@@ -118,88 +88,58 @@ export default ({ post, productId, updateProduct }) => {
 				css={css`
 					display: grid;
 					gap: 1em;
-					grid-template-columns: ${loading || post?.gallery?.length
+					grid-template-columns: ${post?.gallery?.length
 						? 'repeat(4, 1fr)'
 						: '1fr'};
 				`}
 				draggedItemClassName="sc-dragging"
 				onSortEnd={onDragStop}
 			>
-				{loading ? (
-					[...Array(4)].map(() => {
-						return (
-							<ScSkeleton
-								style={{
-									aspectRatio: '1 / 1',
-									'--border-radius':
-										'var(--sc-border-radius-medium)',
-								}}
-							/>
-						);
-					})
-				) : (
-					<>
-						{(post?.gallery || []).map(({ id }, index) => (
-							<SortableItem key={id}>
-								<div
-									css={css`
-										user-select: none;
-										cursor: grab;
-									`}
-								>
-									{typeof id === 'string' ? (
-										<ProductMedia
-											id={id}
-											onRemove={() => {}}
-											isFeatured={index === 0}
-										/>
-									) : (
-										<WordPressMedia
-											id={id}
-											onRemove={() => {}}
-											isFeatured={index === 0}
-										/>
-									)}
-								</div>
-							</SortableItem>
-						))}
-						<AddImage
-							value={(post?.gallery || []).map(({ id }) => id)}
-							onSelect={(media) => {
-								const mediaIds = (media || []).map(
-									({ id }) => ({
-										id,
-									})
-								);
-								// Add media ids to the end of the array of objects, but only if they do not yet exist.
-								editEntityRecord(
-									'postType',
-									'sc_product',
-									post?.id,
-									{
-										gallery: [
-											...post?.gallery,
-											...mediaIds.filter(
-												({ id }) =>
-													!post?.gallery.some(
-														(item) => item.id === id
-													)
-											),
-										],
-									}
-								);
-							}}
-						/>
-					</>
-				)}
-			</SortableList>
-
-			{(!!saving || !!fetching) && (
-				<ScBlockUi
-					style={{ '--sc-block-ui-opacity': '0.75' }}
-					spinner
+				{(post?.gallery || []).map(({ id }, index) => (
+					<SortableItem key={id}>
+						<div
+							css={css`
+								user-select: none;
+								cursor: grab;
+							`}
+						>
+							{typeof id === 'string' ? (
+								<ProductMedia
+									id={id}
+									onRemove={() => {}}
+									isFeatured={index === 0}
+								/>
+							) : (
+								<WordPressMedia
+									id={id}
+									onRemove={() => {}}
+									isFeatured={index === 0}
+								/>
+							)}
+						</div>
+					</SortableItem>
+				))}
+				<AddImage
+					value={(post?.gallery || []).map(({ id }) => id)}
+					onSelect={(media) => {
+						const mediaIds = (media || []).map(({ id }) => ({
+							id,
+						}));
+						// Add media ids to the end of the array of objects, but only if they do not yet exist.
+						editEntityRecord('postType', 'sc_product', post?.id, {
+							gallery: [
+								...post?.gallery,
+								...mediaIds.filter(
+									({ id }) =>
+										!post?.gallery.some(
+											(item) => item.id === id
+										)
+								),
+							],
+						});
+					}}
 				/>
-			)}
+			</SortableList>
 
 			<ConfirmDeleteImage
 				open={currentModal === modals.CONFIRM_DELETE_IMAGE}
