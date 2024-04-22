@@ -75,14 +75,23 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 						context.index + 1,
 						context.totalOptions - 1
 					);
+					// remove focus from previous item
+					if (context.index > 0) {
+						dropdown
+							.querySelector(`#sc-menu-item-${context.index - 1}`)
+							.classList.remove('sc-focused');
+					}
 				}
 				if (e.key === 'ArrowUp') {
 					context.index = Math.max(context.index - 1, 0);
+					// remove focus from previous item
+					if (context.index < context.totalOptions) {
+						dropdown
+							.querySelector(`#sc-menu-item-${context.index + 1}`)
+							.classList.remove('sc-focused');
+					}
 				}
 				context.activeMenuItemId = `sc-menu-item-${context.index}`;
-				dropdown
-					.querySelector(`#${context.activeMenuItemId}`)
-					.classList.add('sc-focused');
 				dropdown
 					.querySelector(`#${context.activeMenuItemId}`)
 					.classList.add('sc-focused');
