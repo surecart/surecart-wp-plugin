@@ -15,10 +15,17 @@ $dummy_options = [
             [
                 'isMenuOpen' => false,
                 'selectedItem' => $dummy_options[0] ?? [],
+				'activeMenuItemId' => 'sc-menu-item-0',
+				'index' => 0,
+				'totalOptions' => count($dummy_options),
             ]
         )
     ); ?>
 	data-wp-on-document--click="actions.closeMenu"
+	data-wp-bind--aria-activedescendant="context.activeMenuItemId"
+	data-wp-on--keyup="actions.menuItemKeyUp"
+	role="menu"
+	tabindex="-1"
 	<?php echo get_block_wrapper_attributes(); ?>
 >
 	<button
@@ -36,23 +43,18 @@ $dummy_options = [
 	<div
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
-		role="menu"
 		data-wp-watch="callbacks.focusFirstMenuItem"
 		aria-hidden="!context.isMenuOpen"
 	>
-		<?php foreach ($dummy_options as $option) : ?>
+		<?php foreach ($dummy_options as $key => $option) : ?>
 			<div
 				role="menuitem"
-				tabindex="0"
+				tabindex="-1"
 				class="sc-dropdown__menu-item"
 				data-wp-on--click="actions.selectItem"
-				data-wp-on--keyup="actions.menuItemKeyUp"
-				data-wp-on--mouseenter="actions.hoverMenuItem"
-				data-wp-on--mouseleave="actions.hoverMenuItem"
-				data-wp-on--focusin="actions.hoverMenuItem"
-				data-wp-on--focusout="actions.hoverMenuItem"
-				data-wp-class--checked="state.isMenuItemSelected"
-				data-wp-class--menu-item--focused="context.focused"
+				data-wp-class--sc-checked="state.isMenuItemSelected"
+				data-wp-class--sc-focused="state.isMenuItemFocused"
+				id="<?php echo "sc-menu-item-" . $key ?>"
 				<?php echo wp_kses_data(
 					wp_interactivity_data_wp_context(
 						[

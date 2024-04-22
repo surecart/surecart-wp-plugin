@@ -56,8 +56,9 @@
 		cursor: pointer;
 		text-decoration: none;
 
-		&.menu-item--focused:not(.menu-item--disabled),
-		&:hover {
+		&:focus,
+		&:hover,
+		&.sc-focused {
 			outline: none;
 			background-color: var(
 				--sc-menu-item-background-focused,
@@ -87,7 +88,7 @@
 				height: 1em;
 			}
 		}
-		&.checked .menu-item__check {
+		&.sc-checked .menu-item__check {
 			visibility: visible;
 		}
 	}

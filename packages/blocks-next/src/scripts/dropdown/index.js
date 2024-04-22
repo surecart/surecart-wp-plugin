@@ -21,6 +21,10 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 			const context = getContext();
 			return context.selectedItem?.value === context.value;
 		},
+		get isMenuItemFocused() {
+			const context = getContext();
+			return context.activeMenuItemId === context.id;
+		},
 	},
 	actions: {
 		toggleMenu: (e) => {
@@ -47,6 +51,7 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 				label: context.label,
 				value: context.value,
 			};
+			context.activeMenuItemId = context.id;
 			context.isMenuOpen = false;
 			e.target
 				.closest('.sc-dropdown')
@@ -56,21 +61,31 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 		menuItemKeyUp: (e) => {
 			e.preventDefault();
 			const context = getContext();
+			const dropdown = getElement().ref;
 			if (e.key === 'Enter') {
 				actions.selectItem(e);
 			}
 			if (e.key === 'Escape') {
 				context.isMenuOpen = false;
-				e.target
-					.closest('.sc-dropdown')
-					.querySelector('.sc-dropdown__trigger')
-					.focus();
+				dropdown.querySelector('.sc-dropdown__trigger').focus();
 			}
-			if (e.key === 'ArrowDown') {
-				e.target.nextElementSibling?.focus();
-			}
-			if (e.key === 'ArrowUp') {
-				e.target.previousElementSibling?.focus();
+			if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+				if (e.key === 'ArrowDown') {
+					context.index = Math.min(
+						context.index + 1,
+						context.totalOptions - 1
+					);
+				}
+				if (e.key === 'ArrowUp') {
+					context.index = Math.max(context.index - 1, 0);
+				}
+				context.activeMenuItemId = `sc-menu-item-${context.index}`;
+				dropdown
+					.querySelector(`#${context.activeMenuItemId}`)
+					.classList.add('sc-focused');
+				dropdown
+					.querySelector(`#${context.activeMenuItemId}`)
+					.classList.add('sc-focused');
 			}
 		},
 		triggerKeyUp: (e) => {
@@ -84,15 +99,6 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 			}
 			if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
 				context.isMenuOpen = true;
-				const firstMenuItem =
-					getElement().ref.parentElement.querySelector(
-						'.sc-dropdown__menu-item'
-					);
-				setTimeout(() => {
-					if (firstMenuItem) {
-						firstMenuItem.focus();
-					}
-				});
 			}
 		},
 		hoverMenuItem: (e) => {
