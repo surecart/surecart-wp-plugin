@@ -85,7 +85,7 @@ export default ({
 
 	return (
 		<ScDialog
-			label={__('Update Price Version', 'surecart')}
+			label={__('Confirm Price Change', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}
@@ -96,7 +96,7 @@ export default ({
 				`}
 			>
 				{__(
-					'Are you sure you want to update this subscription to use the current price? This will change the subscription amount from today onward.',
+					"Are you sure you want to update this subscription to use the current price? If you choose 'Update Immediately,' the new price starts right away. Otherwise, it will start with the next bill. Either way, it will be the price for all future charges.",
 					'surecart'
 				)}
 			</ScText>
@@ -108,6 +108,13 @@ export default ({
 					--font-weight: var(--sc-font-weight-bold);
 				`}
 			>
+				<span
+					css={css`
+						--font-weight: var(--sc-font-weight-bold);
+					`}
+				>
+					{__('Changed Price', 'surecart')}: &nbsp;
+				</span>
 				<del
 					css={css`
 						color: var(--sc-color-gray-500);
@@ -142,6 +149,19 @@ export default ({
 				})}
 			</ScText>
 
+			{!subscription?.finite && (
+				<ScSwitch
+					checked={immediateUpdate}
+					onScChange={(e) => setImmediateUpdate(e.target.checked)}
+					css={css`
+						margin-left: auto;
+						margin-top: var(--sc-spacing-medium);
+					`}
+				>
+					{__('Update Immediately', 'surecart')}
+				</ScSwitch>
+			)}
+
 			{immediateUpdate && !!upcoming?.checkout?.amount_due && (
 				<ScAlert
 					open
@@ -166,7 +186,7 @@ export default ({
 			<div
 				css={css`
 					display: flex;
-					align-items: center;
+					justify-content: space-between;
 				`}
 				slot="footer"
 			>
@@ -182,17 +202,6 @@ export default ({
 				<ScButton type="text" onClick={onRequestClose}>
 					{__('Cancel', 'surecart')}
 				</ScButton>
-				{!subscription?.finite && (
-					<ScSwitch
-						checked={immediateUpdate}
-						onScChange={(e) => setImmediateUpdate(e.target.checked)}
-						css={css`
-							margin-left: auto;
-						`}
-					>
-						{__('Update Immediately', 'surecart')}
-					</ScSwitch>
-				)}
 			</div>
 		</ScDialog>
 	);
