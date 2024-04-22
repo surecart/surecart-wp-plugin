@@ -39,7 +39,7 @@ export const hasOtherAvailableCreditCardProcessor = (type: string) => availableP
 export const availableManualPaymentMethods = () =>
   sortByArray(state.manualPaymentMethods, 'id', state.sortOrder.manualPaymentMethods)
     .filter(processor => !(state.disabled.processors || []).includes(processor?.id))
-    .filter(processor => processor?.reusable);
+    .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.reusable : true)); // recurring.
 
 /**
  * Get a sorted array of mollie payment method types.
