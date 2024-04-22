@@ -48,17 +48,16 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 		selectItem: (e) => {
 			const context = getContext();
 			context.selectedItem = {
-				label: context.label,
-				value: context.value,
+				label: context.options[context.index].label,
+				value: context.options[context.index].value,
 			};
-			context.activeMenuItemId = context.id;
 			context.isMenuOpen = false;
 			e.target
 				.closest('.sc-dropdown')
 				.querySelector('.sc-dropdown__trigger')
 				.focus();
 		},
-		menuItemKeyUp: (e) => {
+		menuKeyUp: (e) => {
 			e.preventDefault();
 			const context = getContext();
 			const dropdown = getElement().ref;
@@ -70,32 +69,25 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 				dropdown.querySelector('.sc-dropdown__trigger').focus();
 			}
 			if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-				if (e.key === 'ArrowDown') {
-					context.index = Math.min(
-						context.index + 1,
-						context.totalOptions - 1
-					);
-					// remove focus from previous item
-					if (context.index > 0) {
-						dropdown
-							.querySelector(`#sc-menu-item-${context.index - 1}`)
-							.classList.remove('sc-focused');
-					}
-				}
-				if (e.key === 'ArrowUp') {
-					context.index = Math.max(context.index - 1, 0);
-					// remove focus from previous item
-					if (context.index < context.totalOptions) {
-						dropdown
-							.querySelector(`#sc-menu-item-${context.index + 1}`)
-							.classList.remove('sc-focused');
-					}
-				}
+				const isArrowDown = e.key === 'ArrowDown';
+				const newIndex = isArrowDown
+					? Math.min(context.index + 1, context.totalOptions - 1)
+					: Math.max(context.index - 1, 0);
+
+				dropdown
+					?.querySelector(`#sc-menu-item-${context.index}`)
+					?.classList.remove('sc-focused');
+				context.index = newIndex;
 				context.activeMenuItemId = `sc-menu-item-${context.index}`;
 				dropdown
-					.querySelector(`#${context.activeMenuItemId}`)
-					.classList.add('sc-focused');
+					?.querySelector(`#${context.activeMenuItemId}`)
+					?.classList.add('sc-focused');
+				context.activeMenuItemLabel =
+					context.options[context.index].label;
 			}
+		},
+		menuKeyDown: (e) => {
+			e.preventDefault();
 		},
 		triggerKeyUp: (e) => {
 			e.preventDefault();
