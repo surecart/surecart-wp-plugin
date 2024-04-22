@@ -11,7 +11,6 @@ import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
 import ImageDisplay from './ImageDisplay';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
-import AddUrlImage from './AddUrlImage';
 import Error from '../../../components/Error';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
@@ -20,7 +19,7 @@ const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
 	ADD_IMAGE_FROM_URL: 'add_image_from_url',
 };
-export default ({ post, productId, updateProduct, loading }) => {
+export default ({ post, productId, updateProduct }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
@@ -111,11 +110,6 @@ export default ({ post, productId, updateProduct, loading }) => {
 		}
 	};
 
-	const images = [
-		...(post?.gallery || []),
-		...productMedia.map(({ id }) => id),
-	];
-
 	return (
 		<Box title={__('Images', 'surecart')}>
 			<Error error={error} setError={setError} margin="100px" />
@@ -144,7 +138,7 @@ export default ({ post, productId, updateProduct, loading }) => {
 					})
 				) : (
 					<>
-						{(post?.gallery || []).map((id, index) => (
+						{(post?.gallery || []).map(({ id }) => (
 							<SortableItem key={id}>
 								<div
 									css={css`
@@ -152,36 +146,37 @@ export default ({ post, productId, updateProduct, loading }) => {
 										cursor: grab;
 									`}
 								>
-									<ImageDisplay
-										onRemove={() => {
-											editEntityRecord(
-												'postType',
-												'sc_product',
-												post?.id,
-												{
-													gallery:
-														post?.gallery.filter(
-															(item) =>
-																item !== id
-														),
-												}
-											);
-										}}
-										id={id}
-										isFeatured={index === 0}
-									/>
+									{typeof id === 'string' ? (
+										<>{id}</>
+									) : (
+										<>{id}</>
+									)}
 								</div>
 							</SortableItem>
 						))}
 						<AddImage
-							value={post?.gallery || []}
-							onSelect={(gallery) => {
+							value={(post?.gallery || []).map(({ id }) => id)}
+							onSelect={(media) => {
+								const mediaIds = (media || []).map(
+									({ id }) => ({
+										id,
+									})
+								);
+								// Add media ids to the end of the array of objects, but only if they do not yet exist.
 								editEntityRecord(
 									'postType',
 									'sc_product',
 									post?.id,
 									{
-										gallery: gallery.map(({ id }) => id),
+										gallery: [
+											...post?.gallery,
+											...mediaIds.filter(
+												({ id }) =>
+													!post?.gallery.some(
+														(item) => item.id === id
+													)
+											),
+										],
 									}
 								);
 							}}
@@ -204,14 +199,6 @@ export default ({ post, productId, updateProduct, loading }) => {
 					setCurrentModal('');
 				}}
 				selectedImage={selectedImage}
-			/>
-
-			<AddUrlImage
-				open={currentModal === modals.ADD_IMAGE_FROM_URL}
-				onRequestClose={() => {
-					setCurrentModal('');
-				}}
-				productId={productId}
 			/>
 		</Box>
 	);

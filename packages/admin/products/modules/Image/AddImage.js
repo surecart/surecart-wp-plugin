@@ -11,8 +11,6 @@ export default ({ value, onSelect }) => {
 			title={__('Select Media', 'surecart')}
 			onSelect={onSelect}
 			value={value}
-			addToGallery={true}
-			gallery={true}
 			multiple={true}
 			allowedTypes={ALLOWED_MEDIA_TYPES}
 			render={({ open }) => (
