@@ -7,7 +7,7 @@ $attributes = array(
 	'has_thumbnails'      => true,
 );
 
-$product    = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ) )->find( 'b29dd028-b331-4ac9-896b-537ff39e8fc2' );
+$product    = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ) )->find( '78b2e3ec-4d3c-4976-886e-73f2c13f82ea' );
 $images     = $product->getDisplayImages( $content_width ?? 1170 );
 $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 ?>
@@ -19,22 +19,23 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 	<?php
 	echo wp_interactivity_data_wp_context(
 		array(
-			'sliderOptions' => [
+			'sliderOptions'      => [
 				'autoHeight' => ! empty( $attributes['auto_height'] ),
 			],
 			'thumbSliderOptions' => [
-				'slidesPerView' => $attributes['thumbnails_per_page'] ?? 5,
+				'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
 				'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-				'breakpoints' => [
+				'breakpoints'    => [
 					320 => [
-						'slidesPerView' => $attributes['thumbnails_per_page'] ?? 5,
+						'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
 						'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-					]
-				]
+					],
+				],
 			],
 		)
 	);
-	?>>
+	?>
+>
 	<div class="swiper">
 		<div class="swiper-wrapper">
 			<?php foreach ( $images as $index => $image ) : ?>
@@ -50,7 +51,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 						style="height: <?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) ); ?>"
 					/>
 
-					<?php if ($index > 0) : ?>
+					<?php if ( $index > 0 ) : ?>
 						<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 					<?php endif; ?>
 				</div>
@@ -68,7 +69,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 			</div>
 
 			<div class="swiper">
-				<div class="swiper-wrapper <?php echo esc_attr('sc-has-' . $attributes['thumbnails_per_page'] . '-thumbs' ); ?>">
+				<div class="swiper-wrapper <?php echo esc_attr( 'sc-has-' . $attributes['thumbnails_per_page'] . '-thumbs' ); ?>">
 					<?php foreach ( $thumbnails as $thumb_index => $thumbnail ) : ?>
 						<div
 							class="swiper-slide"
@@ -85,7 +86,7 @@ $thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
 								loading="<?php echo esc_attr( $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager' ); ?>"
 							/>
 
-							<?php if ($thumb_index > $attributes['thumbnails_per_page']) : ?>
+							<?php if ( $thumb_index > $attributes['thumbnails_per_page'] ) : ?>
 								<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 							<?php endif; ?>
 						</div>
