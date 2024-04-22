@@ -12,18 +12,6 @@ import { Thumbs, Navigation, A11y } from 'swiper/modules';
 
 // controls the slider
 store('surecart/image-slider', {
-	context: {
-		/**
-		 * Derived State
-		 */
-		/**
-		 * Is active slide
-		 */
-		get isActiveSlide() {
-			const { currentSliderIndex, slideIndex } = getContext();
-			return currentSliderIndex === slideIndex;
-		},
-	},
 	actions: {
 		init: () => {
 			const { ref } = getElement();
@@ -110,11 +98,6 @@ store('surecart/image-slider', {
 								swiper: thumbsSwiper,
 							},
 						}),
-					on: {
-						slideChange: (swiper) => {
-							context.currentSliderIndex = swiper.activeIndex;
-						},
-					},
 					...(sliderOptions || {}),
 				}
 			);
