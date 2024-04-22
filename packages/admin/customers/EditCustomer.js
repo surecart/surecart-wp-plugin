@@ -8,14 +8,12 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
 
 import Error from '../components/Error';
 
-import useDirty from '../hooks/useDirty';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import SaveButton from '../templates/SaveButton';
@@ -36,6 +34,7 @@ import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAd
 import TaxSettings from './modules/TaxSettings';
 import Licenses from './modules/Licenses';
 import Affiliates from '../components/affiliates';
+import useSave from '../settings/UseSave';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -45,9 +44,7 @@ const modals = {
 export default () => {
 	const [error, setError] = useState(null);
 	const [currentModal, setCurrentModal] = useState(null);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
-	const { saveDirtyRecords } = useDirty();
+	const { save } = useSave();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const {
 		customer,
@@ -65,22 +62,9 @@ export default () => {
 	 */
 	const onSubmit = async () => {
 		try {
-			await saveDirtyRecords();
-			// save success.
-			createSuccessNotice(__('Customer updated.', 'surecart'), {
-				type: 'snackbar',
-			});
+			await save({ successMessage: __('Customer updated.', 'surecart') });
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			setError(e);
 		}
 	};
 
