@@ -25,8 +25,6 @@ export class ScSubscriptionPaymentMethod {
 
   @State() manualPaymentMethods: ManualPaymentMethod[];
 
-  @State() manualSelected: boolean = false;
-
   /** The error. */
   @State() error: string;
 
@@ -133,12 +131,13 @@ export class ScSubscriptionPaymentMethod {
       return;
     }
     try {
+      const isManualPaymentMethod = (this.manualPaymentMethods || []).some(method => method.id === payment_method);
       this.busy = true;
       this.subscription = (await apiFetch({
         path: `surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          ...(!this.manualSelected ? { payment_method, manual_payment: false } : { manual_payment_method: payment_method, manual_payment: true }),
+          ...(!isManualPaymentMethod ? { payment_method, manual_payment: false } : { manual_payment_method: payment_method, manual_payment: true }),
         },
       })) as Subscription;
       // remove from view.
@@ -228,7 +227,7 @@ export class ScSubscriptionPaymentMethod {
       const { id } = paymentMethod;
 
       return (
-        <sc-choice checked={currentPaymentMethodId === id} name="payment_method" value={id} required onClick={() => (this.manualSelected = true)}>
+        <sc-choice checked={currentPaymentMethodId === id} name="payment_method" value={id} required>
           <sc-flex justifyContent="flex-start" align-items="center">
             <sc-manual-payment-method paymentMethod={paymentMethod} showDescription />
           </sc-flex>

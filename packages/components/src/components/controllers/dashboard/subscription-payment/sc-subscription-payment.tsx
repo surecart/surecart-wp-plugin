@@ -16,7 +16,6 @@ export class ScSubscriptionPayment {
   @Prop() paymentMethods: Array<PaymentMethod> = [];
   @Prop() customerIds: Array<string> = [];
   @State() manualPaymentMethods: ManualPaymentMethod[];
-  @State() manualSelected: boolean = false;
   @State() loading: boolean;
   @State() busy: boolean;
   @State() error: string;
@@ -34,7 +33,6 @@ export class ScSubscriptionPayment {
       this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
-      this.manualSelected = !!this.subscription?.manual_payment;
     }
   }
 
@@ -67,8 +65,8 @@ export class ScSubscriptionPayment {
   }
 
   async handleSubmit(e) {
-    const { method } = await e.target.getFormJson();
-
+    const { payment_method } = await e.target.getFormJson();
+    const isManualPaymentMethod = (this.manualPaymentMethods || []).some(method => method.id === payment_method);
     try {
       this.error = '';
       this.busy = true;
@@ -76,7 +74,7 @@ export class ScSubscriptionPayment {
         path: `/surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          ...(!this.manualSelected ? { method, manual_payment: false } : { manual_payment_method: method, manual_payment: true }),
+          ...(!isManualPaymentMethod ? { payment_method, manual_payment: false } : { manual_payment_method: payment_method, manual_payment: true }),
         },
       });
       if (this.successUrl) {
@@ -123,7 +121,9 @@ export class ScSubscriptionPayment {
         </Fragment>
       );
     }
-
+    const currentPaymentMethodId = this.subscription?.manual_payment
+      ? this.subscription?.manual_payment_method
+      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
     return (
       <Fragment>
         <sc-choices>
@@ -131,19 +131,14 @@ export class ScSubscriptionPayment {
             {(this.paymentMethods || []).map(method => {
               if (method?.live_mode !== this?.subscription?.live_mode) return null;
               return (
-                <sc-choice checked={!this.manualSelected && this.subscription?.payment_method === method?.id} name="method" value={method?.id}>
+                <sc-choice checked={currentPaymentMethodId === method?.id} name="method" value={method?.id}>
                   <sc-payment-method paymentMethod={method} full={true} />
                 </sc-choice>
               );
             })}
             {(this.manualPaymentMethods || []).map(method => {
               return (
-                <sc-choice
-                  checked={this.manualSelected && this.subscription?.manual_payment_method === method?.id}
-                  name="method"
-                  value={method?.id}
-                  onClick={() => (this.manualSelected = true)}
-                >
+                <sc-choice checked={currentPaymentMethodId === method?.id} name="method" value={method?.id}>
                   <sc-manual-payment-method paymentMethod={method} showDescription />
                 </sc-choice>
               );
