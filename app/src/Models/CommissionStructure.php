@@ -29,7 +29,7 @@ class CommissionStructure extends Model {
 	 */
 	public function getDiscountAmountAttribute() {
 		return $this->amount_commission ?
-			Currency::format( $this->amount_commission, $this->currency )
+			Currency::format( $this->amount_commission, \SureCart::account()->currency ?? 'usd' )
 			: $this->percent_commission . '%';
 	}
 
