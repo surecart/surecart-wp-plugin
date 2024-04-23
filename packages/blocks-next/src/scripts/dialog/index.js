@@ -10,14 +10,14 @@ store('surecart/dialog', {
 			const { target } = getContext() || {};
 			const { ref } = getElement();
 
-			// get passed target or any <dialog> sibling.
+			// Get passed target or <dialog>.
 			let dialog =
-				document.querySelector(target ?? null) || // specified target
-				ref.parentElement.querySelector('dialog') || // sibling dialog
-				ref.closest('dialog') || // parent dialog
+				document.querySelector(target ?? null) || // Specified target.
+				ref.parentElement.querySelector('dialog') || // Sibling dialog.
+				ref.closest('dialog') || // Parent dialog.
 				null;
 
-			// If no dialog is found, search for the closest dialog.
+			// No dialog is found.
 			if (!dialog) {
 				return;
 			}
