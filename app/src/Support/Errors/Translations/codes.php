@@ -142,4 +142,5 @@ return array(
 	'affiliation_request.email.blank'                      => __( 'The affiliate request\'s email cannot be blank.', 'surecart' ),
 	'affiliation_request.bio.blank'                        => __( 'The affiliate request\'s bio cannot be blank.', 'surecart' ),
 	'affiliation_request.email.taken'                      => __( 'The affiliate request\'s email is already in use.', 'surecart' ),
+	'payout_group.end_date.no_applicable_affiliations'     => __( 'There are no affiliates with commissions above the minimum within the selected date range.', 'surecart' ),
 );
