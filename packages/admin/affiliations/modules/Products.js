@@ -152,10 +152,10 @@ export default ({ affiliationId }) => {
 					discount_amount: {
 						label: __('Discount Amount', 'surecart'),
 					},
-					subscription_commision: {
+					subscription_commission: {
 						label: __('Subscription Commission', 'surecart'),
 					},
-					lifetime_commision: {
+					lifetime_commission: {
 						label: __('Lifetime Commission', 'surecart'),
 					},
 					action: {

@@ -51,16 +51,16 @@ export default ({
 							</ScText>
 						),
 
-						subscription_commision: (
+						subscription_commission: (
 							<ScText>
-								{commission_structure?.subscription_commision ||
+								{commission_structure?.subscription_commission ||
 									'-'}
 							</ScText>
 						),
 
-						lifetime_commision: (
+						lifetime_commission: (
 							<ScText>
-								{commission_structure?.lifetime_commision ||
+								{commission_structure?.lifetime_commission ||
 									'-'}
 							</ScText>
 						),
