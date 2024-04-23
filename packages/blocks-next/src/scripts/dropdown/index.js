@@ -82,8 +82,6 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 				dropdown
 					?.querySelector(`#${context.activeMenuItemId}`)
 					?.classList.add('sc-focused');
-				context.activeMenuItemLabel =
-					context.options[context.index].label;
 			}
 		},
 		menuKeyDown: (e) => {

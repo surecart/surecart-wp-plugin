@@ -16,7 +16,6 @@ $dummy_options = [
                 'isMenuOpen' => false,
                 'selectedItem' => $dummy_options[0] ?? [],
 				'activeMenuItemId' => 'sc-menu-item-0',
-				'activeMenuItemLabel' => $dummy_options[0]['label'] ?? '',
 				'index' => 0,
 				'totalOptions' => count($dummy_options),
 				'options' => $dummy_options,
@@ -29,8 +28,7 @@ $dummy_options = [
 	data-wp-on--keydown="actions.menuKeyDown"
 	role="menu"
 	tabindex="-1"
-	aria-live="polite"
-	data-wp-bind--aria-labelledby="context.activeMenuItemLabel"
+	data-wp-bind--aria-labelledby="context.activeMenuItemId"
 	<?php echo get_block_wrapper_attributes(); ?>
 >
 	<button
