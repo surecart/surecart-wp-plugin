@@ -48,8 +48,8 @@ const { state, callbacks, actions } = store('surecart/dropdown', {
 		selectItem: (e) => {
 			const context = getContext();
 			context.selectedItem = {
-				label: context.options[context.index].label,
-				value: context.options[context.index].value,
+				label: context.label || context.options[context.index].label,
+				value: context.value || context.options[context.index].value,
 			};
 			context.isMenuOpen = false;
 			e.target
