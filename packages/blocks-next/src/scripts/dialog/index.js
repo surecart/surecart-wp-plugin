@@ -11,9 +11,14 @@ store('surecart/dialog', {
 			const { ref } = getElement();
 
 			// get passed target or any <dialog> sibling.
-			const dialog = drawerTarget
+			let dialog = drawerTarget
 				? document.querySelector(drawerTarget)
 				: ref.parentElement.querySelector('dialog');
+
+			// If no dialog is found, search for the closest dialog.
+			if (!dialog) {
+				dialog = ref.closest('dialog') || null;
+			}
 
 			// If the dialog is open, close it. Otherwise, open it.
 			dialog?.open ? dialog?.close() : dialog?.showModal();
