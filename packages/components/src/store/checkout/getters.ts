@@ -23,13 +23,17 @@ export const getLineItemByProductId = (productId: string) => (state.checkout?.li
 /**
  * Is the shipping address required?
  */
-export const fullShippingAddressRequired = () => state.checkout?.shipping_enabled || state?.checkout?.shipping_address_required;
+export const fullShippingAddressRequired = () => state.checkout?.shipping_enabled || state?.checkout?.shipping_address_required || state?.paymentMethodRequiresShipping;
 
 /**
  * Is the address required?
  */
 export const shippingAddressRequired = () =>
-  state.checkout?.tax_status === 'address_invalid' || state.checkout?.shipping_enabled || state.checkout?.shipping_address_required || state?.checkout?.tax_enabled;
+  state.checkout?.tax_status === 'address_invalid' ||
+  state.checkout?.shipping_enabled ||
+  state.checkout?.shipping_address_required ||
+  state?.checkout?.tax_enabled ||
+  state?.paymentMethodRequiresShipping;
 
 /**
  * Get Billing address

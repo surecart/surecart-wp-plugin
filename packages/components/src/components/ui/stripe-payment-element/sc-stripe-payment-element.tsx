@@ -1,11 +1,10 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
+import { CustomStripeElementChangeEvent, FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { state as processorsState } from '@store/processors';
@@ -178,7 +177,10 @@ export class ScStripePaymentElement {
 
       this.element = processorsState.instances.stripeElements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
-      this.element.on('change', (event: StripeElementChangeEvent) => {
+      this.element.on('change', (event: CustomStripeElementChangeEvent) => {
+        const requiredShippingPaymentTypes = ['cashapp', 'klarna', 'clearpay'];
+        checkoutState.paymentMethodRequiresShipping = requiredShippingPaymentTypes.includes(event?.value?.type);
+
         if (event.complete) {
           this.scPaymentInfoAdded.emit({
             checkout_id: checkoutState.checkout?.id,

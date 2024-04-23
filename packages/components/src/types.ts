@@ -1,5 +1,6 @@
 import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
+import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 declare global {
   interface Window {
@@ -1271,4 +1272,8 @@ export interface ScNoticeStore {
   };
   additional_errors?: AdditionalError[] | null;
   dismissible?: boolean;
+}
+
+export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent {
+  value?: { type: string };
 }
