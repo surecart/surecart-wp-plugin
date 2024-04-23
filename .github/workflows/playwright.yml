@@ -2,11 +2,8 @@ name: End-to-End Tests
 
 on:
   pull_request:
-    types: [assigned]
-    branches:
-      - main
-      - next
-      - fixes
+    types: [ready_for_review, review_requested]
+
 jobs:
     e2e-playwright:
         runs-on: ubuntu-latest

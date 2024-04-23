@@ -24,6 +24,11 @@ const maybeUpdateProcessor = () => {
 const maybeUpdateMethod = () => {
   // get method ids.
   const ids = (availableMethodTypes() || []).map(({ id }) => id);
+  // if the processor is not mollie, unset the method.
+  if (selectedProcessor?.id !== 'mollie') {
+    selectedProcessor.method = null;
+    return;
+  }
   // selected method is available
   if (ids.includes(selectedProcessor.method)) return;
   // if the current method is not available, set the first method.

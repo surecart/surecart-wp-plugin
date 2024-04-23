@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-08T17:48:17+00:00\n"
+"POT-Creation-Date: 2024-04-16T17:51:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -94,7 +94,7 @@ msgstr ""
 #: Blocks/Payment/edit.js:33
 #: sc-license.js:129
 #: sc-order.js:179
-#: sc-payment.js:62
+#: sc-payment.js:65
 msgid "Test Mode"
 msgstr ""
 
@@ -860,23 +860,9 @@ msgstr ""
 msgid "Inactive"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsController.php:25
+#: src/Controllers/Admin/Bumps/BumpsController.php:23
 #: admin/bumps/index.php:8
 msgid "Bumps"
-msgstr ""
-
-#: src/Controllers/Admin/Bumps/BumpsController.php:78
-#: src/Controllers/Admin/Customers/CustomersController.php:80
-#: src/Controllers/Admin/Licenses/LicensesController.php:80
-#: src/Controllers/Admin/Products/ProductsController.php:164
-msgid "Product archived."
-msgstr ""
-
-#: src/Controllers/Admin/Bumps/BumpsController.php:78
-#: src/Controllers/Admin/Customers/CustomersController.php:80
-#: src/Controllers/Admin/Licenses/LicensesController.php:80
-#: src/Controllers/Admin/Products/ProductsController.php:164
-msgid "Product restored."
 msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:53
@@ -886,7 +872,7 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:53
 #: coupons/modules/Code.js:118
 #: product-groups/EditProductGroup.js:164
-#: products/EditProduct.js:176
+#: products/EditProduct.js:186
 #: products/modules/Prices/Price/Header.js:226
 #: products/modules/SingleDownload.js:259
 #: upsell-funnels/EditFunnel.js:261
@@ -1127,7 +1113,6 @@ msgid "+ %d more"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:295
-#: src/Controllers/Admin/Customers/CustomersListTable.php:166
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:165
 #: src/Controllers/Admin/Products/ProductsListTable.php:488
 #: bumps/EditBump.js:127
@@ -1143,7 +1128,6 @@ msgid "Un-Archive"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:295
-#: src/Controllers/Admin/Customers/CustomersListTable.php:166
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:165
 #: src/Controllers/Admin/Products/ProductsListTable.php:488
 #: bumps/EditBump.js:128
@@ -1208,7 +1192,7 @@ msgstr ""
 #: admin/customers/index.php:7
 #: bumps/modules/Conditions.js:79
 #: coupons/modules/Restrictions.js:66
-#: customers/EditCustomer.js:130
+#: customers/EditCustomer.js:114
 #: settings/advanced/AdvancedSettings.js:413
 #: settings/export/ExportSettings.js:23
 #: upsell-funnels/modules/Conditions.js:139
@@ -1240,24 +1224,6 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:322
 #: src/Integrations/TutorLMS/TutorLMSService.php:167
 msgid "No price"
-msgstr ""
-
-#: src/Controllers/Admin/Customers/CustomersListTable.php:167
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:489
-msgid "Are you sure you want to restore this product? This will be be available to purchase."
-msgstr ""
-
-#: src/Controllers/Admin/Customers/CustomersListTable.php:167
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:489
-msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
-msgstr ""
-
-#: src/Controllers/Admin/Customers/CustomersListTable.php:174
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:173
-#: src/Controllers/Admin/Products/ProductsListTable.php:496
-msgid "Toggle Product Archive"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:48
@@ -1301,7 +1267,7 @@ msgstr ""
 msgid "Invoices"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesController.php:25
+#: src/Controllers/Admin/Licenses/LicensesController.php:23
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
 #: admin/licenses/index.php:7
 #: components/data-tables/licenses-data-table/index.js:26
@@ -1346,6 +1312,21 @@ msgstr ""
 #: sc-license.js:111
 #: sc-licenses-list.js:83
 msgid "Revoked"
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
+#: src/Controllers/Admin/Products/ProductsListTable.php:489
+msgid "Are you sure you want to restore this product? This will be be available to purchase."
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
+#: src/Controllers/Admin/Products/ProductsListTable.php:489
+msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
+msgstr ""
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:173
+#: src/Controllers/Admin/Products/ProductsListTable.php:496
+msgid "Toggle Product Archive"
 msgstr ""
 
 #: src/Controllers/Admin/Onboarding/OnboardingController.php:59
@@ -1503,7 +1484,7 @@ msgid "View Collection"
 msgstr ""
 
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:48
-#: src/Controllers/Admin/Products/ProductsController.php:27
+#: src/Controllers/Admin/Products/ProductsController.php:26
 #: src/Integrations/Elementor/Conditions/ProductSingle.php:56
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:181
 #: admin/products/index.php:29
@@ -1512,7 +1493,7 @@ msgstr ""
 #: coupons/modules/Restrictions.js:59
 #: product-collections/components/Products.js:28
 #: product-groups/modules/Products.js:45
-#: products/EditProduct.js:204
+#: products/EditProduct.js:214
 #: settings/shipping/profile/Products.js:217
 #: upsell-funnels/modules/Conditions.js:132
 #: Blocks/Form/components/SelectPrices.js:111
@@ -1546,22 +1527,30 @@ msgstr ""
 msgid "Live"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:46
+#: src/Controllers/Admin/Products/ProductsController.php:45
 msgid "This product has already been deleted."
 msgid_plural "These products have already been deleted."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:52
+#: src/Controllers/Admin/Products/ProductsController.php:51
 msgid "Delete Product"
 msgid_plural "Delete Products."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:124
+#: src/Controllers/Admin/Products/ProductsController.php:123
 #: licenses/modules/Purchase.js:58
 #: products/components/Url/form.js:68
 msgid "View Product"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsController.php:163
+msgid "Product archived."
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsController.php:163
+msgid "Product restored."
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:146
@@ -1909,11 +1898,11 @@ msgstr ""
 msgid "View Upsell"
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsController.php:106
+#: src/Controllers/Admin/Upsells/UpsellsController.php:107
 msgid "Funnel enabled."
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsController.php:106
+#: src/Controllers/Admin/Upsells/UpsellsController.php:107
 msgid "Funnel disabled."
 msgstr ""
 
@@ -1972,7 +1961,7 @@ msgstr ""
 
 #: src/Controllers/Web/BuyPageController.php:52
 #: src/Controllers/Web/ProductPageController.php:82
-#: products/EditProduct.js:208
+#: products/EditProduct.js:218
 #: components/PriceInfo.js:103
 msgid "Edit Product"
 msgstr ""
@@ -2073,7 +2062,7 @@ msgstr ""
 msgid "Edit Upsell Funnel"
 msgstr ""
 
-#: src/Controllers/Web/WebhookController.php:31
+#: src/Controllers/Web/WebhookController.php:30
 msgid "SureCart Webhook Creation Error"
 msgstr ""
 
@@ -2400,7 +2389,7 @@ msgstr ""
 #: src/Middleware/ArchiveModelMiddleware.php:24
 #: src/Middleware/CheckoutFormModeMiddleware.php:22
 #: src/Middleware/EditModelMiddleware.php:24
-#: src/Middleware/LoginMiddleware.php:14
+#: src/Middleware/LoginMiddleware.php:13
 #: src/Middleware/NonceMiddleware.php:32
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:67
 #: Controllers/Middleware/SubscriptionNonceVerificationMiddleware.php:20
@@ -4057,7 +4046,7 @@ msgid "This product is no longer purchaseable."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:76
-#: sc-session-provider2.js:384
+#: sc-session-provider2.js:386
 msgid "Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment."
 msgstr ""
 
@@ -6670,7 +6659,6 @@ msgstr ""
 #: components/filters/price/PriceFilter.js:45
 #: components/MediaLibrary/DownloadMedia.js:29
 #: coupons/modules/Code.js:45
-#: customers/EditCustomer.js:75
 #: customers/modules/Balance/ViewTransactions.js:46
 #: customers/modules/User/index.js:24
 #: licenses/modules/Activations/index.js:65
@@ -8371,7 +8359,7 @@ msgid "This coupon will not be usable and all unsaved changes will be lost."
 msgstr ""
 
 #: coupons/components/CouponActionsDropdown.js:36
-#: customers/EditCustomer.js:93
+#: customers/EditCustomer.js:77
 #: products/EditProduct.js:125
 msgid "Permanently delete %s? You cannot undo this action."
 msgstr ""
@@ -8727,23 +8715,23 @@ msgstr ""
 msgid "Create this customer in test mode if you are going to use this account for test mode purchasing."
 msgstr ""
 
-#: customers/EditCustomer.js:70
+#: customers/EditCustomer.js:65
 msgid "Customer updated."
 msgstr ""
 
-#: customers/EditCustomer.js:99
+#: customers/EditCustomer.js:83
 msgid "this customer"
 msgstr ""
 
-#: customers/EditCustomer.js:134
+#: customers/EditCustomer.js:118
 msgid "Edit Customer"
 msgstr ""
 
-#: customers/EditCustomer.js:156
+#: customers/EditCustomer.js:140
 msgid "Save Customer"
 msgstr ""
 
-#: customers/EditCustomer.js:190
+#: customers/EditCustomer.js:174
 msgid "Commissions On All Purchases"
 msgstr ""
 
@@ -10196,19 +10184,23 @@ msgstr ""
 msgid "Product updated."
 msgstr ""
 
-#: products/EditProduct.js:149
+#: products/EditProduct.js:138
+msgid "Product deleted."
+msgstr ""
+
+#: products/EditProduct.js:159
 msgid "Un-Archive %s? This will make the product purchaseable again."
 msgstr ""
 
-#: products/EditProduct.js:156
+#: products/EditProduct.js:166
 msgid "Archive %s? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr ""
 
-#: products/EditProduct.js:243
+#: products/EditProduct.js:253
 msgid "Save & Publish"
 msgstr ""
 
-#: products/EditProduct.js:244
+#: products/EditProduct.js:254
 msgid "Save Product"
 msgstr ""
 
@@ -14415,7 +14407,7 @@ msgstr ""
 #: Blocks/Payment/components/Stripe.js:37
 #: sc-payment.js:39
 #: sc-payment.js:43
-#: sc-payment.js:47
+#: sc-payment.js:50
 msgid "Credit Card"
 msgstr ""
 
@@ -15690,24 +15682,33 @@ msgstr ""
 msgid "Enable Paystack payment"
 msgstr ""
 
+#: Blocks/Payment/components/Inspector.js:124
+#: sc-checkout-mollie-payment2.js:55
+msgid "Test Processor"
+msgstr ""
+
+#: Blocks/Payment/components/Inspector.js:125
+msgid "Enable a test processor (in test mode only)"
+msgstr ""
+
 #. translators: Manual payment method.
 #: Blocks/Payment/components/ManualPaymentMethod.js:20
-#: sc-checkout-mollie-payment2.js:44
-#: sc-checkout-mollie-payment2.js:105
+#: sc-checkout-mollie-payment2.js:45
+#: sc-checkout-mollie-payment2.js:121
 msgid "%s selected for check out."
 msgstr ""
 
 #: Blocks/Payment/components/PayPal.js:55
 #: sc-payment.js:43
-#: sc-payment.js:52
+#: sc-payment.js:55
 msgid "Credit Card selected for check out."
 msgstr ""
 
 #: Blocks/Payment/components/PayPal.js:66
 #: Blocks/Payment/components/PayPal.js:95
-#: sc-checkout-mollie-payment2.js:105
+#: sc-checkout-mollie-payment2.js:121
 #: sc-payment.js:43
-#: sc-payment.js:52
+#: sc-payment.js:55
 msgid "Another step will appear after submitting your order to complete your purchase details."
 msgstr ""
 
@@ -19419,7 +19420,15 @@ msgstr ""
 msgid "#%s"
 msgstr ""
 
-#: sc-checkout-mollie-payment2.js:102
+#: sc-checkout-mollie-payment2.js:57
+msgid "Test processor selected for check out."
+msgstr ""
+
+#: sc-checkout-mollie-payment2.js:59
+msgid "This is a test payment processor used to simulate test transactions. It is only available in test mode."
+msgstr ""
+
+#: sc-checkout-mollie-payment2.js:118
 msgid "No available payment methods"
 msgstr ""
 
@@ -19943,19 +19952,19 @@ msgstr ""
 msgid "Credit Card (Stripe)"
 msgstr ""
 
-#: sc-payment.js:47
+#: sc-payment.js:50
 msgid "Credit Card (Paystack)"
 msgstr ""
 
-#: sc-payment.js:62
+#: sc-payment.js:65
 msgid "You do not have any processors enabled for this mode and cart. "
 msgstr ""
 
-#: sc-payment.js:65
+#: sc-payment.js:68
 msgid "Please configure your processors"
 msgstr ""
 
-#: sc-payment.js:65
+#: sc-payment.js:68
 msgid "Please contact us for payment."
 msgstr ""
 
@@ -20237,7 +20246,7 @@ msgstr ""
 
 #: sc-session-provider2.js:198
 #: sc-session-provider2.js:272
-#: sc-session-provider2.js:284
+#: sc-session-provider2.js:286
 msgid "Payment unsuccessful. Please try again."
 msgstr ""
 
@@ -20245,7 +20254,7 @@ msgstr ""
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
 msgstr ""
 
-#: sc-session-provider2.js:279
+#: sc-session-provider2.js:280
 msgid "Payment canceled. Please try again."
 msgstr ""
 
