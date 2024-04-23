@@ -7,17 +7,19 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 store('surecart/dialog', {
 	actions: {
 		toggle: () => {
-			const { drawerTarget } = getContext() || {};
+			const { target } = getContext() || {};
 			const { ref } = getElement();
 
 			// get passed target or any <dialog> sibling.
-			let dialog = drawerTarget
-				? document.querySelector(drawerTarget)
-				: ref.parentElement.querySelector('dialog');
+			let dialog =
+				document.querySelector(target ?? null) || // specified target
+				ref.parentElement.querySelector('dialog') || // sibling dialog
+				ref.closest('dialog') || // parent dialog
+				null;
 
 			// If no dialog is found, search for the closest dialog.
 			if (!dialog) {
-				dialog = ref.closest('dialog') || null;
+				return;
 			}
 
 			// If the dialog is open, close it. Otherwise, open it.
