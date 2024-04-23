@@ -23,7 +23,6 @@ export default ({
 	isManualPaymentSelected,
 }) => {
 	const [paymentMethod, setPaymentMethod] = useState(paymentMethodId);
-	const [manual, setManual] = useState(false);
 
 	const { payment_methods, loading } = useSelect(
 		(select) => {
@@ -126,7 +125,6 @@ export default ({
 								isManualPaymentSelected &&
 								payment_method?.id === manualPaymentMethodId
 							}
-							onClick={() => setManual(true)}
 						>
 							<ScManualPaymentMethod
 								paymentMethod={payment_method}
@@ -144,7 +142,12 @@ export default ({
 			{loading || (manualLoading && <ScBlockUi spinner />)}
 			<ScButton
 				type="primary"
-				onClick={() => updatePaymentMethod(paymentMethod, manual)}
+				onClick={() => {
+					const isManualPaymentMethod = manual_payment_methods.find(
+						({ id }) => id === paymentMethod
+					);
+					updatePaymentMethod(paymentMethod, !!isManualPaymentMethod);
+				}}
 				slot="footer"
 			>
 				{__('Update', 'surecart')}
