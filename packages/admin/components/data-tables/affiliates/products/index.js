@@ -30,6 +30,7 @@ export default ({
 	pagination,
 	columns,
 	footer,
+	headerAction,
 	empty,
 	...props
 }) => {
@@ -83,6 +84,7 @@ export default ({
 				})}
 			loading={isLoading}
 			updating={isFetching}
+			headerAction={headerAction}
 			footer={!!footer && footer}
 			{...props}
 		/>
