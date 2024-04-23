@@ -61,28 +61,57 @@ export default ({ coupon, loading, updateCoupon }) => {
 							type="number"
 						/>
 					</BaseControl>
-					<BaseControl>
-						<ScPriceInput
-							className="sc-coupon-minimum-subtotal-amount"
-							help={__(
-								'The minimum order subtotal amount required to apply this coupon.',
-								'surecart'
-							)}
-							currencyCode={
-								coupon?.currency ||
-								window?.scData?.currency_code
-							}
-							placeholder={__('No Minimum', 'surecart')}
-							attribute="min_subtotal_amount"
-							label={__('Minimum order subtotal', 'surecart')}
-							value={coupon?.min_subtotal_amount || null}
-							onScInput={(e) =>
-								updateCoupon({
-									min_subtotal_amount: e.target.value,
-								})
-							}
-						/>
-					</BaseControl>
+					<div
+						css={css`
+							display: flex;
+							gap: 1em;
+						`}
+					>
+						<BaseControl>
+							<ScPriceInput
+								className="sc-coupon-minimum-subtotal-amount"
+								help={__(
+									'The minimum order subtotal amount required to apply this coupon.',
+									'surecart'
+								)}
+								currencyCode={
+									coupon?.currency ||
+									window?.scData?.currency_code
+								}
+								placeholder={__('No Minimum', 'surecart')}
+								attribute="min_subtotal_amount"
+								label={__('Minimum order subtotal', 'surecart')}
+								value={coupon?.min_subtotal_amount || null}
+								onScInput={(e) =>
+									updateCoupon({
+										min_subtotal_amount: e.target.value,
+									})
+								}
+							/>
+						</BaseControl>
+						<BaseControl>
+							<ScPriceInput
+								className="sc-coupon-maxium-subtotal-amount"
+								help={__(
+									'The maximum order subtotal amount required to apply this coupon.',
+									'surecart'
+								)}
+								currencyCode={
+									coupon?.currency ||
+									window?.scData?.currency_code
+								}
+								placeholder={__('No Maximum', 'surecart')}
+								attribute="max_subtotal_amount"
+								label={__('Maximum order subtotal', 'surecart')}
+								value={coupon?.max_subtotal_amount || null}
+								onScInput={(e) =>
+									updateCoupon({
+										max_subtotal_amount: e.target.value,
+									})
+								}
+							/>
+						</BaseControl>
+					</div>
 				</div>
 				<div>
 					<ScSwitch

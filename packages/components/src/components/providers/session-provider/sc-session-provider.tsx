@@ -321,6 +321,7 @@ export class ScSessionProvider {
         createErrorNotice({
           message: __('Payment unsuccessful. Please try again.', 'surecart'),
         });
+        updateFormState('REJECT');
         return;
 
       case 'payment_intent_canceled':
@@ -329,6 +330,7 @@ export class ScSessionProvider {
         createErrorNotice({
           message: __('Payment canceled. Please try again.', 'surecart'),
         });
+        updateFormState('REJECT');
         return;
 
       case 'finalized':

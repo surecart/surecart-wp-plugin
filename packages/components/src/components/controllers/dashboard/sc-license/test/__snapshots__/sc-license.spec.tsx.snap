@@ -8,19 +8,22 @@ exports[`sc-license renders 1`] = `
         License not found.
       </sc-empty>
       <sc-dialog noheader="" style="--body-spacing: var(--sc-spacing-x-large);">
-        <sc-dashboard-module heading="Confirm" style="--sc-dashboard-module-spacing: var(--sc-spacing-x-large); text-align: center;">
+        <sc-button circle="" class="close__button" type="text">
+          <sc-icon name="x"></sc-icon>
+        </sc-button>
+        <sc-dashboard-module class="license-cancel" error="" heading="Delete Activation" style="--sc-dashboard-module-spacing: 1em;">
           <span slot="description">
             Are you sure you want to delete activation?
           </span>
+          <sc-flex justifycontent="flex-start">
+            <sc-button type="primary">
+              Delete Activation
+            </sc-button>
+            <sc-button type="text" style="color: var(--sc-color-gray-500;">
+              Cancel
+            </sc-button>
+          </sc-flex>
         </sc-dashboard-module>
-        <div slot="footer">
-          <sc-button type="text">
-            Don't delete
-          </sc-button>
-          <sc-button type="primary">
-            Delete activation
-          </sc-button>
-        </div>
       </sc-dialog>
     </sc-spacing>
   </mock:shadow-root>
