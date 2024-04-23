@@ -10,7 +10,7 @@ import {
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export default ({ open, onRequestClose, paymentMethod }) => {
@@ -25,6 +25,10 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 			...update,
 		});
 	};
+
+	useEffect(() => {
+		setData(paymentMethod);
+	}, [paymentMethod]);
 
 	const { name, description, instructions, archived } = data || {};
 
