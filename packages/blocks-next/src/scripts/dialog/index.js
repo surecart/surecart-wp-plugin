@@ -3,7 +3,6 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
-// controls the product page.
 store('surecart/dialog', {
 	actions: {
 		toggle: () => {
