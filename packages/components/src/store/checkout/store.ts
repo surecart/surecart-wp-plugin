@@ -18,6 +18,7 @@ interface Store {
   isCheckoutPage: boolean;
   validateStock: boolean;
   persist: 'browser' | 'url' | false;
+  paymentMethodRequiresShipping: boolean;
 }
 
 const { state, onChange, on, set, get, dispose, reset } = createStore<Store>(
@@ -34,6 +35,7 @@ const { state, onChange, on, set, get, dispose, reset } = createStore<Store>(
     isCheckoutPage: false,
     validateStock: false,
     persist: 'browser',
+    paymentMethodRequiresShipping: false,
     ...checkout,
   },
   (newValue, oldValue) => {
