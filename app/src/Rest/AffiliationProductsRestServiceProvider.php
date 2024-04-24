@@ -53,7 +53,7 @@ class AffiliationProductsRestServiceProvider extends RestServiceProvider impleme
 	}
 
 	/**
-	 * Who can list affiliation requests?
+	 * Who can list affiliation products?
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -63,7 +63,7 @@ class AffiliationProductsRestServiceProvider extends RestServiceProvider impleme
 	}
 
 	/**
-	 * Who can get a specific affiliation request?
+	 * Who can get a specific affiliation product?
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -73,7 +73,7 @@ class AffiliationProductsRestServiceProvider extends RestServiceProvider impleme
 	}
 
 	/**
-	 * Who can create an affiliation request?
+	 * Who can create an affiliation product?
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -83,7 +83,7 @@ class AffiliationProductsRestServiceProvider extends RestServiceProvider impleme
 	}
 
 	/**
-	 * Who can update an affiliation request?
+	 * Who can update an affiliation product?
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -113,7 +113,7 @@ class AffiliationProductsRestServiceProvider extends RestServiceProvider impleme
 	}
 
 	/**
-	 * Who can delete an affiliation request?
+	 * Who can delete an affiliation product?
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
