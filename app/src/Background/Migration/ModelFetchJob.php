@@ -41,10 +41,10 @@ class ModelFetchJob extends BackgroundProcess {
 		$model = new $args['model']();
 
 		// get the items.
-		$items = $model->paginate(
+		$items = $model->with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections' ] )->paginate(
 			[
 				'page'     => $page,
-				'per_page' => 25,
+				'per_page' => 1,
 			]
 		);
 
@@ -57,13 +57,9 @@ class ModelFetchJob extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $items->data as $item ) {
-			// add to items queue.
-			\SureCart::migration()->sync()->push_to_queue(
-				[
-					'id'    => $item->id,
-					'model' => $args['model'],
-				],
-			)->save();
+			// TODO: add sync job start record.
+			$item->sync();
+			// TODO: add sync job complete record.
 		}
 
 		// we have more to process.
@@ -76,17 +72,5 @@ class ModelFetchJob extends BackgroundProcess {
 
 		// nothing more to process.
 		return false;
-	}
-
-	/**
-	 * Complete processing.
-	 *
-	 * Override if applicable, but ensure that the below actions are
-	 * performed, or, call parent::complete().
-	 */
-	protected function complete() {
-		parent::complete();
-		// All these fetches are complete, so we can now sync the data.
-		\SureCart::migration()->sync()->dispatch();
 	}
 }

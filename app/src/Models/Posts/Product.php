@@ -115,6 +115,16 @@ class Product extends PostModel {
 		VariantOptionValue::where( 'product_id', $this->post->ID )->delete();
 	}
 
+	protected function getFeaturedImageAttribute() {
+		$images = array_filter(
+			$this->gallery,
+			function( $image ) {
+				return $image->featured;
+			}
+		);
+		return $this->getFeaturedImage();
+	}
+
 	/**
 	 * Get the active prices.
 	 *

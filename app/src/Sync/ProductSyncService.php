@@ -57,7 +57,7 @@ class ProductSyncService {
 	 *
 	 * @return void
 	 */
-	public function sync( $page, $batch_size ) {
+	public function sync( $page, $batch_size = 1 ) {
 		// get products.
 		$products = Product::with( [ 'prices', 'variants', 'variant_options', 'product_medias', 'product_media.media' ] )->paginate(
 			[
@@ -65,6 +65,10 @@ class ProductSyncService {
 				'page'     => $page,
 			]
 		);
+
+		if ( is_wp_error( $products ) ) {
+			return $products;
+		}
 
 		// enqueue actions to sync an individual customer.
 		foreach ( $products->data as $product ) {

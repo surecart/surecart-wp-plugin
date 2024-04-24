@@ -39,6 +39,7 @@ class CollectionTaxonomyService {
 				'public'            => true,
 				'show_in_rest'      => true,
 				'hierarchical'      => false,
+				'show_in_ui'        => true,
 				'show_admin_column' => true,
 				'rewrite'           => [
 					'slug' => 'collections',

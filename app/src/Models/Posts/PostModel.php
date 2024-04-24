@@ -169,6 +169,9 @@ abstract class PostModel {
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
 
+		$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
+		wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+
 		// set the post on the model.
 		$this->post = get_post( $post_id );
 
@@ -197,6 +200,9 @@ abstract class PostModel {
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
+
+		$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
+		wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
 
 		$this->post = get_post( $post_id );
 
