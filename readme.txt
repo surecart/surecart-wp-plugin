@@ -305,6 +305,15 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.25.0 - April 25th, 2024 =
+- Improvement: Price creation/edit UI now accounts for the larger number of options available.
+- Improvement: Add live mode toggle to abandoned checkouts page.
+- Improvement: Add ability to cancel a subscription that is already pending cancellation in the admin.
+- Fix: Issue where deleted checkouts could sometimes not be handled correctly.
+- Fix: Product page slideshow not loading when double quotes appear in file name.
+- Fix: Issue where deleted checkout and dashboard pages could not be restored if the options table was cleared.
+- Fix: Ensure we collect shipping addressses for some Stripe payment element payment methods that require a shipping address.
+
 = 2.24.0 - April 17th, 2024 =
 - New: Test processor for testing checkout flow without connecting a payment processor.
 - New: Restrict coupons to a maximum order subtotal.
