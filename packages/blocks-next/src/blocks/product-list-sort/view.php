@@ -92,23 +92,3 @@ foreach ( $options as $option ) {
 	</div>
 </div>
 
-<sc-dropdown style="--panel-width: 400px">
-	<sc-button slot="trigger" caret type="text">Trigger</sc-button>
-	<sc-menu>
-	<?php foreach ($options as $option) : ?>
-		<sc-menu-item checked>
-		<?php echo esc_html($option['label'] ?? ''); ?>
-		</sc-menu-item>
-	<?php endforeach; ?>
-	</sc-menu>
-</sc-dropdown>
-
-<select
-    <?php echo get_block_wrapper_attributes( array( 'class' => 'sc-dropdown' ) ); ?>
-    data-wp-on--input="actions.sort"
->
-    <option value="created_at:desc" <?php selected($sort, 'created_at:desc'); ?>> <?php esc_html_e('Latest', 'surecart') ?> </option>
-    <option value="created_at:asc" <?php selected($sort, 'created_at:asc'); ?>> <?php esc_html_e('Oldest', 'surecart') ?> </option>
-    <option value="name:asc" <?php selected($sort, 'name:asc'); ?>> <?php esc_html_e('Alphabetical, A-Z', 'surecart') ?> </option>
-    <option value="name:desc" <?php selected($sort, 'name:desc'); ?>> <?php esc_html_e('Alphabetical, Z-A', 'surecart') ?> </option>
-</select>

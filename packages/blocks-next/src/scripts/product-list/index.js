@@ -56,19 +56,6 @@ const { state, actions } = store('surecart/product-list', {
 				yield actions.prefetch(ref.href);
 			}
 		},
-		*sort(event) {
-			const { blockId } = getContext();
-			const { actions, state: routerState } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			const url = new URL(routerState?.url);
-			url.searchParams.set(
-				`products-${blockId}-sort`,
-				event?.target?.value
-			);
-			actions.navigate(url.toString());
-		},
 		*filter(event) {
 			const { actions, state: routerState } = yield import(
 				/* webpackIgnore: true */
