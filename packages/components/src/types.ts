@@ -787,7 +787,7 @@ export interface Processor {
   };
   recurring_enabled: boolean;
   supported_currencies: Array<string>;
-  processor_type: 'paypal' | 'stripe' | 'mollie';
+  processor_type: 'paypal' | 'stripe' | 'mollie' | 'mock';
 }
 
 export interface Purchase {

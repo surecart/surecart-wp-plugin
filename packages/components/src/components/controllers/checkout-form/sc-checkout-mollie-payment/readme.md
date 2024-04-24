@@ -27,6 +27,8 @@
 - [sc-payment-method-choice](../../../processors/sc-payment-method-choice)
 - [sc-payment-selected](../../../ui/payment-selected)
 - [sc-block-ui](../../../ui/block-ui)
+- [sc-icon](../../../ui/icon)
+- [sc-checkout-paystack-payment-provider](../sc-checkout-paystack-payment-provider)
 
 ### Graph
 ```mermaid
@@ -37,6 +39,8 @@ graph TD;
   sc-checkout-mollie-payment --> sc-payment-method-choice
   sc-checkout-mollie-payment --> sc-payment-selected
   sc-checkout-mollie-payment --> sc-block-ui
+  sc-checkout-mollie-payment --> sc-icon
+  sc-checkout-mollie-payment --> sc-checkout-paystack-payment-provider
   sc-alert --> sc-icon
   sc-payment-method-choice --> sc-card
   sc-payment-selected --> sc-divider

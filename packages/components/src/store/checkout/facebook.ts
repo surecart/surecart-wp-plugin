@@ -1,5 +1,5 @@
 import { maybeConvertAmount } from '../../functions/currency';
-import { LineItem, Product, Checkout } from 'src/types';
+import { Checkout, LineItem, Product } from 'src/types';
 
 /**
  * Handle add to cart event.

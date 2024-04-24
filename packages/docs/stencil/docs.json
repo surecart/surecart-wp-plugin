@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-04-08T17:47:03",
+  "timestamp": "2024-04-16T17:49:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4682,7 +4682,9 @@
         "sc-alert",
         "sc-payment-method-choice",
         "sc-payment-selected",
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-icon",
+        "sc-checkout-paystack-payment-provider"
       ],
       "dependencyGraph": {
         "sc-checkout-mollie-payment": [
@@ -4691,7 +4693,9 @@
           "sc-alert",
           "sc-payment-method-choice",
           "sc-payment-selected",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-icon",
+          "sc-checkout-paystack-payment-provider"
         ],
         "sc-alert": [
           "sc-icon"
@@ -4726,10 +4730,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-checkout-mollie-payment",
         "sc-payment"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-checkout-mollie-payment": [
+          "sc-checkout-paystack-payment-provider"
+        ],
         "sc-payment": [
           "sc-checkout-paystack-payment-provider"
         ]
@@ -13653,6 +13661,7 @@
         "sc-cart-icon",
         "sc-cc-logo",
         "sc-charges-list",
+        "sc-checkout-mollie-payment",
         "sc-checkout-stock-alert",
         "sc-coupon-form",
         "sc-customer-details",
@@ -13731,6 +13740,9 @@
           "sc-icon"
         ],
         "sc-charges-list": [
+          "sc-icon"
+        ],
+        "sc-checkout-mollie-payment": [
           "sc-icon"
         ],
         "sc-checkout-stock-alert": [
@@ -20817,7 +20829,9 @@
           "sc-alert",
           "sc-payment-method-choice",
           "sc-payment-selected",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-icon",
+          "sc-checkout-paystack-payment-provider"
         ],
         "sc-alert": [
           "sc-icon"

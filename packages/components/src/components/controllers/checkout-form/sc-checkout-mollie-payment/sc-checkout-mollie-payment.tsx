@@ -4,7 +4,7 @@ import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { state as processorsState } from '@store/processors';
-import { hasMultipleMethodChoices, availableMethodTypes, availableManualPaymentMethods } from '@store/processors/getters';
+import { hasMultipleMethodChoices, availableMethodTypes, availableManualPaymentMethods, getAvailableProcessor } from '@store/processors/getters';
 // checkout store.
 import { state as checkoutState } from '@store/checkout';
 import { listenTo } from '@store/checkout/functions';
@@ -15,6 +15,7 @@ import apiFetch from '../../../../functions/fetch';
 
 import { ManualPaymentMethods } from '../payment/ManualPaymentMethods';
 import { createErrorNotice } from '@store/notices/mutations';
+import { MockProcessor } from '../payment/MockProcessor';
 
 @Component({
   tag: 'sc-checkout-mollie-payment',
@@ -108,6 +109,7 @@ export class ScCheckoutMolliePayment {
               </sc-card>
             </sc-payment-method-choice>
           ))}
+          <MockProcessor processor={getAvailableProcessor('mock')} />
           <ManualPaymentMethods methods={availableManualPaymentMethods()} />
         </Tag>
         {!!checkoutIsLocked('methods') && <sc-block-ui class="busy-block-ui" z-index={9} style={{ '--sc-block-ui-opacity': '0.4' }}></sc-block-ui>}

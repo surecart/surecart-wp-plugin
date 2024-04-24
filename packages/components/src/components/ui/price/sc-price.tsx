@@ -3,7 +3,7 @@
  */
 import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { intervalString } from 'src/functions/price';
+import { intervalString } from '../../../functions/price';
 
 /**
  * Internal dependencies.

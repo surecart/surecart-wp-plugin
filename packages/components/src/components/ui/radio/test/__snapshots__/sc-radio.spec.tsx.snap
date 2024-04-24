@@ -18,6 +18,7 @@ exports[`sc-radio renders 1`] = `
       </span>
       <span class="radio__label" id="radio-label-1" part="label">
         <slot></slot>
+        <slot name="description"></slot>
       </span>
     </label>
   </mock:shadow-root>
