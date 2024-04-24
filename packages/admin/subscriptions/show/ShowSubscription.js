@@ -43,6 +43,7 @@ import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtMo
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
 import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
 import Affiliates from '../../components/affiliates';
+import ForceCancelModal from './modules/modals/ForceCancelModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -190,9 +191,14 @@ export default () => {
 		}
 		if (subscription?.cancel_at_period_end) {
 			return (
-				<ScMenuItem onClick={() => setModal('dont_cancel')}>
-					{__("Don't Cancel", 'surecart')}
-				</ScMenuItem>
+				<>
+					<ScMenuItem onClick={() => setModal('dont_cancel')}>
+						{__("Don't Cancel", 'surecart')}
+					</ScMenuItem>
+					<ScMenuItem onClick={() => setModal('force_cancel')}>
+						{__('Cancel Now', 'surecart')}
+					</ScMenuItem>
+				</>
 			);
 		}
 		return (
@@ -475,6 +481,10 @@ export default () => {
 			<CancelSubscriptionModal
 				subscription={subscription}
 				open={modal === 'cancel'}
+				onRequestClose={onRequestCloseModal}
+			/>
+			<ForceCancelModal
+				open={modal === 'force_cancel'}
 				onRequestClose={onRequestCloseModal}
 			/>
 			<DontCancelModal
