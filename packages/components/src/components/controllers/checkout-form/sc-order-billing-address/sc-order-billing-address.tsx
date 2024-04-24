@@ -73,7 +73,7 @@ export class ScOrderBillingAddress {
       this.address.country = this.defaultCountry;
     }
 
-    if (checkoutState.checkout.billing_matches_shipping && checkoutState.checkout?.billing_address) {
+    if (!checkoutState.checkout?.billing_matches_shipping && checkoutState.checkout?.billing_address) {
       this.address = checkoutState.checkout.billing_address;
     }
   }
@@ -145,7 +145,7 @@ export class ScOrderBillingAddress {
           </sc-switch>
         )}
 
-        {(!this.shippingAddressFieldExists() || !checkoutState.checkout.billing_matches_shipping) && (
+        {(!this.shippingAddressFieldExists() || !checkoutState.checkout?.billing_matches_shipping) && (
           <sc-address
             exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
             ref={el => {
