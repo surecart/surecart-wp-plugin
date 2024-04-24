@@ -1,7 +1,8 @@
 import { ScInput } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
+import { forwardRef } from 'react';
 
-export default ({ price, updatePrice }) => {
+const PriceName = ({ price, updatePrice }, ref) => {
 	return (
 		<ScInput
 			value={price?.name}
@@ -10,7 +11,9 @@ export default ({ price, updatePrice }) => {
 			onScInput={(e) => {
 				updatePrice({ name: e.target.value });
 			}}
+			ref={ref}
 			autoFocus
 		/>
 	);
 };
+export default forwardRef(PriceName);
