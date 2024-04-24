@@ -19,7 +19,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 			return new CustomerSyncService();
 		};
 
-		$container['surecart.sync.products'] = function () {
+		$container['surecart.sync.product'] = function () {
 			return new ProductSyncService();
 		};
 	}
@@ -32,6 +32,6 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.sync.customers']->bootstrap();
-		$container['surecart.sync.products']->bootstrap();
+		$container['surecart.sync.product']->bootstrap();
 	}
 }

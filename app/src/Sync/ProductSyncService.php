@@ -22,7 +22,7 @@ class ProductSyncService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( $this->action_name, [ $this, 'sync' ], 10, 2 );
+		add_action( $this->action_name, [ $this, 'sync' ], 10 );
 	}
 
 	/**
@@ -42,19 +42,20 @@ class ProductSyncService {
 	 *
 	 * @return boolean
 	 */
-	public function hasRecentlySynced( $id, $time_ago = '-5 minutes' ) {
-		// get the last sync.
+	public function hasRecentlySynced( $id, $time_ago = '5 minutes' ) {
+		// get any syncs newer than the time ago.
 		$last_sync = \SureCart::queue()->search(
 			[
 				'hook'         => $this->action_name,
 				'args'         => [ 'id' => $id ],
-				'date_compare' => '<', // before the time ago.
-				'date'         => strtotime( $time_ago ), // 5 minutes ago.
+				'date_compare' => '>', // after the time ago.
+				'date'         => strtotime( '-' . $time_ago ), // 5 minutes ago.
 				'per_page'     => 1, // only need one.
 			],
 			'ids' // return only the ids (more efficient).
 		);
 
+		// if we have a sync that is newer than the time ago, return true.
 		return ! empty( $last_sync );
 	}
 
@@ -69,7 +70,7 @@ class ProductSyncService {
 		// is scheduled or has recently synced.
 		// this prevents multiple syncs from happening at the same time
 		// or rapid syncing of products due to unforeseen circumstances.
-		if ( $this->isScheduled() || $this->hasRecentlySynced( $id ) ) {
+		if ( $this->hasRecentlySynced( $id ) ) {
 			return;
 		}
 
