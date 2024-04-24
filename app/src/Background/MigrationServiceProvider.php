@@ -5,6 +5,7 @@ namespace SureCart\Background;
 use SureCart\Background\Migration\MigrationService;
 use SureCart\Background\Migration\ModelFetchJob;
 use SureCart\Background\Migration\ModelSyncJob;
+use SureCart\Background\Migration\ProductMigrationService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -28,6 +29,10 @@ class MigrationServiceProvider implements ServiceProviderInterface {
 			return $sync;
 		};
 
+		$container['surecart.migration.products'] = function () {
+			return new ProductMigrationService();
+		};
+
 		$container['surecart.migration'] = function () use ( $container ) {
 			return new MigrationService(
 				$container['surecart.migration.model_fetch'],
@@ -37,6 +42,7 @@ class MigrationServiceProvider implements ServiceProviderInterface {
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'migration', 'surecart.migration' );
+		$app->alias( 'productMigation', 'surecart.migration.products' );
 	}
 
 	/**
