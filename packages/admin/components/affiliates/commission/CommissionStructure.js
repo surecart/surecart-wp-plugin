@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/react';
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -24,6 +24,12 @@ export default ({ commissionStructure, onChangeStructure }) => {
 		: 'percentage';
 
 	const [commisionType, setCommisionType] = useState(type);
+
+	useEffect(() => {
+		if (type !== commisionType) {
+			setCommisionType(type);
+		}
+	}, [type]);
 
 	return (
 		<>
