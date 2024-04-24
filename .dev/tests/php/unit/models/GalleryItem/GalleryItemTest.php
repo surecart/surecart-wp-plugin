@@ -22,12 +22,11 @@ class GalleryItemTest extends SureCartUnitTestCase {
 	 */
 	public function test_running() {
 
-		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
 		$id = $this->factory->attachment->create_upload_object( $filename );
 		$post = get_post($id);
 
 		$this->assertNotEmpty($post);
-
 		// $gallery = new GalleryItem($post);
 		// $this->assertEquals(1, $gallery->id);
 
