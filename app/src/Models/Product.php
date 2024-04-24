@@ -66,6 +66,26 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Maybe queue a sync job if updated_at is different
+	 * than the product post updated_at.
+	 *
+	 * @param string $value The updated_at value.
+	 *
+	 * @return void
+	 */
+	public function setUpdatedAtAttribute( $value ) {
+		// queue the off-session sync job if the product updated_at is newer than the post updated_at.
+		if ( ! empty( $this->post ) && ! empty( $this->post->updated_at ) && ! empty( $this->updated_at ) ) {
+			if ( $this->updated_at > $this->post->updated_at ) {
+				$this->queueSync();
+			}
+		}
+
+		// set the attribute like normal.
+		$this->attributes['updated_at'] = apply_filters( "surecart/$this->object_name/attributes/updated_at", $value, $this );
+	}
+
+	/**
 	 * Image srcset.
 	 *
 	 * @return string

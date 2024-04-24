@@ -946,6 +946,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Queue a sync job for later.
+	 *
+	 * @return \SureCart\Background\QueueService
+	 */
+	protected function queueSync() {
+		return \SureCart::queue()->async( 'surecart/sync/product', [ 'id' => $this->id ] );
+	}
+
+	/**
 	 * Update the model.
 	 *
 	 * @param array $attributes Attributes to update.

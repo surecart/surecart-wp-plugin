@@ -10,13 +10,19 @@ use SureCart\Models\Product;
  */
 class ProductSyncService {
 	/**
+	 * The action name.
+	 *
+	 * @var string
+	 */
+	protected $action_name = 'surecart/sync/product';
+
+	/**
 	 * Bootstrap any actions.
 	 *
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'surecart/sync/products', [ $this, 'sync' ], 10, 2 );
-		add_action( 'admin_notices', [ $this, 'showSyncNotice' ] );
+		add_action( $this->action_name, [ $this, 'sync' ], 10, 2 );
 	}
 
 	/**
@@ -24,91 +30,58 @@ class ProductSyncService {
 	 *
 	 * @return boolean
 	 */
-	public function isRunning() {
-		return as_has_scheduled_action( 'surecart/sync/product' ) || as_has_scheduled_action( 'surecart/sync/products' );
+	public function isScheduled() {
+		return \SureCart::queue()->isScheduled( $this->action_name );
 	}
 
 	/**
-	 * Show an admin notice if products are being synced.
+	 * Has this product been synced recently.
 	 *
-	 * @return void
+	 * @param string $id The product id to check.
+	 * @param string $time_ago The time ago to check.
+	 *
+	 * @return boolean
 	 */
-	public function showSyncNotice() {
-		if ( ! $this->isRunning() ) {
-			return;
-		}
-
-		echo wp_kses_post(
-			\SureCart::notices()->render(
-				[
-					'type'  => 'info',
-					'title' => esc_html__( 'SureCart product sync in progress', 'surecart' ),
-					'text'  => '<p>' . esc_html__( 'SureCart is syncing products in the background. The process may take a little while, so please be patient.', 'surecart' ) . '</p>',
-				]
-			)
-		);
-	}
-
-	/**
-	 * Sync products.
-	 *
-	 * @param string  $page Current page.
-	 * @param integer $batch_size Batch size.
-	 *
-	 * @return void
-	 */
-	public function sync( $page, $batch_size = 1 ) {
-		// get products.
-		$products = Product::with( [ 'prices', 'variants', 'variant_options', 'product_medias', 'product_media.media' ] )->paginate(
+	public function hasRecentlySynced( $id, $time_ago = '-5 minutes' ) {
+		// get the last sync.
+		$last_sync = \SureCart::queue()->search(
 			[
-				'per_page' => $batch_size,
-				'page'     => $page,
-			]
-		);
-
-		if ( is_wp_error( $products ) ) {
-			return $products;
-		}
-
-		// enqueue actions to sync an individual customer.
-		foreach ( $products->data as $product ) {
-			$this->syncProduct( $product );
-		}
-
-		// calculate the total number of pages.
-		$total_pages = ceil( $products->pagination->count / $products->pagination->limit );
-
-		// if the total number of pages less than or equal to the current page, we don't have another page.
-		if ( $total_pages <= $products->pagination->page ) {
-			// we don't have another page.
-			return;
-		}
-
-		// get the next batch.
-		return as_enqueue_async_action(
-			'surecart/sync/products',
-			[
-				'page'       => $page + 1,
-				'batch_size' => $batch_size,
+				'hook'         => $this->action_name,
+				'args'         => [ 'id' => $id ],
+				'date_compare' => '<', // before the time ago.
+				'date'         => strtotime( $time_ago ), // 5 minutes ago.
+				'per_page'     => 1, // only need one.
 			],
-			'surecart'
+			'ids' // return only the ids (more efficient).
 		);
+
+		return ! empty( $last_sync );
 	}
 
 	/**
-	 * Sync an individual customer.
+	 * Sync product.
 	 *
-	 * @param \SureCart\Models\Product $product Customer.
+	 * @param string $id The product id to sync.
 	 *
-	 * @return \SureCart\Models\Product|\WP_Error
+	 * @return void
 	 */
-	public function syncProduct( $product ) {
-		if ( ! $product || is_wp_error( $product ) ) {
+	public function sync( $id ) {
+		// is scheduled or has recently synced.
+		// this prevents multiple syncs from happening at the same time
+		// or rapid syncing of products due to unforeseen circumstances.
+		if ( $this->isScheduled() || $this->hasRecentlySynced( $id ) ) {
+			return;
+		}
+
+		// get product.
+		$product = Product::with( [ 'prices', 'variants', 'variant_options', 'product_medias', 'product_media.media' ] )->get( $id );
+
+		// handle error.
+		if ( is_wp_error( $product ) ) {
 			return $product;
 		}
 
-		$product->sync();
-
-		return $product;
+		// sync the product.
+		return $product->sync();
 	}
 }
