@@ -17,9 +17,9 @@ import PrevNextButtons from '../../ui/PrevNextButtons';
 import usePagination from '../../hooks/usePagination';
 import ProductsDataTable from '../../components/data-tables/affiliates/products';
 import { ScButton, ScIcon } from '@surecart/components-react';
-import ProductCommissionDrawerForm from '../../components/affiliates/commission/ProductCommissionDrawerForm';
+import AffiliationProductDrawer from '../../components/affiliates/commission/AffiliationProductDrawer';
 import useSave from '../../settings/UseSave';
-import Error from '../../components/Error';
+import ConfirmDeleteAffiliationProduct from './ConfirmDeleteAffiliationProduct';
 
 export default ({ affiliationId }) => {
 	if (!affiliationId) {
@@ -32,7 +32,7 @@ export default ({ affiliationId }) => {
 	const perPage = 5;
 
 	const { save } = useSave();
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [affiliationProduct, setAffiliationProduct] = useState({
 		commission_structure: {},
@@ -79,35 +79,47 @@ export default ({ affiliationId }) => {
 		perPage,
 	});
 
-	const { affiliation_product, isLoading } = useSelect((select) => {
-		if (!affiliationProduct.id) {
-			return {
-				isLoading: false,
-				affiliation_product: null,
-			};
-		}
+	// const { affiliation_product, loadingItem } = useSelect((select) => {
+	// 	if (!affiliationProduct.id) {
+	// 		return {
+	// 			loadingItem: false,
+	// 			affiliation_product: null,
+	// 		};
+	// 	}
 
-		const entityData = [
-			'surecart',
-			'affiliation-product',
-			affiliationProduct.id,
-		];
+	// 	const entityData = [
+	// 		'surecart',
+	// 		'affiliation-product',
+	// 		affiliationProduct.id,
+	// 		{
+	// 			expand: ['commission_structure', 'product', 'product.prices'],
+	// 		},
+	// 	];
 
-		return {
-			affiliation_product: select(coreStore).getEditedEntityRecord(
-				...entityData
-			),
-			isLoading: select(coreStore)?.isResolving?.(
-				'getEditedEntityRecord',
-				[...entityData]
-			),
-		};
-	});
+	// 	return {
+	// 		affiliation_product: select(coreStore).getEditedEntityRecord(
+	// 			...entityData
+	// 		),
+	// 		loadingItem: select(coreStore)?.isResolving?.(
+	// 			'getEditedEntityRecord',
+	// 			[...entityData]
+	// 		),
+	// 	};
+	// });
 
 	const saveAffiliationProduct = async (data) => {
 		try {
+			setError(null);
+
 			if (data.id) {
-				save({
+				await editEntityRecord(
+					'surecart',
+					'affiliation-product',
+					data.id,
+					data
+				);
+
+				await save({
 					successMessage: __(
 						'Affiliate product commission updated.',
 						'surecart'
@@ -140,8 +152,6 @@ export default ({ affiliationId }) => {
 
 	return (
 		<>
-			<Error error={error} setError={setError} />
-
 			<ProductsDataTable
 				title={__('Products', 'surecart')}
 				columns={{
@@ -182,7 +192,7 @@ export default ({ affiliationId }) => {
 					>
 						<ScButton
 							type="link"
-							onClick={() => setModal(true)}
+							onClick={() => setModal('create')}
 							disabled={loading}
 						>
 							<ScIcon name="plus" slot="prefix" />
@@ -201,21 +211,40 @@ export default ({ affiliationId }) => {
 						/>
 					)
 				}
-				setAffiliationProduct={setAffiliationProduct}
+				setAffiliationProduct={(value) => {
+					setAffiliationProduct(value);
+
+					if (value?.id) {
+						setModal('edit');
+					}
+				}}
+				onDelete={(id) => {
+					setModal('delete');
+					setAffiliationProduct({ id });
+				}}
 			/>
 
-			<ProductCommissionDrawerForm
+			<AffiliationProductDrawer
 				title={
 					affiliationProduct?.id
 						? __('Edit Product Commission', 'surecart')
 						: __('New Product Commission', 'surecart')
 				}
 				id={affiliationProduct?.id}
-				open={!!modal}
+				open={modal === 'create' || modal === 'edit'}
+				error={error}
 				onRequestClose={() => setModal(false)}
 				saveAffiliationProduct={saveAffiliationProduct}
 				affiliationProduct={affiliationProduct}
 				setAffiliationProduct={setAffiliationProduct}
+				loading={false}
+			/>
+
+			<ConfirmDeleteAffiliationProduct
+				open={modal === 'delete'}
+				onRequestClose={() => setModal(false)}
+				affiliationId={affiliationId}
+				affiliationProductId={affiliationProduct?.id}
 			/>
 		</>
 	);
