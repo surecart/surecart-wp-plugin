@@ -2,6 +2,10 @@
  * WordPress dependencies
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
+import {
+	actions as dropdownActions,
+	callbacks as dropdownCallbacks,
+} from '../dropdown';
 
 /**
  * Check if the link is valid.
@@ -24,8 +28,13 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
-const { state } = store('surecart/product-list', {
+const { state, actions } = store('surecart/product-list', {
 	actions: {
+		...dropdownActions,
+		onMenuItemClick: (e) => {
+			actions.selectItem(e);
+			actions.navigate(e);
+		},
 		*navigate(event) {
 			const { ref } = getElement();
 			if (isValidLink(ref) && isValidEvent(event)) {
@@ -138,6 +147,7 @@ const { state } = store('surecart/product-list', {
 		},
 	},
 	callbacks: {
+		...dropdownCallbacks,
 		*prefetch() {
 			const { url } = getContext();
 			const { ref } = getElement();
