@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
@@ -32,6 +32,8 @@ export default ({
 	footer,
 	headerAction,
 	empty,
+	setAffiliationProduct,
+	onDelete,
 	...props
 }) => {
 	return (
@@ -41,7 +43,10 @@ export default ({
 			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
-				.map(({ product, commission_structure }) => {
+				.map((affiliationProduct) => {
+					const { product, commission_structure } =
+						affiliationProduct;
+
 					return {
 						product: <Product product={product} />,
 
@@ -71,10 +76,20 @@ export default ({
 									<ScIcon name="more-horizontal" />
 								</ScButton>
 								<ScMenu>
-									<ScMenuItem>
+									<ScMenuItem
+										onClick={() =>
+											setAffiliationProduct(
+												affiliationProduct
+											)
+										}
+									>
 										{__('Edit', 'surecart')}
 									</ScMenuItem>
-									<ScMenuItem>
+									<ScMenuItem
+										onClick={() =>
+											onDelete(affiliationProduct?.id)
+										}
+									>
 										{__('Delete', 'surecart')}
 									</ScMenuItem>
 								</ScMenu>
