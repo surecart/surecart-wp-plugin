@@ -1,12 +1,13 @@
 <?php
-namespace SureCart\Background\Migration;
 
-use SureCart\Background\BackgroundProcess;
+namespace SureCart\Sync\Products;
+
+use SureCart\Models\Product;
 
 /**
  * This class dispatches model pull requests.
  */
-class ModelFetchJob extends BackgroundProcess {
+class ProductsFetchProcess  extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *
@@ -19,7 +20,7 @@ class ModelFetchJob extends BackgroundProcess {
 	 *
 	 * @var string
 	 */
-	protected $action = 'model_fetch';
+	protected $action = 'product_fetch';
 
 	/**
 	 * Perform task with queued item.
@@ -37,11 +38,8 @@ class ModelFetchJob extends BackgroundProcess {
 		// the current page.
 		$page = $args['page'] ?? 1;
 
-		// get the model.
-		$model = new $args['model']();
-
 		// get the items.
-		$items = $model->paginate(
+		$items = Product::paginate(
 			[
 				'page'     => $page,
 				'per_page' => 25,
@@ -55,16 +53,16 @@ class ModelFetchJob extends BackgroundProcess {
 			return false;
 		}
 
-		// add each item to the queue.
+		$products_queue = \SureCart::sync()->products()->syncQueue();
 		foreach ( $items->data as $item ) {
-			// add to items queue.
-			\SureCart::migration()->sync()->push_to_queue(
+			$products_queue->push_to_queue(
 				[
 					'id'    => $item->id,
 					'model' => $args['model'],
 				],
-			)->save();
+			);
 		}
+		$products_queue->save();
 
 		// we have more to process.
 		if ( $items->hasNextPage() ) {
@@ -89,4 +87,5 @@ class ModelFetchJob extends BackgroundProcess {
 		// All these fetches are complete, so we can now sync the data.
 		\SureCart::migration()->sync()->dispatch();
 	}
+}
 }

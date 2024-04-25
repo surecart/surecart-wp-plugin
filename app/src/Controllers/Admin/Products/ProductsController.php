@@ -206,12 +206,13 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function sync( $request ) {
-		// TODO: do this only on a full sync.
-		VariantOptionValue::deleteAll();
-
-		\SureCart::migration()->deleteAll();
 		// dispatch job.
-		\SureCart::migration()->models()->dispatch();
+		\SureCart::sync()->products()->push_to_queue(
+			[
+				'page'  => 1,
+				'clear' => true,
+			]
+		)->save()->dispatch();
 
 		return $this->redirectBack( $request );
 	}

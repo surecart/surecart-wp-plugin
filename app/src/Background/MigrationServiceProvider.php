@@ -30,7 +30,7 @@ class MigrationServiceProvider implements ServiceProviderInterface {
 		};
 
 		$container['surecart.migration.products'] = function () {
-			return new ProductMigrationService();
+			return new ProductPostMigrationService();
 		};
 
 		$container['surecart.migration'] = function () use ( $container ) {

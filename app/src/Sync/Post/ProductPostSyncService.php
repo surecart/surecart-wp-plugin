@@ -1,11 +1,15 @@
 <?php
 
-namespace SureCart\Background;
+namespace SureCart\Sync\Post;
+
+use SureCart\Models\Concerns\Facade;
 
 /**
- * Product migration service.
+ * This class syncs product records to WordPress posts.
  */
-class ProductPostMigrationService {
+class ProductPostSyncService {
+	use Facade;
+
 	/**
 	 * The product model.
 	 *
@@ -28,13 +32,32 @@ class ProductPostMigrationService {
 	protected $post_type = 'sc_product';
 
 	/**
+	 * Should we sync this with collections?
+	 *
+	 * @var string
+	 */
+	protected $with_collections = false;
+
+	/**
+	 * Should we do it with collections?
+	 *
+	 * @param string $with_collections Whether to sync with collections.
+	 *
+	 * @return void
+	 */
+	protected function withCollections( $with_collections = true ) {
+		$this->with_collections = $with_collections;
+		return $this;
+	}
+
+	/**
 	 * Find the post from the model.
 	 *
 	 * @param string $model_id The model id.
 	 *
 	 * @return \WP_Post|\WP_Error|null
 	 */
-	public function findByModelId( string $model_id ) {
+	protected function findByModelId( string $model_id ) {
 		// if we don't have a model id, return null.
 		if ( empty( $model_id ) ) {
 			return null;
@@ -72,10 +95,14 @@ class ProductPostMigrationService {
 	 * Sync the model with the post.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
+	 * @param boolean                $with_collections Whether to sync with collections.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync( \SureCart\Models\Model $model ) {
+	protected function sync( \SureCart\Models\Model $model, $with_collections = false ) {
+		// sync with collections?
+		$this->with_collections = $with_collections;
+
 		$this->post = $this->findByModelId( $model->id );
 
 		if ( is_wp_error( $this->post ) ) {
@@ -150,9 +177,11 @@ class ProductPostMigrationService {
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
 
-		// set the terms.
-		$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
-		wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+		if ( ! empty( $this->with_collections ) ) {
+			// set the terms.
+			$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
+			wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+		}
 
 		// set the post on the model.
 		$this->post = get_post( $post_id );
@@ -190,8 +219,10 @@ class ProductPostMigrationService {
 		}
 
 		// set the collection terms.
-		$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
-		wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+		if ( ! empty( $this->with_collections ) ) {
+			$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
+			wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+		}
 
 		$this->post = get_post( $post_id );
 

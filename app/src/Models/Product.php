@@ -2,9 +2,9 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Posts\Product as ProductPost;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
+use SureCart\Sync\Post\ProductPostSyncService;
 
 /**
  * Price model
@@ -41,11 +41,29 @@ class Product extends Model implements PageModel {
 	protected $cache_key = 'products_updated_at';
 
 	/**
-	 * The syncable post class.
+	 * Immediately sync with a post.
 	 *
-	 * @var \SureCart\Models\PostModel
+	 * @param bool $with_collections Whether to sync with collections.
+	 *
+	 * @return \WP_Post|\WP_Error
 	 */
-	protected $post = ProductPost::class;
+	protected function sync( $with_collections = false ) {
+		return \SureCart::sync()
+			->product()
+			->withCollections( $with_collections )
+			->execute( $this );
+	}
+
+	/**
+	 * Queue a sync process with a post.
+	 *
+	 * @return \SureCart\Background\QueueService
+	 */
+	protected function queueSync() {
+		return \SureCart::sync()
+			->product()
+			->queue( $this );
+	}
 
 	/**
 	 * Create a new model

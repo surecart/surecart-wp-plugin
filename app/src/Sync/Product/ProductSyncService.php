@@ -1,9 +1,10 @@
 <?php
 
 
-namespace SureCart\Sync;
+namespace SureCart\Sync\Product;
 
 use SureCart\Models\Product;
+use SureCart\Sync\Post\ProductPostSyncService;
 
 /**
  * Syncs customer records to WordPress users.
@@ -22,16 +23,41 @@ class ProductSyncService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( $this->action_name, [ $this, 'sync' ], 10 );
+		add_action( $this->action_name, [ $this, 'fetchAndSync' ], 10 );
+	}
+
+	/**
+	 * Queue the sync for a later time.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return \SureCart\Queue\Async
+	 */
+	public function queue( \SureCart\Models\Model $model ) {
+		return \SureCart::queue()->async( $this->action_name, [ 'id' => $model->id ] );
+	}
+
+	/**
+	 * Run the model sync immediately.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 * @param boolean                $with_collections Whether to sync with collections.
+	 *
+	 * @return \WP_Post|\WP_Error
+	 */
+	public function execute( \SureCart\Models\Model $model, $with_collections = false ) {
+		return ProductPostSyncService::sync( $model, $with_collections );
 	}
 
 	/**
 	 * Is this sync running.
 	 *
+	 * @param string $id The product id to check.
+	 *
 	 * @return boolean
 	 */
-	public function isScheduled() {
-		return \SureCart::queue()->isScheduled( $this->action_name );
+	public function isScheduled( $id ) {
+		return \SureCart::queue()->isScheduled( $this->action_name, [ 'id' => $id ] );
 	}
 
 	/**
@@ -66,11 +92,11 @@ class ProductSyncService {
 	 *
 	 * @return void
 	 */
-	public function sync( $id ) {
+	public function fetchAndSync( $id ) {
 		// is scheduled or has recently synced.
 		// this prevents multiple syncs from happening at the same time
 		// or rapid syncing of products due to unforeseen circumstances.
-		if ( $this->hasRecentlySynced( $id ) ) {
+		if ( $this->isScheduled( $id ) || $this->hasRecentlySynced( $id ) ) {
 			return;
 		}
 
@@ -82,7 +108,6 @@ class ProductSyncService {
 			return $product;
 		}
 
-		// sync the product.
-		return $product->sync();
+		return $this->execute( $product );
 	}
 }

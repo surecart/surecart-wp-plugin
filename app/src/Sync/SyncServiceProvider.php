@@ -15,13 +15,20 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.sync.customers'] = function () {
-			return new CustomerSyncService();
+		$container['surecart.sync'] = function () {
+			return new SyncService();
 		};
 
-		$container['surecart.sync.product'] = function () {
-			return new ProductSyncService();
-		};
+		// $container['surecart.sync.products.fetch'] = function () {
+		// return new ProductFetchProcess();
+		// };
+
+		// $container['surecart.sync.products.process'] = function () {
+		// return new ProductSyncProcess();
+		// };
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'sync', 'surecart.sync' );
 	}
 
 	/**
@@ -31,7 +38,6 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.sync.customers']->bootstrap();
-		$container['surecart.sync.product']->bootstrap();
+		$container['surecart.sync']->bootstrap();
 	}
 }

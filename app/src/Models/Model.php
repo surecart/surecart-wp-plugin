@@ -923,29 +923,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
-	 * Possibly sync this with a post.
-	 *
-	 * @return $this
-	 */
-	protected function sync() {
-		if ( empty( $this->post() ) ) {
-			return new \WP_Error( 'no_post', 'This model does not have an associated post.' );
-		}
-
-		if ( empty( $this->id ) ) {
-			return new \WP_Error( 'no_id', 'This model does not have an ID.' );
-		}
-
-		$post = $this->post()->sync( $this );
-
-		if ( is_wp_error( $post ) ) {
-			return $post->get_error_message();
-		}
-
-		return $this;
-	}
-
-	/**
 	 * Queue a sync job for later.
 	 *
 	 * @return \SureCart\Background\QueueService

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SureCart\Sync;
+namespace SureCart\Sync\Customers;
 
 use SureCart\Models\Customer;
 use SureCart\Models\Purchase;

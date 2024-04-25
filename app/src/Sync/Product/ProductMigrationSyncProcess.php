@@ -1,12 +1,13 @@
 <?php
-namespace SureCart\Background\Migration;
+namespace SureCart\Sync\Product;
 
 use SureCart\Background\BackgroundProcess;
+use SureCart\Models\Product;
 
 /**
  * This class dispatches model pull requests.
  */
-class ModelFetchJob extends BackgroundProcess {
+class ProductSyncProcess extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *
@@ -19,7 +20,7 @@ class ModelFetchJob extends BackgroundProcess {
 	 *
 	 * @var string
 	 */
-	protected $action = 'model_fetch';
+	protected $action = 'sync_products';
 
 	/**
 	 * Perform task with queued item.
@@ -35,16 +36,14 @@ class ModelFetchJob extends BackgroundProcess {
 	 */
 	protected function task( $args ) {
 		// the current page.
-		$page = $args['page'] ?? 1;
-
-		// get the model.
-		$model = new $args['model']();
+		$page     = $args['page'] ?? 1;
+		$per_page = $args['per_page'] ?? 1;
 
 		// get the items.
-		$items = $model->paginate(
+		$items = Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections' ] )->paginate(
 			[
 				'page'     => $page,
-				'per_page' => 25,
+				'per_page' => $per_page,
 			]
 		);
 
@@ -57,13 +56,9 @@ class ModelFetchJob extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $items->data as $item ) {
-			// add to items queue.
-			\SureCart::migration()->sync()->push_to_queue(
-				[
-					'id'    => $item->id,
-					'model' => $args['model'],
-				],
-			)->save();
+			// TODO: add sync job start record.
+			$item->sync();
+			// TODO: add sync job complete record.
 		}
 
 		// we have more to process.
@@ -76,17 +71,5 @@ class ModelFetchJob extends BackgroundProcess {
 
 		// nothing more to process.
 		return false;
-	}
-
-	/**
-	 * Complete processing.
-	 *
-	 * Override if applicable, but ensure that the below actions are
-	 * performed, or, call parent::complete().
-	 */
-	protected function complete() {
-		parent::complete();
-		// All these fetches are complete, so we can now sync the data.
-		\SureCart::migration()->sync()->dispatch();
 	}
 }
