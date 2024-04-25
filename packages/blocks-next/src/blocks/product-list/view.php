@@ -10,7 +10,8 @@
 			'pages' => $pages,
 			'blockId' => $block_id,
 			'autoScroll' => (bool) $attributes['pagination_auto_scroll'] ?? true,
-			'products' => $products->data
+			'products' => $products->data,
+			'hasProducts' => !empty($products->total()),
 		]
 	); ?>
 >

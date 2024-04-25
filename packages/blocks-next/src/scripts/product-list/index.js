@@ -28,7 +28,7 @@ const { actions: dropdownActions } = store('surecart/dropdown');
 
 const { state, actions } = store('surecart/product-list', {
 	actions: {
-		onMenuItemClick: (e) => {
+		onSortMenuItemClick: (e) => {
 			dropdownActions.selectItem(e);
 			actions.navigate(e);
 		},
