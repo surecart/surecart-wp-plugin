@@ -7,19 +7,104 @@ namespace SureCart\Sync\Products;
  */
 class ProductsSyncService {
 	/**
-	 * Holds the sync process.
+	 * Application instance.
 	 *
-	 * @var \SureCart\Background\BackgroundProcess
+	 * @var \SureCart\Application
 	 */
-	protected $process;
+	protected $app = null;
 
 	/**
-	 * Get the processes.
+	 * Constructor.
 	 *
-	 * @param \SureCart\Background\BackgroundProcess $process The process.
+	 * @param \SureCart\Application $app The application.
 	 */
-	public function __construct( \SureCart\Background\BackgroundProcess $process ) {
-		$this->process = $process;
+	public function __construct( $app ) {
+		$this->app = $app;
+	}
+
+	/**
+	 * Get the queue process.
+	 *
+	 * @return ProductsQueueProcess
+	 */
+	public function queue() {
+		return $this->app->resolve( 'surecart.process.products.queue' );
+	}
+
+	/**
+	 * Get the sync process.
+	 *
+	 * @return ProductsSyncProcess
+	 */
+	public function sync() {
+		return $this->app->resolve( 'surecart.process.products.sync' );
+	}
+
+	/**
+	 * Cancel the process.
+	 *
+	 * @return void
+	 */
+	public function cancel() {
+		$this->queue()->cancel();
+		$this->sync()->cancel();
+	}
+
+	/**
+	 * Is this process active?
+	 *
+	 * @return boolean
+	 */
+	public function isActive() {
+		if ( $this->queue()->is_active() ) {
+			return 'queue';
+		}
+		if ( $this->sync()->is_active() ) {
+			return 'sync';
+		}
+		return false;
+	}
+
+	/**
+	 * Bootstrap the service.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		add_action( 'admin_notices', [ $this, 'showMigrationNotice' ] );
+	}
+
+	/**
+	 * Show the migration notice.
+	 *
+	 * @return void
+	 */
+	public function showMigrationNotice() {
+		if ( ! $this->isActive() ) {
+			return;
+		}
+		echo wp_kses_post(
+			\SureCart::notices()->render(
+				[
+					'type'  => 'info',
+					'title' => esc_html__( 'SureCart Product Sync In Progress', 'surecart' ),
+					'text'  => wp_sprintf(
+						'<p>%s</p>
+						<p><a href="%s" class="button button-secondary" id="surecart-migration-cancel">%s</a></p>',
+						esc_html__( 'SureCart is syncing products in the background. The process may take a little while, so please be patient.', 'surecart' ),
+						esc_url(
+							add_query_arg(
+								[
+									'action' => 'cancel_sync_products',
+									'nonce'  => wp_create_nonce( 'cancel_sync_products' ),
+								],
+							)
+						),
+						esc_html__( 'Cancel', 'surecart' )
+					),
+				]
+			)
+		);
 	}
 
 	/**
@@ -40,6 +125,6 @@ class ProductsSyncService {
 		);
 
 		// save and dispatch the process.
-		return $this->process->push_to_queue( $args )->save()->dispatch();
+		return $this->queue()->push_to_queue( $args )->save()->dispatch();
 	}
 }
