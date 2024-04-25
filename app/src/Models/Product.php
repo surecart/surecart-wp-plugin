@@ -4,7 +4,6 @@ namespace SureCart\Models;
 
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
-use SureCart\Sync\Post\ProductPostSyncService;
 
 /**
  * Price model

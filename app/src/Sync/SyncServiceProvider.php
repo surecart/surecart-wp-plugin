@@ -2,6 +2,11 @@
 
 namespace SureCart\Sync;
 
+use SureCart\Sync\Customers\CustomerSyncService;
+use SureCart\Sync\Product\ProductSyncService;
+use SureCart\Sync\Products\ProductsQueueProcess;
+use SureCart\Sync\Products\ProductsSyncProcess;
+use SureCart\Sync\Products\ProductsSyncService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -15,19 +20,29 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.sync'] = function () {
-			return new SyncService();
+		$app = $container[ SURECART_APPLICATION_KEY ];
+
+		// the sync service.
+		$container['surecart.sync'] = function ( $container ) {
+			return new SyncService( $container[ SURECART_APPLICATION_KEY ] );
 		};
 
-		// $container['surecart.sync.products.fetch'] = function () {
-		// return new ProductFetchProcess();
-		// };
+		// the product sync service.
+		$container['surecart.sync.product'] = function () {
+			return new ProductSyncService();
+		};
 
-		// $container['surecart.sync.products.process'] = function () {
-		// return new ProductSyncProcess();
-		// };
+		// the products sync service (bulk).
+		$container['surecart.sync.products'] = function () {
+			return new ProductsSyncService( new ProductsQueueProcess( new ProductsSyncProcess() ) );
+		};
 
-		$app = $container[ SURECART_APPLICATION_KEY ];
+		// the customers sync service.
+		$container['surecart.sync.customers'] = function () {
+			return new CustomerSyncService();
+		};
+
+		// alias the services.
 		$app->alias( 'sync', 'surecart.sync' );
 	}
 
@@ -38,6 +53,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.sync']->bootstrap();
+		$container['surecart.sync.product']->bootstrap();
+		$container['surecart.sync.customers']->bootstrap();
 	}
 }

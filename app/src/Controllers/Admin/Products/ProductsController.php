@@ -200,14 +200,10 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function sync() {
-		// dispatch job.
-		\SureCart::sync()->products()->push_to_queue(
-			[
-				'page'  => 1,
-				'clear' => true,
-			]
-		)->save()->dispatch();
+		// dispatch the sync job.
+		\SureCart::sync()->products()->dispatch( [ 'with_collections' => true ] );
 
+		// redirect back.
 		return \SureCart::redirect()->to(
 			esc_url_raw( admin_url( 'admin.php?page=sc-products' ) )
 		);

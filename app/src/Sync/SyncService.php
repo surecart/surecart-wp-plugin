@@ -1,8 +1,8 @@
 <?php
 namespace SureCart\Sync;
 
+use SureCart\Background\Migration\ProductsSyncProcess;
 use SureCart\Sync\Customers\CustomerSyncService;
-use SureCart\Sync\Products\ProductsSyncService;
 use SureCart\Sync\Product\ProductSyncService;
 
 /**
@@ -10,15 +10,19 @@ use SureCart\Sync\Product\ProductSyncService;
  */
 class SyncService {
 	/**
-	 * Bootstrap the service.
+	 * Application instance.
 	 *
-	 * @return void
+	 * @var \SureCart\Application
 	 */
-	public function bootstrap() {
-		// bootstrap the product sync.
-		$this->product()->bootstrap();
-		// bootstrap the customers sync.
-		$this->customers()->bootstrap();
+	protected $app = null;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \SureCart\Application $app The application.
+	 */
+	public function __construct( $app ) {
+		$this->app = $app;
 	}
 
 	/**
@@ -27,7 +31,7 @@ class SyncService {
 	 * @return ProductsSyncProcess
 	 */
 	public function products() {
-		return new ProductsSyncService();
+		return $this->app->resolve( 'surecart.sync.products' );
 	}
 
 	/**
@@ -36,15 +40,15 @@ class SyncService {
 	 * @return ProductSyncService
 	 */
 	public function product() {
-		return new ProductSyncService();
+		return $this->app->resolve( 'surecart.sync.product' );
 	}
 
 	/**
 	 * Get the customer sync service.
 	 *
-	 * @return ProductSyncService
+	 * @return CustomerSyncService
 	 */
 	public function customers() {
-		return new CustomerSyncService();
+		return $this->app->resolve( 'surecart.sync.customers' );
 	}
 }

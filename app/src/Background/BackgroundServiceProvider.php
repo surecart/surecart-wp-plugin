@@ -40,7 +40,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.async.webhooks']->bootstrap();
 		$container['surecart.bulk_action']->bootstrap();
 	}
 }

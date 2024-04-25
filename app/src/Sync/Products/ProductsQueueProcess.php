@@ -2,12 +2,13 @@
 
 namespace SureCart\Sync\Products;
 
+use SureCart\Background\BackgroundProcess;
 use SureCart\Models\Product;
 
 /**
- * This class dispatches model pull requests.
+ * This process fetches and queues all products for syncing.
  */
-class ProductsFetchProcess  extends BackgroundProcess {
+class ProductsQueueProcess extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *
@@ -20,7 +21,24 @@ class ProductsFetchProcess  extends BackgroundProcess {
 	 *
 	 * @var string
 	 */
-	protected $action = 'product_fetch';
+	protected $action = 'queue_products';
+
+	/**
+	 * The process to run on complete.
+	 *
+	 * @var \SureCart\Background\BackgroundProcess
+	 */
+	protected $sync_process;
+
+	/**
+	 * Construct the process.
+	 *
+	 * @param \SureCart\Background\BackgroundProcess $sync_process The process to run on complete.
+	 */
+	public function __construct( \SureCart\Background\BackgroundProcess $sync_process ) {
+		$this->sync_process = $sync_process;
+		parent::__construct();
+	}
 
 	/**
 	 * Perform task with queued item.
@@ -35,6 +53,7 @@ class ProductsFetchProcess  extends BackgroundProcess {
 	 * @return mixed
 	 */
 	protected function task( $args ) {
+		error_log( 'Processing page: ' . $args['page'] );
 		// the current page.
 		$page = $args['page'] ?? 1;
 
@@ -42,7 +61,7 @@ class ProductsFetchProcess  extends BackgroundProcess {
 		$items = Product::paginate(
 			[
 				'page'     => $page,
-				'per_page' => 25,
+				'per_page' => $args['batch_size'] ?? 25,
 			]
 		);
 
@@ -53,16 +72,18 @@ class ProductsFetchProcess  extends BackgroundProcess {
 			return false;
 		}
 
-		$products_queue = \SureCart::sync()->products()->syncQueue();
+		// add each item to the queue.
 		foreach ( $items->data as $item ) {
-			$products_queue->push_to_queue(
+			$this->sync_process->push_to_queue(
 				[
 					'id'    => $item->id,
 					'model' => $args['model'],
 				],
 			);
 		}
-		$products_queue->save();
+
+		// save the queue for later processing.
+		$this->sync_process->save();
 
 		// we have more to process.
 		if ( $items->hasNextPage() ) {
@@ -83,9 +104,10 @@ class ProductsFetchProcess  extends BackgroundProcess {
 	 * performed, or, call parent::complete().
 	 */
 	protected function complete() {
+		// When everything is queued, dispatch the complete process.
+		$this->sync_process->dispatch();
+
+		// call the parent complete method.
 		parent::complete();
-		// All these fetches are complete, so we can now sync the data.
-		\SureCart::migration()->sync()->dispatch();
 	}
-}
 }

@@ -1,28 +1,45 @@
 <?php
+
 namespace SureCart\Sync\Products;
 
 /**
- * This class dispatches model pull requests.
+ * Syncs customer records to WordPress users.
  */
 class ProductsSyncService {
-	public function bootstrap() {
-		// when the fetch is completed, sync the products.
-		// do_action( $this->identifier . '_completed' );
+	/**
+	 * Holds the sync process.
+	 *
+	 * @var \SureCart\Background\BackgroundProcess
+	 */
+	protected $process;
 
-		// first get items to sync. we will store them in the queue.
-	}
-
-	public function syncQueue() {
-
+	/**
+	 * Get the processes.
+	 *
+	 * @param \SureCart\Background\BackgroundProcess $process The process.
+	 */
+	public function __construct( \SureCart\Background\BackgroundProcess $process ) {
+		$this->process = $process;
 	}
 
 	/**
-	 * Sync all the products
+	 * Start the sync process.
 	 *
-	 * @var string
+	 * @param boolean $args The arguments.
+	 *
+	 * @return array|WP_Error The response or WP_Error on failure.
 	 */
-	public function sync() {
-		// first get items to sync.
-		// then pass them off to the sync process.
+	public function dispatch( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'page'             => 1,
+				'per_page'         => 25,
+				'with_collections' => false,
+			]
+		);
+
+		// save and dispatch the process.
+		return $this->process->push_to_queue( $args )->save()->dispatch();
 	}
 }

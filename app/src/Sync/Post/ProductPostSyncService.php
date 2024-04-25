@@ -43,7 +43,7 @@ class ProductPostSyncService {
 	 *
 	 * @param string $with_collections Whether to sync with collections.
 	 *
-	 * @return void
+	 * @return self
 	 */
 	protected function withCollections( $with_collections = true ) {
 		$this->with_collections = $with_collections;

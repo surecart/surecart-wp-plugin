@@ -7,7 +7,7 @@ use SureCart\Models\Product;
 use SureCart\Sync\Post\ProductPostSyncService;
 
 /**
- * Syncs customer records to WordPress users.
+ * This syncs an individual product to a post asynchronously.
  */
 class ProductSyncService {
 	/**
