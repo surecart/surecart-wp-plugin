@@ -314,6 +314,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue where deleted checkout and dashboard pages could not be restored if the options table was cleared.
 - Fix: Ensure we collect shipping addressses for some Stripe payment element payment methods that require a shipping address.
 - Fix: Issue with tax id input defaulting to "other" if no tax ids are selected as defaults.
+- Fix: Issue where clearing account cache on connection screen could sometimes clear out api token.
 
 = 2.24.0 - April 17th, 2024 =
 - New: Test processor for testing checkout flow without connecting a payment processor.
