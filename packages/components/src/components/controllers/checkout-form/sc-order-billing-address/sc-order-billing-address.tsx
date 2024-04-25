@@ -84,7 +84,7 @@ export class ScOrderBillingAddress {
     try {
       lockCheckout('billing-address');
       checkoutState.checkout = (await createOrUpdateCheckout({
-        id: checkoutState.checkout.id,
+        id: checkoutState?.checkout?.id,
         data: {
           billing_matches_shipping: false,
           billing_address: this.address as Address,

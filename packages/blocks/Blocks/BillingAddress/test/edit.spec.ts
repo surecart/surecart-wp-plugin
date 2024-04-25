@@ -218,6 +218,13 @@ test.describe('surecart/billing-address block frontend', () => {
 		page,
 		requestUtils,
 	}) => {
+		const testAddress = {
+			country: 'US',
+			line_1: '123 Test St',
+			city: 'Test City',
+			postal_code: '12345',
+			state: 'NY',
+		};
 		const serializedBlockHTML = `
 		<!-- wp:surecart/checkout-form {\"title\":\"Test Form\"} /-->
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
@@ -237,47 +244,27 @@ test.describe('surecart/billing-address block frontend', () => {
 
 		await page.goto(post.link);
 
+		let requestCount = 0;
+		const requestPromise = page.waitForRequest((request) => {
+			if (
+				request.url().includes('checkouts') &&
+				request.method() === 'POST'
+			) {
+				requestCount++;
+			}
+
+			return requestCount === 2; // wait for the second request
+		});
+
 		// fill the address
 		await page
-			.locator(
-				'sc-order-billing-address >> sc-address >> sc-select[name="shipping_country"]'
-			)
-			.evaluate((el) => el.setAttribute('value', 'US'));
-		await page
-			.locator(
-				'sc-order-billing-address >> sc-address >> sc-input[name="shipping_line_1"]'
-			)
-			.evaluate((el) => el.setAttribute('value', '123 Test St'));
-		await page
-			.locator(
-				'sc-order-billing-address >> sc-address >> sc-input[name="shipping_city"]'
-			)
-			.evaluate((el) => el.setAttribute('value', 'Test City'));
-		await page
-			.locator(
-				'sc-order-billing-address >> sc-address >> sc-input[name="shipping_postal_code"]'
-			)
-			.evaluate((el) => el.setAttribute('value', '12345'));
+			.locator('sc-order-billing-address >> sc-address')
+			.evaluate((el: any) => (el.address = testAddress));
 
-		// let requestCount = 0;
-		// const requestPromise = page.waitForRequest((request) => {
-		// 	if (
-		// 		request.url().includes('checkouts') &&
-		// 		request.method() === 'POST'
-		// 	) {
-		// 		requestCount++;
-		// 	}
+		await page.locator('body').click();
 
-		// 	return requestCount === 2; // wait for the second request
-		// });
-
-		// await page
-		// 	.locator(
-		// 		'sc-order-billing-address >> sc-address >> sc-input[name="shipping_city"]'
-		// 	)
-		// 	.click();
-
-		// const request = await requestPromise;
-		// expect(request.postDataJSON()).toEqual({});
+		const request = await requestPromise;
+		const requestBody = JSON.parse(request.postData() || '{}');
+		expect(requestBody.billing_address).toEqual(testAddress);
 	});
 });
