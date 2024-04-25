@@ -35,7 +35,7 @@ import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
 import Url from './modules/Url';
-import Products from './modules/Products';
+import Products from './modules/affiliation-products';
 
 export default ({ id }) => {
 	const { save } = useSave();

@@ -38,7 +38,7 @@ export default ({
 }) => {
 	return (
 		<DataTable
-			title={title || __('Products', 'surecart')}
+			title={title || __('Product Commissions', 'surecart')}
 			columns={columns}
 			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
