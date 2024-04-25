@@ -45,6 +45,13 @@ abstract class BackgroundProcess extends AsyncRequest {
 	protected $cron_interval_identifier;
 
 	/**
+	 * Restrict object instantiation when using unserialize.
+	 *
+	 * @var bool|array
+	 */
+	protected $allowed_batch_data_classes = true;
+
+	/**
 	 * The status set when process is cancelling.
 	 *
 	 * @var int
@@ -60,9 +67,26 @@ abstract class BackgroundProcess extends AsyncRequest {
 
 	/**
 	 * Initiate new background process.
+	 *
+	 * @param bool|array $allowed_batch_data_classes Optional. Array of class names that can be unserialized. Default true (any class).
 	 */
-	public function __construct() {
-		parent::bootstrap();
+	public function __construct( $allowed_batch_data_classes = true ) {
+		parent::__construct();
+
+		if ( empty( $allowed_batch_data_classes ) && false !== $allowed_batch_data_classes ) {
+			$allowed_batch_data_classes = true;
+		}
+
+		if ( ! is_bool( $allowed_batch_data_classes ) && ! is_array( $allowed_batch_data_classes ) ) {
+			$allowed_batch_data_classes = true;
+		}
+
+		// If allowed_batch_data_classes property set in subclass,
+		// only apply override if not allowing any class.
+		if ( true === $this->allowed_batch_data_classes || true !== $allowed_batch_data_classes ) {
+			$this->allowed_batch_data_classes = $allowed_batch_data_classes;
+		}
+
 		$this->cron_hook_identifier     = $this->identifier . '_cron';
 		$this->cron_interval_identifier = $this->identifier . '_cron_interval';
 
@@ -102,15 +126,6 @@ abstract class BackgroundProcess extends AsyncRequest {
 		$this->data[] = $data;
 
 		return $this;
-	}
-
-	/**
-	 * Does this have a queue?
-	 *
-	 * @return array
-	 */
-	public function has_queue() {
-		return ! empty( $this->data );
 	}
 
 	/**
@@ -193,11 +208,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	public function is_cancelled() {
 		$status = get_site_option( $this->get_status_key(), 0 );
 
-		if ( absint( $status ) === self::STATUS_CANCELLED ) {
-			return true;
-		}
-
-		return false;
+		return absint( $status ) === self::STATUS_CANCELLED;
 	}
 
 	/**
@@ -222,11 +233,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	public function is_paused() {
 		$status = get_site_option( $this->get_status_key(), 0 );
 
-		if ( absint( $status ) === self::STATUS_PAUSED ) {
-			return true;
-		}
-
-		return false;
+		return absint( $status ) === self::STATUS_PAUSED;
 	}
 
 	/**
@@ -295,7 +302,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 *
 	 * @return string
 	 */
-	public function get_status_key() {
+	protected function get_status_key() {
 		return $this->identifier . '_status';
 	}
 
@@ -415,7 +422,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	protected function get_batch() {
 		return array_reduce(
 			$this->get_batches( 1 ),
-			function ( $carry, $batch ) {
+			static function ( $carry, $batch ) {
 				return $batch;
 			},
 			array()
@@ -470,11 +477,13 @@ abstract class BackgroundProcess extends AsyncRequest {
 		$batches = array();
 
 		if ( ! empty( $items ) ) {
+			$allowed_classes = $this->allowed_batch_data_classes;
+
 			$batches = array_map(
-				function ( $item ) use ( $column, $value_column ) {
+				static function ( $item ) use ( $column, $value_column, $allowed_classes ) {
 					$batch       = new \stdClass();
 					$batch->key  = $item->{$column};
-					$batch->data = maybe_unserialize( $item->{$value_column} );
+					$batch->data = static::maybe_unserialize( $item->{$value_column}, $allowed_classes );
 
 					return $batch;
 				},
@@ -491,7 +500,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * Pass each queue item to the task handler, while remaining
 	 * within server memory and time limit constraints.
 	 */
-	public function handle() {
+	protected function handle() {
 		$this->lock_process();
 
 		/**
@@ -637,6 +646,25 @@ abstract class BackgroundProcess extends AsyncRequest {
 	}
 
 	/**
+	 * Get the cron healthcheck interval in minutes.
+	 *
+	 * Default is 5 minutes, minimum is 1 minute.
+	 *
+	 * @return int
+	 */
+	public function get_cron_interval() {
+		$interval = 5;
+
+		if ( property_exists( $this, 'cron_interval' ) ) {
+			$interval = $this->cron_interval;
+		}
+
+		$interval = apply_filters( $this->cron_interval_identifier, $interval );
+
+		return is_int( $interval ) && 0 < $interval ? $interval : 5;
+	}
+
+	/**
 	 * Schedule the cron healthcheck job.
 	 *
 	 * @access public
@@ -646,11 +674,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * @return mixed
 	 */
 	public function schedule_cron_healthcheck( $schedules ) {
-		$interval = apply_filters( $this->cron_interval_identifier, 5 );
-
-		if ( property_exists( $this, 'cron_interval' ) ) {
-			$interval = apply_filters( $this->cron_interval_identifier, $this->cron_interval );
-		}
+		$interval = $this->get_cron_interval();
 
 		if ( 1 === $interval ) {
 			$display = __( 'Every Minute' );
@@ -693,7 +717,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 */
 	protected function schedule_event() {
 		if ( ! wp_next_scheduled( $this->cron_hook_identifier ) ) {
-			wp_schedule_event( time(), $this->cron_interval_identifier, $this->cron_hook_identifier );
+			wp_schedule_event( time() + ( $this->get_cron_interval() * MINUTE_IN_SECONDS ), $this->cron_interval_identifier, $this->cron_hook_identifier );
 		}
 	}
 
@@ -733,4 +757,25 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * @return mixed
 	 */
 	abstract protected function task( $item );
+
+	/**
+	 * Maybe unserialize data, but not if an object.
+	 *
+	 * @param mixed      $data            Data to be unserialized.
+	 * @param bool|array $allowed_classes Array of class names that can be unserialized.
+	 *
+	 * @return mixed
+	 */
+	protected static function maybe_unserialize( $data, $allowed_classes ) {
+		if ( is_serialized( $data ) ) {
+			$options = array();
+			if ( is_bool( $allowed_classes ) || is_array( $allowed_classes ) ) {
+				$options['allowed_classes'] = $allowed_classes;
+			}
+
+			return @unserialize( $data, $options ); // @phpcs:ignore
+		}
+
+		return $data;
+	}
 }
