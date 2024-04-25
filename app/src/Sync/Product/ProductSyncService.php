@@ -45,7 +45,7 @@ class ProductSyncService {
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function execute( \SureCart\Models\Model $model, $with_collections = false ) {
+	public function sync( \SureCart\Models\Model $model, $with_collections = false ) {
 		return ProductPostSyncService::sync( $model, $with_collections );
 	}
 
@@ -108,6 +108,6 @@ class ProductSyncService {
 			return $product;
 		}
 
-		return $this->execute( $product );
+		return $this->sync( $product );
 	}
 }

@@ -51,7 +51,7 @@ class Product extends Model implements PageModel {
 		return \SureCart::sync()
 			->product()
 			->withCollections( $with_collections )
-			->execute( $this );
+			->sync( $this );
 	}
 
 	/**
