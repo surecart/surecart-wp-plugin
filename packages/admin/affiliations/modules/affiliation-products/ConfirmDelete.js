@@ -2,10 +2,9 @@
  * WordPress dependencies.
  */
 import { useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -13,49 +12,31 @@ import { store as noticesStore } from '@wordpress/notices';
  * Internal dependencies.
  */
 import { ScBlockUi } from '@surecart/components-react';
-import Error from '../../components/Error';
+import Error from '../../../components/Error';
 
-export default ({
-	onRequestClose,
-	open,
-	affiliationId,
-	affiliationProductId,
-	onRefresh,
-}) => {
+export default ({ onRequestClose, open, affiliationProductId }) => {
 	const [error, setError] = useState(null);
 	const [deleting, setDeleting] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { deleteEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const onDelete = async () => {
 		try {
 			setDeleting(true);
 
-			const { baseURL } = select(coreStore).getEntityConfig(
+			await deleteEntityRecord(
 				'surecart',
-				'affiliation-product'
+				'affiliation-product',
+				affiliationProductId,
+				undefined,
+				{
+					throwOnError: true,
+				}
 			);
 
-			const { deleted } = await apiFetch({
-				path: `${baseURL}/${affiliationProductId}`,
-				method: 'DELETE',
+			createSuccessNotice(__('Affiliate product deleted.', 'surecart'), {
+				type: 'snackbar',
 			});
-			console.log('deleted', deleted);
-
-			if (deleted) {
-				// receiveEntityRecords('surecart', 'affiliation-product', {
-				// 	affiliation_ids: [affiliationId],
-				// });
-				createSuccessNotice(
-					__(
-						'Affiliation product has been deleted successfully.',
-						'surecart'
-					)
-				);
-
-				window.location.reload();
-			}
 
 			onRequestClose();
 		} catch (e) {
