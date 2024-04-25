@@ -53,32 +53,6 @@ const { state, actions } = store('surecart/product-list', {
 				yield actions.prefetch(ref.href);
 			}
 		},
-		*removeFilter() {
-			// navigate to new url
-			const { actions, state: routerState } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			const { ref } = getElement();
-			// remove filter id from state
-			const { blockId } = getContext();
-			const filterId = ref?.id;
-			const currentFilter = state[blockId]?.filter || [];
-			const updatedFilter = currentFilter.filter((id) => id !== filterId);
-			const url = new URL(routerState?.url);
-			if (updatedFilter.length === 0) {
-				url.searchParams.delete(`products-${blockId}-filter`);
-			} else {
-				url.searchParams.set(
-					`products-${blockId}-filter`,
-					updatedFilter.join(',')
-				);
-			}
-			update({
-				filter: updatedFilter,
-			});
-			actions.navigate(url.toString());
-		},
 		*onSearchSubmit(event) {
 			event.preventDefault();
 			const { actions, state: routerState } = yield import(
