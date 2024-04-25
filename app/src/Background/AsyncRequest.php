@@ -7,7 +7,6 @@ namespace SureCart\Background;
  * @abstract
  */
 abstract class AsyncRequest {
-
 	/**
 	 * Prefix
 	 *
@@ -49,7 +48,7 @@ abstract class AsyncRequest {
 	/**
 	 * Initiate new async request.
 	 */
-	public function __construct() {
+	public function bootstrap() {
 		$this->identifier = $this->prefix . '_' . $this->action;
 
 		add_action( 'wp_ajax_' . $this->identifier, array( $this, 'maybe_handle' ) );
@@ -135,7 +134,7 @@ abstract class AsyncRequest {
 		}
 
 		$args = array(
-			'timeout'   => 5,
+			'timeout'   => 0.01,
 			'blocking'  => false,
 			'body'      => $this->data,
 			'cookies'   => $_COOKIE, // Passing cookies ensures request is performed as initiating user.
@@ -194,5 +193,5 @@ abstract class AsyncRequest {
 	 * Override this method to perform any actions required
 	 * during the async request.
 	 */
-	abstract protected function handle();
+	abstract public function handle();
 }
