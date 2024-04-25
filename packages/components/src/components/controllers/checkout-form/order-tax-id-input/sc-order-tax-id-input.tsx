@@ -93,7 +93,7 @@ export class ScOrderTaxIdInput {
         ref={el => (this.input = el as HTMLScTaxIdInputElement)}
         show={this.show}
         number={checkoutState.checkout?.tax_identifier?.number}
-        type={checkoutState.checkout?.tax_identifier?.number_type || this.taxIdTypesData?.[0] || 'other'}
+        type={checkoutState.checkout?.tax_identifier?.number_type || this.taxIdTypesData?.[0] || 'eu_vat'}
         country={(checkoutState.checkout?.shipping_address as Address)?.country}
         status={this.getStatus()}
         loading={formBusy()}

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-04-16T17:49:56",
+  "timestamp": "2024-04-24T19:15:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4683,8 +4683,7 @@
         "sc-payment-method-choice",
         "sc-payment-selected",
         "sc-block-ui",
-        "sc-icon",
-        "sc-checkout-paystack-payment-provider"
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-checkout-mollie-payment": [
@@ -4694,8 +4693,7 @@
           "sc-payment-method-choice",
           "sc-payment-selected",
           "sc-block-ui",
-          "sc-icon",
-          "sc-checkout-paystack-payment-provider"
+          "sc-icon"
         ],
         "sc-alert": [
           "sc-icon"
@@ -4730,14 +4728,10 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "sc-checkout-mollie-payment",
         "sc-payment"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "sc-checkout-mollie-payment": [
-          "sc-checkout-paystack-payment-provider"
-        ],
         "sc-payment": [
           "sc-checkout-paystack-payment-provider"
         ]
@@ -20830,8 +20824,7 @@
           "sc-payment-method-choice",
           "sc-payment-selected",
           "sc-block-ui",
-          "sc-icon",
-          "sc-checkout-paystack-payment-provider"
+          "sc-icon"
         ],
         "sc-alert": [
           "sc-icon"
