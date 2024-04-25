@@ -55,27 +55,27 @@ class AffiliationProductRestServiceProviderTest extends SureCartUnitTestCase {
 	 */
 	public function test_permissions($caps, $method, $route, $status){
 		//mock the requests in the container
-        $requests = \Mockery::mock(RequestService::class);
-        \SureCart::alias('request', function () use ($requests) {
-            return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-        });
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
 
-        $requests->shouldReceive('makeRequest')
-            ->andReturn((object) [
-                'id' => 'test',
-            ]);
+		$requests->shouldReceive('makeRequest')
+			->andReturn((object) [
+				'id' => 'test',
+			]);
 
-        if (is_array($caps)) {
-            $user = self::factory()->user->create_and_get();
-            foreach ($caps as $cap) {
-                $user->add_cap($cap);
-            }
+		if (is_array($caps)) {
+			$user = self::factory()->user->create_and_get();
+			foreach ($caps as $cap) {
+				$user->add_cap($cap);
+			}
 
-            wp_set_current_user($user->ID ?? null);
-        }
+			wp_set_current_user($user->ID ?? null);
+		}
 
-        $request = new \WP_REST_Request($method, $route);
-        $response = rest_do_request($request);
-        $this->assertSame($status, $response->get_status());
+		$request = new \WP_REST_Request($method, $route);
+		$response = rest_do_request($request);
+		$this->assertSame($status, $response->get_status());
 	}
 }
