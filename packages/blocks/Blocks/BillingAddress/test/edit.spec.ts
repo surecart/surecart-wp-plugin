@@ -259,7 +259,10 @@ test.describe('surecart/billing-address block frontend', () => {
 		// fill the address
 		await page
 			.locator('sc-order-billing-address >> sc-address')
-			.evaluate((el: any) => (el.address = testAddress));
+			.evaluate(
+				(el: any, address) => (el.address = address),
+				testAddress
+			);
 
 		await page.locator('body').click();
 
