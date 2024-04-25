@@ -15,7 +15,7 @@ import {
 	ScPriceInput,
 } from '@surecart/components-react';
 
-export default ({ commissionStructure, onChangeStructure }) => {
+export default ({ commissionStructure, onChangeStructure, page }) => {
 	const type = commissionStructure?.amount_commission
 		? 'fixed'
 		: 'percentage';
@@ -33,7 +33,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 			<ScRadioGroup
 				label={__('Select a commission type', 'surecart')}
 				onScChange={(e) => setCommisionType(e.target.value)}
-				required
+				{...(page !== 'settings' && { required: true })}
 			>
 				<ScRadio
 					value="percentage"
@@ -60,7 +60,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							amount_commission: null,
 						});
 					}}
-					required
+					{...(page !== 'settings' && { required: true })}
 				>
 					<span slot="suffix">%</span>
 				</ScInput>
@@ -79,7 +79,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							percent_commission: null,
 						});
 					}}
-					required
+					{...(page !== 'settings' && { required: true })}
 				/>
 			)}
 			<ScSwitch
