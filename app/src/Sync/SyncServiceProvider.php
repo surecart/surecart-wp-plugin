@@ -32,9 +32,19 @@ class SyncServiceProvider implements ServiceProviderInterface {
 			return new ProductSyncService();
 		};
 
+		// the products sync process.
+		$container['surecart.process.products.sync'] = function() {
+			return new ProductsSyncProcess();
+		};
+
+		// the products queue process. Needs the sync process to be injected.
+		$container['surecart.process.products.queue'] = function ( $container ) {
+			return new ProductsQueueProcess( $container['surecart.process.products.sync'] );
+		};
+
 		// the products sync service (bulk).
-		$container['surecart.sync.products'] = function () {
-			return new ProductsSyncService( new ProductsQueueProcess( new ProductsSyncProcess() ) );
+		$container['surecart.sync.products'] = function ( $container ) {
+			return new ProductsSyncService( $container[ SURECART_APPLICATION_KEY ] );
 		};
 
 		// the customers sync service.
@@ -54,6 +64,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.sync.product']->bootstrap();
+		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
 	}
 }
