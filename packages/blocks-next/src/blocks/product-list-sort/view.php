@@ -20,12 +20,12 @@ foreach ( $options as $option ) {
 ?>
 <div
 	class="sc-dropdown"
+	data-wp-interactive='{ "namespace": "surecart/dropdown" }'
 	<?php echo wp_kses_data(
         wp_interactivity_data_wp_context(
             [
                 'isMenuOpen' => false,
                 'selectedItem' => $selected_option,
-                'selectedItemLabel' => $selected_option['label'] ?? 'First Option',
 				'activeMenuItemId' => 'sc-menu-item-0',
 				'index' => 0,
 				'totalOptions' => count($options),
@@ -33,10 +33,10 @@ foreach ( $options as $option ) {
             ]
         )
     ); ?>
-	data-wp-on-document--click="actions.closeMenu"
+	data-wp-on-document--click="surecart/dropdown::actions.closeMenu"
 	data-wp-bind--aria-activedescendant="context.activeMenuItemId"
-	data-wp-on--keyup="actions.menuKeyUp"
-	data-wp-on--keydown="actions.menuKeyDown"
+	data-wp-on--keyup="surecart/dropdown::actions.menuKeyUp"
+	data-wp-on--keydown="surecart/dropdown::actions.menuKeyDown"
 	role="menu"
 	tabindex="-1"
 	data-wp-bind--aria-labelledby="context.activeMenuItemId"
@@ -44,10 +44,10 @@ foreach ( $options as $option ) {
 >
 	<button
 		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"
-		data-wp-on--click="actions.toggleMenu"
-		data-wp-on--keyup="actions.triggerKeyUp"
+		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
+		data-wp-on--keyup="surecart/dropdown::actions.triggerKeyUp"
 	>
-		<span class="sc-button__label" data-wp-text="context.selectedItemLabel">
+		<span class="sc-button__label" data-wp-text="surecart/dropdown::state.getSelectedOptionLabel">
 			<?php echo $options[0]['label'] ?? 'First Option'; ?>
         </span>
 		<span class="sc-button__caret">
@@ -57,7 +57,6 @@ foreach ( $options as $option ) {
 	<div
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
-		data-wp-watch="callbacks.focusFirstMenuItem"
 		aria-hidden="!context.isMenuOpen"
 	>
 		<?php foreach ($options as $key => $option) : ?>
@@ -65,13 +64,13 @@ foreach ( $options as $option ) {
 				role="menuitem"
 				tabindex="-1"
 				class="sc-dropdown__menu-item"
-				data-wp-on--click="actions.onMenuItemClick"
-				data-wp-class--sc-checked="callbacks.isMenuItemSelected"
-				data-wp-class--sc-focused="callbacks.isMenuItemFocused"
+				data-wp-on--click="surecart/product-list::actions.onMenuItemClick"
+				data-wp-class--sc-checked="surecart/dropdown::state.isMenuItemSelected"
+				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
 				id="<?php echo "sc-menu-item-" . $key ?>"
                 href="<?php echo esc_url(add_query_arg($sort_key, $option['value'])) ?>"
-				data-wp-on--mouseenter="actions.prefetch"
-				data-wp-watch="callbacks.prefetch"
+				data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
+				data-wp-watch="surecart/product-list::callbacks.prefetch"
 				<?php echo wp_kses_data(
 					wp_interactivity_data_wp_context(
 						[

@@ -34,5 +34,6 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/dropdown.css"]
+	"style": ["file:../../styles/dropdown.css", "file:../../styles/button.css"],
+	"viewScriptModule": "@surecart/dropdown"
 }

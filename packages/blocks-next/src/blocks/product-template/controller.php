@@ -17,8 +17,7 @@ $sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $
 $search_key = isset( $block_id ) ? 'products-' . $block_id . '-search' : 'products-search';
 $search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $search_key ] );
 $filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
-$filter = empty( $_GET[ $filter_key ] ) ? '' : sanitize_text_field( $_GET[ $filter_key ] );
-$collection_ids = $filter ? explode( ',', $filter ) : [];
+$filter = empty( $_GET[ $filter_key ] ) ? '' : array_map('sanitize_text_field', $_GET[ $filter_key ]);
 $per_page = $block->context["surecart/product-list/limit"] ?? 15;
 
 $products = Product::where(
@@ -31,7 +30,7 @@ $products = Product::where(
 			'product_media.media'
 		],
 		'sort'     => $sort,
-		'product_collection_ids' => $collection_ids,
+		'product_collection_ids' => $filter,
 		'query'    => $search,
 	]
 )->paginate(

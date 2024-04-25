@@ -120,7 +120,20 @@ add_action('init', function() {
 		$static_assets['version']
 	);
 
-
+	// instead, use a static loader that injects the script at runtime.
+	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/dropdown/index.asset.php';
+	wp_register_script_module(
+		'@surecart/dropdown',
+		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dropdown/index.js',
+		[
+			[
+				'id' => '@wordpress/interactivity',
+				'import' => 'dynamic'
+			]
+		],
+		$static_assets['version']
+	);
+	
 	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
 	wp_register_script_module(

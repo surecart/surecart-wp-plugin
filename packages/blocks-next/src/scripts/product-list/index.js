@@ -2,10 +2,6 @@
  * WordPress dependencies
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
-import {
-	actions as dropdownActions,
-	callbacks as dropdownCallbacks,
-} from '../dropdown';
 
 /**
  * Check if the link is valid.
@@ -28,11 +24,12 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
+const { actions: dropdownActions } = store('surecart/dropdown');
+
 const { state, actions } = store('surecart/product-list', {
 	actions: {
-		...dropdownActions,
 		onMenuItemClick: (e) => {
-			actions.selectItem(e);
+			dropdownActions.selectItem(e);
 			actions.navigate(e);
 		},
 		*navigate(event) {
@@ -55,28 +52,6 @@ const { state, actions } = store('surecart/product-list', {
 				);
 				yield actions.prefetch(ref.href);
 			}
-		},
-		*filter(event) {
-			const { actions, state: routerState } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			const { blockId } = getContext();
-			const newValue = event.target.value;
-			const url = new URL(routerState?.url);
-			const existingParams = url.searchParams.getAll(
-				`products-${blockId}-filter`
-			);
-			const currentFilter = state[blockId]?.filter || [];
-			const updatedFilter = [
-				...new Set([...currentFilter, newValue, ...existingParams]),
-			];
-			const filtersString = updatedFilter.join(',');
-			update({
-				filter: updatedFilter,
-			});
-			url.searchParams.set(`products-${blockId}-filter`, filtersString);
-			actions.navigate(url.toString());
 		},
 		*removeFilter() {
 			// navigate to new url
@@ -134,7 +109,6 @@ const { state, actions } = store('surecart/product-list', {
 		},
 	},
 	callbacks: {
-		...dropdownCallbacks,
 		*prefetch() {
 			const { url } = getContext();
 			const { ref } = getElement();
