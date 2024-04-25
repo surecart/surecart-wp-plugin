@@ -19,6 +19,7 @@ import ProductsDataTable from '../../../components/data-tables/affiliates/produc
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
 import useSave from '../../../settings/UseSave';
 import ConfirmDelete from './ConfirmDelete';
+import EmptyCommissions from './EmptyCommissions';
 import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ affiliationId }) => {
@@ -224,26 +225,24 @@ export default ({ affiliationId }) => {
 				perPage={perPage}
 				page={page}
 				setPage={setPage}
-				empty={
-					page > 1
-						? __('No more products.', 'surecart')
-						: __('None found.', 'surecart')
-				}
+				empty={<EmptyCommissions setModal={setModal} />}
 				headerAction={
-					<div
-						css={css`
-							margin: -12px 20px;
-						`}
-					>
-						<ScButton
-							type="link"
-							onClick={openCreateModal}
-							disabled={loading}
+					affiliationProducts.length > 0 && (
+						<div
+							css={css`
+								margin: -12px 20px;
+							`}
 						>
-							<ScIcon name="plus" slot="prefix" />
-							{__('Add Commission', 'surecart')}
-						</ScButton>
-					</div>
+							<ScButton
+								type="link"
+								onClick={openCreateModal}
+								disabled={loading}
+							>
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add Commission', 'surecart')}
+							</ScButton>
+						</div>
+					)
 				}
 				footer={
 					hasPagination && (

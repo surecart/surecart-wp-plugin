@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
