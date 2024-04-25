@@ -3,11 +3,6 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-/**
- * Internal dependencies
- */
-import { state as processorState } from '@store/processors';
-
 test.describe('surecart/billing-address block editor', () => {
 	test('Should allow adding of the billing address block', async ({
 		editor,
@@ -60,8 +55,6 @@ test.describe('surecart/billing-address block editor', () => {
 });
 
 test.describe('surecart/billing-address block frontend', () => {
-	test.beforeAll(async ({ requestUtils }) => {});
-
 	test('Should use shipping address if present by default', async ({
 		page,
 		requestUtils,
@@ -191,8 +184,8 @@ test.describe('surecart/billing-address block frontend', () => {
 
 		await page.goto(post.link);
 
-		let requestCount = 0;
 		// capture the request and expect to have billing_matches_shipping false in the body
+		let requestCount = 0;
 		const requestPromise = page.waitForRequest((request) => {
 			if (
 				request.url().includes('checkouts') &&
