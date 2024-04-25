@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
-
 /**
  * External dependencies.
  */
@@ -36,6 +33,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 			<ScRadioGroup
 				label={__('Select a commission type', 'surecart')}
 				onScChange={(e) => setCommisionType(e.target.value)}
+				required
 			>
 				<ScRadio
 					value="percentage"
@@ -62,6 +60,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							amount_commission: null,
 						});
 					}}
+					required
 				>
 					<span slot="suffix">%</span>
 				</ScInput>
@@ -80,6 +79,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							percent_commission: null,
 						});
 					}}
+					required
 				/>
 			)}
 			<ScSwitch
