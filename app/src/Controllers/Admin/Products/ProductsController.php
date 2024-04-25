@@ -4,10 +4,8 @@ namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
-use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
-use SureCart\Models\VariantOptionValue;
 
 /**
  * Handles product admin requests.
@@ -171,7 +169,8 @@ class ProductsController extends AdminController {
 	 * Change the archived attribute in the model
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return void
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function toggleArchive( $request ) {
 		$product = Product::find( $request->query( 'id' ) );
@@ -190,22 +189,17 @@ class ProductsController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $updated->get_error_messages() ) ) );
 		}
 
-		\SureCart::flash()->add(
-			'success',
-			$updated->archived ? __( 'Product archived.', 'surecart' ) : __( 'Product restored.', 'surecart' )
+		return \SureCart::redirect()->to(
+			esc_url_raw( add_query_arg( 'status', ( $updated->archived ? 'archived' : 'active' ), admin_url( 'admin.php?page=sc-products' ) ) )
 		);
-
-		return $this->redirectBack( $request );
 	}
 
 	/**
 	 * Start product sync.
 	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 *
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
-	public function sync( $request ) {
+	public function sync() {
 		// dispatch job.
 		\SureCart::sync()->products()->push_to_queue(
 			[
@@ -214,30 +208,21 @@ class ProductsController extends AdminController {
 			]
 		)->save()->dispatch();
 
-		return $this->redirectBack( $request );
+		return \SureCart::redirect()->to(
+			esc_url_raw( admin_url( 'admin.php?page=sc-products' ) )
+		);
 	}
 
 	/**
 	 * Cancel product sync.
 	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 *
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
-	public function cancelSync( $request ) {
+	public function cancelSync() {
 		\SureCart::migration()->deleteAll();
 
-		return $this->redirectBack( $request );
-	}
-
-	/**
-	 * Redirect back.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 *
-	 * @return \SureCartCore\Responses\RedirectResponse
-	 */
-	public function redirectBack( $request ) {
-		return ( new RedirectResponse( $request ) )->back();
+		return \SureCart::redirect()->to(
+			esc_url_raw( admin_url( 'admin.php?page=sc-products' ) )
+		);
 	}
 }

@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.22.1
+Stable tag: 2.25.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,33 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.25.0 - April 25th, 2024 =
+- Improvement: Price creation/edit UI now accounts for the larger number of options available.
+- Improvement: Add live mode toggle to abandoned checkouts page.
+- Improvement: Add ability to cancel a subscription that is already pending cancellation in the admin.
+- Fix: Issue where deleted checkouts could sometimes not be handled correctly.
+- Fix: Product page slideshow not loading when double quotes appear in file name.
+- Fix: Issue where deleted checkout and dashboard pages could not be restored if the options table was cleared.
+- Fix: Ensure we collect shipping addressses for some Stripe payment element payment methods that require a shipping address.
+- Fix: Issue with tax id input defaulting to "other" if no tax ids are selected as defaults.
+- Fix: Issue where clearing account cache on connection screen could sometimes clear out api token.
+
+= 2.24.0 - April 17th, 2024 =
+- New: Test processor for testing checkout flow without connecting a payment processor.
+- New: Restrict coupons to a maximum order subtotal.
+- Improvement: Store checkout form now defaults to test mode for new stores.
+- Fix: Issue with loading indicator not clearing when payment fails on offsite payments flow.
+- Fix: Issue with upsells always showing totals in USD in some cases.
+
+= 2.23.0 - April 10th, 2024 =
+- New: Live/Test mode admin bar toggle on checkout pages.
+- Change: When no store logo is updated, no longer show the site title on instant checkout and customer dashboard.
+- Fix: Issue with tax input id not selecting correct tax type if only one tax type is added and country is not immediately selected in the address.
+- Fix: PHP notice when using shortcode registrations with incorrect attributes.
+- Fix: Issue with filtering collections showing blank page in admin.
+- Fix: Confusing error message when customer record cannot be updated in admin.
+- Fix: Deleting a product does was not automatically redirecting to the product list page in admin.
 
 = 2.22.1 - April 4th, 2024 =
 - Improvement: Global setting for exclusive/inclusive tax.

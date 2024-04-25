@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-04-02T16:38:33",
+  "timestamp": "2024-04-24T19:15:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4682,7 +4682,8 @@
         "sc-alert",
         "sc-payment-method-choice",
         "sc-payment-selected",
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-checkout-mollie-payment": [
@@ -4691,7 +4692,8 @@
           "sc-alert",
           "sc-payment-method-choice",
           "sc-payment-selected",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-icon"
         ],
         "sc-alert": [
           "sc-icon"
@@ -13653,6 +13655,7 @@
         "sc-cart-icon",
         "sc-cc-logo",
         "sc-charges-list",
+        "sc-checkout-mollie-payment",
         "sc-checkout-stock-alert",
         "sc-coupon-form",
         "sc-customer-details",
@@ -13731,6 +13734,9 @@
           "sc-icon"
         ],
         "sc-charges-list": [
+          "sc-icon"
+        ],
+        "sc-checkout-mollie-payment": [
           "sc-icon"
         ],
         "sc-checkout-stock-alert": [
@@ -20817,7 +20823,8 @@
           "sc-alert",
           "sc-payment-method-choice",
           "sc-payment-selected",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-icon"
         ],
         "sc-alert": [
           "sc-icon"

@@ -6,7 +6,7 @@ import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { getQueryArg } from '@wordpress/url';
+import { getQueryArg, addQueryArgs } from '@wordpress/url';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -163,6 +163,16 @@ export default ({ id, setBrowserURL }) => {
 		try {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
+
+			createSuccessNotice( __('Product deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			// Redirect to products page.
+			window.location.href = addQueryArgs(
+				'admin.php',
+				{ page: 'sc-products' },
+			);
 		} catch (e) {
 			setError(e);
 		}

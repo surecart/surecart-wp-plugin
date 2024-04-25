@@ -1,5 +1,6 @@
 import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
+import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 declare global {
   interface Window {
@@ -786,7 +787,7 @@ export interface Processor {
   };
   recurring_enabled: boolean;
   supported_currencies: Array<string>;
-  processor_type: 'paypal' | 'stripe' | 'mollie';
+  processor_type: 'paypal' | 'stripe' | 'mollie' | 'mock';
 }
 
 export interface Purchase {
@@ -1271,4 +1272,8 @@ export interface ScNoticeStore {
   };
   additional_errors?: AdditionalError[] | null;
   dismissible?: boolean;
+}
+
+export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent {
+  value?: { type: string };
 }

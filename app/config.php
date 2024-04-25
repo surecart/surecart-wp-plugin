@@ -23,6 +23,7 @@ return [
 		\SureCart\WordPress\ThemeServiceProvider::class,
 		\SureCart\WordPress\Templates\TemplatesServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
+		\SureCart\WordPress\Posts\PostServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
 		\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
