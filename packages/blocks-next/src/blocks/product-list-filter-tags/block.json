@@ -17,6 +17,8 @@
 	},
 	"supports": {
 		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
 			"default": {
 				"type": "flex"
 			}

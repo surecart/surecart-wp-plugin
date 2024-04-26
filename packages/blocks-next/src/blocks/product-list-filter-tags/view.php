@@ -15,10 +15,7 @@ $product_collections  = ProductCollection::where([
 ?>
 
 <div
-    <?php echo get_block_wrapper_attributes( array( 'class' => $class . 'is-layout-flex is-wrap' ) ); ?> 
-    style="<?php 
-		echo 'flex-direction: row;';
-	?>"
+    <?php echo get_block_wrapper_attributes(); ?> 
 >
 	<?php foreach ( $product_collections as $product_collection ) : 
         $remove_filter_url = esc_url( add_query_arg( $filter_key, array_diff( $filter, [ $product_collection->id ] ) ) );
