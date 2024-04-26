@@ -71,7 +71,10 @@ export default ({
 						}
 						onChangeStructure={(value) =>
 							onChange({
-								commission_structure: value,
+								commission_structure: {
+									...affiliationItem?.commission_structure,
+									...value,
+								},
 							})
 						}
 					/>

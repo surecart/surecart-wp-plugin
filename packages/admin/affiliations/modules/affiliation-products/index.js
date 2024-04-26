@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
@@ -48,7 +45,7 @@ export default ({ affiliationId }) => {
 
 	const id = affiliationProduct?.id;
 
-	// Run a selector to get the affiliation product data for ddit.
+	// Run a selector to get the affiliation product data for edit.
 	// So that we can use editEntityRecord to save the data.
 	useSelect(
 		(select) => {
@@ -225,34 +222,23 @@ export default ({ affiliationId }) => {
 				perPage={perPage}
 				page={page}
 				setPage={setPage}
-				empty={<EmptyCommissions setModal={setModal} />}
-				headerAction={
-					affiliationProducts.length > 0 && (
-						<div
-							css={css`
-								margin: -12px 20px;
-							`}
-						>
-							<ScButton
-								type="link"
-								onClick={openCreateModal}
-								disabled={loading}
-							>
-								<ScIcon name="plus" slot="prefix" />
-								{__('Add Commission', 'surecart')}
-							</ScButton>
-						</div>
-					)
-				}
+				empty={<EmptyCommissions openModal={openCreateModal} />}
 				footer={
-					hasPagination && (
-						<PrevNextButtons
-							data={affiliationProducts}
-							page={page}
-							setPage={setPage}
-							perPage={perPage}
-							loading={fetching}
-						/>
+					affiliationProducts.length > 0 ? (
+						<ScButton onClick={openCreateModal}>
+							<ScIcon name="plus" slot="prefix"></ScIcon>
+							{__('Add Commission', 'surecart')}
+						</ScButton>
+					) : (
+						hasPagination && (
+							<PrevNextButtons
+								data={affiliationProducts}
+								page={page}
+								setPage={setPage}
+								perPage={perPage}
+								loading={fetching}
+							/>
+						)
 					)
 				}
 				setAffiliationProduct={openEditModal}
