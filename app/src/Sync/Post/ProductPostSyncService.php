@@ -99,10 +99,7 @@ class ProductPostSyncService {
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync( \SureCart\Models\Model $model, $with_collections = false ) {
-		// sync with collections?
-		$this->with_collections = $with_collections;
-
+	protected function sync( \SureCart\Models\Model $model ) {
 		$this->post = $this->findByModelId( $model->id );
 
 		if ( is_wp_error( $this->post ) ) {
@@ -122,6 +119,7 @@ class ProductPostSyncService {
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
 		return [
 			'post_title'        => $model->name,
+			'post_type'         => $this->post_type,
 			'post_name'         => $model->slug,
 			'menu_order'        => $model->position ?? 0,
 			'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
@@ -150,11 +148,6 @@ class ProductPostSyncService {
 	 * @return \WP_Post|\WP_Error
 	 */
 	protected function create( \SureCart\Models\Model $model ) {
-		// find the post.
-		if ( empty( $this->post ) ) {
-			$this->post = $this->findByModelId( $model->id );
-		}
-
 		// don't do these actions as they can slow down the sync.
 		foreach ( [ 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ] as $action ) {
 			remove_all_actions( $action );
