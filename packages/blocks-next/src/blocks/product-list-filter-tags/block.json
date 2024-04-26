@@ -16,6 +16,7 @@
 		}
 	},
 	"supports": {
+		"interactivity": true,
 		"layout": {
 			"allowSwitching": false,
 			"allowInheriting": false,
@@ -23,7 +24,6 @@
 				"type": "flex"
 			}
 		},
-		"interactivity": true,
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"],
@@ -40,8 +40,8 @@
 			"enableContrastChecker": true
 		}
 	},
-	"render": "file:./view.php",
 	"textdomain": "surecart",
+	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": ["file:../../styles/tag.css"]
 }
