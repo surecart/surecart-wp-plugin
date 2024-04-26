@@ -34,12 +34,13 @@ export default ({
 	onRequestClose,
 }) => {
 	const [immediateUpdate, setImmediateUpdate] = useState(false);
+	const [skipProration, setSkipProration] = useState(false);
 	const [upcoming, setUpcoming] = useState();
 	const [loading, setLoading] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const submit = () => {
-		onUpdateRecentVersion(immediateUpdate);
+		onUpdateRecentVersion(immediateUpdate, skipProration);
 		onRequestClose();
 	};
 
@@ -163,24 +164,39 @@ export default ({
 			)}
 
 			{immediateUpdate && !!upcoming?.checkout?.amount_due && (
-				<ScAlert
-					open
-					type="warning"
-					css={css`
-						margin-top: var(--sc-spacing-small);
-					`}
-				>
-					{sprintf(
-						__(
-							'Changing the subscription price will immediately charge the customer %s.',
-							'surecart'
-						),
-						formatNumber(
-							upcoming?.checkout?.amount_due,
-							upcoming?.checkout?.currency ?? 'usd'
-						)
-					)}
-				</ScAlert>
+				<>
+					<div
+						css={css`
+							margin-top: var(--sc-spacing-medium);
+						`}
+					>
+						<ScSwitch
+							checked={!skipProration}
+							onClick={(e) => setSkipProration(!e.target.checked)}
+						>
+							{__('Prorate Charges', 'surecart')}
+						</ScSwitch>
+					</div>
+
+					<ScAlert
+						open
+						type="warning"
+						css={css`
+							margin-top: var(--sc-spacing-small);
+						`}
+					>
+						{sprintf(
+							__(
+								'Changing the subscription price will immediately charge the customer %s.',
+								'surecart'
+							),
+							formatNumber(
+								upcoming?.checkout?.amount_due,
+								upcoming?.checkout?.currency ?? 'usd'
+							)
+						)}
+					</ScAlert>
+				</>
 			)}
 
 			<div

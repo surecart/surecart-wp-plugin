@@ -26,6 +26,7 @@ export default ({
 	updateSubscription,
 	setRefresh,
 	setUpdateBehavior,
+	setSkipProration,
 	upcoming,
 	loading,
 }) => {
@@ -232,8 +233,12 @@ export default ({
 			<UpdateRecentPrice
 				price={price}
 				subscription={subscription}
-				onUpdateRecentVersion={(updateBehavior = null) => {
+				onUpdateRecentVersion={(
+					updateBehavior = null,
+					skipProration
+				) => {
 					setRefresh(true);
+					setSkipProration(skipProration);
 					if (updateBehavior) {
 						setUpdateBehavior('immediate');
 					}

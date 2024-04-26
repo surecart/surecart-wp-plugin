@@ -312,6 +312,7 @@ export default () => {
 					refresh={refreshPriceVersion}
 					setRefresh={setRefreshPriceVersion}
 					setUpdateBehavior={setUpdateBehavior}
+					setSkipProration={setSkipProration}
 				/>
 				<Trial
 					subscription={subscription}
