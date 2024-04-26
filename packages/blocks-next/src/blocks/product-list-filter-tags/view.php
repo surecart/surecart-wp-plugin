@@ -33,7 +33,7 @@ $block_gap_css_var = $attributes['style']['spacing']['blockGap'] ? sc_get_block_
         <a 
             key="<?php echo esc_attr( $product_collection->id ); ?>" 
             id="<?php echo esc_attr( $product_collection->id ); ?>" 
-            class="sc-tag sc-tag--primary tag--clearable"
+            class="sc-tag sc-tag--default sc-tag--medium sc-tag--clearable"
             href="<?php echo esc_url( $remove_filter_url ); ?>"
             data-wp-on--click="surecart/product-list::actions.navigate"
             data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
