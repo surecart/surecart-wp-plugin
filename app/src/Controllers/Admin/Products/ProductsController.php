@@ -11,31 +11,19 @@ use SureCart\Background\BulkActionService;
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
-
-	/**
-	 * Get the sync url.
-	 *
-	 * @return string
-	 */
-	protected function getSyncUrl() {
-		return esc_url(
-			add_query_arg(
-				[
-					'action' => 'sync',
-					'nonce'  => wp_create_nonce( 'sync_products' ),
-				],
-			)
-		);
-	}
-
 	/**
 	 * Products index.
 	 */
 	public function index() {
+		// instantiate the bulk actions service.
 		$bulk_action_service = new BulkActionService();
 		$bulk_action_service->bootstrap();
+
+		// instantiate the products list table.
 		$table = new ProductsListTable( $bulk_action_service );
 		$table->prepare_items();
+
+		// add header.
 		$this->withHeader(
 			array(
 				'breadcrumbs' => [
@@ -43,9 +31,31 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => '<div><a href="' . esc_url( $this->getSyncUrl() ) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
+				'suffix'      => '<div><a href="' . esc_url(
+					esc_url(
+						add_query_arg(
+							[
+								'action' => 'sync',
+								'nonce'  => wp_create_nonce( 'sync_products' ),
+							],
+							\SureCart::getUrl()->index( 'products' )
+						)
+					)
+				) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
 			)
 		);
+
+		// add notices.
+		$this->withNotices(
+			array(
+				'sync_cancelled'        => __( 'The sync has been cancelled.', 'surecart' ),
+				'sync_cancel_scheduled' => __( 'The sync has been scheduled to be cancelled.', 'surecart' ),
+				'archived'              => __( 'Product archived.', 'surecart' ),
+				'unarchived'            => __( 'Product unarchived.', 'surecart' ),
+			)
+		);
+
+		// return view.
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
 	}
 
@@ -53,25 +63,33 @@ class ProductsController extends AdminController {
 	 * Confirm Bulk Delete.
 	 */
 	public function confirmBulkDelete() {
+		// find the products queued for bulk deletion.
 		$products = Product::where(
 			[
-				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ),
+				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			]
-		)->get(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		)->get();
 
+		// handle empty.
 		if ( empty( $products ) ) {
-			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $_REQUEST['bulk_action_product_ids'] ), 'surecart' ) ) );
+			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $_REQUEST['bulk_action_product_ids'] ), 'surecart' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
+		// handle error.
+		if ( is_wp_error( $products ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $products->get_error_messages() ) ) );
+		}
+
+		// add header.
 		$this->withHeader(
 			[
 				'delete' => [
 					'title' => _n( 'Delete Product', 'Delete Products.', count( $products ), 'surecart' ),
 				],
 			],
-			'<div><a href="' . esc_url( $this->getSyncUrl() ) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
 		);
 
+		// return view.
 		return \SureCart::view( 'admin/products/confirm-bulk-delete' )->with( [ 'products' => $products ] );
 	}
 
@@ -79,8 +97,14 @@ class ProductsController extends AdminController {
 	 * Bulk Delete.
 	 */
 	public function bulkDelete() {
-		$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$action      = \SureCart::bulkAction()->createBulkAction( 'delete_products', $product_ids );
+		// create bulk action.
+		$action = \SureCart::bulkAction()->createBulkAction(
+			'delete_products',
+			array_map(
+				'sanitize_text_field',
+				$_REQUEST['bulk_action_product_ids'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			)
+		);
 
 		// handle error.
 		if ( is_wp_error( $action ) ) {
@@ -93,13 +117,17 @@ class ProductsController extends AdminController {
 
 	/**
 	 * Edit a product.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function edit( $request ) {
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 
+		// define product.
 		$product = null;
 
+		// find the product.
 		if ( $request->query( 'id' ) ) {
 			$product = Product::find( $request->query( 'id' ) );
 
@@ -108,6 +136,7 @@ class ProductsController extends AdminController {
 			}
 		}
 
+		// preload paths.
 		if ( ! empty( $product ) ) {
 			$gallery_paths = [];
 			$gallery       = $product->post->gallery;
@@ -132,8 +161,6 @@ class ProductsController extends AdminController {
 						'/wp/v2/templates/' . $product->template_id . '?context=edit',
 						'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
 						'/surecart/v1/products/' . $product->id . '?context=edit',
-						// '/surecart/v1/product_medias?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
-						// '/surecart/v1/prices?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
 						'/surecart/v1/integrations?context=edit&model_ids[0]=' . $product->id . '&per_page=50',
 						'/surecart/v1/integration_providers?context=edit',
 						'/surecart/v1/integration_provider_items?context=edit',
@@ -190,7 +217,12 @@ class ProductsController extends AdminController {
 		}
 
 		return \SureCart::redirect()->to(
-			esc_url_raw( add_query_arg( 'status', ( $updated->archived ? 'archived' : 'active' ), admin_url( 'admin.php?page=sc-products' ) ) )
+			esc_url_raw(
+				add_query_arg(
+					$updated->archived ? [ 'archived' => 1 ] : [ 'unarchived' => 1 ],
+					\SureCart::getUrl()->index( 'products' )
+				)
+			)
 		);
 	}
 
@@ -203,10 +235,8 @@ class ProductsController extends AdminController {
 		// dispatch the sync job.
 		\SureCart::sync()->products()->dispatch( [ 'with_collections' => true ] );
 
-		// redirect back.
-		return \SureCart::redirect()->to(
-			esc_url_raw( admin_url( 'admin.php?page=sc-products' ) )
-		);
+		// redirect to products page.
+		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
 	}
 
 	/**
@@ -215,10 +245,18 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function cancelSync() {
-		\SureCart::migration()->deleteAll();
+		// cancel the sync.
+		\SureCart::sync()->products()->cancel();
 
+		// redirect to products page.
 		return \SureCart::redirect()->to(
-			esc_url_raw( admin_url( 'admin.php?page=sc-products' ) )
+			esc_url_raw(
+				add_query_arg(
+					// if it's still active, show that it is scheduled to be cancelled.
+					\SureCart::sync()->products()->isActive() ? [ 'sync_cancel_scheduled' => true ] : [ 'sync_cancelled' => true ],
+					\SureCart::getUrl()->index( 'products' )
+				)
+			)
 		);
 	}
 }

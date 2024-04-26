@@ -45,7 +45,7 @@ class ProductPostSyncService {
 	 *
 	 * @return self
 	 */
-	protected function withCollections( $with_collections = true ) {
+	public function withCollections( $with_collections = true ) {
 		$this->with_collections = $with_collections;
 		return $this;
 	}

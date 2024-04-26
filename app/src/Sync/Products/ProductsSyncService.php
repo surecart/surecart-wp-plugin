@@ -43,11 +43,16 @@ class ProductsSyncService {
 	/**
 	 * Cancel the process.
 	 *
+	 * This cancels the queue and sync processes
+	 * and also deletes all the queue and sync items.
+	 *
 	 * @return void
 	 */
 	public function cancel() {
 		$this->queue()->cancel();
+		$this->queue()->delete_all();
 		$this->sync()->cancel();
+		$this->sync()->delete_all();
 	}
 
 	/**

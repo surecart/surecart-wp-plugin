@@ -3,6 +3,7 @@
 namespace SureCart\Sync;
 
 use SureCart\Sync\Customers\CustomerSyncService;
+use SureCart\Sync\Post\ProductPostSyncService;
 use SureCart\Sync\Product\ProductSyncService;
 use SureCart\Sync\Products\ProductsQueueProcess;
 use SureCart\Sync\Products\ProductsSyncProcess;
@@ -28,13 +29,18 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		};
 
 		// the product sync service.
-		$container['surecart.sync.product'] = function () {
-			return new ProductSyncService();
+		$container['surecart.sync.product'] = function ( $container ) {
+			return new ProductSyncService( $container[ SURECART_APPLICATION_KEY ] );
 		};
 
 		// the products sync process.
 		$container['surecart.process.products.sync'] = function() {
 			return new ProductsSyncProcess();
+		};
+
+		// the products sync process.
+		$container['surecart.process.product_post.sync'] = function() {
+			return new ProductPostSyncService();
 		};
 
 		// the products queue process. Needs the sync process to be injected.
