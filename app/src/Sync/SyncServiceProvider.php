@@ -34,18 +34,22 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		};
 
 		// the products sync process.
-		$container['surecart.process.products.sync'] = function() {
-			return new ProductsSyncProcess();
-		};
-
-		// the products sync process.
 		$container['surecart.process.product_post.sync'] = function() {
 			return new ProductPostSyncService();
 		};
 
+		// the products sync process.
+		// this needs to be instantiated on load.
+		$products_sync_process                       = new ProductsSyncProcess();
+		$container['surecart.process.products.sync'] = function() use ( $products_sync_process ) {
+			return $products_sync_process;
+		};
+
 		// the products queue process. Needs the sync process to be injected.
-		$container['surecart.process.products.queue'] = function ( $container ) {
-			return new ProductsQueueProcess( $container['surecart.process.products.sync'] );
+		// this needs to be instantiated on load.
+		$products_queue_process                       = new ProductsQueueProcess( $products_sync_process );
+		$container['surecart.process.products.queue'] = function () use ( $products_queue_process ) {
+			return $products_queue_process;
 		};
 
 		// the products sync service (bulk).

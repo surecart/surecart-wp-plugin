@@ -53,7 +53,6 @@ class ProductsQueueProcess extends BackgroundProcess {
 	 * @return mixed
 	 */
 	protected function task( $args ) {
-		error_log( 'Processing page: ' . $args['page'] );
 		// the current page.
 		$page = $args['page'] ?? 1;
 
@@ -76,7 +75,8 @@ class ProductsQueueProcess extends BackgroundProcess {
 		foreach ( $items->data as $item ) {
 			$this->sync_process->push_to_queue(
 				[
-					'id' => $item->id,
+					'id'               => $item->id,
+					'with_collections' => $args['with_collections'] ?? false,
 				],
 			);
 		}
@@ -87,8 +87,9 @@ class ProductsQueueProcess extends BackgroundProcess {
 		// we have more to process.
 		if ( $items->hasNextPage() ) {
 			return [
-				'page'       => $items->pagination->page + 1,
-				'batch_size' => $args['batch_size'] ?? 25,
+				'page'             => $items->pagination->page + 1,
+				'batch_size'       => $args['batch_size'] ?? 25,
+				'with_collections' => $args['with_collections'] ?? false,
 			];
 		}
 

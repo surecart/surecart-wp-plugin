@@ -50,7 +50,7 @@ class ProductsSyncProcess extends BackgroundProcess {
 				return false;
 			}
 
-			$model->sync();
+			$model->sync( $item['with_collections'] ?? false );
 		} catch ( \Exception $e ) {
 			error_log( 'Error syncing model: ' . $item['model'] . ' with id: ' . $item['id'] );
 			error_log( $e->getMessage() );
