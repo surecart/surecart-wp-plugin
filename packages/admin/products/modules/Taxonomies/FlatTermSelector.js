@@ -15,11 +15,7 @@ import {
 } from '@surecart/components-react';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as editorStore } from '@wordpress/editor';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
-// import Collection from './Collection';
-import NewCollection from './NewCollection';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Shared reference to an empty array for cases where it is important to avoid
@@ -39,13 +35,7 @@ const DEFAULT_QUERY = {
 	context: 'view',
 };
 
-export default ({ product, post, updateProduct, loading }) => {
-	const [suggestion, setSuggestion] = useState('');
-	const [modal, setModal] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
-
-	const slug = 'sc_collection';
-
+export default ({ post, slug, loading }) => {
 	const {
 		terms,
 		termIds,
@@ -67,8 +57,6 @@ export default ({ product, post, updateProduct, loading }) => {
 				include: (termIds || []).join(','),
 				per_page: -1,
 			};
-
-			console.log({ slug, taxonomy });
 
 			return {
 				hasCreateAction: taxonomy
@@ -100,8 +88,6 @@ export default ({ product, post, updateProduct, loading }) => {
 		termIds.includes(term.id)
 	);
 
-	console.log({ terms, termIds });
-
 	// const collections = useSelect((select) => {
 	// 	return (
 	// 		select(coreStore).getEntityRecords('taxonomy', 'sc_collection', {
@@ -114,28 +100,28 @@ export default ({ product, post, updateProduct, loading }) => {
 	// });
 
 	// when product collections come in, update the product collection ids for updating later.
-	useEffect(() => {
-		receiveEntityRecords('surecart', 'product', {
-			...product,
-			product_collection_ids: (
-				product?.product_collections?.data || []
-			)?.map((c) => c.id),
-		});
-	}, [product?.product_collections?.data]);
+	// useEffect(() => {
+	// 	receiveEntityRecords('surecart', 'product', {
+	// 		...product,
+	// 		product_collection_ids: (
+	// 			product?.product_collections?.data || []
+	// 		)?.map((c) => c.id),
+	// 	});
+	// }, [product?.product_collections?.data]);
 
 	// toggle collection (add or remmove id from `product_collection_ids`)
-	const toggleCollection = async (collectionId) => {
-		if (!collectionId) return;
-		updateProduct({
-			product_collection_ids: (
-				product?.product_collection_ids || []
-			).includes(collectionId)
-				? product?.product_collection_ids.filter(
-						(id) => id !== collectionId
-				  ) // remove.
-				: [...(product?.product_collection_ids || []), collectionId], // add.
-		});
-	};
+	// const toggleCollection = async (collectionId) => {
+	// 	if (!collectionId) return;
+	// 	updateProduct({
+	// 		product_collection_ids: (
+	// 			product?.product_collection_ids || []
+	// 		).includes(collectionId)
+	// 			? product?.product_collection_ids.filter(
+	// 					(id) => id !== collectionId
+	// 			  ) // remove.
+	// 			: [...(product?.product_collection_ids || []), collectionId], // add.
+	// 	});
+	// };
 
 	return (
 		<>
@@ -144,16 +130,12 @@ export default ({ product, post, updateProduct, loading }) => {
 				title={taxonomy?.labels?.name}
 				footer={
 					<ModelSelector
-						placeholder={__(
-							'Add this product to a collection...',
-							'surecart'
-						)}
+						searchPlaceholder={taxonomy?.labels?.search_items}
 						kind="taxonomy"
-						name="sc_collection"
+						name={slug}
 						onSelect={(collectionId) =>
 							toggleCollection(collectionId)
 						}
-						onChangeQuery={(value) => setSuggestion(value)}
 						exclude={termIds}
 						style={{ width: '100%' }}
 					>
@@ -167,7 +149,7 @@ export default ({ product, post, updateProduct, loading }) => {
 
 						<ScButton slot="trigger">
 							<ScIcon name="plus" slot="prefix" />
-							{__('Add To Collection', 'surecart')}
+							{taxonomy?.labels?.add_new_item}
 						</ScButton>
 					</ModelSelector>
 				}
@@ -193,13 +175,13 @@ export default ({ product, post, updateProduct, loading }) => {
 					</div>
 				)}
 			</Box>
-
+			{/*
 			<NewCollection
 				open={'new' === modal}
 				onRequestClose={() => setModal(false)}
 				onCreate={(collection) => toggleCollection(collection.id)}
 				suggestion={suggestion}
-			/>
+			/> */}
 		</>
 	);
 };

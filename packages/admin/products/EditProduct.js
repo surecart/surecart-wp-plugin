@@ -30,6 +30,7 @@ import Variations from './modules/Variations';
 import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
+import Taxonomies from './modules/Taxonomies';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -164,15 +165,14 @@ export default ({ id, setBrowserURL }) => {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
 
-			createSuccessNotice( __('Product deleted.', 'surecart'), {
+			createSuccessNotice(__('Product deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 
 			// Redirect to products page.
-			window.location.href = addQueryArgs(
-				'admin.php',
-				{ page: 'sc-products' },
-			);
+			window.location.href = addQueryArgs('admin.php', {
+				page: 'sc-products',
+			});
 		} catch (e) {
 			setError(e);
 		}
@@ -293,21 +293,21 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
 					<Shipping
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
 					<Tax
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Collections
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
+
+					<Taxonomies post={post} loading={loadingPost} />
+
 					<Advanced
 						product={product}
 						updateProduct={editProduct}

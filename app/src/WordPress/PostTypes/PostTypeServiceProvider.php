@@ -14,19 +14,16 @@ class PostTypeServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$container['surecart.forms']                              = function ( $container ) {
+		$container['surecart.forms']                  = function ( $container ) {
 			return new FormPostTypeService( $container['surecart.pages'] );
 		};
-		$container['surecart.cart.post']                          = function( $container ) {
+		$container['surecart.cart.post']              = function( $container ) {
 			return new CartPostTypeService( $container['surecart.pages'] );
 		};
-		$container['surecart.post_types.product']                 = function() {
+		$container['surecart.post_types.product']     = function() {
 			return new ProductPostTypeService();
 		};
-		$container['surecart.post_types.product_collection_page'] = function() {
-			return new ProductCollectionsPagePostTypeService();
-		};
-		$container['surecart.post_types.upsell_page']             = function() {
+		$container['surecart.post_types.upsell_page'] = function() {
 			return new ProductUpsellPagePostTypeService();
 		};
 
@@ -45,7 +42,6 @@ class PostTypeServiceProvider implements ServiceProviderInterface {
 		$container['surecart.forms']->bootstrap();
 		$container['surecart.cart.post']->bootstrap();
 		$container['surecart.post_types.product']->bootstrap();
-		$container['surecart.post_types.product_collection_page']->bootstrap();
 		$container['surecart.post_types.upsell_page']->bootstrap();
 	}
 }

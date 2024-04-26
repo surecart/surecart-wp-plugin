@@ -228,9 +228,10 @@ class ProductsListTable extends ListTable {
 	 * @return array|\WP_Error
 	 */
 	private function table_data() {
+		$is_archived   = $this->getArchiveStatus();
 		$product_query = Product::where(
 			array(
-				'archived' => $this->getArchiveStatus(),
+				'archived' => $is_archived,
 				'query'    => $this->get_search_query(),
 			)
 		)->with(
@@ -242,11 +243,36 @@ class ProductsListTable extends ListTable {
 			)
 		);
 
-		// Check if there is any sc_collection in the query, then filter it.
+		// Check if there is any sc_collection. If so, query by taxonomy.
 		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$posts = get_posts(
+				[
+					'post_type'      => 'sc_product',
+					'posts_per_page' => $this->get_items_per_page( 'products' ),
+					'post_status'    => $is_archived ? 'sc_archive' : 'publish',
+					'tax_query'      => array(
+						array(
+							'taxonomy' => 'sc_collection',
+							'terms'    => (int) $_GET['sc_collection'], // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+						),
+					),
+				]
+			);
+
+			if ( empty( $posts ) ) {
+				return new \WP_Error( 'no_products_found', __( 'No products found.', 'surecart' ) );
+			}
+
+			$product_ids = array_map(
+				function ( $post ) {
+					return $post->sc_id;
+				},
+				$posts
+			);
+
 			$product_query->where(
 				array(
-					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					'ids' => $product_ids,  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				)
 			);
 		}
@@ -614,7 +640,13 @@ class ProductsListTable extends ListTable {
 			return;
 		}
 
-		$product_collections  = ProductCollection::get( array( 'per_page' => -1 ) );
+		$product_collections = get_terms(
+			[
+				'taxonomy'   => 'sc_collection',
+				'hide_empty' => true,
+			]
+		);
+
 		$displayed_collection = isset( $_GET['sc_collection'] ) ? sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 
@@ -623,8 +655,8 @@ class ProductsListTable extends ListTable {
 		</label>
 		<select name="sc_collection" id="filter-by-collection">
 			<option <?php selected( $displayed_collection, '' ); ?> value=""><?php esc_html_e( 'All Product Collections', 'surecart' ); ?></option>
-			<?php foreach ( $product_collections as $collection ) : ?>
-				<option <?php selected( $displayed_collection, $collection->id ); ?> value="<?php echo esc_attr( $collection->id ); ?>"><?php echo esc_html( $collection->name ); ?></option>
+			<?php foreach ( $product_collections as $term ) : ?>
+				<option <?php selected( $displayed_collection, $term->term_id ); ?> value="<?php echo esc_attr( $term->term_id ); ?>"><?php echo esc_html( $term->name ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php

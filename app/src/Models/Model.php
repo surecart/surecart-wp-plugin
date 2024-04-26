@@ -459,7 +459,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return int|false
 	 */
 	public function getPostAttribute() {
-		return $this->post();
+		return \SureCart::sync()->product()->post()->findByModelId( $this->id );
 	}
 
 	/**
