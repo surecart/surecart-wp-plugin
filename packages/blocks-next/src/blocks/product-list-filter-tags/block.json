@@ -16,6 +16,11 @@
 		}
 	},
 	"supports": {
+		"layout": {
+			"default": {
+				"type": "flex"
+			}
+		},
 		"interactivity": true,
 		"spacing": {
 			"padding": true,

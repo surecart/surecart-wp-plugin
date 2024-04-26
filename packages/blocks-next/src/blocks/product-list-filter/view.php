@@ -52,7 +52,6 @@ foreach ( $product_collections as $collection ) {
 	<div
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
-		data-wp-watch="callbacks.focusFirstMenuItem"
 		aria-hidden="!context.isMenuOpen"
 	>
 		<?php foreach ($options as $key => $option) :

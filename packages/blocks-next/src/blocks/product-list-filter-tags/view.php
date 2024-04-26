@@ -12,18 +12,12 @@ if ( empty( $filter ) ) {
 $product_collections  = ProductCollection::where([
     'ids' => $filter,
 ])->get( array( 'per_page' => -1 ) );
-
-
-$block_gap_css_var = $attributes['style']['spacing']['blockGap'] ? sc_get_block_gap_css_var( $attributes['style']['spacing']['blockGap'] ) : '0.75em';
-
 ?>
 
 <div
     <?php echo get_block_wrapper_attributes( array( 'class' => $class . 'is-layout-flex is-wrap' ) ); ?> 
     style="<?php 
 		echo 'flex-direction: row;';
-		echo 'gap:' . $block_gap_css_var . '; ';  
-		echo esc_attr($style); 
 	?>"
 >
 	<?php foreach ( $product_collections as $product_collection ) : 

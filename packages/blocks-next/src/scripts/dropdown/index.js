@@ -3,8 +3,7 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
-// controls the dropdown.
-const { state, callbacks, actions } = store('surecart/dropdown', {
+const { actions } = store('surecart/dropdown', {
 	state: {
 		get getSelectedOptionLabel() {
 			const context = getContext();
