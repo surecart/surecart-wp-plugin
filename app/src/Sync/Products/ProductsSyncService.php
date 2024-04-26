@@ -98,6 +98,7 @@ class ProductsSyncService {
 									'action' => 'cancel_sync_products',
 									'nonce'  => wp_create_nonce( 'cancel_sync_products' ),
 								],
+								\SureCart::getUrl()->index( 'products' )
 							)
 						),
 						esc_html__( 'Cancel', 'surecart' )
