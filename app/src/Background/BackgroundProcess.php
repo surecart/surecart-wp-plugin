@@ -8,6 +8,7 @@ namespace SureCart\Background;
  * @extends WP_Async_Request
  */
 abstract class BackgroundProcess extends AsyncRequest {
+
 	/**
 	 * Action
 	 *
