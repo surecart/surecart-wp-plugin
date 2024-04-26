@@ -65,6 +65,8 @@ foreach ( $options as $option ) {
 				tabindex="-1"
 				class="sc-dropdown__menu-item"
 				data-wp-on--click="surecart/product-list::actions.onSortMenuItemClick"
+				data-wp-on--click--navigate="surecart/product-list::actions.navigate"
+				data-wp-on--click--select-item="surecart/dropdown::actions.selectItem"
 				data-wp-class--sc-checked="surecart/dropdown::state.isMenuItemSelected"
 				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
 				id="<?php echo "sc-menu-item-" . $key ?>"
