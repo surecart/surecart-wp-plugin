@@ -40,15 +40,11 @@
 			"background": false
 		},
 		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
 			"width": true,
-			"__experimentalSelector": ".product-img",
-			"__experimentalSkipSerialization": true,
+			"color": true,
 			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"width": true
+				"width": true,
+				"color": true
 			}
 		}
 	},
