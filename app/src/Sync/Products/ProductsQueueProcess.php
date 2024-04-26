@@ -76,8 +76,7 @@ class ProductsQueueProcess extends BackgroundProcess {
 		foreach ( $items->data as $item ) {
 			$this->sync_process->push_to_queue(
 				[
-					'id'    => $item->id,
-					'model' => $args['model'],
+					'id' => $item->id,
 				],
 			);
 		}
@@ -88,8 +87,8 @@ class ProductsQueueProcess extends BackgroundProcess {
 		// we have more to process.
 		if ( $items->hasNextPage() ) {
 			return [
-				'model' => $args['model'],
-				'page'  => $items->pagination->page + 1,
+				'page'       => $items->pagination->page + 1,
+				'batch_size' => $args['batch_size'] ?? 25,
 			];
 		}
 

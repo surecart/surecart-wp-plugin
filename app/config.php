@@ -47,7 +47,6 @@ return [
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
 		\SureCart\Activation\ActivationServiceProvider::class,
 		\SureCart\Background\BackgroundServiceProvider::class,
-		\SureCart\Background\MigrationServiceProvider::class,
 		\SureCart\Sync\SyncServiceProvider::class,
 
 		// REST providers.
