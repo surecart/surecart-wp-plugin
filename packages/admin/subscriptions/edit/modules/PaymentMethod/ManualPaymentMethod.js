@@ -29,7 +29,7 @@ export default ({ subscription, loading, setEdit }) => {
 				),
 				hasLoadedPaymentmethod: select(
 					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
+				)?.hasFinishedResolution?.('getEntityRecord', entityData),
 			};
 		},
 		[id]
