@@ -178,7 +178,6 @@ export class ScSubscriptionNextPayment {
               <a href={this.updatePaymentMethodUrl} slot="price-description">
                 <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
                   {manualPaymentMethod ? <sc-manual-payment-method paymentMethod={manualPaymentMethod} /> : <sc-payment-method paymentMethod={checkout?.payment_method} />}
-                  <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
                   <sc-icon name="edit-3"></sc-icon>
                 </sc-flex>
               </a>
