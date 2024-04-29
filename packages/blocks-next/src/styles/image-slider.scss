@@ -2,8 +2,8 @@
 	user-select: none;
 
 	$themeColor: #09090a !default;
-	--swiper-navigation-size: 44px;
-	--swiper-navigation-color: #fff;
+	--swiper-navigation-size: 32px;
+	--swiper-navigation-color: var(--sc-color-primary-500);
 
 	@import 'swiper/scss';
 	@import 'swiper/scss/a11y';
@@ -38,7 +38,7 @@
 		&,
 		&:focus,
 		&:hover {
-			color: var(--sc-color-black);
+			color: var(--swiper-navigation-color);
 		}
 
 		&.swiper-button-disabled {
