@@ -41,6 +41,7 @@ class CommissionStructure extends Model {
 	public function getSubscriptionCommissionAttribute() {
 		if ( $this->recurring_commissions_enabled ) {
 			$days = $this->recurring_commission_days;
+			// translators: %s is the number of days.
 			return sprintf( _n( '%s Day', '%s Days', $days, 'surecart' ), $days );
 		}
 
