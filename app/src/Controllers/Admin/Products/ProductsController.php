@@ -121,6 +121,8 @@ class ProductsController extends AdminController {
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function edit( $request ) {
+		global $post;
+
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 
@@ -135,6 +137,15 @@ class ProductsController extends AdminController {
 				wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
 			}
 		}
+
+		if ( ! empty( $product ) ) {
+			$post = $product->post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		}
+
+		do_action( 'load-post.php' );
+
+		// include ABSPATH . 'wp-admin/includes/meta-boxes.php';
+		// register_and_do_post_meta_boxes( $post );
 
 		// preload paths.
 		if ( ! empty( $product ) ) {
@@ -188,8 +199,33 @@ class ProductsController extends AdminController {
 			99
 		);
 
-		// return view.
-		return '<div id="app"></div>';
+		$locations = array( 'side', 'normal', 'advanced' );
+		ob_start(); ?>
+
+		<div id="app"></div>
+
+		<?php the_block_editor_meta_boxes(); ?>
+
+		<!-- <div id="metaboxes" class="hidden">
+			<?php foreach ( $locations as $location ) : ?>
+				<form class="metabox-location-<?php echo esc_attr( $location ); ?>" onsubmit="return false;">
+					<div id="poststuff" class="sidebar-open">
+						<div id="postbox-container-2" class="postbox-container">
+							<?php
+							do_meta_boxes(
+								'post',
+								$location,
+								$product->post
+							);
+							?>
+						</div>
+					</div>
+				</form>
+			<?php endforeach; ?>
+		</div> -->
+
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
