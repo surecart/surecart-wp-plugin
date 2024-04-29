@@ -22,6 +22,7 @@ import {
 	ScFormatNumber,
 	ScSwitch,
 	ScText,
+	ScCard,
 } from '@surecart/components-react';
 import { intervalString } from '../../../../util/translations';
 import { formatNumber } from '../../../../util';
@@ -53,7 +54,7 @@ export default ({
 			return;
 		}
 		fetchUpcomingPeriod();
-	}, [immediateUpdate, open]);
+	}, [immediateUpdate, open, skipProration]);
 
 	const fetchUpcomingPeriod = async () => {
 		setLoading(true);
@@ -66,6 +67,7 @@ export default ({
 						update_behavior: immediateUpdate
 							? 'immediate'
 							: 'scheduled',
+						skip_proration: skipProration,
 						skip_product_group_validation: true,
 						refresh_price_version: true,
 						expand: ['period.checkout'],
@@ -97,12 +99,12 @@ export default ({
 				`}
 			>
 				{__(
-					"Are you sure you want to update this subscription to use the current price? If you choose 'Update Immediately,' the new price starts right away. Otherwise, it will start with the next bill. Either way, it will be the price for all future charges.",
+					'Are you sure you want to update this subscription to use the current price? This will update this users subscription to use the current price.',
 					'surecart'
 				)}
 			</ScText>
 
-			<ScText
+			<ScCard
 				css={css`
 					display: block;
 					margin-top: var(--sc-spacing-small);
@@ -114,7 +116,7 @@ export default ({
 						--font-weight: var(--sc-font-weight-bold);
 					`}
 				>
-					{__('Changed Price', 'surecart')}: &nbsp;
+					{__('Price Change:', 'surecart')} &nbsp;
 				</span>
 				<del
 					css={css`
@@ -148,7 +150,7 @@ export default ({
 				{intervalString(recentPrice, {
 					labels: { interval: '/' },
 				})}
-			</ScText>
+			</ScCard>
 
 			{!subscription?.finite && (
 				<ScSwitch
@@ -160,6 +162,12 @@ export default ({
 					`}
 				>
 					{__('Update Immediately', 'surecart')}
+					<span slot="description">
+						{__(
+							'Immediately updates the subscription to this new price, instead of waiting until renewal.',
+							'surecart'
+						)}
+					</span>
 				</ScSwitch>
 			)}
 
@@ -175,6 +183,12 @@ export default ({
 							onClick={(e) => setSkipProration(!e.target.checked)}
 						>
 							{__('Prorate Charges', 'surecart')}
+							<span slot="description">
+								{__(
+									'Apply a credit of unused time from the current billing period.',
+									'surecart'
+								)}
+							</span>
 						</ScSwitch>
 					</div>
 
@@ -199,26 +213,19 @@ export default ({
 				</>
 			)}
 
-			<div
-				css={css`
-					display: flex;
-					justify-content: space-between;
-				`}
+			<ScButton
+				type="primary"
+				onClick={() => submit(true)}
+				loading={loading}
 				slot="footer"
 			>
-				<ScButton
-					type="primary"
-					onClick={() => submit(true)}
-					loading={loading}
-				>
-					{immediateUpdate
-						? __('Update Subscription', 'surecart')
-						: __('Schedule Update', 'surecart')}
-				</ScButton>
-				<ScButton type="text" onClick={onRequestClose}>
-					{__('Cancel', 'surecart')}
-				</ScButton>
-			</div>
+				{immediateUpdate
+					? __('Update Subscription', 'surecart')
+					: __('Schedule Update', 'surecart')}
+			</ScButton>
+			<ScButton type="text" onClick={onRequestClose} slot="footer">
+				{__('Cancel', 'surecart')}
+			</ScButton>
 		</ScDialog>
 	);
 };
