@@ -38,9 +38,10 @@ export default ({ subscription, updateSubscription, loading }) => {
 				payment_method: select(coreStore).getEntityRecord(
 					...entityData
 				),
-				hasLoadedPaymentmethod: select(
-					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
+				hasLoadedPaymentmethod: select(coreStore).hasFinishedResolution(
+					'getEntityRecord',
+					entityData
+				),
 			};
 		},
 		[id]
