@@ -16,7 +16,7 @@ import Error from '../../Error';
 import Product from '../../../affiliations/modules/affiliation-products/Product';
 
 export default ({
-	type,
+	hasProduct,
 	title,
 	open,
 	error,
@@ -50,7 +50,7 @@ export default ({
 				>
 					<Error error={error} />
 
-					{type === 'product-commission' && (
+					{hasProduct && (
 						<Product
 							label={__('Product', 'surecart')}
 							productId={
