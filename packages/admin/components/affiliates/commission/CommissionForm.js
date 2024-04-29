@@ -44,8 +44,8 @@ export default ({
 						display: flex;
 						flex-direction: column;
 						height: 100%;
-						gap: var(--sc-spacing-medium);
-						padding: var(--sc-spacing-x-large);
+						gap: var(--sc-spacing-xx-large);
+						padding: var(--sc-spacing-xx-large);
 					`}
 				>
 					<Error error={error} />
