@@ -67,6 +67,7 @@ export class ScSubscriptionPayment {
   async handleSubmit(e) {
     const { payment_method } = await e.target.getFormJson();
     const isManualPaymentMethod = (this.manualPaymentMethods || []).some(method => method.id === payment_method);
+
     try {
       this.error = '';
       this.busy = true;
@@ -108,8 +109,12 @@ export class ScSubscriptionPayment {
     }
 
     const modeMethods = this.paymentMethods.filter(method => method?.live_mode === this.subscription?.live_mode);
+    const hasNoPaymentMethods = (!this.paymentMethods?.length && !this.manualPaymentMethods?.length) || (this.paymentMethods?.length && !modeMethods?.length);
+    const currentPaymentMethodId = this.subscription?.manual_payment
+      ? this.subscription?.manual_payment_method
+      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
 
-    if ((!this.paymentMethods?.length && !this.manualPaymentMethods?.length) || (this.paymentMethods?.length && !modeMethods?.length)) {
+    if (hasNoPaymentMethods) {
       return (
         <Fragment>
           <sc-empty icon="credit-card">{__('You have no saved payment methods.', 'surecart')}</sc-empty>
@@ -121,9 +126,7 @@ export class ScSubscriptionPayment {
         </Fragment>
       );
     }
-    const currentPaymentMethodId = this.subscription?.manual_payment
-      ? this.subscription?.manual_payment_method
-      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
+
     return (
       <Fragment>
         <sc-choices>
