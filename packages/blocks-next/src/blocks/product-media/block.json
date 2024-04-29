@@ -38,6 +38,7 @@
 	"editorStyle": ["file:../../styles/image-slider.css"],
 	"viewScriptModule": "@surecart/image-slider",
 	"style": [
+		"file:./style-index.css",
 		"file:../../styles/image-slider.css",
 		"file:../../styles/product-media.css"
 	]
