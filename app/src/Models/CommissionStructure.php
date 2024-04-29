@@ -41,8 +41,8 @@ class CommissionStructure extends Model {
 	public function getSubscriptionCommissionAttribute() {
 		if ( $this->recurring_commissions_enabled ) {
 			$days = $this->recurring_commission_days;
-			// translators: %s is the number of days.
-			return sprintf( _n( '%s Day', '%s Days', $days, 'surecart' ), $days );
+			// translators: %d is the number of days.
+			return sprintf( _n( '%d Day', '%d Days', $days, 'surecart' ), $days );
 		}
 
 		return null;
@@ -56,7 +56,8 @@ class CommissionStructure extends Model {
 	public function getLifetimeCommissionAttribute() {
 		if ( $this->repeat_customer_commissions_enabled ) {
 			$days = $this->repeat_customer_commission_days;
-			return sprintf( _n( '%s Day', '%s Days', $days, 'surecart' ), $days );
+			// translators: %d is the number of days.
+			return sprintf( _n( '%d Day', '%d Days', $days, 'surecart' ), $days );
 		}
 
 		return null;
