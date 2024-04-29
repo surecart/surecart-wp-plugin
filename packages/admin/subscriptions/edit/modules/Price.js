@@ -100,7 +100,7 @@ export default ({
 												labels: { interval: '/' },
 											})}
 											{!price?.current_version && (
-												<ScTag type="warning" pill>
+												<ScTag type="info" pill>
 													{__(
 														'Previous Price Version',
 														'surecart'
