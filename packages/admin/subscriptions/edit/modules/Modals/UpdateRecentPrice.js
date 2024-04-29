@@ -81,6 +81,9 @@ export default ({
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });
+			(e?.additional_errors || []).forEach((e) => {
+				createErrorNotice(e?.message);
+			});
 		} finally {
 			setLoading(false);
 		}
