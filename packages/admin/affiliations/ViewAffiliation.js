@@ -50,16 +50,18 @@ export default ({ id }) => {
 		(select) => {
 			const entityData = ['surecart', 'affiliation', id];
 			return {
-				affiliation: select(coreStore).getEntityRecord(...entityData),
+				affiliation: select(coreStore).getEditedEntityRecord(
+					...entityData
+				),
 				hasLoadedAffiliation: select(
 					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
+				)?.hasFinishedResolution?.('getEditedEntityRecord', [
+					...entityData,
+				]),
 			};
 		},
 		[id]
 	);
-
-	console.log('affiliation', affiliation);
 
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
@@ -71,12 +73,15 @@ export default ({ id }) => {
 	 */
 	const onSubmit = async () => {
 		try {
+			setLoading(true);
 			await save({
 				successMessage: __('Affiliate updated.', 'surecart'),
 			});
 		} catch (e) {
 			console.error(e);
 			setError(e);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -249,7 +254,7 @@ export default ({ id }) => {
 					<Commission
 						affiliation={affiliation}
 						updateAffiliation={updateAffiliation}
-						loading={!hasLoadedAffiliation}
+						loading={!hasLoadedAffiliation || loading}
 						error={error}
 					/>
 				</>
