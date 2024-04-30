@@ -12,7 +12,7 @@ export default function ({ openModal }) {
 	return (
 		<ScEmpty icon="percent">
 			{__(
-				'No product commissions found. Add a new product commission.',
+				'Add a product-specific commission for this affiliate.',
 				'surecart'
 			)}
 

@@ -251,7 +251,7 @@ export default ({ affiliationId }) => {
 						? __('Edit Product Commission', 'surecart')
 						: __('New Product Commission', 'surecart')
 				}
-				type="product-commission"
+				hasProduct={true}
 				error={error}
 				open={modal === 'create' || modal === 'edit'}
 				id={affiliationProduct?.id}
