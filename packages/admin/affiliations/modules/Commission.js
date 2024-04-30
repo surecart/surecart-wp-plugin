@@ -4,35 +4,30 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
+/**
+ * Internal dependencies.
+ */
 import { ScButton, ScIcon } from '@surecart/components-react';
-import Box from '../../../ui/Box';
-import Definition from '../../../ui/Definition';
-import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
-import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
+import Definition from '../../ui/Definition';
+import CommissionForm from '../../components/affiliates/commission/CommissionForm';
+import EmptyCommissions from '../../components/affiliates/commission/EmptyCommissions';
+import Box from '../../ui/Box';
 
-export default ({ product, updateProduct, loading, error }) => {
-	const productId = product?.id;
-	if (!productId) {
-		return null;
-	}
-
+export default ({ affiliation, updateAffiliation, loading, error }) => {
 	const [modal, setModal] = useState(false);
 
 	const onChange = (data) => {
-		updateProduct({
-			commission_structure: {
-				...product?.commission_structure,
-				...data?.commission_structure,
-			},
+		updateAffiliation({
+			commission_structure: data?.commission_structure || {},
 		});
 	};
 
-	const { commission_structure: commissionStructure } = product || {};
+	const { commission_structure: commissionStructure } = affiliation || {};
 
 	return (
 		<>
 			<Box
-				title={__('Custom Affiliate Commission', 'surecart')}
+				title={__('Custom Commission', 'surecart')}
 				loading={loading}
 				header_action={
 					commissionStructure?.id ? (
@@ -70,7 +65,7 @@ export default ({ product, updateProduct, loading, error }) => {
 				) : (
 					<EmptyCommissions
 						message={__(
-							'Add a product-specific commission for this affiliate.',
+							'Add custom commission for this affiliate.',
 							'surecart'
 						)}
 						openModal={() => setModal('create')}

@@ -222,7 +222,15 @@ export default ({ affiliationId }) => {
 				perPage={perPage}
 				page={page}
 				setPage={setPage}
-				empty={<EmptyCommissions openModal={openCreateModal} />}
+				empty={
+					<EmptyCommissions
+						message={__(
+							'Add a product-specific commission for this affiliate.',
+							'surecart'
+						)}
+						openModal={openCreateModal}
+					/>
+				}
 				footer={
 					affiliationProducts.length > 0 ? (
 						<ScButton onClick={openCreateModal}>

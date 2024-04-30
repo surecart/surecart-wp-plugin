@@ -36,6 +36,7 @@ import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
 import Url from './modules/Url';
 import Products from './modules/affiliation-products';
+import Commission from './modules/Commission';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -43,7 +44,7 @@ export default ({ id }) => {
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -57,6 +58,8 @@ export default ({ id }) => {
 		},
 		[id]
 	);
+
+	console.log('affiliation', affiliation);
 
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
@@ -153,6 +156,9 @@ export default ({ id }) => {
 		}
 	};
 
+	const updateAffiliation = (data) =>
+		editEntityRecord('surecart', 'affiliation', id, data);
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -239,6 +245,12 @@ export default ({ id }) => {
 					<Url
 						url={affiliation?.referral_url}
 						code={affiliation?.code}
+					/>
+					<Commission
+						affiliation={affiliation}
+						updateAffiliation={updateAffiliation}
+						loading={!hasLoadedAffiliation}
+						error={error}
 					/>
 				</>
 			}
