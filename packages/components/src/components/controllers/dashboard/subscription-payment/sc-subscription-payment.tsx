@@ -131,14 +131,14 @@ export class ScSubscriptionPayment {
             {(this.paymentMethods || []).map(method => {
               if (method?.live_mode !== this?.subscription?.live_mode) return null;
               return (
-                <sc-choice checked={currentPaymentMethodId === method?.id} name="method" value={method?.id}>
+                <sc-choice checked={currentPaymentMethodId === method?.id} name="payment_method" value={method?.id}>
                   <sc-payment-method paymentMethod={method} full={true} />
                 </sc-choice>
               );
             })}
             {(this.manualPaymentMethods || []).map(method => {
               return (
-                <sc-choice checked={currentPaymentMethodId === method?.id} name="method" value={method?.id}>
+                <sc-choice checked={currentPaymentMethodId === method?.id} name="payment_method" value={method?.id}>
                   <sc-manual-payment-method paymentMethod={method} showDescription />
                 </sc-choice>
               );
