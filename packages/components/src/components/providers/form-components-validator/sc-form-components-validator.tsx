@@ -142,10 +142,9 @@ export class ScFormComponentsValidator {
 
   addBumps() {
     if (this.hasBumpsField) return;
-    const billingAddress = this.el.querySelector('sc-order-billing-address');
-    const payment = this.el.querySelector('sc-payment');
+    const attachReferenceElement = this.el.querySelector('sc-order-billing-address') || this.el.querySelector('sc-payment');
     const bumps = document.createElement('sc-order-bumps');
-    billingAddress.parentNode.insertBefore(bumps, (billingAddress || payment).nextSibling);
+    attachReferenceElement?.parentNode.insertBefore(bumps, attachReferenceElement.nextSibling);
     this.hasBumpsField = true;
   }
 
