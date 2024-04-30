@@ -16,7 +16,7 @@ class AffiliationProtocolController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return AffiliationProtocol::find();
+		return AffiliationProtocol::with( [ 'commission_structure' ] )->find();
 	}
 
 	/**
@@ -27,6 +27,8 @@ class AffiliationProtocolController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return AffiliationProtocol::update( $request->get_json_params() );
+		return AffiliationProtocol::update( $request->get_json_params() )
+			->with( [ 'commission_structure' ] )
+			->find();
 	}
 }
