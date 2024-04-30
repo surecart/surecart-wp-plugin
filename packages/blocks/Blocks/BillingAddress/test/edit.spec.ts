@@ -201,6 +201,19 @@ test.describe('surecart/billing-address block frontend', () => {
 				'sc-switch:has-text("Billing address same as shipping address.")'
 			)
 			.click();
+
+		// fill the shipping address to trigger API call
+		await page.locator('sc-order-shipping-address >> sc-address').evaluate(
+			(el: any) =>
+				(el.address = {
+					country: 'US',
+					line_1: '123 Test St',
+					city: 'Test City',
+					postal_code: '12345',
+					state: 'NY',
+				})
+		);
+
 		const request = await requestPromise;
 
 		const requestBody = JSON.parse(request.postData() || '{}');
