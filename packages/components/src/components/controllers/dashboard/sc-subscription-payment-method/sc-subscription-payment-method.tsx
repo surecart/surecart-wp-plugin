@@ -70,9 +70,7 @@ export class ScSubscriptionPaymentMethod {
     if (!customerId) return;
     try {
       this.loading = true;
-      const methods = await this.fetchMethods(customerId);
-      this.paymentMethods = methods['paymentMethods'];
-      this.manualPaymentMethods = methods['manualPaymentMethods'];
+      await this.fetchMethods(customerId);
     } catch (e) {
       this.error = e?.messsage || __('Something went wrong', 'surecart');
       console.error(this.error);
@@ -82,7 +80,7 @@ export class ScSubscriptionPaymentMethod {
   }
 
   async fetchMethods(customerId) {
-    const paymentMethods = (await apiFetch({
+    this.paymentMethods = (await apiFetch({
       path: addQueryArgs(`surecart/v1/payment_methods`, {
         expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
         customer_ids: [customerId],
@@ -91,15 +89,13 @@ export class ScSubscriptionPaymentMethod {
       }),
     })) as PaymentMethod[];
 
-    const manualPaymentMethods = (await apiFetch({
+    this.manualPaymentMethods = (await apiFetch({
       path: addQueryArgs(`surecart/v1/manual_payment_methods`, {
         customer_ids: [customerId],
         reusable: true,
         live_mode: this.subscription?.live_mode,
       }),
     })) as ManualPaymentMethod[];
-
-    return { paymentMethods, manualPaymentMethods };
   }
 
   async deleteMethod(method: PaymentMethod) {
