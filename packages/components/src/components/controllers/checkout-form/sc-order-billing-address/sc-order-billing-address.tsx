@@ -102,17 +102,6 @@ export class ScOrderBillingAddress {
       ...checkoutState.checkout,
       billing_matches_shipping: e.target.checked,
     };
-
-    if (!e.target.checked) {
-      this.address = {
-        country: this.defaultCountry || null,
-        city: null,
-        line_1: null,
-        line_2: null,
-        postal_code: null,
-        state: null,
-      };
-    }
   }
 
   shippingAddressFieldExists() {
