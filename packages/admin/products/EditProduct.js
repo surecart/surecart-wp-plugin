@@ -286,7 +286,12 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Affiliation productId={id} loading={!hasLoadedProduct} />
+					<Affiliation
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+						error={error}
+					/>
 				</>
 			}
 		>

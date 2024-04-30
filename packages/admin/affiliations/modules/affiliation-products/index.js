@@ -16,7 +16,7 @@ import ProductsDataTable from '../../../components/data-tables/affiliates/produc
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
 import useSave from '../../../settings/UseSave';
 import ConfirmDelete from './ConfirmDelete';
-import EmptyCommissions from './EmptyCommissions';
+import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
 import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ affiliationId }) => {
@@ -250,6 +250,11 @@ export default ({ affiliationId }) => {
 					affiliationProduct?.id
 						? __('Edit Product Commission', 'surecart')
 						: __('New Product Commission', 'surecart')
+				}
+				submitButtonTitle={
+					affiliationProduct?.id
+						? __('Save', 'surecart')
+						: __('Create', 'surecart')
 				}
 				hasProduct={true}
 				error={error}
