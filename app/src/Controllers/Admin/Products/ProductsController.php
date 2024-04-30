@@ -121,8 +121,6 @@ class ProductsController extends AdminController {
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function edit( $request ) {
-		global $post;
-
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 
@@ -137,15 +135,6 @@ class ProductsController extends AdminController {
 				wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
 			}
 		}
-
-		if ( ! empty( $product ) ) {
-			$post = $product->post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-		}
-
-		do_action( 'load-post.php' );
-
-		// include ABSPATH . 'wp-admin/includes/meta-boxes.php';
-		// register_and_do_post_meta_boxes( $post );
 
 		// preload paths.
 		if ( ! empty( $product ) ) {
@@ -199,32 +188,77 @@ class ProductsController extends AdminController {
 			99
 		);
 
-		$locations = array( 'side', 'normal', 'advanced' );
-		ob_start(); ?>
+		return '<div id="app"></div><div id="metaboxes" class="hidden">' . $this->renderMetaBoxes( $product ) . '</div>';
+	}
 
-		<div id="app"></div>
+	/**
+	 * Render meta boxes.
+	 *
+	 * @param \SureCart\Models\Product $product Product.
+	 */
+	public function renderMetaBoxes( \SureCart\Models\Product $product ) {
+		if ( empty( $product ) || empty( $product->post ) ) {
+			return;
+		}
 
-		<?php the_block_editor_meta_boxes(); ?>
+		global $post;
+		$post = $product->post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
-		<!-- <div id="metaboxes" class="hidden">
-			<?php foreach ( $locations as $location ) : ?>
-				<form class="metabox-location-<?php echo esc_attr( $location ); ?>" onsubmit="return false;">
-					<div id="poststuff" class="sidebar-open">
-						<div id="postbox-container-2" class="postbox-container">
-							<?php
-							do_meta_boxes(
-								'post',
-								$location,
-								$product->post
-							);
-							?>
-						</div>
-					</div>
-				</form>
-			<?php endforeach; ?>
-		</div> -->
+		do_action( 'load-post.php' );
+		$post_type = 'sc_product';
 
-		<?php
+		/**
+		 * Fires after all built-in meta boxes have been added.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param string  $post_type Post type.
+		 * @param WP_Post $post      Post object.
+		 */
+		do_action( 'add_meta_boxes', $post_type, $post );
+
+		/**
+		 * Fires after all built-in meta boxes have been added, contextually for the given post type.
+		 *
+		 * The dynamic portion of the hook name, `$post_type`, refers to the post type of the post.
+		 *
+		 * Possible hook names include:
+		 *
+		 *  - `add_meta_boxes_post`
+		 *  - `add_meta_boxes_page`
+		 *  - `add_meta_boxes_attachment`
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param WP_Post $post Post object.
+		 */
+		do_action( "add_meta_boxes_{$post_type}", $post );
+
+		/**
+		 * Fires after meta boxes have been added.
+		 *
+		 * Fires once for each of the default meta box contexts: normal, advanced, and side.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param string                $post_type Post type of the post on Edit Post screen, 'link' on Edit Link screen,
+		 *                                         'dashboard' on Dashboard screen.
+		 * @param string                $context   Meta box context. Possible values include 'normal', 'advanced', 'side'.
+		 * @param WP_Post|object|string $post      Post object on Edit Post screen, link object on Edit Link screen,
+		 *                                         an empty string on Dashboard screen.
+		 */
+		do_action( 'do_meta_boxes', $post_type, 'normal', $post );
+		/** This action is documented in wp-admin/includes/meta-boxes.php */
+		do_action( 'do_meta_boxes', $post_type, 'advanced', $post );
+		/** This action is documented in wp-admin/includes/meta-boxes.php */
+		do_action( 'do_meta_boxes', $post_type, 'side', $post );
+
+		global $current_screen, $typenow;
+		$current_screen = convert_to_screen( $post_type ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$typenow        = $post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+
+		ob_start();
+		the_block_editor_meta_boxes();
 		return ob_get_clean();
 	}
 
