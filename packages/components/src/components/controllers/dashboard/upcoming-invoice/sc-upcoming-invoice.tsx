@@ -6,7 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, PaymentMethod, Period, Price, Product, Subscription, ManualPaymentMethod } from '../../../../types';
+import { Checkout, PaymentMethod, Period, Price, Product, ManualPaymentMethod } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-upcoming-invoice',
@@ -73,11 +73,6 @@ export class ScUpcomingInvoice {
 
   async getInvoice() {
     if (!this.subscriptionId) return;
-    const subscription = (await apiFetch({
-      path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscriptionId}`, {
-        expand: ['price', 'price.product', 'current_period', 'product'],
-      }),
-    })) as Subscription;
 
     this.invoice = (await apiFetch({
       method: 'PATCH',
@@ -104,7 +99,6 @@ export class ScUpcomingInvoice {
         quantity: this.quantity,
         ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
         ...(this.discount ? { discount: this.discount } : {}),
-        ...(!subscription?.manual_payment ? {payment_method:subscription?.payment_method, manual_payment: false} : {manual_payment_method: subscription?.manual_payment_method, manual_payment: true}),
       },
     })) as Period;
     return this.invoice;
@@ -231,13 +225,13 @@ export class ScUpcomingInvoice {
     if (this.loading) {
       return this.renderLoading();
     }
-    
+
     if (!this.invoice) {
       return this.renderEmpty();
     }
-    
+
     const checkout = this.invoice?.checkout as Checkout;
-    const manualPaymentMethod = checkout?.manual_payment ? checkout?.manual_payment_method as ManualPaymentMethod : null;
+    const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
 
     return (
       <Fragment>
@@ -285,11 +279,11 @@ export class ScUpcomingInvoice {
 
         <sc-coupon-form
           discount={checkout?.discount}
-          label={__('Add Coupon Code','surecart')}
+          label={__('Add Coupon Code', 'surecart')}
           onScApplyCoupon={e => this.applyCoupon(e)}
           error={this.couponError}
           collapsed
-          buttonText={__('Add Coupon Code','surecart')}
+          buttonText={__('Add Coupon Code', 'surecart')}
         ></sc-coupon-form>
 
         {!!checkout.tax_amount && (
@@ -310,12 +304,8 @@ export class ScUpcomingInvoice {
             slot="price-description"
           >
             <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-              {!!manualPaymentMethod &&
-                <sc-manual-payment-method paymentMethod={manualPaymentMethod} />
-              }
-              { !manualPaymentMethod &&
-                <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
-              }
+              {!!manualPaymentMethod && <sc-manual-payment-method paymentMethod={manualPaymentMethod} />}
+              {!manualPaymentMethod && <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>}
               <sc-icon name="edit-3"></sc-icon>
             </sc-flex>
           </a>
