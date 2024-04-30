@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
@@ -13,9 +13,6 @@ import {
 	ScInput,
 	ScSelect,
 	ScDialog,
-	ScRadioGroup,
-	ScRadio,
-	ScPriceInput,
 	ScButton,
 	ScIcon,
 } from '@surecart/components-react';
