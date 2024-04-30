@@ -58,20 +58,22 @@ export default ({
 
 						subscription_commission: (
 							<ScText>
-								{commission_structure?.subscription_commission ||
-									'-'}
+								{commission_structure?.subscription_commission || (
+									<ScIcon name="x" />
+								)}
 							</ScText>
 						),
 
 						lifetime_commission: (
 							<ScText>
-								{commission_structure?.lifetime_commission ||
-									'-'}
+								{commission_structure?.lifetime_commission || (
+									<ScIcon name="x" />
+								)}
 							</ScText>
 						),
 
 						action: (
-							<ScDropdown position="bottom-right">
+							<ScDropdown placement="bottom-end">
 								<ScButton type="text" slot="trigger" circle>
 									<ScIcon name="more-horizontal" />
 								</ScButton>
@@ -83,6 +85,13 @@ export default ({
 											)
 										}
 									>
+										<ScIcon
+											slot="prefix"
+											name="edit-2"
+											style={{
+												opacity: 0.5,
+											}}
+										/>
 										{__('Edit', 'surecart')}
 									</ScMenuItem>
 									<ScMenuItem
@@ -90,6 +99,13 @@ export default ({
 											onDelete(affiliationProduct?.id)
 										}
 									>
+										<ScIcon
+											slot="prefix"
+											name="trash"
+											style={{
+												opacity: 0.5,
+											}}
+										/>
 										{__('Delete', 'surecart')}
 									</ScMenuItem>
 								</ScMenu>

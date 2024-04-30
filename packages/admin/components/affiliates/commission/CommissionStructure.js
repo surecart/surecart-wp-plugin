@@ -45,6 +45,7 @@ export default ({ commissionStructure, onChangeStructure, page }) => {
 					{__('Flat Rate', 'surecart')}
 				</ScRadio>
 			</ScRadioGroup>
+
 			{commisionType === 'percentage' ? (
 				<ScInput
 					type="number"
@@ -82,6 +83,7 @@ export default ({ commissionStructure, onChangeStructure, page }) => {
 					{...(page !== 'settings' && { required: true })}
 				/>
 			)}
+
 			<ScSwitch
 				checked={
 					commissionStructure?.zero_commission_amount_referrals_enabled
@@ -102,6 +104,7 @@ export default ({ commissionStructure, onChangeStructure, page }) => {
 					)}
 				</span>
 			</ScSwitch>
+
 			<ScSwitch
 				checked={commissionStructure?.recurring_commissions_enabled}
 				onClick={(e) => {
@@ -120,6 +123,7 @@ export default ({ commissionStructure, onChangeStructure, page }) => {
 					)}
 				</span>
 			</ScSwitch>
+
 			{commissionStructure?.recurring_commissions_enabled && (
 				<ScInput
 					label={__('Subscription Commission Duration', 'surecart')}
@@ -139,6 +143,7 @@ export default ({ commissionStructure, onChangeStructure, page }) => {
 					<span slot="suffix">{__('Days', 'surecart')}</span>
 				</ScInput>
 			)}
+
 			<ScSwitch
 				checked={
 					commissionStructure?.repeat_customer_commissions_enabled
@@ -159,6 +164,7 @@ export default ({ commissionStructure, onChangeStructure, page }) => {
 					)}
 				</span>
 			</ScSwitch>
+
 			{commissionStructure?.repeat_customer_commissions_enabled && (
 				<ScInput
 					label={__('Lifetime Commission Duration', 'surecart')}
