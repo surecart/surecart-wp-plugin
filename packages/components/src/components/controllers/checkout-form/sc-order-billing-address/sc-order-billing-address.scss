@@ -4,6 +4,6 @@
 
 .order-billing-address {
   &__toggle {
-    margin-bottom: var(--sc-spacing-medium);
+    margin-bottom: var(--sc-form-row-spacing, var(--sc-spacing-medium));
   }
 }
