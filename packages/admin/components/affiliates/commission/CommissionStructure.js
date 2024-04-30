@@ -33,7 +33,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 			<ScRadioGroup
 				label={__('Select a commission type', 'surecart')}
 				onScChange={(e) => setCommisionType(e.target.value)}
-				required={true}
+				required
 			>
 				<ScRadio
 					value="percentage"
@@ -61,7 +61,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							amount_commission: null,
 						});
 					}}
-					required={true}
+					required
 				>
 					<span slot="suffix">%</span>
 				</ScInput>
@@ -80,7 +80,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							percent_commission: null,
 						});
 					}}
-					required={true}
+					required
 				/>
 			)}
 
