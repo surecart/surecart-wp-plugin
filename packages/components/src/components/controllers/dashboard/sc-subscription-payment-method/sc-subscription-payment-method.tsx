@@ -140,6 +140,14 @@ export class ScSubscriptionPaymentMethod {
           ...(!isManualPaymentMethod ? { payment_method, manual_payment: false } : { manual_payment_method: payment_method, manual_payment: true }),
         },
       })) as Subscription;
+      // redirect to edit page.
+      window.location.assign(
+        addQueryArgs(window.location.href, {
+          action: 'edit',
+          model: 'subscription',
+          id: this.subscription?.id,
+        }),
+      );
       // remove from view.
     } catch (e) {
       this.error = e?.messsage || __('Something went wrong', 'surecart');
