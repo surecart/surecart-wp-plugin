@@ -109,11 +109,12 @@ export default ({
 								{!!payment_method?.paypal_account?.email &&
 									payment_method?.paypal_account?.email}
 							</div>
-							{payment_method?.id === paymentMethodId && (
-								<ScTag type="info" slot="price">
-									{__('Current', 'surecart')}
-								</ScTag>
-							)}
+							{payment_method?.id === paymentMethodId &&
+								!isManualPaymentSelected && (
+									<ScTag type="info" slot="price">
+										{__('Current', 'surecart')}
+									</ScTag>
+								)}
 						</ScChoice>
 					);
 				})}

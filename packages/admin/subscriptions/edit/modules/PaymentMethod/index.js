@@ -52,7 +52,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 			loading={loading || !hasLoadedPaymentmethod}
 		>
 			<>
-				{subscription?.payment_method && (
+				{subscription?.payment_method && !subscription?.manual_payment && (
 					<ScCard>
 						<ScFlex
 							alignItems="center"
@@ -98,18 +98,21 @@ export default ({ subscription, updateSubscription, loading }) => {
 						subscription?.customer?.id || subscription?.customer
 					}
 					paymentMethodId={
-						subscription?.payment_method?.id ||
-						subscription?.payment_method ||
-						subscription?.manual_payment_method
+						subscription?.manual_payment
+							? subscription?.manual_payment_method
+							: subscription?.payment_method?.id ||
+							  subscription?.payment_method
 					}
 					updatePaymentMethod={(payment_method, manual = false) => {
 						if (manual) {
 							updateSubscription({
 								manual_payment_method: payment_method,
+								manual_payment: true,
 							});
 						} else {
 							updateSubscription({
 								payment_method,
+								manual_payment: false,
 							});
 						}
 						setEdit(false);
