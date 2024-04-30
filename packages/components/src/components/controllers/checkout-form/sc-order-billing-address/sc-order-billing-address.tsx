@@ -1,4 +1,4 @@
-import { Component, Fragment, h, Host, Method, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Checkout } from '../../../../types';
 import { state as checkoutState } from '@store/checkout';
@@ -6,7 +6,6 @@ import { formLoading } from '@store/form/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { ScSwitchCustomEvent } from 'src/components';
-import { availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
 
 @Component({
   tag: 'sc-order-billing-address',
@@ -14,6 +13,7 @@ import { availableManualPaymentMethods, availableProcessors } from '@store/proce
   shadow: true,
 })
 export class ScOrderBillingAddress {
+  /** The input */
   private input: HTMLScAddressElement | HTMLScCompactAddressElement;
 
   /** Label for the field */
@@ -73,7 +73,7 @@ export class ScOrderBillingAddress {
       this.address.country = this.defaultCountry;
     }
 
-    if (!checkoutState.checkout?.billing_matches_shipping && checkoutState.checkout?.billing_address) {
+    if (checkoutState.checkout?.billing_address) {
       this.address = checkoutState.checkout.billing_address;
     }
   }
@@ -86,7 +86,7 @@ export class ScOrderBillingAddress {
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState?.checkout?.id,
         data: {
-          billing_matches_shipping: false,
+          billing_matches_shipping: checkoutState.checkout?.billing_matches_shipping,
           billing_address: this.address as Address,
         },
       })) as Checkout;
@@ -97,7 +97,7 @@ export class ScOrderBillingAddress {
     }
   }
 
-  async onToggleSameAsShipping(e: ScSwitchCustomEvent<void>) {
+  async onToggleBillingMatchesShipping(e: ScSwitchCustomEvent<void>) {
     checkoutState.checkout = {
       ...checkoutState.checkout,
       billing_matches_shipping: e.target.checked,
@@ -109,18 +109,16 @@ export class ScOrderBillingAddress {
   }
 
   render() {
-    if (!availableProcessors()?.length && !availableManualPaymentMethods()?.length) {
-      return <Host style={{ display: 'none' }} />;
-    }
-
     return (
       <Fragment>
+        {/* Only display this toggle if there is a shipping address. */}
         {this.shippingAddressFieldExists() && (
-          <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleSameAsShipping(e)} checked={checkoutState.checkout?.billing_matches_shipping}>
+          <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleBillingMatchesShipping(e)} checked={checkoutState.checkout?.billing_matches_shipping}>
             {this.toggleLabel}
           </sc-switch>
         )}
 
+        {/* If the shipping address field does not exist, always display this field. */}
         {(!this.shippingAddressFieldExists() || !checkoutState.checkout?.billing_matches_shipping) && (
           <sc-address
             exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
