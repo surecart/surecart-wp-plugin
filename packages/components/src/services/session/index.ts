@@ -38,10 +38,11 @@ export const expand = [
 ];
 
 /** Default data we send with every request. */
-export const withDefaultData = (data: { metadata?: any; } = {}) => ({
+export const withDefaultData = (data: { metadata?: any } = {}) => ({
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
   abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
+  billing_matches_shipping: checkoutState.checkout?.billing_matches_shipping,
   metadata: {
     ...(data?.metadata || {}),
     ...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),

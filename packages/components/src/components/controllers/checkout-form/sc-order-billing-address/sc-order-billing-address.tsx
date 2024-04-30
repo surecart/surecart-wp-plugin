@@ -98,33 +98,20 @@ export class ScOrderBillingAddress {
   }
 
   async onToggleSameAsShipping(e: ScSwitchCustomEvent<void>) {
-    try {
-      checkoutState.checkout = {
-        ...checkoutState.checkout,
-        billing_matches_shipping: e.target.checked,
-      };
-      lockCheckout('billing-address');
-      checkoutState.checkout = (await createOrUpdateCheckout({
-        id: checkoutState.checkout.id,
-        data: {
-          billing_matches_shipping: e.target.checked,
-        },
-      })) as Checkout;
+    checkoutState.checkout = {
+      ...checkoutState.checkout,
+      billing_matches_shipping: e.target.checked,
+    };
 
-      if (!e.target.checked) {
-        this.address = {
-          country: this.defaultCountry || null,
-          city: null,
-          line_1: null,
-          line_2: null,
-          postal_code: null,
-          state: null,
-        };
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      unLockCheckout('billing-address');
+    if (!e.target.checked) {
+      this.address = {
+        country: this.defaultCountry || null,
+        city: null,
+        line_1: null,
+        line_2: null,
+        postal_code: null,
+        state: null,
+      };
     }
   }
 
