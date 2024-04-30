@@ -34,15 +34,7 @@ export default () => {
 		itemError: affiliationProtocolItemError,
 		editItem: editAffiliationProtocolItem,
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
-	} = useEntity('store', 'affiliation_protocol', {
-		expand: ['commission_structure'],
-	});
-
-	const type = affiliationProtocolItem?.amount_commission
-		? 'fixed'
-		: 'percentage';
-
-	const [commisionType, setCommisionType] = useState(null);
+	} = useEntity('store', 'affiliation_protocol');
 
 	const signupsUrl = `https://affiliates.surecart.com/join/${scData?.account_slug}`;
 	const successFunction = () => {
@@ -57,9 +49,6 @@ export default () => {
 		trackingScript,
 		successFunction
 	);
-	useEffect(() => {
-		setCommisionType(type);
-	}, [type]);
 
 	/**
 	 * Form is submitted.
@@ -394,12 +383,6 @@ export default () => {
 						affiliationProtocolItem?.commission_structure
 					}
 					onChangeStructure={(value) => {
-						console.log(
-							'affiliationProtocolItem?.commission_structure',
-							affiliationProtocolItem?.commission_structure
-						);
-						console.log('value', value);
-
 						editAffiliationProtocolItem({
 							commission_structure: {
 								...affiliationProtocolItem?.commission_structure,
@@ -407,7 +390,6 @@ export default () => {
 							},
 						});
 					}}
-					page="settings"
 				/>
 
 				<ScTextarea
