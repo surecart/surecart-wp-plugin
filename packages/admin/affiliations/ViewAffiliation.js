@@ -253,9 +253,7 @@ export default ({ id }) => {
 					/>
 					<Commission
 						affiliation={affiliation}
-						updateAffiliation={updateAffiliation}
 						loading={!hasLoadedAffiliation || loading}
-						error={error}
 					/>
 				</>
 			}
