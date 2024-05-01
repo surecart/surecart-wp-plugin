@@ -201,64 +201,14 @@ class ProductsController extends AdminController {
 			return;
 		}
 
+		// fake the global post for metaboxes.
 		global $post;
 		$post = $product->post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
-		do_action( 'load-post.php' );
-		$post_type = 'sc_product';
-
-		/**
-		 * Fires after all built-in meta boxes have been added.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param string  $post_type Post type.
-		 * @param WP_Post $post      Post object.
-		 */
-		do_action( 'add_meta_boxes', $post_type, $post );
-
-		/**
-		 * Fires after all built-in meta boxes have been added, contextually for the given post type.
-		 *
-		 * The dynamic portion of the hook name, `$post_type`, refers to the post type of the post.
-		 *
-		 * Possible hook names include:
-		 *
-		 *  - `add_meta_boxes_post`
-		 *  - `add_meta_boxes_page`
-		 *  - `add_meta_boxes_attachment`
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param WP_Post $post Post object.
-		 */
-		do_action( "add_meta_boxes_{$post_type}", $post );
-
-		/**
-		 * Fires after meta boxes have been added.
-		 *
-		 * Fires once for each of the default meta box contexts: normal, advanced, and side.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param string                $post_type Post type of the post on Edit Post screen, 'link' on Edit Link screen,
-		 *                                         'dashboard' on Dashboard screen.
-		 * @param string                $context   Meta box context. Possible values include 'normal', 'advanced', 'side'.
-		 * @param WP_Post|object|string $post      Post object on Edit Post screen, link object on Edit Link screen,
-		 *                                         an empty string on Dashboard screen.
-		 */
-		do_action( 'do_meta_boxes', $post_type, 'normal', $post );
-		/** This action is documented in wp-admin/includes/meta-boxes.php */
-		do_action( 'do_meta_boxes', $post_type, 'advanced', $post );
-		/** This action is documented in wp-admin/includes/meta-boxes.php */
-		do_action( 'do_meta_boxes', $post_type, 'side', $post );
-
-		global $current_screen, $typenow;
-		$current_screen = convert_to_screen( $post_type ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-		$typenow        = $post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		\SureCart::metaboxes()->register();
 
 		ob_start();
-		the_block_editor_meta_boxes();
+		\SureCart::metaboxes()->render();
 		return ob_get_clean();
 	}
 

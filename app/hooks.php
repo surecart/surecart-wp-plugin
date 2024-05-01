@@ -59,3 +59,38 @@ add_filter(
 		return $url;
 	}
 );
+
+add_action(
+	'init',
+	function() {
+		register_taxonomy(
+			'custom_category',
+			[ 'sc_product' ],
+			[
+				'label'             => __( 'Custom Category', 'surecart' ),
+				'labels'            => [
+					'name'              => _x( 'Custom Category', 'taxonomy general name', 'surecart' ),
+					'singular_name'     => _x( 'Custom Category', 'taxonomy singular name', 'surecart' ),
+					'search_items'      => __( 'Search Custom Category', 'surecart' ),
+					'all_items'         => __( 'All Custom Category', 'surecart' ),
+					'parent_item'       => __( 'Parent Custom Category', 'surecart' ),
+					'parent_item_colon' => __( 'Parent Custom Category:', 'surecart' ),
+					'edit_item'         => __( 'Edit Custom Category', 'surecart' ),
+					'update_item'       => __( 'Update Custom Category', 'surecart' ),
+					'add_new_item'      => __( 'Add New Custom Category', 'surecart' ),
+					'new_item_name'     => __( 'New Custom Category Name', 'surecart' ),
+					'menu_name'         => __( 'Custom Category', 'surecart' ),
+				],
+				'public'            => true,
+				'show_in_rest'      => true,
+				'hierarchical'      => false,
+				'show_in_ui'        => true,
+				// 'show_in_menu'      => false,
+				'show_admin_column' => true,
+				'rewrite'           => [
+					'slug' => 'custom_category',
+				],
+			]
+		);
+	}
+);

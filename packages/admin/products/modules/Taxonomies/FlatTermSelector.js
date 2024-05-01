@@ -81,13 +81,14 @@ export default ({ post, slug, loading }) => {
 				]),
 			};
 		},
-		[slug, post]
+		[slug, post, loading]
 	);
 
 	const selectedTerms = (terms || []).filter((term) =>
 		termIds.includes(term.id)
 	);
 
+	console.log({ hasResolvedTerms });
 	// const collections = useSelect((select) => {
 	// 	return (
 	// 		select(coreStore).getEntityRecords('taxonomy', 'sc_collection', {
@@ -126,7 +127,7 @@ export default ({ post, slug, loading }) => {
 	return (
 		<>
 			<Box
-				loading={loading || !hasResolvedTerms}
+				loading={loading}
 				title={taxonomy?.labels?.name}
 				footer={
 					<ModelSelector

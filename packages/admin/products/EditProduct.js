@@ -7,6 +7,7 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
+import { applyFilters } from '@wordpress/hooks';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -31,6 +32,7 @@ import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Taxonomies from './modules/Taxonomies';
+import MetaBoxes from './modules/MetaBoxes';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -99,6 +101,12 @@ export default ({ id, setBrowserURL }) => {
 	const onSubmit = async (e) => {
 		try {
 			setError(null);
+
+			await applyFilters(
+				'editor.__unstableSavePost',
+				Promise.resolve(),
+				{}
+			);
 
 			// get draft prices.
 			const { prices } = select(coreStore).getEditedEntityRecord(
@@ -313,6 +321,8 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
+					<MetaBoxes location="side" />
 				</>
 			}
 		>
@@ -376,6 +386,8 @@ export default ({ id, setBrowserURL }) => {
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}
 				/>
+				<MetaBoxes location="normal" />
+				<MetaBoxes location="advanced" />
 			</Fragment>
 		</UpdateModel>
 	);
