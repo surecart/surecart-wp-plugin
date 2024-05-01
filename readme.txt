@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.25.0
+Stable tag: 2.25.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,11 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.25.1 - May 1st, 2024 =
+- Fix: Thank you page shortcode not pulling in order correctly.
+- Fix: Issue where google eCommerce events were not giving priority of Google Analytics over Google Tag Manager when both are active.
+- Fix: PHP warning that appears when adding a customer payment method when WordPress debug mode is active.
 
 = 2.25.0 - April 25th, 2024 =
 - Improvement: Price creation/edit UI now accounts for the larger number of options available.
