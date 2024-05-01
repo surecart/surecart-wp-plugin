@@ -1367,6 +1367,14 @@
     "class": true,
     "slot": true
   },
+  "sc-payment-method-details": {
+    "edit-handler": true,
+    "payment-method": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-payment-methods-list": {
     "heading": true,
     "is-customer": true,

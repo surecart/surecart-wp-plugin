@@ -134,6 +134,7 @@ export const ScPasswordNag = /*@__PURE__*/createReactComponent<JSX.ScPasswordNag
 export const ScPayment = /*@__PURE__*/createReactComponent<JSX.ScPayment, HTMLScPaymentElement>('sc-payment');
 export const ScPaymentMethod = /*@__PURE__*/createReactComponent<JSX.ScPaymentMethod, HTMLScPaymentMethodElement>('sc-payment-method');
 export const ScPaymentMethodChoice = /*@__PURE__*/createReactComponent<JSX.ScPaymentMethodChoice, HTMLScPaymentMethodChoiceElement>('sc-payment-method-choice');
+export const ScPaymentMethodDetails = /*@__PURE__*/createReactComponent<JSX.ScPaymentMethodDetails, HTMLScPaymentMethodDetailsElement>('sc-payment-method-details');
 export const ScPaymentMethodsList = /*@__PURE__*/createReactComponent<JSX.ScPaymentMethodsList, HTMLScPaymentMethodsListElement>('sc-payment-methods-list');
 export const ScPaymentSelected = /*@__PURE__*/createReactComponent<JSX.ScPaymentSelected, HTMLScPaymentSelectedElement>('sc-payment-selected');
 export const ScPaypalAddMethod = /*@__PURE__*/createReactComponent<JSX.ScPaypalAddMethod, HTMLScPaypalAddMethodElement>('sc-paypal-add-method');

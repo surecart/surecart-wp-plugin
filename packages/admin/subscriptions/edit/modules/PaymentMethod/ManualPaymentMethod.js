@@ -35,10 +35,6 @@ export default ({ subscription, loading, setEdit }) => {
 		[id]
 	);
 
-	if (!hasLoadedPaymentmethod) {
-		return null;
-	}
-
 	return (
 		<ScCard loading={loading || !hasLoadedPaymentmethod}>
 			<ScFlex

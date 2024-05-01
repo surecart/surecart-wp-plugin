@@ -2389,6 +2389,10 @@ export namespace Components {
          */
         "processorId": string;
     }
+    interface ScPaymentMethodDetails {
+        "editHandler": () => void;
+        "paymentMethod": PaymentMethod;
+    }
     interface ScPaymentMethodsList {
         /**
           * The heading
@@ -5170,6 +5174,12 @@ declare global {
         prototype: HTMLScPaymentMethodChoiceElement;
         new (): HTMLScPaymentMethodChoiceElement;
     };
+    interface HTMLScPaymentMethodDetailsElement extends Components.ScPaymentMethodDetails, HTMLStencilElement {
+    }
+    var HTMLScPaymentMethodDetailsElement: {
+        prototype: HTMLScPaymentMethodDetailsElement;
+        new (): HTMLScPaymentMethodDetailsElement;
+    };
     interface HTMLScPaymentMethodsListElement extends Components.ScPaymentMethodsList, HTMLStencilElement {
     }
     var HTMLScPaymentMethodsListElement: {
@@ -5858,6 +5868,7 @@ declare global {
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method": HTMLScPaymentMethodElement;
         "sc-payment-method-choice": HTMLScPaymentMethodChoiceElement;
+        "sc-payment-method-details": HTMLScPaymentMethodDetailsElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
@@ -8529,6 +8540,10 @@ declare namespace LocalJSX {
          */
         "processorId"?: string;
     }
+    interface ScPaymentMethodDetails {
+        "editHandler"?: () => void;
+        "paymentMethod"?: PaymentMethod;
+    }
     interface ScPaymentMethodsList {
         /**
           * The heading
@@ -10561,6 +10576,7 @@ declare namespace LocalJSX {
         "sc-payment": ScPayment;
         "sc-payment-method": ScPaymentMethod;
         "sc-payment-method-choice": ScPaymentMethodChoice;
+        "sc-payment-method-details": ScPaymentMethodDetails;
         "sc-payment-methods-list": ScPaymentMethodsList;
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
@@ -10803,6 +10819,7 @@ declare module "@stencil/core" {
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
             "sc-payment-method-choice": LocalJSX.ScPaymentMethodChoice & JSXBase.HTMLAttributes<HTMLScPaymentMethodChoiceElement>;
+            "sc-payment-method-details": LocalJSX.ScPaymentMethodDetails & JSXBase.HTMLAttributes<HTMLScPaymentMethodDetailsElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;

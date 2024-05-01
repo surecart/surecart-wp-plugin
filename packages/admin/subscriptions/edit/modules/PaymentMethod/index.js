@@ -1,11 +1,9 @@
 import Box from '../../../../ui/Box';
 import EditPaymentMethod from './EditPaymentMethod';
 import {
-	ScButton,
 	ScFlex,
-	ScIcon,
 	ScCard,
-	ScPaymentMethod,
+	ScPaymentMethodDetails,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
@@ -52,35 +50,13 @@ export default ({ subscription, updateSubscription, loading }) => {
 			loading={loading || !hasLoadedPaymentmethod}
 		>
 			<>
-				{subscription?.payment_method && !subscription?.manual_payment && (
-					<ScCard>
-						<ScFlex
-							alignItems="center"
-							justifyContent="flex-start"
-							style={{ gap: '0.5em' }}
-						>
-							<ScPaymentMethod paymentMethod={payment_method} />
-							<div>
-								{!!payment_method?.card?.exp_month && (
-									<span>
-										{__('Exp.', 'surecart')}
-										{payment_method?.card?.exp_month}/
-										{payment_method?.card?.exp_year}
-									</span>
-								)}
-								{!!payment_method?.paypal_account?.email &&
-									payment_method?.paypal_account?.email}
-							</div>
-							<ScButton
-								type="text"
-								circle
-								onClick={() => setEdit(true)}
-							>
-								<ScIcon name="edit-2" />
-							</ScButton>
-						</ScFlex>
-					</ScCard>
-				)}
+				{subscription?.payment_method &&
+					!subscription?.manual_payment && (
+						<ScPaymentMethodDetails
+							paymentMethod={payment_method}
+							editHandler={() => setEdit(true)}
+						/>
+					)}
 				{subscription?.manual_payment && (
 					<ManualPaymentMethod
 						subscription={subscription}
@@ -92,29 +68,17 @@ export default ({ subscription, updateSubscription, loading }) => {
 				<EditPaymentMethod
 					open={edit}
 					setOpen={setEdit}
-					isManualPaymentSelected={subscription?.manual_payment}
-					manualPaymentMethodId={subscription?.manual_payment_method}
 					customerId={
 						subscription?.customer?.id || subscription?.customer
 					}
+					isManualPaymentSelected={subscription?.manual_payment}
+					manualPaymentMethodId={subscription?.manual_payment_method}
 					paymentMethodId={
-						subscription?.manual_payment
-							? subscription?.manual_payment_method
-							: subscription?.payment_method?.id ||
-							  subscription?.payment_method
+						subscription?.payment_method?.id ||
+						subscription?.payment_method
 					}
-					updatePaymentMethod={(payment_method, manual = false) => {
-						if (manual) {
-							updateSubscription({
-								manual_payment_method: payment_method,
-								manual_payment: true,
-							});
-						} else {
-							updateSubscription({
-								payment_method,
-								manual_payment: false,
-							});
-						}
+					updatePaymentMethod={(data) => {
+						updateSubscription(data);
 						setEdit(false);
 					}}
 				/>

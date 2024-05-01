@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-04-12T12:04:38",
+  "timestamp": "2024-05-01T07:05:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1915,6 +1915,7 @@
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-method",
+        "sc-payment-method-details",
         "sc-payment-methods-list",
         "sc-paystack-add-method",
         "sc-product-item-list",
@@ -2020,6 +2021,9 @@
           "sc-button"
         ],
         "sc-payment-method": [
+          "sc-button"
+        ],
+        "sc-payment-method-details": [
           "sc-button"
         ],
         "sc-payment-methods-list": [
@@ -2686,6 +2690,7 @@
         "sc-password-nag",
         "sc-payment",
         "sc-payment-method-choice",
+        "sc-payment-method-details",
         "sc-payment-methods-list",
         "sc-purchase-downloads-list",
         "sc-subscription",
@@ -2755,6 +2760,9 @@
           "sc-card"
         ],
         "sc-payment-method-choice": [
+          "sc-card"
+        ],
+        "sc-payment-method-details": [
           "sc-card"
         ],
         "sc-payment-methods-list": [
@@ -11480,6 +11488,7 @@
         "sc-order",
         "sc-pagination",
         "sc-password-nag",
+        "sc-payment-method-details",
         "sc-payment-methods-list",
         "sc-subscription",
         "sc-subscription-cancel",
@@ -11520,6 +11529,9 @@
           "sc-flex"
         ],
         "sc-password-nag": [
+          "sc-flex"
+        ],
+        "sc-payment-method-details": [
           "sc-flex"
         ],
         "sc-payment-methods-list": [
@@ -13675,6 +13687,7 @@
         "sc-password-nag",
         "sc-payment",
         "sc-payment-method",
+        "sc-payment-method-details",
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-product-line-item",
@@ -13797,6 +13810,9 @@
           "sc-icon"
         ],
         "sc-payment-method": [
+          "sc-icon"
+        ],
+        "sc-payment-method-details": [
           "sc-icon"
         ],
         "sc-payment-methods-list": [
@@ -21005,6 +21021,7 @@
       ],
       "dependents": [
         "sc-order",
+        "sc-payment-method-details",
         "sc-payment-methods-list",
         "sc-subscription-next-payment",
         "sc-subscription-payment",
@@ -21035,6 +21052,9 @@
           "sc-icon"
         ],
         "sc-order": [
+          "sc-payment-method"
+        ],
+        "sc-payment-method-details": [
           "sc-payment-method"
         ],
         "sc-payment-methods-list": [
@@ -21150,6 +21170,83 @@
         ],
         "sc-payment": [
           "sc-payment-method-choice"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-payment-method-details/sc-payment-method-details.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-payment-method-details",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "editHandler",
+          "type": "() => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "() => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "paymentMethod",
+          "type": "PaymentMethod",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "PaymentMethod"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-card",
+        "sc-flex",
+        "sc-payment-method",
+        "sc-button",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-payment-method-details": [
+          "sc-card",
+          "sc-flex",
+          "sc-payment-method",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-payment-method": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon",
+          "sc-tag",
+          "sc-cc-logo",
+          "sc-text"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-cc-logo": [
+          "sc-icon"
         ]
       }
     },

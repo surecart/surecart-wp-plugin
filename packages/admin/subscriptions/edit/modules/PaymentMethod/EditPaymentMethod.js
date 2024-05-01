@@ -131,11 +131,12 @@ export default ({
 								paymentMethod={payment_method}
 								showDescription
 							/>
-							{payment_method?.id === paymentMethodId && (
-								<ScTag type="info" slot="price">
-									{__('Current', 'surecart')}
-								</ScTag>
-							)}
+							{payment_method?.id === manualPaymentMethodId &&
+								isManualPaymentSelected && (
+									<ScTag type="info" slot="price">
+										{__('Current', 'surecart')}
+									</ScTag>
+								)}
 						</ScChoice>
 					);
 				})}
@@ -147,7 +148,15 @@ export default ({
 					const isManualPaymentMethod = manual_payment_methods.find(
 						({ id }) => id === paymentMethod
 					);
-					updatePaymentMethod(paymentMethod, !!isManualPaymentMethod);
+					updatePaymentMethod({
+						manual_payment: !!isManualPaymentMethod,
+						payment_method: !isManualPaymentMethod
+							? paymentMethod
+							: null,
+						manual_payment_method: isManualPaymentMethod
+							? paymentMethod
+							: null,
+					});
 				}}
 				slot="footer"
 			>
