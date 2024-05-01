@@ -78,7 +78,7 @@ test.describe('surecart/billing-address block frontend', () => {
 
 		await expect(
 			page.locator(
-				'sc-switch:has-text("Billing address same as shipping address.")'
+				'sc-switch:has-text("Billing address is different from shipping address.")'
 			)
 		).toBeVisible();
 	});
@@ -108,7 +108,7 @@ test.describe('surecart/billing-address block frontend', () => {
 
 		await page
 			.locator(
-				'sc-switch:has-text("Billing address same as shipping address.")'
+				'sc-switch:has-text("Billing address is different from shipping address.")'
 			)
 			.click();
 		await page.waitForLoadState('networkidle');
@@ -119,7 +119,7 @@ test.describe('surecart/billing-address block frontend', () => {
 
 		await page
 			.locator(
-				'sc-switch:has-text("Billing address same as shipping address.")'
+				'sc-switch:has-text("Billing address is different from shipping address.")'
 			)
 			.click();
 		await page.waitForLoadState('networkidle');
@@ -155,7 +155,7 @@ test.describe('surecart/billing-address block frontend', () => {
 		).toBeVisible();
 		await expect(
 			page.locator(
-				'sc-switch:has-text("Billing address same as shipping address.")'
+				'sc-switch:has-text("Billing address is different from shipping address.")'
 			)
 		).not.toBeVisible();
 	});
@@ -198,7 +198,7 @@ test.describe('surecart/billing-address block frontend', () => {
 		});
 		await page
 			.locator(
-				'sc-switch:has-text("Billing address same as shipping address.")'
+				'sc-switch:has-text("Billing address is different from shipping address.")'
 			)
 			.click();
 

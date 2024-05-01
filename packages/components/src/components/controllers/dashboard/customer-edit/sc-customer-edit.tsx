@@ -144,7 +144,7 @@ export class ScCustomerEdit {
                 }}
                 value="on"
               >
-                {__('Billing address same as shipping', 'surecart')}
+                {__('Billing address is different from shipping', 'surecart')}
               </sc-switch>
             </div>
 

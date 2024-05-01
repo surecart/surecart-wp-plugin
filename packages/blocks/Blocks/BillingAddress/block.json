@@ -15,7 +15,7 @@
 	"attributes": {
 		"toggle_label": {
 			"type": "string",
-			"default": "Billing address same as shipping address."
+			"default": "Billing address is different from shipping address."
 		},
 		"label": {
 			"type": "string",
