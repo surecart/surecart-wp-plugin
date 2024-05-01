@@ -156,19 +156,6 @@ class Referral extends Model {
 	}
 
 	/**
-	 * Get the status attribute.
-	 *
-	 * @return string
-	 */
-	public function getStatusAttribute() {
-		if ( $this->payout && 'processing' === $this->payout->status ) {
-			return 'in_payout';
-		}
-
-		return $this->attributes['status'] ?? '';
-	}
-
-	/**
 	 * Get the display status attribute.
 	 *
 	 * @return string
@@ -180,7 +167,6 @@ class Referral extends Model {
 			'denied'    => __( 'Denied', 'surecart' ),
 			'cancelled' => __( 'Cancelled', 'surecart' ),
 			'approved'  => __( 'Approved', 'surecart' ),
-			'in_payout' => __( 'In Payout', 'surecart' ),
 		];
 		return $statuses[ $this->status ] ?? '';
 	}
@@ -197,7 +183,6 @@ class Referral extends Model {
 			'denied'    => 'danger',
 			'cancelled' => 'default',
 			'approved'  => 'info',
-			'in_payout' => 'warning',
 		];
 		return $types[ $this->status ] ?? 'default';
 	}

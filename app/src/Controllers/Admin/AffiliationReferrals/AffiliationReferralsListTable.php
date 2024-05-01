@@ -282,7 +282,6 @@ class AffiliationReferralsListTable extends ListTable {
 					'affiliation',
 					'checkout',
 					'checkout.order',
-					'payout'
 				],
 			)
 		)->paginate(
