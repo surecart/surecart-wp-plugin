@@ -12,7 +12,6 @@ import {
 	ScPremiumTag,
 	ScPriceInput,
 	ScSwitch,
-	ScUpgradeRequired,
 } from '@surecart/components-react';
 
 const SETUP_AMOUNT_TYPES = {
@@ -21,21 +20,21 @@ const SETUP_AMOUNT_TYPES = {
 };
 
 export default ({ price, updatePrice }) => {
-	const amountType = price.setup_fee_amount < 0 ? 'discount' : 'fee';
+	const amountType = price?.setup_fee_amount < 0 ? 'discount' : 'fee';
 
 	return (
-		<ScUpgradeRequired
-			required={!scData?.entitlements?.subscription_setup_fees}
+		<div
 			css={css`
 				display: grid;
-				gap: var(--sc-spacing-small);
+				gap: var(--sc-spacing-medium);
 			`}
 		>
 			<ScSwitch
-				checked={price.setup_fee_enabled}
+				checked={price?.setup_fee_enabled}
 				onScChange={(e) =>
 					updatePrice({
 						setup_fee_enabled: e.target.checked,
+						setup_fee_amount: 0,
 						...(!e.target.checked && {
 							setup_fee_name: null,
 							setup_fee_amount: 0,
@@ -44,15 +43,23 @@ export default ({ price, updatePrice }) => {
 				}
 			>
 				{__('Setup fee or discount', 'surecart')}
+
 				{!scData?.entitlements?.subscription_setup_fees && (
 					<>
 						{' '}
 						<ScPremiumTag />
 					</>
 				)}
+
+				<span slot="description">
+					{__(
+						'Charge an initial fee or offer a discount for the first payment.',
+						'surecart'
+					)}
+				</span>
 			</ScSwitch>
 
-			{price.setup_fee_enabled && (
+			{price?.setup_fee_enabled && (
 				<div
 					css={css`
 						display: flex;
@@ -65,7 +72,7 @@ export default ({ price, updatePrice }) => {
 				>
 					<ScInput
 						label={sprintf(
-							__('%s Name', 'surecart'),
+							__('%s name', 'surecart'),
 							SETUP_AMOUNT_TYPES[amountType]
 						)}
 						value={price?.setup_fee_name}
@@ -138,6 +145,6 @@ export default ({ price, updatePrice }) => {
 					</ScPriceInput>
 				</div>
 			)}
-		</ScUpgradeRequired>
+		</div>
 	);
 };

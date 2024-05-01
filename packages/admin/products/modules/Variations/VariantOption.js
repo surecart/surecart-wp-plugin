@@ -68,7 +68,7 @@ export default ({
 	return (
 		<div
 			css={css`
-				padding: 24px;
+				padding: 28px;
 				background: white;
 				border-bottom: 1px solid var(--sc-color-gray-200);
 			`}

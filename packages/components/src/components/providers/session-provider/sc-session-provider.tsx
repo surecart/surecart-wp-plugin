@@ -8,7 +8,7 @@ import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordp
 import { updateFormState } from '@store/form/mutations';
 
 import { parseFormData } from '../../../functions/form-data';
-import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
+import { createCheckout, createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
 import { createErrorNotice, createInfoNotice, removeNotice } from '@store/notices/mutations';
 
@@ -371,7 +371,7 @@ export class ScSessionProvider {
 
     try {
       updateFormState('FETCH');
-      checkoutState.checkout = (await createOrUpdateCheckout({
+      checkoutState.checkout = (await createCheckout({
         data: {
           ...data,
           ...(promotion_code ? { discount: { promotion_code } } : {}),
@@ -418,7 +418,6 @@ export class ScSessionProvider {
   async handleErrorResponse(e) {
     // reinitalize if order not found.
     if (['checkout.not_found'].includes(e?.code)) {
-      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'checkout_id'));
       clearCheckout();
       return this.handleNewCheckout(false);
     }

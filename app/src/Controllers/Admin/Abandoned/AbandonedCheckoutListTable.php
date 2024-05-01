@@ -60,6 +60,10 @@ class AbandonedCheckoutListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 
+			if ( isset( $_GET['live_mode'] ) ) {
+				$link = add_query_arg( 'live_mode', $_GET['live_mode'], $link );
+			}
+
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
 
@@ -99,6 +103,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			'notification_status' => __( 'Email Status', 'surecart' ),
 			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
 			'total'               => __( 'Total', 'surecart' ),
+			'mode'                => '',
 		];
 	}
 
@@ -109,16 +114,21 @@ class AbandonedCheckoutListTable extends ListTable {
 	 */
 	protected function table_data() {
 		$status = $this->getStatus();
-		$where  = [];
+		$where  = array(
+			'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		);
+
 		if ( $status ) {
 			$where['notification_status'] = [ $status ];
 		}
+
 		return AbandonedCheckout::where( $where )
 		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
 				'page'     => $this->get_pagenum(),
+				'expand'   => [ 'checkout' ],
 			]
 		);
 	}
@@ -198,6 +208,17 @@ class AbandonedCheckoutListTable extends ListTable {
 				return '<sc-tag type="info">' . __( 'Recovered Before Email Was Sent', 'surecart' ) . '</sc-tag>';
 		}
 		return '<sc-tag type="success">' . $abandoned->recovery_status . '</sc-tag>';
+	}
+
+	/**
+	 * Handle the mode column
+	 *
+	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
+	 *
+	 * @return string
+	 */
+	public function column_mode( $abandoned ) {
+		return empty( $abandoned->checkout->live_mode ) ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
 	}
 
 	/**
