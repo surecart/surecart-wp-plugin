@@ -1,16 +1,14 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import {
-	ScAddress,
 	ScBlockUi,
 	ScButton,
 	ScDialog,
 	ScFlex,
-	ScForm,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Error from '../../../components/Error';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
@@ -28,15 +26,16 @@ export default ({ customerId, open, onRequestClose }) => {
 			setBusy(true);
 			const customer = await apiFetch({
 				path: addQueryArgs(`/surecart/v1/customers/${customerId}`, {
-					expand: ['shipping_address', 'billing_address', 'balances'],
+					expand: ['shipping_address', 'balances', 'billing_address'],
 				}),
 				method: 'PATCH',
 				data: {
-					shipping_address: {},
+					billing_matches_shipping: false,
+					billing_address: {},
 				},
 			});
 			receiveEntityRecords('surecart', 'customer', customer);
-			createSuccessNotice(__('Shipping Address Deleted', 'surecart'), {
+			createSuccessNotice(__('Billing Address Deleted', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -49,7 +48,7 @@ export default ({ customerId, open, onRequestClose }) => {
 
 	return (
 		<ScDialog
-			label={__('Delete Shipping Address', 'surecart')}
+			label={__('Delete Billing Address', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 			style={{

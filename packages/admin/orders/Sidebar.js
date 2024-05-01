@@ -24,6 +24,12 @@ export default ({ order, checkout, customer, loading }) => {
 					label={__('Shipping & Tax Address', 'surecart')}
 				/>
 			)}
+			{!!checkout?.billing_address && (
+				<Address
+					address={checkout?.billing_address}
+					label={__('Billing Address', 'surecart')}
+				/>
+			)}
 			{!!checkout?.tax_identifier && (
 				<TaxInfo
 					taxIdentifier={checkout?.tax_identifier}

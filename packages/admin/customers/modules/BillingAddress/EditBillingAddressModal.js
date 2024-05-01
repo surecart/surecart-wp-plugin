@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import {
 	ScAddress,
 	ScBlockUi,
@@ -17,26 +15,34 @@ import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 
-export default ({ customerId, open, onRequestClose }) => {
+export default ({ customerId, billingAddress, open, onRequestClose }) => {
 	const [error, setError] = useState(false);
 	const [busy, setBusy] = useState(false);
+	const [address, setAddress] = useState(billingAddress);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+
+	useEffect(() => {
+		setAddress(billingAddress);
+	}, [billingAddress]);
+
+	const isEdit = () => !!billingAddress?.id;
 
 	const onEditAddress = async () => {
 		try {
 			setBusy(true);
 			const customer = await apiFetch({
 				path: addQueryArgs(`/surecart/v1/customers/${customerId}`, {
-					expand: ['shipping_address', 'billing_address', 'balances'],
+					expand: ['shipping_address', 'balances', 'billing_address'],
 				}),
 				method: 'PATCH',
 				data: {
-					shipping_address: {},
+					billing_matches_shipping: false,
+					billing_address: address,
 				},
 			});
 			receiveEntityRecords('surecart', 'customer', customer);
-			createSuccessNotice(__('Shipping Address Deleted', 'surecart'), {
+			createSuccessNotice(__('Billing Address Updated', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -49,20 +55,29 @@ export default ({ customerId, open, onRequestClose }) => {
 
 	return (
 		<ScDialog
-			label={__('Delete Shipping Address', 'surecart')}
+			label={
+				isEdit()
+					? __('Update Billing Address', 'surecart')
+					: __('Add Billing Address', 'surecart')
+			}
 			open={open}
 			onScRequestClose={onRequestClose}
 			style={{
 				'--dialog-body-overflow': 'visible',
 			}}
 		>
-			<ScFlex flexDirection="column" style={{ gap: '1em' }}>
-				<Error error={error} setError={setError} />
-
-				{__(
-					'Are you sure you want to delete address? This action cannot be undone.',
-					'surecart'
-				)}
+			<Error error={error} setError={setError} />
+			<ScForm
+				onScSubmit={onEditAddress}
+				onScFormSubmit={(e) => {
+					e.stopImmediatePropagation();
+				}}
+			>
+				<ScAddress
+					address={address}
+					onScChangeAddress={(e) => setAddress(e.detail)}
+					required
+				/>
 				<ScFlex justifyContent="flex-end">
 					<ScButton
 						type="text"
@@ -71,15 +86,13 @@ export default ({ customerId, open, onRequestClose }) => {
 					>
 						{__('Cancel', 'surecart')}
 					</ScButton>{' '}
-					<ScButton
-						type="primary"
-						disabled={busy}
-						onClick={onEditAddress}
-					>
-						{__('Delete', 'surecart')}
+					<ScButton type="primary" disabled={busy} submit>
+						{isEdit()
+							? __('Update Address', 'surecart')
+							: __('Save Address', 'surecart')}
 					</ScButton>
 				</ScFlex>
-			</ScFlex>
+			</ScForm>
 			{busy && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
