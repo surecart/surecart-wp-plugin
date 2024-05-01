@@ -75,11 +75,8 @@ export default ({ affiliationId }) => {
 		});
 	};
 
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		e.stopImmediatePropagation();
+	const onSubmit = async () =>
 		affiliationProduct?.id ? await onEdit() : await onCreate();
-	};
 
 	const { affiliationProducts, loading, fetching } = useSelect(
 		(select) => {
