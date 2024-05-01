@@ -182,7 +182,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
+	 * @group subscriptions
 	 * @dataProvider customerRequestProvider
 	 */
 	public function test_customer_permissions($method, $route, $status, $params = [], $setup = null) {
@@ -216,6 +216,9 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertSame($status, $response->get_status());
 	}
 
+	/**
+	 * @group subscriptions
+	 */
 	public function test_can_preserve_permissions() {
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
