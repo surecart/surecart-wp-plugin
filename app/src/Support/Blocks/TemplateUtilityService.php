@@ -46,7 +46,7 @@ class TemplateUtilityService {
 		$this->templates_directory      = $templates_directory;
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = [
-			'single-product'          => [
+			'single-sc_product'       => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
 			],
