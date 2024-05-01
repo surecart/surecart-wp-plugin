@@ -26,8 +26,7 @@ import EmptyCommissions from '../../../components/affiliates/commission/EmptyCom
 import ConfirmDelete from './ConfirmDelete';
 
 export default ({ product, loading }) => {
-	const productId = product?.id;
-	if (!productId) {
+	if (!product?.id) {
 		return null;
 	}
 
@@ -41,9 +40,6 @@ export default ({ product, loading }) => {
 	);
 
 	const handleSubmit = async (e, commissionStructureData, message) => {
-		e?.preventDefault();
-		e?.stopPropagation();
-
 		try {
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -52,7 +48,7 @@ export default ({ product, loading }) => {
 
 			setSaving(true);
 			const productData = await apiFetch({
-				path: addQueryArgs(`${baseURL}/${productId}`),
+				path: addQueryArgs(`${baseURL}/${product?.id}`),
 				method: 'PATCH',
 				data: {
 					commission_structure: commissionStructureData,
@@ -95,7 +91,7 @@ export default ({ product, loading }) => {
 		await handleSubmit(
 			e,
 			null,
-			__('Custom Affiliate Commission deleted.', 'surecart')
+			__('Affiliate commission deleted.', 'surecart')
 		);
 	};
 
@@ -162,31 +158,31 @@ export default ({ product, loading }) => {
 				)}
 			</Box>
 
-			{(modal === 'create' || modal === 'edit') && (
-				<CommissionForm
-					title={
+			<CommissionForm
+				title={
+					commissionStructure?.id
+						? __('Edit Commission', 'surecart')
+						: __('Add Commission', 'surecart')
+				}
+				submitButtonTitle={__('Save', 'surecart')}
+				error={error}
+				open={modal === 'create' || modal === 'edit'}
+				onRequestClose={() => setModal(false)}
+				onSubmit={(e) =>
+					handleSubmit(
+						e,
+						commissionStructure,
 						commissionStructure?.id
-							? __('Edit Commission', 'surecart')
-							: __('Add Commission', 'surecart')
-					}
-					submitButtonTitle={__('Save', 'surecart')}
-					error={error}
-					open={modal === 'create' || modal === 'edit'}
-					onRequestClose={() => setModal(false)}
-					onSubmit={(e) =>
-						handleSubmit(
-							e,
-							commissionStructure,
-							__('Custom Affiliate Commission saved.', 'surecart')
-						)
-					}
-					onChange={onChange}
-					affiliationItem={{
-						commission_structure: commissionStructure,
-					}}
-					loading={loading || saving}
-				/>
-			)}
+							? __('Affiliate commission updated.', 'surecart')
+							: __('Affiliate commission added.', 'surecart')
+					)
+				}
+				onChange={onChange}
+				affiliationItem={{
+					commission_structure: commissionStructure,
+				}}
+				loading={loading || saving}
+			/>
 
 			<ConfirmDelete
 				open={modal === 'delete'}

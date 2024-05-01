@@ -18,7 +18,7 @@ export default ({ onRequestClose, open, onDelete, deleting, error }) => {
 			onCancel={onRequestClose}
 		>
 			<Error error={error} />
-			{__('Are you sure? This action cannot be undone.', 'surecart')}
+			{__('Are you sure? This cannot be undone.', 'surecart')}
 			{!!deleting && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
