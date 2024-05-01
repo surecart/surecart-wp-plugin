@@ -8,13 +8,10 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScButton, ScEmpty, ScIcon } from '@surecart/components-react';
 
-export default function ({ openModal }) {
+export default function ({ openModal, message }) {
 	return (
 		<ScEmpty icon="percent">
-			{__(
-				'Add a product-specific commission for this affiliate.',
-				'surecart'
-			)}
+			{message}
 
 			<ScButton onClick={openModal}>
 				<ScIcon name="plus" slot="prefix" />
