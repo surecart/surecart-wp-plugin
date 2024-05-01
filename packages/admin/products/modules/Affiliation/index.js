@@ -9,6 +9,7 @@ import { useState } from '@wordpress/element';
 import { select, useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
 
 import {
@@ -38,7 +39,7 @@ export default ({ product, loading, error }) => {
 		product.commission_structure
 	);
 
-	const handleSubmit = async (e, data, message) => {
+	const handleSubmit = async (e, commissionStructureData, message) => {
 		e?.preventDefault();
 		e?.stopPropagation();
 
@@ -50,10 +51,11 @@ export default ({ product, loading, error }) => {
 
 			setSaving(true);
 			const productData = await apiFetch({
-				path: `${baseURL}/${productId}`,
-				method: 'PUT',
+				path: addQueryArgs(`${baseURL}/${productId}`),
+				method: 'PATCH',
 				data: {
-					commission_structure: data,
+					object: 'product',
+					commission_structure: commissionStructureData,
 				},
 			});
 
@@ -71,7 +73,7 @@ export default ({ product, loading, error }) => {
 				}
 			);
 
-			setCommissionStructure(productData?.commission_structure);
+			setCommissionStructure(productData.commission_structure);
 
 			createSuccessNotice(message, {
 				type: 'snackbar',
@@ -80,11 +82,6 @@ export default ({ product, loading, error }) => {
 			setModal(false);
 		} catch (error) {
 			console.error(error);
-			// TODO: Remove this when API fixes.
-			if (data === null) {
-				setCommissionStructure(null);
-				setModal(false);
-			}
 		} finally {
 			setSaving(false);
 		}
@@ -112,7 +109,7 @@ export default ({ product, loading, error }) => {
 						<ScDropdown
 							placement="bottom-end"
 							css={css`
-								height: 100%;
+								margin: -12px 0px;
 							`}
 						>
 							<ScButton slot="trigger" type="text" circle>
@@ -155,7 +152,13 @@ export default ({ product, loading, error }) => {
 						</Definition>
 					</>
 				) : (
-					<EmptyCommissions openModal={() => setModal('create')} />
+					<EmptyCommissions
+						message={__(
+							'Add a custom affiliate commission for this product.',
+							'surecart'
+						)}
+						openModal={() => setModal('create')}
+					/>
 				)}
 			</Box>
 
