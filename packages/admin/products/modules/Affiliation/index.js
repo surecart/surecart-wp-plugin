@@ -25,12 +25,13 @@ import CommissionForm from '../../../components/affiliates/commission/Commission
 import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
 import ConfirmDelete from './ConfirmDelete';
 
-export default ({ product, loading, error }) => {
+export default ({ product, loading }) => {
 	const productId = product?.id;
 	if (!productId) {
 		return null;
 	}
 
+	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
 	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -54,7 +55,6 @@ export default ({ product, loading, error }) => {
 				path: addQueryArgs(`${baseURL}/${productId}`),
 				method: 'PATCH',
 				data: {
-					object: 'product',
 					commission_structure: commissionStructureData,
 				},
 			});
@@ -82,14 +82,14 @@ export default ({ product, loading, error }) => {
 			setModal(false);
 		} catch (error) {
 			console.error(error);
+			setError(error);
 		} finally {
 			setSaving(false);
 		}
 	};
 
-	const onChange = async (data) => {
+	const onChange = (data) =>
 		setCommissionStructure(data?.commission_structure);
-	};
 
 	const onDelete = async (e) => {
 		await handleSubmit(
