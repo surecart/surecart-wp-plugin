@@ -6,20 +6,14 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
 	 * Get the product.
 	 *
-	 * @param \WP_Post|int $product The product.
+	 * @param \WP_Post|int $post The product post
 	 */
-	function sc_get_product( $product = false ) {
-		global $post;
-
-		if ( empty( $product ) ) {
-			$product = $post;
-		}
-
+	function sc_get_product( $post = false ) {
 		// make sure to get the post.
-		$product = get_post( $product );
+		$post = get_post( $post );
 
-		// return the product object.
-		return get_post_meta( $product->ID, 'product', true );
+		// return the post object.
+		return get_post_meta( $post->ID, 'product', true );
 	}
 }
 

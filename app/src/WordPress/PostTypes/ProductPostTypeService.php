@@ -41,6 +41,67 @@ class ProductPostTypeService {
 			10,
 			4
 		);
+
+		add_action( 'use_block_editor_for_post', [ $this, 'forceGutenberg' ], 999, 2 );
+
+		add_filter(
+			'the_posts',
+			function( $posts, $query ) {
+				if ( $query->get( 'post_type' ) !== $this->post_type ) {
+					return $posts;
+				}
+				foreach ( $posts as $post ) {
+					if ( $post->post_type !== $this->post_type ) {
+						continue;
+					}
+					// If $area is not allowed, set it back to the uncategorized default.
+					$area                          = WP_TEMPLATE_PART_AREA_UNCATEGORIZED;
+					$template_part_id              = 'surecart/surecart//product-info'; // Get the template part ID.
+					$content                       = do_blocks( get_block_template( $template_part_id, 'wp_template_part' )->content );
+					$content                       = shortcode_unautop( $content );
+					$content                       = do_shortcode( $content );
+					$seen_ids[ $template_part_id ] = true;
+					$content                       = do_blocks( $content );
+					unset( $seen_ids[ $template_part_id ] );
+					$content = wptexturize( $content );
+					$content = convert_smilies( $content );
+					$content = wp_filter_content_tags( $content, "template_part_{$area}" );
+					// Handle embeds for block template parts.
+					global $wp_embed;
+					$content            = $wp_embed->autoembed( $content );
+					$post->post_content = str_replace( ']]>', ']]&gt;', $content ) . $post->post_content;
+				}
+				return $posts;
+			},
+			10,
+			2
+		);
+
+		// add_filter(
+		// 'the_content',
+		// function( $existing_content ) {
+		// global $post, $sc_product;
+		// if ( $post->post_type !== $this->post_type ) {
+		// return $existing_content;
+		// }
+		// If $area is not allowed, set it back to the uncategorized default.
+		// $area                          = WP_TEMPLATE_PART_AREA_UNCATEGORIZED;
+		// $template_part_id              = 'surecart/surecart//product-info'; // Get the template part ID.
+		// $content                       = do_blocks( get_block_template( $template_part_id, 'wp_template_part' )->content );
+		// $content                       = shortcode_unautop( $content );
+		// $content                       = do_shortcode( $content );
+		// $seen_ids[ $template_part_id ] = true;
+		// $content                       = do_blocks( $content );
+		// unset( $seen_ids[ $template_part_id ] );
+		// $content = wptexturize( $content );
+		// $content = convert_smilies( $content );
+		// $content = wp_filter_content_tags( $content, "template_part_{$area}" );
+		// Handle embeds for block template parts.
+		// global $wp_embed;
+		// $content = $wp_embed->autoembed( $content );
+		// return str_replace( ']]>', ']]&gt;', $content ) . $existing_content;
+		// }
+		// );
 		// when gallery is updated on the post, set the first as the featured image.
 		// add_action( 'updated_post_meta', [ $this, 'automaticallySetFeaturedImage' ], 10, 4 );
 		// add the external media url.
@@ -49,6 +110,21 @@ class ProductPostTypeService {
 		// add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
 		// when a product media is deleted, remove it from the gallery.
 		// add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+	}
+
+	/**
+	 * Force gutenberg in case of classic editor
+	 *
+	 * @param boolean  $use Whether to use Gutenberg.
+	 * @param \WP_Post $post Post object.
+	 *
+	 * @return boolean;
+	 */
+	public function forceGutenberg( $use, $post ) {
+		if ( $this->post_type === $post->post_type ) {
+			return true;
+		}
+		return $use;
 	}
 
 	public function migrateDefaultGalleryMetaData( $value, $object_id, $meta_key, $single ) {
@@ -410,44 +486,45 @@ class ProductPostTypeService {
 		register_post_type(
 			$this->post_type,
 			array(
-				'labels'            => array(
-					'name'                     => _x( 'SureCart Products', 'post type general name', 'surecart' ),
-					'singular_name'            => _x( 'SureCart Product', 'post type singular name', 'surecart' ),
-					'add_new'                  => _x( 'Add New', 'SureCart Product', 'surecart' ),
-					'add_new_item'             => __( 'Add new SureCart Product', 'surecart' ),
-					'new_item'                 => __( 'New SureCart Product', 'surecart' ),
-					'edit_item'                => __( 'Edit SureCart Product', 'surecart' ),
-					'view_item'                => __( 'View SureCart Product', 'surecart' ),
-					'all_items'                => __( 'All SureCart Products', 'surecart' ),
-					'search_items'             => __( 'Search SureCart Products', 'surecart' ),
+				'labels'       => array(
+					'name'                     => _x( 'Products', 'post type general name', 'surecart' ),
+					'singular_name'            => _x( 'Product', 'post type singular name', 'surecart' ),
+					'add_new'                  => _x( 'Add New', 'Product', 'surecart' ),
+					'add_new_item'             => __( 'Add new Product', 'surecart' ),
+					'new_item'                 => __( 'New Product', 'surecart' ),
+					'edit_item'                => __( 'Edit Product', 'surecart' ),
+					'view_item'                => __( 'View Product', 'surecart' ),
+					'all_items'                => __( 'All Products', 'surecart' ),
+					'search_items'             => __( 'Search Products', 'surecart' ),
 					'not_found'                => __( 'No checkout forms found.', 'surecart' ),
 					'not_found_in_trash'       => __( 'No checkout forms found in Trash.', 'surecart' ),
 					'filter_items_list'        => __( 'Filter checkout forms list', 'surecart' ),
-					'items_list_navigation'    => __( 'SureCart Products list navigation', 'surecart' ),
-					'items_list'               => __( 'SureCart Products list', 'surecart' ),
-					'item_published'           => __( 'SureCart Product published.', 'surecart' ),
-					'item_published_privately' => __( 'SureCart Product published privately.', 'surecart' ),
-					'item_reverted_to_draft'   => __( 'SureCart Product reverted to draft.', 'surecart' ),
-					'item_scheduled'           => __( 'SureCart Product scheduled.', 'surecart' ),
-					'item_updated'             => __( 'SureCart Product updated.', 'surecart' ),
+					'items_list_navigation'    => __( 'Products list navigation', 'surecart' ),
+					'items_list'               => __( 'Products list', 'surecart' ),
+					'item_published'           => __( 'Product published.', 'surecart' ),
+					'item_published_privately' => __( 'Product published privately.', 'surecart' ),
+					'item_reverted_to_draft'   => __( 'Product reverted to draft.', 'surecart' ),
+					'item_scheduled'           => __( 'Product scheduled.', 'surecart' ),
+					'item_updated'             => __( 'Product updated.', 'surecart' ),
 				),
-				'hierarchical'      => true,
-				'public'            => true,
-				'show_ui'           => true,
-				'show_in_menu'      => true,
-				'rewrite'           => [
-					'slug'       => 'products-new',
+				'hierarchical' => true,
+				'public'       => true,
+				// 'show_ui'           => true,
+				// 'show_in_menu'      => true,
+				'rewrite'      => [
+					'slug'       => 'products',
 					'with_front' => false,
 				],
-				'show_in_rest'      => true,
-				'show_in_nav_menus' => false,
-				'can_export'        => false,
-				'capability_type'   => 'post',
-				'map_meta_cap'      => true,
-				'supports'          => array(
+				'show_in_rest' => true,
+				// 'show_in_nav_menus' => false,
+				// 'can_export'        => false,
+				// 'capability_type'   => 'post',
+				// 'map_meta_cap'      => true,
+				'supports'     => array(
 					'title',
 					'excerpt',
 					'custom-fields',
+					'page-attributes',
 				),
 			)
 		);

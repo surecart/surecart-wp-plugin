@@ -136,6 +136,7 @@ class ProductPostSyncService {
 				'featured'                     => $model->featured,
 				'recurring'                    => $model->recurring,
 				'shipping_enabled'             => $model->shipping_enabled,
+				'_wp_page_template'            => $model->wp_template_id,
 			],
 		];
 	}

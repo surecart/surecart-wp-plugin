@@ -27,10 +27,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Product Page
 |--------------------------------------------------------------------------
 */
-\SureCart::route()
-	->get()
-	->where( 'query_var', 'sc_product_page_id' )
-	->handle( 'ProductPageController@show' );
+// \SureCart::route()
+// ->get()
+// ->where( 'query_var', 'sc_product_page_id' )
+// ->handle( 'ProductPageController@show' );
 
 /*
 |--------------------------------------------------------------------------

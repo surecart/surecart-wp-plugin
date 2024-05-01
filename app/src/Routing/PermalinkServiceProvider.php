@@ -110,11 +110,11 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.settings.permalinks.product']->bootstrap();
-		( new PermalinkService() )
-			->params( [ 'sc_product_page_id' ] )
-			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_product_page_id=$matches[1]' )
-			->create();
+		// ( new PermalinkService() )
+		// ->params( [ 'sc_product_page_id' ] )
+		// ->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+		// ->query( 'index.php?sc_product_page_id=$matches[1]' )
+		// ->create();
 
 		$container['surecart.settings.permalinks.buy']->bootstrap();
 		( new PermalinkService() )
