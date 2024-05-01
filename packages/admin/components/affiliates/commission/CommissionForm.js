@@ -27,6 +27,10 @@ export default ({
 	onSubmit,
 	submitButtonTitle,
 }) => {
+	if (!open) {
+		return null;
+	}
+
 	return (
 		<ScForm
 			onScFormSubmit={(e) => {
@@ -38,7 +42,7 @@ export default ({
 			<ScDrawer
 				label={title}
 				style={{ '--sc-drawer-size': '32rem' }}
-				onScRequestClose={onRequestClose}
+				onScAfterHide={onRequestClose}
 				open={open}
 				stickyHeader
 			>
