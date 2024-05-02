@@ -14,7 +14,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export default ({ open, onRequestClose, paymentMethod }) => {
-	const [data, setData] = useState(paymentMethod);
+	const [data, setData] = useState(paymentMethod || { reusable: true });
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -27,7 +27,11 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 	};
 
 	useEffect(() => {
-		setData(paymentMethod);
+		if (paymentMethod) {
+			setData(paymentMethod);
+		} else {
+			setData({ reusable: true });
+		}
 	}, [paymentMethod]);
 
 	const { name, description, instructions, archived } = data || {};
