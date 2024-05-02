@@ -138,6 +138,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							recurring_commission_days: e.target.value,
 						});
 					}}
+					placeholder={__('Forever', 'surecart')}
 					value={commissionStructure?.recurring_commission_days}
 				>
 					<span slot="suffix">{__('Days', 'surecart')}</span>
@@ -179,6 +180,7 @@ export default ({ commissionStructure, onChangeStructure }) => {
 							repeat_customer_commission_days: e.target.value,
 						});
 					}}
+					placeholder={__('Forever', 'surecart')}
 					value={commissionStructure?.repeat_customer_commission_days}
 				>
 					<span slot="suffix">{__('Days', 'surecart')}</span>
