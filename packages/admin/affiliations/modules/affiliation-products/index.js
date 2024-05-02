@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -224,22 +227,34 @@ export default ({ affiliationId }) => {
 				setPage={setPage}
 				empty={<EmptyCommissions openModal={openCreateModal} />}
 				footer={
-					affiliationProducts.length > 0 ? (
-						<ScButton onClick={openCreateModal}>
-							<ScIcon name="plus" slot="prefix"></ScIcon>
-							{__('Add Commission', 'surecart')}
-						</ScButton>
-					) : (
-						hasPagination && (
-							<PrevNextButtons
-								data={affiliationProducts}
-								page={page}
-								setPage={setPage}
-								perPage={perPage}
-								loading={fetching}
-							/>
-						)
-					)
+					<div
+						css={css`
+							width: 100%;
+						`}
+					>
+						{hasPagination && (
+							<div
+								css={css`
+									margin-bottom: var(--sc-spacing-medium);
+								`}
+							>
+								<PrevNextButtons
+									data={affiliationProducts}
+									page={page}
+									setPage={setPage}
+									perPage={perPage}
+									loading={fetching}
+								/>
+							</div>
+						)}
+
+						{affiliationProducts.length > 0 ? (
+							<ScButton onClick={openCreateModal}>
+								<ScIcon name="plus" slot="prefix"></ScIcon>
+								{__('Add Commission', 'surecart')}
+							</ScButton>
+						) : null}
+					</div>
 				}
 				setAffiliationProduct={openEditModal}
 				onDelete={openDeleteModal}
