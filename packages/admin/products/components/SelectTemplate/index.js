@@ -31,7 +31,7 @@ export default function PostTemplate({ product, updateProduct }) {
 					'postType',
 					'wp_template',
 					product?.metadata?.wp_template_id ||
-						'surecart/surecart//single-product'
+						'surecart/surecart//single-sc_product'
 				)
 			);
 		},

@@ -139,7 +139,7 @@ class ProductsController extends AdminController {
 		// preload paths.
 		if ( ! empty( $product ) ) {
 			$gallery_paths = [];
-			$gallery       = $product->post->gallery;
+			$gallery       = $product->post->gallery ?? [];
 			foreach ( $gallery as $item ) {
 				if ( is_int( $item->id ) ) {
 					$gallery_paths[] = '/wp/v2/media/' . $item->id . '?context=edit';
@@ -203,10 +203,10 @@ class ProductsController extends AdminController {
 
 		// fake the global post for metaboxes.
 		global $post;
-		$post = $product->post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$post = $product->post;
 
 		\SureCart::metaboxes()->register();
-
 		ob_start();
 		\SureCart::metaboxes()->render();
 		return ob_get_clean();

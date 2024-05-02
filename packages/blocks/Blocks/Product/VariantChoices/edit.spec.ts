@@ -11,7 +11,7 @@ test.describe('surecart/product-variant-choices', () => {
 
 	test.beforeEach(async ({ admin, editor }) => {
 		await admin.visitSiteEditor({
-			postId: 'surecart/surecart//single-product',
+			postId: 'surecart/surecart//single-sc_product',
 			postType: 'wp_template',
 			canvas: 'edit',
 		});

@@ -2,9 +2,6 @@
 
 namespace SureCart\WordPress\PostTypes;
 
-use SureCart\Models\Product;
-use SureCart\Models\ProductMedia;
-
 /**
  * Form post type service class.
  */
@@ -24,110 +21,106 @@ class ProductPostTypeService {
 	public function bootstrap() {
 		// register.
 		add_action( 'init', [ $this, 'registerPostType' ] );
-		// add varition option value query to posts_where.
-		add_filter( 'posts_where', [ $this, 'handleVariationOptionValueQuery' ], 10, 2 );
-		// add global $sc_product inside loops.
-		add_action( 'the_post', [ $this, 'setupData' ] );
+
 		// register post status.
 		add_action( 'init', [ $this, 'registerPostStatus' ] );
+
+		// add varition option value query to posts_where.
+		add_filter( 'posts_where', [ $this, 'handleVariationOptionValueQuery' ], 10, 2 );
+
+		// add global $sc_product inside loops.
+		add_action( 'the_post', [ $this, 'setupData' ] );
+
 		// add the rest api meta query.
 		add_action( "rest_{$this->post_type}_query", [ $this, 'addMetaQuery' ], 10, 2 );
+
 		// register rest fields.
 		add_action( 'rest_api_init', [ $this, 'registerRestFields' ] );
 
-		add_action(
-			'get_post_metadata',
-			[ $this, 'migrateDefaultGalleryMetaData' ],
-			10,
-			4
-		);
+		// product gallery migration.
+		add_action( 'get_post_metadata', [ $this, 'defaultGalleryFallback' ], 10, 4 );
 
-		add_action( 'use_block_editor_for_post', [ $this, 'forceGutenberg' ], 999, 2 );
+		// update edit post link to edit the product directly.
+		add_filter( 'get_edit_post_link', [ $this, 'updateEditPostLink' ], 10, 2 );
 
-		add_filter(
-			'the_posts',
-			function( $posts, $query ) {
-				if ( $query->get( 'post_type' ) !== $this->post_type ) {
-					return $posts;
-				}
-				foreach ( $posts as $post ) {
-					if ( $post->post_type !== $this->post_type ) {
-						continue;
-					}
-					// If $area is not allowed, set it back to the uncategorized default.
-					$area                          = WP_TEMPLATE_PART_AREA_UNCATEGORIZED;
-					$template_part_id              = 'surecart/surecart//product-info'; // Get the template part ID.
-					$content                       = do_blocks( get_block_template( $template_part_id, 'wp_template_part' )->content );
-					$content                       = shortcode_unautop( $content );
-					$content                       = do_shortcode( $content );
-					$seen_ids[ $template_part_id ] = true;
-					$content                       = do_blocks( $content );
-					unset( $seen_ids[ $template_part_id ] );
-					$content = wptexturize( $content );
-					$content = convert_smilies( $content );
-					$content = wp_filter_content_tags( $content, "template_part_{$area}" );
-					// Handle embeds for block template parts.
-					global $wp_embed;
-					$content            = $wp_embed->autoembed( $content );
-					$post->post_content = str_replace( ']]>', ']]&gt;', $content ) . $post->post_content;
-				}
-				return $posts;
-			},
-			10,
-			2
-		);
-
-		// add_filter(
-		// 'the_content',
-		// function( $existing_content ) {
-		// global $post, $sc_product;
-		// if ( $post->post_type !== $this->post_type ) {
-		// return $existing_content;
-		// }
-		// If $area is not allowed, set it back to the uncategorized default.
-		// $area                          = WP_TEMPLATE_PART_AREA_UNCATEGORIZED;
-		// $template_part_id              = 'surecart/surecart//product-info'; // Get the template part ID.
-		// $content                       = do_blocks( get_block_template( $template_part_id, 'wp_template_part' )->content );
-		// $content                       = shortcode_unautop( $content );
-		// $content                       = do_shortcode( $content );
-		// $seen_ids[ $template_part_id ] = true;
-		// $content                       = do_blocks( $content );
-		// unset( $seen_ids[ $template_part_id ] );
-		// $content = wptexturize( $content );
-		// $content = convert_smilies( $content );
-		// $content = wp_filter_content_tags( $content, "template_part_{$area}" );
-		// Handle embeds for block template parts.
-		// global $wp_embed;
-		// $content = $wp_embed->autoembed( $content );
-		// return str_replace( ']]>', ']]&gt;', $content ) . $existing_content;
-		// }
-		// );
-		// when gallery is updated on the post, set the first as the featured image.
-		// add_action( 'updated_post_meta', [ $this, 'automaticallySetFeaturedImage' ], 10, 4 );
-		// add the external media url.
-		// add_filter( 'wp_get_attachment_image_src', [ $this, 'externalMediaUrl' ], 10, 3 );
-		// add the external media metadata.
-		// add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
 		// when a product media is deleted, remove it from the gallery.
-		// add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+		add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+
+		// handle classic themes template.
+		if ( ! wp_is_block_theme() ) {
+			// replace the content with product info part.
+			add_filter( 'the_content', [ $this, 'replaceContentWithProductInfoPart' ], 10 );
+		}
 	}
 
 	/**
-	 * Force gutenberg in case of classic editor
+	 * Update the edit post link to edit the product directly.
 	 *
-	 * @param boolean  $use Whether to use Gutenberg.
-	 * @param \WP_Post $post Post object.
+	 * @param string  $link     The link.
+	 * @param integer $post_id  The post ID.
 	 *
-	 * @return boolean;
+	 * @return string
 	 */
-	public function forceGutenberg( $use, $post ) {
-		if ( $this->post_type === $post->post_type ) {
-			return true;
+	public function updateEditPostLink( $link, $post_id ) {
+		// only for our post type.
+		if ( get_post_type( $post_id ) !== $this->post_type ) {
+			return $link;
 		}
-		return $use;
+
+		// get the product.
+		$product = sc_get_product( $post_id );
+
+		// if we have a product, return the edit link.
+		if ( ! empty( $product ) ) {
+			return \SureCart::getUrl()->edit( 'product', $product->id );
+		}
+
+		return $link;
 	}
 
-	public function migrateDefaultGalleryMetaData( $value, $object_id, $meta_key, $single ) {
+	/**
+	 * For classic themes, replace the content with the product info template.
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function replaceContentWithProductInfoPart( $content ) {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return $content;
+		}
+		if ( ! empty( $content ) ) {
+			return $content;
+		}
+		$template_part_id = 'surecart/surecart//product-info'; // Get the template part ID.
+		$blocks           = get_block_template( $template_part_id, 'wp_template_part' )->content;
+		$blocks           = shortcode_unautop( $blocks );
+		$blocks           = do_shortcode( $blocks );
+		$blocks           = do_blocks( $blocks );
+		$blocks           = wptexturize( $blocks );
+		$blocks           = convert_smilies( $blocks );
+		$blocks           = wp_filter_content_tags( $blocks, 'template_part_uncategorized' );
+		// Handle embeds for block template parts.
+		global $wp_embed;
+		$blocks = $wp_embed->autoembed( $blocks );
+		$blocks = str_replace( ']]>', ']]&gt;', $blocks );
+		return $blocks . $content;
+	}
+
+	/**
+	 * Default gallery fallback.
+	 *
+	 * Because the gallery metadata has not yet been saved, pull in the product media
+	 * as the gallery.
+	 *
+	 * @param array   $value  The value.
+	 * @param integer $object_id The object ID.
+	 * @param string  $meta_key The meta key.
+	 * @param bool    $single Whether to return a single value.
+	 *
+	 * @return array|mixed;
+	 */
+	public function defaultGalleryFallback( $value, $object_id, $meta_key, $single ) {
 		// only for gallery.
 		if ( 'gallery' !== $meta_key ) {
 			return $value;
@@ -135,7 +128,7 @@ class ProductPostTypeService {
 
 		// only for our post type.
 		if ( get_post_type( $object_id ) !== $this->post_type ) {
-			return;
+			return $value;
 		}
 
 		// only if empty.
@@ -237,81 +230,6 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Add the external media metadata.
-	 *
-	 * @param mixed  $data          The data.
-	 * @param string $attachment_id     The object ID.
-	 *
-	 * @return mixed
-	 */
-	public function externalAttachmentMetaData( $data, $attachment_id ) {
-		// TODO: check to make sure it's surecart.
-
-		$source_url = get_post_meta( $attachment_id, '_source_url', true );
-
-		$sizes = wp_get_registered_image_subsizes();
-
-		foreach ( $sizes as $name => $size ) {
-			$width  = $size['width'] ?? null;
-			$height = $size['height'] ?? null;
-
-			if ( strpos( $source_url, 'media.surecart.com' ) !== false ) {
-				$source_url = 'https://surecart.com/cdn-cgi/image/fit=' . ( $size['crop'] ? 'crop' : 'scale-down' ) . ',format=auto,width=' . $width . ',height=' . $height . '/' . $source_url;
-			}
-
-			$data['sizes'][ $name ] = [
-				'file'       => $source_url,
-				'width'      => $width,
-				'height'     => $height,
-				'source_url' => $source_url,
-			];
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Add the external media url.
-	 *
-	 * @param array   $image The image.
-	 * @param integer $id    The ID.
-	 * @param array   $size  The size.
-	 *
-	 * @return array
-	 */
-	public function externalMediaUrl( $image, $id, $size ) {
-		// get the post.
-		$source_url = get_post_meta( $id, '_source_url', true );
-
-		// not a surecart image.
-		if ( strpos( $source_url, 'media.surecart.com' ) === false ) {
-			return $image;
-		}
-
-		if ( is_string( $size ) ) {
-			$sizes = wp_get_registered_image_subsizes();
-
-			if ( isset( $sizes[ $size ] ) ) {
-				$size = [
-					$sizes[ $size ]['width'],
-					$sizes[ $size ]['height'],
-				];
-			} else {
-				$size = [
-					null,
-					null,
-				];
-			}
-		}
-
-		return [
-			'https://surecart.com/cdn-cgi/image/fit=crop,format=auto,width=' . $size[0] . ',height=' . $size[1] . '/' . $source_url,
-			$size[0],
-			$size[1],
-		];
-	}
-
-	/**
 	 * When a product media is deleted, remove it from the gallery.
 	 *
 	 * @param integer $post_id The post ID.
@@ -345,81 +263,6 @@ class ProductPostTypeService {
 
 		// update the gallery.
 		update_post_meta( $post->post_parent, 'gallery', $updated );
-	}
-
-	/**
-	 * When the gallery post meta is updated, automatically make the first item the featured image.
-	 *
-	 * @param integer $meta_id The meta ID.
-	 * @param integer $post_id The post ID.
-	 * @param string  $meta_key The meta key.
-	 * @param mixed   $meta_value The meta value.
-	 *
-	 * @return void
-	 */
-	public function automaticallySetFeaturedImage( $meta_id, $post_id, $meta_key, $meta_value ) {
-		// get the post.
-		$post = get_post( $post_id );
-
-		// if the surecart id is missing.
-		if ( empty( $post->sc_id ) ) {
-			return;
-		}
-
-		// check it's our data .
-		if ( get_post_type( $post ) !== $this->post_type || 'gallery' !== $meta_key ) {
-			return;
-		}
-
-		// check data integrity.
-		if ( ! is_array( $meta_value ) || empty( $meta_value[0] ) ) {
-			return;
-		}
-
-		// TODO: Check for image type before setting as featured image.
-
-		// set the post thumbnail.
-		set_post_thumbnail( $post_id, $meta_value[0] );
-
-		// get the attachment url.
-		$attachment_url = wp_get_attachment_url( $meta_value[0] );
-
-		return false;
-
-		// if the attachment url is missing.
-		if ( empty( $attachment_url ) ) {
-			throw new \Exception( 'Attachment URL is missing.' );
-		}
-
-		$product = Product::find( $post->sc_id );
-		if ( is_wp_error( $product ) ) {
-			throw new \Exception( $product->get_error_message() );
-		}
-
-		if ( ! empty( $product->featured_product_media ) ) {
-			$updated = ProductMedia::update(
-				[
-					'id'       => $product->featured_product_media,
-					'url'      => $attachment_url,
-					'media_id' => null, // make sure to clear the media id.
-					'position' => 0,
-				]
-			);
-			if ( is_wp_error( $updated ) ) {
-				throw new \Exception( $updated->get_error_message() );
-			}
-		} else {
-			$created = ProductMedia::create(
-				[
-					'url'      => $attachment_url,
-					'product'  => $product->id,
-					'media_id' => null,
-				]
-			);
-			if ( is_wp_error( $created ) ) {
-				throw new \Exception( $created->get_error_message() );
-			}
-		}
 	}
 
 	/**
@@ -486,7 +329,7 @@ class ProductPostTypeService {
 		register_post_type(
 			$this->post_type,
 			array(
-				'labels'       => array(
+				'labels'            => array(
 					'name'                     => _x( 'Products', 'post type general name', 'surecart' ),
 					'singular_name'            => _x( 'Product', 'post type singular name', 'surecart' ),
 					'add_new'                  => _x( 'Add New', 'Product', 'surecart' ),
@@ -507,23 +350,24 @@ class ProductPostTypeService {
 					'item_scheduled'           => __( 'Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'Product updated.', 'surecart' ),
 				),
-				'hierarchical' => true,
-				'public'       => true,
-				// 'show_ui'           => true,
-				// 'show_in_menu'      => true,
-				'rewrite'      => [
+				'hierarchical'      => true,
+				'public'            => true,
+				'show_ui'           => true,
+				'show_in_menu'      => true,
+				'rewrite'           => [
 					'slug'       => 'products',
 					'with_front' => false,
 				],
-				'show_in_rest' => true,
-				// 'show_in_nav_menus' => false,
-				// 'can_export'        => false,
-				// 'capability_type'   => 'post',
-				// 'map_meta_cap'      => true,
-				'supports'     => array(
+				'show_in_rest'      => true,
+				'show_in_nav_menus' => false,
+				'can_export'        => false,
+				'capability_type'   => 'post',
+				'map_meta_cap'      => true,
+				'supports'          => array(
 					'title',
 					'excerpt',
 					'custom-fields',
+					'editor',
 					'page-attributes',
 				),
 			)

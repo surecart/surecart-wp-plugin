@@ -127,6 +127,7 @@ class ProductPostSyncService {
 			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 			'post_status'       => $this->getPostStatusFromModel( $model ),
+			'page_template'     => $this->convertTemplateId( $model->template_id ),
 			'meta_input'        => [
 				'sc_id'                        => $model->id,
 				'product'                      => $model,
@@ -136,9 +137,27 @@ class ProductPostSyncService {
 				'featured'                     => $model->featured,
 				'recurring'                    => $model->recurring,
 				'shipping_enabled'             => $model->shipping_enabled,
-				'_wp_page_template'            => $model->wp_template_id,
 			],
 		];
+	}
+
+	/**
+	 * Convert the template id.
+	 *
+	 * This removes the template theme prefix since this is not needed.
+	 *
+	 * @param string $id The template id.
+	 *
+	 * @return string
+	 */
+	protected function convertTemplateId( $id ) {
+		$parts = explode( '//', $id, 2 );
+
+		// not a FSE template.
+		if ( count( $parts ) < 2 ) {
+			return null;
+		}
+		return $parts[1] ?? null;
 	}
 
 	/**
@@ -197,6 +216,11 @@ class ProductPostSyncService {
 		}
 
 		$props = $this->getSchemaMap( $model );
+
+		// if we already have a post template, don't sync. This is to prevent overwriting the template.
+		if ( ! empty( $this->post->page_template ) ) {
+			unset( $props['page_template'] );
+		}
 
 		// update the post by id.
 		$post_id = wp_update_post(

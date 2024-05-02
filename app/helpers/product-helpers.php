@@ -1,19 +1,20 @@
 <?php
 
-use SureCart\Models\Product;
 
 if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
 	 * Get the product.
 	 *
-	 * @param \WP_Post|int $post The product post
+	 * @param \WP_Post|int $post The product post.
+	 *
+	 * @return \SureCart\Models\Product|null
 	 */
 	function sc_get_product( $post = false ) {
 		// make sure to get the post.
 		$post = get_post( $post );
 
 		// return the post object.
-		return get_post_meta( $post->ID, 'product', true );
+		return ! empty( $post ) ? get_post_meta( $post->ID, 'product', true ) : null;
 	}
 }
 

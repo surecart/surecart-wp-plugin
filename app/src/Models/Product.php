@@ -339,13 +339,13 @@ class Product extends Model implements PageModel {
 		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
 			// we have a php file, switch to default.
 			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
-				return 'surecart/surecart//single-product';
+				return 'single-sc_product';
 			}
 
 			// this is acceptable.
 			return $this->attributes['metadata']->wp_template_id;
 		}
-		return 'surecart/surecart//single-product';
+		return 'single-sc_product';
 	}
 
 	/**

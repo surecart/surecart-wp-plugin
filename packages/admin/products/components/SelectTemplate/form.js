@@ -28,14 +28,8 @@ export default function PostTemplateForm({
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
-			const templates = (getEntityRecords(...selectorArgs) || []).filter(
-				(template) => {
-					return (
-						template.id === 'surecart/surecart//single-product' ||
-						template.slug.includes('sc-products')
-					);
-				}
-			);
+			const templates = getEntityRecords(...selectorArgs) || [];
+			console.log({ templates });
 			return {
 				templates,
 				defaultTemplate: templates.find(
@@ -98,7 +92,7 @@ export default function PostTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={selected?.id || 'surecart/surecart//single-product'}
+				value={selected?.id || 'surecart/surecart//single-sc_product'}
 				options={options}
 				onChange={(slug) => {
 					updateProduct({
@@ -118,7 +112,7 @@ export default function PostTemplateForm({
 							postType: 'wp_template',
 							postId:
 								selected?.id ||
-								'surecart/surecart//single-product',
+								'surecart/surecart//single-sc_product',
 							canvas: 'edit',
 						})}
 					>

@@ -26,7 +26,7 @@ const commonBlocks = [
 ];
 const productPageTemplates = [
 	'surecart/surecart//product-info',
-	'surecart/surecart//single-product',
+	'surecart/surecart//single-sc_product',
 	'sc-products',
 	'sc-part-products-info',
 ];

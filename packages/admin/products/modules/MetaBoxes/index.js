@@ -59,7 +59,10 @@ export default function MetaBoxes({ location }) {
 				.postbox-container {
 					float: none;
 				}
-
+				// don't allow collapsing.
+				.closed .inside {
+					display: initial;
+				}
 				#poststuff {
 					min-width: auto;
 					padding-top: 0;
