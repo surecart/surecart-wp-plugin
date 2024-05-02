@@ -174,7 +174,7 @@ export default ({
 				</ScSwitch>
 			)}
 
-			{immediateUpdate && !!upcoming?.checkout?.amount_due && (
+			{immediateUpdate && !!upcoming?.checkout?.proration_amount && (
 				<>
 					<div
 						css={css`
@@ -202,16 +202,29 @@ export default ({
 							margin-top: var(--sc-spacing-small);
 						`}
 					>
-						{sprintf(
-							__(
-								'Changing the subscription price will immediately charge the customer %s.',
-								'surecart'
-							),
-							formatNumber(
-								upcoming?.checkout?.amount_due,
-								upcoming?.checkout?.currency ?? 'usd'
-							)
-						)}
+						{upcoming?.checkout?.proration_amount < 0
+							? sprintf(
+									__(
+										'Changing the subscription price will give the customer a proration credit of %s.',
+										'surecart'
+									),
+									formatNumber(
+										Math.abs(
+											upcoming?.checkout?.proration_amount
+										),
+										upcoming?.checkout?.currency ?? 'usd'
+									)
+							  )
+							: sprintf(
+									__(
+										'Changing the subscription price will immediately charge the customer %s.',
+										'surecart'
+									),
+									formatNumber(
+										upcoming?.checkout?.proration_amount,
+										upcoming?.checkout?.currency ?? 'usd'
+									)
+							  )}
 					</ScAlert>
 				</>
 			)}
