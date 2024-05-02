@@ -1,9 +1,14 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
-export default ({ context: { 'surecart/filterTag/name': name } }) => {
+export default ({
+	context: { 'surecart/filterTag/name': name },
+	__unstableLayoutClassNames,
+}) => {
 	const blockProps = useBlockProps({
-		className: 'sc-tag sc-tag--default sc-tag--medium sc-tag--clearable',
+		className:
+			'sc-tag sc-tag--default sc-tag--medium sc-tag--clearable' +
+			__unstableLayoutClassNames,
 	});
 
 	return (

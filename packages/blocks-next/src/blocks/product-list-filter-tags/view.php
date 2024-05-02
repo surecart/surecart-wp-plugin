@@ -39,6 +39,6 @@ $product_collections = array_map(function($i) use ($product_collections, $filter
 	<template
 		data-wp-each--collection="context.collections"
     >
-            <?php echo $content ?>
+        <?php echo $content ?>
 	</template>
 </div>

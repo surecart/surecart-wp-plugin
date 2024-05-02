@@ -1,10 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import TemplateListEdit from '../../components/TemplateListEdit';
-import { useBlockProps } from '@wordpress/block-editor';
 
 const TEMPLATE = [['surecart/product-list-filter-tag']];
 
-export default ({ clientId }) => {
+export default ({ clientId, __unstableLayoutClassNames }) => {
 	return (
 		<TemplateListEdit
 			template={TEMPLATE}
@@ -19,7 +18,7 @@ export default ({ clientId }) => {
 					'surecart/filterTag/name': __('Filter 3'),
 				},
 			]}
-			itemProps={useBlockProps()}
+			className={__unstableLayoutClassNames}
 			clientId={clientId}
 		/>
 	);
