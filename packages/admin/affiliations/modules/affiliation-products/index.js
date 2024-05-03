@@ -227,38 +227,36 @@ export default ({ affiliationId }) => {
 				setPage={setPage}
 				empty={<EmptyCommissions openModal={openCreateModal} />}
 				footer={
-					<div
-						css={css`
-							width: 100%;
-						`}
-					>
-						{hasPagination && (
-							<div
-								css={css`
-									margin-bottom: var(--sc-spacing-medium);
-								`}
-							>
-								<PrevNextButtons
-									data={affiliationProducts}
-									page={page}
-									setPage={setPage}
-									perPage={perPage}
-									loading={fetching}
-								/>
-							</div>
-						)}
-
-						{affiliationProducts.length > 0 ? (
-							<ScButton onClick={openCreateModal}>
-								<ScIcon name="plus" slot="prefix"></ScIcon>
-								{__('Add Commission', 'surecart')}
-							</ScButton>
-						) : null}
-					</div>
+					affiliationProducts.length > 0 ? (
+						<ScButton onClick={openCreateModal}>
+							<ScIcon name="plus" slot="prefix"></ScIcon>
+							{__('Add Commission', 'surecart')}
+						</ScButton>
+					) : null
 				}
 				setAffiliationProduct={openEditModal}
 				onDelete={openDeleteModal}
-			/>
+			>
+				{hasPagination && (
+					<div>
+						<div
+							css={css`
+								margin: 0 var(--sc-spacing-xx-large)
+									var(--sc-spacing-large)
+									var(--sc-spacing-xx-large);
+							`}
+						>
+							<PrevNextButtons
+								data={affiliationProducts}
+								page={page}
+								setPage={setPage}
+								perPage={perPage}
+								loading={fetching}
+							/>
+						</div>
+					</div>
+				)}
+			</ProductsDataTable>
 
 			<CommissionForm
 				title={
