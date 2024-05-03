@@ -13,7 +13,7 @@ import { addQueryArgs } from '@wordpress/url';
 import PostTemplateForm from './form';
 import { getTemplateTitle } from '../../utility';
 
-export default function PostTemplate({ product, updateProduct }) {
+export default function PostTemplate({ product, updateProduct, post }) {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
 	const [popoverAnchor, setPopoverAnchor] = useState(null);
@@ -30,12 +30,11 @@ export default function PostTemplate({ product, updateProduct }) {
 				select(coreStore).getEntityRecord(
 					'postType',
 					'wp_template',
-					product?.metadata?.wp_template_id ||
-						'surecart/surecart//single-sc_product'
+					post?.template || 'surecart/surecart//single-sc_product'
 				)
 			);
 		},
-		[product?.metadata?.wp_template_id]
+		[post?.template]
 	);
 
 	return (
@@ -71,6 +70,7 @@ export default function PostTemplate({ product, updateProduct }) {
 								onClose={onClose}
 								template={template}
 								product={product}
+								post={post}
 								updateProduct={updateProduct}
 							/>
 						</div>

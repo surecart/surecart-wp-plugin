@@ -126,6 +126,9 @@ class BlockTemplatesService {
 				continue;
 			}
 
+			error_log( $post_type );
+			error_log( print_r( $template_file, true ) );
+
 			// this supports block templates and the template is not available in the site editor.
 			if ( $this->utility->supportsBlockTemplates() && ! $this->utility->isBlockAvailableInSiteEditor( $template_file->slug ) ) {
 				continue;

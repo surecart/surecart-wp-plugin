@@ -297,6 +297,7 @@ export default ({ id, setBrowserURL }) => {
 					<Publishing
 						id={id}
 						product={product}
+						post={post}
 						onToggleArchiveProduct={onToggleArchiveProduct}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}

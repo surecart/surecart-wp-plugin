@@ -49,20 +49,24 @@ class TemplateUtilityService {
 			'single-sc_product'       => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
+				'post_types'  => [ 'sc_product' ],
 			],
 			'product-info'            => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
 				'site-editor' => false,
+				'post_types'  => [ 'sc_product' ],
 			],
 			'single-upsell'           => [
 				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
+				'post_types'  => [ 'sc_upsell' ],
 			],
 			'upsell-info'             => [
 				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
 				'site-editor' => false,
+				'post_types'  => [ 'sc_upsell' ],
 			],
 			'product-collection'      => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
@@ -235,8 +239,8 @@ class TemplateUtilityService {
 		$template->title          = $post->post_title;
 		$template->status         = $post->post_status;
 		$template->has_theme_file = $has_theme_file;
-		$template->is_custom      = false;
-		$template->post_types     = array( 'sc_product', 'sc_collection', 'sc_upsell' ); // Don't appear in any Edit Post template selector dropdown.
+		$template->is_custom      = true;
+		$template->post_types     = []; // don't appear in edit posts dropdown.
 
 		if ( 'wp_template_part' === $post->post_type ) {
 			$type_terms = get_the_terms( $post, 'wp_template_part_area' );
@@ -353,7 +357,7 @@ class TemplateUtilityService {
 		$template->has_theme_file = true;
 		$template->origin         = $template_file->source;
 		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
-		$template->post_types     = [ 'sc_product', 'sc_collection', 'sc_bump' ]; // Don't appear in any Edit Post template selector dropdown.
+		$template->post_types     = $template_file->post_types ?? []; // Set the post type.
 		$template->area           = 'uncategorized';
 		return $template;
 	}
@@ -422,7 +426,6 @@ class TemplateUtilityService {
 			'source'      => $template_is_from_theme ? 'theme' : 'plugin',
 			'title'       => $this->getBlockTemplateTitle( $template_slug ),
 			'description' => $this->getBlockTemplateDescription( $template_slug ),
-			'post_types'  => array( 'sc_product', 'sc_collection', 'sc_bump' ), // Don't appear in any Edit Post template selector dropdown.
 		);
 
 		return (object) $new_template_item;

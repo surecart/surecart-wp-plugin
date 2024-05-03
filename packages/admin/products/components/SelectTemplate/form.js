@@ -17,19 +17,26 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import PostTemplateCreateModal from './create-modal';
 import { getTemplateTitle } from '../../utility';
+import { useDispatch } from '@wordpress/data';
 
 export default function PostTemplateForm({
 	onClose,
 	product,
+	post,
 	updateProduct,
 	template,
 }) {
+	const { editEntityRecord } = useDispatch(coreStore);
+
 	const { templates, defaultTemplate, canCreate, canEdit } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
-			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const selectorArgs = [
+				'postType',
+				'wp_template',
+				{ per_page: -1, post_type: 'sc_product' },
+			];
 			const templates = getEntityRecords(...selectorArgs) || [];
-			console.log({ templates });
 			return {
 				templates,
 				defaultTemplate: templates.find(
@@ -44,7 +51,7 @@ export default function PostTemplateForm({
 
 	const options = (templates ?? []).map((template) => ({
 		value: template?.id,
-		label: getTemplateTitle(template),
+		label: template?.title?.rendered || template?.slug,
 	}));
 
 	const selected = templates.find(
@@ -95,12 +102,13 @@ export default function PostTemplateForm({
 				value={selected?.id || 'surecart/surecart//single-sc_product'}
 				options={options}
 				onChange={(slug) => {
-					updateProduct({
-						metadata: {
-							...product.metadata,
-							wp_template_id: slug,
-						},
-					});
+					editEntityRecord(
+						'postType',
+						'sc_product',
+						post?.id,
+						{ template: slug },
+						{ undoIgnore: true }
+					);
 				}}
 			/>
 
