@@ -25,7 +25,8 @@ import {
 	ScCard,
 } from '@surecart/components-react';
 import { intervalString } from '../../../../util/translations';
-import { formatNumber } from '../../../../util';
+import LineItem from '../../../show/modules/LineItems/LineItem';
+import { formatTaxDisplay } from '../../../../util/tax';
 
 export default ({
 	price,
@@ -197,34 +198,62 @@ export default ({
 
 					<ScAlert
 						open
-						type="warning"
+						type="info"
 						css={css`
 							margin-top: var(--sc-spacing-small);
 						`}
 					>
-						{upcoming?.checkout?.proration_amount < 0
-							? sprintf(
-									__(
-										'Changing the subscription price will give the customer a proration credit of %s.',
-										'surecart'
-									),
-									formatNumber(
-										Math.abs(
-											upcoming?.checkout?.proration_amount
-										),
-										upcoming?.checkout?.currency ?? 'usd'
-									)
-							  )
-							: sprintf(
-									__(
-										'Changing the subscription price will immediately charge the customer %s.',
-										'surecart'
-									),
-									formatNumber(
-										upcoming?.checkout?.proration_amount,
-										upcoming?.checkout?.currency ?? 'usd'
-									)
-							  )}
+						{!!upcoming?.checkout?.proration_amount && (
+							<LineItem
+								label={__('Proration', 'surecart')}
+								currency={upcoming?.checkout?.currency}
+								value={upcoming?.checkout?.proration_amount}
+							/>
+						)}
+
+						{!!upcoming?.checkout?.applied_balance_amount && (
+							<LineItem
+								label={__('Applied Balance', 'surecart')}
+								currency={upcoming?.checkout?.currency}
+								value={
+									upcoming?.checkout?.applied_balance_amount
+								}
+							/>
+						)}
+
+						{!!upcoming?.checkout?.trial_amount && (
+							<LineItem
+								label={__('Trial', 'surecart')}
+								currency={upcoming?.checkout?.currency}
+								value={upcoming?.checkout?.trial_amount}
+							/>
+						)}
+
+						{!!upcoming?.checkout?.discount_amount && (
+							<LineItem
+								label={__('Discounts', 'surecart')}
+								currency={upcoming?.checkout?.currency}
+								value={upcoming?.checkout?.discount_amount}
+							/>
+						)}
+
+						{!!upcoming?.checkout?.shipping_amount && (
+							<LineItem
+								label={__('Shipping', 'surecart')}
+								currency={upcoming?.checkout?.currency}
+								value={upcoming?.checkout?.shipping_amount}
+							/>
+						)}
+
+						{!!upcoming?.checkout?.tax_amount && (
+							<LineItem
+								label={`${formatTaxDisplay(
+									upcoming?.checkout?.tax_label
+								)} (${upcoming?.checkout?.tax_percent}%)`}
+								currency={upcoming?.checkout?.currency}
+								value={upcoming?.checkout?.tax_amount}
+							/>
+						)}
 					</ScAlert>
 				</>
 			)}
