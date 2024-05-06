@@ -50,9 +50,9 @@ export default ({
 					return {
 						product: <Product product={product} />,
 
-						discount_amount: (
+						commission_amount: (
 							<ScText>
-								{commission_structure?.discount_amount}
+								{commission_structure?.commission_amount}
 							</ScText>
 						),
 

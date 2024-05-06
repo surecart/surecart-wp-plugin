@@ -23,11 +23,11 @@ class CommissionStructure extends Model {
 	protected $object_name = 'commission_structure';
 
 	/**
-	 * Get discount amount attribute.
+	 * Get commission amount attribute.
 	 *
 	 * @return string
 	 */
-	public function getDiscountAmountAttribute() {
+	public function getCommissionAmountAttribute() {
 		return $this->amount_commission ?
 			Currency::format( $this->amount_commission, \SureCart::account()->currency ?? 'usd' )
 			: $this->percent_commission . '%';
@@ -41,7 +41,7 @@ class CommissionStructure extends Model {
 	public function getSubscriptionCommissionAttribute() {
 		if ( $this->recurring_commissions_enabled ) {
 			if ( empty( $this->recurring_commission_days ) ) {
-				return __( 'Forever', 'surecart' );
+				return '∞';
 			}
 			// translators: %d is the number of days.
 			return sprintf( _n( '%d Day', '%d Days', $this->recurring_commission_days, 'surecart' ), $this->recurring_commission_days );
@@ -58,7 +58,7 @@ class CommissionStructure extends Model {
 	public function getLifetimeCommissionAttribute() {
 		if ( $this->repeat_customer_commissions_enabled ) {
 			if ( empty( $this->repeat_customer_commission_days ) ) {
-				return __( 'Forever', 'surecart' );
+				return '∞';
 			}
 			// translators: %d is the number of days.
 			return sprintf( _n( '%d Day', '%d Days', $this->repeat_customer_commission_days, 'surecart' ), $this->repeat_customer_commission_days );

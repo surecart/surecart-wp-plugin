@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -199,8 +202,8 @@ export default ({ affiliationId }) => {
 						label: __('Product', 'surecart'),
 						width: '200px',
 					},
-					discount_amount: {
-						label: __('Discount Amount', 'surecart'),
+					commission_amount: {
+						label: __('Commission Amount', 'surecart'),
 					},
 					subscription_commission: {
 						label: __('Subscription Commission', 'surecart'),
@@ -234,8 +237,20 @@ export default ({ affiliationId }) => {
 							<ScIcon name="plus" slot="prefix"></ScIcon>
 							{__('Add Commission', 'surecart')}
 						</ScButton>
-					) : (
-						hasPagination && (
+					) : null
+				}
+				setAffiliationProduct={openEditModal}
+				onDelete={openDeleteModal}
+			>
+				{hasPagination && (
+					<div>
+						<div
+							css={css`
+								margin: 0 var(--sc-spacing-xx-large)
+									var(--sc-spacing-large)
+									var(--sc-spacing-xx-large);
+							`}
+						>
 							<PrevNextButtons
 								data={affiliationProducts}
 								page={page}
@@ -243,12 +258,10 @@ export default ({ affiliationId }) => {
 								perPage={perPage}
 								loading={fetching}
 							/>
-						)
-					)
-				}
-				setAffiliationProduct={openEditModal}
-				onDelete={openDeleteModal}
-			/>
+						</div>
+					</div>
+				)}
+			</ProductsDataTable>
 
 			<CommissionForm
 				title={
