@@ -53,11 +53,10 @@ export default ({ id }) => {
 				affiliation: select(coreStore).getEditedEntityRecord(
 					...entityData
 				),
-				hasLoadedAffiliation: select(
-					coreStore
-				)?.hasFinishedResolution?.('getEditedEntityRecord', [
-					...entityData,
-				]),
+				hasLoadedAffiliation: select(coreStore).hasFinishedResolution(
+					'getEditedEntityRecord',
+					entityData
+				),
 			};
 		},
 		[id]
