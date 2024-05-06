@@ -70,7 +70,7 @@ export default function ({
 				{commissionStructure?.id ? (
 					<>
 						<Definition title={__('Commission', 'surecart')}>
-							{commissionStructure.discount_amount}
+							{commissionStructure.commission_amount}
 						</Definition>
 						<Definition
 							title={__(
