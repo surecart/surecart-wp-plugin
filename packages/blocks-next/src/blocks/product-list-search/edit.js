@@ -26,7 +26,7 @@ export default ({ attributes: { placeholder } }) => {
 			<input
 				className="sc-form-control"
 				type="search"
-				placeholder={placeholder || __('Search', 'surecart')}
+				placeholder={__('Search', 'surecart')}
 			/>
 		</div>
 	);
