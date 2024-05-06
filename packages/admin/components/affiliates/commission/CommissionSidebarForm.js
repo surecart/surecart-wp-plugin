@@ -1,0 +1,125 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
+import Box from '../../../ui/Box';
+import Definition from '../../../ui/Definition';
+import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
+import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
+import ConfirmDelete from './ConfirmDelete';
+
+export default function ({
+	headerTitle,
+	formTitle,
+	submitButtonTitle,
+	onSubmitMessage,
+	emptyCommissionMessage,
+	loading,
+	commissionStructure,
+	modal,
+	setModal,
+	error,
+	onDelete,
+	onChange,
+	onSubmit,
+}) {
+	return (
+		<>
+			<Box
+				title={headerTitle}
+				loading={loading}
+				header_action={
+					commissionStructure?.id ? (
+						<ScDropdown
+							placement="bottom-end"
+							css={css`
+								margin: -12px 0px;
+							`}
+						>
+							<ScButton slot="trigger" type="text" circle>
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem onClick={() => setModal('edit')}>
+									<ScIcon name="edit" slot="prefix" />
+									{__('Edit', 'surecart')}
+								</ScMenuItem>
+								<ScMenuItem onClick={() => setModal('delete')}>
+									<ScIcon name="trash" slot="prefix" />
+									{__('Delete', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+					) : null
+				}
+			>
+				{commissionStructure?.id ? (
+					<>
+						<Definition title={__('Commission', 'surecart')}>
+							{commissionStructure.commission_amount}
+						</Definition>
+						<Definition
+							title={__(
+								'Subscription Commission Duration',
+								'surecart'
+							)}
+						>
+							{commissionStructure.subscription_commission || '-'}
+						</Definition>
+						<Definition
+							title={__(
+								'Lifetime Commission Duration',
+								'surecart'
+							)}
+						>
+							{commissionStructure.lifetime_commission || '-'}
+						</Definition>
+					</>
+				) : (
+					<EmptyCommissions
+						message={emptyCommissionMessage}
+						openModal={() => setModal('create')}
+					/>
+				)}
+			</Box>
+
+			<CommissionForm
+				title={formTitle}
+				submitButtonTitle={submitButtonTitle}
+				error={error}
+				open={modal === 'create' || modal === 'edit'}
+				onRequestClose={() => setModal(false)}
+				onSubmit={(e) =>
+					onSubmit(e, commissionStructure, onSubmitMessage)
+				}
+				onChange={onChange}
+				affiliationItem={{
+					commission_structure: commissionStructure,
+				}}
+				loading={loading}
+			/>
+
+			<ConfirmDelete
+				open={modal === 'delete'}
+				onRequestClose={() => setModal(false)}
+				onDelete={onDelete}
+				deleting={loading}
+				error={error}
+			/>
+		</>
+	);
+}

@@ -40,8 +40,10 @@ export default ({ onRequestClose, open, affiliationProductId }) => {
 
 			onRequestClose();
 		} catch (e) {
-			setDeleting(false);
 			setError(e);
+			console.error(e);
+		} finally {
+			setDeleting(false);
 		}
 	};
 

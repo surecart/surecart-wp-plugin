@@ -25,17 +25,24 @@ export default ({
 	onRequestClose,
 	affiliationItem,
 	onSubmit,
+	submitButtonTitle,
 }) => {
 	if (!open) {
 		return null;
 	}
 
 	return (
-		<ScForm onScFormSubmit={onSubmit}>
+		<ScForm
+			onScFormSubmit={(e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				onSubmit(e);
+			}}
+		>
 			<ScDrawer
 				label={title}
 				style={{ '--sc-drawer-size': '32rem' }}
-				onScRequestClose={onRequestClose}
+				onScAfterHide={onRequestClose}
 				open={open}
 				stickyHeader
 			>
@@ -87,9 +94,7 @@ export default ({
 					busy={loading}
 					disabled={loading}
 				>
-					{affiliationItem?.id
-						? __('Save', 'surecart')
-						: __('Create', 'surecart')}
+					{submitButtonTitle}
 				</ScButton>
 				<ScButton
 					type="text"

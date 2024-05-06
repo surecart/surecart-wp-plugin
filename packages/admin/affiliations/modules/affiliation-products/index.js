@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -16,7 +19,7 @@ import ProductsDataTable from '../../../components/data-tables/affiliates/produc
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
 import useSave from '../../../settings/UseSave';
 import ConfirmDelete from './ConfirmDelete';
-import EmptyCommissions from './EmptyCommissions';
+import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
 import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ affiliationId }) => {
@@ -75,11 +78,8 @@ export default ({ affiliationId }) => {
 		});
 	};
 
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		e.stopImmediatePropagation();
+	const onSubmit = async () =>
 		affiliationProduct?.id ? await onEdit() : await onCreate();
-	};
 
 	const { affiliationProducts, loading, fetching } = useSelect(
 		(select) => {
@@ -202,8 +202,8 @@ export default ({ affiliationId }) => {
 						label: __('Product', 'surecart'),
 						width: '200px',
 					},
-					discount_amount: {
-						label: __('Discount Amount', 'surecart'),
+					commission_amount: {
+						label: __('Commission Amount', 'surecart'),
 					},
 					subscription_commission: {
 						label: __('Subscription Commission', 'surecart'),
@@ -222,15 +222,35 @@ export default ({ affiliationId }) => {
 				perPage={perPage}
 				page={page}
 				setPage={setPage}
-				empty={<EmptyCommissions openModal={openCreateModal} />}
+				empty={
+					<EmptyCommissions
+						message={__(
+							'Add a product-specific commission for this affiliate.',
+							'surecart'
+						)}
+						openModal={openCreateModal}
+					/>
+				}
 				footer={
 					affiliationProducts.length > 0 ? (
 						<ScButton onClick={openCreateModal}>
 							<ScIcon name="plus" slot="prefix"></ScIcon>
 							{__('Add Commission', 'surecart')}
 						</ScButton>
-					) : (
-						hasPagination && (
+					) : null
+				}
+				setAffiliationProduct={openEditModal}
+				onDelete={openDeleteModal}
+			>
+				{hasPagination && (
+					<div>
+						<div
+							css={css`
+								margin: 0 var(--sc-spacing-xx-large)
+									var(--sc-spacing-large)
+									var(--sc-spacing-xx-large);
+							`}
+						>
 							<PrevNextButtons
 								data={affiliationProducts}
 								page={page}
@@ -238,18 +258,21 @@ export default ({ affiliationId }) => {
 								perPage={perPage}
 								loading={fetching}
 							/>
-						)
-					)
-				}
-				setAffiliationProduct={openEditModal}
-				onDelete={openDeleteModal}
-			/>
+						</div>
+					</div>
+				)}
+			</ProductsDataTable>
 
 			<CommissionForm
 				title={
 					affiliationProduct?.id
 						? __('Edit Product Commission', 'surecart')
 						: __('New Product Commission', 'surecart')
+				}
+				submitButtonTitle={
+					affiliationProduct?.id
+						? __('Save', 'surecart')
+						: __('Create', 'surecart')
 				}
 				hasProduct={true}
 				error={error}

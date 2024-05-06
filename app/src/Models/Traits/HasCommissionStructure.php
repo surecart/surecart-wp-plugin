@@ -15,6 +15,6 @@ trait HasCommissionStructure {
 	 * @return void
 	 */
 	protected function setCommissionStructureAttribute( $value ) {
-		$this->setRelation( 'commission_structure', $value, CommissionStructure::class );
+		$this->setRelation( 'commission_structure', (object) $value, CommissionStructure::class );
 	}
 }
