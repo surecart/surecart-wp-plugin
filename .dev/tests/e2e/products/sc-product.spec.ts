@@ -1,7 +1,12 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+
+/**
+ * Internal dependencies.
+ */
+import { createProvisionalAccount } from '../provisional-account-opening';
 
 const API_BASE_PATH = '/surecart/v1/products';
 const API_MEDIA_PATH = '/surecart/v1/product_medias';
@@ -12,16 +17,13 @@ test.describe('Product', () => {
 	let collection1 = null;
 	let collection2 = null;
 
-	test.beforeAll(async ({ requestUtils, admin }) => {
+	test.beforeEach(async ({ requestUtils }) => {
+		// Create a provisional account before running the full test suite.
+		await createProvisionalAccount(requestUtils);
+
 		// Insert some product collections.
-		collection1 = await getOrCreateProductCollection(
-			requestUtils,
-			'Collection 1'
-		);
-		collection2 = await getOrCreateProductCollection(
-			requestUtils,
-			'Collection 2'
-		);
+		collection1 = await getOrCreateProductCollection(requestUtils, 'Collection 1');
+		collection2 = await getOrCreateProductCollection(requestUtils, 'Collection 2');
 
 		// Insert some products.
 		await createProduct(requestUtils, {

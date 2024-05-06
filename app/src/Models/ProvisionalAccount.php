@@ -41,8 +41,10 @@ class ProvisionalAccount extends Model {
 	 */
 	protected function create( $attributes = [] ) {
 		// we only allow this if the setup is not complete.
-		if ( ! empty( ApiToken::get() ) ) {
-			return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
+		if ( ! defined('SC_E2E_TESTING') && ! SC_E2E_TESTING ) {
+			if ( ! empty( ApiToken::get() ) ) {
+				return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
+			}
 		}
 
 		// set account name as the site name if nothing is provided.

@@ -70,10 +70,10 @@
 		"test:cypress:ci": "wp-env start && wp-env clean && cypress run --config video=false --browser chrome",
 		"test:cypress:record": "wp-env start --xdebug && cypress run --browser chrome --record --key 29b7dee9-7f63-4a24-abd2-bd74c58ec60a",
 		"test:cypress": "yarn dev & npx cypress open",
-		"test:e2e": "yarn wp-env:init && yarn playwright test --reporter=list",
-		"test:e2e:ui": "yarn wp-env:init && yarn playwright test --ui",
-		"test:e2e:debug": "yarn wp-env:init && yarn playwright test --debug",
-		"test:e2e:trace": "yarn wp-env:init && yarn playwright test --trace on"
+		"test:e2e": "yarn playwright test --reporter=list",
+		"test:e2e:ui": "yarn playwright test --ui",
+		"test:e2e:debug": "yarn playwright test --debug",
+		"test:e2e:trace": "yarn playwright test --trace on"
 	},
 	"browserslist": [
 		"last 3 versions"
