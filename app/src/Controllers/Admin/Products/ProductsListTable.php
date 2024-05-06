@@ -143,7 +143,7 @@ class ProductsListTable extends ListTable {
 			'cb'                  => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
-			'commission_rate'     => __( 'Commission Rate', 'surecart' ),
+			'commission_amount'   => __( 'Commission Amount', 'surecart' ),
 			'quantity'            => __( 'Quantity', 'surecart' ),
 			'integrations'        => __( 'Integrations', 'surecart' ),
 			'product_collections' => __( 'Collections', 'surecart' ),
@@ -176,12 +176,12 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
-	 * Show the affiliate commission rate.
+	 * Show the affiliate commission amount.
 	 *
 	 * @param Product $product The product model.
 	 */
-	public function column_commission_rate( $product ) {
-		return $product->commission_structure->discount_amount ?? '-';
+	public function column_commission_amount( $product ) {
+		return $product->commission_structure->commission_amount ?? '-';
 	}
 
 	/**
@@ -221,7 +221,7 @@ class ProductsListTable extends ListTable {
 	 */
 	public function get_hidden_columns() {
 		return array(
-			'commission_rate',
+			'commission_amount',
 		);
 	}
 
