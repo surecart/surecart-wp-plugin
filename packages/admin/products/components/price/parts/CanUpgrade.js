@@ -12,17 +12,17 @@ export default ({ price, updatePrice }) => {
 			`}
 		>
 			<ScSwitch
-				checked={price?.portal_subscription_update_enabled}
+				checked={!price?.portal_subscription_update_enabled}
 				onScChange={(e) =>
 					updatePrice({
-						portal_subscription_update_enabled: e.target.checked,
+						portal_subscription_update_enabled: !e.target.checked,
 					})
 				}
 			>
-				{__('Available for upgrade', 'surecart')}
+				{__('Exclude from upgrade options', 'surecart')}
 				<span slot="description">
 					{__(
-						'When turned on, customers can choose this price in the update plans section of the customer dashboard.',
+						'When turned on, customers cannot choose this price in the update plans section of the customer dashboard.',
 						'surecart'
 					)}
 				</span>
