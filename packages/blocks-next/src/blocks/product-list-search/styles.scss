@@ -1,11 +1,4 @@
 .wp-block-surecart-product-list-search {
-	button.wp-block-surecart-product-list-search-button {
-		opacity: 1;
-		padding-top: 0.3em;
-		padding-bottom: 0.3em;
-		padding-left: 1rem;
-		svg {
-			fill: currentColor;
-		}
-	}
+	min-height: 30px;
+	--sc-border-radius-medium: 0;
 }
