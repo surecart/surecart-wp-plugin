@@ -27,14 +27,10 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 	};
 
 	useEffect(() => {
-		if (paymentMethod) {
-			setData(paymentMethod);
-		} else {
-			setData({ reusable: true });
-		}
+		setData({ reusable: true, ...paymentMethod });
 	}, [paymentMethod]);
 
-	const { name, description, instructions, archived } = data || {};
+	const { name, description, instructions } = data || {};
 
 	const onSubmit = async () => {
 		try {
@@ -137,10 +133,10 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 						updateData({ reusable: e.target.checked })
 					}
 				>
-					{__('Allow in subscriptions or installments', 'surecart')}
+					{__('Reusable', 'surecart')}
 					<span slot="description">
 						{__(
-							'Let customers use this manual payment method for purchasing subscriptions or installments.',
+							'Let customers use this manual payment method for purchasing subscriptions, installments or upsells.',
 							'surecart'
 						)}
 					</span>
