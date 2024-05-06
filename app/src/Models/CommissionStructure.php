@@ -28,6 +28,10 @@ class CommissionStructure extends Model {
 	 * @return string
 	 */
 	public function getCommissionAmountAttribute() {
+		if ( empty( $this->amount_commission ) && empty( $this->percent_commission ) ) {
+			return '-';
+		}
+
 		return $this->amount_commission ?
 			Currency::format( $this->amount_commission, \SureCart::account()->currency ?? 'usd' )
 			: $this->percent_commission . '%';
