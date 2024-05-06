@@ -18,6 +18,8 @@ $data       = $controller->getData();
 </head>
 
 <body <?php body_class( is_user_logged_in() ? 'has-columns' : '' ); ?>>
+	<?php wp_body_open(); ?>
+
 	<?php do_action( 'surecart_template_dashboard_body_open' ); ?>
 
 	<?php

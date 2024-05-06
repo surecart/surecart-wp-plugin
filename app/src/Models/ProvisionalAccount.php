@@ -57,6 +57,9 @@ class ProvisionalAccount extends Model {
 			$attributes['account_url'] = get_bloginfo( 'url' );
 		}
 
+		// set source.
+		$attributes['source'] = empty( $attributes['source'] ) ? sanitize_text_field( wp_unslash( $attributes['source'] ) ) : 'surecart_wp';
+
 		return parent::create( $attributes );
 	}
 }

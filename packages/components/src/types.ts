@@ -1,5 +1,6 @@
 import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
+import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 declare global {
   interface Window {
@@ -32,6 +33,9 @@ declare global {
     scData: {
       cdn_root: string;
       root_url: string;
+      account_id: string;
+      account_slug: string;
+      api_url: string;
       plugin_url: string;
       page_id: string;
       persist_cart: 'browser' | 'url' | false;
@@ -227,6 +231,7 @@ export interface License {
   id: string;
   object: 'license';
   activation_limit: number;
+  activation_count: number;
   key: string;
   activations?: {
     object: 'list';
@@ -704,6 +709,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  updated_at: number;
   variant: string;
   upsells_expire_at?: number;
 }
@@ -781,7 +787,7 @@ export interface Processor {
   };
   recurring_enabled: boolean;
   supported_currencies: Array<string>;
-  processor_type: 'paypal' | 'stripe' | 'mollie';
+  processor_type: 'paypal' | 'stripe' | 'mollie' | 'mock';
 }
 
 export interface Purchase {
@@ -982,6 +988,7 @@ export interface DiscountResponse {
   id: string;
   object: 'discount';
   promotion: Promotion;
+  redeemable_status: string;
 }
 
 export interface ResponseError {
@@ -1028,6 +1035,7 @@ export interface PaymentIntent extends Object {
   customer: Customer | string;
   created_at: number;
   updated_at: number;
+  payment_method: PaymentMethod | string;
 }
 
 export interface PaymentIntents {
@@ -1202,6 +1210,8 @@ export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
   currency: string;
+  total_amount: number;
+  line_items?: lineItems;
   payment_method: {
     billing_details: {
       name: string;
@@ -1231,6 +1241,12 @@ export interface ProductsSearchedParams {
   searchResultIds: string[];
 }
 
+export interface ProductsViewedParams {
+  products: Product[];
+  pageTitle: string;
+  collectionId?: string;
+}
+
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
 
 interface AdditionalError {
@@ -1256,4 +1272,8 @@ export interface ScNoticeStore {
   };
   additional_errors?: AdditionalError[] | null;
   dismissible?: boolean;
+}
+
+export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent {
+  value?: { type: string };
 }

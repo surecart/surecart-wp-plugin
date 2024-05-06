@@ -17,6 +17,10 @@ interface Store {
       mollie: string[];
     };
   };
+  instances: {
+    stripe?: any;
+    stripeElements: any;
+  };
   config: {
     stripe: {
       paymentElement: boolean;
@@ -33,11 +37,14 @@ const { state, onChange, on, dispose } = createStore<Store>(
       processors: [],
     },
     sortOrder: {
-      processors: ['stripe', 'paystack', 'paypal'],
+      processors: ['stripe', 'paystack', 'paypal', 'mollie', 'mock'],
       manualPaymentMethods: [],
       paymentMethods: {
         mollie: ['creditcard', 'paypal'],
       },
+    },
+    instances: {
+      stripe: undefined,
     },
     config: {
       stripe: {

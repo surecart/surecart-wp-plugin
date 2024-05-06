@@ -1,8 +1,8 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch, Fragment } from '@stencil/core';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { getHumanDiscount } from '../../../functions/price';
+import { getHumanDiscount, getHumanDiscountRedeemableStatus } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
 
 /**
@@ -91,19 +91,7 @@ export class ScCouponForm {
   @Watch('discount')
   handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
     if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
-    if (this?.discount?.promotion?.code) {
-      const message = sprintf(
-        // Translators: %1$s is the coupon code, %2$s is the human readable discount.
-        __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
-        newValue?.promotion?.code || this.input.value || '',
-        getHumanDiscount(this?.discount?.coupon),
-      );
-      speak(message, 'assertive');
-    } else {
-      // Translators: %s is the coupon code.
-      const message = __('Coupon code removed.', 'sc-coupon-form');
-      speak(message, 'assertive');
-    }
+
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
         (this.couponTag.shadowRoot.querySelector('*') as any).focus();
@@ -173,7 +161,7 @@ export class ScCouponForm {
             <div part="discount-label">{__('Discount', 'surecart')}</div>
             <sc-tag
               exportparts="base:coupon-tag"
-              type="success"
+              type={'redeemable' === this.discount?.redeemable_status ? 'success' : 'warning'}
               class="coupon-tag"
               clearable
               onScClear={() => {
@@ -196,15 +184,23 @@ export class ScCouponForm {
             </sc-tag>
           </span>
 
-          {humanDiscount && (
-            <span class="coupon-human-discount" slot="price-description">
-              {this.translateHumanDiscountWithDuration(humanDiscount)}
-            </span>
+          {'redeemable' === this.discount?.redeemable_status ? (
+            <Fragment>
+              {humanDiscount && (
+                <span class="coupon-human-discount" slot="price-description">
+                  {this.translateHumanDiscountWithDuration(humanDiscount)}
+                </span>
+              )}
+              <span slot="price">
+                <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
+              </span>
+            </Fragment>
+          ) : (
+            <div class="coupon__status" slot="price-description">
+              <sc-icon name="alert-triangle" />
+              {getHumanDiscountRedeemableStatus(this.discount?.redeemable_status)}
+            </div>
           )}
-
-          <span slot="price">
-            <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
-          </span>
         </sc-line-item>
       );
     }

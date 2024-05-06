@@ -11,10 +11,53 @@ use SureCart\Models\ProductCollection;
  * Create a new table class that will extend the WP_List_Table
  */
 class ProductsListTable extends ListTable {
-
+	/**
+	 * The checkbox.
+	 *
+	 * @var bool
+	 */
 	public $checkbox = true;
-	public $error    = '';
-	public $pages    = array();
+
+	/**
+	 * The error message.
+	 *
+	 * @var string
+	 */
+	public $error = '';
+
+	/**
+	 * The list of pages.
+	 *
+	 * @var array
+	 */
+	public $pages = array();
+
+	/**
+	 * The BulkActionService instance.
+	 *
+	 * @var \SureCart\Background\BulkActionService
+	 */
+	public $bulk_actions = null;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \SureCart\Background\BulkActionService $bulk_actions The BulkActionService instance.
+	 */
+	public function __construct( \SureCart\Background\BulkActionService $bulk_actions ) {
+		parent::__construct();
+
+		$this->bulk_actions = $bulk_actions;
+
+		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
+	}
+
+	/**
+	 * Show bulk action admin notice.
+	 */
+	public function show_bulk_action_admin_notice() {
+		$this->bulk_actions->showBulkActionAdminNotice( 'delete_products' );
+	}
 
 	/**
 	 * Prepare the items for the table to process
@@ -97,7 +140,7 @@ class ProductsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'          => '<input type="checkbox" />',
+			'cb'                  => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
 			'quantity'            => __( 'Quantity', 'surecart' ),
@@ -117,7 +160,7 @@ class ProductsListTable extends ListTable {
 	public function column_cb( $product ) {
 		?>
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
+		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="bulk_action_product_ids[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
 
@@ -157,7 +200,7 @@ class ProductsListTable extends ListTable {
 	 * Show any integrations.
 	 */
 	public function column_integrations( $product ) {
-		$list = $this->productIntegrationsList( $product->id );
+		$list = $this->productIntegrationsList( [ 'product_id' => $product->id ] );
 		return $list ? $list : '-';
 	}
 
@@ -371,6 +414,18 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
+		$pending_record_ids    = $this->bulk_actions->getRecordIds( 'delete_products', 'pending' );
+		$processing_record_ids = $this->bulk_actions->getRecordIds( 'delete_products', 'processing' );
+		$succeeded_record_ids  = $this->bulk_actions->getRecordIds( 'delete_products', 'succeeded' );
+		$bulk_status           = '';
+		if ( ! empty( $pending_record_ids ) && in_array( $product->id, $pending_record_ids ) ) {
+			$bulk_status = 'pending';
+		} elseif ( ! empty( $processing_record_ids ) && in_array( $product->id, $processing_record_ids ) ) {
+			$bulk_status = 'processing';
+		} elseif ( ! empty( $succeeded_record_ids ) && in_array( $product->id, $succeeded_record_ids ) ) {
+			$bulk_status = 'succeeded';
+		}
+
 		ob_start();
 		?>
 
@@ -390,22 +445,37 @@ class ProductsListTable extends ListTable {
 			<?php echo esc_html( $product->name ); ?>
 		</a>
 
-		<?php
-		echo $this->row_actions(
-			array_filter(
-				array(
-					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
-					'trash'        => $this->action_toggle_archive( $product ),
-					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
-				)
-			),
-		);
-		?>
+		<?php echo wp_kses_post( $this->getRowActions( $product, $bulk_status ) ); ?>
 		</div>
 
 		</div>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get row actions.
+	 *
+	 * @param \SureCart\Models\Product $product Product model.
+	 *
+	 * @return array
+	 */
+	public function getRowActions( $product, $bulk_status ) {
+		if ( 'succeeded' === $bulk_status ) {
+			return '<div>' . esc_html__( 'Successfully deleted.', 'surecart' ) . '</div>';
+		}
+
+		if ( 'pending' === $bulk_status || 'processing' === $bulk_status ) {
+			return '<div>' . esc_html__( 'Queued for deletion.', 'surecart' ) . '</div>';
+		}
+
+		return $this->row_actions(
+			[
+				'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+				'trash'        => $this->action_toggle_archive( $product ),
+				'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+			]
+		);
 	}
 
 	/**
@@ -496,6 +566,28 @@ class ProductsListTable extends ListTable {
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
 		do_action( 'manage_products_extra_tablenav', $which );
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function get_bulk_actions() {
+		$actions           = array();
+		$actions['delete'] = __( 'Delete permanently', 'surecart' );
+		return $actions;
+	}
+
+	/**
+	 * Gets the current action selected from the bulk actions dropdown.
+	 *
+	 * @return string|false The action name. False if no action was selected.
+	 */
+	public function current_action() {
+		if ( ! empty( $_REQUEST['delete_all'] ) ) {
+			return 'delete_all';
+		}
+
+		return parent::current_action();
 	}
 
 	/**

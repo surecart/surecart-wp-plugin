@@ -4,7 +4,6 @@ import Amount from './parts/Amount';
 import AdHoc from './parts/AdHoc';
 import ScratchAmount from './parts/ScratchAmount';
 import SetupFee from './parts/SetupFee';
-import { ScCard, ScFormControl } from '@surecart/components-react';
 
 export default ({ price, updatePrice }) => {
 	return (

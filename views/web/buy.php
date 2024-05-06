@@ -23,18 +23,19 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 </head>
 
 <body <?php body_class( 'sc-buy-page' ); ?>>
+
+	<?php wp_body_open(); ?>
+
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
 	<header class="sc-buy-header">
 		<div class="sc-buy-logo">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<?php if ( $show_logo ) : ?>
+				<?php if ( ! empty( $show_logo ) && ! empty( $logo_url ) ) : ?>
 					<img src="<?php echo esc_url( $logo_url ?? '' ); ?>"
 						style="max-width: <?php echo esc_attr( $logo_width ?? '180px' ); ?>; width: 100%; height: auto;"
 						alt="<?php echo esc_attr( get_bloginfo() ); ?>"
 					/>
-				<?php else : ?>
-					<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
 				<?php endif; ?>
 			</a>
 			<?php if ( empty( $enabled ) ) : ?>

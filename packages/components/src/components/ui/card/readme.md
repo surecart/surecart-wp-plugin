@@ -35,6 +35,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-mollie-add-method](../sc-mollie-add-method)
@@ -70,6 +71,7 @@ graph TD;
   sc-downloads-list --> sc-card
   sc-fulfillments --> sc-card
   sc-invoices-list --> sc-card
+  sc-license --> sc-card
   sc-licenses-list --> sc-card
   sc-login-form --> sc-card
   sc-mollie-add-method --> sc-card

@@ -22,7 +22,7 @@ exports[`sc-upgrade-required Should only render children when required is false 
           Unlock revenue boosting features when you upgrade your plan!
         </p>
       </slot>
-      <sc-button full="" href="https://app.surecart.com/billing" target="_blank" type="primary">
+      <sc-button full="" href="https://app.surecart.com/plans?switch_account_id=undefined" target="_blank" type="primary">
         Upgrade Now
         <sc-icon name="arrow-right" slot="suffix"></sc-icon>
       </sc-button>
@@ -56,7 +56,7 @@ exports[`sc-upgrade-required Should render modal by default when defaultOpen is 
           Unlock revenue boosting features when you upgrade your plan!
         </p>
       </slot>
-      <sc-button full="" href="https://app.surecart.com/billing" target="_blank" type="primary">
+      <sc-button full="" href="https://app.surecart.com/plans?switch_account_id=undefined" target="_blank" type="primary">
         Upgrade Now
         <sc-icon name="arrow-right" slot="suffix"></sc-icon>
       </sc-button>
@@ -87,7 +87,7 @@ exports[`sc-upgrade-required renders 1`] = `
           Unlock revenue boosting features when you upgrade your plan!
         </p>
       </slot>
-      <sc-button full="" href="https://app.surecart.com/billing" target="_blank" type="primary">
+      <sc-button full="" href="https://app.surecart.com/plans?switch_account_id=undefined" target="_blank" type="primary">
         Upgrade Now
         <sc-icon name="arrow-right" slot="suffix"></sc-icon>
       </sc-button>

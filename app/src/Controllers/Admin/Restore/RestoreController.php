@@ -20,11 +20,13 @@ class RestoreController  extends AdminController {
 		}
 
 		$this->withHeader(
-			[
-				'restore' => [
-					'title' => __( 'Restore', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'restore' => [
+						'title' => __( 'Restore', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 
 		return \SureCart::view( 'admin/restore/index' )
@@ -51,13 +53,9 @@ class RestoreController  extends AdminController {
 
 		$page_id = \SureCart::pages()->getId( $page, 'page' );
 
-		if ( empty( $page_id ) ) {
-			wp_die( esc_html__( 'Invalid page selected. Please choose the correct page to restore.', 'surecart' ) );
-		}
-
 		$post_status = get_post_status( $page_id );
 
-		if ( ! empty( get_post_status_object( $post_status )->label ) ) {
+		if ( ! empty( get_post_status_object( $post_status )->label ) && ! empty( $page_id ) ) {
 			$restored = wp_update_post(
 				[
 					'ID'          => $page_id,

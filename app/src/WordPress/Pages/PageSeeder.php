@@ -112,7 +112,7 @@ class PageSeeder {
 				'checkout' => [
 					'name'      => _x( 'checkout', 'Form slug', 'surecart' ),
 					'title'     => _x( 'Checkout', 'Form title', 'surecart' ),
-					'content'   => '<!-- wp:surecart/form -->' . $pattern['content'] . '<!-- /wp:surecart/form -->',
+					'content'   => '<!-- wp:surecart/form {"mode":"test"} -->' . $pattern['content'] . '<!-- /wp:surecart/form -->',
 					'post_type' => 'sc_form',
 				],
 			]
