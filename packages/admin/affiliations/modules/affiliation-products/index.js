@@ -205,8 +205,8 @@ export default ({ affiliationId }) => {
 						label: __('Product', 'surecart'),
 						width: '200px',
 					},
-					discount_amount: {
-						label: __('Discount Amount', 'surecart'),
+					commission_amount: {
+						label: __('Commission Amount', 'surecart'),
 					},
 					subscription_commission: {
 						label: __('Subscription Commission', 'surecart'),

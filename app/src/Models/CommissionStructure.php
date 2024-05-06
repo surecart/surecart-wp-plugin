@@ -23,11 +23,11 @@ class CommissionStructure extends Model {
 	protected $object_name = 'commission_structure';
 
 	/**
-	 * Get discount amount attribute.
+	 * Get commission amount attribute.
 	 *
 	 * @return string
 	 */
-	public function getDiscountAmountAttribute() {
+	public function getCommissionAmountAttribute() {
 		return $this->amount_commission ?
 			Currency::format( $this->amount_commission, \SureCart::account()->currency ?? 'usd' )
 			: $this->percent_commission . '%';
