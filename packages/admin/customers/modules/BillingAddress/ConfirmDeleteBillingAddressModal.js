@@ -35,7 +35,7 @@ export default ({ customerId, open, onRequestClose }) => {
 				},
 			});
 			receiveEntityRecords('surecart', 'customer', customer);
-			createSuccessNotice(__('Billing Address Deleted', 'surecart'), {
+			createSuccessNotice(__('Billing address deleted', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -57,28 +57,27 @@ export default ({ customerId, open, onRequestClose }) => {
 		>
 			<ScFlex flexDirection="column" style={{ gap: '1em' }}>
 				<Error error={error} setError={setError} />
-
 				{__(
 					'Are you sure you want to delete address? This action cannot be undone.',
 					'surecart'
 				)}
-				<ScFlex justifyContent="flex-end">
-					<ScButton
-						type="text"
-						onClick={onRequestClose}
-						disabled={busy}
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>{' '}
-					<ScButton
-						type="primary"
-						disabled={busy}
-						onClick={onEditAddress}
-					>
-						{__('Delete', 'surecart')}
-					</ScButton>
-				</ScFlex>
 			</ScFlex>
+			<ScButton
+				type="text"
+				onClick={onRequestClose}
+				disabled={busy}
+				slot="footer"
+			>
+				{__('Cancel', 'surecart')}
+			</ScButton>
+			<ScButton
+				type="primary"
+				disabled={busy}
+				onClick={onEditAddress}
+				slot="footer"
+			>
+				{__('Delete', 'surecart')}
+			</ScButton>
 			{busy && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
