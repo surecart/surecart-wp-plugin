@@ -21,7 +21,7 @@ export default ({
 			title={__('Billing Address', 'surecart')}
 			header_action={
 				!!billingAddress?.id && (
-					<ScDropdown placement="bott  om-end">
+					<ScDropdown placement="bottom-end">
 						<ScButton
 							circle
 							type="text"
