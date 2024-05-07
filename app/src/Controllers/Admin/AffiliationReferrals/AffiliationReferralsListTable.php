@@ -5,7 +5,6 @@ namespace SureCart\Controllers\Admin\AffiliationReferrals;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Referral;
 use SureCart\Support\Currency;
-use SureCart\Support\TimeDate;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -112,14 +111,15 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			'date'        => esc_html__( 'Date', 'surecart' ),
-			'status'      => esc_html__( 'Status', 'surecart' ),
-			'payout'      => esc_html__( 'Payout', 'surecart' ),
-			'affiliate'   => esc_html__( 'Affiliate', 'surecart' ),
-			'description' => esc_html__( 'Description', 'surecart' ),
-			'order'       => esc_html__( 'Order', 'surecart' ),
-			'commission'  => esc_html__( 'Commission', 'surecart' ),
-			'mode'        => '',
+			'date'          => esc_html__( 'Date', 'surecart' ),
+			'status'        => esc_html__( 'Status', 'surecart' ),
+			'payout_status' => esc_html__( 'Payout Status', 'surecart' ),
+			'payout_date'   => esc_html__( 'Payout Date', 'surecart' ),
+			'affiliate'     => esc_html__( 'Affiliate', 'surecart' ),
+			'description'   => esc_html__( 'Description', 'surecart' ),
+			'order'         => esc_html__( 'Order', 'surecart' ),
+			'commission'    => esc_html__( 'Commission', 'surecart' ),
+			'mode'          => '',
 		);
 	}
 
@@ -204,28 +204,37 @@ class AffiliationReferralsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the payout column.
+	 * Handle the payout status column.
 	 *
 	 * @param \SureCart\Models\Referral $referral The Referral model.
 	 *
 	 * @return string
 	 */
-	public function column_payout( $referral ) {
-		$payout = $referral->payout ?? null;
-		if ( empty( $payout ) ) {
-			return '-';
+	public function column_payout_status( $referral ) {
+		if ( empty( $referral->payout ) ) {
+			return '_';
 		}
 
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $payout->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $payout->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $payout->created_at ) )
-		);
-		$color   = 'completed' === $payout->status ? 'var(--sc-color-success-700)' : 'var(--sc-color-warning-700)';
+		$type = 'completed' === $referral->payout->status ? 'success' : 'warning';
 
-		return $created . ' - (<small style="color:' . $color . '">' . $payout->status_display_text . '</small>)';
+		return '<sc-tag type="' . $type . '">' . $referral->payout->status_display_text . ' </sc-tag>';
 	}
+
+	/**
+	 * Handle the payout date column.
+	 *
+	 * @param \SureCart\Models\Referral $referral The Referral model.
+	 *
+	 * @return string
+	 */
+	public function column_payout_date( $referral ) {
+		if ( empty( $referral->payout ) ) {
+			return '_';
+		}
+
+		return date_i18n( get_option( 'date_format' ), $referral->created_at );
+	}
+
 
 	/**
 	 * Handle the affiliate column.
@@ -365,6 +374,11 @@ class AffiliationReferralsListTable extends ListTable {
 			return null;
 		}
 
+		// transform in payout status.
+		if ( 'in_payout' === $_GET['status'] ) {
+			return 'paid';
+		}
+
 		return sanitize_text_field( wp_unslash( $_GET['status'] ) );
 	}
 
@@ -380,7 +394,7 @@ class AffiliationReferralsListTable extends ListTable {
 			'approved'  => __( 'Approved', 'surecart' ),
 			'denied'    => __( 'Denied', 'surecart' ),
 			'canceled'  => __( 'Canceled', 'surecart' ),
-			'paid'      => __( 'Paid', 'surecart' ),
+			'in_payout' => __( 'In Payout', 'surecart' ),
 		);
 	}
 
@@ -403,7 +417,7 @@ class AffiliationReferralsListTable extends ListTable {
 						'live_mode' => $_GET['live_mode'] ?? '',
 					]
 				),
-				esc_url_raw( admin_url( 'admin . php ? page = sc - affiliate - referrals' ) )
+				esc_url_raw( admin_url( 'admin.php?page=sc-affiliate-referrals' ) )
 			)
 		);
 	}
