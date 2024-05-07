@@ -10,27 +10,11 @@
 	"example": {},
 	"ancestor": ["surecart/product-list"],
 	"usesContext": ["surecart/product-list/blockId"],
-	"attributes": {
-		"label": {
-			"type": "string"
-		}
-	},
 	"supports": {
 		"interactivity": true,
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"],
-			"blockGap": true
-		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontWeight": true
-		},
-		"color": {
-			"text": true,
-			"background": false,
-			"enableContrastChecker": true
+			"margin": ["top", "bottom"]
 		}
 	},
 	"render": "file:./view.php",
