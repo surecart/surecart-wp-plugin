@@ -1,10 +1,6 @@
 import Box from '../../../../ui/Box';
 import EditPaymentMethod from './EditPaymentMethod';
-import {
-	ScFlex,
-	ScCard,
-	ScPaymentMethodDetails,
-} from '@surecart/components-react';
+import { ScPaymentMethodDetails } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from 'react';
@@ -72,12 +68,9 @@ export default ({ subscription, updateSubscription, loading }) => {
 					customerId={
 						subscription?.customer?.id || subscription?.customer
 					}
-					isManualPaymentSelected={subscription?.manual_payment}
-					manualPaymentMethodId={subscription?.manual_payment_method}
-					paymentMethodId={
-						subscription?.payment_method?.id ||
-						subscription?.payment_method
-					}
+					manualPayment={subscription?.manual_payment}
+					manualPaymentMethod={subscription?.manual_payment_method}
+					paymentMethod={subscription?.payment_method}
 					updatePaymentMethod={(data) => {
 						updateSubscription(data);
 						setEdit(false);

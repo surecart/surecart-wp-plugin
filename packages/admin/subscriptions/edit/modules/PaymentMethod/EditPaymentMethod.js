@@ -17,12 +17,14 @@ export default ({
 	open,
 	setOpen,
 	customerId,
-	paymentMethodId,
-	manualPaymentMethodId,
+	paymentMethod,
+	manualPaymentMethod,
 	updatePaymentMethod,
-	isManualPaymentSelected,
+	manualPayment,
 }) => {
-	const [paymentMethod, setPaymentMethod] = useState(paymentMethodId);
+	const [paymentMethodId, setPaymentMethod] = useState(
+		paymentMethod?.id || paymentMethod
+	);
 
 	const { payment_methods, loading } = useSelect(
 		(select) => {
@@ -93,8 +95,8 @@ export default ({
 						<ScChoice
 							value={payment_method?.id}
 							checked={
-								!isManualPaymentSelected &&
-								payment_method?.id === paymentMethod
+								!manualPayment &&
+								payment_method?.id === paymentMethodId
 							}
 						>
 							<ScPaymentMethod paymentMethod={payment_method} />
@@ -110,7 +112,7 @@ export default ({
 									payment_method?.paypal_account?.email}
 							</div>
 							{payment_method?.id === paymentMethodId &&
-								!isManualPaymentSelected && (
+								!manualPayment && (
 									<ScTag type="info" slot="price">
 										{__('Current', 'surecart')}
 									</ScTag>
@@ -123,16 +125,16 @@ export default ({
 						<ScChoice
 							value={payment_method?.id}
 							checked={
-								isManualPaymentSelected &&
-								payment_method?.id === manualPaymentMethodId
+								manualPayment &&
+								payment_method?.id === manualPaymentMethod
 							}
 						>
 							<ScManualPaymentMethod
 								paymentMethod={payment_method}
 								showDescription
 							/>
-							{payment_method?.id === manualPaymentMethodId &&
-								isManualPaymentSelected && (
+							{payment_method?.id === manualPaymentMethod &&
+								manualPayment && (
 									<ScTag type="info" slot="price">
 										{__('Current', 'surecart')}
 									</ScTag>
@@ -146,15 +148,15 @@ export default ({
 				type="primary"
 				onClick={() => {
 					const isManualPaymentMethod = manual_payment_methods.find(
-						({ id }) => id === paymentMethod
+						({ id }) => id === paymentMethodId
 					);
 					updatePaymentMethod({
 						manual_payment: !!isManualPaymentMethod,
 						payment_method: !isManualPaymentMethod
-							? paymentMethod
+							? paymentMethodId
 							: null,
 						manual_payment_method: isManualPaymentMethod
-							? paymentMethod
+							? paymentMethodId
 							: null,
 					});
 				}}

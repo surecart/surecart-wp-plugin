@@ -68,7 +68,7 @@ export class ScSubscriptionPaymentMethod {
   }
 
   hasMultiplePaymentMethods() {
-    return this.paymentMethods?.length > 1 || this.manualPaymentMethods?.length > 1 || this.hasPaymentMethods();
+    return [...(this?.paymentMethods || []), ...(this?.manualPaymentMethods || [])]?.length > 1;
   }
 
   componentWillLoad() {

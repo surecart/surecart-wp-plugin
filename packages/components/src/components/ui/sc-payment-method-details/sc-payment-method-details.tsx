@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { PaymentMethod } from '../../../types';
 
 @Component({
@@ -18,8 +18,10 @@ export class ScPaymentMethodDetails {
           <div>
             {!!this.paymentMethod?.card?.exp_month && (
               <span>
-                {__('Exp.', 'surecart')}
-                {this.paymentMethod?.card?.exp_month}/{this.paymentMethod?.card?.exp_year}
+                {
+                  // Translators: %d/%d is month and year of expiration.
+                  sprintf(__('Exp. %d/%d', 'surecart'), this.paymentMethod?.card?.exp_month, this.paymentMethod?.card?.exp_year)
+                }
               </span>
             )}
             {!!this.paymentMethod?.paypal_account?.email && this.paymentMethod?.paypal_account?.email}

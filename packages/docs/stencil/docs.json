@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-05-01T07:05:09",
+  "timestamp": "2024-05-07T07:36:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -21177,6 +21177,7 @@
       "filePath": "./src/components/ui/sc-payment-method-details/sc-payment-method-details.tsx",
       "encapsulation": "shadow",
       "tag": "sc-payment-method-details",
+      "readme": "# sc-payment-method-details\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
