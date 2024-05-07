@@ -88,42 +88,6 @@ export default ({ post, slug, loading }) => {
 		termIds.includes(term.id)
 	);
 
-	console.log({ hasResolvedTerms });
-	// const collections = useSelect((select) => {
-	// 	return (
-	// 		select(coreStore).getEntityRecords('taxonomy', 'sc_collection', {
-	// 			per_page: 100,
-	// 			orderby: 'name',
-	// 			post: post?.id,
-	// 			order: 'asc',
-	// 		}) || []
-	// 	);
-	// });
-
-	// when product collections come in, update the product collection ids for updating later.
-	// useEffect(() => {
-	// 	receiveEntityRecords('surecart', 'product', {
-	// 		...product,
-	// 		product_collection_ids: (
-	// 			product?.product_collections?.data || []
-	// 		)?.map((c) => c.id),
-	// 	});
-	// }, [product?.product_collections?.data]);
-
-	// toggle collection (add or remmove id from `product_collection_ids`)
-	// const toggleCollection = async (collectionId) => {
-	// 	if (!collectionId) return;
-	// 	updateProduct({
-	// 		product_collection_ids: (
-	// 			product?.product_collection_ids || []
-	// 		).includes(collectionId)
-	// 			? product?.product_collection_ids.filter(
-	// 					(id) => id !== collectionId
-	// 			  ) // remove.
-	// 			: [...(product?.product_collection_ids || []), collectionId], // add.
-	// 	});
-	// };
-
 	return (
 		<>
 			<Box

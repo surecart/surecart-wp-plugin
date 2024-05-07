@@ -120,14 +120,10 @@ class BlockTemplatesService {
 			// on the template file, then lets skip it so that it doesn't get added. This is typically used to hide templates
 			// in the template dropdown on the Edit Post page.
 			if ( $post_type &&
-				isset( $template_file->post_types ) &&
-				! in_array( $post_type, $template_file->post_types, true )
+				! in_array( $post_type, $template_file->post_types ?? [], true )
 			) {
 				continue;
 			}
-
-			error_log( $post_type );
-			error_log( print_r( $template_file, true ) );
 
 			// this supports block templates and the template is not available in the site editor.
 			if ( $this->utility->supportsBlockTemplates() && ! $this->utility->isBlockAvailableInSiteEditor( $template_file->slug ) ) {

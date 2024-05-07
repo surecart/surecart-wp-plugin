@@ -11,7 +11,6 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import PostTemplateForm from './form';
-import { getTemplateTitle } from '../../utility';
 
 export default function PostTemplate({ product, updateProduct, post }) {
 	// Use internal state instead of a ref to make sure that the component
@@ -23,18 +22,43 @@ export default function PostTemplate({ product, updateProduct, post }) {
 		[popoverAnchor]
 	);
 
+	// get the assigned template.
 	const template = useSelect(
 		(select) => {
-			return (
-				select(coreStore).canUser('create', 'templates') &&
-				select(coreStore).getEntityRecord(
+			const currentTemplate = post?.template;
+
+			// have have set a current template with a slug.
+			if (currentTemplate) {
+				const templateWithSameSlug = select(coreStore)
+					.getEntityRecords('postType', 'wp_template', {
+						per_page: -1,
+					})
+					?.find((template) => template.slug === currentTemplate);
+
+				if (!templateWithSameSlug) {
+					return templateWithSameSlug;
+				}
+
+				return select(coreStore).getEditedEntityRecord(
 					'postType',
 					'wp_template',
-					post?.template || 'surecart/surecart//single-sc_product'
-				)
+					templateWithSameSlug.id
+				);
+			}
+
+			const slugToCheck = post?.slug
+				? `single-sc_product-${post?.slug}`
+				: 'single-sc_product';
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: slugToCheck,
+			});
+			return select(coreStore).getEditedEntityRecord(
+				'postType',
+				'wp_template',
+				defaultTemplateId
 			);
 		},
-		[post?.template]
+		[post?.template, post?.slug]
 	);
 
 	return (
@@ -105,12 +129,6 @@ export default function PostTemplate({ product, updateProduct, post }) {
 }
 
 function PostTemplateToggle({ isOpen, onClick, template }) {
-	// if (!template) {
-	// 	return <Spinner />;
-	// }
-
-	let templateTitle = getTemplateTitle(template);
-
 	return (
 		<Button
 			css={css`
@@ -123,17 +141,17 @@ function PostTemplateToggle({ isOpen, onClick, template }) {
 			variant="tertiary"
 			aria-expanded={isOpen}
 			aria-label={
-				templateTitle
+				template?.title
 					? sprintf(
 							// translators: %s: Name of the currently selected template.
 							__('Select template: %s'),
-							templateTitle
+							template?.title
 					  )
 					: __('Select template')
 			}
 			onClick={onClick}
 		>
-			{templateTitle ?? __('Default template')}
+			{template?.title ?? __('Default template')}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

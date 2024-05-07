@@ -242,6 +242,11 @@ class TemplateUtilityService {
 		$template->is_custom      = true;
 		$template->post_types     = []; // don't appear in edit posts dropdown.
 
+		// this is a customized version of the template.
+		if ( ! empty( $this->plugin_template_types[ $post->post_name ]['post_types'] ) ) {
+			$template->post_types = $this->plugin_template_types[ $post->post_name ]['post_types'];
+		}
+
 		if ( 'wp_template_part' === $post->post_type ) {
 			$type_terms = get_the_terms( $post, 'wp_template_part_area' );
 			if ( ! is_wp_error( $type_terms ) && false !== $type_terms ) {
@@ -359,6 +364,7 @@ class TemplateUtilityService {
 		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
 		$template->post_types     = $template_file->post_types ?? []; // Set the post type.
 		$template->area           = 'uncategorized';
+
 		return $template;
 	}
 

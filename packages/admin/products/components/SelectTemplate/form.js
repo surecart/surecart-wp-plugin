@@ -16,7 +16,6 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import PostTemplateCreateModal from './create-modal';
-import { getTemplateTitle } from '../../utility';
 import { useDispatch } from '@wordpress/data';
 
 export default function PostTemplateForm({
@@ -49,14 +48,16 @@ export default function PostTemplateForm({
 		[]
 	);
 
-	const options = (templates ?? []).map((template) => ({
-		value: template?.id,
-		label: template?.title?.rendered || template?.slug,
-	}));
-
-	const selected = templates.find(
-		(template) => template.id === product?.metadata?.wp_template_id
-	);
+	const options = (templates ?? [])
+		.map((template) => ({
+			value: template?.slug,
+			label:
+				template?.title?.rendered || template?.title || template?.slug,
+		}))
+		.filter(
+			(option, index, self) =>
+				index === self.findIndex((t) => t.value === option.value)
+		);
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -99,7 +100,7 @@ export default function PostTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={selected?.id || 'surecart/surecart//single-sc_product'}
+				value={template?.slug || 'surecart/surecart//single-sc_product'}
 				options={options}
 				onChange={(slug) => {
 					editEntityRecord(
@@ -119,7 +120,7 @@ export default function PostTemplateForm({
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template',
 							postId:
-								selected?.id ||
+								template?.id ||
 								'surecart/surecart//single-sc_product',
 							canvas: 'edit',
 						})}
