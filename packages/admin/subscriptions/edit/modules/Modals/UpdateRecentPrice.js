@@ -16,13 +16,14 @@ import { store as coreStore } from '@wordpress/core-data';
  * Internal dependencies.
  */
 import {
-	ScAlert,
 	ScButton,
 	ScDialog,
 	ScFormatNumber,
 	ScSwitch,
 	ScText,
 	ScCard,
+	ScLineItem,
+	ScDivider,
 } from '@surecart/components-react';
 import { intervalString } from '../../../../util/translations';
 import LineItem from '../../../show/modules/LineItems/LineItem';
@@ -196,13 +197,19 @@ export default ({
 						</ScSwitch>
 					</div>
 
-					<ScAlert
-						open
-						type="info"
+					<ScCard
 						css={css`
+							display: block;
 							margin-top: var(--sc-spacing-small);
+							--font-weight: var(--sc-font-weight-bold);
 						`}
 					>
+						<LineItem
+							label={__('Subtotal', 'surecart')}
+							currency={upcoming?.checkout?.currency}
+							value={upcoming?.checkout?.subtotal_amount}
+						/>
+
 						{!!upcoming?.checkout?.proration_amount && (
 							<LineItem
 								label={__('Proration', 'surecart')}
@@ -254,7 +261,29 @@ export default ({
 								value={upcoming?.checkout?.tax_amount}
 							/>
 						)}
-					</ScAlert>
+						<ScDivider
+							style={{ '--spacing': 'var(--sc-spacing-small)' }}
+						/>
+
+						<ScLineItem
+							style={{
+								width: '100%',
+								'--price-size': 'var(--sc-font-size-x-large)',
+							}}
+						>
+							<span slot="title">{__('Total', 'surecart')}</span>
+							<span slot="price">
+								<ScFormatNumber
+									type="currency"
+									currency={upcoming?.checkout?.currency}
+									value={upcoming?.checkout?.amount_due}
+								></ScFormatNumber>
+							</span>
+							<span slot="currency">
+								{upcoming?.checkout?.currency}
+							</span>
+						</ScLineItem>
+					</ScCard>
 				</>
 			)}
 
