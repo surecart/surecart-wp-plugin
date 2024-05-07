@@ -160,7 +160,7 @@ class PaymentMethodController extends BaseController {
 								'tab'    => $this->getTab(),
 								'model'  => 'customer',
 								'action' => 'show',
-								'id'     => User::current()->customerId( 'false' === $_GET['live_mode'] ? 'test' : 'live' ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+								'id'     => User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ),
 							],
 							remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 						)

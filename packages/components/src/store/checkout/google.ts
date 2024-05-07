@@ -1,4 +1,4 @@
-import { trackEvent } from 'src/functions/google';
+import { trackEvent } from '../../functions/google';
 import { maybeConvertAmount } from '../../functions/currency';
 import { Checkout, LineItem, Product, ShippingMethod } from 'src/types';
 

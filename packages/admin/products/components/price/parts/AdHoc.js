@@ -6,12 +6,23 @@ import { ScPriceInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ price, updatePrice }) => {
 	return (
-		<>
+		<div
+			css={css`
+				display: grid;
+				gap: var(--sc-spacing-medium);
+			`}
+		>
 			<ScSwitch
 				checked={price?.ad_hoc}
 				onScChange={(e) => updatePrice({ ad_hoc: e.target.checked })}
 			>
-				{__('Allow customers to pay what they want', 'surecart')}
+				{__('Pay what you want', 'surecart')}
+				<span slot="description">
+					{__(
+						'Allow customers to pay any amount they want, ideal for donations or perceived value they place on your cause or service.',
+						'surecart'
+					)}
+				</span>
 			</ScSwitch>
 
 			{!!price?.ad_hoc && (
@@ -60,6 +71,6 @@ export default ({ price, updatePrice }) => {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 };

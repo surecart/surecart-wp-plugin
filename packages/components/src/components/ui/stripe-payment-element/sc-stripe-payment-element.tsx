@@ -1,17 +1,17 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
+import { CustomStripeElementChangeEvent, FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { state as processorsState } from '@store/processors';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
+import { getCompleteAddress } from '@store/checkout/getters';
 import { getProcessorByType } from '@store/processors/getters';
 
 @Component({
@@ -155,8 +155,7 @@ export class ScStripePaymentElement {
     if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
-
-      const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
+      const address = getCompleteAddress('shipping');
 
       // create the payment element.
       (processorsState.instances.stripeElements as any)
@@ -165,14 +164,7 @@ export class ScStripePaymentElement {
             billingDetails: {
               name: checkoutState.checkout?.name,
               email: checkoutState.checkout?.email,
-              address: {
-                line1,
-                line2,
-                city,
-                state,
-                country,
-                postal_code,
-              },
+              ...(!!address ? { address } : {}),
             },
           },
           fields: {
@@ -185,7 +177,10 @@ export class ScStripePaymentElement {
 
       this.element = processorsState.instances.stripeElements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
-      this.element.on('change', (event: StripeElementChangeEvent) => {
+      this.element.on('change', (event: CustomStripeElementChangeEvent) => {
+        const requiredShippingPaymentTypes = ['cashapp', 'klarna', 'clearpay'];
+        checkoutState.paymentMethodRequiresShipping = requiredShippingPaymentTypes.includes(event?.value?.type);
+
         if (event.complete) {
           this.scPaymentInfoAdded.emit({
             checkout_id: checkoutState.checkout?.id,
