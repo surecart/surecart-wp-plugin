@@ -7,7 +7,7 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
-import { applyFilters } from '@wordpress/hooks';
+import { applyFilters, doAction } from '@wordpress/hooks';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -147,6 +147,15 @@ export default ({ id, setBrowserURL }) => {
 
 			if (values.some((value) => typeof value === 'undefined')) {
 				throw new Error('Saving failed.');
+			}
+
+			// fire save event.
+			doAction('surecart.productSaved', product);
+
+			// unload acf if it exists.
+			// TODO: move to a separate function.
+			if (!!acf?.unload?.reset) {
+				acf.unload.reset();
 			}
 
 			// remove all args from the url.
@@ -301,6 +310,7 @@ export default ({ id, setBrowserURL }) => {
 								!hasLoadedProduct ||
 								isSavingMetaBoxes
 							}
+							disabled={false} // in order to save metaboxes
 						>
 							{willPublish()
 								? __('Save & Publish', 'surecart')
