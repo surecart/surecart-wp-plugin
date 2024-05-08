@@ -46,9 +46,6 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": [
-		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css",
-		"file:../../styles/dialog.css"
-	]
+	"editorStyle": "file:./editor.css",
+	"style": ["file:../../styles/quantity-selector.css"]
 }

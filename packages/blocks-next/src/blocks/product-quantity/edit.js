@@ -1,35 +1,48 @@
 import { __ } from '@wordpress/i18n';
-import { RichText } from '@wordpress/block-editor';
-import { __unstableGetBlockProps } from '@wordpress/blocks/build/api';
+import { css } from '@emotion/core';
+import { useBlockProps } from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
 
-	const blockProps = __unstableGetBlockProps({
-		className: 'sc-choices',
+	const blockProps = useBlockProps({
+		className: 'sc-quantity-selector',
 	});
 
-	<div {...blockProps}>
-		<RichText
-			tagName="label"
-			className="sc-form-label"
-			aria-label={__('Label text', 'surecart')}
-			placeholder={__('Add label…', 'surecart')}
-			value={label}
-			onChange={(label) => setAttributes({ label })}
-			withoutInteractiveFormatting
-			allowedFormats={['core/bold', 'core/italic']}
-		/>
-		<div class="input-group">
-			<span class="input-group-text">+</span>
-			<input
-				type="text"
-				class="form-control"
-				placeholder="Username"
-				aria-label="Username"
-				aria-describedby="basic-addon1"
-			/>
-			<span class="input-group-text">-</span>
+	return (
+		<div {...blockProps}>
+			<button>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<line x1="5" y1="12" x2="19" y2="12" />
+				</svg>
+			</button>
+			<input />
+			<button>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<line x1="12" y1="5" x2="12" y2="19" />
+					<line x1="5" y1="12" x2="19" y2="12" />
+				</svg>
+			</button>
 		</div>
-	</div>;
+	);
 };
