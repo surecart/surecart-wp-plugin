@@ -2,11 +2,7 @@ name: Components Tests
 
 on:
   pull_request:
-    types: [assigned]
-    branches:
-      - main
-      - next
-      - fixes
+    types: [review_requested]
     paths:
       - "packages/components/src/**/*.tsx"
       - "packages/components/src/**/*.snap"

@@ -84,7 +84,8 @@ export class ScOrderConfirmProvider {
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
-        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { sc_order: checkoutState.checkout?.id })), 50);
+        const redirectUrl = addQueryArgs(successUrl, { sc_order: checkoutState.checkout?.id });
+        setTimeout(() => window.location.assign(redirectUrl), 50);
       } else {
         this.showSuccessModal = true;
       }

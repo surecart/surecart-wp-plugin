@@ -1,7 +1,7 @@
-import { maybeConvertAmount } from 'src/functions/currency';
+import { maybeConvertAmount } from '../../functions/currency';
 import { ProductsViewedParams } from 'src/types';
 import { __ } from '@wordpress/i18n';
-import { trackEvent } from 'src/functions/google';
+import { trackEvent } from '../../functions/google';
 /**
  * Handle the search event.
  */

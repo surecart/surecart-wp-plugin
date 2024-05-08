@@ -43,6 +43,7 @@
  - [sc-cart-icon](../sc-cart-icon)
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
@@ -104,6 +105,7 @@ graph TD;
   sc-cart-icon --> sc-icon
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
+  sc-checkout-mollie-payment --> sc-icon
   sc-checkout-stock-alert --> sc-icon
   sc-coupon-form --> sc-icon
   sc-customer-details --> sc-icon

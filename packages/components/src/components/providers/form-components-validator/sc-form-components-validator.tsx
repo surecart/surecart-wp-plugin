@@ -12,6 +12,7 @@ export class ScFormComponentsValidator {
   @Element() el: HTMLScFormComponentsValidatorElement;
 
   private removeCheckoutListener: () => void;
+  private removePaymentRequiresShippingListener: () => void;
 
   /** Disable validation? */
   @Prop() disabled: boolean;
@@ -91,10 +92,12 @@ export class ScFormComponentsValidator {
     }
 
     this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
+    this.removePaymentRequiresShippingListener = onCheckoutChange('paymentMethodRequiresShipping', () => this.handleOrderChange());
   }
 
   disconnectedCallback() {
     this.removeCheckoutListener();
+    this.removePaymentRequiresShippingListener();
   }
 
   handleShippingAddressRequired() {
@@ -151,6 +154,9 @@ export class ScFormComponentsValidator {
     if (this.hasTaxLine) return;
     const total = this.el.querySelector('sc-line-item-total[total=total]');
     const tax = document.createElement('sc-line-item-tax');
+
+    if (!total) return;
+
     if (total?.previousElementSibling?.tagName === 'SC-DIVIDER') {
       total.parentNode.insertBefore(tax, total.previousElementSibling);
     } else {
@@ -173,6 +179,8 @@ export class ScFormComponentsValidator {
 
     let insertBeforeElement: Element = this.el.querySelector('sc-line-item-tax');
     const total = this.el.querySelector('sc-line-item-total[total=total]');
+
+    if (!total) return;
 
     if (!insertBeforeElement) {
       insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER' ? total.previousElementSibling : total;

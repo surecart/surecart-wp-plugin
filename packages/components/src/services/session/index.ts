@@ -101,6 +101,15 @@ export const createOrUpdateCheckout = async ({ id = null, data = {}, query = {} 
   });
 };
 
+/** Create the checkout */
+export const createCheckout = async ({ data = {}, query = {} }) => {
+  return await apiFetch({
+    method: 'POST', // create
+    path: addQueryArgs(parsePath(null), withDefaultQuery(query)),
+    data: withDefaultData(data),
+  });
+};
+
 /** Update the checkout. */
 export const updateCheckout = async ({ id, data = {}, query = {} }) => {
   return await apiFetch({

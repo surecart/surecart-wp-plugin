@@ -156,4 +156,35 @@ describe('sc-payment', () => {
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });
+
+  it('renders mock processor with stripe', async () => {
+    const page = await newSpecPage({
+      components: [ScPayment],
+      html: `<sc-payment></sc-payment>`,
+    });
+
+    processorsState.processors = [
+      {
+        id: 'stripeid',
+        live_mode: false,
+        recurring_enabled: true,
+        processor_type: 'stripe',
+      },
+      {
+        id: 'mockid',
+        live_mode: false,
+        recurring_enabled: true,
+        processor_type: 'mock',
+      },
+    ] as Processor[];
+
+    checkoutState.formId = 1;
+    checkoutState.mode = 'test';
+    checkoutState.checkout = {
+      live_mode: false,
+    } as Checkout;
+
+    await page.waitForChanges();
+    expect(page.root).toMatchSnapshot();
+  });
 });
