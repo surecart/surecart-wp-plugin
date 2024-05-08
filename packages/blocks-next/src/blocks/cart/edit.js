@@ -49,7 +49,9 @@ export default (props) => {
 					[`has-custom-font-size`]: blockProps.style.fontSize,
 				})}
 			>
-				<button>Open Cart Drawer</button>
+				<button>
+					Cart
+				</button>
 			</div>
 		</>
 	);
