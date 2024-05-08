@@ -19,7 +19,13 @@ import {
 } from '@surecart/components-react';
 import Error from '../../../components/Error';
 
-export default ({ open, onRequestClose, onCreate, suggestion = '' }) => {
+export default ({
+	open,
+	onRequestClose,
+	onCreate,
+	taxonomy,
+	suggestion = '',
+}) => {
 	const [busy, setBusy] = useState(false);
 	const [name, setName] = useState('');
 	const [error, setError] = useState(null);
@@ -37,9 +43,9 @@ export default ({ open, onRequestClose, onCreate, suggestion = '' }) => {
 		e.stopImmediatePropagation();
 		try {
 			setBusy(true);
-			const collection = await saveEntityRecord(
-				'surecart',
-				'product-collection',
+			const term = await saveEntityRecord(
+				'taxonomy',
+				taxonomy.slug,
 				{
 					name: name || suggestion,
 				},
@@ -47,11 +53,17 @@ export default ({ open, onRequestClose, onCreate, suggestion = '' }) => {
 					throwOnError: true,
 				}
 			);
-			createSuccessNotice(__('Collection created.', 'surecart'), {
-				type: 'snackbar',
-			});
+			createSuccessNotice(
+				sprintf(
+					__('%s created.', 'surecart'),
+					taxonomy?.labels?.singular_name
+				),
+				{
+					type: 'snackbar',
+				}
+			);
 			setName('');
-			onCreate(collection);
+			onCreate(term);
 			onRequestClose();
 		} catch (e) {
 			setError(e);
@@ -64,7 +76,7 @@ export default ({ open, onRequestClose, onCreate, suggestion = '' }) => {
 	return (
 		<ScForm onScFormSubmit={onSubmit}>
 			<ScDialog
-				label={__('New Collection', 'surecart')}
+				label={taxonomy?.labels?.add_new_item}
 				open={open}
 				onScRequestClose={onRequestClose}
 			>
@@ -72,9 +84,8 @@ export default ({ open, onRequestClose, onCreate, suggestion = '' }) => {
 
 				<ScInput
 					ref={input}
-					label={__('Collection Name', 'surecart')}
+					label={__('Name', 'surecart')}
 					className="sc-product-name hydrated"
-					help={__('A name for your product collection.', 'surecart')}
 					onScInput={(e) => setName(e.target.value)}
 					value={name || suggestion}
 					name="name"
@@ -85,9 +96,11 @@ export default ({ open, onRequestClose, onCreate, suggestion = '' }) => {
 				<ScButton type="primary" submit slot="footer">
 					{__('Create', 'surecart')}
 				</ScButton>
+
 				<ScButton onClick={onRequestClose} type="text" slot="footer">
 					{__('Cancel', 'surecart')}
 				</ScButton>
+
 				{busy && <ScBlockUi spinner />}
 			</ScDialog>
 		</ScForm>

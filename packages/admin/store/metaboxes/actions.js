@@ -50,13 +50,10 @@ export const initializeMetaBoxes =
 
 		// Save metaboxes on save completion, except for autosaves.
 		addFilter(
-			'editor.__unstableSavePost',
+			'surecart.saveProduct',
 			'core/edit-post/save-metaboxes',
 			(previous, options) =>
 				previous.then(() => {
-					if (options.isAutosave) {
-						return;
-					}
 					return dispatch.requestMetaBoxUpdates();
 				})
 		);
@@ -102,7 +99,6 @@ export const requestMetaBoxUpdates =
 		}, new window.FormData());
 
 		try {
-			console.log(window.scData.wpMetaBoxUrl);
 			// Save the metaboxes.
 			await apiFetch({
 				url: window.scData.wpMetaBoxUrl,
@@ -110,10 +106,10 @@ export const requestMetaBoxUpdates =
 				body: formData,
 				parse: false,
 			});
-			dispatch.metaBoxUpdatesSuccess();
+			return dispatch.metaBoxUpdatesSuccess();
 		} catch (e) {
 			console.error(e);
-			dispatch.metaBoxUpdatesFailure();
+			return dispatch.metaBoxUpdatesFailure();
 		}
 	};
 

@@ -4,12 +4,8 @@ import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ id, slug, onToggle }) => {
 	const { name } = useSelect(
-		(select) => {
-			return (
-				select(coreStore).getEditedEntityRecord('taxonomy', slug, id) ||
-				{}
-			);
-		},
+		(select) =>
+			select(coreStore).getEntityRecord('taxonomy', slug, id) || {},
 		[id]
 	);
 

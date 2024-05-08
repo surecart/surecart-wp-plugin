@@ -1,46 +1,39 @@
 /** @jsx jsx */
+/**
+ * External dependencies.
+ */
 import { css, jsx } from '@emotion/core';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import Box from '../../../ui/Box';
 import {
 	ScButton,
 	ScIcon,
 	ScMenuDivider,
 	ScMenuItem,
-	ScTag,
 } from '@surecart/components-react';
+import Box from '../../../ui/Box';
 import ModelSelector from '../../../components/ModelSelector';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
 import Term from './Term';
-
-/**
- * Shared reference to an empty array for cases where it is important to avoid
- * returning a new array reference on every invocation.
- *
- * @type {Array<any>}
- */
-const EMPTY_ARRAY = [];
+import NewTaxonomy from './NewTaxonomy';
 
 /**
  * Module constants
  */
-const MAX_TERMS_SUGGESTIONS = 20;
 const DEFAULT_QUERY = {
-	per_page: MAX_TERMS_SUGGESTIONS,
-	_fields: 'id,name',
-	context: 'view',
+	per_page: 20,
 };
 
 export default ({ post, slug, loading }) => {
 	const [values, setValues] = useState([]);
 	const [modal, setModal] = useState(false);
 	const { editEntityRecord } = useDispatch(coreStore);
+
 	const {
 		terms,
 		termIds,
@@ -53,9 +46,7 @@ export default ({ post, slug, loading }) => {
 			const { getEntityRecords, getTaxonomy, hasFinishedResolution } =
 				select(coreStore);
 			const taxonomy = getTaxonomy(slug);
-			const termIds = taxonomy
-				? post?.[taxonomy?.rest_base]
-				: EMPTY_ARRAY;
+			const termIds = taxonomy ? post?.[taxonomy?.rest_base] : [];
 
 			const query = {
 				...DEFAULT_QUERY,
@@ -78,7 +69,7 @@ export default ({ post, slug, loading }) => {
 				termIds, // get the term ids for the post.
 				terms: termIds?.length
 					? getEntityRecords('taxonomy', slug, query) // fetch all terms.
-					: EMPTY_ARRAY,
+					: [],
 				hasResolvedTerms: hasFinishedResolution('getEntityRecords', [
 					'taxonomy',
 					slug,
@@ -86,7 +77,7 @@ export default ({ post, slug, loading }) => {
 				]),
 			};
 		},
-		[slug]
+		[slug, post]
 	);
 
 	// Update terms state only after the selectors are resolved.
@@ -95,21 +86,22 @@ export default ({ post, slug, loading }) => {
 	useEffect(() => {
 		if (hasResolvedTerms) {
 			const newValues = (terms ?? []).map((term) => term.id);
-			setValues(newValues);
+			setValues(Array.from(new Set([...(values || []), ...newValues])));
 		}
 	}, [terms, hasResolvedTerms]);
 
-	const toggleCollection = (collectionId) => {
+	const toggleTerm = (id) => {
+		const newValues = values.includes(id)
+			? values.filter((vid) => vid !== parseInt(id))
+			: [...values, parseInt(id)];
+
 		// Optimistically update term values.
 		// The selector will always re-fetch terms later.
-		setValues(
-			termIds.includes(collectionId)
-				? termIds.filter((id) => id !== collectionId)
-				: [...termIds, parseInt(collectionId)]
-		);
+		setValues(newValues);
 
+		// Update the post with the new term values.
 		editEntityRecord('postType', 'sc_product', post?.id, {
-			[taxonomy.rest_base]: values,
+			[taxonomy.rest_base]: newValues,
 		});
 	};
 
@@ -121,16 +113,14 @@ export default ({ post, slug, loading }) => {
 	return (
 		<>
 			<Box
-				loading={loading}
+				loading={loading && !hasResolvedTerms}
 				title={taxonomy?.labels?.name}
 				footer={
 					<ModelSelector
 						searchPlaceholder={taxonomy?.labels?.search_items}
 						kind="taxonomy"
 						name={slug}
-						onSelect={(collectionId) =>
-							toggleCollection(parseInt(collectionId))
-						}
+						onSelect={(id) => toggleTerm(parseInt(id))}
 						exclude={termIds}
 						style={{ width: '100%' }}
 					>
@@ -165,17 +155,18 @@ export default ({ post, slug, loading }) => {
 								key={id}
 								id={id}
 								slug={slug}
-								onToggle={() => toggleCollection(id)}
+								onToggle={() => toggleTerm(id)}
 							/>
 						))}
 					</div>
 				)}
 			</Box>
 
-			<NewCollection
+			<NewTaxonomy
 				open={'new' === modal}
+				taxonomy={taxonomy}
 				onRequestClose={() => setModal(false)}
-				onCreate={(collection) => toggleCollection(collection.id)}
+				onCreate={(collection) => toggleTerm(collection.id)}
 			/>
 		</>
 	);

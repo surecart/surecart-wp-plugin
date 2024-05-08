@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { Global, css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
@@ -48,6 +48,10 @@ export default ({ id, setBrowserURL }) => {
 		savingProduct,
 		productError,
 	} = useEntity('product', id);
+
+	const isSavingMetaBoxes = useSelect((select) =>
+		select('surecart/metaboxes').isSavingMetaBoxes()
+	);
 
 	const { post, loadingPost } = useSelect(
 		(select) => {
@@ -101,12 +105,6 @@ export default ({ id, setBrowserURL }) => {
 		try {
 			setError(null);
 
-			await applyFilters(
-				'editor.__unstableSavePost',
-				Promise.resolve(),
-				{}
-			);
-
 			// get draft prices.
 			const { prices } = select(coreStore).getEditedEntityRecord(
 				'surecart',
@@ -136,8 +134,17 @@ export default ({ id, setBrowserURL }) => {
 				);
 			});
 
+			// add metaboxes to pending records.
+			const metaboxes = applyFilters(
+				'surecart.saveProduct',
+				Promise.resolve(),
+				{}
+			);
+			pendingSavedRecords.push(metaboxes);
+
 			// check values.
 			const values = await Promise.all(pendingSavedRecords);
+
 			if (values.some((value) => typeof value === 'undefined')) {
 				throw new Error('Saving failed.');
 			}
@@ -149,6 +156,7 @@ export default ({ id, setBrowserURL }) => {
 				type: 'snackbar',
 			});
 		} catch (e) {
+			console.error(e);
 			setError(e);
 		}
 	};
@@ -225,174 +233,180 @@ export default ({ id, setBrowserURL }) => {
 	};
 
 	return (
-		<UpdateModel
-			onSubmit={onSubmit}
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-
-						#screen-meta-links {
-							display: none;
-						}
-					`}
-				>
-					<ScButton
-						circle
-						size="small"
-						href="admin.php?page=sc-products"
+		<>
+			<Global
+				styles={css`
+					#screen-meta-links {
+						display: none;
+					}
+				`}
+			/>
+			<UpdateModel
+				onSubmit={onSubmit}
+				title={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 1em;
+						`}
 					>
-						<sc-icon name="arrow-left"></sc-icon>
-					</ScButton>
-					<sc-breadcrumbs>
-						<sc-breadcrumb>
-							<Logo display="block" />
-						</sc-breadcrumb>
-						<sc-breadcrumb href="admin.php?page=sc-products">
-							{__('Products', 'surecart')}
-						</sc-breadcrumb>
-						<sc-breadcrumb>
-							<sc-flex style={{ gap: '1em' }}>
-								{__('Edit Product', 'surecart')}
-								{renderStatusBadge()}
-							</sc-flex>
-						</sc-breadcrumb>
-					</sc-breadcrumbs>
-				</div>
-			}
-			button={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.5em;
-					`}
-				>
-					<ActionsDropdown
-						product={product}
-						onDelete={onDeleteProduct}
-						onToggleArchive={onToggleArchiveProduct}
+						<ScButton
+							circle
+							size="small"
+							href="admin.php?page=sc-products"
+						>
+							<sc-icon name="arrow-left"></sc-icon>
+						</ScButton>
+						<sc-breadcrumbs>
+							<sc-breadcrumb>
+								<Logo display="block" />
+							</sc-breadcrumb>
+							<sc-breadcrumb href="admin.php?page=sc-products">
+								{__('Products', 'surecart')}
+							</sc-breadcrumb>
+							<sc-breadcrumb>
+								<sc-flex style={{ gap: '1em' }}>
+									{__('Edit Product', 'surecart')}
+									{renderStatusBadge()}
+								</sc-flex>
+							</sc-breadcrumb>
+						</sc-breadcrumbs>
+					</div>
+				}
+				button={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+						`}
+					>
+						<ActionsDropdown
+							product={product}
+							onDelete={onDeleteProduct}
+							onToggleArchive={onToggleArchiveProduct}
+						/>
+
+						<BuyLink
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<SaveButton
+							busy={
+								deletingProduct ||
+								savingProduct ||
+								!hasLoadedProduct ||
+								isSavingMetaBoxes
+							}
+						>
+							{willPublish()
+								? __('Save & Publish', 'surecart')
+								: __('Save Product', 'surecart')}
+						</SaveButton>
+					</div>
+				}
+				sidebar={
+					<>
+						<Publishing
+							id={id}
+							product={product}
+							post={post}
+							onToggleArchiveProduct={onToggleArchiveProduct}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Shipping
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Tax
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Taxonomies post={post} loading={loadingPost} />
+
+						<Advanced
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<MetaBoxes location="side" />
+					</>
+				}
+			>
+				<Fragment>
+					<Error
+						error={saveProductError || productError || error}
+						setError={setError}
+						margin="80px"
 					/>
 
-					<BuyLink
+					<Details
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
 
-					<SaveButton
-						busy={
-							deletingProduct ||
-							savingProduct ||
-							!hasLoadedProduct
-						}
-					>
-						{willPublish()
-							? __('Save & Publish', 'surecart')
-							: __('Save Product', 'surecart')}
-					</SaveButton>
-				</div>
-			}
-			sidebar={
-				<>
-					<Publishing
+					<Image
+						productId={id}
+						updateProduct={editProduct}
+						post={post}
+						loadingPost={loadingPost}
+					/>
+
+					<Prices
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<Inventory
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<Variations
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<Integrations id={id} product={product} />
+
+					<Downloads
 						id={id}
 						product={product}
-						post={post}
-						onToggleArchiveProduct={onToggleArchiveProduct}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
 
-					<Shipping
+					<Licensing
+						id={id}
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-
-					<Tax
+					<SearchEngine
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-
-					<Taxonomies post={post} loading={loadingPost} />
-
-					<Advanced
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
-
-					<MetaBoxes location="side" />
-				</>
-			}
-		>
-			<Fragment>
-				<Error
-					error={saveProductError || productError || error}
-					setError={setError}
-					margin="80px"
-				/>
-
-				<Details
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Image
-					productId={id}
-					updateProduct={editProduct}
-					post={post}
-					loadingPost={loadingPost}
-				/>
-
-				<Prices
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Inventory
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Variations
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Integrations id={id} product={product} />
-
-				<Downloads
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Licensing
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-				<SearchEngine
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-				<MetaBoxes location="normal" />
-				<MetaBoxes location="advanced" />
-			</Fragment>
-		</UpdateModel>
+					<MetaBoxes location="normal" />
+					<MetaBoxes location="advanced" />
+				</Fragment>
+			</UpdateModel>
+		</>
 	);
 };
