@@ -64,6 +64,17 @@ export class ScOrderShippingAddress {
     state: null,
   };
 
+  /** Names for the address */
+  names = {
+    name: 'shipping_name',
+    country: 'shipping_country',
+    city: 'shipping_city',
+    line_1: 'shipping_line_1',
+    line_2: 'shipping_line_2',
+    postal_code: 'shipping_postal_code',
+    state: 'shipping_state',
+  };
+
   async updateAddressState(address: Partial<Address>) {
     if (JSON.stringify(address) === JSON.stringify(this.address)) return; // no change, don't update.
     this.address = address;
@@ -119,6 +130,7 @@ export class ScOrderShippingAddress {
             postal_code: this.postalCodePlaceholder,
             state: this.statePlaceholder,
           }}
+          names={this.names}
           required={this.required || shippingAddressRequired()}
           loading={formLoading()}
           address={this.address}
@@ -143,6 +155,7 @@ export class ScOrderShippingAddress {
           postal_code: this.postalCodePlaceholder,
           state: this.statePlaceholder,
         }}
+        names={this.names}
         label={this.label}
         onScChangeAddress={e => this.updateAddressState(e.detail)}
       ></sc-compact-address>

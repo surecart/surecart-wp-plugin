@@ -135,6 +135,15 @@ export class ScOrderBillingAddress {
               postal_code: this.postalCodePlaceholder,
               state: this.statePlaceholder,
             }}
+            names={{
+              name: 'billing_name',
+              country: 'billing_country',
+              city: 'billing_city',
+              line_1: 'billing_line_1',
+              line_2: 'billing_line_2',
+              postal_code: 'billing_postal_code',
+              state: 'billing_state',
+            }}
             required={this.required}
             loading={formLoading()}
             address={this.address}
