@@ -21,10 +21,6 @@
 			"type": "string",
 			"default": "Billing Address"
 		},
-		"required": {
-			"type": "boolean",
-			"default": true
-		},
 		"show_name": {
 			"type": "boolean",
 			"default": false

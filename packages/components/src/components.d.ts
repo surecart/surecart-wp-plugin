@@ -1896,10 +1896,6 @@ export namespace Components {
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
-          * Is this required (defaults to false)
-         */
-        "required": boolean;
-        /**
           * Show the name field
          */
         "showName": boolean;
@@ -8061,10 +8057,6 @@ declare namespace LocalJSX {
           * Postal Code placeholder
          */
         "postalCodePlaceholder"?: string;
-        /**
-          * Is this required (defaults to false)
-         */
-        "required"?: boolean;
         /**
           * Show the name field
          */

@@ -1047,7 +1047,6 @@
     "line2-placeholder": true,
     "name-placeholder": true,
     "postal-code-placeholder": true,
-    "required": true,
     "show-name": true,
     "state-placeholder": true,
     "toggle-label": true,

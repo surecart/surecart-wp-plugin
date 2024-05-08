@@ -19,9 +19,6 @@ export class ScOrderBillingAddress {
   /** Label for the field */
   @Prop() label: string;
 
-  /** Is this required (defaults to false) */
-  @Prop({ mutable: true, reflect: true }) required = false;
-
   /** Show the name field */
   @Prop({ reflect: true }) showName: boolean;
 
@@ -144,7 +141,7 @@ export class ScOrderBillingAddress {
               postal_code: 'billing_postal_code',
               state: 'billing_state',
             }}
-            required={this.required}
+            required={true}
             loading={formLoading()}
             address={this.address}
             show-name={this.showName}

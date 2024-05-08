@@ -13,7 +13,6 @@ import { countryChoices } from '@surecart/components';
 export default ({ attributes, setAttributes }) => {
 	const {
 		label,
-		required,
 		show_name,
 		default_country,
 		name_placeholder,
@@ -32,13 +31,6 @@ export default ({ attributes, setAttributes }) => {
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<ToggleControl
-							label={__('Required', 'surecart')}
-							checked={required}
-							onChange={(required) => setAttributes({ required })}
-						/>
-					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Switch Label', 'surecart')}
@@ -154,7 +146,7 @@ export default ({ attributes, setAttributes }) => {
 					<ScAddress
 						label={label}
 						showName={show_name}
-						required={required}
+						required={true}
 						placeholders={{
 							name: name_placeholder,
 							country: country_placeholder,
