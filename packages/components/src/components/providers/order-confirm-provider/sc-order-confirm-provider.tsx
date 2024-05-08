@@ -63,14 +63,17 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
+      const checkout = checkoutState.checkout;
+      const formId = checkoutState.formId;
+
       // If there is an initial upsell redirect to it.
-      if (!!checkoutState?.checkout?.current_upsell?.permalink) {
+      if (!!checkout?.current_upsell?.permalink) {
         setTimeout(
           () =>
             window.location.assign(
-              addQueryArgs(checkoutState?.checkout?.current_upsell?.permalink, {
-                sc_checkout_id: checkoutState.checkout?.id,
-                sc_form_id: checkoutState.formId,
+              addQueryArgs(checkout?.current_upsell?.permalink, {
+                sc_checkout_id: checkout?.id,
+                sc_form_id: formId,
               }),
             ),
           50,
@@ -80,11 +83,11 @@ export class ScOrderConfirmProvider {
       }
 
       // get success url.
-      const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
+      const successUrl = checkout?.metadata?.success_url || this.successUrl;
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
-        const redirectUrl = addQueryArgs(successUrl, { sc_order: checkoutState.checkout?.id });
+        const redirectUrl = addQueryArgs(successUrl, { sc_order: checkout?.id });
         setTimeout(() => window.location.assign(redirectUrl), 50);
       } else {
         this.showSuccessModal = true;
