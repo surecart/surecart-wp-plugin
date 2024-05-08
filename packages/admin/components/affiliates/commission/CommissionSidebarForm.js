@@ -60,7 +60,7 @@ export default function ({
 								</ScMenuItem>
 								<ScMenuItem onClick={() => setModal('delete')}>
 									<ScIcon name="trash" slot="prefix" />
-									{__('Delete', 'surecart')}
+									{__('Remove', 'surecart')}
 								</ScMenuItem>
 							</ScMenu>
 						</ScDropdown>

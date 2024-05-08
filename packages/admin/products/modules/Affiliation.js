@@ -13,12 +13,15 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies.
  */
 import CommissionSidebarForm from '../../components/affiliates/commission/CommissionSidebarForm';
+import GuideModal from '../../components/affiliates/commission/GuideModal';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ product, loading }) => {
 	if (!product?.id) {
 		return null;
 	}
 
+	const [guide, setGuide] = useState(false);
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
 	const [saving, setSaving] = useState(false);
@@ -84,33 +87,65 @@ export default ({ product, loading }) => {
 		);
 	};
 
+	const commissionTitleRender = () => {
+		return (
+			<>
+				{__('Custom Affiliate Commission', 'surecart')}
+
+				<ScButton
+					onClick={() => setGuide(true)}
+					size="small"
+					circle
+					type="text"
+				>
+					<sc-icon
+						name="help-circle"
+						style={{ fontSize: '18px' }}
+					></sc-icon>
+				</ScButton>
+			</>
+		);
+	};
+
 	return (
-		<CommissionSidebarForm
-			headerTitle={__('Custom Affiliate Commission', 'surecart')}
-			formTitle={
-				commissionStructure?.id
-					? __('Edit Commission', 'surecart')
-					: __('Add Commission', 'surecart')
-			}
-			submitButtonTitle={__('Save', 'surecart')}
-			onSubmitMessage={
-				commissionStructure?.id
-					? __('Affiliate commission updated.', 'surecart')
-					: __('Affiliate commission added.', 'surecart')
-			}
-			emptyCommissionMessage={__(
-				'Add a custom affiliate commission for this product.',
-				'surecart'
-			)}
-			loading={loading || saving}
-			commissionStructure={commissionStructure}
-			modal={modal}
-			setModal={setModal}
-			onDelete={onDelete}
-			error={error}
-			setError={setError}
-			onChange={onChange}
-			onSubmit={handleSubmit}
-		/>
+		<>
+			<CommissionSidebarForm
+				headerTitle={commissionTitleRender()}
+				formTitle={
+					commissionStructure?.id
+						? __('Edit Commission', 'surecart')
+						: __('Add Commission', 'surecart')
+				}
+				submitButtonTitle={__('Save', 'surecart')}
+				onSubmitMessage={
+					commissionStructure?.id
+						? __('Affiliate commission updated.', 'surecart')
+						: __('Affiliate commission added.', 'surecart')
+				}
+				emptyCommissionMessage={__(
+					'Add a custom affiliate commission for this product.',
+					'surecart'
+				)}
+				loading={loading || saving}
+				commissionStructure={commissionStructure}
+				modal={modal}
+				setModal={setModal}
+				onDelete={onDelete}
+				error={error}
+				setError={setError}
+				onChange={onChange}
+				onSubmit={handleSubmit}
+			/>
+
+			<GuideModal
+				open={guide}
+				onRequestClose={() => setGuide(false)}
+				title={__('Payment rules for specific product', 'surecart')}
+				description={__(
+					'These settings let you change the payment rules for specific product. You can decide different payment amounts and rules that are more suitable for certain products, overriding the global settings.',
+					'surecart'
+				)}
+			/>
+		</>
 	);
 };

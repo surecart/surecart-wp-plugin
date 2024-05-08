@@ -20,6 +20,7 @@ import CommissionForm from '../../../components/affiliates/commission/Commission
 import useSave from '../../../settings/UseSave';
 import ConfirmDelete from './ConfirmDelete';
 import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
+import GuideModal from '../../../components/affiliates/commission/GuideModal';
 import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ affiliationId }) => {
@@ -30,6 +31,7 @@ export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
+	const [guide, setGuide] = useState(false);
 	const perPage = 5;
 
 	const { save } = useSave();
@@ -193,10 +195,30 @@ export default ({ affiliationId }) => {
 		setModal('delete');
 	};
 
+	const productTitleRender = () => {
+		return (
+			<>
+				{__('Product Commissions', 'surecart')}
+
+				<ScButton
+					onClick={() => setGuide(true)}
+					size="small"
+					circle
+					type="text"
+				>
+					<sc-icon
+						name="help-circle"
+						style={{ fontSize: '18px' }}
+					></sc-icon>
+				</ScButton>
+			</>
+		);
+	};
+
 	return (
 		<>
 			<ProductsDataTable
-				title={__('Product Commissions', 'surecart')}
+				title={productTitleRender()}
 				columns={{
 					product: {
 						label: __('Product', 'surecart'),
@@ -290,6 +312,19 @@ export default ({ affiliationId }) => {
 				onRequestClose={() => setModal(false)}
 				affiliationId={affiliationId}
 				affiliationProductId={affiliationProduct?.id}
+			/>
+
+			<GuideModal
+				open={guide}
+				onRequestClose={() => setGuide(false)}
+				title={__(
+					'Different payment rules for each product',
+					'surecart'
+				)}
+				description={__(
+					'This layer lets you set different payment rules for each product. If a product has its own commission rule, it will use this rule instead of the Global Commissions and Custom Commissions.',
+					'surecart'
+				)}
 			/>
 		</>
 	);
