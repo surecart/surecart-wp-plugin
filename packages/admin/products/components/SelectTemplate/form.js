@@ -30,12 +30,16 @@ export default function PostTemplateForm({
 	const { templates, defaultTemplate, canCreate, canEdit } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
-			const selectorArgs = [
-				'postType',
-				'wp_template',
-				{ per_page: -1, post_type: 'sc_product' },
-			];
-			const templates = getEntityRecords(...selectorArgs) || [];
+			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const templates = (getEntityRecords(...selectorArgs) || []).filter(
+				(template) => {
+					const slug = template?.slug || '';
+					return (
+						slug.includes('sc_product') ||
+						slug.includes('sc-products')
+					);
+				}
+			);
 			return {
 				templates,
 				defaultTemplate: templates.find(

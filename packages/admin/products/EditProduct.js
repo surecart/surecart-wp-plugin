@@ -234,6 +234,10 @@ export default ({ id, setBrowserURL }) => {
 						display: flex;
 						align-items: center;
 						gap: 1em;
+
+						#screen-meta-links {
+							display: none;
+						}
 					`}
 				>
 					<ScButton

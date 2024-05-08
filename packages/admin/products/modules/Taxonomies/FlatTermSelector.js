@@ -15,7 +15,10 @@ import {
 } from '@surecart/components-react';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
+import Term from './Term';
+import NewCollection from '../Collections/NewCollection';
 
 /**
  * Shared reference to an empty array for cases where it is important to avoid
@@ -36,6 +39,9 @@ const DEFAULT_QUERY = {
 };
 
 export default ({ post, slug, loading }) => {
+	const [values, setValues] = useState([]);
+	const [modal, setModal] = useState(false);
+	const { editEntityRecord } = useDispatch(coreStore);
 	const {
 		terms,
 		termIds,
@@ -81,12 +87,37 @@ export default ({ post, slug, loading }) => {
 				]),
 			};
 		},
-		[slug, post, loading]
+		[slug]
 	);
 
-	const selectedTerms = (terms || []).filter((term) =>
-		termIds.includes(term.id)
-	);
+	// Update terms state only after the selectors are resolved.
+	// We're using this to avoid terms temporarily disappearing on slow networks
+	// while core data makes REST API requests.
+	useEffect(() => {
+		if (hasResolvedTerms) {
+			const newValues = (terms ?? []).map((term) => term.id);
+			setValues(newValues);
+		}
+	}, [terms, hasResolvedTerms]);
+
+	const toggleCollection = (collectionId) => {
+		// Optimistically update term values.
+		// The selector will always re-fetch terms later.
+		setValues(
+			termIds.includes(collectionId)
+				? termIds.filter((id) => id !== collectionId)
+				: [...termIds, parseInt(collectionId)]
+		);
+
+		editEntityRecord('postType', 'sc_product', post?.id, {
+			[taxonomy.rest_base]: values,
+		});
+	};
+
+	// no action available.
+	if (!hasAssignAction) {
+		return null;
+	}
 
 	return (
 		<>
@@ -99,18 +130,20 @@ export default ({ post, slug, loading }) => {
 						kind="taxonomy"
 						name={slug}
 						onSelect={(collectionId) =>
-							toggleCollection(collectionId)
+							toggleCollection(parseInt(collectionId))
 						}
 						exclude={termIds}
 						style={{ width: '100%' }}
 					>
-						<div slot="prefix">
-							<ScMenuItem onClick={() => setModal('new')}>
-								<ScIcon slot="prefix" name="plus" />
-								{__('Add New', 'surecart')}
-							</ScMenuItem>
-							<ScMenuDivider />
-						</div>
+						{hasCreateAction && (
+							<div slot="prefix">
+								<ScMenuItem onClick={() => setModal('new')}>
+									<ScIcon slot="prefix" name="plus" />
+									{__('Add New', 'surecart')}
+								</ScMenuItem>
+								<ScMenuDivider />
+							</div>
+						)}
 
 						<ScButton slot="trigger">
 							<ScIcon name="plus" slot="prefix" />
@@ -119,7 +152,7 @@ export default ({ post, slug, loading }) => {
 					</ModelSelector>
 				}
 			>
-				{!!selectedTerms?.length && (
+				{!!values?.length && (
 					<div
 						css={css`
 							display: flex;
@@ -128,25 +161,23 @@ export default ({ post, slug, loading }) => {
 							gap: 0.25em;
 						`}
 					>
-						{selectedTerms.map(({ id, name }) => (
-							<ScTag
+						{values.map((id) => (
+							<Term
 								key={id}
-								onScClear={() => toggleCollection(id)}
-								clearable
-							>
-								{name}
-							</ScTag>
+								id={id}
+								slug={slug}
+								onToggle={() => toggleCollection(id)}
+							/>
 						))}
 					</div>
 				)}
 			</Box>
-			{/*
+
 			<NewCollection
 				open={'new' === modal}
 				onRequestClose={() => setModal(false)}
 				onCreate={(collection) => toggleCollection(collection.id)}
-				suggestion={suggestion}
-			/> */}
+			/>
 		</>
 	);
 };
