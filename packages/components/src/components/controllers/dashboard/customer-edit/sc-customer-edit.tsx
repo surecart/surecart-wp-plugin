@@ -135,11 +135,11 @@ export class ScCustomerEdit {
             <div>
               <sc-switch
                 name="billing_matches_shipping"
-                checked={this.customer?.billing_matches_shipping}
+                checked={!this.customer?.billing_matches_shipping}
                 onScChange={e => {
                   this.customer = {
                     ...this.customer,
-                    billing_matches_shipping: (e.target as HTMLScSwitchElement).checked,
+                    billing_matches_shipping: !(e.target as HTMLScSwitchElement).checked,
                   };
                 }}
                 value="on"
