@@ -18,7 +18,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import Term from './Term';
-import NewCollection from '../Collections/NewCollection';
 
 /**
  * Shared reference to an empty array for cases where it is important to avoid

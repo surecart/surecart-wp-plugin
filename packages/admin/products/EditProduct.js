@@ -28,7 +28,6 @@ import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Variations from './modules/Variations';
-import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Taxonomies from './modules/Taxonomies';
