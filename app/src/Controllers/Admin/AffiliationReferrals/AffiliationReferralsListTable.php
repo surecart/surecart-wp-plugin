@@ -232,7 +232,7 @@ class AffiliationReferralsListTable extends ListTable {
 			return '_';
 		}
 
-		return date_i18n( get_option( 'date_format' ), $referral->created_at );
+		return date_i18n( get_option( 'date_format' ), $referral->payout->created_at );
 	}
 
 
