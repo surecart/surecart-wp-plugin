@@ -296,6 +296,26 @@ export default ({
 									{upcoming?.checkout?.currency}
 								</span>
 							</ScLineItem>
+
+							{!!upcoming?.checkout?.credited_balance_amount && (
+								<ScLineItem>
+									<span slot="title">
+										{__('Customer Credit', 'surecart')}
+									</span>
+									<span slot="description">
+										{__('Applied to balance', 'surecart')}
+									</span>
+									<ScFormatNumber
+										slot="price"
+										type="currency"
+										currency={upcoming?.checkout?.currency}
+										value={
+											upcoming?.checkout
+												?.credited_balance_amount
+										}
+									/>
+								</ScLineItem>
+							)}
 						</ScCard>
 					</>
 				)}
