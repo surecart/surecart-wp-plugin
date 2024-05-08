@@ -138,7 +138,8 @@ export default ({ product, updateProduct }) => {
 						}
 						quantityEnabled={!!product?.stock_enabled}
 						canOverride={
-							(prices || [])?.length <= 1 || variant?.amount
+							(prices || [])?.length <= 1 ||
+							variant?.amount !== null
 						}
 						defaultSku={product?.sku}
 						defaultAmount={
