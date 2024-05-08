@@ -137,7 +137,9 @@ export default ({ product, updateProduct }) => {
 							updateVariant(data, variant?.position)
 						}
 						quantityEnabled={!!product?.stock_enabled}
-						canOverride={(prices || [])?.length <= 1}
+						canOverride={
+							(prices || [])?.length <= 1 || variant?.amount
+						}
 						defaultSku={product?.sku}
 						defaultAmount={
 							prices?.[0]
