@@ -144,8 +144,8 @@ export default ({ attributes, setAttributes }) => {
 
 			<div {...blockProps}>
 				<ScSwitch
-					checked={sameAsShipping}
-					onScChange={(e) => setSameAsShipping(e.target.checked)}
+					checked={!sameAsShipping}
+					onScChange={(e) => setSameAsShipping(!e.target.checked)}
 					style={{ marginBottom: 'var(--sc-spacing-medium)' }}
 				>
 					{toggle_label}
