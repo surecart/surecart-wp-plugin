@@ -224,7 +224,6 @@ class SubscriptionController extends BaseController {
 							add_query_arg(
 								[
 									'tab'   => $this->getTab(),
-									'nonce' => wp_create_nonce( 'subscription-switch' ),
 								]
 							)
 						),
