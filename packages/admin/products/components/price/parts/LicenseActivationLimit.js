@@ -17,12 +17,21 @@ export default ({ price, updatePrice, className, product }) => {
 				onScChange={(e) => {
 					setShowLicenseActivationLimit(e.target.checked);
 					updatePrice({
-						license_activation_limit: e.target.checked ? 1 : null,
+						license_activation_limit: e.target.checked
+							? product?.license_activation_limit
+							: null,
 					});
 				}}
 			>
 				{__('Custom license activation limit', 'surecart')}
+				<span slot="description">
+					{__(
+						'Specify the maximum number of unique activations allowed per license key for this pricing option.',
+						'surecart'
+					)}
+				</span>
 			</ScSwitch>
+
 			{showLicenseActivationLimit && (
 				<ScInput
 					className={className}
