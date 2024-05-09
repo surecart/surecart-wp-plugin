@@ -94,6 +94,7 @@ add_filter( 'render_block_context', function( $context, $parsed_block, $parent_b
 		$context['surecart/has-variant-choices'] = !empty(wp_get_first_block([$parsed_block], 'surecart/product-variant-choices-v2'));
 	}
 
+	// pass a unique id to each product list block.
 	if ( $parsed_block['blockName'] === 'surecart/product-list' ) {
 		$context['surecart/product-list/blockId'] = wp_unique_id();
 	}
@@ -133,7 +134,7 @@ add_action('init', function() {
 		],
 		$static_assets['version']
 	);
-	
+
 	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
 	wp_register_script_module(
