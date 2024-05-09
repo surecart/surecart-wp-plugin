@@ -12,6 +12,7 @@ import { Checkout, Period, Product, ResponseError, Subscription } from '../../..
 })
 export class ScSubscriptionNextPayment {
   @Prop() subscription: Subscription;
+  @Prop() updatePaymentMethodUrl: string;
   @State() period: Period;
   @State() loading: boolean = true;
   @State() error: ResponseError;
@@ -169,12 +170,7 @@ export class ScSubscriptionNextPayment {
 
             <sc-line-item>
               <span slot="description">{__('Payment', 'surecart')}</span>
-              <a
-                href={addQueryArgs(window.location.href, {
-                  action: 'update_payment_method',
-                })}
-                slot="price-description"
-              >
+              <a href={this.updatePaymentMethodUrl} slot="price-description">
                 <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
                   <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
                   <sc-icon name="edit-3"></sc-icon>

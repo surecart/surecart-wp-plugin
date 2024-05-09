@@ -3611,6 +3611,7 @@ export namespace Components {
     }
     interface ScSubscriptionNextPayment {
         "subscription": Subscription;
+        "updatePaymentMethodUrl": string;
     }
     interface ScSubscriptionPayment {
         "backUrl": string;
@@ -9869,6 +9870,7 @@ declare namespace LocalJSX {
     }
     interface ScSubscriptionNextPayment {
         "subscription"?: Subscription;
+        "updatePaymentMethodUrl"?: string;
     }
     interface ScSubscriptionPayment {
         "backUrl"?: string;

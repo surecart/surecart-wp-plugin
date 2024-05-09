@@ -2022,6 +2022,7 @@
   },
   "sc-subscription-next-payment": {
     "subscription": true,
+    "update-payment-method-url": true,
     "style": true,
     "id": true,
     "class": true,
