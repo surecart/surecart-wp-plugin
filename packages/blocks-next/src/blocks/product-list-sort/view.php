@@ -3,10 +3,21 @@ $block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
 $sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
 $sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
 $options = [
-	array( 'value' => 'created_at:desc', 'label' => esc_html__( 'Latest', 'surecart' ) ),
-    array( 'value' => 'created_at:asc', 'label' => esc_html__( 'Oldest', 'surecart' ) ),
-    array( 'value' => 'name:asc', 'label' => esc_html__( 'Alphabetical, A-Z', 'surecart' ) ),
-    array( 'value' => 'name:desc', 'label' => esc_html__( 'Alphabetical, Z-A', 'surecart' ) ),
+ 	[
+		'value' => 'created_at:desc',
+		'label' => esc_html__( 'Latest', 'surecart' )
+	],
+    [
+		'value' => 'created_at:asc',
+		'label' => esc_html__( 'Oldest', 'surecart' )
+	],
+	[
+		'value' => 'price:asc',
+		'label' => esc_html__( 'Price, low to high', 'surecart' )
+	],
+	[ 	'value' => 'price:desc',
+		'label' => esc_html__( 'Price, high to low', 'surecart' )
+	],
 ];
 $selected_option = $options[0] ?? [];
 
@@ -32,7 +43,7 @@ foreach ( $options as $option ) {
             ]
         )
     ); ?>
-	data-wp-on-document--click="surecart/dropdown::actions.closeMenu"
+	data-wp-on-document--click="surecart/dropdown::actions.closeOnClickOutside"
 	data-wp-bind--aria-activedescendant="context.activeMenuItemId"
 	data-wp-on--keyup="surecart/dropdown::actions.menuKeyUp"
 	data-wp-on--keydown="surecart/dropdown::actions.menuKeyDown"
@@ -44,7 +55,7 @@ foreach ( $options as $option ) {
 	<button
 		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"
 		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
-		data-wp-on--keyup="surecart/dropdown::actions.triggerKeyUp"
+		data-wp-on--keyup="surecart/dropdown::actions.handleKeyUp"
 	>
 		<span class="sc-button__label" data-wp-text="surecart/dropdown::state.getSelectedOptionLabel">
 			<?php echo $options[0]['label'] ?? 'First Option'; ?>
@@ -84,9 +95,11 @@ foreach ( $options as $option ) {
 				<span class="sc-dropdown__menu-item__label">
 					<?php echo esc_html($option['label'] ?? ''); ?>
 				</span>
-				<span class="menu-item__check">
-					<?php echo SureCart::svg()->get( 'check' ); ?>
-				</span>
+				<?php if ($option['checked']) : ?>
+					<span class="sc-menu-item__check">
+						<?php echo SureCart::svg()->get( 'check' ); ?>
+					</span>
+				<?php endif; ?>
 		</a>
 		<?php endforeach; ?>
 	</div>

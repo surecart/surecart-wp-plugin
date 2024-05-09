@@ -5,9 +5,9 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 
 const { actions } = store('surecart/dropdown', {
 	state: {
-		get getSelectedOptionLabel() {
+		get selectedOptionLabel() {
 			const context = getContext();
-			return context.selectedItem?.label;
+			return context.selectedItem?.label || 'label';
 		},
 		get isMenuItemSelected() {
 			const context = getContext();
@@ -15,16 +15,21 @@ const { actions } = store('surecart/dropdown', {
 		},
 		get isMenuItemFocused() {
 			const context = getContext();
-			return context.activeMenuItemId === context.id;
+			const element = getElement();
+			return context.activeMenuItemId === element.attributes.id;
 		},
 	},
+
 	actions: {
+		// Toggle the menu.
 		toggleMenu: (e) => {
 			e.preventDefault();
 			const context = getContext();
 			context.isMenuOpen = !context.isMenuOpen;
 		},
-		closeMenu: (e) => {
+
+		// Close menu on click outside.
+		closeOnClickOutside: (e) => {
 			const context = getContext();
 			// if the click is inside button or on button then return
 			if (
@@ -37,59 +42,61 @@ const { actions } = store('surecart/dropdown', {
 			if (!context.isMenuOpen) return;
 			context.isMenuOpen = false;
 		},
-		selectItem: (e) => {
-			const context = getContext();
-			context.selectedItem = {
-				label: context.label || context.options[context.index].label,
-				value: context.value || context.options[context.index].value,
-			};
-			context.isMenuOpen = false;
-			e.target
-				.closest('.sc-dropdown')
-				.querySelector('.sc-dropdown__trigger')
-				.focus();
-		},
-		menuKeyUp: (e) => {
-			e.preventDefault();
+
+		// Select item programmatically.
+		selectItem: () => {
 			const context = getContext();
 			const dropdown = getElement().ref;
+			dropdown.querySelector('#' + context.activeMenuItemId).click();
+		},
+
+		// Handle keyup event.
+		menuKeyUp: (e) => {
+			const context = getContext();
+			const dropdown = getElement().ref;
+			const options = dropdown.querySelectorAll('[role="menuitem"]');
+
+			// escape closes the menu.
+			if (e.key === 'Escape') {
+				e.preventDefault();
+				context.isMenuOpen = false;
+			}
+
+			// enter key may open the menu or select the item.
 			if (e.key === 'Enter') {
+				e.preventDefault();
+				// open the menu if closed.
+				if (!context.isMenuOpen) {
+					context.isMenuOpen = true;
+					return;
+				}
 				actions.selectItem(e);
 			}
-			if (e.key === 'Escape') {
-				context.isMenuOpen = false;
-				dropdown.querySelector('.sc-dropdown__trigger').focus();
-			}
+
+			// arrow keys navigate the menu.
 			if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+				e.preventDefault();
+
+				// open the menu if closed.
+				if (!context.isMenuOpen) {
+					context.isMenuOpen = true;
+					return;
+				}
+
+				// navigate the menu items.
 				const isArrowDown = e.key === 'ArrowDown';
-				const newIndex = isArrowDown
-					? Math.min(context.index + 1, context.totalOptions - 1)
+				context.index = isArrowDown
+					? Math.min(context.index + 1, options?.length - 1)
 					: Math.max(context.index - 1, 0);
 
-				dropdown
-					?.querySelector(`#sc-menu-item-${context.index}`)
-					?.classList.remove('sc-focused');
-				context.index = newIndex;
-				context.activeMenuItemId = `sc-menu-item-${context.index}`;
-				dropdown
-					?.querySelector(`#${context.activeMenuItemId}`)
-					?.classList.add('sc-focused');
+				context.activeMenuItemId =
+					options[context.index].attributes.id.value;
 			}
 		},
+
 		menuKeyDown: (e) => {
-			e.preventDefault();
-		},
-		triggerKeyUp: (e) => {
-			e.preventDefault();
-			const context = getContext();
-			if (e.key === ' ') {
-				context.isMenuOpen = !context.isMenuOpen;
-			}
-			if (e.key === 'Escape') {
-				context.isMenuOpen = false;
-			}
-			if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-				context.isMenuOpen = true;
+			if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(e.key)) {
+				e.preventDefault();
 			}
 		},
 	},
