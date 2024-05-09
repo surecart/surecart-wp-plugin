@@ -25,20 +25,16 @@ $product_collections = array_map(function($i) use ($product_collections, $filter
 }, range(0, count($product_collections) - 1));
 
 ?>
-<div 
+<div
     <?php echo get_block_wrapper_attributes(); ?>
-    <?php echo wp_kses_data(
-        wp_interactivity_data_wp_context(
-            [
-                'collections' => $product_collections,
-               
-            ]
-        )
-    ); ?>
+    <?php echo wp_interactivity_data_wp_context(['collections' => $product_collections]); ?>
 >
 	<template
 		data-wp-each--collection="context.collections"
+		data-wp-key="context.collection.id"
     >
-        <?php echo $content ?>
+		<span>
+        	<?php echo $content ?>
+		</span>
 	</template>
 </div>
