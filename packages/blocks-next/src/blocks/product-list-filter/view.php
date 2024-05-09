@@ -20,6 +20,7 @@
 		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"
 		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
 		role="button"
+		tabindex="1"
 	>
 		<span class="sc-button__label"><?php esc_html_e('Filter', 'surecart'); ?></span>
 		<span class="sc-button__caret"><?php echo SureCart::svg()->get( 'chevron-down' ); ?></span>
@@ -38,9 +39,8 @@
 				id="<?php echo esc_attr( wp_unique_id( 'sc-menu-item-' ) ); ?>"
                 href="<?php echo esc_url($option['href']) ?>"
 				data-wp-on--click="surecart/product-list::actions.navigate"
-				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
 				data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
-				data-wp-watch="surecart/product-list::callbacks.prefetch"
+				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
 			>
 				<span class="sc-dropdown__menu-item__label">
 					<?php echo esc_html($option['label'] ?? ''); ?>

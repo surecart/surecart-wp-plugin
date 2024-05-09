@@ -16,10 +16,5 @@ $options = array_map( function( $collection ) use ( $filter_key, $existing_filte
 	];
 }, $product_collections ?? [] );
 
-// this is needed for server side rendering.
-wp_interactivity_state('surecart/dropdown', [
-	'label' => esc_html__('Filter', 'surecart'),
-]);
-
 // return the view.
 return 'file:./view.php';

@@ -5,16 +5,6 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 
 const { actions } = store('surecart/dropdown', {
 	state: {
-		get selectedOptionLabel() {
-			const context = getContext();
-			return context.selectedItem?.label || 'label';
-		},
-
-		get isMenuItemSelected() {
-			const context = getContext();
-			return context.selectedItem?.value === context.value;
-		},
-
 		get isMenuItemFocused() {
 			const context = getContext();
 			const element = getElement();
@@ -33,14 +23,8 @@ const { actions } = store('surecart/dropdown', {
 		// Close menu on click outside.
 		closeOnClickOutside: (e) => {
 			const context = getContext();
-			// if the click is inside button or on button then return
-			if (
-				e &&
-				(e.target?.classList?.contains('sc-dropdown__trigger') ||
-					e.target?.closest('.sc-dropdown__trigger'))
-			)
-				return;
-			if (e && e.target.closest('.surecart-dropdown')) return;
+			// if the click is inside the dropdown, do nothing.
+			if (e && e.target.closest('.sc-dropdown')) return;
 			if (!context.isMenuOpen) return;
 			context.isMenuOpen = false;
 		},

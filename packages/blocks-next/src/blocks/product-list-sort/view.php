@@ -1,48 +1,12 @@
-<?php
-$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
-$sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
-$sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
-$options = [
- 	[
-		'value' => 'created_at:desc',
-		'label' => esc_html__( 'Latest', 'surecart' )
-	],
-    [
-		'value' => 'created_at:asc',
-		'label' => esc_html__( 'Oldest', 'surecart' )
-	],
-	[
-		'value' => 'price:asc',
-		'label' => esc_html__( 'Price, low to high', 'surecart' )
-	],
-	[ 	'value' => 'price:desc',
-		'label' => esc_html__( 'Price, high to low', 'surecart' )
-	],
-];
-$selected_option = $options[0] ?? [];
-
-foreach ( $options as $option ) {
-    if ( $option['value'] === $sort ) {
-        $selected_option = $option;
-        break;
-    }
-}
-
-?>
 <div
-	data-wp-interactive='{ "namespace": "surecart/dropdown" }'
-	<?php echo wp_kses_data(
-        wp_interactivity_data_wp_context(
-            [
-                'isMenuOpen' => false,
-                'selectedItem' => $selected_option,
-				'activeMenuItemId' => 'sc-menu-item-0',
-				'index' => 0,
-				'totalOptions' => count($options),
-				'options' => $options,
-            ]
-        )
+	<?php echo get_block_wrapper_attributes( [ 'class' => 'sc-dropdown' ] ); ?>
+	<?php echo wp_interactivity_data_wp_context(
+		[
+			'isMenuOpen' => false,
+			'index' => 0, // needed to keep track of the focused item
+		]
     ); ?>
+	data-wp-interactive='{ "namespace": "surecart/dropdown" }'
 	data-wp-on-document--click="surecart/dropdown::actions.closeOnClickOutside"
 	data-wp-bind--aria-activedescendant="context.activeMenuItemId"
 	data-wp-on--keyup="surecart/dropdown::actions.menuKeyUp"
@@ -50,20 +14,21 @@ foreach ( $options as $option ) {
 	role="menu"
 	tabindex="-1"
 	data-wp-bind--aria-labelledby="context.activeMenuItemId"
-	<?php echo get_block_wrapper_attributes( [ 'class' => 'sc-dropdown' ] ); ?>
 >
-	<button
+	<div
 		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"
 		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
-		data-wp-on--keyup="surecart/dropdown::actions.handleKeyUp"
+		role="button"
+		tabindex="1"
 	>
-		<span class="sc-button__label" data-wp-text="surecart/dropdown::state.getSelectedOptionLabel">
-			<?php echo $options[0]['label'] ?? 'First Option'; ?>
+		<span class="sc-button__label">
+			<?php echo wp_kses_post($selected_option['label']); ?>
         </span>
 		<span class="sc-button__caret">
 			<?php echo SureCart::svg()->get( 'chevron-down' ); ?>
 		</span>
-	</button>
+	</div>
+
 	<div
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
@@ -74,23 +39,11 @@ foreach ( $options as $option ) {
 				role="menuitem"
 				tabindex="-1"
 				class="sc-dropdown__menu-item"
-				data-wp-on--click="surecart/product-list::actions.onSortMenuItemClick"
-				data-wp-on--click--navigate="surecart/product-list::actions.navigate"
-				data-wp-on--click--select-item="surecart/dropdown::actions.selectItem"
-				data-wp-class--sc-checked="surecart/dropdown::state.isMenuItemSelected"
-				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
-				id="<?php echo "sc-menu-item-" . $key ?>"
-                href="<?php echo esc_url(add_query_arg($sort_key, $option['value'])) ?>"
+				id="<?php echo esc_attr( wp_unique_id( 'sc-menu-item-' ) ); ?>"
+                href="<?php echo esc_url($option['href']) ?>"
+				data-wp-on--click="surecart/product-list::actions.navigate"
 				data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
-				data-wp-watch="surecart/product-list::callbacks.prefetch"
-				<?php echo wp_kses_data(
-					wp_interactivity_data_wp_context(
-						[
-							'value' => $option['value'] ?? '',
-							'label' => $option['label'] ?? '',
-						]
-					)
-				); ?>
+				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
 			>
 				<span class="sc-dropdown__menu-item__label">
 					<?php echo esc_html($option['label'] ?? ''); ?>
@@ -100,7 +53,7 @@ foreach ( $options as $option ) {
 						<?php echo SureCart::svg()->get( 'check' ); ?>
 					</span>
 				<?php endif; ?>
-		</a>
+			</a>
 		<?php endforeach; ?>
 	</div>
 </div>
