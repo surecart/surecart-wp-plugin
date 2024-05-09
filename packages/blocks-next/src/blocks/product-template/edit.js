@@ -20,7 +20,7 @@ const TEMPLATE = [
 		'surecart/product-title-v2',
 		{
 			level: 2,
-			isLink: true,
+			isLink: false,
 			style: {
 				typography: { fontSize: '1.25em' },
 				spacing: { margin: { top: '5px', bottom: '5px' } },

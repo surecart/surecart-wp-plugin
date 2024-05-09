@@ -19,7 +19,7 @@
 		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"
 		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
 		role="button"
-		tabindex="1"
+		tabindex="0"
 	>
 		<span class="sc-button__label">
 			<?php echo wp_kses_post($selected_option['label']); ?>

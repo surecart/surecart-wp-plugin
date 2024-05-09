@@ -7,7 +7,6 @@ import {
 import {
 	PanelBody,
 	RangeControl,
-	Notice,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';

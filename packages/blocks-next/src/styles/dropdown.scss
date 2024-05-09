@@ -3,11 +3,12 @@
 	display: inline-block;
 	width: 100%;
 	margin-bottom: 10px;
+
 	&__panel {
 		transform-origin: top left;
 		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
 			0 4px 6px -2px rgba(0, 0, 0, 0.05);
-		max-height: var(--panel-height);
+		max-height: var(--sc-dropdown-height, 75vh);
 		font-family: var(--sc-font-sans);
 		font-size: var(--sc-font-size-medium);
 		font-weight: var(--sc-font-weight-normal);
@@ -26,6 +27,7 @@
 		margin-top: 0.5em;
 		position: absolute;
 	}
+
 	&__menu-item {
 		position: relative;
 		display: flex;
@@ -68,6 +70,7 @@
 		&__label {
 			flex: 1 1 auto;
 		}
+
 		.sc-menu-item__check {
 			display: flex;
 			position: absolute;

@@ -54,6 +54,9 @@ const { actions } = store('surecart/dropdown', {
 				// open the menu if closed.
 				if (!context.isMenuOpen) {
 					context.isMenuOpen = true;
+					context.index = 0;
+					context.activeMenuItemId =
+						options?.[0]?.attributes?.id?.value;
 					return;
 				}
 				actions.selectItem(e);
@@ -66,6 +69,9 @@ const { actions } = store('surecart/dropdown', {
 				// open the menu if closed.
 				if (!context.isMenuOpen) {
 					context.isMenuOpen = true;
+					context.index = 0;
+					context.activeMenuItemId =
+						options?.[0]?.attributes?.id?.value;
 					return;
 				}
 

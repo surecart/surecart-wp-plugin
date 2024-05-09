@@ -11,7 +11,7 @@
 .product-item-link {
 	box-sizing: border-box;
 	display: block;
-	text-decoration: none;
+	text-decoration: none !important;
 
 	&:hover {
 		text-decoration: none;
