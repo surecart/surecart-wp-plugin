@@ -39,14 +39,14 @@ if ( is_wp_error( $products ) ) {
 // build up pagination.
 $pages = array_map(function($i) use ($page_key) {
 	return [
-		'href' => esc_url(add_query_arg($page_key, $i)),
+		'href' => add_query_arg($page_key, $i),
 		'name' => $i,
 		'key'  => 'product-pagination-numbers' . $i,
 	];
 }, range(1, $products->totalPages()));
 
-$next_page_link = $products->hasNextPage() ? esc_url(add_query_arg($page_key, $page + 1)) : "";
-$previous_page_link =$products->hasPreviousPage() ? esc_url(add_query_arg($page_key, $page - 1)) : "";
+$next_page_link = $products->hasNextPage() ? add_query_arg($page_key, $page + 1) : "";
+$previous_page_link =$products->hasPreviousPage() ? add_query_arg($page_key, $page - 1) : "";
 
 // return the view.
 return 'file:./view.php';
