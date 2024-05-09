@@ -5,24 +5,28 @@ $block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
 $filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
 $filter = empty( $_GET[ $filter_key ] ) ? '' : array_map('sanitize_text_field', $_GET[ $filter_key ]);
 
+// no filters.
 if ( empty( $filter ) ) {
     return;
 }
 
+// get the collections.
 $product_collections  = ProductCollection::where([
     'ids' => $filter,
 ])->get( array( 'per_page' => -1 ) );
 
-$product_collections = array_map(function($i) use ($product_collections, $filter_key, $filter) {
-    if ( empty ( $product_collections[$i] ) ) {
-        return;
-    }
+// map the collections to the view.
+$product_collections = array_map(function($collection) use ($filter_key, $filter) {
+	// remove the current collection from the filter
+	$filters = array_values( array_filter( $filter, function( $id ) use ( $collection ) {
+		return $id !== $collection->id;
+	} ) );
 	return [
-		'href' => esc_url( add_query_arg( $filter_key, array_diff( $filter, [ $product_collections[$i]->id ] ) ) ),
-		'name' => $product_collections[$i]->name,
-		'id'  => $product_collections[$i]->id,
+		'href' => add_query_arg( $filter_key, $filters ),
+		'name' => $collection->name,
+		'id'  => $collection->id,
 	];
-}, range(0, count($product_collections) - 1));
+}, $product_collections ?? [] );
 
 ?>
 <div
