@@ -79,7 +79,8 @@ export class ScSubscriptionSwitch {
       .map(product => (product as Product)?.prices?.data)
       .flat()
       .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i) // remove duplicates.
-      .filter(price => !price?.archived); // remove archived
+      .filter(price => !price?.archived) // remove archived
+      .filter(price => price.portal_subscription_update_enabled); // only show prices that can be upgraded to.
 
     this.showFilters = this.prices?.length > this.filterAbove;
   }

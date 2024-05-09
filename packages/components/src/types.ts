@@ -120,6 +120,7 @@ export interface Price {
   updated_at: number;
   product?: Product | string;
   position: number;
+  portal_subscription_update_enabled: boolean;
   metadata: { [key: string]: string };
 }
 export interface VariantOption {
