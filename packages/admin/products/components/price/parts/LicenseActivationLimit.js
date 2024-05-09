@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { ScInput, ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
@@ -11,7 +13,12 @@ export default ({ price, updatePrice, className, product }) => {
 	}
 
 	return (
-		<>
+		<div
+			css={css`
+				display: grid;
+				gap: var(--sc-spacing-medium);
+			`}
+		>
 			<ScSwitch
 				checked={showLicenseActivationLimit}
 				onScChange={(e) => {
@@ -26,7 +33,7 @@ export default ({ price, updatePrice, className, product }) => {
 				{__('Custom license activation limit', 'surecart')}
 				<span slot="description">
 					{__(
-						'Specify the maximum number of unique activations allowed per license key for this pricing option.',
+						'The maximum number of unique activations allowed per license key for this price.',
 						'surecart'
 					)}
 				</span>
@@ -53,6 +60,6 @@ export default ({ price, updatePrice, className, product }) => {
 					}}
 				/>
 			)}
-		</>
+		</div>
 	);
 };
