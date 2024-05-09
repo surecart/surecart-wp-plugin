@@ -46,14 +46,8 @@ const debouncedSearch = debounce((term, routerState, actions, blockId) => {
 	actions.navigate(url.toString());
 }, 200); // 200ms debounce delay
 
-const { actions: dropdownActions } = store('surecart/dropdown');
-
-const { state, actions } = store('surecart/product-list', {
+const { state } = store('surecart/product-list', {
 	actions: {
-		onSortMenuItemClick: (e) => {
-			dropdownActions.selectItem(e);
-			actions.navigate(e);
-		},
 		*navigate(event) {
 			const { ref } = getElement();
 			if (isValidLink(ref) && isValidEvent(event)) {
@@ -65,6 +59,7 @@ const { state, actions } = store('surecart/product-list', {
 				yield actions.navigate(ref.href);
 			}
 		},
+
 		*prefetch() {
 			const { ref } = getElement();
 			if (isValidLink(ref)) {
@@ -75,6 +70,7 @@ const { state, actions } = store('surecart/product-list', {
 				yield actions.prefetch(ref.href);
 			}
 		},
+
 		*onSearchClear(event) {
 			if (!event.target.value) {
 				const { actions, state: routerState } = yield import(
@@ -87,6 +83,7 @@ const { state, actions } = store('surecart/product-list', {
 				actions.navigate(url.toString());
 			}
 		},
+
 		*onSearchInput(event) {
 			event.preventDefault();
 			const { actions, state: routerState } = yield import(
@@ -101,6 +98,7 @@ const { state, actions } = store('surecart/product-list', {
 			debouncedSearch(ref?.value, routerState, actions, blockId);
 		},
 	},
+
 	callbacks: {
 		*prefetch() {
 			const { url } = getContext();
