@@ -387,6 +387,10 @@ export default () => {
 							},
 						});
 					}}
+					onEditAffiliationProtocolItem={editAffiliationProtocolItem}
+					zeroCommissionAmountReferral={
+						affiliationProtocolItem?.zero_commission_amount_referrals_enabled
+					}
 				/>
 
 				<ScTextarea
