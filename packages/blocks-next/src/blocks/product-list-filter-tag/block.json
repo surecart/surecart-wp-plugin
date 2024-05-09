@@ -29,5 +29,6 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
+	"style": ["file:../../styles/tag.css"],
 	"render": "file:./view.php"
 }
