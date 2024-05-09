@@ -9,10 +9,12 @@ const { actions } = store('surecart/dropdown', {
 			const context = getContext();
 			return context.selectedItem?.label || 'label';
 		},
+
 		get isMenuItemSelected() {
 			const context = getContext();
 			return context.selectedItem?.value === context.value;
 		},
+
 		get isMenuItemFocused() {
 			const context = getContext();
 			const element = getElement();
