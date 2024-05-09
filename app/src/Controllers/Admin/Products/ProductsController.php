@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
-use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
 
@@ -21,11 +20,13 @@ class ProductsController extends AdminController {
 		$table = new ProductsListTable( $bulk_action_service );
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'products' => [
-					'title' => __( 'Products', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'products' => [
+						'title' => __( 'Products', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
 	}
@@ -162,10 +163,8 @@ class ProductsController extends AdminController {
 			$updated->archived ? __( 'Product archived.', 'surecart' ) : __( 'Product restored.', 'surecart' )
 		);
 
-		return $this->redirectBack( $request );
-	}
-
-	public function redirectBack( $request ) {
-		return ( new RedirectResponse( $request ) )->back();
+		return \SureCart::redirect()->to(
+			esc_url_raw( add_query_arg( 'status', ( $updated->archived ? 'archived' : 'active' ), admin_url( 'admin.php?page=sc-products' ) ) )
+		);
 	}
 }

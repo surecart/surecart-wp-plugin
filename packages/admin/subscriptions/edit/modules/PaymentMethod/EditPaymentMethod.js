@@ -6,6 +6,7 @@ import {
 	ScChoices,
 	ScDialog,
 	ScPaymentMethod,
+	ScManualPaymentMethod,
 	ScTag,
 } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
@@ -16,10 +17,14 @@ export default ({
 	open,
 	setOpen,
 	customerId,
-	paymentMethodId,
+	paymentMethod,
+	manualPaymentMethod,
 	updatePaymentMethod,
+	manualPayment,
 }) => {
-	const [paymentMethod, setPaymentMethod] = useState(paymentMethodId);
+	const [paymentMethodId, setPaymentMethod] = useState(
+		paymentMethod?.id || paymentMethod
+	);
 
 	const { payment_methods, loading } = useSelect(
 		(select) => {
@@ -52,6 +57,32 @@ export default ({
 		[customerId, open]
 	);
 
+	const { manual_payment_methods, manualLoading } = useSelect(
+		(select) => {
+			if (!open) return {};
+			const queryArgs = [
+				'surecart',
+				'manual_payment_method',
+				{
+					context: 'edit',
+					customer_ids: [customerId],
+					reusable: true,
+					per_page: 100,
+				},
+			];
+			return {
+				manual_payment_methods: select(coreStore).getEntityRecords(
+					...queryArgs
+				),
+				manualLoading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[customerId, open]
+	);
+
 	return (
 		<ScDialog
 			label={__('Update Payment Method', 'surecart')}
@@ -63,7 +94,10 @@ export default ({
 					return (
 						<ScChoice
 							value={payment_method?.id}
-							checked={payment_method?.id === paymentMethod}
+							checked={
+								!manualPayment &&
+								payment_method?.id === paymentMethodId
+							}
 						>
 							<ScPaymentMethod paymentMethod={payment_method} />
 							<div slot="description">
@@ -77,19 +111,55 @@ export default ({
 								{!!payment_method?.paypal_account?.email &&
 									payment_method?.paypal_account?.email}
 							</div>
-							{payment_method?.id === paymentMethodId && (
-								<ScTag type="info" slot="price">
-									{__('Current', 'surecart')}
-								</ScTag>
-							)}
+							{payment_method?.id === paymentMethodId &&
+								!manualPayment && (
+									<ScTag type="info" slot="price">
+										{__('Current', 'surecart')}
+									</ScTag>
+								)}
+						</ScChoice>
+					);
+				})}
+				{(manual_payment_methods || []).map((payment_method) => {
+					return (
+						<ScChoice
+							value={payment_method?.id}
+							checked={
+								manualPayment &&
+								payment_method?.id === manualPaymentMethod
+							}
+						>
+							<ScManualPaymentMethod
+								paymentMethod={payment_method}
+								showDescription
+							/>
+							{payment_method?.id === manualPaymentMethod &&
+								manualPayment && (
+									<ScTag type="info" slot="price">
+										{__('Current', 'surecart')}
+									</ScTag>
+								)}
 						</ScChoice>
 					);
 				})}
 			</ScChoices>
-			{loading && <ScBlockUi spinner />}
+			{loading || (manualLoading && <ScBlockUi spinner />)}
 			<ScButton
 				type="primary"
-				onClick={() => updatePaymentMethod(paymentMethod)}
+				onClick={() => {
+					const isManualPaymentMethod = manual_payment_methods.find(
+						({ id }) => id === paymentMethodId
+					);
+					updatePaymentMethod({
+						manual_payment: !!isManualPaymentMethod,
+						payment_method: !isManualPaymentMethod
+							? paymentMethodId
+							: null,
+						manual_payment_method: isManualPaymentMethod
+							? paymentMethodId
+							: null,
+					});
+				}}
 				slot="footer"
 			>
 				{__('Update', 'surecart')}

@@ -37,7 +37,7 @@ export const expand = [
 ];
 
 /** Default data we send with every request. */
-export const withDefaultData = (data: { metadata?: any; } = {}) => ({
+export const withDefaultData = (data: { metadata?: any } = {}) => ({
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
   abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
@@ -97,6 +97,15 @@ export const createOrUpdateCheckout = async ({ id = null, data = {}, query = {} 
   return await apiFetch({
     method: id ? 'PATCH' : 'POST', // create or update
     path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
+    data: withDefaultData(data),
+  });
+};
+
+/** Create the checkout */
+export const createCheckout = async ({ data = {}, query = {} }) => {
+  return await apiFetch({
+    method: 'POST', // create
+    path: addQueryArgs(parsePath(null), withDefaultQuery(query)),
     data: withDefaultData(data),
   });
 };

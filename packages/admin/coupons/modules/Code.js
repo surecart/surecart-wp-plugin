@@ -11,7 +11,7 @@ import {
 	ScFlex,
 	ScIcon,
 } from '@surecart/components-react';
-import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
+import { Icon, moreHorizontalMobile } from '@wordpress/icons';
 import { css, jsx } from '@emotion/core';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';

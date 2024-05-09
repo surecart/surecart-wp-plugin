@@ -118,7 +118,7 @@ export const upsellRequest = args =>
   apiFetch({
     path: addQueryArgs('surecart/v1/line_items/upsell', {
       ...args,
-      expand: ['checkout', 'checkout.current_upsell', 'fees'],
+      expand: ['checkout', 'checkout.current_upsell', 'fees', 'line_item', 'line_item.price'],
     }),
     method: 'POST',
     data: {

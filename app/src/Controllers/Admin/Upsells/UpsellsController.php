@@ -18,11 +18,13 @@ class UpsellsController extends AdminController {
 		$table = new UpsellsListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'upsells' => [
-					'title' => __( 'Upsell Funnels', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'upsells' => [
+						'title' => __( 'Upsell Funnels', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/upsell-funnels/index' )->with( [ 'table' => $table ] );
 	}
@@ -84,6 +86,7 @@ class UpsellsController extends AdminController {
 	 */
 	public function toggleEnabled( $request ) {
 		$funnel = UpsellFunnel::find( $request->query( 'id' ) );
+		$status = $request->query( 'status' ) ?? 'active';
 
 		if ( is_wp_error( $funnel ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $funnel->get_error_messages() ) ) );
@@ -104,6 +107,8 @@ class UpsellsController extends AdminController {
 			$updated->enabled ? __( 'Funnel enabled.', 'surecart' ) : __( 'Funnel disabled.', 'surecart' )
 		);
 
-		return ( new RedirectResponse( $request ) )->back();
+		return \SureCart::redirect()->to(
+			esc_url_raw( add_query_arg( 'status', $status, admin_url( 'admin.php?page=sc-upsell-funnels' ) ) )
+		);
 	}
 }

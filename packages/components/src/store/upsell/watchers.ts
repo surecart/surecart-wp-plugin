@@ -61,6 +61,6 @@ onChange('loading', val => {
       return (state.loading = 'complete');
     }
     state.loading = 'redirecting';
-    window.location.assign(nextLink);
+    window.location.assign(addQueryArgs(nextLink, { sc_order: state.checkout?.id }));
   }
 });

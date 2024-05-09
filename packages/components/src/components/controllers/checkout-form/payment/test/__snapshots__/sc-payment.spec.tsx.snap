@@ -86,6 +86,49 @@ exports[`sc-payment only renders processors with the right mode 1`] = `
 </sc-payment>
 `;
 
+exports[`sc-payment renders mock processor with stripe 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+        <sc-tag exportparts="base:test-badge__base, content:test-badge__content" size="small" type="warning">
+          Test Mode
+        </sc-tag>
+      </div>
+      <sc-toggles theme="container">
+        <sc-payment-method-choice processor-id="stripe">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon aria-hidden="true" name="credit-card" style="font-size: 24px;"></sc-icon>
+            <span>
+              Credit Card
+            </span>
+          </span>
+          <div class="sc-payment__stripe-card-element">
+            <slot name="stripe"></slot>
+          </div>
+        </sc-payment-method-choice>
+        <sc-payment-method-choice processor-id="mock">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon aria-hidden="true" name="credit-card" style="font-size: 24px;"></sc-icon>
+            <span>
+              Test Processor
+            </span>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="Test processor selected for check out.">
+              <sc-icon aria-hidden="true" name="credit-card" slot="icon"></sc-icon>
+              This is a test payment processor used to simulate test transactions. It is only available in test mode.
+            </sc-payment-selected>
+          </sc-card>
+          <sc-checkout-paystack-payment-provider></sc-checkout-paystack-payment-provider>
+        </sc-payment-method-choice>
+      </sc-toggles>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
 exports[`sc-payment renders no processors & user does not have \`manage_sc_shop_settings\` capability 1`] = `
 <sc-payment>
   <mock:shadow-root>

@@ -51,6 +51,12 @@ export default ({ price, updatePrice, product }) => {
 								'Revoke access when installments are completed',
 								'surecart'
 							)}
+							<span slot="description">
+								{__(
+									'Automatically revoke access to integrations and licenses after all payments are completed.',
+									'surecart'
+								)}
+							</span>
 						</ScSwitch>
 					)}
 				</>
