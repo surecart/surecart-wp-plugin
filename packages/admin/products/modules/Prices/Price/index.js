@@ -204,6 +204,7 @@ export default ({ price, product }) => {
 								<Subscription
 									price={currentPrice}
 									updatePrice={editPrice}
+                  product={product}
 								/>
 							)}
 
@@ -211,6 +212,7 @@ export default ({ price, product }) => {
 								<Multiple
 									price={currentPrice}
 									updatePrice={editPrice}
+                  product={product}
 								/>
 							)}
 
@@ -218,6 +220,7 @@ export default ({ price, product }) => {
 								<OneTime
 									price={currentPrice}
 									updatePrice={editPrice}
+                  product={product}
 								/>
 							)}
 

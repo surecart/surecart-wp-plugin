@@ -155,20 +155,29 @@ export default ({ isOpen, onRequestClose, product }) => {
 							]}
 						/>
 
-						{type === 'subscription' && (
-							<Subscription
-								price={price}
-								updatePrice={updatePrice}
-							/>
-						)}
+            {type === 'subscription' && (
+              <Subscription
+                price={price}
+                updatePrice={updatePrice}
+                product={product}
+              />
+            )}
 
-						{type === 'multiple' && (
-							<Multiple price={price} updatePrice={updatePrice} />
-						)}
+            {type === 'multiple' && (
+              <Multiple
+                price={price}
+                updatePrice={updatePrice}
+                product={product}
+              />
+            )}
 
-						{type === 'once' && (
-							<OneTime price={price} updatePrice={updatePrice} />
-						)}
+            {type === 'once' && (
+              <OneTime
+                price={price}
+                updatePrice={updatePrice}
+                product={product}
+              />
+            )}
 
 						<CanUpgrade price={price} updatePrice={updatePrice} />
 					</div>
