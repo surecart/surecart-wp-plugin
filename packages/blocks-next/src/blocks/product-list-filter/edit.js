@@ -1,29 +1,32 @@
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-
-const FALLBACK_COLLECTIONS = [
-	{ id: '1', name: 'Collection' },
-	{ id: '2', name: 'Collection 2' },
-	{ id: '3', name: 'Collection 3' },
-];
+import { useBlockProps } from '@wordpress/block-editor';
 
 export default () => {
-	const collections = useSelect((select) =>
-		select(coreStore).getEntityRecords('surecart', 'product-collection')
-	);
-
+	const blockProps = useBlockProps({
+		className: 'sc-dropdown',
+	});
 	return (
-		<select className="sc-dropdown">
-			<option value="">{__('Filter', 'surecart')}</option>
-			{(collections?.length ? collections : FALLBACK_COLLECTIONS).map(
-				(collection) =>
-					collection.id && (
-						<option key={collection.id} value={collection.id}>
-							{collection.name}
-						</option>
-					)
-			)}
-		</select>
+		<div {...blockProps} role="menu" tabIndex="-1">
+			<button className="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text">
+				<span className="sc-button__label">
+					{__('Filter', 'surecart')}
+				</span>
+				<span className="sc-button__caret">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					>
+						<polyline points="6 9 12 15 18 9" />
+					</svg>
+				</span>
+			</button>
+		</div>
 	);
 };

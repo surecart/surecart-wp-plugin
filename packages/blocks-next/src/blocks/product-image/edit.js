@@ -170,7 +170,7 @@ export default ({
 					units={units}
 				/>
 			</InspectorControls>
-			<div class="wp-block-surecart-product-image__wrapper">
+			<div className="wp-block-surecart-product-image__wrapper">
 				<img
 					src={product?.featured_media?.src}
 					alt={alt}

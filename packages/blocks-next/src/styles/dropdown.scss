@@ -47,7 +47,7 @@
 		user-select: none;
 		white-space: var(--sc-menu-item-white-space, nowrap);
 		cursor: pointer;
-		text-decoration: none;
+		text-decoration: none !important;
 
 		&:focus,
 		&:hover,

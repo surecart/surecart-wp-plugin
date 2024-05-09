@@ -24,6 +24,28 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
+// Custom debounce function
+const debounce = (func, delay) => {
+	let timerId;
+	return function (...args) {
+		if (timerId) {
+			clearTimeout(timerId);
+		}
+		timerId = setTimeout(() => {
+			func(...args);
+		}, delay);
+	};
+};
+
+// Define a debounced version of the search function
+const debouncedSearch = debounce((term, routerState, actions, blockId) => {
+	// Perform your search operation here, e.g., fetch data from an API
+	console.log('Performing search for:', term);
+	const url = new URL(routerState?.url);
+	url.searchParams.set(`products-${blockId}-search`, term);
+	actions.navigate(url.toString());
+}, 200); // 200ms debounce delay
+
 const { actions: dropdownActions } = store('surecart/dropdown');
 
 const { state, actions } = store('surecart/product-list', {
@@ -53,22 +75,6 @@ const { state, actions } = store('surecart/product-list', {
 				yield actions.prefetch(ref.href);
 			}
 		},
-		*onSearchSubmit(event) {
-			event.preventDefault();
-			const { actions, state: routerState } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			const { ref } = getElement();
-			// remove filter id from state
-			const { blockId } = getContext();
-			const searchValue = ref?.querySelector(
-				'.wp-block-surecart-product-list-search-input'
-			)?.value;
-			const url = new URL(routerState?.url);
-			url.searchParams.set(`products-${blockId}-search`, searchValue);
-			actions.navigate(url.toString());
-		},
 		*onSearchClear(event) {
 			if (!event.target.value) {
 				const { actions, state: routerState } = yield import(
@@ -80,6 +86,19 @@ const { state, actions } = store('surecart/product-list', {
 				url.searchParams.delete(`products-${blockId}-search`);
 				actions.navigate(url.toString());
 			}
+		},
+		*onSearchInput(event) {
+			event.preventDefault();
+			const { actions, state: routerState } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			const { ref } = getElement();
+			const { blockId } = getContext();
+			if (!ref || !ref.value) {
+				return;
+			}
+			debouncedSearch(ref?.value, routerState, actions, blockId);
 		},
 	},
 	callbacks: {

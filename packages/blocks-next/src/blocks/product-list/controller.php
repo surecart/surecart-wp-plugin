@@ -32,6 +32,10 @@ $products = Product::where(
 	]
 );
 
+if ( is_wp_error( $products ) ) {
+	return;
+}
+
 // build up pagination.
 $pages = array_map(function($i) use ($page_key) {
 	return [

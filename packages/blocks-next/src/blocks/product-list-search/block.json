@@ -10,37 +10,20 @@
 	"example": {},
 	"ancestor": ["surecart/product-list"],
 	"usesContext": ["surecart/product-list/blockId"],
-	"attributes": {
-		"label": {
-			"type": "string"
-		}
-	},
 	"supports": {
 		"interactivity": true,
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"],
-			"blockGap": true
-		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontWeight": true
-		},
-		"color": {
-			"text": true,
-			"background": false,
-			"enableContrastChecker": true
-		},
-		"layout": {
-			"default": {
-				"type": "flex",
-				"flexWrap": "nowrap"
-			}
+			"margin": ["top", "bottom"]
 		}
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/input-group.css", "file:./index.css"]
+	"style": [
+		"file:../../styles/input-group.css",
+		"file:../../styles/form-label.css",
+		"file:../../styles/form-control.css",
+		"file:./index.css"
+	]
 }

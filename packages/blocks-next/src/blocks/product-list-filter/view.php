@@ -13,7 +13,6 @@ foreach ( $product_collections as $collection ) {
 }
 ?>
 <div
-	class="sc-dropdown"
 	data-wp-interactive='{ "namespace": "surecart/dropdown" }'
 	<?php echo wp_kses_data(
         wp_interactivity_data_wp_context(
@@ -35,7 +34,7 @@ foreach ( $product_collections as $collection ) {
 	role="menu"
 	tabindex="-1"
 	data-wp-bind--aria-labelledby="context.activeMenuItemId"
-	<?php echo get_block_wrapper_attributes(); ?>
+	<?php echo get_block_wrapper_attributes( [ 'class' => 'sc-dropdown' ] ); ?>
 >
 	<button
 		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"
