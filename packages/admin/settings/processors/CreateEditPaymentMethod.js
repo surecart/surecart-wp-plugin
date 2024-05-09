@@ -6,14 +6,15 @@ import {
 	ScForm,
 	ScInput,
 	ScRichText,
+	ScSwitch,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export default ({ open, onRequestClose, paymentMethod }) => {
-	const [data, setData] = useState(paymentMethod);
+	const [data, setData] = useState({ reusable: true, ...paymentMethod });
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -25,7 +26,11 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 		});
 	};
 
-	const { name, description, instructions, archived } = data || {};
+	useEffect(() => {
+		setData({ reusable: true, ...paymentMethod });
+	}, [paymentMethod]);
+
+	const { name, description, instructions } = data || {};
 
 	const onSubmit = async () => {
 		try {
@@ -48,7 +53,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 			console.error(e);
 			setError(
 				e?.message ||
-				__('Something went wrong. Please try again.', 'surecart')
+					__('Something went wrong. Please try again.', 'surecart')
 			);
 		} finally {
 			setBusy(false);
@@ -122,6 +127,20 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					}
 					required
 				/>
+				<ScSwitch
+					checked={data?.reusable}
+					onScChange={(e) =>
+						updateData({ reusable: e.target.checked })
+					}
+				>
+					{__('Reusable', 'surecart')}
+					<span slot="description">
+						{__(
+							'Let customers use this manual payment method for purchasing subscriptions, installments or upsells.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 
 				<div>
 					<ScButton type="primary" submit>

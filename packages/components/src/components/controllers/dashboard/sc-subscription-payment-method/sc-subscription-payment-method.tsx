@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { PaymentMethod, Subscription } from '../../../../types';
+import { ManualPaymentMethod, PaymentMethod, Subscription } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-payment-method',
@@ -22,6 +22,8 @@ export class ScSubscriptionPaymentMethod {
 
   /** The list of payment methods. */
   @State() paymentMethods: PaymentMethod[];
+
+  @State() manualPaymentMethods: ManualPaymentMethod[];
 
   /** The error. */
   @State() error: string;
@@ -55,6 +57,20 @@ export class ScSubscriptionPaymentMethod {
     );
   }
 
+  currentPaymentMethodId() {
+    return this.subscription?.manual_payment
+      ? this.subscription?.manual_payment_method
+      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
+  }
+
+  hasPaymentMethods() {
+    return this.paymentMethods?.length && this.manualPaymentMethods?.length;
+  }
+
+  hasMultiplePaymentMethods() {
+    return [...(this?.paymentMethods || []), ...(this?.manualPaymentMethods || [])]?.length > 1;
+  }
+
   componentWillLoad() {
     onFirstVisible(this.el, () => {
       this.getPaymentMethods();
@@ -63,12 +79,12 @@ export class ScSubscriptionPaymentMethod {
 
   /** Get all subscriptions */
   async getPaymentMethods() {
-    if (this.paymentMethods?.length) return;
+    if (this.hasPaymentMethods()) return;
     const customerId = this.subscription?.customer?.id || this.subscription?.customer;
     if (!customerId) return;
     try {
       this.loading = true;
-      this.paymentMethods = await this.fetchMethods(customerId);
+      await this.fetchMethods(customerId);
     } catch (e) {
       this.error = e?.messsage || __('Something went wrong', 'surecart');
       console.error(this.error);
@@ -78,7 +94,7 @@ export class ScSubscriptionPaymentMethod {
   }
 
   async fetchMethods(customerId) {
-    return (await apiFetch({
+    this.paymentMethods = (await apiFetch({
       path: addQueryArgs(`surecart/v1/payment_methods`, {
         expand: ['card', 'customer', 'billing_agreement', 'paypal_account', 'payment_instrument', 'bank_account'],
         customer_ids: [customerId],
@@ -86,6 +102,14 @@ export class ScSubscriptionPaymentMethod {
         live_mode: this.subscription?.live_mode,
       }),
     })) as PaymentMethod[];
+
+    this.manualPaymentMethods = (await apiFetch({
+      path: addQueryArgs(`surecart/v1/manual_payment_methods`, {
+        customer_ids: [customerId],
+        reusable: true,
+        live_mode: this.subscription?.live_mode,
+      }),
+    })) as ManualPaymentMethod[];
   }
 
   async deleteMethod(method: PaymentMethod) {
@@ -109,18 +133,28 @@ export class ScSubscriptionPaymentMethod {
 
   async updateMethod(e) {
     const { payment_method } = await e.target.getFormJson();
-    if (payment_method === ((this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method)) {
+
+    if (payment_method === this.currentPaymentMethodId()) {
       return;
     }
     try {
+      const isManualPaymentMethod = (this.manualPaymentMethods || []).some(method => method.id === payment_method);
       this.busy = true;
       this.subscription = (await apiFetch({
         path: `surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          payment_method,
+          ...(!isManualPaymentMethod ? { payment_method, manual_payment: false } : { manual_payment_method: payment_method, manual_payment: true }),
         },
       })) as Subscription;
+      // redirect to edit page.
+      window.location.assign(
+        addQueryArgs(window.location.href, {
+          action: 'edit',
+          model: 'subscription',
+          id: this.subscription?.id,
+        }),
+      );
       // remove from view.
     } catch (e) {
       this.error = e?.messsage || __('Something went wrong', 'surecart');
@@ -135,14 +169,14 @@ export class ScSubscriptionPaymentMethod {
       return this.renderLoading();
     }
 
-    if (!this.paymentMethods?.length) {
+    if (!this.hasPaymentMethods()) {
       return this.renderEmpty();
     }
 
     return (
       <sc-form onScSubmit={e => this.updateMethod(e)}>
         <sc-choices>{this.renderList()}</sc-choices>
-        {this.paymentMethods?.length > 1 ? (
+        {this.hasMultiplePaymentMethods() ? (
           <sc-button type="primary" submit full size="large" busy={this.busy} disabled={this.busy}>
             {__('Update Payment Method', 'surecart')}
           </sc-button>
@@ -166,12 +200,11 @@ export class ScSubscriptionPaymentMethod {
   }
 
   renderList() {
-    return this.paymentMethods.map(paymentMethod => {
-      const subscription_payment_method_id = (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
+    const regularPaymentMethods = this.paymentMethods.map(paymentMethod => {
       const { id, card, live_mode, paypal_account } = paymentMethod;
 
       return (
-        <sc-choice checked={subscription_payment_method_id === id} name="payment_method" value={id} required>
+        <sc-choice checked={this.currentPaymentMethodId() === id} name="payment_method" value={id} required>
           <sc-flex justifyContent="flex-start" align-items="center">
             <sc-payment-method paymentMethod={paymentMethod} />{' '}
             {!live_mode && (
@@ -192,7 +225,7 @@ export class ScSubscriptionPaymentMethod {
             )}
             {!!paypal_account && paypal_account?.email}
           </div>
-          {subscription_payment_method_id === id && (
+          {this.currentPaymentMethodId() === id && (
             <sc-tag type="info" slot="price">
               {__('Current Payment Method', 'surecart')}
             </sc-tag>
@@ -200,6 +233,24 @@ export class ScSubscriptionPaymentMethod {
         </sc-choice>
       );
     });
+
+    const manualPaymentMethods = this.manualPaymentMethods.map(paymentMethod => {
+      const { id } = paymentMethod;
+
+      return (
+        <sc-choice checked={this.currentPaymentMethodId() === id} name="payment_method" value={id} required>
+          <sc-flex justifyContent="flex-start" align-items="center">
+            <sc-manual-payment-method paymentMethod={paymentMethod} showDescription />
+          </sc-flex>
+          {this.currentPaymentMethodId() === id && (
+            <sc-tag type="info" slot="price">
+              {__('Current Payment Method', 'surecart')}
+            </sc-tag>
+          )}
+        </sc-choice>
+      );
+    });
+    return [...regularPaymentMethods, ...manualPaymentMethods];
   }
 
   render() {
