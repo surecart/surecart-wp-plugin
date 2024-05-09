@@ -5,10 +5,10 @@
     data-wp-on--click="surecart/product-list::actions.navigate"
     data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
     <?php echo get_block_wrapper_attributes( [
-        'class' => 'sc-tag sc-tag--default sc-tag--medium sc-tag--clearable',
+        'class' => 'sc-tag sc-tag--default sc-tag--medium',
         'style' =>'cursor: pointer; text-decoration: none;'
     ] ); ?>
 >
     <span class="tag__content" data-wp-text="context.collection.name"></span>
-    <?php echo SureCart::svg()->get( 'x', [ 'width' => 16, 'height' => 16 ] ); ?>
+    <?php echo SureCart::svg()->get( 'x', [ 'class' => 'sc-tag__clear', 'aria-label' => __('Remove tag', 'surecart') ] ); ?>
 </a>
