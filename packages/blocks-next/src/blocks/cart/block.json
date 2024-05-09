@@ -8,7 +8,16 @@
 	"category": "widgets",
 	"icon": "media-interactive",
 	"example": {},
-	"attributes": {},
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Cart"
+		},
+		"width": {
+			"type": "string",
+			"default": "500px"
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"spacing": {

@@ -12,7 +12,7 @@ import {
 /**
  * Component Dependencies
  */
-import CartInspectorControls from '../../../../blocks/components/CartInspectorControls';
+// import CartInspectorControls from '../../../../blocks/components/CartInspectorControls';
 import useCartStyles from '../../../../blocks/hooks/useCartStyles';
 
 export default ({ attributes, setAttributes }) => {
@@ -25,10 +25,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-				<CartInspectorControls
+				{/* <CartInspectorControls
 					attributes={attributes}
 					setAttributes={setAttributes}
-				/>
+				/> */}
 			</InspectorControls>
 
 			<div {...blockProps}>

@@ -194,7 +194,7 @@ class CartService {
 
 		// get first block attributes.
 		$template_blocks    = parse_blocks( $template->content );
-		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart' );
+		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart-v2' );
 		$attributes         = isset( $post_content_block['attrs'] ) ? $post_content_block['attrs'] : [];
 
 		ob_start();
@@ -295,7 +295,7 @@ class CartService {
 	 * @return string
 	 */
 	public static function removeDeprecatedCartContent( $content ) {
-		$review_cart_present = strpos( $content, 'wp:surecart/cart-header {"text":"Review Your Cart"' );
+		$review_cart_present = strpos( $content, 'wp:surecart/cart-header-v2 {"text":"Review Your Cart"' );
 		$my_cart_present     = strpos( $content, '<sc-cart-header><span>My Cart</span></sc-cart-header>' );
 
 		if ( false !== $review_cart_present && false !== $my_cart_present ) {
