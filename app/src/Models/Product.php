@@ -398,6 +398,20 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the scratch display amount.
+	 *
+	 * @return string
+	 */
+	public function getScratchDisplayAmountAttribute() {
+		$prices = $this->active_prices ?? [];
+		$initial_price =  $prices[0] ?? null;
+		if ( empty( $initial_price->scratch_amount ) ) {
+			return '';
+		}
+		return Currency::format( $initial_price->scratch_amount, $initial_price->currency );
+	}
+
+	/**
 	 * Get the product template
 	 *
 	 * @return \WP_Template

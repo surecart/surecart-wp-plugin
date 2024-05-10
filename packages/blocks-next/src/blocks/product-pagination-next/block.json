@@ -31,9 +31,15 @@
 			"lineHeight": true,
 			"__experimentalFontWeight": true
 		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
 		"color": {
 			"text": true,
-			"background": false,
+			"background": true,
 			"enableContrastChecker": true
 		}
 	},

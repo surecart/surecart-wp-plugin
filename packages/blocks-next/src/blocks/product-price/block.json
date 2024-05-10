@@ -11,7 +11,7 @@
 	"usesContext": ["surecart/productId"],
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
-		"range": {
+		"show_range": {
 			"type": "boolean",
 			"default": false
 		}

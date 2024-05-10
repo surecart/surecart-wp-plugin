@@ -1,18 +1,15 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-description-v2",
-	"title": "Product Description",
-	"description": "Display the product description.",
+	"name": "surecart/product-scratch-price",
+	"title": "Scratch Price",
+	"description": "Display the product scratch price.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart",
 	"icon": "media-interactive",
-	"example": {
-		"textAlign": {
-			"type": "string",
-			"default": "left"
-		}
-	},
+	"example": {},
+	"usesContext": ["surecart/productId"],
+	"ancestor": ["surecart/product-list"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {
@@ -31,6 +28,7 @@
 		}
 	},
 	"textdomain": "surecart",
-	"render": "file:./view.php",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"render": "file:./view.php"
 }
