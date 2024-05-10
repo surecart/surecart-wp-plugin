@@ -1,0 +1,18 @@
+.sc-block-ui {
+	position: var(--sc-block-ui-position, absolute);
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: var(--sc-block-ui-background-color, var(--sc-color-white));
+	opacity: var(--sc-block-ui-opacity, 0.35);
+	transition: visibility 0s, opacity var(--sc-transition-medium) ease;
+	visibility: visible;
+
+	&[hidden] {
+		display: block;
+		transition: visibility 0s, opacity 0.5s linear;
+		visibility: hidden;
+		opacity: 0;
+	}
+}

@@ -38,5 +38,5 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./index.css"]
+	"style": ["file:./index.css", "file:../../styles/block-ui.css"]
 }
