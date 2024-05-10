@@ -37,11 +37,11 @@ if ( is_wp_error( $products ) ) {
 }
 
 // build up pagination.
-$pages = array_map(function($i) use ($page_key) {
+$pages = array_map(function($i) use ($page_key, $page) {
 	return [
 		'href' => add_query_arg($page_key, $i),
 		'name' => $i,
-		'key'  => 'product-pagination-numbers' . $i,
+		'current' => (int) $i === (int) $page
 	];
 }, range(1, $products->totalPages()));
 
