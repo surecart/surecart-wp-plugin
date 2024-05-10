@@ -13,8 +13,8 @@
 	display: block;
 	text-decoration: none !important;
 
-	&:hover {
-		text-decoration: none;
+	&:focus:not(:focus-visible) {
+		outline: none;
 	}
 }
 
