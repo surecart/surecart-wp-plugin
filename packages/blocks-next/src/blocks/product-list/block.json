@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list",
 	"title": "Product List",
-	"description": "Display the products.",
+	"description": "Display a list of products.",
 	"version": "1.0.0",
 	"category": "surecart",
 	"icon": "media-interactive",
@@ -22,10 +22,6 @@
 			"default": true
 		}
 	},
-	"allowedBlocks": [
-		"surecart/product-template",
-		"surecart/product-pagination"
-	],
 	"supports": {
 		"interactivity": true,
 		"layout": true,
