@@ -6,10 +6,10 @@
 	data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
 	>
 	<?php if (!empty($arrow_name)) : ?>
-		<?php echo \SureCart::svg()->get($arrow_name, ['class' => 'wp-block-surecart-product-pagination-previous__icon']); ?>
+		<?php echo \SureCart::svg()->get($arrow_name, ['class' => 'wp-block-surecart-product-pagination-previous__icon', 'aria-hidden' => true]); ?>
 	<?php endif; ?>
 
-	<?php if (!empty($show_label)) : ?>
+	<span class="<?php echo empty($show_label) ? 'sc-screen-reader-text': 'sc-page-link-label'; ?>">
 		<?php echo wp_kses_post($attributes['label'] ?? __('Previous', 'surecart')); ?>
-	<?php endif; ?>
+	</span>
 </a>
