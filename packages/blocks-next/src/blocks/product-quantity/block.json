@@ -46,6 +46,13 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./editor.css",
-	"style": ["file:../../styles/quantity-selector.css"]
+	"editorStyle": [
+		"file:../../styles/quantity-selector.css",
+		"file:../../styles/label.css"
+	],
+	"viewScriptModule": "@surecart/quantity-selector",
+	"style": [
+		"file:../../styles/quantity-selector.css",
+		"file:../../styles/label.css"
+	]
 }

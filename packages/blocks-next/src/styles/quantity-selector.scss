@@ -52,7 +52,7 @@
 		}
 	}
 
-	&___control {
+	&__control {
 		text-align: center;
 		line-height: 1;
 		border: none;
@@ -98,9 +98,9 @@
 
 	&__decrease,
 	&__increase {
-		display: inline-block;
-		text-align: center;
-		vertical-align: middle;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		line-height: 0;
 		height: auto;
 		top: 1px;
@@ -113,6 +113,11 @@
 		user-select: none;
 		border-width: 0;
 		padding: 0;
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
 
 		&:hover:not(.button--disabled) {
 			.quantity__control {
@@ -148,6 +153,11 @@
 		.sc-quantity-selector__increase {
 			width: 24px;
 			border: none;
+
+			svg {
+				width: 12px;
+				height: 12px;
+			}
 		}
 		.sc-quantity-selector__control {
 			max-width: 24px;
