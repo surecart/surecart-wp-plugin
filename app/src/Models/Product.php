@@ -494,6 +494,34 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the max stock quantity for the product.
+	 *
+	 * @param \SureCart\Models\Variant $selected_variant The selected variant.
+	 *
+	 * @return int|INF
+	 */
+	public function getMaxStockQuantity( $selected_variant = null ) {
+		// Check purchase limit.
+		if ( ! empty( $this->purchase_limit ) ) {
+			return $this->purchase_limit;
+		}
+
+		// If stock is not enabled or out of stock purchases are allowed, return infinity.
+		$is_stock_needs_to_be_checked = $this->stock_enabled && ! $this->allow_out_of_stock_purchases;
+		if ( ! $is_stock_needs_to_be_checked ) {
+			return INF;
+		}
+
+		// If no variant is selected, check against product stock.
+		if ( empty( $selected_variant ) ) {
+			return $this->available_stock;
+		}
+
+		// Check against variant stock.
+		return $selected_variant->available_stock;
+	}
+
+	/**
 	 * Get the product images
 	 *
 	 * @param int   $width The image width.

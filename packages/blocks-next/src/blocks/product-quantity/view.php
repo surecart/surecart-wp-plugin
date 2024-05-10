@@ -8,9 +8,7 @@
 	<?php
 		echo wp_interactivity_data_wp_context(
 			array(
-				'quantity' => 3,
-				'max'      => 4,
-				'min'      => 2,
+				'quantity' => max($product->selectedPrice->ad_hoc? 1: ),
 				'disabled' => false,
 			)
 		);
@@ -27,7 +25,7 @@
 			data-wp-bind--aria-valuemin="context.min"
 			data-wp-bind--max="context.max"
 			data-wp-bind--aria-valuemax="context.max"
-			data-wp-bind--aria-disabled="context.disabled"
+			data-wp-bind--aria-disabled=""
 			type="number"
 			step="1"
 			autocomplete="off"
