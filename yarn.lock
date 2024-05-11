@@ -6700,21 +6700,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@preact/signals-core@npm:^1.4.0":
-  version: 1.5.1
-  resolution: "@preact/signals-core@npm:1.5.1"
-  checksum: 56eaadf5a70b8c0b8506645e39cb6866758c69c3f2708548b30bde9105eaba05bfc1b69ef60472389c453cfa8774dead93547a89358a0ff0df0918871e6a5222
+"@preact/signals-core@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@preact/signals-core@npm:1.6.0"
+  checksum: 85f269714ed8685240ea796d83fbefb06a43559f3c1417c832750568c545517bc3295ec73ffaca2eb3ae6657a591e46db3a94305862640c0c1be93c6d2f9a0e6
   languageName: node
   linkType: hard
 
-"@preact/signals@npm:^1.1.3":
-  version: 1.2.2
-  resolution: "@preact/signals@npm:1.2.2"
+"@preact/signals@npm:^1.2.2":
+  version: 1.2.3
+  resolution: "@preact/signals@npm:1.2.3"
   dependencies:
-    "@preact/signals-core": ^1.4.0
+    "@preact/signals-core": ^1.6.0
   peerDependencies:
     preact: 10.x
-  checksum: 05ae4ac0124828755511bd67aeb16902b6daaca7c87debade850a2204a84206752417b8f4534a46928533704b924afb0bd22555763a4c5a93461fc5ed4b504c7
+  checksum: efd1b9dd66b47bb08a328d1fb6a1d84514415b8f4a330b9aff2dd1c7bf33bbc67136ad6c2c40021c4b10c3796a63fdf65e3105993220f899c7a35210808d1a36
   languageName: node
   linkType: hard
 
@@ -8494,7 +8494,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@surecart/blocks-next@workspace:packages/blocks-next"
   dependencies:
-    "@wordpress/interactivity": ^3.1.0
+    "@wordpress/interactivity": ^5.2.0
     "@wordpress/prettier-config": ^1.1.1
     "@wordpress/scripts": ^27
     prettier: ^2.5.1
@@ -12190,14 +12190,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/interactivity@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@wordpress/interactivity@npm:3.1.0"
+"@wordpress/interactivity@npm:^5.2.0":
+  version: 5.6.0
+  resolution: "@wordpress/interactivity@npm:5.6.0"
   dependencies:
-    "@preact/signals": ^1.1.3
-    deepsignal: ^1.3.6
-    preact: ^10.13.2
-  checksum: 48b2439515acdf647211fa0ac02a720313e41f9baeb62cacbfb376f0b7ca70d7ca263cacbe7339d930e6704d2f15808454ebb6059dc4f140eac97597306113ee
+    "@preact/signals": ^1.2.2
+    deepsignal: ^1.4.0
+    preact: ^10.19.3
+  checksum: dcb20a4f96e85e858ed00c1da5e1e0a2936633ee16a872266c65dd592d8d2967eb5debd5abbd72218f1543cf66f6c0448d5e51f48c422acc33b0553bc1fff6b4
   languageName: node
   linkType: hard
 
@@ -17835,9 +17835,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepsignal@npm:^1.3.6":
-  version: 1.4.0
-  resolution: "deepsignal@npm:1.4.0"
+"deepsignal@npm:^1.4.0":
+  version: 1.5.0
+  resolution: "deepsignal@npm:1.5.0"
   peerDependencies:
     "@preact/signals": ^1.1.4
     "@preact/signals-core": ^1.5.1
@@ -17852,7 +17852,7 @@ __metadata:
       optional: true
     preact:
       optional: true
-  checksum: b07547cc14d2810d8278678bd91c9dc595e3cd831913b321ea5874ab435fde88fd861c6f80ee73525864a0c11435ecad661618c57d0e44d2553832c4fa7d7d06
+  checksum: b96392ce50169d15242e2c387e2a3ee441537ef64d5addabe18a888bd725e8608beeb62c59d08f178606f8ea29c585c2110061db696c0ab5be7a2408fe462079
   languageName: node
   linkType: hard
 
@@ -30554,10 +30554,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.13.2":
-  version: 10.19.3
-  resolution: "preact@npm:10.19.3"
-  checksum: cb4fcc801f7ff302b9706eb4bb4a36cc7cd96f3231ac28baeb3ea5caf6724372222121cb487f66af44a1312bf61dbe74825ce2fda98295d2108e7443c20b0e56
+"preact@npm:^10.19.3":
+  version: 10.21.0
+  resolution: "preact@npm:10.21.0"
+  checksum: 04acdd300e779eec230256d043120e564ac76bb535b05a9b23949f8641bf8e135098d0bd12c008cc4316174469356d09a2326dde6acbd8f539d1b4bf2231cbaa
   languageName: node
   linkType: hard
 
