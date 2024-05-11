@@ -1,8 +1,8 @@
 /**
- * WordPress dependencies
+ * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-
+import { PanelBody, TextControl } from '@wordpress/components';
 import {
 	RichText,
 	InspectorControls,
@@ -10,10 +10,10 @@ import {
 } from '@wordpress/block-editor';
 
 /**
- * Component Dependencies
+ * Internal dependencies.
  */
-// import CartInspectorControls from '../../../../blocks/components/CartInspectorControls';
 import useCartStyles from '../../../../blocks/hooks/useCartStyles';
+import ScIcon from '../../components/ScIcon';
 
 export default ({ attributes, setAttributes }) => {
 	const { text } = attributes;
@@ -25,13 +25,20 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-				{/* <CartInspectorControls
-					attributes={attributes}
-					setAttributes={setAttributes}
-				/> */}
+				<PanelBody>
+					<TextControl
+						label={__('Header Text')}
+						value={text}
+						onChange={(text) => setAttributes({ text })}
+					/>
+				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
+				<ScIcon
+					name="arrow-right"
+					class="wp-block-surecart-cart-header-v2__close"
+				/>
 				<RichText
 					aria-label={__('Header Text')}
 					placeholder={__('Add a title…')}
@@ -40,6 +47,7 @@ export default ({ attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
+				<span class="sc-tag sc-tag--default">0</span>
 			</div>
 		</>
 	);
