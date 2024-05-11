@@ -5,6 +5,12 @@
 	width: 100%;
 	font-size: 1em;
 
+	border-bottom: var(--sc-drawer-border);
+    padding-top: 1.25em;
+    padding-bottom: 1.25em;
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+
 	&__title {
 		text-align: center;
 		overflow: hidden;
@@ -14,10 +20,8 @@
 	}
 
 	&__close {
-		svg {
-			cursor: pointer;
-			width: 16px;
-			height: 16px;
-		}
+		cursor: pointer;
+		width: 16px;
+		height: 16px;
 	}
 }

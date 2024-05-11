@@ -1,20 +1,44 @@
 /**
  * External dependencies.
  */
-import { useEffect, useState } from '@wordpress/element';
+import React, { useEffect, useState } from 'react';
 
 export default function ({ name, ...props }) {
-	const [svgContent, setSvgContent] = useState(null);
+	const [svgElement, setSvgElement] = useState(null);
 	const assetDir = window?.scData?.plugin_url + '/dist/icon-assets';
 
 	useEffect(() => {
 		fetch(`${assetDir}/${name}.svg`)
 			.then((response) => response.text())
-			.then(setSvgContent)
+			.then((svgContent) => {
+				const parser = new DOMParser();
+				const svgDoc = parser.parseFromString(
+					svgContent,
+					'image/svg+xml'
+				);
+				setSvgElement(svgDoc?.documentElement);
+			})
 			.catch(console.error);
 	}, [name]);
 
-	return svgContent ? (
-		<span {...props} dangerouslySetInnerHTML={{ __html: svgContent }} />
-	) : null;
+	if (!svgElement) {
+		return null;
+	}
+
+	// Create a new SVG element and copy over the attributes from the original SVG element
+	const svgProps = Array.from(svgElement.attributes).reduce((acc, attr) => {
+		acc[attr.name] = attr.value;
+		return acc;
+	}, {});
+
+	// Merge the original SVG props with the passed props
+	const mergedProps = { ...svgProps, ...props };
+
+	// Convert the SVG element to a React element
+	const svgReactElement = React.createElement(svgElement.tagName, {
+		...mergedProps,
+		dangerouslySetInnerHTML: { __html: svgElement.innerHTML },
+	});
+
+	return svgReactElement;
 }
