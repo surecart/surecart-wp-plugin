@@ -140,4 +140,22 @@ add_action('init', function() {
 		],
 		$static_assets['version']
 	);
+
+	// Cart sidebar.
+	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/cart/index.asset.php';
+	wp_register_script_module(
+		'@surecart/cart',
+		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart/index.js',
+		[
+			[
+				'id' => '@surecart/api-fetch',
+				'import' => 'dynamic'
+			],
+			[
+				'id' => '@surecart/dialog',
+				'import' => 'dynamic'
+			]
+		],
+		$static_assets['version']
+	);
 });
