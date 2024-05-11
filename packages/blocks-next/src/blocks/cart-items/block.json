@@ -1,20 +1,41 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-menu-icon-v2",
-	"title": "Cart Menu Icon v2",
-	"description": "The cart menu icon that shows your cart quantity.",
-	"version": "1.0.0",
+	"name": "surecart/cart-items-v2",
+	"title": "Cart Items v2",
+	"description": "The cart items v2",
 	"category": "cart",
+	"version": "1.0.0",
 	"example": {},
+	"textdomain": "surecart",
+	"ancestor": ["surecart/cart-v2"],
 	"attributes": {
-		"cart_icon": {
-			"type": "string",
-			"default": "shopping-bag"
-		},
-		"cart_menu_always_shown": {
+		"removable": {
 			"type": "boolean",
 			"default": true
+		},
+		"editable": {
+			"type": "boolean",
+			"default": true
+		},
+		"border": {
+			"type": "boolean",
+			"default": true
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "1.25em",
+				"left": "1.25em",
+				"bottom": "1.25em",
+				"right": "1.25em"
+			}
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -41,7 +62,6 @@
 		}
 	},
 	"render": "file:./view.php",
-	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
 		"file:../../styles/wp-button.css",

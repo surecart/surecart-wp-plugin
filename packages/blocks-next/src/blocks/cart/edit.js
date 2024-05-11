@@ -1,33 +1,29 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
 import {
-	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	InspectorControls,
 	useBlockProps,
 	InnerBlocks,
-	__experimentalUnitControl as UnitControl,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
-	InspectorControls,
+	__experimentalUnitControl as UnitControl,
+	useSetting,
 } from '@wordpress/block-editor';
-
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
 	PanelBody,
 } from '@wordpress/components';
 
-const allowedBlocks = [
-	// 'surecart/cart-coupon-v2',
-	// 'surecart/cart-submit-v2',
-	// 'surecart/cart-subtotal-v2',
-	// 'surecart/cart-bump-line-item-v2',
-	// 'surecart/cart-items-v2',
-	'surecart/cart-header-v2',
-	// 'surecart/cart-message-v2',
-];
-
-import { useSetting } from '@wordpress/block-editor';
+/**
+ * Internal dependencies.
+ */
+import { TEMPLATE } from './template';
 
 export default ({ attributes: { width }, setAttributes }) => {
+	const allowedBlocks = ['surecart/cart-header-v2', 'surecart/cart-items-v2'];
+
 	const blockProps = useBlockProps({
 		style: {
 			fontSize: '16px',
@@ -45,6 +41,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 			style: {
 				maxWidth: width,
 			},
+			template: TEMPLATE,
 		},
 		{
 			renderAppender: InnerBlocks.ButtonBlockAppender,

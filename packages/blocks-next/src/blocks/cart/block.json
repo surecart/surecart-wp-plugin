@@ -2,12 +2,16 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/cart-v2",
-	"title": "SureCart Cart",
+	"title": "SureCart Cart v2",
 	"description": "Display SureCart Cart",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "cart",
 	"icon": "media-interactive",
 	"example": {},
+	"providesContext": {
+		"surecart/cart-v2/blockId": "cart-v2"
+	},
+	"usesContext": ["surecart/cart-v2/blockId"],
 	"attributes": {
 		"title": {
 			"type": "string",
@@ -20,50 +24,18 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"layout": true,
+		"align": true,
 		"spacing": {
-			"__experimentalSkipSerialization": true,
-			"padding": ["horizontal", "vertical"],
-			"margin": ["top", "bottom"]
-		},
-		"color": {
-			"__experimentalSkipSerialization": true,
-			"gradients": true,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
-		},
-		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
-		"typography": {
-			"fontSize": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true
-		},
-		"reusable": false,
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"style": true,
-			"width": true,
-			"__experimentalSkipSerialization": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"style": true,
-				"width": true
-			}
+			"padding": true,
+			"margin": ["top", "bottom"],
+			"blockGap": true
 		}
 	},
-	"textdomain": "surecart",
+	"allowedBlocks": ["surecart/cart-header-v2", "surecart/cart-items-v2"],
 	"render": "file:./view.php",
+	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": [
-		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css",
-		"file:../../styles/drawer.css",
-		"file:../../styles/cart.css"
-	],
-	"viewScriptModule": ["@surecart/dialog"]
+	"style": ["file:./style-index.css"],
+	"viewScriptModule": ["@surecart/cart"]
 }
