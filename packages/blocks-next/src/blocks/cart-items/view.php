@@ -32,7 +32,26 @@
                             </span>
                         <?php endif; ?>
                         <?php if ($attributes['editable']): ?>
-                            <!-- Handle Editable Input -->
+                            <div class="sc-quantity-selector quantity--small" style="margin-top: var(--sc-spacing-xx-small);">
+                                <div role="button" class="sc-quantity-selector__decrease">
+                                    <?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
+                                </div>
+                                <input
+                                    class="sc-quantity-selector__control"
+                                    data-wp-bind--value="context.line_item.quantity"
+                                    data-wp-bind--min="context.line_item.min"
+                                    data-wp-bind--aria-valuemin="context.line_item.min"
+                                    data-wp-bind--max="context.line_item.max"
+                                    data-wp-bind--aria-valuemax="context.line_item.max"
+                                    data-wp-bind--aria-disabled="context.line_item.disabled"
+                                    type="number"
+                                    step="1"
+                                    autocomplete="off"
+                                />
+                                <div role="button" class="sc-quantity-selector__increase">
+                                    <?php echo wp_kses( SureCart::svg()->get( 'plus' ), sc_allowed_svg_html() ); ?>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>

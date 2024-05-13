@@ -110,29 +110,29 @@ export default ({ attributes, setAttributes }) => {
 													</span>
 												)}
 										</div>
-										{/* {editable && (
-											<sc-quantity-select
-												max={lineItem.max || Infinity}
-												exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
-												clickEl={lineItem.el}
-												quantity={lineItem.quantity}
-												size="small"
-												onScChange={(e) =>
-													e.detail &&
-													lineItem.scUpdateQuantity.emit(
-														e.detail
-													)
-												}
-												aria-label={sprintf(
-													__(
-														'Change Quantity - %s %s',
-														'surecart'
-													),
-													lineItem.name,
-													lineItem.price.name
-												)}
-											></sc-quantity-select>
-										)} */}
+										{editable && (
+											<div class="sc-quantity-selector quantity--small">
+												<div
+													role="button"
+													class="sc-quantity-selector__decrease"
+												>
+													<ScIcon name="minus" />
+												</div>
+												<input
+													class="sc-quantity-selector__control"
+													value={lineItem.quantity}
+													type="number"
+													step="1"
+													autocomplete="off"
+												/>
+												<div
+													role="button"
+													class="sc-quantity-selector__increase"
+												>
+													<ScIcon name="plus" />
+												</div>
+											</div>
+										)}
 									</div>
 									<div class="sc-product-line-item__suffix">
 										{!!removable ? (
