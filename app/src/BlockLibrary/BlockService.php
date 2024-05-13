@@ -65,4 +65,12 @@ class BlockService {
 	public function styles() {
 		return new BlockStylesService();
 	}
+
+	public function urlParams() {
+		return new URLParamService();
+	}
+
+	public function productUrlParams() {
+		return new ProductURLParamService();
+	}
 }
