@@ -52,7 +52,7 @@
 		}
 	}
 
-	&__control {
+	input[type="number"].sc-quantity-selector__control {
 		text-align: center;
 		line-height: 1;
 		border: none;
@@ -159,7 +159,7 @@
 				height: 12px;
 			}
 		}
-		.sc-quantity-selector__control {
+		input[type="number"].sc-quantity-selector__control {
 			max-width: 24px;
 		}
 	}
