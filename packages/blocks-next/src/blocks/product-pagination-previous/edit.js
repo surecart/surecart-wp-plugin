@@ -13,20 +13,22 @@ export default ({
 	context: { paginationArrow, showLabel },
 }) => {
 	const displayArrow = arrowMap[paginationArrow];
+
+	const blockProps = useBlockProps({
+		className: 'has-arrow-type-' + paginationArrow,
+	});
+
 	return (
-		<a
-			href="#pagination-previous-pseudo-link"
-			onClick={(event) => event.preventDefault()}
-			{...useBlockProps()}
-		>
+		<a href="#" onClick={(e) => e.preventDefault()} {...blockProps}>
 			{displayArrow && (
 				<span
-					className={`wp-block-product-pagination-previous-arrow is-arrow-${paginationArrow}`}
+					className={`wp-block-surecart-product-pagination-previous__icon`}
 					aria-hidden={true}
 				>
 					{displayArrow}
 				</span>
 			)}
+
 			{showLabel && (
 				<PlainText
 					__experimentalVersion={2}
