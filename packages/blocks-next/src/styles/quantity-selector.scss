@@ -163,7 +163,8 @@
 		}
 		.sc-quantity-selector__control {
 			max-width: 24px;
-            max-height: 24px;
+            max-height: 24px !important;
+            min-height: 24px !important;
             font-size: var(--sc-quantity-font-size-small, 12px) !important;
 		}
 	}

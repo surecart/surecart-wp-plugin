@@ -84,42 +84,42 @@ export default ({ attributes, setAttributes }) => {
 					{lineItems.map((lineItem) => {
 						return (
 							<div
-								class="sc-product-line-item"
+								className="sc-product-line-item"
 								style={{ marginBottom: 20 }}
 							>
 								<div className="sc-product-line-item__item">
 									<img
 										src={lineItem.price.product.image_url}
-										class="sc-product-line-item__image"
+										className="sc-product-line-item__image"
 									/>
-									<div class="sc-product-line-item__text">
-										<div class="sc-product-line-item__text-details">
-											<div class="sc-product-line-item__title">
+									<div className="sc-product-line-item__text">
+										<div className="sc-product-line-item__text-details">
+											<div className="sc-product-line-item__title">
 												{lineItem.price.product.name}
 											</div>
-											<div class="sc-product-line-item__description sc-product-line-item__price-variant">
+											<div className="sc-product-line-item__description sc-product-line-item__price-variant">
 												<div>
 													{lineItem?.price?.name}
 												</div>
 											</div>
 											{!editable &&
 												lineItem.quantity > 1 && (
-													<span class="sc-product-line-item__description">
+													<span className="sc-product-line-item__description">
 														{__('Qty:', 'surecart')}{' '}
 														{lineItem.quantity}
 													</span>
 												)}
 										</div>
 										{editable && (
-											<div class="sc-quantity-selector quantity--small">
+											<div className="sc-quantity-selector quantity--small">
 												<div
 													role="button"
-													class="sc-quantity-selector__decrease"
+													className="sc-quantity-selector__decrease"
 												>
 													<ScIcon name="minus" />
 												</div>
 												<input
-													class="sc-quantity-selector__control"
+													className="sc-quantity-selector__control"
 													value={lineItem.quantity}
 													type="number"
 													step="1"
@@ -127,42 +127,25 @@ export default ({ attributes, setAttributes }) => {
 												/>
 												<div
 													role="button"
-													class="sc-quantity-selector__increase"
+													className="sc-quantity-selector__increase"
 												>
 													<ScIcon name="plus" />
 												</div>
 											</div>
 										)}
 									</div>
-									<div class="sc-product-line-item__suffix">
+									<div className="sc-product-line-item__suffix">
 										{!!removable ? (
 											<ScIcon
-												class="sc-product-line-item__remove"
+												className="sc-product-line-item__remove"
 												name="x"
-												onClick={() =>
-													lineItem.scRemove.emit()
-												}
-												onKeyDown={(e) => {
-													if (e.key === 'Enter') {
-														lineItem.scRemove.emit();
-													}
-												}}
-												tabindex="0"
-												aria-label={sprintf(
-													__(
-														'Remove Item - %s %s',
-														'surecart'
-													),
-													lineItem.name,
-													lineItem.priceName
-												)}
 											></ScIcon>
 										) : (
 											<div></div>
 										)}
 
-										<div class="sc-product-line-item__price">
-											<div class="price">
+										<div className="sc-product-line-item__price">
+											<div className="price">
 												{lineItem.price.display_amount}
 											</div>
 										</div>
