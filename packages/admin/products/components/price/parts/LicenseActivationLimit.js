@@ -48,10 +48,7 @@ export default ({ price, updatePrice, className, product }) => {
 						'Specify the maximum number of unique activations allowed per license key for this pricing option. If left blank, the default limit set for the product will apply.',
 						'surecart'
 					)}
-					placeholder={
-						product?.license_activation_limit ||
-						__('Unlimited', 'surecart')
-					}
+					placeholder={product?.license_activation_limit || '∞'}
 					value={price?.license_activation_limit}
 					onScInput={(e) => {
 						updatePrice({
