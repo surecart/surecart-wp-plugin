@@ -1,25 +1,15 @@
-<?php
-$arrowMap = [
-	"none" => '',
-	"arrow" => '←',
-	"chevron" => '«',
-];
-$paginationArrow = $block->context['paginationArrow'] ?? '';
-$displayArrow = $arrowMap[$paginationArrow] ?? '';
-?>
 <a
-	<?php echo get_block_wrapper_attributes(); ?>
+	<?php echo get_block_wrapper_attributes(['class' => 'has-arrow-type-' . esc_attr($pagination_arrow)]); ?>
 	data-wp-bind--href="context.previousPageLink"
+	data-wp-class--disabled="!context.previousPageLink"
 	data-wp-on--click="surecart/product-list::actions.navigate"
 	data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
-	data-wp-class--disabled="!context.previousPageLink"
->
-	<?php if ( $displayArrow ) : ?>
-	<span
-		class="wp-block-product-pagination-next-arrow is-arrow-<?php echo esc_attr( $paginationArrow ); ?>"
 	>
-		<?php echo esc_html( $displayArrow ); ?>
-	</span>
+	<?php if (!empty($arrow_name)) : ?>
+		<?php echo \SureCart::svg()->get($arrow_name, ['class' => 'wp-block-surecart-product-pagination-previous__icon']); ?>
 	<?php endif; ?>
-	<?php echo wp_kses_post($attributes['label'] ?? __( 'Previous', 'surecart' )); ?>
+
+	<?php if (!empty($show_label)) : ?>
+		<?php echo wp_kses_post($attributes['label'] ?? __('Previous', 'surecart')); ?>
+	<?php endif; ?>
 </a>

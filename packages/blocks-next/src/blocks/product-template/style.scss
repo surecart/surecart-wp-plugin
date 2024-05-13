@@ -1,20 +1,23 @@
-.product-item {
+.sc-product-item {
 	height: 100%;
 	box-sizing: border-box;
-	opacity: 0;
-	animation-duration: var(--sc-transition-fast);
-	animation-fill-mode: both;
-	animation-name: fadeInUp;
-	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	&.sc-has-animation-fade-up {
+		opacity: 0;
+		animation-duration: var(--sc-transition-fast);
+		animation-fill-mode: both;
+		animation-name: fadeInUp;
+		animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	}
 }
 
-.product-item-link {
+.sc-product-item-link {
 	box-sizing: border-box;
 	display: block;
 	text-decoration: none !important;
 
-	&:hover {
-		text-decoration: none;
+	&:focus:not(:focus-visible) {
+		outline: none;
 	}
 }
 
@@ -31,7 +34,7 @@
 }
 
 @media (prefers-reduced-motion) {
-	.product-item {
+	.sc-product-item {
 		opacity: 1;
 		animation-name: none;
 	}

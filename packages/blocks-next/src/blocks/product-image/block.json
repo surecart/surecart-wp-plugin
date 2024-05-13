@@ -42,9 +42,11 @@
 		"__experimentalBorder": {
 			"width": true,
 			"color": true,
+			"radius": true,
 			"__experimentalDefaultControls": {
 				"width": true,
-				"color": true
+				"color": true,
+				"radius": true
 			}
 		}
 	},

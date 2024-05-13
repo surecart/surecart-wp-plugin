@@ -5,7 +5,7 @@ import { useSelect } from '@wordpress/data';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 
 export default ({
-	attributes: { range },
+	attributes: { show_range },
 	setAttributes,
 	context: { 'surecart/productId': productId },
 }) => {
@@ -37,15 +37,15 @@ export default ({
 							'Show a range of prices if multiple prices are available or has variable products.',
 							'surecart'
 						)}
-						checked={range}
-						onChange={(range) => setAttributes({ range })}
+						checked={show_range}
+						onChange={(show_range) => setAttributes({ show_range })}
 					/>
 				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
 				{product?.id
-					? range
+					? show_range
 						? product?.range_display_amount
 						: product?.display_amount
 					: '$10'}

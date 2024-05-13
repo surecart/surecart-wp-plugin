@@ -16,4 +16,6 @@
 	); ?>
 >
     <?php echo $content; ?>
+
+	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
 </div>

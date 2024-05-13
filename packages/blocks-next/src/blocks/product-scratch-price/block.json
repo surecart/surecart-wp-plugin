@@ -1,20 +1,15 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-pagination-numbers",
-	"title": "Numbers",
-	"description": "Display the product pagination numbers.",
+	"name": "surecart/product-scratch-price",
+	"title": "Scratch Price",
+	"description": "Display the product scratch price.",
 	"version": "1.0.0",
 	"category": "surecart",
 	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-pagination"],
-	"usesContext": [
-		"surecart/product-list/blockId",
-		"surecart/product-list/limit",
-		"paginationArrow",
-		"showLabel"
-	],
+	"usesContext": ["surecart/productId"],
+	"ancestor": ["surecart/product-list"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {
@@ -32,8 +27,8 @@
 			"enableContrastChecker": true
 		}
 	},
-	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"render": "file:./view.php"
 }
