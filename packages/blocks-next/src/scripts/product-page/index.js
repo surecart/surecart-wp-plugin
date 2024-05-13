@@ -14,7 +14,7 @@ const { state, callbacks, actions } = store('surecart/product', {
 			return callbacks.getState('product');
 		},
 		get selectedPrice() {
-			return callbacks.getState('selectedPrice');
+			return callbacks.getState('selectedPrice') || {};
 		},
 		get selectedVariant() {
 			return callbacks.getState('selectedVariant');
@@ -23,7 +23,7 @@ const { state, callbacks, actions } = store('surecart/product', {
 			return callbacks.getState('variantValues');
 		},
 		get quantity() {
-			return callbacks.getState('quantity');
+			return callbacks.getState('quantity') || 1;
 		},
 		get busy() {
 			return callbacks.getState('busy');
@@ -148,6 +148,40 @@ const { state, callbacks, actions } = store('surecart/product', {
 		get selectedVariantId() {
 			return state.selectedVariant?.id;
 		},
+		/** Get the min product quantity */
+		get minQuantity() {
+			return 1; //return 1 as the minimum quantity.
+		},
+		/** Get the max product quantity */
+		get maxQuantity() {
+			// check purchase limit.
+			if (state.product?.purchase_limit) {
+				return state.product.purchase_limit;
+			}
+
+			// check if stock needs to be checked
+			const isStockNeedsToBeChecked = !!(
+				state.product?.stock_enabled &&
+				!state.product?.allow_out_of_stock_purchases
+			);
+
+			// if stock is not enabled return infinity.
+			if (!isStockNeedsToBeChecked) {
+				return Infinity;
+			}
+
+			// if no variant is selected, check against product stock.
+			if (!state.selectedVariant) {
+				return state.product.available_stock;
+			}
+
+			// check against variant stock.
+			return state.selectedVariant.available_stock;
+		},
+		/** Is the quantity disabled? */
+		get isQuantityDisabled() {
+			return !!state?.selectedPrice?.ad_hoc;
+		},
 	},
 
 	actions: {
@@ -222,6 +256,29 @@ const { state, callbacks, actions } = store('surecart/product', {
 				});
 			}
 		},
+	},
+	onQuantityChange: (e) => {
+		const { ref } = getContext();
+		update({
+			quantity: Math.max(
+				Math.min(state.maxQuantity, parseInt(ref.value)),
+				state.minQuantity
+			),
+		});
+	},
+	onQuantityDecrease: () => {
+		if (state.isQuantityDisabled) return;
+
+		update({
+			quantity: Math.max(state.minQuantity, state.quantity - 1),
+		});
+	},
+	onQuantityIncrease: () => {
+		if (state.isQuantityDisabled) return;
+
+		update({
+			quantity: Math.min(state.maxQuantity, state.quantity + 1),
+		});
 	},
 });
 

@@ -11,9 +11,9 @@ $active_prices  = $product->active_prices;
 $selected_price = $active_prices[0] ?? '';
 
 wp_interactivity_state(
-	'surecart/product',
+	'surecart/product-page',
 	array_merge(
-		wp_interactivity_state( 'surecart/product' ),
+		wp_interactivity_state( 'surecart/product-page' ),
 		array(
 			$product->id                 => array(
 				'formId'          => \SureCart::forms()->getDefaultId(),

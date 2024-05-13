@@ -50,7 +50,6 @@
 		"file:../../styles/quantity-selector.css",
 		"file:../../styles/label.css"
 	],
-	"viewScriptModule": "@surecart/quantity-selector",
 	"style": [
 		"file:../../styles/quantity-selector.css",
 		"file:../../styles/label.css"
