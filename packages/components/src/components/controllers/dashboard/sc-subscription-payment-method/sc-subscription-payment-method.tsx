@@ -169,7 +169,7 @@ export class ScSubscriptionPaymentMethod {
       return this.renderLoading();
     }
 
-    if (!this.hasPaymentMethods()) {
+    if (!this.paymentMethods?.length && !this.manualPaymentMethods?.length) {
       return this.renderEmpty();
     }
 
