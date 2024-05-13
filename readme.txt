@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.25.2
+Stable tag: 2.26.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,16 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.26.0 - May 13th, 2024 =
+- New: Ability to set manual payment methods as usable in subscription, installments and upsells.
+- New: Generate bulk affiliate payouts for all affiliates from a specific time period and minimum amount.
+- New: Exclude specific prices from showing up in the subscription upgrade section of the customer dashboard.
+- New: Override license activation limits for a specific price.
+- Improvement: FSE themes now use a FSE template for the store checkout upon activation.
+- Fix: Cancelling a Mollie payment method now allows customer to checkout again.
+- Fix: Merchant UX dead end where variant overrides can be set when there are multiple prices.
+- Fix: Repeat payment label now matches the capitalization of other fields.
 
 = 2.25.2 - May 8th, 2024 =
 - Fix: Race condition where upsells are sometimes not redirecting after successful checkout.

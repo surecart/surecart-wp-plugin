@@ -16,7 +16,7 @@ import {
 import Box from '../ui/Box';
 import ModelSelector from '../components/ModelSelector';
 import Error from '../components/Error';
-import { BaseControl, DateTimePicker } from '@wordpress/components';
+import { DateTimePicker } from '@wordpress/components';
 
 export default () => {
 	const { saveEntityRecord } = useDispatch(coreStore);
