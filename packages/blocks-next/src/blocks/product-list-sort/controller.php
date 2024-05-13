@@ -1,6 +1,6 @@
 <?php
-$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
-$sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
+$block_id = $block->context["surecart/product-list/blockId"];
+$sort_key = \SureCart::block()->productUrlParams()->getKey( 'sort', $block_id );
 $sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
 
 $options = [
