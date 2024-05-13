@@ -1,3 +1,7 @@
+.wp-block-surecart-product-template {
+	width: 100%; // prevent collapsing during loading.
+}
+
 .sc-product-item {
 	height: 100%;
 	box-sizing: border-box;
