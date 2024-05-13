@@ -15,6 +15,7 @@ import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
 import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
+import CanUpgrade from '../../../components/price/parts/CanUpgrade';
 
 export default ({ price, product }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -203,6 +204,7 @@ export default ({ price, product }) => {
 								<Subscription
 									price={currentPrice}
 									updatePrice={editPrice}
+                  product={product}
 								/>
 							)}
 
@@ -210,6 +212,7 @@ export default ({ price, product }) => {
 								<Multiple
 									price={currentPrice}
 									updatePrice={editPrice}
+                  product={product}
 								/>
 							)}
 
@@ -217,8 +220,14 @@ export default ({ price, product }) => {
 								<OneTime
 									price={currentPrice}
 									updatePrice={editPrice}
+                  product={product}
 								/>
 							)}
+
+							<CanUpgrade
+								price={currentPrice}
+								updatePrice={editPrice}
+							/>
 						</div>
 					</div>
 

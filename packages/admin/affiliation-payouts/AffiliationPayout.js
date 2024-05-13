@@ -6,7 +6,7 @@ import { getQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies.
  */
-import CreateAffiliationReferral from './CreateAffiliationPayout';
+import CreateAffiliationPayout from './CreateAffiliationPayout';
 import ExportAffiliationPayout from './ExportAffiliationPayout';
 
 export default () => {
@@ -16,5 +16,5 @@ export default () => {
 		return <ExportAffiliationPayout />;
 	}
 
-	return <CreateAffiliationReferral />;
+	return <CreateAffiliationPayout />;
 };

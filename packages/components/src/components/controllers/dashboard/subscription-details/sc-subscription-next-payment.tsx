@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { intervalString, translateRemainingPayments } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, Period, Product, ResponseError, Subscription } from '../../../../types';
+import { Checkout, Period, Product, ResponseError, Subscription, ManualPaymentMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-next-payment',
@@ -12,7 +12,9 @@ import { Checkout, Period, Product, ResponseError, Subscription } from '../../..
 })
 export class ScSubscriptionNextPayment {
   @Prop() subscription: Subscription;
+  /** Update the payment method url */
   @Prop() updatePaymentMethodUrl: string;
+
   @State() period: Period;
   @State() loading: boolean = true;
   @State() error: ResponseError;
@@ -46,6 +48,7 @@ export class ScSubscriptionNextPayment {
             'period.checkout',
             'checkout.line_items',
             'checkout.payment_method',
+            'checkout.manual_payment_method',
             'payment_method.card',
             'payment_method.payment_instrument',
             'payment_method.paypal_account',
@@ -87,6 +90,8 @@ export class ScSubscriptionNextPayment {
           <sc-subscription-details slot="summary" subscription={this.subscription}></sc-subscription-details>
         </div>
       );
+
+    const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
 
     return (
       <Host>
@@ -172,7 +177,7 @@ export class ScSubscriptionNextPayment {
               <span slot="description">{__('Payment', 'surecart')}</span>
               <a href={this.updatePaymentMethodUrl} slot="price-description">
                 <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-                  <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
+                  {manualPaymentMethod ? <sc-manual-payment-method paymentMethod={manualPaymentMethod} /> : <sc-payment-method paymentMethod={checkout?.payment_method} />}
                   <sc-icon name="edit-3"></sc-icon>
                 </sc-flex>
               </a>
