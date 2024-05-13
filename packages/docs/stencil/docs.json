@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-05-09T18:21:33",
+  "timestamp": "2024-05-13T16:56:44",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -31230,13 +31230,13 @@
         "sc-form",
         "sc-choices",
         "sc-button",
-        "sc-icon",
         "sc-choice",
         "sc-flex",
         "sc-payment-method",
         "sc-tag",
         "sc-manual-payment-method",
         "sc-dashboard-module",
+        "sc-icon",
         "sc-block-ui"
       ],
       "dependencyGraph": {
@@ -31249,13 +31249,13 @@
           "sc-form",
           "sc-choices",
           "sc-button",
-          "sc-icon",
           "sc-choice",
           "sc-flex",
           "sc-payment-method",
           "sc-tag",
           "sc-manual-payment-method",
           "sc-dashboard-module",
+          "sc-icon",
           "sc-block-ui"
         ],
         "sc-empty": [
