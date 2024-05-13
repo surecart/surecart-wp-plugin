@@ -6,7 +6,7 @@ $product_collections  = ProductCollection::get( array( 'per_page' => -1 ) );
 $block_id = $block->context["surecart/product-list/blockId"];
 $filter_key = \SureCart::block()->productUrlParams()->getKey( 'filter', $block_id );
 
-$options = array_map( function( $collection ) use ( $filter_key ) {
+$options = array_map( function( $collection ) use ( $filter_key, $block_id ) {
 	return [
 		'value' => $collection->id,
 		'label' => $collection->name,
