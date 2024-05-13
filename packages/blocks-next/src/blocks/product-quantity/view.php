@@ -1,6 +1,4 @@
-<div
-<?php echo get_block_wrapper_attributes(); ?>
->
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?> >
 	<label>
 		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Quantity', 'surecart' ) ); ?>
 	</label>
@@ -16,6 +14,7 @@
 			data-wp-bind--aria-valuemin="state.minQuantity"
 			data-wp-bind--max="state.maxQuantity"
 			data-wp-bind--aria-valuemax="state.maxQuantity"
+			data-wp-bind--disabled="state.isQuantityDisabled"
 			data-wp-bind--aria-disabled="state.isQuantityDisabled"
 			type="number"
 			step="1"

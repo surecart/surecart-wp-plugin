@@ -5,7 +5,7 @@ import { store, getContext } from '@wordpress/interactivity';
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
-const { state, callbacks, actions } = store('surecart/product', {
+const { state, callbacks, actions } = store('surecart/product-page', {
 	state: {
 		/**
 		 * Product contextual state.
@@ -258,6 +258,7 @@ const { state, callbacks, actions } = store('surecart/product', {
 		},
 	},
 	onQuantityChange: (e) => {
+		console.log('quantity changed');
 		const { ref } = getContext();
 		update({
 			quantity: Math.max(
@@ -267,6 +268,7 @@ const { state, callbacks, actions } = store('surecart/product', {
 		});
 	},
 	onQuantityDecrease: () => {
+		console.log('decrease');
 		if (state.isQuantityDisabled) return;
 
 		update({
@@ -274,6 +276,7 @@ const { state, callbacks, actions } = store('surecart/product', {
 		});
 	},
 	onQuantityIncrease: () => {
+		console.log('increasing quantity');
 		if (state.isQuantityDisabled) return;
 
 		update({

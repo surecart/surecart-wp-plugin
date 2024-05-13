@@ -7,8 +7,7 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"example": {},
-	"usesContext": ["surecart/product"],
+	"ancestor": ["surecart/product-page"],
 	"keywords": ["quantity", "form", "product"],
 	"attributes": {
 		"label": {

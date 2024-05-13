@@ -127,6 +127,10 @@ add_action('init', function() {
 			[
 				'id' => '@surecart/dialog',
 				'import' => 'dynamic'
+			],
+			[
+				'id' => '@wordpress/interactivity',
+				'import' => 'dynamic'
 			]
 		],
 		$static_assets['version']
