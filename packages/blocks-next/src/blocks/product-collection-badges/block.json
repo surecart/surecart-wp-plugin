@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-collection-badges-v2",
+	"title": "Product Collection Badges",
+	"description": "Displays collection selector for a product.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"attributes": {
+		"count": {
+			"type": "number",
+			"default": 1
+		},
+		"id": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"blockGap": {
+				"__experimentalDefault": "3px"
+			},
+			"__experimentalSkipSerialization": ["padding"],
+			"padding": ["horizontal", "vertical"]
+		},
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
+		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"radius": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"radius": true,
+				"color": true,
+				"width": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["file:../../styles/collection-badges.css"]
+}
