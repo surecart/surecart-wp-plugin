@@ -1,10 +1,11 @@
 import { useBlockProps, PlainText } from '@wordpress/block-editor';
-import { __ } from '@wordpress/i18n';
+import { __, isRTL } from '@wordpress/i18n';
+import Icon from '../../components/Icon';
 
-const arrowMap = {
+const ARROWS = {
 	none: '',
-	arrow: '→',
-	chevron: '»',
+	arrow: isRTL() ? 'arrow-left' : 'arrow-right',
+	chevron: isRTL() ? 'chevron-left' : 'chevron-right',
 };
 
 export default ({
@@ -12,7 +13,7 @@ export default ({
 	setAttributes,
 	context: { paginationArrow, showLabel },
 }) => {
-	const displayArrow = arrowMap[paginationArrow];
+	const displayArrow = ARROWS[paginationArrow];
 
 	const blockProps = useBlockProps({
 		className: 'has-arrow-type-' + paginationArrow,
@@ -30,13 +31,13 @@ export default ({
 					onChange={(newLabel) => setAttributes({ label: newLabel })}
 				/>
 			)}
-			{displayArrow && (
-				<span
-					className={`wp-block-surecart-product-pagination-previous__icon`}
+
+			{!!displayArrow && (
+				<Icon
+					name={displayArrow}
+					className={`wp-block-surecart-product-pagination-next__icon`}
 					aria-hidden={true}
-				>
-					{displayArrow}
-				</span>
+				/>
 			)}
 		</a>
 	);
