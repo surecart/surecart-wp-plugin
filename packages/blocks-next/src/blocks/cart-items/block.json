@@ -9,6 +9,7 @@
 	"example": {},
 	"textdomain": "surecart",
 	"ancestor": ["surecart/cart-v2"],
+	"usesContext": ["surecart/cart-v2/blockId"],
 	"attributes": {
 		"removable": {
 			"type": "boolean",
@@ -16,7 +17,7 @@
 		},
 		"editable": {
 			"type": "boolean",
-			"default": true
+			"default": false
 		},
 		"border": {
 			"type": "boolean",
@@ -64,10 +65,8 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css",
-		"file:../../styles/drawer.css",
-		"file:../../styles/cart.css"
+		"file:../../styles/line-item.css",
+		"file:../../styles/product-line-item.css"
 	],
 	"viewScriptModule": ["@surecart/dialog"]
 }
