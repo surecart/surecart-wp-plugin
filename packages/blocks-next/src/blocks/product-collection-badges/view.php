@@ -1,15 +1,14 @@
-<div class="is-layout-flex sc-product-collection-badges">
-	<?php foreach ( $collections as $collection ) { ?>
-		<a
-			class="sc-product-collection-badge"
-			href="<?php echo esc_url( $collection->permalink ); ?>"
-			class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
-			style="<?php echo esc_attr( $style ); ?>"
-		>
-			<span aria-hidden="true"><?php echo esc_html( $collection->name ); ?></span>
-			<?php // translators: %s: collection name. ?>
-			<span class="sc-screen-reader-text"><?php echo esc_html( sprintf( __( 'Link to %s product collection.', 'surecart' ), $collection->name ) ); ?></span>
-		</a>
-	<?php }?>
+<div
+	<?php echo get_block_wrapper_attributes( array( 'class' => 'is-layout-flex sc-product-collection-badges' ) ); ?>
+	<?php echo wp_interactivity_data_wp_context( array( 'collections' => $collections ) ); ?>
+>
+	<template
+		data-wp-each--collection="context.collections"
+		data-wp-key="context.collection.id"
+	>
+		<span>
+			<?php echo wp_kses_post( $content ); ?>
+		</span>
+	</template>
 </div>
 

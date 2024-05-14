@@ -1,48 +1,36 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-collection-badges-v2",
-	"title": "Product Collection Badges",
-	"description": "Displays collection selectors for a product.",
+	"name": "surecart/product-collection-badge",
+	"title": "Product Collection Badge",
+	"description": "Displays collection selector for a product.",
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"ancestor": ["surecart/product-page"],
-	"attributes": {
-		"count": {
-			"type": "number",
-			"default": 1
-		},
-		"id": {
-			"type": "string"
-		}
-	},
+	"ancestor": ["surecart/product-collection-badges-v2"],
+	"usesContext": ["surecart/productCollectionBadge/name"],
 	"supports": {
 		"interactivity": true,
-		"reusable": false,
-		"html": false,
-		"multiple": false,
-		"layout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"default": {
-				"type": "flex"
-			}
-		},
 		"color": {
 			"__experimentalSkipSerialization": true,
+			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
 				"text": true
-			}
+			},
+			"enableContrastChecker": true
 		},
 		"spacing": {
-			"blockGap": {
-				"__experimentalDefault": "3px"
-			},
-			"margin": ["top", "bottom"],
-			"__experimentalSkipSerialization": ["padding"],
-			"padding": ["horizontal", "vertical"]
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"lineHeight": true,
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
 		},
 		"__experimentalBorder": {
 			"width": true,

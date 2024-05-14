@@ -19,10 +19,15 @@ if ( ! empty( $attributes['count'] ) ) {
 	$collections = array_slice( $collections, 0, $attributes['count'] );
 }
 
-// get the styles & classes.
-$styles = sc_get_block_styles();
-$style = $styles['css'] ?? '';
-$classes = $styles['classnames'] ?? '';
+// map through the collections and update the screen reader text.
+foreach ( $collections as $collection ) {
+	$collection->screen_reader_text = sprintf(
+		/* translators: %s: collection name */
+		__( 'Link to %s product collection.', 'surecart' ),
+		$collection->name
+	);
+}
+
 
 // return the view.
 return 'file:./view.php';
