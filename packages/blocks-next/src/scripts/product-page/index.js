@@ -256,32 +256,29 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 				});
 			}
 		},
-	},
-	onQuantityChange: (e) => {
-		console.log('quantity changed');
-		const { ref } = getContext();
-		update({
-			quantity: Math.max(
-				Math.min(state.maxQuantity, parseInt(ref.value)),
-				state.minQuantity
-			),
-		});
-	},
-	onQuantityDecrease: () => {
-		console.log('decrease');
-		if (state.isQuantityDisabled) return;
+		onQuantityChange: (e) => {
+			const { ref } = getContext();
+			update({
+				quantity: Math.max(
+					Math.min(state.maxQuantity, parseInt(ref.value)),
+					state.minQuantity
+				),
+			});
+		},
+		onQuantityDecrease: () => {
+			if (state.isQuantityDisabled) return;
 
-		update({
-			quantity: Math.max(state.minQuantity, state.quantity - 1),
-		});
-	},
-	onQuantityIncrease: () => {
-		console.log('increasing quantity');
-		if (state.isQuantityDisabled) return;
+			update({
+				quantity: Math.max(state.minQuantity, state.quantity - 1),
+			});
+		},
+		onQuantityIncrease: () => {
+			if (state.isQuantityDisabled) return;
 
-		update({
-			quantity: Math.min(state.maxQuantity, state.quantity + 1),
-		});
+			update({
+				quantity: Math.min(state.maxQuantity, state.quantity + 1),
+			});
+		},
 	},
 });
 
