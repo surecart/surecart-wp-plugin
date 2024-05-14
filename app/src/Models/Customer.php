@@ -199,4 +199,17 @@ class Customer extends Model {
 			$this->attributes['user'] = $this->getUser();
 		}
 	}
+
+	/**
+	 * Get the billing address attribute
+	 *
+	 * @return array|null The billing address.
+	 */
+	public function getBillingAddressDisplayAttribute() {
+		if ( $this->billing_matches_shipping ) {
+			return $this->shipping_address;
+		}
+
+		return $this->attributes['billing_address'] ?? null;
+	}
 }

@@ -348,7 +348,7 @@ class Checkout extends Model {
 	 *
 	 * @return array|null The billing address.
 	 */
-	public function getBillingAddressAttribute() {
+	public function getBillingAddressDisplayAttribute() {
 		if ( $this->billing_matches_shipping ) {
 			return $this->shipping_address;
 		}

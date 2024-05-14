@@ -1071,6 +1071,7 @@ export interface Customer extends Object {
   last_name?: string;
   phone?: string;
   billing_address?: string | Address;
+  billing_address_display?: string | Address;
   shipping_address?: string | Address;
   billing_matches_shipping: boolean;
   live_mode: boolean;

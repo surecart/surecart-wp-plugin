@@ -24,9 +24,9 @@ export default ({ order, checkout, customer, loading }) => {
 					label={__('Shipping & Tax Address', 'surecart')}
 				/>
 			)}
-			{!!checkout?.billing_address && (
+			{!!checkout?.billing_address_display && (
 				<Address
-					address={checkout?.billing_address}
+					address={checkout?.billing_address_display}
 					label={__('Billing Address', 'surecart')}
 				/>
 			)}
