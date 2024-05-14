@@ -66,7 +66,7 @@ const { state } = store('surecart/product-list', {
 				state.loading = false;
 
 				const firstAnchor = queryRef.querySelector(
-					'.product-item a[href]'
+					'.sc-product-item a[href]'
 				);
 				// Focus the first anchor of the Query block.
 				// this may move the browser window to the top of the page if it is offscreen.
