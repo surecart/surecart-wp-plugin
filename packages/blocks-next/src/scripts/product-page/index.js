@@ -257,10 +257,9 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 			}
 		},
 		onQuantityChange: (e) => {
-			const { ref } = getContext();
 			update({
 				quantity: Math.max(
-					Math.min(state.maxQuantity, parseInt(ref.value)),
+					Math.min(state.maxQuantity, parseInt(e.target.value)),
 					state.minQuantity
 				),
 			});
