@@ -19,7 +19,7 @@ import ProductsDataTable from '../../../components/data-tables/affiliates/produc
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
 import useSave from '../../../settings/UseSave';
 import ConfirmDelete from './ConfirmDelete';
-import EmptyCommissions from './EmptyCommissions';
+import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
 import GuideModal from '../../../components/affiliates/commission/GuideModal';
 import { ScButton, ScIcon } from '@surecart/components-react';
 
@@ -80,11 +80,8 @@ export default ({ affiliationId }) => {
 		});
 	};
 
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		e.stopImmediatePropagation();
+	const onSubmit = async () =>
 		affiliationProduct?.id ? await onEdit() : await onCreate();
-	};
 
 	const { affiliationProducts, loading, fetching } = useSelect(
 		(select) => {
@@ -247,7 +244,15 @@ export default ({ affiliationId }) => {
 				perPage={perPage}
 				page={page}
 				setPage={setPage}
-				empty={<EmptyCommissions openModal={openCreateModal} />}
+				empty={
+					<EmptyCommissions
+						message={__(
+							'Add a product-specific commission for this affiliate.',
+							'surecart'
+						)}
+						openModal={openCreateModal}
+					/>
+				}
 				footer={
 					affiliationProducts.length > 0 ? (
 						<ScButton onClick={openCreateModal}>
@@ -285,6 +290,11 @@ export default ({ affiliationId }) => {
 					affiliationProduct?.id
 						? __('Edit Product Commission', 'surecart')
 						: __('New Product Commission', 'surecart')
+				}
+				submitButtonTitle={
+					affiliationProduct?.id
+						? __('Save', 'surecart')
+						: __('Create', 'surecart')
 				}
 				hasProduct={true}
 				error={error}

@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
@@ -13,15 +13,13 @@ import {
 	ScInput,
 	ScSelect,
 	ScDialog,
-	ScRadioGroup,
-	ScRadio,
-	ScPriceInput,
 	ScButton,
 	ScIcon,
 } from '@surecart/components-react';
 import { useCopyToClipboard } from '@wordpress/compose';
 import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
+import CommissionStructure from '../../components/affiliates/commission/CommissionStructure';
 
 export default () => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -34,12 +32,6 @@ export default () => {
 		editItem: editAffiliationProtocolItem,
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
-
-	const type = affiliationProtocolItem?.amount_commission
-		? 'fixed'
-		: 'percentage';
-
-	const [commisionType, setCommisionType] = useState(null);
 
 	const signupsUrl = `https://affiliates.surecart.com/join/${scData?.account_slug}`;
 	const successFunction = () => {
@@ -54,9 +46,6 @@ export default () => {
 		trackingScript,
 		successFunction
 	);
-	useEffect(() => {
-		setCommisionType(type);
-	}, [type]);
 
 	/**
 	 * Form is submitted.
@@ -386,164 +375,24 @@ export default () => {
 				)}
 				loading={!hasLoadedAffiliationProtocolItem}
 			>
-				<ScRadioGroup
-					label={__('Select a commission type', 'surecart')}
-					onScChange={(e) => setCommisionType(e.target.value)}
-				>
-					<ScRadio
-						value="percentage"
-						checked={commisionType === 'percentage'}
-					>
-						{__('Percentage', 'surecart')}
-					</ScRadio>
-					<ScRadio value="fixed" checked={commisionType === 'fixed'}>
-						{__('Flat Rate', 'surecart')}
-					</ScRadio>
-				</ScRadioGroup>
-				{commisionType === 'percentage' ? (
-					<ScInput
-						type="number"
-						min="0"
-						disabled={commisionType !== 'percentage'}
-						max="100"
-						attribute="percent_commission"
-						label={__('Percent Commission', 'surecart')}
-						value={
-							affiliationProtocolItem?.percent_commission || null
-						}
-						onScInput={(e) => {
-							editAffiliationProtocolItem({
-								percent_commission: e.target.value,
-								amount_commission: null,
-							});
-						}}
-					>
-						<span slot="suffix">%</span>
-					</ScInput>
-				) : (
-					<ScPriceInput
-						currencyCode={scData?.currency}
-						disabled={commisionType === 'percentage'}
-						attribute="amount_commission"
-						label={__('Amount Commission', 'surecart')}
-						value={
-							affiliationProtocolItem?.amount_commission ||
-							null ||
-							null
-						}
-						onScInput={(e) => {
-							editAffiliationProtocolItem({
-								amount_commission: e.target.value,
-								percent_commission: null,
-							});
-						}}
-					/>
-				)}
-				<ScSwitch
-					checked={
+				<CommissionStructure
+					commissionStructure={
+						affiliationProtocolItem?.commission_structure
+					}
+					onChangeStructure={(value) => {
+						editAffiliationProtocolItem({
+							commission_structure: {
+								...affiliationProtocolItem?.commission_structure,
+								...value,
+							},
+						});
+					}}
+					onEditAffiliationProtocolItem={editAffiliationProtocolItem}
+					zeroCommissionAmountReferral={
 						affiliationProtocolItem?.zero_commission_amount_referrals_enabled
 					}
-					onClick={(e) => {
-						e.preventDefault();
-						editAffiliationProtocolItem({
-							zero_commission_amount_referrals_enabled:
-								!affiliationProtocolItem?.zero_commission_amount_referrals_enabled,
-						});
-					}}
-				>
-					{__('Zero Commission Referrals', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Whether or not to create a referral from a checkout when the resulting referral has a commission of zero. This is useful for tracking referrals that do not have a commission, such as when a customer uses a coupon code.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-				<ScSwitch
-					checked={
-						affiliationProtocolItem?.recurring_commissions_enabled
-					}
-					onClick={(e) => {
-						e.preventDefault();
-						editAffiliationProtocolItem({
-							recurring_commissions_enabled:
-								!affiliationProtocolItem?.recurring_commissions_enabled,
-						});
-					}}
-				>
-					{__('Subscription Commissions', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Do you want to award commissions on subscription renewal payments?',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-				{affiliationProtocolItem?.recurring_commissions_enabled && (
-					<ScInput
-						label={__(
-							'Subscription Commission Duration',
-							'surecart'
-						)}
-						help={__(
-							'For how long should subscription commissions be awarded? (Leave empty if you want to award commissions forever.)',
-							'surecart'
-						)}
-						type="number"
-						onScInput={(e) => {
-							e.preventDefault();
-							editAffiliationProtocolItem({
-								recurring_commission_days: e.target.value,
-							});
-						}}
-						value={
-							affiliationProtocolItem?.recurring_commission_days
-						}
-					>
-						<span slot="suffix">{__('Days', 'surecart')}</span>
-					</ScInput>
-				)}
-				<ScSwitch
-					checked={
-						affiliationProtocolItem?.repeat_customer_commissions_enabled
-					}
-					onClick={(e) => {
-						e.preventDefault();
-						editAffiliationProtocolItem({
-							repeat_customer_commissions_enabled:
-								!affiliationProtocolItem?.repeat_customer_commissions_enabled,
-						});
-					}}
-				>
-					{__('Lifetime Commissions', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Do you want to award commissions on future purchases?',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-				{affiliationProtocolItem?.repeat_customer_commissions_enabled && (
-					<ScInput
-						label={__('Lifetime Commission Duration', 'surecart')}
-						help={__(
-							'For how long should future purchase commissions be awarded? (Leave empty if you want to award commission forever.)',
-							'surecart'
-						)}
-						type="number"
-						onScInput={(e) => {
-							e.preventDefault();
-							editAffiliationProtocolItem({
-								repeat_customer_commission_days: e.target.value,
-							});
-						}}
-						value={
-							affiliationProtocolItem?.repeat_customer_commission_days
-						}
-					>
-						<span slot="suffix">{__('Days', 'surecart')}</span>
-					</ScInput>
-				)}
+				/>
+
 				<ScTextarea
 					label={__('Payout Instructions', 'surecart')}
 					help={__(
