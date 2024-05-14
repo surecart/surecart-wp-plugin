@@ -12,6 +12,12 @@
 		animation-fill-mode: both;
 		animation-name: fadeInUp;
 		animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+		@for $i from 2 through 10 {
+			&:nth-child(#{$i}n) {
+				animation-delay: #{$i * 0.025}s;
+			}
+		}
 	}
 }
 
