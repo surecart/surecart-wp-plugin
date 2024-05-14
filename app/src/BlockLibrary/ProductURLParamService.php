@@ -35,7 +35,6 @@ class ProductURLParamService {
      */
     public function addFilterArg( $key, $value, $block_id ) {
        $key = $this->getKey( $key, $block_id );
-       error_log( 'key: ' . $key );
        return \SureCart::block()->urlParams()->addFilterArg( $key, $value );
     }
 }
