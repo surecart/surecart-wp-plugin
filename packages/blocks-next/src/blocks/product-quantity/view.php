@@ -1,8 +1,12 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?> >
-	<label>
+<div <?php echo get_block_wrapper_attributes(); ?> >
+	<label class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Quantity', 'surecart' ) ); ?>
 	</label>
-	<div class="sc-quantity-selector" style="<?php echo esc_attr( $styles['border']['css'] ?? '' ); ?>">
+	<div
+		class="sc-quantity-selector"
+		style="<?php echo esc_attr( $styles['border']['css'] ?? '' ); ?>"
+		data-wp-class--quantity--disabled="state.isQuantityDisabled"
+	>
 		<div role="button" class="sc-quantity-selector__decrease" data-wp-on--click="callbacks.onQuantityDecrease">
 			<?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
 		</div>

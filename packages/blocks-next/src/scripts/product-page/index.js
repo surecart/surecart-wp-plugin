@@ -22,9 +22,6 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		get variantValues() {
 			return callbacks.getState('variantValues');
 		},
-		get quantity() {
-			return callbacks.getState('quantity') || 1;
-		},
 		get busy() {
 			return callbacks.getState('busy');
 		},
@@ -35,6 +32,12 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		/**
 		 * Derived state
 		 */
+		/** Get the product quantity */
+		get quantity() {
+			if (state?.selectedPrice?.ad_hoc) return 1;
+
+			return callbacks.getState('quantity') || 1;
+		},
 		/** Get the selected amount. */
 		get selectedAmount() {
 			return (
