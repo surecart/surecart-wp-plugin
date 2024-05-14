@@ -15,16 +15,6 @@ class ProductURLParamService {
     protected $prefix = 'products';
 	
     /**
-     * Get the current block ID.
-     * 
-     * @return int
-     */
-    public function getCurrentBlockId() {
-        $block = \WP_Block_Supports::$block_to_render;
-        return (int) $block->context["surecart/product-list/blockId"] ?? '';
-    }
-
-    /**
      * Get a unique key for a block.
      *  
      * @param  string $unique_id Unique ID.
