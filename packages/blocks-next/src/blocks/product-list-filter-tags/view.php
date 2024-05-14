@@ -29,6 +29,10 @@ $product_collections = array_map(function($collection) use ($filter_key, $filter
 	];
 }, $product_collections ?? [] );
 
+if (empty($product_collections)) {
+	return;
+}
+
 ?>
 <div
     <?php echo get_block_wrapper_attributes(); ?>
