@@ -71,6 +71,7 @@ export default ({ attributes, setAttributes }) => {
 					<input
 						className="sc-quantity-selector__control"
 						value={0}
+						type="number"
 					/>
 					<button className="sc-quantity-selector__increase">
 						<svg
