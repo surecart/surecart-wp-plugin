@@ -78,7 +78,9 @@ export default function ({
 								'surecart'
 							)}
 						>
-							{commissionStructure.subscription_commission || '-'}
+							{commissionStructure.subscription_commission || (
+								<ScIcon name="x" />
+							)}
 						</Definition>
 						<Definition
 							title={__(
@@ -86,7 +88,9 @@ export default function ({
 								'surecart'
 							)}
 						>
-							{commissionStructure.lifetime_commission || '-'}
+							{commissionStructure.lifetime_commission || (
+								<ScIcon name="x" />
+							)}
 						</Definition>
 					</>
 				) : (

@@ -36,6 +36,7 @@ import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
 import Url from './modules/Url';
 import Products from './modules/affiliation-products';
+import Commission from './modules/Commission';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -43,16 +44,19 @@ export default ({ id }) => {
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
 			const entityData = ['surecart', 'affiliation', id];
 			return {
-				affiliation: select(coreStore).getEntityRecord(...entityData),
-				hasLoadedAffiliation: select(
-					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
+				affiliation: select(coreStore).getEditedEntityRecord(
+					...entityData
+				),
+				hasLoadedAffiliation: select(coreStore).hasFinishedResolution(
+					'getEditedEntityRecord',
+					entityData
+				),
 			};
 		},
 		[id]
@@ -68,12 +72,15 @@ export default ({ id }) => {
 	 */
 	const onSubmit = async () => {
 		try {
+			setLoading(true);
 			await save({
 				successMessage: __('Affiliate updated.', 'surecart'),
 			});
 		} catch (e) {
 			console.error(e);
 			setError(e);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -152,6 +159,9 @@ export default ({ id }) => {
 			setLoading(false);
 		}
 	};
+
+	const updateAffiliation = (data) =>
+		editEntityRecord('surecart', 'affiliation', id, data);
 
 	return (
 		<UpdateModel
@@ -239,6 +249,10 @@ export default ({ id }) => {
 					<Url
 						url={affiliation?.referral_url}
 						code={affiliation?.code}
+					/>
+					<Commission
+						affiliation={affiliation}
+						loading={!hasLoadedAffiliation || loading}
 					/>
 				</>
 			}
