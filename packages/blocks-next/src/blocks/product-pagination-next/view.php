@@ -2,6 +2,7 @@
 	<?php echo get_block_wrapper_attributes(['class' => 'has-arrow-type-' . esc_attr($pagination_arrow)]); ?>
 	data-wp-bind--href="context.nextPageLink"
 	data-wp-class--disabled="!context.nextPageLink"
+	data-wp-bind--aria-disabled="!context.nextPageLink"
 	data-wp-on--click="surecart/product-list::actions.navigate"
 	data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
 	>
