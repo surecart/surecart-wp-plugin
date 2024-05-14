@@ -25,13 +25,13 @@
                         <div class="sc-product-line-item__description sc-product-line-item__price-variant">
                             <div data-wp-text="context.line_item.price.name"></div>
                         </div>
-                        <?php if (!$attributes['editable']): ?>
+                        <?php if ( ! $attributes['editable'] ): ?>
                             <span class="sc-product-line-item__description">
-                                <?php _e('Qty:', 'surecart'); ?>
+                                <?php esc_html_e('Qty:', 'surecart'); ?>
                                 <span data-wp-text="context.line_item.quantity"></span>
                             </span>
                         <?php endif; ?>
-                        <?php if ($attributes['editable']): ?>
+                        <?php if ( $attributes['editable'] ): ?>
                             <div class="sc-quantity-selector quantity--small" style="margin-top: var(--sc-spacing-xx-small);">
                                 <div role="button" class="sc-quantity-selector__decrease">
                                     <?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
@@ -56,20 +56,20 @@
                     </div>
                 </div>
                 <div class="sc-product-line-item__suffix">
-                    <?php if ($attributes['removable']): ?>
+                    <?php if ( $attributes['removable'] ): ?>
                         <?php echo wp_kses( SureCart::svg()->get('x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
                     <?php endif; ?>
 
                     <div class="sc-product-line-item__price">
                         <div class="price">
                             <span
-                                data-wp-hidden="contex.line_item.price.scratchAmount !== contex.line_item.price.amount"
+                                data-wp-bind--hidden="contex.line_item.price.scratchAmount !== contex.line_item.price.amount"
                                 data-wp-text="contex.line_item.price.scratchAmount"
                             ></span>
-                            <span data-wp-text="context.line_item.price.amount"></span>
+                            <span data-wp-text="context.line_item.price.display_amount"></span>
                         </div>
                         <div
-                            data-wp-hidden="!contex.line_item.price.interval"
+                            data-wp-bind--hidden="!contex.line_item.price.interval"
                             class="sc-product-line-item__price__description"
                             data-wp-text="contex.line_item.price.interval"
                         >

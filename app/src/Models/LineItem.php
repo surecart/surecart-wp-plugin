@@ -4,6 +4,7 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasPrice;
+use SureCart\Support\Currency;
 
 /**
  * Price model
@@ -73,5 +74,88 @@ class LineItem extends Model {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Get the currency attribute.
+	 *
+	 * TODO: Remove this method once currency added on line item.
+	 *
+	 * @return string
+	 */
+	public function getCurrencyAttribute() {
+		return $this->checkout->currency ?? \SureCart::account()->currency;
+	}
+
+	/**
+	 * Get the display ad hoc amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayAdhocAmountAttribute() {
+		return empty( $this->ad_hoc_amount ) ? '' : Currency::format( $this->ad_hoc_amount, $this->currency );
+	}
+
+	/**
+	 * Get the bump amount display attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayBumpAmountAttribute() {
+		return empty( $this->bump_amount ) ? '' : Currency::format( $this->bump_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display scratch amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayScratchAmountAttribute() {
+		return  empty( $this->scratch_amount ) ? '' : Currency::format( $this->scratch_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display tax amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayTaxAmountAttribute() {
+		return  empty( $this->tax_amount ) ? '' : Currency::format( $this->tax_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplaySubtotalAmountAttribute() {
+		return  empty( $this->subtotal_amount ) ? '' : Currency::format( $this->subtotal_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display total amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayTotalAmountAttribute() {
+		return  empty( $this->total_amount ) ? '' : Currency::format( $this->total_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display full amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayFullAmountAttribute() {
+		return  empty( $this->full_amount ) ? '' : Currency::format( $this->full_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display trial amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayTrialAmountAttribute() {
+		return  empty( $this->trial_amount ) ? '' : Currency::format( $this->trial_amount, $this->currency );
 	}
 }

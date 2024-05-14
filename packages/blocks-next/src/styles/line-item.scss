@@ -1,8 +1,5 @@
 .sc-line-item {
 	display: block;
-
-	--mobile-size: 380px;
-	--price-size: var(--sc-font-size-medium);
 	line-height: var(--sc-line-height-dense);
 
 	&__item {
@@ -17,21 +14,21 @@
 		}
 	}
 
-	&__item__title {
+	&__title {
 		color: var(--sc-line-item-title-color);
 	}
-	&__item__price {
+	&__price {
 		color: var(--sc-input-label-color);
 	}
 
-	&__item__title,
-	&__item__price {
+	&__title,
+	&__price {
 		font-size: var(--sc-font-size-medium);
 		font-weight: var(--sc-font-weight-semibold);
 	}
 
-	&__item__description,
-	&__item__price-description {
+	&__description,
+	&__price-description {
 		font-size: var(--sc-font-size-small);
 		line-height: var(--sc-line-height-dense);
 		color: var(--sc-input-label-color);
@@ -43,7 +40,7 @@
 	// 	text-decoration: none;
 	// }
 
-	&__item__end {
+	&__end {
 		flex: 1;
 		display: flex;
 		align-items: center;
@@ -55,34 +52,34 @@
 	}
 
 	@media screen and (min-width: 280px) {
-		&__item__end {
+		&__end {
 			width: auto;
 			text-align: right;
 			margin-left: 20px;
 			margin-top: 0;
 		}
 
-		&__item--is-rtl &__item__end {
+		&__item--is-rtl &__end {
 			margin-left: 0;
 			margin-right: 20px;
 		}
-		&__item__price-text {
+		&__price-text {
 			text-align: right;
 		}
 	}
 
-	&__item__price-currency {
+	&__price-currency {
 		font-size: var(--sc-font-size-small);
 		color: var(--sc-input-label-color);
 		text-transform: var(--sc-currency-transform, uppercase);
 		margin-right: 8px;
 	}
 
-	&__item__text {
+	&__text {
 		flex: 1;
 	}
 
-	&__item__price-description {
+	&__price-description {
 		display: -webkit-box;
 	}
 
@@ -103,14 +100,14 @@
 	// 	line-height: 1;
 	// }
 
-	&__item__price-layout {
+	&__price-layout {
 		font-size: var(--sc-font-size-x-large);
 		font-weight: var(--sc-font-weight-semibold);
 		display: flex;
 		align-items: center;
 	}
 
-	&__item__price {
+	&__price {
 		font-size: var(--price-size);
 	}
 
@@ -123,24 +120,24 @@
 	}
 
 	&__item--is-rtl {
-		&__item__description,
-		&__item__price-description {
+		&__description,
+		&__price-description {
 			text-align: right;
 		}
 
-		&__item__text {
+		&__text {
 			text-align: right;
 		}
 
 		@media screen and (min-width: 280px) {
-			&__item__end {
+			&__end {
 				width: auto;
 				text-align: left;
 				margin-left: 0;
 				margin-top: 0;
 			}
 
-			&__item__price-text {
+			&__price-text {
 				text-align: left;
 			}
 		}

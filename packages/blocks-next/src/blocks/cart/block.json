@@ -32,7 +32,11 @@
 			"blockGap": true
 		}
 	},
-	"allowedBlocks": ["surecart/cart-header-v2", "surecart/cart-items-v2"],
+	"allowedBlocks": [
+		"surecart/cart-header-v2",
+		"surecart/cart-items-v2",
+		"surecart/cart-coupon-v2"
+	],
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",

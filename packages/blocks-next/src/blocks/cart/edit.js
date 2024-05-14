@@ -22,7 +22,11 @@ import {
 import { TEMPLATE } from './template';
 
 export default ({ attributes: { width }, setAttributes }) => {
-	const allowedBlocks = ['surecart/cart-header-v2', 'surecart/cart-items-v2'];
+	const allowedBlocks = [
+		'surecart/cart-header-v2',
+		'surecart/cart-items-v2',
+		'surecart/cart-coupon-v2',
+	];
 
 	const blockProps = useBlockProps({
 		style: {
