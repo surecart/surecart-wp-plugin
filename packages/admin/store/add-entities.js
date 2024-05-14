@@ -370,6 +370,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'payout-group',
+		kind: 'surecart',
+		label: __('Payout Groups', 'surecart'),
+		baseURL: '/surecart/v1/payout_groups',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'shipping-profile',
 		kind: 'surecart',
 		label: __('Shipping Profile', 'surecart'),

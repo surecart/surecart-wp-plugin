@@ -38,12 +38,7 @@ export default ({ prices, product, children }) => {
 				{(prices || []).map((price) => {
 					return (
 						<SortableItem key={price.id}>
-							<div
-								css={css`
-									padding-top: var(--sc-spacing-x-small);
-									padding-bottom: var(--sc-spacing-x-small);
-								`}
-							>
+							<div>
 								<Price price={price} product={product} />
 							</div>
 						</SortableItem>

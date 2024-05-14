@@ -12,6 +12,7 @@ import {
   hasOtherAvailableCreditCardProcessor,
 } from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
+import { MockProcessor } from './MockProcessor';
 
 /**
  * @part base - The elements base wrapper.
@@ -98,6 +99,10 @@ export class ScPayment {
     );
   }
 
+  renderMock(processor) {
+    return <MockProcessor processor={processor} />;
+  }
+
   renderPaystack(processor) {
     const title = hasOtherAvailableCreditCardProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
 
@@ -178,6 +183,8 @@ export class ScPayment {
                     return this.renderPayPal(processor);
                   case 'paystack':
                     return this.renderPaystack(processor);
+                  case 'mock':
+                    return this.renderMock(processor);
                 }
               })}
               <ManualPaymentMethods methods={availableManualPaymentMethods()} />

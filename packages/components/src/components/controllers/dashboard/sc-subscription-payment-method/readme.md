@@ -25,12 +25,13 @@
 - [sc-form](../../../ui/form)
 - [sc-choices](../../../ui/choices)
 - [sc-button](../../../ui/button)
-- [sc-icon](../../../ui/icon)
 - [sc-choice](../../../ui/choice)
 - [sc-flex](../../../ui/flex)
 - [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-tag](../../../ui/tag)
+- [sc-manual-payment-method](../../../ui/sc-manual-payment-method)
 - [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-icon](../../../ui/icon)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -44,12 +45,13 @@ graph TD;
   sc-subscription-payment-method --> sc-form
   sc-subscription-payment-method --> sc-choices
   sc-subscription-payment-method --> sc-button
-  sc-subscription-payment-method --> sc-icon
   sc-subscription-payment-method --> sc-choice
   sc-subscription-payment-method --> sc-flex
   sc-subscription-payment-method --> sc-payment-method
   sc-subscription-payment-method --> sc-tag
+  sc-subscription-payment-method --> sc-manual-payment-method
   sc-subscription-payment-method --> sc-dashboard-module
+  sc-subscription-payment-method --> sc-icon
   sc-subscription-payment-method --> sc-block-ui
   sc-empty --> sc-icon
   sc-choices --> sc-form-control
@@ -62,6 +64,7 @@ graph TD;
   sc-payment-method --> sc-cc-logo
   sc-payment-method --> sc-text
   sc-cc-logo --> sc-icon
+  sc-manual-payment-method --> sc-prose
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
