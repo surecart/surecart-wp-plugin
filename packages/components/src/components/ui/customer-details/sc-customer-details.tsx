@@ -44,6 +44,8 @@ export class ScCustomerDetails {
       return this.renderEmpty();
     }
 
+    const billingAddress = (this?.customer?.billing_matches_shipping ? this.customer?.shipping_address : this.customer?.billing_address) || {};
+
     return (
       <sc-card no-padding>
         <sc-stacked-list>
@@ -67,7 +69,7 @@ export class ScCustomerDetails {
             </sc-stacked-list-row>
           )}
           {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(__('Shipping Address', 'surecart'), this.customer.shipping_address)}
-          {!!Object.keys(this?.customer?.billing_address || {}).length && this.renderAddress(__('Billing Address', 'surecart'), this.customer.billing_address)}
+          {!!Object.keys(billingAddress).length && this.renderAddress(__('Billing Address', 'surecart'), billingAddress)}
           {!!this?.customer?.phone && (
             <sc-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
               <div>

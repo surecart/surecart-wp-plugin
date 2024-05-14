@@ -162,7 +162,11 @@ export default () => {
 						}
 					/>
 					<BillingAddress
-						billingAddress={customer.billing_address}
+						billingAddress={
+							customer?.billing_matches_shipping
+								? customer?.shipping_address
+								: customer?.billing_address
+						}
 						loading={!hasLoadedCustomer}
 						onEditAddress={() =>
 							setCurrentModal(modals.EDIT_BILLING_ADDRESS)
