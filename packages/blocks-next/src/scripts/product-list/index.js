@@ -111,6 +111,7 @@ const { state } = store('surecart/product-list', {
 				url.searchParams.delete(`products-${blockId}-search`);
 				actions.navigate(url.toString());
 				state.loading = false;
+				state.searchLoading = false;
 				return;
 			}
 			throttledSearch(ref?.value, routerState, actions, blockId);
