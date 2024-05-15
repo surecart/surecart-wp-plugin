@@ -1,7 +1,7 @@
 import { Component, Fragment, h, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Checkout } from '../../../../types';
-import { state as checkoutState } from '@store/checkout';
+import { state as checkoutState, onChange } from '@store/checkout';
 import { formLoading } from '@store/form/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
@@ -65,14 +65,22 @@ export class ScOrderBillingAddress {
     return this.input?.reportValidity?.();
   }
 
+  prefillAddress() {
+    // check if address keys are empty, if so, update them.
+    const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
+    const emptyAddressKeys = addressKeys.filter(key => !this.address[key]);
+    if (emptyAddressKeys.length === addressKeys.length) {
+      this.address = { ...this.address, ...(checkoutState.checkout?.billing_address as Address) };
+    }
+  }
+
   componentWillLoad() {
     if (this.defaultCountry && !this.address.country) {
       this.address.country = this.defaultCountry;
     }
 
-    if (checkoutState.checkout?.billing_address) {
-      this.address = checkoutState.checkout.billing_address;
-    }
+    this.prefillAddress();
+    onChange('checkout', () => this.prefillAddress());
   }
 
   async updateAddressState(address: Partial<Address>) {
