@@ -20,7 +20,7 @@ test.describe('Product Page With Variant', () => {
 		product = await createVariantProduct(requestUtils);
 	});
 
-	test('Loads variant and price selector', async ({ page, requestUtils }) => {
+	test('Loads variant and price selector', async ({ page }) => {
 		await page.goto(product?.permalink);
 		// Wait for the page to load.
 		await page.waitForLoadState('networkidle');
