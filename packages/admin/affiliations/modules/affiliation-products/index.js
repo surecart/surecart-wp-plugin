@@ -183,6 +183,11 @@ export default ({ affiliationId }) => {
 		setModal('delete');
 	};
 
+	const onDeleted = () => {
+		setModal(false);
+		setPage(1);
+	};
+
 	const productTitleRender = () => {
 		return (
 			<>
@@ -300,6 +305,7 @@ export default ({ affiliationId }) => {
 				onRequestClose={() => setModal(false)}
 				affiliationId={affiliationId}
 				affiliationProductId={affiliationProduct?.id}
+				onDeleted={onDeleted}
 			/>
 
 			<GuideModal
