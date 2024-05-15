@@ -24,27 +24,25 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
-// Custom debounce function
-const debounce = (func, delay) => {
-	let timerId;
+const throttle = (func, delay) => {
+	let lastCall = 0;
 	return function (...args) {
-		if (timerId) {
-			clearTimeout(timerId);
-		}
-		timerId = setTimeout(() => {
+		const now = new Date().getTime();
+		if (now - lastCall >= delay) {
+			lastCall = now;
 			func(...args);
-		}, delay);
+		}
 	};
 };
-
 // Define a debounced version of the search function
-const debouncedSearch = debounce((term, routerState, actions, blockId) => {
+const throttledSearch = throttle((term, routerState, actions, blockId) => {
 	// Perform your search operation here, e.g., fetch data from an API
 	console.log('Performing search for:', term);
 	const url = new URL(routerState?.url);
 	url.searchParams.set(`products-${blockId}-search`, term);
 	actions.navigate(url.toString());
-}, 200); // 200ms debounce delay
+	state.loading = false;
+}, 100);
 
 const { state } = store('surecart/product-list', {
 	state: {
@@ -104,12 +102,17 @@ const { state } = store('surecart/product-list', {
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
 			);
+			state.loading = true;
 			const { ref } = getElement();
 			const { blockId } = getContext();
 			if (!ref || !ref.value) {
+				const url = new URL(routerState?.url);
+				url.searchParams.delete(`products-${blockId}-search`);
+				actions.navigate(url.toString());
+				state.loading = false;
 				return;
 			}
-			debouncedSearch(ref?.value, routerState, actions, blockId);
+			throttledSearch(ref?.value, routerState, actions, blockId);
 		},
 	},
 
