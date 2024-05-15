@@ -181,7 +181,7 @@ export default ({
 					</ScSwitch>
 				)}
 
-				{immediateUpdate && !!upcoming?.checkout?.proration_amount && (
+				{immediateUpdate && !!upcoming?.checkout?.subtotal_amount && (
 					<>
 						<div
 							css={css`
