@@ -24,32 +24,56 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
-const throttle = (func, delay) => {
-	let lastCall = 0;
-	return function (...args) {
-		const now = new Date().getTime();
-		if (now - lastCall >= delay) {
-			lastCall = now;
-			func(...args);
-		}
+/** Debounce function that returns a promise when callback is complete. */
+function debounce(func, delay) {
+	let timeoutId;
+	return function () {
+		return new Promise((resolve) => {
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+				func.apply(this, arguments);
+				resolve();
+			}, delay);
+		});
 	};
-};
+}
+
 // Define a debounced version of the search function
-const throttledSearch = throttle((term, routerState, actions, blockId) => {
-	const url = new URL(routerState?.url);
-	url.searchParams.set(`products-${blockId}-search`, term);
-	actions.navigate(url.toString()).then(() => {
-		state.loading = false;
-		state.searchLoading = false;
-	});
-}, 100);
+const debouncedSearch = debounce(
+	async (term, routerState, actions, blockId) => {
+		// Get the current URL.
+		const url = new URL(routerState?.url);
+
+		// reset to page 1.
+		url.searchParams.delete(`products-${blockId}-page`);
+
+		// set param or delete it if term is empty
+		term
+			? url.searchParams.set(`products-${blockId}-search`, term)
+			: url.searchParams.delete(`products-${blockId}-search`);
+
+		// Navigate to the new URL.
+		return await actions.navigate(url.toString());
+	},
+	500
+);
 
 const { state } = store('surecart/product-list', {
 	state: {
+		/** Are we loading */
 		loading: false,
-		searchLoading: false,
+
+		/** Are we searching? */
+		searching: false,
+
+		/** Loading indicator visibility */
+		get searchLoadingVisibility() {
+			return state.searching ? 'visible' : 'hidden';
+		},
 	},
+
 	actions: {
+		/** Navigate to a url using the router region. */
 		*navigate(event) {
 			const { ref } = getElement();
 			const queryRef = ref.closest('[data-wp-router-region]');
@@ -72,7 +96,7 @@ const { state } = store('surecart/product-list', {
 				firstAnchor?.focus();
 			}
 		},
-
+		/** Prefetch upcoming urls. */
 		*prefetch() {
 			const { ref } = getElement();
 			if (isValidLink(ref)) {
@@ -83,42 +107,29 @@ const { state } = store('surecart/product-list', {
 				yield actions.prefetch(ref.href);
 			}
 		},
-
-		*onSearchClear(event) {
-			if (!event.target.value) {
-				const { actions, state: routerState } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-				const { blockId } = getContext();
-				const url = new URL(routerState?.url);
-				url.searchParams.delete(`products-${blockId}-search`);
-				actions.navigate(url.toString());
-			}
-		},
+		/** Handle search input. */
 		*onSearchInput(event) {
 			event.preventDefault();
 			const { actions, state: routerState } = yield import(
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
 			);
-			state.loading = true;
-			state.searchLoading = true;
 			const { ref } = getElement();
 			const { blockId } = getContext();
-			if (!ref || !ref.value) {
-				const url = new URL(routerState?.url);
-				url.searchParams.delete(`products-${blockId}-search`);
-				actions.navigate(url.toString());
-				state.loading = false;
-				state.searchLoading = false;
-				return;
-			}
-			throttledSearch(ref?.value, routerState, actions, blockId);
+
+			state.loading = true;
+			state.searching = true;
+			yield debouncedSearch(ref?.value, routerState, actions, blockId);
+			state.loading = false;
+			state.searching = false;
 		},
 	},
 
 	callbacks: {
+		/**
+		 * This is optionally used when there is a url context,
+		 * we can prefetch a page ahead of time without mouse enter (just on load)
+		 */
 		*prefetch() {
 			const { url } = getContext();
 			const { ref } = getElement();
@@ -132,14 +143,3 @@ const { state } = store('surecart/product-list', {
 		},
 	},
 });
-
-/**
- * Update state.
- */
-export const update = (data) => {
-	const { blockId } = getContext();
-	state[blockId] = {
-		...state?.[blockId],
-		...data,
-	};
-};
