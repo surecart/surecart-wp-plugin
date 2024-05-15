@@ -53,7 +53,7 @@ const debouncedSearch = debounce(
 			: url.searchParams.delete(`products-${blockId}-search`);
 
 		// Navigate to the new URL.
-		return await actions.navigate(url.toString());
+		return actions.navigate(url.toString());
 	},
 	500
 );
@@ -65,11 +65,6 @@ const { state } = store('surecart/product-list', {
 
 		/** Are we searching? */
 		searching: false,
-
-		/** Loading indicator visibility */
-		get searchLoadingVisibility() {
-			return state.searching ? 'visible' : 'hidden';
-		},
 	},
 
 	actions: {
@@ -120,6 +115,21 @@ const { state } = store('surecart/product-list', {
 			state.loading = true;
 			state.searching = true;
 			yield debouncedSearch(ref?.value, routerState, actions, blockId);
+			state.loading = false;
+			state.searching = false;
+		},
+		/** Clear the search input. */
+		*clearSearch(event) {
+			event.preventDefault();
+			const { actions, state: routerState } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			const { blockId } = getContext();
+
+			state.loading = true;
+			state.searching = true;
+			yield debouncedSearch('', routerState, actions, blockId);
 			state.loading = false;
 			state.searching = false;
 		},
