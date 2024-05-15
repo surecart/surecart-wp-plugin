@@ -6,11 +6,11 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import { createProvisionalAccount } from '../provisional-account-opening';
+import { create as createAccount } from '../provisional-account';
 
 test.describe('Product Admin Page With Variant', () => {
 	test.beforeEach(async ({ page, requestUtils }) => {
-		await createProvisionalAccount(requestUtils);
+		await createAccount(requestUtils);
 
 		// make sure variants are in view.
 		await page.setViewportSize({

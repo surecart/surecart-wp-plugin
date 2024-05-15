@@ -1,4 +1,4 @@
-export const createProvisionalAccount = async (requestUtils) => {
+export const create = async (requestUtils) => {
 	try {
 		const provisionalStore = await requestUtils.rest({
 			method: 'POST',
@@ -14,6 +14,6 @@ export const createProvisionalAccount = async (requestUtils) => {
 
 		return provisionalStore;
 	} catch (error) {
-		console.log('Error::createProvisionalAccount()-->', error);
+		console.log('Provisional Account Create Error: ', error);
 	}
 }

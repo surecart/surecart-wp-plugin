@@ -6,7 +6,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import { createProvisionalAccount } from '../provisional-account-opening';
+import { create as createAccount } from '../provisional-account';
 import {
 	PRICE_API_PATH,
 	PRODUCT_API_PATH
@@ -16,7 +16,7 @@ test.describe('Product Page With Variant', () => {
 	let product = null;
 
 	test.beforeEach(async ({ requestUtils }) => {
-		await createProvisionalAccount(requestUtils);
+		await createAccount(requestUtils);
 		product = await createVariantProduct(requestUtils);
 	});
 

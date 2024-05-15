@@ -7,11 +7,11 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
  * Internal dependencies.
  */
 import { createProduct } from '../request-utils/products';
-import { createProvisionalAccount } from '../provisional-account-opening';
+import { create as createAccount } from '../provisional-account';
 
 test.describe('Product Admin Page For Stock', () => {
 	test.beforeEach(async ({ requestUtils }) => {
-		await createProvisionalAccount(requestUtils);
+		await createAccount(requestUtils);
 	});
 
 	test('Should create a product with stock', async ({

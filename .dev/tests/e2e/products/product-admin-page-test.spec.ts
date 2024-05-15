@@ -7,11 +7,11 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
  * Internal dependencies.
  */
 import { PRODUCT_API_PATH } from '../request-utils/endpoints';
-import { createProvisionalAccount } from '../provisional-account-opening';
+import { create as createAccount } from '../provisional-account';
 
 test.describe('Product Admin Page', () => {
 	test.beforeEach(async ({ requestUtils }) => {
-		await createProvisionalAccount(requestUtils);
+		await createAccount(requestUtils);
 	});
 
 	test('Should render product list page', async ({ page }) => {

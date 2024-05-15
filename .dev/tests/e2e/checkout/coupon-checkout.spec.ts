@@ -2,9 +2,14 @@
  * WordPress dependencies
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { create as createAccount } from '../provisional-account';
 
 test.describe('Coupon', () => {
 	let product;
+
+	test.beforeEach(async ({ requestUtils }) => {
+		await createAccount(requestUtils);
+	});
 
 	test('Can add a valid coupon', async ({ page, requestUtils }) => {
 		await requestUtils.rest({
