@@ -4,7 +4,6 @@ export const TEMPLATE = [
 		{
 			layout: {
 				type: 'flex',
-				flexWrap: 'nowrap',
 				justifyContent: 'space-between',
 			},
 			style: {

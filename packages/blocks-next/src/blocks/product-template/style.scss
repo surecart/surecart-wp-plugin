@@ -50,3 +50,9 @@
 		animation-name: none;
 	}
 }
+
+@media (max-width: 480px) {
+	.wp-block-surecart-product-template {
+		grid-template-columns: 1fr !important;
+	}
+}
