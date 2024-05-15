@@ -81,6 +81,9 @@
 		text-align: center;
 		white-space: nowrap;
 		opacity: 0.5;
+		&[hidden] {
+			display: none;
+		}
 	}
 
 	// Large input group.

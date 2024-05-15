@@ -24,6 +24,7 @@
 		"file:../../styles/input-group.css",
 		"file:../../styles/form-label.css",
 		"file:../../styles/form-control.css",
+		"file:../../styles/spinner.css",
 		"file:./index.css"
 	]
 }

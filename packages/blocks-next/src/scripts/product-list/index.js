@@ -36,17 +36,18 @@ const throttle = (func, delay) => {
 };
 // Define a debounced version of the search function
 const throttledSearch = throttle((term, routerState, actions, blockId) => {
-	// Perform your search operation here, e.g., fetch data from an API
-	console.log('Performing search for:', term);
 	const url = new URL(routerState?.url);
 	url.searchParams.set(`products-${blockId}-search`, term);
-	actions.navigate(url.toString());
-	state.loading = false;
+	actions.navigate(url.toString()).then(() => {
+		state.loading = false;
+		state.searchLoading = false;
+	});
 }, 100);
 
 const { state } = store('surecart/product-list', {
 	state: {
 		loading: false,
+		searchLoading: false,
 	},
 	actions: {
 		*navigate(event) {
@@ -95,7 +96,6 @@ const { state } = store('surecart/product-list', {
 				actions.navigate(url.toString());
 			}
 		},
-
 		*onSearchInput(event) {
 			event.preventDefault();
 			const { actions, state: routerState } = yield import(
@@ -103,6 +103,7 @@ const { state } = store('surecart/product-list', {
 				'@wordpress/interactivity-router'
 			);
 			state.loading = true;
+			state.searchLoading = true;
 			const { ref } = getElement();
 			const { blockId } = getContext();
 			if (!ref || !ref.value) {

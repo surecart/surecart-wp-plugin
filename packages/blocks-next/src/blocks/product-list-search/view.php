@@ -17,4 +17,7 @@ $search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $sear
         placeholder="<?php echo __( 'Search', 'surecart' ) ; ?>"
         value="<?php echo esc_attr( $search ); ?>"
     >
+    <span class="sc-input-group-text" data-wp-bind--hidden="!state.searchLoading">
+        <span class="sc-spinner" aria-hidden="true"></span>
+    </span>
 </div>
