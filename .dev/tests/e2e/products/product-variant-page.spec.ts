@@ -1,9 +1,22 @@
 /**
- * WordPress dependencies.
+ * External dependencies.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
+/**
+ * Internal dependencies.
+ */
+import { createProvisionalAccount } from '../provisional-account-opening';
+import {
+	PRICE_API_PATH,
+	PRODUCT_API_PATH
+} from '../request-utils/endpoints';
+
 test.describe('Product Page With Variant', () => {
+	test.beforeEach(async ({ requestUtils }) => {
+		await createProvisionalAccount(requestUtils);
+	});
+
 	test('Loads variant and price selector', async ({ page, requestUtils }) => {
 		const product = await createVariantProduct(requestUtils);
 		await page.goto(product?.permalink);
@@ -64,7 +77,7 @@ test.describe('Product Page With Variant', () => {
 export const createVariantProduct = async (requestUtils) => {
 	const product = await requestUtils.rest({
 		method: 'POST',
-		path: '/surecart/v1/products',
+		path: PRODUCT_API_PATH,
 		data: {
 			name: 'Test Product',
 			stock_enabled: true,
@@ -119,6 +132,12 @@ export const createVariantProduct = async (requestUtils) => {
 
 	const prices = [
 		{
+			position: 0,
+			name: 'One Time',
+			amount: 2000,
+			product: product.id,
+		},
+		{
 			position: 1,
 			name: 'Monthly',
 			amount: 2000,
@@ -127,19 +146,13 @@ export const createVariantProduct = async (requestUtils) => {
 			recurring_interval_count: 1,
 			product: product.id,
 		},
-		{
-			position: 0,
-			name: 'One Time',
-			amount: 2000,
-			product: product.id,
-		},
 	];
 
 	await Promise.all(
 		prices.map((price) =>
 			requestUtils.rest({
 				method: 'POST',
-				path: '/surecart/v1/prices',
+				path: PRICE_API_PATH,
 				data: price,
 			})
 		)

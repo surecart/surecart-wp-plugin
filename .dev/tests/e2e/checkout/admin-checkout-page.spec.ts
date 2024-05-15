@@ -1,4 +1,7 @@
-import { test, expect } from '@playwright/test';
+/**
+ * External dependencies.
+ */
+import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe('Admin checkouts page', () => {
 	test('Checkout id is created when the page is visited..', async ({

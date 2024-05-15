@@ -6,9 +6,14 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import { createProduct } from '../../tests/request-utils/products';
+import { createProduct } from '../request-utils/products';
+import { createProvisionalAccount } from '../provisional-account-opening';
 
 test.describe('Product Admin Page For Stock', () => {
+	test.beforeEach(async ({ requestUtils }) => {
+		await createProvisionalAccount(requestUtils);
+	});
+
 	test('Should create a product with stock', async ({
 		page,
 		requestUtils,

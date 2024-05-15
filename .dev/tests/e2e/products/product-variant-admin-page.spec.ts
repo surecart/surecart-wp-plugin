@@ -1,10 +1,17 @@
 /**
- * WordPress dependencies.
+ * External dependencies.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
+/**
+ * Internal dependencies.
+ */
+import { createProvisionalAccount } from '../provisional-account-opening';
+
 test.describe('Product Admin Page With Variant', () => {
-	test.beforeEach(async ({ page }) => {
+	test.beforeEach(async ({ page, requestUtils }) => {
+		await createProvisionalAccount(requestUtils);
+
 		// make sure variants are in view.
 		await page.setViewportSize({
 			width: 1728,

@@ -7,18 +7,18 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
  * Internal dependencies.
  */
 import { createProvisionalAccount } from '../provisional-account-opening';
-
-const API_BASE_PATH = '/surecart/v1/products';
-const API_MEDIA_PATH = '/surecart/v1/product_medias';
-const API_PRICE_PATH = '/surecart/v1/prices';
-const API_PRODUCT_COLLECTION_PATH = '/surecart/v1/product_collections';
+import {
+	PRODUCT_API_PATH,
+	PRODUCT_MEDIA_API_PATH,
+	PRICE_API_PATH,
+	PRODUCT_COLLECTION_API_PATH
+} from '../request-utils/endpoints';
 
 test.describe('Product', () => {
 	let collection1 = null;
 	let collection2 = null;
 
 	test.beforeEach(async ({ requestUtils }) => {
-		// Create a provisional account before running the full test suite.
 		await createProvisionalAccount(requestUtils);
 
 		// Insert some product collections.
@@ -99,7 +99,6 @@ test.describe('Product', () => {
 		await page.waitForResponse((resp) =>
 			resp.url().includes('surecart/v1/products')
 		);
-		await page.waitForLoadState('networkidle');
 
 		// Test: if Product 1 and Product 2 are showing in the list in the A-Z order.
 		await expect(
@@ -223,7 +222,7 @@ export const getOrCreateProductCollection = async (
 	// get existing collection.
 	const existingCollections = await requestUtils.rest({
 		method: 'GET',
-		path: API_PRODUCT_COLLECTION_PATH + '?query=' + collectionName,
+		path: PRODUCT_COLLECTION_API_PATH + '?query=' + collectionName,
 	});
 
 	if (existingCollections?.[0]) {
@@ -233,7 +232,7 @@ export const getOrCreateProductCollection = async (
 	// create the collection.
 	return await requestUtils.rest({
 		method: 'POST',
-		path: API_PRODUCT_COLLECTION_PATH,
+		path: PRODUCT_COLLECTION_API_PATH,
 		data: {
 			name: collectionName,
 		},
@@ -247,7 +246,7 @@ export const createProduct = async (requestUtils, data) => {
 	// Check first if same product is found.
 	const existingProduct = await requestUtils.rest({
 		method: 'GET',
-		path: API_BASE_PATH + '?query=' + data.name,
+		path: PRODUCT_API_PATH + '?query=' + data.name,
 	});
 
 	if (existingProduct.length) {
@@ -258,7 +257,7 @@ export const createProduct = async (requestUtils, data) => {
 	if (!product) {
 		product = await requestUtils.rest({
 			method: 'POST',
-			path: API_BASE_PATH,
+			path: PRODUCT_API_PATH,
 			data: {
 				name: data.name,
 				status: data.status,
@@ -276,7 +275,7 @@ export const createProduct = async (requestUtils, data) => {
 	if (data.image_url && needsCreatePriceImage) {
 		await requestUtils.rest({
 			method: 'POST',
-			path: API_MEDIA_PATH,
+			path: PRODUCT_MEDIA_API_PATH,
 			data: {
 				product_id: product.id,
 				url: data.image_url,
@@ -288,7 +287,7 @@ export const createProduct = async (requestUtils, data) => {
 	if (needsCreatePriceImage) {
 		await requestUtils.rest({
 			method: 'POST',
-			path: API_PRICE_PATH,
+			path: PRICE_API_PATH,
 			data: {
 				amount: data?.amount || '0',
 				product: product.id,

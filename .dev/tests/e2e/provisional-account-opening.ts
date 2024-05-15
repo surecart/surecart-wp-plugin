@@ -12,8 +12,6 @@ export const createProvisionalAccount = async (requestUtils) => {
 			throw new Error('Provisional account could not be created.');
 		}
 
-		console.log('Provisional account created.');
-
 		return provisionalStore;
 	} catch (error) {
 		console.log('Error::createProvisionalAccount()-->', error);
