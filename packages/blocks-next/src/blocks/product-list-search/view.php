@@ -16,7 +16,20 @@ $search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $sear
         placeholder="<?php echo __( 'Search', 'surecart' ) ; ?>"
         value="<?php echo esc_attr( $search ); ?>"
     >
-    <span class="sc-input-group-text" data-wp-style--visibility="state.searchLoadingVisibility">
+
+	<?php if ( ! empty( $search ) ) : ?>
+		<span class="sc-input-group-text"
+			role="button"
+			tabindex="0"
+			data-wp-bind--hidden="state.searching"
+			data-wp-on--click="actions.clearSearch"
+		>
+			<?php echo SureCart::svg()->get( 'x', [ 'width' => 16, 'height' => 16, 'class' => 'sc-icon', 'aria-hidden' => true ] ); ?>
+			<div class="sc-screen-reader-text"><?php esc_html_e( 'Clear search', 'surecart' ); ?></div>
+		</span>
+	<?php endif; ?>
+
+    <span class="sc-input-group-text" data-wp-bind--hidden="!state.searching" hidden>
         <span class="sc-spinner" aria-hidden="true"></span>
     </span>
 </div>
