@@ -60,7 +60,7 @@ test.describe('Product', () => {
 
 		// Test: Search Product list.
 		await page.getByPlaceholder('Search').fill('Product 2');
-		await page.click('.search-button');
+		await page.getByPlaceholder('Search').press('Enter');
 		await page.waitForLoadState('networkidle');
 
 		// Test: if Product 2 is showing in the list.
@@ -200,10 +200,7 @@ test.describe('Product', () => {
 
 	test('Product page - Product Collection', async ({ page }) => {
 		await page.goto('/collections/collection-1');
-		await page.waitForResponse((resp) =>
-			resp.url().includes('surecart/v1/products')
-		);
-		await page.waitForTimeout(3000);
+		await page.waitForTimeout(2000);
 
 		await expect(
 			page.getByRole('heading').getByText('Collection 1', { exact: true })
