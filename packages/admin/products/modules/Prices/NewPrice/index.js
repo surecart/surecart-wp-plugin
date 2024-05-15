@@ -18,11 +18,14 @@ import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 import Error from '../../../../components/Error';
+import CanUpgrade from '../../../components/price/parts/CanUpgrade';
 
 export default ({ isOpen, onRequestClose, product }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const [price, setPrice] = useState({});
+	const [price, setPrice] = useState({
+		portal_subscription_update_enabled: true,
+	});
 	const [type, setType] = useState('once');
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -152,20 +155,31 @@ export default ({ isOpen, onRequestClose, product }) => {
 							]}
 						/>
 
-						{type === 'subscription' && (
-							<Subscription
-								price={price}
-								updatePrice={updatePrice}
-							/>
-						)}
+            {type === 'subscription' && (
+              <Subscription
+                price={price}
+                updatePrice={updatePrice}
+                product={product}
+              />
+            )}
 
-						{type === 'multiple' && (
-							<Multiple price={price} updatePrice={updatePrice} />
-						)}
+            {type === 'multiple' && (
+              <Multiple
+                price={price}
+                updatePrice={updatePrice}
+                product={product}
+              />
+            )}
 
-						{type === 'once' && (
-							<OneTime price={price} updatePrice={updatePrice} />
-						)}
+            {type === 'once' && (
+              <OneTime
+                price={price}
+                updatePrice={updatePrice}
+                product={product}
+              />
+            )}
+
+						<CanUpgrade price={price} updatePrice={updatePrice} />
 					</div>
 				</div>
 				<div

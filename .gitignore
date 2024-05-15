@@ -48,7 +48,6 @@ build
 
 
 @surecart
-cypress.env.json
 
 # Playwright
 /test-results/

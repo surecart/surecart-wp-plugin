@@ -62,9 +62,10 @@ export default ({ loading, id, product, updateProduct }) => {
 						type="number"
 						label={__('Activation Limit', 'surecart')}
 						help={__(
-							'Enter the number of unique activations per license key. Leave blank for infinite.',
+							'Set the default limit for unique activations per license key, applying to all prices. Specify at the price level to override. Leave blank for unlimited activations.',
 							'surecart'
 						)}
+						placeholder={'∞'}
 						value={product?.license_activation_limit}
 						onScInput={(e) => {
 							updateProduct({

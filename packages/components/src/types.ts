@@ -120,6 +120,7 @@ export interface Price {
   updated_at: number;
   product?: Product | string;
   position: number;
+  portal_subscription_update_enabled: boolean;
   metadata: { [key: string]: string };
 }
 export interface VariantOption {
@@ -856,6 +857,8 @@ export interface Subscription extends Object {
   ended_at: number;
   end_behavior: 'cancel' | 'complete';
   payment_method: PaymentMethod | string;
+  manual_payment_method: ManualPaymentMethod | string;
+  manual_payment: boolean;
   price: Price;
   ad_hoc_amount: number;
   variant?: Variant | string;
