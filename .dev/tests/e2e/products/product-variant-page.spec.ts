@@ -13,12 +13,14 @@ import {
 } from '../request-utils/endpoints';
 
 test.describe('Product Page With Variant', () => {
+	let product = null;
+
 	test.beforeEach(async ({ requestUtils }) => {
 		await createProvisionalAccount(requestUtils);
+		product = await createVariantProduct(requestUtils);
 	});
 
 	test('Loads variant and price selector', async ({ page, requestUtils }) => {
-		const product = await createVariantProduct(requestUtils);
 		await page.goto(product?.permalink);
 		// Wait for the page to load.
 		await page.waitForLoadState('networkidle');
