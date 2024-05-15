@@ -185,6 +185,18 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		get isQuantityDisabled() {
 			return !!state?.selectedPrice?.ad_hoc;
 		},
+		/** Is quantity increase disabled? */
+		get isQuantityIncreaseDisabled() {
+			return (
+				state.isQuantityDisabled || state.quantity >= state.maxQuantity
+			);
+		},
+		/** Is quantity decrease disabled? */
+		get isQuantityDecreaseDisabled() {
+			return (
+				state.isQuantityDisabled || state.quantity <= state.minQuantity
+			);
+		},
 	},
 
 	actions: {
