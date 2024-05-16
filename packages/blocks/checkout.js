@@ -95,8 +95,6 @@ registerBlocks([
 	totals,
 	shippingChoices,
 	shippingLineItem,
-	...(!!window?.scBlockData?.entitlements?.bumps ? [orderBumps] : []),
-	...(!!window?.scBlockData?.entitlements?.conditional_forms
-		? [conditionalForm]
-		: []),
+	orderBumps,
+	conditionalForm,
 ]);
