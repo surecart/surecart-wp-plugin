@@ -13,9 +13,6 @@ class AbandonedCheckoutViewController extends AdminController {
 	 * Index.
 	 */
 	public function index() {
-		// enqueue stats.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( AbandonedCheckoutStatsScriptsController::class, 'enqueue' ) );
-
 		$this->withHeader(
 			array(
 				'breadcrumbs' => [
@@ -26,6 +23,9 @@ class AbandonedCheckoutViewController extends AdminController {
 				'test_mode_toggle' => true,
 			)
 		);
+
+		// enqueue stats.
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( AbandonedCheckoutStatsScriptsController::class, 'enqueue' ) );
 
 		$table = new AbandonedCheckoutListTable();
 		$table->prepare_items();
