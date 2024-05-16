@@ -2,6 +2,10 @@
 	position: relative;
     container-type: inline-size;
 
+	&[hidden] {
+		display: none;
+	}
+
     .coupon-button {
         opacity: 0;
         visibility: hidden;

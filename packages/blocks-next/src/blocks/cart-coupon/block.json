@@ -79,6 +79,7 @@
 	"style": [
 		"file:../../styles/line-item.css",
 		"file:../../styles/coupon-form.css",
+		"file:../../styles/form-control.css",
 		"file:./style-index.css"
 	]
 }

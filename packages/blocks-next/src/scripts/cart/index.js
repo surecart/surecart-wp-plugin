@@ -7,6 +7,7 @@ import { store, getContext } from '@wordpress/interactivity';
 const { state, callbacks, actions } = store('surecart/cart', {
 	state: {
 		open: false, // is sidebar open or not.
+		discountInputOpen: false,
 		get getItemsCount() {
 			console.log(
 				'state.checkout?.line_items?.data',
@@ -17,10 +18,20 @@ const { state, callbacks, actions } = store('surecart/cart', {
 				0
 			);
 		},
+		get isDiscountAdded() {
+			return false;
+			// return !!state.checkout.discount.promotion.code;
+		},
 	},
 
 	actions: {
-		//
+		setOpen(open) {
+			state.open = open;
+		},
+		toggleDiscountInput() {
+			alert('clicked on actions');
+			state.discountInputOpen = !state.discountInputOpen;
+		},
 	},
 
 	callbacks: {
@@ -36,3 +47,6 @@ const { state, callbacks, actions } = store('surecart/cart', {
 		},
 	},
 });
+
+console.log('state', state);
+console.log('state.isDiscountAdded', state.isDiscountAdded);

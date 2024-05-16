@@ -94,61 +94,6 @@ $checkoutJson = '{
         "created_at": 1712118390,
         "updated_at": 1712585485
     },
-    "discount": {
-        "id": "d0150555-163e-4bb9-8267-e8e6d1feb3ad",
-        "object": "discount",
-        "redeemable_status": "greater_than_max_subtotal_amount",
-        "coupon": {
-            "id": "3adac6ba-afca-4549-b39d-bb25ef20a926",
-            "object": "coupon",
-            "archived": false,
-            "archived_at": null,
-            "amount_off": null,
-            "currency": "usd",
-            "duration": "forever",
-            "duration_in_months": null,
-            "expired": false,
-            "metadata": {
-                "wp_created_by": "1"
-            },
-            "max_redemptions": null,
-            "max_redemptions_per_customer": null,
-            "max_subtotal_amount": 10000,
-            "min_subtotal_amount": null,
-            "name": "MAX20",
-            "percent_off": 20,
-            "product_ids": [],
-            "redeem_by": null,
-            "times_redeemed": 1,
-            "discarded_at": null,
-            "filter_match_type": null,
-            "filter_price_ids": [],
-            "filter_product_ids": [],
-            "filter_customer_ids": [],
-            "created_at": 1711452019,
-            "updated_at": 1714738249
-        },
-        "promotion": {
-            "id": "4c7d69f9-230c-4e89-823b-202b92ebfe16",
-            "object": "promotion",
-            "archived": false,
-            "archived_at": null,
-            "code": "MAX20",
-            "expired": false,
-            "max_redemptions": null,
-            "metadata": [],
-            "redeem_by": null,
-            "times_redeemed": 1,
-            "affiliation": null,
-            "coupon": "3adac6ba-afca-4549-b39d-bb25ef20a926",
-            "customer": null,
-            "discarded_at": null,
-            "created_at": 1711452019,
-            "updated_at": 1714738242
-        },
-        "created_at": 1715675812,
-        "updated_at": 1715675812
-    },
     "line_items": {
         "object": "list",
         "pagination": {
@@ -433,6 +378,62 @@ $checkoutJson = '{
     "payment_intent_id": null,
     "payment_method_id": null
 }';
+
+// "discount": {
+//     "id": "d0150555-163e-4bb9-8267-e8e6d1feb3ad",
+//     "object": "discount",
+//     "redeemable_status": "greater_than_max_subtotal_amount",
+//     "coupon": {
+//         "id": "3adac6ba-afca-4549-b39d-bb25ef20a926",
+//         "object": "coupon",
+//         "archived": false,
+//         "archived_at": null,
+//         "amount_off": null,
+//         "currency": "usd",
+//         "duration": "forever",
+//         "duration_in_months": null,
+//         "expired": false,
+//         "metadata": {
+//             "wp_created_by": "1"
+//         },
+//         "max_redemptions": null,
+//         "max_redemptions_per_customer": null,
+//         "max_subtotal_amount": 10000,
+//         "min_subtotal_amount": null,
+//         "name": "MAX20",
+//         "percent_off": 20,
+//         "product_ids": [],
+//         "redeem_by": null,
+//         "times_redeemed": 1,
+//         "discarded_at": null,
+//         "filter_match_type": null,
+//         "filter_price_ids": [],
+//         "filter_product_ids": [],
+//         "filter_customer_ids": [],
+//         "created_at": 1711452019,
+//         "updated_at": 1714738249
+//     },
+//     "promotion": {
+//         "id": "4c7d69f9-230c-4e89-823b-202b92ebfe16",
+//         "object": "promotion",
+//         "archived": false,
+//         "archived_at": null,
+//         "code": "MAX20",
+//         "expired": false,
+//         "max_redemptions": null,
+//         "metadata": [],
+//         "redeem_by": null,
+//         "times_redeemed": 1,
+//         "affiliation": null,
+//         "coupon": "3adac6ba-afca-4549-b39d-bb25ef20a926",
+//         "customer": null,
+//         "discarded_at": null,
+//         "created_at": 1711452019,
+//         "updated_at": 1714738242
+//     },
+//     "created_at": 1715675812,
+//     "updated_at": 1715675812
+// },
 
 wp_interactivity_state(
 	'surecart/cart',
