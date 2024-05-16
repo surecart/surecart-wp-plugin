@@ -22,7 +22,6 @@ export default ({
 	__unstableLayoutClassNames,
 	clientId,
 }) => {
-	console.log('attributes', attributes);
 	const { count } = attributes;
 
 	const getCollections = () => {
@@ -56,7 +55,9 @@ export default ({
 						<NumberControl
 							label={__('Number To Display', 'surecart')}
 							value={count}
-							onChange={(count) => setAttributes({ count })}
+							onChange={(count) =>
+								setAttributes({ count: parseInt(count) })
+							}
 						/>
 					</PanelRow>
 				</PanelBody>

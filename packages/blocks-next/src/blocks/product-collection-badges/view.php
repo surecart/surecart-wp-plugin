@@ -4,10 +4,10 @@
 >
 	<template
 		data-wp-each--collection="context.collections"
-		data-wp-key="context.collection.id"
+		data-wp-key="context.product_collection.id"
 	>
-		<span>
-			<?php echo wp_kses_post( $content ); ?>
+		<span data-wp-bind--id="context.collection.id">
+			<?php echo $content ?>
 		</span>
 	</template>
 </div>

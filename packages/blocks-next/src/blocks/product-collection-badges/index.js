@@ -9,6 +9,7 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import edit from './edit';
 import metadata from './block.json';
+import save from './save';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -16,4 +17,5 @@ import metadata from './block.json';
 registerBlockType(metadata.name, {
 	icon,
 	edit,
+	save,
 });

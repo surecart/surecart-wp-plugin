@@ -13,7 +13,6 @@
 		"interactivity": true,
 		"inserter": false,
 		"color": {
-			"__experimentalSkipSerialization": true,
 			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
@@ -37,7 +36,6 @@
 			"width": true,
 			"color": true,
 			"radius": true,
-			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"radius": true,
 				"color": true,

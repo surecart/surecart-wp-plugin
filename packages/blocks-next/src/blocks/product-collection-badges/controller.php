@@ -14,6 +14,7 @@ if ( empty( $collections ) ) {
 	return '';
 }
 
+
 // Limit the number of items displayed based on the $attributes['count'] value.
 if ( ! empty( $attributes['count'] ) ) {
 	$collections = array_slice( $collections, 0, $attributes['count'] );
