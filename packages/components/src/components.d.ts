@@ -3439,7 +3439,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<Checkout | NodeJS.Timeout | Error>;
+        "finalize": () => Promise<Checkout | Error | NodeJS.Timeout>;
         /**
           * Should we persist the session.
          */

@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Watch, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs, getQueryArgs } from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 import { speak } from '@wordpress/a11y';
 
 import apiFetch from '../../../functions/fetch';
@@ -84,21 +84,13 @@ export class ScOrderConfirmProvider {
 
       // get success url.
       const successUrl = checkout?.metadata?.success_url || this.successUrl;
-      const molliePaymentMethodType = checkout?.payment_intent?.processor_data?.mollie?.payment_method_type;
-      const mollieManualPaymentMethodEnabled = molliePaymentMethodType?.toString() === 'banktransfer'; // TODO: find a better way to check from the processor.
-      const { is_surecart_payment_redirect } = getQueryArgs(window.location.href);
-
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
         const redirectUrl = addQueryArgs(successUrl, { sc_order: checkout?.id });
         setTimeout(() => window.location.assign(redirectUrl), 50);
       } else {
-        if (!mollieManualPaymentMethodEnabled) {
-          this.showSuccessModal = true;
-        } else if (is_surecart_payment_redirect) {
-          this.showSuccessModal = true;
-        }
+        this.showSuccessModal = true;
       }
       clearCheckout();
     }
