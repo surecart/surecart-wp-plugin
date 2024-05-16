@@ -23,6 +23,7 @@ $search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $sear
 			tabindex="0"
 			data-wp-bind--hidden="state.searching"
 			data-wp-on--click="actions.clearSearch"
+			data-wp-on--keydown="actions.clearSearch"
 		>
 			<?php echo SureCart::svg()->get( 'x', [ 'width' => 16, 'height' => 16, 'class' => 'sc-icon', 'aria-hidden' => true ] ); ?>
 			<div class="sc-screen-reader-text"><?php esc_html_e( 'Clear search', 'surecart' ); ?></div>
