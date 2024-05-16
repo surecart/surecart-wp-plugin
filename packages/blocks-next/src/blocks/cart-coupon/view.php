@@ -30,7 +30,7 @@
 
                     <!-- non-redeemable UI -->
                     <span
-						data-wp-bind--hidden="!state.discountIsRedeemable"
+                        data-wp-bind--hidden="!state.discountIsRedeemable"
                         class="coupon__status"
                     >
                         <?php echo wp_kses( SureCart::svg()->get('alert-triangle', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
