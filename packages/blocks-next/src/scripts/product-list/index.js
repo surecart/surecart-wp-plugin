@@ -30,8 +30,8 @@ function debounce(func, delay) {
 	return function () {
 		return new Promise((resolve) => {
 			clearTimeout(timeoutId);
-			timeoutId = setTimeout(() => {
-				func.apply(this, arguments);
+			timeoutId = setTimeout(async () => {
+				await func.apply(this, arguments);
 				resolve();
 			}, delay);
 		});
