@@ -46,7 +46,13 @@ $pages = array_map(function($i) use ($page_key, $page) {
 }, range(1, $products->totalPages()));
 
 $next_page_link = $products->hasNextPage() ? add_query_arg($page_key, $page + 1) : "";
-$previous_page_link =$products->hasPreviousPage() ? add_query_arg($page_key, $page - 1) : "";
+$previous_page_link = $products->hasPreviousPage() ? add_query_arg($page_key, $page - 1) : "";
+
+// this is needed to set the initial state on the server side for SSR.
+wp_interactivity_state('surecart/product-list', [
+	'loading' => false,
+	'searching' => false,
+]);
 
 // return the view.
 return 'file:./view.php';
