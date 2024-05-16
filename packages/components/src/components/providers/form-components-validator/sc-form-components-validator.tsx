@@ -12,6 +12,7 @@ export class ScFormComponentsValidator {
   @Element() el: HTMLScFormComponentsValidatorElement;
 
   private removeCheckoutListener: () => void;
+  private removePaymentRequiresShippingListener: () => void;
 
   /** Disable validation? */
   @Prop() disabled: boolean;
@@ -91,10 +92,12 @@ export class ScFormComponentsValidator {
     }
 
     this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
+    this.removePaymentRequiresShippingListener = onCheckoutChange('paymentMethodRequiresShipping', () => this.handleOrderChange());
   }
 
   disconnectedCallback() {
     this.removeCheckoutListener();
+    this.removePaymentRequiresShippingListener();
   }
 
   handleShippingAddressRequired() {

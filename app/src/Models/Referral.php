@@ -163,7 +163,7 @@ class Referral extends Model {
 	public function getStatusDisplayTextAttribute() {
 		$statuses = [
 			'reviewing' => __( 'Reviewing', 'surecart' ),
-			'paid'      => __( 'Paid', 'surecart' ),
+			'paid'      => __( 'In Payout', 'surecart' ),
 			'denied'    => __( 'Denied', 'surecart' ),
 			'cancelled' => __( 'Cancelled', 'surecart' ),
 			'approved'  => __( 'Approved', 'surecart' ),
@@ -181,8 +181,8 @@ class Referral extends Model {
 			'reviewing' => 'warning',
 			'paid'      => 'success',
 			'denied'    => 'danger',
-			'cancelled' => 'info',
-			'approved'  => 'success',
+			'cancelled' => 'default',
+			'approved'  => 'info',
 		];
 		return $types[ $this->status ] ?? 'default';
 	}

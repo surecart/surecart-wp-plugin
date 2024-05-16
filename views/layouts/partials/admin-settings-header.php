@@ -73,31 +73,6 @@
 
 	<?php if ( ! empty( $claim_url ) ) : ?>
 		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
-	<?php elseif ( ! \SureCart::notices()->isDismissed( 'migrate_to_surecart' ) ) : ?>
-		<div class="sc-migrate" data-dismissible="disable-done-notice-forever">
-			<div class="sc-migrate-content">
-				<?php esc_html_e( 'Looking to migrate from another ecommerce platform?', 'surecart' ); ?>
-				<a class="sc-migrate-link" target="_blank" href="https://surecart.com/migrate-to-surecart/">
-					<?php esc_html_e( 'Contact Us', 'surecart' ); ?>
-					<sc-icon name="arrow-right"></sc-icon>
-				</a>
-			</div>
-			<a href="
-			<?php
-			echo esc_url(
-				add_query_arg(
-					[
-						'surecart_action' => 'dismiss_notices',
-						'surecart_notice' => sanitize_text_field( 'migrate_to_surecart' ),
-						'surecart_nonce'  => wp_create_nonce( 'surecart_notice_nonce' ),
-					]
-				)
-			);
-			?>
-			" class="sc-migrate__close">
-				<sc-icon name="x"></sc-icon>
-			</a>
-		</div>
 	<?php endif; ?>
 
 	<div id="sc-settings-header">

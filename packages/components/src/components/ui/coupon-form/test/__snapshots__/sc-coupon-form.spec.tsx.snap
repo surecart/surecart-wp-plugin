@@ -8,16 +8,14 @@ exports[`sc-coupon-form handles applied coupons 1`] = `
         <div part="discount-label">
           Discount
         </div>
-        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="warning">
           TESTCODE
         </sc-tag>
       </span>
-      <span class="coupon-human-discount" slot="price-description">
-        25% off
-      </span>
-      <span slot="price">
-        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
-      </span>
+      <div class="coupon__status" slot="price-description">
+        <sc-icon name="alert-triangle"></sc-icon>
+        Not redeemable
+      </div>
     </sc-line-item>
   </mock:shadow-root>
 </sc-coupon-form>
@@ -31,16 +29,14 @@ exports[`sc-coupon-form handles recurring coupons with forever duration 1`] = `
         <div part="discount-label">
           Discount
         </div>
-        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="warning">
           TESTCODE
         </sc-tag>
       </span>
-      <span class="coupon-human-discount" slot="price-description">
-        25% off
-      </span>
-      <span slot="price">
-        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
-      </span>
+      <div class="coupon__status" slot="price-description">
+        <sc-icon name="alert-triangle"></sc-icon>
+        Not redeemable
+      </div>
     </sc-line-item>
   </mock:shadow-root>
 </sc-coupon-form>
@@ -54,16 +50,14 @@ exports[`sc-coupon-form handles recurring coupons with once duration 1`] = `
         <div part="discount-label">
           Discount
         </div>
-        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="warning">
           TESTCODE
         </sc-tag>
       </span>
-      <span class="coupon-human-discount" slot="price-description">
-        25% off once
-      </span>
-      <span slot="price">
-        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
-      </span>
+      <div class="coupon__status" slot="price-description">
+        <sc-icon name="alert-triangle"></sc-icon>
+        Not redeemable
+      </div>
     </sc-line-item>
   </mock:shadow-root>
 </sc-coupon-form>
@@ -77,16 +71,14 @@ exports[`sc-coupon-form handles recurring coupons with repeating duration 1`] = 
         <div part="discount-label">
           Discount
         </div>
-        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="warning">
           TESTCODE
         </sc-tag>
       </span>
-      <span class="coupon-human-discount" slot="price-description">
-        25% off for 3 months
-      </span>
-      <span slot="price">
-        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
-      </span>
+      <div class="coupon__status" slot="price-description">
+        <sc-icon name="alert-triangle"></sc-icon>
+        Not redeemable
+      </div>
     </sc-line-item>
   </mock:shadow-root>
 </sc-coupon-form>

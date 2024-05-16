@@ -1,8 +1,7 @@
 import { Component, h, Host, Prop } from '@stencil/core';
 import { Media, Product, ProductMedia } from '../../../../types';
-import { sizeImage } from '../../../../functions/media';
+import { sizeImage, getFeaturedProductMediaAttributes } from '../../../../functions/media';
 import { applyFilters } from '@wordpress/hooks';
-import { getFeaturedProductMediaAttributes } from 'src/functions/media';
 
 @Component({
   tag: 'sc-product-item-image',

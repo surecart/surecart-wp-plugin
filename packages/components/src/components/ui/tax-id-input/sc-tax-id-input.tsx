@@ -1,7 +1,7 @@
 import { Component, h, Prop, Fragment, Watch, Event, EventEmitter, Method } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
-import { zones, getType } from '../../../functions/tax';
+import { zones } from '../../../functions/tax';
 
 @Component({
   tag: 'sc-tax-id-input',
@@ -85,9 +85,6 @@ export class ScTaxIdInput {
   }
 
   componentWillLoad() {
-    if (this.country && !this.type) {
-      this.type = getType(this.country);
-    }
     this.onLabelChange();
   }
 

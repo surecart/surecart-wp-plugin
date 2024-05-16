@@ -32,10 +32,10 @@ export default ({ attributes, setAttributes }) => {
 						{__('Enabled Processors', 'surecart')}{' '}
 						{!scBlockData?.entitlements
 							?.form_specific_payment_methods && (
-								<ScUpgradeRequired>
-									<ScPremiumTag />
-								</ScUpgradeRequired>
-							)}
+							<ScUpgradeRequired>
+								<ScPremiumTag />
+							</ScUpgradeRequired>
+						)}
 					</Flex>
 				}
 				initialOpen={
@@ -113,6 +113,25 @@ export default ({ attributes, setAttributes }) => {
 								!scBlockData?.entitlements
 									?.form_specific_payment_methods ||
 								isMollieEnabled
+							}
+						/>
+					</PanelRow>
+				)}
+
+				{hasProcessor('mock') && (
+					<PanelRow>
+						<PaymentMethodCheckbox
+							name={__('Test Processor', 'surecart')}
+							help={__(
+								'Enable a test processor (in test mode only)',
+								'surecart'
+							)}
+							id={'mock'}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							disabled={
+								!scBlockData?.entitlements
+									?.form_specific_payment_methods
 							}
 						/>
 					</PanelRow>

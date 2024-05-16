@@ -65,6 +65,7 @@ graph TD;
   sc-subscription-next-payment --> sc-product-line-item
   sc-subscription-next-payment --> sc-line-item
   sc-subscription-next-payment --> sc-divider
+  sc-subscription-next-payment --> sc-manual-payment-method
   sc-subscription-next-payment --> sc-payment-method
   sc-subscription-next-payment --> sc-icon
   sc-toggle --> sc-icon
@@ -88,6 +89,7 @@ graph TD;
   sc-product-line-item --> sc-icon
   sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
+  sc-manual-payment-method --> sc-prose
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-button
   sc-payment-method --> sc-icon

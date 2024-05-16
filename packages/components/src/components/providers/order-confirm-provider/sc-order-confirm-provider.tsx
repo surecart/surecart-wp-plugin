@@ -63,14 +63,17 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
+      const checkout = checkoutState.checkout;
+      const formId = checkoutState.formId;
+
       // If there is an initial upsell redirect to it.
-      if (!!checkoutState?.checkout?.current_upsell?.permalink) {
+      if (!!checkout?.current_upsell?.permalink) {
         setTimeout(
           () =>
             window.location.assign(
-              addQueryArgs(checkoutState?.checkout?.current_upsell?.permalink, {
-                sc_checkout_id: checkoutState.checkout?.id,
-                sc_form_id: checkoutState.formId,
+              addQueryArgs(checkout?.current_upsell?.permalink, {
+                sc_checkout_id: checkout?.id,
+                sc_form_id: formId,
               }),
             ),
           50,
@@ -80,15 +83,16 @@ export class ScOrderConfirmProvider {
       }
 
       // get success url.
-      const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
-      const molliePaymentMethodType = checkoutState.checkout?.payment_intent?.processor_data?.mollie?.payment_method_type;
+      const successUrl = checkout?.metadata?.success_url || this.successUrl;
+      const molliePaymentMethodType = checkout?.payment_intent?.processor_data?.mollie?.payment_method_type;
       const mollieManualPaymentMethodEnabled = molliePaymentMethodType?.toString() === 'banktransfer'; // TODO: find a better way to check from the processor.
       const { is_surecart_payment_redirect } = getQueryArgs(window.location.href);
 
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
-        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { sc_order: checkoutState.checkout?.id })), 50);
+        const redirectUrl = addQueryArgs(successUrl, { sc_order: checkout?.id });
+        setTimeout(() => window.location.assign(redirectUrl), 50);
       } else {
         if (!mollieManualPaymentMethodEnabled) {
           this.showSuccessModal = true;

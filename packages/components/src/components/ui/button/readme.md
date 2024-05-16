@@ -75,6 +75,7 @@
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-method](../sc-payment-method)
+ - [sc-payment-method-details](../sc-payment-method-details)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paystack-add-method](../sc-paystack-add-method)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
@@ -133,6 +134,7 @@ graph TD;
   sc-pagination --> sc-button
   sc-password-nag --> sc-button
   sc-payment-method --> sc-button
+  sc-payment-method-details --> sc-button
   sc-payment-methods-list --> sc-button
   sc-paystack-add-method --> sc-button
   sc-product-item-list --> sc-button

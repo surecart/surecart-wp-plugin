@@ -44,6 +44,7 @@ return array(
 	'checkout.line_items.unpurchasable_prices'             => __( 'One of these products is no longer purchaseable.', 'surecart' ),
 	'checkout.shipping_address.missing_tax_info'           => __( 'Please fill out your address.', 'surecart' ),
 	'checkout.discount.coupon.invalid'                     => __( 'This coupon is not valid. Please double-check it and try again.', 'surecart' ),
+	'discount.not_redeemable'                              => __( 'This discount is not redeemable.', 'surecart' ),
 	'checkout.customer.blank'                              => __( 'Please select a customer.', 'surecart' ),
 	'download.current_release'                             => __( 'This download cannot be removed or archived when it is set as the current release.', 'surecart' ),
 	'refund.amount.greater_than_refundable_amount'         => __( 'The refund amount is greater than the refundable amount.', 'surecart' ),
@@ -142,4 +143,5 @@ return array(
 	'affiliation_request.email.blank'                      => __( 'The affiliate request\'s email cannot be blank.', 'surecart' ),
 	'affiliation_request.bio.blank'                        => __( 'The affiliate request\'s bio cannot be blank.', 'surecart' ),
 	'affiliation_request.email.taken'                      => __( 'The affiliate request\'s email is already in use.', 'surecart' ),
+	'payout_group.end_date.no_applicable_affiliations'     => __( 'No affiliates have earned more than the minimum commission amount within the selected date range.', 'surecart' ),
 );
