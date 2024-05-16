@@ -340,6 +340,7 @@ dispatch(coreStore).addEntities([
 		label: __('Affiliation Product', 'surecart'),
 		baseURL: '/surecart/v1/affiliation_products',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'click',

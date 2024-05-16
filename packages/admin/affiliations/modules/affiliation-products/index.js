@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
@@ -83,43 +83,31 @@ export default ({ affiliationId }) => {
 	const onSubmit = async () =>
 		affiliationProduct?.id ? await onEdit() : await onCreate();
 
-	const { affiliationProducts, loading, fetching } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'affiliation-product',
-				{
-					context: 'edit',
-					affiliation_ids: [affiliationId],
-					page,
-					per_page: perPage,
-					expand: [
-						'commission_structure',
-						'product',
-						'product.prices',
-					],
-				},
-			];
-			const affiliationProducts =
-				select(coreStore).getEntityRecords(...queryArgs) || [];
-			const loading = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			);
-
-			return {
-				affiliationProducts,
-				loading: loading && page === 1,
-				fetching: loading && page !== 1,
-			};
+	const {
+		records: affiliationProducts,
+		isResolving: loading,
+		isResolving: fetching,
+		totalItems,
+	} = useEntityRecords(
+		'surecart',
+		'affiliation-product',
+		{
+			context: 'edit',
+			affiliation_ids: [affiliationId],
+			page,
+			per_page: perPage,
+			expand: ['commission_structure', 'product', 'product.prices'],
 		},
-		[affiliationId, page]
+		{
+			enabled: true,
+		}
 	);
 
 	const { hasPagination } = usePagination({
-		data: affiliationProducts,
+		data: affiliationProducts || [],
 		page,
 		perPage,
+		totalItems,
 	});
 
 	const onCreate = async () => {
@@ -195,6 +183,11 @@ export default ({ affiliationId }) => {
 		setModal('delete');
 	};
 
+	const onDeleted = () => {
+		setModal(false);
+		setPage(1);
+	};
+
 	const productTitleRender = () => {
 		return (
 			<>
@@ -254,7 +247,7 @@ export default ({ affiliationId }) => {
 					/>
 				}
 				footer={
-					affiliationProducts.length > 0 ? (
+					(affiliationProducts || []).length > 0 ? (
 						<ScButton onClick={openCreateModal}>
 							<ScIcon name="plus" slot="prefix"></ScIcon>
 							{__('Add Commission', 'surecart')}
@@ -312,6 +305,7 @@ export default ({ affiliationId }) => {
 				onRequestClose={() => setModal(false)}
 				affiliationId={affiliationId}
 				affiliationProductId={affiliationProduct?.id}
+				onDeleted={onDeleted}
 			/>
 
 			<GuideModal

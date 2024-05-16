@@ -14,7 +14,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { ScBlockUi } from '@surecart/components-react';
 import Error from '../../../components/Error';
 
-export default ({ onRequestClose, open, affiliationProductId }) => {
+export default ({ onRequestClose, open, affiliationProductId, onDeleted }) => {
 	const [error, setError] = useState(null);
 	const [deleting, setDeleting] = useState(false);
 	const { deleteEntityRecord } = useDispatch(coreStore);
@@ -38,7 +38,7 @@ export default ({ onRequestClose, open, affiliationProductId }) => {
 				type: 'snackbar',
 			});
 
-			onRequestClose();
+			onDeleted();
 		} catch (e) {
 			setError(e);
 			console.error(e);
