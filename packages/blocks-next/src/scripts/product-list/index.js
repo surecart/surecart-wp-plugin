@@ -62,7 +62,6 @@ const { state } = store('surecart/product-list', {
 	state: {
 		/** Are we loading */
 		loading: false,
-
 		/** Are we searching? */
 		searching: false,
 	},

@@ -66,11 +66,12 @@ class BlockService {
 		return new BlockStylesService();
 	}
 
-	public function urlParams() {
-		return new URLParamService();
-	}
-
-	public function productUrlParams() {
-		return new ProductURLParamService();
+	/**
+	 * Get url params service.
+	 *
+	 * @return BlockValidationService
+	 */
+	public function urlParams( $type = '' ) {
+		return new URLParamService( $type );
 	}
 }
