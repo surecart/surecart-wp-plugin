@@ -18,6 +18,15 @@ const { state, callbacks, actions } = store('surecart/cart', {
 				0
 			);
 		},
+		get discountIsRedeemable() {
+			return (
+				state?.checkout?.discount?.redeemable_status === 'redeemable'
+			);
+		},
+		get lineItemHasScratchAmount() {
+			const { line_item } = getContext();
+			return line_item.price.scratchAmount !== line_item.price.amount;
+		},
 		get isDiscountAdded() {
 			return false;
 			// return !!state.checkout.discount.promotion.code;

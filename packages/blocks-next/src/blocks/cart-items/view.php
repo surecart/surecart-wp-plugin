@@ -4,7 +4,7 @@
 >
 	<template
 		data-wp-each--line_item="state.checkout.line_items.data"
-		data-wp-key="state.checkout.line_item.id"
+		data-wp-key="context.line_item.id"
 	>
         <div
             class="sc-product-line-item"
@@ -55,6 +55,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
+
                 <div class="sc-product-line-item__suffix">
                     <?php if ( $attributes['removable'] ): ?>
                         <?php echo wp_kses( SureCart::svg()->get('x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
@@ -63,15 +64,15 @@
                     <div class="sc-product-line-item__price">
                         <div class="price">
                             <span
-                                data-wp-bind--hidden="contex.line_item.price.scratchAmount !== contex.line_item.price.amount"
-                                data-wp-text="contex.line_item.price.scratchAmount"
+                                data-wp-bind--hidden="!state.lineItemHasScratchAmount"
+                                data-wp-text="context.line_item.price.scratchAmount"
                             ></span>
                             <span data-wp-text="context.line_item.price.display_amount"></span>
                         </div>
                         <div
-                            data-wp-bind--hidden="!contex.line_item.price.interval"
+                            data-wp-bind--hidden="!context.line_item.price.interval"
                             class="sc-product-line-item__price__description"
-                            data-wp-text="contex.line_item.price.interval"
+                            data-wp-text="context.line_item.price.interval"
                         >
                         </div>
                     </div>
