@@ -120,7 +120,16 @@ const { state } = store('surecart/product-list', {
 		},
 		/** Clear the search input. */
 		*clearSearch(event) {
+			// no-op if not enter or space key
+			if (
+				event?.type === 'keydown' &&
+				!['Enter', 'Space'].includes(event.key)
+			) {
+				return true;
+			}
+
 			event.preventDefault();
+
 			const { actions, state: routerState } = yield import(
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
