@@ -14,12 +14,6 @@ import TemplateListEdit from '../../components/TemplateListEdit';
  */
 import { useSelect } from '@wordpress/data';
 
-const FALLBACK_COLLECTIONS = [
-	{ id: '1', name: 'Collection' },
-	{ id: '2', name: 'Collection 2' },
-	{ id: '3', name: 'Collection 3' },
-];
-
 const TEMPLATE = [['surecart/product-collection-badge']];
 
 export default ({
@@ -28,15 +22,24 @@ export default ({
 	__unstableLayoutClassNames,
 	clientId,
 }) => {
+	console.log('attributes', attributes);
 	const { count } = attributes;
 
 	const getCollections = () => {
-		let collections = useSelect((select) =>
-			select(coreStore).getEntityRecords('surecart', 'product-collection')
-		);
+		let collections =
+			useSelect((select) =>
+				select(coreStore).getEntityRecords(
+					'surecart',
+					'product-collection'
+				)
+			) || [];
 
-		if (!collections?.length) {
-			collections = FALLBACK_COLLECTIONS;
+		if (collections?.length < count) {
+			for (let i = 0; i < count; i++) {
+				if (!collections[i]) {
+					collections.push({ name: `Collection ${i + 1}`, id: i });
+				}
+			}
 		}
 
 		return collections.slice(0, count).map((collection) => ({
@@ -64,6 +67,7 @@ export default ({
 				blockContexts={getCollections()}
 				className={__unstableLayoutClassNames}
 				clientId={clientId}
+				renderAppender={false}
 			/>
 		</Fragment>
 	);

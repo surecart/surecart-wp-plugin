@@ -12,16 +12,11 @@
 		"count": {
 			"type": "number",
 			"default": 1
-		},
-		"id": {
-			"type": "string"
 		}
 	},
 	"supports": {
 		"interactivity": true,
-		"reusable": false,
 		"html": false,
-		"multiple": false,
 		"layout": {
 			"allowSwitching": false,
 			"allowInheriting": false,

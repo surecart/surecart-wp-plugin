@@ -11,6 +11,7 @@
 	"usesContext": ["surecart/productCollectionBadge/name"],
 	"supports": {
 		"interactivity": true,
+		"inserter": false,
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
