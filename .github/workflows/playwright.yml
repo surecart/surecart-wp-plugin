@@ -29,7 +29,7 @@ jobs:
             - name: Install WordPress and start the server
               run: |
                   yarn run wp-env start
-                  yarn run wp-env run cli wp rewrite structure /%postname%/
+                  yarn run wp-env run tests-wordpress wp rewrite structure /%postname%/
 
             - name: Install Playwright dependencies
               run: npx playwright install --with-deps ${{ matrix.browser }}
