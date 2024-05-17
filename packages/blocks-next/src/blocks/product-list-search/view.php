@@ -1,23 +1,35 @@
 <?php
-$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
-$search_key = isset( $block_id ) ? 'products-' . $block_id . '-search' : 'products-search';
-$search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $search_key ] );
+$block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
+$url      = \SureCart::block()->urlParams( 'products', $block_id );
+$query    = $url->getArg( 'search' );
 ?>
 <div
-    <?php echo get_block_wrapper_attributes( array( 'class' => "sc-input-group sc-input-group-sm" ) ); ?>
+	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-input-group sc-input-group-sm' ) ) ); ?>
 >
-    <span class="sc-input-group-text">
-        <?php echo SureCart::svg()->get( 'search', [ 'width' => 16, 'height' => 16, 'class' => 'sc-icon' ] ); ?>
-    </span>
-    <input
-        class="sc-form-control"
-        type="search"
-        data-wp-on--input="actions.onSearchInput"
-        placeholder="<?php echo __( 'Search', 'surecart' ) ; ?>"
-        value="<?php echo esc_attr( $search ); ?>"
-    >
+	<span class="sc-input-group-text">
+		<?php
+		echo wp_kses(
+			SureCart::svg()->get(
+				'search',
+				[
+					'width'  => 16,
+					'height' => 16,
+					'class'  => 'sc-icon',
+				]
+			),
+			sc_allowed_svg_html()
+		)
+		?>
+	</span>
+	<input
+		class="sc-form-control"
+		type="search"
+		data-wp-on--input="actions.onSearchInput"
+		placeholder="<?php esc_attr_e( 'Search', 'surecart' ); ?>"
+		value="<?php echo esc_attr( $query ); ?>"
+	>
 
-	<?php if ( ! empty( $search ) ) : ?>
+	<?php if ( ! empty( $query ) ) : ?>
 		<span class="sc-input-group-text"
 			role="button"
 			tabindex="0"
@@ -25,12 +37,25 @@ $search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $sear
 			data-wp-on--click="actions.clearSearch"
 			data-wp-on--keydown="actions.clearSearch"
 		>
-			<?php echo SureCart::svg()->get( 'x', [ 'width' => 16, 'height' => 16, 'class' => 'sc-icon', 'aria-hidden' => true ] ); ?>
+			<?php
+			echo wp_kses(
+				SureCart::svg()->get(
+					'x',
+					[
+						'width'       => 16,
+						'height'      => 16,
+						'class'       => 'sc-icon',
+						'aria-hidden' => true,
+					]
+				),
+				sc_allowed_svg_html()
+			);
+			?>
 			<div class="sc-screen-reader-text"><?php esc_html_e( 'Clear search', 'surecart' ); ?></div>
 		</span>
 	<?php endif; ?>
 
-    <span class="sc-input-group-text" data-wp-bind--hidden="!state.searching" hidden>
-        <span class="sc-spinner" aria-hidden="true"></span>
-    </span>
+	<span class="sc-input-group-text" data-wp-bind--hidden="!state.searching" hidden>
+		<span class="sc-spinner" aria-hidden="true"></span>
+	</span>
 </div>

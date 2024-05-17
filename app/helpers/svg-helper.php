@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Get allowed SVG HTML.
+ *
+ * @return array
+ */
 function sc_allowed_svg_html(): array {
 	$kses_defaults = wp_kses_allowed_html( 'post' );
 
@@ -11,7 +16,7 @@ function sc_allowed_svg_html(): array {
 	$svg_args = apply_filters(
 		'sc_allowed_svg_html',
 		array(
-			'svg'   => array(
+			'svg'      => array(
 				'class'             => true,
 				'aria-hidden'       => true,
 				'aria-labelledby'   => true,
@@ -28,30 +33,30 @@ function sc_allowed_svg_html(): array {
 				'stroke-linejoin'   => true,
 				'stroke-miterlimit' => true,
 			),
-			'g'     => array(
-				'fill' => true,
-				'transform' => true
+			'g'        => array(
+				'fill'      => true,
+				'transform' => true,
 			),
-			'title' => array( 'title' => true ),
-			'path'  => array(
+			'title'    => array( 'title' => true ),
+			'path'     => array(
 				'd'         => true,
 				'fill'      => true,
 				'transform' => true,
 			),
-			'circle' => array(
+			'circle'   => array(
 				'cx'   => true,
 				'cy'   => true,
 				'r'    => true,
 				'fill' => true,
 			),
-			'ellipse' => array(
+			'ellipse'  => array(
 				'cx'   => true,
 				'cy'   => true,
 				'rx'   => true,
 				'ry'   => true,
 				'fill' => true,
 			),
-			'line' => array(
+			'line'     => array(
 				'x1'           => true,
 				'y1'           => true,
 				'x2'           => true,
@@ -59,7 +64,7 @@ function sc_allowed_svg_html(): array {
 				'stroke'       => true,
 				'stroke-width' => true,
 			),
-			'polygon' => array(
+			'polygon'  => array(
 				'points' => true,
 				'fill'   => true,
 			),
@@ -67,14 +72,14 @@ function sc_allowed_svg_html(): array {
 				'points' => true,
 				'fill'   => true,
 			),
-			'rect' => array(
+			'rect'     => array(
 				'x'      => true,
 				'y'      => true,
 				'width'  => true,
 				'height' => true,
 				'fill'   => true,
 			),
-			'text' => array(
+			'text'     => array(
 				'x'         => true,
 				'y'         => true,
 				'dx'        => true,
