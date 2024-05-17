@@ -319,12 +319,14 @@ export class ScSessionProvider {
       case 'payment_failed':
         clearCheckout();
         createErrorNotice({
-          message: __('Payment unsuccessful. Please try again.', 'surecart'),
+          message: __('Payment unsuccessful.', 'surecart'),
         });
         updateFormState('REJECT');
         return;
 
       case 'payment_intent_canceled':
+        updateFormState('REJECT');
+        return;
       case 'canceled':
         clearCheckout();
         createErrorNotice({

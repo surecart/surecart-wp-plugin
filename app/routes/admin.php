@@ -437,6 +437,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+\SureCart::route()
+->where( 'admin', 'sc-affiliate-payout-groups' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationPayoutGroups\\' )
+->group(
+	function () {
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationPayoutGroupsController@edit' );
+	}
+);
+
 /*
 |--------------------------------------------------------------------------
 | Settings

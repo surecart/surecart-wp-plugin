@@ -81,6 +81,10 @@ class TemplateUtilityService {
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
 				'description' => __( 'The slide-out cart template.', 'surecart' ),
 			],
+			'checkout'                => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Checkout', 'Template name', 'surecart' ) : _x( 'Checkout', 'Template name', 'surecart' ),
+				'description' => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
+			],
 		];
 	}
 
@@ -339,7 +343,8 @@ class TemplateUtilityService {
 	 * @return \WP_Block_Template Template.
 	 */
 	public function buildTemplateResultFromFile( $template_file, $template_type ) {
-		$template_file = (object) $template_file;
+		$default_template_types = get_default_block_template_types();
+		$template_file          = (object) $template_file;
 
 		// If the theme has an archive-products.html template but does not have product taxonomy templates
 		// then we will load in the archive-product.html template from the theme to use for product taxonomies on the frontend.
@@ -364,6 +369,10 @@ class TemplateUtilityService {
 		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
 		$template->post_types     = $template_file->post_types ?? []; // Set the post type.
 		$template->area           = 'uncategorized';
+
+		if ( 'wp_template' === $template_type && isset( $default_template_types[ $template_file->slug ] ) ) {
+			$template->is_custom = false;
+		}
 
 		return $template;
 	}
