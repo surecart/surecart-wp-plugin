@@ -2,16 +2,14 @@
 <?php
 use SureCart\Models\Product;
 
-$block_id = (int) $block->context["surecart/product-list/blockId"] ?? '';
-$page_key = isset( $block_id ) ? 'products-' . $block_id . '-page' : 'products-page';
-$page = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
-$sort_key = isset( $block_id ) ? 'products-' . $block_id . '-sort' : 'products-sort';
-$sort = empty( $_GET[ $sort_key ] ) ? 'created_at:desc' : sanitize_text_field( $_GET[ $sort_key ] );
-$search_key = isset( $block_id ) ? 'products-' . $block_id . '-search' : 'products-search';
-$search = empty( $_GET[ $search_key ] ) ? '' : sanitize_text_field( $_GET[ $search_key ] );
-$filter_key = isset( $block_id ) ? 'products-' . $block_id . '-filter' : 'products-filter';
-$filter = empty( $_GET[ $filter_key ] ) ? '' : array_map('sanitize_text_field', $_GET[ $filter_key ]);
+$block_id 		= (int) $block->context["surecart/product-list/blockId"] ?? '';
+$url 			= \SureCart::block()->urlParams('products')->setInstanceId( $block_id );
+$search 		= $url->getArg( 'search' );
+$sort 			= $url->getArg( 'sort' );
+$collections 	= $url->getArg( 'filter' );
+$current_page 	= $url->getCurrentPage();
 
+// TODO: sorting by price is not available yet. We need to do this via the product post type metadata.
 $products = Product::where(
 	[
 		'archived' => false,
@@ -22,13 +20,13 @@ $products = Product::where(
 			'product_media.media'
 		],
 		'sort'     => $sort,
-		'product_collection_ids' => $filter,
+		'product_collection_ids' => $collections,
 		'query'    => $search,
 	]
 )->paginate(
 	[
 		'per_page' => $attributes['limit'] ?? 15,
-		'page'     => $page,
+		'page'     => $current_page,
 	]
 );
 
@@ -37,16 +35,15 @@ if ( is_wp_error( $products ) ) {
 }
 
 // build up pagination.
-$pages = array_map(function($i) use ($page_key, $page) {
+$next_page_link = $products->hasNextPage() ? $url->addPageArg($current_page + 1) : "";
+$previous_page_link = $products->hasPreviousPage() ? $url->addPageArg($current_page - 1) : "";
+$pages = array_map(function($i) use ($current_page, $url) {
 	return [
-		'href' => add_query_arg($page_key, $i),
+		'href' => $url->addPageArg($i),
 		'name' => $i,
-		'current' => (int) $i === (int) $page
+		'current' => (int) $i === (int) $current_page
 	];
 }, range(1, $products->totalPages()));
-
-$next_page_link = $products->hasNextPage() ? add_query_arg($page_key, $page + 1) : "";
-$previous_page_link = $products->hasPreviousPage() ? add_query_arg($page_key, $page - 1) : "";
 
 // this is needed to set the initial state on the server side for SSR.
 wp_interactivity_state('surecart/product-list', [

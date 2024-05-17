@@ -37,7 +37,7 @@
 				tabindex="-1"
 				class="sc-dropdown__menu-item"
 				id="<?php echo esc_attr( wp_unique_id( 'sc-menu-item-' ) ); ?>"
-                href="<?php echo esc_url($option['href']) ?>"
+                href="<?php echo esc_url_raw($option['href']) ?>"
 				data-wp-on--click="surecart/product-list::actions.navigate"
 				data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
 				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
