@@ -46,6 +46,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		};
 
 		$app->alias( 'block', 'block' );
+
+		// Register blocks.
+		include plugin_dir_path( SURECART_PLUGIN_FILE ) . 'packages/blocks-next/index.php';
 	}
 
 	/**
