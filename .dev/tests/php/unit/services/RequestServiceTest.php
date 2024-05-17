@@ -2,15 +2,12 @@
 
 namespace SureCart\Tests\Services;
 
-use SureCart\Models\ApiToken;
 use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class RequestServiceTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-
-	protected $requests;
 
 	/**
 	 * Set up a new app instance to use for tests.
@@ -20,17 +17,16 @@ class RequestServiceTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
-				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class
 			]
 		], false);
 
-		// setup mock requests
-		$this->setupMockRequests();
-
 		parent::setUp();
 	}
 
+	/**
+	 * @group request
+	 */
 	public function test_gets_base_url()
 	{
 		$service = new RequestService();
@@ -38,6 +34,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 	}
 
 	/**
+	 * @group request
 	 * @dataProvider cacheProvider
 	 */
 	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args, bool $expected) {
@@ -56,12 +53,53 @@ class RequestServiceTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * Should clear the token if a 401 issue.
+	 * @group request
 	 */
 	public function test_shouldNotMakeRequestIfNoToken() {
 		$service = new RequestService( null );
 		$this->assertWPError( $service->makeRequest( 'test') );
 		$error = $service->makeRequest( 'test' );
 		$this->assertSame( 'missing_token', $error->get_error_code() );
+	}
+
+	/**
+	 * @group request
+	 */
+	public function test_shouldRetry409Requests() {
+		$service = \Mockery::mock( RequestService::class, ['token'] )->makePartial();
+
+		$service->shouldReceive( 'getBaseUrl' )->andReturn('http://test.com');
+
+		// 409 request.
+		$service->shouldReceive( 'remoteRequest' )
+			->withArgs(function ($url, $args) {
+				// make sure the same arguments are passed each time.
+				return str_contains($url, 'test') && $args['method'] === 'POST' && !empty($args['body']);
+			})
+			->twice()
+			->andReturn( [
+				'response' => [
+					'code' => 409
+				]
+			] );
+
+		// make the request.
+		$service->makeUncachedRequest('test', [
+			'method' => 'POST',
+			'body' => [
+				'test' => 'test'
+			]
+		]);
+
+		$service->shouldReceive( 'remoteRequest' )
+		->once()
+		->andReturn( [
+			'response' => [
+				'code' => 404
+			]
+		] );
+
+		// make the request.
+		$service->makeUncachedRequest('test');
 	}
 }
