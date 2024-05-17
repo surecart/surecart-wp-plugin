@@ -6,11 +6,11 @@ namespace SureCart\BlockLibrary;
  * Provide URL params related functionality.
  */
 class URLParamService {
-	 /**
-	  * Prefix.
-	  *
-	  * @var string
-	  */
+	/**
+	 * Prefix.
+	 *
+	 * @var string
+	 */
 	protected $prefix = 'query';
 
 	/**
@@ -18,14 +18,14 @@ class URLParamService {
 	 *
 	 * @var string
 	 */
-	public $pagination_key = 'page';
+	protected $pagination_key = 'page';
 
 	/**
 	 * Unique instance ID.
 	 *
 	 * @var string
 	 */
-	public $instance_id = '';
+	protected $instance_id = '';
 
 	/**
 	 * Set the prefix.
@@ -67,7 +67,10 @@ class URLParamService {
 	 * @return string
 	 */
 	public function getKey( $name = '', $instance_id = '' ) {
-		$instance_id = $instance_id ?: $this->instance_id;
+		// get the instance ID.
+		if ( empty( $instance_id ) ) {
+			$instance_id = $this->instance_id;
+		}
 		return trim( $this->prefix . '-' . $instance_id . '-' . $name, '-' );
 	}
 
@@ -81,8 +84,11 @@ class URLParamService {
 	 * @return array
 	 */
 	public function getArg( $name, $instance_id = '' ) {
-		$instance_id = $instance_id ?: $this->instance_id;
-		$key         = $this->getKey( $name, $instance_id );
+		// get the instance ID.
+		if ( empty( $instance_id ) ) {
+			$instance_id = $this->instance_id;
+		}
+		$key = $this->getKey( $name, $instance_id );
 		return $_GET[ $key ] ?? null;
 	}
 
@@ -94,8 +100,10 @@ class URLParamService {
 	 * @return int
 	 */
 	public function getCurrentPage( $instance_id = '' ) {
-		$instance_id = $instance_id ?: $this->instance_id;
-		$key         = $this->getKey( $this->pagination_key, $instance_id );
+		if ( empty( $instance_id ) ) {
+			$instance_id = $this->instance_id;
+		}
+		$key = $this->getKey( $this->pagination_key, $instance_id );
 		return max( 1, absint( $_GET[ $key ] ?? 1 ) );
 	}
 
@@ -107,8 +115,9 @@ class URLParamService {
 	 * @return string
 	 */
 	public function addArg( $key, $value, $instance_id = '' ) {
-		// get the instance ID.
-		$instance_id = $instance_id ?: $this->instance_id;
+		if ( empty( $instance_id ) ) {
+			$instance_id = $this->instance_id;
+		}
 		// get the key for this filter argument.
 		$key = $this->getKey( $key, $instance_id );
 		// return the new URL without pagination for filtering.
@@ -136,7 +145,9 @@ class URLParamService {
 	 */
 	public function addFilterArg( $key, $value, $instance_id = '' ) {
 		// get the instance ID.
-		$instance_id = $instance_id ?: $this->instance_id;
+		if ( empty( $instance_id ) ) {
+			$instance_id = $this->instance_id;
+		}
 
 		// get the key for this filter argument.
 		$key = $this->getKey( $key, $instance_id );
