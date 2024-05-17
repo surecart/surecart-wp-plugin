@@ -3,7 +3,16 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
+/**
+ * Internal dependencies.
+ */
+import { create as createAccount } from '../provisional-account';
+
 test.describe('Admin checkouts page', () => {
+	test.beforeEach(async ({ requestUtils }) => {
+		await createAccount(requestUtils);
+	});
+
 	test('Checkout id is created when the page is visited..', async ({
 		page,
 	}) => {
