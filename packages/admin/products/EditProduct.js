@@ -154,8 +154,8 @@ export default ({ id, setBrowserURL }) => {
 
 			// unload acf if it exists.
 			// TODO: move to a separate function.
-			if (!!acf?.unload?.reset) {
-				acf.unload.reset();
+			if (!!window?.acf?.unload?.reset) {
+				window.acf.unload.reset();
 			}
 
 			// remove all args from the url.
