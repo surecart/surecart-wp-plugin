@@ -66,14 +66,13 @@ class RequestServiceTest extends SureCartUnitTestCase
 	 * @group request
 	 */
 	public function test_shouldRetry409Requests() {
+		// create the mock service.
 		$service = \Mockery::mock( RequestService::class, ['token'] )->makePartial();
 
-		$service->shouldReceive( 'getBaseUrl' )->andReturn('http://test.com');
-
-		// 409 request.
+		// 409 response mock should be called twice as a retry (and only twice).
 		$service->shouldReceive( 'remoteRequest' )
+			// make sure the same arguments are passed each time.
 			->withArgs(function ($url, $args) {
-				// make sure the same arguments are passed each time.
 				return str_contains($url, 'test') && $args['method'] === 'POST' && !empty($args['body']);
 			})
 			->twice()
@@ -91,6 +90,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 			]
 		]);
 
+		// another status code should only be called once.
 		$service->shouldReceive( 'remoteRequest' )
 		->once()
 		->andReturn( [
