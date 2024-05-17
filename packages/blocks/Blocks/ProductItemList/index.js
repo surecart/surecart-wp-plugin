@@ -17,9 +17,13 @@ export { metadata, name };
 
 export const settings = {
 	icon,
-	edit,
-	// edit: ({ clientId }) => (
-	// 	<BlockReplacer clientId={clientId} blockType="surecart/product-list" />
-	// ),
+	// edit,
+	edit: ({ clientId, attributes }) => (
+		<BlockReplacer
+			clientId={clientId}
+			attributes={attributes}
+			blockType="surecart/product-list"
+		/>
+	),
 	save,
 };

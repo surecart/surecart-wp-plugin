@@ -335,12 +335,14 @@ class Block extends BaseBlock {
 
 		$new_block .= '</div><!-- /wp:group -->';
 
+		if ( $collection_enabled ) {
 		$new_block .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
-		$new_block .= '<div class="wp-block-group" style="margin-bottom:10px">';
-		$new_block .= '<!-- wp:surecart/product-list-filter-tags -->';
-		$new_block .= '<!-- wp:surecart/product-list-filter-tag /-->';
-		$new_block .= '</div><!-- /wp:group -->';
-		$new_block .= '</div><!-- /wp:group -->';
+			$new_block .= '<div class="wp-block-group" style="margin-bottom:10px">';
+			$new_block .= '<!-- wp:surecart/product-list-filter-tags -->';
+			$new_block .= '<!-- wp:surecart/product-list-filter-tag /-->';
+			$new_block .= '</div><!-- /wp:group -->';
+			$new_block .= '</div><!-- /wp:group -->';
+		}
 
 		$new_block .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
 		$new_block .= '<!-- wp:surecart/product-image /-->';
