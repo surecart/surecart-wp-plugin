@@ -33,6 +33,7 @@
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
 		aria-hidden="!context.isMenuOpen"
+		hidden
 	>
 		<?php foreach ($options as $key => $option) : ?>
 			<a
