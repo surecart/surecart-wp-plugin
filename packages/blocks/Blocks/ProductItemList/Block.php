@@ -291,6 +291,13 @@ class Block extends BaseBlock {
 		return '<sc-product-item-list id="' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
 	}
 
+	/**
+	 * Render the new product list block.
+	 *
+	 * @param  array $attributes Block attributes.
+	 *
+	 * @return string
+	 */
 	public function renderNewProductListBlock( $attributes ) {
 		$limit = $attributes['limit'] ?? 15;
 		$sort_enabled = $attributes['sort_enabled'] ?? true;
