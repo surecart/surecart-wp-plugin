@@ -458,6 +458,76 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get markup for a specific product image.
+	 *
+	 * @param integer $id  The image id.
+	 * @param string  $size The image size.
+	 *
+	 * @return string
+	 */
+	public function getImageMarkup( $id, $size = 'full' ) {
+		if ( is_int( $id ) ) {
+			return wp_get_attachment_image( $id, 'large' );
+		}
+
+		// get the first item that maches the id.
+		$item = array_filter(
+			$this->getAttribute( 'product_medias' )->data ?? [],
+			function( $item ) use ( $id ) {
+				return $item->id === $id;
+			}
+		);
+		$item = array_shift( $item );
+
+		// no item found.
+		if ( empty( $item ) ) {
+			return '';
+		}
+
+		// get sizes.
+		$sizes      = wp_get_registered_image_subsizes();
+		$image_size = $sizes[ $size ] ?? null;
+
+		// set attributes.
+		$attr['src']    = $item->getUrl( $image_size['width'] ?? 1080 );
+		$attr['alt']    = $item->media->alt ?? $this->name;
+		$attr['class']  = 'attachment-' . $size . ' size-' . $size;
+		$attr['srcset'] = $item->getSrcset( [ 90, 120, 240 ] );
+		$attr['sizes']  = sprintf( '(max-width: %1$dpx) 100vw, %1$dpx', $image_size['width'] );
+		$hwstring       = image_hwstring( $image_size['width'] ?? 1080, $image_size['height'] ?? 1080 );
+
+		// prepare attributes.
+		$attr = array_map( 'esc_attr', $attr );
+		$html = rtrim( "<img $hwstring" );
+		foreach ( $attr as $name => $value ) {
+			$html .= " $name=" . '"' . $value . '"';
+		}
+
+		// close tag.
+		$html .= ' />';
+
+		return wp_img_tag_add_loading_optimization_attrs( $html, null );
+	}
+
+	/**
+	 * Get the product gallery images.
+	 *
+	 * @return array
+	 */
+	public function getImages( $size = 'full' ) {
+		$gallery_items = $this->post()->gallery ?? [];
+		return array_map(
+			function( $item ) use ( $size ) {
+				if ( ! isset( $item->id ) ) {
+					return;
+				}
+				return $this->getImageMarkup( $item->id, $size );
+			},
+			$gallery_items
+		);
+	}
+
+	/**
 	 * Get the product page initial state
 	 *
 	 * @param array $args Array of arguments.
