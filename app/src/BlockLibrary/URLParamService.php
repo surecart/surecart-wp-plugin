@@ -7,18 +7,18 @@ namespace SureCart\BlockLibrary;
  */
 class URLParamService {
 	 /**
-     * Prefix.
-     *
-     * @var string
-     */
-    protected $prefix = 'query';
+	  * Prefix.
+	  *
+	  * @var string
+	  */
+	protected $prefix = 'query';
 
-    /**
-     * Pagination Key.
-     *
-     * @var string
-     */
-    public $pagination_key = 'page';
+	/**
+	 * Pagination Key.
+	 *
+	 * @var string
+	 */
+	public $pagination_key = 'page';
 
 	/**
 	 * Unique instance ID.
@@ -30,10 +30,12 @@ class URLParamService {
 	/**
 	 * Set the prefix.
 	 *
-	 * @param string $prefix
+	 * @param string $prefix Prefix.
+	 * @param string $instance_id Unique instance ID.
 	 */
-	public function __construct( $prefix = 'query' ) {
-		$this->prefix = $prefix;
+	public function __construct( $prefix = 'query', $instance_id = '' ) {
+		$this->prefix      = $prefix;
+		$this->instance_id = $instance_id;
 	}
 
 	/**
@@ -56,18 +58,18 @@ class URLParamService {
 		return $this;
 	}
 
-    /**
-     * Get a unique key for a block.
+	/**
+	 * Get a unique key for a block.
 	 *
 	 * @param  string $name Name.
 	 * @param  string $instance_id Unique instance ID.
 	 *
-     * @return string
-     */
-    public function getKey( $name = '', $instance_id = '' ) {
+	 * @return string
+	 */
+	public function getKey( $name = '', $instance_id = '' ) {
 		$instance_id = $instance_id ?: $this->instance_id;
-        return trim( $this->prefix . '-' . $instance_id . '-' . $name, '-' );
-    }
+		return trim( $this->prefix . '-' . $instance_id . '-' . $name, '-' );
+	}
 
 
 	/**
@@ -80,7 +82,7 @@ class URLParamService {
 	 */
 	public function getArg( $name, $instance_id = '' ) {
 		$instance_id = $instance_id ?: $this->instance_id;
-		$key = $this->getKey($name, $instance_id);
+		$key         = $this->getKey( $name, $instance_id );
 		return $_GET[ $key ] ?? null;
 	}
 
@@ -93,7 +95,7 @@ class URLParamService {
 	 */
 	public function getCurrentPage( $instance_id = '' ) {
 		$instance_id = $instance_id ?: $this->instance_id;
-		$key = $this->getKey( $this->pagination_key, $instance_id);
+		$key         = $this->getKey( $this->pagination_key, $instance_id );
 		return max( 1, absint( $_GET[ $key ] ?? 1 ) );
 	}
 
@@ -116,7 +118,7 @@ class URLParamService {
 	/**
 	 * Add a pagination argument to the URL.
 	 *
-	 * @param  int $page Page.
+	 * @param  int    $page Page.
 	 * @param  string $instance_id Unique instance ID.
 	 *
 	 * @return string
@@ -125,14 +127,14 @@ class URLParamService {
 		return $this->addArg( $this->pagination_key, $page, $instance_id );
 	}
 
-    /**
-     * Add a filter argument to the URL.
-     *
-     * @param  string $key Key.
-     * @param  string $value Value.
-     * @return string
-     */
-    public function addFilterArg( $key, $value, $instance_id = '' ) {
+	/**
+	 * Add a filter argument to the URL.
+	 *
+	 * @param  string $key Key.
+	 * @param  string $value Value.
+	 * @return string
+	 */
+	public function addFilterArg( $key, $value, $instance_id = '' ) {
 		// get the instance ID.
 		$instance_id = $instance_id ?: $this->instance_id;
 
@@ -140,12 +142,12 @@ class URLParamService {
 		$key = $this->getKey( $key, $instance_id );
 
 		// get the existing filters.
-        $existing_filters = $_GET[ $key ] ?? [];
+		$existing_filters = $_GET[ $key ] ?? [];
 
 		// add the new filter.
-        $filters = array_unique( array_merge( $existing_filters, [ $value ] ) );
+		$filters = array_unique( array_merge( $existing_filters, [ $value ] ) );
 
 		// return the new URL without pagination for filtering.
-        return remove_query_arg( $this->pagination_key, add_query_arg( $key, $filters ) );
-    }
+		return remove_query_arg( $this->pagination_key, add_query_arg( $key, $filters ) );
+	}
 }
