@@ -292,7 +292,6 @@ class Block extends BaseBlock {
 	}
 
 	public function renderNewProductListBlock( $attributes ) {
-		var_dump( $attributes );
 		$limit = $attributes['limit'] ?? 15;
 		$sort_enabled = $attributes['sort_enabled'] ?? true;
 		$search_enabled = $attributes['search_enabled'] ?? true;
