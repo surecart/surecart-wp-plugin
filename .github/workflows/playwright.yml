@@ -29,6 +29,10 @@ jobs:
             - name: Install WordPress and start the server
               run: |
                   yarn run wp-env start
+
+                  # Install Wp cli in tests-wordpress container - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+                  docker exec tests-wordpress bash -c "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
+
                   yarn run wp-env run tests-wordpress wp rewrite structure /%postname%/
 
             - name: Install Playwright dependencies
