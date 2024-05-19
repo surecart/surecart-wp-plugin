@@ -47,10 +47,10 @@
 	"editorScript": "file:./index.js",
 	"editorStyle": [
 		"file:../../styles/quantity-selector.css",
-		"file:../../styles/label.css"
+		"file:../../styles/input-group.css"
 	],
 	"style": [
 		"file:../../styles/quantity-selector.css",
-		"file:../../styles/label.css"
+		"file:../../styles/input-group.css"
 	]
 }

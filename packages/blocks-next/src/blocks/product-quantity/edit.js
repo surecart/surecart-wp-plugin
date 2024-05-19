@@ -44,7 +44,7 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<label className="sc-form-label">{label}</label>
 				<div
-					className="sc-quantity-selector"
+					className="sc-input-group sc-quantity-selector"
 					style={{
 						...(borderStyle?.borderRadius
 							? {
@@ -53,7 +53,7 @@ export default ({ attributes, setAttributes }) => {
 							: {}),
 					}}
 				>
-					<button className="sc-quantity-selector__decrease">
+					<div className="sc-input-group-text sc-quantity-selector__decrease">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -67,13 +67,13 @@ export default ({ attributes, setAttributes }) => {
 						>
 							<line x1="5" y1="12" x2="19" y2="12" />
 						</svg>
-					</button>
+					</div>
 					<input
-						className="sc-quantity-selector__control"
+						className="sc-form-control sc-quantity-selector__control"
 						value={0}
 						type="number"
 					/>
-					<button className="sc-quantity-selector__increase">
+					<div className="sc-input-group-text sc-quantity-selector__increase">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -88,7 +88,7 @@ export default ({ attributes, setAttributes }) => {
 							<line x1="12" y1="5" x2="12" y2="19" />
 							<line x1="5" y1="12" x2="19" y2="12" />
 						</svg>
-					</button>
+					</div>
 				</div>
 			</div>
 		</>
