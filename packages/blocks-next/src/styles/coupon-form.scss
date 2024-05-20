@@ -92,4 +92,24 @@
 			margin-top: 0.25em;
 		}
 	}
+
+	&__input-group {
+		.sc-input-group-text {
+			opacity: 1;
+
+			button {
+				background: transparent;
+				border: 0;
+				font-size: var(--sc-button-font-size-medium);
+				cursor: pointer;
+				color: var(--sc-color-primary-500);
+				font-weight: var(--sc-font-weight-semibold);
+				padding: 0 6px;
+
+				&:hover {
+					color: var(--sc-color-gray-700);
+				}
+			}
+		}
+	}
 }
