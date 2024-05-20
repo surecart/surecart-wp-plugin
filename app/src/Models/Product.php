@@ -436,9 +436,10 @@ class Product extends Model implements PageModel {
 	public function getInitialAmountAttribute() {
 		$initial_variant = $this->first_variant_with_stock;
 		if ( ! empty( $initial_variant->amount ) ) {
+		if ( ! empty( $initial_variant->amount ) ) {
 			return $initial_variant->amount;
 		}
-		$prices        = $this->active_prices ?? array();
+		$prices        = $this->active_prices ?? [];
 		$initial_price = $prices[0] ?? null;
 		return $initial_price->amount ?? null;
 	}
@@ -449,7 +450,7 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getScratchAmountAttribute() {
-		$prices        = $this->active_prices ?? array();
+		$prices        = $this->active_prices ?? [];
 		$initial_price = $prices[0] ?? null;
 		return $initial_price->scratch_amount ?? null;
 	}
@@ -585,7 +586,7 @@ class Product extends Model implements PageModel {
 		if ( ! empty( $initial_variant->amount ) ) {
 			return Currency::format( $initial_variant->amount, $initial_variant->currency );
 		}
-		$prices        = $this->active_prices ?? array();
+		$prices        = $this->active_prices ?? [];
 		$initial_price = $prices[0] ?? null;
 		if ( empty( $initial_price ) ) {
 			return '';
@@ -630,7 +631,7 @@ class Product extends Model implements PageModel {
 	public function getInitialPageState( $args = array() ) {
 		$form = \SureCart::forms()->getDefault();
 
-		$prices         = $this->active_prices ?? array();
+		$prices         = $this->active_prices ?? [];
 		$selected_price = $prices[0] ?? null;
 
 		return wp_parse_args(
@@ -647,6 +648,34 @@ class Product extends Model implements PageModel {
 				'selectedVariant' => $this->first_variant_with_stock ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			)
+		);
+	}
+
+	/**
+	 * Get the product images
+	 *
+	 * @param int   $width The image width.
+	 * @param array $srcset The image srcset.
+	 *
+	 * @return array
+	 */
+	public function getDisplayImages( $width = 1170, $srcset = array() ) {
+		return array_map(
+			function ( $product_media ) use ( $width, $srcset ) {
+				$items = array(
+					'id'     => $product_media->id,
+					'src'    => esc_url( $product_media->getUrl( $width ) ),
+					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $this->name ?? '' ),
+					'title'  => $product_media->media->title ?? '',
+					'width'  => $product_media->width,
+					'height' => $product_media->height,
+				);
+				if ( ! empty( $srcset ) ) {
+					$items['srcset'] = $product_media->getSrcset( $srcset );
+				}
+				return $items;
+			},
+			$this->product_medias->data
 		);
 	}
 }
