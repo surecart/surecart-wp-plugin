@@ -12,11 +12,7 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
-function PostTemplateInnerBlocks({
-	template,
-	renderAppender = true,
-	...itemProps
-}) {
+function PostTemplateInnerBlocks({ template, renderAppender, ...itemProps }) {
 	const innerBlocksProps = useInnerBlocksProps(itemProps, {
 		template,
 		__unstableDisableLayoutClassNames: true,
@@ -64,7 +60,7 @@ export default function MultiEdit({
 	style,
 	itemProps,
 	template,
-	renderAppender = true,
+	renderAppender,
 }) {
 	const [activeBlockContextId, setActiveBlockContextId] = useState();
 
