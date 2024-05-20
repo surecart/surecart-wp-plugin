@@ -8,6 +8,7 @@
 	"category": "widgets",
 	"icon": "media-interactive",
 	"example": {},
+	"ancestor": ["surecart/product-buy-buttons-v2"],
 	"usesContext": ["surecart/product"],
 	"attributes": {
 		"add_to_cart": {

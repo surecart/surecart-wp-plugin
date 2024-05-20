@@ -7,6 +7,7 @@
 	"category": "surecart",
 	"keywords": ["button", "buy", "product"],
 	"icon": "media-interactive",
+	"ancestor": ["surecart/product-page"],
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
