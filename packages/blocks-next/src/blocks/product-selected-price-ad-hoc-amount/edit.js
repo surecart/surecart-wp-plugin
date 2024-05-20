@@ -1,16 +1,21 @@
 import { __ } from '@wordpress/i18n';
 
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	RichText,
+	__experimentalUseColorProps as useColorProps,
+} from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
 	const blockProps = useBlockProps();
+	const colorProps = useColorProps(attributes);
 
 	return (
 		<div {...blockProps}>
 			<RichText
 				tagName="label"
-				className="sc-form-label"
+				className={`sc-form-label ${colorProps.className}`}
 				aria-label={__('Label text', 'surecart')}
 				placeholder={__('Add label…', 'surecart')}
 				value={label}
