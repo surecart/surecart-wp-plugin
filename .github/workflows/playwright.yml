@@ -30,12 +30,9 @@ jobs:
               run: |
                   yarn run wp-env start
 
-                  # Install Wp cli in tests-wordpress container
-                  CONTAINER_NAME=$(docker ps -a --format "{{.Names}}" | grep -E 'tests-wordpress-1$')
-                  docker exec $CONTAINER_NAME bash -c "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
-
                   # Set the permalink structure
-                  yarn run wp-env run tests-wordpress wp rewrite structure /%postname%/
+                  yarn run wp-env run tests-cli wp rewrite structure /%postname%/
+                  yarn run wp-env run tests-cli wp rewrite flush --hard
 
             - name: Install Playwright dependencies
               run: npx playwright install --with-deps ${{ matrix.browser }}
