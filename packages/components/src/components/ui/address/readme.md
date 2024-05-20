@@ -73,6 +73,7 @@ Type: `Promise<boolean>`
 ### Used by
 
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-order-billing-address](../../controllers/checkout-form/sc-order-billing-address)
  - [sc-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
 
 ### Depends on
@@ -101,6 +102,7 @@ graph TD;
   sc-select --> sc-menu
   sc-block-ui --> sc-spinner
   sc-customer-edit --> sc-address
+  sc-order-billing-address --> sc-address
   sc-order-shipping-address --> sc-address
   style sc-address fill:#f9f,stroke:#333,stroke-width:4px
 ```
