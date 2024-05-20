@@ -164,19 +164,17 @@ class ProductPostTypeService {
 	 *
 	 * @return void
 	 */
-	public function setupData( $post ) {
-			// unset existing globals.
-		unset( $GLOBALS['sc_product'] );
-
+	public function setupData( $post = '' ) {
 		// get post.
-		if ( is_int( $post ) ) {
-			$post = get_post( $post );
-		}
+		$post = get_post( $post );
 
 		// check post type.
 		if ( empty( $post->post_type ) || 'sc_product' !== $post->post_type ) {
 			return;
 		}
+
+		// unset existing globals.
+		unset( $GLOBALS['sc_product'] );
 
 		// set product.
 		$GLOBALS['sc_product'] = sc_get_product( $post );

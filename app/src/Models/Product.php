@@ -465,9 +465,9 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getImageMarkup( $id, $size = 'full' ) {
+	public function getImageMarkup( $id, $size = 'full', $attr = [] ) {
 		if ( is_int( $id ) ) {
-			return wp_get_attachment_image( $id, 'large' );
+			return wp_get_attachment_image( $id, 'large', false, $attr );
 		}
 
 		// get the first item that maches the id.
@@ -484,44 +484,40 @@ class Product extends Model implements PageModel {
 			return '';
 		}
 
-		// get sizes.
-		$sizes      = wp_get_registered_image_subsizes();
-		$image_size = $sizes[ $size ] ?? null;
-
-		// set attributes.
-		$attr['src']    = $item->getUrl( $image_size['width'] ?? 1080 );
-		$attr['alt']    = $item->media->alt ?? $this->name;
-		$attr['class']  = 'attachment-' . $size . ' size-' . $size;
-		$attr['srcset'] = $item->getSrcset( [ 90, 120, 240 ] );
-		$attr['sizes']  = sprintf( '(max-width: %1$dpx) 100vw, %1$dpx', $image_size['width'] );
-		$hwstring       = image_hwstring( $image_size['width'] ?? 1080, $image_size['height'] ?? 1080 );
-
-		// prepare attributes.
-		$attr = array_map( 'esc_attr', $attr );
-		$html = rtrim( "<img $hwstring" );
-		foreach ( $attr as $name => $value ) {
-			$html .= " $name=" . '"' . $value . '"';
-		}
-
-		// close tag.
-		$html .= ' />';
-
-		return wp_img_tag_add_loading_optimization_attrs( $html, null );
+		return $item->getImageMarkup( $size, $attr );
 	}
 
 	/**
-	 * Get the product gallery images.
+	 * Get the gallery attribute.
 	 *
-	 * @return array
+	 * Map the post gallery array to GalleryItem objects.
+	 *
+	 * @return GalleryItem[]
 	 */
-	public function getImages( $size = 'full' ) {
+	public function getGalleryAttribute() {
 		$gallery_items = $this->post()->gallery ?? [];
+
 		return array_map(
-			function( $item ) use ( $size ) {
-				if ( ! isset( $item->id ) ) {
-					return;
+			function( $gallery_item ) {
+				// this is a post id.
+				if ( is_int( $gallery_item->id ) ) {
+					return new GalleryItem( $gallery_item );
 				}
-				return $this->getImageMarkup( $item->id, $size );
+
+				// get the product media item that matches the id.
+				$item = array_filter(
+					$this->getAttribute( 'product_medias' )->data ?? [],
+					function( $item ) use ( $gallery_item ) {
+						return $item->id === $gallery_item->id;
+					}
+				);
+
+				$item = array_shift( $item );
+				if ( ! empty( $item ) ) {
+					return new GalleryItem( $item );
+				}
+
+				return '';
 			},
 			$gallery_items
 		);

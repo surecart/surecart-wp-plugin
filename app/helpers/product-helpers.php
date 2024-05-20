@@ -62,12 +62,35 @@ if ( ! function_exists( 'sc_query_products' ) ) {
 	}
 }
 
-/**
- * Set global $sc_product.
- *
- * @param mixed $post Post Object.
- * @return WC_Product
- */
-function sc_setup_product_data( $post ) {
-	return \SureCart::productPost()->setupData( $post );
+if ( ! function_exists( 'sc_setup_product_data' ) ) {
+	/**
+	 * Set global $sc_product.
+	 *
+	 * @param mixed $post Post Object or ID.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	function sc_setup_product_data( $post = '' ) {
+		return \SureCart::productPost()->setupData( $post );
+	}
 }
+
+
+if ( ! function_exists( 'sc_get_product_image' ) ) {
+	/**
+	 * Set global $sc_product.
+	 *
+	 * @param mixed  $id The attachment id.
+	 * @param string $size Image size.
+	 *
+	 * @return string
+	 */
+	function sc_get_product_image( $id, $size = 'full' ) {
+		$sc_product = sc_setup_product_data();
+		if ( empty( $sc_product ) ) {
+			return '';
+		}
+		return $sc_product->getImageMarkup( $id, $size );
+	}
+}
+
