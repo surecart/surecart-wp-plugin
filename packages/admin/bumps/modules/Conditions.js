@@ -60,6 +60,7 @@ export default ({ loading, bump, updateBump }) => {
 						onScChange={(e) =>
 							updateBump({ filter_match_type: e.target.value })
 						}
+						required
 					/>
 					<Filters
 						label={__('Prices', 'surecart')}
