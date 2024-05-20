@@ -51,9 +51,9 @@ class Product extends Model implements PageModel {
 	 */
 	protected function sync( $with_collections = false ) {
 		return \SureCart::sync()
-			->product()
-			->withCollections( $with_collections )
-			->sync( $this );
+		->product()
+		->withCollections( $with_collections )
+		->sync( $this );
 	}
 
 	/**
@@ -63,8 +63,8 @@ class Product extends Model implements PageModel {
 	 */
 	protected function queueSync() {
 		return \SureCart::sync()
-			->product()
-			->queue( $this );
+		->product()
+		->queue( $this );
 	}
 
 	/**
@@ -436,12 +436,13 @@ class Product extends Model implements PageModel {
 	public function getInitialAmountAttribute() {
 		$initial_variant = $this->first_variant_with_stock;
 		if ( ! empty( $initial_variant->amount ) ) {
-		if ( ! empty( $initial_variant->amount ) ) {
-			return $initial_variant->amount;
+			if ( ! empty( $initial_variant->amount ) ) {
+				return $initial_variant->amount;
+			}
+			$prices        = $this->active_prices ?? [];
+			$initial_price = $prices[0] ?? null;
+			return $initial_price->amount ?? null;
 		}
-		$prices        = $this->active_prices ?? [];
-		$initial_price = $prices[0] ?? null;
-		return $initial_price->amount ?? null;
 	}
 
 	/**
@@ -506,8 +507,8 @@ class Product extends Model implements PageModel {
 	 */
 	public function getTemplateContent(): string {
 		return wp_is_block_theme() ?
-			$this->template->content ?? '' :
-			$this->template_part->content ?? '';
+		$this->template->content ?? '' :
+		$this->template_part->content ?? '';
 	}
 
 	/**
@@ -609,14 +610,14 @@ class Product extends Model implements PageModel {
 		}
 
 		return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' .
-				Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
+			Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
 	}
 
 	/*
-	 * Is the product on sale?
-	 *
-	 * @return array
-	 */
+	* Is the product on sale?
+	*
+	* @return array
+	*/
 	public function getIsOnSaleAttribute() {
 		return $this->initial_price->is_on_sale ?? false;
 	}
