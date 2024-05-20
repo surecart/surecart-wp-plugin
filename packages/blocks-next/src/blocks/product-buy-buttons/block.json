@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-buy-buttons-v2",
+	"title": "Product Buy Buttons v2",
+	"description": "Displays product buy and add to cart buttons",
+	"category": "surecart",
+	"keywords": ["button", "buy", "product"],
+	"icon": "media-interactive",
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"align": ["wide", "full"],
+		"html": false,
+		"__experimentalExposeControlsToChildren": true,
+		"spacing": {
+			"blockGap": true,
+			"margin": ["top", "bottom"],
+			"__experimentalDefaultControls": {
+				"blockGap": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"__experimentalLayout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
+		}
+	},
+	"style": ["file:../../styles/wp-buttons.css"],
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js"
+}
