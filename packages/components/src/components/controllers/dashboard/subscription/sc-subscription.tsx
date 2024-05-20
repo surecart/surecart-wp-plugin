@@ -233,9 +233,7 @@ export class ScSubscription {
                       onClick: () => (this.resubscribeModal = true),
                     }
                   : {
-                      href: addQueryArgs(window.location.href, {
-                        action: 'update_payment_method',
-                      }),
+                      href: this?.updatePaymentMethodUrl,
                     })}
               >
                 <sc-icon name="repeat" slot="prefix"></sc-icon>
