@@ -58,15 +58,17 @@ export default ({
 
 						subscription_commission: (
 							<ScText>
-								{commission_structure?.subscription_commission ||
-									'-'}
+								{commission_structure?.subscription_commission || (
+									<ScIcon name="x" />
+								)}
 							</ScText>
 						),
 
 						lifetime_commission: (
 							<ScText>
-								{commission_structure?.lifetime_commission ||
-									'-'}
+								{commission_structure?.lifetime_commission || (
+									<ScIcon name="x" />
+								)}
 							</ScText>
 						),
 
