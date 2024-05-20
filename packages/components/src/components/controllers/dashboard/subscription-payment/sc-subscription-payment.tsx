@@ -2,8 +2,7 @@ import { Component, h, Prop, State, Fragment } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { PaymentMethod, Subscription } from '../../../../types';
-
+import { PaymentMethod, Subscription, ManualPaymentMethod } from '../../../../types';
 @Component({
   tag: 'sc-subscription-payment',
   styleUrl: 'sc-subscription-payment.scss',
@@ -16,6 +15,7 @@ export class ScSubscriptionPayment {
   @Prop({ mutable: true }) subscription: Subscription;
   @Prop() paymentMethods: Array<PaymentMethod> = [];
   @Prop() customerIds: Array<string> = [];
+  @State() manualPaymentMethods: ManualPaymentMethod[];
   @State() loading: boolean;
   @State() busy: boolean;
   @State() error: string;
@@ -54,10 +54,19 @@ export class ScSubscriptionPayment {
         ...(this.subscription?.live_mode !== null ? { live_mode: this.subscription.live_mode } : {}),
       }),
     })) as PaymentMethod[];
+
+    this.manualPaymentMethods = (await apiFetch({
+      path: addQueryArgs(`surecart/v1/manual_payment_methods`, {
+        customer_ids: this.customerIds,
+        reusable: true,
+        live_mode: this.subscription?.live_mode,
+      }),
+    })) as ManualPaymentMethod[];
   }
 
   async handleSubmit(e) {
-    const { method } = await e.target.getFormJson();
+    const { payment_method } = await e.target.getFormJson();
+    const isManualPaymentMethod = (this.manualPaymentMethods || []).some(method => method.id === payment_method);
 
     try {
       this.error = '';
@@ -66,7 +75,7 @@ export class ScSubscriptionPayment {
         path: `/surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          payment_method: method,
+          ...(!isManualPaymentMethod ? { payment_method, manual_payment: false } : { manual_payment_method: payment_method, manual_payment: true }),
         },
       });
       if (this.successUrl) {
@@ -100,8 +109,12 @@ export class ScSubscriptionPayment {
     }
 
     const modeMethods = this.paymentMethods.filter(method => method?.live_mode === this.subscription?.live_mode);
+    const hasNoPaymentMethods = (!this.paymentMethods?.length && !this.manualPaymentMethods?.length) || (this.paymentMethods?.length && !modeMethods?.length);
+    const currentPaymentMethodId = this.subscription?.manual_payment
+      ? this.subscription?.manual_payment_method
+      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
 
-    if (!modeMethods?.length) {
+    if (hasNoPaymentMethods) {
       return (
         <Fragment>
           <sc-empty icon="credit-card">{__('You have no saved payment methods.', 'surecart')}</sc-empty>
@@ -121,8 +134,15 @@ export class ScSubscriptionPayment {
             {(this.paymentMethods || []).map(method => {
               if (method?.live_mode !== this?.subscription?.live_mode) return null;
               return (
-                <sc-choice checked={this.subscription?.payment_method === method?.id} name="method" value={method?.id}>
+                <sc-choice checked={currentPaymentMethodId === method?.id} name="payment_method" value={method?.id}>
                   <sc-payment-method paymentMethod={method} full={true} />
+                </sc-choice>
+              );
+            })}
+            {(this.manualPaymentMethods || []).map(method => {
+              return (
+                <sc-choice checked={currentPaymentMethodId === method?.id} name="payment_method" value={method?.id}>
+                  <sc-manual-payment-method paymentMethod={method} showDescription />
                 </sc-choice>
               );
             })}

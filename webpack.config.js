@@ -57,6 +57,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/affiliation-payouts/index.js'
 		),
+		['admin/affiliation-payouts-groups']: path.resolve(
+			__dirname,
+			'packages/admin/affiliation-payouts-groups/index.js'
+		),
 		['admin/checkouts']: path.resolve(
 			__dirname,
 			'packages/admin/checkouts/index.js'
@@ -108,10 +112,6 @@ module.exports = {
 		['admin/test-mode-toggle']: path.resolve(
 			__dirname,
 			'packages/admin/test-mode-toggle/index.js'
-		),
-		['admin/cart/edit']: path.resolve(
-			__dirname,
-			'packages/admin/cart/edit/index.js'
 		),
 		['admin/cancellation-insights']: path.resolve(
 			__dirname,

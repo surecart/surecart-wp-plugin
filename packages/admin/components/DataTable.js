@@ -11,6 +11,7 @@ export default ({
 	after = '',
 	items = [],
 	hideHeader = false,
+	headerAction = '',
 	columns = {},
 	children,
 	empty = '',
@@ -21,7 +22,12 @@ export default ({
 	if ((items || []).length === 0 && !loading && !updating) {
 		return (
 			<>
-				<Box title={title} loading={loading} footer={footer}>
+				<Box
+					title={title}
+					loading={loading}
+					footer={footer}
+					header_action={headerAction}
+				>
 					{empty}
 				</Box>
 				{after}
@@ -53,6 +59,7 @@ export default ({
 				title={title}
 				noPadding={true}
 				loading={loading || updating}
+				header_action={headerAction}
 				footer={footer}
 			>
 				<ScTable

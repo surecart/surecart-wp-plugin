@@ -987,6 +987,14 @@
     "class": true,
     "slot": true
   },
+  "sc-manual-payment-method": {
+    "payment-method": true,
+    "show-description": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-menu": {
     "aria-label": true,
     "style": true,
@@ -1371,6 +1379,14 @@
     "is-manual": true,
     "method-id": true,
     "processor-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-payment-method-details": {
+    "edit-handler": true,
+    "payment-method": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2039,6 +2055,7 @@
   },
   "sc-subscription-next-payment": {
     "subscription": true,
+    "update-payment-method-url": true,
     "style": true,
     "id": true,
     "class": true,

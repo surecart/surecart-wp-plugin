@@ -87,6 +87,11 @@ export class ScSwitch {
       this.checked = true;
       this.scChange.emit();
     }
+
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      this.handleClick();
+    }
   }
 
   handleMouseDown(event: MouseEvent) {

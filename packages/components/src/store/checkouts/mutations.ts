@@ -1,6 +1,6 @@
 import { Checkout } from 'src/types';
 import store from './store';
-import { state as checkoutState } from '@store/checkout';
+import { state as checkoutState, reset as resetCheckoutState } from '@store/checkout';
 import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 /** Get the checkout. */
@@ -24,5 +24,6 @@ export const setCheckout = (data: Checkout, formId: number | string) => {
 export const clearCheckout = (formId: number | string, mode: 'live' | 'test') => {
   const { [formId]: remove, ...checkouts } = store.state[mode];
   window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
-  return store.set(mode, checkouts);
+  store.set(mode, checkouts);
+  resetCheckoutState();
 };

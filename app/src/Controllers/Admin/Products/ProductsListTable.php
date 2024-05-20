@@ -143,6 +143,7 @@ class ProductsListTable extends ListTable {
 			'cb'                  => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
+			'commission_amount'   => __( 'Commission Amount', 'surecart' ),
 			'quantity'            => __( 'Quantity', 'surecart' ),
 			'integrations'        => __( 'Integrations', 'surecart' ),
 			'product_collections' => __( 'Collections', 'surecart' ),
@@ -172,6 +173,15 @@ class ProductsListTable extends ListTable {
 	public function column_quantity( $product ) {
 		// translators: %d is the number of available stock.
 		return $product->stock_enabled ? sprintf( __( '%d Available', 'surecart' ), $product->available_stock ) : '∞';
+	}
+
+	/**
+	 * Show the affiliate commission amount.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_commission_amount( $product ) {
+		return $product->commission_structure->commission_amount ?? '-';
 	}
 
 	/**
@@ -210,7 +220,9 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_hidden_columns() {
-		return array();
+		return array(
+			'commission_amount',
+		);
 	}
 
 	/**
@@ -239,6 +251,7 @@ class ProductsListTable extends ListTable {
 				'product_collections',
 				'featured_product_media',
 				'product_media.media',
+				'commission_structure',
 			)
 		);
 

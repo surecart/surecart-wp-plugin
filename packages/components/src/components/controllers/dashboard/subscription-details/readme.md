@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type           | Default     |
-| -------------- | --------- | ----------- | -------------- | ----------- |
-| `subscription` | --        |             | `Subscription` | `undefined` |
+| Property                 | Attribute                   | Description                   | Type           | Default     |
+| ------------------------ | --------------------------- | ----------------------------- | -------------- | ----------- |
+| `subscription`           | --                          |                               | `Subscription` | `undefined` |
+| `updatePaymentMethodUrl` | `update-payment-method-url` | Update the payment method url | `string`       | `undefined` |
 
 
 ## Dependencies
@@ -29,6 +30,7 @@
 - [sc-product-line-item](../../../ui/product-line-item)
 - [sc-line-item](../../../ui/line-item)
 - [sc-divider](../../../ui/divider)
+- [sc-manual-payment-method](../../../ui/sc-manual-payment-method)
 - [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-icon](../../../ui/icon)
 
@@ -44,6 +46,7 @@ graph TD;
   sc-subscription-next-payment --> sc-product-line-item
   sc-subscription-next-payment --> sc-line-item
   sc-subscription-next-payment --> sc-divider
+  sc-subscription-next-payment --> sc-manual-payment-method
   sc-subscription-next-payment --> sc-payment-method
   sc-subscription-next-payment --> sc-icon
   sc-toggle --> sc-icon
@@ -69,6 +72,7 @@ graph TD;
   sc-product-line-item --> sc-icon
   sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
+  sc-manual-payment-method --> sc-prose
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-button
   sc-payment-method --> sc-icon
