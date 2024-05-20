@@ -1,0 +1,19 @@
+.wp-block-surecart-product-pagination-numbers {
+	a {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25em;
+		line-height: 1;
+		gap: var(--sc-spacing-xx-small);
+		text-decoration: none;
+
+		&[disabled] {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+
+		&:focus:not(:focus-visible) {
+			outline: none;
+		}
+	}
+}

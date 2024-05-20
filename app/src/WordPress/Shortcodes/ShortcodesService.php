@@ -52,20 +52,16 @@ class ShortcodesService {
 					}
 				}
 
-				$shortcode_attrs = shortcode_atts(
-					$defaults,
+				$shortcode_attrs = wp_parse_args(
 					$attributes,
-					$name
+					$defaults
 				);
 
-				$block = new \WP_Block(
-					[
-						'blockName'    => $block_name,
-						'attrs'        => $shortcode_attrs,
-						'innerContent' => do_shortcode( $content ),
-					]
+				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
+
+				return wp_interactivity_process_directives(
+					do_blocks( '<!-- wp:' . $block_name . ' ' . wp_json_encode( $shortcode_attrs, JSON_FORCE_OBJECT ) . ' -->' . do_shortcode($content) . '<!-- /wp:' . $block_name . ' -->')
 				);
-				return $block->render();
 			}
 		);
 	}

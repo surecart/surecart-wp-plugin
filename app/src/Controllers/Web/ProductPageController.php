@@ -1,8 +1,6 @@
 <?php
 namespace SureCart\Controllers\Web;
 
-use SureCart\Models\Form;
-
 /**
  * Handles Product page requests for frontend.
  */

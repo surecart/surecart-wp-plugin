@@ -1,0 +1,89 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-variant-choices-v2",
+	"title": "Product Variants",
+	"description": "Displays possible choices for product variants.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"ancestor": ["surecart/product-page"],
+	"example": {
+		"attributes": {}
+	},
+	"attributes": {
+		"label": {
+			"type": "rich-text",
+			"default": "Select An Option",
+			"selector": ".wp-block-form-input__label-content",
+			"source": "rich-text",
+			"__experimentalRole": "content"
+		},
+		"highlight_text": {
+			"type": "string"
+		},
+		"highlight_background": {
+			"type": "string"
+		},
+		"highlight_border": {
+			"type": "object",
+			"default": {
+				"top": {
+					"width": 0,
+					"color": null
+				},
+				"right": {
+					"width": 0,
+					"color": null
+				},
+				"bottom": {
+					"width": 0,
+					"color": null
+				},
+				"left": {
+					"width": 0,
+					"color": null
+				}
+			}
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		},
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"text": true,
+			"background": false,
+			"button": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"button": true
+			}
+		},
+		"typography": {
+			"__experimentalSkipSerialization": true,
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"shadow": {
+			"__experimentalSkipSerialization": true
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"selectors": {
+		"root": ".sc-pill-option__button"
+	},
+	"style": ["file:../../styles/pill.css", "file:../../styles/label.css"]
+}

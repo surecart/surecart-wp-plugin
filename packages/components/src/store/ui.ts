@@ -28,5 +28,13 @@ on('set', (key, newState) => {
   }
 });
 
+window.sc = {
+  ...(window?.sc || {}),
+  cart: {
+    ...(window?.sc?.cart || {}),
+    toggle: toggleCart,
+  },
+};
+
 export { on };
 export default store;

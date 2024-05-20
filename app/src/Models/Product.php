@@ -2,6 +2,8 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasImageSizes;
+use SureCart\Models\Traits\HasPurchases;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
@@ -9,7 +11,8 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model implements PageModel {
-	use Traits\HasImageSizes;
+	use HasImageSizes;
+	use HasPurchases;
 
 	/**
 	 * Rest API endpoint
@@ -71,12 +74,12 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return $this|false
 	 */
-	protected function create( $attributes = [] ) {
+	protected function create( $attributes = array() ) {
 		if ( ! wp_is_block_theme() ) {
-			$attributes['metadata'] = [
-				...$attributes['metadata'] ?? [],
+			$attributes['metadata'] = array(
+				...$attributes['metadata'] ?? array(),
 				'wp_template_id' => apply_filters( 'surecart/templates/products/default', 'pages/template-surecart-product.php' ),
-			];
+			);
 		}
 
 		return parent::create( $attributes );
@@ -158,6 +161,7 @@ class Product extends Model implements PageModel {
 		$this->setCollection( 'variants', $value, Variant::class );
 	}
 
+
 	/**
 	 * Set the variants attribute.
 	 *
@@ -169,13 +173,13 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Set the product attribute
+	 * Set the featured product media attribute.
 	 *
 	 * @param  string $value Product properties.
 	 * @return void
 	 */
-	public function setPurchaseAttribute( $value ) {
-		$this->setRelation( 'purchase', $value, Purchase::class );
+	public function setFeaturedProductMediaAttribute( $value ) {
+		$this->setRelation( 'featured_product_media', $value, ProductMedia::class );
 	}
 
 	/**
@@ -246,11 +250,11 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return array
 	 */
-	public function activePrices() {
+	public function getActivePricesAttribute() {
 		$active_prices = array_values(
 			array_filter(
-				$this->prices->data ?? [],
-				function( $price ) {
+				$this->prices->data ?? array(),
+				function ( $price ) {
 					return ! $price->archived;
 				}
 			)
@@ -258,7 +262,7 @@ class Product extends Model implements PageModel {
 
 		usort(
 			$active_prices,
-			function( $a, $b ) {
+			function ( $a, $b ) {
 				if ( $a->position == $b->position ) {
 					return 0;
 				}
@@ -274,8 +278,8 @@ class Product extends Model implements PageModel {
 	 */
 	public function activeAdHocPrices() {
 		return array_filter(
-			$this->activePrices() ?? [],
-			function( $price ) {
+			$this->active_prices ?? array(),
+			function ( $price ) {
 				return $price->ad_hoc;
 			}
 		);
@@ -292,7 +296,7 @@ class Product extends Model implements PageModel {
 		return (object) array(
 			'alt'   => $featured_product_media->media->alt ?? $this->title ?? $this->name ?? '',
 			'title' => $featured_product_media->media->title ?? '',
-			'url'   => $featured_product_media->media->url ?? $this->image_url,
+			'src'   => $featured_product_media->media->url ?? $this->image_url ?? \SureCart::core()->assets()->getUrl() . '/images/placeholder.jpg',
 		);
 	}
 
@@ -302,30 +306,30 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getJsonSchemaArray(): array {
-		$active_prices = (array) $this->activePrices();
+		$active_prices = (array) $this->active_prices;
 
 		$offers = array_map(
-			function( $price ) {
-				return [
+			function ( $price ) {
+				return array(
 					'@type'         => 'Offer',
 					'price'         => Currency::maybeConvertAmount( $price->amount, $price->currency ),
 					'priceCurrency' => $price->currency,
 					'availability'  => 'https://schema.org/InStock',
-				];
+				);
 			},
-			$active_prices ?? []
+			$active_prices ?? array()
 		);
 
 		return apply_filters(
 			'surecart/product/json_schema',
-			[
+			array(
 				'@context'    => 'http://schema.org',
 				'@type'       => 'Product',
 				'name'        => $this->name,
 				'image'       => $this->image_url ?? '',
 				'description' => sanitize_text_field( $this->description ),
 				'offers'      => $offers,
-			],
+			),
 			$this
 		);
 	}
@@ -363,7 +367,7 @@ class Product extends Model implements PageModel {
 		// Sort prices by position.
 		usort(
 			$filtered->prices->data,
-			function( $a, $b ) {
+			function ( $a, $b ) {
 				return $a->position - $b->position;
 			}
 		);
@@ -386,8 +390,8 @@ class Product extends Model implements PageModel {
 		// Filter out archived prices.
 		$filtered->prices->data = array_values(
 			array_filter(
-				$filtered->prices->data ?? [],
-				function( $price ) {
+				$filtered->prices->data ?? array(),
+				function ( $price ) {
 					return ! $price->archived;
 				}
 			)
@@ -401,19 +405,67 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return \SureCart\Models\Variant;
 	 */
-	public function getFirstVariantWithStock() {
-		$first_variant_with_stock = $this->variants->data[0] ?? null;
-
+	public function getFirstVariantWithStockAttribute() {
 		// stock is enabled.
-		if ( $this->stock_enabled ) {
+		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases && ! empty( $this->variants->data ) ) {
 			foreach ( $this->variants->data as $variant ) {
 				if ( $variant->available_stock > 0 ) {
-					$first_variant_with_stock = $variant;
-					break;
+					return $variant;
 				}
 			}
 		}
-		return $first_variant_with_stock;
+		return $this->variants->data[0] ?? null;
+	}
+
+	/**
+	 * Get the initial price.
+	 *
+	 * @return string
+	 */
+	public function getInitialPriceAttribute() {
+		$prices        = $this->active_prices ?? array();
+		$initial_price = $prices[0] ?? null;
+		return $initial_price;
+	}
+
+	/**
+	 * Get the initial amount.
+	 *
+	 * @return string
+	 */
+	public function getInitialAmountAttribute() {
+		$initial_variant = $this->first_variant_with_stock;
+		if ( ! empty( $initial_variant->amount ) ) {
+			return $initial_variant->amount;
+		}
+		$prices        = $this->active_prices ?? array();
+		$initial_price = $prices[0] ?? null;
+		return $initial_price->amount ?? null;
+	}
+
+	/**
+	 * Get the scratch amount.
+	 *
+	 * @return string
+	 */
+	public function getScratchAmountAttribute() {
+		$prices        = $this->active_prices ?? array();
+		$initial_price = $prices[0] ?? null;
+		return $initial_price->scratch_amount ?? null;
+	}
+
+	/**
+	 * Get the scratch display amount.
+	 *
+	 * @return string
+	 */
+	public function getScratchDisplayAmountAttribute() {
+		$prices        = $this->active_prices ?? array();
+		$initial_price = $prices[0] ?? null;
+		if ( empty( $initial_price->scratch_amount ) ) {
+			return '';
+		}
+		return Currency::format( $initial_price->scratch_amount, $initial_price->currency );
 	}
 
 	/**
@@ -451,7 +503,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getTemplateContent() : string {
+	public function getTemplateContent(): string {
 		return wp_is_block_theme() ?
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';
@@ -465,15 +517,15 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getImageMarkup( $id, $size = 'full', $attr = [] ) {
+	public function getImageMarkup( $id, $size = 'full', $attr = array() ) {
 		if ( is_int( $id ) ) {
 			return wp_get_attachment_image( $id, 'large', false, $attr );
 		}
 
 		// get the first item that maches the id.
 		$item = array_filter(
-			$this->getAttribute( 'product_medias' )->data ?? [],
-			function( $item ) use ( $id ) {
+			$this->getAttribute( 'product_medias' )->data ?? array(),
+			function ( $item ) use ( $id ) {
 				return $item->id === $id;
 			}
 		);
@@ -495,10 +547,10 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		$gallery_items = $this->post()->gallery ?? [];
+		$gallery_items = $this->post()->gallery ?? array();
 
 		return array_map(
-			function( $gallery_item ) {
+			function ( $gallery_item ) {
 				// this is a post id.
 				if ( is_int( $gallery_item->id ) ) {
 					return new GalleryItem( $gallery_item );
@@ -506,8 +558,8 @@ class Product extends Model implements PageModel {
 
 				// get the product media item that matches the id.
 				$item = array_filter(
-					$this->getAttribute( 'product_medias' )->data ?? [],
-					function( $item ) use ( $gallery_item ) {
+					$this->getAttribute( 'product_medias' )->data ?? array(),
+					function ( $item ) use ( $gallery_item ) {
 						return $item->id === $gallery_item->id;
 					}
 				);
@@ -524,29 +576,77 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the price display amount.
+	 *
+	 * @return array
+	 */
+	public function getDisplayAmountAttribute() {
+		$initial_variant = $this->first_variant_with_stock;
+		if ( ! empty( $initial_variant->amount ) ) {
+			return Currency::format( $initial_variant->amount, $initial_variant->currency );
+		}
+		$prices        = $this->active_prices ?? array();
+		$initial_price = $prices[0] ?? null;
+		if ( empty( $initial_price ) ) {
+			return '';
+		}
+		return Currency::format( $initial_price->amount, $initial_price->currency );
+	}
+
+	/**
+	 * Get Price Range Display Amount.
+	 *
+	 * @return string
+	 */
+	public function getRangeDisplayAmountAttribute() {
+		if ( ! $this->metrics || empty( $this->metrics->min_price_amount ) || empty( $this->metrics->max_price_amount ) ) {
+			return '';
+		}
+
+		if ( $this->metrics->min_price_amount === $this->metrics->max_price_amount ) {
+			return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency );
+		}
+
+		return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' .
+				Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
+	}
+
+	/*
+	 * Is the product on sale?
+	 *
+	 * @return array
+	 */
+	public function getIsOnSaleAttribute() {
+		return $this->initial_price->is_on_sale ?? false;
+	}
+
+	/**
 	 * Get the product page initial state
 	 *
 	 * @param array $args Array of arguments.
 	 *
 	 * @return array
 	 */
-	public function getInitialPageState( $args = [] ) {
+	public function getInitialPageState( $args = array() ) {
 		$form = \SureCart::forms()->getDefault();
+
+		$prices         = $this->active_prices ?? array();
+		$selected_price = $prices[0] ?? null;
 
 		return wp_parse_args(
 			$args,
-			[
+			array(
 				'formId'          => $form->ID,
 				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
 				'product'         => $this,
-				'prices'          => $this->activePrices(),
-				'selectedPrice'   => ( $this->activePrices() ?? [] )[0] ?? null,
+				'prices'          => $this->active_prices,
+				'isOnSale'        => $selected_price ? $selected_price->is_on_sale : false,
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
-				'variant_options' => $this->variant_options->data ?? [],
-				'variants'        => $this->variants->data ?? [],
-				'selectedVariant' => $this->getFirstVariantWithStock() ?? null,
+				'variant_options' => $this->variant_options->data ?? array(),
+				'variants'        => $this->variants->data ?? array(),
+				'selectedVariant' => $this->first_variant_with_stock ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
-			]
+			)
 		);
 	}
 }

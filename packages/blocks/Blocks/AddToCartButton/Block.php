@@ -46,7 +46,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 
 		// Slide-out is disabled, go directly to checkout.
 		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
-			return \SureCart::blocks()->render(
+			return \SureCart::block()->render(
 				'blocks/buy-button',
 				[
 					'type'  => $attributes['type'] ?? 'primary',

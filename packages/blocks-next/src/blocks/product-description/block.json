@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-description-v2",
+	"title": "Product Description",
+	"description": "Display the product description.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"example": {
+		"textAlign": {
+			"type": "string",
+			"default": "left"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js"
+}

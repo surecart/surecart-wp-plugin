@@ -6,7 +6,7 @@
 
 namespace SureCart\BlockLibrary;
 
-use SureCartBlocks\Blocks\BlockService;
+use SureCart\BlockLibrary\BlockService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -26,7 +26,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		$container['blocks'] = function () use ( $app ) {
+		$container['block'] = function () use ( $app ) {
 			return new BlockService( $app );
 		};
 
@@ -38,9 +38,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockValidationService(
 				apply_filters(
 					'surecart_block_validators',
-					[
+					array(
 						new \SureCart\BlockValidator\VariantChoice(),
-					]
+					)
 				)
 			);
 		};
@@ -49,14 +49,10 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new FormModeSwitcherService( $app );
 		};
 
-		$app->alias( 'blocks', 'blocks' );
+		$app->alias( 'block', 'block' );
 
-		$app->alias(
-			'block',
-			function () use ( $app ) {
-				return call_user_func_array( [ $app->blocks(), 'render' ], func_get_args() );
-			}
-		);
+		// Register blocks.
+		include plugin_dir_path( SURECART_PLUGIN_FILE ) . 'packages/blocks-next/index.php';
 	}
 
 	/**
@@ -76,9 +72,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		// allow design tokens in css.
 		add_filter(
 			'safe_style_css',
-			function( $styles ) {
+			function ( $styles ) {
 				return array_merge(
-					[
+					array(
 						'--spacing',
 						'--font-weight',
 						'--line-height',
@@ -92,17 +88,17 @@ class BlockServiceProvider implements ServiceProviderInterface {
 						'--sc-color-primary-500',
 						'--sc-focus-ring-color-primary',
 						'--sc-input-border-color-focus',
-					],
+					),
 					$styles
 				);
 			}
 		);
 		// allow our web components in wp_kses contexts.
-		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
+		add_filter( 'wp_kses_allowed_html', array( $this, 'ksesComponents' ) );
 		// register our blocks.
-		add_action( 'init', [ $this, 'registerBlocks' ] );
+		add_action( 'init', array( $this, 'registerBlocks' ) );
 		// register our category.
-		add_action( 'block_categories_all', [ $this, 'registerBlockCategories' ] );
+		add_action( 'block_categories_all', array( $this, 'registerBlockCategories' ) );
 	}
 
 	/**
@@ -112,15 +108,15 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function registerBlockCategories( $categories ) {
-		return [
-			...[
-				[
+		return array(
+			...array(
+				array(
 					'slug'  => 'surecart',
 					'title' => esc_html__( 'SureCart', 'surecart' ),
-				],
-			],
+				),
+			),
 			...$categories,
-		];
+		);
 	}
 
 	/**
