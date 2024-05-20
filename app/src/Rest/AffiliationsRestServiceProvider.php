@@ -27,7 +27,7 @@ class AffiliationsRestServiceProvider extends RestServiceProvider implements Res
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'find' ];
+	protected $methods = [ 'index', 'find', 'edit' ];
 
 	/**
 	 * Register REST Routes
@@ -113,6 +113,16 @@ class AffiliationsRestServiceProvider extends RestServiceProvider implements Res
 	 */
 	public function get_item_permissions_check( $request ) {
 		return current_user_can( 'read_sc_affiliates' );
+	}
+
+	/**
+	 * Who can update a specific affiliation?
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 
 	/**
