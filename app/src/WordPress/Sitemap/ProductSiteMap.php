@@ -120,9 +120,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 	protected function get_products( $page_num ) {
 		$args = $this->get_products_query_args();
 
-		// Remove archived products from the sitemap.
-		$args['archived'] = false;
-
 		return Product::where( $args )->paginate(
 			[
 				'page'     => $page_num,
@@ -150,6 +147,7 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 			'wp_sitemaps_sc_products_query_args',
 			array(
 				'status' => [ 'published' ],
+				'archived' => false,
 			)
 		);
 
