@@ -14,12 +14,12 @@ import {
 	ScDropdown,
 	ScIcon,
 	ScMenu,
+	ScEmpty,
 	ScMenuItem,
 } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import Definition from '../../../ui/Definition';
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
-import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
 import ConfirmDelete from './ConfirmDelete';
 
 export default function ({
@@ -36,6 +36,7 @@ export default function ({
 	onDelete,
 	onChange,
 	onSubmit,
+	...props
 }) {
 	return (
 		<>
@@ -66,6 +67,15 @@ export default function ({
 						</ScDropdown>
 					) : null
 				}
+				footer={
+					!commissionStructure?.id && (
+						<ScButton onClick={() => setModal('create')}>
+							<ScIcon name="plus" slot="prefix" />
+							{__('Add Commission', 'surecart')}
+						</ScButton>
+					)
+				}
+				{...props}
 			>
 				{commissionStructure?.id ? (
 					<>
@@ -90,10 +100,11 @@ export default function ({
 						</Definition>
 					</>
 				) : (
-					<EmptyCommissions
-						message={emptyCommissionMessage}
-						openModal={() => setModal('create')}
-					/>
+					!!emptyCommissionMessage && (
+						<ScEmpty icon="percent">
+							{emptyCommissionMessage}
+						</ScEmpty>
+					)
 				)}
 			</Box>
 

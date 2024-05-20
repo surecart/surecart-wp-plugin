@@ -201,7 +201,7 @@ export default ({ affiliationId }) => {
 				>
 					<sc-icon
 						name="help-circle"
-						style={{ fontSize: '18px' }}
+						style={{ fontSize: '14px', opacity: '0.65' }}
 					></sc-icon>
 				</ScButton>
 			</>
@@ -311,14 +311,52 @@ export default ({ affiliationId }) => {
 			<GuideModal
 				open={guide}
 				onRequestClose={() => setGuide(false)}
-				title={__(
-					'Different payment rules for each product',
-					'surecart'
-				)}
-				description={__(
-					'This layer lets you set different payment rules for each product. If a product has its own commission rule, it will use this rule instead of the Global Commissions and Custom Commissions.',
-					'surecart'
-				)}
+				title={__('Affiliate product commissions', 'surecart')}
+				description={
+					<>
+						<p>
+							{__(
+								'This setting will overwrite any other comission settings for the affiliate and product.',
+								'surecart'
+							)}
+						</p>
+						<p>
+							<strong>{__('Priority', 'surecart')}</strong>
+						</p>
+						<ol>
+							<li>
+								{__(
+									'Global Affiliate Commissions (Lowest)',
+									'surecart'
+								)}
+							</li>
+							<li>
+								{__(
+									'Individual Affiliate Commissions',
+									'surecart'
+								)}
+							</li>
+							<li>
+								{__(
+									'Individual Product Commissions',
+									'surecart'
+								)}
+							</li>
+							<li>
+								<strong
+									style={{
+										color: 'var(--sc-color-primary-500)',
+									}}
+								>
+									{__(
+										'Individual Affiliate Product Commissions (Highest)',
+										'surecart'
+									)}
+								</strong>
+							</li>
+						</ol>
+					</>
+				}
 			/>
 		</>
 	);

@@ -91,7 +91,6 @@ export default ({ product, loading }) => {
 		return (
 			<>
 				{__('Custom Affiliate Commission', 'surecart')}
-
 				<ScButton
 					onClick={() => setGuide(true)}
 					size="small"
@@ -100,7 +99,7 @@ export default ({ product, loading }) => {
 				>
 					<sc-icon
 						name="help-circle"
-						style={{ fontSize: '18px' }}
+						style={{ fontSize: '14px', opacity: '0.65' }}
 					></sc-icon>
 				</ScButton>
 			</>
@@ -122,10 +121,6 @@ export default ({ product, loading }) => {
 						? __('Affiliate commission updated.', 'surecart')
 						: __('Affiliate commission added.', 'surecart')
 				}
-				emptyCommissionMessage={__(
-					'Add a custom affiliate commission for this product.',
-					'surecart'
-				)}
 				loading={loading || saving}
 				commissionStructure={commissionStructure}
 				modal={modal}
@@ -140,11 +135,52 @@ export default ({ product, loading }) => {
 			<GuideModal
 				open={guide}
 				onRequestClose={() => setGuide(false)}
-				title={__('Payment rules for specific product', 'surecart')}
-				description={__(
-					'These settings let you change the payment rules for specific product. You can decide different payment amounts and rules that are more suitable for certain products, overriding the global settings.',
-					'surecart'
-				)}
+				title={__('Custom product affiliate settings', 'surecart')}
+				description={
+					<>
+						<p>
+							{__(
+								'This setting will overwrite any global or individual affiliate settings for this product.',
+								'surecart'
+							)}
+						</p>
+						<p>
+							<strong>{__('Priority', 'surecart')}</strong>
+						</p>
+						<ol>
+							<li>
+								{__(
+									'Global Affiliate Settings (Lowest)',
+									'surecart'
+								)}
+							</li>
+							<li>
+								{__(
+									'Individual Affiliate Settings',
+									'surecart'
+								)}
+							</li>
+							<li>
+								<strong
+									style={{
+										color: 'var(--sc-color-primary-500)',
+									}}
+								>
+									{__(
+										'Individual Product Settings',
+										'surecart'
+									)}
+								</strong>
+							</li>
+							<li>
+								{__(
+									'Individual Affiliate Product Settings (Highest)',
+									'surecart'
+								)}
+							</li>
+						</ol>
+					</>
+				}
 			/>
 		</>
 	);

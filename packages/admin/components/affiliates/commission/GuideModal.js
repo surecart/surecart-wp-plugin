@@ -9,40 +9,38 @@ export default ({ open, onRequestClose, title, description }) => {
 		!!open && (
 			<Guide
 				css={css`
-					width: 312px;
+					width: 380px;
 					* {
 						box-sizing: border-box;
 					}
 
-					.surecart-guide__heading {
-						font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
-							Roboto, Oxygen-Sans, Ubuntu, Cantarell,
-							Helvetica Neue, sans-serif;
-						font-size: 24px;
-						line-height: 1.4;
-						margin: 16px 0;
-						padding: 0 32px;
+					.components-guide__page {
+						min-height: 0;
+						padding: 32px;
 					}
 
-					.surecart-guide__text {
-						font-size: 13px;
-						line-height: 1.4;
-						margin: 0 0 24px;
-						padding: 0 32px;
+					.surecart-guide__heading {
+						line-height: 1.2;
+						margin-top: 0;
+					}
+
+					.surecart-guide__text p {
+						margin-top: 0;
 					}
 				`}
 				onFinish={onRequestClose}
+				finishButtonText={__('Close', 'surecart')}
 				pages={[
 					{
 						content: (
 							<Fragment>
-								<h1 className="surecart-guide__heading">
+								<h2 className="surecart-guide__heading">
 									{title}
-								</h1>
+								</h2>
 
-								<p class="surecart-guide__text">
+								<div class="surecart-guide__text">
 									{description}
-								</p>
+								</div>
 							</Fragment>
 						),
 					},
