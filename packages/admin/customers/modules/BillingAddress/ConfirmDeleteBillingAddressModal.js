@@ -1,16 +1,14 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import {
-	ScAddress,
 	ScBlockUi,
 	ScButton,
 	ScDialog,
 	ScFlex,
-	ScForm,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Error from '../../../components/Error';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
@@ -28,15 +26,16 @@ export default ({ customerId, open, onRequestClose }) => {
 			setBusy(true);
 			const customer = await apiFetch({
 				path: addQueryArgs(`/surecart/v1/customers/${customerId}`, {
-					expand: ['shipping_address', 'billing_address', 'balances'],
+					expand: ['shipping_address', 'balances', 'billing_address'],
 				}),
 				method: 'PATCH',
 				data: {
-					shipping_address: {},
+					billing_matches_shipping: false,
+					billing_address: {},
 				},
 			});
 			receiveEntityRecords('surecart', 'customer', customer);
-			createSuccessNotice(__('Shipping Address Deleted', 'surecart'), {
+			createSuccessNotice(__('Billing address deleted', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -49,7 +48,7 @@ export default ({ customerId, open, onRequestClose }) => {
 
 	return (
 		<ScDialog
-			label={__('Delete Shipping Address', 'surecart')}
+			label={__('Delete Billing Address', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 			style={{
@@ -58,28 +57,27 @@ export default ({ customerId, open, onRequestClose }) => {
 		>
 			<ScFlex flexDirection="column" style={{ gap: '1em' }}>
 				<Error error={error} setError={setError} />
-
 				{__(
 					'Are you sure you want to delete address? This action cannot be undone.',
 					'surecart'
 				)}
-				<ScFlex justifyContent="flex-end">
-					<ScButton
-						type="text"
-						onClick={onRequestClose}
-						disabled={busy}
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>{' '}
-					<ScButton
-						type="primary"
-						disabled={busy}
-						onClick={onEditAddress}
-					>
-						{__('Delete', 'surecart')}
-					</ScButton>
-				</ScFlex>
 			</ScFlex>
+			<ScButton
+				type="text"
+				onClick={onRequestClose}
+				disabled={busy}
+				slot="footer"
+			>
+				{__('Cancel', 'surecart')}
+			</ScButton>
+			<ScButton
+				type="primary"
+				disabled={busy}
+				onClick={onEditAddress}
+				slot="footer"
+			>
+				{__('Delete', 'surecart')}
+			</ScButton>
 			{busy && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}

@@ -35,10 +35,15 @@ import TaxSettings from './modules/TaxSettings';
 import Licenses from './modules/Licenses';
 import Affiliates from '../components/affiliates';
 import useSave from '../settings/UseSave';
+import BillingAddress from './modules/BillingAddress';
+import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
+import ConfirmDeleteBillingAddressModal from './modules/BillingAddress/ConfirmDeleteBillingAddressModal';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
 	CONFIRM_DELETE_ADDRESS: 'CONFIRM_DELETE_ADDRESS',
+	EDIT_BILLING_ADDRESS: 'EDIT_BILLING_ADDRESS',
+	CONFIRM_DELETE_BILLING_ADDRESS: 'CONFIRM_DELETE_BILLING_ADDRESS',
 };
 
 export default () => {
@@ -54,7 +59,7 @@ export default () => {
 		deletingCustomer,
 		savingCustomer,
 	} = useEntity('customer', id, {
-		expand: ['balances', 'shipping_address'],
+		expand: ['balances', 'shipping_address', 'billing_address'],
 	});
 
 	/**
@@ -156,6 +161,18 @@ export default () => {
 							setCurrentModal(modals.CONFIRM_DELETE_ADDRESS)
 						}
 					/>
+					<BillingAddress
+						billingAddress={customer.billing_address_display}
+						loading={!hasLoadedCustomer}
+						onEditAddress={() =>
+							setCurrentModal(modals.EDIT_BILLING_ADDRESS)
+						}
+						onDeleteAddress={() =>
+							setCurrentModal(
+								modals.CONFIRM_DELETE_BILLING_ADDRESS
+							)
+						}
+					/>
 					<TaxSettings
 						customer={customer}
 						loading={!hasLoadedCustomer}
@@ -232,6 +249,20 @@ export default () => {
 					/>
 					<ConfirmDeleteAddressModal
 						open={currentModal === modals.CONFIRM_DELETE_ADDRESS}
+						onRequestClose={() => setCurrentModal('')}
+						customerId={id}
+					/>
+					<EditBillingAddressModal
+						open={currentModal === modals.EDIT_BILLING_ADDRESS}
+						billingAddress={customer?.billing_address}
+						onRequestClose={() => setCurrentModal('')}
+						customerId={id}
+					/>
+					<ConfirmDeleteBillingAddressModal
+						open={
+							currentModal ===
+							modals.CONFIRM_DELETE_BILLING_ADDRESS
+						}
 						onRequestClose={() => setCurrentModal('')}
 						customerId={id}
 					/>

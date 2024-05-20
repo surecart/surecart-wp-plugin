@@ -1,10 +1,10 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/address",
-	"title": "Shipping Address",
-	"description": "Display an shipping address form. This is used for shipping and tax calculations.",
+	"name": "surecart/billing-address",
+	"title": "Billing Address",
+	"description": "Display an billing address form. This is used for billing.",
 	"category": "surecart",
-	"keywords": ["address", "shipping", "tax"],
+	"keywords": ["address", "billing", "tax"],
 	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
@@ -13,17 +13,13 @@
 		"className": false
 	},
 	"attributes": {
+		"toggle_label": {
+			"type": "string",
+			"default": "Billing address is different from shipping address."
+		},
 		"label": {
 			"type": "string",
-			"default": "Shipping Address"
-		},
-		"required": {
-			"type": "boolean",
-			"default": true
-		},
-		"full": {
-			"type": "boolean",
-			"default": true
+			"default": "Billing Address"
 		},
 		"show_name": {
 			"type": "boolean",

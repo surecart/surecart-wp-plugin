@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasCustomer;
 
 /**
@@ -9,6 +10,7 @@ use SureCart\Models\Traits\HasCustomer;
  */
 class AbandonedCheckout extends Model {
 	use HasCustomer;
+	use HasCheckout;
 
 	/**
 	 * Rest API endpoint
