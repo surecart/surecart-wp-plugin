@@ -32,7 +32,6 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"wp-env": "wp-env",
-		"wp-env:init": "wp-env run cli 'wp rewrite structure /%postname%/'",
 		"dev": "composer install && yarn start:workspace",
 		"docs:release": "yarn workspaces foreach run docs:release",
 		"dev:docs": "yarn workspace @surecart/docs run start",

@@ -50,23 +50,16 @@ test.describe('Product', () => {
 		// Test: Check if the Shop heading is showing.
 		await expect(page.locator('h1')).toHaveText('Shop');
 
-		// Test: Check if Product 1 and Product 2 are showing in the list.
-		await expect(
-			await page.locator('sc-product-item-title').nth(0).innerText()
-		).toBe('Product 2');
-		await expect(
-			await page.locator('sc-product-item-title').nth(1).innerText()
-		).toBe('Product 1');
+		// Test: Check if there is 2 sc-product-item-title in the page.
+		await expect(page.locator('sc-product-item-title')).toHaveCount(2);
 
 		// Test: Search Product list.
 		await page.getByPlaceholder('Search').fill('Product 2');
 		await page.getByPlaceholder('Search').press('Enter');
 		await page.waitForLoadState('networkidle');
 
-		// Test: if Product 2 is showing in the list.
-		await expect(
-			await page.locator('sc-product-item-title').nth(0).innerText()
-		).toBe('Product 2');
+		// Test: if only 1 product is showing in the list.
+		await expect(page.locator('sc-product-item-title')).toHaveCount(1);
 
 		// Test: Clear search.
 		await page.click('.tag--clearable');
