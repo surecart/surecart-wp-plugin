@@ -2,7 +2,7 @@
  * Internal dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -10,6 +10,7 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
+import ScIcon from '../../components/ScIcon';
 
 /**
  * External dependencies.
@@ -18,9 +19,87 @@ import {
 // import useCartStyles from '../../../../blocks/hooks/useCartStyles';
 
 export default ({ attributes, setAttributes }) => {
-	const { text, button_text, disabled, collapsed, placeholder } = attributes;
+	const { text, button_text, collapsed, placeholder } = attributes;
 
 	const blockProps = useBlockProps();
+
+	const [discountInputOpen, setDiscountInputOpen] = useState(false);
+	const [discountCode, setDiscountCode] = useState('');
+	const [discountApplied, setDiscountApplied] = useState(false);
+	const [discountIsRedeemable, setDiscountIsRedeemable] = useState(true);
+
+	const renderDiscountedState = () => {
+		return (
+			<div
+				class="sc-line-item__item sc-coupon-form"
+				hidden={!discountApplied}
+			>
+				<div class="sc-line-item__text">
+					<div class="sc-line-item__description">
+						{__('Discount', 'surecart')}
+						<span class="sc-tag sc-tag--default">
+							{discountCode}
+
+							<button
+								onClick={() => {
+									setDiscountApplied(false);
+									setDiscountCode('');
+								}}
+							>
+								<ScIcon name="x" />
+							</button>
+						</span>
+					</div>
+				</div>
+
+				<div class="sc-line-item__end">
+					<div class="sc-line-item__price-text">
+						<div class="sc-line-item__price-description">
+							<span>
+								<span
+									class="coupon-human-discount"
+									hidden={!discountIsRedeemable}
+								>
+									{'$50.00'}
+								</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	};
+
+	const renderDiscountInput = () => {
+		return (
+			<div
+				hidden={!discountInputOpen && collapsed}
+				class="sc-input-group sc-coupon-form__input-group"
+			>
+				<input
+					type="text"
+					id="coupon"
+					class="sc-form-control sc-coupon-form__input"
+					aria-label="quantity"
+					aria-describedby="basic-addon1"
+					placeholder={_('Enter coupon code', 'surecart')}
+					value={discountCode}
+					onChange={(e) => setDiscountCode(e.target.value)}
+				/>
+				<span class="sc-input-group-text" id="basic-addon1">
+					<button
+						hidden={!discountCode}
+						onClick={() => {
+							setDiscountInputOpen(false);
+							setDiscountApplied(true);
+						}}
+					>
+						{__('Apply', 'surecart')}
+					</button>
+				</span>
+			</div>
+		);
+	};
 
 	return (
 		<Fragment>
@@ -64,43 +143,38 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				Coupon
-				{/* <ScCouponForm
-					collapsed={collapsed}
-					placeholder={placeholder}
-					label={text}
-				>
-					<span
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-						slot="label"
-					>
-						{text}
-						{disabled && (
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								css={css`
-									width: 16px;
-									height: 16px;
-								`}
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-								/>
-							</svg>
-						)}
-					</span>
-					{button_text}
-				</ScCouponForm> */}
+				<div className="sc-cart-coupon__wrapper">
+					{discountApplied ? (
+						renderDiscountedState()
+					) : (
+						<>
+							{collapsed ? (
+								<div>
+									<span
+										hidden={discountInputOpen}
+										class="trigger"
+										onClick={() =>
+											setDiscountInputOpen(true)
+										}
+									>
+										{text}
+									</span>
+									{renderDiscountInput()}
+								</div>
+							) : (
+								<div>
+									<label
+										class="sc-form-label"
+										for="sc-coupon-input"
+									>
+										{text}
+									</label>
+									{renderDiscountInput()}
+								</div>
+							)}
+						</>
+					)}
+				</div>
 			</div>
 		</Fragment>
 	);

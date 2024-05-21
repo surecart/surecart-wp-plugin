@@ -14,6 +14,10 @@
 		var(--sc-input-transition, var(--sc-transition-medium)) border,
 		var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
+	&[hidden] {
+		display: none;
+	}
+
 	&::-webkit-search-decoration,
 	&::-webkit-search-cancel-button,
 	&::-webkit-search-results-button,

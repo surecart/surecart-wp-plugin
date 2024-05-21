@@ -6,8 +6,6 @@ import { store, getContext } from '@wordpress/interactivity';
 // controls the product page.
 const { state, callbacks, actions } = store('surecart/cart', {
 	state: {
-		open: false, // is sidebar open or not.
-		discountInputOpen: false,
 		discountCode: '',
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
@@ -32,16 +30,16 @@ const { state, callbacks, actions } = store('surecart/cart', {
 		},
 	},
 
-	actions: {
-		*onFetchCheckout() {
-			// state.checkout = yield apiFetch({
-			// 	method: 'GET',
-			// 	path: addQueryArgs(`${baseUrl}${checkoutState.checkout?.id}`, {
-			// 		expand,
-			// 	}),
-			// });
-		},
-	},
+	// actions: {
+	// 	*onFetchCheckout() {
+	// 		// state.checkout = yield apiFetch({
+	// 		// 	method: 'GET',
+	// 		// 	path: addQueryArgs(`${baseUrl}${checkoutState.checkout?.id}`, {
+	// 		// 		expand,
+	// 		// 	}),
+	// 		// });
+	// 	},
+	// },
 
 	callbacks: {
 		getState(prop = null) {
@@ -51,14 +49,22 @@ const { state, callbacks, actions } = store('surecart/cart', {
 
 			return getContext()?.[prop] || false;
 		},
+
 		fetchCheckouts() {
 			console.log('fetching checkouts');
 		},
-		setOpen(open) {
-			state.open = open;
+	},
+
+	actions: {
+		setOpen(e) {
+			e.preventDefault();
+			const context = getContext();
+			context.open = !context.open;
 		},
 		toggleDiscountInput(e) {
-			state.discountInputOpen = !state.discountInputOpen;
+			e.preventDefault();
+			const context = getContext();
+			context.discountInputOpen = !context.discountInputOpen;
 		},
 		setDiscountCode(e) {
 			state.discountCode = e?.target?.value || '';
@@ -68,6 +74,3 @@ const { state, callbacks, actions } = store('surecart/cart', {
 		},
 	},
 });
-
-console.log('state', state);
-console.log('state.discountInputOpen', state.discountInputOpen);
