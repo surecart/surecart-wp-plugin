@@ -1,34 +1,20 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-coupon-v2",
-	"title": "Cart Coupon",
-	"description": "Display a coupon form in the cart",
-	"keywords": ["coupon", "promo"],
-	"version": "1.0.0",
+	"name": "surecart/cart-subtotal-v2",
+	"title": "Cart Subtotal",
+	"description": "Display the cart subtotal",
+	"keywords": ["cart", "subtotal"],
 	"category": "cart",
+	"textdomain": "surecart",
+	"version": "1.0.0",
 	"example": {},
 	"ancestor": ["surecart/cart-v2"],
 	"usesContext": ["surecart/cart-v2/blockId"],
 	"attributes": {
-		"text": {
+		"label": {
 			"type": "string",
-			"default": "Add Coupon Code"
-		},
-		"button_text": {
-			"type": "string",
-			"default": "Apply"
-		},
-		"placeholder": {
-			"type": "string",
-			"default": "Enter coupon code"
-		},
-		"collapsed": {
-			"type": "boolean",
-			"default": true
-		},
-		"disabled": {
-			"type": "boolean"
+			"default": "Subtotal"
 		},
 		"border": {
 			"type": "boolean",
@@ -61,7 +47,7 @@
 			}
 		},
 		"color": {
-			"text": false,
+			"text": true,
 			"background": false
 		},
 		"__experimentalBorder": {
@@ -74,12 +60,10 @@
 		}
 	},
 	"render": "file:./view.php",
-	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
 		"file:../../styles/line-item.css",
-		"file:../../styles/coupon-form.css",
-		"file:../../styles/form-control.css",
+		"file:../../styles/product-line-item.css",
 		"file:./style-index.css"
 	]
 }

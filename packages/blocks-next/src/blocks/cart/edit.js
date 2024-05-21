@@ -26,6 +26,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 		'surecart/cart-header-v2',
 		'surecart/cart-items-v2',
 		'surecart/cart-coupon-v2',
+		'surecart/cart-subtotal-v2',
 	];
 
 	const blockProps = useBlockProps({

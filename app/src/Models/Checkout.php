@@ -12,6 +12,7 @@ use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
+use SureCart\Support\Currency;
 
 /**
  * Order model
@@ -50,6 +51,24 @@ class Checkout extends Model {
 	public function __construct( $attributes = [], $type = '' ) {
 		$this->processor_type = $type;
 		parent::__construct( $attributes );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplaySubtotalAmountAttribute() {
+		return Currency::format( $this->subtotal_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayTotalAmountAttribute() {
+		return Currency::format( $this->total_amount, $this->currency );
 	}
 
 	/**

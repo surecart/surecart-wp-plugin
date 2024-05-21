@@ -1,22 +1,24 @@
 .sc-cart-coupon__wrapper {
 	padding: 1.25em;
+    margin-top: 0;
+	border-bottom: var(--sc-drawer-border);
 
-    .trigger {
-        cursor: pointer;
-    }
+	.trigger {
+		cursor: pointer;
+	}
 
-    .sc-tag {
-        button {
-            background: transparent;
-            border: none;
-            padding: 0px;
-            cursor: pointer;
-            margin-left: 0.5em;
+	.sc-tag {
+		button {
+			background: transparent;
+			border: none;
+			padding: 0px;
+			cursor: pointer;
+			margin-left: 0.5em;
 
-            svg {
-                width: 16px;
-                height: 16px;
-            }
-        }
-    }
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
 }
