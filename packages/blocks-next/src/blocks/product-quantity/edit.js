@@ -18,7 +18,6 @@ export default ({ attributes, setAttributes }) => {
 	const blockProps = useBlockProps({
 		style: {
 			display: 'block',
-			marginBottom: 'var(--sc-form-row-spacing, 0.75em)',
 			...(colorStyle?.color
 				? {
 						'--sc-input-label-color': colorStyle.color,
