@@ -1,4 +1,4 @@
-export const newShopTemplate = (attributes) => {
+export const newShopTemplate = (attributes, childBlocks) => {
 	const {
 		sort_enabled,
 		search_enabled,
@@ -6,6 +6,22 @@ export const newShopTemplate = (attributes) => {
 		collection_enabled,
 		columns,
 	} = attributes;
+
+	const getChildBlocksAttributes = (blockName) => {
+		return childBlocks[0]?.innerBlocks.find(
+			(block) => block.name === blockName
+		)?.attributes;
+	};
+
+	const blockNames = [
+		'surecart/product-item-title',
+		'surecart/product-item-price',
+		'surecart/product-item-image',
+	];
+
+	const [titleAttributes, priceAttributes, imageAttributes] = blockNames.map(
+		getChildBlocksAttributes
+	);
 
 	return [
 		[
@@ -74,6 +90,11 @@ export const newShopTemplate = (attributes) => {
 					columnCount: columns,
 				},
 			},
+			[
+				['surecart/product-image', imageAttributes],
+				['surecart/product-title-v2', titleAttributes],
+				['surecart/product-price-v2', priceAttributes],
+			],
 		],
 		pagination_enabled ? ['surecart/product-pagination'] : null,
 	].filter(Boolean);
