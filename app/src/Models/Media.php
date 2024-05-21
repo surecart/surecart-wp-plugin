@@ -64,7 +64,7 @@ class Media extends Model {
 
 		// get width and constrain the dimensions based on the width/height.
 		$width            = $image_size['width'] ?? $this->width ?? 1080;
-		[$width, $height] = wp_constrain_dimensions( $this->width, $this->height, $image_size['width'] );
+		[$width, $height] = wp_constrain_dimensions( $this->width, $this->height, $width );
 
 		$srcset_sizes = array_map(
 			function( $size ) {
@@ -112,7 +112,7 @@ class Media extends Model {
 		}
 
 		if ( empty( $attr['srcset'] ) ) {
-			$attr['srcset'] = $this->getSrcset( $srcset_sizes );
+			$attr['srcset'] = $this->imageSrcSet( $this->url, $srcset_sizes );
 		}
 
 		/**

@@ -41,7 +41,7 @@ class ProductPostTypeService {
 		add_action( 'get_post_metadata', [ $this, 'defaultGalleryFallback' ], 10, 4 );
 
 		// update edit post link to edit the product directly.
-		add_filter( 'get_edit_post_link', [ $this, 'updateEditPostLink' ], 10, 2 );
+		// add_filter( 'get_edit_post_link', [ $this, 'updateEditPostLink' ], 10, 2 );
 
 		// when a product media is deleted, remove it from the gallery.
 		add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );

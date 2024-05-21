@@ -117,11 +117,13 @@ class ProductPostSyncService {
 	 * @return array
 	 */
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
+		$base_amount = ! empty( $model->prices->data[0]->amount ) ? $model->prices->data[0]->amount : 0;
 		return [
 			'post_title'        => $model->name,
 			'post_type'         => $this->post_type,
 			'post_name'         => $model->slug,
 			'menu_order'        => $model->position ?? 0,
+			'sticky'            => $model->featured,
 			'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
 			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
@@ -131,6 +133,8 @@ class ProductPostSyncService {
 			'meta_input'        => [
 				'sc_id'                        => $model->id,
 				'product'                      => $model,
+				'min_price_amount'             => ! empty( $model->metrics->min_price_amount ) ? $model->metrics->min_price_amount : $base_amount,
+				'max_price_amount'             => ! empty( $model->metrics->max_price_amount ) ? $model->metrics->max_price_amount : $base_amount,
 				'available_stock'              => $model->available_stock,
 				'stock_enabled'                => $model->stock_enabled,
 				'allow_out_of_stock_purchases' => $model->allow_out_of_stock_purchases,

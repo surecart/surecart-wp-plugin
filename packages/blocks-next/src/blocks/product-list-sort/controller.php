@@ -1,37 +1,39 @@
 <?php
-$block_id 	= $block->context["surecart/product-list/blockId"];
-$url 		= \SureCart::block()->urlParams('products')->setInstanceId( $block_id );
-$sort 		= $url->getArg( 'sort' ) ?? 'created_at:desc';
+$block_id       = $block->context['surecart/product-list/blockId'];
+$params         = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block_id );
+$query_order    = $params->getArg( 'order' ) ?? 'desc';
+$query_order_by = $params->getArg( 'orderby' ) ?? 'date';
 
 $options = [
- 	[
-		'value' => 'created_at:desc',
-		'href' => $url->addArg('sort', 'created_at:desc'),
-		'label' => esc_html__( 'Latest', 'surecart' ),
-		'checked' => $sort === 'created_at:desc',
-	],
-    [
-		'value' => 'created_at:asc',
-		'href' => $url->addArg('sort', 'created_at:asc'),
-		'label' => esc_html__( 'Oldest', 'surecart' ),
-		'checked' => $sort === 'created_at:asc',
+	[
+		'value'   => 'date:desc',
+		'href'    => $params->addArg( 'order', 'desc' )->addArg( 'orderby', 'date' )->url(),
+		'label'   => esc_html__( 'Latest', 'surecart' ),
+		'checked' => 'desc' === $query_order && 'date' === $query_order_by,
 	],
 	[
-		'value' => 'price:asc',
-		'href' => $url->addArg('sort', 'price:asc'),
-		'label' => esc_html__( 'Price, low to high', 'surecart' ),
-		'checked' => $sort === 'price:asc',
+		'value'   => 'date:asc',
+		'href'    => $params->addArg( 'order', 'asc' )->addArg( 'orderby', 'date' )->url(),
+		'label'   => esc_html__( 'Oldest', 'surecart' ),
+		'checked' => 'asc' === $query_order && 'date' === $query_order_by,
 	],
-	[ 	'value' => 'price:desc',
-		'href' => $url->addArg('sort', 'price:desc'),
-		'label' => esc_html__( 'Price, high to low', 'surecart' ),
-		'checked' => $sort === 'price:desc',
+	[
+		'value'   => 'price:asc',
+		'href'    => $params->addArg( 'order', 'asc' )->addArg( 'orderby', 'price' )->url(),
+		'label'   => esc_html__( 'Price, low to high', 'surecart' ),
+		'checked' => 'asc' === $query_order && 'price' === $query_order_by,
+	],
+	[
+		'value'   => 'price:desc',
+		'href'    => $params->addArg( 'order', 'desc' )->addArg( 'orderby', 'price' )->url(),
+		'label'   => esc_html__( 'Price, high to low', 'surecart' ),
+		'checked' => 'desc' === $query_order && 'price' === $query_order_by,
 	],
 ];
 
 // get the currently selected option.
-$selected_options 	= array_filter($options, fn($option) => $option['value'] === $sort);
-$selected_option 	= array_shift($selected_options);
+$selected_options = array_filter( $options, fn( $option) => $option['value'] === $query_order . ':' . $query_order_by );
+$selected_option  = array_shift( $selected_options ) ?? $options[0];
 
 // return the view.
 return 'file:./view.php';

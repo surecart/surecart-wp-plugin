@@ -2,41 +2,25 @@
 	class="sc-image-slider"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
 	data-wp-init="actions.init"
-	<?php
-	echo wp_interactivity_data_wp_context(
-		array(
-			'sliderOptions'      => [
-				'autoHeight' => ! empty( $attributes['auto_height'] ),
-				'spaceBetween' => 40,
-			],
-			'thumbSliderOptions' => [
-				'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
-				'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-				'breakpoints'    => [
-					320 => [
-						'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
-						'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-					],
-				],
-			],
-		)
-	);
-	?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
 >
-	<div class="swiper">
+	<div class="swiper" style="height: <?php echo esc_attr( $height ); ?>">
 		<div class="swiper-wrapper">
-			<?php foreach ( $images as $index => $image ) : ?>
-				<div class="swiper-slide" data-wp-key="<?php echo esc_attr( $image['id'] ); ?>">
-					<img
-						src="<?php echo esc_url( $image['src'] ); ?>"
-						alt="<?php echo esc_attr( $image['alt'] ); ?>"
-						srcset="<?php echo esc_attr( $image['srcset'] ?? '' ); ?>"
-						width="<?php echo esc_attr( $image['width'] ); ?>"
-						height="<?php echo esc_attr( $image['height'] ); ?>"
-						title="<?php echo esc_attr( $image['title'] ); ?>"
-						loading="<?php echo esc_attr( $index > 0 ? 'lazy' : 'eager' ); ?>"
-						style="height: <?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) ); ?>"
-					/>
+			<?php foreach ( $gallery as $index => $image ) : ?>
+				<div class="swiper-slide" data-wp-key="<?php echo esc_attr( $image->id ); ?>">
+					<div class="swiper-zoom-container" data-swiper-zoom="5">
+						<?php
+							echo wp_kses_post(
+								$image->getImageMarkup(
+									'large',
+									[
+										'loading' => $index > 0 ? 'lazy' : 'eager',
+										'height'  => ! empty( $attributes['auto_height'] ) ? 'auto' : ( $attributes['height'] ?? 'auto' ),
+									]
+								)
+							);
+						?>
+					</div>
 
 					<?php if ( $index > 0 ) : ?>
 						<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
@@ -56,21 +40,22 @@
 
 		<div class="swiper">
 			<div class="swiper-wrapper <?php echo esc_attr( 'sc-has-' . $attributes['thumbnails_per_page'] . '-thumbs' ); ?>">
-				<?php foreach ( $thumbnails as $thumb_index => $thumbnail ) : ?>
+				<?php foreach ( $gallery as $thumb_index => $image ) : ?>
 					<div
 						class="swiper-slide"
-						data-wp-key="<?php echo esc_attr( $thumbnail['id'] ); ?>"
+						data-wp-key="<?php echo esc_attr( $image->id ); ?>"
 						<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'slideIndex' => (int) $thumb_index ) ) ); ?>
 					>
-						<img
-							src="<?php echo esc_url( $thumbnail['src'] ); ?>"
-							alt="<?php echo esc_attr( $image['alt'] ); ?>"
-							title="<?php echo esc_attr( $thumbnail['title'] ); ?>"
-							srcset="<?php echo esc_attr( $thumbnail['srcset'] ); ?>"
-							width="<?php echo esc_attr( $thumbnail['width'] ); ?>"
-							height="<?php echo esc_attr( $thumbnail['height'] ); ?>"
-							loading="<?php echo esc_attr( $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager' ); ?>"
-						/>
+					<?php
+						echo wp_kses_post(
+							$image->getImageMarkup(
+								'thumbnail',
+								[
+									'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
+								]
+							)
+						);
+					?>
 
 						<?php if ( $thumb_index > $attributes['thumbnails_per_page'] ) : ?>
 							<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
@@ -85,4 +70,3 @@
 		</div>
 	</div>
 </div>
-

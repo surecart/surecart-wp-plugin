@@ -47,23 +47,51 @@ class GalleryItem {
 	 * @return string
 	 */
 	protected function getImageMarkup( $size = 'full', $attr = [] ) {
+		$image = '';
+
 		// Handle attachments.
 		if ( isset( $this->post->id ) ) {
-			return wp_get_attachment_image( $this->post->id, $size, false, $attr );
+			$image = wp_get_attachment_image( $this->post->id, $size, false, $attr );
 		}
 
 		// Handle media.
 		if ( isset( $this->product_media->media ) ) {
-			return $this->product_media->media->getImageMarkup( $size, $attr );
+			$image = $this->product_media->media->getImageMarkup( $size, $attr );
 		}
 
 		// Handle media url.
 		if ( isset( $this->product_media->url ) ) {
 			// We cannot lazy load this or use srcset since we don't know the width/height of an external url.
-			return sprintf( '<img src="%s" alt="%s" title="%s" />', $this->product_media->url, $this->product_media->alt ?? '', $this->product_media->title ?? '' );
+			$image = sprintf( '<img src="%s" alt="%s" title="%s" />', $this->product_media->url, $this->product_media->alt ?? '', $this->product_media->title ?? '' );
 		}
 
-		// Handle nothing.
-		return '';
+		// add height style.
+		$tags = new \WP_HTML_Tag_Processor( $image );
+		if ( $tags->next_tag( 'img' ) && ! empty( $attr['height'] ) ) {
+			$tags->set_attribute( 'style', 'height: ' . $attr['height'] );
+		}
+
+		// return updated html.
+		return $tags->get_updated_html();
+	}
+
+	/**
+	 * Get the image markup.
+	 *
+	 * @param string $size The size of the image.
+	 * @param array  $attr The attributes for the tag.
+	 *
+	 * @return string
+	 */
+	public function __get( $key ) {
+		if ( isset( $this->product_media->{$key} ) ) {
+			return $this->product_media->{$key};
+		}
+
+		if ( isset( $this->post->{$key} ) ) {
+			return $this->post->{$key};
+		}
+
+		return null;
 	}
 }
