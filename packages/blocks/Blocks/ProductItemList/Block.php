@@ -292,6 +292,22 @@ class Block extends BaseBlock {
 	}
 
 	/**
+	 * Get the Child Blocks Attributes.
+	 *
+	 * @param string $block_name
+	 * @param array $child_blocks
+	 * @return array|null Child Blocks Attributes.
+	 */
+	public function getChildBlocksAttributes( $block_name, $child_blocks ) {
+		foreach ( $child_blocks[0]['innerBlocks'] as $block ) {
+			if ( $block['blockName'] === $block_name)  {
+				return $block['attrs'];
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Render the new product list block.
 	 *
 	 * @param  array $attributes Block attributes.
@@ -299,6 +315,15 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function renderNewProductListBlock( $attributes ) {
+		$inner_blocks = $this->block->parsed_block['innerBlocks'] ?? [];
+		$product_title_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-title', $inner_blocks );
+		$product_price_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-price', $inner_blocks );
+		$product_image_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-image', $inner_blocks );
+
+		$title_style = $product_title_attrs['style'] ? wp_json_encode( $product_title_attrs['style'] ) : '{}';
+		$price_style = $product_price_attrs['style'] ? wp_json_encode( $product_price_attrs['style'] ) : '{}';
+		$image_style = $product_image_attrs['style'] ? wp_json_encode( $product_image_attrs['style'] ) : '{}';
+
 		$limit = $attributes['limit'] ?? 15;
 		$sort_enabled = $attributes['sort_enabled'] ?? true;
 		$search_enabled = $attributes['search_enabled'] ?? true;
@@ -345,9 +370,9 @@ class Block extends BaseBlock {
 		}
 
 		$new_block .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
-		$new_block .= '<!-- wp:surecart/product-image /-->';
-		$new_block .= '<!-- wp:surecart/product-title-v2 {"level":2,"style":{"typography":{"fontSize":"1.25em"},"spacing":{"margin":{"top":"5px","bottom":"5px"}}}} /-->';
-		$new_block .= '<!-- wp:surecart/product-price-v2 /-->';
+		$new_block .= '<!-- wp:surecart/product-image {"style":' . $image_style . '} /-->';
+		$new_block .= '<!-- wp:surecart/product-title-v2 {"level":2,"style":' . $title_style . '} /-->';
+		$new_block .= '<!-- wp:surecart/product-price-v2 {"style":' . $price_style . '} /-->';
 		$new_block .= '<!-- /wp:surecart/product-template -->';
 
 		if ( $pagination_enabled ) {
