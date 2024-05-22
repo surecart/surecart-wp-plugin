@@ -5,7 +5,7 @@
 		wp_interactivity_data_wp_context(
 			[
 				'isMenuOpen' => false,
-				'index'      => 0, // needed to keep track of the focused item
+				'index'      => 0, // needed to keep track of the focused item.
 			]
 		)
 	);
