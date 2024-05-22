@@ -150,13 +150,13 @@ export default ({ product, loading }) => {
 						<ol>
 							<li>
 								{__(
-									'Global Affiliate Settings (Lowest)',
+									'Global Affiliate Commissions (Lowest)',
 									'surecart'
 								)}
 							</li>
 							<li>
 								{__(
-									'Individual Affiliate Settings',
+									'Individual Affiliate Commissions',
 									'surecart'
 								)}
 							</li>
@@ -167,14 +167,14 @@ export default ({ product, loading }) => {
 									}}
 								>
 									{__(
-										'Individual Product Settings',
+										'Individual Product Commissions',
 										'surecart'
 									)}
 								</strong>
 							</li>
 							<li>
 								{__(
-									'Individual Affiliate Product Settings (Highest)',
+									'Individual Affiliate Product Commissions (Highest)',
 									'surecart'
 								)}
 							</li>
