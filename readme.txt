@@ -306,13 +306,13 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 2.27.0 - May 22nd, 2024 =
-- New: Product specific commissions rates.
-- New: Affiliate specific commission rates.
-- New: Affiliate & Product specific commission rates.
+- New: Individual product commissions rates.
+- New: Individual affiliate commission rates.
+- New: Affiliate + product combination commission rates.
 - Improvement: Conditional form block and order bumps block now allowed on free accounts.
 - Improvement: Remove nonce from order confirm page GET request to allow dynamic linking.
 - Fix: Issue with abandoned checkout stats sometimes incorrectly defaulting to USD.
-- Fix: Make sure order bump commission rule field is required to prevent misconfiguration.
+- Fix: Ensure order bump display condition rule field is required to prevent misconfiguration.
 - Fix: Attaching and affiliate to a product was not working for affiliates without a last name.
 - Fix: Ensure post types have correct capitalization in admin.
 
