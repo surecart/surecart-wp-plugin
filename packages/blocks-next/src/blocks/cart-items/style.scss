@@ -1,4 +1,7 @@
 .wp-block-surecart-cart-items__wrapper {
+	min-height: 400px;
+	border-bottom: var(--sc-drawer-border);
+
 	.sc-quantity-selector {
 		margin-top: --var(sc-spacing-small);
 	}

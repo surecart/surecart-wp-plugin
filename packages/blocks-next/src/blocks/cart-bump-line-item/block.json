@@ -34,9 +34,25 @@
 	},
 	"supports": {
 		"interactivity": true,
-		"reusable": false,
-		"html": false,
-		"multiple": false
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"color": {
+			"text": true
+		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"__experimentalDefaultControls": {
+				"width": true,
+				"color": true
+			}
+		}
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",

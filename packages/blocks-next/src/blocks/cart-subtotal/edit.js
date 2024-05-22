@@ -9,14 +9,11 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 /**
  * Internal dependencies.
  */
-import useCartStyles from '../../../../blocks/hooks/useCartStyles';
+// import useCartStyles from '../../../../blocks/hooks/useCartStyles';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
-
-	const blockProps = useBlockProps({
-		style: useCartStyles({ attributes }),
-	});
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>

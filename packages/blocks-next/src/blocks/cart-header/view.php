@@ -1,4 +1,6 @@
-<div <?php echo get_block_wrapper_attributes( array( 'style' => $style ) ); ?>>
+<div
+    <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+>
 	<span class="wp-block-surecart-cart-header-v2__close" role="button" tabindex="0">
     	<?php echo wp_kses( SureCart::svg()->get('arrow-right' ), sc_allowed_svg_html() ); ?>
 	</span>

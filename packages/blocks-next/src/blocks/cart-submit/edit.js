@@ -91,7 +91,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div class="wp-block-buttons" style={{ marginTop: 0 }}>
+			<div class="wp-block-buttons">
 				<div
 					{...blockProps}
 					className={classnames(blockProps.className, {

@@ -1,6 +1,6 @@
 <div
     class="wp-block-surecart-cart-items__wrapper"
-    style="min-height: 400px; border-bottom: var(--sc-drawer-border); padding: 1.25em;"
+    <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 >
 	<template
 		data-wp-each--line_item="state.checkout.line_items.data"

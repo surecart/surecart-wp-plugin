@@ -1,22 +1,14 @@
 /**
- * WordPress dependencies
+ * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
-/**
- * Component Dependencies
- */
-import useCartStyles from '../../../../blocks/hooks/useCartStyles';
-
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
-
-	const blockProps = useBlockProps({
-		style: useCartStyles({ attributes }),
-	});
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
