@@ -216,15 +216,7 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getPermalinkAttribute(): string {
-		if ( empty( $this->attributes['id'] ) ) {
-			return '';
-		}
-		// permalinks off.
-		if ( ! get_option( 'permalink_structure' ) ) {
-			return add_query_arg( 'sc_product_page_id', $this->slug, get_home_url() );
-		}
-		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . $this->slug;
+		return ! empty( $this->post() ) ? get_the_permalink( $this->post()->ID ) : '';
 	}
 
 	/**
@@ -291,6 +283,10 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getFeaturedMediaAttribute() {
+		$gallery = $this->gallery || [];
+		if ( ! empty( $gallery ) ) {
+			return $gallery[0];
+		}
 		$featured_product_media = $this->featured_product_media;
 
 		return (object) array(
@@ -553,7 +549,7 @@ class Product extends Model implements PageModel {
 
 		return array_map(
 			function ( $gallery_item ) {
-				// this is a post id.
+				// this is an attachment id.
 				if ( is_int( $gallery_item->id ) ) {
 					return new GalleryItem( $gallery_item );
 				}
@@ -566,6 +562,7 @@ class Product extends Model implements PageModel {
 					}
 				);
 
+				// get the first item.
 				$item = array_shift( $item );
 				if ( ! empty( $item ) ) {
 					return new GalleryItem( $item );
@@ -584,14 +581,17 @@ class Product extends Model implements PageModel {
 	 */
 	public function getDisplayAmountAttribute() {
 		$initial_variant = $this->first_variant_with_stock;
+
 		if ( ! empty( $initial_variant->amount ) ) {
 			return Currency::format( $initial_variant->amount, $initial_variant->currency );
 		}
+
 		$prices        = $this->active_prices ?? [];
 		$initial_price = $prices[0] ?? null;
 		if ( empty( $initial_price ) ) {
 			return '';
 		}
+
 		return Currency::format( $initial_price->amount, $initial_price->currency );
 	}
 
@@ -613,70 +613,12 @@ class Product extends Model implements PageModel {
 			Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
 	}
 
-	/*
-	* Is the product on sale?
-	*
-	* @return array
-	*/
+	/**
+	 * Is the product on sale?
+	 *
+	 * @return array
+	 */
 	public function getIsOnSaleAttribute() {
 		return $this->initial_price->is_on_sale ?? false;
-	}
-
-	/**
-	 * Get the product page initial state
-	 *
-	 * @param array $args Array of arguments.
-	 *
-	 * @return array
-	 */
-	public function getInitialPageState( $args = array() ) {
-		$form = \SureCart::forms()->getDefault();
-
-		$prices         = $this->active_prices ?? [];
-		$selected_price = $prices[0] ?? null;
-
-		return wp_parse_args(
-			$args,
-			array(
-				'formId'          => $form->ID,
-				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
-				'product'         => $this,
-				'prices'          => $this->active_prices,
-				'isOnSale'        => $selected_price ? $selected_price->is_on_sale : false,
-				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
-				'variant_options' => $this->variant_options->data ?? array(),
-				'variants'        => $this->variants->data ?? array(),
-				'selectedVariant' => $this->first_variant_with_stock ?? null,
-				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
-			)
-		);
-	}
-
-	/**
-	 * Get the product images
-	 *
-	 * @param int   $width The image width.
-	 * @param array $srcset The image srcset.
-	 *
-	 * @return array
-	 */
-	public function getDisplayImages( $width = 1170, $srcset = array() ) {
-		return array_map(
-			function ( $product_media ) use ( $width, $srcset ) {
-				$items = array(
-					'id'     => $product_media->id,
-					'src'    => esc_url( $product_media->getUrl( $width ) ),
-					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $this->name ?? '' ),
-					'title'  => $product_media->media->title ?? '',
-					'width'  => $product_media->width,
-					'height' => $product_media->height,
-				);
-				if ( ! empty( $srcset ) ) {
-					$items['srcset'] = $product_media->getSrcset( $srcset );
-				}
-				return $items;
-			},
-			$this->product_medias->data
-		);
 	}
 }
