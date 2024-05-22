@@ -53,12 +53,12 @@ $products = array_map(
 );
 
 // build up pagination.
-$next_page_link     = $products_query->max_num_pages && $products_query->max_num_pages !== $current_page ? $url->addPageArg( $current_page + 1 ) : '';
-$previous_page_link = $current_page > 1 ? $url->addPageArg( $current_page - 1 ) : '';
+$next_page_link     = $products_query->max_num_pages && $products_query->max_num_pages !== $current_page ? $url->addPageArg( $current_page + 1 )->url() : '';
+$previous_page_link = $current_page > 1 ? $url->addPageArg( $current_page - 1 )->url() : '';
 $pagination         = array_map(
 	function( $i ) use ( $current_page, $url ) {
 		return [
-			'href'    => $url->addPageArg( $i ),
+			'href'    => $url->addPageArg( $i )->url(),
 			'name'    => $i,
 			'current' => (int) $i === (int) $current_page,
 		];
