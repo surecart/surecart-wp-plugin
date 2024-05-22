@@ -1,4 +1,4 @@
-<div <?php echo get_block_wrapper_attributes( [ 'class' => 'wp-block-button' ] ); ?>
+<div <?php echo get_block_wrapper_attributes( array( 'class' => 'wp-block-button' ) ); ?>
 	<?php
 	echo wp_interactivity_data_wp_context(
 		array(
