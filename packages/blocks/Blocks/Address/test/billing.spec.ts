@@ -3,7 +3,7 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-test.describe('surecart/billing-address block editor', () => {
+test.describe('Billing address block editor', () => {
 	test('Should allow adding of the billing address block', async ({
 		editor,
 		page,
@@ -13,48 +13,20 @@ test.describe('surecart/billing-address block editor', () => {
 
 		const serializedBlockHTML = `
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
-				<!-- wp:surecart/billing-address /-->
+				<!-- wp:surecart/address /-->
 			<!-- /wp:surecart/form -->
 		`;
 
 		await editor.setContent(serializedBlockHTML);
 		await expect(
-			page.locator('div[data-type="surecart/billing-address"]')
+			page.locator(
+				'sc-switch:has-text("Billing address is different from shipping address.")'
+			)
 		).toBeVisible();
-	});
-
-	test('Should allow modifying attributes', async ({
-		editor,
-		page,
-		admin,
-	}) => {
-		await admin.createNewPost();
-		const serializedBlockHTML = `
-			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
-				<!-- wp:surecart/billing-address /-->
-			<!-- /wp:surecart/form -->
-		`;
-
-		await editor.setContent(serializedBlockHTML);
-		await page.locator('div[data-type="surecart/billing-address"]').click();
-
-		// required attribute
-		await page.locator('label:has-text("Required")').first().click();
-		expect(await editor.getEditedPostContent()).toContain(
-			'{"required":false}'
-		);
-
-		// labels attribute
-		await page.getByLabel('SWITCH LABEL').fill('Test Label');
-		await page.getByLabel('ADDRESS LABEL').fill('Test Address Label');
-		expect(await editor.getEditedPostContent()).toContain('Test Label');
-		expect(await editor.getEditedPostContent()).toContain(
-			'Test Address Label'
-		);
 	});
 });
 
-test.describe('surecart/billing-address block frontend', () => {
+test.describe('Billing address block frontend', () => {
 	test('Should use shipping address if present by default', async ({
 		page,
 		requestUtils,
@@ -63,7 +35,6 @@ test.describe('surecart/billing-address block frontend', () => {
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
 				<!-- wp:surecart/address {"required":false} /-->
 				<!-- wp:surecart/payment /-->
-				<!-- wp:surecart/billing-address /-->
 			<!-- /wp:surecart/form -->
 		`;
 
@@ -91,7 +62,6 @@ test.describe('surecart/billing-address block frontend', () => {
 		<!-- wp:surecart/checkout-form {\"title\":\"Test Form\"} /-->
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
 			    <!-- wp:surecart/address {"required":false} /-->
-				<!-- wp:surecart/billing-address /-->
 			<!-- /wp:surecart/form -->
 		<!-- /wp:surecart/checkout-form -->
 		`;
@@ -129,37 +99,6 @@ test.describe('surecart/billing-address block frontend', () => {
 		).not.toBeVisible();
 	});
 
-	test('Should collect billing address if shipping address is not present', async ({
-		requestUtils,
-		page,
-	}) => {
-		const serializedBlockHTML = `
-			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
-				<!-- wp:surecart/payment /-->
-				<!-- wp:surecart/billing-address /-->
-			<!-- /wp:surecart/form -->
-		`;
-
-		const post = await requestUtils.rest({
-			method: 'POST',
-			path: '/wp/v2/pages',
-			data: {
-				content: serializedBlockHTML,
-			},
-		});
-
-		await page.goto(post.link);
-
-		await expect(
-			page.locator('sc-address:has-text("Billing Address")')
-		).toBeVisible();
-		await expect(
-			page.locator(
-				'sc-switch:has-text("Billing address is different from shipping address.")'
-			)
-		).not.toBeVisible();
-	});
-
 	test('Should pass correct data to the server for the toggle', async ({
 		page,
 		requestUtils,
@@ -169,7 +108,6 @@ test.describe('surecart/billing-address block frontend', () => {
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
 			    <!-- wp:surecart/address {"required":false} /-->
 				<!-- wp:surecart/payment /-->
-				<!-- wp:surecart/billing-address /-->
 			<!-- /wp:surecart/form -->
 		<!-- /wp:surecart/checkout-form -->
 		`;
@@ -235,7 +173,7 @@ test.describe('surecart/billing-address block frontend', () => {
 		<!-- wp:surecart/checkout-form {\"title\":\"Test Form\"} /-->
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
 			   <!-- wp:surecart/payment /-->
-				<!-- wp:surecart/billing-address /-->
+				<!-- wp:surecart/address /-->
 			<!-- /wp:surecart/form -->
 		<!-- /wp:surecart/checkout-form -->
 		`;
@@ -261,6 +199,13 @@ test.describe('surecart/billing-address block frontend', () => {
 
 			return requestCount === 2; // wait for the second request
 		});
+
+		// toggle the billing address
+		await page
+			.locator(
+				'sc-switch:has-text("Billing address is different from shipping address.")'
+			)
+			.click();
 
 		// fill the address
 		await page

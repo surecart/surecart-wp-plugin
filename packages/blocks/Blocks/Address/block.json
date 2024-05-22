@@ -17,6 +17,14 @@
 			"type": "string",
 			"default": "Shipping Address"
 		},
+		"billing_label": {
+			"type": "string",
+			"default": "Billing Address"
+		},
+		"billing_toggle_label": {
+			"type": "string",
+			"default": "Billing address is different from shipping address."
+		},
 		"required": {
 			"type": "boolean",
 			"default": true

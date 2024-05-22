@@ -1,4 +1,4 @@
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import {
@@ -11,12 +11,15 @@ import {
 	ScAddress,
 	ScSelect,
 	ScCompactAddress,
+	ScSwitch,
 } from '@surecart/components-react';
 import { countryChoices } from '@surecart/components';
 
 export default ({ attributes, setAttributes }) => {
 	const {
 		label,
+		billing_label,
+		billing_toggle_label,
 		required,
 		full,
 		show_name,
@@ -28,7 +31,7 @@ export default ({ attributes, setAttributes }) => {
 		postal_code_placeholder,
 		state_placeholder,
 	} = attributes;
-
+	const [sameAsShipping, setSameAsShipping] = useState(false);
 	const blockProps = useBlockProps();
 
 	const Tag = full ? ScAddress : ScCompactAddress;
@@ -53,11 +56,31 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'surecart')}
+							label={__('Shipping Address Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Billing Address Toggle', 'surecart')}
+							value={billing_toggle_label}
+							onChange={(billing_toggle_label) =>
+								setAttributes({ billing_toggle_label })
+							}
+						/>
+					</PanelRow>
+					{!sameAsShipping && (
+						<PanelRow>
+							<TextControl
+								label={__('Billing Address Label', 'surecart')}
+								value={billing_label}
+								onChange={(billing_label) =>
+									setAttributes({ billing_label })
+								}
+							/>
+						</PanelRow>
+					)}
 					<PanelRow>
 						<ToggleControl
 							label={__(
@@ -182,6 +205,33 @@ export default ({ attributes, setAttributes }) => {
 						country: default_country,
 					}}
 				/>
+				<div style={{ marginTop: 'var(--sc-form-row-spacing)' }}>
+					<ScSwitch
+						checked={!sameAsShipping}
+						onScChange={(e) => setSameAsShipping(!e.target.checked)}
+						style={{ marginBottom: 'var(--sc-spacing-medium)' }}
+					>
+						{billing_toggle_label}
+					</ScSwitch>
+					{!sameAsShipping && (
+						<ScAddress
+							label={billing_label}
+							showName={show_name}
+							required={true}
+							placeholders={{
+								name: name_placeholder,
+								country: country_placeholder,
+								city: city_placeholder,
+								line_1: line_1_placeholder,
+								postal_code: postal_code_placeholder,
+								state: state_placeholder,
+							}}
+							address={{
+								country: default_country,
+							}}
+						/>
+					)}
+				</div>
 			</div>
 		</Fragment>
 	);
