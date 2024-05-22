@@ -1,0 +1,61 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/billing-address",
+	"title": "Billing Address",
+	"description": "Display an billing address form. This is used for billing.",
+	"category": "surecart",
+	"keywords": ["address", "billing", "tax"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/form"],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"inserter": false,
+		"className": false
+	},
+	"attributes": {
+		"toggle_label": {
+			"type": "string",
+			"default": "Billing address is different from shipping address."
+		},
+		"label": {
+			"type": "string",
+			"default": "Billing Address"
+		},
+		"show_name": {
+			"type": "boolean",
+			"default": false
+		},
+		"default_country": {
+			"type": "string"
+		},
+		"name_placeholder": {
+			"type": "string",
+			"default": "Name or Company Name"
+		},
+		"country_placeholder": {
+			"type": "string",
+			"default": "Country"
+		},
+		"city_placeholder": {
+			"type": "string",
+			"default": "City"
+		},
+		"line_1_placeholder": {
+			"type": "string",
+			"default": "Address"
+		},
+		"line_2_placeholder": {
+			"type": "string",
+			"default": "Address Line 2"
+		},
+		"postal_code_placeholder": {
+			"type": "string",
+			"default": "Postal Code/Zip"
+		},
+		"state_placeholder": {
+			"type": "string",
+			"default": "State/Province/Region"
+		}
+	}
+}

@@ -143,7 +143,7 @@ class CheckoutTest extends SureCartUnitTestCase
 		$instance = new Checkout($request['checkout'], 'custom');
 		$prepared = $instance->finalize();
 
-		// make sure attriutes page
+		// make sure attributes page
 		$this->assertEquals($prepared->getAttributes(), $response);
 	}
 }

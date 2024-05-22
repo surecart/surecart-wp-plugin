@@ -56,6 +56,7 @@ export default () => {
 						'customer',
 						'checkout.tax_identifier',
 						'checkout.shipping_address',
+						'checkout.billing_address',
 						'checkout.discount',
 						'checkout.line_items',
 						'discount.promotion',
@@ -212,6 +213,17 @@ export default () => {
 							loading={!hasLoadedAbandoned}
 						/>
 					)}
+
+					{!!abandoned?.checkout?.billing_address_display && (
+						<Address
+							label={__('Billing Address', 'surecart')}
+							address={
+								abandoned?.checkout?.billing_address_display
+							}
+							loading={!hasLoadedAbandoned}
+						/>
+					)}
+
 					<MetaData
 						abandoned={abandoned}
 						loading={!hasLoadedAbandoned}
