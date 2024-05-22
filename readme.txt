@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.27.0 - May 21st, 2024 =
+= 2.27.0 - May 22nd, 2024 =
 - New: Product specific commissions rates.
 - New: Affiliate specific commission rates.
 - New: Affiliate & Product specific commission rates.
