@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasCommissionStructure;
+
 /**
  * Holds the data of the current Affiliation protocol.
  */
 class AffiliationProtocol extends Model {
+	use HasCommissionStructure;
+
 	/**
 	 * Rest API endpoint
 	 *

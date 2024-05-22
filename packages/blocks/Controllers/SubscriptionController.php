@@ -22,19 +22,16 @@ class SubscriptionController extends BaseController {
 	 */
 	protected $middleware = [
 		'confirm'               => [
-			SubscriptionNonceVerificationMiddleware::class,
 			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
 		],
 		'confirm_amount'        => [
-			SubscriptionNonceVerificationMiddleware::class,
 			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
 		],
 		'confirm_variation'     => [
-			SubscriptionNonceVerificationMiddleware::class,
 			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,

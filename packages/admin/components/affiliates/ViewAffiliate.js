@@ -33,8 +33,8 @@ export default ({ updateItem, affiliation }) => {
 						<ScAvatar
 							image={avatarUrl}
 							initials={
-								affiliation?.first_name.charAt(0) +
-								affiliation?.last_name.charAt(0)
+								(affiliation?.first_name || '').charAt(0) +
+								(affiliation?.last_name || '').charAt(0)
 							}
 						/>
 					</div>

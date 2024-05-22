@@ -16,6 +16,22 @@ class AffiliationsController extends RestController {
 	protected $class = Affiliation::class;
 
 	/**
+	 * Run some middleware to run before request.
+	 *
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
+	 *
+	 * @return \SureCart\Models\Model
+	 */
+	protected function middleware( $class, \WP_REST_Request $request ) {
+		// if we are in edit context, we want to fetch the commission_structure.
+		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
+			$class->with( [ 'commission_structure' ] );
+		}
+		return parent::middleware( $class, $request );
+	}
+
+	/**
 	 * Activate an affiliation.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.

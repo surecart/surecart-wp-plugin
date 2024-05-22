@@ -2,13 +2,17 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasPurchases;
+use SureCart\Models\Traits\HasShippingAddress;
 
 /**
  * Price model
  */
 class Customer extends Model {
 	use HasPurchases;
+	use HasShippingAddress;
+	use HasBillingAddress;
 
 	/**
 	 * Rest API endpoint
@@ -194,5 +198,18 @@ class Customer extends Model {
 		if ( ! empty( $this->query['expand'] ) && in_array( 'user', $this->query['expand'] ) ) {
 			$this->attributes['user'] = $this->getUser();
 		}
+	}
+
+	/**
+	 * Get the billing address attribute
+	 *
+	 * @return array|null The billing address.
+	 */
+	public function getBillingAddressDisplayAttribute() {
+		if ( $this->billing_matches_shipping ) {
+			return $this->shipping_address;
+		}
+
+		return $this->attributes['billing_address'] ?? null;
 	}
 }

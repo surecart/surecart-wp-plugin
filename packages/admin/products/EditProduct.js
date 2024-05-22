@@ -30,6 +30,7 @@ import Variations from './modules/Variations';
 import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
+import Affiliation from './modules/Affiliation';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -135,15 +136,14 @@ export default ({ id, setBrowserURL }) => {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
 
-			createSuccessNotice( __('Product deleted.', 'surecart'), {
+			createSuccessNotice(__('Product deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 
 			// Redirect to products page.
-			window.location.href = addQueryArgs(
-				'admin.php',
-				{ page: 'sc-products' },
-			);
+			window.location.href = addQueryArgs('admin.php', {
+				page: 'sc-products',
+			});
 		} catch (e) {
 			setError(e);
 		}
@@ -279,10 +279,18 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
 					<Advanced
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
+					/>
+
+					<Affiliation
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+						error={error}
 					/>
 				</>
 			}
