@@ -10,6 +10,7 @@
             )
         );
     ?>
+    data-wp-on-document--click="actions.closeCouponOnClickOutside"
 >
     <!-- Discount applied Applied coupon UI -->
     <div

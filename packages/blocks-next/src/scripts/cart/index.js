@@ -23,10 +23,13 @@ const { state, callbacks, actions } = store('surecart/cart', {
 			return line_item.price.scratchAmount !== line_item.price.amount;
 		},
 		get isDiscountAdded() {
-			return !!state.checkout?.discount?.promotion?.code;
+			return !!state?.checkout?.discount?.promotion?.code;
 		},
 		get isDiscountCodeSet() {
 			return !!state?.discountCode;
+		},
+		get hasBumpAmount() {
+			return !!state?.checkout?.bump_amount;
 		},
 	},
 
@@ -71,6 +74,16 @@ const { state, callbacks, actions } = store('surecart/cart', {
 		},
 		applyDiscount() {
 			console.log('applying discount');
+		},
+		closeCouponOnClickOutside: (e) => {
+			const context = getContext();
+
+			// if the click is inside the coupon form, do nothing
+			if (e && e.target.closest('.sc-coupon-form')) return;
+
+			if (!context.discountInputOpen) return;
+
+			context.discountInputOpen = false;
 		},
 	},
 });

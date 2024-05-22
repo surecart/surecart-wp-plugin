@@ -72,6 +72,15 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display bump amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayBumpAmountAttribute() {
+		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
+	}
+
+	/**
 	 * Set attributes during write actions.
 	 *
 	 * @return void

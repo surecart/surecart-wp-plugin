@@ -29,6 +29,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 		'surecart/cart-subtotal-v2',
 		'surecart/cart-submit-v2',
 		'surecart/cart-message-v2',
+		'surecart/cart-bump-line-item-v2',
 	];
 
 	const blockProps = useBlockProps({

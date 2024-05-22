@@ -12,6 +12,8 @@ $checkoutJson = '{
     "amount_due": 100000,
     "applied_balance_amount": 0,
     "billing_matches_shipping": true,
+    "bump_amount": -101,
+    "display_bump_amount": "-$1.01",
     "credited_balance_amount": 0,
     "currency": "usd",
     "discount_amount": 0,
@@ -364,7 +366,6 @@ $checkoutJson = '{
         },
         "data": []
     },
-    "bump_amount": 0,
     "number": null,
     "pdf_url": null,
     "charge": null,
@@ -449,6 +450,7 @@ wp_interactivity_state(
         'discountIsRedeemable' => false,
         'isDiscountAdded' => false,
         'isDiscountCodeSet' => false,
+        'hasBumpAmount' => false,
 	)
 );
 
