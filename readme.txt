@@ -309,7 +309,6 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Product specific commissions rates.
 - New: Affiliate specific commission rates.
 - New: Affiliate & Product specific commission rates.
-- New: Billing address block for checkout forms.
 - Improvement: Conditional form block and order bumps block now allowed on free accounts.
 - Improvement: Remove nonce from order confirm page GET request to allow dynamic linking.
 - Fix: Issue with abandoned checkout stats sometimes incorrectly defaulting to USD.
