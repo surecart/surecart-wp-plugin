@@ -912,7 +912,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * The product post.
 	 *
-	 * @return \SureCart\Models\PostModel
+	 * @return \WP_Post|false
 	 */
 	protected function post() {
 		return \SureCart::sync()->product()->post()->findByModelId( $this->id );
