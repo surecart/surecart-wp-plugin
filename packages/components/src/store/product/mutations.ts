@@ -37,7 +37,7 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
 
   if (!productState) return;
   if (!productState.selectedPrice?.id) return;
-  if (productState.selectedPrice?.ad_hoc && !productState.adHocAmount) return;
+  if (productState.selectedPrice?.ad_hoc && !productState.adHocAmount && 0 !== productState.adHocAmount) return;
 
   return addQueryArgs(url, {
     line_items: [
