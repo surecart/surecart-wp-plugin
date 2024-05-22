@@ -15,19 +15,25 @@ import classnames from 'classnames';
 import { useEffect } from '@wordpress/element';
 
 const TEMPLATE = [
-	['surecart/product-image'],
 	[
-		'surecart/product-title-v2',
-		{
-			level: 2,
-			isLink: false,
-			style: {
-				typography: { fontSize: '1.25em' },
-				spacing: { margin: { top: '5px', bottom: '5px' } },
-			},
-		},
+		'core/group',
+		{},
+		[
+			['surecart/product-image'],
+			[
+				'surecart/product-title-v2',
+				{
+					level: 2,
+					isLink: false,
+					style: {
+						typography: { fontSize: '1.25em' },
+						spacing: { margin: { top: '5px', bottom: '5px' } },
+					},
+				},
+			],
+			['surecart/product-price-v2'],
+		],
 	],
-	['surecart/product-price-v2'],
 ];
 
 export default ({
