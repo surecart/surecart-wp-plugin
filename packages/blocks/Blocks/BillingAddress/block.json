@@ -10,6 +10,7 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
+		"inserter": false,
 		"className": false
 	},
 	"attributes": {
