@@ -45,6 +45,10 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
+		$container['blocks.mode_switcher'] = function () use ( $app ) {
+			return new FormModeSwitcherService( $app );
+		};
+
 		$app->alias( 'blocks', 'blocks' );
 
 		$app->alias(
@@ -67,6 +71,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['blocks.patterns']->bootstrap();
 		$container['blocks.validations']->bootstrap();
+		$container['blocks.mode_switcher']->bootstrap();
 
 		// allow design tokens in css.
 		add_filter(

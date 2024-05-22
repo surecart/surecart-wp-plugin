@@ -24,7 +24,7 @@ class InstallService {
 				'checkout' => array(
 					'name'      => _x( 'checkout', 'Form slug', 'surecart' ),
 					'title'     => _x( 'Checkout', 'Form title', 'surecart' ),
-					'content'   => '<!-- wp:surecart/form -->
+					'content'   => '<!-- wp:surecart/form {"mode":"test"} -->
 
 					<!-- wp:surecart/heading {"title":"Contact Information"} -->
 					<sc-heading>Contact Information<span slot="description"></span><span slot="end"></span></sc-heading>
@@ -120,7 +120,7 @@ class InstallService {
 					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
 					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} -->
-					<!-- wp:surecart/form /-->
+					<!-- wp:surecart/form {"mode":"test"} /-->
 					<!-- /wp:surecart/checkout-form -->',
 				),
 				'order-confirmation' => array(

@@ -435,6 +435,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+\SureCart::route()
+->where( 'admin', 'sc-affiliate-payout-groups' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationPayoutGroups\\' )
+->group(
+	function () {
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationPayoutGroupsController@edit' );
+	}
+);
+
 /*
 |--------------------------------------------------------------------------
 | Settings
@@ -453,11 +465,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( ! ApiToken::get() ) {
 			// without the var.
 			\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->handle( 'ConnectionSettings@show' );
-			\SureCart::route()->post()->where( 'sc_url_var', false, 'tab' )->middleware( 'nonce:update_plugin_settings' )->handle( 'ConnectionSettings@save' );
 
 			// with the var.
 			\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->handle( 'ConnectionSettings@show' );
-			\SureCart::route()->post()->where( 'sc_url_var', 'connection', 'tab' )->middleware( 'nonce:update_plugin_settings' )->handle( 'ConnectionSettings@save' );
 
 			// Advanced.
 			\SureCart::route()->get()->where( 'sc_url_var', 'advanced', 'tab' )->name( 'settings.advanced' )->handle( 'AdvancedSettings@show' );
@@ -485,7 +495,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Connection.
 		\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->name( 'settings.connection' )->handle( 'ConnectionSettings@show' );
-		\SureCart::route()->post()->where( 'sc_url_var', 'connection', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.connection.save' )->handle( 'ConnectionSettings@save' );
 
 		// Advanced.
 		\SureCart::route()->get()->where( 'sc_url_var', 'advanced', 'tab' )->name( 'settings.advanced' )->handle( 'AdvancedSettings@show' );

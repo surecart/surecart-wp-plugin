@@ -7,7 +7,7 @@ import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Charge, Checkout, FeaturedProductMediaAttributes, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
-import { getFeaturedProductMediaAttributes } from 'src/functions/media';
+import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
 
 @Component({
   tag: 'sc-order',

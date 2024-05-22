@@ -6,7 +6,7 @@ import { select, useDispatch } from '@wordpress/data';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { getQueryArg } from '@wordpress/url';
+import { getQueryArg, addQueryArgs } from '@wordpress/url';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -30,6 +30,7 @@ import Variations from './modules/Variations';
 import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
+import Affiliation from './modules/Affiliation';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -134,6 +135,15 @@ export default ({ id, setBrowserURL }) => {
 		try {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
+
+			createSuccessNotice(__('Product deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			// Redirect to products page.
+			window.location.href = addQueryArgs('admin.php', {
+				page: 'sc-products',
+			});
 		} catch (e) {
 			setError(e);
 		}
@@ -269,10 +279,18 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
 					<Advanced
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
+					/>
+
+					<Affiliation
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+						error={error}
 					/>
 				</>
 			}

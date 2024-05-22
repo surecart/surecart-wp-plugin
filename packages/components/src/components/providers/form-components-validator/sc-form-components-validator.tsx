@@ -12,6 +12,7 @@ export class ScFormComponentsValidator {
   @Element() el: HTMLScFormComponentsValidatorElement;
 
   private removeCheckoutListener: () => void;
+  private removePaymentRequiresShippingListener: () => void;
 
   /** Disable validation? */
   @Prop() disabled: boolean;
@@ -36,6 +37,7 @@ export class ScFormComponentsValidator {
 
   /** Is there shipping choices */
   @State() hasShippingChoices: boolean;
+
   /** Is there a shipping amount */
   @State() hasShippingAmount: boolean;
 
@@ -91,10 +93,12 @@ export class ScFormComponentsValidator {
     }
 
     this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
+    this.removePaymentRequiresShippingListener = onCheckoutChange('paymentMethodRequiresShipping', () => this.handleOrderChange());
   }
 
   disconnectedCallback() {
     this.removeCheckoutListener();
+    this.removePaymentRequiresShippingListener();
   }
 
   handleShippingAddressRequired() {
@@ -141,9 +145,9 @@ export class ScFormComponentsValidator {
 
   addBumps() {
     if (this.hasBumpsField) return;
-    const payment = this.el.querySelector('sc-payment');
+    const attachReferenceElement = this.el.querySelector('sc-order-billing-address') || this.el.querySelector('sc-payment');
     const bumps = document.createElement('sc-order-bumps');
-    payment.parentNode.insertBefore(bumps, payment.nextSibling);
+    attachReferenceElement?.parentNode.insertBefore(bumps, attachReferenceElement.nextSibling);
     this.hasBumpsField = true;
   }
 

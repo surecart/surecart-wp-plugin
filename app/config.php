@@ -23,6 +23,7 @@ return [
 		\SureCart\WordPress\ThemeServiceProvider::class,
 		\SureCart\WordPress\Templates\TemplatesServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
+		\SureCart\WordPress\Posts\PostServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
 		\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
@@ -124,6 +125,7 @@ return [
 		\SureCart\Rest\PayoutGroupsRestServiceProvider::class,
 		\SureCart\Rest\ReferralsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationProductsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationsRestServiceProvider::class,
 		\SureCart\Rest\ExportsRestServiceProvider::class,
 
@@ -149,6 +151,7 @@ return [
 	'blocks'                 => [
 		\SureCartBlocks\Blocks\Email\Block::class,
 		\SureCartBlocks\Blocks\Address\Block::class,
+		\SureCartBlocks\Blocks\BillingAddress\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Coupon\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,

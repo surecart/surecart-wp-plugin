@@ -37,7 +37,7 @@ const { state, onChange, on, dispose } = createStore<Store>(
       processors: [],
     },
     sortOrder: {
-      processors: ['stripe', 'paystack', 'paypal'],
+      processors: ['stripe', 'paystack', 'paypal', 'mollie', 'mock'],
       manualPaymentMethods: [],
       paymentMethods: {
         mollie: ['creditcard', 'paypal'],

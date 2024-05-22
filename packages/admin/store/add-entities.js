@@ -335,6 +335,14 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'affiliation-product',
+		kind: 'surecart',
+		label: __('Affiliation Product', 'surecart'),
+		baseURL: '/surecart/v1/affiliation_products',
+		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
+	},
+	{
 		name: 'click',
 		kind: 'surecart',
 		label: __('Clicks', 'surecart'),
@@ -360,6 +368,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Payouts', 'surecart'),
 		baseURL: '/surecart/v1/payouts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'payout-group',
+		kind: 'surecart',
+		label: __('Payout Groups', 'surecart'),
+		baseURL: '/surecart/v1/payout_groups',
 		baseURLParams: { context: 'edit' },
 	},
 	{

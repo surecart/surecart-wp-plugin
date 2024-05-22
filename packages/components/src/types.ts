@@ -1,5 +1,6 @@
 import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
+import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 declare global {
   interface Window {
@@ -119,6 +120,7 @@ export interface Price {
   updated_at: number;
   product?: Product | string;
   position: number;
+  portal_subscription_update_enabled: boolean;
   metadata: { [key: string]: string };
 }
 export interface VariantOption {
@@ -629,6 +631,7 @@ export interface Checkout extends Object {
     data: Array<PaymentIntent>;
   };
   abandoned_checkout_enabled: boolean;
+  billing_matches_shipping: boolean;
   bump_amount: number;
   payment_method_required?: boolean;
   manual_payment: boolean;
@@ -786,7 +789,7 @@ export interface Processor {
   };
   recurring_enabled: boolean;
   supported_currencies: Array<string>;
-  processor_type: 'paypal' | 'stripe' | 'mollie';
+  processor_type: 'paypal' | 'stripe' | 'mollie' | 'mock';
 }
 
 export interface Purchase {
@@ -855,6 +858,8 @@ export interface Subscription extends Object {
   ended_at: number;
   end_behavior: 'cancel' | 'complete';
   payment_method: PaymentMethod | string;
+  manual_payment_method: ManualPaymentMethod | string;
+  manual_payment: boolean;
   price: Price;
   ad_hoc_amount: number;
   variant?: Variant | string;
@@ -1070,6 +1075,7 @@ export interface Customer extends Object {
   last_name?: string;
   phone?: string;
   billing_address?: string | Address;
+  billing_address_display?: string | Address;
   shipping_address?: string | Address;
   billing_matches_shipping: boolean;
   live_mode: boolean;
@@ -1271,4 +1277,8 @@ export interface ScNoticeStore {
   };
   additional_errors?: AdditionalError[] | null;
   dismissible?: boolean;
+}
+
+export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent {
+  value?: { type: string };
 }

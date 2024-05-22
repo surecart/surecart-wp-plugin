@@ -1810,6 +1810,10 @@ export namespace Components {
         "loggedIn": boolean;
         "order": Checkout;
     }
+    interface ScManualPaymentMethod {
+        "paymentMethod": ManualPaymentMethod;
+        "showDescription": boolean;
+    }
     interface ScMenu {
         "ariaLabel": string;
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
@@ -1860,6 +1864,53 @@ export namespace Components {
         "customerIds": string[];
         "heading": string;
         "orderId": string;
+    }
+    interface ScOrderBillingAddress {
+        /**
+          * City placeholder
+         */
+        "cityPlaceholder": string;
+        /**
+          * Country placeholder
+         */
+        "countryPlaceholder": string;
+        /**
+          * Default country for address
+         */
+        "defaultCountry": string;
+        /**
+          * Label for the field
+         */
+        "label": string;
+        /**
+          * Address placeholder
+         */
+        "line1Placeholder": string;
+        /**
+          * Address Line 2 placeholder
+         */
+        "line2Placeholder": string;
+        /**
+          * Name placeholder
+         */
+        "namePlaceholder": string;
+        /**
+          * Postal Code placeholder
+         */
+        "postalCodePlaceholder": string;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Show the name field
+         */
+        "showName": boolean;
+        /**
+          * State placeholder
+         */
+        "statePlaceholder": string;
+        /**
+          * Toggle label
+         */
+        "toggleLabel": string;
     }
     interface ScOrderBump {
         /**
@@ -2384,6 +2435,10 @@ export namespace Components {
           * The processor ID
          */
         "processorId": string;
+    }
+    interface ScPaymentMethodDetails {
+        "editHandler": () => void;
+        "paymentMethod": PaymentMethod;
     }
     interface ScPaymentMethodsList {
         /**
@@ -3611,6 +3666,10 @@ export namespace Components {
     }
     interface ScSubscriptionNextPayment {
         "subscription": Subscription;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl": string;
     }
     interface ScSubscriptionPayment {
         "backUrl": string;
@@ -4948,6 +5007,12 @@ declare global {
         prototype: HTMLScLoginProviderElement;
         new (): HTMLScLoginProviderElement;
     };
+    interface HTMLScManualPaymentMethodElement extends Components.ScManualPaymentMethod, HTMLStencilElement {
+    }
+    var HTMLScManualPaymentMethodElement: {
+        prototype: HTMLScManualPaymentMethodElement;
+        new (): HTMLScManualPaymentMethodElement;
+    };
     interface HTMLScMenuElement extends Components.ScMenu, HTMLStencilElement {
     }
     var HTMLScMenuElement: {
@@ -4983,6 +5048,12 @@ declare global {
     var HTMLScOrderElement: {
         prototype: HTMLScOrderElement;
         new (): HTMLScOrderElement;
+    };
+    interface HTMLScOrderBillingAddressElement extends Components.ScOrderBillingAddress, HTMLStencilElement {
+    }
+    var HTMLScOrderBillingAddressElement: {
+        prototype: HTMLScOrderBillingAddressElement;
+        new (): HTMLScOrderBillingAddressElement;
     };
     interface HTMLScOrderBumpElement extends Components.ScOrderBump, HTMLStencilElement {
     }
@@ -5155,6 +5226,12 @@ declare global {
     var HTMLScPaymentMethodChoiceElement: {
         prototype: HTMLScPaymentMethodChoiceElement;
         new (): HTMLScPaymentMethodChoiceElement;
+    };
+    interface HTMLScPaymentMethodDetailsElement extends Components.ScPaymentMethodDetails, HTMLStencilElement {
+    }
+    var HTMLScPaymentMethodDetailsElement: {
+        prototype: HTMLScPaymentMethodDetailsElement;
+        new (): HTMLScPaymentMethodDetailsElement;
     };
     interface HTMLScPaymentMethodsListElement extends Components.ScPaymentMethodsList, HTMLStencilElement {
     }
@@ -5809,12 +5886,14 @@ declare global {
         "sc-line-items-provider": HTMLScLineItemsProviderElement;
         "sc-login-form": HTMLScLoginFormElement;
         "sc-login-provider": HTMLScLoginProviderElement;
+        "sc-manual-payment-method": HTMLScManualPaymentMethodElement;
         "sc-menu": HTMLScMenuElement;
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
         "sc-mollie-add-method": HTMLScMollieAddMethodElement;
         "sc-order": HTMLScOrderElement;
+        "sc-order-billing-address": HTMLScOrderBillingAddressElement;
         "sc-order-bump": HTMLScOrderBumpElement;
         "sc-order-bumps": HTMLScOrderBumpsElement;
         "sc-order-confirm-components-validator": HTMLScOrderConfirmComponentsValidatorElement;
@@ -5843,6 +5922,7 @@ declare global {
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method": HTMLScPaymentMethodElement;
         "sc-payment-method-choice": HTMLScPaymentMethodChoiceElement;
+        "sc-payment-method-details": HTMLScPaymentMethodDetailsElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
@@ -7927,6 +8007,10 @@ declare namespace LocalJSX {
         "onScSetLoggedIn"?: (event: ScLoginProviderCustomEvent<boolean>) => void;
         "order"?: Checkout;
     }
+    interface ScManualPaymentMethod {
+        "paymentMethod"?: ManualPaymentMethod;
+        "showDescription"?: boolean;
+    }
     interface ScMenu {
         "ariaLabel"?: string;
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
@@ -7969,6 +8053,52 @@ declare namespace LocalJSX {
         "customerIds"?: string[];
         "heading"?: string;
         "orderId"?: string;
+    }
+    interface ScOrderBillingAddress {
+        /**
+          * City placeholder
+         */
+        "cityPlaceholder"?: string;
+        /**
+          * Country placeholder
+         */
+        "countryPlaceholder"?: string;
+        /**
+          * Default country for address
+         */
+        "defaultCountry"?: string;
+        /**
+          * Label for the field
+         */
+        "label"?: string;
+        /**
+          * Address placeholder
+         */
+        "line1Placeholder"?: string;
+        /**
+          * Address Line 2 placeholder
+         */
+        "line2Placeholder"?: string;
+        /**
+          * Name placeholder
+         */
+        "namePlaceholder"?: string;
+        /**
+          * Postal Code placeholder
+         */
+        "postalCodePlaceholder"?: string;
+        /**
+          * Show the name field
+         */
+        "showName"?: boolean;
+        /**
+          * State placeholder
+         */
+        "statePlaceholder"?: string;
+        /**
+          * Toggle label
+         */
+        "toggleLabel"?: string;
     }
     interface ScOrderBump {
         /**
@@ -8509,6 +8639,10 @@ declare namespace LocalJSX {
           * The processor ID
          */
         "processorId"?: string;
+    }
+    interface ScPaymentMethodDetails {
+        "editHandler"?: () => void;
+        "paymentMethod"?: PaymentMethod;
     }
     interface ScPaymentMethodsList {
         /**
@@ -9869,6 +10003,10 @@ declare namespace LocalJSX {
     }
     interface ScSubscriptionNextPayment {
         "subscription"?: Subscription;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl"?: string;
     }
     interface ScSubscriptionPayment {
         "backUrl"?: string;
@@ -10503,12 +10641,14 @@ declare namespace LocalJSX {
         "sc-line-items-provider": ScLineItemsProvider;
         "sc-login-form": ScLoginForm;
         "sc-login-provider": ScLoginProvider;
+        "sc-manual-payment-method": ScManualPaymentMethod;
         "sc-menu": ScMenu;
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
         "sc-mollie-add-method": ScMollieAddMethod;
         "sc-order": ScOrder;
+        "sc-order-billing-address": ScOrderBillingAddress;
         "sc-order-bump": ScOrderBump;
         "sc-order-bumps": ScOrderBumps;
         "sc-order-confirm-components-validator": ScOrderConfirmComponentsValidator;
@@ -10537,6 +10677,7 @@ declare namespace LocalJSX {
         "sc-payment": ScPayment;
         "sc-payment-method": ScPaymentMethod;
         "sc-payment-method-choice": ScPaymentMethodChoice;
+        "sc-payment-method-details": ScPaymentMethodDetails;
         "sc-payment-methods-list": ScPaymentMethodsList;
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
@@ -10740,12 +10881,14 @@ declare module "@stencil/core" {
             "sc-line-items-provider": LocalJSX.ScLineItemsProvider & JSXBase.HTMLAttributes<HTMLScLineItemsProviderElement>;
             "sc-login-form": LocalJSX.ScLoginForm & JSXBase.HTMLAttributes<HTMLScLoginFormElement>;
             "sc-login-provider": LocalJSX.ScLoginProvider & JSXBase.HTMLAttributes<HTMLScLoginProviderElement>;
+            "sc-manual-payment-method": LocalJSX.ScManualPaymentMethod & JSXBase.HTMLAttributes<HTMLScManualPaymentMethodElement>;
             "sc-menu": LocalJSX.ScMenu & JSXBase.HTMLAttributes<HTMLScMenuElement>;
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
             "sc-mollie-add-method": LocalJSX.ScMollieAddMethod & JSXBase.HTMLAttributes<HTMLScMollieAddMethodElement>;
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
+            "sc-order-billing-address": LocalJSX.ScOrderBillingAddress & JSXBase.HTMLAttributes<HTMLScOrderBillingAddressElement>;
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-components-validator": LocalJSX.ScOrderConfirmComponentsValidator & JSXBase.HTMLAttributes<HTMLScOrderConfirmComponentsValidatorElement>;
@@ -10778,6 +10921,7 @@ declare module "@stencil/core" {
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
             "sc-payment-method-choice": LocalJSX.ScPaymentMethodChoice & JSXBase.HTMLAttributes<HTMLScPaymentMethodChoiceElement>;
+            "sc-payment-method-details": LocalJSX.ScPaymentMethodDetails & JSXBase.HTMLAttributes<HTMLScPaymentMethodDetailsElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;

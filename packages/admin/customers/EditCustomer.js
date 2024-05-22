@@ -8,14 +8,12 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
 
 import Error from '../components/Error';
 
-import useDirty from '../hooks/useDirty';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import SaveButton from '../templates/SaveButton';
@@ -36,18 +34,22 @@ import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAd
 import TaxSettings from './modules/TaxSettings';
 import Licenses from './modules/Licenses';
 import Affiliates from '../components/affiliates';
+import useSave from '../settings/UseSave';
+import BillingAddress from './modules/BillingAddress';
+import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
+import ConfirmDeleteBillingAddressModal from './modules/BillingAddress/ConfirmDeleteBillingAddressModal';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
 	CONFIRM_DELETE_ADDRESS: 'CONFIRM_DELETE_ADDRESS',
+	EDIT_BILLING_ADDRESS: 'EDIT_BILLING_ADDRESS',
+	CONFIRM_DELETE_BILLING_ADDRESS: 'CONFIRM_DELETE_BILLING_ADDRESS',
 };
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [currentModal, setCurrentModal] = useState(null);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
-	const { saveDirtyRecords } = useDirty();
+	const { save } = useSave();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const {
 		customer,
@@ -57,7 +59,7 @@ export default () => {
 		deletingCustomer,
 		savingCustomer,
 	} = useEntity('customer', id, {
-		expand: ['balances', 'shipping_address'],
+		expand: ['balances', 'shipping_address', 'billing_address'],
 	});
 
 	/**
@@ -65,22 +67,9 @@ export default () => {
 	 */
 	const onSubmit = async () => {
 		try {
-			await saveDirtyRecords();
-			// save success.
-			createSuccessNotice(__('Customer updated.', 'surecart'), {
-				type: 'snackbar',
-			});
+			await save({ successMessage: __('Customer updated.', 'surecart') });
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
-			);
-			if (e?.additional_errors?.length) {
-				e?.additional_errors.forEach((e) => {
-					if (e?.message) {
-						createErrorNotice(e?.message);
-					}
-				});
-			}
+			setError(e);
 		}
 	};
 
@@ -172,6 +161,18 @@ export default () => {
 							setCurrentModal(modals.CONFIRM_DELETE_ADDRESS)
 						}
 					/>
+					<BillingAddress
+						billingAddress={customer.billing_address_display}
+						loading={!hasLoadedCustomer}
+						onEditAddress={() =>
+							setCurrentModal(modals.EDIT_BILLING_ADDRESS)
+						}
+						onDeleteAddress={() =>
+							setCurrentModal(
+								modals.CONFIRM_DELETE_BILLING_ADDRESS
+							)
+						}
+					/>
 					<TaxSettings
 						customer={customer}
 						loading={!hasLoadedCustomer}
@@ -207,37 +208,6 @@ export default () => {
 			<Subscriptions customerId={id} />
 			<PaymentMethods customerId={id} />
 
-			{/* <Fragment>
-				<Details
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Prices
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Integrations id={id} />
-
-				<Downloads
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Licensing
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-			</Fragment> */}
-
 			{!!currentModal ? (
 				<>
 					<EditAddressModal
@@ -248,6 +218,20 @@ export default () => {
 					/>
 					<ConfirmDeleteAddressModal
 						open={currentModal === modals.CONFIRM_DELETE_ADDRESS}
+						onRequestClose={() => setCurrentModal('')}
+						customerId={id}
+					/>
+					<EditBillingAddressModal
+						open={currentModal === modals.EDIT_BILLING_ADDRESS}
+						billingAddress={customer?.billing_address}
+						onRequestClose={() => setCurrentModal('')}
+						customerId={id}
+					/>
+					<ConfirmDeleteBillingAddressModal
+						open={
+							currentModal ===
+							modals.CONFIRM_DELETE_BILLING_ADDRESS
+						}
 						onRequestClose={() => setCurrentModal('')}
 						customerId={id}
 					/>
