@@ -2,11 +2,14 @@
  * WordPress dependencies
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { create as createAccount } from '../provisional-account';
 
 test.describe('surecart/product-donation', () => {
 	let product;
 
 	test.beforeEach(async ({ requestUtils, page }) => {
+		await createAccount(requestUtils);
+
 		product = await requestUtils.rest({
 			method: 'POST',
 			path: '/surecart/v1/products',

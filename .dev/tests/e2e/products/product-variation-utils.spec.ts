@@ -6,7 +6,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import { generateValueCombinations, generateVariants } from '../utils';
+import { generateValueCombinations, generateVariants } from '../../../../packages/admin/products/modules/Variations/utils';
 
 test.describe('generateValueCombinations', () => {
 	test('should generate value combinations', () => {

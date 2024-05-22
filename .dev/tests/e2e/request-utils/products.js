@@ -1,5 +1,8 @@
+/**
+ * Internal dependencies.
+ */
+import { PRODUCT_API_PATH } from './endpoints';
 import { createPrice, deleteAllPrices, getDefaultPriceData } from './prices';
-export const API_PATH = '/surecart/v1/products';
 
 export const getDefaultProductData = {
 	name: 'Test Product',
@@ -20,7 +23,7 @@ export const createProduct = async (
 	// Create product.
 	const product = await requestUtils.rest({
 		method: 'POST',
-		path: API_PATH,
+		path: PRODUCT_API_PATH,
 		data,
 	});
 
@@ -47,7 +50,7 @@ export const deleteAllProducts = async (requestUtils) => {
 		products =
 			(await requestUtils.rest({
 				method: 'GET',
-				path: API_PATH,
+				path: PRODUCT_API_PATH,
 				query: {
 					per_page: 100,
 				},
@@ -63,7 +66,7 @@ export const deleteAllProducts = async (requestUtils) => {
 			try {
 				await requestUtils.rest({
 					method: 'DELETE',
-					path: `${API_PATH}/${product.id}`,
+					path: `${PRODUCT_API_PATH}/${product.id}`,
 				});
 				console.log(`Product - ${product.id} - Deleted.`);
 			} catch (error) {

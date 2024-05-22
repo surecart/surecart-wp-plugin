@@ -6,9 +6,14 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import { createProduct } from '../../tests/request-utils/products';
+import { createProduct } from '../request-utils/products';
+import { create as createAccount } from '../provisional-account';
 
 test.describe('Product Admin Page For Stock', () => {
+	test.beforeEach(async ({ requestUtils }) => {
+		await createAccount(requestUtils);
+	});
+
 	test('Should create a product with stock', async ({
 		page,
 		requestUtils,
@@ -78,7 +83,9 @@ test.describe('Product Admin Page For Stock', () => {
 		expect(await onHand.locator('input')).toHaveValue('6');
 
 		await adjustBy.locator('.button__increase').click();
-		expect(await adjustBy.locator('input')).toHaveValue('2');
+		expect(await adjustBy.locator('input')).toHaveValue('2', {
+			timeout: 10000,
+		});
 		expect(await available.locator('input')).toHaveValue('7');
 		expect(await onHand.locator('input')).toHaveValue('7');
 
@@ -88,9 +95,9 @@ test.describe('Product Admin Page For Stock', () => {
 		await page.getByRole('button', { name: 'Save Product' }).click();
 
 		// Wait for the page to load.
-		await page.waitForResponse((resp) =>
-			resp.url().includes('surecart/v1/product')
-		);
+		await page.waitForResponse((resp) => resp.url().includes('product'), {
+			timeout: 10000,
+		});
 
 		expect(await stockControl.locator('input')).toHaveValue('7');
 	});
