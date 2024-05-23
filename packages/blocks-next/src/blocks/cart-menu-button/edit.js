@@ -8,12 +8,7 @@ import { PanelBody, ToggleControl, PanelRow } from '@wordpress/components';
 /**
  * Internal dependencies.
  */
-import {
-	ScIcon,
-	ScChoice,
-	ScChoices,
-	ScCartButton,
-} from '@surecart/components-react';
+import ScIcon from '../../components/ScIcon';
 
 export default ({ attributes, setAttributes }) => {
 	const { cart_icon, cart_menu_always_shown } = attributes;
@@ -37,31 +32,19 @@ export default ({ attributes, setAttributes }) => {
 								flex: 'flex-1',
 							}}
 						>
-							<ScChoices
-								label={__('Icon', 'surecart')}
-								onScChange={(e) =>
-									setAttributes({
-										cart_icon: e.target.value,
-									})
-								}
-								style={{ '--sc-choice-padding': '1.3em' }}
-								autoWidth
-							>
-								<ScChoice
-									showControl={false}
-									checked={cart_icon === 'shopping-bag'}
-									value="shopping-bag"
-								>
-									<ScIcon name="shopping-bag" />
-								</ScChoice>
-								<ScChoice
-									showControl={false}
-									checked={cart_icon === 'shopping-cart'}
-									value="shopping-cart"
-								>
-									<ScIcon name="shopping-cart" />
-								</ScChoice>
-							</ScChoices>
+							<label>{__('Icon', 'surecart')}</label>
+							<div className='sc-cart-choicer'>
+								<ScIcon
+									name="shopping-bag"
+									class={cart_icon === 'shopping-bag' ? 'active' : ''}
+									onClick={() => setAttributes({ cart_icon: 'shopping-bag' })}
+								/>
+								<ScIcon
+									name="shopping-cart"
+									class={cart_icon === 'shopping-cart' ? 'active' : ''}
+									onClick={() => setAttributes({ cart_icon: 'shopping-cart' })}
+								/>
+							</div>
 						</div>
 					</PanelRow>
 
@@ -85,9 +68,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<a {...blockProps}>
-				<ScCartButton cartMenuAlwaysShown={true} showEmptyCount={true}>
-					<ScIcon name={cart_icon} />
-				</ScCartButton>
+				<ScIcon name={cart_icon} />
 			</a>
 		</div>
 	);

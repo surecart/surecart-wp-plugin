@@ -22,15 +22,15 @@ import {
 import { TEMPLATE } from './template';
 
 export default ({ attributes: { width }, setAttributes }) => {
-	const allowedBlocks = [
-		'surecart/cart-header-v2',
-		'surecart/cart-items-v2',
-		'surecart/cart-coupon-v2',
-		'surecart/cart-subtotal-v2',
-		'surecart/cart-submit-v2',
-		'surecart/cart-message-v2',
-		'surecart/cart-bump-line-item-v2',
-	];
+	// const allowedBlocks = [
+	// 	'surecart/cart-header-v2',
+	// 	'surecart/cart-items-v2',
+	// 	'surecart/cart-coupon-v2',
+	// 	'surecart/cart-subtotal-v2',
+	// 	'surecart/cart-submit-v2',
+	// 	'surecart/cart-message-v2',
+	// 	'surecart/cart-bump-line-item-v2',
+	// ];
 
 	const blockProps = useBlockProps({
 		style: {
@@ -53,7 +53,6 @@ export default ({ attributes: { width }, setAttributes }) => {
 		},
 		{
 			renderAppender: InnerBlocks.ButtonBlockAppender,
-			allowedBlocks,
 		}
 	);
 

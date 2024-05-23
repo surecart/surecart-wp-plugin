@@ -29,7 +29,7 @@
 		},
 		"color": {
 			"text": true,
-			"background": false
+			"background": true
 		},
 		"__experimentalBorder": {
 			"width": true,
@@ -43,11 +43,7 @@
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": [
-		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css",
-		"file:../../styles/drawer.css",
-		"file:../../styles/cart.css"
-	],
+	"style": ["file:./style-index.css"],
+	"editorStyle": ["file:./index.css"],
 	"viewScriptModule": ["@surecart/dialog", "@surecart/checkout"]
 }

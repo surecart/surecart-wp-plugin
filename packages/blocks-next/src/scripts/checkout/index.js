@@ -68,6 +68,7 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 
 	actions: {
 		toggleCartSidebar(e) {
+			console.log('toggling cart sidebar');
 			e.preventDefault();
 			const context = getContext();
 			context.openCartSidebar = !context.openCartSidebar;
