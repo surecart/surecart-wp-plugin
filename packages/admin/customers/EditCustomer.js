@@ -208,37 +208,6 @@ export default () => {
 			<Subscriptions customerId={id} />
 			<PaymentMethods customerId={id} />
 
-			{/* <Fragment>
-				<Details
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Prices
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Integrations id={id} />
-
-				<Downloads
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Licensing
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-			</Fragment> */}
-
 			{!!currentModal ? (
 				<>
 					<EditAddressModal
