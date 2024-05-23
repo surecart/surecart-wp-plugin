@@ -59,7 +59,7 @@ class ProvisionalAccount extends Model {
 		}
 
 		// set source with fallback to the option.
-		$attributes['source'] = empty( $attributes['source'] ) ? sanitize_text_field( wp_unslash( $attributes['source'] ) ) : sanitize_text_field( get_option( 'surecart_source', 'surecart_wp' ) );
+		$attributes['source'] = isset( $attributes['source'] ) ? sanitize_text_field( wp_unslash( $attributes['source'] ) ) : sanitize_text_field( get_option( 'surecart_source', 'surecart_wp' ) );
 
 		return parent::create( $attributes );
 	}
