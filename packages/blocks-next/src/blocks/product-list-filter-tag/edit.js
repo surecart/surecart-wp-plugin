@@ -1,6 +1,6 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { ScIcon } from '@surecart/components-react';
+import Icon from '../../components/Icon';
 
 export default ({
 	context: { 'surecart/filterTag/name': name },
@@ -16,7 +16,7 @@ export default ({
 	return (
 		<div {...blockProps}>
 			<span className="tag__content">{name}</span>
-			<ScIcon
+			<Icon
 				name="x"
 				className="sc-tag__clear"
 				aria-label={__('Remove tag', 'surecart')}

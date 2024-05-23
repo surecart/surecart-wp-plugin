@@ -42,5 +42,9 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./index.css", "file:../../styles/block-ui.css"]
+	"style": [
+		"file:./index.css",
+		"file:../../styles/block-ui.css",
+		"file:../../styles/tag.css"
+	]
 }

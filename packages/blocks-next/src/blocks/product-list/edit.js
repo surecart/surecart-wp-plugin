@@ -10,13 +10,13 @@ import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 	Spinner,
-	Placeholder,
 	SelectControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { TEMPLATE } from './template';
 import ProductSelector from '../../components/ProductSelector';
+import Icon from '../../components/Icon';
 
 export default function ProductListEdit({
 	setAttributes,
@@ -51,15 +51,7 @@ export default function ProductListEdit({
 			ids: [...ids, product.id],
 		});
 	};
-	if (loading) {
-		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
-		);
-	}
-	console.log(ids);
-	console.log(products);
+
 	return (
 		<>
 			<InspectorControls>
@@ -94,10 +86,54 @@ export default function ProductListEdit({
 						onChange={(type) => setAttributes({ type })}
 					/>
 					{type === 'custom' && (
-						<ProductSelector
-							onProductSelect={onProductSelect}
-							currentSelectedIds={ids}
-						/>
+						<>
+							<div
+								style={{
+									display: 'flex',
+									flexWrap: 'wrap',
+									width: '100%',
+									gap: '0.5em',
+									marginBottom: '1em',
+								}}
+							>
+								{loading && <Spinner />}
+								{products?.map((product) => {
+									return (
+										<div
+											className="sc-tag sc-tag--default sc-tag--medium"
+											key={product.id}
+											onClick={() => {
+												setAttributes({
+													ids: ids.filter(
+														(id) =>
+															id !== product.id
+													),
+												});
+											}}
+											style={{
+												cursor: 'pointer',
+											}}
+										>
+											<span className="tag__content">
+												{product.name}
+											</span>
+											<Icon
+												name="x"
+												className="sc-tag__clear"
+												aria-label={__(
+													'Remove tag',
+													'surecart'
+												)}
+											/>
+										</div>
+									);
+								})}
+							</div>
+							<ProductSelector
+								onProductSelect={onProductSelect}
+								currentSelectedIds={ids}
+							/>
+						</>
 					)}
 				</PanelBody>
 			</InspectorControls>
