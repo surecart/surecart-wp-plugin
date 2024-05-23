@@ -9,7 +9,9 @@
 	"icon": "media-interactive",
 	"example": {},
 	"providesContext": {
-		"surecart/product-list/limit": "limit"
+		"surecart/product-list/limit": "limit",
+		"surecart/product-list/type": "type",
+		"surecart/product-list/ids": "ids"
 	},
 	"usesContext": ["surecart/product-list/blockId"],
 	"attributes": {

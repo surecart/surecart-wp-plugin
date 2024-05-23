@@ -41,7 +41,11 @@ export default ({
 	attributes: { layout },
 	__unstableLayoutClassNames,
 	setAttributes,
-	context: { 'surecart/product-list/limit': limit },
+	context: {
+		'surecart/product-list/limit': limit,
+		'surecart/product-list/type': type,
+		'surecart/product-list/ids': ids,
+	},
 }) => {
 	const { type: layoutType, columnCount = 3 } = layout || {};
 
@@ -67,6 +71,8 @@ export default ({
 					'variants',
 				],
 				archived: false,
+				...('custom' === type ? { ids: ids } : {}),
+				...('featured' === type ? { featured: true } : {}),
 				status: ['published'],
 				page: 1,
 				per_page: limit || 15,

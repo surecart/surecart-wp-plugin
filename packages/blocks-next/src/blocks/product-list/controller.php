@@ -7,22 +7,32 @@ $query        = $url->getArg( 'search' );
 $sort         = $url->getArg( 'sort' );
 $collections  = $url->getArg( 'filter' );
 $current_page = $url->getCurrentPage();
+$type         = $attributes['type'] ?? 'all';
+$ids          = $attributes['ids'] ?? [];
+
+$params = [
+	'archived'               => false,
+	'status'                 => [ 'published' ],
+	'expand'                 => [
+		'prices',
+		'featured_product_media',
+		'product_media.media',
+	],
+	'sort'                   => $sort,
+	'product_collection_ids' => $collections,
+	'query'                  => $query,
+];
+
+if ( $type === 'custom' ) {
+    $params['ids'] = $ids;
+}
+
+if ( $type === 'featured' ) {
+    $params['featured'] = true;
+}
 
 // TODO: sorting by price is not available yet. We need to do this via the product post type metadata.
-$products = Product::where(
-	[
-		'archived'               => false,
-		'status'                 => [ 'published' ],
-		'expand'                 => [
-			'prices',
-			'featured_product_media',
-			'product_media.media',
-		],
-		'sort'                   => $sort,
-		'product_collection_ids' => $collections,
-		'query'                  => $query,
-	]
-)->paginate(
+$products = Product::where( $params )->paginate(
 	[
 		'per_page' => $attributes['limit'] ?? 15,
 		'page'     => $current_page,
