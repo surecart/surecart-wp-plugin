@@ -136,19 +136,18 @@ export class ScCustomerEdit {
             </div>
 
             <div>
-              <sc-switch
-                name="billing_different_from_shipping"
-                checked={!this.customer?.billing_matches_shipping}
+              <sc-checkbox
+                name="billing_same_as_shipping"
+                checked={this.customer?.billing_matches_shipping}
                 onScChange={e => {
                   this.customer = {
                     ...this.customer,
-                    billing_matches_shipping: !(e.target as HTMLScSwitchElement).checked,
+                    billing_matches_shipping: (e.target as HTMLScCheckboxElement).checked,
                   };
                 }}
-                value="on"
               >
-                {__('Billing address is different from shipping', 'surecart')}
-              </sc-switch>
+                {__('Billing address is same as shipping', 'surecart')}
+              </sc-checkbox>
             </div>
 
             <div style={{ display: this.customer?.billing_matches_shipping ? 'none' : 'block' }}>

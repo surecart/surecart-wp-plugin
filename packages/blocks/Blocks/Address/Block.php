@@ -34,8 +34,11 @@ class Block extends BaseBlock {
 			postal-code-placeholder="<?php echo esc_attr( $attributes['postal_code_placeholder'] ); ?>"
 			state-placeholder="<?php echo esc_attr( $attributes['state_placeholder'] ); ?>"
 		></sc-order-shipping-address>
+		<?php
 
-		<sc-order-billing-address
+		if ( $attributes['collect_billing'] ) {
+			?>
+			<sc-order-billing-address
 			label="<?php echo esc_attr( $attributes['billing_label'] ); ?>"
 			<?php echo $attributes['show_name'] ? 'show-name' : null; ?>
 			default-country="<?php echo esc_attr( $default_country ); ?>"
@@ -48,7 +51,9 @@ class Block extends BaseBlock {
 			state-placeholder="<?php echo esc_attr( $attributes['state_placeholder'] ); ?>"
 			toggle-label="<?php echo esc_attr( $attributes['billing_toggle_label'] ); ?>"
 		></sc-order-billing-address>
-		<?php
+			<?php
+		}
+
 		return ob_get_clean();
 	}
 }

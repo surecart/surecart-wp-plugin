@@ -4,11 +4,7 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe('Billing address block editor', () => {
-	test('Should allow adding of the billing address block', async ({
-		editor,
-		page,
-		admin,
-	}) => {
+	test.beforeEach(async ({ editor, admin }) => {
 		await admin.createNewPost();
 
 		const serializedBlockHTML = `
@@ -18,11 +14,32 @@ test.describe('Billing address block editor', () => {
 		`;
 
 		await editor.setContent(serializedBlockHTML);
+	});
+	test('Should allow adding of the billing address block', async ({
+		page,
+	}) => {
 		await expect(
 			page.locator(
-				'sc-switch:has-text("Billing address is different from shipping address.")'
+				'sc-checkbox:has-text("Billing address is same as shipping")'
 			)
 		).toBeVisible();
+	});
+
+	test('Should allow opting out of collecting billing address', async ({
+		page,
+	}) => {
+		// click on the shipping address block
+		await page.locator('sc-address[label="Shipping Address"]').click();
+
+		// click to toggle the collect billing address
+		await page.locator('label:has-text("Collect Billing Address")').click();
+
+		// expect the billing address to be hidden
+		await expect(
+			page.locator(
+				'sc-checkbox:has-text("Billing address is same as shipping")'
+			)
+		).not.toBeVisible();
 	});
 });
 
@@ -49,7 +66,7 @@ test.describe('Billing address block frontend', () => {
 
 		await expect(
 			page.locator(
-				'sc-switch:has-text("Billing address is different from shipping address.")'
+				'sc-checkbox:has-text("Billing address is same as shipping")'
 			)
 		).toBeVisible();
 	});
@@ -78,7 +95,7 @@ test.describe('Billing address block frontend', () => {
 
 		await page
 			.locator(
-				'sc-switch:has-text("Billing address is different from shipping address.")'
+				'sc-checkbox:has-text("Billing address is same as shipping")'
 			)
 			.click();
 		await page.waitForLoadState('networkidle');
@@ -89,7 +106,7 @@ test.describe('Billing address block frontend', () => {
 
 		await page
 			.locator(
-				'sc-switch:has-text("Billing address is different from shipping address.")'
+				'sc-checkbox:has-text("Billing address is same as shipping")'
 			)
 			.click();
 		await page.waitForLoadState('networkidle');
@@ -136,7 +153,7 @@ test.describe('Billing address block frontend', () => {
 		});
 		await page
 			.locator(
-				'sc-switch:has-text("Billing address is different from shipping address.")'
+				'sc-checkbox:has-text("Billing address is same as shipping")'
 			)
 			.click();
 
@@ -203,7 +220,7 @@ test.describe('Billing address block frontend', () => {
 		// toggle the billing address
 		await page
 			.locator(
-				'sc-switch:has-text("Billing address is different from shipping address.")'
+				'sc-checkbox:has-text("Billing address is same as shipping")'
 			)
 			.click();
 

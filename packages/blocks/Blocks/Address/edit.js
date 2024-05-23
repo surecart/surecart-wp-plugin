@@ -11,7 +11,8 @@ import {
 	ScAddress,
 	ScSelect,
 	ScCompactAddress,
-	ScSwitch,
+	ScCheckbox,
+	ScFlex,
 } from '@surecart/components-react';
 import { countryChoices } from '@surecart/components';
 
@@ -30,6 +31,7 @@ export default ({ attributes, setAttributes }) => {
 		line_1_placeholder,
 		postal_code_placeholder,
 		state_placeholder,
+		collect_billing,
 	} = attributes;
 	const [sameAsShipping, setSameAsShipping] = useState(false);
 	const blockProps = useBlockProps();
@@ -62,15 +64,30 @@ export default ({ attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 					<PanelRow>
-						<TextControl
-							label={__('Billing Address Toggle', 'surecart')}
-							value={billing_toggle_label}
-							onChange={(billing_toggle_label) =>
-								setAttributes({ billing_toggle_label })
+						<ToggleControl
+							label={__('Collect Billing Address', 'surecart')}
+							checked={collect_billing}
+							onChange={(collect_billing) =>
+								setAttributes({ collect_billing })
 							}
+							help={__(
+								'If enabled, an additional billing address form will be displayed.',
+								'surecart'
+							)}
 						/>
 					</PanelRow>
-					{!sameAsShipping && (
+					{collect_billing && (
+						<PanelRow>
+							<TextControl
+								label={__('Billing Address Toggle', 'surecart')}
+								value={billing_toggle_label}
+								onChange={(billing_toggle_label) =>
+									setAttributes({ billing_toggle_label })
+								}
+							/>
+						</PanelRow>
+					)}
+					{!sameAsShipping && collect_billing && (
 						<PanelRow>
 							<TextControl
 								label={__('Billing Address Label', 'surecart')}
@@ -189,31 +206,38 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<Tag
-					label={label}
-					showName={show_name}
-					required={required}
-					placeholders={{
-						name: name_placeholder,
-						country: country_placeholder,
-						city: city_placeholder,
-						line_1: line_1_placeholder,
-						postal_code: postal_code_placeholder,
-						state: state_placeholder,
-					}}
-					address={{
-						country: default_country,
-					}}
-				/>
-				<div style={{ marginTop: 'var(--sc-form-row-spacing)' }}>
-					<ScSwitch
-						checked={!sameAsShipping}
-						onScChange={(e) => setSameAsShipping(!e.target.checked)}
-						style={{ marginBottom: 'var(--sc-spacing-medium)' }}
-					>
-						{billing_toggle_label}
-					</ScSwitch>
-					{!sameAsShipping && (
+				<ScFlex
+					flexDirection="column"
+					style={{ '--sc-flex-column-gap': '25px' }}
+				>
+					<Tag
+						label={label}
+						showName={show_name}
+						required={required}
+						placeholders={{
+							name: name_placeholder,
+							country: country_placeholder,
+							city: city_placeholder,
+							line_1: line_1_placeholder,
+							postal_code: postal_code_placeholder,
+							state: state_placeholder,
+						}}
+						address={{
+							country: default_country,
+						}}
+					/>
+
+					{collect_billing && (
+						<ScCheckbox
+							checked={sameAsShipping}
+							onScChange={(e) =>
+								setSameAsShipping(e.target.checked)
+							}
+						>
+							{billing_toggle_label}
+						</ScCheckbox>
+					)}
+					{!sameAsShipping && collect_billing && (
 						<ScAddress
 							label={billing_label}
 							showName={show_name}
@@ -231,7 +255,7 @@ export default ({ attributes, setAttributes }) => {
 							}}
 						/>
 					)}
-				</div>
+				</ScFlex>
 			</div>
 		</Fragment>
 	);
