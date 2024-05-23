@@ -1,4 +1,7 @@
-const API_PATH = '/surecart/v1/prices';
+/**
+ * Internal dependencies.
+ */
+import { PRICE_API_PATH } from "./endpoints";
 
 /**
  * Get default price data.
@@ -22,7 +25,7 @@ export const getDefaultPriceData = () => {
 export const createPrice = async (requestUtils, data) => {
 	return await requestUtils.rest({
 		method: 'POST',
-		path: API_PATH,
+		path: PRICE_API_PATH,
 		data,
 	});
 };
@@ -38,7 +41,7 @@ export const deleteAllPrices = async (requestUtils) => {
 		prices =
 			(await requestUtils.rest({
 				method: 'GET',
-				path: API_PATH,
+				path: PRICE_API_PATH,
 				query: {
 					per_page: 100,
 				},
@@ -54,7 +57,7 @@ export const deleteAllPrices = async (requestUtils) => {
 			try {
 				await requestUtils.rest({
 					method: 'DELETE',
-					path: `${API_PATH}/${price.id}`,
+					path: `${PRICE_API_PATH}/${price.id}`,
 				});
 				console.log(`Price - ${price.id} - Deleted.`);
 			} catch (error) {

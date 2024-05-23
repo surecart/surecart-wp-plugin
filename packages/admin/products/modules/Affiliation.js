@@ -140,7 +140,7 @@ export default ({ product, loading }) => {
 					<>
 						<p>
 							{__(
-								'This setting will overwrite any global or individual affiliate settings for this product.',
+								'This setting will overwrite any global or individual affiliate commissions for this product.',
 								'surecart'
 							)}
 						</p>
