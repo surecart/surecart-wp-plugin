@@ -4,7 +4,7 @@
 import { store, getContext } from '@wordpress/interactivity';
 
 // controls the product page.
-const { state, callbacks, actions } = store('surecart/cart', {
+const { state, callbacks, actions } = store('surecart/checkout', {
 	state: {
 		discountCode: '',
 		get getItemsCount() {
@@ -31,7 +31,13 @@ const { state, callbacks, actions } = store('surecart/cart', {
 		get hasBumpAmount() {
 			return !!state?.checkout?.bump_amount;
 		},
+		// get checkout() {
+		// 	// context form id and mode.
+		// 	// pull from local storage.
+		// },
 	},
+
+	// watch directive.
 
 	// actions: {
 	// 	*onFetchCheckout() {
@@ -41,6 +47,8 @@ const { state, callbacks, actions } = store('surecart/cart', {
 	// 		// 		expand,
 	// 		// 	}),
 	// 		// });
+
+	// store in local, form id and mode ==> same as how previous
 	// 	},
 	// },
 
@@ -59,10 +67,10 @@ const { state, callbacks, actions } = store('surecart/cart', {
 	},
 
 	actions: {
-		setOpen(e) {
+		toggleCartSidebar(e) {
 			e.preventDefault();
 			const context = getContext();
-			context.open = !context.open;
+			context.openCartSidebar = !context.openCartSidebar;
 		},
 		toggleDiscountInput(e) {
 			e.preventDefault();

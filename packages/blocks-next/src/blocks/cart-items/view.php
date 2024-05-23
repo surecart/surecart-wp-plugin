@@ -2,7 +2,7 @@
     class="wp-block-surecart-cart-items__wrapper"
     <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 >
-	<template
+    <template
 		data-wp-each--line_item="state.checkout.line_items.data"
 		data-wp-key="context.line_item.id"
 	>

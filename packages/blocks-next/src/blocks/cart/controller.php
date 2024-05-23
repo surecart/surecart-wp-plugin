@@ -439,9 +439,8 @@ $checkoutJson = '{
 // },
 
 wp_interactivity_state(
-	'surecart/cart',
+	"surecart/checkout",
 	array(
-        'open' => false,
         'discountInputOpen' => false,
         'discountCode' => '',
 		'checkout' => json_decode($checkoutJson, true),
