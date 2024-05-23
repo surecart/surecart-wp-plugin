@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.27.0
+Stable tag: 2.27.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,12 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.27.1 - May 23nd, 2024 =
+- Improvement: Handle potential platform conflict statuses with retry mechanism.
+- Fix: Archived products showing up in sitemap.
+- Fix: Issue with selecting $0 amount for custom pricing on product page can lead to 404 in some cases.
+- Fix: Flash of order confirmation modal that can sometimes happen briefly when bank transfer payment methods are selected.
 
 = 2.27.0 - May 22nd, 2024 =
 - New: Individual product commissions rates.
