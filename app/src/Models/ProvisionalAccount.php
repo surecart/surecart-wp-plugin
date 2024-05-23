@@ -41,8 +41,9 @@ class ProvisionalAccount extends Model {
 	 */
 	protected function create( $attributes = [] ) {
 		// we only allow this if the setup is not complete.
-		if ( ! defined('SC_E2E_TESTING') && ! SC_E2E_TESTING ) {
-			if ( ! empty( ApiToken::get() ) ) {
+		if ( ! empty( ApiToken::get() ) ) {
+			$testing = defined( 'SC_E2E_TESTING' ) ? (bool) SC_E2E_TESTING : false;
+			if ( ! $testing ) {
 				return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
 			}
 		}
