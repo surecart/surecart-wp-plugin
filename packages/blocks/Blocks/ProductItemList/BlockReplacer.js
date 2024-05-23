@@ -24,6 +24,8 @@ export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 				{
 					limit: attributes?.limit,
 					style: attributes?.style,
+					ids: attributes?.ids,
+					type: attributes?.type,
 				},
 				createBlocksFromInnerBlocksTemplate(newShop)
 			),

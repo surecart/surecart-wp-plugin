@@ -91,15 +91,21 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				},
 			},
 			[
-				['surecart/product-image', imageAttributes],
 				[
-					'surecart/product-title-v2',
-					{
-						...titleAttributes,
-						level: 0,
-					},
+					'core/group',
+					childBlocks[0]?.attributes, // Product Item
+					[
+						['surecart/product-image', imageAttributes],
+						[
+							'surecart/product-title-v2',
+							{
+								...titleAttributes,
+								level: 0,
+							},
+						],
+						['surecart/product-price-v2', priceAttributes],
+					],
 				],
-				['surecart/product-price-v2', priceAttributes],
 			],
 		],
 		pagination_enabled ? ['surecart/product-pagination'] : null,
