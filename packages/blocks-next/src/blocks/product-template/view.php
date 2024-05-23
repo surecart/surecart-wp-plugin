@@ -1,11 +1,11 @@
-<div <?php echo get_block_wrapper_attributes(); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<template
 		data-wp-each--product="context.products"
 		data-wp-each-key="context.product.id"
 		>
 		<div class="sc-product-item sc-has-animation-fade-up">
 			<a data-wp-bind--href="context.product.permalink" class="sc-product-item-link">
-				<?php echo $content ?>
+				<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</a>
 		</div>
 	</template>

@@ -1,3 +1,3 @@
-<div data-wp-bind--hidden="!context.hasProducts" <?php echo get_block_wrapper_attributes(); ?>>
-    <?php echo $content; ?>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?> data-wp-bind--hidden="!context.hasProducts" hidden>
+	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>

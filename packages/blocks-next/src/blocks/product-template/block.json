@@ -21,7 +21,9 @@
 	"ancestor": ["surecart/product-list"],
 	"usesContext": [
 		"surecart/product-list/blockId",
-		"surecart/product-list/limit"
+		"surecart/product-list/limit",
+		"surecart/product-list/type",
+		"surecart/product-list/ids"
 	],
 	"supports": {
 		"interactivity": true,
