@@ -25,8 +25,11 @@ class ProductPostTypeService {
 		// register post status.
 		add_action( 'init', [ $this, 'registerPostStatus' ] );
 
-		// add varition option value query to posts_where.
+		// add variation option value query to posts_where.
 		add_filter( 'posts_where', [ $this, 'handleVariationOptionValueQuery' ], 10, 2 );
+
+		// ensure we always fetch with the current connected store id in case of store change.
+		add_filter( 'parse_query', [ $this, 'forceAccountIdScope' ], 10, 2 );
 
 		// add global $sc_product inside loops.
 		add_action( 'the_post', [ $this, 'setupData' ] );
@@ -39,6 +42,14 @@ class ProductPostTypeService {
 
 		// product gallery migration.
 		add_action( 'get_post_metadata', [ $this, 'defaultGalleryFallback' ], 10, 4 );
+
+		// add_filter(
+		// 'query_vars',
+		// function( $vars ) {
+		// $vars[] = 'variant_options';
+		// return $vars;
+		// }
+		// );
 
 		// update edit post link to edit the product directly.
 		// add_filter( 'get_edit_post_link', [ $this, 'updateEditPostLink' ], 10, 2 );
@@ -181,6 +192,38 @@ class ProductPostTypeService {
 
 		// return product.
 		return $GLOBALS['sc_product'];
+	}
+
+	/**
+	 * Force the account id scope.
+	 *
+	 * @param \WP_Query $query The query.
+	 *
+	 * @return \WP_Query
+	 */
+	public function forceAccountIdScope( $query ) {
+		// not our post type.
+		if ( $query->get( 'post_type' ) !== 'sc_product' ) {
+			return $query;
+		}
+
+		// add to tax_query.
+		if ( \SureCart::account()->id ) {
+			$query->set(
+				'tax_query',
+				[
+					[
+						'taxonomy' => 'sc_account',
+						'field'    => 'name',
+						'terms'    => \SureCart::account()->id,
+					],
+				]
+			);
+		}
+
+		// var_dump( $query );
+
+		return $query;
 	}
 
 	/**
