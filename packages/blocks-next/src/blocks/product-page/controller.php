@@ -43,7 +43,7 @@ wp_interactivity_state(
 			'selectedDisplayAmount'        => $product->display_amount,
 			'selectedScratchDisplayAmount' => $selected_price->scratch_display_amount,
 			'isOnSale'                     => $product->is_on_sale,
-			'adHocAmount'                  => $selected_price->ad_hoc ? $selected_price->amount : 0,
+			'adHocAmount'                  => ( $selected_price->ad_hoc ? $selected_price->amount : 0 ) / ( $selected_price->is_zero_decimal ? 1 : 100 ),
 		)
 	)
 );

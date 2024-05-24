@@ -32,14 +32,6 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		/**
 		 * Derived state
 		 */
-		/** Get ad hoc min */
-		get adHocMinAmount() {
-			return (state?.selectedPrice?.ad_hoc_min_amount || 0) / 100;
-		},
-		/** Get ad hoc max */
-		get adHocMaxAmount() {
-			return (state?.selectedPrice?.ad_hoc_max_amount || 0) / 100;
-		},
 		/** Get the product quantity */
 		get quantity() {
 			if (state?.selectedPrice?.ad_hoc) return 1;
@@ -151,6 +143,28 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 					: {}),
 			};
 		},
+		/** Get the formatted selected price */
+		get formattedSelectedPrice() {
+			if (!state.selectedPrice?.id) return;
+			const formatted = { ...state.selectedPrice };
+
+			// format zero decimal prices.
+			if (!formatted?.is_zero_decimal) {
+				[
+					'full_amount',
+					'amount',
+					'display_amount',
+					'scratch_amount',
+					'ad_hoc_min_amount',
+					'ad_hoc_max_amount',
+					'setup_fee_amount',
+				].forEach((key) => {
+					formatted[key] = parseFloat(formatted[key]) / 100;
+				});
+			}
+
+			return formatted;
+		},
 		/** Is the add to cart/buy disabled? */
 		get disabled() {
 			return state?.selectedPrice?.archived || state?.product?.archived;
@@ -254,9 +268,10 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 			const selectedPrice = state.product.prices?.data.find(
 				(p) => p.id === price?.id
 			);
-			state.adHocAmount = selectedPrice?.ad_hoc
-				? selectedPrice?.amount
-				: 0;
+			state.adHocAmount =
+				parseFloat(selectedPrice?.ad_hoc ? selectedPrice?.amount : 0) /
+				(selectedPrice?.is_zero_decimal ? 1 : 100);
+
 			update({ selectedPrice });
 		},
 		setAdHocAmount: (e) => {

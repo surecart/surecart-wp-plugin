@@ -1,3 +1,14 @@
+<?php
+/**
+ * PHP file to use when rendering the block type on the server to show on the front end.
+ *
+ * The following variables are exposed to the file:
+ *     $attributes (array): The block attributes.
+ *     $class (string): The block class name.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ */
+?>
 <div
 	<?php echo get_block_wrapper_attributes( array( 'style' => 'width:' . esc_attr( $attributes['width'] ) . ';' ) ); ?>
 	data-wp-bind--hidden="!state.selectedPrice.ad_hoc"
@@ -15,8 +26,8 @@
 			data-wp-on--change="callbacks.formatAdHocAmount"
 			type="number"
 			step="0.01"
-			data-wp-bind--min="state.adHocMinAmount"
-			data-wp-bind--max="state.adHocMaxAmount"
+			data-wp-bind--min="state.formattedSelectedPrice.ad_hoc_min_amount"
+			data-wp-bind--max="state.formattedSelectedPrice.ad_hoc_max_amount"
 			required
 			onwheel="this.blur()"
 		/>
