@@ -888,8 +888,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			\SureCart::account()->clearCache();
 		}
 
-		$this->sync();
-
 		return $this;
 	}
 
@@ -945,8 +943,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		if ( $this->cachable || $this->clears_account_cache ) {
 			\SureCart::account()->clearCache();
 		}
-
-		$this->sync();
 
 		return $this;
 	}
