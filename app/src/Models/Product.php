@@ -68,6 +68,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the attached post.
+	 *
+	 * @return int|false
+	 */
+	public function getPostAttribute() {
+		return \SureCart::sync()->product()->post()->findByModelId( $this->id );
+	}
+
+	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
