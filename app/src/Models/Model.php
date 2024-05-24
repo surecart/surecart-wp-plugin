@@ -130,13 +130,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $clears_account_cache = false;
 
 	/**
-	 * The syncable post class.
-	 *
-	 * @var \SureCart\Models\PostModel
-	 */
-	protected $post;
-
-	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -898,15 +891,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->sync();
 
 		return $this;
-	}
-
-	/**
-	 * The product post.
-	 *
-	 * @return \WP_Post|false
-	 */
-	protected function post() {
-		return \SureCart::sync()->product()->post()->findByModelId( $this->id );
 	}
 
 	/**
