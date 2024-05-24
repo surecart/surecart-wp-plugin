@@ -3,6 +3,7 @@
 namespace SureCart\Sync\Post;
 
 use SureCart\Models\Concerns\Facade;
+use SureCart\Models\VariantOptionValue;
 
 /**
  * This class syncs product records to WordPress posts.
@@ -198,6 +199,26 @@ class ProductPostSyncService {
 			// set the terms.
 			$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
 			wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+		}
+
+		// delete existing.
+		VariantOptionValue::where( 'product_id', $model->id )->delete();
+
+		// create new.
+		foreach ( $model->variant_options->data as $option ) {
+			foreach ( $option->values as $value ) {
+				$created = VariantOptionValue::create(
+					[
+						'value'      => $value,
+						'name'       => $option->name,
+						'post_id'    => $post_id,
+						'product_id' => $model->id,
+					]
+				);
+				if ( is_wp_error( $created ) ) {
+					return $created;
+				}
+			}
 		}
 
 		// set the post on the model.
