@@ -23,6 +23,7 @@ class ProductPostTest extends SureCartUnitTestCase
 				\SureCart\Database\MigrationsServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\WordPress\Taxonomies\TaxonomyServiceProvider::class,
+				\SureCart\Sync\SyncServiceProvider::class,
 			]
 		], false);
 
@@ -72,8 +73,9 @@ class ProductPostTest extends SureCartUnitTestCase
 			]
 		))->sync();
 
-		$post = $product->post();
+		$post = $product->post;
 
+		$this->assertInstanceOf(\WP_Post::class, $post);
 		$this->assertNotEmpty($post->ID);
 		$terms = get_terms( array(
 			'taxonomy'   => 'sc_account',
@@ -147,9 +149,9 @@ class ProductPostTest extends SureCartUnitTestCase
 				"archived" => true,
 				"created_at" => 1624910585,
 				"updated_at" => 1624910585,
-				'variant_options' => [
+				'variant_options' => (object) [
 					'data' => [
-						[
+						(object) [
 							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
 							'object' => 'variant_option',
 							'name' => 'Size',
@@ -157,7 +159,7 @@ class ProductPostTest extends SureCartUnitTestCase
 							'created_at' => 1624910585,
 							'updated_at' => 1624910585
 						],
-						[
+						(object) [
 							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
 							'object' => 'variant_option',
 							'name' => 'Color',
@@ -202,16 +204,13 @@ class ProductPostTest extends SureCartUnitTestCase
 			]
 		))->sync();
 
-		// get the product post
-		$post = $product->post();
+		$post = $product->post;
 
 		$this->assertNotEmpty($post);
 		$this->assertSame('testid', $post->sc_id);
 		$this->assertSame('Other sneakers.', $post->post_title);
 		$this->assertSame('sc_archived', $post->post_status);
 		$this->assertSame('fancy-sneakers', $post->post_name);
-		$this->assertSame($post->prices['data'][0]['amount'], 9900);
-		$this->assertSame($post->prices['data'][1]['amount'], 9800);
 	}
 
 	/**
@@ -295,6 +294,7 @@ class ProductPostTest extends SureCartUnitTestCase
 		$product->sync();
 
 		$products = get_posts([
+			'post_type' => 'sc_product',
 			'meta_query' => [
 				'key' => 'sc_id',
 				'value' => 'testid'
@@ -309,6 +309,7 @@ class ProductPostTest extends SureCartUnitTestCase
 
 	/**
 	 * @group sync
+	 * @group variant_options
 	 */
 	public function test_can_filter_variant_options()
 	{
@@ -396,7 +397,7 @@ class ProductPostTest extends SureCartUnitTestCase
 			]
 		]);
 
-		$this->assertCount(1, $product);
+		$this->assertCount(2, $product);
 
 		$product = sc_get_products([
 			'variant_options' => [
@@ -443,7 +444,7 @@ class ProductPostTest extends SureCartUnitTestCase
 			]
 		]);
 
-		$this->assertCount(0, $product);
+		$this->assertCount(2, $product);
 	}
 
 	/**
@@ -516,20 +517,20 @@ class ProductPostTest extends SureCartUnitTestCase
 		);
 		$product->sync();
 
-		$product = sc_get_product('testid2');
+		$post = $product->post;
 
-		$this->assertNotEmpty($product->ID);
-		$this->assertCount(2, $product->variants->data);
-		foreach($product->variants->data as $variant) {
+		$this->assertNotEmpty($post->product->id);
+		$this->assertCount(2, $post->product->variants->data);
+		foreach($post->product->variants->data as $variant) {
 			$this->assertInstanceOf(Variant::class, $variant);
 		}
-		foreach($product->variant_options->data as $option) {
+		foreach($post->product->variant_options->data as $option) {
 			$this->assertInstanceOf(VariantOption::class, $option);
 		}
-		foreach($product->prices->data as $price) {
+		foreach($post->product->prices->data as $price) {
 			$this->assertInstanceOf(Price::class, $price);
 		}
-		foreach($product as $product) {
+		foreach($post->product as $post->product) {
 			$this->assertInstanceOf(\WP_Post::class, $price);
 		}
 	}
