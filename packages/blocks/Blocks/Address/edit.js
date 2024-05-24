@@ -71,7 +71,7 @@ export default ({ attributes, setAttributes }) => {
 								setAttributes({ collect_billing })
 							}
 							help={__(
-								'If enabled, an additional billing address form will be displayed.',
+								'If enabled, the user can enter a separate billing address. Otherwise, the billing address will be the same as the shipping address.',
 								'surecart'
 							)}
 						/>
