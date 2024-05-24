@@ -16,6 +16,10 @@
 			"type": "string",
 			"default": "Enter an amount"
 		},
+		"width": {
+			"type": "string",
+			"default": "100%"
+		},
 		"lock": {
 			"type": "object",
 			"default": {

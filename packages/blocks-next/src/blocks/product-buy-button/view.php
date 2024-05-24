@@ -15,9 +15,9 @@
 		style="<?php echo esc_attr( $style ); ?>"
 		data-wp-bind--disabled="state.isUnavailable"
 		data-wp-bind--value="state.checkoutUrl"
-		<?php echo $attributes['add_to_cart'] ? 'data-wp-class--sc-button__link--busy="state.busy"' : ''; ?>
+		data-wp-class--sc-button__link--busy="state.busy"
 	>
-		<span class="sc-spinner" aria-hidden="true"></span>
+		<span class="sc-spinner" aria-hidden="false"></span>
 		<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			<?php echo wp_kses_post( $attributes['text'] ?? __( 'Add To Cart', 'surecart' ) ); ?>
 		</span>

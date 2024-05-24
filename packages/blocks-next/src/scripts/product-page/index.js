@@ -32,6 +32,14 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		/**
 		 * Derived state
 		 */
+		/** Get ad hoc min */
+		get adHocMinAmount() {
+			return (state?.selectedPrice?.ad_hoc_min_amount || 0) / 100;
+		},
+		/** Get ad hoc max */
+		get adHocMaxAmount() {
+			return (state?.selectedPrice?.ad_hoc_max_amount || 0) / 100;
+		},
 		/** Get the product quantity */
 		get quantity() {
 			if (state?.selectedPrice?.ad_hoc) return 1;
@@ -246,6 +254,9 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 			const selectedPrice = state.product.prices?.data.find(
 				(p) => p.id === price?.id
 			);
+			state.adHocAmount = selectedPrice?.ad_hoc
+				? selectedPrice?.amount
+				: 0;
 			update({ selectedPrice });
 		},
 		setAdHocAmount: (e) => {
