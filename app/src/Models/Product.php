@@ -50,10 +50,12 @@ class Product extends Model implements PageModel {
 	 * @return \WP_Post|\WP_Error
 	 */
 	protected function sync( $with_collections = false ) {
-		return \SureCart::sync()
-		->product()
-		->withCollections( $with_collections )
-		->sync( $this );
+		\SureCart::sync()
+			->product()
+			->withCollections( $with_collections )
+			->sync( $this );
+
+		return $this;
 	}
 
 	/**
@@ -62,9 +64,11 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Background\QueueService
 	 */
 	protected function queueSync() {
-		return \SureCart::sync()
-		->product()
-		->queue( $this );
+		\SureCart::sync()
+			->product()
+			->queue( $this );
+
+		return $this;
 	}
 
 	/**
@@ -225,7 +229,7 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getPermalinkAttribute(): string {
-		return ! empty( $this->post() ) ? get_the_permalink( $this->post()->ID ) : '';
+		return ! empty( $this->post ) ? get_the_permalink( $this->post->ID ) : '';
 	}
 
 	/**
@@ -554,7 +558,7 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		$gallery_items = $this->post()->gallery ?? array();
+		$gallery_items = $this->post->gallery ?? array();
 
 		return array_map(
 			function ( $gallery_item ) {
