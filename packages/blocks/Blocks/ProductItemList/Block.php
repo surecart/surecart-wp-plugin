@@ -279,7 +279,7 @@ class Block extends BaseBlock {
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
 				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
-				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
+				'collectionEnabled'    => \SureCart::account()->isConnected() ? $attributes['collection_enabled'] : false,
 				'pageTitle'            => get_the_title(),
 			]
 		);
