@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.27.1 - May 23nd, 2024 =
+= 2.27.1 - May 23rd, 2024 =
 - Improvement: Handle potential platform conflict statuses with retry mechanism.
 - Fix: Archived products showing up in sitemap.
 - Fix: Issue with selecting $0 amount for custom pricing on product page can lead to 404 in some cases.
