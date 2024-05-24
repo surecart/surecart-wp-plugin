@@ -135,14 +135,14 @@ export class ScSessionProvider {
         },
       });
 
-      // the checkout is paid.
-      if (['paid', 'processing'].includes(checkoutState.checkout?.status)) {
-        this.scPaid.emit();
-      }
-
       if (checkoutState.checkout?.payment_intent?.processor_data?.mollie?.checkout_url) {
         updateFormState('PAYING');
         return setTimeout(() => window.location.assign(checkoutState.checkout?.payment_intent?.processor_data?.mollie?.checkout_url), 50);
+      }
+
+      // the checkout is paid.
+      if (['paid', 'processing'].includes(checkoutState.checkout?.status)) {
+        this.scPaid.emit();
       }
 
       setTimeout(() => {

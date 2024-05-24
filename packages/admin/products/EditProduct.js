@@ -30,6 +30,7 @@ import Tax from './modules/Tax';
 import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
+import Affiliation from './modules/Affiliation';
 import Taxonomies from './modules/Taxonomies';
 import MetaBoxes from './modules/MetaBoxes';
 

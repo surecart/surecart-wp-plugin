@@ -637,6 +637,7 @@ export interface Checkout extends Object {
     data: Array<PaymentIntent>;
   };
   abandoned_checkout_enabled: boolean;
+  billing_matches_shipping: boolean;
   bump_amount: number;
   payment_method_required?: boolean;
   manual_payment: boolean;
@@ -1080,6 +1081,7 @@ export interface Customer extends Object {
   last_name?: string;
   phone?: string;
   billing_address?: string | Address;
+  billing_address_display?: string | Address;
   shipping_address?: string | Address;
   billing_matches_shipping: boolean;
   live_mode: boolean;

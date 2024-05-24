@@ -25,7 +25,7 @@ export class ScCustomerEdit {
         first_name,
         last_name,
         phone,
-        billing_matches_shipping,
+        billing_different_from_shipping,
         shipping_name,
         shipping_city,
         'tax_identifier.number_type': tax_identifier_number_type,
@@ -41,6 +41,23 @@ export class ScCustomerEdit {
         billing_postal_code,
         billing_state,
       } = await e.target.getFormJson();
+      this.customer.billing_address = {
+        name: billing_name,
+        city: billing_city,
+        country: billing_country,
+        line_1: billing_line_1,
+        postal_code: billing_postal_code,
+        state: billing_state,
+      };
+      this.customer.shipping_address = {
+        name: shipping_name,
+        city: shipping_city,
+        country: shipping_country,
+        line_1: shipping_line_1,
+        postal_code: shipping_postal_code,
+        state: shipping_state,
+      };
+
       await apiFetch({
         path: addQueryArgs(`surecart/v1/customers/${this.customer?.id}`, { expand: ['tax_identifier'] }),
         method: 'PATCH',
@@ -49,23 +66,9 @@ export class ScCustomerEdit {
           first_name,
           last_name,
           phone,
-          billing_matches_shipping: billing_matches_shipping === 'on',
-          shipping_address: {
-            name: shipping_name,
-            city: shipping_city,
-            country: shipping_country,
-            line_1: shipping_line_1,
-            postal_code: shipping_postal_code,
-            state: shipping_state,
-          },
-          billing_address: {
-            name: billing_name,
-            city: billing_city,
-            country: billing_country,
-            line_1: billing_line_1,
-            postal_code: billing_postal_code,
-            state: billing_state,
-          },
+          billing_matches_shipping: billing_different_from_shipping !== 'on',
+          shipping_address: this.customer.shipping_address,
+          billing_address: this.customer.billing_address,
           ...(tax_identifier_number && tax_identifier_number_type
             ? {
                 tax_identifier: {
@@ -134,17 +137,17 @@ export class ScCustomerEdit {
 
             <div>
               <sc-switch
-                name="billing_matches_shipping"
-                checked={this.customer?.billing_matches_shipping}
+                name="billing_different_from_shipping"
+                checked={!this.customer?.billing_matches_shipping}
                 onScChange={e => {
                   this.customer = {
                     ...this.customer,
-                    billing_matches_shipping: (e.target as HTMLScSwitchElement).checked,
+                    billing_matches_shipping: !(e.target as HTMLScSwitchElement).checked,
                   };
                 }}
                 value="on"
               >
-                {__('Billing address same as shipping', 'surecart')}
+                {__('Billing address is different from shipping', 'surecart')}
               </sc-switch>
             </div>
 
@@ -164,7 +167,7 @@ export class ScCustomerEdit {
                   postal_code: 'billing_postal_code',
                   state: 'billing_state',
                 }}
-                required={false}
+                required={true}
               ></sc-address>
             </div>
 

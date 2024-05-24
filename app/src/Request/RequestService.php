@@ -24,13 +24,6 @@ class RequestService {
 	protected $token = '';
 
 	/**
-	 * Request URL
-	 *
-	 * @var string
-	 */
-	protected $base_url = '';
-
-	/**
 	 * The base path for the request.
 	 *
 	 * @var string
@@ -59,9 +52,35 @@ class RequestService {
 	protected $authorized = true;
 
 	/**
+	 * Number of retries.
+	 *
+	 * @var integer
+	 */
+	protected $current_retries = 0;
+
+	/**
+	 * Total number of retries.
+	 *
+	 * @var integer
+	 */
+	protected $total_retries = 1;
+
+	/**
+	 * Status codes to retry.
+	 *
+	 * @var array
+	 */
+	protected $retry_status_codes = [ 409 ];
+
+	/**
 	 * Constructor.
 	 *
-	 * @param string $token The rest api base path.
+	 * @param string                                 $token The rest api base path.
+	 * @param string                                 $base_path The rest api base path.
+	 * @param \SureCart\Support\Errors\ErrorsService $errors_service The error handling service.
+	 * @param boolean                                $authorized Is this request authorized.
+	 *
+	 * @return void
 	 */
 	public function __construct( $token = '', $base_path = '/v1', $errors_service = null, $authorized = true ) {
 		// error handing service.
@@ -70,7 +89,6 @@ class RequestService {
 		$this->token = $token;
 		// set the base path and url.
 		$this->base_path  = $base_path;
-		$this->base_url   = $this->getBaseUrl();
 		$this->authorized = $authorized;
 	}
 
@@ -248,7 +266,7 @@ class RequestService {
 		$endpoint = apply_filters( 'surecart/request/endpoint', $endpoint, $args );
 
 		// make url.
-		$url = trailingslashit( $this->base_url ) . untrailingslashit( $endpoint );
+		$url = trailingslashit( $this->getBaseUrl() ) . untrailingslashit( $endpoint );
 
 		// add query args.
 		if ( ! empty( $args['query'] ) ) {
@@ -273,6 +291,15 @@ class RequestService {
 		}
 
 		$response_code = wp_remote_retrieve_response_code( $response );
+
+		// handle handle retries.
+		if ( in_array( $response_code, $this->retry_status_codes ) ) {
+			$this->current_retries++;
+			if ( $this->current_retries <= $this->total_retries ) {
+				call_user_func_array( [ $this, __METHOD__ ], func_get_args() );
+			}
+		}
+
 		$response_body = wp_remote_retrieve_body( $response );
 		$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
 

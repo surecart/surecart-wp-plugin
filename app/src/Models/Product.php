@@ -4,6 +4,7 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
+use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
@@ -11,8 +12,7 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model implements PageModel {
-	use HasImageSizes;
-	use HasPurchases;
+	use HasImageSizes, HasPurchases, HasCommissionStructure;
 
 	/**
 	 * Rest API endpoint

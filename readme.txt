@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.26.0
+Stable tag: 2.27.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,23 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.27.1 - May 23rd, 2024 =
+- Improvement: Handle potential platform conflict statuses with retry mechanism.
+- Fix: Archived products showing up in sitemap.
+- Fix: Issue with selecting $0 amount for custom pricing on product page can lead to 404 in some cases.
+- Fix: Flash of order confirmation modal that can sometimes happen briefly when bank transfer payment methods are selected.
+
+= 2.27.0 - May 22nd, 2024 =
+- New: Individual product commissions rates.
+- New: Individual affiliate commission rates.
+- New: Affiliate + product combination commission rates.
+- Improvement: Conditional form block and order bumps block now allowed on free accounts.
+- Improvement: Remove nonce from order confirm page GET request to allow dynamic linking.
+- Fix: Issue with abandoned checkout stats sometimes incorrectly defaulting to USD.
+- Fix: Ensure order bump display condition rule field is required to prevent misconfiguration.
+- Fix: Attaching and affiliate to a product was not working for affiliates without a last name.
+- Fix: Ensure post types have correct capitalization in admin.
 
 = 2.26.0 - May 13th, 2024 =
 - New: Ability to set manual payment methods as usable in subscription, installments and upsells.

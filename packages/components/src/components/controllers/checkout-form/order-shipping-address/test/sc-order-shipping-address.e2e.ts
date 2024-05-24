@@ -1,6 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { dispose as disposeCheckout, state as checkoutState } from '@store/checkout';
-import { Checkout } from 'src/types';
+import { dispose as disposeCheckout } from '@store/checkout';
 
 describe('sc-order-shipping-address', () => {
   beforeEach(() => {
