@@ -3,9 +3,12 @@
  */
 import { store, getContext } from '@wordpress/interactivity';
 
+const LOCAL_STORAGE_KEY = 'surecart-local-storage';
+
 // controls the product page.
 const { state, callbacks, actions } = store('surecart/checkout', {
 	state: {
+		openCartSidebar: false,
 		discountCode: '',
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
@@ -35,6 +38,12 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		// 	// context form id and mode.
 		// 	// pull from local storage.
 		// },
+		get checkoutData() {
+			// get the checkout data from local storage.
+			const mode = getContext('mode');
+			const checkoutData = state.checkoutStorage[mode];
+			return checkoutData;
+		},
 	},
 
 	// watch directive.
@@ -51,6 +60,27 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 	// store in local, form id and mode ==> same as how previous
 	// 	},
 	// },
+
+	actions: {
+		setCheckout(data, mode = 'live', formId = null) {
+			// set the checkout data to local storage by key.
+			const checkoutData = JSON.stringify(data);
+			const previousCheckoutData =
+				localStorage.getItem(LOCAL_STORAGE_KEY) || {};
+			const parsedPreviousCheckoutData = JSON.parse(previousCheckoutData);
+
+			// Store data by mode for live / test.
+			const checkoutStorage = {
+				...parsedPreviousCheckoutData,
+				[mode]: checkoutData,
+			};
+
+			localStorage.setItem(
+				LOCAL_STORAGE_KEY,
+				JSON.stringify(checkoutStorage)
+			);
+		},
+	},
 
 	callbacks: {
 		getState(prop = null) {
@@ -70,8 +100,7 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		toggleCartSidebar(e) {
 			console.log('toggling cart sidebar');
 			e.preventDefault();
-			const context = getContext();
-			context.openCartSidebar = !context.openCartSidebar;
+			state.openCartSidebar = !state?.openCartSidebar || false;
 		},
 		toggleDiscountInput(e) {
 			e.preventDefault();
