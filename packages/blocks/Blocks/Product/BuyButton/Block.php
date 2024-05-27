@@ -112,7 +112,7 @@ class Block extends ProductBlock {
 		ob_start();
 		?>
 		<sc-product-buy-button
-			<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
+			<?php echo wp_validate_boolean( $attributes['add_to_cart'] ) ? 'add-to-cart' : ''; ?>
 			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 			button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
 			product-id="<?php echo esc_attr( $product->id ); ?>"
@@ -122,7 +122,7 @@ class Block extends ProductBlock {
 			>
 			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
-				<?php echo $attributes['add_to_cart'] ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
+				<?php echo wp_validate_boolean( $attributes['add_to_cart'] ) ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
 			</a>
 			<button disabled class="wp-block-button__link sc-block-button__link wp-element-button sc-block-button--sold-out <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo esc_html( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ); ?></span>
@@ -140,7 +140,7 @@ class Block extends ProductBlock {
 			'wp_footer',
 			function() use ( $attributes, $product ) {
 				?>
-		<sc-product-price-modal product-id="<?php echo esc_attr( $product->id ); ?>" <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
+		<sc-product-price-modal product-id="<?php echo esc_attr( $product->id ); ?>" <?php echo esc_attr( wp_validate_boolean( $attributes['add_to_cart'] ) ? 'add-to-cart' : '' ); ?>>
 				<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
 		</sc-product-price-modal>
 				<?php
