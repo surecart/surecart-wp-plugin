@@ -2,10 +2,11 @@
 	<?php
 	echo wp_interactivity_data_wp_context(
 		array(
-			'checkoutUrl'    => esc_url( \SureCart::pages()->url( 'checkout' ) ),
-			'text'           => esc_attr( $attributes['text'] ?? __( 'Add To Cart', 'surecart' ) ),
-			'outOfStockText' => esc_attr( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ),
-			'addToCart'      => $attributes['add_to_cart'] ?? true,
+			'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
+			'text'            => $attributes['text'] ?? ( $attributes['add_to_cart'] ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
+			'outOfStockText'  => esc_attr( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ),
+			'unavailableText' => esc_attr( $attributes['unavailable_text'] ?? __( 'Unavailable For Purchase', 'surecart' ) ),
+			'addToCart'       => $attributes['add_to_cart'] ?? true,
 		)
 	);
 	?>
@@ -19,7 +20,6 @@
 	>
 		<span class="sc-spinner" aria-hidden="false"></span>
 		<span class="sc-button__link-text" data-wp-text="state.buttonText">
-			<?php echo wp_kses_post( $attributes['text'] ?? __( 'Add To Cart', 'surecart' ) ); ?>
 		</span>
 	</button>
 </div>

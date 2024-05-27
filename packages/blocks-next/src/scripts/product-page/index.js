@@ -99,14 +99,21 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 			});
 		},
 		get buttonText() {
-			const { text, outOfStockText } = getContext();
+			const { text, outOfStockText, unavailableText } = getContext();
+
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
+
+			if (state.isUnavailable) {
+				return unavailableText;
+			}
+
 			return text;
 		},
 		get isUnavailable() {
 			return (
+				state?.product?.archived || // archived.
 				state?.isSoldOut || // sold out.
 				(state?.variants?.length && !state?.selectedVariant?.id) // no selected variant.
 			);

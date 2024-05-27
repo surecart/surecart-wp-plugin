@@ -103,9 +103,9 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
+	"editorStyle": ["file:../../styles/wp-button.css"],
 	"style": [
 		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css",
-		"file:../../styles/dialog.css"
+		"file:../../styles/spinner.css"
 	]
 }
