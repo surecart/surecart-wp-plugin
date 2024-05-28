@@ -212,7 +212,7 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		if ( isset( $attributes[ 'sort_enabled' ] ) ) { // This way we know it's the old block.
-			return $this->renderNewProductListBlock( $attributes );
+			return \SureCart::block()->productListMigration( $attributes, $this->block )->render();
 		}
 		
 		self::$instance = wp_unique_id( 'sc-product-item-list-' );
@@ -289,103 +289,6 @@ class Block extends BaseBlock {
 		);
 
 		return '<sc-product-item-list id="' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
-	}
-
-	/**
-	 * Get the Child Blocks Attributes.
-	 *
-	 * @param string $block_name
-	 * @param array $child_blocks
-	 * @return array|null Child Blocks Attributes.
-	 */
-	public function getChildBlocksAttributes( $block_name, $child_blocks ) {
-		foreach ( $child_blocks[0]['innerBlocks'] as $block ) {
-			if ( $block['blockName'] === $block_name)  {
-				return $block['attrs'];
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Render the new product list block.
-	 *
-	 * @param  array $attributes Block attributes.
-	 *
-	 * @return string
-	 */
-	public function renderNewProductListBlock( $attributes ) {
-		$inner_blocks = $this->block->parsed_block['innerBlocks'] ?? [];
-		$product_title_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-title', $inner_blocks );
-		$product_price_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-price', $inner_blocks );
-		$product_image_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-image', $inner_blocks );
-
-		$title_style = $product_title_attrs['style'] ? wp_json_encode( $product_title_attrs['style'] ) : '{}';
-		$price_style = $product_price_attrs['style'] ? wp_json_encode( $product_price_attrs['style'] ) : '{}';
-		$image_style = $product_image_attrs['style'] ? wp_json_encode( $product_image_attrs['style'] ) : '{}';
-
-		$limit = $attributes['limit'] ?? 15;
-		$sort_enabled = $attributes['sort_enabled'] ?? true;
-		$search_enabled = $attributes['search_enabled'] ?? true;
-		$pagination_enabled = $attributes['pagination_enabled'] ?? true;
-		$collection_enabled = $attributes['collection_enabled'] ?? true;
-		$columns = $attributes['columns'] ?? 3;
-		
-		$new_block = '<!-- wp:surecart/product-list {"limit":' . $limit . '} -->';
-
-		$new_block .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->';
-		$new_block .= '<div class="wp-block-group" style="margin-bottom:10px">';
-
-		if ( $sort_enabled || $collection_enabled ) {
-			$new_block .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
-			$new_block .= '<div class="wp-block-group">';
-
-			if ( $sort_enabled ) {
-				$new_block .= '<!-- wp:surecart/product-list-sort /-->';
-			}
-
-			if ( $collection_enabled ) {
-				$new_block .= '<!-- wp:surecart/product-list-filter /-->';
-			}
-
-			$new_block .= '</div><!-- /wp:group -->';
-		}
-
-		if ( $search_enabled ) {
-			$new_block .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
-			$new_block .= '<div class="wp-block-group">';
-			$new_block .= '<!-- wp:surecart/product-list-search /-->';
-			$new_block .= '</div><!-- /wp:group -->';
-		}
-
-		$new_block .= '</div><!-- /wp:group -->';
-
-		if ( $collection_enabled ) {
-		$new_block .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
-			$new_block .= '<div class="wp-block-group" style="margin-bottom:10px">';
-			$new_block .= '<!-- wp:surecart/product-list-filter-tags -->';
-			$new_block .= '<!-- wp:surecart/product-list-filter-tag /-->';
-			$new_block .= '</div><!-- /wp:group -->';
-			$new_block .= '</div><!-- /wp:group -->';
-		}
-
-		$new_block .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
-		$new_block .= '<!-- wp:surecart/product-image {"style":' . $image_style . '} /-->';
-		$new_block .= '<!-- wp:surecart/product-title-v2 {"level":2,"style":' . $title_style . '} /-->';
-		$new_block .= '<!-- wp:surecart/product-price-v2 {"style":' . $price_style . '} /-->';
-		$new_block .= '<!-- /wp:surecart/product-template -->';
-
-		if ( $pagination_enabled ) {
-			$new_block .= '<!-- wp:surecart/product-pagination -->';
-			$new_block .= '<!-- wp:surecart/product-pagination-previous /-->';
-			$new_block .= '<!-- wp:surecart/product-pagination-numbers /-->';
-			$new_block .= '<!-- wp:surecart/product-pagination-next /-->';
-			$new_block .= '<!-- /wp:surecart/product-pagination -->';
-		}
-
-		$new_block .= '<!-- /wp:surecart/product-list -->';
-		
-		return do_blocks( $new_block );
 	}
 
 	/**
