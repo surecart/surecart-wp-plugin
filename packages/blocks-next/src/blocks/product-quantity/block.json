@@ -36,7 +36,6 @@
 		},
 		"__experimentalBorder": {
 			"radius": true,
-			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"radius": true
 			}

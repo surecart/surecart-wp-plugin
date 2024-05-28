@@ -1,7 +1,7 @@
 .sc-input-group.sc-quantity-selector {
 	width: var(--sc-quantity-select-width, 100px);
 	height: var(--sc-quantity-control-height, var(--sc-input-height-small));
-	border-radius: var(--border-radius);
+	border-radius: inherit !important;
 
 	&.quantity--disabled {
 		background-color: var(--sc-input-background-color-disabled);
@@ -81,4 +81,8 @@
 			font-size: var(--sc-font-size-x-small);
 		}
 	}
+}
+
+.sc-form-label {
+	color: inherit !important;
 }

@@ -4,7 +4,6 @@
 	</label>
 	<div
 		class="sc-input-group sc-quantity-selector"
-		style="<?php echo esc_attr( $styles['border']['css'] ?? '' ); ?>"
 		data-wp-class--quantity--disabled="state.isQuantityDisabled"
 	>
 		<div
