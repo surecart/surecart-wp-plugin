@@ -11,15 +11,32 @@
 	);
 	?>
 	>
-	<button
-		class="wp-block-button__link wp-element-button sc-button__link <?php echo esc_attr( $class ); ?>"
-		style="<?php echo esc_attr( $style ); ?>"
-		data-wp-bind--disabled="state.isUnavailable"
-		data-wp-bind--value="state.checkoutUrl"
-		data-wp-class--sc-button__link--busy="state.busy"
-	>
-		<span class="sc-spinner" aria-hidden="false"></span>
-		<span class="sc-button__link-text" data-wp-text="state.buttonText">
-		</span>
-	</button>
+	<?php
+	if ( ! $attributes['add_to_cart'] ) {
+		?>
+		<a
+			class="wp-block-button__link wp-element-button sc-button__link <?php echo esc_attr( $class ); ?>"
+			style="<?php echo esc_attr( $style ); ?>"
+			data-wp-bind--disabled="state.isUnavailable"
+			data-wp-href="state.checkoutUrl"
+		>
+			<span class="sc-button__link-text" data-wp-text="state.buttonText">
+			</span>
+		</a>
+		<?php
+	} else {
+		?>
+		<button
+			class="wp-block-button__link wp-element-button sc-button__link <?php echo esc_attr( $class ); ?>"
+			style="<?php echo esc_attr( $style ); ?>"
+			data-wp-bind--disabled="state.isUnavailable"
+			data-wp-class--sc-button__link--busy="state.busy"
+		>
+			<span class="sc-spinner" aria-hidden="false"></span>
+			<span class="sc-button__link-text" data-wp-text="state.buttonText">
+			</span>
+		</button>
+		<?php
+	}
+	?>
 </div>
