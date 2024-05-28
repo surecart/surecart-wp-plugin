@@ -120,8 +120,6 @@ class Checkout extends Model {
 
 		parent::update( $attributes );
 
-		$this->sync();
-
 		return $this;
 	}
 
