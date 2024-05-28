@@ -74,4 +74,21 @@ class LineItem extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Get the line item image
+	 */
+	public function getImageAttribute() {
+		// if we have a variant, use the variant image.
+		if ( ! empty( $this->variant ) && is_a( $this->variant, Variant::class ) ) {
+			return $this->variant->line_item_image;
+		}
+
+		// if we have a product, use the product image.
+		if ( ! empty( $this->product ) && is_a( $this->product, Product::class ) ) {
+			return $this->product->line_item_image;
+		}
+
+		return null;
+	}
 }

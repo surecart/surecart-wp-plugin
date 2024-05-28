@@ -58,6 +58,29 @@ class Media extends Model {
 	 * @return string
 	 */
 	protected function getImageMarkup( $size = 'full', $attr = [] ) {
+		// prepare attributes.
+		$attr = $this->getImageAttributes( $size, $attr );
+		$html = '';
+
+		foreach ( $attr as $name => $value ) {
+			$html .= " $name=" . '"' . $value . '"';
+		}
+
+		// close tag.
+		$html .= ' />';
+
+		return $html;
+	}
+
+	/**
+	 * Get the image attributes.
+	 *
+	 * @param string $size The size of the image.
+	 * @param array  $attr The attributes for the tag.
+	 *
+	 * @return array
+	 */
+	protected function getImageAttributes( $size = 'full', $attr = [] ) {
 		// get sizes.
 		$sizes      = wp_get_registered_image_subsizes();
 		$image_size = $sizes[ $size ] ?? null;
@@ -74,11 +97,12 @@ class Media extends Model {
 		);
 
 		// set attributes.
-		$attr['src']   = $this->getUrl( $width );
-		$attr['alt']   = $this->alt ?? '';
-		$attr['class'] = 'attachment-' . $size . ' size-' . $size;
-		$attr['sizes'] = sprintf( '(max-width: %1$dpx) 100vw, %1$dpx', $width );
-		$hwstring      = image_hwstring( $width, $height );
+		$attr['src']    = $this->getUrl( $width );
+		$attr['alt']    = $this->alt ?? '';
+		$attr['class']  = 'attachment-' . $size . ' size-' . $size;
+		$attr['sizes']  = sprintf( '(max-width: %1$dpx) 100vw, %1$dpx', $width );
+		$attr['width']  = (int) $width;
+		$attr['height'] = (int) $height;
 
 		// loading attributes.
 		$loading_attr              = $attr;
@@ -127,15 +151,6 @@ class Media extends Model {
 		$attr = apply_filters( 'wp_get_sc_product_attachment_image_attributes', $attr, $this, $size );
 
 		// prepare attributes.
-		$attr = array_map( 'esc_attr', $attr );
-		$html = rtrim( "<img $hwstring" );
-		foreach ( $attr as $name => $value ) {
-			$html .= " $name=" . '"' . $value . '"';
-		}
-
-		// close tag.
-		$html .= ' />';
-
-		return $html;
+		return array_map( 'esc_attr', $attr );
 	}
 }

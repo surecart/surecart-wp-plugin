@@ -1,41 +1,32 @@
 <?php
 namespace SureCart\Models;
 
-use SureCart\Models\Concerns\Facade;
 use SureCart\Models\Traits\HasAttributes;
+use SureCart\Support\Contracts\GalleryItem;
 
 /**
  * Gallery item model
  */
-class GalleryItem {
-	use Facade, HasAttributes;
-
-	/**
-	 * The media item.
-	 *
-	 * @var \SureCart\Models\ProductMedia
-	 */
-	protected $product_media;
+class GalleryItemProductMedia implements GalleryItem {
+	use HasAttributes;
 
 	/**
 	 * The post item.
 	 *
 	 * @var \WP_Post
 	 */
-	protected $post;
+	protected $product_media;
 
 	/**
 	 * Create a new gallery item.
 	 * This can accept a product media or a post.
 	 *
-	 * @param mixed $item The item.
+	 * @param \SureCart\Models\ProductMedia $item The item.
+	 *
+	 * @return void
 	 */
-	public function __construct( $item ) {
-		if ( is_a( $item, \SureCart\Models\ProductMedia::class ) ) {
-			$this->product_media = $item;
-		} else {
-			$this->post = get_post( $item );
-		}
+	public function __construct( \SureCart\Models\ProductMedia $item ) {
+		$this->product_media = $item;
 	}
 
 	/**
@@ -46,13 +37,8 @@ class GalleryItem {
 	 *
 	 * @return string
 	 */
-	protected function getImageMarkup( $size = 'full', $attr = [] ) {
+	public function getImageMarkup( $size = 'full', $attr = [] ) : string {
 		$image = '';
-
-		// Handle attachments.
-		if ( isset( $this->post->id ) ) {
-			$image = wp_get_attachment_image( $this->post->id, $size, false, $attr );
-		}
 
 		// Handle media.
 		if ( isset( $this->product_media->media ) ) {
@@ -76,18 +62,29 @@ class GalleryItem {
 	}
 
 	/**
-	 * Get the image markup.
+	 * Get the image data.
 	 *
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
 	 *
+	 * @return array
+	 */
+	public function getImageAttributes( $size = 'full', $attr = [] ) {
+		if ( isset( $this->product_media->media ) ) {
+			return $this->product_media->media->getImageAttributes( $size, $attr );
+		}
+
+		return $this->product_media;
+	}
+
+	/**
+	 * Get the image markup.
+	 *
+	 * @param string $key The key to get.
+	 *
 	 * @return string
 	 */
 	public function __get( $key ) {
-		if ( isset( $this->product_media->{$key} ) ) {
-			return $this->product_media->{$key};
-		}
-
 		if ( isset( $this->post->{$key} ) ) {
 			return $this->post->{$key};
 		}

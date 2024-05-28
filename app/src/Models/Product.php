@@ -304,13 +304,7 @@ class Product extends Model implements PageModel {
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
-		$featured_product_media = $this->featured_product_media;
-
-		return (object) array(
-			'alt'   => $featured_product_media->media->alt ?? $this->title ?? $this->name ?? '',
-			'title' => $featured_product_media->media->title ?? '',
-			'src'   => $featured_product_media->media->url ?? $this->image_url ?? \SureCart::core()->assets()->getUrl() . '/images/placeholder.jpg',
-		);
+		return new GalleryItemAttachment( $this->featured_product_media );
 	}
 
 	/**
@@ -568,7 +562,7 @@ class Product extends Model implements PageModel {
 			function ( $gallery_item ) {
 				// this is an attachment id.
 				if ( is_int( $gallery_item->id ) ) {
-					return new GalleryItem( $gallery_item );
+					return new GalleryItemAttachment( $gallery_item );
 				}
 
 				// get the product media item that matches the id.
@@ -582,7 +576,7 @@ class Product extends Model implements PageModel {
 				// get the first item.
 				$item = array_shift( $item );
 				if ( ! empty( $item ) ) {
-					return new GalleryItem( $item );
+					return new GalleryItemProductMedia( $item );
 				}
 
 				return '';
@@ -637,5 +631,14 @@ class Product extends Model implements PageModel {
 	 */
 	public function getIsOnSaleAttribute() {
 		return $this->initial_price->is_on_sale ?? false;
+	}
+
+	/**
+	 * Get the image used in line items.
+	 *
+	 * @return void
+	 */
+	public function getLineItemImageAttribute() {
+		return $this->featured_media->getImageAttributes( 'thumbnail' );
 	}
 }
