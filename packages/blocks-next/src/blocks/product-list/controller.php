@@ -7,10 +7,11 @@ $query_order_by = $url->getArg( 'orderby' );
 $collections    = $url->getArg( 'sc_collection' );
 $current_page   = $url->getCurrentPage();
 
+// build up the query.
 $query = [
 	'post_type'           => 'sc_product',
 	'status'              => 'publish',
-	'ignore_sticky_posts' => 1, // TODO: only if this is featured (we make featured sticky)
+	'ignore_sticky_posts' => 1,
 	'posts_per_page'      => $attributes['limit'] ?? 15,
 	'paged'               => $current_page,
 	'order'               => $query_order ?? 'desc',
@@ -24,6 +25,7 @@ if ( 'price' === $query_order_by ) {
 	$query['orderby']  = 'meta_value_num';
 }
 
+// handle collections query.
 if ( ! empty( $collections ) ) {
 	$query['tax_query'] = [
 		[
@@ -34,6 +36,44 @@ if ( ! empty( $collections ) ) {
 	];
 }
 
+// handle featured.
+if ( 'featured' === ( $attributes['type'] ?? 'all' ) ) {
+	$query['meta_query'] = [
+		[
+			'key'     => 'featured',
+			'value'   => '1',
+			'compare' => '=',
+		],
+	];
+}
+
+if ( 'custom' === ( $attributes['type'] ?? 'all' ) ) {
+	// fallback for older strings - get the ids of legacy products.
+	$legacy_ids           = [];
+	$ids_that_are_strings = array_filter( $attributes['ids'] ?? [], 'is_string' );
+	if ( ! empty( $ids_that_are_strings ) ) {
+		$legacy_ids = get_posts(
+			[
+				'post_type'      => 'sc_product',
+				'status'         => 'publish',
+				'fields'         => 'ids',
+				'posts_per_page' => -1,
+				'meta_query'     => [
+					[
+						'key'     => 'sc_id',
+						'value'   => $ids_that_are_strings,
+						'compare' => 'IN',
+					],
+				],
+			]
+		);
+	}
+
+	$ids_that_are_integers = array_filter( $attributes['ids'] ?? [], 'is_int' );
+	$query['post__in']     = array_merge( $legacy_ids, $ids_that_are_integers );
+}
+
+// run the query.
 $products_query = new \WP_Query( $query );
 
 // handle errors.
