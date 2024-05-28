@@ -10,7 +10,6 @@ import {
 	Spinner,
 	Popover,
 } from '@wordpress/components';
-import { Icon, currencyDollar } from '@wordpress/icons';
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -37,10 +36,8 @@ export default ({ onProductSelect, currentSelectedIds }) => {
 		try {
 			setLoading(true);
 			const products = await apiFetch({
-				path: addQueryArgs('/surecart/v1/products', {
-					query: searchText,
-					archived: false,
-					status: ['published'],
+				path: addQueryArgs('/wp/v2/sc_product', {
+					search: searchText,
 				}),
 			});
 
@@ -119,7 +116,7 @@ export default ({ onProductSelect, currentSelectedIds }) => {
 												<TextHighlight
 													// The component expects a plain text string.
 													text={stripHTML(
-														product?.name
+														product?.title?.rendered
 													)}
 													highlight={searchText}
 												/>
