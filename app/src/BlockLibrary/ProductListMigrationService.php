@@ -49,11 +49,11 @@ class ProductListMigrationService {
 	 * Get the Child Blocks Attributes.
 	 *
 	 * @param string $block_name
-	 * @return array|null Child Blocks Attributes.
+	 * @return array Child Blocks Attributes.
 	 */
 	public function getChildBlocksAttributes( $block_name ) {
 		if ( empty( $this->inner_blocks ) || empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
-			return null;
+			return [];
 		}
 
 		foreach ( $this->inner_blocks[0]['innerBlocks'] as $block ) {
@@ -61,7 +61,7 @@ class ProductListMigrationService {
 				return $block['attrs'];
 			}
 		}
-		return null;
+		return [];
 	}
 
 	/**
@@ -107,8 +107,8 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderSortAndFilter(): void {
-		$sort_enabled = $this->attributes['sort_enabled'] ?? true;
-		$collection_enabled = $this->attributes['collection_enabled'] ?? true;
+		$sort_enabled = wp_validate_boolean( $this->attributes['sort_enabled'] ) ?? true;
+		$collection_enabled = wp_validate_boolean( $this->attributes['collection_enabled'] ) ?? true;
 
 		if ( ! $sort_enabled && ! $collection_enabled ) {
 			return;
@@ -134,7 +134,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderSearch(): void {
-		$search_enabled = $this->attributes['search_enabled'] ?? true;
+		$search_enabled = wp_validate_boolean( $this->attributes['search_enabled'] ) ?? true;
 
 		if ( ! $search_enabled ) {
 			return;
@@ -152,7 +152,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderFilterTags(): void {
-		$collection_enabled = $this->attributes['collection_enabled'] ?? true;
+		$collection_enabled = wp_validate_boolean( $this->attributes['collection_enabled'] ) ?? true;
 
 		if ( ! $collection_enabled ) {
 			return;
@@ -173,8 +173,8 @@ class ProductListMigrationService {
 	 */
 	public function renderTitle(): void {
 		$product_title_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-title' );
-		$title_style = $product_title_attrs['style'] ? wp_json_encode( $product_title_attrs['style'] ) : '{}';
-		$this->block_html .= '<!-- wp:surecart/product-title-v2 {"level":2,"style":' . $title_style . '} /-->';
+		$title_style = ! empty( $product_title_attrs['style'] ) ? wp_json_encode( $product_title_attrs['style'] ) : '{}';
+		$this->block_html .= '<!-- wp:surecart/product-title-v2 {"level":0,"style":' . $title_style . '} /-->';
 	}
 
 	/**
@@ -184,7 +184,7 @@ class ProductListMigrationService {
 	 */
 	public function renderImage(): void {
 		$product_image_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-image' );
-		$image_style = $product_image_attrs['style'] ? wp_json_encode( $product_image_attrs['style'] ) : '{}';
+		$image_style = ! empty( $product_image_attrs['style'] ) ? wp_json_encode( $product_image_attrs['style'] ) : '{}';
 		$this->block_html .= '<!-- wp:surecart/product-image {"style":' . $image_style . '} /-->';
 	
 	}
@@ -196,7 +196,7 @@ class ProductListMigrationService {
 	 */
 	public function renderPrice(): void {
 		$product_price_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-price' );
-		$price_style = $product_price_attrs['style'] ? wp_json_encode( $product_price_attrs['style'] ) : '{}';
+		$price_style = ! empty( $product_price_attrs['style'] ) ? wp_json_encode( $product_price_attrs['style'] ) : '{}';
 		$this->block_html .= '<!-- wp:surecart/product-price-v2 {"style":' . $price_style . '} /-->';
 	}
 
@@ -220,7 +220,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderPagination(): void {
-		$pagination_enabled = $this->attributes['pagination_enabled'] ?? true;
+		$pagination_enabled = wp_validate_boolean( $this->attributes['pagination_enabled'] ) ?? true;
 
 		if ( ! $pagination_enabled ) {
 			return;
