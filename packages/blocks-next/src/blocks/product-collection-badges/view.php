@@ -18,7 +18,7 @@
 		data-wp-each--collection="context.collections"
 	>
 		<span data-wp-key="context.collection.id">
-			<?php echo  $content; ?>
+			<?php echo $content; ?>
 		</span>
 	</template>
 </div>
