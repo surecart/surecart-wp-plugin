@@ -197,9 +197,9 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Failed Payments', 'surecart')}
+				title={__('Payments', 'surecart')}
 				description={__(
-					'Manage how your store handles failed subscription payments.',
+					'Manage how your store handles subscription payments.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
@@ -244,6 +244,30 @@ export default () => {
 						'surecart'
 					)}
 				</sc-text>
+				<ScSwitch
+					checked={item?.default_payment_method_detach_enabled}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							default_payment_method_detach_enabled:
+								!item?.default_payment_method_detach_enabled,
+						});
+					}}
+				>
+					{__(
+						'Allow Customers to Remove Default Payment Method',
+						'surecart'
+					)}
+					{!scData?.entitlements?.optional_upfront_payment_method && (
+						<ScPremiumTag />
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'When enabled, customers are allowed to remove their default payment method on file. This can lead to subscription payments failing since there is no payment method on file.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
