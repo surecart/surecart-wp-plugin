@@ -4,6 +4,7 @@ namespace SureCart\Tests\Models\Product;
 
 use SureCart\Models\Product;
 use SureCart\Models\Price;
+use SureCart\Sync\SyncServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class ProductTest extends SureCartUnitTestCase
@@ -21,7 +22,8 @@ class ProductTest extends SureCartUnitTestCase
 				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
-				\SureCart\Account\AccountServiceProvider::class
+				\SureCart\Account\AccountServiceProvider::class,
+				SyncServiceProvider::class,
 			]
 		], false);
 

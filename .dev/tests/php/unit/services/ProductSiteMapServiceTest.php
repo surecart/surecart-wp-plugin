@@ -2,8 +2,11 @@
 
 namespace SureCart\Tests\Services;
 
+use SureCart\Account\AccountServiceProvider;
 use SureCart\Models\Product;
+use SureCart\Request\RequestServiceProvider;
 use SureCart\Settings\SettingsServiceProvider;
+use SureCart\Sync\SyncServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\Sitemap\ProductSiteMap;
 
@@ -16,7 +19,10 @@ class ProductSiteMapServiceTest extends SureCartUnitTestCase {
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
-				SettingsServiceProvider::class
+				SettingsServiceProvider::class,
+				SyncServiceProvider::class,
+				AccountServiceProvider::class,
+				RequestServiceProvider::class,
 			]
 		], false);
 	}

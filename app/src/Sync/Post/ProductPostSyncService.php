@@ -205,7 +205,7 @@ class ProductPostSyncService {
 		VariantOptionValue::where( 'product_id', $model->id )->delete();
 
 		// create new.
-		foreach ( $model->variant_options->data as $option ) {
+		foreach ( ( $model->variant_options->data ?? [] ) as $option ) {
 			foreach ( $option->values as $value ) {
 				$created = VariantOptionValue::create(
 					[

@@ -9,8 +9,13 @@ use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\CheckoutRestServiceProvider;
 use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
+use SureCart\Sync\SyncServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\PluginServiceProvider;
+use SureCartAppCore\AppCore\AppCore;
+use SureCartAppCore\AppCore\AppCoreServiceProvider;
+use SureCartAppCore\Assets\AssetsServiceProvider;
+use SureCartAppCore\Config\ConfigServiceProvider;
 use WP_REST_Request;
 
 class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
@@ -32,7 +37,11 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 				AccountServiceProvider::class,
 				CheckoutRestServiceProvider::class,
 				RequestServiceProvider::class,
-				ErrorsServiceProvider::class
+				ErrorsServiceProvider::class,
+				SyncServiceProvider::class,
+				ConfigServiceProvider::class,
+				AppCoreServiceProvider::class,
+				AssetsServiceProvider::class,
 			]
 		], false);
 	}

@@ -117,7 +117,12 @@ class Checkout extends Model {
 	 */
 	protected function update( $attributes = [] ) {
 		$this->setWriteAttributes();
-		return parent::update( $attributes );
+
+		parent::update( $attributes );
+
+		$this->sync();
+
+		return $this;
 	}
 
 	/**

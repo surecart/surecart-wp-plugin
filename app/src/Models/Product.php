@@ -95,7 +95,11 @@ class Product extends Model implements PageModel {
 			);
 		}
 
-		return parent::create( $attributes );
+		parent::create( $attributes );
+
+		$this->sync();
+
+		return $this;
 	}
 
 	/**

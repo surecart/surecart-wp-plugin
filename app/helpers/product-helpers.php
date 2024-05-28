@@ -30,11 +30,13 @@ if ( ! function_exists( 'sc_get_products' ) ) {
 	 */
 	function sc_get_products( $args = [] ) {
 		return get_posts(
-			$args,
-			[
-				'post_type'   => 'sc_product',
-				'post_status' => 'publish',
-			]
+			wp_parse_args(
+				$args,
+				[
+					'post_type'   => 'sc_product',
+					'post_status' => 'publish',
+				]
+			)
 		);
 	}
 }
