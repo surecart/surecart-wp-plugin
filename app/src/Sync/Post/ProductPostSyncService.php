@@ -124,7 +124,6 @@ class ProductPostSyncService {
 			'post_type'         => $this->post_type,
 			'post_name'         => $model->slug,
 			'menu_order'        => $model->position ?? 0,
-			'sticky'            => $model->featured,
 			'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
 			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
