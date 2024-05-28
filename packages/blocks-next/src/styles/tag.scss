@@ -23,7 +23,7 @@
 // Type modifiers
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-.sc-tag--primary {
+div.sc-tag--primary {
 	background-color: var(
 		--sc-tag-primary-background-color,
 		var(--sc-color-primary-500)
@@ -38,7 +38,7 @@
 	);
 }
 
-.sc-tag--success {
+div.sc-tag--success {
 	background-color: var(
 		--sc-tag-success-background-color,
 		var(--sc-color-success-100)
@@ -50,13 +50,13 @@
 	color: var(--sc-tag-success-color, var(--sc-color-success-800));
 }
 
-.sc-tag--info {
+div.sc-tag--info {
 	background-color: var(--sc-color-info-100);
 	border-color: var(--sc-color-info-200);
 	color: var(--sc-color-info-700);
 }
 
-.sc-tag--default {
+div.sc-tag--default {
 	background-color: var(
 		--sc-tag-default-background-color,
 		var(--sc-color-gray-100)
@@ -71,7 +71,7 @@
 	color: var(--sc-color-warning-700);
 }
 
-.sc-tag--danger {
+div.sc-tag--danger {
 	background-color: var(--sc-color-danger-100);
 	border-color: var(--sc-color-danger-200);
 	color: var(--sc-color-danger-700);
@@ -81,7 +81,7 @@
 // Size modifiers
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-.sc-tag--small {
+div.sc-tag--small {
 	font-size: var(--sc-button-font-size-small);
 	height: calc(var(--sc-input-height-small) * 0.75);
 	line-height: calc(
@@ -96,7 +96,7 @@
 	}
 }
 
-.sc-tag--medium {
+div.sc-tag--medium {
 	font-size: var(--sc-font-size-small);
 	height: calc(var(--sc-input-height-medium) * 0.75);
 	line-height: calc(
@@ -111,7 +111,7 @@
 	}
 }
 
-.sc-tag--large {
+div.sc-tag--large {
 	font-size: var(--sc-button-font-size-large);
 	height: calc(var(--sc-input-height-large) * 0.75);
 	line-height: calc(
@@ -130,6 +130,6 @@
 // Pill modifier
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-.sc-tag--pill {
+div.sc-tag--pill {
 	border-radius: var(--sc-border-radius-pill);
 }
