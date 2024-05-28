@@ -300,7 +300,7 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getFeaturedMediaAttribute() {
-		$gallery = $this->gallery || [];
+		$gallery = $this->gallery ?? [];
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
