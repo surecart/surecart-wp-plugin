@@ -11,21 +11,28 @@ class ProductListMigrationService {
 	 *
 	 * @var string
 	 */
-	protected $attributes = [];
+	protected array $attributes = [];
 
 	/**
 	 * Block.
 	 *
 	 * @var string
 	 */
-	protected $block = null;
+	protected ?object $block;
 
 	/**
 	 * Block HTML.
 	 *
 	 * @var string
 	 */
-	protected $block_html = '';
+	protected string $block_html = '';
+
+	/**
+	 * Inner Blocks.
+	 *
+	 * @var string
+	 */
+	protected array $inner_blocks = [];
 
 	/**
 	 * Set the initial variables.
@@ -45,6 +52,10 @@ class ProductListMigrationService {
 	 * @return array|null Child Blocks Attributes.
 	 */
 	public function getChildBlocksAttributes( $block_name ) {
+		if ( empty( $this->inner_blocks ) || empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
+			return null;
+		}
+
 		foreach ( $this->inner_blocks[0]['innerBlocks'] as $block ) {
 			if ( $block['blockName'] === $block_name)  {
 				return $block['attrs'];
@@ -56,9 +67,9 @@ class ProductListMigrationService {
 	/**
 	 * Render the product list.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function renderProductList() {
+	public function renderProductList(): void {
 		$limit = $this->attributes['limit'] ?? 15;
 
 		$this->block_html .= '<!-- wp:surecart/product-list {"limit":' . $limit . '} -->';
@@ -77,9 +88,9 @@ class ProductListMigrationService {
 	/**
 	 * Render the sort, filter and search.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function renderSortFilterAndSearch() {
+	public function renderSortFilterAndSearch(): void {
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->';
 		$this->block_html .= '<div class="wp-block-group" style="margin-bottom:10px">';
 
@@ -93,14 +104,14 @@ class ProductListMigrationService {
 	/**
 	 * Render the sort and filter.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function renderSortAndFilter() {
+	public function renderSortAndFilter(): void {
 		$sort_enabled = $this->attributes['sort_enabled'] ?? true;
 		$collection_enabled = $this->attributes['collection_enabled'] ?? true;
 
 		if ( ! $sort_enabled && ! $collection_enabled ) {
-			return '';
+			return;
 		}
 
 		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
@@ -120,13 +131,13 @@ class ProductListMigrationService {
 	/**
 	 * Render the search.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function renderSearch() {
+	public function renderSearch(): void {
 		$search_enabled = $this->attributes['search_enabled'] ?? true;
 
 		if ( ! $search_enabled ) {
-			return '';
+			return;
 		}
 
 		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
@@ -138,13 +149,13 @@ class ProductListMigrationService {
 	/**
 	 * Render the filter tags.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function renderFilterTags() {
+	public function renderFilterTags(): void {
 		$collection_enabled = $this->attributes['collection_enabled'] ?? true;
 
 		if ( ! $collection_enabled ) {
-			return '';
+			return;
 		}
 
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
@@ -156,36 +167,63 @@ class ProductListMigrationService {
 	}
 
 	/**
+	 * Render the product title.
+	 *
+	 * @return void
+	 */
+	public function renderTitle(): void {
+		$product_title_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-title' );
+		$title_style = $product_title_attrs['style'] ? wp_json_encode( $product_title_attrs['style'] ) : '{}';
+		$this->block_html .= '<!-- wp:surecart/product-title-v2 {"level":2,"style":' . $title_style . '} /-->';
+	}
+
+	/**
+	 * Render the product image.
+	 *
+	 * @return void
+	 */
+	public function renderImage(): void {
+		$product_image_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-image' );
+		$image_style = $product_image_attrs['style'] ? wp_json_encode( $product_image_attrs['style'] ) : '{}';
+		$this->block_html .= '<!-- wp:surecart/product-image {"style":' . $image_style . '} /-->';
+	
+	}
+
+	/**
+	 * Render the product price.
+	 *
+	 * @return void
+	 */
+	public function renderPrice(): void {
+		$product_price_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-price' );
+		$price_style = $product_price_attrs['style'] ? wp_json_encode( $product_price_attrs['style'] ) : '{}';
+		$this->block_html .= '<!-- wp:surecart/product-price-v2 {"style":' . $price_style . '} /-->';
+	}
+
+	/**
 	 * Render the product template.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function renderProductTemplate() {
+	public function renderProductTemplate(): void {
 		$columns = $this->attributes['columns'] ?? 3;
-		$product_title_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-title' );
-		$product_price_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-price' );
-		$product_image_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-image' );
-		$title_style = $product_title_attrs['style'] ? wp_json_encode( $product_title_attrs['style'] ) : '{}';
-		$price_style = $product_price_attrs['style'] ? wp_json_encode( $product_price_attrs['style'] ) : '{}';
-		$image_style = $product_image_attrs['style'] ? wp_json_encode( $product_image_attrs['style'] ) : '{}';
-
 		$this->block_html .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
-			$this->block_html .= '<!-- wp:surecart/product-image {"style":' . $image_style . '} /-->';
-			$this->block_html .= '<!-- wp:surecart/product-title-v2 {"level":2,"style":' . $title_style . '} /-->';
-			$this->block_html .= '<!-- wp:surecart/product-price-v2 {"style":' . $price_style . '} /-->';
+			$this->renderImage();
+			$this->renderTitle();
+			$this->renderPrice();
 		$this->block_html .= '<!-- /wp:surecart/product-template -->';
 	}
 
 	/**
 	 * Render the pagination.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function renderPagination() {
+	public function renderPagination(): void {
 		$pagination_enabled = $this->attributes['pagination_enabled'] ?? true;
 
 		if ( ! $pagination_enabled ) {
-			return '';
+			return;
 		}
 
 		$this->block_html .= '<!-- wp:surecart/product-pagination -->';
@@ -200,7 +238,7 @@ class ProductListMigrationService {
 	 *
 	 * @return string
 	 */
-	public function doBlocks() {
+	public function doBlocks(): string {
 		return do_blocks( $this->block_html );
 	}
 
@@ -209,7 +247,7 @@ class ProductListMigrationService {
 	 *
 	 * @return string
 	 */
-	public function render() {
+	public function render(): string {
 		$this->renderProductList();
 		return $this->doBlocks();
 	}
