@@ -1,11 +1,13 @@
 <div
-	<?php echo get_block_wrapper_attributes( [ 'class' => 'sc-dropdown' ] ); ?>
+	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'class' => 'sc-dropdown' ] ) ); ?>
 	<?php
-	echo wp_interactivity_data_wp_context(
-		[
-			'isMenuOpen' => false,
-			'index'      => 0,
-		]
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			[
+				'isMenuOpen' => false,
+				'index'      => 0,
+			]
+		)
 	);
 	?>
 	data-wp-interactive='{ "namespace": "surecart/dropdown" }'
@@ -24,7 +26,7 @@
 		tabindex="0"
 	>
 		<span class="sc-button__label"><?php esc_html_e( 'Filter', 'surecart' ); ?></span>
-		<span class="sc-button__caret"><?php echo SureCart::svg()->get( 'chevron-down' ); ?></span>
+		<span class="sc-button__caret"><?php echo wp_kses( SureCart::svg()->get( 'chevron-down' ), sc_allowed_svg_html() ); ?></span>
 	</div>
 
 	<div
@@ -50,7 +52,7 @@
 
 				<?php if ( $option['checked'] ) : ?>
 					<span class="sc-menu-item__check">
-						<?php echo SureCart::svg()->get( 'check' ); ?>
+						<?php echo wp_kses( SureCart::svg()->get( 'check' ), sc_allowed_svg_html() ); ?>
 					</span>
 				<?php endif; ?>
 			</a>

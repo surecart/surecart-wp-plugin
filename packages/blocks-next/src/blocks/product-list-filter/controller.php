@@ -8,7 +8,6 @@ $collections = get_terms(
 	)
 );
 
-
 $block_id   = $block->context['surecart/product-list/blockId'];
 $filter_key = \SureCart::block()->urlParams( 'products' )->getKey( 'filter', $block_id );
 

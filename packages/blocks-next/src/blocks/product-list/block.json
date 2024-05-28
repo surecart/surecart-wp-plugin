@@ -9,10 +9,20 @@
 	"icon": "media-interactive",
 	"example": {},
 	"providesContext": {
-		"surecart/product-list/limit": "limit"
+		"surecart/product-list/limit": "limit",
+		"surecart/product-list/type": "type",
+		"surecart/product-list/ids": "ids"
 	},
 	"usesContext": ["surecart/product-list/blockId"],
 	"attributes": {
+		"ids": {
+			"type": "array",
+			"default": []
+		},
+		"type": {
+			"type": "string",
+			"default": "all"
+		},
 		"limit": {
 			"type": "number",
 			"default": 15
@@ -34,5 +44,9 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./index.css", "file:../../styles/block-ui.css"]
+	"style": [
+		"file:./index.css",
+		"file:../../styles/block-ui.css",
+		"file:../../styles/tag.css"
+	]
 }

@@ -15,19 +15,25 @@ import classnames from 'classnames';
 import { useEffect } from '@wordpress/element';
 
 const TEMPLATE = [
-	['surecart/product-image'],
 	[
-		'surecart/product-title-v2',
-		{
-			level: 2,
-			isLink: false,
-			style: {
-				typography: { fontSize: '1.25em' },
-				spacing: { margin: { top: '5px', bottom: '5px' } },
-			},
-		},
+		'core/group',
+		{},
+		[
+			['surecart/product-image'],
+			[
+				'surecart/product-title-v2',
+				{
+					level: 2,
+					isLink: false,
+					style: {
+						typography: { fontSize: '1.25em' },
+						spacing: { margin: { top: '5px', bottom: '5px' } },
+					},
+				},
+			],
+			['surecart/product-price-v2'],
+		],
 	],
-	['surecart/product-price-v2'],
 ];
 
 export default ({
@@ -35,7 +41,11 @@ export default ({
 	attributes: { layout },
 	__unstableLayoutClassNames,
 	setAttributes,
-	context: { 'surecart/product-list/limit': limit },
+	context: {
+		'surecart/product-list/limit': limit,
+		'surecart/product-list/type': type,
+		'surecart/product-list/ids': ids,
+	},
 }) => {
 	const { type: layoutType, columnCount = 3 } = layout || {};
 
@@ -61,6 +71,8 @@ export default ({
 					'variants',
 				],
 				archived: false,
+				...('custom' === type ? { ids: ids } : {}),
+				...('featured' === type ? { featured: true } : {}),
 				status: ['published'],
 				page: 1,
 				per_page: limit || 15,

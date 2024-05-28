@@ -69,9 +69,12 @@ class BlockService {
 	/**
 	 * Get url params service.
 	 *
+	 * @param string $type Block type.
+	 * @param string $instance_id Unique instance ID.
+	 *
 	 * @return BlockValidationService
 	 */
-	public function urlParams( $type = '' ) {
-		return new URLParamService( $type );
+	public function urlParams( $type = '', $instance_id = '' ) {
+		return new URLParamService( $type, $instance_id );
 	}
 }
