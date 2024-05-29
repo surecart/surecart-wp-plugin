@@ -5,5 +5,5 @@
 		srcset="<?php echo esc_attr( $featured_image['srcset'] ?? '' ); ?>"
 		width="<?php echo esc_attr( $featured_image['width'] ); ?>"
 		height="<?php echo esc_attr( $featured_image['height'] ); ?>"
-		title="<?php echo esc_attr( ! empty( $featured_image['title'] ) ? $featured_iamge['title'] : get_the_title() ); ?>" />
+		title="<?php echo esc_attr( ! empty( $featured_image['title'] ) ? $featured_image['title'] : get_the_title() ); ?>" />
 </figure>
