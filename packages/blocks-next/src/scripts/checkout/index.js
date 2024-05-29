@@ -89,12 +89,14 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 
 	actions: {
 		toggleCartSidebar(e) {
-			console.log('toggling cart sidebar');
 			e.preventDefault();
 			state.openCartSidebar = !state?.openCartSidebar || false;
+
+			// Toggle the sc-drawer dialog.
+			const { actions } = store('surecart/dialog');
+			actions.toggle();
 		},
 		toggleDiscountInput(e) {
-			console.log('toggling discount input.');
 			e.preventDefault();
 			const context = getContext();
 			context.discountInputOpen = !context.discountInputOpen;

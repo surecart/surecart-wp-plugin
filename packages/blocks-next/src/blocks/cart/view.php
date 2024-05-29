@@ -13,7 +13,10 @@
         );
     ?>
 >
-    <dialog class="sc-drawer" data-wp-on--click="surecart/dialog::actions.closeOverlay">
+    <dialog
+        class="sc-drawer"
+        data-wp-on--click="surecart/dialog::actions.closeOverlay"
+    >
         <div class="sc-drawer__wrapper">
             <?php echo do_blocks( $content ); ?>
         </div>
