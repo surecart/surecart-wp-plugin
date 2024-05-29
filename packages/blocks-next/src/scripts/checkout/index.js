@@ -6,16 +6,16 @@ import { store, getContext } from '@wordpress/interactivity';
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
 const getCheckoutData = (mode = 'live') => {
-	const checkoutData = localStorage.getItem(
-		LOCAL_STORAGE_KEY
-	);
+	const checkoutData = localStorage.getItem(LOCAL_STORAGE_KEY);
 
 	const parsedCheckoutData = JSON.parse(checkoutData) || {
 		live: {},
 		test: {},
 	};
 
-	return parsedCheckoutData[mode];
+	const modeData = parsedCheckoutData[mode];
+	const modeDataValues = Object.values(modeData);
+	return Object.assign({}, ...modeDataValues);
 };
 
 // controls the product page.
@@ -48,18 +48,15 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		get hasBumpAmount() {
 			return !!state?.checkout?.bump_amount;
 		},
-		get isCartOpen () {
+		get isCartOpen() {
 			return !!state.openCartSidebar;
 		},
-		// get checkout() {
-		// 	// context form id and mode.
-		// 	// pull from local storage.
-		// },
-		get checkoutData() {
-			// get the checkout data from local storage.
-			const mode = getContext('mode');
-			const checkoutData = state.checkoutStorage[mode];
-			return checkoutData;
+		get checkout() {
+			const mode = getContext('mode') || 'test';
+			return getCheckoutData(mode);
+		},
+		get checkoutLineItems() {
+			return state.checkout?.line_items?.data || [];
 		},
 	},
 
@@ -72,19 +69,19 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			return getContext()?.[prop] || false;
 		},
 
-		*fetchCheckout(e) {
-			// const context = getContext();
-			// const { mode } = context;
-			// return getCheckoutData(mode);
-			e?.preventDefault();
+		// *fetchCheckout(e) {
+		// 	// const context = getContext();
+		// 	// const { mode } = context;
+		// 	// return getCheckoutData(mode);
+		// 	e?.preventDefault();
 
-			state.loading = true;
-			const context = getContext();
+		// 	state.loading = true;
+		// 	const context = getContext();
 
-			const { mode } = context;
+		// 	const { mode } = context;
 
-			const checkoutData = yield getCheckoutData(mode);
-		},
+		// 	const checkoutData = yield getCheckoutData(mode);
+		// },
 	},
 
 	actions: {

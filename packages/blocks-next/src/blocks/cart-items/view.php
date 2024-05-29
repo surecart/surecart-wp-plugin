@@ -3,7 +3,7 @@
     <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 >
     <template
-		data-wp-each--line_item="state.checkout.line_items.data"
+		data-wp-each--line_item="state.checkoutLineItems"
 		data-wp-key="context.line_item.id"
 	>
         <div
