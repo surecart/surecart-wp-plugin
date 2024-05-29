@@ -28,7 +28,7 @@ export default ({ attributes, setAttributes }) => {
 				name: 'Basic',
 				product: {
 					name: 'Example Product',
-					image_url: 'https://source.unsplash.com/daily',
+					image_url: 'https://picsum.photos/seed/picsum/200/200',
 				},
 				display_amount: '$12.34',
 			},
@@ -39,7 +39,7 @@ export default ({ attributes, setAttributes }) => {
 				name: 'Monthly',
 				product: {
 					name: 'Example Product',
-					image_url: 'https://source.unsplash.com/daily',
+					image_url: 'https://picsum.photos/seed/picsum/200/200',
 				},
 				display_amount: '$123.45',
 			},

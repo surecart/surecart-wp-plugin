@@ -16,8 +16,13 @@ store('surecart/dialog', {
 				ref.closest('dialog') || // Parent dialog.
 				null;
 
-			// No dialog is found.
+			// Try all of the dialog element once.
 			if (!dialog) {
+				dialog = document.querySelector('dialog');
+			}
+
+			// No dialog is found.
+			if (dialog instanceof HTMLDialogElement === false) {
 				return;
 			}
 

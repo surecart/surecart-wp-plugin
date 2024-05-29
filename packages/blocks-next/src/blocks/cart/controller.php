@@ -443,6 +443,8 @@ wp_interactivity_state(
 	array(
         'discountInputOpen' => false,
         'discountCode' => '',
+        'loading' => false,
+        'openCartSidebar' => false,
 		'checkout' => json_decode($checkoutJson, true),
 
         // derived states.
@@ -452,5 +454,7 @@ wp_interactivity_state(
         'hasBumpAmount' => false,
 	)
 );
+
+$form = \SureCart::forms()->getDefault();
 
 return 'file:./view.php';

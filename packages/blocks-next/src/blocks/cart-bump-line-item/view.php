@@ -1,5 +1,4 @@
 <div
-    class="sc-cart-bump-line-item__wrapper"
     <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
     data-wp-bind--hidden="!state.hasBumpAmount"
     hidden
