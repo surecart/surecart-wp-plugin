@@ -92,7 +92,7 @@ if ( ! function_exists( 'sc_get_product_image' ) ) {
 		if ( empty( $sc_product ) ) {
 			return '';
 		}
-		return $sc_product->getImageMarkup( $id, $size );
+		return $sc_product->featured_image->html( $id, $size );
 	}
 }
 

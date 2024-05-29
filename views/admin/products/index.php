@@ -13,6 +13,7 @@
 		height: 40px;
 		object-fit: cover;
 		background: #f3f3f3;
+		flex: 1 0 40px;
 		display: flex;
 		align-items: center;
 		justify-content: center;

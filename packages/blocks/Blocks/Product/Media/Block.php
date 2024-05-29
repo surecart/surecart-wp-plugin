@@ -32,7 +32,7 @@ class Block extends ProductBlock {
 		}
 
 		foreach ( $product->gallery as $key => $gallery_item ) {
-			echo wp_kses_post( $gallery_item->getImageMarkup( 'thumbnail', [ 'load' => 0 === $key ? 'eager' : 'lazy' ] ) );
+			echo wp_kses_post( $gallery_item->html( 'thumbnail', [ 'load' => 0 === $key ? 'eager' : 'lazy' ] ) );
 		}
 
 		// no product media, show placeholder.

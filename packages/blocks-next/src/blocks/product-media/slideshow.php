@@ -11,7 +11,7 @@
 					<div class="swiper-zoom-container" data-swiper-zoom="5">
 						<?php
 							echo wp_kses_post(
-								$image->getImageMarkup(
+								$image->html(
 									'large',
 									[
 										'loading' => $index > 0 ? 'lazy' : 'eager',
@@ -48,7 +48,7 @@
 					>
 					<?php
 						echo wp_kses_post(
-							$image->getImageMarkup(
+							$image->html(
 								'thumbnail',
 								[
 									'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',

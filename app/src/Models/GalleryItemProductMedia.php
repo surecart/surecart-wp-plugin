@@ -37,12 +37,12 @@ class GalleryItemProductMedia implements GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function getImageMarkup( $size = 'full', $attr = [] ) : string {
+	public function html( $size = 'full', $attr = [] ) : string {
 		$image = '';
 
 		// Handle media.
 		if ( isset( $this->product_media->media ) ) {
-			$image = $this->product_media->media->getImageMarkup( $size, $attr );
+			return $this->product_media->media->html( $size, $attr );
 		}
 
 		// Handle media url.
@@ -69,12 +69,14 @@ class GalleryItemProductMedia implements GalleryItem {
 	 *
 	 * @return array
 	 */
-	public function getImageAttributes( $size = 'full', $attr = [] ) {
+	public function attributes( $size = 'full', $attr = [] ) {
 		if ( isset( $this->product_media->media ) ) {
-			return $this->product_media->media->getImageAttributes( $size, $attr );
+			return $this->product_media->media->attributes( $size, $attr );
 		}
 
-		return $this->product_media;
+		return [
+			'src' => $this->product_media->url,
+		];
 	}
 
 	/**
@@ -85,8 +87,8 @@ class GalleryItemProductMedia implements GalleryItem {
 	 * @return string
 	 */
 	public function __get( $key ) {
-		if ( isset( $this->post->{$key} ) ) {
-			return $this->post->{$key};
+		if ( isset( $this->product_media->{$key} ) ) {
+			return $this->product_media->{$key};
 		}
 
 		return null;

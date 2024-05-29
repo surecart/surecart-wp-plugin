@@ -37,7 +37,7 @@ class GalleryItemAttachment implements GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function getImageMarkup( $size = 'full', $attr = [] ) : string {
+	public function html( $size = 'full', $attr = [] ) : string {
 		$image = '';
 
 		// Handle attachments.
@@ -65,7 +65,7 @@ class GalleryItemAttachment implements GalleryItem {
 	 *
 	 * @return array
 	 */
-	public function getImageAttributes( $size = 'full', $attr = [] ) {
+	public function attributes( $size = 'full', $attr = [] ) {
 		$attachment_id = $this->post->ID;
 		$image         = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
 
@@ -80,9 +80,11 @@ class GalleryItemAttachment implements GalleryItem {
 			}
 
 			$default_attr = array(
-				'src'   => $src,
-				'class' => "attachment-$size_class size-$size_class",
-				'alt'   => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
+				'src'    => $src,
+				'class'  => "attachment-$size_class size-$size_class",
+				'alt'    => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
+				'width'  => $width,
+				'height' => $height,
 			);
 
 			/**
@@ -157,7 +159,7 @@ class GalleryItemAttachment implements GalleryItem {
 			 */
 			$attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment, $size );
 
-			return array_map( 'esc_attr', $attr );
+			return $attr;
 		}
 
 		return [];

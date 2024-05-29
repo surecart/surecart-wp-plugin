@@ -57,10 +57,10 @@ class Media extends Model {
 	 *
 	 * @return string
 	 */
-	protected function getImageMarkup( $size = 'full', $attr = [] ) {
+	protected function html( $size = 'full', $attr = [] ) {
 		// prepare attributes.
-		$attr = $this->getImageAttributes( $size, $attr );
-		$html = '';
+		$attr = $this->attributes( $size, $attr );
+		$html = '<img ';
 
 		foreach ( $attr as $name => $value ) {
 			$html .= " $name=" . '"' . $value . '"';
@@ -80,7 +80,7 @@ class Media extends Model {
 	 *
 	 * @return array
 	 */
-	protected function getImageAttributes( $size = 'full', $attr = [] ) {
+	protected function attributes( $size = 'full', $attr = [] ) {
 		// get sizes.
 		$sizes      = wp_get_registered_image_subsizes();
 		$image_size = $sizes[ $size ] ?? null;
@@ -151,6 +151,6 @@ class Media extends Model {
 		$attr = apply_filters( 'wp_get_sc_product_attachment_image_attributes', $attr, $this, $size );
 
 		// prepare attributes.
-		return array_map( 'esc_attr', $attr );
+		return $attr;
 	}
 }

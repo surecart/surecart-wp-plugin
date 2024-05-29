@@ -296,6 +296,19 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the featured image attribute.
+	 *
+	 * @return SureCart\Support\Contracts\GalleryItem|null;
+	 */
+	public function getFeaturedImageAttribute() {
+		$gallery = $this->gallery ?? [];
+		if ( ! empty( $gallery ) ) {
+			return $gallery[0];
+		}
+		return ! empty( $this->featured_product_media ) ? new GalleryItemProductMedia( $this->featured_product_media ) : null;
+	}
+
+	/**
 	 * Returns the product media image attributes.
 	 *
 	 * @return SureCart\Support\Contracts\GalleryItem|null;
@@ -546,7 +559,7 @@ class Product extends Model implements PageModel {
 			return '';
 		}
 
-		return $item->getImageMarkup( $size, $attr );
+		return $item->html( $size, $attr );
 	}
 
 	/**
@@ -557,13 +570,16 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		$gallery_items = $this->post->gallery ?? array();
+		$gallery_items = $this->post->gallery ?? [];
 
 		return array_map(
 			function ( $gallery_item ) {
+				// force object.
+				$gallery_item = (object) $gallery_item;
+
 				// this is an attachment id.
 				if ( is_int( $gallery_item->id ) ) {
-					return new GalleryItemAttachment( $gallery_item );
+					return new GalleryItemAttachment( $gallery_item->id );
 				}
 
 				// get the product media item that matches the id.
@@ -640,6 +656,6 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_media, GalleryItem::class ) ? $this->featured_media->getImageAttributes( 'thumbnail' ) : [];
+		return is_a( $this->featured_media, GalleryItem::class ) ? $this->featured_media->attributes( 'thumbnail' ) : [];
 	}
 }

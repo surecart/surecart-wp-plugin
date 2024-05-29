@@ -11,7 +11,7 @@ interface GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function getImageMarkup( $size = 'full', $attr = [] ) : string;
+	public function html( $size = 'full', $attr = [] ) : string;
 
 	/**
 	 * Get the page descriptoin attribute
@@ -21,5 +21,5 @@ interface GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function getImageAttributes( $size = 'full', $attr = [] );
+	public function attributes( $size = 'full', $attr = [] );
 }
