@@ -58,6 +58,10 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		get checkoutLineItems() {
 			return state.checkout?.line_items?.data || [];
 		},
+		get hasLineItemImageUrl() {
+			const { line_item } = getContext();
+			return !!line_item?.price?.product?.image_url;
+		},
 	},
 
 	callbacks: {

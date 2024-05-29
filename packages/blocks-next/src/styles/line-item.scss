@@ -4,7 +4,7 @@
 
 	&__item {
 		display: grid;
-		align-items: center;
+		align-self: center;
 		grid-template-columns: auto 1fr 1fr;
 	}
 
