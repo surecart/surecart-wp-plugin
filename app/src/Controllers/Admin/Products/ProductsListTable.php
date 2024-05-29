@@ -435,7 +435,7 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_status( $product ) {
 		ob_start();
-		$status = get_post_status_object( $product->post()->post_status ?? '' );
+		$status = get_post_status_object( $product->post->post_status ?? '' );
 		?>
 
 		<?php if ( $status ) : ?>
@@ -478,7 +478,7 @@ class ProductsListTable extends ListTable {
 		?>
 
 		<div class="sc-product-name">
-		<?php if ( $product->featured_media->src ) { ?>
+		<?php if ( ! empty( $product->featured_media->src ) ) { ?>
 			<img src="<?php echo esc_url( $product->featured_media->src ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
 			<div class="sc-product-image-preview">
