@@ -5,6 +5,7 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
+use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
@@ -297,14 +298,14 @@ class Product extends Model implements PageModel {
 	/**
 	 * Returns the product media image attributes.
 	 *
-	 * @return object
+	 * @return SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedMediaAttribute() {
 		$gallery = $this->gallery ?? [];
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
-		return new GalleryItemAttachment( $this->featured_product_media );
+		return ! empty( $this->featured_product_media ) ? new GalleryItemProductMedia( $this->featured_product_media ) : null;
 	}
 
 	/**
@@ -636,9 +637,9 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the image used in line items.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function getLineItemImageAttribute() {
-		return $this->featured_media->getImageAttributes( 'thumbnail' );
+		return is_a( $this->featured_media, GalleryItem::class ) ? $this->featured_media->getImageAttributes( 'thumbnail' ) : [];
 	}
 }

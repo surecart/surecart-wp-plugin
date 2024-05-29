@@ -221,8 +221,6 @@ class ProductPostTypeService {
 			);
 		}
 
-		// var_dump( $query );
-
 		return $query;
 	}
 
