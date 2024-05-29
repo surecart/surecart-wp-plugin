@@ -11,28 +11,28 @@ class ProductListMigrationService {
 	 *
 	 * @var string
 	 */
-	protected array $attributes = [];
+	public array $attributes = [];
 
 	/**
 	 * Block.
 	 *
 	 * @var string
 	 */
-	protected ?object $block;
+	public ?object $block;
 
 	/**
 	 * Block HTML.
 	 *
 	 * @var string
 	 */
-	protected string $block_html = '';
+	public string $block_html = '';
 
 	/**
 	 * Inner Blocks.
 	 *
 	 * @var string
 	 */
-	protected array $inner_blocks = [];
+	public array $inner_blocks = [];
 
 	/**
 	 * Set the initial variables.
