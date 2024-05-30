@@ -31,7 +31,8 @@ function sc_get_cart_block_style( $attributes ) {
 	$style .= ! empty( $attributes['backgroundColor'] ) ? 'background-color: ' . $attributes['backgroundColor'] . ';' : '';
 
 	// Text color style.
-	$style .= ! empty( $attributes['textColor'] ) ? 'color: ' . $attributes['textColor'] . ';' : '';
+	$text_color = $attributes['textColor'] ?? 'var(--sc-line-item-title-color, var(--sc-input-label-color))';
+	$style .= 'color: ' . $text_color . ';';
 
 	return $style;
 }

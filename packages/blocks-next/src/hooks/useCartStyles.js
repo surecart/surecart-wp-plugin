@@ -5,8 +5,8 @@ export default ({ attributes }) => {
 		...(border ? { borderBottom: 'var(--sc-drawer-border)' } : {}),
 		...(backgroundColor ? { backgroundColor: backgroundColor } : {}),
 		...(textColor
-			? { color: textColor, '--sc-input-label-color': textColor }
-			: {}),
+			? { color: textColor }
+			: { color: 'var(--sc-input-label-color)' }),
 		...(padding?.top ? { paddingTop: padding?.top } : {}),
 		...(padding?.bottom ? { paddingBottom: padding?.bottom } : {}),
 		...(padding?.left ? { paddingLeft: padding?.left } : {}),

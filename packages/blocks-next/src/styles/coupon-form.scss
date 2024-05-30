@@ -1,38 +1,38 @@
 .sc-coupon-form {
 	position: relative;
-    container-type: inline-size;
+	container-type: inline-size;
 
 	&[hidden] {
 		display: none;
 	}
 
-    .coupon-button {
-        opacity: 0;
-        visibility: hidden;
-        transform: scale(0.9);
-        transition: all var(--sc-transition-fast) ease;
-    }
+	.coupon-button {
+		opacity: 0;
+		visibility: hidden;
+		transform: scale(0.9);
+		transition: all var(--sc-transition-fast) ease;
+	}
 
-    .coupon-button-mobile {
-        margin-top: var(--sc-input-label-margin);
-        display: none;
-    }
+	.coupon-button-mobile {
+		margin-top: var(--sc-input-label-margin);
+		display: none;
+	}
 
-    &--has-value {
-        .coupon-button {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-        }
-    }
+	&--has-value {
+		.coupon-button {
+			opacity: 1;
+			visibility: visible;
+			transform: scale(1);
+		}
+	}
 
 	@container (max-width: 320px) {
-        .coupon-button {
-            display: none;
-        }
-        .coupon-button-mobile {
-            display: block;
-        }
+		.coupon-button {
+			display: none;
+		}
+		.coupon-button-mobile {
+			display: block;
+		}
 	}
 
 	.form {
@@ -64,7 +64,6 @@
 		cursor: pointer;
 		font-size: var(--sc-font-size-small);
 		line-height: var(--sc-line-height-dense);
-		color: var(--sc-input-label-color);
 		user-select: none;
 
 		&:hover {
