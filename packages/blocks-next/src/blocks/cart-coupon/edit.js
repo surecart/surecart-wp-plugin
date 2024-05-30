@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -20,6 +20,7 @@ import useCartStyles from '../../hooks/useCartStyles';
 
 export default ({ attributes, setAttributes }) => {
 	const { text, button_text, collapsed, placeholder } = attributes;
+	const discountInputRef = useRef();
 
 	const blockProps = useBlockProps({
 		style: useCartStyles({ attributes }),
@@ -29,6 +30,26 @@ export default ({ attributes, setAttributes }) => {
 	const [discountCode, setDiscountCode] = useState('');
 	const [discountApplied, setDiscountApplied] = useState(false);
 	const [discountIsRedeemable, setDiscountIsRedeemable] = useState(true);
+
+	useEffect(() => {
+		function handleOutsideClick(event) {
+			if (
+				discountInputRef.current &&
+				!discountInputRef.current.contains(event.target)
+			) {
+				if (discountInputOpen) {
+					setDiscountInputOpen(!discountInputOpen);
+				}
+			}
+		}
+
+		// Bind the event listener
+		document.addEventListener('mousedown', handleOutsideClick);
+		return () => {
+			// Unbind the event listener on clean up
+			document.removeEventListener('mousedown', handleOutsideClick);
+		};
+	}, [discountInputOpen]);
 
 	const renderDiscountedState = () => {
 		return (
@@ -77,6 +98,7 @@ export default ({ attributes, setAttributes }) => {
 			<div
 				hidden={!discountInputOpen && collapsed}
 				class="sc-input-group sc-coupon-form__input-group"
+				ref={discountInputRef}
 			>
 				<input
 					type="text"
@@ -106,7 +128,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-        <CartInspectorControls
+				<CartInspectorControls
 					attributes={attributes}
 					setAttributes={setAttributes}
 				/>
