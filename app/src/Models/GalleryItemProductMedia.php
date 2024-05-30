@@ -65,7 +65,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 			return $this->item->media->attributes( $size, $attr );
 		}
 
-		return [
+		return (object) [
 			'src' => $this->item->url,
 		];
 	}

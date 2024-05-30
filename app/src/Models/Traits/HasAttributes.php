@@ -222,6 +222,15 @@ trait HasAttributes {
 	}
 
 	/**
+	 * Get the attributes
+	 *
+	 * @return array
+	 */
+	public function getAttributes() {
+		return json_decode( wp_json_encode( $this->attributes ), true );
+	}
+
+	/**
 	 * Convert to object.
 	 *
 	 * @return Object
@@ -296,7 +305,7 @@ trait HasAttributes {
 			}
 		);
 
-		return array_merge( $attributes, $this->relations );
+		return $attributes;
 	}
 
 	/**

@@ -46,8 +46,22 @@ class LineItemTest extends SureCartUnitTestCase
 				],
 			]
 		]);
-		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item->image['class']);
-		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item->image['class']);
-		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item->image['sizes']);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item->image->class);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item->image->class);
+		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item->image->sizes);
+
+		// serialize and unserialize
+		$encoded = wp_json_encode($line_item);
+		$decoded = json_decode($encoded, true);
+
+		$this->assertSame('attachment-thumbnail size-thumbnail', $decoded['image']['class']);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $decoded['image']['class']);
+		$this->assertSame('(max-width: 150px) 100vw, 150px', $decoded['image']['sizes']);
+
+		$decoded = json_decode($encoded);
+
+		$this->assertSame('attachment-thumbnail size-thumbnail', $decoded->image->class);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $decoded->image->class);
+		$this->assertSame('(max-width: 150px) 100vw, 150px', $decoded->image->sizes);
 	}
 }

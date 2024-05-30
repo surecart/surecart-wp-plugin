@@ -150,7 +150,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			 */
 			$attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment, $size );
 
-			return $attr;
+			return (object) $attr;
 		}
 
 		return [];

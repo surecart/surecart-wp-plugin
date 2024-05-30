@@ -151,6 +151,6 @@ class Media extends Model {
 		$attr = apply_filters( 'wp_get_sc_product_attachment_image_attributes', $attr, $this, $size );
 
 		// prepare attributes.
-		return $attr;
+		return (object) $attr;
 	}
 }
