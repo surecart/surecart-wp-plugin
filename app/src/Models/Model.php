@@ -1097,8 +1097,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// Check if any attribute is a model and call toArray.
 		array_walk_recursive(
 			$this->getAttributes(),
-			function ( &$value, $key ) {
-				if ( $value instanceof Model ) {
+			function ( &$value ) {
+				if ( method_exists( $value, 'toObject' ) ) {
 					$value = $value->toObject();
 				}
 			}

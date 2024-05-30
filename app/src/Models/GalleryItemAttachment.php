@@ -1,22 +1,13 @@
 <?php
 namespace SureCart\Models;
 
-use SureCart\Models\Traits\HasAttributes;
+use SureCart\Models\GalleryItem as ModelsGalleryItem;
 use SureCart\Support\Contracts\GalleryItem;
 
 /**
  * Gallery item model
  */
-class GalleryItemAttachment implements GalleryItem {
-	use HasAttributes;
-
-	/**
-	 * The post item.
-	 *
-	 * @var \WP_Post
-	 */
-	protected $post;
-
+class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	/**
 	 * Create a new gallery item.
 	 * This can accept a product media or a post.
@@ -26,7 +17,7 @@ class GalleryItemAttachment implements GalleryItem {
 	 * @return void
 	 */
 	public function __construct( $item ) {
-		$this->post = get_post( $item );
+		$this->item = get_post( $item );
 	}
 
 	/**
@@ -41,8 +32,8 @@ class GalleryItemAttachment implements GalleryItem {
 		$image = '';
 
 		// Handle attachments.
-		if ( isset( $this->post->ID ) ) {
-			$image = wp_get_attachment_image( $this->post->ID, $size, false, $attr );
+		if ( isset( $this->item->ID ) ) {
+			$image = wp_get_attachment_image( $this->item->ID, $size, false, $attr );
 		}
 
 		// add any styles.
@@ -66,7 +57,7 @@ class GalleryItemAttachment implements GalleryItem {
 	 * @return array
 	 */
 	public function attributes( $size = 'full', $attr = [] ) {
-		$attachment_id = $this->post->ID;
+		$attachment_id = $this->item->ID;
 		$image         = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
 
 		if ( $image ) {
@@ -163,20 +154,5 @@ class GalleryItemAttachment implements GalleryItem {
 		}
 
 		return [];
-	}
-
-	/**
-	 * Get the image markup.
-	 *
-	 * @param string $key The key to get.
-	 *
-	 * @return string
-	 */
-	public function __get( $key ) {
-		if ( isset( $this->post->{$key} ) ) {
-			return $this->post->{$key};
-		}
-
-		return null;
 	}
 }
