@@ -78,7 +78,7 @@ if ( ! function_exists( 'sc_setup_product_data' ) ) {
 }
 
 
-if ( ! function_exists( 'sc_get_product_image' ) ) {
+if ( ! function_exists( 'sc_get_product_featured_image' ) ) {
 	/**
 	 * Set global $sc_product.
 	 *
@@ -87,8 +87,8 @@ if ( ! function_exists( 'sc_get_product_image' ) ) {
 	 *
 	 * @return string
 	 */
-	function sc_get_product_image( $id, $size = 'full' ) {
-		$sc_product = sc_setup_product_data();
+	function sc_get_product_featured_image( $id, $size = 'full' ) {
+		$sc_product = sc_get_product();
 		if ( empty( $sc_product ) ) {
 			return '';
 		}

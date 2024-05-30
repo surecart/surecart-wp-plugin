@@ -6,5 +6,5 @@
 		)
 	)
 ); ?>>
-	<img data-wp-bind--src="context.product.featured_image.src"/>
+	<?php echo wp_kses_post( sc_get_product_featured_image( 'large', [ 'loading' => 'eager' ] ) ); ?>
 </div>

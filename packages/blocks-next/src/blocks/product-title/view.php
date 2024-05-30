@@ -4,12 +4,12 @@
 		<a
 			data-wp-bind--href="context.product.permalink"
 			target="<?php echo esc_attr( $attributes['linkTarget'] ); ?>"
-			<?php ! empty( $attributes['rel'] ) ? 'rel="' . esc_attr( $attributes['rel'] ) . '"' : ''; ?>
+			<?php echo ! empty( $attributes['rel'] ) ? 'rel="' . esc_attr( $attributes['rel'] ) . '"' : ''; ?>
 			data-wp-bind--title="context.product.name"
 		>
 	<?php endif; ?>
 
-	<span data-wp-text="context.product.name"></span>
+	<?php the_title(); ?>
 
 	<?php if ( $is_link ) : ?>
 		</a>

@@ -4,12 +4,13 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Concerns\Arrayable;
+use SureCart\Concerns\Objectable;
 use SureCart\Models\Traits\HasAttributes;
 
 /**
  * GalleryItem model
  */
-abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable {
+abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, Objectable {
 	use HasAttributes;
 
 	/**

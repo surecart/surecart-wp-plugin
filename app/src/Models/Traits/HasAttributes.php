@@ -258,7 +258,7 @@ trait HasAttributes {
 
 		// Check if any attribute is a model and call toArray.
 		array_walk_recursive(
-			$this->getAttributes(),
+			$attributes,
 			function ( &$value ) {
 				if ( method_exists( $value, 'toObject' ) ) {
 					$value = $value->toObject();
