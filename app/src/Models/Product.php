@@ -305,7 +305,13 @@ class Product extends Model implements PageModel {
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
-		return ! empty( $this->featured_product_media ) ? new GalleryItemProductMedia( $this->featured_product_media ) : null;
+		if ( empty( $this->featured_product_media ) ) {
+			return null;
+		}
+		if ( ! is_a( $this->featured_product_media, \SureCart\Models\ProductMedia::class ) ) {
+			return null;
+		}
+		return new GalleryItemProductMedia( $this->featured_product_media );
 	}
 
 	/**
@@ -314,11 +320,7 @@ class Product extends Model implements PageModel {
 	 * @return SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedMediaAttribute() {
-		$gallery = $this->gallery ?? [];
-		if ( ! empty( $gallery ) ) {
-			return $gallery[0];
-		}
-		return ! empty( $this->featured_product_media ) ? new GalleryItemProductMedia( $this->featured_product_media ) : null;
+		return $this->featured_product_image;
 	}
 
 	/**
@@ -533,36 +535,6 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get markup for a specific product image.
-	 *
-	 * @param integer $id  The image id.
-	 * @param string  $size The image size.
-	 *
-	 * @return string
-	 */
-	public function getImageMarkup( $id, $size = 'full', $attr = array() ) {
-		if ( is_int( $id ) ) {
-			return wp_get_attachment_image( $id, 'large', false, $attr );
-		}
-
-		// get the first item that maches the id.
-		$item = array_filter(
-			$this->getAttribute( 'product_medias' )->data ?? array(),
-			function ( $item ) use ( $id ) {
-				return $item->id === $id;
-			}
-		);
-		$item = array_shift( $item );
-
-		// no item found.
-		if ( empty( $item ) ) {
-			return '';
-		}
-
-		return $item->html( $size, $attr );
-	}
-
-	/**
 	 * Get the gallery attribute.
 	 *
 	 * Map the post gallery array to GalleryItem objects.
@@ -656,6 +628,6 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_media, GalleryItem::class ) ? $this->featured_media->attributes( 'thumbnail' ) : [];
+		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : [];
 	}
 }

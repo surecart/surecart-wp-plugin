@@ -86,7 +86,7 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group media
 	 * @group product
 	 */
-	public function test_has_featured_media_from_product_media_url() {
+	public function test_has_featured_image_from_product_media_url() {
 		$product = new Product([
 			'id' => 'test',
 			'featured_product_media' => [
@@ -103,7 +103,7 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group media
 	 * @group product
 	 */
-	public function test_has_featured_media_from_attachment() {
+	public function test_has_featured_image_from_attachment() {
 		$product = new Product([
 			'id' => 'test',
 			'name' => 'test',

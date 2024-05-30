@@ -64,8 +64,8 @@ export default ({
 		[productId]
 	);
 
-	const alt = product?.featured_media?.alt || '';
-	const title = product?.featured_media?.title || '';
+	const alt = product?.featured_image?.alt || '';
+	const title = product?.featured_image?.title || '';
 
 	return (
 		<>
@@ -173,7 +173,7 @@ export default ({
 
 			<div {...blockProps}>
 				<img
-					src={product?.featured_media?.src}
+					src={product?.featured_image?.src}
 					alt={alt}
 					{...(title ? { title } : {})}
 				/>

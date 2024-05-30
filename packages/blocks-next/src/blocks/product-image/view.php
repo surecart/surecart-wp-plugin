@@ -6,5 +6,5 @@
 		)
 	)
 ); ?>>
-	<img data-wp-bind--src="context.product.featured_media.src"/>
+	<img data-wp-bind--src="context.product.featured_image.src"/>
 </div>
