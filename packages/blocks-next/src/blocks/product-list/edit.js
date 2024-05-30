@@ -28,14 +28,12 @@ export default function ProductListEdit({
 	});
 	const { products, loading } = useSelect((select) => {
 		const queryArgs = [
-			'surecart',
-			'product',
+			'postType',
+			'sc_product',
 			{
-				archived: false,
-				status: ['published'],
 				page: 1,
 				per_page: limit || 15,
-				ids: ids,
+				include: ids,
 			},
 		];
 		return {
@@ -115,7 +113,7 @@ export default function ProductListEdit({
 											}}
 										>
 											<span className="tag__content">
-												{product.name}
+												{product?.title?.raw}
 											</span>
 											<Icon
 												name="x"

@@ -60,22 +60,12 @@ export default ({
 
 	const { products, loading } = useSelect((select) => {
 		const queryArgs = [
-			'surecart',
-			'product',
+			'postType',
+			'sc_product',
 			{
-				expand: [
-					'prices',
-					'featured_product_media',
-					'product_medias',
-					'product_media.media',
-					'variants',
-				],
-				archived: false,
-				...('custom' === type ? { ids: ids } : {}),
-				...('featured' === type ? { featured: true } : {}),
-				status: ['published'],
 				page: 1,
 				per_page: limit || 15,
+				...('custom' === type ? { include: ids } : {}),
 			},
 		];
 		return {

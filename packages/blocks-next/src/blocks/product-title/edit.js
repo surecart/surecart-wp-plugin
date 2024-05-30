@@ -43,7 +43,7 @@ export default ({
 
 	const { product, loading } = useSelect(
 		(select) => {
-			const queryArgs = ['surecart', 'product', productId];
+			const queryArgs = ['postType', 'sc_product', productId];
 			return {
 				product: select(coreStore).getEntityRecord(...queryArgs),
 				loading: select(coreStore).isResolving(
@@ -111,7 +111,7 @@ export default ({
 			</InspectorControls>
 
 			<TagName {...blockProps}>
-				{product?.name || __('Product Name', 'surecart')}
+				{product?.title?.raw || __('Product Name', 'surecart')}
 			</TagName>
 		</>
 	);

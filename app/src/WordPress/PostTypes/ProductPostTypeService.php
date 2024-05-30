@@ -25,6 +25,9 @@ class ProductPostTypeService {
 		// register post status.
 		add_action( 'init', [ $this, 'registerPostStatus' ] );
 
+		// register meta.
+		add_action( 'init', [ $this, 'registerMeta' ] );
+
 		// add variation option value query to posts_where.
 		add_filter( 'posts_where', [ $this, 'handleVariationOptionValueQuery' ], 10, 2 );
 
@@ -62,6 +65,162 @@ class ProductPostTypeService {
 			// replace the content with product info part.
 			add_filter( 'the_content', [ $this, 'replaceContentWithProductInfoPart' ], 10 );
 		}
+	}
+
+	/**
+	 * Register the meta.
+	 *
+	 * @return void
+	 */
+	public function registerMeta() {
+		// register the product meta.
+		register_meta(
+			'post',
+			'product',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => array(
+					'name'   => 'product',
+					'type'   => 'object',
+					'schema' => array(
+						'type'                 => 'object',
+						'context'              => array( 'edit' ),
+						'additionalProperties' => true,
+					),
+				),
+				'single'        => true,
+				'type'          => 'object',
+			]
+		);
+
+		register_meta(
+			'post',
+			'sc_id',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'string',
+			]
+		);
+
+		register_meta(
+			'post',
+			'min_price_amount',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'string',
+			]
+		);
+
+		register_meta(
+			'post',
+			'max_price_amount',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'string',
+			]
+		);
+
+		register_meta(
+			'post',
+			'available_stock',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'string',
+			]
+		);
+
+		register_meta(
+			'post',
+			'stock_enabled',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'boolean',
+			]
+		);
+
+		register_meta(
+			'post',
+			'allow_out_of_stock_purchases',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'boolean',
+			]
+		);
+
+		register_meta(
+			'post',
+			'featured',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'boolean',
+			]
+		);
+
+		register_meta(
+			'post',
+			'recurring',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'boolean',
+			]
+		);
+
+		register_meta(
+			'post',
+			'shipping_enabled',
+			[
+				'object_subtype' => $this->post_type,
+				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest' => true,
+				'single'        => true,
+				'type'          => 'boolean',
+			]
+		);
 	}
 
 	/**
