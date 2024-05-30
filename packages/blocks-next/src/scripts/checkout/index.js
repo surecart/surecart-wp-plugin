@@ -5,7 +5,7 @@ import { store, getContext } from '@wordpress/interactivity';
 
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
-const getCheckoutData = (mode = 'live') => {
+const getCheckoutData = (mode = 'live', formId) => {
 	const checkoutData = localStorage.getItem(LOCAL_STORAGE_KEY);
 
 	const parsedCheckoutData = JSON.parse(checkoutData) || {
@@ -14,8 +14,8 @@ const getCheckoutData = (mode = 'live') => {
 	};
 
 	const modeData = parsedCheckoutData[mode];
-	const modeDataValues = Object.values(modeData);
-	return Object.assign({}, ...modeDataValues);
+
+	return modeData?.[formId] || {};
 };
 
 // controls the product page.
@@ -52,8 +52,9 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			return !!state.openCartSidebar;
 		},
 		get checkout() {
-			const mode = getContext('mode') || 'test';
-			return getCheckoutData(mode);
+			const mode = getContext('mode') || 'live';
+			const formId = getContext('formId');
+			return getCheckoutData(mode, formId);
 		},
 		get checkoutLineItems() {
 			return state.checkout?.line_items?.data || [];

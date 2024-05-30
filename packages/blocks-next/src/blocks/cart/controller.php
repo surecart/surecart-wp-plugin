@@ -3,6 +3,9 @@ $styles = sc_get_block_styles();
 $style = $styles['css'] ?? '';
 $class = $styles['classnames'] ?? '';
 
+$form = \SureCart::forms()->getDefault();
+$mode = \SureCart\Models\Form::getMode( $form->ID );
+
 wp_interactivity_state(
 	"surecart/checkout",
 	array(
@@ -19,7 +22,5 @@ wp_interactivity_state(
         'hasBumpAmount' => false,
 	)
 );
-
-$form = \SureCart::forms()->getDefault();
 
 return 'file:./view.php';
