@@ -6,11 +6,12 @@ $style .= ! empty( $attributes['border'] )
 $style .= ! empty( $attributes['padding'] )
 	? esc_attr( safecss_filter_attr( 'padding:' . $attributes['padding']['top'] . ' ' . $attributes['padding']['right'] . ' ' . $attributes['padding']['bottom'] . ' ' . $attributes['padding']['left'] ) ) . ';'
 	: '';
-$style .= ! empty( $attributes['backgroundColor'] )
-	? esc_attr( safecss_filter_attr( 'background-color:' . $attributes['backgroundColor'] ) ) . ';'
+$style .= ! empty( $attributes['sectionBackgroundColor'] )
+	? esc_attr( safecss_filter_attr( 'background-color:' . $attributes['sectionBackgroundColor'] ) ) . ';'
 	: '';
 $style .= ! empty( $attributes['textColor'] )
     ? esc_attr( safecss_filter_attr( 'color:' . $attributes['textColor'] ) ) . ';'
     : '';
 
+// Return the view.
 return 'file:./view.php';

@@ -1,4 +1,8 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes(
+	array(
+		'style' => $style,
+	)
+) ); ?>>
     <div
         class="sc-product-line-item"
         style="margin-bottom: 20px;"

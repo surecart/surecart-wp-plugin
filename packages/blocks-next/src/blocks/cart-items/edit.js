@@ -9,16 +9,17 @@ import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
  * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
+import useCartStyles from '../../hooks/useCartStyles';
+import CartInspectorControls from '../../components/CartInspectorControls';
 
 export default ({ attributes, setAttributes }) => {
 	const { removable, editable } = attributes;
 
-	const blockProps = useBlockProps({
+  const blockProps = useBlockProps({
 		style: {
-			...attributes,
-			minHeight: '400px',
-			borderBottom: 'var(--sc-drawer-border)'
-		},
+      minHeight: '400px',
+      ...useCartStyles({ attributes }),
+    },
 	});
 
 	const lineItems = [
@@ -49,6 +50,11 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
+        <CartInspectorControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
+
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl

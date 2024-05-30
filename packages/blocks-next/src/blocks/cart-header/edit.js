@@ -14,6 +14,7 @@ import {
  */
 import useCartStyles from '../../../../blocks/hooks/useCartStyles';
 import ScIcon from '../../components/ScIcon';
+import CartInspectorControls from '../../components/CartInspectorControls';
 
 export default ({ attributes, setAttributes }) => {
 	const { text } = attributes;
@@ -25,6 +26,11 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
+        <CartInspectorControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
+
 				<PanelBody>
 					<TextControl
 						label={__('Header Text')}

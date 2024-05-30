@@ -1,5 +1,9 @@
 <div
-    <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+    <?php echo wp_kses_data( get_block_wrapper_attributes(
+		array(
+			'style' => $style,
+		)
+	) ); ?>
     data-wp-bind--hidden="!state.hasBumpAmount"
     hidden
 >

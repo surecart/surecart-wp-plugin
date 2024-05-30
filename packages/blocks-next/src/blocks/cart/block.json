@@ -25,12 +25,8 @@
 	"supports": {
 		"interactivity": true,
 		"layout": true,
-		"align": true,
-		"spacing": {
-			"padding": true,
-			"margin": ["top", "bottom"],
-			"blockGap": true
-		}
+		"html": false,
+		"multiple": false
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",

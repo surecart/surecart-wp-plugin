@@ -6,17 +6,17 @@ import {
 	RichText,
 	AlignmentControl,
 	BlockControls,
-	useBlockProps,
 } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies.
  */
-import { ScText } from '@surecart/components-react';
+import useCartBlockProps from '../../hooks/useCartBlockProps';
 
 export default ({ attributes, setAttributes }) => {
 	const { text, align } = attributes;
-	const blockProps = useBlockProps();
+
+  const blockProps = useCartBlockProps({ attributes });
 
 	return (
 		<>

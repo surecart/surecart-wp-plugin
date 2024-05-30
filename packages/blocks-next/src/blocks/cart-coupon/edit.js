@@ -1,5 +1,5 @@
 /**
- * Internal dependencies.
+ * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
@@ -10,18 +10,20 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
-import ScIcon from '../../components/ScIcon';
 
 /**
- * External dependencies.
+ * Internal dependencies.
  */
-// import { ScCouponForm } from '@surecart/components-react';
-// import useCartStyles from '../../../../blocks/hooks/useCartStyles';
+import ScIcon from '../../components/ScIcon';
+import CartInspectorControls from '../../components/CartInspectorControls';
+import useCartStyles from '../../hooks/useCartStyles';
 
 export default ({ attributes, setAttributes }) => {
 	const { text, button_text, collapsed, placeholder } = attributes;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: useCartStyles({ attributes }),
+	});
 
 	const [discountInputOpen, setDiscountInputOpen] = useState(false);
 	const [discountCode, setDiscountCode] = useState('');
@@ -104,6 +106,11 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
+        <CartInspectorControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
+
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl

@@ -1,6 +1,10 @@
 <div
     class="wp-block-surecart-cart-items__wrapper"
-    <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+    <?php echo wp_kses_data( get_block_wrapper_attributes(
+		array(
+			'style' => $style,
+		)
+	) ); ?>
 >
     <template
 		data-wp-each--line_item="state.checkoutLineItems"

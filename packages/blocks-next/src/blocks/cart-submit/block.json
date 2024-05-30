@@ -36,43 +36,8 @@
 		"anchor": true,
 		"align": false,
 		"alignWide": false,
-		"multiple": false,
-		"spacing": {
-			"__experimentalSkipSerialization": true,
-			"padding": ["horizontal", "vertical"],
-			"margin": ["top", "bottom"]
-		},
-		"color": {
-			"__experimentalSkipSerialization": true,
-			"gradients": true,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
-		},
-		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
-		"typography": {
-			"fontSize": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true
-		},
-		"reusable": false,
-		"shadow": true,
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"style": true,
-			"width": true,
-			"__experimentalSkipSerialization": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"style": true,
-				"width": true
-			}
-		}
+		"html": false,
+		"multiple": false
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",

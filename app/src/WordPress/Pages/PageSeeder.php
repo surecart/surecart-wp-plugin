@@ -58,7 +58,7 @@ class PageSeeder {
 	 * @return void
 	 */
 	public function createCartPost() {
-		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/cart.php';
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/cart-v2.php';
 
 		$cart = apply_filters(
 			'surecart/create_cart',
