@@ -13,20 +13,20 @@ export default ({
 		className: 'product-price',
 	});
 
-	const product = useSelect(
+	let { product } = useSelect(
 		(select) => {
-			if (!productId) {
-				return null;
-			}
-			return select(coreStore).getEntityRecord(
-				'surecart',
-				'product',
-				productId
-			);
+			const queryArgs = ['postType', 'sc_product', productId];
+			return {
+				product: select(coreStore).getEntityRecord(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
 		},
 		[productId]
 	);
-
+	product = product?.meta?.product;
 	return (
 		<>
 			<InspectorControls>
