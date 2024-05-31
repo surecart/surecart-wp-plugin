@@ -41,7 +41,7 @@ class ProductListBlock {
 	 */
 	public function __construct( \WP_Block $block ) {
 		$this->block = $block;
-		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( (int) $block->context['surecart/product-list/blockId'] ?? '' );
+		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( (int) $block->context['surecart/product-list/block_id'] ?? '' );
 	}
 
 	/**

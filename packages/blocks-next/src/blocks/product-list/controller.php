@@ -9,7 +9,7 @@ wp_interactivity_state(
 );
 
 // TODO: change to snake_case.
-$block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
+$block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
 
 // return the view.
 return 'file:./view.php';
