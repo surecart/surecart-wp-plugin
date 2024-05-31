@@ -25,7 +25,7 @@ export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 	useEffect(() => {
 		if (!block?.name || !replaceBlock || !clientId || !products?.records)
 			return;
-		const ids = products?.records?.map((product) => product.id);
+		const ids = (products?.records || []).map((product) => product.id);
 		replaceBlock(clientId, [
 			createBlock(
 				blockType,

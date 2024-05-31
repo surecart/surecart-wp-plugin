@@ -1,7 +1,6 @@
 import TemplateListEdit from '../../components/TemplateListEdit';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useEntityRecords } from '@wordpress/core-data';
 import {
 	Spinner,
 	Placeholder,
@@ -58,25 +57,16 @@ export default ({
 		}
 	}, [layoutType]);
 
-	const { products, loading } = useSelect((select) => {
-		const queryArgs = [
-			'postType',
-			'sc_product',
-			{
-				page: 1,
-				per_page: limit || 15,
-				...('custom' === type ? { include: ids } : {}),
-				...('featured' === type ? { featured: true } : {}),
-			},
-		];
-		return {
-			products: select(coreStore).getEntityRecords(...queryArgs),
-			loading: select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			),
-		};
-	});
+	const { records: products, isResolving } = useEntityRecords(
+		'postType',
+		'sc_product',
+		{
+			page: 1,
+			per_page: limit || 15,
+			...('custom' === type ? { include: ids } : {}),
+			...('featured' === type ? { featured: true } : {}),
+		}
+	);
 
 	const setDisplayLayout = (newDisplayLayout) =>
 		setAttributes({
@@ -102,7 +92,7 @@ export default ({
 		},
 	];
 
-	if (loading) {
+	if (isResolving) {
 		return (
 			<Placeholder>
 				<Spinner />

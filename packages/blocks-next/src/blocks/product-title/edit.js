@@ -13,8 +13,7 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { useEntityRecord } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -41,27 +40,11 @@ export default ({
 		}),
 	});
 
-	const { product, loading } = useSelect(
-		(select) => {
-			const queryArgs = ['postType', 'sc_product', productId];
-			return {
-				product: select(coreStore).getEntityRecord(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[productId]
+	let { record: product } = useEntityRecord(
+		'postType',
+		'sc_product',
+		productId
 	);
-
-	if (loading) {
-		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
-		);
-	}
 
 	return (
 		<>

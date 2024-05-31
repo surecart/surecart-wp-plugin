@@ -12,8 +12,7 @@ import {
 	Spinner,
 	SelectControl,
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { useEntityRecords } from '@wordpress/core-data';
 import { TEMPLATE } from './template';
 import ProductSelector from '../../components/ProductSelector';
 import Icon from '../../components/Icon';
@@ -26,24 +25,17 @@ export default function ProductListEdit({
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
 	});
-	const { products, loading } = useSelect((select) => {
-		const queryArgs = [
-			'postType',
-			'sc_product',
-			{
-				page: 1,
-				per_page: limit || 15,
-				include: ids,
-			},
-		];
-		return {
-			products: select(coreStore).getEntityRecords(...queryArgs),
-			loading: select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			),
-		};
-	});
+
+	const { records: products, isResolving } = useEntityRecords(
+		'postType',
+		'sc_product',
+		{
+			page: 1,
+			per_page: limit,
+			include: ids,
+		}
+	);
+
 	const onProductSelect = (product) => {
 		setAttributes({
 			ids: [...ids, product.id],
@@ -94,7 +86,7 @@ export default function ProductListEdit({
 									marginBottom: '1em',
 								}}
 							>
-								{loading && <Spinner />}
+								{isResolving && <Spinner />}
 								{products?.map((product) => {
 									return (
 										<div

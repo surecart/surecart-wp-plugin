@@ -5,10 +5,8 @@ import {
 } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useEntityRecord } from '@wordpress/core-data';
 import {
-	PanelBody,
 	SelectControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
@@ -50,19 +48,12 @@ export default ({
 			[dimension]: parsedValue < 0 ? '0' : nextValue,
 		});
 	};
-	let { product } = useSelect(
-		(select) => {
-			const queryArgs = ['postType', 'sc_product', productId];
-			return {
-				product: select(coreStore).getEntityRecord(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[productId]
+	let { record: product } = useEntityRecord(
+		'postType',
+		'sc_product',
+		productId
 	);
+
 	product = product?.meta?.product;
 
 	const alt = product?.featured_media?.alt || '';
