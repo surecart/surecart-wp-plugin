@@ -1,13 +1,14 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+/**
+ * WordPress dependencies.
+ */
 import { __ } from '@wordpress/i18n';
-import {
-	ScProductLineItem,
-	ScStackedListRow,
-} from '@surecart/components-react';
+import { ScProductLineItem } from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
-import useCartBlockProps from '../../hooks/useCartBlockProps';
+
+/**
+ * Internal dependencies.
+ */
 import CartInspectorControls from '../../components/CartInspectorControls';
 import useCartStyles from '../../hooks/useCartStyles';
 
@@ -17,6 +18,9 @@ export default ({ attributes, setAttributes }) => {
 	const blockProps = useBlockProps({
 		style: useCartStyles({ attributes }),
 	});
+
+	const placeholderImageUrl =
+		scBlockData?.plugin_url + '/images/placeholder.jpg';
 
 	return (
 		<>
@@ -58,7 +62,7 @@ export default ({ attributes, setAttributes }) => {
 					<ScProductLineItem
 						removable={removable}
 						editable={editable}
-						imageUrl="https://source.unsplash.com/daily"
+						imageUrl={placeholderImageUrl}
 						amount={12345}
 						currency={scData?.currency || 'usd'}
 						name={__('Example Product', 'surecart')}
@@ -70,7 +74,7 @@ export default ({ attributes, setAttributes }) => {
 						amount={1234}
 						interval={__('every month', 'surecart')}
 						currency={scData?.currency || 'usd'}
-						imageUrl="https://source.unsplash.com/daily"
+						imageUrl={placeholderImageUrl}
 						name={__('Example Product', 'surecart')}
 						priceName={__('Monthly', 'surecart')}
 						style={{ marginTop: '20px' }}
