@@ -1,10 +1,17 @@
 .wp-block-surecart-cart-items__wrapper {
 	border-bottom: var(--sc-drawer-border);
 	flex: 1 1 auto;
-    overflow: auto;
-    min-height: 200px;
+	overflow: auto;
+	min-height: 200px;
 
 	.sc-quantity-selector {
 		margin-top: --var(sc-spacing-small);
+	}
+
+	.sc-product-line-item__remove-button {
+		background: none;
+		border: none;
+		box-shadow: none;
+		padding: 0;
 	}
 }

@@ -63,7 +63,9 @@
 
                 <div class="sc-product-line-item__suffix">
                     <?php if ( $attributes['removable'] ): ?>
-                        <?php echo wp_kses( SureCart::svg()->get('x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
+						<button class="sc-product-line-item__remove-button" data-wp-on--click="surecart/checkout::actions.removeLineItem">
+                        	<?php echo wp_kses( SureCart::svg()->get('x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
+						</button>
                     <?php endif; ?>
 
                     <div class="sc-product-line-item__price">
