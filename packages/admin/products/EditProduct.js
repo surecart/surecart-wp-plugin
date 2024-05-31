@@ -61,6 +61,7 @@ export default ({ id, setBrowserURL }) => {
 				'sc_product',
 				{
 					sc_id: [id],
+					per_page: 1,
 				},
 			];
 			const posts =

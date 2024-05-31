@@ -18,7 +18,7 @@ export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 
 	const products = useEntityRecords('postType', 'sc_product', {
 		page: 1,
-		per_page: attributes?.limit || 15,
+		per_page: -1,
 		sc_id: attributes?.ids,
 	});
 
