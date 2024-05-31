@@ -8,82 +8,45 @@
 	"category": "widgets",
 	"icon": "media-interactive",
 	"ancestor": ["surecart/product-page"],
-	"example": {
-		"attributes": {}
-	},
-	"attributes": {
-		"label": {
-			"type": "rich-text",
-			"default": "Select An Option",
-			"selector": ".wp-block-form-input__label-content",
-			"source": "rich-text",
-			"__experimentalRole": "content"
-		},
-		"highlight_text": {
-			"type": "string"
-		},
-		"highlight_background": {
-			"type": "string"
-		},
-		"highlight_border": {
-			"type": "object",
-			"default": {
-				"top": {
-					"width": 0,
-					"color": null
-				},
-				"right": {
-					"width": 0,
-					"color": null
-				},
-				"bottom": {
-					"width": 0,
-					"color": null
-				},
-				"left": {
-					"width": 0,
-					"color": null
-				}
-			}
-		}
-	},
 	"supports": {
 		"interactivity": true,
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"width": true,
-			"__experimentalSkipSerialization": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"width": true
+		"html": false,
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
 			}
 		},
 		"color": {
-			"__experimentalSkipSerialization": true,
-			"gradients": true,
-			"text": true,
-			"background": false,
-			"button": true,
 			"__experimentalDefaultControls": {
-				"text": true,
-				"button": true
+				"background": true,
+				"color": true
 			}
 		},
-		"typography": {
-			"__experimentalSkipSerialization": true,
-			"fontSize": true,
-			"lineHeight": true
+		"spacing": {
+			"blockGap": {
+				"__experimentalDefault": "3px"
+			},
+			"margin": ["top", "bottom"],
+			"padding": ["horizontal", "vertical"]
 		},
-		"shadow": {
-			"__experimentalSkipSerialization": true
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"radius": true,
+			"__experimentalDefaultControls": {
+				"radius": true,
+				"color": true,
+				"width": true
+			}
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"selectors": {
-		"root": ".sc-pill-option__button"
-	},
-	"style": ["file:../../styles/pill.css", "file:../../styles/label.css"]
+	"style": [
+		"file:../../styles/pill.css",
+		"file:../../styles/label.css",
+		"file:../../styles/product-variants.css"
+	]
 }

@@ -61,6 +61,7 @@ export default function MultiEdit({
 	itemProps,
 	template,
 	renderAppender,
+	attachBlockProps = true,
 }) {
 	const [activeBlockContextId, setActiveBlockContextId] = useState();
 
@@ -69,10 +70,12 @@ export default function MultiEdit({
 		[clientId]
 	);
 
-	const blockProps = useBlockProps({
-		className,
-		style,
-	});
+	const blockProps = attachBlockProps
+		? useBlockProps({
+				className,
+				style,
+		  })
+		: { style, className };
 
 	// To avoid flicker when switching active block contexts, a preview is rendered
 	// for each block context, but the preview for the active block context is hidden.

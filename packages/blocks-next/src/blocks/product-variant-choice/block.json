@@ -1,0 +1,70 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-variant-choice-v2",
+	"title": "Product Variant",
+	"description": "Display the product variant.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"ancestor": ["surecart/product-variant-choices-v2"],
+	"usesContext": [
+		"surecart/productVariantChoice/name",
+		"surecart/productVariantChoice/selected"
+	],
+	"example": {
+		"attributes": {}
+	},
+	"attributes": {
+		"highlight_text": {
+			"type": "string"
+		},
+		"highlight_background": {
+			"type": "string"
+		},
+		"highlight_border": {
+			"type": "object",
+			"default": {
+				"color": null,
+				"style": null,
+				"width": null
+			}
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"inserter": false,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		},
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			},
+			"enableContrastChecker": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"shadow": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": ["file:../../styles/pill.css", "file:../../styles/label.css"]
+}

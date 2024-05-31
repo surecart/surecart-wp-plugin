@@ -11,32 +11,28 @@
  */
 ?>
 
-<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<div class="sc-product-variants__wrapper">
 	<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-		<div <?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionNumber' => (int) $key + 1 ] ) ); ?>>
+		<div
+			<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionNumber' => (int) $key + 1 ] ) ); ?>
+			<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+		>
 			<label class="sc-form-label">
 				<?php echo wp_kses_post( $option->name ); ?>
 			</label>
 
-			<div class="sc-pill-option__wrapper">
-				<?php foreach ( $option->values as $name ) : ?>
-					<button
-						type="button"
-						class="sc-pill-option__button <?php echo esc_attr( $styles['classnames'] ?? '' ); ?>"
-						value="<?php echo esc_attr( $name ); ?>"
-						<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionValue' => esc_attr( $name ) ] ) ); ?>
-						data-wp-on--click="callbacks.setOption"
-						data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
-						data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
-						data-wp-bind--aria-checked="state.isOptionSelected"
-						data-wp-bind--aria-disabled="state.isOptionUnavailable"
-						tabindex="0"
-						role="radio"
-						style="<?php echo esc_attr( $styles['color']['css'] ?? '' ); ?>"
-					>
-						<?php echo wp_kses_post( $name ); ?>
-					</button>
-				<?php endforeach; ?>
+			<div
+				class="sc-pill-option__wrapper"
+				<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+				<?php echo wp_interactivity_data_wp_context( array( 'option_values' => $option->values ) ); ?>
+			>
+				<template
+					data-wp-each--option_value="context.option_values"
+				>
+					<span data-wp-key="context.option_value">
+						<?php echo $content; ?>
+					</span>
+				</template>
 			</div>
 		</div>
 	<?php endforeach; ?>

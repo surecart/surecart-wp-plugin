@@ -9,8 +9,6 @@ import {
 import { InspectorControls } from '@wordpress/block-editor';
 
 export default (props) => {
-	const colorGradientSettings = useMultipleOriginColorsAndGradients();
-
 	const SingleColumnItem = styled.div`
 		grid-column: 1 / -1;
 
@@ -18,42 +16,21 @@ export default (props) => {
 			margin-bottom: 0 !important;
 		}
 	`;
+	const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
 	return (
-		<InspectorControls group="styles">
-			<ToolsPanel label={__('Dimensions')} resetAll={() => {}}>
-				<ToolsPanelItem
-					hasValue={() => false}
-					label={__('Padding')}
-					onDeselect={() => {}}
-				></ToolsPanelItem>
-				<ToolsPanelItem
-					hasValue={() => false}
-					label={__('Margin')}
-					onDeselect={() => {}}
-				></ToolsPanelItem>
-				<ToolsPanelItem
-					hasValue={() => false}
-					label={__('Item Padding')}
-					onDeselect={() => {}}
-				></ToolsPanelItem>
-				<ToolsPanelItem
-					hasValue={() => false}
-					label={__('Item Margin')}
-					onDeselect={() => {}}
-				></ToolsPanelItem>
-				<SingleColumnItem>
-					<BorderBoxControl
-						__experimentalIsRenderedInSidebar={true}
-						popoverOffset={40}
-						popoverPlacement="left-start"
-						enableAlpha={true}
-						size={'__unstable-large'}
-						{...colorGradientSettings}
-						{...props}
-					/>
-				</SingleColumnItem>
-			</ToolsPanel>
+		<InspectorControls group="border">
+			<SingleColumnItem>
+				<BorderBoxControl
+					__experimentalIsRenderedInSidebar={true}
+					popoverOffset={40}
+					popoverPlacement="left-start"
+					enableAlpha={true}
+					size={'__unstable-large'}
+					{...colorGradientSettings}
+					{...props}
+				/>
+			</SingleColumnItem>
 		</InspectorControls>
 	);
 };
