@@ -89,7 +89,7 @@ if ( ! function_exists( 'sc_get_product_featured_image' ) ) {
 	 */
 	function sc_get_product_featured_image( $id, $size = 'full' ) {
 		$sc_product = sc_get_product();
-		if ( empty( $sc_product ) ) {
+		if ( empty( $sc_product ) || empty( $sc_product->featured_image ) ) {
 			return '';
 		}
 		return $sc_product->featured_image->html( $id, $size );

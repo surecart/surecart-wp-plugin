@@ -14,13 +14,6 @@ class ProductListBlock {
 	protected $block;
 
 	/**
-	 * The block id.
-	 *
-	 * @var int
-	 */
-	protected $block_id = null;
-
-	/**
 	 * The URL.
 	 *
 	 * @var object
@@ -47,9 +40,8 @@ class ProductListBlock {
 	 * @param \WP_Block $block The block.
 	 */
 	public function __construct( \WP_Block $block ) {
-		$this->block    = $block;
-		$this->block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
-		$this->url      = \SureCart::block()->urlParams( 'products' )->setInstanceId( $this->block_id );
+		$this->block = $block;
+		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( (int) $block->context['surecart/product-list/blockId'] ?? '' );
 	}
 
 	/**
@@ -147,11 +139,11 @@ class ProductListBlock {
 	public function __get( $key ) {
 		// handle pagination.
 		if ( 'next_page_link' === $key ) {
-			return $this->query->max_num_pages && $this->query->max_num_pages !== $this->query->paged ? $this->url->addPageArg( $this->query->paged + 1 )->url() : '';
+			return $this->max_num_pages && $this->max_num_pages !== $this->paged ? $this->url->addPageArg( $this->paged + 1 )->url() : '';
 		}
 
 		if ( 'previous_page_link' === $key ) {
-			return $this->query->paged > 1 ? $this->url->addPageArg( $this->query->paged - 1 )->url() : '';
+			return $this->paged > 1 ? $this->url->addPageArg( $this->paged - 1 )->url() : '';
 		}
 
 		if ( 'pagination_links' === $key ) {
@@ -160,10 +152,10 @@ class ProductListBlock {
 					return [
 						'href'    => $this->url->addPageArg( $i )->url(),
 						'name'    => $i,
-						'current' => (int) $i === (int) $this->query->paged,
+						'current' => (int) $i === (int) $this->paged,
 					];
 				},
-				range( 1, $this->query->max_num_pages )
+				range( 1, $this->max_num_pages )
 			);
 		}
 
@@ -176,7 +168,7 @@ class ProductListBlock {
 			);
 		}
 
-		return $this->query->$key;
+		return $this->query->$key ?? $this->query->query[ $key ] ?? $this->query->query_vars[ $key ] ?? null;
 	}
 
 	/**

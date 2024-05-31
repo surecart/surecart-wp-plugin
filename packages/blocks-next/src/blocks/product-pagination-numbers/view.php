@@ -1,13 +1,13 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<template data-wp-each--page="context.pages" data-wp-key="context.page.href">
-		<span> <?php /** This span is needed to prevent a javascript issue with interactivity api */ ?>
-			<a
-				data-wp-bind--href="context.page.href"
-				data-wp-text="context.page.name"
-				data-wp-on--click="surecart/product-list::actions.navigate"
-				data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
-				data-wp-bind--disabled="context.page.current"
-			></a>
-		</span>
-	</template>
+	<?php foreach ( $pagination_links as $pagination_link ) : ?>
+		<a href="<?php echo esc_url( $pagination_link['href'] ); ?>"
+			data-wp-on--click="surecart/product-list::actions.navigate"
+			data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
+			<?php if ( $pagination_link['current'] ) { ?>
+				disabled
+			<?php } ?>
+			>
+				<?php echo esc_html( $pagination_link['name'] ); ?>
+			</a>
+	<?php endforeach; ?>
 </div>
