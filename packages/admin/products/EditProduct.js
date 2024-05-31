@@ -60,7 +60,7 @@ export default ({ id, setBrowserURL }) => {
 				'postType',
 				'sc_product',
 				{
-					sc_id: id,
+					sc_id: [id],
 				},
 			];
 			const posts =

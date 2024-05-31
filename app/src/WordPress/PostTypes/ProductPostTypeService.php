@@ -508,8 +508,9 @@ class ProductPostTypeService {
 	public function addMetaQuery( $args, $request ) {
 		if ( ! empty( $request['sc_id'] ) ) {
 			$args['meta_query'][]   = [
-				'key'   => 'sc_id',
-				'value' => $request['sc_id'],
+				'key'     => 'sc_id',
+				'value'   => $request['sc_id'],
+				'compare' => 'IN',
 			];
 			$args['post_status']    = [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
 			$args['posts_per_page'] = 1;
