@@ -1,10 +1,8 @@
 <?php
-
 // we have no posts.
 if ( ! $query->have_posts() ) {
 	return '';
 }
-
 ?>
 	<ul <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 		<?php
