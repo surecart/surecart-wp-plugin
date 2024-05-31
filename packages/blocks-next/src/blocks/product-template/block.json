@@ -16,6 +16,7 @@
 		"surecart/product-title-v2",
 		"surecart/product-price-v2",
 		"surecart/product-scratch-price",
+		"surecart/product-description-v2",
 		"core/group"
 	],
 	"ancestor": ["surecart/product-list"],

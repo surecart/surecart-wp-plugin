@@ -15,8 +15,8 @@
 	},
 	"usesContext": [
 		"surecart/product-list/blockId",
-		"surecart/product-list/limit",
-		"surecart/product-list/type"
+		"surecart/product-list/type",
+		"surecart/product-list/ids"
 	],
 	"attributes": {
 		"ids": {
