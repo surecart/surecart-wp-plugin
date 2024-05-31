@@ -31,7 +31,11 @@
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/drawer.css", "file:./index.css"],
+	"style": [
+		"file:../../styles/drawer.css",
+		"file:../../styles/block-ui.css",
+		"file:./index.css"
+	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/dialog"]
 }

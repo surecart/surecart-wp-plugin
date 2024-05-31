@@ -19,6 +19,8 @@
     >
         <div class="sc-drawer__wrapper">
             <?php echo do_blocks( $content ); ?>
+
+			<div class="sc-block-ui" data-wp-bind--hidden="surecart/checkout::!state.loading" hidden></div>
         </div>
     </dialog>
 </div>

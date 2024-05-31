@@ -186,6 +186,7 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		},
 
 		updateLineItem: async (data) => {
+			state.loading = true;
 			const { line_item, mode, formId } = getContext();
 			const checkout = await updateCheckoutLineItem({
 				id: line_item?.id,
@@ -195,15 +196,18 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			if (checkout) {
 				actions.setCheckout(checkout, mode, formId);
 			}
+			state.loading = false;
 		},
 
 		removeLineItem: async () => {
+			state.loading = true;
 			const { line_item, mode, formId } = getContext();
 			const checkout = await removeCheckoutLineItem(line_item?.id);
 
 			if (checkout) {
 				actions.setCheckout(checkout, mode, formId);
 			}
+			state.loading = false;
 		},
 	},
 });
