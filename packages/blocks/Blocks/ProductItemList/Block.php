@@ -314,13 +314,15 @@ class Block extends BaseBlock {
 	 */
 	public function renderNewProductListBlock( $attributes ) {
 		$limit = $attributes['limit'] ?? 15;
+		$ids = wp_json_encode($attributes['ids']) ?? '';
+		$type = wp_json_encode($attributes['type']) ?? 'all';
 		$sort_enabled = $attributes['sort_enabled'] ?? true;
 		$search_enabled = $attributes['search_enabled'] ?? true;
 		$pagination_enabled = $attributes['pagination_enabled'] ?? true;
 		$collection_enabled = $attributes['collection_enabled'] ?? true;
 		$columns = $attributes['columns'] ?? 3;
 		
-		$new_block = '<!-- wp:surecart/product-list {"limit":' . $limit . '} -->';
+		$new_block = '<!-- wp:surecart/product-list {"limit":' . $limit . ',"ids":' . $ids . ',"type":' . $type . '} -->';
 
 		$new_block .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->';
 		$new_block .= '<div class="wp-block-group" style="margin-bottom:10px">';

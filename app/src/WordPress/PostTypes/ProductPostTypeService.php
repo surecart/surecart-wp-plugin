@@ -513,7 +513,7 @@ class ProductPostTypeService {
 				'compare' => 'IN',
 			];
 			$args['post_status']    = [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
-			$args['posts_per_page'] = 1;
+			$args['posts_per_page'] = -1;
 			$args['no_found_rows']  = true;
 		}
 		return $args;
