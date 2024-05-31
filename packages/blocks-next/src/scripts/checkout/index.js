@@ -3,6 +3,11 @@
  */
 import { store, getContext } from '@wordpress/interactivity';
 
+/**
+ * Internal dependencies.
+ */
+import { removeLineItem, fetchCheckout } from '@surecart/checkout-actions';
+
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
 const getCheckoutData = (mode = 'live', formId) => {
@@ -15,7 +20,7 @@ const getCheckoutData = (mode = 'live', formId) => {
 
 	const modeData = parsedCheckoutData[mode];
 
-	return modeData?.[formId] || {};
+	return modeData?.[formId] || null;
 };
 
 // controls the product page.
@@ -24,6 +29,7 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		openCartSidebar: false,
 		loading: false,
 		discountCode: '',
+		checkout: null,
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
 				(count, item) => count + (item?.quantity || 0),
@@ -45,16 +51,14 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		get isDiscountCodeSet() {
 			return !!state?.discountCode;
 		},
+		get discountAmount() {
+			return state?.checkout?.discount_amount || 0;
+		},
 		get hasBumpAmount() {
 			return !!state?.checkout?.bump_amount;
 		},
 		get isCartOpen() {
 			return !!state.openCartSidebar;
-		},
-		get checkout() {
-			const mode = getContext('mode') || 'live';
-			const formId = getContext('formId');
-			return getCheckoutData(mode, formId);
 		},
 		get checkoutLineItems() {
 			return state.checkout?.line_items?.data || [];
@@ -74,19 +78,16 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			return getContext()?.[prop] || false;
 		},
 
-		// *fetchCheckout(e) {
-		// 	// const context = getContext();
-		// 	// const { mode } = context;
-		// 	// return getCheckoutData(mode);
-		// 	e?.preventDefault();
+		init() {
+			const { mode, formId } = getContext();
+			const checkout = getCheckoutData(mode, formId);
 
-		// 	state.loading = true;
-		// 	const context = getContext();
+			if (!checkout) {
+				return;
+			}
 
-		// 	const { mode } = context;
-
-		// 	const checkoutData = yield getCheckoutData(mode);
-		// },
+			state.checkout = checkout;
+		},
 	},
 
 	actions: {
@@ -119,28 +120,57 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 
 			context.discountInputOpen = false;
 		},
-		setCheckout(data, mode = 'live') {
-			const previousCheckoutData = localStorage.getItem(
-				LOCAL_STORAGE_KEY
-			) || {
-				live: {},
-				test: {},
-			};
+		setCheckout(data, mode, formId) {
+			let checkout = getCheckoutData(mode, formId);
 
-			// set the checkout data to local storage by key.
-			const checkoutData = JSON.stringify(data);
-			const parsedPreviousCheckoutData = JSON.parse(previousCheckoutData);
+			if (!checkout) {
+				return;
+			}
 
-			// Store data by mode for live / test.
-			const checkoutStorage = {
-				...parsedPreviousCheckoutData,
-				[mode]: checkoutData,
-			};
+      // Set the checkout data.
+      state.checkout = data;
+
+			// Find the checkout by mode and formId.
+			const checkoutData = checkout[mode]?.[formId];
+			let checkoutStorage = JSON.parse(
+				localStorage.getItem(LOCAL_STORAGE_KEY)
+			);
+
+			if (checkoutData) {
+				// update the existing checkout data.
+				checkoutStorage = {
+					...checkoutStorage,
+					[mode]: {
+						...checkoutStorage[mode],
+						[formId]: data,
+					},
+				};
+			} else {
+				// create a new checkout data.
+				checkoutStorage = {
+					...checkoutStorage,
+					[mode]: {
+						...checkoutStorage[mode],
+						[formId]: data,
+					},
+				};
+			}
 
 			localStorage.setItem(
 				LOCAL_STORAGE_KEY,
 				JSON.stringify(checkoutStorage)
 			);
+		},
+
+		removeLineItem: () => {
+			const { line_item, mode, formId } = getContext();
+
+			const checkout = removeLineItem({
+				checkoutId: state?.checkout?.id,
+				itemId: line_item?.id,
+			});
+
+			actions.setCheckout(checkout, mode, formId);
 		},
 	},
 });

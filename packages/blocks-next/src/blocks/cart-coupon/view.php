@@ -32,11 +32,11 @@
             <div class="sc-line-item__price-text">
                 <div class="sc-line-item__price-description">
                     <!-- redeemable UI -->
-                    <span data-wp-bind--hidden="!state.checkout.discount_amount">
+                    <span data-wp-bind--hidden="!state.discountAmount">
                         <span
                             data-wp-bind--hidden="!state.discountIsRedeemable"
                             class="coupon-human-discount"
-                            data-wp-text="state.checkout.discount_amount"
+                            data-wp-text="state.discountAmount"
                         ></span>
                     </span>
 

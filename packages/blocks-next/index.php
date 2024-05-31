@@ -141,6 +141,15 @@ add_action('init', function() {
 		$static_assets['version']
 	);
 
+	// Checkout actions.
+	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout-actions/index.asset.php';
+	wp_register_script_module(
+		'@surecart/checkout-actions',
+		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout-actions/index.js',
+		[],
+		$static_assets['version']
+	);
+
 	// SureCart Checkout
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout/index.asset.php';
 	wp_register_script_module(
@@ -149,6 +158,10 @@ add_action('init', function() {
 		[
 			[
 				'id' => '@surecart/api-fetch',
+				'import' => 'dynamic'
+			],
+			[
+				'id' => '@surecart/checkout-actions',
 				'import' => 'dynamic'
 			],
 			[

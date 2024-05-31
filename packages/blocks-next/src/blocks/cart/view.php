@@ -4,14 +4,14 @@
         echo wp_kses_data(
             wp_interactivity_data_wp_context(
                 [
-                    'formId' => esc_attr( $form->ID ),
+                    'formId' => intval( $form->ID ),
                     'mode' => esc_attr( $mode ),
                 ]
             )
         );
     ?>
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
-    data-wp-watch="surecart/checkout::callbacks.fetchCheckout"
+    data-wp-init="surecart/checkout::callbacks.init"
 >
     <dialog
         class="sc-drawer"
