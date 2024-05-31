@@ -1,7 +1,10 @@
 import apiFetch from '@surecart/api-fetch';
+import { store } from '@wordpress/interactivity';
 
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 export const baseUrl = 'surecart/v1/checkouts/';
+
+const { state: checkoutState } = store('surecart/checkout');
 
 /** Items to always expand. */
 export const expand = [
@@ -39,6 +42,40 @@ export const parsePath = (id, endpoint = '') => {
 	});
 };
 
+/** Fethc a checkout by id */
+export const fetchCheckout = async ({ id, query = {} }) => {
+	return await apiFetch({
+		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
+	});
+};
+
+/** Default query we send with every request. */
+export const withDefaultQuery = (query = {}) => ({
+	// ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
+	// ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
+	...query,
+});
+
+/**
+ * Update a line item.
+ */
+export const updateLineItem = async ({ id, data }) => {
+	const item = await apiFetch({
+		path: addQueryArgs(`surecart/v1/line_items/${id}`, {
+			expand: [
+				...(expand || []).map((item) => {
+					return item.includes('.') ? item : `checkout.${item}`;
+				}),
+				'checkout',
+			],
+		}),
+		method: 'PATCH',
+		data,
+	});
+
+	return item?.checkout;
+};
+
 /**
  * Remove a line item.
  */
@@ -55,75 +92,41 @@ export const removeLineItem = async ({ checkoutId, itemId }) => {
 	return await fetchCheckout({ id: checkoutId });
 };
 
-/** Fethc a checkout by id */
-export const fetchCheckout = async ({ id, query = {} }) => {
-	return await apiFetch({
-		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
-	});
-};
-
-/** Default query we send with every request. */
-export const withDefaultQuery = (query = {}) => ({
-	// ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
-	// ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
-	...query,
-});
-
-// /**
-//  * Update a line item.
-//  */
-// export const updateLineItem = async ({ id, data }) => {
-// 	const item = await apiFetch({
-// 		path: addQueryArgs(`surecart/v1/line_items/${id}`, {
-// 			expand: [
-// 				...(expand || []).map((item) => {
-// 					return item.includes('.') ? item : `checkout.${item}`;
-// 				}),
-// 				'checkout',
-// 			],
-// 		}),
-// 		method: 'PATCH',
-// 		data,
-// 	});
-
-// 	return item?.checkout;
-// };
-
 // /**
 //  * Update the checkout line item
 //  */
-// const updateCheckoutLineItem = async ({ id, data }) => {
-// 	try {
-// 		updateFormState('FETCH');
-// 		state.checkout = await updateLineItem({
-// 			id: id,
-// 			data,
-// 		});
-// 		updateFormState('RESOLVE');
-// 	} catch (e) {
-// 		console.error(e);
-// 		createErrorNotice(e);
-// 		updateFormState('REJECT');
-// 	}
-// };
+export const updateCheckoutLineItem = async ({ id, data }) => {
+	try {
+		// updateFormState('FETCH');
+		return await updateLineItem({
+			id: id,
+			data,
+		});
+		// updateFormState('RESOLVE');
+	} catch (e) {
+		console.error(e);
+		// createErrorNotice(e);
+		// updateFormState('REJECT');
+	}
+};
 
-// /**
-//  * Remove the checkout line item.
-//  */
-// const removeCheckoutLineItem = async (id) => {
-// 	try {
-// 		// updateFormState('FETCH');
-// 		return await removeLineItem({
-// 			checkoutId: state.checkout.id,
-// 			itemId: id,
-// 		});
-// 		// updateFormState('RESOLVE');
-// 	} catch (e) {
-// 		console.error(e);
-// 		// createErrorNotice(e);
-// 		// updateFormState('REJECT');
-// 	}
-// };
+/**
+ * Remove the checkout line item.
+ */
+export const removeCheckoutLineItem = async (id) => {
+	try {
+		// updateFormState('FETCH');
+		return await removeLineItem({
+			checkoutId: checkoutState?.checkout?.id,
+			itemId: id,
+		});
+		// updateFormState('RESOLVE');
+	} catch (e) {
+		console.error(e);
+		// createErrorNotice(e);
+		// updateFormState('REJECT');
+	}
+};
 
 // /**
 //  * Add the checkout line item.

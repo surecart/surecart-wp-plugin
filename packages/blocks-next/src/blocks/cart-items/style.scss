@@ -5,7 +5,7 @@
 	min-height: 200px;
 
 	.sc-quantity-selector {
-		margin-top: --var(sc-spacing-small);
+		margin-top: var(--sc-spacing-small);
 	}
 
 	.sc-product-line-item__remove-button {

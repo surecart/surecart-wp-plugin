@@ -1,41 +1,7 @@
-.sc-quantity-selector {
-	display: inline;
-	position: relative;
-	display: inline-block;
+.sc-input-group.sc-quantity-selector {
 	width: var(--sc-quantity-select-width, 100px);
 	height: var(--sc-quantity-control-height, var(--sc-input-height-small));
-	display: flex;
-	align-items: stretch;
-	font-family: var(--sc-input-font-family);
-	font-weight: var(--sc-input-font-weight);
-	letter-spacing: var(--sc-input-letter-spacing);
-	background-color: var(--sc-input-background-color);
-	border: var(--sc-input-border);
-	border-radius: var(--border-radius);
-	vertical-align: middle;
-	box-shadow: var(--sc-input-box-shadow);
-	transition: var(--sc-input-transition, var(--sc-transition-medium)) color,
-		var(--sc-input-transition, var(--sc-transition-medium)) border,
-		var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
-
-	&:hover:not(.quantity--disabled) {
-		background-color: var(--sc-input-background-color-hover);
-		border-color: var(--sc-input-border-color-hover);
-
-		.sc-quantity-selector__control {
-			color: var(--sc-input-color-hover);
-		}
-	}
-
-	&.quantity--focused:not(.quantity--disabled) {
-		background-color: var(--sc-input-background-color-focus);
-		border-color: var(--sc-input-border-color-focus);
-		box-shadow: var(--focus-ring);
-
-		.sc-quantity-selector__control {
-			color: var(--sc-input-color-focus);
-		}
-	}
+	border-radius: inherit !important;
 
 	&.quantity--disabled {
 		background-color: var(--sc-input-background-color-disabled);
@@ -52,54 +18,8 @@
 		}
 	}
 
-	&__control {
-		text-align: center;
-		line-height: 1;
-		border: none !important;
-		flex: 1;
-		max-width: var(--sc-quantity-input-max-width, 35px);
-        max-height: var(--sc-quantity-input-max-height, 35px);
-		background-color: var(
-			--sc-input-control-background-color,
-			var(--sc-color-white)
-		);
-		color: var(--sc-input-control-color, var(--sc-color-black));
-		-moz-appearance: textfield;
-        padding: 0 !important;
-
-		&::-webkit-outer-spin-button,
-		&::-webkit-inner-spin-button {
-			-webkit-appearance: none;
-		}
-
-		&::-webkit-search-decoration,
-		&::-webkit-search-cancel-button,
-		&::-webkit-search-results-button,
-		&::-webkit-search-results-decoration {
-			-webkit-appearance: none;
-		}
-
-		&:-webkit-autofill,
-		&:-webkit-autofill:hover,
-		&:-webkit-autofill:focus,
-		&:-webkit-autofill:active {
-			box-shadow: 0 0 0 var(--sc-input-height-large)
-				var(--sc-input-background-color-hover) inset !important;
-			-webkit-text-fill-color: var(--sc-input-color);
-		}
-
-		&::placeholder {
-			color: var(--sc-input-placeholder-color);
-			user-select: none;
-		}
-
-		&:focus {
-			outline: none;
-		}
-	}
-
-	&__decrease,
-	&__increase {
+	.sc-quantity-selector__decrease,
+	.sc-quantity-selector__increase {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -108,8 +28,6 @@
 		top: 1px;
 		bottom: 1px;
 		width: 32px;
-		background: var(--sc-input-background-color);
-		color: var(--sc-input-help-text-color);
 		cursor: pointer;
 		font-size: 13px;
 		user-select: none;
@@ -117,14 +35,8 @@
 		padding: 0;
 
 		svg {
-			width: 16px;
-			height: 16px;
-		}
-
-		&:hover:not(.button--disabled) {
-			.quantity__control {
-				color: var(--sc-input-color-hover);
-			}
+			width: var(--sc-font-size-medium, 1em);
+			height: var(--sc-font-size-medium, 1em);
 		}
 
 		&.button--disabled {
@@ -135,16 +47,19 @@
 		}
 	}
 
-	&__decrease {
-		left: 1px;
-		border-radius: var(--border-radius) 0 0 var(--border-radius);
-		border-right: var(--sc-input-border);
+	.sc-quantity-selector__decrease {
+		border-right: 1px solid var(--sc-input-border-color);
 	}
 
-	&__increase {
-		right: 1px;
-		border-radius: 0 var(--border-radius) var(--border-radius) 0;
-		border-left: var(--sc-input-border);
+	.sc-quantity-selector__increase {
+		border-left: 1px solid var(--sc-input-border-color);
+	}
+
+	input[type='number'].sc-quantity-selector__control {
+		line-height: 1;
+		font-size: var(--sc-font-size-small);
+		height: 100%;
+		text-align: center;
 	}
 
 	&.quantity--small {
@@ -157,29 +72,17 @@
 			border: none;
 
 			svg {
-				width: 12px;
-				height: 12px;
+				width: var(--sc-font-size-small, 0.75em);
+				height: var(--sc-font-size-small, 0.75em);
 			}
 		}
-		.sc-quantity-selector__control {
+		input[type='number'].sc-quantity-selector__control {
 			max-width: 24px;
-            max-height: 24px !important;
-            min-height: 24px !important;
-            font-size: var(--sc-quantity-font-size-small, 12px) !important;
+			font-size: var(--sc-font-size-x-small);
 		}
 	}
+}
 
-	&.quantity--is-rtl {
-		.sc-quantity-selector__decrease {
-			right: 1px;
-			border-left: var(--sc-input-border);
-			border-right: 0;
-		}
-
-		.sc-quantity-selector__increase {
-			left: 1px;
-			border-right: var(--sc-input-border);
-			border-left: 0;
-		}
-	}
+.wp-block-surecart-product-quantity-v2 .sc-form-label {
+	color: inherit !important;
 }

@@ -6,7 +6,10 @@ import { store, getContext } from '@wordpress/interactivity';
 /**
  * Internal dependencies.
  */
-import { removeLineItem, fetchCheckout } from '@surecart/checkout-actions';
+import {
+	updateCheckoutLineItem,
+	removeCheckoutLineItem,
+} from '@surecart/checkout-actions';
 
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
@@ -127,8 +130,8 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 				return;
 			}
 
-      // Set the checkout data.
-      state.checkout = data;
+			// Set the checkout data.
+			state.checkout = data;
 
 			// Find the checkout by mode and formId.
 			const checkoutData = checkout[mode]?.[formId];
@@ -162,15 +165,45 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			);
 		},
 
-		removeLineItem: () => {
-			const { line_item, mode, formId } = getContext();
+		onQuantityIncrease: () => {
+			const { line_item } = getContext();
+			const quantity = line_item?.quantity + 1;
+			actions.updateLineItem({ quantity });
+		},
 
-			const checkout = removeLineItem({
-				checkoutId: state?.checkout?.id,
-				itemId: line_item?.id,
+		onQuantityDecrease: () => {
+			const { line_item } = getContext();
+			const quantity = line_item?.quantity - 1;
+			if (quantity < 1) {
+				return;
+			}
+			actions.updateLineItem({ quantity });
+		},
+
+		onQuantityChange: (e) => {
+			const quantity = parseInt(e.target.value || '');
+			actions.updateLineItem({ quantity });
+		},
+
+		updateLineItem: async (data) => {
+			const { line_item, mode, formId } = getContext();
+			const checkout = await updateCheckoutLineItem({
+				id: line_item?.id,
+				data,
 			});
 
-			actions.setCheckout(checkout, mode, formId);
+			if (checkout) {
+				actions.setCheckout(checkout, mode, formId);
+			}
+		},
+
+		removeLineItem: async () => {
+			const { line_item, mode, formId } = getContext();
+			const checkout = await removeCheckoutLineItem(line_item?.id);
+
+			if (checkout) {
+				actions.setCheckout(checkout, mode, formId);
+			}
 		},
 	},
 });

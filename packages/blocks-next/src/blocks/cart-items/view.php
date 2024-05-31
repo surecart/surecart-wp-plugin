@@ -37,26 +37,48 @@
                             </span>
                         <?php endif; ?>
                         <?php if ( $attributes['editable'] ): ?>
-                            <div class="sc-quantity-selector quantity--small" style="margin-top: var(--sc-spacing-xx-small);">
-                                <div role="button" class="sc-quantity-selector__decrease">
-                                    <?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
-                                </div>
-                                <input
-                                    class="sc-quantity-selector__control"
-                                    data-wp-bind--value="context.line_item.quantity"
-                                    data-wp-bind--min="context.line_item.min"
-                                    data-wp-bind--aria-valuemin="context.line_item.min"
-                                    data-wp-bind--max="context.line_item.max"
-                                    data-wp-bind--aria-valuemax="context.line_item.max"
-                                    data-wp-bind--aria-disabled="context.line_item.disabled"
-                                    type="number"
-                                    step="1"
-                                    autocomplete="off"
-                                />
-                                <div role="button" class="sc-quantity-selector__increase">
-                                    <?php echo wp_kses( SureCart::svg()->get( 'plus' ), sc_allowed_svg_html() ); ?>
-                                </div>
-                            </div>
+							<div
+								class="sc-input-group sc-quantity-selector"
+								data-wp-class--quantity--disabled="state.isQuantityDisabled"
+							>
+								<div
+									class="sc-input-group-text sc-quantity-selector__decrease"
+									role="button"
+									tabindex="0"
+									data-wp-on--click="surecart/checkout::actions.onQuantityDecrease"
+									data-wp-bind--disabled="state.isQuantityDecreaseDisabled"
+									data-wp-bind--aria-disabled="state.isQuantityDecreaseDisabled"
+									data-wp-class--button--disabled="state.isQuantityDecreaseDisabled"
+									aria-label="<?php echo esc_html__( 'Decrease quantity by one.', 'surecart' ); ?>"
+								>
+									<?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
+								</div>
+								<input
+									type="number"
+									class="sc-form-control sc-quantity-selector__control"
+									data-wp-bind--value="context.line_item.quantity"
+									data-wp-on--change="surecart/checkout::actions.onQuantityChange"
+									data-wp-bind--min="context.line_item.min"
+									data-wp-bind--aria-valuemin="context.line_item.min"
+									data-wp-bind--max="context.line_item.max"
+									data-wp-bind--aria-valuemax="context.line_item.max"
+									step="1"
+									autocomplete="off"
+									role="spinbutton"
+								/>
+								<div
+									class="sc-input-group-text sc-quantity-selector__increase"
+									role="button"
+									tabindex="0"
+									data-wp-on--click="surecart/checkout::actions.onQuantityIncrease"
+									data-wp-bind--disabled="state.isQuantityIncreaseDisabled"
+									data-wp-bind--aria-disabled="state.isQuantityIncreaseDisabled"
+									data-wp-class--button--disabled="state.isQuantityIncreaseDisabled"
+									aria-label="<?php echo esc_html__( 'Increase quantity by one.', 'surecart' ); ?>"
+								>
+									<?php echo wp_kses( SureCart::svg()->get( 'plus' ), sc_allowed_svg_html() ); ?>
+								</div>
+							</div>
                         <?php endif; ?>
                     </div>
                 </div>
