@@ -59,7 +59,6 @@
 		"files": [
 			"core/core/config.php",
 			"core/app-core/config.php",
-			"packages/blocks-next/index.php",
 			"vendor/woocommerce/action-scheduler/action-scheduler.php"
 		]
 	},
