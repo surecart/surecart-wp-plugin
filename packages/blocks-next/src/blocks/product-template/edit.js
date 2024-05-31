@@ -66,6 +66,7 @@ export default ({
 				page: 1,
 				per_page: limit || 15,
 				...('custom' === type ? { include: ids } : {}),
+				...('featured' === type ? { featured: true } : {}),
 			},
 		];
 		return {

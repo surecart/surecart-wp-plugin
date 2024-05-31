@@ -506,12 +506,21 @@ class ProductPostTypeService {
 	 * @return array
 	 */
 	public function addMetaQuery( $args, $request ) {
-		if ( ! empty( $request['sc_id'] ) ) {
-			$args['meta_query'][]   = [
-				'key'     => 'sc_id',
-				'value'   => $request['sc_id'],
-				'compare' => 'IN',
-			];
+		if ( ! empty( $request ) ) {
+			if ( ! empty( $request['sc_id'] ) ) {
+				$args['meta_query'][]   = [
+					'key'     => 'sc_id',
+					'value'   => $request['sc_id'],
+					'compare' => 'IN',
+				];
+			}
+			if ( ! empty( $request['featured'] ) ) {
+				$args['meta_query'][]   = [
+					'key'     => 'featured',
+					'value'   => '1',
+					'compare' => '=',
+				];
+			}
 			$args['post_status']    = [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
 			$args['posts_per_page'] = -1;
 			$args['no_found_rows']  = true;
