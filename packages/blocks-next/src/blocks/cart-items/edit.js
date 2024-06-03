@@ -15,11 +15,11 @@ import CartInspectorControls from '../../components/CartInspectorControls';
 export default ({ attributes, setAttributes }) => {
 	const { removable, editable } = attributes;
 
-  const blockProps = useBlockProps({
+	const blockProps = useBlockProps({
 		style: {
-      minHeight: '400px',
-      ...useCartStyles({ attributes }),
-    },
+			minHeight: '400px',
+			...useCartStyles({ attributes }),
+		},
 	});
 
 	const lineItems = [
@@ -50,7 +50,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-        <CartInspectorControls
+				<CartInspectorControls
 					attributes={attributes}
 					setAttributes={setAttributes}
 				/>
@@ -101,36 +101,38 @@ export default ({ attributes, setAttributes }) => {
 											{lineItem.price.product.name}
 										</div>
 										<div className="sc-product-line-item__description sc-product-line-item__price-variant">
-											<div>
-												{lineItem?.price?.name}
-											</div>
+											<div>{lineItem?.price?.name}</div>
 										</div>
-										{!editable &&
-											lineItem.quantity > 1 && (
-												<span className="sc-product-line-item__description">
-													{__('Qty:', 'surecart')}{' '}
-													{lineItem.quantity}
-												</span>
-											)}
+										{!editable && lineItem.quantity > 1 && (
+											<span className="sc-product-line-item__description">
+												{__('Qty:', 'surecart')}{' '}
+												{lineItem.quantity}
+											</span>
+										)}
 									</div>
 									{editable && (
-										<div className="sc-quantity-selector quantity--small">
+										<div className="sc-input-group sc-quantity-selector">
 											<div
+												className="sc-input-group-text sc-quantity-selector__decrease"
 												role="button"
-												className="sc-quantity-selector__decrease"
+												tabindex="0"
+												aria-label="<?php echo esc_html__( 'Decrease quantity by one.', 'surecart' ); ?>"
 											>
 												<ScIcon name="minus" />
 											</div>
 											<input
-												className="sc-quantity-selector__control"
-												value={lineItem.quantity}
 												type="number"
+												className="sc-form-control sc-quantity-selector__control"
+												value={lineItem.quantity}
 												step="1"
 												autocomplete="off"
+												role="spinbutton"
 											/>
 											<div
+												className="sc-input-group-text sc-quantity-selector__increase"
 												role="button"
-												className="sc-quantity-selector__increase"
+												tabindex="0"
+												aria-label="<?php echo esc_html__( 'Increase quantity by one.', 'surecart' ); ?>"
 											>
 												<ScIcon name="plus" />
 											</div>
