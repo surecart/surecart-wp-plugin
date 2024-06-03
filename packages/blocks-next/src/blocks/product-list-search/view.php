@@ -1,5 +1,5 @@
 <?php
-$block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
+$block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
 $url      = \SureCart::block()->urlParams( 'products', $block_id );
 $query    = $url->getArg( 'search' );
 ?>

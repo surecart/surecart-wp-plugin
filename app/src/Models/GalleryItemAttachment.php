@@ -37,9 +37,11 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		}
 
 		// add any styles.
+		$tags = new \WP_HTML_Tag_Processor( $image );
+
+		// add inline styles.
 		if ( ! empty( $attr['style'] ) ) {
-			$tags = new \WP_HTML_Tag_Processor( $image );
-			if ( $tags->next_tag( 'img' ) && ! empty( $attr['height'] ) ) {
+			if ( $tags->next_tag( 'img' ) && ! empty( $attr['style'] ) ) {
 				$tags->set_attribute( 'style', $attr['style'] );
 			}
 		}

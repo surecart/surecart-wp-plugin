@@ -77,4 +77,13 @@ class BlockService {
 	public function urlParams( $type = '', $instance_id = '' ) {
 		return new URLParamService( $type, $instance_id );
 	}
+
+	/**
+	 * Get the product list service.
+	 *
+	 * @return ProductListService
+	 */
+	public function productList( $block ) {
+		return new ProductListService( $block );
+	}
 }

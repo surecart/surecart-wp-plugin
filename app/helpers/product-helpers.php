@@ -78,21 +78,59 @@ if ( ! function_exists( 'sc_setup_product_data' ) ) {
 }
 
 
-if ( ! function_exists( 'sc_get_product_image' ) ) {
+if ( ! function_exists( 'sc_get_product_featured_image' ) ) {
 	/**
 	 * Set global $sc_product.
 	 *
-	 * @param mixed  $id The attachment id.
-	 * @param string $size Image size.
+	 * @param string $size The image size.
+	 * @param array  $attrs The attributes.
 	 *
 	 * @return string
 	 */
-	function sc_get_product_image( $id, $size = 'full' ) {
-		$sc_product = sc_setup_product_data();
-		if ( empty( $sc_product ) ) {
+	function sc_get_product_featured_image( $size = 'full', $attrs = [] ) {
+		$sc_product = sc_get_product();
+		if ( empty( $sc_product ) || empty( $sc_product->featured_image ) ) {
 			return '';
 		}
-		return $sc_product->featured_image->html( $id, $size );
+		return $sc_product->featured_image->html( $size, $attrs );
+	}
+}
+
+if ( ! function_exists( 'sc_get_product_featured_image_attributes' ) ) {
+	/**
+	 * Set global $sc_product.
+	 *
+	 * @param string $size The image size.
+	 * @param array  $attrs The attributes.
+	 *
+	 * @return object
+	 */
+	function sc_get_product_featured_image_attributes( $size = 'full', $attrs = [] ) {
+		$sc_product = sc_get_product();
+		if ( empty( $sc_product ) || empty( $sc_product->featured_image ) ) {
+			return '';
+		}
+		return $sc_product->featured_image->attributes( $size, $attrs );
+	}
+}
+
+if ( ! function_exists( 'sc_html_attributes' ) ) {
+	/**
+	 * Get the html attributes.
+	 *
+	 * @param array $attributes The attributes.
+	 * @param bool  $show_empty_values Whether to show empty values.
+	 *
+	 * @return string
+	 */
+	function sc_html_attributes( $attributes = [], $show_empty_values = false ) {
+		$html = '';
+		foreach ( $attributes as $key => $value ) {
+			if ( $value || $show_empty_values ) {
+				$html .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( $value ) );
+			}
+		}
+		return $html;
 	}
 }
 

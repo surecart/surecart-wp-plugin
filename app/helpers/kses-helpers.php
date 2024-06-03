@@ -92,3 +92,17 @@ function sc_allowed_svg_html(): array {
 
 	return array_merge( $kses_defaults, $svg_args );
 }
+
+/**
+ * Add sizes and srcset to allowed image HTML.
+ *
+ * @return array
+ */
+function sc_allowed_image_html(): array {
+	$kses = wp_kses_allowed_html( 'post' );
+
+	$kses['img']['srcset'] = true;
+	$kses['img']['sizes']  = true;
+
+	return $kses;
+}

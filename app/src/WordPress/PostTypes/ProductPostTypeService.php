@@ -209,15 +209,23 @@ class ProductPostTypeService {
 
 		// add to tax_query.
 		if ( \SureCart::account()->id ) {
+			// get existing tax_query.
+			$existing = is_array( $query->get( 'tax_query' ) ) && ! empty( $query->get( 'tax_query' ) ) ? $query->get( 'tax_query' ) : [];
+
+			// set the tax query using account.
 			$query->set(
 				'tax_query',
-				[
+				array_merge(
 					[
-						'taxonomy' => 'sc_account',
-						'field'    => 'name',
-						'terms'    => \SureCart::account()->id,
+						'relation' => 'AND',
+						[
+							'taxonomy' => 'sc_account',
+							'field'    => 'name',
+							'terms'    => \SureCart::account()->id,
+						],
 					],
-				]
+					$existing,
+				),
 			);
 		}
 

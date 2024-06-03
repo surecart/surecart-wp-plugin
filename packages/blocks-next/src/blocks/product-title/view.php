@@ -2,14 +2,14 @@
 <<?php echo esc_html( $html_tag ); ?> <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( $is_link ) : ?>
 		<a
-			data-wp-bind--href="context.product.permalink"
+			href="<?php echo esc_url( get_the_permalink() ); ?>"
+			title="<?php echo esc_attr( the_title_attribute( [ 'echo' => false ] ) ); ?>"
 			target="<?php echo esc_attr( $attributes['linkTarget'] ); ?>"
-			<?php ! empty( $attributes['rel'] ) ? 'rel="' . esc_attr( $attributes['rel'] ) . '"' : ''; ?>
-			data-wp-bind--title="context.product.name"
+			<?php echo ! empty( $attributes['rel'] ) ? 'rel="' . esc_attr( $attributes['rel'] ) . '"' : ''; ?>
 		>
 	<?php endif; ?>
 
-	<span data-wp-text="context.product.name"></span>
+	<?php the_title(); ?>
 
 	<?php if ( $is_link ) : ?>
 		</a>

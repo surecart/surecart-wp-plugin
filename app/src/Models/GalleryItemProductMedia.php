@@ -42,10 +42,14 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 			$image = sprintf( '<img src="%s" alt="%s" title="%s" />', $this->item->url, $this->item->alt ?? '', $this->item->title ?? '' );
 		}
 
-		// add height style.
+		// add any styles.
 		$tags = new \WP_HTML_Tag_Processor( $image );
-		if ( $tags->next_tag( 'img' ) && ! empty( $attr['height'] ) ) {
-			$tags->set_attribute( 'style', 'height: ' . $attr['height'] );
+
+		// add inline styles.
+		if ( ! empty( $attr['style'] ) ) {
+			if ( $tags->next_tag( 'img' ) && ! empty( $attr['style'] ) ) {
+				$tags->set_attribute( 'style', $attr['style'] );
+			}
 		}
 
 		// return updated html.

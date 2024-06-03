@@ -1,6 +1,6 @@
 <?php
 
-$block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
+$block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
 $params   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block_id );
 $filter   = $params->getArg( 'sc_collection' );
 

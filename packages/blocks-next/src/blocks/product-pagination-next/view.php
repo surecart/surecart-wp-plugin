@@ -1,11 +1,22 @@
 <a
-	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'class' => 'has-arrow-type-' . esc_attr( $pagination_arrow ) ] ) ); ?>
-	data-wp-bind--href="context.nextPageLink"
-	data-wp-class--disabled="!context.nextPageLink"
-	data-wp-bind--aria-disabled="!context.nextPageLink"
-	data-wp-on--click="surecart/product-list::actions.navigate"
-	data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
+<?php
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array_filter(
+				[
+					'class'                  => 'has-arrow-type-' . esc_attr( $pagination_arrow ),
+					'href'                   => esc_url( $page_link ),
+					'role'                   => 'link',
+					'aria-disabled'          => empty( $page_link ) ? 'true' : null,
+					'data-wp-on--click'      => 'surecart/product-list::actions.navigate',
+					'data-wp-on--mouseenter' => 'surecart/product-list::actions.prefetch',
+				]
+			)
+		)
+	);
+	?>
 	>
+
 	<span class="<?php echo empty( $show_label ) ? 'sc-screen-reader-text' : 'sc-page-link-label'; ?>">
 		<?php echo wp_kses_post( $attributes['label'] ?? __( 'Next', 'surecart' ) ); ?>
 	</span>

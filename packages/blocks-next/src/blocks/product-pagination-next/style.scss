@@ -12,4 +12,10 @@
 	&:focus:not(:focus-visible) {
 		outline: none;
 	}
+
+	&[aria-disabled] {
+		pointer-events: none;
+		text-decoration: none;
+		opacity: 0.5;
+	}
 }

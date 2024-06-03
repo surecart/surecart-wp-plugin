@@ -4,11 +4,11 @@
 $collections = get_terms(
 	array(
 		'taxonomy'   => 'sc_collection',
-		'hide_empty' => false,
+		'hide_empty' => true,
 	)
 );
 
-$block_id   = $block->context['surecart/product-list/blockId'];
+$block_id   = $block->context['surecart/product-list/block_id'];
 $filter_key = \SureCart::block()->urlParams( 'products' )->getKey( 'filter', $block_id );
 
 $options = array_map(

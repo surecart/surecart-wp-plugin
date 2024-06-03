@@ -16,6 +16,13 @@ class Product extends Model implements PageModel {
 	use HasImageSizes, HasPurchases, HasCommissionStructure;
 
 	/**
+	 * These always need to be fetched during create/update in order to sync with post model.
+	 *
+	 * @var array
+	 */
+	protected $sync_expands = [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ];
+
+	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
@@ -60,6 +67,21 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Delete the synced post.
+	 *
+	 * @param string $id The id of the model to delete.
+	 * @return \SureCart\Models\Product
+	 */
+	protected function deleteSynced( $id = '' ) {
+		$id = ! empty( $id ) ? $id : $this->id;
+		\SureCart::sync()
+			->product()
+			->delete( $id );
+
+		return $this;
+	}
+
+	/**
 	 * Queue a sync process with a post.
 	 *
 	 * @return \SureCart\Background\QueueService
@@ -89,17 +111,65 @@ class Product extends Model implements PageModel {
 	 * @return $this|false
 	 */
 	protected function create( $attributes = array() ) {
-		if ( ! wp_is_block_theme() ) {
-			$attributes['metadata'] = array(
-				...$attributes['metadata'] ?? array(),
-				'wp_template_id' => apply_filters( 'surecart/templates/products/default', 'pages/template-surecart-product.php' ),
-			);
+		// always expand these on create since we need to sync with the post.
+		$this->with( $this->sync_expands );
+
+		// create the model.
+		$created = parent::create( $attributes );
+		if ( is_wp_error( $created ) ) {
+			return $created;
 		}
 
-		parent::create( $attributes );
-
+		// sync with the post.
 		$this->sync();
 
+		// return.
+		return $this;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		// always expand these on update since we need to sync with the post.
+		$this->with( $this->sync_expands );
+
+		// update the model.
+		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		// return.
+		return $this;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param string $id The id of the model to delete.
+	 * @return $this|false
+	 */
+	protected function delete( $id = '' ) {
+		// delete the model.
+		$deleted = parent::delete( $id );
+
+		// check for errors.
+		if ( is_wp_error( $deleted ) ) {
+			return $deleted;
+		}
+
+		// delete the post.
+		$this->deleteSynced( $id );
+
+		// return.
 		return $this;
 	}
 
@@ -544,33 +614,35 @@ class Product extends Model implements PageModel {
 	public function getGalleryAttribute() {
 		$gallery_items = $this->post->gallery ?? [];
 
-		return array_map(
-			function ( $gallery_item ) {
-				// force object.
-				$gallery_item = (object) $gallery_item;
+		return array_filter(
+			array_map(
+				function ( $gallery_item ) {
+					// force object.
+					$gallery_item = (object) $gallery_item;
 
-				// this is an attachment id.
-				if ( is_int( $gallery_item->id ) ) {
-					return new GalleryItemAttachment( $gallery_item->id );
-				}
-
-				// get the product media item that matches the id.
-				$item = array_filter(
-					$this->getAttribute( 'product_medias' )->data ?? array(),
-					function ( $item ) use ( $gallery_item ) {
-						return $item->id === $gallery_item->id;
+					// this is an attachment id.
+					if ( is_int( $gallery_item->id ) ) {
+						return new GalleryItemAttachment( $gallery_item->id );
 					}
-				);
 
-				// get the first item.
-				$item = array_shift( $item );
-				if ( ! empty( $item ) ) {
-					return new GalleryItemProductMedia( $item );
-				}
+					// get the product media item that matches the id.
+					$item = array_filter(
+						$this->getAttribute( 'product_medias' )->data ?? array(),
+						function ( $item ) use ( $gallery_item ) {
+							return $item->id === $gallery_item->id;
+						}
+					);
 
-				return '';
-			},
-			$gallery_items
+					// get the first item.
+					$item = array_shift( $item );
+					if ( ! empty( $item ) ) {
+						return new GalleryItemProductMedia( $item );
+					}
+
+					return null;
+				},
+				$gallery_items
+			)
 		);
 	}
 
