@@ -138,6 +138,7 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			state.loading = false;
 
 			if (checkout) {
+				state.discountCode = '';
 				state.checkout = checkout;
 			}
 		},
