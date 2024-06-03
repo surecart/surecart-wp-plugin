@@ -258,9 +258,6 @@ export default () => {
 						'Allow Customers to Remove Default Payment Method',
 						'surecart'
 					)}
-					{!scData?.entitlements?.optional_upfront_payment_method && (
-						<ScPremiumTag />
-					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'When enabled, customers are allowed to remove their default payment method on file. This can lead to subscription payments failing since there is no payment method on file.',
