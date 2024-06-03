@@ -559,33 +559,35 @@ class Product extends Model implements PageModel {
 	public function getGalleryAttribute() {
 		$gallery_items = $this->post->gallery ?? [];
 
-		return array_map(
-			function ( $gallery_item ) {
-				// force object.
-				$gallery_item = (object) $gallery_item;
+		return array_filter(
+			array_map(
+				function ( $gallery_item ) {
+					// force object.
+					$gallery_item = (object) $gallery_item;
 
-				// this is an attachment id.
-				if ( is_int( $gallery_item->id ) ) {
-					return new GalleryItemAttachment( $gallery_item->id );
-				}
-
-				// get the product media item that matches the id.
-				$item = array_filter(
-					$this->getAttribute( 'product_medias' )->data ?? array(),
-					function ( $item ) use ( $gallery_item ) {
-						return $item->id === $gallery_item->id;
+					// this is an attachment id.
+					if ( is_int( $gallery_item->id ) ) {
+						return new GalleryItemAttachment( $gallery_item->id );
 					}
-				);
 
-				// get the first item.
-				$item = array_shift( $item );
-				if ( ! empty( $item ) ) {
-					return new GalleryItemProductMedia( $item );
-				}
+					// get the product media item that matches the id.
+					$item = array_filter(
+						$this->getAttribute( 'product_medias' )->data ?? array(),
+						function ( $item ) use ( $gallery_item ) {
+							return $item->id === $gallery_item->id;
+						}
+					);
 
-				return '';
-			},
-			$gallery_items
+					// get the first item.
+					$item = array_shift( $item );
+					if ( ! empty( $item ) ) {
+						return new GalleryItemProductMedia( $item );
+					}
+
+					return null;
+				},
+				$gallery_items
+			)
 		);
 	}
 
