@@ -1,6 +1,10 @@
 .wp-block-surecart-cart-coupon-v2 {
 	.trigger {
 		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 
 	.sc-tag {
