@@ -16,6 +16,13 @@ class Product extends Model implements PageModel {
 	use HasImageSizes, HasPurchases, HasCommissionStructure;
 
 	/**
+	 * These always need to be fetched during create/update in order to sync with post model.
+	 *
+	 * @var array
+	 */
+	protected $sync_expands = [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ];
+
+	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
@@ -104,17 +111,19 @@ class Product extends Model implements PageModel {
 	 * @return $this|false
 	 */
 	protected function create( $attributes = array() ) {
-		if ( ! wp_is_block_theme() ) {
-			$attributes['metadata'] = array(
-				...$attributes['metadata'] ?? array(),
-				'wp_template_id' => apply_filters( 'surecart/templates/products/default', 'pages/template-surecart-product.php' ),
-			);
+		// always expand these on create since we need to sync with the post.
+		$this->with( $this->sync_expands );
+
+		// create the model.
+		$created = parent::create( $attributes );
+		if ( is_wp_error( $created ) ) {
+			return $created;
 		}
 
-		parent::create( $attributes );
-
+		// sync with the post.
 		$this->sync();
 
+		// return.
 		return $this;
 	}
 
@@ -126,10 +135,19 @@ class Product extends Model implements PageModel {
 	 * @return $this|false
 	 */
 	protected function update( $attributes = array() ) {
-		parent::update( $attributes );
+		// always expand these on update since we need to sync with the post.
+		$this->with( $this->sync_expands );
 
+		// update the model.
+		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		// sync with the post.
 		$this->sync();
 
+		// return.
 		return $this;
 	}
 
@@ -140,14 +158,18 @@ class Product extends Model implements PageModel {
 	 * @return $this|false
 	 */
 	protected function delete( $id = '' ) {
+		// delete the model.
 		$deleted = parent::delete( $id );
 
+		// check for errors.
 		if ( is_wp_error( $deleted ) ) {
 			return $deleted;
 		}
 
+		// delete the post.
 		$this->deleteSynced( $id );
 
+		// return.
 		return $this;
 	}
 
