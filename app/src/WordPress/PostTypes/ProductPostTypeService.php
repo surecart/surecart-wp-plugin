@@ -394,7 +394,7 @@ class ProductPostTypeService {
 				'show_ui'           => true,
 				'show_in_menu'      => true,
 				'rewrite'           => [
-					'slug'       => 'products',
+					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,
 				],
 				'show_in_rest'      => true,
