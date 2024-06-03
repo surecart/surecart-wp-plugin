@@ -20,12 +20,7 @@
 			"type": "string"
 		},
 		"highlight_border": {
-			"type": "object",
-			"default": {
-				"color": null,
-				"style": null,
-				"width": null
-			}
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -48,8 +43,7 @@
 			"__experimentalDefaultControls": {
 				"text": true,
 				"background": true
-			},
-			"enableContrastChecker": true
+			}
 		},
 		"typography": {
 			"fontSize": true,

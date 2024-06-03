@@ -17,7 +17,6 @@ import { Fragment } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import BorderInspectorControl from '../../components/BorderInspectorControl';
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 
 export default ({
@@ -44,6 +43,10 @@ export default ({
 					style: {
 						backgroundColor: highlight_background,
 						color: highlight_text,
+						borderTopColor: highlight_border,
+						borderBottomColor: highlight_border,
+						borderLeftColor: highlight_border,
+						borderRightColor: highlight_border,
 					},
 			  }
 			: {}),
@@ -51,15 +54,6 @@ export default ({
 
 	return (
 		<Fragment>
-			{/* Additional border inspector control. */}
-			<BorderInspectorControl
-				label={__('Highlight Border', 'surecart')}
-				value={highlight_border}
-				onChange={(highlight_border) =>
-					setAttributes({ highlight_border })
-				}
-				panelId={clientId}
-			/>
 			{/* Additional color inspector control. */}
 			<ColorInspectorControl
 				settings={[
@@ -79,6 +73,16 @@ export default ({
 						resetAllFilter: () =>
 							setAttributes({
 								highlight_background: undefined,
+							}),
+					},
+					{
+						colorValue: highlight_border,
+						label: __('Highlight Border', 'surecart'),
+						onColorChange: (highlight_border) =>
+							setAttributes({ highlight_border }),
+						resetAllFilter: () =>
+							setAttributes({
+								highlight_border: undefined,
 							}),
 					},
 				]}

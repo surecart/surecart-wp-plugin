@@ -9,16 +9,16 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+
+printf(
+	'<style>button.sc-pill-option__button--selected,button.sc-pill-option__button--selected:hover,button.sc-pill-option__button--selected:focus{background-color:%s!important;color:%s!important;border-color:%s!important;}</style>',
+	$attributes['highlight_background'] ?? '',
+	$attributes['highlight_text'] ?? '',
+	$attributes['highlight_border'] ?? ''
+);
+
 ?>
 <button
-	<?php
-	echo wp_interactivity_data_wp_context(
-		array(
-			'highlight_text'       => $attributes['highlight_text'] ?? '',
-			'highlight_background' => $attributes['highlight_background'] ?? '',
-		)
-	);
-	?>
 	type="button"
 	data-wp-bind--value="context.option_value"
 	data-wp-text="context.option_value"
