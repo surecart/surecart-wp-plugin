@@ -4,7 +4,7 @@
 $collections = get_terms(
 	array(
 		'taxonomy'   => 'sc_collection',
-		'hide_empty' => false,
+		'hide_empty' => true,
 	)
 );
 
