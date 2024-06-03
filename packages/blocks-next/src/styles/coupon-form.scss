@@ -86,6 +86,10 @@
 		align-items: flex-start;
 		text-align: left;
 
+		&[hidden] {
+			display: none;
+		}
+
 		sc-icon {
 			flex: 0 0 1em;
 			margin-top: 0.25em;

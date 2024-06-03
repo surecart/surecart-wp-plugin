@@ -79,6 +79,11 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 					!lineItem?.price?.recurring_period_count
 			);
 		},
+
+		// Do any line items have a recurring price?
+		get hasRecurring() {
+			return state?.checkout?.line_items?.data?.some(item => item?.price?.recurring_interval);
+		}
 	},
 
 	callbacks: {
@@ -119,7 +124,8 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		setDiscountCode(e) {
 			state.discountCode = e?.target?.value || '';
 		},
-		applyDiscount: async () => {
+		applyDiscount: async (e) => {
+			e.preventDefault();
 			state.loading = true;
 			const checkout = await handleCouponApply(
 				state.checkout.id,

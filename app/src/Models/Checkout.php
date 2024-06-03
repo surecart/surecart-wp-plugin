@@ -108,12 +108,25 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the has recurring attribute.
+	 *
+	 * Do any line items have a recurring price?
+	 *
+	 * @return bool
+	 */
+	public function getHasRecurringAttribute() {
+		return array_reduce($this->line_items->data, function($carry, $item) {
+			return $carry || isset($item->price->recurring_interval);
+		}, false);
+	}
+
+	/**
 	 * Get the human discount attribute.
 	 *
 	 * @return string
 	 */
 	public function getHumanDiscountAttribute() {
-		if ( $this->discount && $this->discount->coupon ) {
+		if ( $this->discount && $this->discount->coupon && $this->discount->coupon->percent_off ) {
 			if ( $this->discount->coupon->amount_off && $this->currency ) {
 				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
 			}
@@ -129,7 +142,7 @@ class Checkout extends Model {
 	}
 
 	public function getHumanDiscountWithDurationAttribute() {
-		if ( ! $this->show_interval ) {
+		if ( ! $this->hasRecurrning ) {
 			return $this->human_discount;
 		}
 

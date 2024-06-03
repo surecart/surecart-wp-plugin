@@ -5,7 +5,7 @@
 	&__item {
 		display: grid;
 		align-self: center;
-		grid-template-columns: auto 1fr 1fr;
+		grid-template-columns: auto 1fr;
 	}
 
 	@media screen and (min-width: var(--mobile-size)) {
