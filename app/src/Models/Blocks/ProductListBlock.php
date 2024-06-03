@@ -72,13 +72,14 @@ class ProductListBlock {
 
 		// handle collections query.
 		if ( ! empty( $this->url->getArg( 'sc_collection' ) ) ) {
-			$this->query_vars['tax_query'] = [
+			$this->query_vars['tax_query'] =
 				[
-					'taxonomy' => 'sc_collection',
-					'field'    => 'term_id',
-					'terms'    => $this->url->getArg( 'sc_collection' ),
-				],
-			];
+					[
+						'taxonomy' => 'sc_collection',
+						'field'    => 'term_id',
+						'terms'    => array_map( 'intval', $this->url->getArg( 'sc_collection' ) ?? [] ),
+					],
+				];
 		}
 
 		// handle featured.
