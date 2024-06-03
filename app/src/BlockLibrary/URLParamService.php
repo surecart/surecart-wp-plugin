@@ -118,7 +118,7 @@ class URLParamService {
 		// get the key for this filter argument.
 		$key = $this->getKey( $key, $instance_id );
 		// return the new URL without pagination for filtering.
-		$this->url = add_query_arg( $key, $value, $this->url );
+		$this->url = add_query_arg( $key, $value );
 		// return this.
 		return $this;
 	}
