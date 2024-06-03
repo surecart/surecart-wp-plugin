@@ -17,7 +17,6 @@ export { metadata, name };
 
 export const settings = {
 	icon,
-	// edit,
 	edit: ({ clientId, attributes }) => (
 		<BlockReplacer
 			clientId={clientId}
