@@ -136,12 +136,14 @@ export default ({ id, setBrowserURL }) => {
 			});
 
 			// add metaboxes to pending records.
-			const metaboxes = applyFilters(
-				'surecart.saveProduct',
-				Promise.resolve(),
-				{}
-			);
-			pendingSavedRecords.push(metaboxes);
+			if (post) {
+				const metaboxes = applyFilters(
+					'surecart.saveProduct',
+					Promise.resolve(),
+					{}
+				);
+				pendingSavedRecords.push(metaboxes);
+			}
 
 			// check values.
 			const values = await Promise.all(pendingSavedRecords);
