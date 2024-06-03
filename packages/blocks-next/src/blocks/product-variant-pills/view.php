@@ -21,18 +21,8 @@
 				<?php echo wp_kses_post( $option->name ); ?>
 			</label>
 
-			<div
-				class="sc-pill-option__wrapper"
-				<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-				<?php echo wp_interactivity_data_wp_context( array( 'option_values' => $option->values ) ); ?>
-			>
-				<template
-					data-wp-each--option_value="context.option_values"
-				>
-					<span data-wp-key="context.option_value">
-						<?php echo $content; ?>
-					</span>
-				</template>
+			<div <?php echo wp_interactivity_data_wp_context( array( 'optionValues' => $option->values ) ); ?> >
+				<?php echo $content; ?>
 			</div>
 		</div>
 	<?php endforeach; ?>

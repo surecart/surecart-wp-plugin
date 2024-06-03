@@ -22,8 +22,8 @@ import ColorInspectorControl from '../../components/ColorInspectorControl';
 
 export default ({
 	context: {
-		'surecart/productVariantChoice/name': name,
-		'surecart/productVariantChoice/selected': selected,
+		'surecart/productVariantPill/name': name,
+		'surecart/productVariantPill/selected': selected,
 	},
 	__unstableLayoutClassNames,
 	clientId,

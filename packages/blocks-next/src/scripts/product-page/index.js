@@ -63,19 +63,19 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		},
 		/** Is the option unavailable */
 		get isOptionUnavailable() {
-			const { optionNumber, optionValue } = getContext();
+			const { optionNumber, option_value } = getContext();
 			return isProductVariantOptionSoldOut(
 				parseInt(optionNumber),
-				optionValue,
+				option_value,
 				state.variantValues,
 				state.product
 			);
 		},
 		/** Is the option selected? */
 		get isOptionSelected() {
-			const { optionNumber, optionValue } = getContext();
+			const { optionNumber, option_value } = getContext();
 			return (
-				state.variantValues[`option_${optionNumber}`] === optionValue
+				state.variantValues[`option_${optionNumber}`] === option_value
 			);
 		},
 		/** Is the price selected? */

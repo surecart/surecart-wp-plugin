@@ -10,7 +10,6 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 ?>
-
 <button
 	<?php
 	echo wp_interactivity_data_wp_context(
