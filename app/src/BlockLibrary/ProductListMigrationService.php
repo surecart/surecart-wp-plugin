@@ -58,6 +58,9 @@ class ProductListMigrationService {
 
 		foreach ( $this->inner_blocks[0]['innerBlocks'] as $block ) {
 			if ( $block['blockName'] === $block_name)  {
+				if ( 'surecart/product-item-title' === $block_name ) {
+					$block['attrs']['level'] = 0;
+				}
 				return $block['attrs'];
 			}
 		}
@@ -172,9 +175,8 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderTitle(): void {
-		$product_title_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-title' );
-		$title_style = ! empty( $product_title_attrs['style'] ) ? wp_json_encode( $product_title_attrs['style'] ) : '{}';
-		$this->block_html .= '<!-- wp:surecart/product-title-v2 {"level":0,"style":' . $title_style . '} /-->';
+		$product_title_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-title' ) );
+		$this->block_html .= '<!-- wp:surecart/product-title-v2 ' . $product_title_attrs . ' /-->';
 	}
 
 	/**
@@ -183,9 +185,8 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderImage(): void {
-		$product_image_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-image' );
-		$image_style = ! empty( $product_image_attrs['style'] ) ? wp_json_encode( $product_image_attrs['style'] ) : '{}';
-		$this->block_html .= '<!-- wp:surecart/product-image {"style":' . $image_style . '} /-->';
+		$product_image_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-image' ) );
+		$this->block_html .= '<!-- wp:surecart/product-image ' . $product_image_attrs . ' /-->';
 	
 	}
 
@@ -195,9 +196,8 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderPrice(): void {
-		$product_price_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-price' );
-		$price_style = ! empty( $product_price_attrs['style'] ) ? wp_json_encode( $product_price_attrs['style'] ) : '{}';
-		$this->block_html .= '<!-- wp:surecart/product-price-v2 {"style":' . $price_style . '} /-->';
+		$product_price_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-price' ) );
+		$this->block_html .= '<!-- wp:surecart/product-price-v2 ' . $product_price_attrs . ' /-->';
 	}
 
 	/**
