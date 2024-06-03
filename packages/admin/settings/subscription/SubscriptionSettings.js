@@ -255,7 +255,7 @@ export default () => {
 					}}
 				>
 					{__(
-						'Allow Customers to Remove Default Payment Method',
+						'Allow Customers To Remove Default Payment Method',
 						'surecart'
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
