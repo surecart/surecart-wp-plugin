@@ -45,9 +45,8 @@ class ProductSyncService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( $this->action_name, [ $this, 'handleScheduledSync' ], 10 );
+		add_action( $this->action_name, [ $this, 'handleScheduledSync' ], 10, 2 );
 	}
-
 
 	/**
 	 * Post sync service
@@ -83,7 +82,9 @@ class ProductSyncService {
 			[
 				'id'               => $model->id,
 				'with_collections' => $this->with_collections,
-			]
+			],
+			'product-' . $model->id,
+			true
 		);
 	}
 
@@ -110,64 +111,23 @@ class ProductSyncService {
 	}
 
 	/**
-	 * Is this sync running.
-	 *
-	 * @param string $id The product id to check.
-	 *
-	 * @return boolean
-	 */
-	public function isScheduled( $id ) {
-		return \SureCart::queue()->isScheduled( $this->action_name, [ 'id' => $id ] );
-	}
-
-	/**
-	 * Has this product been synced recently.
-	 *
-	 * @param string $id The product id to check.
-	 * @param string $time_ago The time ago to check.
-	 *
-	 * @return boolean
-	 */
-	public function hasRecentlySynced( $id, $time_ago = '5 minutes' ) {
-		// get any syncs newer than the time ago.
-		$last_sync = \SureCart::queue()->search(
-			[
-				'hook'         => $this->action_name,
-				'args'         => [ 'id' => $id ],
-				'date_compare' => '>', // after the time ago.
-				'date'         => strtotime( '-' . $time_ago ), // 5 minutes ago.
-				'per_page'     => 1, // only need one.
-			],
-			'ids' // return only the ids (more efficient).
-		);
-
-		// if we have a sync that is newer than the time ago, return true.
-		return ! empty( $last_sync );
-	}
-
-	/**
 	 * Fetch and sync product.
 	 *
 	 * @param string $id The product id to sync.
 	 *
-	 * @return void
+	 * @throws \Exception If there is an error.
+	 *
+	 * @return \WP_Post|\WP_Error
 	 */
-	public function handleScheduledSync( $id ) {
-		// is scheduled or has recently synced.
-		// this prevents multiple syncs from happening at the same time
-		// or rapid syncing of products due to unforeseen circumstances.
-		if ( $this->isScheduled( $id ) || $this->hasRecentlySynced( $id ) ) {
-			return;
-		}
-
+	public function handleScheduledSync( $id, $with_collections = false ) {
 		// get product.
-		$product = Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->get( $id );
+		$product = Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->find( $id );
 
 		// handle error.
 		if ( is_wp_error( $product ) ) {
-			return $product;
+			throw( $product->get_error_message() );
 		}
 
-		return $this->sync( $product );
+		return $this->withCollections( $with_collections )->sync( $product );
 	}
 }
