@@ -108,6 +108,46 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the human discount attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountAttribute() {
+		if ( $this->discount && $this->discount->coupon ) {
+			if ( $this->discount->coupon->amount_off && $this->currency ) {
+				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
+			}
+
+			if ( $this->discount->coupon->percent_off ) {
+				return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
+			}
+
+			return '';
+		}
+
+		return '';
+	}
+
+	public function getHumanDiscountWithDurationAttribute() {
+		if ( ! $this->show_interval ) {
+			return $this->human_discount;
+		}
+
+		$duration = $this->discount->coupon->duration ?? '';
+		$duration_in_months = $this->discount->coupon->duration_in_months ?? 0;
+
+		switch ( $duration ) {
+			case 'once':
+				return sprintf( '%s %s', $this->human_discount, __( 'once', 'surecart' ) );
+			case 'repeating':
+				$months_label = sprintf( _n( '%d month', '%d months', $duration_in_months, 'surecart' ), $duration_in_months );
+				return sprintf( '%s for %s', $this->human_discount, $months_label );
+			default:
+				return $this->human_discount;
+		}
+	}
+
+	/**
 	 * Set attributes during write actions.
 	 *
 	 * @return void

@@ -24,7 +24,12 @@
         <div class="sc-line-item__text">
             <div class="sc-line-item__description">
                 <?php esc_html_e( 'Discount', 'surecart' ); ?>
-                <span class="sc-tag sc-tag--default" data-wp-text="state.checkout.discount.promotion.code"></span>
+                <span class="sc-tag sc-tag--default">
+                    <span data-wp-text="state.checkout.discount.promotion.code"></span>
+                    <button data-wp-on--click="actions.removeDiscount">
+                        <?php echo wp_kses( SureCart::svg()->get('x', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
+                    </button>
+                </span>
             </div>
         </div>
 
@@ -32,22 +37,24 @@
             <div class="sc-line-item__price-text">
                 <div class="sc-line-item__price-description">
                     <!-- redeemable UI -->
-                    <span data-wp-bind--hidden="!state.discountAmount">
-                        <span
+                    <div data-wp-bind--hidden="state.discountIsRedeemable">
+                        <div
                             data-wp-bind--hidden="!state.discountIsRedeemable"
                             class="coupon-human-discount"
                             data-wp-text="state.checkout.display_discount_amount"
-                        ></span>
-                    </span>
+                        ></div>
+                        <br>
+                        <div data-wp-text="state.checkout.human_discount_with_duration"></div>
+                    </div>
 
                     <!-- non-redeemable UI -->
-                    <span
+                    <div
                         data-wp-bind--hidden="!state.discountIsRedeemable"
                         class="coupon__status"
                     >
                         <?php echo wp_kses( SureCart::svg()->get('alert-triangle', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
                         <span data-wp-text="state.checkout.discount.redeemable_status"></span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>

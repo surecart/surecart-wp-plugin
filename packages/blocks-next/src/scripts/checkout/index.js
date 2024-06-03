@@ -131,6 +131,17 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 				state.checkout = checkout;
 			}
 		},
+
+		removeDiscount: async () => {
+			state.loading = true;
+			const checkout = await handleCouponApply(state.checkout.id, null);
+			state.loading = false;
+
+			if (checkout) {
+				state.checkout = checkout;
+			}
+		},
+
 		closeCouponOnClickOutside: (e) => {
 			const context = getContext();
 
