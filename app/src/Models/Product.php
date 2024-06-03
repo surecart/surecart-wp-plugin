@@ -182,6 +182,12 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setUpdatedAtAttribute( $value ) {
+		// queue the off-session sync job if the product is not set.
+		// TODO: Check if this is necessary.
+		if ( empty( $this->post ) ) {
+			$this->queueSync();
+		}
+
 		// queue the off-session sync job if the product updated_at is newer than the post updated_at.
 		if ( ! empty( $this->post ) && ! empty( $this->post->updated_at ) && ! empty( $this->updated_at ) ) {
 			if ( $this->updated_at > $this->post->updated_at ) {
