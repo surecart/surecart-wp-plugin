@@ -21,6 +21,13 @@ class URLParamService {
 	protected $pagination_key = 'page';
 
 	/**
+	 * Search Key.
+	 *
+	 * @var string
+	 */
+	protected $search_key = 'search';
+
+	/**
 	 * Unique instance ID.
 	 *
 	 * @var string
@@ -167,7 +174,36 @@ class URLParamService {
 		$filters = array_unique( array_merge( $existing_filters, [ $value ] ) );
 
 		// return the new URL without pagination for filtering.
-		return remove_query_arg( $this->pagination_key, add_query_arg( $key, $filters ) );
+		return remove_query_arg(
+			[
+				$this->getKey( $this->pagination_key, $instance_id ),
+				$this->getKey( $this->search_key, $instance_id ),
+			],
+			add_query_arg( $key, $filters )
+		);
+	}
+
+	/**
+	 * Check if a filter argument exists in the URL.
+	 *
+	 * @param  string $key Key.
+	 * @param  string $value Value.
+	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return bool
+	 */
+	public function hasFilterArg( $key, $value, $instance_id = '' ) {
+		// get the instance ID.
+		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+
+		// get the key for this filter argument.
+		$key = $this->getKey( $key, $instance_id );
+
+		// get the existing filters.
+		$existing_filters = $_GET[ $key ] ?? [];
+
+		// check if the value exists in the existing filters.
+		return in_array( strval( $value ), $existing_filters, false );
 	}
 
 	/**
@@ -193,6 +229,12 @@ class URLParamService {
 		$filters = array_diff( $existing_filters, [ $value ] );
 
 		// return the new URL without pagination for filtering.
-		return remove_query_arg( $this->pagination_key, add_query_arg( $key, $filters ) );
+		return remove_query_arg(
+			[
+				$this->getKey( $this->pagination_key, $instance_id ),
+				$this->getKey( $this->search_key, $instance_id ),
+			],
+			add_query_arg( $key, $filters )
+		);
 	}
 }
