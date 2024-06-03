@@ -56,7 +56,7 @@ export default ({
 			});
 		}
 	}, [layoutType]);
-	console.log(ids);
+
 	const { records: products, isResolving } = useEntityRecords(
 		'postType',
 		'sc_product',
@@ -67,7 +67,7 @@ export default ({
 			...('featured' === type ? { featured: true } : {}),
 		}
 	);
-	console.log(products);
+
 	const setDisplayLayout = (newDisplayLayout) =>
 		setAttributes({
 			layout: { ...layout, ...newDisplayLayout },
