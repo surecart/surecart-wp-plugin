@@ -22,7 +22,7 @@ class PermalinkServiceTest extends SureCartUnitTestCase {
 
     /**
      * Provide test versions mock data.
-     * 
+     *
      * @return void
      */
     public function versionData()
@@ -37,10 +37,10 @@ class PermalinkServiceTest extends SureCartUnitTestCase {
 
     /**
      * Tests if flush rewrite rules was successful on version change.
-     * 
+     *
      * @dataProvider versionData
      * @group flush-rewrite-rules
-     * 
+     *
      * @return void
      */
     public function test_flushRewriteRulesOnVersionChange( $stored_version, $plugin_version, $should_migrate ) {
