@@ -6,6 +6,7 @@
  *     $attributes (array): The block attributes.
  *     $content (string): The block default content.
  *     $block (WP_Block): The block instance.
+ *     $product (Product): The product object.
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
