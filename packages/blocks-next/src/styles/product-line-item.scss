@@ -2,6 +2,10 @@
 	display: block;
 	font-family: var(--sc-font-sans);
 
+	&[hidden] {
+		display: none;
+	}
+
 	&__item {
 		box-sizing: border-box;
 		margin: 0px;

@@ -70,6 +70,14 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			return !!line_item?.price?.product?.image_url;
 		},
+		get hasSubscription() {
+			return (state.checkout?.line_items?.data || []).some(
+				(lineItem) =>
+					lineItem?.price?.recurring_interval === 'month' &&
+					!!lineItem?.price?.recurring_interval &&
+					!lineItem?.price?.recurring_period_count
+			);
+		},
 	},
 
 	callbacks: {
@@ -211,3 +219,5 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		},
 	},
 });
+
+console.log('state.checkout', state.checkout);

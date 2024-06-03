@@ -72,12 +72,30 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display full amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayFullAmountAttribute() {
+		return Currency::format( $this->full_amount, $this->currency );
+	}
+
+	/**
 	 * Get the display bump amount attribute.
 	 *
 	 * @return string
 	 */
 	public function getDisplayBumpAmountAttribute() {
 		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Is the checkout an installment
+	 *
+	 * @return bool
+	 */
+	public function getIsInstallmentAttribute() {
+		return $this->full_amount !== $this->subtotal_amount;
 	}
 
 	/**
