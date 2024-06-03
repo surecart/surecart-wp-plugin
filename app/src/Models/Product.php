@@ -104,6 +104,21 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		parent::update( $attributes );
+
+		$this->sync();
+
+		return $this;
+	}
+
+	/**
 	 * Maybe queue a sync job if updated_at is different
 	 * than the product post updated_at.
 	 *
