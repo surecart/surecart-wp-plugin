@@ -49,6 +49,24 @@ export const fetchCheckout = async ({ id, query = {} }) => {
 	});
 };
 
+export const withDefaultData = (data) => ({
+	live_mode: checkoutState.mode !== 'test',
+	group_key: checkoutState.groupId,
+	abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
+	metadata: {
+		...(data?.metadata || {}),
+		...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),
+		...(checkoutState?.product?.id && {
+			buy_page_product_id: checkoutState?.product?.id,
+		}),
+		page_url: window.location.href,
+	},
+	...(checkoutState?.checkout?.email && {
+		email: checkoutState?.checkout?.email,
+	}),
+	...data,
+});
+
 /** Default query we send with every request. */
 export const withDefaultQuery = (query = {}) => ({
 	// ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
@@ -158,13 +176,13 @@ export const removeCheckoutLineItem = async (id) => {
 // };
 
 // /** Update the checkout. */
-// const updateCheckout = async ({ id, data = {}, query = {} }) => {
-// 	return await apiFetch({
-// 		method: 'PATCH',
-// 		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
-// 		data: withDefaultData(data),
-// 	});
-// };
+export const updateCheckout = async ({ id, data = {}, query = {} }) => {
+	return await apiFetch({
+		method: 'PATCH',
+		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
+		data: withDefaultData(data),
+	});
+};
 
 // /** Finalize a checkout */
 // const finalizeCheckout = async ({ id, data = {}, query = {}, processor }) => {
@@ -244,3 +262,14 @@ export const removeCheckoutLineItem = async (id) => {
 
 // 	return item?.checkout;
 // };
+
+export const handleCouponApply = async (checkoutId, promotion_code) => {
+	return await updateCheckout({
+		id: checkoutId,
+		data: {
+			discount: {
+				...(promotion_code ? { promotion_code } : {}),
+			},
+		},
+	});
+};

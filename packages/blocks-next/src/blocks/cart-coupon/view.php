@@ -36,7 +36,7 @@
                         <span
                             data-wp-bind--hidden="!state.discountIsRedeemable"
                             class="coupon-human-discount"
-                            data-wp-text="state.discountAmount"
+                            data-wp-text="state.checkout.display_discount_amount"
                         ></span>
                     </span>
 

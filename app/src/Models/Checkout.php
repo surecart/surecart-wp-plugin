@@ -81,6 +81,15 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display discount amount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisplayDiscountAmountAttribute() {
+		return Currency::format( $this->discount_amount, $this->currency );
+	}
+
+	/**
 	 * Get the display bump amount attribute.
 	 *
 	 * @return string

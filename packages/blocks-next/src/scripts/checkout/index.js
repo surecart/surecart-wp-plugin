@@ -9,6 +9,7 @@ import { store, getContext } from '@wordpress/interactivity';
 import {
 	updateCheckoutLineItem,
 	removeCheckoutLineItem,
+	handleCouponApply,
 } from '@surecart/checkout-actions';
 
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
@@ -118,8 +119,17 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		setDiscountCode(e) {
 			state.discountCode = e?.target?.value || '';
 		},
-		applyDiscount() {
-			console.log('applying discount');
+		applyDiscount: async () => {
+			state.loading = true;
+			const checkout = await handleCouponApply(
+				state.checkout.id,
+				state.discountCode
+			);
+			state.loading = false;
+
+			if (checkout) {
+				state.checkout = checkout;
+			}
 		},
 		closeCouponOnClickOutside: (e) => {
 			const context = getContext();
