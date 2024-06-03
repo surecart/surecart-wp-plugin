@@ -9,6 +9,7 @@ use SureCart\Models\Product;
 use SureCart\Models\Variant;
 use SureCart\Models\VariantOption;
 use SureCart\Models\VariantOptionValue;
+use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class ProductPostTest extends SureCartUnitTestCase
@@ -23,19 +24,14 @@ class ProductPostTest extends SureCartUnitTestCase
 				\SureCart\Database\MigrationsServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\WordPress\Taxonomies\TaxonomyServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\Account\AccountServiceProvider::class,
 				\SureCart\Sync\SyncServiceProvider::class,
 			]
 		], false);
 
 		// remove existing.
 		(new VariantOptionValues(new Table()))->uninstall();
-
-		// mock the account id.
-		\SureCart::alias('account', function () {
-			return (object) [
-				'id' => 'test',
-			];
-		});
 	}
 
 	/**
@@ -43,6 +39,13 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group account
 	 */
 	public function test_has_account_term() {
+		// mock the account id.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test',
+			];
+		});
+
 		$product = (new Product(
 			[
 				"id" => "testid",
@@ -84,6 +87,7 @@ class ProductPostTest extends SureCartUnitTestCase
 
 		$terms = get_the_terms($post->ID, 'sc_account');
 		$this->assertNotEmpty($terms);
+		$this->assertCount(1, $terms);
 		$this->assertSame('test', $terms[0]->slug);
 	}
 
@@ -92,6 +96,13 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group account
 	 */
 	public function test_should_return_empty_if_account_switches() {
+		// mock the account id.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test',
+			];
+		});
+
 		(new Product(
 			[
 				"id" => "testid",
@@ -122,6 +133,10 @@ class ProductPostTest extends SureCartUnitTestCase
 			]
 		))->sync();
 
+		// get the product post
+		$products = sc_get_products();
+		$this->assertCount(1, $products);
+
 		// account changes.
 		\SureCart::alias('account', function () {
 			return (object) [
@@ -137,7 +152,7 @@ class ProductPostTest extends SureCartUnitTestCase
 	/**
 	 * @group sync
 	 */
-	public function test_can_sync_product()
+	public function test_syncs_product_directly()
 	{
 		$product = (new Product(
 			[
@@ -211,6 +226,92 @@ class ProductPostTest extends SureCartUnitTestCase
 		$this->assertSame('Other sneakers.', $post->post_title);
 		$this->assertSame('sc_archived', $post->post_status);
 		$this->assertSame('fancy-sneakers', $post->post_name);
+	}
+
+		/**
+	 * @group sync
+	 */
+	public function test_syncs_when_created() {
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		$requests
+			->shouldReceive('makeRequest')
+			->andReturn((object) [
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'featured' => true
+			]);
+
+		$product = Product::create(['name' => 'Test']);
+		$this->assertNotEmpty(get_post($product->post->ID));
+	}
+
+	/**
+	 * @group sync
+	 */
+	public function test_syncs_when_updated() {
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		$requests
+			->shouldReceive('makeRequest')
+			->once()
+			->andReturn((object) [
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'featured' => true
+			]);
+
+		$product = Product::update(['id' => 'test', 'name' => 'Test']);
+		$this->assertNotEmpty(get_post($product->post->ID));
+		$this->assertNotEmpty(get_post_meta($product->post->ID, 'featured', true));
+	}
+
+	/**
+	 * @group sync
+	 */
+	public function test_syncs_when_deleted() {
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		$requests
+			->shouldReceive('makeRequest')
+			->twice()
+			->andReturn((object) [
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'featured' => true
+			]);
+
+		$product = Product::create(['name' => 'Test']);
+
+		// store the id
+		$id = $product->post->ID;
+
+		// delete the product.
+		Product::delete('testid');
+
+		// the post should also get deleted.
+		$this->assertEmpty(get_post($id));
 	}
 
 	/**
@@ -313,6 +414,13 @@ class ProductPostTest extends SureCartUnitTestCase
 	 */
 	public function test_can_filter_variant_options()
 	{
+		// mock the account id.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test',
+			];
+		});
+
 		$product = new Product(
 			[
 				"id" => "testid",

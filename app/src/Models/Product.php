@@ -60,6 +60,21 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Delete the synced post.
+	 *
+	 * @param string $id The id of the model to delete.
+	 * @return \SureCart\Models\Product
+	 */
+	protected function deleteSynced( $id = '' ) {
+		$id = ! empty( $id ) ? $id : $this->id;
+		\SureCart::sync()
+			->product()
+			->delete( $id );
+
+		return $this;
+	}
+
+	/**
 	 * Queue a sync process with a post.
 	 *
 	 * @return \SureCart\Background\QueueService
@@ -114,6 +129,24 @@ class Product extends Model implements PageModel {
 		parent::update( $attributes );
 
 		$this->sync();
+
+		return $this;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param string $id The id of the model to delete.
+	 * @return $this|false
+	 */
+	protected function delete( $id = '' ) {
+		$deleted = parent::delete( $id );
+
+		if ( is_wp_error( $deleted ) ) {
+			return $deleted;
+		}
+
+		$this->deleteSynced( $id );
 
 		return $this;
 	}

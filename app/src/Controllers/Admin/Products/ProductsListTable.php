@@ -5,7 +5,6 @@ namespace SureCart\Controllers\Admin\Products;
 use SureCart\Models\Product;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\ProductCollection;
 
 /**
  * Create a new table class that will extend the WP_List_Table
