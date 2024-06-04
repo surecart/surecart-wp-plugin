@@ -3,6 +3,7 @@
 namespace SureCart\Sync\Post;
 
 use SureCart\Models\Concerns\Facade;
+use SureCart\Models\Product;
 use SureCart\Models\VariantOptionValue;
 
 /**
@@ -96,7 +97,6 @@ class ProductPostSyncService {
 	 * Sync the model with the post.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
-	 * @param boolean                $with_collections Whether to sync with collections.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
@@ -108,6 +108,35 @@ class ProductPostSyncService {
 		}
 
 		return empty( $this->post->ID ) ? $this->create( $model ) : $this->update( $model );
+	}
+
+	/**
+	 * Delete the synced post.
+	 *
+	 * @param string $id The model id.
+	 *
+	 * @return \WP_Post|\WP_Error|false|null
+	 */
+	protected function delete( string $id ) {
+		$this->post = $this->findByModelId( $id );
+
+		if ( is_wp_error( $this->post ) ) {
+			return $this->post;
+		}
+
+		// force delete post.
+		return wp_delete_post( $this->post->ID, true );
+	}
+
+	/**
+	 * Get the model.
+	 *
+	 * @param string $id The model id.
+	 *
+	 * @return \SureCart\Models\Model
+	 */
+	protected function getModel( $id ) {
+		return Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->find( $id );
 	}
 
 	/**

@@ -9,7 +9,7 @@
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
-	"usesContext": ["surecart/product-list/blockId"],
+	"usesContext": ["surecart/product-list/block_id"],
 	"attributes": {
 		"label": {
 			"type": "string"

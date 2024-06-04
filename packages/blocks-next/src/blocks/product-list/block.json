@@ -13,7 +13,11 @@
 		"surecart/product-list/type": "type",
 		"surecart/product-list/ids": "ids"
 	},
-	"usesContext": ["surecart/product-list/blockId"],
+	"usesContext": [
+		"surecart/product-list/block_id",
+		"surecart/product-list/type",
+		"surecart/product-list/ids"
+	],
 	"attributes": {
 		"ids": {
 			"type": "array",
@@ -26,10 +30,6 @@
 		"limit": {
 			"type": "number",
 			"default": 15
-		},
-		"pagination_auto_scroll": {
-			"type": "boolean",
-			"default": true
 		}
 	},
 	"supports": {

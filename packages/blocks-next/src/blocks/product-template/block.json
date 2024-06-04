@@ -16,11 +16,12 @@
 		"surecart/product-title-v2",
 		"surecart/product-price-v2",
 		"surecart/product-scratch-price",
+		"surecart/product-description-v2",
 		"core/group"
 	],
 	"ancestor": ["surecart/product-list"],
 	"usesContext": [
-		"surecart/product-list/blockId",
+		"surecart/product-list/block_id",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
 		"surecart/product-list/ids"

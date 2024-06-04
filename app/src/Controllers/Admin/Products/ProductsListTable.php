@@ -5,7 +5,6 @@ namespace SureCart\Controllers\Admin\Products;
 use SureCart\Models\Product;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\ProductCollection;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -478,10 +477,10 @@ class ProductsListTable extends ListTable {
 		?>
 
 		<div class="sc-product-name">
-			<?php if ( ! empty( $product->featured_media ) ) { ?>
+			<?php if ( ! empty( $product->featured_image ) ) { ?>
 				<?php
 				echo wp_kses_post(
-					$product->featured_media->getImageMarkup(
+					$product->featured_image->html(
 						'thumbnail',
 						[
 							'style' => 'width:40px;height:40px;border: 1px solid #dcdcdc;flex: 1 0 40px;object-fit: cover;',

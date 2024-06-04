@@ -53,9 +53,7 @@ export default ({
 		'sc_product',
 		productId
 	);
-
 	product = product?.meta?.product;
-
 	const alt = product?.featured_media?.alt || '';
 	const title = product?.featured_media?.title || '';
 
@@ -165,7 +163,7 @@ export default ({
 
 			<div {...blockProps}>
 				<img
-					src={product?.featured_media?.src}
+					src={product?.featured_image?.src}
 					alt={alt}
 					{...(title ? { title } : {})}
 				/>

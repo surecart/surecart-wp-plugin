@@ -45,7 +45,7 @@ class ProductSyncService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( $this->action_name, [ $this, 'fetchAndSync' ], 10 );
+		add_action( $this->action_name, [ $this, 'handleScheduledSync' ], 10 );
 	}
 
 
@@ -91,12 +91,22 @@ class ProductSyncService {
 	 * Run the model sync immediately.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
-	 * @param boolean                $with_collections Whether to sync with collections.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
 	public function sync( \SureCart\Models\Model $model ) {
 		return $this->post()->withCollections( $this->with_collections )->sync( $model );
+	}
+
+	/**
+	 * Run the model sync immediately.
+	 *
+	 * @param string $id The product id.
+	 *
+	 * @return \WP_Post|\WP_Error|false|null
+	 */
+	public function delete( string $id ) {
+		return $this->post()->delete( $id );
 	}
 
 	/**
@@ -136,13 +146,13 @@ class ProductSyncService {
 	}
 
 	/**
-	 * Sync product.
+	 * Fetch and sync product.
 	 *
 	 * @param string $id The product id to sync.
 	 *
 	 * @return void
 	 */
-	public function fetchAndSync( $id, $with_collections = false ) {
+	public function handleScheduledSync( $id ) {
 		// is scheduled or has recently synced.
 		// this prevents multiple syncs from happening at the same time
 		// or rapid syncing of products due to unforeseen circumstances.
@@ -151,7 +161,7 @@ class ProductSyncService {
 		}
 
 		// get product.
-		$product = Product::with( [ 'prices', 'variants', 'variant_options', 'product_medias', 'product_media.media' ] )->get( $id );
+		$product = Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->get( $id );
 
 		// handle error.
 		if ( is_wp_error( $product ) ) {

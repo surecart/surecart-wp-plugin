@@ -5,11 +5,12 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Concerns\Arrayable;
+use SureCart\Concerns\Objectable;
 
 /**
  * Model class
  */
-abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelInterface {
+abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Objectable, ModelInterface {
 	/**
 	 * Keeps track of booted models
 	 *
@@ -1096,9 +1097,9 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 		// Check if any attribute is a model and call toArray.
 		array_walk_recursive(
-			$this->getAttributes(),
-			function ( &$value, $key ) {
-				if ( $value instanceof Model ) {
+			$attributes,
+			function ( &$value ) {
+				if ( is_a( $value, Objectable::class ) ) {
 					$value = $value->toObject();
 				}
 			}
@@ -1136,8 +1137,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// Check if any attribute is a model and call toArray.
 		array_walk_recursive(
 			$attributes,
-			function ( &$value, $key ) {
-				if ( $value instanceof Model ) {
+			function ( &$value ) {
+				if ( is_a( $value, Arrayable::class ) ) {
 					$value = $value->toArray();
 				}
 			}

@@ -88,4 +88,13 @@ class BlockService {
 	public function productListMigration( $attributes = [], $block = null ) {
 		return new ProductListMigrationService( $attributes, $block );
 	}
+	
+	/**
+	 * Get the product list service.
+	 *
+	 * @return ProductListService
+	 */
+	public function productList( $block ) {
+		return new ProductListService( $block );
+	}
 }

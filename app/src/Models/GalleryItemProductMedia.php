@@ -1,22 +1,13 @@
 <?php
 namespace SureCart\Models;
 
-use SureCart\Models\Traits\HasAttributes;
+use SureCart\Models\GalleryItem as ModelsGalleryItem;
 use SureCart\Support\Contracts\GalleryItem;
 
 /**
  * Gallery item model
  */
-class GalleryItemProductMedia implements GalleryItem {
-	use HasAttributes;
-
-	/**
-	 * The post item.
-	 *
-	 * @var \WP_Post
-	 */
-	protected $product_media;
-
+class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	/**
 	 * Create a new gallery item.
 	 * This can accept a product media or a post.
@@ -26,7 +17,7 @@ class GalleryItemProductMedia implements GalleryItem {
 	 * @return void
 	 */
 	public function __construct( \SureCart\Models\ProductMedia $item ) {
-		$this->product_media = $item;
+		$this->item = $item;
 	}
 
 	/**
@@ -41,20 +32,24 @@ class GalleryItemProductMedia implements GalleryItem {
 		$image = '';
 
 		// Handle media.
-		if ( isset( $this->product_media->media ) ) {
-			return $this->product_media->media->html( $size, $attr );
+		if ( isset( $this->item->media ) ) {
+			return $this->item->media->html( $size, $attr );
 		}
 
 		// Handle media url.
-		if ( isset( $this->product_media->url ) ) {
+		if ( isset( $this->item->url ) ) {
 			// We cannot lazy load this or use srcset since we don't know the width/height of an external url.
-			$image = sprintf( '<img src="%s" alt="%s" title="%s" />', $this->product_media->url, $this->product_media->alt ?? '', $this->product_media->title ?? '' );
+			$image = sprintf( '<img src="%s" alt="%s" title="%s" />', $this->item->url, $this->item->alt ?? '', $this->item->title ?? '' );
 		}
 
-		// add height style.
+		// add any styles.
 		$tags = new \WP_HTML_Tag_Processor( $image );
-		if ( $tags->next_tag( 'img' ) && ! empty( $attr['height'] ) ) {
-			$tags->set_attribute( 'style', 'height: ' . $attr['height'] );
+
+		// add inline styles.
+		if ( ! empty( $attr['style'] ) ) {
+			if ( $tags->next_tag( 'img' ) && ! empty( $attr['style'] ) ) {
+				$tags->set_attribute( 'style', $attr['style'] );
+			}
 		}
 
 		// return updated html.
@@ -70,27 +65,12 @@ class GalleryItemProductMedia implements GalleryItem {
 	 * @return array
 	 */
 	public function attributes( $size = 'full', $attr = [] ) {
-		if ( isset( $this->product_media->media ) ) {
-			return $this->product_media->media->attributes( $size, $attr );
+		if ( isset( $this->item->media ) ) {
+			return $this->item->media->attributes( $size, $attr );
 		}
 
-		return [
-			'src' => $this->product_media->url,
+		return (object) [
+			'src' => $this->item->url,
 		];
-	}
-
-	/**
-	 * Get the image markup.
-	 *
-	 * @param string $key The key to get.
-	 *
-	 * @return string
-	 */
-	public function __get( $key ) {
-		if ( isset( $this->product_media->{$key} ) ) {
-			return $this->product_media->{$key};
-		}
-
-		return null;
 	}
 }
