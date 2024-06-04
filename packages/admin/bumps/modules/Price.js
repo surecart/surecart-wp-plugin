@@ -28,8 +28,6 @@ export default ({ loading, bump, updateBump }) => {
 		[bump?.price]
 	);
 
-	console.log(price?.product?.line_item_image);
-
 	return (
 		<Box title={__('Price', 'surecart')} loading={loading}>
 			<ScFormControl

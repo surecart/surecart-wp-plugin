@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-export default ({ className, media, image, children, suffix }) => {
+export default ({ className, image, children, suffix }) => {
 	return (
 		<div
 			className={className}
@@ -15,11 +15,11 @@ export default ({ className, media, image, children, suffix }) => {
 				align-items: stretch;
 				width: 100%;
 				border-bottom: none;
-				${!!media?.url ? 'align-items: center' : ''};
-				${!!media?.url ? 'container-type: inline-size' : ''};
+				${!!image?.src ? 'align-items: center' : ''};
+				${!!image?.src ? 'container-type: inline-size' : ''};
 			`}
 		>
-			{!!media?.url && (
+			{!!image?.src && (
 				<img
 					{...image}
 					css={css`

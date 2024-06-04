@@ -6,10 +6,7 @@ import LineItemLabel from './LineItemLabel';
 
 export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 	return (
-		<LineItem
-			suffix={suffix}
-			image={lineItem?.price?.product?.line_item_image}
-		>
+		<LineItem suffix={suffix} image={lineItem?.image}>
 			<span
 				css={css`
 					box-sizing: border-box;
