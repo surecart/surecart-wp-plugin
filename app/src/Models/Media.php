@@ -86,8 +86,12 @@ class Media extends Model {
 		$image_size = $sizes[ $size ] ?? null;
 
 		// get width and constrain the dimensions based on the width/height.
-		$width            = $image_size['width'] ?? $this->width ?? 1080;
-		[$width, $height] = wp_constrain_dimensions( $this->width, $this->height, $width );
+		$width = $image_size['width'] ?? $this->width ?? 1080;
+		if ( $this->width && $this->height ) {
+			[$width, $height] = wp_constrain_dimensions( $this->width, $this->height, $width );
+		} else {
+			$height = $image_size['height'] ?? $this->height ?? 1080;
+		}
 
 		$srcset_sizes = array_map(
 			function( $size ) {
