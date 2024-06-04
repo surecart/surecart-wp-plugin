@@ -33,30 +33,6 @@ export default ({ post, productId, updateProduct }) => {
 		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
 	};
 
-	const { media, loading } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'product-media',
-				{
-					product_ids: [productId],
-					context: 'edit',
-					per_page: 100,
-				},
-			];
-			const media = select(coreStore).getEntityRecords(...queryArgs);
-			const loading = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			);
-			return {
-				media,
-				loading,
-			};
-		},
-		[productId]
-	);
-
 	const saveProductMedia = async (media) => {
 		return saveEntityRecord(
 			'surecart',
@@ -69,16 +45,9 @@ export default ({ post, productId, updateProduct }) => {
 		);
 	};
 
-	const onAddMedia = async (medias) => {
-		try {
-			await Promise.all(medias.map((media) => saveProductMedia(media)));
-			createSuccessNotice(__('Images updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		}
+	const onRemoveMedia = (id) => {
+		const gallery = post?.gallery.filter((item) => item.id !== id);
+		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
 	};
 
 	return (
@@ -106,13 +75,13 @@ export default ({ post, productId, updateProduct }) => {
 							{typeof id === 'string' ? (
 								<ProductMedia
 									id={id}
-									onRemove={() => {}}
+									onRemove={() => onRemoveMedia(id)}
 									isFeatured={index === 0}
 								/>
 							) : (
 								<WordPressMedia
 									id={id}
-									onRemove={() => {}}
+									onRemove={() => onRemoveMedia(id)}
 									isFeatured={index === 0}
 								/>
 							)}
