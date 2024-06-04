@@ -114,6 +114,7 @@ class ProductSyncService {
 	 * Fetch and sync product.
 	 *
 	 * @param string $id The product id to sync.
+	 * @param bool   $with_collections Whether to sync with collections.
 	 *
 	 * @throws \Exception If there is an error.
 	 *
