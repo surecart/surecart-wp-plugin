@@ -8,7 +8,7 @@ import {
 	ScStackedListRow,
 } from '@surecart/components-react';
 
-export default ({ loading, media, image, icon, children, suffix }) => {
+export default ({ loading, image, icon, children, suffix }) => {
 	return (
 		<ScStackedListRow
 			style={{

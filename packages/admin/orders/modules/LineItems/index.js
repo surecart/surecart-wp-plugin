@@ -20,7 +20,6 @@ import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { getSKUText } from '../../../util/products';
 
 const status = {
