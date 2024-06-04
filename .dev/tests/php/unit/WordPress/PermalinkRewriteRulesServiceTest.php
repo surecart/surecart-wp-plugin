@@ -2,13 +2,13 @@
 namespace SureCart\Tests\WordPress\Admin;
 
 use SureCart\Tests\SureCartUnitTestCase;;
-use SureCart\Routing\PermalinkService;
+use SureCart\Routing\PermalinkRewriteRulesService;
 /**
- * Test class for the PermalinkService service.
+ * Test class for the PermalinkRewriteRulesService service.
  *
  * This class contains tests for the methods related to flushing rewrite rules based on version changes.
  */
-class PermalinkServiceTest extends SureCartUnitTestCase {
+class PermalinkRewriteRulesServiceTest extends SureCartUnitTestCase {
     protected $service;
 
     /**
@@ -17,7 +17,7 @@ class PermalinkServiceTest extends SureCartUnitTestCase {
     protected function setUp(): void
     {
 		parent::setUp();
-        $this->service = \Mockery::mock( PermalinkService::class )->makePartial();
+        $this->service = \Mockery::mock( PermalinkRewriteRulesService::class )->makePartial();
     }
 
     /**
