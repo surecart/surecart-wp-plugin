@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-export default ({ className, media, children, suffix }) => {
+export default ({ className, media, image, children, suffix }) => {
 	return (
 		<div
 			className={className}
@@ -21,9 +21,7 @@ export default ({ className, media, children, suffix }) => {
 		>
 			{!!media?.url && (
 				<img
-					src={media.url}
-					alt={media.alt}
-					{...(media.title ? { title: media.title } : {})}
+					{...image}
 					css={css`
 						width: var(--sc-product-line-item-image-size, 4em);
 						height: var(--sc-product-line-item-image-size, 4em);

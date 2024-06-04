@@ -41,27 +41,19 @@ export default ({
 		}),
 	});
 
-	const { product, loading } = useSelect(
+	const product = useSelect(
 		(select) => {
-			const queryArgs = ['surecart', 'product', productId];
-			return {
-				product: select(coreStore).getEntityRecord(...queryArgs),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
+			if (!productId) {
+				return null;
+			}
+			return select(coreStore).getEntityRecord(
+				'surecart',
+				'product',
+				productId
+			);
 		},
 		[productId]
 	);
-
-	if (loading) {
-		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
-		);
-	}
 
 	return (
 		<>

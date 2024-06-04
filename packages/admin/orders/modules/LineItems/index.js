@@ -109,19 +109,6 @@ export default ({ order, checkout, loading }) => {
 		[checkout?.id]
 	);
 
-	const getImageAttributes = (item) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(
-			item?.price?.product,
-			item?.variant
-		);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
-	};
-
 	const shippingMethodName =
 		checkout?.selected_shipping_choice?.shipping_method?.name;
 
@@ -210,7 +197,7 @@ export default ({ order, checkout, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							{...getImageAttributes(item)}
+							image={item?.image}
 							name={item?.price?.product?.name}
 							priceName={item?.price?.name}
 							variantLabel={

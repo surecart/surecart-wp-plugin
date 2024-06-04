@@ -339,6 +339,7 @@ export interface Product extends Object {
   tax_enabled: boolean;
   purchase_limit: number;
   metrics: ProductMetrics;
+  line_item_image: ImageAttributes;
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';
@@ -425,6 +426,18 @@ export type LineItemsData = {
   [id: string]: Array<LineItemData>;
 };
 
+export interface ImageAttributes {
+  src: string;
+  alt?: string;
+  class?: string;
+  decoding?: string;
+  height?: number;
+  loading?: string;
+  sizes?: string;
+  srcset?: string;
+  width?: number;
+}
+
 export interface LineItem extends Object {
   id?: string;
   ad_hoc_amount?: number;
@@ -433,6 +446,7 @@ export interface LineItem extends Object {
   quantity: number;
   checkout: string | Checkout;
   bump: string | Bump;
+  image: ImageAttributes;
   fees?: {
     object: 'list';
     pagination: Pagination;

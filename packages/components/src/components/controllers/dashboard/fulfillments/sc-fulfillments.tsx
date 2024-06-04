@@ -98,7 +98,7 @@ export class ScFulfillments {
                       <div>
                         <div class="line_item__info">
                           <div class="line_item__image">
-                            {!!(line_item?.price?.product as Product)?.image_url && <img src={(line_item?.price?.product as Product)?.image_url} />}
+                            {!!(line_item?.price?.product as Product)?.line_item_image && <img {...((line_item?.price?.product as Product)?.line_item_image as any)} />}
                           </div>
                           <div class="line_item__text">
                             <div>{(line_item?.price?.product as Product)?.name}</div>

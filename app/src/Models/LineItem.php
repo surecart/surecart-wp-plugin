@@ -84,10 +84,9 @@ class LineItem extends Model {
 		// if ( ! empty( $this->variant ) && is_a( $this->variant, Variant::class ) ) {
 		// return $this->variant->line_item_image;
 		// }
-
 		// if we have a product, use the product image.
-		if ( ! empty( $this->product ) && is_a( $this->product, Product::class ) ) {
-			return $this->product->line_item_image;
+		if ( isset( $this->price->product->line_item_image ) ) {
+			return $this->price->product->line_item_image;
 		}
 
 		return null;
