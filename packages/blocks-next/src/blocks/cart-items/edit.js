@@ -22,6 +22,9 @@ export default ({ attributes, setAttributes }) => {
 		},
 	});
 
+	const placeholderImageUrl =
+		scBlockData?.plugin_url + '/images/placeholder.jpg';
+
 	const lineItems = [
 		{
 			quantity: 2,
@@ -29,7 +32,7 @@ export default ({ attributes, setAttributes }) => {
 				name: 'Basic',
 				product: {
 					name: 'Example Product',
-					image_url: 'https://picsum.photos/seed/picsum/200/200',
+					image_url: placeholderImageUrl,
 				},
 				display_amount: '$12.34',
 			},
@@ -40,7 +43,7 @@ export default ({ attributes, setAttributes }) => {
 				name: 'Monthly',
 				product: {
 					name: 'Example Product',
-					image_url: 'https://picsum.photos/seed/picsum/200/200',
+					image_url: placeholderImageUrl,
 				},
 				display_amount: '$123.45',
 			},
