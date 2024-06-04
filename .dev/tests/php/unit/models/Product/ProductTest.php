@@ -4,7 +4,6 @@ namespace SureCart\Tests\Models\Product;
 
 use SureCart\Models\Product;
 use SureCart\Models\Price;
-use SureCart\Sync\SyncServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class ProductTest extends SureCartUnitTestCase
@@ -23,7 +22,7 @@ class ProductTest extends SureCartUnitTestCase
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Account\AccountServiceProvider::class,
-				SyncServiceProvider::class,
+				\SureCart\Sync\SyncServiceProvider::class,
 			]
 		], false);
 
@@ -59,7 +58,7 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group media
 	 * @group product
 	 */
-	public function test_has_featured_image_from_featured_product_media() {
+	public function test_has_images_from_featured_product_media() {
 		$product = new Product([
 			'id' => 'test',
 			'featured_product_media' => [
@@ -71,22 +70,32 @@ class ProductTest extends SureCartUnitTestCase
 			],
 		]);
 		// this should work for both.
-		$attributes = $product->featured_image->attributes();
-		$this->assertSame('https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=800/http://example.com/image.jpg', $attributes->src);
-		$this->assertSame('attachment-full size-full', $attributes->class);
-		$this->assertSame('(max-width: 800px) 100vw, 800px', $attributes->sizes);
-		$this->assertSame(800, $attributes->width);
-		$this->assertSame(600, $attributes->height);
-		$this->assertSame('lazy', $attributes->loading);
-		$this->assertSame('async', $attributes->decoding);
-		$this->assertStringContainsString('http://example.com/image.jpg', $attributes->srcset);
+		$featured = $product->featured_image->attributes();
+		$this->assertSame('https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=800/http://example.com/image.jpg', $featured->src);
+		$this->assertSame('attachment-full size-full', $featured->class);
+		$this->assertSame('(max-width: 800px) 100vw, 800px', $featured->sizes);
+		$this->assertSame(800, $featured->width);
+		$this->assertSame(600, $featured->height);
+		$this->assertSame('lazy', $featured->loading);
+		$this->assertSame('async', $featured->decoding);
+		$this->assertStringContainsString('http://example.com/image.jpg', $featured->srcset);
+
+		$line_item_image = $product->line_item_image;
+		$this->assertSame('https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=150/http://example.com/image.jpg', $line_item_image->src);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item_image->class);
+		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item_image->sizes);
+		$this->assertSame(150, $line_item_image->width);
+		$this->assertSame(113, $line_item_image->height);
+		$this->assertSame('lazy', $line_item_image->loading);
+		$this->assertSame('async', $line_item_image->decoding);
+		$this->assertStringContainsString('http://example.com/image.jpg', $line_item_image->srcset);
 	}
 
 	/**
 	 * @group media
 	 * @group product
 	 */
-	public function test_has_featured_image_from_product_media_url() {
+	public function test_has_images_from_product_media_url() {
 		$product = new Product([
 			'id' => 'test',
 			'featured_product_media' => [
@@ -97,6 +106,9 @@ class ProductTest extends SureCartUnitTestCase
 		// this should work for both.
 		$attributes = $product->featured_image->attributes();
 		$this->assertSame('http://example.com/image.jpg', $attributes->src);
+
+		$line_item_image = $product->line_item_image;
+		$this->assertSame('http://example.com/image.jpg', $line_item_image->src);
 	}
 
 	/**
@@ -133,5 +145,16 @@ class ProductTest extends SureCartUnitTestCase
 		$this->assertSame('lazy', $attributes->loading);
 		$this->assertSame('async', $attributes->decoding);
 		$this->assertStringContainsString('test-image-large',$attributes->srcset);
+
+		$line_item_image = $product->line_item_image;
+		var_dump($line_item_image);
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item_image->class);
+		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item_image->sizes);
+		$this->assertSame(150, $line_item_image->width);
+		$this->assertSame(113, $line_item_image->height);
+		$this->assertSame('lazy', $line_item_image->loading);
+		$this->assertSame('async', $line_item_image->decoding);
+		$this->assertStringContainsString('test-image-large', $line_item_image->srcset);
 	}
 }
