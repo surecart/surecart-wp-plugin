@@ -129,17 +129,6 @@ class ProductPostSyncService {
 	}
 
 	/**
-	 * Get the model.
-	 *
-	 * @param string $id The model id.
-	 *
-	 * @return \SureCart\Models\Model
-	 */
-	protected function getModel( $id ) {
-		return Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->find( $id );
-	}
-
-	/**
 	 * Get the schema map.
 	 *
 	 * @param \SureCart\Models\Model $model The model.

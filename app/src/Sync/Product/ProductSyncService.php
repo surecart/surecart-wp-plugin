@@ -83,8 +83,8 @@ class ProductSyncService {
 				'id'               => $model->id,
 				'with_collections' => $this->with_collections,
 			],
-			'product-' . $model->id,
-			true
+			'product-' . $model->id, // unique id for the product.
+			true // force unique. This will replace any existing jobs.
 		);
 	}
 
@@ -122,7 +122,7 @@ class ProductSyncService {
 	 */
 	public function handleScheduledSync( $id, $with_collections = false ) {
 		// get product.
-		$product = Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->find( $id );
+		$product = Product::findSyncable( $id );
 
 		// handle error.
 		if ( is_wp_error( $product ) ) {
