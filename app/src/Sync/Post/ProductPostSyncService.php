@@ -129,17 +129,6 @@ class ProductPostSyncService {
 	}
 
 	/**
-	 * Get the model.
-	 *
-	 * @param string $id The model id.
-	 *
-	 * @return \SureCart\Models\Model
-	 */
-	protected function getModel( $id ) {
-		return Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->find( $id );
-	}
-
-	/**
 	 * Get the schema map.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
@@ -158,7 +147,6 @@ class ProductPostSyncService {
 			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 			'post_status'       => $this->getPostStatusFromModel( $model ),
-			'page_template'     => $this->convertTemplateId( $model->template_id ),
 			'meta_input'        => [
 				'sc_id'                        => $model->id,
 				'product'                      => $model,
@@ -219,6 +207,9 @@ class ProductPostSyncService {
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
+
+		// update page template.
+		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
 
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
@@ -288,6 +279,9 @@ class ProductPostSyncService {
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
+
+		// update page template.
+		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
 
 		// set the collection terms.
 		if ( ! empty( $this->with_collections ) ) {

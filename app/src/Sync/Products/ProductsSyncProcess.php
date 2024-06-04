@@ -43,7 +43,7 @@ class ProductsSyncProcess extends BackgroundProcess {
 
 		try {
 			// find and sync.
-			$model = Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ] )->find( $item['id'] );
+			$model = Product::findSyncable( $item['id'] );
 
 			if ( is_wp_error( $model ) ) {
 				error_log( $model->get_error_message() );

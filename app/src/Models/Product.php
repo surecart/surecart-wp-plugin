@@ -112,7 +112,7 @@ class Product extends Model implements PageModel {
 	 */
 	protected function create( $attributes = array() ) {
 		// always expand these on create since we need to sync with the post.
-		$this->with( $this->sync_expands );
+		$this->withSyncableExpands();
 
 		// create the model.
 		$created = parent::create( $attributes );
@@ -136,7 +136,7 @@ class Product extends Model implements PageModel {
 	 */
 	protected function update( $attributes = array() ) {
 		// always expand these on update since we need to sync with the post.
-		$this->with( $this->sync_expands );
+		$this->withSyncableExpands();
 
 		// update the model.
 		$updated = parent::update( $attributes );
@@ -174,6 +174,26 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * The model with the expanded items needed for syncing.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	protected function withSyncableExpands() {
+		return $this->with( $this->sync_expands );
+	}
+
+	/**
+	 * Find the model for syncing.
+	 *
+	 * @param string $id The id of the model to find.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	protected function findSyncable( $id ) {
+		return $this->withSyncableExpands()->find( $id );
+	}
+
+	/**
 	 * Maybe queue a sync job if updated_at is different
 	 * than the product post updated_at.
 	 *
@@ -182,6 +202,12 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setUpdatedAtAttribute( $value ) {
+		// queue the off-session sync job if the product is not set.
+		// TODO: Check if this is necessary.
+		if ( empty( $this->post ) ) {
+			$this->queueSync();
+		}
+
 		// queue the off-session sync job if the product updated_at is newer than the post updated_at.
 		if ( ! empty( $this->post ) && ! empty( $this->post->updated_at ) && ! empty( $this->updated_at ) ) {
 			if ( $this->updated_at > $this->post->updated_at ) {

@@ -14,10 +14,12 @@ class QueueService {
 	 * @param string $hook The hook to trigger.
 	 * @param array  $args Arguments to pass when the hook triggers.
 	 * @param string $group The group to assign this job to.
+	 * @param bool   $unique If true, ensure this action is not already scheduled.
+	 *
 	 * @return string $this.
 	 */
-	public function async( $hook, $args = array(), $group = '' ) {
-		\as_enqueue_async_action( $hook, $args, $group );
+	public function async( $hook, $args = array(), $group = '', $unique = false ) {
+		\as_enqueue_async_action( $hook, $args, $group, $unique );
 		return $this;
 	}
 

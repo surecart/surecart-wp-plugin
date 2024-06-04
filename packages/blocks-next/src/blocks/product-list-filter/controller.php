@@ -9,15 +9,16 @@ $collections = get_terms(
 );
 
 $block_id   = $block->context['surecart/product-list/block_id'];
-$filter_key = \SureCart::block()->urlParams( 'products' )->getKey( 'filter', $block_id );
+$url        = \SureCart::block()->urlParams( 'products', $block_id );
+$filter_key = $url->getKey( 'filter' );
 
 $options = array_map(
-	function( $collection ) use ( $filter_key, $block_id ) {
+	function( $collection ) use ( $url ) {
 		return [
 			'value'   => $collection->term_id,
 			'label'   => $collection->name,
-			'href'    => \SureCart::block()->urlParams( 'products' )->addFilterArg( 'sc_collection', $collection->term_id, $block_id ),
-			'checked' => in_array( $collection->term_id, $_GET[ $filter_key ] ?? [] ),
+			'href'    => $url->hasFilterArg( 'sc_collection', $collection->term_id ) ? $url->removeFilterArg( 'sc_collection', $collection->term_id ) : $url->addFilterArg( 'sc_collection', $collection->term_id ),
+			'checked' => $url->hasFilterArg( 'sc_collection', $collection->term_id ),
 		];
 	},
 	$collections ?? []
