@@ -12,7 +12,11 @@ $style .= ! empty( $attributes['height'] )
 	? esc_attr( safecss_filter_attr( 'height:' . $attributes['height'] ) ) . ';'
 	: '';
 
-global $sc_product;
 
-// return the view.
-return 'file:./view.php';
+$product_image_html = sc_get_product_featured_image( 'medium_large', [ 'loading' => 'eager' ] );
+
+if ( $product_image_html ) {
+	return 'file:./view.php';
+}
+
+return 'file:./empty.php';

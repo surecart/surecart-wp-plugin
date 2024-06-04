@@ -10,5 +10,5 @@ echo wp_kses_data(
 );
 ?>
 >
-	<?php echo wp_kses( sc_get_product_featured_image( 'medium_large', [ 'loading' => 'eager' ] ), sc_allowed_image_html() ); ?>
+	<?php echo wp_kses( $product_image_html, sc_allowed_image_html() ); ?>
 </figure>
