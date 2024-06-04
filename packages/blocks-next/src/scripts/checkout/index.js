@@ -82,8 +82,10 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 
 		// Do any line items have a recurring price?
 		get hasRecurring() {
-			return state?.checkout?.line_items?.data?.some(item => item?.price?.recurring_interval);
-		}
+			return state?.checkout?.line_items?.data?.some(
+				(item) => item?.price?.recurring_interval
+			);
+		},
 	},
 
 	callbacks: {
@@ -247,5 +249,3 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		},
 	},
 });
-
-console.log('state.checkout', state.checkout);

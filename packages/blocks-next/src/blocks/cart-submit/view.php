@@ -1,5 +1,5 @@
 <div
-    class="wp-block-buttons sc-cart-submit__wrapper"
+    class="wp-block-button sc-cart-submit__wrapper"
     <?php echo wp_kses_data( get_block_wrapper_attributes(
 		array(
 			'style' => $style,
@@ -12,4 +12,5 @@
     >
         <span><?php echo wp_kses_post( $attributes['text'] ); ?></span>
     </a>
+
 </div>
