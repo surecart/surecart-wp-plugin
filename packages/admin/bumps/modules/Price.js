@@ -12,7 +12,6 @@ import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
 
 import ModelRow from '../components/ModelRow';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import LineItemLabel from '../../ui/LineItemLabel';
 
 export default ({ loading, bump, updateBump }) => {
@@ -29,6 +28,8 @@ export default ({ loading, bump, updateBump }) => {
 		[bump?.price]
 	);
 
+	console.log(price?.product?.line_item_image);
+
 	return (
 		<Box title={__('Price', 'surecart')} loading={loading}>
 			<ScFormControl
@@ -40,9 +41,7 @@ export default ({ loading, bump, updateBump }) => {
 						<ScStackedList>
 							<ModelRow
 								icon={'image'}
-								media={getFeaturedProductMediaAttributes(
-									price?.product
-								)}
+								image={price?.product?.line_item_image}
 								loading={!hasLoadedPrice}
 								suffix={
 									<div>
