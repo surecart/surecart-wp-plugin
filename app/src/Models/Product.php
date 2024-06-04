@@ -112,7 +112,7 @@ class Product extends Model implements PageModel {
 	 */
 	protected function create( $attributes = array() ) {
 		// always expand these on create since we need to sync with the post.
-		$this->with( $this->sync_expands );
+		$this->withSyncableExpands();
 
 		// create the model.
 		$created = parent::create( $attributes );
@@ -136,7 +136,7 @@ class Product extends Model implements PageModel {
 	 */
 	protected function update( $attributes = array() ) {
 		// always expand these on update since we need to sync with the post.
-		$this->with( $this->sync_expands );
+		$this->withSyncableExpands();
 
 		// update the model.
 		$updated = parent::update( $attributes );
@@ -171,6 +171,26 @@ class Product extends Model implements PageModel {
 
 		// return.
 		return $this;
+	}
+
+	/**
+	 * The model with the expanded items needed for syncing.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	protected function withSyncableExpands() {
+		return $this->with( $this->sync_expands );
+	}
+
+	/**
+	 * Find the model for syncing.
+	 *
+	 * @param string $id The id of the model to find.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	protected function findSyncable( $id ) {
+		return $this->withSyncableExpands()->find( $id );
 	}
 
 	/**
