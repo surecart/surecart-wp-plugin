@@ -118,7 +118,7 @@ class BlockAssetsLoadService {
 		}
 
 		// load for thrive architect builder.
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['tve_content'] )  ) {
 			return 'thrive';
 		}
