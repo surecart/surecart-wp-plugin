@@ -155,6 +155,6 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			return (object) $attr;
 		}
 
-		return [];
+		return (object) [];
 	}
 }
