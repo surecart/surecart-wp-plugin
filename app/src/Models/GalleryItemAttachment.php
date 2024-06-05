@@ -56,7 +56,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
 	 *
-	 * @return array
+	 * @return object
 	 */
 	public function attributes( $size = 'full', $attr = [] ) {
 		$attachment_id = $this->item->ID;
