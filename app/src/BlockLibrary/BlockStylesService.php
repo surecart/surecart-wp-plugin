@@ -14,13 +14,6 @@ class BlockStylesService {
 	public $block = null;
 
 	/**
-	 * Bypass supports check
-	 *
-	 * @var bool
-	 */
-	public $bypass_supports = false;
-
-	/**
 	 * Get the spacing values from the block editor
 	 *
 	 * @return array
@@ -45,10 +38,10 @@ class BlockStylesService {
 			'padding' => null,
 			'margin'  => null,
 		);
-		if ( $has_padding_support || $this->bypass_supports ) {
+		if ( $has_padding_support ) {
 			$spacing_block_styles['padding'] = isset( $block_styles['spacing']['padding'] ) ? $block_styles['spacing']['padding'] : null;
 		}
-		if ( $has_margin_support || $this->bypass_supports ) {
+		if ( $has_margin_support ) {
 			$spacing_block_styles['margin'] = isset( $block_styles['spacing']['margin'] ) ? $block_styles['spacing']['margin'] : null;
 		}
 
@@ -73,7 +66,7 @@ class BlockStylesService {
 
 		// Border radius.
 		if (
-			( wp_has_border_feature_support( $block_type, 'radius' ) || $this->bypass_supports ) &&
+			wp_has_border_feature_support( $block_type, 'radius' ) &&
 			isset( $block_attributes['style']['border']['radius'] )
 		) {
 			$border_radius = $block_attributes['style']['border']['radius'];
@@ -87,7 +80,7 @@ class BlockStylesService {
 
 		// Border style.
 		if (
-			( wp_has_border_feature_support( $block_type, 'style' ) || $this->bypass_supports ) &&
+			wp_has_border_feature_support( $block_type, 'style' ) &&
 			isset( $block_attributes['style']['border']['style'] )
 		) {
 			$border_block_styles['style'] = $block_attributes['style']['border']['style'];
@@ -95,7 +88,7 @@ class BlockStylesService {
 
 		// Border width.
 		if (
-			( $has_border_width_support || $this->bypass_supports ) &&
+			$has_border_width_support &&
 			isset( $block_attributes['style']['border']['width'] )
 		) {
 			$border_width = $block_attributes['style']['border']['width'];
@@ -110,7 +103,7 @@ class BlockStylesService {
 
 		// Border color.
 		if (
-			( $has_border_color_support || $this->bypass_supports )
+			$has_border_color_support
 		) {
 			$preset_border_color          = array_key_exists( 'borderColor', $block_attributes ) ? "var:preset|color|{$block_attributes['borderColor']}" : null;
 			$custom_border_color          = isset( $block_attributes['style']['border']['color'] ) ? $block_attributes['style']['border']['color'] : null;
@@ -118,13 +111,13 @@ class BlockStylesService {
 		}
 
 		// Generates styles for individual border sides.
-		if ( $has_border_color_support || $has_border_width_support || $this->bypass_supports ) {
+		if ( $has_border_color_support || $has_border_width_support ) {
 			foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
 				$border                       = isset( $block_attributes['style']['border'][ $side ] ) ? $block_attributes['style']['border'][ $side ] : null;
 				$border_side_values           = array(
-					'width' => isset( $border['width'] ) && ( ! wp_should_skip_block_supports_serialization( $block_type, '__experimentalBorder', 'width' ) || $this->bypass_supports ) ? $border['width'] : null,
-					'color' => isset( $border['color'] ) && ( ! wp_should_skip_block_supports_serialization( $block_type, '__experimentalBorder', 'color' ) || $this->bypass_supports ) ? $border['color'] : null,
-					'style' => isset( $border['style'] ) && ( ! wp_should_skip_block_supports_serialization( $block_type, '__experimentalBorder', 'style' ) || $this->bypass_supports ) ? $border['style'] : null,
+					'width' => isset( $border['width'] ) && ! wp_should_skip_block_supports_serialization( $block_type, '__experimentalBorder', 'width' ) ? $border['width'] : null,
+					'color' => isset( $border['color'] ) && ! wp_should_skip_block_supports_serialization( $block_type, '__experimentalBorder', 'color' ) ? $border['color'] : null,
+					'style' => isset( $border['style'] ) && ! wp_should_skip_block_supports_serialization( $block_type, '__experimentalBorder', 'style' ) ? $border['style'] : null,
 				);
 				$border_block_styles[ $side ] = $border_side_values;
 			}
@@ -157,21 +150,21 @@ class BlockStylesService {
 		$color_block_styles            = array();
 
 		// Text colors.
-		if ( $has_text_colors_support || $this->bypass_supports ) {
+		if ( $has_text_colors_support ) {
 			$preset_text_color          = array_key_exists( 'textColor', $block_attributes ) ? "var:preset|color|{$block_attributes['textColor']}" : null;
 			$custom_text_color          = isset( $block_attributes['style']['color']['text'] ) ? $block_attributes['style']['color']['text'] : null;
 			$color_block_styles['text'] = $preset_text_color ? $preset_text_color : $custom_text_color;
 		}
 
 		// Background colors.
-		if ( $has_background_colors_support || $this->bypass_supports ) {
+		if ( $has_background_colors_support ) {
 			$preset_background_color          = array_key_exists( 'backgroundColor', $block_attributes ) ? "var:preset|color|{$block_attributes['backgroundColor']}" : null;
 			$custom_background_color          = isset( $block_attributes['style']['color']['background'] ) ? $block_attributes['style']['color']['background'] : null;
 			$color_block_styles['background'] = $preset_background_color ? $preset_background_color : $custom_background_color;
 		}
 
 		// Gradients.
-		if ( $has_gradients_support || $this->bypass_supports ) {
+		if ( $has_gradients_support ) {
 			$preset_gradient_color          = array_key_exists( 'gradient', $block_attributes ) ? "var:preset|gradient|{$block_attributes['gradient']}" : null;
 			$custom_gradient_color          = isset( $block_attributes['style']['color']['gradient'] ) ? $block_attributes['style']['color']['gradient'] : null;
 			$color_block_styles['gradient'] = $preset_gradient_color ? $preset_gradient_color : $custom_gradient_color;
@@ -190,8 +183,7 @@ class BlockStylesService {
 	 */
 	public function get( $combine = true, $block = null ) {
 		if ( $block ) {
-			$this->block           = $block;
-			$this->bypass_supports = true;
+			$this->block = $block;
 		}
 
 		if ( $combine ) {
