@@ -3,13 +3,21 @@ namespace SureCart\Sync\Store;
 
 /**
  * The store sync service.
- * This service is responsible for syncing the store data when
- * the account id is first set or changed.
+ *
+ * This service is responsible for syncing the store
+ * data when the account id is first set or changed.
  *
  * @since 3.0.0
  * @package SureCart\Sync\Store
  */
 class StoreSyncService {
+	/**
+	 * The option name for the stored account.
+	 *
+	 * @var string
+	 */
+	protected $option_name = 'surecart_current_account_id';
+
 	/**
 	 * Bootstrap the service.
 	 *
@@ -20,32 +28,25 @@ class StoreSyncService {
 	}
 
 	/**
-	 * The option name for the stored version.
+	 * Retrieves the stored account from the WordPress options.
 	 *
-	 * @var string
-	 */
-	protected $option_name = 'surecart_current_account_id';
-
-	/**
-	 * Retrieves the stored version from the WordPress options.
-	 *
-	 * @return string The stored version.
+	 * @return string The stored account.
 	 */
 	public function getStoredAccount() {
 		return get_option( $this->option_name, null );
 	}
 
 	/**
-	 * Retrieves the current plugin version.
+	 * Retrieves the current plugin account.
 	 *
-	 * @return string The current plugin version.
+	 * @return string The current plugin account.
 	 */
 	public function currentAccountId() {
 		return \SureCart::account()->id ?? '';
 	}
 
 	/**
-	 * Flush the rewrite rules on version change.
+	 * Flush the rewrite rules on account change.
 	 *
 	 * @return boolean
 	 */
@@ -62,7 +63,7 @@ class StoreSyncService {
 	}
 
 	/**
-	 * Flushes the rewrite rules and updates the stored version.
+	 * Flushes the rewrite rules and updates the stored account.
 	 *
 	 * @return boolean
 	 */
