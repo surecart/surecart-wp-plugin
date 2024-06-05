@@ -11,7 +11,7 @@ class ProductListMigrationService {
 	 *
 	 * @var string
 	 */
-	public array $attributes = [];
+	public array $attributes = array();
 
 	/**
 	 * Block.
@@ -32,39 +32,40 @@ class ProductListMigrationService {
 	 *
 	 * @var string
 	 */
-	public array $inner_blocks = [];
+	public array $inner_blocks = array();
 
 	/**
 	 * Set the initial variables.
 	 *
-	 * @param array $attributes Attributes.
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
 	 */
-	public function __construct( $attributes = [], $block = null ) {
-		$this->attributes = $attributes;
-		$this->block = $block;
-		$this->inner_blocks = $block->parsed_block['innerBlocks'] ?? [];
+	public function __construct( $attributes = array(), $block = null ) {
+		$this->attributes   = $attributes;
+		$this->block        = $block;
+		$this->inner_blocks = $block->parsed_block['innerBlocks'] ?? array();
 	}
 
 	/**
 	 * Get the Child Blocks Attributes.
 	 *
-	 * @param string $block_name
+	 * @param string $block_name Block Name.
 	 * @return array Child Blocks Attributes.
 	 */
 	public function getChildBlocksAttributes( $block_name ) {
 		if ( empty( $this->inner_blocks ) || empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
-			return [];
+			return array();
 		}
 
 		foreach ( $this->inner_blocks[0]['innerBlocks'] as $block ) {
-			if ( $block['blockName'] === $block_name)  {
+			if ( $block['blockName'] === $block_name ) {
 				if ( 'surecart/product-item-title' === $block_name ) {
 					$block['attrs']['level'] = 0;
 				}
 				return $block['attrs'];
 			}
 		}
-		return [];
+		return array();
 	}
 
 	/**
@@ -110,7 +111,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderSortAndFilter(): void {
-		$sort_enabled = wp_validate_boolean( $this->attributes['sort_enabled'] ) ?? true;
+		$sort_enabled       = wp_validate_boolean( $this->attributes['sort_enabled'] ) ?? true;
 		$collection_enabled = wp_validate_boolean( $this->attributes['collection_enabled'] ) ?? true;
 
 		if ( ! $sort_enabled && ! $collection_enabled ) {
@@ -176,7 +177,7 @@ class ProductListMigrationService {
 	 */
 	public function renderTitle(): void {
 		$product_title_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-title' ) );
-		$this->block_html .= '<!-- wp:surecart/product-title-v2 ' . $product_title_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-title-v2 ' . $product_title_attrs . ' /-->';
 	}
 
 	/**
@@ -186,8 +187,7 @@ class ProductListMigrationService {
 	 */
 	public function renderImage(): void {
 		$product_image_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-image' ) );
-		$this->block_html .= '<!-- wp:surecart/product-image ' . $product_image_attrs . ' /-->';
-	
+		$this->block_html   .= '<!-- wp:surecart/product-image ' . $product_image_attrs . ' /-->';
 	}
 
 	/**
@@ -197,7 +197,7 @@ class ProductListMigrationService {
 	 */
 	public function renderPrice(): void {
 		$product_price_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-price' ) );
-		$this->block_html .= '<!-- wp:surecart/product-price-v2 ' . $product_price_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-price-v2 ' . $product_price_attrs . ' /-->';
 	}
 
 	/**
@@ -206,11 +206,11 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderProductTemplate(): void {
-		$columns = $this->attributes['columns'] ?? 3;
+		$columns           = $this->attributes['columns'] ?? 3;
 		$this->block_html .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
-		$group_attrs = wp_json_encode( $this->inner_blocks[0]['attrs'] );
-		$group_block = parse_blocks( '<!-- wp:group ' . $group_attrs . ' -->' )[0];
-		$group_styles = sc_get_block_styles( true, $group_block );
+		$group_attrs       = wp_json_encode( $this->inner_blocks[0]['attrs'] );
+		$group_block       = parse_blocks( '<!-- wp:group ' . $group_attrs . ' -->' )[0];
+		$group_styles      = sc_get_block_styles( true, $group_block );
 		$this->block_html .= '<!-- wp:group -->';
 		$this->block_html .= '<div class="wp-block-group ' . $group_styles['classnames'] . '" style="' . $group_styles['css'] . '">';
 			$this->renderImage();
