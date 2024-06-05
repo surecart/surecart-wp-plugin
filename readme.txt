@@ -305,6 +305,12 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.28.0 - June 6th, 2024 =
+- Improvement: Add ability to collection billing address with shipping address on checkout.
+- Improvement: Allow manually updating a subscription to the newest price version in case of a pricing change.
+- Fix: Modal incorrectly triggering when item quantity is out of stock on checkout page in some instances.
+- Fix: Some shortcodes not working with 0 instead of false for some attributes.
+
 = 2.27.1 - May 23rd, 2024 =
 - Improvement: Handle potential platform conflict statuses with retry mechanism.
 - Fix: Archived products showing up in sitemap.
