@@ -20,7 +20,7 @@ export default ({ attributes, setAttributes }) => {
 	});
 
 	const placeholderImageUrl =
-		scBlockData?.plugin_url + '/images/placeholder.jpg';
+		scBlockData?.plugin_url + '/images/placeholder-thumbnail.jpg';
 
 	return (
 		<>
