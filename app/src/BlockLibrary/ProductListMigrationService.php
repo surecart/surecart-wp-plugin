@@ -213,9 +213,22 @@ class ProductListMigrationService {
 		$group_styles      = sc_get_block_styles( true, $group_block );
 		$this->block_html .= '<!-- wp:group -->';
 		$this->block_html .= '<div class="wp-block-group ' . $group_styles['classnames'] . '" style="' . $group_styles['css'] . '">';
-			$this->renderImage();
-			$this->renderTitle();
-			$this->renderPrice();
+		// Render according to the inner blocks order in old block.
+		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
+			foreach ( $this->inner_blocks[0]['innerBlocks'] as $inner_block ) {
+				switch ( $inner_block['blockName'] ) {
+					case 'surecart/product-item-image':
+						$this->renderImage();
+						break;
+					case 'surecart/product-item-title':
+						$this->renderTitle();
+						break;
+					case 'surecart/product-item-price':
+						$this->renderPrice();
+						break;
+				}
+			}
+		}
 		$this->block_html .= '</div><!-- /wp:group -->';
 		$this->block_html .= '<!-- /wp:surecart/product-template -->';
 	}
