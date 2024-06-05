@@ -4,6 +4,6 @@
  *
  * @return array
  */
-function sc_get_block_styles() {
-	return \SureCart::block()->styles()->get();
+function sc_get_block_styles( $combined = true, $block = null ) {
+	return \SureCart::block()->styles()->get( $combined, $block );
 }
