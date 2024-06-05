@@ -119,7 +119,7 @@ class BlockAssetsLoadService {
 
 		// load for thrive architect builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! empty( $_GET['action'] ) && 'architect' === sanitize_text_field( $_GET['action'] ) ) {
+		if ( isset( $_POST['tve_content'] )  ) {
 			return 'thrive';
 		}
 
