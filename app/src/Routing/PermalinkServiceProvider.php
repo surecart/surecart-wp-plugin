@@ -152,5 +152,8 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->url( 'surecart/redirect' )
 			->query( 'index.php?sc_redirect=1' )
 			->create();
+
+		// Rewrite rules.
+		( new PermalinkRewriteRulesService() )->create();
 	}
 }
