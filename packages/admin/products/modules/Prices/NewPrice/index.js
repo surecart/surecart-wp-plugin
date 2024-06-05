@@ -38,17 +38,6 @@ export default ({ isOpen, onRequestClose, product }) => {
 		setPrice({ ...price, ...data });
 	};
 
-	const onClose = () => {
-		if (price?.amount) {
-			const r = confirm(
-				__('Are you sure you want to discard this price?', 'surecart')
-			);
-			if (!r) return;
-		}
-		setPrice(null);
-		onRequestClose();
-	};
-
 	const onSubmit = async (e) => {
 		e.stopPropagation();
 		try {
@@ -108,7 +97,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 			<ScDrawer
 				label={__('Add A Price', 'surecart')}
 				style={{ '--sc-drawer-size': '32rem' }}
-				onScAfterHide={onClose}
+				onScAfterHide={onRequestClose}
 				open={isOpen}
 				stickyHeader
 				onScAfterShow={() => ref.current.triggerFocus()}
@@ -200,7 +189,12 @@ export default ({ isOpen, onRequestClose, product }) => {
 						>
 							{__('Create Price', 'surecart')}
 						</ScButton>
-						<ScButton type="text" onClick={onClose}>
+						<ScButton
+							type="text"
+							onClick={(e) =>
+								e.target.closest('sc-drawer').requestClose()
+							}
+						>
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
