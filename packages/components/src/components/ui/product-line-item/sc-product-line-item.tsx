@@ -149,7 +149,7 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src && <img part="image" class="item__image" {...(this.image as any)} />}
+          {!!this.image?.src && <img {...(this.image as any)} part="image" />}
           <div class="item__text" part="text">
             <div class="item__text-details">
               <div class="item__title" part="title">
