@@ -30,8 +30,9 @@ export class ScCheckoutStockAlert {
   getOutOfStockLineItems() {
     return (checkoutState.checkout?.line_items?.data || []).filter(lineItem => {
       const product = lineItem.price?.product as Product;
-      // no stock handling.
-      if (!product?.stock_enabled || product?.allow_out_of_stock_purchases) return;
+
+      // this item is not out of stock, don't include it.
+      if (lineItem?.purchasable_status !== 'out_of_stock') return false;
 
       // check the variant stock.
       if (lineItem?.variant?.id) {
