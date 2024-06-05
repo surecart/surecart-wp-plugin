@@ -19,13 +19,7 @@ import { useEntityRecord } from '@wordpress/core-data';
  * Internal dependencies
  */
 import HeadingLevelDropdown from '../../components/HeadingLebelDropdown';
-import {
-	PanelBody,
-	Placeholder,
-	Spinner,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
+import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
 
 export default ({
 	attributes: { level, textAlign, isLink, rel, linkTarget },
