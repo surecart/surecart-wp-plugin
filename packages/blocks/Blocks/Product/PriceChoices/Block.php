@@ -31,7 +31,7 @@ class Block extends ProductBlock {
 				'class'      => 'surecart-block product-price-choices',
 				'product-id' => esc_attr( $product->id ),
 				'style'      => esc_attr( $this->getVars( $attributes, '--sc-choice' ) . ' --columns: ' . $attributes['columns'] ?? 2 . '; border: none; ' . $styles ),
-				'show-price' => ! empty( $attributes['show_price'] ) ? 'true' : 'false',
+				'show-price' => wp_validate_boolean( $attributes['show_price'] ) ? 'true' : 'false',
 			]
 		);
 
