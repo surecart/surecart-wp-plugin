@@ -8,6 +8,7 @@ use SureCart\Sync\Product\ProductSyncService;
 use SureCart\Sync\Products\ProductsQueueProcess;
 use SureCart\Sync\Products\ProductsSyncProcess;
 use SureCart\Sync\Products\ProductsSyncService;
+use SureCart\Sync\Store\StoreSyncService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -26,6 +27,11 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		// the sync service.
 		$container['surecart.sync'] = function ( $container ) {
 			return new SyncService( $container[ SURECART_APPLICATION_KEY ] );
+		};
+
+		// the sync service.
+		$container['surecart.sync.store'] = function ( $container ) {
+			return new StoreSyncService( $container[ SURECART_APPLICATION_KEY ] );
 		};
 
 		// the product sync service.
@@ -76,5 +82,6 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.product']->bootstrap();
 		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
+		$container['surecart.sync.store']->bootstrap();
 	}
 }
