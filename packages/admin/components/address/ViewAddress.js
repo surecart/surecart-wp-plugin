@@ -1,6 +1,11 @@
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
-import Box from '../../../ui/Box';
-import AddressDisplay from '../../../components/AddressDisplay';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScButton,
 	ScDropdown,
@@ -9,18 +14,22 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
+import Box from '../../ui/Box';
+import AddressDisplay from '../AddressDisplay';
 
-export default ({
-	billingAddress,
-	loading,
+export default function ({
+	title,
 	onEditAddress,
 	onDeleteAddress,
-}) => {
+	address,
+	loading,
+}) {
 	return (
 		<Box
-			title={__('Billing Address', 'surecart')}
+			title={title}
+			loading={loading}
 			header_action={
-				!!billingAddress?.id && (
+				!!address?.id && (
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							circle
@@ -60,20 +69,19 @@ export default ({
 			}
 			footer={
 				!loading &&
-				!billingAddress?.id && (
+				!address?.id && (
 					<ScButton onClick={onEditAddress}>
 						<ScIcon name="plus" slot="prefix" />
 						{__('Add Address', 'surecart')}
 					</ScButton>
 				)
 			}
-			loading={loading}
 		>
-			{!!billingAddress?.id ? (
+			{!!address?.id ? (
 				<ScFlex>
-					<AddressDisplay address={billingAddress} />
+					<AddressDisplay address={address} />
 				</ScFlex>
 			) : null}
 		</Box>
 	);
-};
+}

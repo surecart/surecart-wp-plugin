@@ -1,4 +1,3 @@
-import Address from './modules/Address';
 import Customer from './modules/Customer';
 import Phone from './modules/Phone';
 import MetaData from './modules/MetaData';
@@ -6,19 +5,9 @@ import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import ViewAddress from '../components/address/ViewAddress';
 
-import BillingAddress from './modules/BillingAddress';
-import ShippingAddress from './modules/ShippingAddress';
-
-export default ({
-	modal,
-	setModal,
-	order,
-	checkout,
-	customer,
-	loading,
-	modals,
-}) => {
+export default ({ setModal, order, checkout, customer, loading, modals }) => {
 	return (
 		<Fragment>
 			<Customer customer={customer} loading={loading} />
@@ -29,16 +18,19 @@ export default ({
 					loading={loading}
 				/>
 			)}
-			<ShippingAddress
-				shippingAddress={checkout?.shipping_address}
+
+			<ViewAddress
+				title={__('Shipping & Tax Address', 'surecart')}
 				loading={loading}
+				address={checkout?.shipping_address}
 				onEditAddress={() => setModal(modals.EDIT_SHIPPING_ADDRESS)}
 				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
 			/>
 
-			<BillingAddress
-				billingAddress={checkout?.billing_address}
+			<ViewAddress
+				title={__('Billing Address', 'surecart')}
 				loading={loading}
+				address={checkout?.billing_address}
 				onEditAddress={() => setModal(modals.EDIT_BILLING_ADDRESS)}
 				onDeleteAddress={() =>
 					setModal(modals.CONFIRM_DELETE_BILLING_ADDRESS)
