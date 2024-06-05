@@ -37,9 +37,9 @@ class URLParamService {
 	/**
 	 * URL.
 	 *
-	 * @var string
+	 * @var string|false
 	 */
-	protected $url = '';
+	protected $url = false;
 
 	/**
 	 * Set the prefix.
@@ -125,7 +125,7 @@ class URLParamService {
 		// get the key for this filter argument.
 		$key = $this->getKey( $key, $instance_id );
 		// return the new URL without pagination for filtering.
-		$this->url = add_query_arg( $key, $value );
+		$this->url = add_query_arg( $key, $value, $this->url );
 		// return this.
 		return $this;
 	}
@@ -179,7 +179,7 @@ class URLParamService {
 				$this->getKey( $this->pagination_key, $instance_id ),
 				$this->getKey( $this->search_key, $instance_id ),
 			],
-			add_query_arg( $key, $filters )
+			add_query_arg( $key, $filters, $this->url )
 		);
 	}
 
@@ -234,7 +234,7 @@ class URLParamService {
 				$this->getKey( $this->pagination_key, $instance_id ),
 				$this->getKey( $this->search_key, $instance_id ),
 			],
-			add_query_arg( $key, $filters )
+			add_query_arg( $key, $filters, $this->url )
 		);
 	}
 }

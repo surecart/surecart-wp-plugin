@@ -3,12 +3,13 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCommissionStructure;
+use SureCart\Models\Traits\HasProduct;
 
 /**
  * AffiliationProduct Model
  */
 class AffiliationProduct extends Model {
-	use HasCommissionStructure;
+	use HasCommissionStructure, HasProduct;
 
 	/**
 	 * Rest API endpoint

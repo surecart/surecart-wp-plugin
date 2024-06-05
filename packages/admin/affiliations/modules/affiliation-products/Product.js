@@ -21,7 +21,6 @@ import {
 	ScFormatNumber,
 	ScIcon,
 } from '@surecart/components-react';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { intervalString } from '../../../util/translations';
 import ModelSelector from '../../../components/ModelSelector';
 import ModelRow from '../../../upsell-funnels/components/ModelRow';
@@ -92,7 +91,7 @@ export default ({ productId, onSelect, ...props }) => {
 				<ScCard slot="trigger" noPadding>
 					<ModelRow
 						icon={'image'}
-						media={getFeaturedProductMediaAttributes(product)}
+						image={product?.line_item_image}
 						loading={loading}
 						suffix={
 							<div

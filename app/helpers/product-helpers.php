@@ -1,6 +1,4 @@
 <?php
-
-
 if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
 	 * Get the product.

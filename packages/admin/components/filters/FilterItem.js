@@ -12,7 +12,15 @@ import {
 	ScStackedListRow,
 } from '@surecart/components-react';
 
-export default ({ loading, media, onRemove, icon, children, suffix }) => {
+export default ({
+	loading,
+	media,
+	image,
+	onRemove,
+	icon,
+	children,
+	suffix,
+}) => {
 	return (
 		<ScStackedListRow mobileSize={320}>
 			{loading ? (
@@ -21,7 +29,7 @@ export default ({ loading, media, onRemove, icon, children, suffix }) => {
 					justifyContent="flex-start"
 					style={{ width: '100%' }}
 				>
-					{(!!media?.url || !!icon) && (
+					{(!!image?.src || !!icon) && (
 						<ScSkeleton
 							css={css`
 								width: 60px;
@@ -39,11 +47,9 @@ export default ({ loading, media, onRemove, icon, children, suffix }) => {
 			) : (
 				<>
 					<ScFlex alignItems="center" justifyContent="flex-start">
-						{media?.url ? (
+						{!!image?.src ? (
 							<img
-								src={media.url}
-								alt={media.alt}
-								{...(media.title ? { title: media.title } : {})}
+								{...image}
 								css={css`
 									width: 60px;
 									height: 60px;

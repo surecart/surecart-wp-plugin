@@ -54,7 +54,7 @@ class ProductListBlock {
 		$this->query_vars = array_filter(
 			[
 				'post_type'           => 'sc_product',
-				'status'              => 'publish',
+				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => $this->block->context['surecart/product-list/limit'] ?? 15,
 				'paged'               => $this->url->getCurrentPage(),
