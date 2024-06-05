@@ -108,7 +108,6 @@ export default ({ isOpen, onRequestClose, product }) => {
 			<ScDrawer
 				label={__('Add A Price', 'surecart')}
 				style={{ '--sc-drawer-size': '32rem' }}
-				onScRequestClose={onClose}
 				onScAfterHide={onClose}
 				open={isOpen}
 				stickyHeader
@@ -158,29 +157,29 @@ export default ({ isOpen, onRequestClose, product }) => {
 							]}
 						/>
 
-            {type === 'subscription' && (
-              <Subscription
-                price={price}
-                updatePrice={updatePrice}
-                product={product}
-              />
-            )}
+						{type === 'subscription' && (
+							<Subscription
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
 
-            {type === 'multiple' && (
-              <Multiple
-                price={price}
-                updatePrice={updatePrice}
-                product={product}
-              />
-            )}
+						{type === 'multiple' && (
+							<Multiple
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
 
-            {type === 'once' && (
-              <OneTime
-                price={price}
-                updatePrice={updatePrice}
-                product={product}
-              />
-            )}
+						{type === 'once' && (
+							<OneTime
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
 
 						<CanUpgrade price={price} updatePrice={updatePrice} />
 					</div>
