@@ -299,34 +299,34 @@ class ProductPostSyncService {
 	 *
 	 * @return void
 	 */
-	protected function syncCollections($post_id, $model) {
+	protected function syncCollections( $post_id, $model ) {
 		// sanity check.
-		if ( !isset($model->product_collections) || !isset($model->product_collections->data) || !is_array($model->product_collections->data)) {
+		if ( ! isset( $model->product_collections ) || ! isset( $model->product_collections->data ) || ! is_array( $model->product_collections->data ) ) {
 			return;
 		}
 
 		// Loop through the collections.
-		foreach( $model->product_collections->data as $collection ) {
+		foreach ( $model->product_collections->data as $collection ) {
 			// Check if the term exists by slug.
 			$term = term_exists( $collection->name, 'sc_collection' );
 
 			// error handling.
 			if ( is_wp_error( $term ) ) {
-				error_log($term->get_error_message());
+				error_log( $term->get_error_message() );
 				continue;
 			}
 
 			// if the term does not exist, create it.
-			$term = empty( $term ) ? wp_insert_term( $collection->name, 'sc_collection') : null;
+			$term = empty( $term ) ? wp_insert_term( $collection->name, 'sc_collection' ) : null;
 
 			// error handling.
 			if ( is_wp_error( $term ) ) {
-				error_log($term->get_error_message());
+				error_log( $term->get_error_message() );
 				continue;
 			}
 
 			// get the term id.
-			$term_id = isset($term['term_id']) ? $term['term_id'] : null;
+			$term_id = isset( $term['term_id'] ) ? $term['term_id'] : null;
 
 			// Assign to post and add meta.
 			if ( ! empty( $term_id ) ) {
