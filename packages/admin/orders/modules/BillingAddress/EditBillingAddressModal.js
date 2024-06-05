@@ -79,8 +79,8 @@ export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 			isEdit={isEdit}
 			title={
 				isEdit()
-					? __('Update Shipping Address', 'surecart')
-					: __('Add Shipping Address', 'surecart')
+					? __('Update Billing Address', 'surecart')
+					: __('Add Billing Address', 'surecart')
 			}
 			open={open}
 			address={address}
