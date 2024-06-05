@@ -7,7 +7,18 @@ import TaxInfo from './modules/TaxInfo';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-export default ({ order, checkout, customer, loading }) => {
+import BillingAddress from './modules/BillingAddress';
+import ShippingAddress from './modules/ShippingAddress';
+
+export default ({
+	modal,
+	setModal,
+	order,
+	checkout,
+	customer,
+	loading,
+	modals,
+}) => {
 	return (
 		<Fragment>
 			<Customer customer={customer} loading={loading} />
@@ -18,18 +29,22 @@ export default ({ order, checkout, customer, loading }) => {
 					loading={loading}
 				/>
 			)}
-			{!!checkout?.shipping_address && (
-				<Address
-					address={checkout?.shipping_address}
-					label={__('Shipping & Tax Address', 'surecart')}
-				/>
-			)}
-			{!!checkout?.billing_address_display && (
-				<Address
-					address={checkout?.billing_address_display}
-					label={__('Billing Address', 'surecart')}
-				/>
-			)}
+			<ShippingAddress
+				shippingAddress={checkout?.shipping_address}
+				loading={loading}
+				onEditAddress={() => setModal(modals.EDIT_SHIPPING_ADDRESS)}
+				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
+			/>
+
+			<BillingAddress
+				billingAddress={checkout?.billing_address}
+				loading={loading}
+				onEditAddress={() => setModal(modals.EDIT_BILLING_ADDRESS)}
+				onDeleteAddress={() =>
+					setModal(modals.CONFIRM_DELETE_BILLING_ADDRESS)
+				}
+			/>
+
 			{!!checkout?.tax_identifier && (
 				<TaxInfo
 					taxIdentifier={checkout?.tax_identifier}

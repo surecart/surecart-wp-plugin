@@ -1,5 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { store as coreStore } from '@wordpress/core-data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import { useEffect, useState } from 'react';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
@@ -10,14 +25,6 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
-import { useEffect, useState } from 'react';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
@@ -32,6 +39,17 @@ import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
 import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
 import ReturnItems from './modules/ReturnRequest/ReturnItems';
+import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
+import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
+import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
+import ConfirmDeleteBillingAddressModal from './modules/BillingAddress/ConfirmDeleteBillingAddressModal';
+
+const modals = {
+	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
+	CONFIRM_DELETE_ADDRESS: 'CONFIRM_DELETE_ADDRESS',
+	EDIT_BILLING_ADDRESS: 'EDIT_BILLING_ADDRESS',
+	CONFIRM_DELETE_BILLING_ADDRESS: 'CONFIRM_DELETE_BILLING_ADDRESS',
+};
 
 export default () => {
 	const [modal, setModal] = useState();
@@ -281,12 +299,54 @@ export default () => {
 				</ScDropdown>
 			}
 			sidebar={
-				<Sidebar
-					order={order}
-					checkout={order?.checkout}
-					customer={order?.checkout?.customer}
-					loading={!hasLoadedOrder}
-				/>
+				<>
+					<Sidebar
+						order={order}
+						checkout={order?.checkout}
+						customer={order?.checkout?.customer}
+						loading={!hasLoadedOrder}
+						modal={modal}
+						setModal={setModal}
+						modals={modals}
+					/>
+
+					{!!modal ? (
+						<>
+							<EditAddressModal
+								open={modal === modals.EDIT_SHIPPING_ADDRESS}
+								shippingAddress={
+									order?.checkout?.shipping_address
+								}
+								onRequestClose={() => setModal('')}
+								checkoutId={order?.checkout?.id}
+							/>
+
+							<ConfirmDeleteAddressModal
+								open={modal === modals.CONFIRM_DELETE_ADDRESS}
+								onRequestClose={() => setModal('')}
+								checkoutId={order?.checkout?.id}
+							/>
+
+							<EditBillingAddressModal
+								open={modal === modals.EDIT_BILLING_ADDRESS}
+								billingAddress={
+									order?.checkout?.billing_address
+								}
+								onRequestClose={() => setModal('')}
+								checkoutId={order?.checkout?.id}
+							/>
+
+							<ConfirmDeleteBillingAddressModal
+								open={
+									modal ===
+									modals.CONFIRM_DELETE_BILLING_ADDRESS
+								}
+								onRequestClose={() => setModal('')}
+								checkoutId={order?.checkout?.id}
+							/>
+						</>
+					) : null}
+				</>
 			}
 		>
 			<>
