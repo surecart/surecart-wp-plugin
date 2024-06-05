@@ -25,7 +25,7 @@ export class ScCustomerEdit {
         first_name,
         last_name,
         phone,
-        billing_different_from_shipping,
+        billing_matches_shipping,
         shipping_name,
         shipping_city,
         'tax_identifier.number_type': tax_identifier_number_type,
@@ -66,7 +66,7 @@ export class ScCustomerEdit {
           first_name,
           last_name,
           phone,
-          billing_matches_shipping: billing_different_from_shipping !== 'on',
+          billing_matches_shipping: billing_matches_shipping === 'on',
           shipping_address: this.customer.shipping_address,
           billing_address: this.customer.billing_address,
           ...(tax_identifier_number && tax_identifier_number_type
@@ -115,64 +115,64 @@ export class ScCustomerEdit {
             <sc-column>
               <sc-phone-input label={__('Phone', 'surecart')} name="phone" value={this.customer?.phone} />
             </sc-column>
-            <div>
-              <sc-address
-                label={__('Shipping Address', 'surecart')}
-                showName={true}
-                address={{
-                  ...(this.customer?.shipping_address as Address),
-                }}
-                required={false}
-                names={{
-                  name: 'shipping_name',
-                  country: 'shipping_country',
-                  line_1: 'shipping_line_1',
-                  line_2: 'shipping_line_2',
-                  city: 'shipping_city',
-                  postal_code: 'shipping_postal_code',
-                  state: 'shipping_state',
-                }}
-              ></sc-address>
-            </div>
+            <sc-flex style={{ '--sc-flex-column-gap': 'var(--sc-spacing-medium)' }} flexDirection="column">
+              <div>
+                <sc-address
+                  label={__('Shipping Address', 'surecart')}
+                  showName={true}
+                  address={{
+                    ...(this.customer?.shipping_address as Address),
+                  }}
+                  required={false}
+                  names={{
+                    name: 'shipping_name',
+                    country: 'shipping_country',
+                    line_1: 'shipping_line_1',
+                    line_2: 'shipping_line_2',
+                    city: 'shipping_city',
+                    postal_code: 'shipping_postal_code',
+                    state: 'shipping_state',
+                  }}
+                ></sc-address>
+              </div>
 
-            <div>
-              <sc-switch
-                name="billing_different_from_shipping"
-                checked={!this.customer?.billing_matches_shipping}
-                onScChange={e => {
-                  this.customer = {
-                    ...this.customer,
-                    billing_matches_shipping: !(e.target as HTMLScSwitchElement).checked,
-                  };
-                }}
-                value="on"
-              >
-                {__('Billing address is different from shipping', 'surecart')}
-              </sc-switch>
-            </div>
+              <div>
+                <sc-checkbox
+                  name="billing_matches_shipping"
+                  checked={this.customer?.billing_matches_shipping}
+                  onScChange={e => {
+                    this.customer = {
+                      ...this.customer,
+                      billing_matches_shipping: (e.target as HTMLScCheckboxElement).checked,
+                    };
+                  }}
+                >
+                  {__('Billing address is same as shipping', 'surecart')}
+                </sc-checkbox>
+              </div>
 
-            <div style={{ display: this.customer?.billing_matches_shipping ? 'none' : 'block' }}>
-              <sc-address
-                label={__('Billing Address', 'surecart')}
-                showName={true}
-                address={{
-                  ...(this.customer?.billing_address as Address),
-                }}
-                names={{
-                  name: 'billing_name',
-                  country: 'billing_country',
-                  line_1: 'billing_line_1',
-                  line_2: 'billing_line_2',
-                  city: 'billing_city',
-                  postal_code: 'billing_postal_code',
-                  state: 'billing_state',
-                }}
-                required={true}
-              ></sc-address>
-            </div>
+              <div style={{ display: this.customer?.billing_matches_shipping ? 'none' : 'block' }}>
+                <sc-address
+                  label={__('Billing Address', 'surecart')}
+                  showName={true}
+                  address={{
+                    ...(this.customer?.billing_address as Address),
+                  }}
+                  names={{
+                    name: 'billing_name',
+                    country: 'billing_country',
+                    line_1: 'billing_line_1',
+                    line_2: 'billing_line_2',
+                    city: 'billing_city',
+                    postal_code: 'billing_postal_code',
+                    state: 'billing_state',
+                  }}
+                  required={true}
+                ></sc-address>
+              </div>
 
-            <sc-tax-id-input show number={this.customer?.tax_identifier?.number} type={this.customer?.tax_identifier?.number_type}></sc-tax-id-input>
-
+              <sc-tax-id-input show number={this.customer?.tax_identifier?.number} type={this.customer?.tax_identifier?.number_type}></sc-tax-id-input>
+            </sc-flex>
             <div>
               <sc-button type="primary" full submit>
                 {__('Save', 'surecart')}
