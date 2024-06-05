@@ -14,6 +14,15 @@ class PermalinkRewriteRulesService {
 	protected $option_name = 'surecart_flush_rewrite_rules';
 
 	/**
+	 * Bootstrap the service.
+	 *
+	 * @return mixed
+	 */
+	public function bootstrap() {
+		add_action( 'admin_init', array( $this, 'flushRewriteRulesOnVersionChange' ) );
+	}
+
+	/**
 	 * Retrieves the stored version from the WordPress options.
 	 *
 	 * @return string The stored version.
@@ -69,15 +78,5 @@ class PermalinkRewriteRulesService {
 	public function flushRewriteRulesAndUpdateVersion( $new_version ) {
 		flush_rewrite_rules();
 		return update_option( $this->option_name, $new_version, false );
-	}
-
-	/**
-	 * Create the permalink.
-	 * This handles adding the rewrite rule and query vars.
-	 *
-	 * @return mixed
-	 */
-	public function create() {
-		add_action( 'admin_init', array( $this, 'flushRewriteRulesOnVersionChange' ) );
 	}
 }

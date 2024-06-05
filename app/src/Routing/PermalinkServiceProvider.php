@@ -154,6 +154,6 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->create();
 
 		// Rewrite rules.
-		( new PermalinkRewriteRulesService() )->create();
+		( new PermalinkRewriteRulesService() )->bootstrap();
 	}
 }
