@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
@@ -30,12 +30,11 @@ export default ({ checkoutId, open, onRequestClose }) => {
 				}),
 				method: 'PATCH',
 				data: {
-					billing_matches_shipping: false,
-					billing_address: {},
+					shipping_address: {},
 				},
 			});
 			receiveEntityRecords('surecart', 'order', checkout.order);
-			createSuccessNotice(__('Billing address deleted', 'surecart'), {
+			createSuccessNotice(__('Shipping Address Deleted', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -54,7 +53,7 @@ export default ({ checkoutId, open, onRequestClose }) => {
 			error={error}
 			setError={setError}
 			busy={busy}
-			title={__('Delete Billing Address', 'surecart')}
+			title={__('Delete Shipping Address', 'surecart')}
 			description={__(
 				'Are you sure you want to delete address? This action cannot be undone.',
 				'surecart'

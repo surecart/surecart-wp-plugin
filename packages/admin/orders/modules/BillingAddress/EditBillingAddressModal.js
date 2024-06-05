@@ -5,14 +5,15 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
 import AddressModal from '../../../components/address/AddressModal';
+import { checkoutOrderExpands } from '../../../util/orders';
 
 export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 	const [error, setError] = useState(false);
@@ -32,29 +33,7 @@ export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 			setBusy(true);
 			const checkout = await apiFetch({
 				path: addQueryArgs(`/surecart/v1/checkouts/${checkoutId}`, {
-					expand: [
-						'order',
-						'order.checkout',
-						'checkout.charge',
-						'checkout.customer',
-						'checkout.tax_identifier',
-						'checkout.payment_failures',
-						'checkout.shipping_address',
-						'checkout.billing_address',
-						'checkout.discount',
-						'checkout.line_items',
-						'checkout.selected_shipping_choice',
-						'shipping_choice.shipping_method',
-						'discount.promotion',
-						'line_item.price',
-						'line_item.fees',
-						'line_item.variant',
-						'customer.balances',
-						'price.product',
-						'product.featured_product_media',
-						'product_media.media',
-						'variant.image',
-					],
+					expand: checkoutOrderExpands,
 				}),
 				method: 'PATCH',
 				data: {

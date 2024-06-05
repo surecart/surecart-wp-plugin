@@ -39,8 +39,8 @@ import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
 import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
 import ReturnItems from './modules/ReturnRequest/ReturnItems';
-import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
-import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
+import EditShippingAddressModal from './modules/ShippingAddress/EditShippingAddressModal';
+import ConfirmDeleteShippingAddressModal from './modules/ShippingAddress/ConfirmDeleteShippingAddressModal';
 import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
 import ConfirmDeleteBillingAddressModal from './modules/BillingAddress/ConfirmDeleteBillingAddressModal';
 
@@ -312,7 +312,7 @@ export default () => {
 
 					{!!modal ? (
 						<>
-							<EditAddressModal
+							<EditShippingAddressModal
 								open={modal === modals.EDIT_SHIPPING_ADDRESS}
 								shippingAddress={
 									order?.checkout?.shipping_address
@@ -321,7 +321,7 @@ export default () => {
 								checkoutId={order?.checkout?.id}
 							/>
 
-							<ConfirmDeleteAddressModal
+							<ConfirmDeleteShippingAddressModal
 								open={modal === modals.CONFIRM_DELETE_ADDRESS}
 								onRequestClose={() => setModal('')}
 								checkoutId={order?.checkout?.id}
