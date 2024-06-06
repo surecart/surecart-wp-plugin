@@ -197,9 +197,9 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Payments', 'surecart')}
+				title={__('Failed Payments', 'surecart')}
 				description={__(
-					'Manage how your store handles subscription payments.',
+					'Manage how your store handles failed subscription payments.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
@@ -244,27 +244,6 @@ export default () => {
 						'surecart'
 					)}
 				</sc-text>
-				<ScSwitch
-					checked={item?.default_payment_method_detach_enabled}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							default_payment_method_detach_enabled:
-								!item?.default_payment_method_detach_enabled,
-						});
-					}}
-				>
-					{__(
-						'Allow Customers To Remove Default Payment Method',
-						'surecart'
-					)}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'When enabled, customers are allowed to remove their default payment method on file. This can lead to subscription payments failing since there is no payment method on file.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
@@ -423,6 +402,27 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={item?.default_payment_method_detach_enabled}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							default_payment_method_detach_enabled:
+								!item?.default_payment_method_detach_enabled,
+						});
+					}}
+				>
+					{__(
+						'Allow Customers To Remove Default Payment Method',
+						'surecart'
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'When enabled, customers are allowed to remove their default payment method on file. This can lead to subscription payments failing since there is no payment method on file.',
 							'surecart'
 						)}
 					</span>
