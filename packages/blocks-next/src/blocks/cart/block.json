@@ -34,7 +34,7 @@
 	"style": [
 		"file:../../styles/drawer.css",
 		"file:../../styles/block-ui.css",
-		"file:./index.css"
+		"file:./style-index.css"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/dialog"]
