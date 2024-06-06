@@ -1,42 +1,44 @@
 <div
-    class="wp-block-surecart-cart-items__wrapper"
-    <?php echo wp_kses_data( get_block_wrapper_attributes(
-		array(
-			'style' => $style,
+	class="wp-block-surecart-cart-items__wrapper"
+	<?php echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'style' => $style,
+			)
 		)
-	) ); ?>
+	); ?>
 >
-    <template
+	<template
 		data-wp-each--line_item="state.checkoutLineItems"
 		data-wp-key="context.line_item.id"
 	>
-        <div
-            class="sc-product-line-item"
-            style="margin-bottom: 20px;"
-        >
-            <div class="sc-product-line-item__item">
-                <img
-                    class="sc-product-line-item__image"
-                    data-wp-bind--src="context.line_item.price.product.image_url"
-                    data-wp-bind--hidden="!state.hasLineItemImageUrl"
-                    alt=""
-                />
+		<div
+			class="sc-product-line-item"
+			style="margin-bottom: 20px;"
+		>
+			<div class="sc-product-line-item__item">
+				<img
+					class="sc-product-line-item__image"
+					data-wp-bind--src="context.line_item.price.product.image_url"
+					data-wp-bind--hidden="!state.hasLineItemImageUrl"
+					alt=""
+				/>
 
-                <div class="sc-product-line-item__text">
-                    <div class="sc-product-line-item__text-details">
-                        <div class="sc-product-line-item__title">
-                            <span data-wp-text="context.line_item.price.product.name"></span>
-                        </div>
-                        <div class="sc-product-line-item__description sc-product-line-item__price-variant">
-                            <div data-wp-text="context.line_item.price.name"></div>
-                        </div>
-                        <?php if ( ! $attributes['editable'] ): ?>
-                            <span class="sc-product-line-item__description">
-                                <?php esc_html_e('Qty:', 'surecart'); ?>
-                                <span data-wp-text="context.line_item.quantity"></span>
-                            </span>
-                        <?php endif; ?>
-                        <?php if ( $attributes['editable'] ): ?>
+				<div class="sc-product-line-item__text">
+					<div class="sc-product-line-item__text-details">
+						<div class="sc-product-line-item__title">
+							<span data-wp-text="context.line_item.price.product.name"></span>
+						</div>
+						<div class="sc-product-line-item__description sc-product-line-item__price-variant">
+							<div data-wp-text="context.line_item.price.name"></div>
+						</div>
+						<?php if ( ! $attributes['editable'] ) : ?>
+							<span class="sc-product-line-item__description">
+								<?php esc_html_e( 'Qty:', 'surecart' ); ?>
+								<span data-wp-text="context.line_item.quantity"></span>
+							</span>
+						<?php endif; ?>
+						<?php if ( $attributes['editable'] ) : ?>
 							<div
 								class="sc-input-group sc-quantity-selector"
 								data-wp-class--quantity--disabled="state.isQuantityDisabled"
@@ -79,34 +81,34 @@
 									<?php echo wp_kses( SureCart::svg()->get( 'plus' ), sc_allowed_svg_html() ); ?>
 								</div>
 							</div>
-                        <?php endif; ?>
-                    </div>
-                </div>
+						<?php endif; ?>
+					</div>
+				</div>
 
-                <div class="sc-product-line-item__suffix">
-                    <?php if ( $attributes['removable'] ): ?>
+				<div class="sc-product-line-item__suffix">
+					<?php if ( $attributes['removable'] ) : ?>
 						<button class="sc-product-line-item__remove-button" data-wp-on--click="surecart/checkout::actions.removeLineItem">
-                        	<?php echo wp_kses( SureCart::svg()->get('x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
+							<?php echo wp_kses( SureCart::svg()->get( 'x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
 						</button>
-                    <?php endif; ?>
+					<?php endif; ?>
 
-                    <div class="sc-product-line-item__price">
-                        <div class="price">
-                            <span
-                                data-wp-bind--hidden="!state.lineItemHasScratchAmount"
-                                data-wp-text="context.line_item.price.scratchAmount"
-                            ></span>
-                            <span data-wp-text="context.line_item.price.display_amount"></span>
-                        </div>
-                        <div
-                            data-wp-bind--hidden="!context.line_item.price.interval"
-                            class="sc-product-line-item__price__description"
-                            data-wp-text="context.line_item.price.interval"
-                        >
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+					<div class="sc-product-line-item__price">
+						<div class="price">
+							<span
+								data-wp-bind--hidden="!state.lineItemHasScratchAmount"
+								data-wp-text="context.line_item.price.scratchAmount"
+							></span>
+							<span data-wp-text="context.line_item.price.display_amount"></span>
+						</div>
+						<div
+							data-wp-bind--hidden="!context.line_item.price.interval"
+							class="sc-product-line-item__price__description"
+							data-wp-text="context.line_item.price.interval"
+						>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</template>
 </div>
