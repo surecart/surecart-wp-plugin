@@ -5,20 +5,19 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 
 store('surecart/dialog', {
 	actions: {
-		toggle: () => {
+		toggle: (targetClass = null) => {
 			const { target } = getContext() || {};
-			const { ref } = getElement();
 
 			// Get passed target or <dialog>.
-			let dialog =
-				document.querySelector(target ?? null) || // Specified target.
-				ref.parentElement.querySelector('dialog') || // Sibling dialog.
-				ref.closest('dialog') || // Parent dialog.
-				null;
+			let dialog = document.querySelector(targetClass ?? target ?? null);
 
-			// Try all of the dialog element once.
 			if (!dialog) {
-				dialog = document.querySelector('dialog');
+				const { ref } = getElement();
+
+				dialog =
+					ref.parentElement.querySelector('dialog') || // Sibling dialog.
+					ref.closest('dialog') || // Parent dialog.
+					null;
 			}
 
 			// No dialog is found.
