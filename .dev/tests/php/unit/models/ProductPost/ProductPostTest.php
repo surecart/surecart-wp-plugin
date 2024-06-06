@@ -36,6 +36,95 @@ class ProductPostTest extends SureCartUnitTestCase
 
 	/**
 	 * @group sync
+	 */
+	public function test_syncs_taxonomies() {
+		$product = (new Product(
+			[
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'product_collections' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'product_collection',
+							'name' => 'Sneakers',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'product_collection',
+							'name' => 'Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		))->sync( true );
+
+		$post = $product->post;
+
+		$this->assertInstanceOf(\WP_Post::class, $post);
+		$this->assertNotEmpty($post->ID);
+		$terms = get_the_terms($post->ID, 'sc_collection');
+		$this->assertNotEmpty($terms);
+		$this->assertCount(2, $terms);
+
+		$product_2 = (new Product(
+			[
+				"id" => "testid_2",
+				"object" => "product",
+				"name" => "Test 2",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'product_collections' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'product_collection',
+							'name' => 'Dress Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'product_collection',
+							'name' => 'Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		))->sync( true );
+
+		$post = $product_2->post;
+
+		$this->assertInstanceOf(\WP_Post::class, $post);
+		$this->assertNotEmpty($post->ID);
+		$terms = get_the_terms($post->ID, 'sc_collection');
+		$this->assertNotEmpty($terms);
+		$this->assertCount(2, $terms);
+
+		$this->assertCount(3, get_terms(array(
+			'taxonomy'   => 'sc_collection',
+			'hide_empty' => false,
+		)));
+
+		$sneakers = get_term_by('name', 'Sneakers', 'sc_collection');
+		$this->assertNotEmpty($sneakers);
+		$shoes = get_term_by('name', 'Shoes', 'sc_collection');
+		$this->assertNotEmpty($shoes);
+		$dress_shoes = get_term_by('name', 'Dress Shoes', 'sc_collection');
+		$this->assertNotEmpty($dress_shoes);
+	}
+
+	/**
+	 * @group sync
 	 * @group account
 	 */
 	public function test_has_account_term() {
@@ -164,6 +253,17 @@ class ProductPostTest extends SureCartUnitTestCase
 				"archived" => true,
 				"created_at" => 1624910585,
 				"updated_at" => 1624910585,
+				'product_collections' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'product_collection',
+							'name' => 'Dress Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+					]
+				],
 				'variant_options' => (object) [
 					'data' => [
 						(object) [
@@ -226,6 +326,7 @@ class ProductPostTest extends SureCartUnitTestCase
 		$this->assertSame('Other sneakers.', $post->post_title);
 		$this->assertSame('sc_archived', $post->post_status);
 		$this->assertSame('fancy-sneakers', $post->post_name);
+		$this->assertEmpty(get_the_terms($post->ID, 'sc_collection'));
 	}
 
 		/**
