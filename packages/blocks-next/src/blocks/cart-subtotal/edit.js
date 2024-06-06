@@ -57,7 +57,7 @@ export default ({ attributes, setAttributes }) => {
 						<div className="sc-product-line-item__suffix">
 							<div className="sc-product-line-item__price">
 								<div className="price">
-									<span>$1,35.79</span>
+									<span>$135.79</span>
 								</div>
 							</div>
 						</div>
