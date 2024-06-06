@@ -65,4 +65,16 @@ class BlockService {
 	public function styles() {
 		return new BlockStylesService();
 	}
+
+	/**
+	 * Get the product page migration service.
+	 *
+	 * @param array  $attributes The attributes of the block.
+	 * @param object $block The block object.
+	 *
+	 * @return ProductPageMigrationService
+	 */
+	public function productPageMigration( $attributes = array(), $block = null ) {
+		return new ProductPageMigrationService( $attributes, $block );
+	}
 }

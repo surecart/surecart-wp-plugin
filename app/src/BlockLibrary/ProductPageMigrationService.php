@@ -83,9 +83,7 @@ class ProductPageMigrationService {
 	 * @return void
 	 */
 	public function renderProductPage() {
-		$this->block_html .= '<!-- wp:surecart/product-page -->';
 		$this->renderProductTitle();
-		$this->block_html .= '<!-- /wp:surecart/product-page -->';
 	}
 
 	/**
