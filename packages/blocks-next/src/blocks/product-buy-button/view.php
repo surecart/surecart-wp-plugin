@@ -1,4 +1,12 @@
-<div <?php echo get_block_wrapper_attributes(['class' => 'wp-block-button']); ?>
+<div
+	<?php echo wp_kses_data( get_block_wrapper_attributes(
+		[
+			'class' => 'wp-block-button ' . $class,
+			'style' => 'width: 100%; ' . $style,
+		]
+	) ); ?>
+	data-wp-interactive='{ "namespace": "surecart/checkout" }'
+
 	<?php echo wp_interactivity_data_wp_context( [
 		'checkoutUrl' =>  esc_url( \SureCart::pages()->url( 'checkout' ) ),
 		'text' => esc_attr($attributes['text'] ?? __('Add To Cart', 'surecart')),
@@ -10,10 +18,11 @@
 		style="<?php echo esc_attr($style); ?>"
 		data-wp-bind--disabled="state.isUnavailable"
 		data-wp-bind--value="state.checkoutUrl"
+		data-wp-on--click="surecart/checkout::actions.addToCart"
 		<?php echo $attributes['add_to_cart'] ? 'data-wp-class--sc-button__link--busy="state.busy"' : ''; ?>
 	>
 		<span class="sc-spinner" aria-hidden="true"></span>
-		<span class="sc-button__link-text" data-wp-text="state.buttonText">
+		<span class="sc-button__link-text">
 			<?php echo wp_kses_post( $attributes['text'] ?? __('Add To Cart', 'surecart') ); ?>
 		</span>
 	</button>

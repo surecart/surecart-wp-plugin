@@ -105,6 +105,9 @@
 	"style": [
 		"file:../../styles/wp-button.css",
 		"file:../../styles/spinner.css",
-		"file:../../styles/dialog.css"
-	]
+		"file:../../styles/dialog.css",
+		"file:./style-index.css"
+	],
+	"viewScript": ["wp-url", "wp-api-fetch"],
+	"viewScriptModule": ["@surecart/checkout", "@surecart/dialog"]
 }

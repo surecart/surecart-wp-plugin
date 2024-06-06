@@ -5,7 +5,7 @@ import { store, getContext } from '@wordpress/interactivity';
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
-const { state, callbacks, actions } = store('surecart/product', {
+const { state, callbacks, actions } = store('surecart/product-page', {
 	state: {
 		/**
 		 * Product contextual state.
@@ -14,16 +14,13 @@ const { state, callbacks, actions } = store('surecart/product', {
 			return callbacks.getState('product');
 		},
 		get selectedPrice() {
-			return callbacks.getState('selectedPrice');
+			return callbacks.getState('selectedPrice') || {};
 		},
 		get selectedVariant() {
 			return callbacks.getState('selectedVariant');
 		},
 		get variantValues() {
 			return callbacks.getState('variantValues');
-		},
-		get quantity() {
-			return callbacks.getState('quantity');
 		},
 		get busy() {
 			return callbacks.getState('busy');
@@ -35,6 +32,12 @@ const { state, callbacks, actions } = store('surecart/product', {
 		/**
 		 * Derived state
 		 */
+		/** Get the product quantity */
+		get quantity() {
+			if (state?.selectedPrice?.ad_hoc) return 1;
+
+			return callbacks.getState('quantity') || 1;
+		},
 		/** Get the selected amount. */
 		get selectedAmount() {
 			return (
@@ -60,19 +63,19 @@ const { state, callbacks, actions } = store('surecart/product', {
 		},
 		/** Is the option unavailable */
 		get isOptionUnavailable() {
-			const { optionNumber, optionValue } = getContext();
+			const { optionNumber, option_value } = getContext();
 			return isProductVariantOptionSoldOut(
 				parseInt(optionNumber),
-				optionValue,
+				option_value,
 				state.variantValues,
 				state.product
 			);
 		},
 		/** Is the option selected? */
 		get isOptionSelected() {
-			const { optionNumber, optionValue } = getContext();
+			const { optionNumber, option_value } = getContext();
 			return (
-				state.variantValues[`option_${optionNumber}`] === optionValue
+				state.variantValues[`option_${optionNumber}`] === option_value
 			);
 		},
 		/** Is the price selected? */
@@ -96,14 +99,21 @@ const { state, callbacks, actions } = store('surecart/product', {
 			});
 		},
 		get buttonText() {
-			const { text, outOfStockText } = getContext();
+			const { text, outOfStockText, unavailableText } = getContext();
+
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
+
+			if (state.isUnavailable) {
+				return unavailableText;
+			}
+
 			return text;
 		},
 		get isUnavailable() {
 			return (
+				state?.product?.archived || // archived.
 				state?.isSoldOut || // sold out.
 				(state?.variants?.length && !state?.selectedVariant?.id) // no selected variant.
 			);
@@ -140,6 +150,28 @@ const { state, callbacks, actions } = store('surecart/product', {
 					: {}),
 			};
 		},
+		/** Get the formatted selected price */
+		get formattedSelectedPrice() {
+			if (!state.selectedPrice?.id) return;
+			const formatted = { ...state.selectedPrice };
+
+			// format zero decimal prices.
+			if (!formatted?.is_zero_decimal) {
+				[
+					'full_amount',
+					'amount',
+					'display_amount',
+					'scratch_amount',
+					'ad_hoc_min_amount',
+					'ad_hoc_max_amount',
+					'setup_fee_amount',
+				].forEach((key) => {
+					formatted[key] = parseFloat(formatted[key]) / 100;
+				});
+			}
+
+			return formatted;
+		},
 		/** Is the add to cart/buy disabled? */
 		get disabled() {
 			return state?.selectedPrice?.archived || state?.product?.archived;
@@ -147,6 +179,52 @@ const { state, callbacks, actions } = store('surecart/product', {
 		/** Get the selected variant id. */
 		get selectedVariantId() {
 			return state.selectedVariant?.id;
+		},
+		/** Get the min product quantity */
+		get minQuantity() {
+			return 1; //return 1 as the minimum quantity.
+		},
+		/** Get the max product quantity */
+		get maxQuantity() {
+			// check purchase limit.
+			if (state.product?.purchase_limit) {
+				return state.product.purchase_limit;
+			}
+
+			// check if stock needs to be checked
+			const isStockNeedsToBeChecked = !!(
+				state.product?.stock_enabled &&
+				!state.product?.allow_out_of_stock_purchases
+			);
+
+			// if stock is not enabled return infinity.
+			if (!isStockNeedsToBeChecked) {
+				return Infinity;
+			}
+
+			// if no variant is selected, check against product stock.
+			if (!state.selectedVariant) {
+				return state.product.available_stock;
+			}
+
+			// check against variant stock.
+			return state.selectedVariant.available_stock;
+		},
+		/** Is the quantity disabled? */
+		get isQuantityDisabled() {
+			return !!state?.selectedPrice?.ad_hoc;
+		},
+		/** Is quantity increase disabled? */
+		get isQuantityIncreaseDisabled() {
+			return (
+				state.isQuantityDisabled || state.quantity >= state.maxQuantity
+			);
+		},
+		/** Is quantity decrease disabled? */
+		get isQuantityDecreaseDisabled() {
+			return (
+				state.isQuantityDisabled || state.quantity <= state.minQuantity
+			);
 		},
 	},
 
@@ -197,6 +275,10 @@ const { state, callbacks, actions } = store('surecart/product', {
 			const selectedPrice = state.product.prices?.data.find(
 				(p) => p.id === price?.id
 			);
+			state.adHocAmount =
+				parseFloat(selectedPrice?.ad_hoc ? selectedPrice?.amount : 0) /
+				(selectedPrice?.is_zero_decimal ? 1 : 100);
+
 			update({ selectedPrice });
 		},
 		setAdHocAmount: (e) => {
@@ -221,6 +303,28 @@ const { state, callbacks, actions } = store('surecart/product', {
 					selectedVariant,
 				});
 			}
+		},
+		onQuantityChange: (e) => {
+			update({
+				quantity: Math.max(
+					Math.min(state.maxQuantity, parseInt(e.target.value)),
+					state.minQuantity
+				),
+			});
+		},
+		onQuantityDecrease: () => {
+			if (state.isQuantityDisabled) return;
+
+			update({
+				quantity: Math.max(state.minQuantity, state.quantity - 1),
+			});
+		},
+		onQuantityIncrease: () => {
+			if (state.isQuantityDisabled) return;
+
+			update({
+				quantity: Math.min(state.maxQuantity, state.quantity + 1),
+			});
 		},
 	},
 });
