@@ -95,6 +95,35 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Maybe queue a sync job if updated_at is different
+	 * than the product post updated_at.
+	 *
+	 * @return \SureCart\Background\QueueService|false Whether the sync was queued.
+	 */
+	protected function maybeQueueSync() {
+		// we don't have an updated_at.
+		if ( empty( $this->updated_at ) ) {
+			return false;
+		}
+
+		// we don't have a post.
+		if ( empty( $this->post ) ) {
+			return false;
+		}
+
+		// we don't have a product updated_at.
+		if ( empty( $this->post->product->updated_at ) ) {
+			return false;
+		}
+
+		if ( $this->updated_at <= $this->post->product->updated_at ) {
+			return false;
+		}
+
+		return $this->queueSync();
+	}
+
+	/**
 	 * Get the attached post.
 	 *
 	 * @return int|false
@@ -202,21 +231,8 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setUpdatedAtAttribute( $value ) {
-		// queue the off-session sync job if the product is not set.
-		// TODO: Check if this is necessary.
-		// if ( empty( $this->post ) ) {
-		// $this->queueSync();
-		// }
-
-		// queue the off-session sync job if the product updated_at is newer than the post updated_at.
-		if ( ! empty( $this->post ) && ! empty( $this->post->updated_at ) && ! empty( $this->updated_at ) ) {
-			if ( $this->updated_at > $this->post->updated_at ) {
-				$this->queueSync();
-			}
-		}
-
-		// set the attribute like normal.
 		$this->attributes['updated_at'] = apply_filters( "surecart/$this->object_name/attributes/updated_at", $value, $this );
+		$this->maybeQueueSync();
 	}
 
 	/**

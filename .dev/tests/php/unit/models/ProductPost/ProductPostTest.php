@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Models\ProductPost;
 
+use SureCart\Background\QueueService;
 use SureCart\Database\Table;
 use SureCart\Database\Tables\VariantOptionValues;
 use SureCart\Models\Price;
@@ -14,6 +15,8 @@ use SureCart\Tests\SureCartUnitTestCase;
 
 class ProductPostTest extends SureCartUnitTestCase
 {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	public function setUp(): void
 	{
 		parent::setUp();
@@ -748,4 +751,65 @@ class ProductPostTest extends SureCartUnitTestCase
 			$this->assertInstanceOf(\WP_Post::class, $price);
 		}
 	}
-}
+
+	/**
+	 * This tests to make sure that if the stored post updated_at is older
+	 * than the model updated_at, then the sync is queued for later.
+	 *
+	 * @group sync
+	 */
+	public function test_queues_sync_if_post_type_is_old() {
+		(new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111110
+		]))->sync();
+
+		// mock the requests in the container
+		$queue_service =  \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service
+			->shouldReceive('async')
+			->once()
+			->with(
+				'surecart/sync/product',
+				[
+					'id'               => 'testid',
+					'with_collections' => false,
+				],
+				'product-testid', // unique id for the product.
+				true // force unique. This will replace any existing jobs.
+			)->andReturn(true);
+
+		// this should trigger it.
+		new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111111
+		]);
+
+		// this should not trigger it.
+		new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111110
+		]);
+
+		// this should not trigger it.
+		new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111100
+		]);
+	}
+ }
