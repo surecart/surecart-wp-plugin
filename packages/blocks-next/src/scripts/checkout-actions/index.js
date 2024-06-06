@@ -69,8 +69,10 @@ export const withDefaultData = (data) => ({
 
 /** Default query we send with every request. */
 export const withDefaultQuery = (query = {}) => ({
-	// ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
-	// ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
+	...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
+	...(!!checkoutState?.product?.id && {
+		product_id: checkoutState?.product?.id,
+	}),
 	...query,
 });
 
@@ -110,21 +112,20 @@ export const removeLineItem = async ({ checkoutId, itemId }) => {
 	return await fetchCheckout({ id: checkoutId });
 };
 
-// /**
-//  * Update the checkout line item
-//  */
+/**
+ * Update the checkout line item
+ */
 export const updateCheckoutLineItem = async ({ id, data }) => {
 	try {
-		// updateFormState('FETCH');
+		checkoutState.loading = true;
 		return await updateLineItem({
 			id: id,
 			data,
 		});
-		// updateFormState('RESOLVE');
 	} catch (e) {
 		console.error(e);
-		// createErrorNotice(e);
-		// updateFormState('REJECT');
+	} finally {
+		checkoutState.loading = false;
 	}
 };
 
@@ -133,47 +134,66 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
  */
 export const removeCheckoutLineItem = async (id) => {
 	try {
-		// updateFormState('FETCH');
+		checkoutState.loading = true;
 		return await removeLineItem({
 			checkoutId: checkoutState?.checkout?.id,
 			itemId: id,
 		});
-		// updateFormState('RESOLVE');
 	} catch (e) {
 		console.error(e);
-		// createErrorNotice(e);
-		// updateFormState('REJECT');
+	} finally {
+		checkoutState.loading = false;
 	}
 };
 
-// /**
-//  * Add the checkout line item.
-//  */
-// const addCheckoutLineItem = async (data) => {
-// 	try {
-// 		// updateFormState('FETCH');
-// 		state.checkout = await addLineItem({
-// 			checkout: state.checkout,
-// 			data,
-// 			live_mode: state?.mode === 'live',
-// 		});
-// 		// updateFormState('RESOLVE');
-// 	} catch (e) {
-// 		console.error(e);
-// 		createErrorNotice(e);
-// 		updateFormState('REJECT');
-// 	}
-// };
+/**
+ * Add the checkout line item.
+ */
+export const addCheckoutLineItem = async (data) => {
+	try {
+		checkoutState.loading = true;
+		return await addLineItem({
+			checkout: checkoutState.checkout,
+			data,
+			live_mode: checkoutState?.mode === 'live',
+		});
+	} catch (e) {
+		console.error(e);
+	} finally {
+		checkoutState.loading = false;
+	}
+};
 
-// /** Create or update the checkout. */
-// const createOrUpdateCheckout = async ({ id = null, data = {}, query = {} }) => {
-// 	id = !id ? findInitialCheckoutId() : id;
-// 	return await apiFetch({
-// 		method: id ? 'PATCH' : 'POST', // create or update
-// 		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
-// 		data: withDefaultData(data),
-// 	});
-// };
+/** Get the checkout id  */
+export const findInitialCheckoutId = () => {
+	// check url first.
+	const checkoutId = getQueryArg(window.location.href, 'checkout_id');
+	if (!!checkoutId) {
+		return checkoutId;
+	}
+
+	// check existing order.
+	if (checkoutState?.checkout?.id) {
+		return checkoutState?.checkout?.id;
+	}
+
+	// we don't have and order id.
+	return null;
+};
+
+/** Create or update the checkout. */
+export const createOrUpdateCheckout = async ({
+	id = null,
+	data = {},
+	query = {},
+}) => {
+	id = !id ? findInitialCheckoutId() : id;
+	return await apiFetch({
+		method: id ? 'PATCH' : 'POST', // create or update
+		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
+		data: withDefaultData(data),
+	});
+};
 
 // /** Update the checkout. */
 export const updateCheckout = async ({ id, data = {}, query = {} }) => {
@@ -184,92 +204,104 @@ export const updateCheckout = async ({ id, data = {}, query = {} }) => {
 	});
 };
 
-// /** Finalize a checkout */
-// const finalizeCheckout = async ({ id, data = {}, query = {}, processor }) => {
-// 	return await apiFetch({
-// 		method: 'POST',
-// 		path: addQueryArgs(
-// 			parsePath(id, '/finalize'),
-// 			withDefaultQuery({
-// 				...(processor?.manual
-// 					? {
-// 							manual_payment: true,
-// 							manual_payment_method_id: processor?.id,
-// 					  }
-// 					: { processor_type: processor?.id }),
-// 				...query,
-// 			})
-// 		),
-// 		data: withDefaultData(data),
-// 	});
-// };
+/** Finalize a checkout */
+export const finalizeCheckout = async ({
+	id,
+	data = {},
+	query = {},
+	processor,
+}) => {
+	return await apiFetch({
+		method: 'POST',
+		path: addQueryArgs(
+			parsePath(id, '/finalize'),
+			withDefaultQuery({
+				...(processor?.manual
+					? {
+							manual_payment: true,
+							manual_payment_method_id: processor?.id,
+					  }
+					: { processor_type: processor?.id }),
+				...query,
+			})
+		),
+		data: withDefaultData(data),
+	});
+};
 
-// /**
-//  * Add a line item.
-//  */
-// const addLineItem = async ({ checkout, data, live_mode = false }) => {
-// 	const existingLineItem = (checkout?.line_items?.data || []).find((item) => {
-// 		if (!item?.variant?.id) {
-// 			return item.price.id === data.price;
-// 		}
-// 		return item.variant.id === data.variant && item.price.id === data.price;
-// 	});
+/**
+ * Add a line item.
+ */
+export const addLineItem = async ({ checkout, data, live_mode = false }) => {
+	const existingLineItem = (checkout?.line_items?.data || []).find((item) => {
+		if (!item?.variant?.id) {
+			return item.price.id === data.price;
+		}
+		return item.variant.id === data.variant && item.price.id === data.price;
+	});
 
-// 	// create the checkout with the line item.
-// 	if (!checkout?.id) {
-// 		return await apiFetch({
-// 			method: 'POST', // create
-// 			path: addQueryArgs(parsePath(null)),
-// 			data: {
-// 				line_items: [data],
-// 				live_mode,
-// 			},
-// 		});
-// 	}
-
-// 	// handle existing line item.
-// 	if (!!existingLineItem) {
-// 		return await updateLineItem({
-// 			id: existingLineItem?.id,
-// 			data: {
-// 				...data,
-// 				quantity: existingLineItem?.quantity + data?.quantity,
-// 			},
-// 		});
-// 	}
-
-// 	const item = await apiFetch({
-// 		path: addQueryArgs(
-// 			`surecart/v1/line_items/${
-// 				existingLineItem?.id ? existingLineItem?.id : ''
-// 			}`,
-// 			{
-// 				consolidate: true,
-// 				expand: [
-// 					...(expand || []).map((item) => {
-// 						return item.includes('.') ? item : `checkout.${item}`;
-// 					}),
-// 					'checkout',
-// 				],
-// 			}
-// 		),
-// 		method: 'POST',
-// 		data: {
-// 			...data,
-// 			checkout: checkout.id,
-// 		},
-// 	});
-
-// 	return item?.checkout;
-// };
-
-export const handleCouponApply = async (checkoutId, promotion_code) => {
-	return await updateCheckout({
-		id: checkoutId,
-		data: {
-			discount: {
-				...(promotion_code ? { promotion_code } : {}),
+	// create the checkout with the line item.
+	if (!checkout?.id) {
+		return await apiFetch({
+			method: 'POST', // create
+			path: addQueryArgs(parsePath(null)),
+			data: {
+				line_items: [data],
+				live_mode,
 			},
+		});
+	}
+
+	// handle existing line item.
+	if (!!existingLineItem) {
+		return await updateLineItem({
+			id: existingLineItem?.id,
+			data: {
+				...data,
+				quantity: existingLineItem?.quantity + data?.quantity,
+			},
+		});
+	}
+
+	const item = await apiFetch({
+		path: addQueryArgs(
+			`surecart/v1/line_items/${
+				existingLineItem?.id ? existingLineItem?.id : ''
+			}`,
+			{
+				consolidate: true,
+				expand: [
+					...(expand || []).map((item) => {
+						return item.includes('.') ? item : `checkout.${item}`;
+					}),
+					'checkout',
+				],
+			}
+		),
+		method: 'POST',
+		data: {
+			...data,
+			checkout: checkout.id,
 		},
 	});
+
+	return item?.checkout;
+};
+
+export const handleCouponApply = async (checkoutId, promotion_code) => {
+	try {
+		checkoutState.loading = true;
+		return await updateCheckout({
+			id: checkoutId,
+			data: {
+				discount: {
+					...(promotion_code ? { promotion_code } : {}),
+				},
+			},
+		});
+	} catch (error) {
+		console.error(error);
+	} finally {
+		checkoutState.loading = false;
+	}
 };

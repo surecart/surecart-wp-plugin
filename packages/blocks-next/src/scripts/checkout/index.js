@@ -10,9 +10,13 @@ import {
 	updateCheckoutLineItem,
 	removeCheckoutLineItem,
 	handleCouponApply,
+	addCheckoutLineItem,
 } from '@surecart/checkout-actions';
 
+const { state: productState } = store('surecart/product-page');
+const { actions: dialogActions } = store('surecart/dialog');
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
+const CART_DIALOG_CLASS = '.sc-drawer';
 
 const getCheckoutData = (mode = 'live', formId) => {
 	const checkoutData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -111,29 +115,31 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 
 	actions: {
 		toggleCartSidebar(e) {
-			e.preventDefault();
+			e?.preventDefault();
 			state.openCartSidebar = !state?.openCartSidebar || false;
 
-			// Toggle the sc-drawer dialog.
-			const { actions } = store('surecart/dialog');
-			actions.toggle();
+			// Toggle the cart dialog.
+			dialogActions.toggle(CART_DIALOG_CLASS);
 		},
+
 		toggleDiscountInput(e) {
 			e.preventDefault();
 			const context = getContext();
 			context.discountInputOpen = !context.discountInputOpen;
 		},
+
 		setDiscountCode(e) {
 			state.discountCode = e?.target?.value || '';
 		},
+
 		applyDiscount: async (e) => {
 			e.preventDefault();
-			state.loading = true;
+			e.stopPropagation();
+
 			const checkout = await handleCouponApply(
 				state.checkout.id,
 				state.discountCode
 			);
-			state.loading = false;
 
 			if (checkout) {
 				state.checkout = checkout;
@@ -141,9 +147,7 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		},
 
 		removeDiscount: async () => {
-			state.loading = true;
 			const checkout = await handleCouponApply(state.checkout.id, null);
-			state.loading = false;
 
 			if (checkout) {
 				state.discountCode = '';
@@ -161,6 +165,7 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 
 			context.discountInputOpen = false;
 		},
+
 		setCheckout(data, mode, formId) {
 			let checkout = getCheckoutData(mode, formId);
 
@@ -246,6 +251,54 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 				actions.setCheckout(checkout, mode, formId);
 			}
 			state.loading = false;
+		},
+
+		addToCart: async () => {
+			const { mode, formId } = getContext();
+
+			// TODO: Replace this with the actual selected price id.
+			const selectedPriceId = '069b12cb-be62-4cb4-ae7e-3d79ca7e9618';
+			const quantity = productState?.quantity || 1;
+
+			if (!productState) return;
+			// if (!productState.selectedPrice?.id) return;
+
+			if (
+				productState.selectedPrice?.ad_hoc &&
+				(null === productState.adHocAmount ||
+					undefined === productState.adHocAmount)
+			) {
+				return;
+			}
+
+			let checkout = null;
+			try {
+				state.loading = true;
+				checkout = await addCheckoutLineItem({
+					price: selectedPriceId, // productState.selectedPrice?.id,
+					quantity: Math.max(
+						productState.selectedPrice?.ad_hoc ? 1 : quantity,
+						1
+					),
+					...(productState.selectedPrice?.ad_hoc
+						? { ad_hoc_amount: productState.adHocAmount }
+						: {}),
+					variant: productState.selectedVariant?.id,
+				});
+			} catch (e) {
+				console.error(e);
+				throw e; // Re-throw the caught error
+			} finally {
+				state.loading = false;
+			}
+
+			if (checkout) {
+				actions.setCheckout(checkout, mode, formId);
+				state.openCartSidebar = !state?.openCartSidebar || false;
+
+				// Toggle the cart dialog.
+				dialogActions.toggle(CART_DIALOG_CLASS);
+			}
 		},
 	},
 });
