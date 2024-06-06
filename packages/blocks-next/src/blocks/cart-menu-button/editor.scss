@@ -1,13 +1,13 @@
 .sc-cart-choicer {
 	display: flex;
-    gap: 10px;
+	gap: 10px;
 
-    svg {
-        border: 1px solid transparent;
+	svg {
+		border: 1px solid transparent;
 
-        &.active {
-            border: 1px solid var(--sc-color-gray-200);
-            border-radius: 10px;
-        }
-    }
+		&.active {
+			border: 1px solid var(--sc-color-gray-200);
+			border-radius: 10px;
+		}
+	}
 }
