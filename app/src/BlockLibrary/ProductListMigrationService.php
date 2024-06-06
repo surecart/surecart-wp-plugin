@@ -208,11 +208,13 @@ class ProductListMigrationService {
 	public function renderProductTemplate(): void {
 		$columns           = $this->attributes['columns'] ?? 3;
 		$this->block_html .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
-		$group_attrs       = wp_json_encode( $this->inner_blocks[0]['attrs'] );
+		$group_attrs       = ! empty( $this->inner_blocks[0]['attrs'] ) ? wp_json_encode( $this->inner_blocks[0]['attrs'] ) : '{}';
 		$group_block       = parse_blocks( '<!-- wp:group ' . $group_attrs . ' -->' )[0];
 		$group_styles      = sc_get_block_styles( true, $group_block );
+		$group_classnames  = ! empty( $group_styles['classnames'] ) ? $group_styles['classnames'] : '';
+		$group_css         = ! empty( $group_styles['css'] ) ? $group_styles['css'] : '';
 		$this->block_html .= '<!-- wp:group -->';
-		$this->block_html .= '<div class="wp-block-group ' . $group_styles['classnames'] . '" style="' . $group_styles['css'] . '">';
+		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="' . $group_css . '">';
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
 			foreach ( $this->inner_blocks[0]['innerBlocks'] as $inner_block ) {

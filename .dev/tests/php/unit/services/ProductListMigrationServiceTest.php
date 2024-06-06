@@ -13,6 +13,13 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	 */
 	public function setUp() : void
 	{
+		// Set up an app instance with whatever stubs and mocks we need before every test.
+		\SureCart::make()->bootstrap([
+			'providers' => [
+				\SureCart\BlockLibrary\BlockServiceProvider::class,
+			],
+		], false);
+
 		$attributes = [
 			'limit' => 10,
 			'columns' => 3,
@@ -28,9 +35,9 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
                     [
 						'blockName' => 'surecart/product-template',
                         'innerBlocks' => [
-							['blockName' => 'surecart/product-image', 'attrs' => ['key1' => 'value1']],
-                            ['blockName' => 'surecart/product-title-v2', 'attrs' => ['key2' => 'value2']],
-							['blockName' => 'surecart/product-price-v2', 'attrs' => ['key3' => 'value3']]
+							['blockName' => 'surecart/product-item-image', 'attrs' => ['key1' => 'value1']],
+                            ['blockName' => 'surecart/product-item-title', 'attrs' => ['key2' => 'value2']],
+							['blockName' => 'surecart/product-item-price', 'attrs' => ['key3' => 'value3']]
                         ],
                     ],
                 ],
@@ -73,9 +80,9 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
                     [
 						'blockName' => 'surecart/product-template',
                         'innerBlocks' => [
-							['blockName' => 'surecart/product-image', 'attrs' => ['key1' => 'value1']],
-                            ['blockName' => 'surecart/product-title-v2', 'attrs' => ['key2' => 'value2']],
-							['blockName' => 'surecart/product-price-v2', 'attrs' => ['key3' => 'value3']]
+							['blockName' => 'surecart/product-item-image', 'attrs' => ['key1' => 'value1']],
+                            ['blockName' => 'surecart/product-item-title', 'attrs' => ['key2' => 'value2']],
+							['blockName' => 'surecart/product-item-price', 'attrs' => ['key3' => 'value3']]
                         ],
                     ],
                 ],
@@ -84,8 +91,8 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 
         $service = new ProductListMigrationService([], $block);
 
-        $result = $this->service->getChildBlocksAttributes('surecart/product-title-v2');
-        $this->assertSame(['key2' => 'value2'], $result);
+        $result = $this->service->getChildBlocksAttributes('surecart/product-item-title');
+        $this->assertSame(['key2' => 'value2', 'level'=>0], $result);
     }
 
 	/**
@@ -107,7 +114,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_title()
 	{
 		$this->service->renderTitle();
-		$this->assertStringContainsString('<!-- wp:surecart/product-title-v2 {"level":0,"style":{}} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-title-v2 {"key2":"value2","level":0} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -116,7 +123,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_image()
 	{
 		$this->service->renderImage();
-		$this->assertStringContainsString('<!-- wp:surecart/product-image {"style":{}} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-image {"key1":"value1"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -125,7 +132,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_price()
 	{
 		$this->service->renderPrice();
-		$this->assertStringContainsString('<!-- wp:surecart/product-price-v2 {"style":{}} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-price-v2 {"key3":"value3"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -134,10 +141,11 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_product_template()
 	{
 		$this->service->renderProductTemplate();
+		var_dump($this->service->inner_blocks[0]['innerBlocks']);
 		$this->assertStringContainsString('<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":3}} -->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-image {"style":{}} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-title-v2 {"level":0,"style":{}} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-price-v2 {"style":{}} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-image {"key1":"value1"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-title-v2 {"key2":"value2","level":0} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-price-v2 {"key3":"value3"} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- /wp:surecart/product-template -->', $this->service->block_html);
 	}
 
