@@ -126,6 +126,10 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getHumanDiscountAttribute() {
+		if ( empty( $this->discount->coupon ) ) {
+			return '';
+		}
+
 		if ( $this->discount && $this->discount->coupon && $this->discount->coupon->percent_off ) {
 			if ( $this->discount->coupon->amount_off && $this->currency ) {
 				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
