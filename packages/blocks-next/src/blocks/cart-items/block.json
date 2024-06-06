@@ -49,6 +49,7 @@
 	"style": [
 		"file:../../styles/line-item.css",
 		"file:../../styles/product-line-item.css",
+		"file:../../styles/input-group.css",
 		"file:../../styles/quantity-selector.css",
 		"file:./style-index.css"
 	],

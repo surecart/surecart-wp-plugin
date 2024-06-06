@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -31,13 +31,17 @@ const getCheckoutData = (mode = 'live', formId) => {
 	return modeData?.[formId] || null;
 };
 
+const isNotKeySubmit = (e) => {
+	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+};
+
 // controls the product page.
-const { state, callbacks, actions } = store('surecart/checkout', {
+const { state, actions } = store('surecart/checkout', {
 	state: {
 		openCartSidebar: false,
 		loading: false,
 		discountCode: '',
-		checkout: null,
+		checkout: {},
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
 				(count, item) => count + (item?.quantity || 0),
@@ -123,9 +127,22 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 		},
 
 		toggleDiscountInput(e) {
+			// check if keydown event and not enter/space key.
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
 			e.preventDefault();
+
 			const context = getContext();
 			context.discountInputOpen = !context.discountInputOpen;
+
+			// focus after the input is visible.
+			const { ref } = getElement();
+			const input = ref?.parentElement?.querySelector?.('input');
+			if (input) {
+				setTimeout(() => input.focus(), 0);
+			}
 		},
 
 		setDiscountCode(e) {
@@ -208,13 +225,19 @@ const { state, callbacks, actions } = store('surecart/checkout', {
 			);
 		},
 
-		onQuantityIncrease: () => {
+		onQuantityIncrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity + 1;
 			actions.updateLineItem({ quantity });
 		},
 
-		onQuantityDecrease: () => {
+		onQuantityDecrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity - 1;
 			if (quantity < 1) {

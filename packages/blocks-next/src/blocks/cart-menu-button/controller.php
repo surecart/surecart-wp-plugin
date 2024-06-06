@@ -12,7 +12,7 @@ $form      = \SureCart::cart()->getForm();
 $form_mode = \SureCart::cart()->getMode();
 
 // Stop if no form or mode found as for deletion.
-if ( empty( $form->ID ) || empty( $mode ) ) {
+if ( empty( $form->ID ) || empty( $form_mode ) ) {
 	return '';
 }
 

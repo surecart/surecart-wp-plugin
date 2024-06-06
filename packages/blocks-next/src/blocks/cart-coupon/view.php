@@ -17,8 +17,8 @@
 		?>
 	data-wp-on-document--click="surecart/checkout::actions.closeCouponOnClickOutside"
 >
-<!-- Discount applied Applied coupon UI -->
-<div
+	<!-- Discount applied Applied coupon UI -->
+	<div
 		class="sc-line-item__item sc-coupon-form"
 		data-wp-bind--hidden="!state.isDiscountAdded"
 		hidden
@@ -70,6 +70,9 @@
 						hidden
 						class="trigger"
 						data-wp-on--click="surecart/checkout::actions.toggleDiscountInput"
+						data-wp-on--keydown="surecart/checkout::actions.toggleDiscountInput"
+						aria-role="button"
+						tabindex="0"
 					>
 						<?php echo esc_attr( $attributes['text'] ); ?>
 					</span>
