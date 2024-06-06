@@ -1,15 +1,15 @@
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	<?php
-		echo wp_kses_data(
-			wp_interactivity_data_wp_context(
-				[
-					'formId' => intval( $form->ID ),
-					'mode'   => esc_attr( $form_mode ),
-				]
-			)
-		);
-		?>
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			[
+				'formId' => intval( $form->ID ),
+				'mode'   => esc_attr( $form_mode ),
+			]
+		)
+	);
+	?>
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
 	data-wp-init="surecart/checkout::callbacks.init"
 >
