@@ -1,25 +1,25 @@
 <?php
 $styles = sc_get_block_styles();
-$style = $styles['css'] ?? '';
-$class = $styles['classnames'] ?? '';
+$style  = $styles['css'] ?? '';
+$class  = $styles['classnames'] ?? '';
 
-$form = \SureCart::forms()->getDefault();
-$mode = \SureCart\Models\Form::getMode( $form->ID );
+$form      = \SureCart::forms()->getDefault();
+$form_mode = \SureCart\Models\Form::getMode( $form->ID );
 
 wp_interactivity_state(
-	"surecart/checkout",
+	'surecart/checkout',
 	array(
-        'discountInputOpen' => false,
-        'discountCode' => '',
-        'loading' => true,
-        'openCartSidebar' => false,
-        'checkout' => null,
+		'discountInputOpen'    => false,
+		'discountCode'         => '',
+		'loading'              => true,
+		'openCartSidebar'      => false,
+		'checkout'             => null,
 
-        // derived states.
-        'discountIsRedeemable' => false,
-        'isDiscountAdded' => false,
-        'isDiscountCodeSet' => false,
-        'hasBumpAmount' => false,
+		// derived states.
+		'discountIsRedeemable' => false,
+		'isDiscountAdded'      => false,
+		'isDiscountCodeSet'    => false,
+		'hasBumpAmount'        => false,
 	)
 );
 
