@@ -305,6 +305,9 @@ class ProductPostSyncService {
 			return;
 		}
 
+		// store the terms for the post.
+		$terms = [];
+
 		// Loop through the collections.
 		foreach ( $model->product_collections->data as $collection ) {
 			// Check if the term exists by slug.
@@ -317,7 +320,7 @@ class ProductPostSyncService {
 			}
 
 			// if the term does not exist, create it.
-			$term = empty( $term ) ? wp_insert_term( $collection->name, 'sc_collection' ) : null;
+			$term = ! isset( $term['term_id'] ) ? wp_insert_term( $collection->name, 'sc_collection' ) : $term;
 
 			// error handling.
 			if ( is_wp_error( $term ) ) {
@@ -325,16 +328,27 @@ class ProductPostSyncService {
 				continue;
 			}
 
-			// get the term id.
-			$term_id = isset( $term['term_id'] ) ? $term['term_id'] : null;
-
-			// Assign to post and add meta.
-			if ( ! empty( $term_id ) ) {
-				wp_set_object_terms( $post_id, (int) $term_id, 'sc_collection', true );
-				add_term_meta( $term_id, 'sc_account', \SureCart::account()->id );
-				add_term_meta( $term_id, 'sc_id', $collection->id );
+			// if we don't have a term id, skip.
+			if ( ! isset( $term['term_id'] ) || empty( $term['term_id'] ) ) {
+				error_log( 'Could not create term for collection: ' . $collection->name );
+				error_log( print_r( $term, true ) );
+				continue;
 			}
+
+			// add to terms array.
+			$terms[] = (int) $term['term_id'];
+
+			// add term meta.
+			add_term_meta( $term['term_id'], 'sc_account', \SureCart::account()->id );
+			add_term_meta( $term['term_id'], 'sc_id', $collection->id );
 		}
+
+		// we don't have terms, skip.
+		if ( empty( $terms ) ) {
+			return;
+		}
+
+		wp_set_post_terms( $post_id, $terms, 'sc_collection' );
 	}
 
 	/**
