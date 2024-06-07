@@ -61,6 +61,8 @@ class Block extends ProductItemListBlock {
 			)
 		);
 
+		// TODO: use list block with taxonomy query.
+		return 'working';
 		$products = $this->getProducts( $attributes );
 
 		\SureCart::assets()->addComponentData(
