@@ -53,10 +53,10 @@ class CollectionTaxonomyService {
 				'show_in_rest'      => true,
 				'hierarchical'      => false,
 				'show_in_ui'        => true,
-				// 'show_in_menu'      => false,
 				'show_admin_column' => true,
 				'rewrite'           => [
-					'slug' => 'collections',
+					'slug'       => \SureCart::settings()->permalinks()->getBase( 'collection_page' ),
+					'with_front' => false,
 				],
 			]
 		);
