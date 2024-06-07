@@ -141,7 +141,6 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_product_template()
 	{
 		$this->service->renderProductTemplate();
-		var_dump($this->service->inner_blocks[0]['innerBlocks']);
 		$this->assertStringContainsString('<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":3}} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-image {"key1":"value1"} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-title-v2 {"key2":"value2","level":0} /-->', $this->service->block_html);
