@@ -22,19 +22,16 @@ class SubscriptionController extends BaseController {
 	 */
 	protected $middleware = [
 		'confirm'               => [
-			SubscriptionNonceVerificationMiddleware::class,
 			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
 		],
 		'confirm_amount'        => [
-			SubscriptionNonceVerificationMiddleware::class,
 			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
 		],
 		'confirm_variation'     => [
-			SubscriptionNonceVerificationMiddleware::class,
 			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
@@ -660,6 +657,7 @@ class SubscriptionController extends BaseController {
 				'ad_hoc_amount' => $this->getParam( 'ad_hoc_amount' ),
 				'id'            => $this->getId(),
 				'price_id'      => $this->getParam( 'price_id' ),
+				'nonce'         => wp_create_nonce( 'subscription-switch' ),
 			],
 			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);

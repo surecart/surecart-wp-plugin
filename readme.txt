@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
-Tested up to: 6.4
-Stable tag: 2.20.6
+Tested up to: 6.5
+Stable tag: 2.27.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,97 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.27.1 - May 23rd, 2024 =
+- Improvement: Handle potential platform conflict statuses with retry mechanism.
+- Fix: Archived products showing up in sitemap.
+- Fix: Issue with selecting $0 amount for custom pricing on product page can lead to 404 in some cases.
+- Fix: Flash of order confirmation modal that can sometimes happen briefly when bank transfer payment methods are selected.
+
+= 2.27.0 - May 22nd, 2024 =
+- New: Individual product commissions rates.
+- New: Individual affiliate commission rates.
+- New: Affiliate + product combination commission rates.
+- Improvement: Conditional form block and order bumps block now allowed on free accounts.
+- Improvement: Remove nonce from order confirm page GET request to allow dynamic linking.
+- Fix: Issue with abandoned checkout stats sometimes incorrectly defaulting to USD.
+- Fix: Ensure order bump display condition rule field is required to prevent misconfiguration.
+- Fix: Attaching and affiliate to a product was not working for affiliates without a last name.
+- Fix: Ensure post types have correct capitalization in admin.
+
+= 2.26.0 - May 13th, 2024 =
+- New: Ability to set manual payment methods as usable in subscription, installments and upsells.
+- New: Generate bulk affiliate payouts for all affiliates from a specific time period and minimum amount.
+- New: Exclude specific prices from showing up in the subscription upgrade section of the customer dashboard.
+- New: Override license activation limits for a specific price.
+- Improvement: FSE themes now use a FSE template for the store checkout upon activation.
+- Fix: Cancelling a Mollie payment method now allows customer to checkout again.
+- Fix: Merchant UX dead end where variant overrides can be set when there are multiple prices.
+- Fix: Repeat payment label now matches the capitalization of other fields.
+
+= 2.25.2 - May 8th, 2024 =
+- Fix: Race condition where upsells are sometimes not redirecting after successful checkout.
+- Fix: Typo in timezone settings list.
+- Fix: Correct the webhook url documentation link.
+- Fix: Add the updated url for the affiliate portal.
+- Fix: Edge case where formatting currency on some php installs without a number formatter class could cause an error.
+- Change: Remove migration banner on settings page.
+
+= 2.25.1 - May 1st, 2024 =
+- Fix: Thank you page shortcode not pulling in order correctly.
+- Fix: Issue where google eCommerce events were not giving priority of Google Analytics over Google Tag Manager when both are active.
+- Fix: PHP warning that appears when adding a customer payment method when WordPress debug mode is active.
+
+= 2.25.0 - April 25th, 2024 =
+- Improvement: Price creation/edit UI now accounts for the larger number of options available.
+- Improvement: Add live mode toggle to abandoned checkouts page.
+- Improvement: Add ability to cancel a subscription that is already pending cancellation in the admin.
+- Fix: Issue where deleted checkouts could sometimes not be handled correctly.
+- Fix: Product page slideshow not loading when double quotes appear in file name.
+- Fix: Issue where deleted checkout and dashboard pages could not be restored if the options table was cleared.
+- Fix: Ensure we collect shipping addressses for some Stripe payment element payment methods that require a shipping address.
+- Fix: Issue with tax id input defaulting to "other" if no tax ids are selected as defaults.
+- Fix: Issue where clearing account cache on connection screen could sometimes clear out api token.
+
+= 2.24.0 - April 17th, 2024 =
+- New: Test processor for testing checkout flow without connecting a payment processor.
+- New: Restrict coupons to a maximum order subtotal.
+- Improvement: Store checkout form now defaults to test mode for new stores.
+- Fix: Issue with loading indicator not clearing when payment fails on offsite payments flow.
+- Fix: Issue with upsells always showing totals in USD in some cases.
+
+= 2.23.0 - April 10th, 2024 =
+- New: Live/Test mode admin bar toggle on checkout pages.
+- Change: When no store logo is updated, no longer show the site title on instant checkout and customer dashboard.
+- Fix: Issue with tax input id not selecting correct tax type if only one tax type is added and country is not immediately selected in the address.
+- Fix: PHP notice when using shortcode registrations with incorrect attributes.
+- Fix: Issue with filtering collections showing blank page in admin.
+- Fix: Confusing error message when customer record cannot be updated in admin.
+- Fix: Deleting a product does was not automatically redirecting to the product list page in admin.
+
+= 2.22.1 - April 4th, 2024 =
+- Improvement: Global setting for exclusive/inclusive tax.
+- Fix: Issue where subscription updated hooks were failing when caught via webhook.
+- Fix: UI issue with divider when shop page menu item is hidden.
+- Fix: Positioning of zero commission referrals setting.
+- Fix: Tax collection input validation issue for some Canadian provinces.
+- Fix: Payout period end date not parsing correctly.
+
+= 2.22.0 - April 2nd, 2024 =
+- New: Manage affiliates from the plugin admin.
+- New: Add setting to disable zero dollar commissions.
+- New: Add affiliate promotion codes.
+- New: Ability to edit lifetime and subscription commissions.
+- Improvement: Standardize highlight color across admin pages.
+- Fix: Issue where product list sometimes does not load properly if cart is disabled.
+
+= 2.21.0 - March 28th, 2024 =
+- New: Bulk delete products.
+- New: Load separate block assets control for themes that don't provide support.
+- Improvement: Improve error messaging for minimum values accepted by processors.
+- Improvement: Internal line items refresh logic on checkout.
+- Improvement: Shipping style background to match input backgrounds.
+- Fix: Conflict with SureMembers when trying to restrict product pages that causes a fatal error in some instances.
 
 = 2.20.6 - March 27th, 2024 =
 - Fix: Issue with checkout error caused when tax or shipping is enabled, but totals block is not present.

@@ -1,6 +1,7 @@
-import { Product } from 'src/types';
+import { Product, Address } from 'src/types';
 import { getCheckout } from '../checkouts/mutations';
 import state from './store';
+import { isAddressComplete } from 'src/functions/address';
 
 /**
  * Gets the current checkout for the page.
@@ -22,10 +23,30 @@ export const getLineItemByProductId = (productId: string) => (state.checkout?.li
 /**
  * Is the shipping address required?
  */
-export const fullShippingAddressRequired = () => state.checkout?.shipping_enabled || state?.checkout?.shipping_address_required;
+export const fullShippingAddressRequired = () => state.checkout?.shipping_enabled || state?.checkout?.shipping_address_required || state?.paymentMethodRequiresShipping;
 
 /**
  * Is the address required?
  */
 export const shippingAddressRequired = () =>
-  state.checkout?.tax_status === 'address_invalid' || state.checkout?.shipping_enabled || state.checkout?.shipping_address_required || state?.checkout?.tax_enabled;
+  state.checkout?.tax_status === 'address_invalid' ||
+  state.checkout?.shipping_enabled ||
+  state.checkout?.shipping_address_required ||
+  state?.checkout?.tax_enabled ||
+  state?.paymentMethodRequiresShipping;
+
+/**
+ * Get Billing address
+ */
+export const getCompleteAddress = (type = 'shipping') => {
+  const isComplete = isAddressComplete(state.checkout?.[`${type}_address`] as Address);
+  if (!isComplete) return;
+
+  const { line_1: line1, line_2: line2, ...otherProps } = (state.checkout?.shipping_address as Address) || {};
+
+  return {
+    line1,
+    line2,
+    ...otherProps,
+  };
+};

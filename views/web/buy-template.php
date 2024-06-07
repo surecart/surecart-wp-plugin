@@ -39,7 +39,7 @@
 			<?php else : ?>
 				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 					<figure class="wp-block-image size-full is-resized has-custom-border">
-						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>"  style="border-radius:5px" />
+						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->featured_image->alt ); ?>" title="<?php echo esc_attr( $product->featured_image->title ); ?>"  style="border-radius:5px" />
 					</figure>
 				<!-- /wp:image -->
 			<?php endif; ?>

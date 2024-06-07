@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
+import { ScInput, ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import SetupFee from './parts/SetupFee';
 
@@ -8,8 +8,9 @@ import AdHoc from './parts/AdHoc';
 import Amount from './parts/Amount';
 import ScratchAmount from './parts/ScratchAmount';
 import Trial from './parts/Trial';
+import LicenseActivationLimit from './parts/LicenseActivationLimit';
 
-export default ({ price, updatePrice }) => {
+export default ({ price, updatePrice, product }) => {
 	return (
 		<>
 			<Amount price={price} updatePrice={updatePrice} />
@@ -50,6 +51,12 @@ export default ({ price, updatePrice }) => {
 								'Revoke access when installments are completed',
 								'surecart'
 							)}
+							<span slot="description">
+								{__(
+									'Automatically revoke access to integrations and licenses after all payments are completed.',
+									'surecart'
+								)}
+							</span>
 						</ScSwitch>
 					)}
 				</>
@@ -58,6 +65,11 @@ export default ({ price, updatePrice }) => {
 			<AdHoc price={price} updatePrice={updatePrice} />
 			<SetupFee price={price} updatePrice={updatePrice} />
 			<Trial price={price} updatePrice={updatePrice} />
+			<LicenseActivationLimit
+				price={price}
+				updatePrice={updatePrice}
+				product={product}
+			/>
 		</>
 	);
 };

@@ -238,14 +238,14 @@ export default ({
 									type="number"
 									min="0"
 									max="100"
-									step="0.01"
+									step="0.0001"
 									disabled={hasNoAvailableZones}
 									required
 									label={__('Tax Rate', 'surecart')}
 									value={data?.rate ?? ''}
 									onScInput={(e) => {
 										updateData({
-											rate: parseFloat(e.target.value),
+											rate: e.target.value,
 										});
 									}}
 								>

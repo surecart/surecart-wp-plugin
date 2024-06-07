@@ -11,13 +11,13 @@ import {
 	ScUpgradeRequired,
 } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import Error from '../components/Error';
 import Stat from './Stat';
 import Tab from './Tab';
 import { averageProperties, totalProperties } from './util';
-import { getFormattedPrice, maybeConvertAmount } from '../util';
+import { getFormattedPrice } from '../util';
 import { getFilterData } from '../util/filter';
 
 export default () => {
@@ -26,6 +26,7 @@ export default () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 	const [filter, setFilter] = useState('30days');
+	const liveMode = getQueryArg(window.location.href, 'live_mode') !== 'false';
 
 	const getAbandonedData = async () => {
 		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
@@ -74,6 +75,7 @@ export default () => {
 				start_at: startDate.format(),
 				end_at: endDate.format(),
 				interval: interval,
+				live_mode: liveMode,
 			}),
 		});
 		return data;
@@ -138,10 +140,6 @@ export default () => {
 				display: grid;
 				gap: 1.5em;
 				margin: 1.5em auto;
-
-				--sc-color-primary-500: var(--sc-color-brand-primary);
-				--sc-focus-ring-color-primary: var(--sc-color-brand-primary);
-				--sc-input-border-color-focus: var(--sc-color-brand-primary);
 			`}
 		>
 			<Error error={error} setError={setError} />

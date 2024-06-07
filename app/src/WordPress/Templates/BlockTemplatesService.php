@@ -120,8 +120,7 @@ class BlockTemplatesService {
 			// on the template file, then lets skip it so that it doesn't get added. This is typically used to hide templates
 			// in the template dropdown on the Edit Post page.
 			if ( $post_type &&
-				isset( $template_file->post_types ) &&
-				! in_array( $post_type, $template_file->post_types, true )
+				! in_array( $post_type, $template_file->post_types ?? [], true )
 			) {
 				continue;
 			}

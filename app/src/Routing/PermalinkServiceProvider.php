@@ -110,11 +110,11 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.settings.permalinks.product']->bootstrap();
-		( new PermalinkService() )
-			->params( [ 'sc_product_page_id' ] )
-			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_product_page_id=$matches[1]' )
-			->create();
+		// ( new PermalinkService() )
+		// ->params( [ 'sc_product_page_id' ] )
+		// ->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+		// ->query( 'index.php?sc_product_page_id=$matches[1]' )
+		// ->create();
 
 		$container['surecart.settings.permalinks.buy']->bootstrap();
 		( new PermalinkService() )
@@ -139,11 +139,21 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->query( 'index.php?sc_upsell_id=$matches[1]' )
 			->create();
 
+		// Checkout change mode redirection.
+		( new PermalinkService() )
+			->params( [ 'sc_checkout_change_mode', 'sc_checkout_post' ] )
+			->url( 'surecart/change-checkout-mode' )
+			->query( 'index.php?sc_checkout_change_mode=1&sc_checkout_post=1' )
+			->create();
+
 		// Redirect.
 		( new PermalinkService() )
 			->params( [ 'sc_redirect' ] )
 			->url( 'surecart/redirect' )
 			->query( 'index.php?sc_redirect=1' )
 			->create();
+
+		// Rewrite rules.
+		( new PermalinkRewriteRulesService() )->create();
 	}
 }

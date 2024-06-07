@@ -19,11 +19,13 @@ class CustomersController extends AdminController {
 		$table = new CustomersListTable();
 		$table->prepare_items();
 		$this->withHeader(
-			[
-				'customers' => [
-					'title' => __( 'Customers', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'customers' => [
+						'title' => __( 'Customers', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 		return \SureCart::view( 'admin/customers/index' )->with( [ 'table' => $table ] );
 	}
@@ -46,42 +48,5 @@ class CustomersController extends AdminController {
 
 		// return view.
 		return '<div id="app"></div>';
-	}
-
-	/**
-	 * Change the archived attribute in the model
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return function
-	 */
-	public function toggleArchive( $request ) {
-		$product = Product::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $product ) ) {
-			\SureCart::flash()->add( 'errors', $product->get_error_message() );
-			return $this->redirectBack( $request );
-		}
-
-		$updated = $product->update(
-			[
-				'archived' => ! $product->archived,
-			]
-		);
-
-		if ( is_wp_error( $updated ) ) {
-			\SureCart::flash()->add( 'errors', $updated->get_error_message() );
-			return $this->redirectBack( $request );
-		}
-
-		\SureCart::flash()->add(
-			'success',
-			$updated->archived ? __( 'Product archived.', 'surecart' ) : __( 'Product restored.', 'surecart' )
-		);
-
-		return $this->redirectBack( $request );
-	}
-
-	public function redirectBack( $request ) {
-		return ( new RedirectResponse( $request ) )->back();
 	}
 }

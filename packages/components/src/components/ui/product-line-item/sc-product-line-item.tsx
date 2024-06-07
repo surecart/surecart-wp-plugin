@@ -1,8 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee } from '../../../types';
-import { sizeImage } from '../../../functions/media';
+import { Fee, ImageAttributes } from '../../../types';
 
 /**
  * @part base - The component base
@@ -33,14 +32,8 @@ import { sizeImage } from '../../../functions/media';
 export class ScProductLineItem {
   @Element() el: HTMLScProductLineItemElement;
 
-  /** Url for the product image */
-  @Prop() imageUrl: string;
-
-  /** Title for the product image */
-  @Prop() imageTitle: string;
-
-  /** Alternative description for the product image */
-  @Prop() imageAlt: string;
+  /** Image attributes. */
+  @Prop() image: ImageAttributes;
 
   /** Product name */
   @Prop() name: string;
@@ -150,15 +143,13 @@ export class ScProductLineItem {
           part="product-line-item"
           class={{
             'item': true,
-            'item--has-image': !!this.imageUrl,
+            'item--has-image': !!this.image?.src,
             'item--is-rtl': isRtl(),
             'product-line-item__editable': this.editable,
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.imageUrl && (
-            <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" alt={this.imageAlt} {...(this.imageTitle ? { title: this.imageTitle } : {})} />
-          )}
+          {!!this.image?.src && <img {...(this.image as any)} part="image" />}
           <div class="item__text" part="text">
             <div class="item__text-details">
               <div class="item__title" part="title">

@@ -5,11 +5,12 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Concerns\Arrayable;
+use SureCart\Concerns\Objectable;
 
 /**
  * Model class
  */
-abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelInterface {
+abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Objectable, ModelInterface {
 	/**
 	 * Keeps track of booted models
 	 *
@@ -146,6 +147,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->bootModel();
 		$this->syncOriginal();
 		$this->fill( $attributes );
+	}
+
+	/**
+	 * Get the object name
+	 *
+	 * @return string
+	 */
+	protected function getObjectName() {
+		return $this->object_name;
 	}
 
 	/**
@@ -718,7 +728,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			return $items;
 		}
 
-		return ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
+		$item = ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
+
+		$item->sync();
+
+		return $item;
 	}
 
 	/**
@@ -876,6 +890,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Queue a sync job for later.
+	 *
+	 * @return \SureCart\Background\QueueService
+	 */
+	protected function queueSync() {
+		return \SureCart::queue()->async( 'surecart/sync/product', [ 'id' => $this->id ] );
 	}
 
 	/**
@@ -1047,6 +1070,45 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Convert to object.
+	 *
+	 * @return Object
+	 */
+	public function toObject() {
+		$attributes = (object) $this->attributes;
+
+		// Check if any accessor is available and call it.
+		foreach ( get_class_methods( $this ) as $method ) {
+			if ( method_exists( get_class(), $method ) ) {
+				continue;
+			}
+
+			if ( 'get' === substr( $method, 0, 3 ) && 'Attribute' === substr( $method, -9 ) ) {
+				$key = str_replace( [ 'get', 'Attribute' ], '', $method );
+				if ( $key ) {
+					$pieces           = preg_split( '/(?=[A-Z])/', $key );
+					$pieces           = array_map( 'strtolower', array_filter( $pieces ) );
+					$key              = implode( '_', $pieces );
+					$value            = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
+					$attributes->$key = $this->{$method}( $value );
+				}
+			}
+		}
+
+		// Check if any attribute is a model and call toArray.
+		array_walk_recursive(
+			$attributes,
+			function ( &$value ) {
+				if ( is_a( $value, Objectable::class ) ) {
+					$value = $value->toObject();
+				}
+			}
+		);
+
+		return $attributes;
+	}
+
+	/**
 	 * Calls accessors during toArray.
 	 *
 	 * @return Array
@@ -1075,8 +1137,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// Check if any attribute is a model and call toArray.
 		array_walk_recursive(
 			$attributes,
-			function ( &$value, $key ) {
-				if ( $value instanceof Model ) {
+			function ( &$value ) {
+				if ( is_a( $value, Arrayable::class ) ) {
 					$value = $value->toArray();
 				}
 			}

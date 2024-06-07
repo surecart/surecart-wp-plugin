@@ -161,7 +161,7 @@ export class ScSubscriptionDetails {
 
   showWarning() {
     // no payment method.
-    if (this.subscription?.payment_method) {
+    if (this.subscription?.payment_method || this.subscription.manual_payment) {
       return false;
     }
     // don't show if not looking for payment.

@@ -38,23 +38,6 @@ abstract class ProductBlock extends BaseBlock {
 	}
 
 	/**
-	 * Get the product
-	 *
-	 * @param string $id The product id.
-	 *
-	 * @return Product|null
-	 */
-	public function getProduct( string $id ) {
-		if ( empty( $id ) ) {
-			return get_query_var( 'surecart_current_product' );
-		}
-
-		$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $id );
-
-		return ! empty( $product->id ) ? $product : null;
-	}
-
-	/**
 	 * Get product and call set state.
 	 *
 	 * @param string $id The product id.
@@ -62,7 +45,7 @@ abstract class ProductBlock extends BaseBlock {
 	 * @return \SureCart\Models\Product|null
 	 */
 	public function getProductAndSetInitialState( $id ) {
-		$product = $this->getProduct( $id );
+		$product = sc_get_product( $id );
 
 		if ( empty( $product ) ) {
 			return;

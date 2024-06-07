@@ -1,9 +1,8 @@
 <style>
 	#sc-admin-header {
 		background-color: #fff;
-		width: 100%;
+		width: calc(100% + 20px);
 		margin-left: -20px;
-		padding-right: 20px;
 	}
 
 	#sc-admin-container {
@@ -35,5 +34,17 @@
 				<?php endforeach; ?>
 			</sc-breadcrumbs>
 		<?php endif; ?>
+		<?php
+		if ( ! empty( $suffix ) ) {
+			echo wp_kses_post( $suffix );
+		}
+		?>
+		<?php
+		if ( ! empty( $test_mode_toggle ) ) {
+			?>
+			<div id="sc-test-mode-toggle"></div>
+			<?php
+		}
+		?>
 	</div>
 </div>

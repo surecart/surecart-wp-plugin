@@ -10,13 +10,14 @@
 	line-height: calc(
 		var(--sc-input-height-medium) - var(--sc-input-border-width) * 2
 	);
+	border: none;
 	border-radius: var(--sc-input-border-radius-medium);
 	padding: 0 var(--sc-spacing-small);
-}
 
-.sc-tag__clear::part(base) {
-	color: inherit;
-	padding: 0;
+	&__clear {
+		width: 1em;
+		height: 1em;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +91,7 @@ div.sc-tag--small {
 	border-radius: var(--sc-input-border-radius-small);
 	padding: 0 var(--sc-spacing-x-small);
 
-	.tag__clear {
+	.sc-tag__clear {
 		margin-left: var(--sc-spacing-xx-small);
 		margin-right: calc(-1 * var(--sc-spacing-xxx-small));
 	}
@@ -105,7 +106,7 @@ div.sc-tag--medium {
 	border-radius: var(--sc-input-border-radius-medium);
 	padding: 0 var(--sc-spacing-small);
 
-	.tag__clear {
+	.sc-tag__clear {
 		margin-left: var(--sc-spacing-xx-small);
 		margin-right: calc(-1 * var(--sc-spacing-xx-small));
 	}
@@ -120,7 +121,7 @@ div.sc-tag--large {
 	border-radius: var(--sc-input-border-radius-large);
 	padding: 0 var(--sc-spacing-medium);
 
-	.tag__clear {
+	.sc-tag__clear {
 		margin-left: var(--sc-spacing-xx-small);
 		margin-right: calc(-1 * var(--sc-spacing-x-small));
 	}

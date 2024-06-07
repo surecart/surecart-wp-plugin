@@ -2,7 +2,7 @@ name: PHPUnit
 
 on:
   pull_request:
-    types: [assigned]
+    types: [ready_for_review, review_requested]
 
 jobs:
   test:

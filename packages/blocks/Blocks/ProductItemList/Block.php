@@ -211,6 +211,10 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( isset( $attributes[ 'sort_enabled' ] ) ) { // This way we know it's the old block.
+			return $this->renderNewProductListBlock( $attributes );
+		}
+		
 		self::$instance = wp_unique_id( 'sc-product-item-list-' );
 
 		// check for inner blocks.
@@ -256,7 +260,21 @@ class Block extends BaseBlock {
 			$attributes['type'] = '';
 		}
 
-		$products = $this->getProducts( $attributes );
+		// query posts.
+		$product_query = new \WP_Query(
+			array(
+				'post_type'      => 'sc_product',
+				'posts_per_page' => 10,
+			)
+		);
+
+		// get the product for each post.
+		$products = array_map(
+			function( $post ) {
+				return sc_get_product( $post );
+			},
+			$product_query->posts ?? []
+		);
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
@@ -267,8 +285,8 @@ class Block extends BaseBlock {
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
 				'pagination'           => [
-					'total'       => $products->total(),
-					'total_pages' => $products->totalPages(),
+					'total'       => $product_query->found_posts,
+					'total_pages' => $product_query->max_num_pages,
 				],
 				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
@@ -278,13 +296,85 @@ class Block extends BaseBlock {
 				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
-				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products,
 				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
 				'pageTitle'            => get_the_title(),
 			]
 		);
 
 		return '<sc-product-item-list id="' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
+	}
+
+	/**
+	 * Render the new product list block.
+	 *
+	 * @param  array $attributes Block attributes.
+	 *
+	 * @return string
+	 */
+	public function renderNewProductListBlock( $attributes ) {
+		$limit = $attributes['limit'] ?? 15;
+		$sort_enabled = $attributes['sort_enabled'] ?? true;
+		$search_enabled = $attributes['search_enabled'] ?? true;
+		$pagination_enabled = $attributes['pagination_enabled'] ?? true;
+		$collection_enabled = $attributes['collection_enabled'] ?? true;
+		$columns = $attributes['columns'] ?? 3;
+		
+		$new_block = '<!-- wp:surecart/product-list {"limit":' . $limit . '} -->';
+
+		$new_block .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->';
+		$new_block .= '<div class="wp-block-group" style="margin-bottom:10px">';
+
+		if ( $sort_enabled || $collection_enabled ) {
+			$new_block .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
+			$new_block .= '<div class="wp-block-group">';
+
+			if ( $sort_enabled ) {
+				$new_block .= '<!-- wp:surecart/product-list-sort /-->';
+			}
+
+			if ( $collection_enabled ) {
+				$new_block .= '<!-- wp:surecart/product-list-filter /-->';
+			}
+
+			$new_block .= '</div><!-- /wp:group -->';
+		}
+
+		if ( $search_enabled ) {
+			$new_block .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
+			$new_block .= '<div class="wp-block-group">';
+			$new_block .= '<!-- wp:surecart/product-list-search /-->';
+			$new_block .= '</div><!-- /wp:group -->';
+		}
+
+		$new_block .= '</div><!-- /wp:group -->';
+
+		if ( $collection_enabled ) {
+		$new_block .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
+			$new_block .= '<div class="wp-block-group" style="margin-bottom:10px">';
+			$new_block .= '<!-- wp:surecart/product-list-filter-tags -->';
+			$new_block .= '<!-- wp:surecart/product-list-filter-tag /-->';
+			$new_block .= '</div><!-- /wp:group -->';
+			$new_block .= '</div><!-- /wp:group -->';
+		}
+
+		$new_block .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
+		$new_block .= '<!-- wp:surecart/product-image /-->';
+		$new_block .= '<!-- wp:surecart/product-title-v2 {"level":2,"style":{"typography":{"fontSize":"1.25em"},"spacing":{"margin":{"top":"5px","bottom":"5px"}}}} /-->';
+		$new_block .= '<!-- wp:surecart/product-price-v2 /-->';
+		$new_block .= '<!-- /wp:surecart/product-template -->';
+
+		if ( $pagination_enabled ) {
+			$new_block .= '<!-- wp:surecart/product-pagination -->';
+			$new_block .= '<!-- wp:surecart/product-pagination-previous /-->';
+			$new_block .= '<!-- wp:surecart/product-pagination-numbers /-->';
+			$new_block .= '<!-- wp:surecart/product-pagination-next /-->';
+			$new_block .= '<!-- /wp:surecart/product-pagination -->';
+		}
+
+		$new_block .= '<!-- /wp:surecart/product-list -->';
+		
+		return do_blocks( $new_block );
 	}
 
 	/**
@@ -311,37 +401,5 @@ class Block extends BaseBlock {
 		}
 
 		return $query;
-	}
-
-	/**
-	 * Get the products.
-	 *
-	 * @param  array $attributes Block attributes.
-	 *
-	 * @return \SureCart\Models\Product
-	 */
-	public function getProducts( $attributes ) {
-		$products = Product::where( $this->getQuery( $attributes ) )->paginate(
-			[
-				'per_page' => $attributes['limit'] ?? 30,
-				'page'     => (int) ( $_GET['product-page'] ?? 1 ),
-			]
-		);
-
-		// there is an error or no products.
-		if ( is_wp_error( $products ) || empty( $products->pagination->count ) ) {
-			return new Collection(
-				(object) [
-					'pagination' => [
-						'count' => 0,
-						'limit' => 0,
-						'page'  => 0,
-					],
-					'data'       => [],
-				]
-			);
-		}
-
-		return $products;
 	}
 }

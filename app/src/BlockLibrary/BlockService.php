@@ -65,4 +65,25 @@ class BlockService {
 	public function styles() {
 		return new BlockStylesService();
 	}
+
+	/**
+	 * Get url params service.
+	 *
+	 * @param string $type Block type.
+	 * @param string $instance_id Unique instance ID.
+	 *
+	 * @return BlockValidationService
+	 */
+	public function urlParams( $type = '', $instance_id = '' ) {
+		return new URLParamService( $type, $instance_id );
+	}
+
+	/**
+	 * Get the product list service.
+	 *
+	 * @return ProductListService
+	 */
+	public function productList( $block ) {
+		return new ProductListService( $block );
+	}
 }

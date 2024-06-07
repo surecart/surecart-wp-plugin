@@ -10,7 +10,7 @@ import Status from '../components/Status';
 import Url from '../components/Url';
 import { ScSwitch } from '@surecart/components-react';
 
-export default ({ product, updateProduct, loading }) => {
+export default ({ product, updateProduct, post, loading }) => {
 	const tag = document.querySelector('#wp-admin-bar-view-product-page');
 	const link = document.querySelector('#wp-admin-bar-view-product-page a');
 
@@ -69,11 +69,13 @@ export default ({ product, updateProduct, loading }) => {
 				<Status product={product} updateProduct={updateProduct} />
 				{scData?.is_block_theme ? (
 					<SelectTemplate
+						post={post}
 						product={product}
 						updateProduct={updateProduct}
 					/>
 				) : (
 					<SelectTemplatePart
+						post={post}
 						product={product}
 						updateProduct={updateProduct}
 					/>

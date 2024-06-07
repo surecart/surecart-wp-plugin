@@ -43,6 +43,7 @@
  - [sc-cart-icon](../sc-cart-icon)
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
@@ -65,6 +66,7 @@
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method](../sc-payment-method)
+ - [sc-payment-method-details](../sc-payment-method-details)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-line-item](../product-line-item)
@@ -104,6 +106,7 @@ graph TD;
   sc-cart-icon --> sc-icon
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
+  sc-checkout-mollie-payment --> sc-icon
   sc-checkout-stock-alert --> sc-icon
   sc-coupon-form --> sc-icon
   sc-customer-details --> sc-icon
@@ -126,6 +129,7 @@ graph TD;
   sc-password-nag --> sc-icon
   sc-payment --> sc-icon
   sc-payment-method --> sc-icon
+  sc-payment-method-details --> sc-icon
   sc-payment-methods-list --> sc-icon
   sc-product-item-list --> sc-icon
   sc-product-line-item --> sc-icon

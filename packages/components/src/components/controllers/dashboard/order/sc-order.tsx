@@ -6,8 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Charge, Checkout, FeaturedProductMediaAttributes, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
-import { getFeaturedProductMediaAttributes } from 'src/functions/media';
+import { Charge, Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-order',
@@ -127,13 +126,10 @@ export class ScOrder {
     return (
       <Fragment>
         {(checkout?.line_items?.data || []).map(item => {
-          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
           return (
             <sc-product-line-item
               key={item.id}
-              imageUrl={url}
-              imageAlt={alt}
-              imageTitle={title}
+              image={item?.image}
               name={(item?.price?.product as Product)?.name}
               priceName={item?.price?.name}
               variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}

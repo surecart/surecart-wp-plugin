@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { grid as icon } from '@wordpress/icons';
-
+import { BlockReplacer } from './BlockReplacer';
 /**
  * Internal dependencies
  */
@@ -17,6 +17,13 @@ export { metadata, name };
 
 export const settings = {
 	icon,
-	edit,
+	// edit,
+	edit: ({ clientId, attributes }) => (
+		<BlockReplacer
+			clientId={clientId}
+			attributes={attributes}
+			blockType="surecart/product-list"
+		/>
+	),
 	save,
 };

@@ -30,6 +30,7 @@ export const expand = [
   'product.variants',
   'discount.coupon',
   'shipping_address',
+  'billing_address',
   'tax_identifier',
   'manual_payment_method',
   'shipping_choices',
@@ -41,6 +42,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
   abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
+  billing_matches_shipping: checkoutState.checkout?.billing_matches_shipping,
   metadata: {
     ...(data?.metadata || {}),
     ...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),
@@ -97,6 +99,15 @@ export const createOrUpdateCheckout = async ({ id = null, data = {}, query = {} 
   return await apiFetch({
     method: id ? 'PATCH' : 'POST', // create or update
     path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
+    data: withDefaultData(data),
+  });
+};
+
+/** Create the checkout */
+export const createCheckout = async ({ data = {}, query = {} }) => {
+  return await apiFetch({
+    method: 'POST', // create
+    path: addQueryArgs(parsePath(null), withDefaultQuery(query)),
     data: withDefaultData(data),
   });
 };

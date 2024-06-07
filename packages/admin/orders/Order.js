@@ -90,6 +90,7 @@ export default () => {
 						'checkout.tax_identifier',
 						'checkout.payment_failures',
 						'checkout.shipping_address',
+						'checkout.billing_address',
 						'checkout.discount',
 						'checkout.line_items',
 						'checkout.selected_shipping_choice',

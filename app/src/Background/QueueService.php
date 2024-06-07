@@ -14,10 +14,12 @@ class QueueService {
 	 * @param string $hook The hook to trigger.
 	 * @param array  $args Arguments to pass when the hook triggers.
 	 * @param string $group The group to assign this job to.
+	 * @param bool   $unique If true, ensure this action is not already scheduled.
+	 *
 	 * @return string $this.
 	 */
-	public function async( $hook, $args = array(), $group = '' ) {
-		\as_enqueue_async_action( $hook, $args, $group );
+	public function async( $hook, $args = array(), $group = '', $unique = false ) {
+		\as_enqueue_async_action( $hook, $args, $group, $unique );
 		return $this;
 	}
 
@@ -125,6 +127,25 @@ class QueueService {
 		}
 
 		return null;
+	}
+
+
+	/**
+	 * Check if there is a scheduled action in the queue but more efficiently than as_next_scheduled_action().
+	 *
+	 * It's recommended to use this function when you need to know whether a specific action is currently scheduled
+	 * (pending or in-progress).
+	 *
+	 * @since 3.3.0
+	 *
+	 * @param string $hook  The hook of the action.
+	 * @param array  $args  Args that have been passed to the action. Null will matches any args.
+	 * @param string $group The group the job is assigned to.
+	 *
+	 * @return bool True if a matching action is pending or in-progress, false otherwise.
+	 */
+	public function isScheduled( $hook, $args = null, $group = '' ) {
+		return \as_has_scheduled_action( $hook, $args, $group );
 	}
 
 	/**

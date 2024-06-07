@@ -3,7 +3,6 @@ import { sprintf, __ } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import { isBumpInOrder } from '../../../../functions/line-items';
 import { getFormattedPrice, intervalString } from '../../../../functions/price';
-import { getFeaturedProductMediaAttributes, sizeImage } from '../../../../functions/media';
 import { state as checkoutState } from '@store/checkout';
 
 import { Bump, LineItemData, Price, Product } from '../../../../types';
@@ -137,8 +136,6 @@ export class ScOrderBump {
 
   render() {
     const product = (this.bump?.price as Price)?.product as Product;
-    const media = getFeaturedProductMediaAttributes(product);
-
     return (
       <sc-choice
         value={this.bump?.id}
@@ -178,7 +175,7 @@ export class ScOrderBump {
           <div slot="footer" class="bump__product--wrapper">
             <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
             <div class="bump__product">
-              {!!media?.url && <img src={sizeImage(media?.url, 130)} alt={media.alt} {...(media.title ? { title: media.title } : {})} class="bump__image" />}
+              {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" />}
               <div class="bump__product-text">
                 {!!this.bump?.metadata?.cta && (
                   <div class="bump__product-title" aria-hidden="true">

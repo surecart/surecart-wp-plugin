@@ -42,7 +42,10 @@ class ProvisionalAccount extends Model {
 	protected function create( $attributes = [] ) {
 		// we only allow this if the setup is not complete.
 		if ( ! empty( ApiToken::get() ) ) {
-			return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
+			$testing = defined( 'SC_E2E_TESTING' ) ? (bool) SC_E2E_TESTING : false;
+			if ( ! $testing ) {
+				return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
+			}
 		}
 
 		// set account name as the site name if nothing is provided.
@@ -54,6 +57,9 @@ class ProvisionalAccount extends Model {
 		if ( empty( $attributes['account_url'] ) ) {
 			$attributes['account_url'] = get_bloginfo( 'url' );
 		}
+
+		// set source with fallback to the option.
+		$attributes['source'] = isset( $attributes['source'] ) ? sanitize_text_field( wp_unslash( $attributes['source'] ) ) : sanitize_text_field( get_option( 'surecart_source', 'surecart_wp' ) );
 
 		return parent::create( $attributes );
 	}

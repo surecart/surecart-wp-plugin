@@ -56,6 +56,7 @@
 		min-width: 0;
 		border: 0 !important;
 		box-shadow: none !important;
+		outline: none !important;
 		padding: 0 var(--sc-input-spacing-medium);
 		background-color: transparent;
 		border-radius: 0 !important;
@@ -80,6 +81,9 @@
 		text-align: center;
 		white-space: nowrap;
 		opacity: 0.5;
+		&[hidden] {
+			display: none;
+		}
 	}
 
 	// Large input group.
@@ -100,19 +104,18 @@
 	&-sm {
 		> .sc-form-control,
 		> .sc-input-group-text {
-			padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-small);
+			padding: var(--sc-spacing-xx-small) var(--sc-spacing-small);
 			font-size: var(--sc-font-size-x-small);
 			border-radius: var(--sc-border-radius-small);
 		}
 	}
 
-	// More padding for addon-text.
-	> :not(:last-child),
-	> :nth-last-child(n + 3) {
-		padding-right: var(--sc-spacing-xx-small);
+	// remove right padding from form control if there is an immediatly adjacent input-group-text
+	.sc-form-control:has(+ .sc-input-group-text) {
+		padding-right: 0;
 	}
-
-	> :not(:first-child) {
-		padding-left: var(--sc-spacing-xx-small);
+	// remove left padding from form control if there is an immediatly adjacent input-group-text
+	.sc-input-group-text + .sc-form-control {
+		padding-left: 0;
 	}
 }

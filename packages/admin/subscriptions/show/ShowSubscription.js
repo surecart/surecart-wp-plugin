@@ -42,6 +42,8 @@ import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
 import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
+import Affiliates from '../../components/affiliates';
+import ForceCancelModal from './modules/modals/ForceCancelModal';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -85,7 +87,10 @@ export default () => {
 		}
 	};
 
-	const editSubscription = async (data) => {
+	const editSubscription = async (data, successMessage = null) => {
+		successMessage =
+			successMessage || __('Payment method updated.', 'surecart');
+
 		try {
 			await saveEntityRecord(
 				'surecart',
@@ -93,7 +98,7 @@ export default () => {
 				{ id, ...data },
 				{ throwOnError: true }
 			);
-			createSuccessNotice(__('Payment method updated.', 'surecart'), {
+			createSuccessNotice(successMessage, {
 				type: 'snackbar',
 			});
 		} catch (e) {
@@ -186,9 +191,14 @@ export default () => {
 		}
 		if (subscription?.cancel_at_period_end) {
 			return (
-				<ScMenuItem onClick={() => setModal('dont_cancel')}>
-					{__("Don't Cancel", 'surecart')}
-				</ScMenuItem>
+				<>
+					<ScMenuItem onClick={() => setModal('dont_cancel')}>
+						{__("Don't Cancel", 'surecart')}
+					</ScMenuItem>
+					<ScMenuItem onClick={() => setModal('force_cancel')}>
+						{__('Cancel Now', 'surecart')}
+					</ScMenuItem>
+				</>
 			);
 		}
 		return (
@@ -378,6 +388,20 @@ export default () => {
 						subscription={subscription}
 						loading={!hasLoadedSubscription}
 					/>
+					<Affiliates
+						item={subscription}
+						updateItem={(data) =>
+							editSubscription(
+								data,
+								__('Affiliate commissions updated.', 'surecart')
+							)
+						}
+						loading={!hasLoadedSubscription}
+						commissionText={__(
+							'Commission On This Subscription',
+							'surecart'
+						)}
+					/>
 				</>
 			}
 			button={
@@ -441,7 +465,8 @@ export default () => {
 
 				<Periods subscriptionId={id} />
 
-				{subscription?.payment_method && (
+				{(subscription?.payment_method ||
+					subscription?.manual_payment) && (
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}
@@ -457,6 +482,10 @@ export default () => {
 			<CancelSubscriptionModal
 				subscription={subscription}
 				open={modal === 'cancel'}
+				onRequestClose={onRequestCloseModal}
+			/>
+			<ForceCancelModal
+				open={modal === 'force_cancel'}
 				onRequestClose={onRequestCloseModal}
 			/>
 			<DontCancelModal

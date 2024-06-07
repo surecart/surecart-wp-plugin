@@ -89,7 +89,7 @@ class CustomerController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		$wp_user = \SureCart\Models\User::findByCustomerId( $request['id'] );
+		$wp_user = User::findByCustomerId( $request['id'] );
 
 		if ( ! empty( $wp_user->ID ) ) {
 			wp_update_user(

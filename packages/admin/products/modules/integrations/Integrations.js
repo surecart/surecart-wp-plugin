@@ -83,7 +83,7 @@ export default ({ product, id }) => {
 					>
 						<sc-icon
 							name="help-circle"
-							style={{ fontSize: '18px' }}
+							style={{ fontSize: '14px', opacity: '0.65' }}
 						></sc-icon>
 					</ScButton>
 				}

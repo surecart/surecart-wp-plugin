@@ -27,7 +27,6 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					visibility: visible;
 				}
 			`}
-			media-id={productMedia.id}
 		>
 			{isFeatured && (
 				<ScTag
@@ -86,7 +85,7 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					pointer-events: none;
 				`}
 				alt={productMedia?.media?.alt}
-				{...(productMedia.title ? { title: productMedia.title } : {})}
+				{...(productMedia?.title ? { title: productMedia?.title } : {})}
 			/>
 		</div>
 	);

@@ -15,6 +15,18 @@
 		display: none;
 	}
 
+	.swiper-button-next,
+	.swiper-button-prev {
+		background: var(--sc-color-white);
+		border: 1px solid var(--sc-color-gray-300);
+		border: solid var(--sc-input-border-width) var(--sc-input-border-color);
+		box-shadow: var(--sc-input-box-shadow);
+		width: 40px;
+		height: 40px;
+		border-radius: 9999px;
+		--swiper-navigation-size: 12px;
+	}
+
 	&__thumbs {
 		margin-top: var(--sc-slider-spacing, var(--sc-spacing-small));
 		display: flex;
