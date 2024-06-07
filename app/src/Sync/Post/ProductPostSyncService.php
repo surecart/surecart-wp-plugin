@@ -341,6 +341,7 @@ class ProductPostSyncService {
 			// add term meta.
 			add_term_meta( $term['term_id'], 'sc_account', \SureCart::account()->id );
 			add_term_meta( $term['term_id'], 'sc_id', $collection->id );
+			add_term_meta( $term['term_id'], '_wp_page_template', $model->wp_template_id );
 		}
 
 		// we don't have terms, skip.
