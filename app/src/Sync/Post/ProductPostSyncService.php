@@ -176,8 +176,9 @@ class ProductPostSyncService {
 
 		// not a FSE template.
 		if ( count( $parts ) < 2 ) {
-			return null;
+			return $id;
 		}
+
 		return $parts[1] ?? null;
 	}
 
@@ -210,6 +211,7 @@ class ProductPostSyncService {
 
 		// update page template.
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
+		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
@@ -280,6 +282,7 @@ class ProductPostSyncService {
 
 		// update page template.
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
+		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
 		// set the collection terms.
 		if ( ! empty( $this->with_collections ) ) {
@@ -339,9 +342,10 @@ class ProductPostSyncService {
 			$terms[] = (int) $term['term_id'];
 
 			// add term meta.
-			add_term_meta( $term['term_id'], 'sc_account', \SureCart::account()->id );
-			add_term_meta( $term['term_id'], 'sc_id', $collection->id );
-			add_term_meta( $term['term_id'], '_wp_page_template', $model->wp_template_id );
+			update_term_meta( $term['term_id'], 'sc_account', \SureCart::account()->id );
+			update_term_meta( $term['term_id'], 'sc_id', $collection->id );
+			update_term_meta( $term['term_id'], '_wp_page_template', $this->convertTemplateId( $collection->template_id ?? 'default' ) );
+			update_term_meta( $term['term_id'], '_wp_page_template_part', $this->convertTemplateId( $collection->template_part_id ) );
 		}
 
 		// we don't have terms, skip.
