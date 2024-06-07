@@ -36,6 +36,5 @@
 		"file:../../styles/block-ui.css",
 		"file:./style-index.css"
 	],
-	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/dialog"]
 }
