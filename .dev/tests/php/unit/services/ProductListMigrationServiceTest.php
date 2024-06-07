@@ -412,4 +412,79 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 		$this->assertStringContainsString('<!-- wp:surecart/product-title-v2 {"title":"Product Title","textColor":"base","fontSize":"x-small","style":{"typography":{"fontWeight":"500"},"spacing":{"padding":{"top":"10px"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}}},"level":0} /-->', $this->service->block_html);
 		$this->assertStringContainsString('</div><!-- /wp:group --><!-- /wp:surecart/product-template -->', $this->service->block_html);
 	}
+
+	/**
+	 * @group blocks
+	 */
+	public function test_product_list_with_no_image_price_title_block()
+	{
+		$attributes = [
+			'limit' => 5,
+			'type' => 'custom',
+			'style' => [
+				'spacing' => [
+					'blockGap' => 'var:preset|spacing|20'
+				]
+			]
+		];
+
+		$block = (object) [
+            'parsed_block' => [
+				'blockName' => 'surecart/product-item-list',
+				'attrs' => array(
+					'limit' => 5,
+					'type' => 'custom',
+					'style' => array(
+						'spacing' => array(
+							'blockGap' => 'var:preset|spacing|20'
+						)
+					)
+				),
+				'innerBlocks' => array(
+					array(
+						'blockName' => 'surecart/product-item',
+						'attrs' => array(
+							'borderColor' => 'accent-4',
+							'backgroundColor' => 'accent-3',
+							'style' => array(
+								'spacing' => array(
+									'padding' => array(
+										'top' => 'var:preset|spacing|10',
+										'bottom' => 'var:preset|spacing|10',
+										'left' => 'var:preset|spacing|10',
+										'right' => 'var:preset|spacing|10'
+									),
+									'margin' => array(
+										'top' => 'var:preset|spacing|10',
+										'bottom' => 'var:preset|spacing|10',
+										'left' => 'var:preset|spacing|10',
+										'right' => 'var:preset|spacing|10'
+									)
+								),
+								'border' => array(
+									'radius' => '20px',
+									'width' => '12px'
+								)
+							)
+						),
+						'innerBlocks' => array(),
+						'innerHTML' => '',
+						'innerContent' => array()
+					)
+				),
+				'innerHTML' => '',
+				'innerContent' => array()
+			]
+		];
+
+		$this->service = new ProductListMigrationService(
+			$attributes,
+			$block
+		);
+
+		$this->service->renderProductTemplate();
+		$this->assertStringNotContainsString('<!-- wp:surecart/product-image', $this->service->block_html);
+		$this->assertStringNotContainsString('<!-- wp:surecart/product-price-v2', $this->service->block_html);
+		$this->assertStringNotContainsString('<!-- wp:surecart/product-title-v2', $this->service->block_html);
+	}
 }
