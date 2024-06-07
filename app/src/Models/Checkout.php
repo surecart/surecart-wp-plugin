@@ -130,23 +130,19 @@ class Checkout extends Model {
 			return '';
 		}
 
-		if ( $this->discount && $this->discount->coupon && $this->discount->coupon->percent_off ) {
-			if ( $this->discount->coupon->amount_off && $this->currency ) {
+		if ( ! empty( $this->discount->coupon->percent_off ) ) {
+			if ( ! empty( $this->discount->coupon->amount_off ) && ! empty( $this->currency ) ) {
 				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
 			}
 
-			if ( $this->discount->coupon->percent_off ) {
-				return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
-			}
-
-			return '';
+			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
 		}
 
 		return '';
 	}
 
 	public function getHumanDiscountWithDurationAttribute() {
-		if ( ! $this->hasRecurrning ) {
+		if ( ! $this->hasRecurring ) {
 			return $this->human_discount;
 		}
 
