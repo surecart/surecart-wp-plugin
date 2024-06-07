@@ -17,6 +17,6 @@ class Block extends ProductBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		return \SureCart::block()->productPageMigration( $attributes, $this->block )->render();
+		return \SureCart::block()->productPageMigration( $attributes, $this->block )->renderAll();
 	}
 }

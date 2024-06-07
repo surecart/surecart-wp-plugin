@@ -47,14 +47,19 @@ class ProductPageMigrationService {
 	}
 
 	/**
-	 * Get a given child block attributes.
+	 * Get a given block attributes.
 	 *
-	 * @param $block_name string  The name of the child block.
+	 * @param string $block_name The name of the block.
 	 *
 	 * @return array $attributes  The attributes of the child block.
 	 */
-	public function getChildBlockAttributes( $block_name ) {
-		if ( empty( $this->inner_blocks ) || empty( $this->inner_blocks[0] ) ) {
+	public function getBlockAttributes( $block_name ) {
+		$has_inner_blocks = ! empty( $this->inner_blocks ) && ! empty( $this->inner_blocks[0] );
+		if ( ! $has_inner_blocks && $this->block->parsed_block['blockName'] === $block_name ) {
+			return $this->block->parsed_block['attrs'];
+		}
+
+		if ( ! $has_inner_blocks ) {
 			return array();
 		}
 
@@ -68,14 +73,62 @@ class ProductPageMigrationService {
 	}
 
 	/**
+	 * Render the product media.
+	 *
+	 * @return void
+	 */
+	public function renderProductMedia() {
+		$attributes        = wp_json_encode( $this->getBlockAttributes( 'surecart/product-media' ) );
+		$this->block_html .= '<!-- wp:surecart/product-media-v2 ' . $attributes . ' /-->';
+	}
+
+	/**
 	 * Render the product title.
 	 *
 	 * @return void
 	 */
 	public function renderProductTitle() {
-		$attributes        = wp_json_encode( $this->getChildBlockAttributes( 'surecart/product-title' ) );
+		$attributes        = wp_json_encode( $this->getBlockAttributes( 'surecart/product-title' ) );
 		$this->block_html .= '<!-- wp:surecart/product-title-v2 ' . $attributes . ' /-->';
 	}
+
+	/**
+	 * Render the product collection badges.
+	 *
+	 * @return void
+	 */
+	public function renderProductCollectionBadges() {
+		$attributes        = wp_json_encode( $this->getBlockAttributes( 'surecart/product-collection-badges' ) );
+		$this->block_html .= '<!-- wp:wp:surecart/product-collection-badges-v2 ' . $attributes . ' /-->';
+	}
+
+	/**
+	 * Render the product price.
+	 *
+	 * @return void
+	 */
+	public function renderProductPrice() {
+		$attributes = wp_json_encode( $this->getBlockAttributes( 'surecart/product-price' ) );
+
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0"}},"layout":{"type":"constrained"}} -->';
+		$this->block_html .= '<div class="wp-block-group" >';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->';
+		$this->block_html .= '<div class="wp-block-group" >';
+		$this->block_html .= '<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","fontSize":"24px"},"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}} /-->';
+		$this->block_html .= '<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px"}}} /-->';
+		$this->block_html .= '<!-- wp:surecart/product-sale-badge {"text":"Discounted","style":{"border":{"radius":"100px"},"typography":{"fontSize":"12px"},"layout":{"selfStretch":"fit","flexSize":null}}} /-->';
+		$this->block_html .= '</div>';
+		$this->block_html .= '<!-- /wp:group -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
+		$this->block_html .= '<div class="wp-block-group" >';
+		$this->block_html .= '<!-- wp:surecart/product-selected-price-trial {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}} /-->';
+		$this->block_html .= '<!-- wp:surecart/product-selected-price-fees {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}} /-->';
+		$this->block_html .= '</div>';
+		$this->block_html .= '<!-- /wp:group -->';
+		$this->block_html .= '</div>';
+		$this->block_html .= '<!-- /wp:group -->';
+	}
+
 
 	/**
 	 * Render the product page.
@@ -83,7 +136,6 @@ class ProductPageMigrationService {
 	 * @return void
 	 */
 	public function renderProductPage() {
-		$this->renderProductTitle();
 	}
 
 	/**
@@ -96,12 +148,25 @@ class ProductPageMigrationService {
 	}
 
 	/**
-	 * Render the new product page.
+	 * Render the new product.
 	 *
 	 * @return string
 	 */
 	public function render() {
 		$this->renderProductPage();
+		return $this->doBlocks();
+	}
+
+	/**
+	 * Render all blocks.
+	 *
+	 * @return string
+	 */
+	public function renderAll() {
+		$this->renderProductTitle();
+		$this->renderProductCollectionBadges();
+		$this->renderProductMedia();
+		$this->renderProductPrice();
 		return $this->doBlocks();
 	}
 }
