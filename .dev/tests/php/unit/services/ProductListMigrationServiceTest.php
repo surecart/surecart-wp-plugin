@@ -246,7 +246,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group blocks
+	 * @group block
 	 */
 	public function test_product_list_with_all_attrs_and_styles_applied()
 	{
@@ -414,7 +414,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group blocks
+	 * @group block
 	 */
 	public function test_product_list_with_no_image_price_title_block()
 	{
