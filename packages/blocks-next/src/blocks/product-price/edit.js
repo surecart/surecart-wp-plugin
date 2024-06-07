@@ -1,7 +1,6 @@
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useEntityRecord } from '@wordpress/core-data';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 
 export default ({
@@ -13,20 +12,13 @@ export default ({
 		className: 'product-price',
 	});
 
-	const product = useSelect(
-		(select) => {
-			if (!productId) {
-				return null;
-			}
-			return select(coreStore).getEntityRecord(
-				'surecart',
-				'product',
-				productId
-			);
-		},
-		[productId]
+	let { record: product } = useEntityRecord(
+		'postType',
+		'sc_product',
+		productId
 	);
 
+	product = product?.meta?.product;
 	return (
 		<>
 			<InspectorControls>

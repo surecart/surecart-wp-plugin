@@ -1,4 +1,5 @@
-import { store as blockEditorStore } from '@wordpress/block-editor';
+import { store as blockEditorStore, getBlocks } from '@wordpress/block-editor';
+import { select } from '@wordpress/data';
 import {
 	createBlock,
 	createBlocksFromInnerBlocksTemplate,
@@ -6,6 +7,7 @@ import {
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { newShopTemplate } from './NewShopTemplate';
+import { useEntityRecords } from '@wordpress/core-data';
 
 export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 	const block = useSelect(
@@ -13,15 +15,29 @@ export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 		[clientId]
 	);
 	const { replaceBlock } = useDispatch(blockEditorStore);
-	const newShop = newShopTemplate(attributes);
+	const products = useEntityRecords('postType', 'sc_product', {
+		page: 1,
+		per_page: -1,
+		sc_id: attributes?.ids,
+	});
+
+	const childBlocks = select('core/block-editor').getBlocks(clientId);
+	const newShop = newShopTemplate(attributes, childBlocks);
 	useEffect(() => {
-		if (!block?.name || !replaceBlock || !clientId) return;
+		if (!block?.name || !replaceBlock || !clientId || !products?.records)
+			return;
+		const ids = (products?.records || []).map((product) => product.id);
 		replaceBlock(clientId, [
 			createBlock(
 				blockType,
-				{ limit: attributes?.limit },
+				{
+					limit: attributes?.limit,
+					style: attributes?.style,
+					ids: ids,
+					type: attributes?.type,
+				},
 				createBlocksFromInnerBlocksTemplate(newShop)
 			),
 		]);
-	}, [block, replaceBlock, clientId, blockType]);
+	}, [block, replaceBlock, clientId, blockType, products]);
 };
