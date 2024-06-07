@@ -34,7 +34,7 @@ export default ({ attributes, setAttributes }) => {
 					name: 'Example Product',
 					image_url: placeholderImageUrl,
 				},
-				display_amount: '$12.34',
+				display_amount: scData?.currency_symbol + '12.34',
 			},
 		},
 		{
@@ -45,7 +45,7 @@ export default ({ attributes, setAttributes }) => {
 					name: 'Example Product',
 					image_url: placeholderImageUrl,
 				},
-				display_amount: '$123.45',
+				display_amount: scData?.currency_symbol + '123.45',
 			},
 		},
 	];
