@@ -113,12 +113,25 @@ class ProductCollection extends Model implements PageModel {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
-		// permalinks off.
-		if ( ! get_option( 'permalink_structure' ) ) {
-			return add_query_arg( 'sc_collection_page_id', $this->slug, get_home_url() );
+
+		// get term by sc_id metadata
+		$args = array(
+			'meta_query' => array(
+				array(
+					'key' => 'sc_id',
+					'value' => $this->attributes['id'],
+					'compare' => '='
+				)
+			)
+		);
+
+		$terms = get_terms( 'sc_collection', $args );
+
+		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+			return get_term_link( $terms[0] );
 		}
-		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . $this->slug;
+
+		return '';
 	}
 
 	/**
