@@ -105,11 +105,11 @@ class ProductCollection extends Model implements PageModel {
 	}
 
 	/**
-	 * Get the product permalink.
+	 * Get the term.
 	 *
-	 * @return string
+	 * @return \WP_Term|null
 	 */
-	public function getPermalinkAttribute(): string {
+	public function getTermAttribute() {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
@@ -128,7 +128,26 @@ class ProductCollection extends Model implements PageModel {
 		$terms = get_terms( 'sc_collection', $args );
 
 		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-			return get_term_link( $terms[0] );
+			return $terms[0];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the product permalink.
+	 *
+	 * @return string
+	 */
+	public function getPermalinkAttribute(): string {
+		if ( empty( $this->attributes['id'] ) ) {
+			return false;
+		}
+
+		$term = $this->term;
+
+		if ( isset($term->term_id) ) {
+			return get_term_link( $term );
 		}
 
 		return '';
