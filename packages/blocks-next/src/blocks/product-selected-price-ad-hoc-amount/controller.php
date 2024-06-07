@@ -6,10 +6,10 @@
 
 // // we only want to insert the block once.
 global $sc_block_rendered;
-if ( ! empty( $sc_block_rendered[ $block->parsed_block['blockName'] ] ) && $sc_block_rendered[ $block->parsed_block['blockName'] ][ $block->context['surecart/product']->id ] ) {
+if ( ! empty( $sc_block_rendered[ $block->parsed_block['blockName'] ] ) && $sc_block_rendered[ $block->parsed_block['blockName'] ][ sc_get_product()->id ] ) {
 	return '';
 }
-$sc_block_rendered[ $block->parsed_block['blockName'] ][ $block->context['surecart/product']->id ] = true;
+$sc_block_rendered[ $block->parsed_block['blockName'] ][ sc_get_product()->id ] = true;
 
 
 $styles = sc_get_block_styles();

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 add_action(
 	'init',
-	function() {
+	function () {
 		foreach ( glob( __DIR__ . '/build/blocks/**/block.json' ) as $file ) {
 			register_block_type( dirname( $file ) );
 		}
@@ -21,7 +21,7 @@ add_action(
  */
 add_filter(
 	'block_type_metadata_settings',
-	function( $settings, $metadata ) {
+	function ( $settings, $metadata ) {
 		// if there is a controller file, use it.
 		$controller_path = wp_normalize_path(
 			realpath(
@@ -78,10 +78,25 @@ add_filter(
 
 add_filter(
 	'render_block_context',
-	function( $context, $parsed_block ) {
+	function ( $context, $parsed_block ) {
 		// we are passing an id.
 		if ( 'surecart/product-page' === $parsed_block['blockName'] && ! empty( $parsed_block['attrs']['product_id'] ) ) {
-			$product = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections' ) )->find( $parsed_block['attrs']['product_id'] );
+			$product_post_ids = get_posts(
+				array(
+					'post_type'      => 'sc_product',
+					'status'         => 'publish',
+					'fields'         => 'ids',
+					'posts_per_page' => -1,
+					'meta_query'     => array(
+						array(
+							'key'     => 'sc_id',
+							'value'   => array( $parsed_block['attrs']['product_id'] ),
+							'compare' => 'IN',
+						),
+					),
+				)
+			);
+			$product          = sc_get_product( $product_post_ids[0] ?? 0 );
 			set_query_var( 'surecart_current_product', $product );
 		}
 
@@ -110,13 +125,13 @@ add_filter(
 
 add_action(
 	'init',
-	function() {
+	function () {
 		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/fetch/index.asset.php';
 		wp_register_script_module(
 			'@surecart/api-fetch',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
-			[],
+			array(),
 			$static_assets['version']
 		);
 
@@ -125,7 +140,7 @@ add_action(
 		wp_register_script_module(
 			'@surecart/dialog',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dialog/index.js',
-			[],
+			array(),
 			$static_assets['version']
 		);
 
@@ -134,16 +149,16 @@ add_action(
 		wp_register_script_module(
 			'@surecart/dropdown',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dropdown/index.js',
-			[
-				[
+			array(
+				array(
 					'id'     => '@surecart/dialog',
 					'import' => 'dynamic',
-				],
-				[
+				),
+				array(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
-				],
-			],
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -152,12 +167,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/product-page',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
-			[
-				[
+			array(
+				array(
 					'id'     => '@surecart/dialog',
 					'import' => 'dynamic',
-				],
-			],
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -166,12 +181,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/product-list',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-list/index.js',
-			[
-				[
+			array(
+				array(
 					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
-				],
-			],
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -180,12 +195,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/image-slider',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/image-slider/index.js',
-			[
-				[
+			array(
+				array(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
-				],
-			],
+				),
+			),
 			$static_assets['version']
 		);
 	}

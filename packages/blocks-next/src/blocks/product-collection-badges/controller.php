@@ -1,13 +1,13 @@
 <?php
 
-$product = $block->context['surecart/product'];
+$product = sc_get_product();
 
 if ( empty( $product ) ) {
 	return '';
 }
 
 // get the collections expanded on the product.
-$collections = $product->product_collections->data ?? [];
+$collections = $product->product_collections->data ?? array();
 
 // we don't have any collections to display.
 if ( empty( $collections ) ) {

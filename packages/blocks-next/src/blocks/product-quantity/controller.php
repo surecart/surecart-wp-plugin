@@ -1,5 +1,5 @@
 <?php
-$product = $block->context['surecart/product'];
+$product = sc_get_product();
 
 // return the view.
 return 'file:./view.php';
