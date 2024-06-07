@@ -8,7 +8,7 @@ import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/compone
  * Internal dependencies.
  */
 import { ScBlockUi } from '@surecart/components-react';
-import Error from '../../../components/Error';
+import Error from '../Error';
 
 export default ({ onRequestClose, open, onDelete, deleting, error }) => {
 	return (

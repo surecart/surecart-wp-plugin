@@ -5,14 +5,12 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
  */
-import { ScBlockUi } from '@surecart/components-react';
-import Error from '../../../components/Error';
+import ConfirmDelete from '../../../components/confirm-delete';
 
 export default ({ onRequestClose, open, affiliationProductId, onDeleted }) => {
 	const [error, setError] = useState(null);
@@ -48,22 +46,12 @@ export default ({ onRequestClose, open, affiliationProductId, onDeleted }) => {
 	};
 
 	return (
-		<ConfirmDialog
-			isOpen={open}
-			onConfirm={() => {
-				onDelete();
-			}}
-			onCancel={onRequestClose}
-		>
-			<Error error={error} />
-			{__('Are you sure? This action cannot be undone.', 'surecart')}
-			{deleting && (
-				<ScBlockUi
-					style={{ '--sc-block-ui-opacity': '0.75' }}
-					zIndex="9"
-					spinner
-				/>
-			)}
-		</ConfirmDialog>
+		<ConfirmDelete
+			open={open}
+			onRequestClose={onRequestClose}
+			error={error}
+			deleting={deleting}
+			onDelete={onDelete}
+		/>
 	);
 };

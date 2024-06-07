@@ -20,7 +20,7 @@ import {
 import Box from '../../../ui/Box';
 import Definition from '../../../ui/Definition';
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
-import ConfirmDelete from './ConfirmDelete';
+import ConfirmDelete from '../../confirm-delete';
 
 export default function ({
 	headerTitle,
