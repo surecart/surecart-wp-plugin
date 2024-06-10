@@ -97,4 +97,16 @@ class BlockService {
 	public function productList( $block ) {
 		return new ProductListService( $block );
 	}
+
+	/**
+	 * Get the product price migration service.
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
+	 *
+	 * @return ProductSelectedPriceMigrationService
+	 */
+	public function productSelectedPriceMigration( $attributes = array(), $block = null ) {
+		return new ProductSelectedPriceMigrationService( $attributes, $block );
+	}
 }
