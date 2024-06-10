@@ -10,9 +10,9 @@
 
 printf(
 	'<style>button.sc-pill-option__button--selected,button.sc-pill-option__button--selected:hover,button.sc-pill-option__button--selected:focus{background-color:%s!important;color:%s!important;border-color:%s!important;}</style>',
-	$attributes['highlight_background'] ?? '',
-	$attributes['highlight_text'] ?? '',
-	$attributes['highlight_border'] ?? ''
+	esc_attr( $attributes['highlight_background'] ?? '' ),
+	esc_attr( $attributes['highlight_text'] ?? '' ),
+	esc_attr( $attributes['highlight_border'] ?? '' )
 );
 
 ?>
