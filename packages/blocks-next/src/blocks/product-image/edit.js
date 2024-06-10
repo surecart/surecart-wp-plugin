@@ -5,10 +5,8 @@ import {
 } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useEntityRecord } from '@wordpress/core-data';
 import {
-	PanelBody,
 	SelectControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
@@ -50,22 +48,14 @@ export default ({
 			[dimension]: parsedValue < 0 ? '0' : nextValue,
 		});
 	};
-	const product = useSelect(
-		(select) => {
-			if (!productId) {
-				return null;
-			}
-			return select(coreStore).getEntityRecord(
-				'surecart',
-				'product',
-				productId
-			);
-		},
-		[productId]
+	let { record: product } = useEntityRecord(
+		'postType',
+		'sc_product',
+		productId
 	);
-
-	const alt = product?.featured_image?.alt || '';
-	const title = product?.featured_image?.title || '';
+	product = product?.meta?.product;
+	const alt = product?.featured_media?.alt || '';
+	const title = product?.featured_media?.title || '';
 
 	return (
 		<>
