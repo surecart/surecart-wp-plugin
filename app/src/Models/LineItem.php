@@ -92,7 +92,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayAdhocAmountAttribute() {
+	public function getAdHocAmountDisplayAttribute() {
 		return empty( $this->ad_hoc_amount ) ? '' : Currency::format( $this->ad_hoc_amount, $this->currency );
 	}
 
