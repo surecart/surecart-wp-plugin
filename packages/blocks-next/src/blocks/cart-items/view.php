@@ -19,8 +19,11 @@
 			<div class="sc-product-line-item__item">
 				<img
 					class="sc-product-line-item__image"
-					data-wp-bind--src="context.line_item.price.product.image_url"
 					data-wp-bind--hidden="!state.hasLineItemImageUrl"
+					data-wp-bind--src="context.line_item.image.src"
+					data-wp-bind--alt="context.line_item.image.alt"
+					data-wp-bind--srcset="context.line_item.image.srcset"
+					data-wp-bind--sizes="context.line_item.image.sizes"
 					alt=""
 				/>
 
