@@ -1,7 +1,13 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { store, getContext } from '@wordpress/interactivity';
+
+/**
+ * Internal dependencies.
+ */
+import { addCheckoutLineItem } from '@surecart/checkout-actions';
+const { actions: checkoutActions } = store('@surecart/checkout');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
@@ -229,17 +235,41 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 	},
 
 	actions: {
-		*addToCart() {
+		addToCart: async () => {
+			if (!state.selectedPrice?.id) return;
+
+			if (
+				state.selectedPrice?.ad_hoc &&
+				(null === state.adHocAmount || undefined === state.adHocAmount)
+			) {
+				return;
+			}
+
+			let checkout = null;
+			// update({ busy: true });
 			try {
-				update({ busy: true });
-				// TODO: replace with interactivity when available.
-				yield window.sc.checkout.addLineItem(state.lineItem);
-				window.sc.cart.toggle(true);
-				// open cart.
-			} catch (error) {
-				update({ error });
+				state.loading = true;
+				checkout = await addCheckoutLineItem({
+					price: state.selectedPrice?.id,
+					quantity: Math.max(
+						state.selectedPrice?.ad_hoc ? 1 : state?.quantity,
+						1
+					),
+					...(state.selectedPrice?.ad_hoc
+						? { ad_hoc_amount: state.adHocAmount }
+						: {}),
+					variant: state.selectedVariant?.id,
+				});
+			} catch (e) {
+				console.error(e);
+				throw e; // Re-throw the caught error
 			} finally {
-				update({ busy: false });
+				// update({ busy: false });
+			}
+
+			if (checkout) {
+				checkoutActions.setCheckout(checkout, state.mode, state.formId);
+				checkoutActions.toggleCartSidebar(null);
 			}
 		},
 	},

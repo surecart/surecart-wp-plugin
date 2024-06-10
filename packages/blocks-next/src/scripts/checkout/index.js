@@ -10,10 +10,8 @@ import {
 	updateCheckoutLineItem,
 	removeCheckoutLineItem,
 	handleCouponApply,
-	addCheckoutLineItem,
 } from '@surecart/checkout-actions';
 
-const { state: productState } = store('surecart/product-page');
 const { actions: cartDrawerActions } = store('surecart/cart-drawer');
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
@@ -120,7 +118,7 @@ const { state, actions } = store('surecart/checkout', {
 	},
 
 	actions: {
-		toggleCartSidebar(e) {
+		toggleCartSidebar(e = null) {
 			e?.preventDefault();
 			state.openCartSidebar = !state?.openCartSidebar || false;
 
@@ -275,54 +273,6 @@ const { state, actions } = store('surecart/checkout', {
 				actions.setCheckout(checkout, mode, formId);
 			}
 			state.loading = false;
-		},
-
-		addToCart: async () => {
-			const { mode, formId } = getContext();
-
-			// TODO: Replace this with the actual selected price id.
-			const selectedPriceId = '069b12cb-be62-4cb4-ae7e-3d79ca7e9618';
-			const quantity = productState?.quantity || 1;
-
-			if (!productState) return;
-			// if (!productState.selectedPrice?.id) return;
-
-			if (
-				productState.selectedPrice?.ad_hoc &&
-				(null === productState.adHocAmount ||
-					undefined === productState.adHocAmount)
-			) {
-				return;
-			}
-
-			let checkout = null;
-			try {
-				state.loading = true;
-				checkout = await addCheckoutLineItem({
-					price: selectedPriceId, // productState.selectedPrice?.id,
-					quantity: Math.max(
-						productState.selectedPrice?.ad_hoc ? 1 : quantity,
-						1
-					),
-					...(productState.selectedPrice?.ad_hoc
-						? { ad_hoc_amount: productState.adHocAmount }
-						: {}),
-					variant: productState.selectedVariant?.id,
-				});
-			} catch (e) {
-				console.error(e);
-				throw e; // Re-throw the caught error
-			} finally {
-				state.loading = false;
-			}
-
-			if (checkout) {
-				actions.setCheckout(checkout, mode, formId);
-				state.openCartSidebar = !state?.openCartSidebar || false;
-
-				// Toggle the cart dialog.
-				cartDrawerActions.toggle();
-			}
 		},
 	},
 });
