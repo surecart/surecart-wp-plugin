@@ -30,6 +30,9 @@
 		"linkTarget": {
 			"type": "string",
 			"default": "_self"
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"supports": {
