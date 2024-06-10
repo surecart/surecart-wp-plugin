@@ -24,7 +24,7 @@
 			<div class="sc-product-line-item__suffix">
 				<div class="sc-product-line-item__price">
 					<div class="price">
-						<span data-wp-text="state.checkout.display_bump_amount"></span>
+						<span data-wp-text="state.checkout.bump_amount_display"></span>
 					</div>
 				</div>
 			</div>

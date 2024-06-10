@@ -58,7 +58,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplaySubtotalAmountAttribute() {
+	public function getSubtotalDisplayAmountAttribute() {
 		return Currency::format( $this->subtotal_amount, $this->currency );
 	}
 
@@ -67,7 +67,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayTotalAmountAttribute() {
+	public function getTotalAmountDisplayAttribute() {
 		return Currency::format( $this->total_amount, $this->currency );
 	}
 
@@ -76,7 +76,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayFullAmountAttribute() {
+	public function getFullAmountDisplayAttribute() {
 		return Currency::format( $this->full_amount, $this->currency );
 	}
 
@@ -85,7 +85,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayDiscountAmountAttribute() {
+	public function getDiscountAmountDisplayAttribute() {
 		return Currency::format( $this->discount_amount, $this->currency );
 	}
 
@@ -94,7 +94,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayBumpAmountAttribute() {
+	public function getBumpAmountDisplayAttribute() {
 		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
 	}
 

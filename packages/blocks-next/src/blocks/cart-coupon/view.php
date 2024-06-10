@@ -44,7 +44,7 @@
 						data-wp-text="state.checkout.human_discount_with_duration"
 					></span>
 				</div>
-				<div class="sc-line-item__price" data-wp-bind--hidden="!state.discountIsRedeemable" data-wp-text="state.checkout.display_discount_amount"></div>
+				<div class="sc-line-item__price" data-wp-bind--hidden="!state.discountIsRedeemable" data-wp-text="state.checkout.discount_amount_display"></div>
 
 				<!-- non-redeemable UI -->
 				<div class="sc-line-item__price-description" data-wp-bind--hidden="state.discountIsRedeemable">
