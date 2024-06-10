@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
@@ -41,7 +41,10 @@ const { state, actions } = store('surecart/checkout', {
 		openCartSidebar: false,
 		loading: false,
 		discountCode: '',
-		checkout: {},
+		get checkout() {
+			const { mode, formId } = getContext();
+			return getCheckoutData(mode, formId) || {};
+		},
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
 				(count, item) => count + (item?.quantity || 0),
@@ -113,7 +116,7 @@ const { state, actions } = store('surecart/checkout', {
 				return;
 			}
 
-			state.checkout = checkout;
+			actions.setCheckout(checkout, mode, formId);
 		},
 	},
 
@@ -153,22 +156,24 @@ const { state, actions } = store('surecart/checkout', {
 			e.preventDefault();
 			e.stopPropagation();
 
+			const { mode, formId } = getContext();
 			const checkout = await handleCouponApply(
 				state.checkout.id,
 				state.discountCode
 			);
 
 			if (checkout) {
-				state.checkout = checkout;
+				actions.setCheckout(checkout, mode, formId);
 			}
 		},
 
 		removeDiscount: async () => {
+			const { mode, formId } = getContext();
 			const checkout = await handleCouponApply(state.checkout.id, null);
 
 			if (checkout) {
 				state.discountCode = '';
-				state.checkout = checkout;
+				actions.setCheckout(checkout, mode, formId);
 			}
 		},
 
@@ -189,9 +194,6 @@ const { state, actions } = store('surecart/checkout', {
 			if (!checkout) {
 				return;
 			}
-
-			// Set the checkout data.
-			state.checkout = data;
 
 			// Find the checkout by mode and formId.
 			const checkoutData = checkout[mode]?.[formId];
