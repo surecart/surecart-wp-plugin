@@ -14,7 +14,7 @@ echo '<style>
 ?>
 <div class="wp-block-group is-layout-constrained" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
 	<div class="wp-block-group alignwide">
-		<?php echo surecart_get_the_block_template_html( get_the_content() ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+		<?php block_template_part( get_term_meta( get_queried_object_id(), '_wp_page_template_part', true ) ) ?>
 	</div>
 </div>
 <?php
