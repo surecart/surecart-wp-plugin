@@ -46,16 +46,8 @@ class ProductPostTypeService {
 		// product gallery migration.
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
-		// add_filter(
-		// 'query_vars',
-		// function( $vars ) {
-		// $vars[] = 'variant_options';
-		// return $vars;
-		// }
-		// );
-
 		// update edit post link to edit the product directly.
-		// add_filter( 'get_edit_post_link', [ $this, 'updateEditPostLink' ], 10, 2 );
+		add_filter( 'get_edit_post_link', array( $this, 'updateEditPostLink' ), 10, 2 );
 
 		// when a product media is deleted, remove it from the gallery.
 		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
