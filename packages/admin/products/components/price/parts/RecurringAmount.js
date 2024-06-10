@@ -42,7 +42,7 @@ export default ({ price, updatePrice, locked }) => {
 				`}
 				required
 				disabled={price?.id}
-				label={__('Repeat Payment Every', 'surecart')}
+				label={__('Repeat payment every', 'surecart')}
 			>
 				<div
 					css={css`

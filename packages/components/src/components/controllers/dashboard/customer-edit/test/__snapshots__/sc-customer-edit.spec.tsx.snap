@@ -28,7 +28,7 @@ exports[`sc-customer-edit renders 1`] = `
           </div>
           <div>
             <sc-switch name="billing_matches_shipping" value="on">
-              Billing address same as shipping
+              Billing address is different from shipping
             </sc-switch>
           </div>
           <div style="display: block;">

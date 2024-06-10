@@ -1,11 +1,22 @@
-import { __ } from '@wordpress/i18n';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScAlert,
 	ScButton,
 	ScForm,
+	ScIcon,
 	ScInput,
 	ScSelect,
 	ScTaxIdInput,
@@ -147,6 +158,22 @@ export default ({
 		(zone) => !isZoneRegistered(zone)
 	);
 
+	const selectedZone = availableZones.find((z) => z.id === data?.tax_zone);
+
+	const requiresManualTaxOverride =
+		selectedZone?.default_rate === 0 ||
+		(region === 'ca' &&
+			['QC', 'SK', 'MB', 'BC'].includes(selectedZone?.state));
+
+	// Set taxType to 'manual' if requiresManualTaxOverride is true.
+	useEffect(() => {
+		setTaxType(
+			requiresManualTaxOverride || registration?.manual_rate
+				? 'manual'
+				: 'automatic'
+		);
+	}, [requiresManualTaxOverride]);
+
 	return (
 		<ScForm
 			onScSubmit={onSubmit}
@@ -173,21 +200,51 @@ export default ({
 			/>
 
 			{region !== 'other' && (
-				<ScSelect
-					label={__('Tax Calculation', 'surecart')}
-					value={taxType}
-					onScChange={(e) => setTaxType(e.target.value)}
-					choices={[
-						{
-							value: 'manual',
-							label: __('Manual', 'surecart'),
-						},
-						{
-							value: 'automatic',
-							label: __('Automatic', 'surecart'),
-						},
-					]}
-				/>
+				<>
+					{requiresManualTaxOverride ? (
+						<div
+							css={css`
+								color: var(--sc-input-help-text-color);
+								display: flex;
+							`}
+						>
+							<ScIcon name="info" />
+							<span
+								css={css`
+									margin-left: var(--sc-spacing-small);
+								`}
+							>
+								{sprintf(
+									/* translators: %s: state/region name */
+									__(
+										'Please specify a tax rate for %s, as it requires manual entry',
+										'surecart'
+									),
+									selectedZone?.state_name ||
+										selectedZone?.country_name,
+									selectedZone?.state_name ||
+										selectedZone?.country_name
+								)}
+							</span>
+						</div>
+					) : (
+						<ScSelect
+							label={__('Tax Calculation', 'surecart')}
+							value={taxType}
+							onScChange={(e) => setTaxType(e.target.value)}
+							choices={[
+								{
+									value: 'manual',
+									label: __('Manual', 'surecart'),
+								},
+								{
+									value: 'automatic',
+									label: __('Automatic', 'surecart'),
+								},
+							]}
+						/>
+					)}
+				</>
 			)}
 
 			{(region === 'other' || taxType === 'manual') && (
@@ -195,7 +252,7 @@ export default ({
 					type="number"
 					min="0"
 					max="100"
-					step="0.01"
+					step="0.0001"
 					required
 					label={__('Tax Rate', 'surecart')}
 					value={data?.manual_rate}

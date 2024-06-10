@@ -1,6 +1,6 @@
 <?php
 // get product.
-$product = get_query_var( 'surecart_current_product' );
+$product = sc_get_product();
 
 // if no product id, return.
 if ( empty( $product ) ) {

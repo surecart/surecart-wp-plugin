@@ -6,7 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, PaymentMethod, Period, Price, Product } from '../../../../types';
+import { Checkout, PaymentMethod, Period, Price, Product, ManualPaymentMethod } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-upcoming-invoice',
@@ -73,6 +73,7 @@ export class ScUpcomingInvoice {
 
   async getInvoice() {
     if (!this.subscriptionId) return;
+
     this.invoice = (await apiFetch({
       method: 'PATCH',
       path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}/upcoming_period/`, {
@@ -82,6 +83,7 @@ export class ScUpcomingInvoice {
           'line_item.price',
           'price.product',
           'checkout.payment_method',
+          'checkout.manual_payment_method',
           'checkout.discount',
           'discount.promotion',
           'discount.coupon',
@@ -229,11 +231,13 @@ export class ScUpcomingInvoice {
     }
 
     const checkout = this.invoice?.checkout as Checkout;
+    const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
+
     return (
       <Fragment>
         {checkout?.line_items?.data.map(item => (
           <sc-product-line-item
-            imageUrl={(item.price?.product as Product)?.image_url}
+            image={(item.price?.product as Product)?.line_item_image}
             name={(item.price?.product as Product)?.name}
             priceName={item?.price?.name}
             variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
@@ -275,11 +279,11 @@ export class ScUpcomingInvoice {
 
         <sc-coupon-form
           discount={checkout?.discount}
-          label={__('Add Coupon Code','surecart')}
+          label={__('Add Coupon Code', 'surecart')}
           onScApplyCoupon={e => this.applyCoupon(e)}
           error={this.couponError}
           collapsed
-          buttonText={__('Add Coupon Code','surecart')}
+          buttonText={__('Add Coupon Code', 'surecart')}
         ></sc-coupon-form>
 
         {!!checkout.tax_amount && (
@@ -300,7 +304,8 @@ export class ScUpcomingInvoice {
             slot="price-description"
           >
             <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-              <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
+              {!!manualPaymentMethod && <sc-manual-payment-method paymentMethod={manualPaymentMethod} />}
+              {!manualPaymentMethod && <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>}
               <sc-icon name="edit-3"></sc-icon>
             </sc-flex>
           </a>

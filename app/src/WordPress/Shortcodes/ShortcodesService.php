@@ -46,7 +46,7 @@ class ShortcodesService {
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
 					foreach ( $attributes as $key => $value ) {
-						if ( strpos( $value, ',' ) !== 0 && is_array( $defaults[ $key ] ) ) {
+						if ( strpos( $value, ',' ) !== 0 && isset( $defaults[ $key ] ) && is_array( $defaults[ $key ] ) ) {
 							$attributes[ $key ] = explode( ',', $value );
 						}
 					}
@@ -58,6 +58,10 @@ class ShortcodesService {
 				);
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
+				
+				if ( ! empty( $block_name ) && 'surecart/product-list' === $block_name ) {
+					return wp_interactivity_process_directives( \SureCart::block()->productListMigration( $shortcode_attrs )->render() );
+				}
 
 				return wp_interactivity_process_directives(
 					do_blocks( '<!-- wp:' . $block_name . ' ' . wp_json_encode( $shortcode_attrs, JSON_FORCE_OBJECT ) . ' -->' . do_shortcode($content) . '<!-- /wp:' . $block_name . ' -->')

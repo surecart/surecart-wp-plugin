@@ -147,6 +147,7 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 			'wp_sitemaps_sc_products_query_args',
 			array(
 				'status' => [ 'published' ],
+				'archived' => false,
 			)
 		);
 

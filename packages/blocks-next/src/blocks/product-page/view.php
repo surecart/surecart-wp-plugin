@@ -1,7 +1,16 @@
 
 <form
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'productId' => $product->id ] ) ); ?>
+	<?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			array(
+				'productId' => $product->id,
+				'product'   => $product,
+			)
+		)
+	);
+	?>
 	data-wp-interactive='{ "namespace": "surecart/product-page" }'
 	data-wp-watch--variant-values="callbacks.updateSelectedVariant"
 	data-wp-on--submit="callbacks.handleSubmit"

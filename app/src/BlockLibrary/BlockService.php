@@ -31,7 +31,7 @@ class BlockService {
 	 * @param  array<string, mixed> $context Context to send.
 	 * @return string View html output.
 	 */
-	public function render( $views, $context = [] ) {
+	public function render( $views, $context = array() ) {
 		return apply_filters( 'surecart_block_output', $this->app->views()->make( $views )->with( $context )->toString() );
 	}
 
@@ -44,7 +44,7 @@ class BlockService {
 	 * @return array
 	 */
 	public function filterBy( $type, $name, $blocks ) {
-		$found_blocks = [];
+		$found_blocks = array();
 		$blocks       = (array) $blocks;
 		foreach ( $blocks as $block ) {
 			if ( $name === $block[ $type ] ) {
@@ -67,14 +67,34 @@ class BlockService {
 	}
 
 	/**
-	 * Get the product page migration service.
+	 * Get url params service.
 	 *
-	 * @param array  $attributes The attributes of the block.
-	 * @param object $block The block object.
+	 * @param string $type Block type.
+	 * @param string $instance_id Unique instance ID.
 	 *
-	 * @return ProductPageMigrationService
+	 * @return URLParamService
 	 */
-	public function productPageMigration( $attributes = array(), $block = null ) {
-		return new ProductPageMigrationService( $attributes, $block );
+	public function urlParams( $type = '', $instance_id = '' ) {
+		return new URLParamService( $type, $instance_id );
+	}
+
+	/**
+	 * Get product list migration service.
+	 *
+	 * @param array $attributes Attributes.
+	 *
+	 * @return ProductListMigrationService
+	 */
+	public function productListMigration( $attributes = array(), $block = null ) {
+		return new ProductListMigrationService( $attributes, $block );
+	}
+
+	/**
+	 * Get the product list service.
+	 *
+	 * @return ProductListService
+	 */
+	public function productList( $block ) {
+		return new ProductListService( $block );
 	}
 }

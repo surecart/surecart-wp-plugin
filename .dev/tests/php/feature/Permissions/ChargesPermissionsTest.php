@@ -18,7 +18,7 @@ class ChargesPermissionsTest extends SureCartUnitTestCase {
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Permissions\RolesServiceProvider::class,
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
-				\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
 				\SureCart\Activation\ActivationServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class,
 			]

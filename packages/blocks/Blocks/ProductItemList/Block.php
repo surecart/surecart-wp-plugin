@@ -211,6 +211,10 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( isset( $attributes[ 'sort_enabled' ] ) ) { // This way we know it's the old block.
+			return \SureCart::block()->productListMigration( $attributes, $this->block )->render();
+		}
+		
 		self::$instance = wp_unique_id( 'sc-product-item-list-' );
 
 		// check for inner blocks.
@@ -256,7 +260,21 @@ class Block extends BaseBlock {
 			$attributes['type'] = '';
 		}
 
-		$products = $this->getProducts( $attributes );
+		// query posts.
+		$product_query = new \WP_Query(
+			array(
+				'post_type'      => 'sc_product',
+				'posts_per_page' => 10,
+			)
+		);
+
+		// get the product for each post.
+		$products = array_map(
+			function( $post ) {
+				return sc_get_product( $post );
+			},
+			$product_query->posts ?? []
+		);
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
@@ -267,8 +285,8 @@ class Block extends BaseBlock {
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
 				'pagination'           => [
-					'total'       => $products->total(),
-					'total_pages' => $products->totalPages(),
+					'total'       => $product_query->found_posts,
+					'total_pages' => $product_query->max_num_pages,
 				],
 				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
@@ -278,7 +296,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
-				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products,
 				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
 				'pageTitle'            => get_the_title(),
 			]
@@ -311,37 +329,5 @@ class Block extends BaseBlock {
 		}
 
 		return $query;
-	}
-
-	/**
-	 * Get the products.
-	 *
-	 * @param  array $attributes Block attributes.
-	 *
-	 * @return \SureCart\Models\Product
-	 */
-	public function getProducts( $attributes ) {
-		$products = Product::where( $this->getQuery( $attributes ) )->paginate(
-			[
-				'per_page' => $attributes['limit'] ?? 30,
-				'page'     => (int) ( $_GET['product-page'] ?? 1 ),
-			]
-		);
-
-		// there is an error or no products.
-		if ( is_wp_error( $products ) || empty( $products->pagination->count ) ) {
-			return new Collection(
-				(object) [
-					'pagination' => [
-						'count' => 0,
-						'limit' => 0,
-						'page'  => 0,
-					],
-					'data'       => [],
-				]
-			);
-		}
-
-		return $products;
 	}
 }

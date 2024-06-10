@@ -76,7 +76,7 @@ registerBlocksForTemplates({
 	// exclude for these templates.
 	exclude: [
 		'surecart/surecart//product-info',
-		'surecart/surecart//single-product',
+		'surecart/surecart//single-sc_product',
 		'surecart/surecart//product-collection-part',
 		'surecart/surecart//product-collection',
 		'sc-products',

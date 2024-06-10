@@ -15,6 +15,7 @@ sc-button {
     visibility: hidden;
     transform: scale(0.9);
     transition: all var(--sc-transition-fast) ease;
+    color: var(--sc-input-color);
   }
 
   .coupon-button-mobile {

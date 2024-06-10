@@ -1,17 +1,37 @@
 <?php
-global $content_width;
 
-$product    = $block->context['surecart/product'];
-$images     = $product->getDisplayImages( $attributes['width'] ?? $content_width, array( 600, 800, 1200 ) ) ?? [];
-$thumbnails = $product->getDisplayImages( 240, array( 90, 120, 240 ) );
-$featured_image = !empty($images) ? $images[0] : null;
+$product        = sc_get_product();
+$gallery        = $product->gallery;
+$featured_image = $gallery[0] ?? null;
 
-if ( empty( $images )) {
+if ( empty( $gallery ) ) {
 	return 'file:./empty.php';
 }
 
-if ( count( $images ) === 1 ) {
+if ( count( $gallery ) === 1 ) {
 	return 'file:./image.php';
+}
+
+$slider_options = array(
+	'sliderOptions'      => [
+		'autoHeight'   => ! empty( $attributes['auto_height'] ),
+		'spaceBetween' => 40,
+	],
+	'thumbSliderOptions' => [
+		'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
+		'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
+		'breakpoints'    => [
+			320 => [
+				'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
+				'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
+			],
+		],
+	],
+);
+
+$height = 'auto';
+if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
+	$height = $attributes['height'];
 }
 
 return 'file:./slideshow.php';

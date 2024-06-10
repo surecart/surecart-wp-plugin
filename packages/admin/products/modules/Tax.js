@@ -2,7 +2,12 @@
 import { css, jsx } from '@emotion/core';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { ScSwitch, ScTooltip } from '@surecart/components-react';
+import {
+	ScButton,
+	ScIcon,
+	ScSwitch,
+	ScTooltip,
+} from '@surecart/components-react';
 
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
@@ -65,7 +70,35 @@ export default ({ loading, product, updateProduct }) => {
 	};
 
 	return (
-		<Box loading={loading} title={__('Tax', 'surecart')}>
+		<Box
+			loading={loading}
+			title={__('Tax', 'surecart')}
+			footer={
+				product?.tax_enabled &&
+				scData?.tax_protocol?.tax_enabled &&
+				scData?.tax_protocol?.tax_behavior === 'inclusive' && (
+					<>
+						<span
+							css={css`
+								color: rgb(107, 114, 128);
+								font-size: 12px;
+							`}
+						>
+							{__('Tax is included in prices', 'surecart')}
+						</span>
+						<ScButton
+							size="small"
+							type="link"
+							target="_blank"
+							href="admin.php?page=sc-settings&tab=tax_protocol"
+						>
+							{__('Edit Settings', 'surecart')}
+							<ScIcon name="external-link" slot="suffix" />
+						</ScButton>
+					</>
+				)
+			}
+		>
 			{renderTaxInput()}
 		</Box>
 	);
