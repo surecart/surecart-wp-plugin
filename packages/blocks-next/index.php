@@ -94,11 +94,6 @@ add_filter( 'render_block_context', function( $context, $parsed_block, $parent_b
 		$context['surecart/has-variant-choices'] = !empty(wp_get_first_block([$parsed_block], 'surecart/product-variant-choices-v2'));
 	}
 
-	// cart sidebar context.
-	if ( $parsed_block['blockName'] === 'surecart/cart-v2' ) {
-		$context['surecart/cart-v2/blockId'] = wp_unique_id();
-	}
-
 	return $context;
 }, 10, 3 );
 

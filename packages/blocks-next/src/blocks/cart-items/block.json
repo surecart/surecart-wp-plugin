@@ -9,7 +9,6 @@
 	"example": {},
 	"textdomain": "surecart",
 	"ancestor": ["surecart/cart-v2"],
-	"usesContext": ["surecart/cart-v2/blockId"],
 	"attributes": {
 		"removable": {
 			"type": "boolean",

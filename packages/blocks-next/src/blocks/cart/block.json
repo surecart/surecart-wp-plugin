@@ -8,10 +8,6 @@
 	"category": "cart",
 	"icon": "media-interactive",
 	"example": {},
-	"providesContext": {
-		"surecart/cart-v2/blockId": "cart-v2"
-	},
-	"usesContext": ["surecart/cart-v2/blockId"],
 	"attributes": {
 		"title": {
 			"type": "string",

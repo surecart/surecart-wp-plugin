@@ -9,7 +9,6 @@
 	"category": "cart",
 	"example": {},
 	"ancestor": ["surecart/cart-v2"],
-	"usesContext": ["surecart/cart-v2/blockId"],
 	"attributes": {
 		"text": {
 			"type": "string",
