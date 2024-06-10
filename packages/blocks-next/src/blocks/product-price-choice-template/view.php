@@ -11,5 +11,5 @@
 	data-wp-bind--aria-checked="state.isPriceSelected"
 	tabindex="0"
 	role="radio">
-	<?php echo $content; ?>
+	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </div>

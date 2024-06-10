@@ -8,9 +8,6 @@
  *     $block (WP_Block): The block instance.
  */
 
-// get initial state.
-$products = wp_interactivity_state( 'surecart/product' );
-
 // get product from initial state.
 $product = sc_get_product();
 

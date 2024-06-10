@@ -13,14 +13,16 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model implements PageModel {
-	use HasImageSizes, HasPurchases, HasCommissionStructure;
+	use HasImageSizes;
+	use HasPurchases;
+	use HasCommissionStructure;
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ];
+	protected $sync_expands = array( 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
 
 	/**
 	 * Rest API endpoint
@@ -413,7 +415,7 @@ class Product extends Model implements PageModel {
 	 * @return SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
-		$gallery = $this->gallery ?? [];
+		$gallery = $this->gallery ?? array();
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
@@ -574,7 +576,7 @@ class Product extends Model implements PageModel {
 			if ( ! empty( $initial_variant->amount ) ) {
 				return $initial_variant->amount;
 			}
-			$prices        = $this->active_prices ?? [];
+			$prices        = $this->active_prices ?? array();
 			$initial_price = $prices[0] ?? null;
 			return $initial_price->amount ?? null;
 		}
@@ -586,7 +588,7 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getScratchAmountAttribute() {
-		$prices        = $this->active_prices ?? [];
+		$prices        = $this->active_prices ?? array();
 		$initial_price = $prices[0] ?? null;
 		return $initial_price->scratch_amount ?? null;
 	}
@@ -654,7 +656,7 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		$gallery_items = $this->post->gallery ?? [];
+		$gallery_items = $this->post->gallery ?? array();
 
 		return array_filter(
 			array_map(
@@ -700,7 +702,7 @@ class Product extends Model implements PageModel {
 			return Currency::format( $initial_variant->amount, $initial_variant->currency );
 		}
 
-		$prices        = $this->active_prices ?? [];
+		$prices        = $this->active_prices ?? array();
 		$initial_price = $prices[0] ?? null;
 		if ( empty( $initial_price ) ) {
 			return '';
@@ -742,6 +744,6 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) [];
+		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) array();
 	}
 }
