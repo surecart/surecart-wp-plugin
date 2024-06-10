@@ -2,13 +2,15 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Product;
+use SureCart\Models\Traits\HasProduct;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
 class Price extends Model {
+	use HasProduct;
+
 	/**
 	 * Rest API endpoint
 	 *
