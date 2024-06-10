@@ -121,4 +121,16 @@ class BlockService {
 	public function productCollectionBadgesMigration( $attributes = array(), $block = null ) {
 		return new ProductCollectionBadgesMigrationService( $attributes, $block );
 	}
+
+	/**
+	 * Get the product price choices migration service.
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
+	 *
+	 * @return ProductPriceChoicesMigrationService
+	 */
+	public function productPriceChoicesMigration( $attributes = array(), $block = null ) {
+		return new ProductPriceChoicesMigrationService( $attributes, $block );
+	}
 }
