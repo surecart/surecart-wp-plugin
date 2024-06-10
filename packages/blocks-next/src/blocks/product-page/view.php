@@ -33,7 +33,6 @@
 	);
 	?>
 	data-wp-interactive='{ "namespace": "surecart/product-page" }'
-	data-wp-watch--variant-values="callbacks.updateSelectedVariant"
 	data-wp-on--submit="callbacks.handleSubmit"
 >
 	<?php echo do_blocks( $content );  // phpcs:ignore WordPress.Security.EscapeOutput ?>

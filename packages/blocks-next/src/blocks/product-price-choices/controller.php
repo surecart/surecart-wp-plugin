@@ -16,5 +16,7 @@ if ( empty( $product->id ) || ! $product->has_multiple_prices ) {
 	return '';
 }
 
+$prices = $product->active_prices;
+
 // return the view.
 return 'file:./view.php';

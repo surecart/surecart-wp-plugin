@@ -5,62 +5,63 @@ import { store, getContext } from '@wordpress/interactivity';
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
-const { state, callbacks, actions } = store('surecart/product-page', {
+const { state, actions } = store('surecart/product-page', {
 	state: {
 		/**
-		 * Product contextual state.
+		 * Get the product quantity based on the selected price.
 		 */
-		// get product() {
-		// 	return callbacks.getState('product');
-		// },
-		// get selectedPrice() {
-		// 	return callbacks.getState('selectedPrice') || {};
-		// },
-		// get selectedVariant() {
-		// 	return callbacks.getState('selectedVariant');
-		// },
-		// get variantValues() {
-		// 	return callbacks.getState('variantValues');
-		// },
-		// get busy() {
-		// 	return callbacks.getState('busy');
-		// },
-		// get error() {
-		// 	return callbacks.getState('error');
-		// },
-
-		/**
-		 * Derived state
-		 */
-		/** Get the product quantity */
 		get quantity() {
 			const { selectedPrice, quantity } = getContext();
 			if (selectedPrice?.ad_hoc) return 1;
 			return quantity;
 		},
-		/** Get the selected amount. */
+
+		/**
+		 * Get the amount based on the selected variant or price.
+		 */
 		get selectedAmount() {
-			const { selectedVariant, selectedPrice } = getContext();
-			return selectedVariant?.amount || selectedPrice?.amount || '';
+			const { selectedPrice } = getContext();
+			return state.selectedVariant?.amount || selectedPrice?.amount || '';
 		},
-		/** Get the selected display amount. */
+
+		/**
+		 * Get the selected display amount based on the selected variant or price.
+		 */
 		get selectedDisplayAmount() {
-			const { selectedVariant, selectedPrice } = getContext();
+			const { selectedPrice } = getContext();
 			return (
-				selectedVariant?.display_amount ||
+				state.selectedVariant?.display_amount ||
 				selectedPrice?.display_amount ||
 				''
 			);
 		},
-		/** Is the product on sale? */
+
+		/**
+		 * Get the selected variant.
+		 */
+		get selectedVariant() {
+			const { variants, variantValues } = getContext();
+			return variantValues
+				? getVariantFromValues({
+						variants: variants,
+						values: variantValues || {},
+				  })
+				: null;
+		},
+
+		/**
+		 * Is this product on sale?
+		 */
 		get isOnSale() {
 			const { selectedAmount, selectedPrice } = getContext();
-			if (selectedPrice?.ad_hoc) {
-				return false;
-			}
-			return selectedPrice.scratch_amount > selectedAmount;
+			return !selectedPrice?.ad_hoc
+				? selectedPrice.scratch_amount > selectedAmount
+				: false;
 		},
-		/** Is the option unavailable */
+
+		/**
+		 * Is the option unavailable due to missing variants or stock.
+		 */
 		get isOptionUnavailable() {
 			const { optionNumber, option_value, product, variantValues } =
 				getContext();
@@ -71,21 +72,26 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 				product
 			);
 		},
-		/** Is the option selected? */
+
+		/**
+		 * Is the option selected?
+		 */
 		get isOptionSelected() {
 			const { optionNumber, option_value, variantValues } = getContext();
-			return variantValues[`option_${optionNumber}`] === option_value;
+			return variantValues?.[`option_${optionNumber}`] === option_value;
 		},
-		/** Is the price selected? */
+
+		/**
+		 * Is the price selected?
+		 */
 		get isPriceSelected() {
 			const { price, selectedPrice } = getContext();
 			return selectedPrice?.id === price?.id;
 		},
-		/** Get the selected option. */
-		get getSelectedOption() {
-			const { optionNumber, variantValues } = getContext();
-			return variantValues[`option_${optionNumber}`];
-		},
+
+		/**
+		 * Get the checkout url based on the built line item.
+		 */
 		get checkoutUrl() {
 			const { checkoutUrl, addToCart } = getContext();
 			if (addToCart) {
@@ -96,43 +102,52 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 				no_cart: true,
 			});
 		},
+
+		/**
+		 * Get the button text based on the product state.
+		 */
 		get buttonText() {
 			const { text, outOfStockText, unavailableText } = getContext();
-
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
-
 			if (state.isUnavailable) {
 				return unavailableText;
 			}
-
 			return text;
 		},
+
+		/**
+		 * Find out if the product is unavailable
+		 * due to being archived, sold out, or no variant selected.
+		 */
 		get isUnavailable() {
-			const { product, variants, selectedVariant } = getContext();
+			const { product, variants } = getContext();
 			return (
 				product?.archived || // archived.
 				state?.isSoldOut || // sold out.
-				(variants?.length && !selectedVariant?.id) // no selected variant.
+				(variants?.length && !state.selectedVariant?.id) // no selected variant.
 			);
 		},
+
+		/**
+		 * Is the product sold out?
+		 */
 		get isSoldOut() {
-			const { product, selectedVariant } = getContext();
+			const { product } = getContext();
 			if (
 				!product?.stock_enabled ||
 				product?.allow_out_of_stock_purchases
 			) {
 				return false;
 			}
-			return selectedVariant?.id
-				? selectedVariant?.available_stock <= 0
+			return state.selectedVariant?.id
+				? state.selectedVariant?.available_stock <= 0
 				: product?.available_stock <= 0;
 		},
 		/** Line item to add to cart. */
 		get lineItem() {
-			const { adHocAmount, selectedPrice, selectedVariant } =
-				getContext();
+			const { adHocAmount, selectedPrice } = getContext();
 			return {
 				price: selectedPrice?.id,
 				quantity: Math.max(
@@ -146,8 +161,8 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 								: adHocAmount,
 					  }
 					: {}),
-				...(selectedVariant?.id
-					? { variant: selectedVariant?.id }
+				...(state.selectedVariant?.id
+					? { variant: state.selectedVariant?.id }
 					: {}),
 			};
 		},
@@ -158,7 +173,7 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		},
 		/** Get the max product quantity */
 		get maxQuantity() {
-			const { product, selectedVariant } = getContext();
+			const { product } = getContext();
 			// check purchase limit.
 			if (product?.purchase_limit) {
 				return product.purchase_limit;
@@ -173,12 +188,12 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 			}
 
 			// if no variant is selected, check against product stock.
-			if (!selectedVariant) {
+			if (!state.selectedVariant) {
 				return product.available_stock;
 			}
 
 			// check against variant stock.
-			return selectedVariant.available_stock;
+			return state.selectedVariant.available_stock;
 		},
 		/** Is the quantity disabled? */
 		get isQuantityDisabled() {
@@ -225,13 +240,10 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 			return window.location.assign(e.submitter.value);
 		},
 		/** Set the option. */
-		setOption: (e) => {
+		setOption: () => {
 			const context = getContext();
-			const { optionNumber, optionValue, variantValues } = context;
-			context.variantValues = {
-				...variantValues,
-				[`option_${optionNumber}`]: e.target.value || optionValue,
-			};
+			context.variantValues[`option_${context?.optionNumber}`] =
+				context?.option_value || e?.target?.value;
 		},
 		/** Set the option. */
 		setPrice: () => {
@@ -254,22 +266,6 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 		formatAdHocAmount: (e) => {
 			const context = getContext();
 			context.adHocAmount = parseFloat(e.target.value).toFixed(2);
-		},
-		/** Update variant and values. */
-		updateSelectedVariant: () => {
-			const context = getContext();
-			if (!context?.variantValues) {
-				return;
-			}
-			// if we have variant values, update the selected variant.
-			const selectedVariant = getVariantFromValues({
-				variants: context?.product?.variants?.data,
-				values: context?.variantValues || {},
-			});
-
-			if (selectedVariant?.id !== context?.selectedVariant?.id) {
-				context.selectedVariant = selectedVariant;
-			}
 		},
 		onQuantityChange: (e) => {
 			const context = getContext();
