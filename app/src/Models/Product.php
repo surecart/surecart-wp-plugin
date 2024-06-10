@@ -705,19 +705,28 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getDisplayAmountAttribute() {
-		$initial_variant = $this->first_variant_with_stock;
+		$prices = $this->active_prices ?? array();
 
-		if ( ! empty( $initial_variant->amount ) ) {
-			return Currency::format( $initial_variant->amount, $initial_variant->currency );
+		// only if we have one price.
+		if ( count( $prices ) === 1 ) {
+			$initial_variant = $this->first_variant_with_stock;
+			if ( ! empty( $initial_variant->amount ) ) {
+				return Currency::format( $initial_variant->amount, $initial_variant->currency );
+			}
 		}
 
-		$prices        = $this->active_prices ?? array();
-		$initial_price = $prices[0] ?? null;
-		if ( empty( $initial_price ) ) {
+		// we don't have an initial price.
+		if ( empty( $this->initial_price ) ) {
 			return '';
 		}
 
-		return Currency::format( $initial_price->amount, $initial_price->currency );
+		// the initial price is ad hoc.
+		if ( $this->initial_price->ad_hoc ) {
+			return esc_html__( 'Custom Amount', 'surecart' );
+		}
+
+		// return the formatted amount.
+		return Currency::format( $this->initial_price->amount, $this->initial_price->currency );
 	}
 
 	/**
@@ -726,16 +735,26 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getRangeDisplayAmountAttribute() {
+		// there are no metrics.
 		if ( ! $this->metrics || empty( $this->metrics->min_price_amount ) || empty( $this->metrics->max_price_amount ) ) {
 			return '';
 		}
 
+		// the min and max are the same.
 		if ( $this->metrics->min_price_amount === $this->metrics->max_price_amount ) {
 			return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency );
 		}
 
-		return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' .
-			Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
+		// return the range.
+		return sprintf(
+			// translators: %1$1s is the min price, %2$2s is the max price.
+			__(
+				'%1$1s - %2$2s',
+				'surecart',
+			),
+			Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ),
+			Currency::format( $this->metrics->max_price_amount, $this->metrics->currency )
+		);
 	}
 
 	/**
