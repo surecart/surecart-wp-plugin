@@ -238,6 +238,20 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Cart side drawer.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/cart-drawer/index.asset.php';
+		wp_register_script_module(
+			'@surecart/cart-drawer',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart-drawer/index.js',
+			[
+				[
+					'id' => '@wordpress/interactivity',
+					'import' => 'dynamic'
+				]
+			],
+			$static_assets['version']
+		);
+
 		// SureCart Checkout.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout/index.asset.php';
 		wp_register_script_module(
@@ -253,7 +267,7 @@ add_action(
 					'import' => 'dynamic'
 				],
 				[
-					'id' => '@surecart/dialog',
+					'id' => '@surecart/cart-drawer',
 					'import' => 'dynamic'
 				]
 			],

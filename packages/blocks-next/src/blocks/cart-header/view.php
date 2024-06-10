@@ -9,7 +9,7 @@
 >
 	<button
 		class="wp-block-surecart-cart-header-v2__close"
-		data-wp-on--click="surecart/dialog::actions.toggle"
+		data-wp-on--click="surecart/cart-drawer::actions.toggle"
 	>
 		<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
 	</button>

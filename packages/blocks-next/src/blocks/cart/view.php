@@ -15,7 +15,7 @@
 >
 	<dialog
 		class="sc-drawer"
-		data-wp-on--click="surecart/dialog::actions.closeOverlay"
+		data-wp-on--click="surecart/cart-drawer::actions.closeOverlay"
 	>
 		<div class="sc-drawer__wrapper">
 			<?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

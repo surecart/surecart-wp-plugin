@@ -110,5 +110,5 @@
 		"file:../../styles/dialog.css",
 		"file:./style-index.css"
 	],
-	"viewScriptModule": ["@surecart/checkout", "@surecart/dialog"]
+	"viewScriptModule": ["@surecart/checkout", "@surecart/cart-drawer"]
 }

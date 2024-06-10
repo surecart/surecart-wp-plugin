@@ -14,9 +14,8 @@ import {
 } from '@surecart/checkout-actions';
 
 const { state: productState } = store('surecart/product-page');
-const { actions: dialogActions } = store('surecart/dialog');
+const { actions: cartDrawerActions } = store('surecart/cart-drawer');
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
-const CART_DIALOG_CLASS = '.sc-drawer';
 
 const getCheckoutData = (mode = 'live', formId) => {
 	const checkoutData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -126,7 +125,7 @@ const { state, actions } = store('surecart/checkout', {
 			state.openCartSidebar = !state?.openCartSidebar || false;
 
 			// Toggle the cart dialog.
-			dialogActions.toggle(CART_DIALOG_CLASS);
+			cartDrawerActions.toggle();
 		},
 
 		toggleDiscountInput(e) {
@@ -322,7 +321,7 @@ const { state, actions } = store('surecart/checkout', {
 				state.openCartSidebar = !state?.openCartSidebar || false;
 
 				// Toggle the cart dialog.
-				dialogActions.toggle(CART_DIALOG_CLASS);
+				cartDrawerActions.toggle();
 			}
 		},
 	},

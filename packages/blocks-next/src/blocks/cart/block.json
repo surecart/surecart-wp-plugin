@@ -33,5 +33,5 @@
 		"file:./style-index.css"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
-	"viewScriptModule": ["@surecart/checkout", "@surecart/dialog"]
+	"viewScriptModule": ["@surecart/checkout", "@surecart/cart-drawer"]
 }

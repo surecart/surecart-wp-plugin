@@ -38,7 +38,7 @@ module.exports = [
 		externals: {
 			...defaultConfig[1]?.externals,
 			'@surecart/dialog': '@surecart/dialog',
-			'@surecart/drawer': '@surecart/drawer',
+			'@surecart/cart-drawer': '@surecart/cart-drawer',
 			'@surecart/api-fetch': '@surecart/api-fetch',
 			'@surecart/checkout-actions': '@surecart/checkout-actions',
 		},
