@@ -204,7 +204,6 @@ return array(
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 
-		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
