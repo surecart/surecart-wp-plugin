@@ -398,6 +398,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the has multiple prices attribute.
+	 *
+	 * @return boolean
+	 */
+	public function getHasMultiplePricesAttribute() {
+		return count( $this->active_prices ) > 1;
+	}
+
+	/**
 	 * Return attached active prices.
 	 */
 	public function activeAdHocPrices() {
