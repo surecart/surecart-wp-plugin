@@ -17,6 +17,8 @@
 		"packages/blocks/**/Blocks/*.php",
 		"packages/blocks/**/Blocks/**/*.json",
 		"packages/blocks/**/Blocks/**/*.css",
+		"packages/blocks-next/build/",
+		"packages/blocks-next/index.php",
 		"templates/",
 		"images/",
 		"core/",

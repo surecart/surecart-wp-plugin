@@ -35,18 +35,21 @@ class LineItemTest extends SureCartUnitTestCase
 	 */
 	public function test_has_image_from_featured_product_media() {
 		$line_item = new LineItem([
-			'product' => [
-				'id' => 'test',
-				'featured_product_media' => [
-					'media' => [
-						'url' => 'http://example.com/image.jpg',
-						'width' => 800,
-						'height' => 600,
-					]
-				],
+			'price' => [
+				'product' => [
+					'id' => 'test',
+					'featured_product_media' => [
+						'media' => [
+							'url' => 'http://example.com/image.jpg',
+							'width' => 800,
+							'height' => 600,
+						]
+					],
+				]
 			]
 		]);
-		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item->image->class);
+
+		$this->assertNotEmpty($line_item->image);
 		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item->image->class);
 		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item->image->sizes);
 

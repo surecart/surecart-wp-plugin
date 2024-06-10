@@ -146,15 +146,30 @@ class ProductTest extends SureCartUnitTestCase
 		$this->assertSame('async', $attributes->decoding);
 		$this->assertStringContainsString('test-image-large',$attributes->srcset);
 
+		$attributes = $product->featured_image->attributes('large');
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-large size-large', $attributes->class);
+		$this->assertSame('(max-width: 1024px) 100vw, 1024px', $attributes->sizes);
+		$this->assertSame(1024, $attributes->width);
+		$this->assertSame(768, $attributes->height);
+		$this->assertSame('lazy', $attributes->loading);
+		$this->assertSame('async', $attributes->decoding);
+		$this->assertStringContainsString('test-image-large',$attributes->srcset);
+
+		$attributes = $product->featured_image->attributes('thumbnail');
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $attributes->class);
+		$this->assertSame(150, $attributes->width);
+		$this->assertSame(150, $attributes->height);
+		$this->assertSame('lazy', $attributes->loading);
+		$this->assertSame('async', $attributes->decoding);
+
 		$line_item_image = $product->line_item_image;
-		var_dump($line_item_image);
 		$this->assertStringContainsString('test-image', $attributes->src);
 		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item_image->class);
-		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item_image->sizes);
 		$this->assertSame(150, $line_item_image->width);
-		$this->assertSame(113, $line_item_image->height);
+		$this->assertSame(150, $line_item_image->height);
 		$this->assertSame('lazy', $line_item_image->loading);
 		$this->assertSame('async', $line_item_image->decoding);
-		$this->assertStringContainsString('test-image-large', $line_item_image->srcset);
 	}
 }

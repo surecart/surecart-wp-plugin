@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Models\ProductPost;
 
+use SureCart\Background\QueueService;
 use SureCart\Database\Table;
 use SureCart\Database\Tables\VariantOptionValues;
 use SureCart\Models\Price;
@@ -14,6 +15,8 @@ use SureCart\Tests\SureCartUnitTestCase;
 
 class ProductPostTest extends SureCartUnitTestCase
 {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	public function setUp(): void
 	{
 		parent::setUp();
@@ -32,6 +35,100 @@ class ProductPostTest extends SureCartUnitTestCase
 
 		// remove existing.
 		(new VariantOptionValues(new Table()))->uninstall();
+	}
+
+	/**
+	 * @group sync
+	 */
+	public function test_syncs_taxonomies() {
+		$product = (new Product(
+			[
+				"id" => "testid",
+				"object" => "product",
+				"name" => "Test",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'product_collections' => (object) [
+					'data' => [
+						(object) [
+							'id' => 'sneakers-id',
+							'object' => 'product_collection',
+							'name' => 'Sneakers',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => 'shoes-id',
+							'object' => 'product_collection',
+							'name' => 'Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		))->sync( true );
+
+		$post = $product->post;
+
+		$this->assertInstanceOf(\WP_Post::class, $post);
+		$this->assertNotEmpty($post->ID);
+		$terms = get_the_terms($post->ID, 'sc_collection');
+		$this->assertNotEmpty($terms);
+		$this->assertCount(2, $terms);
+
+		$product_2 = (new Product(
+			[
+				"id" => "testid_2",
+				"object" => "product",
+				"name" => "Test 2",
+				"created_at" => 1624910585,
+				"updated_at" => 1624910585,
+				'product_collections' => (object) [
+					'data' => [
+						(object) [
+							'id' => 'dress-shoes-id',
+							'object' => 'product_collection',
+							'name' => 'Dress Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+						(object) [
+							'id' => 'shoes-id',
+							'object' => 'product_collection',
+							'name' => 'Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						]
+					]
+				],
+			]
+		))->sync( true );
+
+		$post = $product_2->post;
+
+		$this->assertInstanceOf(\WP_Post::class, $post);
+		$this->assertNotEmpty($post->ID);
+		$terms = get_the_terms($post->ID, 'sc_collection');
+		$this->assertNotEmpty($terms);
+		$this->assertCount(2, $terms);
+
+		// check totals
+		$this->assertCount(3, get_terms(array(
+			'taxonomy'   => 'sc_collection',
+			'hide_empty' => false,
+		)));
+
+		// check individual terms
+		$sneakers = get_term_by('name', 'Sneakers', 'sc_collection');
+		$this->assertNotEmpty($sneakers);
+		$this->assertSame('sneakers-id', get_term_meta($sneakers->term_id, 'sc_id', true));
+		$shoes = get_term_by('name', 'Shoes', 'sc_collection');
+		$this->assertNotEmpty($shoes);
+		$this->assertSame('shoes-id', get_term_meta($shoes->term_id, 'sc_id', true));
+		$dress_shoes = get_term_by('name', 'Dress Shoes', 'sc_collection');
+		$this->assertNotEmpty($dress_shoes);
+		$this->assertSame('dress-shoes-id', get_term_meta($dress_shoes->term_id, 'sc_id', true));
 	}
 
 	/**
@@ -164,6 +261,17 @@ class ProductPostTest extends SureCartUnitTestCase
 				"archived" => true,
 				"created_at" => 1624910585,
 				"updated_at" => 1624910585,
+				'product_collections' => (object) [
+					'data' => [
+						(object) [
+							'id' => '9f86c425-bed7-45a8-841f-ba5ef5efdfef',
+							'object' => 'product_collection',
+							'name' => 'Dress Shoes',
+							'created_at' => 1624910585,
+							'updated_at' => 1624910585
+						],
+					]
+				],
 				'variant_options' => (object) [
 					'data' => [
 						(object) [
@@ -226,6 +334,7 @@ class ProductPostTest extends SureCartUnitTestCase
 		$this->assertSame('Other sneakers.', $post->post_title);
 		$this->assertSame('sc_archived', $post->post_status);
 		$this->assertSame('fancy-sneakers', $post->post_name);
+		$this->assertEmpty(get_the_terms($post->ID, 'sc_collection'));
 	}
 
 		/**
@@ -642,4 +751,65 @@ class ProductPostTest extends SureCartUnitTestCase
 			$this->assertInstanceOf(\WP_Post::class, $price);
 		}
 	}
-}
+
+	/**
+	 * This tests to make sure that if the stored post updated_at is older
+	 * than the model updated_at, then the sync is queued for later.
+	 *
+	 * @group sync
+	 */
+	public function test_queues_sync_if_post_type_is_old() {
+		(new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111110
+		]))->sync();
+
+		// mock the requests in the container
+		$queue_service =  \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service
+			->shouldReceive('async')
+			->once()
+			->with(
+				'surecart/sync/product',
+				[
+					'id'               => 'testid',
+					'with_collections' => false,
+				],
+				'product-testid', // unique id for the product.
+				true // force unique. This will replace any existing jobs.
+			)->andReturn(true);
+
+		// this should trigger it.
+		new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111111
+		]);
+
+		// this should not trigger it.
+		new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111110
+		]);
+
+		// this should not trigger it.
+		new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111100
+		]);
+	}
+ }
