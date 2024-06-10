@@ -21,6 +21,9 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		get selectedAmount() {
 			const { selectedPrice } = getContext();
+			if (prices?.length > 1) {
+				return selectedPrice?.amount || '';
+			}
 			return state.selectedVariant?.amount || selectedPrice?.amount || '';
 		},
 
@@ -28,7 +31,10 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the selected display amount based on the selected variant or price.
 		 */
 		get selectedDisplayAmount() {
-			const { selectedPrice } = getContext();
+			const { prices, selectedPrice } = getContext();
+			if (prices?.length > 1) {
+				return selectedPrice?.display_amount || '';
+			}
 			return (
 				state.selectedVariant?.display_amount ||
 				selectedPrice?.display_amount ||
