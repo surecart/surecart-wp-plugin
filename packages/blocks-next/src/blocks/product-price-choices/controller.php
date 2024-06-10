@@ -12,7 +12,7 @@
 $products = wp_interactivity_state( 'surecart/product' );
 
 // get product from initial state.
-$product = $block->context['surecart/product'];
+$product = sc_get_product();
 
 // make sure we have a product.
 if ( empty( $product->id ) ) {

@@ -7,8 +7,7 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"example": {},
-	"usesContext": ["surecart/product"],
+	"ancestor": ["surecart/product-page"],
 	"keywords": ["quantity", "form", "product"],
 	"attributes": {
 		"label": {
@@ -37,7 +36,6 @@
 		},
 		"__experimentalBorder": {
 			"radius": true,
-			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
 				"radius": true
 			}
@@ -46,9 +44,12 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
+	"editorStyle": [
+		"file:../../styles/quantity-selector.css",
+		"file:../../styles/input-group.css"
+	],
 	"style": [
-		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css",
-		"file:../../styles/dialog.css"
+		"file:../../styles/quantity-selector.css",
+		"file:../../styles/input-group.css"
 	]
 }

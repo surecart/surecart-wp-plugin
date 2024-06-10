@@ -118,7 +118,8 @@
   line-height: var(--sc-line-height-dense);
 }
 
-.item__image {
+.item__image,
+.attachment-thumbnail {
   width: var(--sc-product-line-item-image-size, 4em);
   height: var(--sc-product-line-item-image-size, 4em);
   object-fit: cover;

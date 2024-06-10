@@ -38,11 +38,15 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockValidationService(
 				apply_filters(
 					'surecart_block_validators',
-					[
+					array(
 						new \SureCart\BlockValidator\VariantChoice(),
-					]
+					)
 				)
 			);
+		};
+
+		$container['blocks.mode_switcher'] = function () use ( $app ) {
+			return new FormModeSwitcherService( $app );
 		};
 
 		$app->alias( 'block', 'block' );
@@ -63,13 +67,14 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['blocks.patterns']->bootstrap();
 		$container['blocks.validations']->bootstrap();
+		$container['blocks.mode_switcher']->bootstrap();
 
 		// allow design tokens in css.
 		add_filter(
 			'safe_style_css',
-			function( $styles ) {
+			function ( $styles ) {
 				return array_merge(
-					[
+					array(
 						'--spacing',
 						'--font-weight',
 						'--line-height',
@@ -83,17 +88,17 @@ class BlockServiceProvider implements ServiceProviderInterface {
 						'--sc-color-primary-500',
 						'--sc-focus-ring-color-primary',
 						'--sc-input-border-color-focus',
-					],
+					),
 					$styles
 				);
 			}
 		);
 		// allow our web components in wp_kses contexts.
-		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
+		add_filter( 'wp_kses_allowed_html', array( $this, 'ksesComponents' ) );
 		// register our blocks.
-		add_action( 'init', [ $this, 'registerBlocks' ] );
+		add_action( 'init', array( $this, 'registerBlocks' ) );
 		// register our category.
-		add_action( 'block_categories_all', [ $this, 'registerBlockCategories' ] );
+		add_action( 'block_categories_all', array( $this, 'registerBlockCategories' ) );
 	}
 
 	/**
@@ -103,19 +108,19 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function registerBlockCategories( $categories ) {
-		return [
-			...[
-				[
+		return array(
+			...array(
+				array(
 					'slug'  => 'surecart',
 					'title' => esc_html__( 'SureCart', 'surecart' ),
-				],
-				[
+				),
+				array(
 					'slug'  => 'cart',
 					'title' => esc_html__( 'Cart', 'surecart' ),
-				]
-			],
+				),
+			),
 			...$categories,
-		];
+		);
 	}
 
 	/**

@@ -987,6 +987,14 @@
     "class": true,
     "slot": true
   },
+  "sc-manual-payment-method": {
+    "payment-method": true,
+    "show-description": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-menu": {
     "aria-label": true,
     "style": true,
@@ -1033,6 +1041,23 @@
     "customer-ids": true,
     "heading": true,
     "order-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-billing-address": {
+    "city-placeholder": true,
+    "country-placeholder": true,
+    "default-country": true,
+    "label": true,
+    "line1-placeholder": true,
+    "line2-placeholder": true,
+    "name-placeholder": true,
+    "postal-code-placeholder": true,
+    "show-name": true,
+    "state-placeholder": true,
+    "toggle-label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1359,6 +1384,14 @@
     "class": true,
     "slot": true
   },
+  "sc-payment-method-details": {
+    "edit-handler": true,
+    "payment-method": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-payment-methods-list": {
     "heading": true,
     "is-customer": true,
@@ -1660,9 +1693,7 @@
     "currency": true,
     "editable": true,
     "fees": true,
-    "image-alt": true,
-    "image-title": true,
-    "image-url": true,
+    "image": true,
     "interval": true,
     "max": true,
     "name": true,
@@ -2022,6 +2053,7 @@
   },
   "sc-subscription-next-payment": {
     "subscription": true,
+    "update-payment-method-url": true,
     "style": true,
     "id": true,
     "class": true,

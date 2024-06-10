@@ -8,7 +8,7 @@
 	"category": "widgets",
 	"icon": "media-interactive",
 	"example": {},
-	"usesContext": ["surecart/product"],
+	"usesContext": ["surecart/productId"],
 	"attributes": {
 		"textAlign": {
 			"type": "string",
@@ -17,6 +17,19 @@
 		"level": {
 			"type": "number",
 			"default": 1
+		},
+		"isLink": {
+			"type": "boolean",
+			"default": false
+		},
+		"rel": {
+			"type": "string",
+			"attribute": "rel",
+			"default": ""
+		},
+		"linkTarget": {
+			"type": "string",
+			"default": "_self"
 		}
 	},
 	"supports": {
@@ -51,5 +64,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
+	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js"
 }

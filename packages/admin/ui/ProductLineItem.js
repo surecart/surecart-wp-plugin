@@ -3,16 +3,10 @@ import { css, jsx } from '@emotion/core';
 import LineItem from './LineItem';
 import { ScFormatNumber } from '@surecart/components-react';
 import LineItemLabel from './LineItemLabel';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
-	const { url, alt, title } = getFeaturedProductMediaAttributes(
-		lineItem?.price?.product,
-		lineItem?.variant
-	);
-
 	return (
-		<LineItem suffix={suffix} media={{ url, alt, title }}>
+		<LineItem suffix={suffix} image={lineItem?.image}>
 			<span
 				css={css`
 					box-sizing: border-box;

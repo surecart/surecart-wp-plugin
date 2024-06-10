@@ -75,6 +75,26 @@ export default () => {
 					</span>
 				</ScSwitch>
 				<ScSwitch
+					checked={item?.tax_behavior === 'inclusive'}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							tax_behavior:
+								item?.tax_behavior === 'inclusive'
+									? 'exclusive'
+									: 'inclusive',
+						});
+					}}
+				>
+					{__('Tax Included', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If enabled, the tax amount will be included in the product price and shipping rates for all products.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
 					checked={item?.default_tax_enabled}
 					onClick={(e) => {
 						e.preventDefault();
@@ -83,7 +103,7 @@ export default () => {
 						});
 					}}
 				>
-					{__('Enable A Fallback Tax Rate', 'surecart')}
+					{__('Fallback Tax Rate', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'If enabled, you can enter a tax rate to apply when a specific tax registration is not found.',

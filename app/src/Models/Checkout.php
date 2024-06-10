@@ -6,6 +6,7 @@ use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasSubscriptions;
 use SureCart\Models\LineItem;
 use SureCart\Models\Traits\CanFinalize;
+use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDiscount;
 use SureCart\Models\Traits\HasPaymentIntent;
 use SureCart\Models\Traits\HasPaymentMethod;
@@ -26,7 +27,8 @@ class Checkout extends Model {
 		HasPaymentMethod,
 		HasPurchases,
 		CanFinalize,
-		HasProcessorType;
+		HasProcessorType,
+		HasBillingAddress;
 
 	/**
 	 * Rest API endpoint
@@ -223,7 +225,10 @@ class Checkout extends Model {
 	 */
 	protected function update( $attributes = [] ) {
 		$this->setWriteAttributes();
-		return parent::update( $attributes );
+
+		parent::update( $attributes );
+
+		return $this;
 	}
 
 	/**
@@ -447,5 +452,18 @@ class Checkout extends Model {
 		$this->fireModelEvent( 'declined' );
 
 		return $this;
+	}
+
+	/**
+	 * Get the billing address attribute
+	 *
+	 * @return array|null The billing address.
+	 */
+	public function getBillingAddressDisplayAttribute() {
+		if ( $this->billing_matches_shipping ) {
+			return $this->shipping_address;
+		}
+
+		return $this->attributes['billing_address'] ?? null;
 	}
 }

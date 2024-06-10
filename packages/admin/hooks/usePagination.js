@@ -1,7 +1,15 @@
-export default ({ data, perPage, page = 1 }) => {
+export default ({ data, perPage, page = 1, totalItems = null }) => {
+	data = data || [];
+
+	const hasNext = totalItems
+		? page * perPage < totalItems
+		: data?.length === perPage;
+
+	const hasPagination = page > 1 || hasNext;
+
 	return {
 		hasPrevious: page !== 1,
-		hasNext: data?.length && data?.length === perPage,
-		hasPagination: page > 1 || data?.length >= perPage,
+		hasNext,
+		hasPagination,
 	};
 };

@@ -8,6 +8,7 @@
 	"category": "widgets",
 	"icon": "media-interactive",
 	"example": {},
+	"ancestor": ["surecart/product-buy-buttons-v2"],
 	"usesContext": ["surecart/product"],
 	"attributes": {
 		"add_to_cart": {
@@ -102,6 +103,7 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
+	"editorStyle": ["file:../../styles/wp-button.css"],
 	"style": [
 		"file:../../styles/wp-button.css",
 		"file:../../styles/spinner.css",

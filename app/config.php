@@ -7,11 +7,11 @@
  * @package SureCart
  */
 
-return [
+return array(
 	/**
 	 * Array of service providers you wish to enable.
 	 */
-	'providers'              => [
+	'providers'              => array(
 		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
 		\SureCartAppCore\Config\ConfigServiceProvider::class,
 		\SureCart\Support\UtilityServiceProvider::class,
@@ -23,9 +23,11 @@ return [
 		\SureCart\WordPress\ThemeServiceProvider::class,
 		\SureCart\WordPress\Templates\TemplatesServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
+		\SureCart\WordPress\Posts\PostServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
-		\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+		\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
+		\SureCart\WordPress\Taxonomies\TaxonomyServiceProvider::class,
 		\SureCart\WordPress\Assets\AssetsServiceProvider::class,
 		\SureCart\WordPress\Shortcodes\ShortcodesServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
@@ -45,6 +47,7 @@ return [
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
 		\SureCart\Activation\ActivationServiceProvider::class,
 		\SureCart\Background\BackgroundServiceProvider::class,
+		\SureCart\Sync\SyncServiceProvider::class,
 		\SureCart\Svg\SvgServiceProvider::class,
 
 		// REST providers.
@@ -119,6 +122,15 @@ return [
 		\SureCart\Rest\VariantsRestServiceProvider::class,
 		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
 		\SureCart\Rest\VariantValuesRestServiceProvider::class,
+		\SureCart\Rest\ClicksRestServiceProvider::class,
+		\SureCart\Rest\ReferralItemsRestServiceProvider::class,
+		\SureCart\Rest\PayoutsRestServiceProvider::class,
+		\SureCart\Rest\PayoutGroupsRestServiceProvider::class,
+		\SureCart\Rest\ReferralsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationProductsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationsRestServiceProvider::class,
+		\SureCart\Rest\ExportsRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -134,14 +146,15 @@ return [
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
 		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
-	],
+	),
 
 	/**
 	* SSR Blocks
 	*/
-	'blocks'                 => [
+	'blocks'                 => array(
 		\SureCartBlocks\Blocks\Email\Block::class,
 		\SureCartBlocks\Blocks\Address\Block::class,
+		\SureCartBlocks\Blocks\BillingAddress\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Coupon\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
@@ -212,71 +225,71 @@ return [
 		\SureCartBlocks\Blocks\Upsell\CountdownTimer\Block::class,
 		\SureCartBlocks\Blocks\Upsell\SubmitButton\Block::class,
 		\SureCartBlocks\Blocks\Upsell\NoThanksButton\Block::class,
-	],
+	),
 
 	/** Which components to preload for each block. */
-	'preload'                => [
-		'surecart/address'                   => [ 'sc-order-shipping-address', 'sc-address', 'sc-dropdown' ],
-		'surecart/add-to-cart-button'        => [ 'sc-cart-form', 'sc-price-input', 'sc-cart-form-submit' ],
-		'surecart/button'                    => [ 'sc-button' ],
-		'surecart/buy-button'                => [ 'sc-button' ],
-		'surecart/card'                      => [ 'sc-card' ],
-		'surecart/checkbox'                  => [ 'sc-checkbox' ],
-		'surecart/column'                    => [ 'sc-column' ],
-		'surecart/columns'                   => [ 'sc-columns' ],
-		'surecart/confirmation'              => [ 'sc-order-confirmation' ],
-		'surecart/coupon'                    => [ 'sc-order-coupon-form', 'sc-coupon-form', 'sc-button', 'sc-input' ],
-		'surecart/customer-dashboard-button' => [ 'sc-button' ],
-		'surecart/customer-dashboard'        => [ 'sc-tab-group' ],
-		'surecart/customer-subscriptions'    => [ 'sc-subscriptions-list', 'sc-dialog', 'sc-card', 'sc-stacked-list', 'sc-stacked-list-row', 'sc-flex' ],
-		'surecart/dashboard-page'            => [ 'sc-spacing' ],
-		'surecart/dashboard-tab'             => [ 'sc-tab' ],
-		'surecart/customer-billing-details'  => [ 'sc-dashboard-customer-details', 'sc-breadcrumbs', 'sc-breadcrumb', 'sc-customer-edit' ],
-		'surecart/divider'                   => [ 'sc-divider' ],
-		'surecart/donation'                  => [ 'sc-donation-choices', 'sc-choices', 'sc-choice' ],
-		'surecart/donation-amount'           => [ 'sc-choice', 'sc-format-number' ],
-		'surecart/email'                     => [ 'sc-input', 'sc-customer-email' ],
-		'surecart/phone'                     => [ 'sc-input', 'sc-phone-input', 'sc-customer-phone' ],
-		'surecart/express-payment'           => [ 'sc-express-payment', 'sc-divider', 'sc-stripe-payment-request' ],
-		'surecart/form'                      => [ 'sc-checkout', 'sc-form', 'sc-checkout-unsaved-changes-warning', 'sc-line-items-provider', 'sc-block-ui' ],
-		'surecart/heading'                   => [ 'sc-heading' ],
-		'surecart/input'                     => [ 'sc-input' ],
-		'surecart/line-items'                => [ 'sc-line-items', 'sc-line-item', 'sc-line-item-tax', 'sc-product-line-item', 'sc-format-number', 'sc-skeleton' ],
-		'surecart/logout-button'             => [ 'sc-button' ],
-		'surecart/name'                      => [ 'sc-customer-name', 'sc-input' ],
-		'surecart/first-name'                => [ 'sc-customer-firstname', 'sc-input' ],
-		'surecart/last-name'                 => [ 'sc-customer-lastname', 'sc-input' ],
-		'surecart/name-your-price'           => [ 'sc-custom-order-price-input', 'sc-price-input', 'sc-skeleton' ],
-		'surecart/password'                  => [ 'sc-order-password', 'sc-input' ],
-		'surecart/payment'                   => [ 'sc-payment', 'sc-toggles', 'sc-toggle', 'sc-tag' ],
-		'surecart/price-choice'              => [ 'sc-price-choice', 'sc-choice', 'sc-skeleton' ],
-		'surecart/price-selector'            => [ 'sc-price-choices' ],
-		'surecart/variant-price-selector'    => [ 'sc-checkout-product-price-variant-selector' ],
-		'surecart/submit'                    => [ 'sc-order-submit', 'sc-button', 'sc-total', 'sc-paypal-buttons', 'sc-format-number', 'sc-spinner' ],
-		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
-		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
-		'surecart/totals'                    => [ 'sc-order-summary' ],
-		'surecart/conditional-from'          => [ 'sc-conditional-form' ],
-		'surecart/product-price'             => [ 'sc-product-price', 'sc-tag', 'sc-format-number' ],
-		'surecart/product-media'             => [],
-		'surecart/product-buy-buttons'       => [ 'sc-product-buy-button', 'sc-button' ],
-		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ],
-		'surecart/product-variant-choices'   => [ 'sc-product-variation-choices' ],
-		'surecart/product-quantity'          => [ 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ],
-		'surecart/product-collection-badges' => [],
-	],
+	'preload'                => array(
+		'surecart/address'                   => array( 'sc-order-shipping-address', 'sc-address', 'sc-dropdown' ),
+		'surecart/add-to-cart-button'        => array( 'sc-cart-form', 'sc-price-input', 'sc-cart-form-submit' ),
+		'surecart/button'                    => array( 'sc-button' ),
+		'surecart/buy-button'                => array( 'sc-button' ),
+		'surecart/card'                      => array( 'sc-card' ),
+		'surecart/checkbox'                  => array( 'sc-checkbox' ),
+		'surecart/column'                    => array( 'sc-column' ),
+		'surecart/columns'                   => array( 'sc-columns' ),
+		'surecart/confirmation'              => array( 'sc-order-confirmation' ),
+		'surecart/coupon'                    => array( 'sc-order-coupon-form', 'sc-coupon-form', 'sc-button', 'sc-input' ),
+		'surecart/customer-dashboard-button' => array( 'sc-button' ),
+		'surecart/customer-dashboard'        => array( 'sc-tab-group' ),
+		'surecart/customer-subscriptions'    => array( 'sc-subscriptions-list', 'sc-dialog', 'sc-card', 'sc-stacked-list', 'sc-stacked-list-row', 'sc-flex' ),
+		'surecart/dashboard-page'            => array( 'sc-spacing' ),
+		'surecart/dashboard-tab'             => array( 'sc-tab' ),
+		'surecart/customer-billing-details'  => array( 'sc-dashboard-customer-details', 'sc-breadcrumbs', 'sc-breadcrumb', 'sc-customer-edit' ),
+		'surecart/divider'                   => array( 'sc-divider' ),
+		'surecart/donation'                  => array( 'sc-donation-choices', 'sc-choices', 'sc-choice' ),
+		'surecart/donation-amount'           => array( 'sc-choice', 'sc-format-number' ),
+		'surecart/email'                     => array( 'sc-input', 'sc-customer-email' ),
+		'surecart/phone'                     => array( 'sc-input', 'sc-phone-input', 'sc-customer-phone' ),
+		'surecart/express-payment'           => array( 'sc-express-payment', 'sc-divider', 'sc-stripe-payment-request' ),
+		'surecart/form'                      => array( 'sc-checkout', 'sc-form', 'sc-checkout-unsaved-changes-warning', 'sc-line-items-provider', 'sc-block-ui' ),
+		'surecart/heading'                   => array( 'sc-heading' ),
+		'surecart/input'                     => array( 'sc-input' ),
+		'surecart/line-items'                => array( 'sc-line-items', 'sc-line-item', 'sc-line-item-tax', 'sc-product-line-item', 'sc-format-number', 'sc-skeleton' ),
+		'surecart/logout-button'             => array( 'sc-button' ),
+		'surecart/name'                      => array( 'sc-customer-name', 'sc-input' ),
+		'surecart/first-name'                => array( 'sc-customer-firstname', 'sc-input' ),
+		'surecart/last-name'                 => array( 'sc-customer-lastname', 'sc-input' ),
+		'surecart/name-your-price'           => array( 'sc-custom-order-price-input', 'sc-price-input', 'sc-skeleton' ),
+		'surecart/password'                  => array( 'sc-order-password', 'sc-input' ),
+		'surecart/payment'                   => array( 'sc-payment', 'sc-toggles', 'sc-toggle', 'sc-tag' ),
+		'surecart/price-choice'              => array( 'sc-price-choice', 'sc-choice', 'sc-skeleton' ),
+		'surecart/price-selector'            => array( 'sc-price-choices' ),
+		'surecart/variant-price-selector'    => array( 'sc-checkout-product-price-variant-selector' ),
+		'surecart/submit'                    => array( 'sc-order-submit', 'sc-button', 'sc-total', 'sc-paypal-buttons', 'sc-format-number', 'sc-spinner' ),
+		'surecart/subtotal'                  => array( 'sc-line-item-total', 'sc-format-number' ),
+		'surecart/total'                     => array( 'sc-line-item-total', 'sc-format-number' ),
+		'surecart/totals'                    => array( 'sc-order-summary' ),
+		'surecart/conditional-from'          => array( 'sc-conditional-form' ),
+		'surecart/product-price'             => array( 'sc-product-price', 'sc-tag', 'sc-format-number' ),
+		'surecart/product-media'             => array(),
+		'surecart/product-buy-buttons'       => array( 'sc-product-buy-button', 'sc-button' ),
+		'surecart/product-price-choices'     => array( 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ),
+		'surecart/product-variant-choices'   => array( 'sc-product-variation-choices' ),
+		'surecart/product-quantity'          => array( 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ),
+		'surecart/product-collection-badges' => array(),
+	),
 
 	/**
 	 * Links used.
 	 */
-	'links'                  => [
+	'links'                  => array(
 		'purchase' => 'https://app.surecart.com/plans',
-	],
+	),
 
 	/**
 	* Permission Controllers
 	*/
-	'permission_controllers' => [
+	'permission_controllers' => array(
 		\SureCart\Permissions\Models\ActivationPermissionsController::class,
 		\SureCart\Permissions\Models\BalanceTransactionPermissionsController::class,
 		\SureCart\Permissions\Models\ChargePermissionsController::class,
@@ -289,7 +302,7 @@ return [
 		\SureCart\Permissions\Models\PurchasePermissionsController::class,
 		\SureCart\Permissions\Models\RefundPermissionsController::class,
 		\SureCart\Permissions\Models\SubscriptionPermissionsController::class,
-	],
+	),
 
 	/**
 	 * Array of route group definitions and default attributes.
@@ -298,33 +311,33 @@ return [
 	 * If we are not using routing at all we can skip
 	 * the entire 'routes' option.
 	 */
-	'routes'                 => [
-		'web'   => [
+	'routes'                 => array(
+		'web'   => array(
 			'definitions' => __DIR__ . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'web.php',
-			'attributes'  => [
+			'attributes'  => array(
 				'namespace' => 'SureCart\\Controllers\\Web\\',
-			],
-		],
-		'admin' => [
+			),
+		),
+		'admin' => array(
 			'definitions' => __DIR__ . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'admin.php',
-			'attributes'  => [
+			'attributes'  => array(
 				'namespace' => 'SureCart\\Controllers\\Admin\\',
-			],
-		],
-		'ajax'  => [
+			),
+		),
+		'ajax'  => array(
 			'definitions' => __DIR__ . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'ajax.php',
-			'attributes'  => [
+			'attributes'  => array(
 				'namespace' => 'SureCart\\Controllers\\Ajax\\',
-			],
-		],
-	],
+			),
+		),
+	),
 
 	/**
 	 * View Composers settings.
 	 */
-	'view_composers'         => [
+	'view_composers'         => array(
 		'namespace' => 'SureCart\\ViewComposers\\',
-	],
+	),
 
 	/**
 	 * Register middleware class aliases.
@@ -338,20 +351,21 @@ return [
 	 * - 'user.logged_out'
 	 * - 'user.can'
 	 */
-	'middleware'             => [
+	'middleware'             => array(
 		'archive_model'       => \SureCart\Middleware\ArchiveModelMiddleware::class,
 		'edit_model'          => \SureCart\Middleware\EditModelMiddleware::class,
 		'nonce'               => \SureCart\Middleware\NonceMiddleware::class,
 		'webhooks'            => \SureCart\Middleware\WebhooksMiddleware::class,
 		'assets.components'   => \SureCart\Middleware\ComponentAssetsMiddleware::class,
 		'assets.brand_colors' => \SureCart\Middleware\BrandColorMiddleware::class,
-	],
+		'assets.admin_colors' => \SureCart\Middleware\AdminColorMiddleware::class,
+	),
 
 	/**
 	 * Map model names to their corresponding classes.
 	 * This lets you reference a model based on a simple string.
 	 */
-	'models'                 => [
+	'models'                 => array(
 		'abandoned_checkout'  => \SureCart\Models\AbandonedCheckout::class,
 		'account'             => \SureCart\Models\Account::class,
 		'cancellation_reason' => \SureCart\Models\CancellationReason::class,
@@ -370,7 +384,7 @@ return [
 		'upload'              => \SureCart\Models\Upload::class,
 		'user'                => \SureCart\Models\User::class,
 		'webhook'             => \SureCart\Models\Webhook::class,
-	],
+	),
 
 	/**
 	 * Register middleware groups.
@@ -385,27 +399,27 @@ return [
 	 * Warning: The 'surecart' group contains some internal SureCart core
 	 * middleware which you should avoid overriding.
 	 */
-	'middleware_groups'      => [
-		'global' => [],
-		'web'    => [],
-		'ajax'   => [],
-		'admin'  => [],
-	],
+	'middleware_groups'      => array(
+		'global' => array(),
+		'web'    => array(),
+		'ajax'   => array(),
+		'admin'  => array(),
+	),
 
 	/**
 	 * Optionally specify middleware execution order.
 	 * Use fully qualified middleware class names.
 	 */
-	'middleware_priority'    => [
+	'middleware_priority'    => array(
 		// phpcs:ignore
 		// \SureCart\Middleware\MyMiddlewareThatShouldRunFirst::class,
 		// \SureCart\Middleware\MyMiddlewareThatShouldRunSecond::class,
-	],
+	),
 
 	/**
 	 * Webhook events we gonna proceed.
 	 */
-	'webhook_events'         => [
+	'webhook_events'         => array(
 		// 'cancellation_act.updated',
 		// 'customer.created',
 		'customer.updated',
@@ -428,20 +442,20 @@ return [
 		'subscription.renewed', // needed for AffiliateWP recurring referrals.
 		// 'subscription.updated',
 		'account.updated',
-	],
+	),
 
 	/**
 	 * Custom directories to search for views.
 	 * Use absolute paths or leave blank to disable.
 	 * Applies only to the default PhpViewEngine.
 	 */
-	'views'                  => [ dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'views' ],
+	'views'                  => array( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'views' ),
 
 	/**
 	 * App Core configuration.
 	 */
-	'app_core'               => [
+	'app_core'               => array(
 		'path' => dirname( __DIR__ ),
 		'url'  => plugin_dir_url( SURECART_PLUGIN_FILE ),
-	],
-];
+	),
+);

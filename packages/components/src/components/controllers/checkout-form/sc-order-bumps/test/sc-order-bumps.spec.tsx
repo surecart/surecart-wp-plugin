@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { Bump, Checkout } from '../../../../../types';
+import { Bump, Checkout, Product } from '../../../../../types';
 import { dispose as disposeCheckout, state as checkoutState } from '@store/checkout';
 import { ScOrderBumps } from '../sc-order-bumps';
 
@@ -21,7 +21,26 @@ describe('sc-order-bump', () => {
     checkoutState.checkout = {
       id: 'test',
       recommended_bumps: {
-        data: [{ name: 'Test', amount_off: 123 }] as Bump[],
+        data: [
+          {
+            name: 'Test',
+            amount_off: 123,
+            price: {
+              amount: 123,
+              currency: 'USD',
+              product: {
+                id: 'test',
+                name: 'Test',
+                description: 'Test',
+                variants: {
+                  pagination: {
+                    count: 0,
+                  },
+                },
+              } as Product,
+            },
+          },
+        ] as Bump[],
       },
     } as Checkout;
     const page = await newSpecPage({
@@ -35,7 +54,26 @@ describe('sc-order-bump', () => {
     checkoutState.checkout = {
       id: 'test',
       recommended_bumps: {
-        data: [{ name: 'Test', amount_off: 123 }] as Bump[],
+        data: [
+          {
+            name: 'Test',
+            amount_off: 123,
+            price: {
+              amount: 123,
+              currency: 'USD',
+              product: {
+                id: 'test',
+                name: 'Test',
+                description: 'Test',
+                variants: {
+                  pagination: {
+                    count: 0,
+                  },
+                },
+              } as Product,
+            },
+          },
+        ] as Bump[],
       },
     } as Checkout;
     const page = await newSpecPage({

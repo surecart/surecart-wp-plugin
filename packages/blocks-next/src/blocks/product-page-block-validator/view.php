@@ -1,6 +1,5 @@
 <?php
 
-var_dump('here');
 // If there is no variant choices block, we need to add it.
 if ( empty( $block->context['surecart/has-variant-choices'] ) ){
 	echo (new \WP_Block(

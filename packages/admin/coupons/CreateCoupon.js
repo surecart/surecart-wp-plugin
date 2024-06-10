@@ -13,10 +13,10 @@ import Types from './modules/Types';
 import Limits from './modules/Limits';
 import SelectCustomer from './modules/SelectCustomer';
 import ProductRestrictions from './modules/ProductRestrictions';
+import SelectAffiliate from './modules/SelectAffiliate';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [name, setName] = useState('');
 	const [promotion, setPromotion] = useState(null);
 	const [coupon, setCoupon] = useState(null);
 	const [error, setError] = useState('');
@@ -37,7 +37,7 @@ export default ({ id, setId }) => {
 		});
 	};
 
-	// create the product.
+	// create the coupon.
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -112,6 +112,11 @@ export default ({ id, setId }) => {
 						/>
 
 						<SelectCustomer
+							promotion={promotion}
+							updatePromotion={updatePromotion}
+						/>
+
+						<SelectAffiliate
 							promotion={promotion}
 							updatePromotion={updatePromotion}
 						/>

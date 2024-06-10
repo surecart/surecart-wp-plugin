@@ -20,7 +20,6 @@ import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
 import ProductLineItem from '../../../ui/ProductLineItem';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({
 	items: fulfillmentItems,
@@ -147,16 +146,6 @@ export default ({
 		(item) => item?.price?.product?.shipping_enabled
 	);
 
-	const getImageAttributes = (product) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(product);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
-	};
-
 	return (
 		<ScForm
 			style={{
@@ -199,9 +188,6 @@ export default ({
 									key={item?.id}
 									lineItem={item}
 									showWeight={true}
-									{...getImageAttributes(
-										item?.price?.product
-									)}
 									suffix={
 										<ScInput
 											label={__('Quantity', 'surecart')}

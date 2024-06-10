@@ -5,12 +5,13 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Support\Currency;
+use SureCart\Models\Traits\HasProduct;
 
 /**
  * Price model
  */
 class LineItem extends Model {
-	use HasPrice, HasCheckout;
+	use HasPrice, HasCheckout, HasProduct;
 
 	/**
 	 * Rest API endpoint
@@ -157,5 +158,21 @@ class LineItem extends Model {
 	 */
 	public function getDisplayTrialAmountAttribute() {
 		return  empty( $this->trial_amount ) ? '' : Currency::format( $this->trial_amount, $this->currency );
+	}
+
+	/**
+	* Get the line item image.
+	*/
+	public function getImageAttribute() {
+		// if we have a variant, use the variant image.
+		// if ( ! empty( $this->variant ) && is_a( $this->variant, Variant::class ) ) {
+		// return $this->variant->line_item_image;
+		// }
+		// if we have a product, use the product image.
+		if ( isset( $this->price->product->line_item_image ) ) {
+			return $this->price->product->line_item_image;
+		}
+
+		return null;
 	}
 }

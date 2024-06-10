@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	bootstrap="./.dev/tests/php/bootstrap.php"
 	colors="true"
 	stopOnError="false"
@@ -9,22 +9,21 @@
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
 	backupGlobals="false"
-	>
-	<testsuites>
-		<testsuite name="Unit">
-			<directory suffix=".php">./.dev/tests/php/unit/</directory>
-		</testsuite>
-		<testsuite name="Feature">
-			<directory suffix=".php">./.dev/tests/php/feature/</directory>
-		</testsuite>
-	</testsuites>
-	<php>
-        <!-- <env name="SURECART_RUNNING_TESTS" value="true" force="true" /> -->
-		<const name="SURECART_RUNNING_TESTS" value="true"/>
-    </php>
-	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">./app/src</directory>
-		</whitelist>
-	</filter>
+	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./app/src</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Unit">
+      <directory suffix=".php">./.dev/tests/php/unit/</directory>
+    </testsuite>
+    <testsuite name="Feature">
+      <directory suffix=".php">./.dev/tests/php/feature/</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <const name="SURECART_RUNNING_TESTS" value="true"/>
+  </php>
 </phpunit>

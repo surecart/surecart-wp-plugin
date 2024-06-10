@@ -31,6 +31,10 @@ class Block extends ProductBlock {
 			return '';
 		}
 
+		foreach ( $product->gallery as $key => $gallery_item ) {
+			echo wp_kses_post( $gallery_item->html( 'thumbnail', [ 'load' => 0 === $key ? 'eager' : 'lazy' ] ) );
+		}
+
 		// no product media, show placeholder.
 		if ( empty( $product->product_medias->data ) ) {
 			return wp_sprintf(
@@ -77,8 +81,8 @@ class Block extends ProductBlock {
 			</figure>',
 			get_block_wrapper_attributes(),
 			esc_url( $product->product_medias->data[0]->getUrl( 800 ) ),
-			esc_attr( $product->featured_media->alt ),
-			esc_attr( $product->featured_media->title )
+			esc_attr( $product->featured_image->alt ),
+			esc_attr( $product->featured_image->title )
 		);
 	}
 
@@ -97,7 +101,7 @@ class Block extends ProductBlock {
 			function( $product_media ) use ( $product, $width ) {
 				$items = [
 					'src'    => esc_url( $product_media->getUrl( $width ) ),
-					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
+					'alt'    => esc_attr( $product_media->media->alt ?? esc_url( $product_media->media->filename ?? $product->name ?? '' ) ),
 					'title'  => $product_media->media->title ?? '',
 					'width'  => $product_media->width,
 					'height' => $product_media->height,

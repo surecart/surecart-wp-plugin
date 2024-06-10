@@ -5,16 +5,58 @@ namespace SureCart\Controllers\Admin\Products;
 use SureCart\Models\Product;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\ProductCollection;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class ProductsListTable extends ListTable {
-
+	/**
+	 * The checkbox.
+	 *
+	 * @var bool
+	 */
 	public $checkbox = true;
-	public $error    = '';
-	public $pages    = array();
+
+	/**
+	 * The error message.
+	 *
+	 * @var string
+	 */
+	public $error = '';
+
+	/**
+	 * The list of pages.
+	 *
+	 * @var array
+	 */
+	public $pages = array();
+
+	/**
+	 * The BulkActionService instance.
+	 *
+	 * @var \SureCart\Background\BulkActionService
+	 */
+	public $bulk_actions = null;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \SureCart\Background\BulkActionService $bulk_actions The BulkActionService instance.
+	 */
+	public function __construct( \SureCart\Background\BulkActionService $bulk_actions ) {
+		parent::__construct();
+
+		$this->bulk_actions = $bulk_actions;
+
+		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
+	}
+
+	/**
+	 * Show bulk action admin notice.
+	 */
+	public function show_bulk_action_admin_notice() {
+		$this->bulk_actions->showBulkActionAdminNotice( 'delete_products' );
+	}
 
 	/**
 	 * Prepare the items for the table to process
@@ -97,9 +139,10 @@ class ProductsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'          => '<input type="checkbox" />',
+			'cb'                  => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
+			'commission_amount'   => __( 'Commission Amount', 'surecart' ),
 			'quantity'            => __( 'Quantity', 'surecart' ),
 			'integrations'        => __( 'Integrations', 'surecart' ),
 			'product_collections' => __( 'Collections', 'surecart' ),
@@ -117,7 +160,7 @@ class ProductsListTable extends ListTable {
 	public function column_cb( $product ) {
 		?>
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
+		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="bulk_action_product_ids[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
 
@@ -129,6 +172,15 @@ class ProductsListTable extends ListTable {
 	public function column_quantity( $product ) {
 		// translators: %d is the number of available stock.
 		return $product->stock_enabled ? sprintf( __( '%d Available', 'surecart' ), $product->available_stock ) : '∞';
+	}
+
+	/**
+	 * Show the affiliate commission amount.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_commission_amount( $product ) {
+		return $product->commission_structure->commission_amount ?? '-';
 	}
 
 	/**
@@ -167,7 +219,9 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_hidden_columns() {
-		return array();
+		return array(
+			'commission_amount',
+		);
 	}
 
 	/**
@@ -182,12 +236,13 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return array|\WP_Error
 	 */
 	private function table_data() {
+		$is_archived   = $this->getArchiveStatus();
 		$product_query = Product::where(
 			array(
-				'archived' => $this->getArchiveStatus(),
+				'archived' => $is_archived,
 				'query'    => $this->get_search_query(),
 			)
 		)->with(
@@ -196,14 +251,40 @@ class ProductsListTable extends ListTable {
 				'product_collections',
 				'featured_product_media',
 				'product_media.media',
+				'commission_structure',
 			)
 		);
 
-		// Check if there is any sc_collection in the query, then filter it.
+		// Check if there is any sc_collection. If so, query by taxonomy.
 		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$posts = get_posts(
+				[
+					'post_type'      => 'sc_product',
+					'posts_per_page' => $this->get_items_per_page( 'products' ),
+					'post_status'    => $is_archived ? 'sc_archive' : 'publish',
+					'tax_query'      => array(
+						array(
+							'taxonomy' => 'sc_collection',
+							'terms'    => (int) $_GET['sc_collection'], // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+						),
+					),
+				]
+			);
+
+			if ( empty( $posts ) ) {
+				return new \WP_Error( 'no_products_found', __( 'No products found.', 'surecart' ) );
+			}
+
+			$product_ids = array_map(
+				function ( $post ) {
+					return $post->sc_id;
+				},
+				$posts
+			);
+
 			$product_query->where(
 				array(
-					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					'ids' => $product_ids,  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				)
 			);
 		}
@@ -353,11 +434,20 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_status( $product ) {
 		ob_start();
+		$status = get_post_status_object( $product->post->post_status ?? '' );
 		?>
-		<?php if ( 'published' === ( $product->status ?? '' ) ) : ?>
-			<sc-tag type="success"><?php esc_html_e( 'Published', 'surecart' ); ?></sc-tag>
+
+		<?php if ( $status ) : ?>
+			<sc-tag type="<?php echo ( 'publish' === $status->name ) ? 'success' : ''; ?>">
+				<?php echo esc_html( $status->label ); ?>
+			</sc-tag>
 		<?php else : ?>
-			<sc-tag><?php esc_html_e( 'Draft', 'surecart' ); ?></sc-tag>
+
+			<?php if ( 'published' === ( $product->status ?? '' ) ) : ?>
+				<sc-tag type="success"><?php esc_html_e( 'Published', 'surecart' ); ?></sc-tag>
+			<?php else : ?>
+				<sc-tag><?php esc_html_e( 'Draft', 'surecart' ); ?></sc-tag>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php
 		return ob_get_clean();
@@ -371,41 +461,77 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
+		$pending_record_ids    = $this->bulk_actions->getRecordIds( 'delete_products', 'pending' );
+		$processing_record_ids = $this->bulk_actions->getRecordIds( 'delete_products', 'processing' );
+		$succeeded_record_ids  = $this->bulk_actions->getRecordIds( 'delete_products', 'succeeded' );
+		$bulk_status           = '';
+		if ( ! empty( $pending_record_ids ) && in_array( $product->id, $pending_record_ids ) ) {
+			$bulk_status = 'pending';
+		} elseif ( ! empty( $processing_record_ids ) && in_array( $product->id, $processing_record_ids ) ) {
+			$bulk_status = 'processing';
+		} elseif ( ! empty( $succeeded_record_ids ) && in_array( $product->id, $succeeded_record_ids ) ) {
+			$bulk_status = 'succeeded';
+		}
+
 		ob_start();
 		?>
 
 		<div class="sc-product-name">
-		<?php if ( $product->featured_media->url ) { ?>
-			<img src="<?php echo esc_url( $product->featured_media->url ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" class="sc-product-image-preview" />
-		<?php } else { ?>
+			<?php if ( ! empty( $product->featured_image ) ) { ?>
+				<?php
+				echo wp_kses_post(
+					$product->featured_image->html(
+						'thumbnail',
+						[
+							'style' => 'width:40px;height:40px;border: 1px solid #dcdcdc;flex: 1 0 40px;object-fit: cover;',
+						]
+					)
+				);
+				?>
+			<?php } else { ?>
 			<div class="sc-product-image-preview">
 				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
 				</svg>
 			</div>
-		<?php } ?>
-
+			<?php } ?>
 		<div>
+
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html( $product->name ); ?>
 		</a>
 
-		<?php
-		echo $this->row_actions(
-			array_filter(
-				array(
-					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
-					'trash'        => $this->action_toggle_archive( $product ),
-					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
-				)
-			),
-		);
-		?>
+		<?php echo wp_kses_post( $this->getRowActions( $product, $bulk_status ) ); ?>
 		</div>
 
 		</div>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get row actions.
+	 *
+	 * @param \SureCart\Models\Product $product Product model.
+	 *
+	 * @return array
+	 */
+	public function getRowActions( $product, $bulk_status ) {
+		if ( 'succeeded' === $bulk_status ) {
+			return '<div>' . esc_html__( 'Successfully deleted.', 'surecart' ) . '</div>';
+		}
+
+		if ( 'pending' === $bulk_status || 'processing' === $bulk_status ) {
+			return '<div>' . esc_html__( 'Queued for deletion.', 'surecart' ) . '</div>';
+		}
+
+		return $this->row_actions(
+			[
+				'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+				'trash'        => $this->action_toggle_archive( $product ),
+				'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+			]
+		);
 	}
 
 	/**
@@ -499,6 +625,28 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
+	 * @return array
+	 */
+	protected function get_bulk_actions() {
+		$actions           = array();
+		$actions['delete'] = __( 'Delete permanently', 'surecart' );
+		return $actions;
+	}
+
+	/**
+	 * Gets the current action selected from the bulk actions dropdown.
+	 *
+	 * @return string|false The action name. False if no action was selected.
+	 */
+	public function current_action() {
+		if ( ! empty( $_REQUEST['delete_all'] ) ) {
+			return 'delete_all';
+		}
+
+		return parent::current_action();
+	}
+
+	/**
 	 * Displays a a dropdown to filter by product collection.
 	 *
 	 * @access protected
@@ -513,7 +661,13 @@ class ProductsListTable extends ListTable {
 			return;
 		}
 
-		$product_collections  = ProductCollection::get( array( 'per_page' => -1 ) );
+		$product_collections = get_terms(
+			[
+				'taxonomy'   => 'sc_collection',
+				'hide_empty' => true,
+			]
+		);
+
 		$displayed_collection = isset( $_GET['sc_collection'] ) ? sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 
@@ -522,8 +676,8 @@ class ProductsListTable extends ListTable {
 		</label>
 		<select name="sc_collection" id="filter-by-collection">
 			<option <?php selected( $displayed_collection, '' ); ?> value=""><?php esc_html_e( 'All Product Collections', 'surecart' ); ?></option>
-			<?php foreach ( $product_collections as $collection ) : ?>
-				<option <?php selected( $displayed_collection, $collection->id ); ?> value="<?php echo esc_attr( $collection->id ); ?>"><?php echo esc_html( $collection->name ); ?></option>
+			<?php foreach ( $product_collections as $term ) : ?>
+				<option <?php selected( $displayed_collection, $term->term_id ); ?> value="<?php echo esc_attr( $term->term_id ); ?>"><?php echo esc_html( $term->name ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php

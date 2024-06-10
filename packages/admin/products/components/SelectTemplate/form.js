@@ -16,23 +16,27 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import PostTemplateCreateModal from './create-modal';
-import { getTemplateTitle } from '../../utility';
+import { useDispatch } from '@wordpress/data';
 
 export default function PostTemplateForm({
 	onClose,
 	product,
+	post,
 	updateProduct,
 	template,
 }) {
+	const { editEntityRecord } = useDispatch(coreStore);
+
 	const { templates, defaultTemplate, canCreate, canEdit } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
 			const templates = (getEntityRecords(...selectorArgs) || []).filter(
 				(template) => {
+					const slug = template?.slug || '';
 					return (
-						template.id === 'surecart/surecart//single-product' ||
-						template.slug.includes('sc-products')
+						slug.includes('sc_product') ||
+						slug.includes('sc-products')
 					);
 				}
 			);
@@ -48,14 +52,16 @@ export default function PostTemplateForm({
 		[]
 	);
 
-	const options = (templates ?? []).map((template) => ({
-		value: template?.id,
-		label: getTemplateTitle(template),
-	}));
-
-	const selected = templates.find(
-		(template) => template.id === product?.metadata?.wp_template_id
-	);
+	const options = (templates ?? [])
+		.map((template) => ({
+			value: template?.slug,
+			label:
+				template?.title?.rendered || template?.title || template?.slug,
+		}))
+		.filter(
+			(option, index, self) =>
+				index === self.findIndex((t) => t.value === option.value)
+		);
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -98,15 +104,16 @@ export default function PostTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={selected?.id || 'surecart/surecart//single-product'}
+				value={template?.slug || 'surecart/surecart//single-sc_product'}
 				options={options}
 				onChange={(slug) => {
-					updateProduct({
-						metadata: {
-							...product.metadata,
-							wp_template_id: slug,
-						},
-					});
+					editEntityRecord(
+						'postType',
+						'sc_product',
+						post?.id,
+						{ template: slug },
+						{ undoIgnore: true }
+					);
 				}}
 			/>
 
@@ -117,8 +124,8 @@ export default function PostTemplateForm({
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template',
 							postId:
-								selected?.id ||
-								'surecart/surecart//single-product',
+								template?.id ||
+								'surecart/surecart//single-sc_product',
 							canvas: 'edit',
 						})}
 					>

@@ -33,6 +33,7 @@
 - [sc-coupon-form](../../../ui/coupon-form)
 - [sc-divider](../../../ui/divider)
 - [sc-flex](../../../ui/flex)
+- [sc-manual-payment-method](../../../ui/sc-manual-payment-method)
 - [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-icon](../../../ui/icon)
 - [sc-alert](../../../ui/alert)
@@ -54,6 +55,7 @@ graph TD;
   sc-upcoming-invoice --> sc-coupon-form
   sc-upcoming-invoice --> sc-divider
   sc-upcoming-invoice --> sc-flex
+  sc-upcoming-invoice --> sc-manual-payment-method
   sc-upcoming-invoice --> sc-payment-method
   sc-upcoming-invoice --> sc-icon
   sc-upcoming-invoice --> sc-alert
@@ -82,6 +84,7 @@ graph TD;
   sc-button --> sc-spinner
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
+  sc-manual-payment-method --> sc-prose
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-button
   sc-payment-method --> sc-icon

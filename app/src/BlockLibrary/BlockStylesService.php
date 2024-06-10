@@ -7,12 +7,19 @@ namespace SureCart\BlockLibrary;
  */
 class BlockStylesService {
 	/**
+	 * Block.
+	 *
+	 * @var object
+	 */
+	public $block = null;
+
+	/**
 	 * Get the spacing values from the block editor
 	 *
 	 * @return array
 	 */
-	public function getSpacingValues( ) {
-		$block = \WP_Block_Supports::$block_to_render;
+	public function getSpacingValues() {
+		$block            = $this->block ? $this->block : \WP_Block_Supports::$block_to_render;
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
@@ -46,8 +53,8 @@ class BlockStylesService {
 	 *
 	 * @return array
 	 */
-	public function getBorderValues( ) {
-		$block = \WP_Block_Supports::$block_to_render;
+	public function getBorderValues() {
+		$block            = $this->block ? $this->block : \WP_Block_Supports::$block_to_render;
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
@@ -121,12 +128,11 @@ class BlockStylesService {
 
 	/**
 	 * Get the color values from the block editor
-
 	 *
 	 * @return array
 	 */
-	public function getColorValues(  ) {
-		$block = \WP_Block_Supports::$block_to_render;
+	public function getColorValues() {
+		$block            = $this->block ? $this->block : \WP_Block_Supports::$block_to_render;
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
@@ -170,11 +176,16 @@ class BlockStylesService {
 	/**
 	 * Get the style declarations
 	 *
-	 * @param array $block The parsed block.
+	 * @param bool   $combine Whether to combine the styles or not.
+	 * @param object $block The block object.
 	 *
 	 * @return array
 	 */
-	public function get( $combine = true ) {
+	public function get( $combine = true, $block = null ) {
+		if ( $block ) {
+			$this->block = $block;
+		}
+
 		if ( $combine ) {
 			return wp_style_engine_get_styles(
 				array(
@@ -188,10 +199,31 @@ class BlockStylesService {
 			);
 		}
 
-		return [
-			'spacing' => wp_style_engine_get_styles( [ 'spacing' => $this->getSpacingValues() ] ),
-			'border'  => wp_style_engine_get_styles( [ 'border' => $this->getBorderValues() ] ),
-			'color'   => wp_style_engine_get_styles( [ 'color' => $this->getColorValues() ] ),
-		];
+		return array(
+			'spacing' => wp_style_engine_get_styles( array( 'spacing' => $this->getSpacingValues() ) ),
+			'border'  => wp_style_engine_get_styles( array( 'border' => $this->getBorderValues() ) ),
+			'color'   => wp_style_engine_get_styles( array( 'color' => $this->getColorValues() ) ),
+		);
+	}
+
+	/**
+	 * Get the spacing preset css variable.
+	 *
+	 * @param string $value The value.
+	 *
+	 * @return string|void
+	 */
+	public function getBlockGapPresetCssVar( $value ) {
+		if ( ! $value ) {
+			return;
+		}
+
+		preg_match( '/var:preset\|spacing\|(.+)/', $value, $matches );
+
+		if ( ! $matches ) {
+			return $value;
+		}
+
+		return "var(--wp--preset--spacing--$matches[1])";
 	}
 }

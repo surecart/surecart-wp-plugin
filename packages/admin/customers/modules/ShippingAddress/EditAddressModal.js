@@ -33,7 +33,7 @@ export default ({ customerId, shippingAddress, open, onRequestClose }) => {
 			setBusy(true);
 			const customer = await apiFetch({
 				path: addQueryArgs(`/surecart/v1/customers/${customerId}`, {
-					expand: ['shipping_address', 'balances'],
+					expand: ['shipping_address', 'balances', 'billing_address'],
 				}),
 				method: 'PATCH',
 				data: {
@@ -41,7 +41,7 @@ export default ({ customerId, shippingAddress, open, onRequestClose }) => {
 				},
 			});
 			receiveEntityRecords('surecart', 'customer', customer);
-			createSuccessNotice(__('Address Updated', 'surecart'), {
+			createSuccessNotice(__('Shipping Address Updated', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();

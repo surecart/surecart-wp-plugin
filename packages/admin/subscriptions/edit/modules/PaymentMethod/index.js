@@ -1,16 +1,11 @@
 import Box from '../../../../ui/Box';
 import EditPaymentMethod from './EditPaymentMethod';
-import {
-	ScButton,
-	ScFlex,
-	ScIcon,
-	ScCard,
-	ScPaymentMethod,
-} from '@surecart/components-react';
+import { ScPaymentMethodDetails } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from 'react';
 import { useSelect } from '@wordpress/data';
+import ManualPaymentMethod from './ManualPaymentMethod';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	const id = subscription?.payment_method?.id || subscription?.payment_method;
@@ -37,11 +32,10 @@ export default ({ subscription, updateSubscription, loading }) => {
 				payment_method: select(coreStore).getEntityRecord(
 					...entityData
 				),
-				hasLoadedPaymentmethod: select(
-					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [
-					...entityData,
-				]),
+				hasLoadedPaymentmethod: select(coreStore).hasFinishedResolution(
+					'getEntityRecord',
+					entityData
+				),
 			};
 		},
 		[id]
@@ -52,46 +46,37 @@ export default ({ subscription, updateSubscription, loading }) => {
 			title={__('Payment Method', 'surecart')}
 			loading={loading || !hasLoadedPaymentmethod}
 		>
-			<ScCard>
-				<ScFlex
-					alignItems="center"
-					justifyContent="flex-start"
-					style={{ gap: '0.5em' }}
-				>
-					<ScPaymentMethod paymentMethod={payment_method} />
-					<div>
-						{!!payment_method?.card?.exp_month && (
-							<span>
-								{__('Exp.', 'surecart')}
-								{payment_method?.card?.exp_month}/
-								{payment_method?.card?.exp_year}
-							</span>
-						)}
-						{!!payment_method?.paypal_account?.email &&
-							payment_method?.paypal_account?.email}
-					</div>
-					<ScButton type="text" circle onClick={() => setEdit(true)}>
-						<ScIcon name="edit-2" />
-					</ScButton>
-				</ScFlex>
-			</ScCard>
-			<EditPaymentMethod
-				open={edit}
-				setOpen={setEdit}
-				customerId={
-					subscription?.customer?.id || subscription?.customer
-				}
-				paymentMethodId={
-					subscription?.payment_method?.id ||
-					subscription?.payment_method
-				}
-				updatePaymentMethod={(payment_method) => {
-					updateSubscription({
-						payment_method,
-					});
-					setEdit(false);
-				}}
-			/>
+			<>
+				{subscription?.payment_method &&
+					!subscription?.manual_payment && (
+						<ScPaymentMethodDetails
+							paymentMethod={payment_method}
+							editHandler={() => setEdit(true)}
+						/>
+					)}
+				{subscription?.manual_payment && (
+					<ManualPaymentMethod
+						subscription={subscription}
+						updateSubscription={updateSubscription}
+						loading={loading}
+						setEdit={setEdit}
+					/>
+				)}
+				<EditPaymentMethod
+					open={edit}
+					setOpen={setEdit}
+					customerId={
+						subscription?.customer?.id || subscription?.customer
+					}
+					manualPayment={subscription?.manual_payment}
+					manualPaymentMethod={subscription?.manual_payment_method}
+					paymentMethod={subscription?.payment_method}
+					updatePaymentMethod={(data) => {
+						updateSubscription(data);
+						setEdit(false);
+					}}
+				/>
+			</>
 		</Box>
 	);
 };

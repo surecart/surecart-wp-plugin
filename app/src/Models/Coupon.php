@@ -51,5 +51,15 @@ class Coupon extends Model {
 		}
 
 		return '';
+
+	}
+
+	/**
+	 * Get discount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountAmountAttribute() {
+		return $this->amount_off ? Currency::format( $this->amount_off, $this->currency ) : $this->percent_off . '%';
 	}
 }
