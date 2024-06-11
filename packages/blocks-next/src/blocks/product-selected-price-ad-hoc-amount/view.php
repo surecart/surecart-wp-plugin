@@ -6,8 +6,10 @@
 	<label for="amount" class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
 	</label>
+
 	<div class="sc-input-group">
 		<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
+
 		<input
 			class="sc-form-control"
 			type="number"
@@ -17,7 +19,7 @@
 			data-wp-on--change="callbacks.formatAdHocAmount"
 			data-wp-bind--min="context.selectedPrice.converted_ad_hoc_min_amount"
 			data-wp-bind--max="context.selectedPrice.converted_ad_hoc_max_amount"
-			required
+			data-wp-bind--required="context.selectedPrice.ad_hoc"
 		/>
 	</div>
 </div>
