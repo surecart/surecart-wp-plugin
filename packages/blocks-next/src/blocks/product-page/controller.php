@@ -7,6 +7,8 @@ if ( empty( $product ) ) {
 	return;
 }
 
+$selected_price = $product->initial_price;
+
 wp_interactivity_state(
 	'surecart/product-page',
 	array(
