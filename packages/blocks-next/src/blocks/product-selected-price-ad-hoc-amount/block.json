@@ -53,6 +53,7 @@
 	"editorScript": "file:./index.js",
 	"style": [
 		"file:../../styles/form-control.css",
-		"file:../../styles/input-group.css"
+		"file:../../styles/input-group.css",
+		"file:./style-index.css"
 	]
 }
