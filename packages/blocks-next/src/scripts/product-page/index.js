@@ -151,7 +151,10 @@ const { state, actions } = store('surecart/product-page', {
 				? state.selectedVariant?.available_stock <= 0
 				: product?.available_stock <= 0;
 		},
-		/** Line item to add to cart. */
+
+		/**
+		 * Line item to add to cart.
+		 */
 		get lineItem() {
 			const { adHocAmount, selectedPrice } = getContext();
 			return {
@@ -172,12 +175,18 @@ const { state, actions } = store('surecart/product-page', {
 					: {}),
 			};
 		},
-		/** Is the add to cart/buy disabled? */
+
+		/**
+		 * Is the add to cart/buy disabled?
+		 */
 		get disabled() {
 			const { selectedPrice, product } = getContext();
 			return selectedPrice?.archived || product?.archived;
 		},
-		/** Get the max product quantity */
+
+		/**
+		 * Get the max product quantity
+		 */
 		get maxQuantity() {
 			const { product } = getContext();
 			// check purchase limit.
@@ -201,24 +210,36 @@ const { state, actions } = store('surecart/product-page', {
 			// check against variant stock.
 			return state.selectedVariant.available_stock;
 		},
-		/** Is the quantity disabled? */
+
+		/**
+		 * Is the quantity disabled?
+		 */
 		get isQuantityDisabled() {
 			const { selectedPrice } = getContext();
 			return !!selectedPrice?.ad_hoc;
 		},
-		/** Is quantity increase disabled? */
+
+		/**
+		 * Is quantity increase disabled?
+		 */
 		get isQuantityIncreaseDisabled() {
 			return (
 				state.isQuantityDisabled || state.quantity >= state.maxQuantity
 			);
 		},
-		/** Is quantity decrease disabled? */
+
+		/**
+		 * Is quantity decrease disabled?
+		 */
 		get isQuantityDecreaseDisabled() {
 			return state.isQuantityDisabled || state.quantity <= 1;
 		},
 	},
 
 	actions: {
+		/**
+		 * Add to cart action.
+		 */
 		*addToCart() {
 			const context = getContext();
 			try {
@@ -236,6 +257,9 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	callbacks: {
+		/**
+		 * Handle submit callback.
+		 */
 		handleSubmit(e) {
 			e.preventDefault(); // prevent the form from submitting.
 			// if the button hdoes not have a value, add to cart.
@@ -245,13 +269,19 @@ const { state, actions } = store('surecart/product-page', {
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);
 		},
-		/** Set the option. */
+
+		/**
+		 * Set the option.
+		 */
 		setOption: () => {
 			const context = getContext();
 			context.variantValues[`option_${context?.optionNumber}`] =
 				context?.option_value || e?.target?.value;
 		},
-		/** Set the option. */
+
+		/**
+		 * Set the price
+		 */
 		setPrice: () => {
 			const context = getContext();
 			const { product, price } = context;
@@ -262,10 +292,18 @@ const { state, actions } = store('surecart/product-page', {
 			context.selectedPrice = selectedPrice;
 			context.adHocAmount = null;
 		},
+
+		/**
+		 * Set the ad_hoc_amount
+		 */
 		setAdHocAmount: (e) => {
 			const context = getContext();
 			context.adHocAmount = parseFloat(e.target.value);
 		},
+
+		/**
+		 * Handle the quantity change.
+		 */
 		onQuantityChange: (e) => {
 			const context = getContext();
 			context.quantity = Math.max(
@@ -273,11 +311,19 @@ const { state, actions } = store('surecart/product-page', {
 				1
 			);
 		},
+
+		/**
+		 * Handle the quantity decrease.
+		 */
 		onQuantityDecrease: () => {
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
 		},
+
+		/**
+		 * Handle the quantity increase.
+		 */
 		onQuantityIncrease: () => {
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
@@ -285,17 +331,6 @@ const { state, actions } = store('surecart/product-page', {
 		},
 	},
 });
-
-/**
- * Update state.
- */
-export const update = (data) => {
-	let context = getContext();
-	context = {
-		...context,
-		...data,
-	};
-};
 
 /**
  * Get the variant from provided values.
