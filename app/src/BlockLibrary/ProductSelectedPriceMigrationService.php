@@ -55,13 +55,13 @@ class ProductSelectedPriceMigrationService {
 	public function renderScratchAmountAndSalesBadge() {
 		$sale_text = $this->attributes['sale_text'] ?? 'Discounted';
 
-		$this->block_html  = '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
-		$this->block_html  = '<div class="wp-block-group" >';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
+		$this->block_html .= '<div class="wp-block-group" >';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","fontSize":"24px"},"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}} /-->';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px"}}} /-->';
 		$this->block_html .= '<!-- wp:surecart/product-sale-badge {"text":"' . $sale_text . '","style":{"border":{"radius":"100px"},"typography":{"fontSize":"12px"},"layout":{"selfStretch":"fit","flexSize":null}}} /-->';
-		$this->block_html  = '</div>';
-		$this->block_html  = '<!-- /wp:group -->';
+		$this->block_html .= '</div>';
+		$this->block_html .= '<!-- /wp:group -->';
 	}
 
 	/**
@@ -70,12 +70,12 @@ class ProductSelectedPriceMigrationService {
 	 * @return void
 	 */
 	public function renderSelectedPriceTrialAndFees() {
-		$this->block_html  = '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
-		$this->block_html  = '<div class="wp-block-group" >';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
+		$this->block_html .= '<div class="wp-block-group" >';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-trial {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}} /-->';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-fees {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}} /-->';
-		$this->block_html  = '</div>';
-		$this->block_html  = '<!-- /wp:group -->';
+		$this->block_html .= '</div>';
+		$this->block_html .= '<!-- /wp:group -->';
 	}
 
 	/**
@@ -84,12 +84,12 @@ class ProductSelectedPriceMigrationService {
 	 * @return void
 	 */
 	public function renderPrice() {
-		$this->block_html = '<!-- wp:group {"style":{"spacing":{"blockGap":"0"}},"layout":{"type":"constrained"}} -->';
-		$this->block_html = '<div class="wp-block-group" >';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0"}},"layout":{"type":"constrained"}} -->';
+		$this->block_html .= '<div class="wp-block-group" >';
 		$this->renderScratchAmountAndSalesBadge();
 		$this->renderSelectedPriceTrialAndFees();
-		$this->block_html = '</div>';
-		$this->block_html = '<!-- /wp:group -->';
+		$this->block_html .= '</div>';
+		$this->block_html .= '<!-- /wp:group -->';
 	}
 
 	/**
