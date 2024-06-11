@@ -6,10 +6,16 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 store('surecart/cart-drawer', {
 	actions: {
 		toggle: (targetClass = null) => {
-			const target = getContext?.target || '.sc-drawer';
+			let dialog = null;
+			const target = getContext()?.target || '.sc-drawer';
+			const targettedSelector = targetClass ?? target ?? null;
 
 			// Get passed target or <dialog>.
-			let dialog = document.querySelector(targetClass ?? target ?? null);
+			if (typeof targettedSelector === 'string') {
+				dialog =
+					document?.querySelector(targetClass ?? target ?? null) ||
+					null;
+			}
 
 			if (!dialog) {
 				const { ref } = getElement();
