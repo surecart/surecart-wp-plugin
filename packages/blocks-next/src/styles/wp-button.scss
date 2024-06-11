@@ -2,9 +2,21 @@
 	width: 100%;
 
 	&.is-style-outline {
-		button.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus),
-		div.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus),
-		a.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus) {
+		button.wp-block-button__link.wp-element-button:not(
+				.has-background,
+				:hover,
+				:focus
+			),
+		div.wp-block-button__link.wp-element-button:not(
+				.has-background,
+				:hover,
+				:focus
+			),
+		a.wp-block-button__link.wp-element-button:not(
+				.has-background,
+				:hover,
+				:focus
+			) {
 			background-color: transparent;
 			background-image: none;
 		}
@@ -23,7 +35,7 @@
 	display: inline-block;
 	box-sizing: border-box;
 
-	[disabled] {
+	&[disabled] {
 		pointer-events: none;
 	}
 }

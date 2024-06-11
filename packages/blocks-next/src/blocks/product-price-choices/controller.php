@@ -8,22 +8,15 @@
  *     $block (WP_Block): The block instance.
  */
 
-// get initial state.
-$products = wp_interactivity_state( 'surecart/product' );
-
 // get product from initial state.
 $product = sc_get_product();
 
 // make sure we have a product.
-if ( empty( $product->id ) ) {
+if ( empty( $product->id ) || ! $product->has_multiple_prices ) {
 	return '';
 }
 
-// get only active prices.
 $prices = $product->active_prices;
-if ( empty( $prices ) || count( $prices ) < 2 ) {
-	return '';
-}
 
 // return the view.
 return 'file:./view.php';
