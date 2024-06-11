@@ -44,8 +44,17 @@ class ProductCollectionBadgesMigrationService {
 	 * @return void
 	 */
 	public function renderProductCollectionBadges() {
-		$this->block_html  = '<!-- wp:surecart/product-collection-badges-v2 {"count":' . $this->attributes['count'] . '} -->';
-		$this->block_html .= '<!-- wp:surecart/product-collection-badge /-->';
+		$layout_attributes = array(
+			'count' => $this->attributes['count'],
+			'style' => array(
+				'spacing' => array(
+					'blockGap' => $this->attributes['style']['spacing']['blockGap'] ?? '3px',
+				),
+			),
+		);
+
+		$this->block_html  = '<!-- wp:surecart/product-collection-badges-v2 ' . json_encode( $layout_attributes ) . ' -->';
+		$this->block_html .= '<!-- wp:surecart/product-collection-badge ' . json_encode( $this->attributes ) . ' /-->';
 		$this->block_html .= '<!-- /wp:surecart/product-collection-badges-v2 -->';
 	}
 
