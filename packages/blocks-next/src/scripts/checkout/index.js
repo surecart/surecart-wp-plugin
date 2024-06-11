@@ -17,29 +17,33 @@ const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
 const getCheckoutData = (mode = 'live', formId) => {
 	const checkoutData = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-	const parsedCheckoutData = JSON.parse(checkoutData) || {
+	const defaultData = {
 		live: {},
 		test: {},
 	};
 
+	const parsedCheckoutData = JSON.parse(checkoutData) || defaultData;
+
 	const modeData = parsedCheckoutData[mode];
 
-	return modeData?.[formId] || null;
+	return modeData?.[formId] || defaultData;
 };
 
 const isNotKeySubmit = (e) => {
 	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
 };
 
-// controls the product page.
+/**
+ * Checkout store.
+ */
 const { state, actions } = store('surecart/checkout', {
 	state: {
 		openCartSidebar: false,
 		loading: false,
+		error: null,
 		discountCode: '',
 		get checkout() {
-			const { mode, formId } = getContext();
+			const { mode, formId } = getContext() || {};
 			return getCheckoutData(mode, formId) || {};
 		},
 		get getItemsCount() {

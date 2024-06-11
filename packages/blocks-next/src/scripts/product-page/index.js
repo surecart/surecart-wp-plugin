@@ -7,7 +7,7 @@ import { store, getContext } from '@wordpress/interactivity';
  * Internal dependencies.
  */
 import { addCheckoutLineItem } from '@surecart/checkout-actions';
-const { actions: checkoutActions } = store('@surecart/checkout');
+const { actions: checkoutActions } = store('surecart/checkout');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
@@ -246,9 +246,10 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 			}
 
 			let checkout = null;
-			// update({ busy: true });
 			try {
-				state.loading = true;
+				const mode = callbacks.getState('mode');
+				const formId = callbacks.getState('formId');
+				update({ busy: true });
 				checkout = await addCheckoutLineItem({
 					price: state.selectedPrice?.id,
 					quantity: Math.max(
@@ -260,16 +261,13 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 						: {}),
 					variant: state.selectedVariant?.id,
 				});
+				checkoutActions.setCheckout(checkout, mode, formId);
+				checkoutActions.toggleCartSidebar(null);
 			} catch (e) {
 				console.error(e);
 				throw e; // Re-throw the caught error
 			} finally {
-				// update({ busy: false });
-			}
-
-			if (checkout) {
-				checkoutActions.setCheckout(checkout, state.mode, state.formId);
-				checkoutActions.toggleCartSidebar(null);
+				update({ busy: false });
 			}
 		},
 	},
@@ -277,7 +275,7 @@ const { state, callbacks, actions } = store('surecart/product-page', {
 	callbacks: {
 		/** Get the contextual state. */
 		getState(prop) {
-			const { productId } = getContext();
+			const { productId } = getContext() || {};
 			return state[productId]?.[prop] || false;
 		},
 		handleSubmit(e) {
@@ -363,7 +361,8 @@ const { state, callbacks, actions } = store('surecart/product-page', {
  * Update state.
  */
 export const update = (data) => {
-	const { productId } = getContext();
+	const { productId } = getContext() || {};
+	console.log('productId', productId);
 	state[productId] = {
 		...state?.[productId],
 		...data,

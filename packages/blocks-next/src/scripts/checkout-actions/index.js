@@ -301,6 +301,7 @@ export const handleCouponApply = async (checkoutId, promotion_code) => {
 		});
 	} catch (error) {
 		console.error(error);
+		checkoutState.error = error;
 	} finally {
 		checkoutState.loading = false;
 	}

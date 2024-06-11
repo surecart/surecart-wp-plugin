@@ -234,7 +234,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/checkout-actions',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout-actions/index.js',
-			[],
+			[
+				[
+					'id' => '@surecart/api-fetch',
+					'import' => 'dynamic'
+				],
+			],
 			$static_assets['version']
 		);
 
@@ -258,10 +263,6 @@ add_action(
 			'@surecart/checkout',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout/index.js',
 			[
-				[
-					'id' => '@surecart/api-fetch',
-					'import' => 'dynamic'
-				],
 				[
 					'id' => '@surecart/checkout-actions',
 					'import' => 'dynamic'
