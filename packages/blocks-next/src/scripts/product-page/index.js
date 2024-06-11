@@ -258,12 +258,9 @@ const { state, actions } = store('surecart/product-page', {
 			const selectedPrice = product.prices?.data.find(
 				(p) => p.id === price?.id
 			);
-			const adHocAmount =
-				parseFloat(selectedPrice?.ad_hoc ? selectedPrice?.amount : 0) /
-				(selectedPrice?.is_zero_decimal ? 1 : 100);
 
 			context.selectedPrice = selectedPrice;
-			context.adHocAmount = adHocAmount;
+			context.adHocAmount = null;
 		},
 		setAdHocAmount: (e) => {
 			const context = getContext();
