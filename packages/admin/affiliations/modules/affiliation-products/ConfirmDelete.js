@@ -10,7 +10,7 @@ import { store as noticesStore } from '@wordpress/notices';
 /**
  * Internal dependencies.
  */
-import ConfirmDelete from '../../../components/confirm-delete';
+import Confirm from '../../../components/confirm';
 
 export default ({ onRequestClose, open, affiliationProductId, onDeleted }) => {
 	const [error, setError] = useState(null);
@@ -46,12 +46,14 @@ export default ({ onRequestClose, open, affiliationProductId, onDeleted }) => {
 	};
 
 	return (
-		<ConfirmDelete
+		<Confirm
 			open={open}
 			onRequestClose={onRequestClose}
 			error={error}
-			deleting={deleting}
-			onDelete={onDelete}
-		/>
+			loading={deleting}
+			onConfirm={onDelete}
+		>
+			{__('Are you sure? This cannot be undone.', 'surecart')}
+		</Confirm>
 	);
 };

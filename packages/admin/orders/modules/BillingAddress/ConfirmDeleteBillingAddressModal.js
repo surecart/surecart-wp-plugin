@@ -13,7 +13,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies.
  */
 import { checkoutOrderExpands } from '../../../util/orders';
-import ConfirmDelete from '../../../components/confirm-delete';
+import Confirm from '../../../components/confirm';
 
 export default ({ checkoutId, open, onRequestClose }) => {
 	const [error, setError] = useState(false);
@@ -47,12 +47,14 @@ export default ({ checkoutId, open, onRequestClose }) => {
 	};
 
 	return (
-		<ConfirmDelete
+		<Confirm
 			open={open}
 			onRequestClose={onRequestClose}
-			onDelete={onDelete}
-			deleting={deleting}
+			onConfirm={onDelete}
+			loading={deleting}
 			error={error}
-		/>
+		>
+			{__('Are you sure? This cannot be undone.', 'surecart')}
+		</Confirm>
 	);
 };

@@ -10,16 +10,23 @@ import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/compone
 import { ScBlockUi } from '@surecart/components-react';
 import Error from '../Error';
 
-export default ({ onRequestClose, open, onDelete, deleting, error }) => {
+export default ({
+	onRequestClose,
+	open,
+	onConfirm,
+	loading,
+	error,
+	children,
+}) => {
 	return (
 		<ConfirmDialog
 			isOpen={open}
-			onConfirm={onDelete}
+			onConfirm={onConfirm}
 			onCancel={onRequestClose}
 		>
 			<Error error={error} />
-			{__('Are you sure? This cannot be undone.', 'surecart')}
-			{!!deleting && (
+			{children}
+			{!!loading && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
 					zIndex="9"
