@@ -10,14 +10,12 @@ if ( empty( $product ) ) {
 wp_interactivity_state(
 	'surecart/product-page',
 	array(
-		'busy'                         => false,
-		'selectedPrice'                => $selected_price,
-		'buttonText'                   => __( 'Add To Cart', 'surecart' ),
-		'selectedVariant'              => $product->first_variant_with_stock,
+		'quantity'                     => 1,
 		'selectedDisplayAmount'        => $product->display_amount,
-		'selectedScratchDisplayAmount' => $selected_price->scratch_display_amount,
-		'isOnSale'                     => $product->is_on_sale,
-		'adHocAmount'                  => ( $selected_price->ad_hoc ? $selected_price->amount : 0 ) / ( $selected_price->is_zero_decimal ? 1 : 100 ),
+		'selectedScratchDisplayAmount' => ! empty( $product->initial_price ) ? $product->initial_price->scratch_display_amount : '',
+		'isOnSale'                     => ! empty( $product->initial_price ) ? $product->initial_price->is_on_sale : false,
+		'busy'                         => false,
+		'adHocAmount'                  => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
 	)
 );
 
