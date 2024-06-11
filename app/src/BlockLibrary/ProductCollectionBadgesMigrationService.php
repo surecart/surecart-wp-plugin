@@ -53,8 +53,8 @@ class ProductCollectionBadgesMigrationService {
 			),
 		);
 
-		$this->block_html  = '<!-- wp:surecart/product-collection-badges-v2 ' . json_encode( $layout_attributes ) . ' -->';
-		$this->block_html .= '<!-- wp:surecart/product-collection-badge ' . json_encode( $this->attributes ) . ' /-->';
+		$this->block_html  = '<!-- wp:surecart/product-collection-badges-v2 ' . wp_json_encode( $layout_attributes ) . ' -->';
+		$this->block_html .= '<!-- wp:surecart/product-collection-badge ' . wp_json_encode( $this->attributes ) . ' /-->';
 		$this->block_html .= '<!-- /wp:surecart/product-collection-badges-v2 -->';
 	}
 
