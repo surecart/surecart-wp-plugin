@@ -3,7 +3,7 @@
 	data-wp-bind--hidden="!context.selectedPrice.ad_hoc"
 	hidden
 >
-	<label for="amount" class="sc-form-label <?php echo esc_attr( $class ); ?>">
+	<label for="amount" class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
 	</label>
 	<div class="sc-input-group">
