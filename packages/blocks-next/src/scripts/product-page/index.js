@@ -266,10 +266,6 @@ const { state, actions } = store('surecart/product-page', {
 			const context = getContext();
 			context.adHocAmount = parseFloat(e.target.value);
 		},
-		formatAdHocAmount: (e) => {
-			const context = getContext();
-			context.adHocAmount = parseFloat(e.target.value).toFixed(2);
-		},
 		onQuantityChange: (e) => {
 			const context = getContext();
 			context.quantity = Math.max(

@@ -16,7 +16,6 @@
 			step="0.01"
 			data-wp-bind--value="context.adHocAmount"
 			data-wp-on--input="callbacks.setAdHocAmount"
-			data-wp-on--change="callbacks.formatAdHocAmount"
 			data-wp-bind--min="context.selectedPrice.converted_ad_hoc_min_amount"
 			data-wp-bind--max="context.selectedPrice.converted_ad_hoc_max_amount"
 			data-wp-bind--required="context.selectedPrice.ad_hoc"
