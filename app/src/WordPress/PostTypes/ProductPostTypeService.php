@@ -70,11 +70,8 @@ class ProductPostTypeService {
 	 * @return string
 	 */
 	public function validateFSETemplate( $template ) {
-		// get the post.
-		$post = get_post();
-
 		// not our post type.
-		if ( $post->post_type !== $this->post_type ) {
+		if ( ! is_singular( $this->post_type ) ) {
 			return $template;
 		}
 
