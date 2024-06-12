@@ -1,1 +1,1 @@
-<div <?php echo get_block_wrapper_attributes(); ?> data-wp-text="state.selectedDisplayAmount"></div>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?> data-wp-text="state.selectedDisplayAmount"></div>
