@@ -1,7 +1,10 @@
+/**
+ * WordPress dependencies.
+ */
 import apiFetch from '@surecart/api-fetch';
-import { store } from '@wordpress/interactivity';
+import { store, getContext } from '@wordpress/interactivity';
 
-const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
+const { addQueryArgs, getQueryArg } = wp.url; // TODO: replace with `@wordpress/url` when available.
 export const baseUrl = 'surecart/v1/checkouts/';
 
 const { state: checkoutState } = store('surecart/checkout');
@@ -49,32 +52,56 @@ export const fetchCheckout = async ({ id, query = {} }) => {
 	});
 };
 
-export const withDefaultData = (data) => ({
-	live_mode: checkoutState.mode !== 'test',
-	group_key: checkoutState.groupId,
-	abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
-	metadata: {
-		...(data?.metadata || {}),
-		...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),
-		...(checkoutState?.product?.id && {
-			buy_page_product_id: checkoutState?.product?.id,
+export const withDefaultData = (data) => {
+	const context = getContext();
+	return {
+		live_mode: context.mode !== 'test',
+		group_key: checkoutState.groupId,
+		abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
+		metadata: {
+			...(data?.metadata || {}),
+			...(window?.scData?.page_id && {
+				page_id: window?.scData?.page_id,
+			}),
+			...(checkoutState?.product?.id && {
+				buy_page_product_id: checkoutState?.product?.id,
+			}),
+			page_url: window.location.href,
+		},
+		...(checkoutState?.checkout?.email && {
+			email: checkoutState?.checkout?.email,
 		}),
-		page_url: window.location.href,
-	},
-	...(checkoutState?.checkout?.email && {
-		email: checkoutState?.checkout?.email,
-	}),
-	...data,
-});
+		...data,
+	};
+};
 
 /** Default query we send with every request. */
-export const withDefaultQuery = (query = {}) => ({
-	...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
-	...(!!checkoutState?.product?.id && {
-		product_id: checkoutState?.product?.id,
-	}),
-	...query,
-});
+export const withDefaultQuery = (query = {}) => {
+	const context = getContext();
+	return {
+		...(!!context?.formId && { form_id: context?.formId }),
+		...(!!checkoutState?.product?.id && {
+			product_id: checkoutState?.product?.id,
+		}),
+		...query,
+	};
+};
+
+export const getSessionId = () => {
+	// check url first.
+	const checkoutId = getQueryArg(window.location.href, 'checkout_id');
+	if (!!checkoutId) {
+		return checkoutId;
+	}
+
+	// check existing order.
+	if (checkoutState?.checkout?.id) {
+		return checkoutState?.checkout?.id;
+	}
+
+	// we don't have and order id.
+	return null;
+};
 
 /**
  * Update a line item.
@@ -119,7 +146,7 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 	try {
 		checkoutState.loading = true;
 		return await updateLineItem({
-			id: id,
+			id,
 			data,
 		});
 	} catch (e) {
@@ -164,30 +191,13 @@ export const addCheckoutLineItem = async (data) => {
 	}
 };
 
-/** Get the checkout id  */
-export const findInitialCheckoutId = () => {
-	// check url first.
-	const checkoutId = getQueryArg(window.location.href, 'checkout_id');
-	if (!!checkoutId) {
-		return checkoutId;
-	}
-
-	// check existing order.
-	if (checkoutState?.checkout?.id) {
-		return checkoutState?.checkout?.id;
-	}
-
-	// we don't have and order id.
-	return null;
-};
-
 /** Create or update the checkout. */
 export const createOrUpdateCheckout = async ({
 	id = null,
 	data = {},
 	query = {},
 }) => {
-	id = !id ? findInitialCheckoutId() : id;
+	id = id ?? getSessionId();
 	return await apiFetch({
 		method: id ? 'PATCH' : 'POST', // create or update
 		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
@@ -195,8 +205,9 @@ export const createOrUpdateCheckout = async ({
 	});
 };
 
-// /** Update the checkout. */
-export const updateCheckout = async ({ id, data = {}, query = {} }) => {
+/** Update the checkout. */
+export const updateCheckout = async ({ data = {}, query = {} }) => {
+	const id = data?.id ?? getSessionId();
 	return await apiFetch({
 		method: 'PATCH',
 		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
@@ -288,14 +299,17 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 	return item?.checkout;
 };
 
-export const handleCouponApply = async (checkoutId, promotion_code) => {
+export const handleCouponApply = async (promotionCode) => {
 	try {
 		checkoutState.loading = true;
 		return await updateCheckout({
-			id: checkoutId,
 			data: {
 				discount: {
-					...(promotion_code ? { promotion_code } : {}),
+					...(promotionCode
+						? {
+								promotion_code: promotionCode,
+						  }
+						: {}),
 				},
 			},
 		});

@@ -97,12 +97,12 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		get errorTitle() {
-			return state.error?.title || '';
+			return state.error?.title || state.error || '';
 		},
 
 		get errorMessage() {
 			return state.error?.message || '';
-		}
+		},
 	},
 
 	callbacks: {
@@ -162,20 +162,40 @@ const { state, actions } = store('surecart/checkout', {
 			e.preventDefault();
 			e.stopPropagation();
 
+			// const { ref } = getElement();
 			const { mode, formId } = getContext();
-			const checkout = await handleCouponApply(
-				state.checkout.id,
-				state.discountCode
-			);
+			const checkout = await handleCouponApply(state.discountCode);
 
 			if (checkout) {
+				if (!checkout?.discount?.coupon) {
+					state.error = {
+						title: 'Failed to update. Please check for errors and try again.',
+						message: 'This coupon code is invalid.',
+					};
+					return;
+				}
+
+				state.error = '';
 				actions.setCheckout(checkout, mode, formId);
+
+				// TODO: Confirm and remove this code.
+				// const removeButton = ref?.parentElement?.querySelector?.(
+				// 	'.sc-coupon-remove-discount'
+				// );
+
+				// focus the discount remove button.
+				const removeButton = document?.querySelector?.(
+					'.sc-coupon-remove-discount'
+				);
+				if (removeButton) {
+					setTimeout(() => removeButton.focus(), 0);
+				}
 			}
 		},
 
 		removeDiscount: async () => {
 			const { mode, formId } = getContext();
-			const checkout = await handleCouponApply(state.checkout.id, null);
+			const checkout = await handleCouponApply(null);
 
 			if (checkout) {
 				state.discountCode = '';
