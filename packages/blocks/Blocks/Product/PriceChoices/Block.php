@@ -3,7 +3,6 @@
 namespace SureCartBlocks\Blocks\Product\PriceChoices;
 
 use SureCartBlocks\Blocks\Product\ProductBlock;
-use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block

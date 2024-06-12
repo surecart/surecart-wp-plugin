@@ -44,7 +44,7 @@ class ProductPriceChoicesMigrationService {
 	 * @return void
 	 */
 	public function renderPriceName() {
-		$this->block_html = '<!-- wp:surecart/price-name /-->';
+		$this->block_html .= '<!-- wp:surecart/price-name /-->';
 	}
 
 	/**
@@ -53,7 +53,7 @@ class ProductPriceChoicesMigrationService {
 	 * @return void
 	 */
 	public function renderPriceAmountTrialAndSetupFee() {
-		$this->block_html  = '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
+		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
 		$this->block_html .= '<!-- wp:surecart/price-amount {"style":{"elements":{"link":{"color":{"text":"var:preset|color|accent-3"}}},"typography":{"fontStyle":"normal","fontWeight":"700"}},"textColor":"accent-3"} /-->';
 		$this->block_html .= '<!-- wp:surecart/price-trial {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}},"fontSize":"small"} /-->';
@@ -68,12 +68,18 @@ class ProductPriceChoicesMigrationService {
 	 * @return void
 	 */
 	public function renderPriceChoices() {
-		$this->block_html .= '<!-- wp:surecart/product-price-choices-v2 -->';
+		$attributes = array(
+			'label' => __( 'Pricing', 'surecart' ),
+		);
+
+		$this->block_html .= '<!-- wp:surecart/product-price-choices-v2 ' . wp_json_encode( $attributes ) . ' -->';
 		$this->block_html .= '<!-- wp:surecart/product-price-choice-template -->';
 		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
 		$this->renderPriceName();
-		$this->renderPriceAmountTrialAndSetupFee();
+		if ( $this->attributes['show-price'] ) {
+			$this->renderPriceAmountTrialAndSetupFee();
+		}
 		$this->block_html .= '</div>';
 		$this->block_html .= '<!-- /wp:group -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
