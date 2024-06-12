@@ -42,10 +42,7 @@ const { state, actions } = store('surecart/checkout', {
 		loading: false,
 		error: null,
 		discountCode: '',
-		get checkout() {
-			const { mode, formId } = getContext() || {};
-			return getCheckoutData(mode, formId) || {};
-		},
+		checkout: {},
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
 				(count, item) => count + (item?.quantity || 0),
@@ -117,7 +114,7 @@ const { state, actions } = store('surecart/checkout', {
 				return;
 			}
 
-			actions.setCheckout(checkout, mode, formId);
+			state.checkout = checkout;
 		},
 	},
 
@@ -226,6 +223,8 @@ const { state, actions } = store('surecart/checkout', {
 				LOCAL_STORAGE_KEY,
 				JSON.stringify(checkoutStorage)
 			);
+
+			state.checkout = getCheckoutData(mode, formId);
 		},
 
 		onQuantityIncrease: (e) => {
