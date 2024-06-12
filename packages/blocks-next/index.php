@@ -218,17 +218,6 @@ add_action(
 			$static_assets['version']
 		);
 
-		// we have product context.
-		if ( get_query_var('surecart_current_product') ) {
-			$context['surecart/product'] = get_query_var( 'surecart_current_product' );
-		}
-
-		// add context for required blocks.
-		if ( $parsed_block['blockName'] === 'surecart/product-page' ) {
-			$context['surecart/has-ad-hoc-block'] = !empty(wp_get_first_block([$parsed_block], 'surecart/product-selected-price-ad-hoc-amount'));
-			$context['surecart/has-variant-choices'] = !empty(wp_get_first_block([$parsed_block], 'surecart/product-variant-choices-v2'));
-		}
-
 		// Checkout actions.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout-actions/index.asset.php';
 		wp_register_script_module(
@@ -274,6 +263,4 @@ add_action(
 			],
 			$static_assets['version']
 		);
-
-		return $context;
 	}, 10, 3 );
