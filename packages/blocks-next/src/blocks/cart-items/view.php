@@ -68,6 +68,7 @@
 									data-wp-bind--aria-valuemin="context.line_item.min"
 									data-wp-bind--max="context.line_item.max"
 									data-wp-bind--aria-valuemax="context.line_item.max"
+									data-wp-bind--disabled="surecart/checkout::state.loading"
 									step="1"
 									autocomplete="off"
 									role="spinbutton"
