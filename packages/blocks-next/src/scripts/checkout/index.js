@@ -95,6 +95,14 @@ const { state, actions } = store('surecart/checkout', {
 				(item) => item?.price?.recurring_interval
 			);
 		},
+
+		get errorTitle() {
+			return state.error?.title || '';
+		},
+
+		get errorMessage() {
+			return state.error?.message || '';
+		}
 	},
 
 	callbacks: {
