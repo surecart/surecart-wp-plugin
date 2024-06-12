@@ -244,30 +244,37 @@ const { state, actions } = store('surecart/product-page', {
 
 	actions: {
 		addToCart: async () => {
-			if (!state.selectedPrice?.id) return;
+			const context = getContext();
+			const {
+				selectedPrice,
+				selectedVariant,
+				adHocAmount,
+				mode,
+				formId,
+			} = context;
+
+			if (!selectedPrice?.id) return;
 
 			if (
-				state.selectedPrice?.ad_hoc &&
-				(null === state.adHocAmount || undefined === state.adHocAmount)
+				selectedPrice?.ad_hoc &&
+				(null === adHocAmount || undefined === adHocAmount)
 			) {
 				return;
 			}
 
 			let checkout = null;
 			try {
-				const mode = callbacks.getState('mode');
-				const formId = callbacks.getState('formId');
-				state.busy = true;
+				context.busy = true;
 				checkout = await addCheckoutLineItem({
-					price: state.selectedPrice?.id,
+					price: selectedPrice?.id,
 					quantity: Math.max(
-						state.selectedPrice?.ad_hoc ? 1 : state?.quantity,
+						selectedPrice?.ad_hoc ? 1 : state?.quantity,
 						1
 					),
-					...(state.selectedPrice?.ad_hoc
-						? { ad_hoc_amount: state.adHocAmount }
+					...(selectedPrice?.ad_hoc
+						? { ad_hoc_amount: adHocAmount }
 						: {}),
-					variant: state.selectedVariant?.id,
+					variant: selectedVariant?.id,
 				});
 				checkoutActions.setCheckout(checkout, mode, formId);
 				checkoutActions.toggleCartSidebar(null);
@@ -275,7 +282,7 @@ const { state, actions } = store('surecart/product-page', {
 				console.error(e);
 				throw e; // Re-throw the caught error
 			} finally {
-				state.busy = true;
+				context.busy = false;
 			}
 		},
 	},
