@@ -245,37 +245,11 @@ const { state, actions } = store('surecart/product-page', {
 	actions: {
 		addToCart: async () => {
 			const context = getContext();
-			const {
-				selectedPrice,
-				selectedVariant,
-				adHocAmount,
-				mode,
-				formId,
-			} = context;
-
-			if (!selectedPrice?.id) return;
-
-			if (
-				selectedPrice?.ad_hoc &&
-				(null === adHocAmount || undefined === adHocAmount)
-			) {
-				return;
-			}
-
+			const { mode, formId } = context;
 			let checkout = null;
 			try {
 				context.busy = true;
-				checkout = await addCheckoutLineItem({
-					price: selectedPrice?.id,
-					quantity: Math.max(
-						selectedPrice?.ad_hoc ? 1 : state?.quantity,
-						1
-					),
-					...(selectedPrice?.ad_hoc
-						? { ad_hoc_amount: adHocAmount }
-						: {}),
-					variant: selectedVariant?.id,
-				});
+				checkout = await addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
 				checkoutActions.toggleCartSidebar(null);
 			} catch (e) {
