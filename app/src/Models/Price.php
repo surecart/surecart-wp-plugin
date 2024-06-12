@@ -40,13 +40,62 @@ class Price extends Model {
 	protected $cache_key = 'products_updated_at';
 
 	/**
-	 * Set the product attribute
+	 * Update a model
 	 *
-	 * @param  string $value Product properties.
-	 * @return void
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
 	 */
-	public function setProductAttribute( $value ) {
-		$this->setRelation( 'product', $value, Product::class );
+	protected function create( $attributes = array() ) {
+		// update parent.
+		$updated = parent::create( $attributes );
+
+		// sync product.
+		Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
+
+		// return.
+		return $updated;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		// update parent.
+		$updated = parent::update( $attributes );
+
+		// get uncached product and sync.
+		Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
+
+		// return.
+		return $updated;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function delete( $id = '' ) {
+		// find price as we need the product id.
+		$price = $this->find( $id );
+
+		// update parent.
+		$response = parent::delete( $id );
+
+		// sync product.
+		if ( ! empty( $response->deleted ) ) {
+			Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $price->product_id )->sync();
+		}
+
+		// return.
+		return $response;
 	}
 
 	/**

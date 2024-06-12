@@ -18,7 +18,6 @@
 				'selectedDisplayAmount'        => $product->display_amount,
 				'selectedScratchDisplayAmount' => ! empty( $product->initial_price ) ? $product->initial_price->scratch_display_amount : '',
 				'isOnSale'                     => ! empty( $product->initial_price ) ? $product->initial_price->is_on_sale : false,
-				'isProductPage'                => ! empty( get_query_var( 'surecart_current_product' ) ),
 				'busy'                         => false,
 				'adHocAmount'                  => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
 				'variantValues'                => (object) array_filter(
