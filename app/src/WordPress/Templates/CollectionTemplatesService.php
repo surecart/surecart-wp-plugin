@@ -57,7 +57,7 @@ class CollectionTemplatesService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_filter( 'theme_' . $this->post_type . '_templates', array( $this, 'addTemplates' ) );
+		// add_filter( 'theme_' . $this->post_type . '_templates', array( $this, 'addTemplates' ) );
 	}
 
 	/**
