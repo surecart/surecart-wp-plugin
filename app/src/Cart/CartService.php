@@ -188,7 +188,7 @@ class CartService {
 
 		// get cart block.
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
-		if ( empty( $template->content ) ) {
+		if ( ! $template || empty( $template->content ) ) {
 			return;
 		}
 
@@ -200,16 +200,8 @@ class CartService {
 		ob_start();
 		?>
 
-		<sc-cart
-			id="sc-cart"
-			header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>"
-			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
-			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
-		>
-			<?php
-			echo wp_kses_post( do_blocks( $template->content ) );
-			?>
-		</sc-cart>
+		<!-- Render the block -->
+		<?php echo do_blocks( $template->content ); ?>
 
 		<?php if ( $this->isFloatingIconEnabled() ) : ?>
 			<sc-cart-icon style="font-size: 16px">
@@ -245,12 +237,8 @@ class CartService {
 				)
 			);
 		}
-		?>
 
-		<sc-cart-loader
-			template='<?php echo esc_attr( $template ); ?>'>
-		</sc-cart-loader>
-		<?php
+		echo $template;
 	}
 
 	/**
