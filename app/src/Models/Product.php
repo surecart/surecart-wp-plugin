@@ -424,7 +424,8 @@ class Product extends Model implements PageModel {
 	 * @return SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
-		$gallery = $this->gallery ?? array();
+		$gallery = array_values( $this->gallery ?? array() );
+
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
