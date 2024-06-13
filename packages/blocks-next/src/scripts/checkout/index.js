@@ -89,6 +89,15 @@ const { state, actions } = store('surecart/checkout', {
 			);
 		},
 
+		get isEditable() {
+			const { line_item } = getContext();
+			if (line_item?.price?.ad_hoc || line_item?.bump_amount) {
+				return false;
+			}
+
+			return true;
+		},
+
 		// Do any line items have a recurring price?
 		get hasRecurring() {
 			return state?.checkout?.line_items?.data?.some(

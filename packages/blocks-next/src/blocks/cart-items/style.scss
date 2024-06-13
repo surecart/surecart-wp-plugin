@@ -6,6 +6,10 @@
 
 	.sc-quantity-selector {
 		margin-top: var(--sc-spacing-small);
+
+		&[hidden] {
+			display: none;
+		}
 	}
 
 	.sc-product-line-item__remove-button {

@@ -40,11 +40,12 @@
 								<?php esc_html_e( 'Qty:', 'surecart' ); ?>
 								<span data-wp-text="context.line_item.quantity"></span>
 							</span>
-						<?php endif; ?>
-						<?php if ( $attributes['editable'] ) : ?>
+						<?php elseif ( $attributes['editable'] ) : ?>
 							<div
 								class="sc-input-group sc-quantity-selector"
 								data-wp-class--quantity--disabled="state.isQuantityDisabled"
+								data-wp-bind--hidden="!state.isEditable"
+								hidden
 							>
 								<div
 									class="sc-input-group-text sc-quantity-selector__decrease"
