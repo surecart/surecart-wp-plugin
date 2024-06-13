@@ -71,12 +71,7 @@ class BlockTemplatesService {
 			return $template;
 		}
 
-		list( $template_id, $template_slug ) = $template_name_parts;
-
-		// If we are not dealing with a SureCart template let's return early and let it continue through the process.
-		if ( $this->utility::PLUGIN_SLUG !== $template_id ) {
-			return $template;
-		}
+		$template_slug = $template_name_parts[1];
 
 		// If we don't have a template let Gutenberg do its thing.
 		if ( ! $this->blockTemplateIsAvailable( $template_slug, $template_type ) ) {

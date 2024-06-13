@@ -123,14 +123,6 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->query( 'index.php?sc_checkout_product_id=$matches[1]' )
 			->create();
 
-		// Collection.
-		$container['surecart.settings.permalinks.collection']->bootstrap();
-		( new PermalinkService() )
-			->params( [ 'sc_collection_page_id' ] )
-			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_collection_page_id=$matches[1]' )
-			->create();
-
 		// Upsell.
 		$container['surecart.settings.permalinks.upsell']->bootstrap();
 		( new PermalinkService() )
