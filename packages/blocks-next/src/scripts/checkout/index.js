@@ -41,7 +41,7 @@ const { state, actions } = store('surecart/checkout', {
 		openCartSidebar: false,
 		loading: false,
 		error: null,
-		discountCode: '',
+		promotionCode: '',
 		checkout: {},
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
@@ -61,8 +61,8 @@ const { state, actions } = store('surecart/checkout', {
 		get isDiscountAdded() {
 			return !!state?.checkout?.discount?.promotion?.code;
 		},
-		get isDiscountCodeSet() {
-			return !!state?.discountCode;
+		get isPromotionCodeSet() {
+			return !!state?.promotionCode;
 		},
 		get discountAmount() {
 			return state?.checkout?.discount_amount || 0;
@@ -154,8 +154,8 @@ const { state, actions } = store('surecart/checkout', {
 			}
 		},
 
-		setDiscountCode(e) {
-			state.discountCode = e?.target?.value || '';
+		setPromotionCode(e) {
+			state.promotionCode = e?.target?.value || '';
 		},
 
 		applyDiscount: async (e) => {
@@ -164,10 +164,11 @@ const { state, actions } = store('surecart/checkout', {
 
 			// const { ref } = getElement();
 			const { mode, formId } = getContext();
-			const checkout = await handleCouponApply(state.discountCode);
+			const checkout = await handleCouponApply(state.promotionCode);
 
 			if (checkout) {
 				if (!checkout?.discount?.coupon) {
+					// TODO: Change this from API.
 					state.error = {
 						title: 'Failed to update. Please check for errors and try again.',
 						message: 'This coupon code is invalid.',
@@ -178,15 +179,11 @@ const { state, actions } = store('surecart/checkout', {
 				state.error = '';
 				actions.setCheckout(checkout, mode, formId);
 
-				// TODO: Confirm and remove this code.
-				// const removeButton = ref?.parentElement?.querySelector?.(
-				// 	'.sc-coupon-remove-discount'
-				// );
-
 				// focus the discount remove button.
 				const removeButton = document?.querySelector?.(
-					'.sc-coupon-remove-discount'
+					'#sc-coupon-remove-discount'
 				);
+
 				if (removeButton) {
 					setTimeout(() => removeButton.focus(), 0);
 				}
@@ -198,7 +195,7 @@ const { state, actions } = store('surecart/checkout', {
 			const checkout = await handleCouponApply(null);
 
 			if (checkout) {
-				state.discountCode = '';
+				state.promotionCode = ''; //promotionCode
 				actions.setCheckout(checkout, mode, formId);
 			}
 		},
