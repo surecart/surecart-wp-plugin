@@ -60,7 +60,7 @@ export default ({ attributes, setAttributes }) => {
 				<div class="sc-line-item__text">
 					<div class="sc-line-item__description">
 						{__('Discount', 'surecart')}
-						<span class="sc-tag sc-tag--default">
+						<div class="sc-tag sc-tag--default">
 							{prmotionCode}
 
 							<button
@@ -71,7 +71,7 @@ export default ({ attributes, setAttributes }) => {
 							>
 								<ScIcon name="x" />
 							</button>
-						</span>
+						</div>
 					</div>
 				</div>
 

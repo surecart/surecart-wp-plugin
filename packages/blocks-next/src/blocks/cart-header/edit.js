@@ -53,7 +53,7 @@ export default ({ attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-				<span class="sc-tag sc-tag--default">0</span>
+				<div class="sc-tag sc-tag--default">0</div>
 			</div>
 		</>
 	);

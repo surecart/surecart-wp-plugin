@@ -26,7 +26,7 @@
 		<div class="sc-line-item__text">
 			<div class="sc-line-item__description">
 				<?php esc_html_e( 'Discount', 'surecart' ); ?>
-				<span class="sc-tag sc-tag--default">
+				<div class="sc-tag sc-tag--default">
 					<span data-wp-text="state.checkout.discount.promotion.code"></span>
 					<button
 						data-wp-on--click="actions.removeDiscount"
@@ -35,7 +35,7 @@
 					>
 						<?php echo wp_kses( SureCart::svg()->get( 'x', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
 					</button>
-				</span>
+				</div>
 			</div>
 		</div>
 

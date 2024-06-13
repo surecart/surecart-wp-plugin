@@ -18,7 +18,7 @@
 		<?php echo esc_html( $attributes['text'] ); ?>
 	</span>
 
-	<span class="sc-tag sc-tag--default">
+	<div class="sc-tag sc-tag--default">
 		<span data-wp-text="surecart/checkout::state.getItemsCount"></span>
-	</span>
+	</div>
 </div>
