@@ -124,6 +124,11 @@ const { state, actions } = store('surecart/checkout', {
 		get errorMessage() {
 			return state.error?.message || '';
 		},
+
+		get showCartMenuIcon() {
+			const { cartMenuAlwaysShown } = getContext();
+			return state.getItemsCount > 0 || cartMenuAlwaysShown;
+		},
 	},
 
 	callbacks: {

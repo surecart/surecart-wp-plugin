@@ -45,5 +45,5 @@
 	"editorScript": "file:./index.js",
 	"style": ["file:./style-index.css"],
 	"editorStyle": ["file:./index.css"],
-	"viewScriptModule": ["@surecart/cart-drawer", "@surecart/checkout"]
+	"viewScriptModule": ["@surecart/checkout"]
 }
