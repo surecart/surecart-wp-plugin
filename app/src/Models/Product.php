@@ -426,7 +426,7 @@ class Product extends Model implements PageModel {
 	public function getFeaturedImageAttribute() {
 		$gallery = $this->gallery ?? array();
 		if ( ! empty( $gallery ) ) {
-			return $gallery[0];
+			return $gallery[0] ?? null;
 		}
 		if ( empty( $this->featured_product_media ) ) {
 			return null;

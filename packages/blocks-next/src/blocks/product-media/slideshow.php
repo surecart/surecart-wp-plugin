@@ -13,10 +13,10 @@
 							echo wp_kses_post(
 								$image->html(
 									'large',
-									[
+									array(
 										'loading' => $index > 0 ? 'lazy' : 'eager',
 										'height'  => ! empty( $attributes['auto_height'] ) ? 'auto' : ( $attributes['height'] ?? 'auto' ),
-									]
+									)
 								)
 							);
 						?>
@@ -50,9 +50,9 @@
 						echo wp_kses_post(
 							$image->html(
 								'thumbnail',
-								[
+								array(
 									'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
-								]
+								)
 							)
 						);
 					?>

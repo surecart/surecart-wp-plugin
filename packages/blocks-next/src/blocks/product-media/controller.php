@@ -13,20 +13,20 @@ if ( count( $gallery ) === 1 ) {
 }
 
 $slider_options = array(
-	'sliderOptions'      => [
+	'sliderOptions'      => array(
 		'autoHeight'   => ! empty( $attributes['auto_height'] ),
 		'spaceBetween' => 40,
-	],
-	'thumbSliderOptions' => [
+	),
+	'thumbSliderOptions' => array(
 		'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
 		'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-		'breakpoints'    => [
-			320 => [
+		'breakpoints'    => array(
+			320 => array(
 				'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
 				'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-			],
-		],
-	],
+			),
+		),
+	),
 );
 
 $height = 'auto';

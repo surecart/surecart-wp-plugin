@@ -68,12 +68,26 @@ class ProductPriceChoicesMigrationService {
 	 * @return void
 	 */
 	public function renderPriceChoices() {
-		$attributes = array(
-			'label' => __( 'Pricing', 'surecart' ),
+		$choices_attributes = array(
+			'label' => $this->attributes['label'] ?? __( 'Pricing', 'surecart' ),
 		);
 
-		$this->block_html .= '<!-- wp:surecart/product-price-choices-v2 ' . wp_json_encode( $attributes ) . ' -->';
-		$this->block_html .= '<!-- wp:surecart/product-price-choice-template -->';
+		$template_attributes = array(
+			'textColor'       => $this->attributes['textColor'] ?? 'black',
+			'backgroundColor' => $this->attributes['backgroundColor'] ?? 'white',
+			'style'           => array(
+				'elements' => array(
+					'link' => array(
+						'color' => array(
+							'text' => $this->attributes['elements']['link']['color']['text'] ?? '#8a8a8a',
+						),
+					),
+				),
+			),
+		);
+
+		$this->block_html .= '<!-- wp:surecart/product-price-choices-v2 ' . wp_json_encode( $choices_attributes ) . ' -->';
+		$this->block_html .= '<!-- wp:surecart/product-price-choice-template ' . wp_json_encode( $template_attributes ) . ' -->';
 		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
 		$this->renderPriceName();
@@ -84,6 +98,8 @@ class ProductPriceChoicesMigrationService {
 		$this->block_html .= '<!-- /wp:group -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-choices-v2 -->';
+
+		error_log( print_r( $this->block_html, true ) );
 	}
 
 	/**
