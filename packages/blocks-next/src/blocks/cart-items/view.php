@@ -105,7 +105,7 @@
 								data-wp-bind--hidden="!state.lineItemHasScratchAmount"
 								data-wp-text="context.line_item.price.scratchAmount"
 							></span>
-							<span data-wp-text="context.line_item.price.display_amount"></span>
+							<span data-wp-text="state.lineItemAmountDisplay"></span>
 						</div>
 						<div
 							data-wp-bind--hidden="!context.line_item.price.interval"

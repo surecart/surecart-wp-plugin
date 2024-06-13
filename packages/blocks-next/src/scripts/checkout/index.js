@@ -54,8 +54,20 @@ const { state, actions } = store('surecart/checkout', {
 				state?.checkout?.discount?.redeemable_status === 'redeemable'
 			);
 		},
+		get lineItemAmountDisplay() {
+			const { line_item } = getContext();
+			if (!!line_item?.ad_hoc_amount) {
+				return line_item.ad_hoc_amount_display;
+			}
+
+			return line_item.subtotal_amount_display;
+		},
 		get lineItemHasScratchAmount() {
 			const { line_item } = getContext();
+			if (!!line_item?.ad_hoc_amount) {
+				return false;
+			}
+
 			return line_item.price.scratchAmount !== line_item.price.amount;
 		},
 		get isDiscountAdded() {
