@@ -100,7 +100,7 @@ class LicensesListTable extends ListTable {
 	public function column_key( $license ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit License', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit License', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ); ?>">
 			<?php echo wp_kses_post( $license->key ); ?>
 		</a>
 
@@ -131,7 +131,7 @@ class LicensesListTable extends ListTable {
 	public function column_customer( $license ) {
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $license->purchase->customer->id ) ); ?>">
+		<a aria-label="<?php esc_attr_e( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $license->purchase->customer->id ) ); ?>">
 			<?php echo wp_kses_post( $license->purchase->customer->name ?? $license->purchase->customer->email ); ?>
 			<?php if ( ! empty( $license->purchase->customer->name ) ) : ?>
 				&mdash;
@@ -148,7 +148,7 @@ class LicensesListTable extends ListTable {
 		}
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $license->purchase->product->id ) ); ?>">
+		<a aria-label="<?php esc_attr_e( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $license->purchase->product->id ) ); ?>">
 			<?php echo wp_kses_post( $license->purchase->product->name ); ?>
 		</a>
 		<?php

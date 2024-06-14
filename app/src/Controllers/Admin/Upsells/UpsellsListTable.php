@@ -260,7 +260,7 @@ class UpsellsListTable extends ListTable {
 		ob_start();
 		?>
 		<div>
-			<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
+			<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
 				<?php echo esc_html( $upsell_funnel->name ); ?>
 			</a>
 			<?php
