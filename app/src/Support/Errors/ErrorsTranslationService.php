@@ -36,7 +36,7 @@ class ErrorsTranslationService {
 	 *
 	 * @return string|false
 	 */
-	public function attributeTranslation( $attribute, $type, $options = [] ) {
+	public function attributeTranslation( $attribute, $type, $options = array() ) {
 		// if both are empty, return.
 		if ( empty( $attribute ) && empty( $type ) ) {
 			return false;
@@ -91,6 +91,24 @@ class ErrorsTranslationService {
 			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'], $options['currency'] ) );
 		}
 
+		if ( 'line_items' === $attribute && 'not_purchasable' === $type && ! empty( $options['purchasable_statuses'] ) ) {
+			$line_item_translations = array(
+				'price_gone'             => __( 'The price of one of the items on cart is no longer valid. Please review and try again.', 'surecart' ),
+				'price_old_version'      => __( 'The price of one of the items on cart has changed. Please review and try again.', 'surecart' ),
+				'variant_missing'        => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
+				'variant_gone'           => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
+				'variant_old_version'    => __( 'One of the items on cart has changed. Please review and try again.', 'surecart' ),
+				'out_of_stock'           => __( 'One of the items on cart is out of stock. Please review and try again.', 'surecart' ),
+				'exceeds_purchase_limit' => __( 'One of the items on cart exceeds the purchase limit. Please review and try again.', 'surecart' ),
+			);
+
+			$line_item_translated_error = $line_item_translations[ $options['purchasable_statuses'][0] ?? '' ] ?? false;
+
+			if ( $line_item_translated_error ) {
+				return $line_item_translated_error;
+			}
+		}
+
 		return false;
 	}
 
@@ -129,7 +147,7 @@ class ErrorsTranslationService {
 		}
 
 		// translate attribute.
-		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
+		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? array() );
 		if ( $translated ) {
 			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}
@@ -162,11 +180,11 @@ class ErrorsTranslationService {
 		$formatted = new \WP_Error(
 			$response['code'] ?? '',
 			$this->translateErrorMessage( $response, $response['message'] ?? '' ),
-			[
+			array(
 				'status'      => $code,
 				'type'        => $response['type'] ?? '',
 				'http_status' => $response['http_status'] ?? '',
-			]
+			)
 		);
 
 		if ( ! empty( $response['validation_errors'] ) ) {
@@ -174,11 +192,11 @@ class ErrorsTranslationService {
 				$formatted->add(
 					$error['code'] ?? 'invalid',
 					$this->translateErrorMessage( $error, $error['message'] ),
-					[
+					array(
 						'attribute' => $error['attribute'] ?? '',
 						'type'      => $error['type'] ?? '',
-						'options'   => $error['options'] ?? [],
-					]
+						'options'   => $error['options'] ?? array(),
+					)
 				);
 			}
 		}
