@@ -3,7 +3,5 @@
 		<?php echo wp_kses_post( $attributes['label'] ?? __( 'Pricing', 'surecart' ) ); ?>
 	</label>
 
-	<div class="sc-choices" >
-		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput ?>
-	</div>
+	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </div>
