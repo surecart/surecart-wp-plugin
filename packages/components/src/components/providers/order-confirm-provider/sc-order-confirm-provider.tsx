@@ -27,6 +27,9 @@ export class ScOrderConfirmProvider {
   /** Whether to show success modal */
   @State() showSuccessModal: boolean = false;
 
+  /** Whether to show success modal */
+  @State() manualPaymentMethod: ManualPaymentMethod;
+
   /** Checkout status to listen and do payment related stuff. */
   @Prop() checkoutStatus: string;
 
@@ -111,7 +114,10 @@ export class ScOrderConfirmProvider {
   }
 
   render() {
-    const manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
+    if (checkoutState.checkout?.manual_payment_method) {
+      // After the confirmOrder in finally we are clearing the checkout state. So, we need to store the manual_payment_method in a variable. As there is no other event where we can clear the checkout state.
+      this.manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
+    }
 
     return (
       <Host>
@@ -127,10 +133,10 @@ export class ScOrderConfirmProvider {
             style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
           >
             <span slot="description">{formState?.text?.success?.description || __('Your payment was successful. A receipt is on its way to your inbox.', 'surecart')}</span>
-            {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
+            {!!this.manualPaymentMethod?.name && !!this.manualPaymentMethod?.instructions && (
               <sc-alert type="info" open style={{ 'text-align': 'left' }}>
-                <span slot="title">{manualPaymentMethod?.name}</span>
-                <div innerHTML={manualPaymentMethod?.instructions}></div>
+                <span slot="title">{this.manualPaymentMethod?.name}</span>
+                <div innerHTML={this.manualPaymentMethod?.instructions}></div>
               </sc-alert>
             )}
             <sc-button href={this.getSuccessUrl()} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>
