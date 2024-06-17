@@ -20,7 +20,7 @@ export default ({
 	clientId,
 	__unstableLayoutClassNames,
 }) => {
-	const { layout, style } = attributes;
+	const { layout } = attributes;
 	const { type: layoutType, columnCount = 2 } = layout || {};
 
 	const setDisplayLayout = (newDisplayLayout) =>
