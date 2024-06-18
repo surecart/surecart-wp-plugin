@@ -1,9 +1,9 @@
 {
-	"timestamp": "2024-06-03T05:44:20",
+	"timestamp": "2024-06-10T14:32:54",
 	"compiler": {
 		"name": "@stencil/core",
-		"version": "3.4.2",
-		"typescriptVersion": "5.0.4"
+		"version": "4.18.3",
+		"typescriptVersion": "5.4.5"
 	},
 	"components": [
 		{
@@ -19095,7 +19095,7 @@
 			}
 		},
 		{
-			"filePath": "./src/components/controllers/checkout-form/sc-order-billing-address/sc-order-billing-address.tsx",
+			"filePath": "src/components/controllers/checkout-form/sc-order-billing-address/sc-order-billing-address.tsx",
 			"encapsulation": "shadow",
 			"tag": "sc-order-billing-address",
 			"readme": "# sc-order-billing-address\n\n\n",
@@ -19106,6 +19106,11 @@
 				{
 					"name": "cityPlaceholder",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "city-placeholder",
 					"reflectToAttr": false,
@@ -19123,6 +19128,11 @@
 				{
 					"name": "countryPlaceholder",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "country-placeholder",
 					"reflectToAttr": false,
@@ -19140,6 +19150,11 @@
 				{
 					"name": "defaultCountry",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "default-country",
 					"reflectToAttr": false,
@@ -19156,6 +19171,11 @@
 				{
 					"name": "label",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "label",
 					"reflectToAttr": false,
@@ -19172,6 +19192,11 @@
 				{
 					"name": "line1Placeholder",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "line-1-placeholder",
 					"reflectToAttr": false,
@@ -19189,6 +19214,11 @@
 				{
 					"name": "line2Placeholder",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "line-2-placeholder",
 					"reflectToAttr": false,
@@ -19206,6 +19236,11 @@
 				{
 					"name": "namePlaceholder",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "name-placeholder",
 					"reflectToAttr": false,
@@ -19223,6 +19258,11 @@
 				{
 					"name": "postalCodePlaceholder",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "postal-code-placeholder",
 					"reflectToAttr": false,
@@ -19240,6 +19280,11 @@
 				{
 					"name": "showName",
 					"type": "boolean",
+					"complexType": {
+						"original": "boolean",
+						"resolved": "boolean",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "show-name",
 					"reflectToAttr": true,
@@ -19256,6 +19301,11 @@
 				{
 					"name": "statePlaceholder",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "state-placeholder",
 					"reflectToAttr": false,
@@ -19273,6 +19323,11 @@
 				{
 					"name": "toggleLabel",
 					"type": "string",
+					"complexType": {
+						"original": "string",
+						"resolved": "string",
+						"references": {}
+					},
 					"mutable": false,
 					"attr": "toggle-label",
 					"reflectToAttr": false,
@@ -19294,6 +19349,17 @@
 					"returns": {
 						"type": "Promise<boolean>",
 						"docs": ""
+					},
+					"complexType": {
+						"signature": "() => Promise<boolean>",
+						"parameters": [],
+						"references": {
+							"Promise": {
+								"location": "global",
+								"id": "global::Promise"
+							}
+						},
+						"return": "Promise<boolean>"
 					},
 					"signature": "reportValidity() => Promise<boolean>",
 					"parameters": [],
@@ -19332,7 +19398,7 @@
 			}
 		},
 		{
-			"filePath": "./src/components/controllers/checkout-form/sc-order-bump/sc-order-bump.tsx",
+			"filePath": "src/components/controllers/checkout-form/sc-order-bump/sc-order-bump.tsx",
 			"encapsulation": "shadow",
 			"tag": "sc-order-bump",
 			"readme": "# sc-order-bump\n\n\n",
@@ -28915,7 +28981,7 @@
 						"references": {
 							"LayoutConfig": {
 								"location": "local",
-								"path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+								"path": "/Users/rajkiranbagal/dev/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
 								"id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
 							}
 						}
@@ -41409,5 +41475,227 @@
 				"sc-block-ui": ["sc-spinner"]
 			}
 		}
-	]
+	],
+	"typeLibrary": {
+		"src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig": {
+			"declaration": "interface Array<T> {\n    /**\n     * Gets or sets the length of the array. This is a number one higher than the highest index in the array.\n     */\n    length: number;\n    /**\n     * Returns a string representation of an array.\n     */\n    toString(): string;\n    /**\n     * Returns a string representation of an array. The elements are converted to string using their toLocaleString methods.\n     */\n    toLocaleString(): string;\n    /**\n     * Removes the last element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    pop(): T | undefined;\n    /**\n     * Appends new elements to the end of an array, and returns the new length of the array.\n     * @param items New elements to add to the array.\n     */\n    push(...items: T[]): number;\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: ConcatArray<T>[]): T[];\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: (T | ConcatArray<T>)[]): T[];\n    /**\n     * Adds all the elements of an array into a string, separated by the specified separator string.\n     * @param separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.\n     */\n    join(separator?: string): string;\n    /**\n     * Reverses the elements in an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     */\n    reverse(): T[];\n    /**\n     * Removes the first element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    shift(): T | undefined;\n    /**\n     * Returns a copy of a section of an array.\n     * For both start and end, a negative index can be used to indicate an offset from the end of the array.\n     * For example, -2 refers to the second to last element of the array.\n     * @param start The beginning index of the specified portion of the array.\n     * If start is undefined, then the slice begins at index 0.\n     * @param end The end index of the specified portion of the array. This is exclusive of the element at the index 'end'.\n     * If end is undefined, then the slice extends to the end of the array.\n     */\n    slice(start?: number, end?: number): T[];\n    /**\n     * Sorts an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     * @param compareFn Function used to determine the order of the elements. It is expected to return\n     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive\n     * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.\n     * ```ts\n     * [11,2,22,1].sort((a, b) => a - b)\n     * ```\n     */\n    sort(compareFn?: (a: T, b: T) => number): this;\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount?: number): T[];\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @param items Elements to insert into the array in place of the deleted elements.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount: number, ...items: T[]): T[];\n    /**\n     * Inserts new elements at the start of an array, and returns the new length of the array.\n     * @param items Elements to insert at the start of the array.\n     */\n    unshift(...items: T[]): number;\n    /**\n     * Returns the index of the first occurrence of a value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0.\n     */\n    indexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Returns the index of the last occurrence of a specified value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin searching backward. If fromIndex is omitted, the search starts at the last index in the array.\n     */\n    lastIndexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): this is S[];\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Determines whether the specified callback function returns true for any element of an array.\n     * @param predicate A function that accepts up to three arguments. The some method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value true, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Performs the specified action for each element in an array.\n     * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.\n     * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;\n    /**\n     * Calls a defined callback function on each element of an array, and returns an array that contains the results.\n     * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n\n    [n: number]: T;\n}",
+			"docstring": "",
+			"path": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx"
+		},
+		"src/types.ts::Product": {
+			"declaration": "export interface Product extends Object {\n  id: string;\n  name: string;\n  description: string;\n  archived: boolean;\n  archived_at: string;\n  metadata: any;\n  image_url: string;\n  recurring: boolean;\n  tax_category: string;\n  tax_enabled: boolean;\n  purchase_limit: number;\n  metrics: ProductMetrics;\n  line_item_image: ImageAttributes;\n  permalink: string;\n  weight: number;\n  weight_unit: 'kg' | 'lb' | 'g' | 'oz';\n  featured_product_media?: string | ProductMedia;\n  prices: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Price>;\n  };\n  variants: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Variant>;\n  };\n  variant_options: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<VariantOption>;\n  };\n  product_medias: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ProductMedia>;\n  };\n  downloads: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Download>;\n  };\n  product_collections: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Collection>;\n  };\n  stock_enabled: boolean;\n  allow_out_of_stock_purchases: boolean;\n  stock: number;\n  available_stock: number;\n  held_stock: number;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ProductsSearchedParams": {
+			"declaration": "export interface ProductsSearchedParams {\n  searchString: string;\n  searchCollections?: string[];\n  searchResultCount: number;\n  searchResultIds: string[];\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ProductsViewedParams": {
+			"declaration": "export interface ProductsViewedParams {\n  products: Product[];\n  pageTitle: string;\n  collectionId?: string;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::PriceChoice": {
+			"declaration": "export interface PriceChoice {\n  id: string;\n  product_id: string;\n  quantity: number;\n  enabled: boolean;\n  selected?: boolean;\n  variant?: string | null;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Customer": {
+			"declaration": "export interface Customer extends Object {\n  id: string;\n  email: string;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  phone?: string;\n  billing_address?: string | Address;\n  billing_address_display?: string | Address;\n  shipping_address?: string | Address;\n  billing_matches_shipping: boolean;\n  live_mode: boolean;\n  unsubscribed: boolean;\n  default_payment_method: string | PaymentMethod;\n  tax_identifier: {\n    number: string;\n    number_type: string;\n  };\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::TaxProtocol": {
+			"declaration": "export interface TaxProtocol {\n  id: string;\n  object: 'tax_protocol';\n  ca_tax_enabled: boolean;\n  eu_micro_exemption_enabled: boolean;\n  eu_tax_enabled: boolean;\n  eu_vat_required: boolean;\n  eu_vat_unverified_behavior: 'error' | 'apply_reverse_charge' | 'skip_reverse_charge';\n  eu_vat_local_reverse_charge: boolean;\n  tax_enabled: boolean;\n  address: string | Address;\n  ca_tax_identifier: string | TaxIdentifier;\n  eu_tax_identifier: string | TaxIdentifier;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Processor": {
+			"declaration": "export interface Processor {\n  id: string;\n  live_mode: boolean;\n  processor_data: {\n    account_id: string;\n    recurring_enabled: boolean;\n    client_id: string;\n    merchant_initiated?: boolean;\n  };\n  recurring_enabled: boolean;\n  supported_currencies: Array<string>;\n  processor_type: 'paypal' | 'stripe' | 'mollie' | 'mock';\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ManualPaymentMethod": {
+			"declaration": "export interface ManualPaymentMethod {\n  id: string;\n  object: 'manual_payment_method';\n  archived: boolean;\n  archived_at: number;\n  description: string;\n  instructions: string;\n  name: string;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Checkout": {
+			"declaration": "export interface Checkout extends Object {\n  id?: string;\n  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';\n  staged_payment_intents: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<PaymentIntent>;\n  };\n  abandoned_checkout_enabled: boolean;\n  billing_matches_shipping: boolean;\n  bump_amount: number;\n  payment_method_required?: boolean;\n  manual_payment: boolean;\n  manual_payment_method?: string | ManualPaymentMethod;\n  reusable_payment_method_required?: boolean;\n  number?: string;\n  amount_due?: number;\n  trial_amount?: number;\n  charge?: string | Charge;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  email?: string;\n  phone?: string;\n  live_mode?: boolean;\n  currency?: string;\n  total_amount?: number;\n  subtotal_amount?: number;\n  full_amount?: number;\n  proration_amount?: number;\n  total_savings_amount?: number;\n  applied_balance_amount?: number;\n  discounts?: number;\n  shipping_address_required?: boolean;\n  tax_enabled: boolean;\n  tax_amount: number;\n  email_exists: boolean;\n  tax_inclusive_amount: number;\n  tax_exclusive_amount: number;\n  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';\n  tax_label: string;\n  tax_percent: number;\n  line_items: lineItems;\n  recommended_bumps?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Bump>;\n  };\n  current_upsell: Upsell;\n  recommended_upsells?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Upsell>;\n  };\n  metadata?: any;\n  payment_intent?: PaymentIntent;\n  payment_method?: PaymentMethod;\n  order?: string | Order;\n  customer: string | Customer;\n  subscriptions: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Subscription>;\n  };\n  purchases: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Purchase>;\n  };\n  discount_amount?: number;\n  discount?: DiscountResponse;\n  billing_address?: string | Address;\n  shipping_amount?: number;\n  shipping_address?: string | Address;\n  shipping_enabled?: boolean;\n  shipping_choices?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ShippingChoice>;\n  };\n  selected_shipping_choice?: string | ShippingChoice;\n  selected_shipping_choice_required: boolean;\n  processor_data?: ProcessorData;\n  tax_identifier?: {\n    number: string;\n    number_type: string;\n  };\n  url: string;\n  created_at?: number;\n  updated_at: number;\n  variant: string;\n  upsells_expire_at?: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ResponseError": {
+			"declaration": "export interface ResponseError {\n  code?: string;\n  message: string;\n  data?: {\n    http_status: string;\n    status?: number;\n    type: string;\n  };\n  additional_errors?: Array<{\n    code: string;\n    message: string;\n    data: {\n      attribute: string;\n      options: Array<string>;\n      type: string;\n    };\n  }>;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::LineItemData": {
+			"declaration": "export interface LineItemData extends Object {\n  id?: string;\n  price_id?: string;\n  bump?: string;\n  quantity: number;\n  ad_hoc_amount?: number;\n  variant?: string;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Price": {
+			"declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::LineItem": {
+			"declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  name: string;\n  object: string;\n  quantity: number;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  discount_amount: number;\n  subtotal_amount: number;\n  total_amount: number;\n  trial_amount: number;\n  tax_amount: number;\n  fees_amount: number;\n  scratch_amount: number;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  variant_options: Array<string>;\n  variant?: Variant;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ProcessorName": {
+			"declaration": "export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Address": {
+			"declaration": "export interface Address extends Object {\n  name?: string;\n  line_1?: string;\n  line_2?: string;\n  city?: string;\n  state?: string;\n  postal_code?: string;\n  country?: string;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Prices": {
+			"declaration": "{\n  [id: string]: Price;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Products": {
+			"declaration": "{\n  [id: string]: Product;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::RuleGroup": {
+			"declaration": "export interface RuleGroup {\n  group_id: string;\n  rules: Rule[];\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Bump": {
+			"declaration": "export interface Bump {\n  id: string;\n  object: 'bump';\n  amount_off: number;\n  archived: boolean;\n  archived_at: number;\n  auto_apply: boolean;\n  filter_match_type: 'all' | 'any' | 'none';\n  filters: any;\n  metadata: any;\n  name: string;\n  percent_off: number;\n  price: string | Price;\n  priority: 1 | 2 | 3 | 4 | 5;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Order": {
+			"declaration": "export interface Order extends Object {\n  id?: string;\n  object: 'order';\n  number?: string;\n  order_type?: 'checkout' | 'subscription';\n  statement_url?: string;\n  status?: OrderStatus;\n  shipment_status?: OrderShipmentStatus;\n  checkout?: Checkout | string;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::SubscriptionProtocol": {
+			"declaration": "export interface SubscriptionProtocol {\n  id: string;\n  object: 'subscription_protocol';\n  cancel_behavior: 'pending' | 'immediate';\n  downgrade_behavior: 'pending' | 'immediate';\n  payment_retry_window_weeks: number;\n  upgrade_behavior: 'pending' | 'immediate';\n  preservation_enabled: boolean;\n  preservation_locales: {\n    reasons_title: string;\n    reasons_description: string;\n    skip_link: string;\n    preserve_title: string;\n    preserve_description: string;\n    preserve_button: string;\n    cancel_link: string;\n  };\n  preservation_coupon: Coupon | string;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Subscription": {
+			"declaration": "export interface Subscription extends Object {\n  id: string;\n  object: 'subscription';\n  currency?: string;\n  status: SubscriptionStatus;\n  live_mode: boolean;\n  external_subscription_id: string;\n  current_cancellation_act: string | CancellationAct;\n  trial_end_at: number;\n  processor_type: 'stripe' | 'paypal';\n  order: Order;\n  customer: Customer;\n  discount: DiscountResponse;\n  finite: boolean;\n  pending_update: {\n    ad_hoc_amount?: number;\n    price?: string;\n    quantity?: number;\n    variant?: string;\n  };\n  purchase: Purchase | string;\n  cancel_at_period_end: number | false;\n  current_period: string | Period;\n  current_period_end_at: number | false;\n  current_period_start_at: number | false;\n  remaining_period_count: number | null;\n  ended_at: number;\n  end_behavior: 'cancel' | 'complete';\n  payment_method: PaymentMethod | string;\n  manual_payment_method: ManualPaymentMethod | string;\n  manual_payment: boolean;\n  price: Price;\n  ad_hoc_amount: number;\n  variant?: Variant | string;\n  variant_options?: Array<string>;\n  created_at: number;\n  updated_at: number;\n  restore_at?: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::CancellationReason": {
+			"declaration": "export interface CancellationReason {\n  id: string;\n  object: 'cancellation_reason';\n  archived: boolean;\n  comment_enabled: false;\n  comment_prompt: string | null;\n  coupon_enabled: boolean;\n  label: string;\n  position: number;\n  archived_at: number;\n  discarded_at: number;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Download": {
+			"declaration": "export interface Download {\n  id: string;\n  object: 'download';\n  archived: boolean;\n  archived_at?: number;\n  media: string | Media;\n  name?: string;\n  product: string | Product;\n  update_at: number;\n  created_at: number;\n  url?: string;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::License": {
+			"declaration": "export interface License {\n  id: string;\n  object: 'license';\n  activation_limit: number;\n  activation_count: number;\n  key: string;\n  activations?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Activation>;\n  };\n  status: 'inactive' | 'active' | 'revoked';\n  purchase: string | Purchase;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::PaymentMethod": {
+			"declaration": "export interface PaymentMethod extends Object {\n  id: string;\n  object: 'payment_method';\n  live_mode: boolean;\n  external_payment_method_id: string;\n  processor_type: 'stripe' | 'paypal';\n  paypal_account: any;\n  type: string;\n  bank_account: BankAccount | string;\n  payment_instrument: PaymentInstrument | string;\n  payment_intent: PaymentIntent | string;\n  billing_agreement?: BillingAgreement | string;\n  card: any;\n  customer: Customer | string;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ProductGroup": {
+			"declaration": "export interface ProductGroup {\n  id: string;\n  object: 'product_group';\n  archived: boolean;\n  archived_at: number;\n  metadata: object;\n  name: string;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::WordPressUser": {
+			"declaration": "export interface WordPressUser {\n  id: number;\n  display_name: string;\n  first_name: string;\n  last_name: string;\n  email: string;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ProductMetrics": {
+			"declaration": "export interface ProductMetrics {\n  currency: string;\n  max_price_amount: number;\n  min_price_amount: number;\n  prices_count: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::FormState": {
+			"declaration": "export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired' | 'redirecting';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::FormStateSetter": {
+			"declaration": "export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAYING' | 'PAID' | 'EXPIRE' | 'FETCH';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::DiscountResponse": {
+			"declaration": "export interface DiscountResponse {\n  coupon?: Coupon;\n  id: string;\n  object: 'discount';\n  promotion: Promotion;\n  redeemable_status: string;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::FulfillmentStatus": {
+			"declaration": "export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::OrderFulFillmentStatus": {
+			"declaration": "export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ReturnRequestStatus": {
+			"declaration": "export type ReturnRequestStatus = 'open' | 'completed';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::OrderShipmentStatus": {
+			"declaration": "export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::OrderStatus": {
+			"declaration": "export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ImageAttributes": {
+			"declaration": "export interface ImageAttributes {\n  src: string;\n  alt?: string;\n  class?: string;\n  decoding?: string;\n  height?: number;\n  loading?: string;\n  sizes?: string;\n  srcset?: string;\n  width?: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Fee": {
+			"declaration": "export interface Fee {\n  id: string;\n  object: 'fee';\n  amount: number;\n  description: string;\n  fee_type: 'manual' | 'bump' | 'setup' | 'upsell';\n  line_item: string | LineItem;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::Purchase": {
+			"declaration": "export interface Purchase {\n  id: string;\n  object: 'purchase';\n  live_mode: boolean;\n  quantity: number;\n  revoked: boolean;\n  revoked_at: number;\n  customer: string | Customer;\n  invoice_item: string | InvoiceItem;\n  invoice: string | Invoice;\n  line_item: string | LineItem;\n  order: string | Order;\n  product: string | Product;\n  refund: string | Refund;\n  subscription: string | Subscription;\n  license: string | License;\n  created_at: number;\n  updated_at: number;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::ChoiceItem": {
+			"declaration": "export interface ChoiceItem extends Object {\n  value: string;\n  label: string;\n  description?: string;\n  disabled?: boolean;\n  checked?: boolean;\n  unavailable?: boolean;\n  choices?: ChoiceItem[];\n  suffix?: string;\n  suffixDescription?: string;\n  icon?: string;\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::PaymentInfoAddedParams": {
+			"declaration": "export interface PaymentInfoAddedParams {\n  checkout_id: string;\n  processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';\n  currency: string;\n  total_amount: number;\n  line_items?: lineItems;\n  payment_method: {\n    billing_details: {\n      name: string;\n      email: string;\n    };\n  };\n}",
+			"docstring": "",
+			"path": "src/types.ts"
+		},
+		"src/types.ts::SubscriptionStatus": {
+			"declaration": "export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';",
+			"docstring": "",
+			"path": "src/types.ts"
+		}
+	}
 }

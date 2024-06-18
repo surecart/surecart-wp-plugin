@@ -1,28 +1,31 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-price-choice-template",
-	"title": "Price Template",
-	"description": "Displays the price of a product with a choice of options.",
+	"name": "surecart/product-price-choices-template",
+	"title": "Prices Template",
+	"description": "Displays possible choices for product prices.",
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"usesContext": ["surecart/productId", "surecart/product", "surecart/price"],
+	"usesContext": ["surecart/productId", "surecart/product"],
 	"example": {
 		"attributes": {}
 	},
-	"attributes": {
-		"highlight_border": {
-			"type": "string"
-		}
-	},
 	"supports": {
 		"interactivity": true,
+		"layout": {
+			"__experimentalDefault": "grid",
+			"__experimentalDefaultControls": {
+				"layout": true
+			}
+		},
 		"spacing": {
 			"padding": true,
 			"margin": false,
+			"blockGap": true,
 			"__experimentalDefaultControls": {
-				"padding": true
+				"padding": true,
+				"blockGap": true
 			}
 		},
 		"__experimentalBorder": {
@@ -48,5 +51,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/choice.css", "file:./style-index.css"]
+	"style": ["file:../../styles/choice.css"]
 }

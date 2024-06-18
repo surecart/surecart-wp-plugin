@@ -41,9 +41,29 @@ class ProductListMigrationService {
 	 * @param object $block Block.
 	 */
 	public function __construct( $attributes = array(), $block = null ) {
-		$this->attributes   = $attributes;
-		$this->block        = $block;
-		$this->inner_blocks = $block->parsed_block['innerBlocks'] ?? array();
+		$this->attributes     = $attributes;
+		$this->block          = $block;
+		$default_inner_blocks = array(
+			array(
+				'blockName'   => 'surecart/product-item',
+				'attrs'       => array(),
+				'innerBlocks' => array(
+					array(
+						'blockName' => 'surecart/product-item-image',
+						'attrs'     => array(),
+					),
+					array(
+						'blockName' => 'surecart/product-item-price',
+						'attrs'     => array(),
+					),
+					array(
+						'blockName' => 'surecart/product-item-title',
+						'attrs'     => array(),
+					),
+				),
+			),
+		); // For Shortcodes.
+		$this->inner_blocks   = $block->parsed_block['innerBlocks'] ?? $default_inner_blocks;
 	}
 
 	/**
@@ -176,7 +196,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderTitle(): void {
-		$product_title_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-title' ) );
+		$product_title_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-title' ), JSON_FORCE_OBJECT );
 		$this->block_html   .= '<!-- wp:surecart/product-title-v2 ' . $product_title_attrs . ' /-->';
 	}
 
@@ -186,7 +206,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderImage(): void {
-		$product_image_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-image' ) );
+		$product_image_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-image' ), JSON_FORCE_OBJECT );
 		$this->block_html   .= '<!-- wp:surecart/product-image ' . $product_image_attrs . ' /-->';
 	}
 
@@ -196,7 +216,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderPrice(): void {
-		$product_price_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-price' ) );
+		$product_price_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-price' ), JSON_FORCE_OBJECT );
 		$this->block_html   .= '<!-- wp:surecart/product-price-v2 ' . $product_price_attrs . ' /-->';
 	}
 
