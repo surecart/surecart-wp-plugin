@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-06-05T18:13:14",
+  "timestamp": "2024-06-18T18:47:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -21537,6 +21537,23 @@
       "usage": {},
       "props": [
         {
+          "name": "canDetachDefaultPaymentMethod",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "can-detach-default-payment-method",
+          "reflectToAttr": false,
+          "docs": "Whether default payment method can be detached",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "heading",
           "type": "string",
           "mutable": false,
@@ -21598,13 +21615,13 @@
         "sc-skeleton",
         "sc-divider",
         "sc-empty",
-        "sc-payment-method",
-        "sc-flex",
-        "sc-tag",
         "sc-dropdown",
         "sc-icon",
         "sc-menu",
         "sc-menu-item",
+        "sc-payment-method",
+        "sc-flex",
+        "sc-tag",
         "sc-dashboard-module",
         "sc-button",
         "sc-dialog",
@@ -21621,13 +21638,13 @@
           "sc-skeleton",
           "sc-divider",
           "sc-empty",
-          "sc-payment-method",
-          "sc-flex",
-          "sc-tag",
           "sc-dropdown",
           "sc-icon",
           "sc-menu",
           "sc-menu-item",
+          "sc-payment-method",
+          "sc-flex",
+          "sc-tag",
           "sc-dashboard-module",
           "sc-button",
           "sc-dialog",
