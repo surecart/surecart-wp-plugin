@@ -212,7 +212,7 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		if ( isset( $attributes[ 'sort_enabled' ] ) ) { // This way we know it's the old block.
-			// return \SureCart::block()->productListMigration( $attributes, $this->block )->render();
+			return \SureCart::block()->productListMigration( $attributes, $this->block )->render();
 		}
 		
 		self::$instance = wp_unique_id( 'sc-product-item-list-' );

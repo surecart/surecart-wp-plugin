@@ -7,8 +7,6 @@
  * @returns {void}
  */
 export const trackEvent = (googleEventName, eventData) => {
-	console.log(window.dataLayer);
-	console.log(window.gtag);
 	if (!window.dataLayer && !window.gtag) return;
 	if (!eventData) return;
 
@@ -25,3 +23,9 @@ export const trackEvent = (googleEventName, eventData) => {
 		ecommerce: eventData,
 	});
 };
+
+document.addEventListener('scSearched', (e) => {
+	trackEvent('search', {
+		search_term: e.detail?.searchString,
+	});
+});
