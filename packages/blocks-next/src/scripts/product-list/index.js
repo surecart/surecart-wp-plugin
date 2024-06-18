@@ -116,9 +116,12 @@ const { state } = store('surecart/product-list', {
 			state.loading = true;
 			state.searching = true;
 			yield debouncedSearch(ref?.value, routerState, actions, blockId);
+			const { productIds } = getContext();
 			const analyticsEvent = new CustomEvent('scSearched', {
 				detail: {
 					searchString: ref?.value,
+					searchResultCount: productIds?.length,
+					searchResultIds: productIds,
 				},
 				bubbles: true,
 			});

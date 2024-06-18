@@ -7,9 +7,6 @@ window.addEventListener('scSearched', function (e) {
 	const eventDetail = e.detail;
 	window.fbq('track', 'Search', {
 		search_string: eventDetail.searchString,
-		// content_ids: eventDetail.searchResultIds,
-		// ...(!!eventDetail?.searchCollections?.length
-		// 	? { content_category: eventDetail.searchCollections.join(',') }
-		// 	: {}),
+		content_ids: eventDetail.searchResultIds,
 	});
 });
