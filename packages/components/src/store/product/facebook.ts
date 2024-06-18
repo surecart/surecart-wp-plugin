@@ -6,6 +6,7 @@ import { ProductsSearchedParams } from 'src/types';
  */
 window.addEventListener('scSearched', function (e: CustomEvent) {
   if (!window?.fbq) return;
+
   const eventDetail: ProductsSearchedParams = e.detail;
 
   window.fbq('track', 'Search', {

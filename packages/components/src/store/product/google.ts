@@ -7,8 +7,6 @@ import { trackEvent } from '../../functions/google';
  */
 
 window.addEventListener('scSearched', (e: CustomEvent) => {
-  console.log('scSearched event google', e.detail);
-
   trackEvent('search', {
     search_term: e.detail?.searchString,
   });
