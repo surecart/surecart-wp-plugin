@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
-
+import { trackEvent } from '../../utilities/google';
 /**
  * Check if the link is valid.
  */
@@ -114,6 +114,20 @@ const { state } = store('surecart/product-list', {
 			state.loading = true;
 			state.searching = true;
 			yield debouncedSearch(ref?.value, routerState, actions, blockId);
+			// Create a custom event to dispatch the search term to google & facebook analytics.
+			const analyticsEvent = new CustomEvent('scSearched', {
+				detail: {
+					searchString: ref?.value,
+					// searchResultCount: this.products?.length,
+					// searchResultIds: this.products.map((product) => product.id),
+				},
+				bubbles: true,
+			});
+			window.dispatchEvent(analyticsEvent);
+			trackEvent('search', {
+				search_term: ref?.value,
+			});
+			console.log(analyticsEvent);
 			state.loading = false;
 			state.searching = false;
 		},
