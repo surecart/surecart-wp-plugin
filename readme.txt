@@ -305,14 +305,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.28.0 - June 6th, 2024 =
-- New: Setting to allow customers to remove default payment method.
-- Improvement: Add ability to collection billing address with shipping address on checkout.
-- Improvement: Allow manually updating a subscription to the newest price version in case of a pricing change.
-- Fix: Issue with creating new prices not clearing out form when drawer was closed.
-- Fix: Placeholder images for slide out cart line items in admin.
-- Fix: Modal incorrectly triggering when item quantity is out of stock on checkout page in some instances.
-- Fix: Some shortcodes not working with 0 instead of false for some attributes.
+= 2.28.0 - June 18th, 2024 =
+- New: Added a setting that allows customers to remove their default payment method.
+- New: Added the ability to collect both billing and shipping addresses at checkout.
+- Improvement: Users can now manually update a subscription to the latest price version in the event of a pricing change.
+- Fix: Resolved an issue where creating new prices did not clear the form when the drawer was closed.
+- Fix: Fixed placeholder images for slide-out cart line items in the admin interface.
+- Fix: Fixed an issue where a modal was incorrectly triggered when an item quantity was out of stock on the checkout page in certain instances.
+- Fix: Fixed an issue where some shortcodes did not work with 0 instead of false for some attributes.
 
 = 2.27.1 - May 23rd, 2024 =
 - Improvement: Handle potential platform conflict statuses with retry mechanism.
