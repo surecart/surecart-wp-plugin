@@ -66,6 +66,7 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
+      this.manualPaymentMethod = (checkoutState.checkout?.manual_payment_method as ManualPaymentMethod) || null;
       const checkout = checkoutState.checkout;
       const formId = checkoutState.formId;
 
@@ -114,11 +115,6 @@ export class ScOrderConfirmProvider {
   }
 
   render() {
-    if (checkoutState.checkout?.manual_payment_method) {
-      // After the confirmOrder in finally we are clearing the checkout state. So, we need to store the manual_payment_method in a variable. As there is no other event where we can clear the checkout state.
-      this.manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
-    }
-
     return (
       <Host>
         <slot />
