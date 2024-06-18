@@ -36,7 +36,7 @@ class ErrorsTranslationService {
 	 *
 	 * @return string|false
 	 */
-	public function attributeTranslation( $attribute, $type, $options = array() ) {
+	public function attributeTranslation( $attribute, $type, $options = [] ) {
 		// if both are empty, return.
 		if ( empty( $attribute ) && empty( $type ) ) {
 			return false;
@@ -147,7 +147,7 @@ class ErrorsTranslationService {
 		}
 
 		// translate attribute.
-		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? array() );
+		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
 		if ( $translated ) {
 			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}
@@ -180,11 +180,11 @@ class ErrorsTranslationService {
 		$formatted = new \WP_Error(
 			$response['code'] ?? '',
 			$this->translateErrorMessage( $response, $response['message'] ?? '' ),
-			array(
+			[
 				'status'      => $code,
 				'type'        => $response['type'] ?? '',
 				'http_status' => $response['http_status'] ?? '',
-			)
+			]
 		);
 
 		if ( ! empty( $response['validation_errors'] ) ) {
@@ -192,11 +192,11 @@ class ErrorsTranslationService {
 				$formatted->add(
 					$error['code'] ?? 'invalid',
 					$this->translateErrorMessage( $error, $error['message'] ),
-					array(
+					[
 						'attribute' => $error['attribute'] ?? '',
 						'type'      => $error['type'] ?? '',
-						'options'   => $error['options'] ?? array(),
-					)
+						'options'   => $error['options'] ?? [],
+					]
 				);
 			}
 		}
