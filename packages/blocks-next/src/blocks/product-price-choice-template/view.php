@@ -1,3 +1,13 @@
+<?php
+if ( ! empty( $attributes['highlight_border'] ) ) {
+
+	printf(
+		'<style>div.sc-choice--checked{border-color:%s!important;}</style>',
+		esc_attr( $attributes['highlight_border'] ?? '' )
+	);
+}
+?>
+
 <div
 	<?php
 		echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-choice' ) ) );

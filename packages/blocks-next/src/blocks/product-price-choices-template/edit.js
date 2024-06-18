@@ -32,21 +32,24 @@ export default ({
 		const blockContexts = [];
 		const prices = {
 			0: {
-				name: __('One Time', 'surecart'),
-				display_amount: '$10',
-				short_interval_text: '',
-			},
-			1: {
 				name: __('Subscribe & Save', 'surecart'),
 				display_amount: '$8',
 				short_interval_text: __('/ mo', 'surecart'),
+			},
+			1: {
+				name: __('One Time', 'surecart'),
+				display_amount: '$10',
+				short_interval_text: '',
 			},
 		};
 
 		for (let i = 1; i <= Math.max(2, columnCount); i++) {
 			blockContexts.push({
 				id: `price${i}`,
-				'surecart/price': prices[i % 2],
+				'surecart/price': {
+					...prices[i % 2],
+					checked: i === 1,
+				},
 			});
 		}
 

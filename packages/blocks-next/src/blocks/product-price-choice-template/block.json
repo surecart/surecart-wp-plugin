@@ -7,9 +7,14 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"usesContext": ["surecart/productId", "surecart/product"],
+	"usesContext": ["surecart/productId", "surecart/product", "surecart/price"],
 	"example": {
 		"attributes": {}
+	},
+	"attributes": {
+		"highlight_border": {
+			"type": "string"
+		}
 	},
 	"supports": {
 		"interactivity": true,
