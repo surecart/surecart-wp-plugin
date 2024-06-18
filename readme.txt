@@ -309,6 +309,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Added a setting that allows customers to remove their default payment method.
 - New: Added the ability to collect both billing and shipping addresses at checkout.
 - Improvement: Users can now manually update a subscription to the latest price version in the event of a pricing change.
+- Improvement: Change Free Trial default text throughout plugin to "Trial" to account for paid trials.
+- Fix: Update processor setting url.
 - Fix: Resolved an issue where creating new prices did not clear the form when the drawer was closed.
 - Fix: Fixed placeholder images for slide-out cart line items in the admin interface.
 - Fix: Fixed an issue where a modal was incorrectly triggered when an item quantity was out of stock on the checkout page in certain instances.
