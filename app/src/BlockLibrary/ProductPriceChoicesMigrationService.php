@@ -98,8 +98,6 @@ class ProductPriceChoicesMigrationService {
 		$this->block_html .= '<!-- /wp:group -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-choices-v2 -->';
-
-		error_log( print_r( $this->block_html, true ) );
 	}
 
 	/**
