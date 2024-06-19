@@ -243,6 +243,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the sync expands.
+	 *
+	 * @return array
+	 */
+	protected function getSyncExpands() {
+		return $this->sync_expands;
+	}
+
+	/**
 	 * Maybe queue a sync job if updated_at is different
 	 * than the product post updated_at.
 	 *
