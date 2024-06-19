@@ -244,6 +244,7 @@ class ProductsListTable extends ListTable {
 			array(
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
+				'cached'   => false
 			)
 		)->with(
 			array(
