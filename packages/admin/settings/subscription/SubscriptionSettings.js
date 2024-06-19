@@ -406,6 +406,27 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.default_payment_method_detach_enabled}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							default_payment_method_detach_enabled:
+								!item?.default_payment_method_detach_enabled,
+						});
+					}}
+				>
+					{__(
+						'Allow Customers To Remove Default Payment Method',
+						'surecart'
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'When enabled, customers are allowed to remove their default payment method on file. This can lead to subscription payments failing since there is no payment method on file.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 		</SettingsTemplate>
 	);

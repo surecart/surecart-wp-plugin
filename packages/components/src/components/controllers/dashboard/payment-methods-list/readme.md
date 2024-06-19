@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                   | Type      | Default     |
-| ------------ | ------------- | ----------------------------- | --------- | ----------- |
-| `heading`    | `heading`     | The heading                   | `string`  | `undefined` |
-| `isCustomer` | `is-customer` | Is this a customer            | `boolean` | `undefined` |
-| `query`      | --            | Query to fetch paymentMethods | `object`  | `undefined` |
+| Property                        | Attribute                           | Description                                    | Type      | Default     |
+| ------------------------------- | ----------------------------------- | ---------------------------------------------- | --------- | ----------- |
+| `canDetachDefaultPaymentMethod` | `can-detach-default-payment-method` | Whether default payment method can be detached | `boolean` | `false`     |
+| `heading`                       | `heading`                           | The heading                                    | `string`  | `undefined` |
+| `isCustomer`                    | `is-customer`                       | Is this a customer                             | `boolean` | `undefined` |
+| `query`                         | --                                  | Query to fetch paymentMethods                  | `object`  | `undefined` |
 
 
 ## Dependencies
@@ -24,13 +25,13 @@
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-divider](../../../ui/divider)
 - [sc-empty](../../../ui/empty)
-- [sc-payment-method](../../../ui/sc-payment-method)
-- [sc-flex](../../../ui/flex)
-- [sc-tag](../../../ui/tag)
 - [sc-dropdown](../../../ui/dropdown)
 - [sc-icon](../../../ui/icon)
 - [sc-menu](../../../ui/menu)
 - [sc-menu-item](../../../ui/menu-item)
+- [sc-payment-method](../../../ui/sc-payment-method)
+- [sc-flex](../../../ui/flex)
+- [sc-tag](../../../ui/tag)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
 - [sc-dialog](../../../ui/sc-dialog)
@@ -48,13 +49,13 @@ graph TD;
   sc-payment-methods-list --> sc-skeleton
   sc-payment-methods-list --> sc-divider
   sc-payment-methods-list --> sc-empty
-  sc-payment-methods-list --> sc-payment-method
-  sc-payment-methods-list --> sc-flex
-  sc-payment-methods-list --> sc-tag
   sc-payment-methods-list --> sc-dropdown
   sc-payment-methods-list --> sc-icon
   sc-payment-methods-list --> sc-menu
   sc-payment-methods-list --> sc-menu-item
+  sc-payment-methods-list --> sc-payment-method
+  sc-payment-methods-list --> sc-flex
+  sc-payment-methods-list --> sc-tag
   sc-payment-methods-list --> sc-dashboard-module
   sc-payment-methods-list --> sc-button
   sc-payment-methods-list --> sc-dialog

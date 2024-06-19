@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.27.1
+Stable tag: 2.28.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,17 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.28.0 - June 18th, 2024 =
+- New: Added a setting that allows customers to remove their default payment method.
+- New: Added the ability to collect both billing and shipping addresses at checkout.
+- Improvement: Users can now manually update a subscription to the latest price version in the event of a pricing change.
+- Improvement: Change Free Trial default text throughout plugin to "Trial" to account for paid trials.
+- Fix: Update processor setting url.
+- Fix: Resolved an issue where creating new prices did not clear the form when the drawer was closed.
+- Fix: Fixed placeholder images for slide-out cart line items in the admin interface.
+- Fix: Fixed an issue where a modal was incorrectly triggered when an item quantity was out of stock on the checkout page in certain instances.
+- Fix: Fixed an issue where some shortcodes did not work with 0 instead of false for some attributes.
 
 = 2.27.1 - May 23rd, 2024 =
 - Improvement: Handle potential platform conflict statuses with retry mechanism.
