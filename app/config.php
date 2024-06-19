@@ -207,7 +207,6 @@ return array(
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
-		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
 		\SureCartBlocks\Blocks\Product\CollectionBadges\Block::class,
 

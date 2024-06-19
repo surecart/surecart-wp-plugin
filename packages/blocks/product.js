@@ -2,7 +2,6 @@
  * Internal dependencies.
  */
 import * as BuyButtons from './Blocks/Product/BuyButtons';
-import * as BuyButton from './Blocks/Product/BuyButton';
 import * as Price from './Blocks/Product/Price';
 import * as PriceChoices from './Blocks/Product/PriceChoices';
 import * as Variants from './Blocks/Product/VariantChoices';
@@ -10,7 +9,7 @@ import * as CollectionBadges from './Blocks/Product/CollectionBadges';
 import { registerBlocksForTemplates } from './conditional-block-registration';
 import { upsellPageTemplates } from './upsell';
 
-const productPageBlocks = [BuyButtons, BuyButton, CollectionBadges];
+const productPageBlocks = [BuyButtons, CollectionBadges];
 const commonBlocks = [Price, PriceChoices, Variants];
 const productPageTemplates = [
 	'surecart/surecart//product-info',
