@@ -71,15 +71,15 @@ export default ({ product, updateProduct }) => {
 					</Button>
 				)}
 				renderContent={({ onClose }) => (
-					<MenuGroup>
+					<MenuGroup label={__('Taxable Product Type', 'surecart')}>
 						<MenuItemsChoice
 							choices={[
 								{
-									label: __('Physical', 'surecart'),
+									label: __('Physical Product', 'surecart'),
 									value: 'tangible',
 								},
 								{
-									label: __('Digital', 'surecart'),
+									label: __('Digital Product', 'surecart'),
 									value: 'digital',
 								},
 							]}
