@@ -352,6 +352,13 @@ export default ({ id, setBrowserURL }) => {
 							loading={!hasLoadedProduct}
 						/>
 
+						<Affiliation
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+							error={error}
+						/>
+
 						<MetaBoxes location="side" />
 					</>
 				}
@@ -411,6 +418,7 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
 					<SearchEngine
 						product={product}
 						updateProduct={editProduct}
