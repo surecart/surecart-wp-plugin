@@ -225,6 +225,20 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Check if model has syncable expands as properties
+	 *
+	 * @return bool
+	 */
+	protected function getHasSyncableExpandsAttribute() {
+		foreach ( $this->sync_expands as $expand ) {
+			if ( ! property_exists( $this, $expand ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Maybe queue a sync job if updated_at is different
 	 * than the product post updated_at.
 	 *
