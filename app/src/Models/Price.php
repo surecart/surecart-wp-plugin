@@ -50,8 +50,8 @@ class Price extends Model {
 		// update parent.
 		$updated = parent::create( $attributes );
 
-		// sync product.
-		Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
+		// sync the product.
+		$this->sync();
 
 		// return.
 		return $updated;
@@ -68,8 +68,8 @@ class Price extends Model {
 		// update parent.
 		$updated = parent::update( $attributes );
 
-		// get uncached product and sync.
-		Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
+		// sync the product.
+		$this->sync();
 
 		// return.
 		return $updated;
@@ -96,6 +96,19 @@ class Price extends Model {
 
 		// return.
 		return $response;
+	}
+
+	/**
+	 * Sync the product
+	 *
+	 * @return void
+	 */
+	protected function sync() {
+		if ( ! empty( $this->product ) && $this->product->has_syncable_expands ) {
+			$this->product->sync();
+		} else {
+			Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
+		}
 	}
 
 	/**
