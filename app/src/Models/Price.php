@@ -78,7 +78,7 @@ class Price extends Model {
 	/**
 	 * Update a model
 	 *
-	 * @param array $attributes Attributes to update.
+	 * @param string $id ID to delete.
 	 *
 	 * @return $this|false
 	 */
@@ -91,7 +91,7 @@ class Price extends Model {
 
 		// sync product.
 		if ( ! empty( $response->deleted ) ) {
-			Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $price->product_id )->sync();
+			$this->sync();
 		}
 
 		// return.
@@ -104,11 +104,8 @@ class Price extends Model {
 	 * @return void
 	 */
 	protected function sync() {
-		if ( ! empty( $this->product ) && $this->product->has_syncable_expands ) {
-			$this->product->sync();
-		} else {
-			Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
-		}
+		$product = ! empty( $this->product ) && $this->product->has_syncable_expands ? $this->product : Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id );
+		$product->sync();
 	}
 
 	/**
