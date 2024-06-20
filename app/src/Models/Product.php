@@ -22,7 +22,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
+	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
 
 	/**
 	 * Rest API endpoint
@@ -222,6 +222,33 @@ class Product extends Model implements PageModel {
 	 */
 	protected function findSyncable( $id ) {
 		return $this->withSyncableExpands()->find( $id );
+	}
+
+	/**
+	 * Check if model has syncable expands as properties
+	 *
+	 * @return bool
+	 */
+	protected function getHasSyncableExpandsAttribute() {
+		foreach ( $this->sync_expands as $expand ) {
+			// if expand contains a ., let's ignore it for now.
+			if ( false !== strpos( $expand, '.' ) ) {
+				return true;
+			}
+			if ( ! isset( $this->$expand ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Get the sync expands.
+	 *
+	 * @return array
+	 */
+	protected function getSyncExpands() {
+		return $this->sync_expands;
 	}
 
 	/**

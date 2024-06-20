@@ -21,6 +21,7 @@ class ProductPostTypeService {
 	public function bootstrap() {
 		// register.
 		add_action( 'init', array( $this, 'registerPostType' ) );
+		add_action( 'init', array( $this, 'registerPostType' ) );
 
 		// register post status.
 		add_action( 'init', array( $this, 'registerPostStatus' ) );
@@ -30,17 +31,22 @@ class ProductPostTypeService {
 
 		// add variation option value query to posts_where.
 		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
+		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
 
 		// ensure we always fetch with the current connected store id in case of store change.
+		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
 		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
 
 		// add global $sc_product inside loops.
 		add_action( 'the_post', array( $this, 'setupData' ) );
+		add_action( 'the_post', array( $this, 'setupData' ) );
 
 		// add the rest api meta query.
 		add_action( "rest_{$this->post_type}_query", array( $this, 'addMetaQuery' ), 10, 2 );
+		add_action( "rest_{$this->post_type}_query", array( $this, 'addMetaQuery' ), 10, 2 );
 
 		// register rest fields.
+		add_action( 'rest_api_init', array( $this, 'registerRestFields' ) );
 		add_action( 'rest_api_init', array( $this, 'registerRestFields' ) );
 
 		// product gallery migration.
@@ -583,8 +589,8 @@ class ProductPostTypeService {
 				),
 				'hierarchical'      => true,
 				'public'            => true,
-				'show_ui'           => true,
-				'show_in_menu'      => true,
+				'show_ui'           => false,
+				'show_in_menu'      => false,
 				'rewrite'           => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,
