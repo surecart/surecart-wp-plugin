@@ -16,7 +16,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.settings.permalinks.product'] = function() {
+		$container['surecart.settings.permalinks.product'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'product',
@@ -37,7 +37,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.buy'] = function() {
+		$container['surecart.settings.permalinks.buy'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'buy',
@@ -58,7 +58,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.collection'] = function() {
+		$container['surecart.settings.permalinks.collection'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'                => 'collection',
@@ -80,7 +80,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.upsell'] = function() {
+		$container['surecart.settings.permalinks.upsell'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'upsell',
@@ -144,8 +144,5 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->url( 'surecart/redirect' )
 			->query( 'index.php?sc_redirect=1' )
 			->create();
-
-		// Rewrite rules.
-		( new PermalinkRewriteRulesService() )->create();
 	}
 }
