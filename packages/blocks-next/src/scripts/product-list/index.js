@@ -2,8 +2,6 @@
  * WordPress dependencies
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
-import '../../utilities/google'; // Google Analytics.
-import '../../utilities/facebook'; // Facebook Pixel.
 
 /**
  * Check if the link is valid.
@@ -156,6 +154,12 @@ const { state } = store('surecart/product-list', {
 	},
 
 	callbacks: {
+		*init() {
+			yield import(
+				/* webpackIgnore: true */
+				'@surecart/analytics'
+			);
+		},
 		/**
 		 * This is optionally used when there is a url context,
 		 * we can prefetch a page ahead of time without mouse enter (just on load)

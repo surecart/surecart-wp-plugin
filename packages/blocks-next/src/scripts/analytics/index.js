@@ -24,8 +24,24 @@ export const trackEvent = (googleEventName, eventData) => {
 	});
 };
 
+/**
+ * Handle search event for Google.
+ */
 document.addEventListener('scSearched', (e) => {
 	trackEvent('search', {
 		search_term: e.detail?.searchString,
+	});
+});
+
+/**
+ * Handle search event for Facebook.
+ */
+window.addEventListener('scSearched', function (e) {
+	if (!window?.fbq) return;
+
+	const eventDetail = e.detail;
+	window.fbq('track', 'Search', {
+		search_string: eventDetail.searchString,
+		content_ids: eventDetail.searchResultIds,
 	});
 });

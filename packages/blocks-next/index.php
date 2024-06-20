@@ -131,6 +131,15 @@ add_action(
 		);
 
 		// instead, use a static loader that injects the script at runtime.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/analytics/index.asset.php';
+		wp_register_script_module(
+			'@surecart/analytics',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/analytics/index.js',
+			[],
+			$static_assets['version']
+		);
+
+		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
 		wp_register_script_module(
 			'@surecart/product-page',
@@ -152,6 +161,10 @@ add_action(
 			[
 				[
 					'id'     => '@wordpress/interactivity-router',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/analytics',
 					'import' => 'dynamic',
 				],
 			],

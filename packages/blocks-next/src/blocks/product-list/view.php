@@ -3,6 +3,7 @@
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'blockId' => $block_id ) ) ); ?>
 	data-wp-interactive='{ "namespace": "surecart/product-list" }'
 	data-wp-router-region="<?php echo esc_attr( 'products-' . $block_id ); ?>"
+	data-wp-init="callbacks.init"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
