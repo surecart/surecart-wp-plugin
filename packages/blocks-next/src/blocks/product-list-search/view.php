@@ -4,15 +4,15 @@ use SureCart\Models\Blocks\ProductListBlock;
 $block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
 $controller = new ProductListBlock( $block );
 $list_query      = $controller->query();
-$product_ids = array_map( function($product) {
-	return get_post_meta($product->ID, 'sc_id', true) ?? '';
+$products = array_map( function($product) {
+	return get_post_meta($product->ID, 'product', true) ?? '';
 }, $list_query->posts);
 $url      = \SureCart::block()->urlParams( 'products', $block_id );
 $query    = $url->getArg( 'search' );
 ?>
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-input-group sc-input-group-sm' ) ) ); ?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'productIds' => $product_ids ] ) ); ?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'products' => $products ] ) ); ?>
 >
 	<span class="sc-input-group-text">
 		<?php
