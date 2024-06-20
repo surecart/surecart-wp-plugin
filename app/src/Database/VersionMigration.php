@@ -2,14 +2,10 @@
 
 namespace SureCart\Database;
 
-abstract class GeneralMigration {
-	/**
-	 * The version number when we will run the migration.
-	 *
-	 * @var string
-	 */
-	protected $version = '0.0.0';
-
+/**
+ * A migration that will run each time the version of the plugin changes.
+ */
+abstract class VersionMigration {
 	/**
 	 * The key for the migration.
 	 *
@@ -24,6 +20,15 @@ abstract class GeneralMigration {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_init', [ $this, 'maybeRun' ] );
+	}
+
+	/**
+	 * Get the current version of the plugin.
+	 *
+	 * @return string
+	 */
+	public function currentVersion() {
+		return \SureCart::plugin()->version();
 	}
 
 	/**
@@ -50,7 +55,7 @@ abstract class GeneralMigration {
 	 */
 	public function shouldMigrate(): bool {
 		// check if we already have done this migration.
-		return version_compare( $this->version, $this->getLastMigrationVersion(), '>=' );
+		return version_compare( $this->currentVersion(), $this->getLastMigrationVersion(), '!=' );
 	}
 
 	/**
@@ -67,7 +72,7 @@ abstract class GeneralMigration {
 	 * @return void
 	 */
 	public function complete() {
-		update_option( $this->migration_key, \SureCart::plugin()->version() );
+		update_option( $this->migration_key, $this->currentVersion(), false ); // don't autoload since we are only doing this on the admin.
 	}
 
 	/**
