@@ -34,14 +34,29 @@ document.addEventListener('scSearched', (e) => {
 });
 
 /**
- * Handle search event for Facebook.
+ * Handle view items event.
  */
-window.addEventListener('scSearched', function (e) {
-	if (!window?.fbq) return;
-
+window.addEventListener('scProductsViewed', (e) => {
 	const eventDetail = e.detail;
-	window.fbq('track', 'Search', {
-		search_string: eventDetail.searchString,
-		content_ids: eventDetail.searchResultIds,
+	trackEvent('view_item_list', {
+		item_list_name: eventDetail.pageTitle,
+		items:
+			eventDetail &&
+			eventDetail.products &&
+			eventDetail.products.map((product) => ({
+				item_id: product && product.id,
+				item_name: product && product.name,
+				...(product &&
+				product.product_collections &&
+				product.product_collections.data &&
+				product.product_collections.data.length
+					? {
+							item_category: product.product_collections.data
+								.map((collection) => collection.name)
+								.join(', '),
+					  }
+					: {}),
+				item_list_name: eventDetail.pageTitle,
+			})),
 	});
 });

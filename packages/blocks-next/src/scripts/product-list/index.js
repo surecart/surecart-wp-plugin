@@ -115,7 +115,7 @@ const { state } = store('surecart/product-list', {
 			state.searching = true;
 			yield debouncedSearch(ref?.value, routerState, actions, blockId);
 			const { products } = getContext();
-			const analyticsEvent = new CustomEvent('scSearched', {
+			const scSearchedEvent = new CustomEvent('scSearched', {
 				detail: {
 					searchString: ref?.value,
 					searchResultCount: products?.length,
@@ -123,7 +123,7 @@ const { state } = store('surecart/product-list', {
 				},
 				bubbles: true,
 			});
-			document.dispatchEvent(analyticsEvent);
+			document.dispatchEvent(scSearchedEvent);
 			state.loading = false;
 			state.searching = false;
 		},
@@ -155,10 +155,27 @@ const { state } = store('surecart/product-list', {
 
 	callbacks: {
 		*init() {
-			yield import(
-				/* webpackIgnore: true */
-				'@surecart/analytics'
-			);
+			if (window?.dataLayer || window?.gtag) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/google-events'
+				);
+			}
+			if (window?.fbq) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/facebook-events'
+				);
+			}
+			const { products } = getContext();
+			const scProductsViewedEvent = new CustomEvent('scProductsViewed', {
+				detail: {
+					products: products,
+					pageTitle: document.title,
+				},
+				bubbles: true,
+			});
+			document.dispatchEvent(scProductsViewedEvent);
 		},
 		/**
 		 * This is optionally used when there is a url context,

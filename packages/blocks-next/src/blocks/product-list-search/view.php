@@ -12,7 +12,6 @@ $query    = $url->getArg( 'search' );
 ?>
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-input-group sc-input-group-sm' ) ) ); ?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'products' => $products ] ) ); ?>
 >
 	<span class="sc-input-group-text">
 		<?php
