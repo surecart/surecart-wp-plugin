@@ -58,6 +58,15 @@ class ProductPostTypeService {
 		// when a product media is deleted, remove it from the gallery.
 		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
 
+		// sync via webhook events.
+		add_action( 'surecart/price_created', array( $this, 'sync' ) );
+		add_action( 'surecart/price_deleted', array( $this, 'sync' ) );
+		add_action( 'surecart/price_updated', array( $this, 'sync' ) );
+		add_action( 'surecart/product_created', array( $this, 'sync' ) );
+		add_action( 'surecart/product_deleted', array( $this, 'sync' ) );
+		add_action( 'surecart/product_stock_adjusted', array( $this, 'sync' ) );
+		add_action( 'surecart/product_updated', array( $this, 'sync' ) );
+
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
@@ -66,6 +75,17 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Sync the product.
+	 *
+	 * @param \SureCart\Support\Contracts\Syncable $model The model.
+	 *
+	 * @return void
+	 */
+	public function sync( \SureCart\Support\Contracts\Syncable $model ) {
+		$model->sync();
 	}
 
 	/**
