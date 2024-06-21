@@ -29,6 +29,78 @@ class ProductTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
+	public function test_can_create()
+	{
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$instance = new Product($request['product']);
+		$created = $instance->create();
+
+		$this->assertNotEmpty($created->post);
+	}
+
+	public function test_can_update()
+	{
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$created = Product::update($request['product']);
+
+		$this->assertNotEmpty($created->post);
+	}
+
+	public function test_can_delete() {
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products/' . $response->id)
+			->andReturn($response);
+
+		$created = Product::update($request['product']);
+
+		$id = $created->post->ID;
+		$this->assertNotEmpty(get_post($id));
+
+		Product::delete($created->id);
+
+		$this->assertEmpty(get_post($id));
+	}
+
 	public function test_can_create_price()
 	{
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
