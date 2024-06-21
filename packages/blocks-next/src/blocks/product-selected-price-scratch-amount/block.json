@@ -25,6 +25,7 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"textAlign": true,
 			"__experimentalTextDecoration": true
 		}
 	},

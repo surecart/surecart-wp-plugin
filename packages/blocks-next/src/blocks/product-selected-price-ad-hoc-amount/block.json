@@ -45,7 +45,8 @@
 		},
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true
+			"lineHeight": true,
+			"textAlign": true
 		}
 	},
 	"textdomain": "surecart",
