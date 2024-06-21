@@ -56,14 +56,22 @@ class Product extends Model implements PageModel, Syncable {
 	/**
 	 * Immediately sync with a post.
 	 *
-	 * @param bool $with_collections Whether to sync with collections.
+	 * @param array $args Arguments.
+	 *                  - with_collections: bool Whether to sync with collections.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync( $with_collections = false ) {
+	public function sync( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'with_collections' => false,
+			)
+		);
+
 		\SureCart::sync()
 			->product()
-			->withCollections( $with_collections )
+			->withCollections( $args['with_collections'] )
 			->sync( $this );
 
 		return $this;

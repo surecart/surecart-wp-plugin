@@ -6,7 +6,9 @@ interface Syncable {
 	/**
 	 * Sync the model.
 	 *
+	 * @param array $args Arguments.
+	 *
 	 * @return void
 	 */
-	public function sync();
+	public function sync( $args = [] );
 }

@@ -67,7 +67,7 @@ class ProductPostTest extends SureCartUnitTestCase
 					]
 				],
 			]
-		))->sync( true );
+		))->sync( ['with_collections' => true] );
 
 		$post = $product->post;
 
@@ -103,7 +103,7 @@ class ProductPostTest extends SureCartUnitTestCase
 					]
 				],
 			]
-		))->sync( true );
+		))->sync( [ 'with_collections' => true ] );
 
 		$post = $product_2->post;
 

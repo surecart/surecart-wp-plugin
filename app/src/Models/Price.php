@@ -106,7 +106,7 @@ class Price extends Model implements Syncable {
 	 *
 	 * @return void
 	 */
-	protected function sync( $args = [] ) {
+	public function sync( $args = [] ) {
 		$args = wp_parse_args(
 			$args,
 			array(
