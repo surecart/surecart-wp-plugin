@@ -1,0 +1,107 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { ScIcon, ScSkeleton, ScTag } from '@surecart/components-react';
+import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+
+export default ({ id, onRemove }) => {
+	const media = useSelect((select) => {
+		return select(coreStore).getMedia(id);
+	});
+
+	return (
+		<div
+			css={css`
+				position: relative;
+				padding: 10px;
+				margin: -10px;
+				.sc-remove-icon {
+					visibility: hidden;
+					opacity: 0;
+					transition: all 0.25s ease-in-out;
+				}
+
+				&:hover {
+					.sc-remove-icon {
+						visibility: visible;
+						opacity: 1;
+					}
+				}
+			`}
+			onClick={onRemove}
+			aria-label="Delete image"
+			title="Delete image"
+		>
+			<div
+				css={css`
+					width: 35px;
+					height: 35px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					overflow: hidden;
+					background: var(--sc-choice-background-color);
+					border: var(--sc-choice-border);
+					border-radius: var(--sc-border-radius-medium);
+					border-style: ${!media?.source_url ? 'dashed' : 'solid'};
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					cursor: pointer;
+					transition: background-color var(--sc-transition-medium)
+						ease-in-out;
+					&:hover {
+						background: var(--sc-color-gray-100);
+					}
+				`}
+			>
+				{media?.source_url ? (
+					<img
+						src={
+							media?.media_details?.sizes?.medium?.source_url ||
+							media?.source_url
+						}
+						css={css`
+							width: 35px;
+							height: 35px;
+							object-fit: cover;
+						`}
+						alt={media?.alt_text}
+						{...(media?.title?.rendered
+							? { title: media?.title?.rendered }
+							: {})}
+					/>
+				) : (
+					<ScSkeleton
+						style={{
+							aspectRatio: '1 / 1',
+							'--border-radius': 'var(--sc-border-radius-medium)',
+						}}
+					/>
+				)}
+			</div>
+			<div
+				css={css`
+					cursor: pointer;
+					background: var(--sc-color-gray-800);
+					color: white;
+					width: 18px;
+					height: 18px;
+					font-size: 10px;
+					position: absolute;
+					right: 0px;
+					top: 0px;
+					border-radius: 999px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				`}
+				className="sc-remove-icon"
+				onClick={onRemove}
+			>
+				<ScIcon name="trash" slot="suffix" />
+			</div>
+		</div>
+	);
+};

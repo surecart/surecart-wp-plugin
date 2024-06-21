@@ -414,27 +414,19 @@ return array(
 	 * Webhook events we gonna proceed.
 	 */
 	'webhook_events'         => array(
-		// 'cancellation_act.updated',
-		// 'customer.created',
 		'customer.updated',
-		// 'order.created',
-		// 'order.made_processing',
-		// 'order.paid', // In doc
-		// 'order.payment_failed',
 		'purchase.created',
 		'purchase.invoked',
 		'purchase.updated',
 		'purchase.revoked',
-		// 'refund.created',
-		// 'refund.succeeded', // In doc
-		// 'subscription.canceled', // In doc
-		// 'subscription.created',
-		// 'subscription.completed',
-		// 'subscription.made_active', // In doc
-		// 'subscription.made_past_due',
-		// 'subscription.made_trialing', // In doc
+		'price.created',
+		'price.deleted',
+		'price.updated',
+		'product.created',
+		'product.deleted',
+		'product.stock_adjusted',
+		'product.updated',
 		'subscription.renewed', // needed for AffiliateWP recurring referrals.
-		// 'subscription.updated',
 		'account.updated',
 	),
 

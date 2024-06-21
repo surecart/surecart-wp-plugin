@@ -797,7 +797,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the image used in line items.
 	 *
-	 * @return array
+	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
 		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) array();

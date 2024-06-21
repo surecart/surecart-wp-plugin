@@ -84,15 +84,13 @@ class Price extends Model {
 	 */
 	protected function delete( $id = '' ) {
 		// find price as we need the product id.
-		$price = $this->find( $id );
+		$this->find( $id );
 
 		// update parent.
 		$response = parent::delete( $id );
 
 		// sync product.
-		if ( ! empty( $response->deleted ) ) {
-			$this->sync();
-		}
+		$this->sync( [ 'refetch' => true ] );
 
 		// return.
 		return $response;
@@ -101,10 +99,24 @@ class Price extends Model {
 	/**
 	 * Sync the product
 	 *
+	 * @param array $args Arguments.
+	 *                  - refetch: boolean (default: false) - refetch the product.
+	 *                  - cached: boolean (default: false) - use the cached product.
+	 *
 	 * @return void
 	 */
-	protected function sync() {
-		$product = ! empty( $this->product ) && $this->product->has_syncable_expands ? $this->product : Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id );
+	protected function sync( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'refetch' => false,
+				'cached'  => false,
+			)
+		);
+
+		// if the product is already attached, and syncable, use that. Otherwise, find it.
+		$product = ! empty( $this->product ) && $this->product->has_syncable_expands && ! $args['refetch'] ? $this->product : Product::withSyncableExpands()->where( array( 'cached' => $args['cached'] ) )->find( $this->product_id );
+
 		$product->sync();
 	}
 
@@ -261,12 +273,12 @@ class Price extends Model {
 	 */
 	public function getShortIntervalTextAttribute() {
 		return $this->getIntervalTextAttribute(
-			array(
+			[
 				'day'   => __( 'day', 'surecart' ),
 				'week'  => __( 'wk', 'surecart' ),
 				'month' => __( 'mo', 'surecart' ),
 				'year'  => __( 'yr', 'surecart' ),
-			)
+			]
 		);
 	}
 
