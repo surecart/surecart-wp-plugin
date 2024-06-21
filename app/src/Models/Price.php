@@ -3,12 +3,13 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasProduct;
+use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
-class Price extends Model {
+class Price extends Model implements Syncable {
 	use HasProduct;
 
 	/**

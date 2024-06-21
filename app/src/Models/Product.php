@@ -7,12 +7,13 @@ use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
+use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
-class Product extends Model implements PageModel {
+class Product extends Model implements PageModel, Syncable {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
