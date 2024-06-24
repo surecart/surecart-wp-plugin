@@ -6,4 +6,7 @@
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
+	<ul hidden>
+    	<li id="sc-selection-message"><?php echo __( 'Press the arrow keys then enter to make a selection.', 'surecart' ); ?> </li>
+ 	 </ul>
 </div>
