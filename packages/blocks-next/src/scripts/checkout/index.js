@@ -10,7 +10,7 @@ import {
 	updateCheckoutLineItem,
 	removeCheckoutLineItem,
 	handleCouponApply,
-} from '@surecart/checkout-actions';
+} from '@surecart/checkout-service';
 
 const { actions: cartDrawerActions } = store('surecart/cart-drawer');
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';

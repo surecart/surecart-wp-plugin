@@ -40,7 +40,7 @@ module.exports = [
 			'@surecart/dialog': '@surecart/dialog',
 			'@surecart/cart-drawer': '@surecart/cart-drawer',
 			'@surecart/api-fetch': '@surecart/api-fetch',
-			'@surecart/checkout-actions': '@surecart/checkout-actions',
+			'@surecart/checkout-service': '@surecart/checkout-service',
 		},
 	},
 ];

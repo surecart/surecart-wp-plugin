@@ -131,16 +131,16 @@ add_action(
 		wp_register_script_module(
 			'@surecart/api-fetch',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
-			[
-				[
-					'id' => 'wp-url',
-					'import' => 'dynamic'
-				],
-				[
-					'id' => 'wp-api-fetch',
-					'import' => 'dynamic'
-				]
-			],
+			array(
+				array(
+					'id'     => 'wp-url',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => 'wp-api-fetch',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -149,12 +149,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/dialog',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dialog/index.js',
-			[
-				[
-					'id' => '@wordpress/interactivity',
-					'import' => 'dynamic'
-				]
-			],
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -219,27 +219,27 @@ add_action(
 		);
 
 		// we have product context.
-		if ( get_query_var('surecart_current_product') ) {
+		if ( get_query_var( 'surecart_current_product' ) ) {
 			$context['surecart/product'] = get_query_var( 'surecart_current_product' );
 		}
 
 		// add context for required blocks.
 		if ( $parsed_block['blockName'] === 'surecart/product-page' ) {
-			$context['surecart/has-ad-hoc-block'] = !empty(wp_get_first_block([$parsed_block], 'surecart/product-selected-price-ad-hoc-amount'));
-			$context['surecart/has-variant-choices'] = !empty(wp_get_first_block([$parsed_block], 'surecart/product-variant-choices-v2'));
+			$context['surecart/has-ad-hoc-block']    = ! empty( wp_get_first_block( array( $parsed_block ), 'surecart/product-selected-price-ad-hoc-amount' ) );
+			$context['surecart/has-variant-choices'] = ! empty( wp_get_first_block( array( $parsed_block ), 'surecart/product-variant-choices-v2' ) );
 		}
 
 		// Checkout actions.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout-actions/index.asset.php';
 		wp_register_script_module(
-			'@surecart/checkout-actions',
+			'@surecart/checkout-service',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout-actions/index.js',
-			[
-				[
-					'id' => '@surecart/api-fetch',
-					'import' => 'dynamic'
-				],
-			],
+			array(
+				array(
+					'id'     => '@surecart/api-fetch',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -248,12 +248,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/cart-drawer',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart-drawer/index.js',
-			[
-				[
-					'id' => '@wordpress/interactivity',
-					'import' => 'dynamic'
-				]
-			],
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -262,18 +262,21 @@ add_action(
 		wp_register_script_module(
 			'@surecart/checkout',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout/index.js',
-			[
-				[
-					'id' => '@surecart/checkout-actions',
-					'import' => 'dynamic'
-				],
-				[
-					'id' => '@surecart/cart-drawer',
-					'import' => 'dynamic'
-				]
-			],
+			array(
+				array(
+					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/cart-drawer',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
 		return $context;
-	}, 10, 3 );
+	},
+	10,
+	3
+);

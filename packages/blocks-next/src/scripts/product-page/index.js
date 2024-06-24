@@ -6,7 +6,7 @@ import { store, getContext } from '@wordpress/interactivity';
 /**
  * Internal dependencies.
  */
-import { addCheckoutLineItem } from '@surecart/checkout-actions';
+import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
