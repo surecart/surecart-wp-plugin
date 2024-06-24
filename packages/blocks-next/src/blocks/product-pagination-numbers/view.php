@@ -10,7 +10,8 @@
 					'href'                   => esc_url( $pagination_link['href'] ),
 					'disabled'               => $pagination_link['current'] ? 'disabled' : null,
 					'aria-disabled'          => $pagination_link['current'] ? 'true' : null,
-					'aria-label'             => __( 'Page - ', 'surecart' ) . esc_html( $pagination_link['name'] ),
+					// translators: %s: page number.
+					'aria-label'             => sprintf( __( 'Page %s', 'surecart' ), $pagination_link['name'] ) ,
 					'data-wp-on--click'      => 'surecart/product-list::actions.navigate',
 					'data-wp-on--mouseenter' => 'surecart/product-list::actions.prefetch',
 				]
