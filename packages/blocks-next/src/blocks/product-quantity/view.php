@@ -1,4 +1,4 @@
-<div <?php echo get_block_wrapper_attributes(); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<label for="quantity" class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Quantity', 'surecart' ) ); ?>
 	</label>
@@ -21,14 +21,14 @@
 		<input
 			type="number"
 			class="sc-form-control sc-quantity-selector__control"
-			data-wp-bind--value="state.quantity"
+			data-wp-bind--value="context.quantity"
 			data-wp-on--change="callbacks.onQuantityChange"
-			data-wp-bind--min="state.minQuantity"
-			data-wp-bind--aria-valuemin="state.minQuantity"
-			data-wp-bind--max="state.maxQuantity"
-			data-wp-bind--aria-valuemax="state.maxQuantity"
 			data-wp-bind--disabled="state.isQuantityDisabled"
 			data-wp-bind--aria-disabled="state.isQuantityDisabled"
+			data-wp-bind--max="state.maxQuantity"
+			data-wp-bind--aria-valuemax="state.maxQuantity"
+			min="1"
+			aria-min="1"
 			step="1"
 			autocomplete="off"
 			role="spinbutton"

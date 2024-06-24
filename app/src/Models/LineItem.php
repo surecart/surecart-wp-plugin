@@ -94,7 +94,7 @@ class LineItem extends Model {
 	 * @return string
 	 */
 	public function getAdHocAmountDisplayAttribute() {
-		return empty( $this->ad_hoc_amount ) ? '' : Currency::format( $this->ad_hoc_amount, $this->currency );
+		return ! empty( $this->ad_hoc_amount ) ? Currency::format( $this->ad_hoc_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -102,8 +102,8 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayBumpAmountAttribute() {
-		return empty( $this->bump_amount ) ? '' : Currency::format( $this->bump_amount, $this->currency );
+	public function getBumpAmountDisplayAttribute() {
+		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -111,8 +111,8 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayScratchAmountAttribute() {
-		return  empty( $this->scratch_amount ) ? '' : Currency::format( $this->scratch_amount, $this->currency );
+	public function getScratchAmountDisplayAttribute() {
+		return ! empty( $this->scratch_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -120,8 +120,8 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayTaxAmountAttribute() {
-		return  empty( $this->tax_amount ) ? '' : Currency::format( $this->tax_amount, $this->currency );
+	public function getTaxAmountDisplayAttribute() {
+		return ! empty( $this->tax_amount ) ? Currency::format( $this->tax_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -129,8 +129,8 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplaySubtotalAmountAttribute() {
-		return  empty( $this->subtotal_amount ) ? '' : Currency::format( $this->subtotal_amount, $this->currency );
+	public function getSubtotalAmountDisplayAttribute() {
+		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -138,8 +138,8 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayTotalAmountAttribute() {
-		return  empty( $this->total_amount ) ? '' : Currency::format( $this->total_amount, $this->currency );
+	public function getTotalAmountDisplayAttribute() {
+		return ! empty( $this->total_amount ) ? Currency::format( $this->total_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -147,8 +147,8 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayFullAmountAttribute() {
-		return  empty( $this->full_amount ) ? '' : Currency::format( $this->full_amount, $this->currency );
+	public function getFullAmountDisplayAttribute() {
+		return ! empty( $this->full_amount ) ? Currency::format( $this->full_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -156,8 +156,8 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDisplayTrialAmountAttribute() {
-		return  empty( $this->trial_amount ) ? '' : Currency::format( $this->trial_amount, $this->currency );
+	public function getTrialAmountDisplayAttribute() {
+		return ! empty( $this->trial_amount ) ? Currency::format( $this->trial_amount, $this->currency ) : '';
 	}
 
 	/**

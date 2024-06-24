@@ -61,7 +61,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getSubtotalDisplayAmountAttribute() {
-		return Currency::format( $this->subtotal_amount, $this->currency );
+		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getTotalAmountDisplayAttribute() {
-		return Currency::format( $this->total_amount, $this->currency );
+		return ! empty( $this->total_amount ) ? Currency::format( $this->total_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -79,7 +79,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getFullAmountDisplayAttribute() {
-		return Currency::format( $this->full_amount, $this->currency );
+		return ! empty( $this->full_amount ) ? Currency::format( $this->full_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -88,7 +88,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getDiscountAmountDisplayAttribute() {
-		return Currency::format( $this->discount_amount, $this->currency );
+		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -117,7 +117,7 @@ class Checkout extends Model {
 	 * @return bool
 	 */
 	public function getHasRecurringAttribute() {
-		return array_reduce($this->line_items->data, function($carry, $item) {
+		return array_reduce($this->line_items->data ?? [], function($carry, $item) {
 			return $carry || isset($item->price->recurring_interval);
 		}, false);
 	}
@@ -143,6 +143,11 @@ class Checkout extends Model {
 		return '';
 	}
 
+	/**
+	 * Get the human discount with duration attribute.
+	 *
+	 * @return string
+	 */
 	public function getHumanDiscountWithDurationAttribute() {
 		if ( ! $this->hasRecurring ) {
 			return $this->human_discount;
@@ -160,6 +165,15 @@ class Checkout extends Model {
 			default:
 				return $this->human_discount;
 		}
+	}
+
+	/**
+	 * Get the human discount redeemable status attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountRedeemableStatusAttribute() {
+		return sc_get_human_discount_redeemable_status( $this->discount->redeemable_status ?? '' );
 	}
 
 	/**

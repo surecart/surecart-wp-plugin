@@ -18,7 +18,7 @@ wp_interactivity_state(
 		// derived states.
 		'discountIsRedeemable' => false,
 		'isDiscountAdded'      => false,
-		'isDiscountCodeSet'    => false,
+		'isPromotionCodeSet'    => false,
 		'hasBumpAmount'        => false,
 	)
 );

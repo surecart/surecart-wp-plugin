@@ -18,9 +18,7 @@
 	.swiper-button-next,
 	.swiper-button-prev {
 		background: var(--sc-color-white);
-		border: 1px solid var(--sc-color-gray-300);
-		border: solid var(--sc-input-border-width) var(--sc-input-border-color);
-		box-shadow: var(--sc-input-box-shadow);
+		box-shadow: var(--sc-shadow-medium);
 		width: 40px;
 		height: 40px;
 		border-radius: 9999px;

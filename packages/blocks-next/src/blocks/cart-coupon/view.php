@@ -26,12 +26,20 @@
 		<div class="sc-line-item__text">
 			<div class="sc-line-item__description">
 				<?php esc_html_e( 'Discount', 'surecart' ); ?>
-				<span class="sc-tag sc-tag--default">
+				<div
+					class="sc-tag"
+					data-wp-class--sc-tag--success="state.discountIsRedeemable"
+					data-wp-class--sc-tag--warning="!state.discountIsRedeemable"
+				>
 					<span data-wp-text="state.checkout.discount.promotion.code"></span>
-					<button data-wp-on--click="actions.removeDiscount">
+					<button
+						data-wp-on--click="actions.removeDiscount"
+						id="sc-coupon-remove-discount"
+						title="<?php esc_attr_e( 'Delete discount', 'surecart' ); ?>"
+					>
 						<?php echo wp_kses( SureCart::svg()->get( 'x', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
 					</button>
-				</span>
+				</div>
 			</div>
 		</div>
 
@@ -48,9 +56,9 @@
 
 				<!-- non-redeemable UI -->
 				<div class="sc-line-item__price-description" data-wp-bind--hidden="state.discountIsRedeemable">
-					<div class="coupon__status">
+					<div class="sc-coupon__status">
 						<?php echo wp_kses( SureCart::svg()->get( 'alert-triangle', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
-						<span data-wp-text="state.checkout.discount.redeemable_status"></span>
+						<span data-wp-text="state.checkout.human_discount_redeemable_status"></span>
 					</div>
 				</div>
 			</div>
@@ -90,13 +98,13 @@
 								aria-label="quantity"
 								aria-describedby="coupon-input-addon"
 								placeholder="<?php esc_html_e( 'Enter coupon code', 'surecart' ); ?>"
-								data-wp-bind="state.discountCode"
-								data-wp-on--input="actions.setDiscountCode"
+								data-wp-bind="state.promotionCode"
+								data-wp-on--input="actions.setPromotionCode"
 							>
 							<span class="sc-input-group-text" id="coupon-input-addon">
 								<button
 									type="submit"
-									data-wp-bind--hidden="!state.isDiscountCodeSet"
+									data-wp-bind--hidden="!state.isPromotionCodeSet"
 									data-wp-on--click="actions.applyDiscount"
 								>
 									<?php esc_html_e( 'Apply', 'surecart' ); ?>
@@ -121,11 +129,11 @@
 							aria-describedby="basic-addon1"
 							placeholder="<?php esc_attr_e( 'Enter coupon code', 'surecart' ); ?>"
 							data-wp-bind="state.discountCode"
-							data-wp-on--input="actions.setDiscountCode"
+							data-wp-on--input="actions.setPromotionCode"
 						>
 						<span class="sc-input-group-text" id="basic-addon1">
 							<button
-								data-wp-bind--hidden="!state.isDiscountCodeSet"
+								data-wp-bind--hidden="!state.isPromotionCodeSet"
 								data-wp-on--click="actions.applyDiscount"
 							>
 								<?php esc_html_e( 'Apply', 'surecart' ); ?>

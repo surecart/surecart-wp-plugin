@@ -1,22 +1,13 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-menu-icon-v2",
-	"title": "Cart Menu Icon v2",
-	"description": "The cart menu icon that shows your cart quantity.",
+	"name": "surecart/cart-icon-v2",
+	"title": "Cart Icon v2",
+	"description": "The cart icon that shows your cart quantity.",
 	"version": "1.0.0",
 	"category": "cart",
 	"example": {},
-	"attributes": {
-		"cart_icon": {
-			"type": "string",
-			"default": "shopping-bag"
-		},
-		"cart_menu_always_shown": {
-			"type": "boolean",
-			"default": true
-		}
-	},
+	"attributes": {},
 	"supports": {
 		"interactivity": true,
 		"spacing": {
@@ -44,6 +35,5 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": ["file:./style-index.css"],
-	"editorStyle": ["file:../../styles/choice.css", "file:./index.css"],
 	"viewScriptModule": ["@surecart/checkout"]
 }

@@ -18,6 +18,27 @@
 		data-wp-on--click="surecart/cart-drawer::actions.closeOverlay"
 	>
 		<div class="sc-drawer__wrapper">
+			<!-- Cart alert -->
+			<div class="sc-alert sc-alert__alert--danger"
+				role="alert"
+				aria-live="assertive"
+				aria-atomic="true"
+				data-wp-bind--hidden="!state.error"
+				hidden
+			>
+				<div class="sc-alert__icon">
+					<?php echo wp_kses( SureCart::svg()->get( 'alert-circle', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
+				</div>
+				<div class="sc-alert__text">
+					<div class="sc-alert__title">
+						<span data-wp-text="state.errorTitle"></span>
+					</div>
+					<div class="sc-alert__message">
+						<span data-wp-text="state.errorMessage"></span>
+					</div>
+				</div>
+			</div>
+
 			<?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 			<div class="sc-block-ui" data-wp-bind--hidden="surecart/checkout::!state.loading" hidden></div>

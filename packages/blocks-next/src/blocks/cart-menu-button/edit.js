@@ -32,18 +32,52 @@ export default ({ attributes, setAttributes }) => {
 								flex: 'flex-1',
 							}}
 						>
-							<label>{__('Icon', 'surecart')}</label>
-							<div className='sc-cart-choicer'>
-								<ScIcon
-									name="shopping-bag"
-									class={cart_icon === 'shopping-bag' ? 'active' : ''}
-									onClick={() => setAttributes({ cart_icon: 'shopping-bag' })}
-								/>
-								<ScIcon
-									name="shopping-cart"
-									class={cart_icon === 'shopping-cart' ? 'active' : ''}
-									onClick={() => setAttributes({ cart_icon: 'shopping-cart' })}
-								/>
+							<h2 className="components-truncate components-text components-heading">
+								{__('Icon', 'surecart')}
+							</h2>
+							<div className="sc-choices">
+								<div
+									className={`sc-choice ${
+										cart_icon === 'shopping-bag'
+											? 'sc-choice--checked'
+											: ''
+									}`}
+									onClick={() =>
+										setAttributes({
+											cart_icon: 'shopping-bag',
+										})
+									}
+								>
+									<ScIcon
+										name="shopping-bag"
+										class={
+											cart_icon === 'shopping-bag'
+												? 'active'
+												: ''
+										}
+									/>
+								</div>
+								<div
+									className={`sc-choice ${
+										cart_icon === 'shopping-cart'
+											? 'sc-choice--checked'
+											: ''
+									}`}
+									onClick={() =>
+										setAttributes({
+											cart_icon: 'shopping-cart',
+										})
+									}
+								>
+									<ScIcon
+										name="shopping-cart"
+										class={
+											cart_icon === 'shopping-cart'
+												? 'active'
+												: ''
+										}
+									/>
+								</div>
 							</div>
 						</div>
 					</PanelRow>
@@ -68,7 +102,11 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<a {...blockProps}>
-				<ScIcon name={cart_icon} />
+				<div class="sc-cart-icon">
+					<ScIcon name={cart_icon} />
+				</div>
+
+				<span class="sc-cart-count">2</span>
 			</a>
 		</div>
 	);

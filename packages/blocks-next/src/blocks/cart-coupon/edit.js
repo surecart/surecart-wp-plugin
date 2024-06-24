@@ -27,8 +27,8 @@ export default ({ attributes, setAttributes }) => {
 	});
 
 	const [discountInputOpen, setDiscountInputOpen] = useState(false);
-	const [discountCode, setDiscountCode] = useState('');
-	const [discountApplied, setDiscountApplied] = useState(false);
+	const [prmotionCode, setPromotionCode] = useState('');
+	const [promotionApplied, setPromotionApplied] = useState(false);
 	const [discountIsRedeemable, setDiscountIsRedeemable] = useState(true);
 
 	useEffect(() => {
@@ -55,23 +55,23 @@ export default ({ attributes, setAttributes }) => {
 		return (
 			<div
 				class="sc-line-item__item sc-coupon-form"
-				hidden={!discountApplied}
+				hidden={!promotionApplied}
 			>
 				<div class="sc-line-item__text">
 					<div class="sc-line-item__description">
 						{__('Discount', 'surecart')}
-						<span class="sc-tag sc-tag--default">
-							{discountCode}
+						<div class="sc-tag sc-tag--default">
+							{prmotionCode}
 
 							<button
 								onClick={() => {
-									setDiscountApplied(false);
-									setDiscountCode('');
+									setPromotionApplied(false);
+									setPromotionCode('');
 								}}
 							>
 								<ScIcon name="x" />
 							</button>
-						</span>
+						</div>
 					</div>
 				</div>
 
@@ -107,15 +107,15 @@ export default ({ attributes, setAttributes }) => {
 					aria-label="quantity"
 					aria-describedby="basic-addon1"
 					placeholder={_('Enter coupon code', 'surecart')}
-					value={discountCode}
-					onChange={(e) => setDiscountCode(e.target.value)}
+					value={prmotionCode}
+					onChange={(e) => setPromotionCode(e.target.value)}
 				/>
 				<span class="sc-input-group-text" id="basic-addon1">
 					<button
-						hidden={!discountCode}
+						hidden={!prmotionCode}
 						onClick={() => {
 							setDiscountInputOpen(false);
-							setDiscountApplied(true);
+							setPromotionApplied(true);
 						}}
 					>
 						{__('Apply', 'surecart')}
@@ -173,7 +173,7 @@ export default ({ attributes, setAttributes }) => {
 
 			<div {...blockProps}>
 				<div className="sc-cart-coupon__wrapper">
-					{discountApplied ? (
+					{promotionApplied ? (
 						renderDiscountedState()
 					) : (
 						<>

@@ -41,11 +41,8 @@ const { state, actions } = store('surecart/checkout', {
 		openCartSidebar: false,
 		loading: false,
 		error: null,
-		discountCode: '',
-		get checkout() {
-			const { mode, formId } = getContext() || {};
-			return getCheckoutData(mode, formId) || {};
-		},
+		promotionCode: '',
+		checkout: {},
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
 				(count, item) => count + (item?.quantity || 0),
@@ -57,15 +54,27 @@ const { state, actions } = store('surecart/checkout', {
 				state?.checkout?.discount?.redeemable_status === 'redeemable'
 			);
 		},
+		get lineItemAmountDisplay() {
+			const { line_item } = getContext();
+			if (!!line_item?.ad_hoc_amount) {
+				return line_item.ad_hoc_amount_display;
+			}
+
+			return line_item.subtotal_amount_display;
+		},
 		get lineItemHasScratchAmount() {
 			const { line_item } = getContext();
+			if (!!line_item?.ad_hoc_amount) {
+				return false;
+			}
+
 			return line_item.price.scratchAmount !== line_item.price.amount;
 		},
 		get isDiscountAdded() {
 			return !!state?.checkout?.discount?.promotion?.code;
 		},
-		get isDiscountCodeSet() {
-			return !!state?.discountCode;
+		get isPromotionCodeSet() {
+			return !!state?.promotionCode;
 		},
 		get discountAmount() {
 			return state?.checkout?.discount_amount || 0;
@@ -92,11 +101,33 @@ const { state, actions } = store('surecart/checkout', {
 			);
 		},
 
+		get isEditable() {
+			const { line_item } = getContext();
+			if (line_item?.price?.ad_hoc || line_item?.bump_amount) {
+				return false;
+			}
+
+			return true;
+		},
+
 		// Do any line items have a recurring price?
 		get hasRecurring() {
 			return state?.checkout?.line_items?.data?.some(
 				(item) => item?.price?.recurring_interval
 			);
+		},
+
+		get errorTitle() {
+			return state.error?.title || state.error || '';
+		},
+
+		get errorMessage() {
+			return state.error?.message || '';
+		},
+
+		get showCartMenuIcon() {
+			const { cartMenuAlwaysShown } = getContext();
+			return state.getItemsCount > 0 || cartMenuAlwaysShown;
 		},
 	},
 
@@ -117,7 +148,7 @@ const { state, actions } = store('surecart/checkout', {
 				return;
 			}
 
-			actions.setCheckout(checkout, mode, formId);
+			state.checkout = checkout;
 		},
 	},
 
@@ -149,31 +180,48 @@ const { state, actions } = store('surecart/checkout', {
 			}
 		},
 
-		setDiscountCode(e) {
-			state.discountCode = e?.target?.value || '';
+		setPromotionCode(e) {
+			state.promotionCode = e?.target?.value || '';
 		},
 
 		applyDiscount: async (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 
+			// const { ref } = getElement();
 			const { mode, formId } = getContext();
-			const checkout = await handleCouponApply(
-				state.checkout.id,
-				state.discountCode
-			);
+			const checkout = await handleCouponApply(state.promotionCode);
 
 			if (checkout) {
+				if (!checkout?.discount?.coupon) {
+					// TODO: Change this from API.
+					state.error = {
+						title: 'Failed to update. Please check for errors and try again.',
+						message: 'This coupon code is invalid.',
+					};
+					return;
+				}
+
+				state.error = '';
 				actions.setCheckout(checkout, mode, formId);
+
+				// focus the discount remove button.
+				const removeButton = document?.querySelector?.(
+					'#sc-coupon-remove-discount'
+				);
+
+				if (removeButton) {
+					setTimeout(() => removeButton.focus(), 0);
+				}
 			}
 		},
 
 		removeDiscount: async () => {
 			const { mode, formId } = getContext();
-			const checkout = await handleCouponApply(state.checkout.id, null);
+			const checkout = await handleCouponApply(null);
 
 			if (checkout) {
-				state.discountCode = '';
+				state.promotionCode = ''; //promotionCode
 				actions.setCheckout(checkout, mode, formId);
 			}
 		},
@@ -226,6 +274,8 @@ const { state, actions } = store('surecart/checkout', {
 				LOCAL_STORAGE_KEY,
 				JSON.stringify(checkoutStorage)
 			);
+
+			state.checkout = getCheckoutData(mode, formId);
 		},
 
 		onQuantityIncrease: (e) => {

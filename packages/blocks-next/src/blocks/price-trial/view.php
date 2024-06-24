@@ -1,1 +1,1 @@
-<span <?php echo get_block_wrapper_attributes(); ?> data-wp-text="state.selectedPrice.trial_text"></span>
+<span <?php echo wp_kses_data( wp_kses_data( get_block_wrapper_attributes() ) ); ?> data-wp-text="context.selectedPrice.trial_text"></span>

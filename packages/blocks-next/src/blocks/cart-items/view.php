@@ -40,11 +40,12 @@
 								<?php esc_html_e( 'Qty:', 'surecart' ); ?>
 								<span data-wp-text="context.line_item.quantity"></span>
 							</span>
-						<?php endif; ?>
-						<?php if ( $attributes['editable'] ) : ?>
+						<?php elseif ( $attributes['editable'] ) : ?>
 							<div
 								class="sc-input-group sc-quantity-selector"
 								data-wp-class--quantity--disabled="state.isQuantityDisabled"
+								data-wp-bind--hidden="!state.isEditable"
+								hidden
 							>
 								<div
 									class="sc-input-group-text sc-quantity-selector__decrease"
@@ -68,6 +69,7 @@
 									data-wp-bind--aria-valuemin="context.line_item.min"
 									data-wp-bind--max="context.line_item.max"
 									data-wp-bind--aria-valuemax="context.line_item.max"
+									data-wp-bind--disabled="surecart/checkout::state.loading"
 									step="1"
 									autocomplete="off"
 									role="spinbutton"
@@ -103,7 +105,7 @@
 								data-wp-bind--hidden="!state.lineItemHasScratchAmount"
 								data-wp-text="context.line_item.price.scratchAmount"
 							></span>
-							<span data-wp-text="context.line_item.price.display_amount"></span>
+							<span data-wp-text="state.lineItemAmountDisplay"></span>
 						</div>
 						<div
 							data-wp-bind--hidden="!context.line_item.price.interval"

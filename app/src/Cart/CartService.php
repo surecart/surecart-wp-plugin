@@ -188,33 +188,20 @@ class CartService {
 
 		// get cart block.
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
-		if ( empty( $template->content ) ) {
+		if ( ! $template || empty( $template->content ) ) {
 			return;
 		}
 
-		// get first block attributes.
-		$template_blocks    = parse_blocks( $template->content );
-		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart-v2' );
-		$attributes         = isset( $post_content_block['attrs'] ) ? $post_content_block['attrs'] : [];
-
+		$cart_icon_block_content = '<!-- wp:surecart/cart-icon-v2 /-->';
 		ob_start();
 		?>
 
-		<sc-cart
-			id="sc-cart"
-			header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>"
-			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
-			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
-		>
-			<?php
-			echo wp_kses_post( do_blocks( $template->content ) );
-			?>
-		</sc-cart>
+		<!-- Render the cart-drawer -->
+		<?php echo do_blocks( $template->content ); ?>
 
+		<!-- Render floating cart icon -->
 		<?php if ( $this->isFloatingIconEnabled() ) : ?>
-			<sc-cart-icon style="font-size: 16px">
-				<?php echo wp_kses_post( $this->getIcon( 'floating' ) ); ?>
-			</sc-cart-icon>
+			<?php echo do_blocks( $cart_icon_block_content ); ?>
 		<?php endif; ?>
 
 		<?php
@@ -245,12 +232,8 @@ class CartService {
 				)
 			);
 		}
-		?>
 
-		<sc-cart-loader
-			template='<?php echo esc_attr( $template ); ?>'>
-		</sc-cart-loader>
-		<?php
+		echo $template;
 	}
 
 	/**
