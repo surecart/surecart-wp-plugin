@@ -143,6 +143,11 @@ class Checkout extends Model {
 		return '';
 	}
 
+	/**
+	 * Get the human discount with duration attribute.
+	 *
+	 * @return string
+	 */
 	public function getHumanDiscountWithDurationAttribute() {
 		if ( ! $this->hasRecurring ) {
 			return $this->human_discount;
@@ -160,6 +165,15 @@ class Checkout extends Model {
 			default:
 				return $this->human_discount;
 		}
+	}
+
+	/**
+	 * Get the human discount redeemable status attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountRedeemableStatusAttribute() {
+		return sc_get_human_discount_redeemable_status( $this->discount->redeemable_status ?? '' );
 	}
 
 	/**

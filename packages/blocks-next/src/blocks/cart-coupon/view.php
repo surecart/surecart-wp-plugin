@@ -26,7 +26,11 @@
 		<div class="sc-line-item__text">
 			<div class="sc-line-item__description">
 				<?php esc_html_e( 'Discount', 'surecart' ); ?>
-				<div class="sc-tag sc-tag--default">
+				<div
+					class="sc-tag"
+					data-wp-class--sc-tag--success="state.discountIsRedeemable"
+					data-wp-class--sc-tag--warning="!state.discountIsRedeemable"
+				>
 					<span data-wp-text="state.checkout.discount.promotion.code"></span>
 					<button
 						data-wp-on--click="actions.removeDiscount"
@@ -52,9 +56,9 @@
 
 				<!-- non-redeemable UI -->
 				<div class="sc-line-item__price-description" data-wp-bind--hidden="state.discountIsRedeemable">
-					<div class="coupon__status">
+					<div class="sc-coupon__status">
 						<?php echo wp_kses( SureCart::svg()->get( 'alert-triangle', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
-						<span data-wp-text="state.checkout.discount.redeemable_status"></span>
+						<span data-wp-text="state.checkout.human_discount_redeemable_status"></span>
 					</div>
 				</div>
 			</div>

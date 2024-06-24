@@ -77,7 +77,7 @@
 		}
 	}
 
-	.coupon__status {
+	.sc-coupon__status {
 		font-size: var(--sc-font-size-small);
 		line-height: var(--sc-line-height-dense);
 		color: var(--sc-color-warning-700);
@@ -85,14 +85,16 @@
 		gap: var(--sc-spacing-x-small);
 		align-items: flex-start;
 		text-align: left;
+		justify-content: center;
+    	align-items: center;
 
 		&[hidden] {
 			display: none;
 		}
 
-		sc-icon {
-			flex: 0 0 1em;
-			margin-top: 0.25em;
+		svg {
+			width: 12px;
+			height: 12px;
 		}
 	}
 
