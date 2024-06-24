@@ -12,7 +12,7 @@
 	data-wp-bind--href="context.collection.href"
 	data-wp-on--click="surecart/product-list::actions.navigate"
 	data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
-	aria-describedby="sc-filter-tag-message"
+	aria-description="<?php esc_html_e( 'Press enter to remove this filter.', 'surecart' ); ?>"
 >
 	<span class="tag__content" data-wp-text="context.collection.name"></span>
 	<?php
