@@ -17,7 +17,7 @@ $controller = new ProductListBlock( $block );
 $query      = $controller->query();
 $products = array_map( function($product) {
 	return get_post_meta($product->ID, 'product', true) ?? '';
-}, $list_query->posts);
+}, $query->posts);
 
 // return the view.
 return 'file:./view.php';
