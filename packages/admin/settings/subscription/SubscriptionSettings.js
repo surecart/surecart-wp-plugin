@@ -290,7 +290,24 @@ export default () => {
 						</span>
 					</ScSwitch>
 				</ScUpgradeRequired>
-
+				<ScSwitch
+					checked={item?.bypass_duplicate_trials}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							bypass_duplicate_trials:
+								!item?.bypass_duplicate_trials,
+						});
+					}}
+				>
+					{__('Bypass Duplicate Trials', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This prevents customers from receiving multiple trial periods for the same product by checking their previous trial history',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 				<div
 					css={css`
 						gap: var(--sc-form-row-spacing);
