@@ -8,9 +8,12 @@ import {
 	ScSwitch,
 	ScTooltip,
 } from '@surecart/components-react';
+import { PanelRow, ToggleControl } from '@wordpress/components';
 
-import Box from '../../ui/Box';
-import Definition from '../../ui/Definition';
+import Box from '../../../ui/Box';
+import Definition from '../../../ui/Definition';
+import Category from './Category';
+import Type from './Type';
 
 export default ({ loading, product, updateProduct }) => {
 	const renderTaxInput = () => {
@@ -99,7 +102,35 @@ export default ({ loading, product, updateProduct }) => {
 				)
 			}
 		>
-			{renderTaxInput()}
+			<div>
+				<PanelRow>
+					<span>{__('Charge tax on this product', 'surecart')}</span>
+					<ToggleControl
+						css={css`
+							margin-bottom: 0 !important;
+						`}
+						checked={
+							product?.tax_enabled &&
+							scData?.tax_protocol?.tax_enabled
+						}
+						disabled={!scData?.tax_protocol?.tax_enabled}
+						onChange={() =>
+							updateProduct({
+								tax_enabled: !product?.tax_enabled,
+							})
+						}
+					/>
+				</PanelRow>
+				{product?.tax_enabled && scData?.tax_protocol?.tax_enabled && (
+					<>
+						<Type product={product} updateProduct={updateProduct} />
+						<Category
+							product={product}
+							updateProduct={updateProduct}
+						/>
+					</>
+				)}
+			</div>
 		</Box>
 	);
 };

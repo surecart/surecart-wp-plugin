@@ -51,4 +51,25 @@ class Variant extends Model {
 	public function getDisplayAmountAttribute() {
 		return empty( $this->amount ) ? '' : Currency::format( $this->amount, $this->currency );
 	}
+
+	/**
+	 * Get the featured image attribute.
+	 *
+	 * @return object
+	 */
+	public function getLineItemImageAttribute() {
+		// we have wp media.
+		if ( ! empty( $this->metadata->wp_media ) ) {
+			$item = new GalleryItemAttachment( $this->metadata->wp_media );
+			return $item->attributes( 'thumbnail' );
+		}
+
+		// we have a fallback model from the platform.
+		if ( is_a( $this->image, \SureCart\Models\Media::class ) ) {
+			return $this->image->attributes( 'thumbnail' );
+		}
+
+		// always return an empty object.
+		return (object) [];
+	}
 }

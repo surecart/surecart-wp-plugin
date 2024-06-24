@@ -29,12 +29,16 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 			return new VariantOptionValues( new Table() );
 		};
 
-		$container['surecart.migrations.usermeta'] = function() {
+		$container['surecart.migrations.usermeta'] = function () {
 			return new UserMetaMigrationsService();
 		};
 
-		$container['surecart.migrations.webhook'] = function() {
+		$container['surecart.migrations.webhook'] = function () {
 			return new WebhookMigrationsService();
+		};
+
+		$container['surecart.migrations.rewrites'] = function () {
+			return new RewriteRulesMigrationService();
 		};
 	}
 
@@ -49,5 +53,6 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 		$container['surecart.tables.variant_option_values']->install();
 		$container['surecart.migrations.usermeta']->bootstrap();
 		$container['surecart.migrations.webhook']->bootstrap();
+		$container['surecart.migrations.rewrites']->bootstrap();
 	}
 }

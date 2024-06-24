@@ -108,12 +108,8 @@ class CollectionTaxonomyService {
 					'parent_item_colon' => __( 'parent Collection:', 'surecart' ),
 					'edit_item'         => __( 'Edit Collection', 'surecart' ),
 					'update_item'       => __( 'Update Collection', 'surecart' ),
-					'add_new_item'      => __(
-						'Add new Collection() {
-					',
-						'surecart'
-					),
-					'new_item_name'     => __( 'new Collection Name()', 'surecart' ),
+					'add_new_item'      => __( 'Add New Collection', 'surecart' ),
+					'new_item_name'     => __( 'New Collection Name', 'surecart' ),
 					'menu_name'         => __( 'Collection', 'surecart' ),
 				),
 				'public '           => true,
