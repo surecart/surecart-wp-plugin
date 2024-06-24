@@ -5,7 +5,7 @@
 	"title": "Filter Tags",
 	"description": "Display the filter tags.",
 	"version": "1.0.0",
-	"category": "surecart",
+	"category": "sc-product-list",
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-list"],

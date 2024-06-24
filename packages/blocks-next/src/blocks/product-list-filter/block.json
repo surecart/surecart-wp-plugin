@@ -5,7 +5,7 @@
 	"title": "Filter",
 	"description": "Display the product filter.",
 	"version": "1.0.0",
-	"category": "surecart",
+	"category": "sc-product-list",
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-list"],

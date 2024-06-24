@@ -6,7 +6,7 @@
 	"title": "Template",
 	"description": "Displays products list.",
 	"version": "1.0.0",
-	"category": "surecart",
+	"category": "sc-product-list",
 	"icon": "media-interactive",
 	"example": {
 		"attributes": {}

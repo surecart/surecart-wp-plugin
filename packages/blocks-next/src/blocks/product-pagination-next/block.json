@@ -5,7 +5,7 @@
 	"title": "Next",
 	"description": "Display the product pagination next.",
 	"version": "1.0.0",
-	"category": "surecart",
+	"category": "sc-product-list",
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-pagination"],
