@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SureCart\WordPress\Templates;
 
-use \SureCartVendors\Pimple\Container;
+use SureCartVendors\Pimple\Container;
 
 /**
  * The collection template service.
@@ -22,7 +22,7 @@ class CollectionTemplatesService {
 	 *
 	 * @var array
 	 */
-	private array $templates = [];
+	private array $templates = array();
 
 	/**
 	 * The post type for the templates.
@@ -57,11 +57,7 @@ class CollectionTemplatesService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
-		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
-
-		// collection page query overrides.
-		add_filter( 'query_vars', [ $this, 'addCurrentCollectionQueryVar' ] );
+		// add_filter( 'theme_' . $this->post_type . '_templates', array( $this, 'addTemplates' ) );
 	}
 
 	/**
@@ -82,7 +78,7 @@ class CollectionTemplatesService {
 	 *
 	 * @return array
 	 */
-	public function addTemplates( array $posts_templates ) : array {
+	public function addTemplates( array $posts_templates ): array {
 		return array_merge( $posts_templates, $this->templates );
 	}
 

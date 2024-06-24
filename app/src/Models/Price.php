@@ -40,25 +40,7 @@ class Price extends Model {
 	protected $cache_key = 'products_updated_at';
 
 	/**
-	 * Update a model
-	 *
-	 * @param array $attributes Attributes to update.
-	 *
-	 * @return $this|false
-	 */
-	protected function create( $attributes = array() ) {
-		// update parent.
-		$updated = parent::create( $attributes );
-
-		// sync product.
-		Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
-
-		// return.
-		return $updated;
-	}
-
-	/**
-	 * Update a model
+	 * Set the product attribute
 	 *
 	 * @param array $attributes Attributes to update.
 	 *
@@ -68,8 +50,8 @@ class Price extends Model {
 		// update parent.
 		$updated = parent::update( $attributes );
 
-		// get uncached product and sync.
-		Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $this->product_id )->sync();
+		// sync the product.
+		$this->sync();
 
 		// return.
 		return $updated;
@@ -78,24 +60,46 @@ class Price extends Model {
 	/**
 	 * Update a model
 	 *
-	 * @param array $attributes Attributes to update.
+	 * @param string $id ID to delete.
 	 *
 	 * @return $this|false
 	 */
 	protected function delete( $id = '' ) {
 		// find price as we need the product id.
-		$price = $this->find( $id );
+		$this->find( $id );
 
 		// update parent.
 		$response = parent::delete( $id );
 
 		// sync product.
-		if ( ! empty( $response->deleted ) ) {
-			Product::withSyncableExpands()->where( array( 'cache' => false ) )->find( $price->product_id )->sync();
-		}
+		$this->sync( [ 'refetch' => true ] );
 
 		// return.
 		return $response;
+	}
+
+	/**
+	 * Sync the product
+	 *
+	 * @param array $args Arguments.
+	 *                  - refetch: boolean (default: false) - refetch the product.
+	 *                  - cached: boolean (default: false) - use the cached product.
+	 *
+	 * @return void
+	 */
+	protected function sync( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'refetch' => false,
+				'cached'  => false,
+			)
+		);
+
+		// if the product is already attached, and syncable, use that. Otherwise, find it.
+		$product = ! empty( $this->product ) && $this->product->has_syncable_expands && ! $args['refetch'] ? $this->product : Product::withSyncableExpands()->where( array( 'cached' => $args['cached'] ) )->find( $this->product_id );
+
+		$product->sync();
 	}
 
 	/**
@@ -174,7 +178,6 @@ class Price extends Model {
 	 */
 	public function getTrialTextAttribute() {
 		return $this->trial_duration_days ? sprintf(
-			// translators: %s is the number of days.
 			_n(
 				'Starting in %s day',
 				'Starting in %s days',
@@ -183,7 +186,7 @@ class Price extends Model {
 			),
 			$this->trial_duration_days
 		)
-		: '';
+		: null;
 	}
 
 	/**
@@ -194,7 +197,6 @@ class Price extends Model {
 			return '';
 		}
 		return sprintf(
-			// translators: %1$1s is the setup fee amount, %2$2s is the setup fee name.
 			__( '%1$1s %2$2s', 'surecart' ),
 			Currency::format( $this->setup_fee_amount, $this->currency ),
 			$this->setup_fee_name ?? __( 'Setup Fee', 'surecart' )
@@ -224,12 +226,15 @@ class Price extends Model {
 	 *
 	 * @return string
 	 */
-	public function getIntervalTextAttribute() {
-		$intervals = array(
-			'day'   => __( 'day', 'surecart' ),
-			'week'  => __( 'week', 'surecart' ),
-			'month' => __( 'month', 'surecart' ),
-			'year'  => __( 'year', 'surecart' ),
+	public function getIntervalTextAttribute( $intervals = [] ) {
+		$intervals = wp_parse_args(
+			$intervals,
+			[
+				'day'   => __( 'day', 'surecart' ),
+				'week'  => __( 'week', 'surecart' ),
+				'month' => __( 'month', 'surecart' ),
+				'year'  => __( 'year', 'surecart' ),
+			]
 		);
 
 		if ( empty( $intervals[ $this->recurring_interval ] ) ) {
@@ -237,7 +242,6 @@ class Price extends Model {
 		}
 
 		return sprintf(
-			// translators: %1$d is the number of intervals, %2$s is the interval.
 			_n( '/ %1s', '/ %1$2d %2$1s', $this->recurring_interval_count, 'surecart' ),
 			$intervals[ $this->recurring_interval ],
 			(int) $this->recurring_interval_count,
@@ -251,12 +255,12 @@ class Price extends Model {
 	 */
 	public function getShortIntervalTextAttribute() {
 		return $this->getIntervalTextAttribute(
-			array(
+			[
 				'day'   => __( 'day', 'surecart' ),
 				'week'  => __( 'wk', 'surecart' ),
 				'month' => __( 'mo', 'surecart' ),
 				'year'  => __( 'yr', 'surecart' ),
-			)
+			]
 		);
 	}
 
