@@ -8,6 +8,7 @@
 					'href'                   => esc_url( $page_link ),
 					'role'                   => 'link',
 					'aria-disabled'          => empty( $page_link ) ? 'true' : null,
+					'aria-label'             => wp_kses_post( $attributes['label'] ) ?? __( 'Previous Page', 'surecart' ),
 					'data-wp-on--click'      => 'surecart/product-list::actions.navigate',
 					'data-wp-on--mouseenter' => 'surecart/product-list::actions.prefetch',
 				]
