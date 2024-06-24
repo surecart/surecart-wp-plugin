@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.5
-Stable tag: 2.28.1
+Stable tag: 2.29.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,7 +305,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.28.1 - June 18th, 2024 =
+= 2.29.0 - June 24th, 2024 =
+- New: Subscription setting to prevent customers from purchasing multiple free trials.
 - Fix: Instructions sometimes not showing in popup for manual payment methods.
 - Fix: "Not Found" error when adding a cart icon to a menu and showing it even when there are no items in the cart.
 - Fix: Auto-fulfill not working for test processor.
