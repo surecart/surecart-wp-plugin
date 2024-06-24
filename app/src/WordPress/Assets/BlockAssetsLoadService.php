@@ -88,25 +88,41 @@ class BlockAssetsLoadService {
 	 * @return boolean
 	 */
 	public function isUsingPageBuilder() {
+		return ! empty( $this->getPageBuilder() );
+	}
+
+	/**
+	 * Get the page builder.
+	 *
+	 * @return string
+	 */
+	public function getPageBuilder() {
 		// enable on Elementor.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! empty( $_GET['action'] ) && 'elementor' === sanitize_text_field( $_GET['action'] ) ) {
-			return true;
+			return 'elementor';
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['elementor-preview'] ) ) {
-			return true;
+			return 'elementor';
 		}
 		// load for beaver builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['fl_builder'] ) ) {
-			return true;
+			return 'beaver';
 		}
 		// load for Divi builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['et_fb'] ) ) {
-			return true;
+			return 'divi';
 		}
-		return false;
+
+		// load for thrive architect builder.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['tve_content'] )  ) {
+			return 'thrive';
+		}
+
+		return '';
 	}
 }
