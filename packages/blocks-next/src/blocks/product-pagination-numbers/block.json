@@ -6,7 +6,6 @@
 	"description": "Display the product pagination numbers.",
 	"version": "1.0.0",
 	"category": "sc-product-list",
-	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-pagination"],
 	"usesContext": [
