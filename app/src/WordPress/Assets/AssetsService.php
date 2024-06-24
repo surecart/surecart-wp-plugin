@@ -216,9 +216,10 @@ class AssetsService {
 	 * @return void
 	 */
 	public function addComponentData( $tag, $selector, $data = array() ) {
-		if ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) {
+		if ( ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) && 'thrive' !== $this->loader->getPageBuilder() ) {
 			return $this->outputComponentScript( $tag, $selector, $data );
 		}
+
 		add_action(
 			'wp_footer',
 			function () use ( $tag, $selector, $data ) {
