@@ -18,7 +18,7 @@
 	role="menu"
 	tabindex="-1"
 	data-wp-bind--aria-labelledby="context.activeMenuItemId"
-	aria-describedby="sc-selection-message"
+	aria-description="<?php esc_html_e( 'Press the arrow keys then enter to make a selection.', 'surecart' ); ?>"
 >
 	<div
 		class="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text"

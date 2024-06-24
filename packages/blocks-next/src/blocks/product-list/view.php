@@ -6,6 +6,4 @@
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
-	<span id="sc-selection-message" hidden><?php esc_html_e( 'Press the arrow keys then enter to make a selection.', 'surecart' ); ?></span>
-	<span id="sc-filter-tag-message" hidden><?php esc_html_e( 'Press enter to remove this filter.', 'surecart' ); ?></span>
 </div>
