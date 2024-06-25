@@ -11,6 +11,12 @@
 		margin: 0;
 		cursor: pointer;
 		color: var(--sc-primary-color);
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 var(--sc-focus-ring-width)
+				var(--sc-focus-ring-color-primary);
+		}
 	}
 
 	&__title {
