@@ -263,8 +263,6 @@ add_action(
 			),
 			$static_assets['version']
 		);
-
-		return $context;
 	},
 	10,
 	3
