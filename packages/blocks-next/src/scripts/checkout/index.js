@@ -154,6 +154,11 @@ const { state, actions } = store('surecart/checkout', {
 
 	actions: {
 		toggleCartSidebar(e = null) {
+			// For Tab key press, do nothing.
+			if (e && e.key === 'Tab') {
+				return;
+			}
+
 			e?.preventDefault();
 			state.openCartSidebar = !state?.openCartSidebar || false;
 
