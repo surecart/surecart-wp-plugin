@@ -39,8 +39,8 @@ import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
 import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
 import ReturnItems from './modules/ReturnRequest/ReturnItems';
-import EditShippingAddressModal from './modules/ShippingAddress/EditShippingAddressModal';
-import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
+import EditShippingAddressModal from './modules/EditShippingAddressModal';
+import EditBillingAddressModal from './modules/EditBillingAddressModal';
 import Confirm from '../components/confirm';
 import { checkoutOrderExpands } from '../util/orders';
 
@@ -242,7 +242,7 @@ export default () => {
 
 	const menuItems = getMenuItems(order?.status);
 
-	const deleteMessage = __(
+	const deleteConfirmMessage = __(
 		'Are you sure? This cannot be undone.',
 		'surecart'
 	);
@@ -391,7 +391,7 @@ export default () => {
 								loading={saving}
 								error={error}
 							>
-								{deleteMessage}
+								{deleteConfirmMessage}
 							</Confirm>
 
 							<EditBillingAddressModal
@@ -413,7 +413,7 @@ export default () => {
 								loading={saving}
 								error={error}
 							>
-								{deleteMessage}
+								{deleteConfirmMessage}
 							</Confirm>
 						</>
 					) : null}

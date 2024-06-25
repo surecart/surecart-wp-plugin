@@ -12,21 +12,21 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies.
  */
-import AddressModal from '../../../components/address/AddressModal';
-import { checkoutOrderExpands } from '../../../util/orders';
+import AddressModal from '../../components/address/AddressModal';
+import { checkoutOrderExpands } from '../../util/orders';
 
-export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
+export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 	const [error, setError] = useState(false);
 	const [busy, setBusy] = useState(false);
-	const [address, setAddress] = useState(shippingAddress);
+	const [address, setAddress] = useState(billingAddress);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
-		setAddress(shippingAddress);
-	}, [shippingAddress]);
+		setAddress(billingAddress);
+	}, [billingAddress]);
 
-	const isEdit = () => !!shippingAddress?.id;
+	const isEdit = () => !!billingAddress?.id;
 
 	const onEditAddress = async () => {
 		try {
@@ -37,11 +37,12 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 				}),
 				method: 'PATCH',
 				data: {
-					shipping_address: address,
+					billing_matches_shipping: false,
+					billing_address: address,
 				},
 			});
 			receiveEntityRecords('surecart', 'order', checkout.order);
-			createSuccessNotice(__('Shipping Address Updated', 'surecart'), {
+			createSuccessNotice(__('Billing Address Updated', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
@@ -57,8 +58,8 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 			isEdit={isEdit}
 			title={
 				isEdit()
-					? __('Update Shipping Address', 'surecart')
-					: __('Add Shipping Address', 'surecart')
+					? __('Update Billing Address', 'surecart')
+					: __('Add Billing Address', 'surecart')
 			}
 			open={open}
 			address={address}
