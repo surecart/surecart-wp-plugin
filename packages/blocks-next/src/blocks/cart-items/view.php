@@ -94,7 +94,11 @@
 
 				<div class="sc-product-line-item__suffix">
 					<?php if ( $attributes['removable'] ) : ?>
-						<button class="sc-product-line-item__remove-button" data-wp-on--click="surecart/checkout::actions.removeLineItem">
+						<button
+							class="sc-product-line-item__remove-button"
+							aria-label="<?php esc_attr_e( 'Remove item', 'surecart' ); ?>"
+							data-wp-on--click="surecart/checkout::actions.removeLineItem"
+						>
 							<?php echo wp_kses( SureCart::svg()->get( 'x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
 						</button>
 					<?php endif; ?>

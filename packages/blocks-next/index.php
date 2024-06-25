@@ -242,6 +242,14 @@ add_action(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
 				),
+				array(
+					'id'     => 'wp-i18n',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => 'wp-a11y',
+					'import' => 'dynamic',
+				),
 			),
 			$static_assets['version']
 		);
