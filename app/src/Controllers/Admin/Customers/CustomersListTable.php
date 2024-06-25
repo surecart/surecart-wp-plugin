@@ -140,7 +140,7 @@ class CustomersListTable extends ListTable {
 	public function column_name( $customer ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ); ?>">
 			<?php echo wp_kses_post( $customer->name ?? $customer->email ); ?>
 		</a>
 
