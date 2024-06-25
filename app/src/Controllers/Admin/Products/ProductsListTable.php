@@ -244,6 +244,7 @@ class ProductsListTable extends ListTable {
 			array(
 				'archived' => $is_archived,
 				'query'    => $this->get_search_query(),
+				'',
 			)
 		)->with(
 			array(
@@ -257,34 +258,9 @@ class ProductsListTable extends ListTable {
 
 		// Check if there is any sc_collection. If so, query by taxonomy.
 		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$posts = get_posts(
-				[
-					'post_type'      => 'sc_product',
-					'posts_per_page' => $this->get_items_per_page( 'products' ),
-					'post_status'    => $is_archived ? 'sc_archive' : 'publish',
-					'tax_query'      => array(
-						array(
-							'taxonomy' => 'sc_collection',
-							'terms'    => (int) $_GET['sc_collection'], // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						),
-					),
-				]
-			);
-
-			if ( empty( $posts ) ) {
-				return new \WP_Error( 'no_products_found', __( 'No products found.', 'surecart' ) );
-			}
-
-			$product_ids = array_map(
-				function ( $post ) {
-					return $post->sc_id;
-				},
-				$posts
-			);
-
 			$product_query->where(
 				array(
-					'ids' => $product_ids,  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				)
 			);
 		}
