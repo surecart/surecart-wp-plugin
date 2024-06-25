@@ -71,7 +71,7 @@ class CollectionSyncService {
 			return $this->term;
 		}
 
-		return empty( $this->term->ID ) ? $this->create( $model ) : $this->update( $model );
+		return empty( $this->term->term_id ) ? $this->create( $model ) : $this->update( $model );
 	}
 
 	/**
@@ -122,12 +122,7 @@ class CollectionSyncService {
 
 		// handle errors.
 		if ( is_wp_error( $term ) ) {
-			$data = $term->get_error_data();
-			if ( empty( $data ) ) {
-				return $term;
-			}
-			$term            = [];
-			$term['term_id'] = (int) $data;
+			return $term;
 		}
 
 		$this->term = get_term( $term['term_id'], $this->taxonomy );
