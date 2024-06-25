@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.29.0 - June 24th, 2024 =
+= 2.29.0 - June 25th, 2024 =
 - New: Subscription setting to prevent customers from purchasing multiple free trials.
 - Fix: Instructions sometimes not showing in popup for manual payment methods.
 - Fix: "Not Found" error when adding a cart icon to a menu and showing it even when there are no items in the cart.
@@ -313,6 +313,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Products, product collection, and upsells missing trailing slash causing canonical url issues in some cases.
 - Fix: SureCart form shortcode not saving in Thrive Architect for some users.
 - Fix: Aria-label strings are not translated properly.
+- Fix: Remove product caching on admin product list page to prevent stale inventory data.
+- Fix: Ensure product sku or id is present in product microdata for better facebook support.
 
 = 2.28.0 - June 18th, 2024 =
 - New: Added a setting that allows customers to remove their default payment method.

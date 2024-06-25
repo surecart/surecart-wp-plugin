@@ -300,10 +300,10 @@ export default () => {
 						});
 					}}
 				>
-					{__('Bypass Duplicate Trials', 'surecart')}
+					{__('Prevent Duplicate Trials', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'This prevents customers from receiving multiple trial periods for the same product by checking their previous trial history',
+							'When enabled, this setting prevents customers from receiving multiple trial periods for the same product. If a customer has previously used a trial for the product, they will be charged the full price instead of receiving another trial.',
 							'surecart'
 						)}
 					</span>
