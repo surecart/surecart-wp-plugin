@@ -37,14 +37,6 @@ class CollectionSyncService {
 			return null;
 		}
 
-		$terms_1 = get_terms(
-			array(
-				'taxonomy'   => $this->taxonomy,
-				'hide_empty' => false,
-			)
-		);
-		error_log( print_r( $terms_1, 1 ) );
-
 		// get term by sc_id.
 		$terms = get_terms(
 			array(
