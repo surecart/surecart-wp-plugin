@@ -8,12 +8,15 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
-import { useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
-
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import SaveButton from '../templates/SaveButton';
@@ -30,14 +33,13 @@ import User from './modules/User';
 import ActionsDropdown from './components/ActionsDropdown';
 import ShippingAddress from './modules/ShippingAddress';
 import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
-import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
 import TaxSettings from './modules/TaxSettings';
 import Licenses from './modules/Licenses';
 import Affiliates from '../components/affiliates';
 import useSave from '../settings/UseSave';
 import BillingAddress from './modules/BillingAddress';
 import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
-import ConfirmDeleteBillingAddressModal from './modules/BillingAddress/ConfirmDeleteBillingAddressModal';
+import Confirm from '../components/confirm';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -48,7 +50,11 @@ const modals = {
 
 export default () => {
 	const [error, setError] = useState(null);
+	const [saving, setSaving] = useState(false);
 	const [currentModal, setCurrentModal] = useState(null);
+	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
 	const { save } = useSave();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const {
@@ -96,6 +102,33 @@ export default () => {
 		} catch (e) {
 			console.error(e);
 			setError(e);
+		}
+	};
+
+	const deleteConfirmMessage = __(
+		'Are you sure? This cannot be undone.',
+		'surecart'
+	);
+
+	const deleteAddress = async (data, successMessage) => {
+		try {
+			setSaving(true);
+			const customer = await apiFetch({
+				path: addQueryArgs(`/surecart/v1/customers/${id}`, {
+					expand: ['shipping_address', 'balances', 'billing_address'],
+				}),
+				method: 'PATCH',
+				data,
+			});
+			receiveEntityRecords('surecart', 'customer', customer);
+			createSuccessNotice(successMessage, {
+				type: 'snackbar',
+			});
+			setCurrentModal('');
+		} catch (e) {
+			setError(e);
+		} finally {
+			setSaving(false);
 		}
 	};
 
@@ -157,9 +190,10 @@ export default () => {
 						onEditAddress={() =>
 							setCurrentModal(modals.EDIT_SHIPPING_ADDRESS)
 						}
-						onDeleteAddress={() =>
-							setCurrentModal(modals.CONFIRM_DELETE_ADDRESS)
-						}
+						onDeleteAddress={() => {
+							setCurrentModal(modals.CONFIRM_DELETE_ADDRESS);
+							setError(null);
+						}}
 					/>
 					<BillingAddress
 						billingAddress={customer.billing_address_display}
@@ -167,11 +201,12 @@ export default () => {
 						onEditAddress={() =>
 							setCurrentModal(modals.EDIT_BILLING_ADDRESS)
 						}
-						onDeleteAddress={() =>
+						onDeleteAddress={() => {
 							setCurrentModal(
 								modals.CONFIRM_DELETE_BILLING_ADDRESS
-							)
-						}
+							);
+							setError(null);
+						}}
 					/>
 					<TaxSettings
 						customer={customer}
@@ -216,25 +251,48 @@ export default () => {
 						onRequestClose={() => setCurrentModal('')}
 						customerId={id}
 					/>
-					<ConfirmDeleteAddressModal
+					<Confirm
 						open={currentModal === modals.CONFIRM_DELETE_ADDRESS}
 						onRequestClose={() => setCurrentModal('')}
-						customerId={id}
-					/>
+						onConfirm={() =>
+							deleteAddress(
+								{
+									shipping_address: {},
+								},
+								__('Shipping address deleted.', 'surecart')
+							)
+						}
+						loading={saving}
+						error={error}
+					>
+						{deleteConfirmMessage}
+					</Confirm>
 					<EditBillingAddressModal
 						open={currentModal === modals.EDIT_BILLING_ADDRESS}
 						billingAddress={customer?.billing_address}
 						onRequestClose={() => setCurrentModal('')}
 						customerId={id}
 					/>
-					<ConfirmDeleteBillingAddressModal
+					<Confirm
 						open={
 							currentModal ===
 							modals.CONFIRM_DELETE_BILLING_ADDRESS
 						}
 						onRequestClose={() => setCurrentModal('')}
-						customerId={id}
-					/>
+						onConfirm={() =>
+							deleteAddress(
+								{
+									billing_matches_shipping: false,
+									billing_address: {},
+								},
+								__('Billing address deleted.', 'surecart')
+							)
+						}
+						loading={saving}
+						error={error}
+					>
+						{deleteConfirmMessage}
+					</Confirm>
 				</>
 			) : null}
 		</UpdateModel>

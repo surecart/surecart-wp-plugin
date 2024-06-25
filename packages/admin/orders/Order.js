@@ -247,7 +247,7 @@ export default () => {
 		'surecart'
 	);
 
-	const onDeleteShippingAddress = async () => {
+	const onDeleteAddress = async (data, successMessage) => {
 		try {
 			setSaving(true);
 			const checkout = await apiFetch({
@@ -258,40 +258,10 @@ export default () => {
 					}
 				),
 				method: 'PATCH',
-				data: {
-					shipping_address: {},
-				},
+				data,
 			});
 			receiveEntityRecords('surecart', 'order', checkout.order);
-			createSuccessNotice(__('Shipping address deleted', 'surecart'), {
-				type: 'snackbar',
-			});
-			setModal('');
-		} catch (e) {
-			setError(e);
-		} finally {
-			setSaving(false);
-		}
-	};
-
-	const onDeleteBillingAddress = async () => {
-		try {
-			setSaving(true);
-			const checkout = await apiFetch({
-				path: addQueryArgs(
-					`/surecart/v1/checkouts/${order?.checkout?.id}`,
-					{
-						expand: checkoutOrderExpands,
-					}
-				),
-				method: 'PATCH',
-				data: {
-					billing_matches_shipping: false,
-					billing_address: {},
-				},
-			});
-			receiveEntityRecords('surecart', 'order', checkout.order);
-			createSuccessNotice(__('Billing address deleted', 'surecart'), {
+			createSuccessNotice(successMessage, {
 				type: 'snackbar',
 			});
 			setModal('');
@@ -387,7 +357,17 @@ export default () => {
 							<Confirm
 								open={modal === modals.CONFIRM_DELETE_ADDRESS}
 								onRequestClose={() => setModal('')}
-								onConfirm={onDeleteShippingAddress}
+								onConfirm={() =>
+									onDeleteAddress(
+										{
+											shipping_address: {},
+										},
+										__(
+											'Shipping address deleted.',
+											'surecart'
+										)
+									)
+								}
 								loading={saving}
 								error={error}
 							>
@@ -409,7 +389,18 @@ export default () => {
 									modals.CONFIRM_DELETE_BILLING_ADDRESS
 								}
 								onRequestClose={() => setModal('')}
-								onConfirm={onDeleteBillingAddress}
+								onConfirm={() =>
+									onDeleteAddress(
+										{
+											billing_matches_shipping: false,
+											billing_address: {},
+										},
+										__(
+											'Billing address deleted.',
+											'surecart'
+										)
+									)
+								}
 								loading={saving}
 								error={error}
 							>
