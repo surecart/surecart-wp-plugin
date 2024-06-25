@@ -40,9 +40,9 @@ import Fulfillment from './modules/Fulfillment';
 import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
 import ReturnItems from './modules/ReturnRequest/ReturnItems';
 import EditShippingAddressModal from './modules/ShippingAddress/EditShippingAddressModal';
-import ConfirmDeleteShippingAddressModal from './modules/ShippingAddress/ConfirmDeleteShippingAddressModal';
 import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
-import ConfirmDeleteBillingAddressModal from './modules/BillingAddress/ConfirmDeleteBillingAddressModal';
+import Confirm from '../components/confirm';
+import { checkoutOrderExpands } from '../util/orders';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -53,10 +53,13 @@ const modals = {
 
 export default () => {
 	const [modal, setModal] = useState();
+	const [saving, setSaving] = useState(false);
+	const [error, setError] = useState(null);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 
 	/** This is a workaround until we can sort out why store invalidation is not working for order. */
 	const manuallyRefetchOrder = async () => {
@@ -239,6 +242,66 @@ export default () => {
 
 	const menuItems = getMenuItems(order?.status);
 
+	const deleteMessage = __(
+		'Are you sure? This cannot be undone.',
+		'surecart'
+	);
+
+	const onDeleteShippingAddress = async () => {
+		try {
+			setSaving(true);
+			const checkout = await apiFetch({
+				path: addQueryArgs(
+					`/surecart/v1/checkouts/${order?.checkout?.id}`,
+					{
+						expand: checkoutOrderExpands,
+					}
+				),
+				method: 'PATCH',
+				data: {
+					shipping_address: {},
+				},
+			});
+			receiveEntityRecords('surecart', 'order', checkout.order);
+			createSuccessNotice(__('Shipping address deleted', 'surecart'), {
+				type: 'snackbar',
+			});
+			setModal('');
+		} catch (e) {
+			setError(e);
+		} finally {
+			setSaving(false);
+		}
+	};
+
+	const onDeleteBillingAddress = async () => {
+		try {
+			setSaving(true);
+			const checkout = await apiFetch({
+				path: addQueryArgs(
+					`/surecart/v1/checkouts/${order?.checkout?.id}`,
+					{
+						expand: checkoutOrderExpands,
+					}
+				),
+				method: 'PATCH',
+				data: {
+					billing_matches_shipping: false,
+					billing_address: {},
+				},
+			});
+			receiveEntityRecords('surecart', 'order', checkout.order);
+			createSuccessNotice(__('Billing address deleted', 'surecart'), {
+				type: 'snackbar',
+			});
+			setModal('');
+		} catch (e) {
+			setError(e);
+		} finally {
+			setSaving(false);
+		}
+	};
+
 	return (
 		<UpdateModel
 			title={
@@ -321,11 +384,15 @@ export default () => {
 								checkoutId={order?.checkout?.id}
 							/>
 
-							<ConfirmDeleteShippingAddressModal
+							<Confirm
 								open={modal === modals.CONFIRM_DELETE_ADDRESS}
 								onRequestClose={() => setModal('')}
-								checkoutId={order?.checkout?.id}
-							/>
+								onConfirm={onDeleteShippingAddress}
+								loading={saving}
+								error={error}
+							>
+								{deleteMessage}
+							</Confirm>
 
 							<EditBillingAddressModal
 								open={modal === modals.EDIT_BILLING_ADDRESS}
@@ -336,14 +403,18 @@ export default () => {
 								checkoutId={order?.checkout?.id}
 							/>
 
-							<ConfirmDeleteBillingAddressModal
+							<Confirm
 								open={
 									modal ===
 									modals.CONFIRM_DELETE_BILLING_ADDRESS
 								}
 								onRequestClose={() => setModal('')}
-								checkoutId={order?.checkout?.id}
-							/>
+								onConfirm={onDeleteBillingAddress}
+								loading={saving}
+								error={error}
+							>
+								{deleteMessage}
+							</Confirm>
 						</>
 					) : null}
 				</>
