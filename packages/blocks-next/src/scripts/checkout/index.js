@@ -184,6 +184,36 @@ const { state, actions } = store('surecart/checkout', {
 			state.promotionCode = e?.target?.value || '';
 		},
 
+		maybeApplyDiscountOnKeyDown(e) {
+			if (e.key === 'Escape' || e.key === 'Enter') {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+
+			// if pressed escape key, close the input.
+			if (e.key === 'Escape') {
+				const context = getContext();
+				context.discountInputOpen = false;
+
+				// Move focus to #sc-coupon-trigger.
+				const couponTriggerElement =
+					document.querySelector?.('#sc-coupon-trigger') || null;
+				if (couponTriggerElement) {
+					setTimeout(() => couponTriggerElement.focus(), 0);
+				}
+
+				return;
+			}
+
+			// if pressed enter key, apply the discount.
+			if (e.key === 'Enter') {
+				actions.applyDiscount(e);
+			}
+
+			// if pressed other keys, set the promotion code.
+			actions.setPromotionCode(e);
+		},
+
 		applyDiscount: async (e) => {
 			e.preventDefault();
 			e.stopPropagation();
