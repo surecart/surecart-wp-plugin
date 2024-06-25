@@ -14,7 +14,8 @@
 		}
 	}
 
-	.wp-block-button {
+	&.wp-block-buttons > .wp-block-button {
+		display: block;
 		width: 100%;
 		text-decoration: none !important;
 	}
