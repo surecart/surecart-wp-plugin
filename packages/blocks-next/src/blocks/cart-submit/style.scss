@@ -6,6 +6,12 @@
 		display: block;
 		box-sizing: border-box;
 		text-align: center;
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 var(--sc-focus-ring-width)
+				var(--sc-focus-ring-color-primary);
+		}
 	}
 
 	.wp-block-button {
