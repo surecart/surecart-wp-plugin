@@ -12,6 +12,8 @@
 	);
 	?>
 	data-wp-on--click="surecart/checkout::actions.toggleCartSidebar"
+	data-wp-on--keydown="surecart/checkout::actions.toggleCartSidebar"
+	tabindex="0"
 >
 	<div class="sc-cart-container">
 		<div class="sc-cart-icon">

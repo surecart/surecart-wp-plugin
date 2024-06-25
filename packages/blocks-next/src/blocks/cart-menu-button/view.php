@@ -13,6 +13,8 @@
 	);
 	?>
 	data-wp-on--click="surecart/checkout::actions.toggleCartSidebar"
+	data-wp-on--keydown="surecart/checkout::actions.toggleCartSidebar"
+	tabindex="0"
 >
 	<div class="sc-cart-icon">
 		<?php echo wp_kses( $icon, sc_allowed_svg_html() ); ?>
