@@ -53,7 +53,37 @@ class ProductCollection extends Model implements PageModel {
 			];
 		}
 
-		return parent::create( $attributes );
+		$created = parent::create( $attributes );
+
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		return $this;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		// update the model.
+		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		// return.
+		return $this;
 	}
 
 	/**
