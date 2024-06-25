@@ -216,7 +216,7 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Models\Product
 	 */
 	protected function findSyncable( $id ) {
-		return $this->withSyncableExpands()->find( $id );
+		return $this->withSyncableExpands()->where( [ 'cached' => false ] )->find( $id );
 	}
 
 	/**
