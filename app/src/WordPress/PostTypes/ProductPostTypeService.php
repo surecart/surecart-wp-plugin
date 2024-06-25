@@ -506,7 +506,6 @@ class ProductPostTypeService {
 		$updated = array_filter(
 			$gallery,
 			function ( $id ) use ( $post_id ) {
-			function ( $id ) use ( $post_id ) {
 				return $id !== $post_id;
 			}
 		);
