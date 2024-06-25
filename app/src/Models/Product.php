@@ -13,7 +13,7 @@ use SureCart\Support\Currency;
 /**
  * Price model
  */
-class Product extends Model implements PageModel, Syncable {
+class Product extends Model implements PageModel {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
@@ -56,24 +56,10 @@ class Product extends Model implements PageModel, Syncable {
 	/**
 	 * Immediately sync with a post.
 	 *
-	 * @param array $args Arguments.
-	 *                  - with_collections: bool Whether to sync with collections.
-	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function sync( $args = [] ) {
-		$args = wp_parse_args(
-			$args,
-			array(
-				'with_collections' => false,
-			)
-		);
-
-		\SureCart::sync()
-			->product()
-			->withCollections( $args['with_collections'] )
-			->sync( $this );
-
+	public function sync() {
+		\SureCart::sync()->product()->sync( $this );
 		return $this;
 	}
 

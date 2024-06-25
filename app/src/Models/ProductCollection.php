@@ -57,6 +57,26 @@ class ProductCollection extends Model implements PageModel {
 	}
 
 	/**
+	 * Sync the collection
+	 */
+	public function sync() {
+		\SureCart::sync()
+			->collection()
+			->sync( $this );
+
+		return $this;
+	}
+
+	/**
+	 * Get the attached term.
+	 *
+	 * @return int|false
+	 */
+	public function getTermAttribute() {
+		return \SureCart::sync()->collection()->findByModelId( $this->id );
+	}
+
+	/**
 	 * Get the product template
 	 *
 	 * @return \WP_Template
@@ -105,36 +125,6 @@ class ProductCollection extends Model implements PageModel {
 	}
 
 	/**
-	 * Get the term.
-	 *
-	 * @return \WP_Term|null
-	 */
-	public function getTermAttribute() {
-		if ( empty( $this->attributes['id'] ) ) {
-			return false;
-		}
-
-		// get term by sc_id metadata
-		$args = array(
-			'meta_query' => array(
-				array(
-					'key' => 'sc_id',
-					'value' => $this->attributes['id'],
-					'compare' => '='
-				)
-			)
-		);
-
-		$terms = get_terms( 'sc_collection', $args );
-
-		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-			return $terms[0];
-		}
-
-		return null;
-	}
-
-	/**
 	 * Get the product permalink.
 	 *
 	 * @return string
@@ -146,7 +136,7 @@ class ProductCollection extends Model implements PageModel {
 
 		$term = $this->term;
 
-		if ( isset($term->term_id) ) {
+		if ( isset( $term->term_id ) ) {
 			return get_term_link( $term );
 		}
 
@@ -214,7 +204,7 @@ class ProductCollection extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getTemplateContent() : string {
+	public function getTemplateContent(): string {
 		return wp_is_block_theme() ?
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';

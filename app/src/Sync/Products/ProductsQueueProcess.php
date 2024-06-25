@@ -24,6 +24,13 @@ class ProductsQueueProcess extends BackgroundProcess {
 	protected $action = 'queue_products';
 
 	/**
+	 * The interval for the cron.
+	 *
+	 * @var int
+	 */
+	protected $cron_interval = 1;
+
+	/**
 	 * The process to run on complete.
 	 *
 	 * @var \SureCart\Background\BackgroundProcess

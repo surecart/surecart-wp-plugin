@@ -96,7 +96,7 @@ class ProductSyncService {
 	 * @return \WP_Post|\WP_Error
 	 */
 	public function sync( \SureCart\Models\Model $model ) {
-		return $this->post()->withCollections( $this->with_collections )->sync( $model );
+		return $this->post()->sync( $model );
 	}
 
 	/**
