@@ -189,7 +189,7 @@ const { state, actions } = store('surecart/checkout', {
 			state.promotionCode = e?.target?.value || '';
 		},
 
-		maybeApplyDiscountOnKeyDown(e) {
+		maybeApplyDiscountOnKeyChange(e) {
 			if (e.key === 'Escape' || e.key === 'Enter') {
 				e.preventDefault();
 				e.stopPropagation();
@@ -200,7 +200,7 @@ const { state, actions } = store('surecart/checkout', {
 				const context = getContext();
 				context.discountInputOpen = false;
 
-				// Move focus to #sc-coupon-trigger.
+				// Move focus back to #sc-coupon-trigger element again.
 				const couponTriggerElement =
 					document.querySelector?.('#sc-coupon-trigger') || null;
 				if (couponTriggerElement) {

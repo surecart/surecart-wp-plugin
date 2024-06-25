@@ -100,7 +100,8 @@
 								aria-describedby="coupon-input-addon"
 								placeholder="<?php esc_html_e( 'Enter coupon code', 'surecart' ); ?>"
 								data-wp-bind="state.promotionCode"
-								data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyDown"
+								data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
+								data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 							>
 							<span class="sc-input-group-text" id="coupon-input-addon">
 								<button
@@ -130,7 +131,8 @@
 							aria-describedby="basic-addon1"
 							placeholder="<?php esc_attr_e( 'Enter coupon code', 'surecart' ); ?>"
 							data-wp-bind="state.discountCode"
-							data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyDown"
+							data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
+							data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 						>
 						<span class="sc-input-group-text" id="basic-addon1">
 							<button
