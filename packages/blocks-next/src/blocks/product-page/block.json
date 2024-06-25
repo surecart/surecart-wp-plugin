@@ -17,7 +17,8 @@
 		}
 	},
 	"supports": {
-		"interactivity": true
+		"interactivity": true,
+		"align": ["wide", "full"]
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",

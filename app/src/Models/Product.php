@@ -7,12 +7,13 @@ use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
+use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
-class Product extends Model implements PageModel {
+class Product extends Model implements PageModel, Syncable {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
@@ -22,7 +23,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
+	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
 
 	/**
 	 * Rest API endpoint
@@ -55,14 +56,22 @@ class Product extends Model implements PageModel {
 	/**
 	 * Immediately sync with a post.
 	 *
-	 * @param bool $with_collections Whether to sync with collections.
+	 * @param array $args Arguments.
+	 *                  - with_collections: bool Whether to sync with collections.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync( $with_collections = false ) {
+	public function sync( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'with_collections' => false,
+			)
+		);
+
 		\SureCart::sync()
 			->product()
-			->withCollections( $with_collections )
+			->withCollections( $args['with_collections'] )
 			->sync( $this );
 
 		return $this;
@@ -222,6 +231,33 @@ class Product extends Model implements PageModel {
 	 */
 	protected function findSyncable( $id ) {
 		return $this->withSyncableExpands()->find( $id );
+	}
+
+	/**
+	 * Check if model has syncable expands as properties
+	 *
+	 * @return bool
+	 */
+	protected function getHasSyncableExpandsAttribute() {
+		foreach ( $this->sync_expands as $expand ) {
+			// if expand contains a ., let's ignore it for now.
+			if ( false !== strpos( $expand, '.' ) ) {
+				return true;
+			}
+			if ( ! isset( $this->$expand ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Get the sync expands.
+	 *
+	 * @return array
+	 */
+	protected function getSyncExpands() {
+		return $this->sync_expands;
 	}
 
 	/**
@@ -424,7 +460,8 @@ class Product extends Model implements PageModel {
 	 * @return SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
-		$gallery = $this->gallery ?? array();
+		$gallery = array_values( $this->gallery ?? array() );
+
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
