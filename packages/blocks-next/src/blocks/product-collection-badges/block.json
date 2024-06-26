@@ -5,7 +5,7 @@
 	"title": "Product Collection Badges",
 	"description": "Displays collection selectors for a product.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"ancestor": ["surecart/product-page"],
 	"attributes": {

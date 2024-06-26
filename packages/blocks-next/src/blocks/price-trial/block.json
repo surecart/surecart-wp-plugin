@@ -5,7 +5,7 @@
 	"title": "Price Trial",
 	"description": "Displays trial of a price.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"usesContext": ["surecart/priceId", "surecart/price"],
 	"ancestor": ["surecart/product-price-choice-template"],

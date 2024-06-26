@@ -5,7 +5,7 @@
 	"title": "Product Description",
 	"description": "Display the product description.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"ancestor": ["surecart/product-page"],
 	"attributes": {
