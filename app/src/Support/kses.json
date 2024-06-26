@@ -1700,6 +1700,7 @@
     "max": true,
     "name": true,
     "price-name": true,
+    "purchasable-status": true,
     "quantity": true,
     "removable": true,
     "scratch-amount": true,

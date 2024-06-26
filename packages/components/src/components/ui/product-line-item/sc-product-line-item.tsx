@@ -87,6 +87,9 @@ export class ScProductLineItem {
   /** The SKU. */
   @Prop() sku: string = '';
 
+  /** The purchasable status */
+  @Prop() purchasableStatus: string;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -139,6 +142,29 @@ export class ScProductLineItem {
             {this.interval}
           </div>
         )}
+      </div>
+    );
+  }
+
+  renderPurchasableStatus() {
+    console.log('this.name', this.name, 'this.purchasableStatus', this.purchasableStatus);
+    if (!this.purchasableStatus || this.purchasableStatus === 'purchasable') return null;
+
+    const translations = {
+      price_gone: __('No longer valid', 'surecart'),
+      price_old_version: __('Price has changed', 'surecart'),
+      variant_missing: __('Options no longer available', 'surecart'),
+      variant_old_version: __('Options have changed', 'surecart'),
+      variant_gone: __('Options no longer available', 'surecart'),
+      out_of_stock: __('Out of stock', 'surecart'),
+      exceeds_purchase_limit: __('Exceeds purchase limit', 'surecart'),
+    };
+
+    return (
+      <div class="item__price" part="price">
+        <div class="product-line-item__purchasable-status" part="price__amount">
+          {translations[this.purchasableStatus]}
+        </div>
       </div>
     );
   }
@@ -211,6 +237,7 @@ export class ScProductLineItem {
               <div></div>
             )}
             {this.renderPriceAndInterval()}
+            {this.renderPurchasableStatus()}
           </div>
         </div>
         {(this.fees || []).map(fee => {
