@@ -32,7 +32,13 @@ class CollectionTaxonomyService {
 	 * @return array
 	 */
 	public function forceAccountIdScope( $query ) {
+		// account not connected.
 		if ( ! \SureCart::account()->id ) {
+			return $query;
+		}
+
+		// not a taxonomy query.
+		if ( ! in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
 			return $query;
 		}
 
@@ -41,15 +47,13 @@ class CollectionTaxonomyService {
 		$query->query_vars['meta_query'] = array_merge(
 			$existing,
 			array(
+				'relation' => 'AND',
 				array(
-					'relation' => 'AND',
-					array(
-						'key'     => 'sc_account',
-						'value'   => \SureCart::account()->id,
-						'compare' => '=',
-					),
+					'key'     => 'sc_account',
+					'value'   => \SureCart::account()->id,
+					'compare' => '=',
 				),
-			)
+			),
 		);
 
 		return $query;

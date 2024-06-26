@@ -98,22 +98,7 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Background\QueueService|false Whether the sync was queued.
 	 */
 	protected function maybeQueueSync() {
-		// we don't have an updated_at.
-		if ( empty( $this->updated_at ) ) {
-			return false;
-		}
-
-		// we don't have a post.
-		if ( empty( $this->post ) ) {
-			return false;
-		}
-
-		// we don't have a product updated_at.
-		if ( empty( $this->post->product->updated_at ) ) {
-			return false;
-		}
-
-		if ( $this->updated_at <= $this->post->product->updated_at ) {
+		if ( $this->synced ) {
 			return false;
 		}
 
@@ -217,6 +202,29 @@ class Product extends Model implements PageModel {
 	 */
 	protected function findSyncable( $id ) {
 		return $this->withSyncableExpands()->where( [ 'cached' => false ] )->find( $id );
+	}
+
+	/**
+	 * Get the is synced attribute.
+	 *
+	 * @return bool
+	 */
+	protected function getSyncedAttribute() {
+		// we don't have a post.
+		if ( empty( $this->post ) || ! isset( $this->post->product ) || ! isset( $this->post->product->updated_at ) ) {
+			return false;
+		}
+
+		// the post is trashed.
+		if ( 'trash' === $this->post->post_status ) {
+			return false;
+		}
+
+		if ( empty( $this->updated_at ) ) {
+			return false;
+		}
+
+		return $this->updated_at === $this->post->product->updated_at;
 	}
 
 	/**

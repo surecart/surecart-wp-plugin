@@ -149,6 +149,7 @@ class ProductsListTable extends ListTable {
 			'status'              => __( 'Product Page', 'surecart' ),
 			'featured'            => __( 'Featured', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
+			'sync_status'         => __( 'Synced', 'surecart' ),
 		);
 	}
 
@@ -162,6 +163,18 @@ class ProductsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="bulk_action_product_ids[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
+	}
+
+	/**
+	 * Show the sync status.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_sync_status( $product ) {
+		if ( \SureCart::sync()->products()->isActive() ) {
+			return '<sc-icon name="loader"></sc-icon>' . ' ' . __( 'Syncing...', 'surecart' );
+		}
+		return $product->synced ? '<sc-icon name="check"><sc-icon>' : '<sc-icon name="x"></sc-icon>';
 	}
 
 	/**
@@ -506,6 +519,7 @@ class ProductsListTable extends ListTable {
 				'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 				'trash'        => $this->action_toggle_archive( $product ),
 				'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				'sync'         => '<a href="' . esc_url( \SureCart::getUrl()->sync( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Sync Product', 'surecart' ) . '">' . esc_html__( 'Sync', 'surecart' ) . '</a>',
 			]
 		);
 	}

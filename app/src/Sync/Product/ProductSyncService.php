@@ -24,13 +24,6 @@ class ProductSyncService {
 	protected $app = null;
 
 	/**
-	 * Should we sync this with collections?
-	 *
-	 * @var string
-	 */
-	protected $with_collections = false;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param \SureCart\Application $app The application.
@@ -58,18 +51,6 @@ class ProductSyncService {
 	}
 
 	/**
-	 * Should we do it with collections?
-	 *
-	 * @param string $with_collections Whether to sync with collections.
-	 *
-	 * @return self
-	 */
-	public function withCollections( $with_collections = true ) {
-		$this->with_collections = $with_collections;
-		return $this;
-	}
-
-	/**
 	 * Queue the sync for a later time.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
@@ -81,7 +62,6 @@ class ProductSyncService {
 			$this->action_name,
 			[
 				'id'               => $model->id,
-				'with_collections' => $this->with_collections,
 			],
 			'product-' . $model->id, // unique id for the product.
 			true // force unique. This will replace any existing jobs.
@@ -114,13 +94,12 @@ class ProductSyncService {
 	 * Fetch and sync product.
 	 *
 	 * @param string $id The product id to sync.
-	 * @param bool   $with_collections Whether to sync with collections.
 	 *
 	 * @throws \Exception If there is an error.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function handleScheduledSync( $id, $with_collections = false ) {
+	public function handleScheduledSync( $id ) {
 		// get product.
 		$product = Product::findSyncable( $id );
 
@@ -129,6 +108,6 @@ class ProductSyncService {
 			throw( $product->get_error_message() );
 		}
 
-		return $this->withCollections( $with_collections )->sync( $product );
+		return $this->sync( $product );
 	}
 }

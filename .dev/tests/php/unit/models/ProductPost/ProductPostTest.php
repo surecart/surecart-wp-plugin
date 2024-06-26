@@ -67,7 +67,7 @@ class ProductPostTest extends SureCartUnitTestCase
 					]
 				],
 			]
-		))->sync( ['with_collections' => true] );
+		))->sync();
 
 		$post = $product->post;
 
@@ -103,7 +103,7 @@ class ProductPostTest extends SureCartUnitTestCase
 					]
 				],
 			]
-		))->sync( [ 'with_collections' => true ] );
+		))->sync();
 
 		$post = $product_2->post;
 
@@ -779,7 +779,6 @@ class ProductPostTest extends SureCartUnitTestCase
 				'surecart/sync/product',
 				[
 					'id'               => 'testid',
-					'with_collections' => false,
 				],
 				'product-testid', // unique id for the product.
 				true // force unique. This will replace any existing jobs.

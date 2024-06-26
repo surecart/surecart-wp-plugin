@@ -49,11 +49,12 @@ class ProductPostSyncService {
 		// query the post.
 		$query = new \WP_Query(
 			array(
-				'post_type'      => $this->post_type,
-				'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
-				'posts_per_page' => 1,
-				'no_found_rows'  => true,
-				'meta_query'     => array(
+				'post_type'        => $this->post_type,
+				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
+				'posts_per_page'   => 1,
+				'no_found_rows'    => true,
+				'suppress_filters' => true,
+				'meta_query'       => array(
 					array(
 						'key'   => 'sc_id',
 						'value' => $model_id, // query by model id.
@@ -195,10 +196,10 @@ class ProductPostSyncService {
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
 		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
+		$this->syncCollections( $post_id, $model );
+
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
-
-		$this->syncCollections( $post_id, $model );
 
 		// delete existing.
 		VariantOptionValue::where( 'product_id', $model->id )->delete();
