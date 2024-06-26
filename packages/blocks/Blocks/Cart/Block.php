@@ -18,6 +18,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content, $block = null ) {
-		return filter_block_content( $content, 'post' );
+		return \SureCart::block()->cartMigration( $attributes, $this->block )->render();
+		// return filter_block_content( $content, 'post' );
 	}
 }

@@ -88,6 +88,17 @@ class BlockService {
 	public function productListMigration( $attributes = [], $block = null ) {
 		return new ProductListMigrationService( $attributes, $block );
 	}
+
+	/**
+	 * Get cart migration service.
+	 *
+	 * @param array $attributes Attributes.
+	 *
+	 * @return CartMigrationService
+	 */
+	public function cartMigration( $attributes = [], $block = null ) {
+		return new CartMigrationService( $attributes, $block );
+	}
 	
 	/**
 	 * Get the product list service.
