@@ -8,6 +8,7 @@
 	"category": "widgets",
 	"icon": "media-interactive",
 	"usesContext": ["surecart/productId", "surecart/product", "surecart/price"],
+	"ancestor": ["surecart/product-price-choices-template"],
 	"example": {
 		"attributes": {}
 	},

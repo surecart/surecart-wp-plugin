@@ -8,6 +8,7 @@
 	"category": "widgets",
 	"icon": "media-interactive",
 	"usesContext": ["surecart/priceId", "surecart/price"],
+	"ancestor": ["surecart/product-price-choice-template"],
 	"supports": {
 		"interactivity": true,
 		"color": {

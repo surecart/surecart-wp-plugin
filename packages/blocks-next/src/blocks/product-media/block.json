@@ -8,6 +8,7 @@
 	"keywords": ["image", "media"],
 	"icon": "media-interactive",
 	"textdomain": "surecart",
+	"ancestor": ["surecart/product-page"],
 	"supports": {
 		"interactivity": true,
 		"reusable": false,
