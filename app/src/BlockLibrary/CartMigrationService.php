@@ -34,8 +34,8 @@ class CartMigrationService {
 	 * @param object $block Block.
 	 */
 	public function __construct( $attributes = array(), $block = null ) {
-		$this->attributes     = $attributes;
-		$this->block          = $block;
+		$this->attributes = $attributes;
+		$this->block      = $block;
 	}
 
 	/**
@@ -54,6 +54,8 @@ class CartMigrationService {
 		$this->renderCartSubtotal();
 		$this->renderCartBumpLineItem();
 		$this->renderCartSubmit();
+		$this->renderCartSubmit();
+		$this->renderCartMessage();
 
 		$this->block_html .= '<!-- /wp:surecart/cart-v2 -->';
 	}
@@ -140,6 +142,22 @@ class CartMigrationService {
 		$text_string = $text ? 'text="' . $text . '"' : '';
 
 		$this->block_html .= '<!-- wp:surecart/cart-submit-v2 {' . $text_string . ', ' . $this->getCartStyle() . '} /-->';
+	}
+
+	/**
+	 * Render the cart message element.
+	 *
+	 * @return void
+	 */
+	public function renderCartMessage(): void {
+		$text = $this->attributes['text'] ?? '';
+		if ( empty( $text ) ) {
+			return;
+		}
+
+		$text_string = $text ? 'text="' . $text . '"' : '';
+
+		$this->block_html .= '<!-- wp:surecart/cart-message-v2 {' . $text_string . '} /-->';
 	}
 
 	/**
