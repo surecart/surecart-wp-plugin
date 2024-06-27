@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { layout as icon } from '@wordpress/icons';
+import { currencyDollar as icon } from '@wordpress/icons';
 import { registerBlockType } from '@wordpress/blocks';
 
 /**

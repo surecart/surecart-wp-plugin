@@ -6,7 +6,6 @@
 	"description": "Displays amount of a price.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
 	"usesContext": ["surecart/priceId", "surecart/price"],
 	"ancestor": ["surecart/product-price-choice-template"],
 	"supports": {
