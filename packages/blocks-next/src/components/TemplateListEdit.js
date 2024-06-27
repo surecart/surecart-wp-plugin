@@ -12,10 +12,11 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
-function PostTemplateInnerBlocks({ template, ...itemProps }) {
+function PostTemplateInnerBlocks({ template, renderAppender, ...itemProps }) {
 	const innerBlocksProps = useInnerBlocksProps(itemProps, {
 		template,
 		__unstableDisableLayoutClassNames: true,
+		renderAppender,
 	});
 	return <div {...innerBlocksProps} />;
 }
@@ -59,6 +60,8 @@ export default function MultiEdit({
 	style,
 	itemProps,
 	template,
+	renderAppender,
+	attachBlockProps = true,
 }) {
 	const [activeBlockContextId, setActiveBlockContextId] = useState();
 
@@ -67,10 +70,13 @@ export default function MultiEdit({
 		[clientId]
 	);
 
-	const blockProps = useBlockProps({
-		className,
-		style,
-	});
+	const blockProps = attachBlockProps
+		? useBlockProps({
+				className,
+				style,
+		  })
+		: { style, className };
+
 	// To avoid flicker when switching active block contexts, a preview is rendered
 	// for each block context, but the preview for the active block context is hidden.
 	// This ensures that when it is displayed again, the cached rendering of the
@@ -87,6 +93,7 @@ export default function MultiEdit({
 							(activeBlockContextId || blockContexts[0]?.id) && (
 							<PostTemplateInnerBlocks
 								template={template}
+								renderAppender={renderAppender}
 								{...itemProps}
 							/>
 						)}

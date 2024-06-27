@@ -7,28 +7,48 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
-	"example": {
+	"ancestor": ["surecart/product-page"],
+	"attributes": {
 		"textAlign": {
 			"type": "string",
 			"default": "left"
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"supports": {
 		"interactivity": true,
+		"reusable": false,
+		"html": false,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
 		"spacing": {
-			"padding": true,
-			"margin": ["top", "bottom"]
+			"margin": ["top", "bottom"],
+			"padding": true
 		},
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"__experimentalFontWeight": true
-		},
-		"color": {
-			"text": true,
-			"background": false,
-			"enableContrastChecker": true
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
 		}
 	},
 	"textdomain": "surecart",

@@ -124,9 +124,8 @@ class ProductsSyncService {
 		$args = wp_parse_args(
 			$args,
 			[
-				'page'             => 1,
-				'per_page'         => 25,
-				'with_collections' => false,
+				'page'     => 1,
+				'per_page' => 25,
 			]
 		);
 

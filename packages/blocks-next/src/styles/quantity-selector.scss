@@ -1,0 +1,88 @@
+.sc-input-group.sc-quantity-selector {
+	width: var(--sc-quantity-select-width, 100px);
+	height: var(--sc-quantity-control-height, var(--sc-input-height-small));
+	border-radius: inherit !important;
+
+	&.quantity--disabled {
+		background-color: var(--sc-input-background-color-disabled);
+		border-color: var(--sc-input-border-color-disabled);
+		opacity: 0.5;
+		cursor: not-allowed;
+
+		.sc-quantity-selector__control {
+			color: var(--sc-input-color-disabled);
+
+			&::placeholder {
+				color: var(--sc-input-placeholder-color-disabled);
+			}
+		}
+	}
+
+	.sc-quantity-selector__decrease,
+	.sc-quantity-selector__increase {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 0;
+		height: auto;
+		top: 1px;
+		bottom: 1px;
+		width: 32px;
+		cursor: pointer;
+		font-size: 13px;
+		user-select: none;
+		border-width: 0;
+		padding: 0;
+
+		svg {
+			width: var(--sc-font-size-medium, 1em);
+			height: var(--sc-font-size-medium, 1em);
+		}
+
+		&.button--disabled {
+			background-color: var(--sc-input-background-color-disabled);
+			border-color: var(--sc-input-border-color-disabled);
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+	}
+
+	.sc-quantity-selector__decrease {
+		border-right: 1px solid var(--sc-input-border-color);
+	}
+
+	.sc-quantity-selector__increase {
+		border-left: 1px solid var(--sc-input-border-color);
+	}
+
+	input[type='number'].sc-quantity-selector__control {
+		line-height: 1;
+		font-size: var(--sc-font-size-small);
+		height: 100%;
+		text-align: center;
+	}
+
+	&.quantity--small {
+		width: var(--sc-quantity-select-width-small, 76px);
+		height: var(--sc-quantity-control-height-small, 26px);
+
+		.sc-quantity-selector__decrease,
+		.sc-quantity-selector__increase {
+			width: 24px;
+			border: none;
+
+			svg {
+				width: var(--sc-font-size-small, 0.75em);
+				height: var(--sc-font-size-small, 0.75em);
+			}
+		}
+		input[type='number'].sc-quantity-selector__control {
+			max-width: 24px;
+			font-size: var(--sc-font-size-x-small);
+		}
+	}
+}
+
+.wp-block-surecart-product-quantity-v2 .sc-form-label {
+	color: inherit !important;
+}

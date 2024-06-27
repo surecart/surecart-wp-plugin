@@ -148,6 +148,7 @@ class ProductsListTable extends ListTable {
 			'product_collections' => __( 'Collections', 'surecart' ),
 			'status'              => __( 'Product Page', 'surecart' ),
 			'featured'            => __( 'Featured', 'surecart' ),
+			'sync_status'         => __( 'Synced', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
 		);
 	}
@@ -162,6 +163,18 @@ class ProductsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="bulk_action_product_ids[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
+	}
+
+	/**
+	 * Show the sync status.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_sync_status( $product ) {
+		if ( \SureCart::sync()->products()->isActive() ) {
+			return '<span class="syncing-wrapper"><sc-icon name="loader" class="syncing"></sc-icon><span class="syncing-text">' . __( 'Syncing...', 'surecart' ) . '</span></span>';
+		}
+		return $product->synced ? '<sc-icon name="check" class="synced"></sc-icon>' : '<sc-icon name="x" class="unsynced"></sc-icon>';
 	}
 
 	/**
@@ -244,6 +257,7 @@ class ProductsListTable extends ListTable {
 			array(
 				'archived' => $is_archived,
 				'query'    => $this->get_search_query(),
+				'',
 			)
 		)->with(
 			array(
@@ -257,34 +271,9 @@ class ProductsListTable extends ListTable {
 
 		// Check if there is any sc_collection. If so, query by taxonomy.
 		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$posts = get_posts(
-				[
-					'post_type'      => 'sc_product',
-					'posts_per_page' => $this->get_items_per_page( 'products' ),
-					'post_status'    => $is_archived ? 'sc_archive' : 'publish',
-					'tax_query'      => array(
-						array(
-							'taxonomy' => 'sc_collection',
-							'terms'    => (int) $_GET['sc_collection'], // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						),
-					),
-				]
-			);
-
-			if ( empty( $posts ) ) {
-				return new \WP_Error( 'no_products_found', __( 'No products found.', 'surecart' ) );
-			}
-
-			$product_ids = array_map(
-				function ( $post ) {
-					return $post->sc_id;
-				},
-				$posts
-			);
-
 			$product_query->where(
 				array(
-					'ids' => $product_ids,  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				)
 			);
 		}
@@ -479,14 +468,7 @@ class ProductsListTable extends ListTable {
 		<div class="sc-product-name">
 			<?php if ( ! empty( $product->featured_image ) ) { ?>
 				<?php
-				echo wp_kses_post(
-					$product->featured_image->html(
-						'thumbnail',
-						[
-							'style' => 'width:40px;height:40px;border: 1px solid #dcdcdc;flex: 1 0 40px;object-fit: cover;',
-						]
-					)
-				);
+				echo wp_kses_post( $product->featured_image->html( 'thumbnail' ) );
 				?>
 			<?php } else { ?>
 			<div class="sc-product-image-preview">
@@ -530,6 +512,7 @@ class ProductsListTable extends ListTable {
 				'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 				'trash'        => $this->action_toggle_archive( $product ),
 				'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				'sync'         => '<a href="' . esc_url( \SureCart::getUrl()->sync( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Sync Product', 'surecart' ) . '">' . esc_html__( 'Sync', 'surecart' ) . '</a>',
 			]
 		);
 	}

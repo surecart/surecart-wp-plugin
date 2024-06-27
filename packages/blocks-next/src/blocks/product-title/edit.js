@@ -13,20 +13,13 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { useEntityRecord } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
  */
 import HeadingLevelDropdown from '../../components/HeadingLebelDropdown';
-import {
-	PanelBody,
-	Placeholder,
-	Spinner,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
+import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
 
 export default ({
 	attributes: { level, textAlign, isLink, rel, linkTarget },
@@ -41,18 +34,10 @@ export default ({
 		}),
 	});
 
-	const product = useSelect(
-		(select) => {
-			if (!productId) {
-				return null;
-			}
-			return select(coreStore).getEntityRecord(
-				'surecart',
-				'product',
-				productId
-			);
-		},
-		[productId]
+	let { record: product } = useEntityRecord(
+		'postType',
+		'sc_product',
+		productId
 	);
 
 	return (
@@ -103,7 +88,7 @@ export default ({
 			</InspectorControls>
 
 			<TagName {...blockProps}>
-				{product?.name || __('Product Name', 'surecart')}
+				{product?.title?.raw || __('Product Name', 'surecart')}
 			</TagName>
 		</>
 	);
