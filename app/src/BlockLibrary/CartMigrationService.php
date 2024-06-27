@@ -28,36 +28,42 @@ class CartMigrationService {
 	public string $block_html = '';
 
 	/**
+	 * Inner Blocks.
+	 *
+	 * @var array
+	 */
+	public array $inner_blocks = array();
+
+	/**
 	 * Set the initial variables.
 	 *
 	 * @param array  $attributes Attributes.
 	 * @param object $block Block.
 	 */
 	public function __construct( $attributes = array(), $block = null ) {
-		$this->attributes = $attributes;
-		$this->block      = $block;
+		$this->attributes   = $attributes;
+		$this->block        = $block;
+		$this->inner_blocks = $block->parsed_block['innerBlocks'] ?? [];
 	}
 
 	/**
-	 * Render the cart.
+	 * Get the Child Blocks Attributes.
 	 *
-	 * @return void
+	 * @param string $block_name Block Name.
+	 * @return array             Child Blocks Attributes.
 	 */
-	public function renderCart(): void {
-		$limit = $this->attributes['limit'] ?? 15;
+	public function getChildBlocksAttributes( $block_name ) {
+		if ( empty( $this->inner_blocks ) ) {
+			return array();
+		}
 
-		$this->block_html .= '<!-- wp:surecart/cart-v2 {"limit":' . $limit . '} -->';
+		foreach ( $this->inner_blocks as $block ) {
+			if ( $block['blockName'] === $block_name ) {
+				return $block['attrs'];
+			}
+		}
 
-		$this->renderCartHeader();
-		$this->renderCartItems();
-		$this->renderCartCoupon();
-		$this->renderCartSubtotal();
-		$this->renderCartBumpLineItem();
-		$this->renderCartSubmit();
-		$this->renderCartSubmit();
-		$this->renderCartMessage();
-
-		$this->block_html .= '<!-- /wp:surecart/cart-v2 -->';
+		return array();
 	}
 
 	/**
@@ -179,6 +185,46 @@ class CartMigrationService {
 	}
 
 	/**
+	 * Render the cart template.
+	 *
+	 * @return void
+	 */
+	public function renderCartTemplate(): void {
+		$cart_block_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-v2' ), JSON_FORCE_OBJECT );
+		$this->block_html .= '<!-- wp:surecart/cart-v2 ' . $cart_block_attrs . ' -->';
+
+		// Render according to the inner blocks order in old block.
+		if ( ! empty( $this->inner_blocks ) ) {
+			foreach ( $this->inner_blocks as $inner_block ) {
+				switch ( $inner_block['blockName'] ) {
+					case 'surecart/cart-header-v2':
+						$this->renderCartHeader();
+						break;
+					case 'surecart/cart-items-v2':
+						$this->renderCartItems();
+						break;
+					case 'surecart/cart-coupon-v2':
+						$this->renderCartCoupon();
+						break;
+					case 'surecart/cart-subtotal-v2':
+						$this->renderCartSubtotal();
+						break;
+					case 'surecart/cart-bump-line-item-v2':
+						$this->renderCartBumpLineItem();
+						break;
+					case 'surecart/cart-submit-v2':
+						$this->renderCartSubmit();
+						break;
+					case 'surecart/cart-message-v2':
+						$this->renderCartMessage();
+						break;
+				}
+			}
+		}
+		$this->block_html .= '<!-- /wp:surecart/cart-v2 -->';
+	}
+
+	/**
 	 * Render the blocks.
 	 *
 	 * @return string
@@ -193,7 +239,7 @@ class CartMigrationService {
 	 * @return string
 	 */
 	public function render(): string {
-		$this->renderCart();
+		$this->renderCartTemplate();
 		return $this->doBlocks();
 	}
 }

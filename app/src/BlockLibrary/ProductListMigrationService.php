@@ -30,7 +30,7 @@ class ProductListMigrationService {
 	/**
 	 * Inner Blocks.
 	 *
-	 * @var string
+	 * @var array
 	 */
 	public array $inner_blocks = array();
 
