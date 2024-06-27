@@ -38,31 +38,30 @@ abstract class SureCartUnitTestCase extends WP_UnitTestCase
 
 		// it should cancel the queue since the post has been created.
 		foreach( $ids as $id ) {
-		$queue_service
-		->shouldReceive('cancel')
-		->times($times)
-		->with(
-			'surecart/sync/product',
-			[
-				'id'               => $id,
-			],
-			'product-' . $id, // unique id for the product.
-			true // force unique. This will replace any existing jobs.
-		)->andReturn(true);
+			// it should queue the an async request since the post has not yet been created.
+			$queue_service
+				->shouldReceive('async')
+				->times($times)
+				->with(
+					'surecart/sync/product',
+					[
+						'id'               => $id,
+					],
+					'product-' . $id, // unique id for the product.
+					true // force unique. This will replace any existing jobs.
+				)->andReturn(true);
 
-
-		// it should queue the an async request since the post has not yet been created.
-		$queue_service
-			->shouldReceive('async')
-			->times($times)
-			->with(
-				'surecart/sync/product',
-				[
-					'id'               => $id,
-				],
-				'product-' . $id, // unique id for the product.
-				true // force unique. This will replace any existing jobs.
-			)->andReturn(true);
+			$queue_service
+				->shouldReceive('cancel')
+				->times($times)
+				->with(
+					'surecart/sync/product',
+					[
+						'id'               => $id,
+					],
+					'product-' . $id, // unique id for the product.
+					true // force unique. This will replace any existing jobs.
+				)->andReturn(true);
 		}
 	}
 }
