@@ -1,12 +1,11 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-price-v2",
+	"name": "surecart/product-list-price",
 	"title": "Price",
 	"description": "Display the product price.",
 	"version": "1.0.0",
 	"category": "surecart",
-	"icon": "media-interactive",
 	"example": {},
 	"usesContext": ["surecart/productId"],
 	"ancestor": ["surecart/product-list"],

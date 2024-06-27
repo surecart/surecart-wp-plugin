@@ -5,8 +5,7 @@
 	"title": "Product List",
 	"description": "Display a list of products.",
 	"version": "1.0.0",
-	"category": "surecart",
-	"icon": "media-interactive",
+	"category": "sc-product-list",
 	"example": {},
 	"providesContext": {
 		"surecart/product-list/limit": "limit",

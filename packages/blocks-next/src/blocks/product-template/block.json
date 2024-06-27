@@ -6,15 +6,14 @@
 	"title": "Template",
 	"description": "Displays products list.",
 	"version": "1.0.0",
-	"category": "surecart",
-	"icon": "media-interactive",
+	"category": "sc-product-list",
 	"example": {
 		"attributes": {}
 	},
 	"allowedBlocks": [
 		"surecart/product-image",
-		"surecart/product-title-v2",
-		"surecart/product-price-v2",
+		"surecart/product-list-title",
+		"surecart/product-list-price",
 		"surecart/product-scratch-price",
 		"surecart/product-description-v2",
 		"core/group"
