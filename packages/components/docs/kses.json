@@ -1393,6 +1393,7 @@
     "slot": true
   },
   "sc-payment-methods-list": {
+    "can-detach-default-payment-method": true,
     "heading": true,
     "is-customer": true,
     "query": true,

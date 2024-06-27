@@ -273,7 +273,7 @@ export class ScUpcomingInvoice {
 
         {!!checkout.trial_amount && (
           <sc-line-item>
-            <span slot="description">{__('Free Trial', 'surecart')}</span>
+            <span slot="description">{__('Trial', 'surecart')}</span>
             <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
           </sc-line-item>
         )}

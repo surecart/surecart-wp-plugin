@@ -449,6 +449,7 @@ export interface LineItem extends Object {
   purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';
   purchasable_status_display: string;
   variant_options: Array<string>;
+  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';
   variant?: Variant;
 }
 

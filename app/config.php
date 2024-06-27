@@ -151,7 +151,6 @@ return [
 	'blocks'                 => [
 		\SureCartBlocks\Blocks\Email\Block::class,
 		\SureCartBlocks\Blocks\Address\Block::class,
-		\SureCartBlocks\Blocks\BillingAddress\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Coupon\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,

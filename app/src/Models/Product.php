@@ -167,7 +167,7 @@ class Product extends Model implements PageModel {
 			return add_query_arg( 'sc_product_page_id', $this->slug, get_home_url() );
 		}
 		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . $this->slug;
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . trailingslashit( $this->slug );
 	}
 
 	/**
@@ -268,10 +268,12 @@ class Product extends Model implements PageModel {
 			[
 				'@context'    => 'http://schema.org',
 				'@type'       => 'Product',
+				'productId'   => $this->sku ?? $this->slug,
 				'name'        => $this->name,
-				'image'       => $this->image_url ?? '',
 				'description' => sanitize_text_field( $this->description ),
+				'image'       => $this->image_url ?? '',
 				'offers'      => $offers,
+				'url'         => $this->permalink,
 			],
 			$this
 		);
