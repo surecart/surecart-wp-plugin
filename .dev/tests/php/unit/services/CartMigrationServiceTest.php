@@ -48,7 +48,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_constructor_sets_attributes()
     {
@@ -61,7 +61,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
     }
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_get_child_blocks_attributes()
     {
@@ -86,7 +86,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
     }
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_get_child_blocks_attributes_returns_empty_array_if_no_inner_blocks()
 	{
@@ -99,7 +99,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_header()
 	{
@@ -108,7 +108,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_items()
 	{
@@ -117,7 +117,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_coupon()
 	{
@@ -126,7 +126,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_bump_line_item()
 	{
@@ -135,7 +135,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_subtotal()
 	{
@@ -144,7 +144,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_message()
 	{
@@ -153,7 +153,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_submit()
 	{
@@ -162,7 +162,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group cartblock
+	 * @group block
 	 */
 	public function test_render_cart_template()
 	{
