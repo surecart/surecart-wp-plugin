@@ -3097,9 +3097,9 @@ export namespace Components {
          */
         "priceName"?: string;
         /**
-          * The purchasable status
+          * The purchasable status display
          */
-        "purchasableStatus": string;
+        "purchasableStatusDisplay": string;
         /**
           * Quantity
          */
@@ -9357,9 +9357,9 @@ declare namespace LocalJSX {
          */
         "priceName"?: string;
         /**
-          * The purchasable status
+          * The purchasable status display
          */
-        "purchasableStatus"?: string;
+        "purchasableStatusDisplay"?: string;
         /**
           * Quantity
          */

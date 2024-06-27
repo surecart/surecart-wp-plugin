@@ -447,6 +447,7 @@ export interface LineItem extends Object {
   price?: Price;
   price_id: string;
   purchasable_status: string;
+  purchasable_status_display: string;
   variant_options: Array<string>;
   variant?: Variant;
 }

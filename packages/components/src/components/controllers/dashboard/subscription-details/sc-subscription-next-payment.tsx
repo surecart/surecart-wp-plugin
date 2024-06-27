@@ -121,6 +121,7 @@ export class ScSubscriptionNextPayment {
                 amount={item?.total_amount}
                 currency={item?.price?.currency}
                 interval={intervalString(item?.price)}
+                purchasableStatusDisplay={item?.purchasable_status_display}
               ></sc-product-line-item>
             ))}
 
