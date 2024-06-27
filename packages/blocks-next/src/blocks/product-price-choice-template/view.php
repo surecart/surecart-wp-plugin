@@ -2,7 +2,8 @@
 if ( ! empty( $attributes['highlight_border'] ) ) {
 
 	printf(
-		'<style>div.sc-choice--checked{border-color:%s!important;}</style>',
+		'<style>div.sc-choice--checked{border-color:%s!important;box-shadow:box-shadow: 0 0 0 1px %s;}</style>',
+		esc_attr( $attributes['highlight_border'] ?? '' ),
 		esc_attr( $attributes['highlight_border'] ?? '' )
 	);
 }

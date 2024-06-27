@@ -47,6 +47,7 @@ export default ({
 		}`,
 		style: {
 			borderColor: isChecked ? highlight_border : undefined,
+			boxShadow: isChecked ? `0 0 0 1px ${highlight_border}` : undefined,
 		},
 	});
 
