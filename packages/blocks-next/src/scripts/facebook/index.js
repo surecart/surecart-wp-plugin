@@ -4,9 +4,10 @@
 window.addEventListener('scSearched', function (e) {
 	if (!window?.fbq) return;
 
-	const eventDetail = e.detail;
+	const { searchString, searchResultIds } = e.detail;
+
 	window.fbq('track', 'Search', {
-		search_string: eventDetail.searchString,
-		content_ids: eventDetail.searchResultIds,
+		search_string: searchString,
+		content_ids: searchResultIds,
 	});
 });
