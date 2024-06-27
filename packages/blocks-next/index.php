@@ -232,6 +232,20 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Analytic events - TODO: Maybe will move to seperate checkout-events folder.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/events/index.asset.php';
+		wp_register_script_module(
+			'@surecart/events',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/events/index.js',
+			array(
+				array(
+					'id'     => '@surecart/api-fetch',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
 		// Cart side drawer.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/cart-drawer/index.asset.php';
 		wp_register_script_module(
@@ -262,6 +276,10 @@ add_action(
 			array(
 				array(
 					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/events',
 					'import' => 'dynamic',
 				),
 				array(

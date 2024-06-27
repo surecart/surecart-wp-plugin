@@ -246,10 +246,9 @@ const { state, actions } = store('surecart/product-page', {
 		addToCart: async () => {
 			const context = getContext();
 			const { mode, formId } = context;
-			let checkout = null;
 			try {
 				context.busy = true;
-				checkout = await addCheckoutLineItem(state.lineItem);
+				const checkout = await addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
 				checkoutActions.toggleCartSidebar(null);
 			} catch (e) {

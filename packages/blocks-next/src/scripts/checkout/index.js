@@ -11,6 +11,10 @@ import {
 	removeCheckoutLineItem,
 	handleCouponApply,
 } from '@surecart/checkout-service';
+import {
+	processCheckoutEvents,
+	processCartViewEvent,
+} from '@surecart/events';
 
 const { actions: cartDrawerActions } = store('surecart/cart-drawer');
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
@@ -43,6 +47,7 @@ const { state, actions } = store('surecart/checkout', {
 		error: null,
 		promotionCode: '',
 		checkout: {},
+		oldCheckout: {},
 		get getItemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
 				(count, item) => count + (item?.quantity || 0),
@@ -150,6 +155,13 @@ const { state, actions } = store('surecart/checkout', {
 
 			state.checkout = checkout;
 		},
+
+		onChangeCheckout() {
+			const { checkout, oldCheckout } = state;
+
+			// Trigger events based on the checkout data.
+			processCheckoutEvents(checkout, oldCheckout);
+		},
 	},
 
 	actions: {
@@ -160,7 +172,13 @@ const { state, actions } = store('surecart/checkout', {
 			}
 
 			e?.preventDefault();
+			const wasOpen = state.openCartSidebar;
 			state.openCartSidebar = !state?.openCartSidebar || false;
+
+			// Trigger cart view event.
+			if (!wasOpen && state.openCartSidebar) {
+				processCartViewEvent(state.checkout);
+			}
 
 			// Toggle the cart dialog.
 			cartDrawerActions.toggle();
@@ -278,6 +296,9 @@ const { state, actions } = store('surecart/checkout', {
 			if (!checkout) {
 				return;
 			}
+
+			// Keep the old checkout to track google analytics events.
+			state.oldCheckout = checkout;
 
 			// Find the checkout by mode and formId.
 			const checkoutData = checkout[mode]?.[formId];

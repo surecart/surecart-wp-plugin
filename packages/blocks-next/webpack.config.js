@@ -41,6 +41,7 @@ module.exports = [
 			'@surecart/cart-drawer': '@surecart/cart-drawer',
 			'@surecart/api-fetch': '@surecart/api-fetch',
 			'@surecart/checkout-service': '@surecart/checkout-service',
+			'@surecart/events': '@surecart/events',
 		},
 	},
 ];
