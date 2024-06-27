@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { buttons as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -16,4 +17,5 @@ import save from './save';
 registerBlockType(metadata.name, {
 	edit,
 	save,
+	icon,
 });

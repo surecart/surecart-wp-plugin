@@ -5,7 +5,7 @@
 	"title": "Pagination",
 	"description": "Display the product pagination.",
 	"version": "1.0.0",
-	"category": "surecart",
+	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"example": {},
 	"usesContext": [

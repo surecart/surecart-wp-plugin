@@ -5,8 +5,7 @@
 	"title": "Product Variants Pills",
 	"description": "Display product variants as pills selector.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
+	"category": "surecart-product-page",
 	"ancestor": ["surecart/product-page"],
 	"supports": {
 		"interactivity": true,

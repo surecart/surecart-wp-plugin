@@ -5,10 +5,10 @@
 	"title": "Product Title",
 	"description": "Display the product title.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
+	"category": "surecart-product-page",
 	"example": {},
 	"usesContext": ["surecart/productId"],
+	"ancestor": ["surecart/product-page"],
 	"attributes": {
 		"textAlign": {
 			"type": "string",
