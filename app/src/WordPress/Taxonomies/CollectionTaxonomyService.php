@@ -21,42 +21,6 @@ class CollectionTaxonomyService {
 	public function bootstrap() {
 		add_action( 'init', array( $this, 'register' ) );
 		add_filter( 'taxonomy_template', array( $this, 'template' ) );
-		add_filter( 'parse_term_query', array( $this, 'forceAccountIdScope' ) );
-	}
-
-	/**
-	 * Force account id scope.
-	 *
-	 * @param \WP_Term_Query $query The query.
-	 *
-	 * @return array
-	 */
-	public function forceAccountIdScope( $query ) {
-		// account not connected.
-		if ( ! \SureCart::account()->id ) {
-			return $query;
-		}
-
-		// not a taxonomy query.
-		if ( ! isset( $query->query_vars['taxonomy'] ) || ! is_array( $query->query_vars['taxonomy'] ) || ! in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
-			return $query;
-		}
-
-		$existing = ! empty( $query->query_vars['meta_query'] ) ? $query->query_vars['meta_query'] : array();
-
-		$query->query_vars['meta_query'] = array_merge(
-			$existing,
-			array(
-				'relation' => 'AND',
-				array(
-					'key'     => 'sc_account',
-					'value'   => \SureCart::account()->id,
-					'compare' => '=',
-				),
-			),
-		);
-
-		return $query;
 	}
 
 	/**
