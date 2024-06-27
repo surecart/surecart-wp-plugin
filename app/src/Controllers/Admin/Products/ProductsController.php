@@ -161,24 +161,6 @@ class ProductsController extends AdminController {
 			);
 		}
 
-		// add product link.
-		add_action(
-			'admin_bar_menu',
-			function ( $wp_admin_bar ) use ( $product ) {
-				$wp_admin_bar->add_node(
-					[
-						'id'    => 'view-product-page',
-						'title' => __( 'View Product', 'surecart' ),
-						'href'  => esc_url( $product->permalink ?? '#' ),
-						'meta'  => [
-							'class' => empty( $product->permalink ) ? 'hidden' : '',
-						],
-					]
-				);
-			},
-			99
-		);
-
 		return '<div id="app"></div><div id="metaboxes" class="hidden">' . $this->renderMetaBoxes( $product ) . '</div>';
 	}
 
