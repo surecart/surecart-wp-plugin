@@ -72,10 +72,8 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartHeader(): void {
-		$text        = $this->attributes['text'] ?? '';
-		$text_string = $text ? 'text="' . $text . '"' : '';
-
-		$this->block_html .= '<!-- wp:surecart/cart-header-v2 {' . $text_string . ', ' . $this->getCartStyle() . '} /-->';
+		$cart_header_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-header' ), JSON_FORCE_OBJECT );
+		$this->block_html .= '<!-- wp:surecart/cart-header-v2 ' . $cart_header_attrs . ' /-->';
 	}
 
 	/**
@@ -84,13 +82,8 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartItems(): void {
-		$removable = $this->attributes['removable'] ?? false;
-		$editable  = $this->attributes['editable'] ?? false;
-
-		$removable_string = ! $removable ? 'removable="false"' : '';
-		$editable_string  = ! $editable ? 'editable="false"' : '';
-
-		$this->block_html .= '<!-- wp:surecart/cart-items-v2 {' . $removable_string . ', ' . $editable_string . ', ' . $this->getCartStyle() . '} /-->';
+		$cart_items_attrs  = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-items' ), JSON_FORCE_OBJECT );
+		$this->block_html .= '<!-- wp:surecart/cart-items-v2 ' . $cart_items_attrs . ' /-->';
 	}
 
 	/**
@@ -99,19 +92,8 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartCoupon(): void {
-		$text        = $this->attributes['text'] ?? '';
-		$text_string = $text ? 'text="' . $text . '"' : '';
-
-		$button_text        = $this->attributes['buttonText'] ?? '';
-		$button_text_string = 'buttonText="' . $button_text . '"';
-
-		$placeholder        = $this->attributes['placeholder'] ?? '';
-		$placeholder_string = 'placeholder="' . $placeholder . '"';
-
-		$collapsed        = $this->attributes['collapsed'] ?? false;
-		$collapsed_string = ! $collapsed ? 'collapsed="false"' : '';
-
-		$this->block_html .= '<!-- wp:surecart/cart-coupon-v2 {' . $text_string . ', ' . $button_text_string . ', ' . $placeholder_string . ', ' . $collapsed_string . ', ' . $this->getCartStyle() . '} /-->';
+		$cart_coupon_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-coupon' ), JSON_FORCE_OBJECT );
+		$this->block_html .= '<!-- wp:surecart/cart-coupon-v2 ' . $cart_coupon_attrs . ' /-->';
 	}
 
 	/**
@@ -120,10 +102,8 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartSubtotal(): void {
-		$label        = $this->attributes['label'] ?? '';
-		$label_string = $label ? 'label="' . $label . '"' : '';
-
-		$this->block_html .= '<!-- wp:surecart/cart-subtotal-v2 {' . $label_string . ', ' . $this->getCartStyle() . '} /-->';
+		$cart_subtotal_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-subtotal' ), JSON_FORCE_OBJECT );
+		$this->block_html   .= '<!-- wp:surecart/cart-subtotal-v2 ' . $cart_subtotal_attrs . ' /-->';
 	}
 
 	/**
@@ -132,10 +112,8 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartBumpLineItem(): void {
-		$label        = $this->attributes['label'] ?? '';
-		$label_string = $label ? 'label="' . $label . '"' : '';
-
-		$this->block_html .= '<!-- wp:surecart/cart-bump-line-item-v2 {' . $label_string . ', ' . $this->getCartStyle() . '} /-->';
+		$cart_bump_line_item_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-bump-line-item' ), JSON_FORCE_OBJECT );
+		$this->block_html         .= '<!-- wp:surecart/cart-bump-line-item-v2 ' . $cart_bump_line_item_attrs . ' /-->';
 	}
 
 	/**
@@ -144,10 +122,8 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartSubmit(): void {
-		$text        = $this->attributes['text'] ?? '';
-		$text_string = $text ? 'text="' . $text . '"' : '';
-
-		$this->block_html .= '<!-- wp:surecart/cart-submit-v2 {' . $text_string . ', ' . $this->getCartStyle() . '} /-->';
+		$cart_submit_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-submit' ), JSON_FORCE_OBJECT );
+		$this->block_html .= '<!-- wp:surecart/cart-submit-v2 ' . $cart_submit_attrs . ' /-->';
 	}
 
 	/**
@@ -156,32 +132,8 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartMessage(): void {
-		$text = $this->attributes['text'] ?? '';
-		if ( empty( $text ) ) {
-			return;
-		}
-
-		$text_string = $text ? 'text="' . $text . '"' : '';
-
-		$this->block_html .= '<!-- wp:surecart/cart-message-v2 {' . $text_string . '} /-->';
-	}
-
-	/**
-	 * Get cart element generic styles.
-	 *
-	 * @return string
-	 */
-	public function getCartStyle(): string {
-		$padding        = isset( $this->attributes['padding'] ) ? $this->attributes['padding'] : '';
-		$padding_string = 'padding="' . $padding['top'] . ' ' . $padding['right'] . ' ' . $padding['bottom'] . ' ' . $padding['left'] . '"';
-
-		$border        = isset( $this->attributes['border'] ) ? true : false;
-		$border_string = ! $border ? 'border="false"' : '';
-
-		$background_color_string = isset( $this->attributes['backgroundColor'] ) ? 'backgroundColor="' . $this->attributes['backgroundColor'] . '"' : '';
-		$text_color_string       = isset( $this->attributes['textColor'] ) ? 'textColor="' . $this->attributes['textColor'] . '"' : '';
-
-		return $padding_string . ', ' . $border_string . ', ' . $background_color_string . ', ' . $text_color_string;
+		$cart_message_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-message' ), JSON_FORCE_OBJECT );
+		$this->block_html  .= '<!-- wp:surecart/cart-message-v2 ' . $cart_message_attrs . ' /-->';
 	}
 
 	/**
@@ -190,32 +142,32 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartTemplate(): void {
-		$cart_block_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-v2' ), JSON_FORCE_OBJECT );
+		$cart_block_attrs  = wp_json_encode( $this->attributes, JSON_FORCE_OBJECT );
 		$this->block_html .= '<!-- wp:surecart/cart-v2 ' . $cart_block_attrs . ' -->';
 
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks ) ) {
 			foreach ( $this->inner_blocks as $inner_block ) {
 				switch ( $inner_block['blockName'] ) {
-					case 'surecart/cart-header-v2':
+					case 'surecart/cart-header':
 						$this->renderCartHeader();
 						break;
-					case 'surecart/cart-items-v2':
+					case 'surecart/cart-items':
 						$this->renderCartItems();
 						break;
-					case 'surecart/cart-coupon-v2':
+					case 'surecart/cart-coupon':
 						$this->renderCartCoupon();
 						break;
-					case 'surecart/cart-subtotal-v2':
+					case 'surecart/cart-subtotal':
 						$this->renderCartSubtotal();
 						break;
-					case 'surecart/cart-bump-line-item-v2':
+					case 'surecart/cart-bump-line-item':
 						$this->renderCartBumpLineItem();
 						break;
-					case 'surecart/cart-submit-v2':
+					case 'surecart/cart-submit':
 						$this->renderCartSubmit();
 						break;
-					case 'surecart/cart-message-v2':
+					case 'surecart/cart-message':
 						$this->renderCartMessage();
 						break;
 				}
