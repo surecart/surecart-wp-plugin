@@ -1,4 +1,10 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-input-group sc-input-group-sm' ) ) ); ?>>
+<div <?php echo wp_kses_data(
+	get_block_wrapper_attributes(
+		array(
+			'class' => 'sc-input-group sc-input-group-sm',
+		)
+	)
+); ?>>
 	<span class="sc-input-group-text">
 		<?php
 		echo wp_kses(
@@ -14,6 +20,7 @@
 		)
 		?>
 	</span>
+
 	<input
 		class="sc-form-control"
 		type="search"
