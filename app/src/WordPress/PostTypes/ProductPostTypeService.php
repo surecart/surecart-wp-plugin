@@ -58,9 +58,9 @@ class ProductPostTypeService {
 		add_action( 'surecart/price_deleted', array( $this, 'sync' ) );
 		add_action( 'surecart/price_updated', array( $this, 'sync' ) );
 		add_action( 'surecart/product_created', array( $this, 'sync' ) );
-		add_action( 'surecart/product_deleted', array( $this, 'sync' ) );
 		add_action( 'surecart/product_stock_adjusted', array( $this, 'sync' ) );
 		add_action( 'surecart/product_updated', array( $this, 'sync' ) );
+		add_action( 'surecart/product_deleted', array( $this, 'deleteSynced' ) );
 
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
@@ -75,12 +75,23 @@ class ProductPostTypeService {
 	/**
 	 * Sync the product.
 	 *
-	 * @param \SureCart\Support\Contracts\Syncable $model The model.
+	 * @param \SureCart\Models\Product $product The model.
 	 *
 	 * @return void
 	 */
-	public function sync( \SureCart\Support\Contracts\Syncable $model ) {
-		$model->sync();
+	public function sync( \SureCart\Models\Product $product ) {
+		$product->sync();
+	}
+
+	/**
+	 * Delete the synced product.
+	 *
+	 * @param \SureCart\Models\Product $product The model.
+	 *
+	 * @return void
+	 */
+	public function deleteSynced( \SureCart\Models\Product $product ) {
+		$product->deleteSynced();
 	}
 
 	/**

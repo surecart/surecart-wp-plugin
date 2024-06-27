@@ -35,16 +35,16 @@ class ProductsController extends AdminController {
 			),
 		);
 
-			// add notices.
-			$this->withNotices(
-				array(
-					'sync_cancelled'        => __( 'The sync has been cancelled.', 'surecart' ),
-					'sync_success'          => __( 'Product synced successfully.', 'surecart' ),
-					'sync_cancel_scheduled' => __( 'The sync has been scheduled to be cancelled.', 'surecart' ),
-					'archived'              => __( 'Product archived.', 'surecart' ),
-					'unarchived'            => __( 'Product unarchived.', 'surecart' ),
-				)
-			);
+		// add notices.
+		$this->withNotices(
+			array(
+				'sync_cancelled'        => __( 'The sync has been cancelled.', 'surecart' ),
+				'sync_success'          => __( 'Product synced successfully.', 'surecart' ),
+				'sync_cancel_scheduled' => __( 'The sync has been scheduled to be cancelled.', 'surecart' ),
+				'archived'              => __( 'Product archived.', 'surecart' ),
+				'unarchived'            => __( 'Product unarchived.', 'surecart' ),
+			)
+		);
 
 		// return view.
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );

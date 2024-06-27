@@ -38,7 +38,7 @@ class CollectionTaxonomyService {
 		}
 
 		// not a taxonomy query.
-		if ( ! in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
+		if ( ! isset( $query->query_vars['taxonomy'] ) || ! is_array( $query->query_vars['taxonomy'] ) || ! in_array( $this->slug, $query->query_vars['taxonomy'] ) ) {
 			return $query;
 		}
 

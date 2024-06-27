@@ -148,8 +148,8 @@ class ProductsListTable extends ListTable {
 			'product_collections' => __( 'Collections', 'surecart' ),
 			'status'              => __( 'Product Page', 'surecart' ),
 			'featured'            => __( 'Featured', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
 			'sync_status'         => __( 'Synced', 'surecart' ),
+			'date'                => __( 'Date', 'surecart' ),
 		);
 	}
 
@@ -172,9 +172,9 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_sync_status( $product ) {
 		if ( \SureCart::sync()->products()->isActive() ) {
-			return '<sc-icon name="loader"></sc-icon>' . ' ' . __( 'Syncing...', 'surecart' );
+			return '<span class="syncing-wrapper"><sc-icon name="loader" class="syncing"></sc-icon><span class="syncing-text">' . __( 'Syncing...', 'surecart' ) . '</span></span>';
 		}
-		return $product->synced ? '<sc-icon name="check"><sc-icon>' : '<sc-icon name="x"></sc-icon>';
+		return $product->synced ? '<sc-icon name="check" class="synced"></sc-icon>' : '<sc-icon name="x" class="unsynced"></sc-icon>';
 	}
 
 	/**
@@ -468,14 +468,7 @@ class ProductsListTable extends ListTable {
 		<div class="sc-product-name">
 			<?php if ( ! empty( $product->featured_image ) ) { ?>
 				<?php
-				echo wp_kses_post(
-					$product->featured_image->html(
-						'thumbnail',
-						[
-							'style' => 'width:40px;height:40px;border: 1px solid #dcdcdc;flex: 1 0 40px;object-fit: cover;',
-						]
-					)
-				);
+				echo wp_kses_post( $product->featured_image->html( 'thumbnail' ) );
 				?>
 			<?php } else { ?>
 			<div class="sc-product-image-preview">
