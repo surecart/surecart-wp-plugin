@@ -59,7 +59,16 @@ class Product extends Model implements PageModel {
 	 * @return \WP_Post|\WP_Error
 	 */
 	public function sync() {
-		\SureCart::sync()->product()->sync( $this );
+		// sync the product.
+		$synced = \SureCart::sync()->product()->sync( $this );
+
+		// on success, cancel any queued syncs.
+		if ( ! is_wp_error( $synced ) ) {
+			\SureCart::sync()
+			->product()
+			->cancel( $this );
+		}
+
 		return $this;
 	}
 
@@ -98,6 +107,7 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Background\QueueService|false Whether the sync was queued.
 	 */
 	protected function maybeQueueSync() {
+		// already in sync.
 		if ( $this->synced ) {
 			return false;
 		}
@@ -211,7 +221,7 @@ class Product extends Model implements PageModel {
 	 */
 	protected function getSyncedAttribute() {
 		// we don't have a post.
-		if ( empty( $this->post ) || ! isset( $this->post->product ) || ! isset( $this->post->product->updated_at ) ) {
+		if ( empty( $this->post ) ) {
 			return false;
 		}
 
@@ -220,11 +230,19 @@ class Product extends Model implements PageModel {
 			return false;
 		}
 
+		// this doesn't have updated at.
 		if ( empty( $this->updated_at ) ) {
 			return false;
 		}
 
-		return $this->updated_at === $this->post->product->updated_at;
+		// get the product.
+		$product = get_post_meta( $this->post->ID, 'product', true );
+		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
+			return false;
+		}
+
+		// sync if updated at is different.
+		return $this->updated_at === $product->updated_at;
 	}
 
 	/**

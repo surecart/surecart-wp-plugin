@@ -69,6 +69,24 @@ class ProductSyncService {
 	}
 
 	/**
+	 * Cancel the sync for a later time.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return \SureCart\Queue\Async
+	 */
+	public function cancel( \SureCart\Models\Model $model ) {
+		return \SureCart::queue()->cancel(
+			$this->action_name,
+			[
+				'id'               => $model->id,
+			],
+			'product-' . $model->id, // unique id for the product.
+			true // force unique. This will replace any existing jobs.
+		);
+	}
+
+	/**
 	 * Run the model sync immediately.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
