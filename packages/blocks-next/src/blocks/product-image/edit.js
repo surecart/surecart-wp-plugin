@@ -48,12 +48,13 @@ export default ({
 			[dimension]: parsedValue < 0 ? '0' : nextValue,
 		});
 	};
-	let { record: product } = useEntityRecord(
-		'postType',
-		'sc_product',
-		productId
-	);
-	product = product?.meta?.product;
+
+	const {
+		record: {
+			meta: { product },
+		},
+	} = useEntityRecord('postType', 'sc_product', productId);
+
 	const alt = product?.featured_media?.alt || '';
 	const title = product?.featured_media?.title || '';
 
