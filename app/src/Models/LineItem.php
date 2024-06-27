@@ -10,7 +10,9 @@ use SureCart\Models\Traits\HasProduct;
  * Price model
  */
 class LineItem extends Model {
-	use HasPrice, HasCheckout, HasProduct;
+	use HasPrice;
+	use HasCheckout;
+	use HasProduct;
 
 	/**
 	 * Rest API endpoint
@@ -81,9 +83,10 @@ class LineItem extends Model {
 	 */
 	public function getImageAttribute() {
 		// if we have a variant, use the variant image.
-		// if ( ! empty( $this->variant ) && is_a( $this->variant, Variant::class ) ) {
-		// return $this->variant->line_item_image;
-		// }
+		if ( ! empty( $this->variant ) && is_a( $this->variant, Variant::class ) && ! empty( (array) $this->variant->line_item_image ) ) {
+			return $this->variant->line_item_image;
+		}
+
 		// if we have a product, use the product image.
 		if ( isset( $this->price->product->line_item_image ) ) {
 			return $this->price->product->line_item_image;

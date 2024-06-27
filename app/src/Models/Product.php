@@ -13,7 +13,9 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model implements PageModel {
-	use HasImageSizes, HasPurchases, HasCommissionStructure;
+	use HasImageSizes;
+	use HasPurchases;
+	use HasCommissionStructure;
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
@@ -739,7 +741,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the image used in line items.
 	 *
-	 * @return array
+	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
 		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) [];
