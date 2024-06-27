@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { tag as icon } from '@wordpress/icons';
+import { file as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
