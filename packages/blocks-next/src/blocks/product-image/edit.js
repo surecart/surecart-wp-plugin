@@ -55,9 +55,6 @@ export default ({
 		},
 	} = useEntityRecord('postType', 'sc_product', productId);
 
-	const alt = product?.featured_media?.alt || '';
-	const title = product?.featured_media?.title || '';
-
 	return (
 		<>
 			<InspectorControls group="dimensions">
@@ -162,13 +159,19 @@ export default ({
 				/>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<img
-					src={product?.featured_image?.src}
-					alt={alt}
-					{...(title ? { title } : {})}
-				/>
-			</div>
+			<figure {...blockProps}>
+				{product?.preview_image?.src ? (
+					<img {...product?.preview_image} />
+				) : (
+					<img
+						src={
+							window.scData.plugin_url + '/images/placeholder.jpg'
+						}
+						width="1180"
+						height="1180"
+					/>
+				)}
+			</figure>
 		</>
 	);
 };
