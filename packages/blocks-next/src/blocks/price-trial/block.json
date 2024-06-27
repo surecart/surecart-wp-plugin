@@ -6,7 +6,7 @@
 	"description": "Displays trial of a price.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
+	"icon": "clock",
 	"usesContext": ["surecart/priceId", "surecart/price"],
 	"ancestor": ["surecart/product-price-choice-template"],
 	"supports": {

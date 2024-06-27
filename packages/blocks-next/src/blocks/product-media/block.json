@@ -6,7 +6,6 @@
 	"description": "A container to display the product media",
 	"category": "surecart-product-page",
 	"keywords": ["image", "media"],
-	"icon": "media-interactive",
 	"textdomain": "surecart",
 	"ancestor": ["surecart/product-page"],
 	"supports": {

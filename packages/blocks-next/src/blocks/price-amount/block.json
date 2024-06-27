@@ -8,6 +8,7 @@
 	"category": "surecart-product-page",
 	"usesContext": ["surecart/priceId", "surecart/price"],
 	"ancestor": ["surecart/product-price-choice-template"],
+	"icon": "money-alt",
 	"supports": {
 		"interactivity": true,
 		"color": {

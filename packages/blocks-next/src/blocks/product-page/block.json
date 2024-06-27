@@ -6,8 +6,6 @@
 	"description": "Display product page information.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
-	"example": {},
 	"providesContext": {
 		"surecart/product_id": "product_id"
 	},

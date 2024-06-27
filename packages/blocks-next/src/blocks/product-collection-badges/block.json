@@ -6,7 +6,6 @@
 	"description": "Displays collection selectors for a product.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
 	"ancestor": ["surecart/product-page"],
 	"attributes": {
 		"count": {

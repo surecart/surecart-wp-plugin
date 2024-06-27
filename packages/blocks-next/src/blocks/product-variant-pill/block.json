@@ -6,7 +6,6 @@
 	"description": "Displays a product variant choice as a pill.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
 	"ancestor": ["surecart/product-variant-pills-wrapper"],
 	"usesContext": [
 		"surecart/productVariantPill/name",

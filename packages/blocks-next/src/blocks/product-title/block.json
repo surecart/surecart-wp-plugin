@@ -6,7 +6,6 @@
 	"description": "Display the product title.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
 	"example": {},
 	"usesContext": ["surecart/productId"],
 	"ancestor": ["surecart/product-page"],

@@ -6,7 +6,6 @@
 	"description": "Displays collection selector for a product.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
 	"ancestor": ["surecart/product-collection-badges-v2"],
 	"usesContext": ["surecart/productCollectionBadge/name"],
 	"supports": {

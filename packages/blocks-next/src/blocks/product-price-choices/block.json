@@ -6,11 +6,7 @@
 	"description": "Displays possible choices for product prices.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
 	"ancestor": ["surecart/product-page"],
-	"example": {
-		"attributes": {}
-	},
 	"supports": {
 		"interactivity": true,
 		"spacing": {
