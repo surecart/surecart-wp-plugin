@@ -154,28 +154,32 @@ const { state } = store('surecart/product-list', {
 	},
 
 	callbacks: {
-		*init() {
+		*onChangeProducts() {
 			if (window?.dataLayer || window?.gtag) {
 				yield import(
 					/* webpackIgnore: true */
 					'@surecart/google-events'
 				);
 			}
+
 			if (window?.fbq) {
 				yield import(
 					/* webpackIgnore: true */
 					'@surecart/facebook-events'
 				);
 			}
+
 			const { products } = getContext();
-			const scProductsViewedEvent = new CustomEvent('scProductsViewed', {
-				detail: {
-					products: products,
-					pageTitle: document.title,
-				},
-				bubbles: true,
-			});
-			document.dispatchEvent(scProductsViewedEvent);
+
+			document.dispatchEvent(
+				new CustomEvent('scProductsViewed', {
+					detail: {
+						products: products,
+						pageTitle: document.title,
+					},
+					bubbles: true,
+				})
+			);
 		},
 		/**
 		 * This is optionally used when there is a url context,
