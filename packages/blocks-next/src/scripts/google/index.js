@@ -38,12 +38,13 @@ document.addEventListener('scSearched', (e) => {
  */
 window.addEventListener('scProductsViewed', (e) => {
 	const eventDetail = e.detail;
+	const { pageTitle, products } = eventDetail;
 	trackEvent('view_item_list', {
-		item_list_name: eventDetail.pageTitle,
+		item_list_name: pageTitle,
 		items:
 			eventDetail &&
-			eventDetail.products &&
-			eventDetail.products.map((product) => ({
+			products &&
+			products.map((product) => ({
 				item_id: product && product.id,
 				item_name: product && product.name,
 				...(product &&
