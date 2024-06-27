@@ -88,7 +88,7 @@ export default ({
 			</InspectorControls>
 
 			<TagName {...blockProps}>
-				{product?.title?.raw || __('Product Name', 'surecart')}
+				{product?.title?.rendered || __('Product Name', 'surecart')}
 			</TagName>
 		</>
 	);
