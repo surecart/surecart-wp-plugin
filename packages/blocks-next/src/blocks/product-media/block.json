@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-media-v2",
-	"title": "Product Media - v2",
+	"title": "Product Media",
 	"description": "A container to display the product media",
 	"category": "surecart-product-page",
 	"keywords": ["image", "media"],
