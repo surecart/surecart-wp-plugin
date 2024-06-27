@@ -13,7 +13,9 @@ use SureCart\Support\Currency;
  * Price model
  */
 class Product extends Model implements PageModel {
-	use HasImageSizes, HasPurchases, HasCommissionStructure;
+	use HasImageSizes;
+	use HasPurchases;
+	use HasCommissionStructure;
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
@@ -92,6 +94,35 @@ class Product extends Model implements PageModel {
 			->queue( $this );
 
 		return $this;
+	}
+
+	/**
+	 * Maybe queue a sync job if updated_at is different
+	 * than the product post updated_at.
+	 *
+	 * @return \SureCart\Background\QueueService|false Whether the sync was queued.
+	 */
+	protected function maybeQueueSync() {
+		// we don't have an updated_at.
+		if ( empty( $this->updated_at ) ) {
+			return false;
+		}
+
+		// we don't have a post.
+		if ( empty( $this->post ) ) {
+			return false;
+		}
+
+		// we don't have a product updated_at.
+		if ( empty( $this->post->product->updated_at ) ) {
+			return false;
+		}
+
+		if ( $this->updated_at <= $this->post->product->updated_at ) {
+			return false;
+		}
+
+		return $this->queueSync();
 	}
 
 	/**
@@ -202,21 +233,8 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setUpdatedAtAttribute( $value ) {
-		// queue the off-session sync job if the product is not set.
-		// TODO: Check if this is necessary.
-		// if ( empty( $this->post ) ) {
-		// $this->queueSync();
-		// }
-
-		// queue the off-session sync job if the product updated_at is newer than the post updated_at.
-		if ( ! empty( $this->post ) && ! empty( $this->post->updated_at ) && ! empty( $this->updated_at ) ) {
-			if ( $this->updated_at > $this->post->updated_at ) {
-				$this->queueSync();
-			}
-		}
-
-		// set the attribute like normal.
 		$this->attributes['updated_at'] = apply_filters( "surecart/$this->object_name/attributes/updated_at", $value, $this );
+		$this->maybeQueueSync();
 	}
 
 	/**
@@ -723,7 +741,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the image used in line items.
 	 *
-	 * @return array
+	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
 		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) [];

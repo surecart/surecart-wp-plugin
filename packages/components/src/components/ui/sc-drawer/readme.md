@@ -35,6 +35,12 @@
 
 
 
+#### Parameters
+
+| Name     | Type                                                    | Description |
+| -------- | ------------------------------------------------------- | ----------- |
+| `source` | `"method" \| "close-button" \| "keyboard" \| "overlay"` |             |
+
 #### Returns
 
 Type: `Promise<void>`

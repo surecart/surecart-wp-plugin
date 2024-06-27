@@ -5,11 +5,15 @@
 	"title": "Search",
 	"description": "Display the product search.",
 	"version": "1.0.0",
-	"category": "surecart",
-	"icon": "media-interactive",
+	"category": "sc-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
-	"usesContext": ["surecart/product-list/block_id"],
+	"usesContext": [
+		"surecart/product-list/block_id",
+		"surecart/product-list/limit",
+		"surecart/product-list/type",
+		"surecart/product-list/ids"
+	],
 	"supports": {
 		"interactivity": true,
 		"spacing": {

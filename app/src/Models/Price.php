@@ -40,11 +40,64 @@ class Price extends Model {
 	/**
 	 * Set the product attribute
 	 *
-	 * @param  string $value Product properties.
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		// update parent.
+		$updated = parent::update( $attributes );
+
+		// sync the product.
+		$this->sync();
+
+		// return.
+		return $updated;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param string $id ID to delete.
+	 *
+	 * @return $this|false
+	 */
+	protected function delete( $id = '' ) {
+		// find price as we need the product id.
+		$this->find( $id );
+
+		// update parent.
+		$response = parent::delete( $id );
+
+		// sync product.
+		$this->sync( [ 'refetch' => true ] );
+
+		// return.
+		return $response;
+	}
+
+	/**
+	 * Sync the product
+	 *
+	 * @param array $args Arguments.
+	 *                  - refetch: boolean (default: false) - refetch the product.
+	 *                  - cached: boolean (default: false) - use the cached product.
+	 *
 	 * @return void
 	 */
-	public function setProductAttribute( $value ) {
-		$this->setRelation( 'product', $value, Product::class );
+	protected function sync( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'refetch' => false,
+				'cached'  => false,
+			)
+		);
+
+		// if the product is already attached, and syncable, use that. Otherwise, find it.
+		$product = ! empty( $this->product ) && $this->product->has_syncable_expands && ! $args['refetch'] ? $this->product : Product::withSyncableExpands()->where( array( 'cached' => $args['cached'] ) )->find( $this->product_id );
+
+		$product->sync();
 	}
 
 	/**
@@ -54,7 +107,7 @@ class Price extends Model {
 	 */
 	public function getDisplayAmountAttribute() {
 		if ( $this->ad_hoc ) {
-			return esc_html__('Custom Amount', 'surecart');
+			return esc_html__( 'Custom Amount', 'surecart' );
 		}
 		return empty( $this->amount ) ? '' : Currency::format( $this->amount, $this->currency );
 	}
@@ -65,7 +118,7 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getScratchDisplayAmountAttribute() {
-		return  empty( $this->scratch_amount ) ? '' : Currency::format( $this->scratch_amount, $this->currency );
+		return empty( $this->scratch_amount ) ? '' : Currency::format( $this->scratch_amount, $this->currency );
 	}
 
 	/**
@@ -87,14 +140,14 @@ class Price extends Model {
 	 */
 	public function getTrialTextAttribute() {
 		return $this->trial_duration_days ? sprintf(
-				_n(
-					'Starting in %s day',
-					'Starting in %s days',
-					$this->trial_duration_days,
-					'surecart'
-				),
-				$this->trial_duration_days
-		  )
+			_n(
+				'Starting in %s day',
+				'Starting in %s days',
+				$this->trial_duration_days,
+				'surecart'
+			),
+			$this->trial_duration_days
+		)
 		: null;
 	}
 
@@ -106,9 +159,9 @@ class Price extends Model {
 			return '';
 		}
 		return sprintf(
-			__('%1s %2s', 'surecart'),
+			__( '%1$1s %2$2s', 'surecart' ),
 			Currency::format( $this->setup_fee_amount, $this->currency ),
-			$this->setup_fee_name ?? __('Setup Fee', 'surecart')
+			$this->setup_fee_name ?? __( 'Setup Fee', 'surecart' )
 		);
 	}
 
@@ -135,20 +188,23 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getIntervalTextAttribute( $intervals = [] ) {
-		$intervals = wp_parse_args( $intervals, [
-			'day'   => __('day', 'surecart'),
-			'week'  => __('week', 'surecart'),
-			'month' => __('month', 'surecart'),
-			'year'  => __('year', 'surecart'),
-		] );
+		$intervals = wp_parse_args(
+			$intervals,
+			[
+				'day'   => __( 'day', 'surecart' ),
+				'week'  => __( 'week', 'surecart' ),
+				'month' => __( 'month', 'surecart' ),
+				'year'  => __( 'year', 'surecart' ),
+			]
+		);
 
-		if ( empty($intervals[$this->recurring_interval]) ) {
+		if ( empty( $intervals[ $this->recurring_interval ] ) ) {
 			return '';
 		}
 
 		return sprintf(
-			_n( '/ %1s', '/ %2d %1s', $this->recurring_interval_count, 'surecart' ),
-			$intervals[$this->recurring_interval],
+			_n( '/ %1s', '/ %1$2d %2$1s', $this->recurring_interval_count, 'surecart' ),
+			$intervals[ $this->recurring_interval ],
 			(int) $this->recurring_interval_count,
 		);
 	}
@@ -159,12 +215,14 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getShortIntervalTextAttribute() {
-		return $this->getIntervalTextAttribute( [
-			'day'   => __('day', 'surecart'),
-			'week'  => __('wk', 'surecart'),
-			'month' => __('mo', 'surecart'),
-			'year'  => __('yr', 'surecart'),
-		] );
+		return $this->getIntervalTextAttribute(
+			[
+				'day'   => __( 'day', 'surecart' ),
+				'week'  => __( 'wk', 'surecart' ),
+				'month' => __( 'mo', 'surecart' ),
+				'year'  => __( 'yr', 'surecart' ),
+			]
+		);
 	}
 
 	/**
@@ -173,7 +231,7 @@ class Price extends Model {
 	 * @return boolean
 	 */
 	public function getIsZeroDecimalAttribute() {
-		return Currency::isZeroDecimal($this->currency);
+		return Currency::isZeroDecimal( $this->currency );
 	}
 
 	/**
@@ -182,6 +240,6 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getCurrencySymbolAttribute() {
-		return html_entity_decode( Currency::getCurrencySymbol($this->currency) );
+		return html_entity_decode( Currency::getCurrencySymbol( $this->currency ) );
 	}
 }

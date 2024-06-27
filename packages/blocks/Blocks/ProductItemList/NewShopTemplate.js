@@ -97,13 +97,13 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					[
 						['surecart/product-image', imageAttributes],
 						[
-							'surecart/product-title-v2',
+							'surecart/product-list-title',
 							{
 								...titleAttributes,
 								level: 0,
 							},
 						],
-						['surecart/product-price-v2', priceAttributes],
+						['surecart/product-list-price', priceAttributes],
 					],
 				],
 			],

@@ -4351,16 +4351,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/core@npm:3":
-  version: 3.4.2
-  resolution: "@stencil/core@npm:3.4.2"
+"@stencil/core@npm:^4":
+  version: 4.18.3
+  resolution: "@stencil/core@npm:4.18.3"
   bin:
     stencil: bin/stencil
-  checksum: b875ae9fd3f794323c8f55f2640ff134632d034db6c00b103d6f6604668aa0e218880a198e531842a81c7b4afaed7bf407e71b541c7425634ecdc17e8577b7b5
+  checksum: 7b9ba1f9a0426b3ffe71d3726ffbc1f4dd5a020765910f045b5e51096a31321519b0437501d2180f2aafa2e9fd99b098f12854e8887879fd56db95a0dbd80f99
   languageName: node
   linkType: hard
 
-"@stencil/react-output-target@npm:^0.5.0":
+"@stencil/react-output-target@npm:^0.5.3":
   version: 0.5.3
   resolution: "@stencil/react-output-target@npm:0.5.3"
   peerDependencies:
@@ -4369,16 +4369,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/sass@npm:^1.4.0":
-  version: 1.5.2
-  resolution: "@stencil/sass@npm:1.5.2"
+"@stencil/sass@npm:^3":
+  version: 3.0.12
+  resolution: "@stencil/sass@npm:3.0.12"
   peerDependencies:
-    "@stencil/core": ">=1.0.2"
-  checksum: fc4250eb31351f24c4f59829be2f8f57b81a4c6b5af395f8325e0eb13fe749334c6fbda7edfa250831d50419ba8c111b8fc31b81e2f176d251648dffbdf2cb49
+    "@stencil/core": ">=2.0.0 || >=3.0.0-beta.0 || >= 4.0.0-beta.0 || >= 4.0.0"
+  checksum: 838e9b367b57a0845302ae0df0130f92b2244ce129fcc0d6965b4503c3e39a2a2a31b90f6b34d963b215ac42c6334a28b380523136780aad90a1ec0b230a2256
   languageName: node
   linkType: hard
 
-"@stencil/store@npm:^2.0.0":
+"@stencil/store@npm:^2":
   version: 2.0.16
   resolution: "@stencil/store@npm:2.0.16"
   peerDependencies:
@@ -5711,9 +5711,9 @@ __metadata:
   dependencies:
     "@surecart/components": ^2
     "@types/node": ^20.2.1
-    "@types/react": ^17.0.2
-    react: 17.0.2
-    react-dom: 17.0.2
+    "@types/react": ^18
+    react: ^18
+    react-dom: ^18
     typescript: ^5.0.4
   languageName: unknown
   linkType: soft
@@ -5728,10 +5728,10 @@ __metadata:
     "@floating-ui/dom": ^0.5.0
     "@mdx-js/react": ^1.6.22
     "@paypal/paypal-js": ^5.0.4
-    "@stencil/core": 3
-    "@stencil/react-output-target": ^0.5.0
-    "@stencil/sass": ^1.4.0
-    "@stencil/store": ^2.0.0
+    "@stencil/core": ^4
+    "@stencil/react-output-target": ^0.5.3
+    "@stencil/sass": ^3
+    "@stencil/store": ^2
     "@storybook/addon-a11y": ^6.5.6
     "@storybook/addon-actions": ^6.5.6
     "@storybook/addon-docs": ^6.5.6
@@ -7658,24 +7658,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.79":
+"@types/react@npm:*, @types/react@npm:^18, @types/react@npm:^18.2.79":
   version: 18.3.3
   resolution: "@types/react@npm:18.3.3"
   dependencies:
     "@types/prop-types": "*"
     csstype: ^3.0.2
   checksum: c63d6a78163244e2022b01ef79b0baec4fe4da3475dc4a90bb8accefad35ef0c43560fd0312e5974f92a0f1108aa4d669ac72d73d66396aa060ea03b5d2e3873
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^17.0.2":
-  version: 17.0.80
-  resolution: "@types/react@npm:17.0.80"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": ^0.16
-    csstype: ^3.0.2
-  checksum: 1c27bfc42305d77ef0da55f8f6d4c4a3471aa02b294fcf29ea0f2cfb0bf02892e5a0a3bc7559fa4a5ba50697b2e31076cb5aa5987f69cfc2e880f6426edb8bdf
   languageName: node
   linkType: hard
 
@@ -7701,13 +7690,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 7ece5fbb5d9c8fc76ab0de2f99d705edf92f18e701d4f9d9b0647275e32eb65e656c1badf9dfaa12f4e1ff3e250561c8c9cfe79e8b5f33dd1417ac0f1804f6cc
-  languageName: node
-  linkType: hard
-
-"@types/scheduler@npm:^0.16":
-  version: 0.16.8
-  resolution: "@types/scheduler@npm:0.16.8"
-  checksum: 6c091b096daa490093bf30dd7947cd28e5b2cd612ec93448432b33f724b162587fed9309a0acc104d97b69b1d49a0f3fc755a62282054d62975d53d7fd13472d
   languageName: node
   linkType: hard
 

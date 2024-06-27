@@ -64,6 +64,12 @@ Type: `Promise<void>`
 
 Sets focus on the checkbox.
 
+#### Parameters
+
+| Name      | Type           | Description |
+| --------- | -------------- | ----------- |
+| `options` | `FocusOptions` |             |
+
 #### Returns
 
 Type: `Promise<void>`

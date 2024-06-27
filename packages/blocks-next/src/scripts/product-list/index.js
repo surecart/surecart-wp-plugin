@@ -114,6 +114,16 @@ const { state } = store('surecart/product-list', {
 			state.loading = true;
 			state.searching = true;
 			yield debouncedSearch(ref?.value, routerState, actions, blockId);
+			const { products } = getContext();
+			const scSearchedEvent = new CustomEvent('scSearched', {
+				detail: {
+					searchString: ref?.value,
+					searchResultCount: products?.length,
+					searchResultIds: products?.map((product) => product.id),
+				},
+				bubbles: true,
+			});
+			document.dispatchEvent(scSearchedEvent);
 			state.loading = false;
 			state.searching = false;
 		},
@@ -144,6 +154,33 @@ const { state } = store('surecart/product-list', {
 	},
 
 	callbacks: {
+		*onChangeProducts() {
+			if (window?.dataLayer || window?.gtag) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/google-events'
+				);
+			}
+
+			if (window?.fbq) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/facebook-events'
+				);
+			}
+
+			const { products } = getContext();
+
+			document.dispatchEvent(
+				new CustomEvent('scProductsViewed', {
+					detail: {
+						products: products,
+						pageTitle: document.title,
+					},
+					bubbles: true,
+				})
+			);
+		},
 		/**
 		 * This is optionally used when there is a url context,
 		 * we can prefetch a page ahead of time without mouse enter (just on load)

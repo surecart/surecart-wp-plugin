@@ -176,8 +176,9 @@ class ProductPostSyncService {
 
 		// not a FSE template.
 		if ( count( $parts ) < 2 ) {
-			return null;
+			return $id;
 		}
+
 		return $parts[1] ?? null;
 	}
 
@@ -210,14 +211,13 @@ class ProductPostSyncService {
 
 		// update page template.
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
+		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
 
 		if ( ! empty( $this->with_collections ) ) {
-			// set the terms.
-			$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
-			wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+			$this->syncCollections( $post_id, $model );
 		}
 
 		// delete existing.
@@ -282,16 +282,78 @@ class ProductPostSyncService {
 
 		// update page template.
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
+		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
 		// set the collection terms.
 		if ( ! empty( $this->with_collections ) ) {
-			$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
-			wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
+			$this->syncCollections( $post_id, $model );
 		}
 
 		$this->post = get_post( $post_id );
 
 		return $this->post;
+	}
+
+	/**
+	 * Sync the collections.
+	 *
+	 * @param int                    $post_id The post id.
+	 * @param \SureCart\Models\Model $model   The model.
+	 *
+	 * @return void
+	 */
+	protected function syncCollections( $post_id, $model ) {
+		// sanity check.
+		if ( ! isset( $model->product_collections ) || ! isset( $model->product_collections->data ) || ! is_array( $model->product_collections->data ) ) {
+			return;
+		}
+
+		// store the terms for the post.
+		$terms = [];
+
+		// Loop through the collections.
+		foreach ( $model->product_collections->data as $collection ) {
+			// Check if the term exists by slug.
+			$term = term_exists( $collection->name, 'sc_collection' );
+
+			// error handling.
+			if ( is_wp_error( $term ) ) {
+				error_log( $term->get_error_message() );
+				continue;
+			}
+
+			// if the term does not exist, create it.
+			$term = ! isset( $term['term_id'] ) ? wp_insert_term( $collection->name, 'sc_collection' ) : $term;
+
+			// error handling.
+			if ( is_wp_error( $term ) ) {
+				error_log( $term->get_error_message() );
+				continue;
+			}
+
+			// if we don't have a term id, skip.
+			if ( ! isset( $term['term_id'] ) || empty( $term['term_id'] ) ) {
+				error_log( 'Could not create term for collection: ' . $collection->name );
+				error_log( print_r( $term, true ) );
+				continue;
+			}
+
+			// add to terms array.
+			$terms[] = (int) $term['term_id'];
+
+			// add term meta.
+			update_term_meta( $term['term_id'], 'sc_account', \SureCart::account()->id );
+			update_term_meta( $term['term_id'], 'sc_id', $collection->id );
+			update_term_meta( $term['term_id'], '_wp_page_template', $this->convertTemplateId( $collection->template_id ?? 'default' ) );
+			update_term_meta( $term['term_id'], '_wp_page_template_part', $this->convertTemplateId( $collection->template_part_id ) );
+		}
+
+		// we don't have terms, skip.
+		if ( empty( $terms ) ) {
+			return;
+		}
+
+		wp_set_post_terms( $post_id, $terms, 'sc_collection' );
 	}
 
 	/**
