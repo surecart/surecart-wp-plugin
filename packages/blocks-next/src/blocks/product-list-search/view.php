@@ -1,18 +1,4 @@
-<?php
-use SureCart\Models\Blocks\ProductListBlock;
-
-$block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
-$controller = new ProductListBlock( $block );
-$list_query      = $controller->query();
-$products = array_map( function($product) {
-	return get_post_meta($product->ID, 'product', true) ?? '';
-}, $list_query->posts);
-$url      = \SureCart::block()->urlParams( 'products', $block_id );
-$query    = $url->getArg( 'search' );
-?>
-<div
-	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-input-group sc-input-group-sm' ) ) ); ?>
->
+<div <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-input-group sc-input-group-sm' ) ) ); ?>>
 	<span class="sc-input-group-text">
 		<?php
 		echo wp_kses(
@@ -33,10 +19,10 @@ $query    = $url->getArg( 'search' );
 		type="search"
 		data-wp-on--input="actions.onSearchInput"
 		placeholder="<?php esc_attr_e( 'Search', 'surecart' ); ?>"
-		value="<?php echo esc_attr( $query ); ?>"
+		value="<?php echo esc_attr( $value ); ?>"
 	>
 
-	<?php if ( ! empty( $query ) ) : ?>
+	<?php if ( ! empty( $value ) ) : ?>
 		<span class="sc-input-group-text"
 			role="button"
 			tabindex="0"
