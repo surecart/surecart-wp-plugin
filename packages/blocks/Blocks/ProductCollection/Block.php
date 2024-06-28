@@ -17,6 +17,12 @@ class Block extends ProductItemListBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		$term                        = get_queried_object();
+		$collection                  = get_term_meta( $term->term_id, 'collection', true );
+		$attributes['collection_id'] = $collection->id;
+
+		return \SureCart::block()->productListMigration( $attributes, $this->block )->render();
+
 		self::$instance = wp_unique_id( 'sc-product-item-list-' );
 
 		// check for inner blocks.
@@ -26,7 +32,7 @@ class Block extends ProductItemListBlock {
 		$product_item_attributes   = $product_inner_blocks[0]['attrs'] ?? $attributes;
 
 		$layout_config = array_map(
-			function( $inner_block ) {
+			function ( $inner_block ) {
 				return (object) [
 					'blockName'  => $inner_block['blockName'],
 					'attributes' => $inner_block['attrs'],
@@ -71,7 +77,7 @@ class Block extends ProductItemListBlock {
 
 		// get the product for each post.
 		$products = array_map(
-			function( $post ) {
+			function ( $post ) {
 				return sc_get_product( $post );
 			},
 			$product_query->posts ?? []
@@ -89,11 +95,11 @@ class Block extends ProductItemListBlock {
 					'total_pages' => $product_query->max_num_pages,
 				],
 				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
-				'paginationEnabled'    => ! ! $attributes['pagination_enabled'],
-				'ajaxPagination'       => ! ! $attributes['ajax_pagination'],
-				'paginationAutoScroll' => ! ! $attributes['pagination_auto_scroll'],
-				'searchEnabled'        => ! ! $attributes['search_enabled'],
-				'sortEnabled'          => ! ! $attributes['sort_enabled'],
+				'paginationEnabled'    => (bool) $attributes['pagination_enabled'],
+				'ajaxPagination'       => (bool) $attributes['ajax_pagination'],
+				'paginationAutoScroll' => (bool) $attributes['pagination_auto_scroll'],
+				'searchEnabled'        => (bool) $attributes['search_enabled'],
+				'sortEnabled'          => (bool) $attributes['sort_enabled'],
 				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products,
 				'collectionEnabled'    => false,
 				'collectionId'         => $this->getCollectionId( $attributes ),
