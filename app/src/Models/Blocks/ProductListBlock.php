@@ -70,7 +70,7 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
-		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
+		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
 
 		$sc_collection = $this->url->getArg( 'sc_collection' ); // collection id from url.
 
