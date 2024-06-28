@@ -15,11 +15,22 @@
 		"label": {
 			"type": "string",
 			"default": "Enter an amount"
+		},
+		"width": {
+			"type": "string",
+			"default": "100%"
+		},
+		"lock": {
+			"type": "object",
+			"default": {
+				"move": false,
+				"remove": true
+			}
 		}
 	},
 	"usesContext": ["surecart/has-ad-hoc-block"],
 	"blockHooks": {
-		"surecart/product-buy-button-v2": "before"
+		"surecart/product-buy-buttons-v2": "before"
 	},
 	"supports": {
 		"interactivity": true,
@@ -34,7 +45,8 @@
 		},
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true
+			"lineHeight": true,
+			"textAlign": true
 		}
 	},
 	"textdomain": "surecart",
@@ -42,6 +54,7 @@
 	"editorScript": "file:./index.js",
 	"style": [
 		"file:../../styles/form-control.css",
-		"file:../../styles/input-group.css"
+		"file:../../styles/input-group.css",
+		"file:./style-index.css"
 	]
 }

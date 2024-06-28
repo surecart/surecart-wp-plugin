@@ -1,9 +1,41 @@
+.wp-block-buttons .wp-block-button {
+	width: 100%;
+
+	&.is-style-outline {
+		button.wp-block-button__link.wp-element-button:not(
+				.has-background,
+				:hover,
+				:focus
+			),
+		div.wp-block-button__link.wp-element-button:not(
+				.has-background,
+				:hover,
+				:focus
+			),
+		a.wp-block-button__link.wp-element-button:not(
+				.has-background,
+				:hover,
+				:focus
+			) {
+			background-color: transparent;
+			background-image: none;
+		}
+	}
+
+	.wp-block-button__link {
+		font-weight: inherit !important;
+		font-style: inherit !important;
+		font-size: inherit !important;
+		text-transform: inherit !important;
+	}
+}
+
 .sc-button__link {
 	position: relative;
 	display: inline-block;
 	box-sizing: border-box;
 
-	[disabled] {
+	&[disabled] {
 		pointer-events: none;
 	}
 }
@@ -35,18 +67,21 @@
 			visibility: visible;
 		}
 	}
-}
 
-.sc-button__link.sc-button__width-100 {
-	width: 100%;
-	flex-basis: 100%;
-}
-.sc-button__link.sc-button__width-25 {
-	width: 25%;
-}
-.sc-button__link.sc-button__width-50 {
-	width: 50%;
-}
-.sc-button__link.sc-button__width-75 {
-	width: 75%;
+	&.sc-button__width-100 {
+		width: 100%;
+		flex-basis: 100%;
+	}
+
+	&.sc-button__width-25 {
+		width: 25%;
+	}
+
+	&.sc-button__width-50 {
+		width: 50%;
+	}
+
+	&.sc-button__width-75 {
+		width: 75%;
+	}
 }

@@ -25,7 +25,7 @@ class ProductListBlock {
 	 *
 	 * @var array
 	 */
-	protected $query_vars = [];
+	protected $query_vars = array();
 
 	/**
 	 * The query.
@@ -52,7 +52,7 @@ class ProductListBlock {
 	public function parse_query() {
 		// build up the query.
 		$this->query_vars = array_filter(
-			[
+			array(
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
@@ -61,7 +61,7 @@ class ProductListBlock {
 				'order'               => $this->url->getArg( 'order' ),
 				'orderby'             => $this->url->getArg( 'orderby' ),
 				's'                   => $this->url->getArg( 'search' ),
-			]
+			)
 		);
 
 		// put together price query.
@@ -73,50 +73,50 @@ class ProductListBlock {
 		// handle collections query.
 		if ( ! empty( $this->url->getArg( 'sc_collection' ) ) ) {
 			$this->query_vars['tax_query'] =
-				[
-					[
+				array(
+					array(
 						'taxonomy' => 'sc_collection',
 						'field'    => 'term_id',
-						'terms'    => array_map( 'intval', $this->url->getArg( 'sc_collection' ) ?? [] ),
-					],
-				];
+						'terms'    => array_map( 'intval', $this->url->getArg( 'sc_collection' ) ?? array() ),
+					),
+				);
 		}
 
 		// handle featured.
 		if ( 'featured' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
-			$this->query_vars['meta_query'] = [
-				[
+			$this->query_vars['meta_query'] = array(
+				array(
 					'key'     => 'featured',
 					'value'   => '1',
 					'compare' => '=',
-				],
-			];
+				),
+			);
 		}
 
 		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
 			// fallback for older strings - get the ids of legacy products.
-			$legacy_ids           = [];
-			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_string' );
+			$legacy_ids           = array();
+			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? array(), 'is_string' );
 			if ( ! empty( $ids_that_are_strings ) ) {
 				$legacy_ids = get_posts(
-					[
+					array(
 						'post_type'      => 'sc_product',
 						'status'         => 'publish',
 						'fields'         => 'ids',
 						'posts_per_page' => -1,
-						'meta_query'     => [
-							[
+						'meta_query'     => array(
+							array(
 								'key'     => 'sc_id',
 								'value'   => $ids_that_are_strings,
 								'compare' => 'IN',
-							],
-						],
-					]
+							),
+						),
+					)
 				);
 			}
 
 			// get only ids that are integers.
-			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_int' );
+			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? array(), 'is_int' );
 
 			// post in.
 			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );
@@ -159,12 +159,12 @@ class ProductListBlock {
 
 		if ( 'pagination_links' === $key ) {
 			return array_map(
-				function( $i ) {
-					return [
+				function ( $i ) {
+					return array(
 						'href'    => $this->url->addPageArg( $i )->url(),
 						'name'    => $i,
 						'current' => (int) $i === (int) $this->paged,
-					];
+					);
 				},
 				range( 1, $this->max_num_pages )
 			);
@@ -172,7 +172,7 @@ class ProductListBlock {
 
 		if ( 'products' === $key ) {
 			return array_map(
-				function( $post ) {
+				function ( $post ) {
 					return sc_get_product( $post );
 				},
 				$this->query->posts

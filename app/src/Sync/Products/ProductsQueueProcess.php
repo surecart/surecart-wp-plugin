@@ -24,6 +24,13 @@ class ProductsQueueProcess extends BackgroundProcess {
 	protected $action = 'queue_products';
 
 	/**
+	 * The interval for the cron.
+	 *
+	 * @var int
+	 */
+	protected $cron_interval = 1;
+
+	/**
 	 * The process to run on complete.
 	 *
 	 * @var \SureCart\Background\BackgroundProcess
@@ -75,8 +82,7 @@ class ProductsQueueProcess extends BackgroundProcess {
 		foreach ( $items->data as $item ) {
 			$this->sync_process->push_to_queue(
 				[
-					'id'               => $item->id,
-					'with_collections' => $args['with_collections'] ?? false,
+					'id' => $item->id,
 				],
 			);
 		}
@@ -87,9 +93,8 @@ class ProductsQueueProcess extends BackgroundProcess {
 		// we have more to process.
 		if ( $items->hasNextPage() ) {
 			return [
-				'page'             => $items->pagination->page + 1,
-				'batch_size'       => $args['batch_size'] ?? 25,
-				'with_collections' => $args['with_collections'] ?? false,
+				'page'       => $items->pagination->page + 1,
+				'batch_size' => $args['batch_size'] ?? 25,
 			];
 		}
 

@@ -23,6 +23,13 @@ class ProductsSyncProcess extends BackgroundProcess {
 	protected $action = 'sync_products';
 
 	/**
+	 * The interval for the cron.
+	 *
+	 * @var int
+	 */
+	protected $cron_interval = 1;
+
+	/**
 	 * Perform task with queued item.
 	 *
 	 * Override this method to perform any actions required on each
@@ -50,7 +57,7 @@ class ProductsSyncProcess extends BackgroundProcess {
 				return false;
 			}
 
-			$model->sync( $item['with_collections'] ?? false );
+			$model->sync();
 		} catch ( \Exception $e ) {
 			error_log( 'Error syncing model: ' . $item['model'] . ' with id: ' . $item['id'] );
 			error_log( $e->getMessage() );
