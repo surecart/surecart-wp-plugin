@@ -2,8 +2,8 @@
  * WordPress dependencies
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
-// const { __ } = wp.i18n;
-// const { speak } = wp.a11y;
+const { __ } = wp.i18n;
+const { speak } = wp.a11y;
 
 store('surecart/cart-drawer', {
 	actions: {
@@ -30,20 +30,18 @@ store('surecart/cart-drawer', {
 				return;
 			}
 
-			// If the dialog is open, close it. Otherwise, open it.
-			dialog?.open ? dialog?.close() : dialog?.showModal();
-
-			// speak the dialog state.
+			// speak the cart dialog state.
 			dialog?.open
 				? dialog?.setAttribute('aria-live', 'assertive')
 				: dialog?.removeAttribute('aria-live');
+			speak(
+				dialog?.open
+					? __('Cart opened', 'surecart')
+					: __('Cart closed', 'surecart')
+			);
 
-			// speak it.
-			// speak(
-			// 	dialog?.open
-			// 		? __('Cart opened', 'surecart')
-			// 		: __('Cart closed', 'surecart')
-			// );
+			// If the dialog is open, close it. Otherwise, open it.
+			dialog?.open ? dialog?.close() : dialog?.showModal();
 
 			// Lock the body scroll when the dialog is open.
 			dialog?.open

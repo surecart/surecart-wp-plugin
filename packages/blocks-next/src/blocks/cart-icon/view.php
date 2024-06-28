@@ -16,10 +16,11 @@
 	tabindex="0"
 >
 	<div class="sc-cart-container">
-		<div class="sc-cart-icon">
+		<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Cart Button.', 'surecart' ); ?>">
 			<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
 		</div>
 
+		<span aria-label="<?php esc_attr_e( 'Total items in cart - ', 'surecart' ); ?>"></span>
 		<span
 			class="sc-cart-count"
 			data-wp-text="state.getItemsCount"

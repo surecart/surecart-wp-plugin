@@ -27,6 +27,7 @@ class CartService {
 					// Enqueue the cart drawer script modules.
 					wp_enqueue_script_module( '@surecart/cart-drawer' );
 					wp_enqueue_script_module( '@surecart/checkout' );
+					wp_enqueue_script( 'wp-a11y' );
 				}
 			);
 

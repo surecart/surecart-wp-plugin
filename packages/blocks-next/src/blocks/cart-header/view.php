@@ -14,7 +14,7 @@
 		<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
 	</button>
 
-	<span class="wp-block-surecart-cart-header-v2__title">
+	<span class="wp-block-surecart-cart-header-v2__title" id="sc-cart-drawer-title">
 		<?php echo esc_html( $attributes['text'] ); ?>
 	</span>
 
