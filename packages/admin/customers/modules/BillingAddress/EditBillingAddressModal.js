@@ -26,7 +26,7 @@ export default ({ customerId, billingAddress, open, onRequestClose }) => {
 		setAddress(billingAddress);
 	}, [billingAddress]);
 
-	const isEdit = () => !!billingAddress?.id;
+	const isEdit = !!billingAddress?.id;
 
 	const onEditAddress = async () => {
 		try {
@@ -56,7 +56,7 @@ export default ({ customerId, billingAddress, open, onRequestClose }) => {
 	return (
 		<ScDialog
 			label={
-				isEdit()
+				isEdit
 					? __('Update Billing Address', 'surecart')
 					: __('Add Billing Address', 'surecart')
 			}
@@ -87,7 +87,7 @@ export default ({ customerId, billingAddress, open, onRequestClose }) => {
 						{__('Cancel', 'surecart')}
 					</ScButton>{' '}
 					<ScButton type="primary" disabled={busy} submit>
-						{isEdit()
+						{isEdit
 							? __('Update Address', 'surecart')
 							: __('Save Address', 'surecart')}
 					</ScButton>
