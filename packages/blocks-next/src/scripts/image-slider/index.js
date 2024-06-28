@@ -88,6 +88,7 @@ store('surecart/image-slider', {
 					loop: false,
 					centeredSlides: true,
 					a11y,
+					lazyPreloadPrevNext: 2,
 					navigation: {
 						nextEl: ref.querySelector('.swiper-button-next'),
 						prevEl: ref.querySelector('.swiper-button-prev'),

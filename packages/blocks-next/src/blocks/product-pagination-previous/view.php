@@ -4,10 +4,11 @@
 		get_block_wrapper_attributes(
 			array_filter(
 				[
-					'class'                  => 'has-arrow-type-' . esc_attr( $pagination_arrow ),
+					'class'                  => 'has-arrow-type-' . $pagination_arrow,
 					'href'                   => esc_url( $page_link ),
 					'role'                   => 'link',
 					'aria-disabled'          => empty( $page_link ) ? 'true' : null,
+					'aria-label'             => $attributes['label'] ?? __( 'Previous Page', 'surecart' ),
 					'data-wp-on--click'      => 'surecart/product-list::actions.navigate',
 					'data-wp-on--mouseenter' => 'surecart/product-list::actions.prefetch',
 				]

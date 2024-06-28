@@ -1,16 +1,24 @@
-<div <?php echo get_block_wrapper_attributes(); ?>
-	data-wp-bind--hidden="!state.selectedPrice.ad_hoc"
-	hidden>
-	<label for="amount" class="sc-form-label"><?php echo wp_kses_post($attributes['label'] ?? esc_html_e('Amount', 'surecart')); ?></label>
+<div
+	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'style' => 'width:' . esc_attr( $attributes['width'] ) . ';' ) ) ); ?>
+	data-wp-bind--hidden="!context.selectedPrice.ad_hoc"
+	hidden
+>
+	<label for="amount" class="sc-form-label">
+		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
+	</label>
+
 	<div class="sc-input-group">
-		<span class="sc-input-group-text" id="basic-addon1" data-wp-text="state.selectedPrice.currency_symbol"></span>
+		<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
+
 		<input
 			class="sc-form-control"
-			data-wp-bind--value="state.adHocAmount"
-			data-wp-on--input="callbacks.setAdHocAmount"
-			data-wp-on--change="callbacks.formatAdHocAmount"
-			data-wp-bind--required="state.selectedPrice.ad_hoc"
 			type="number"
-			step="0.01" />
+			step="0.01"
+			data-wp-bind--value="context.adHocAmount"
+			data-wp-on--input="callbacks.setAdHocAmount"
+			data-wp-bind--min="context.selectedPrice.converted_ad_hoc_min_amount"
+			data-wp-bind--max="context.selectedPrice.converted_ad_hoc_max_amount"
+			data-wp-bind--required="context.selectedPrice.ad_hoc"
+		/>
 	</div>
 </div>

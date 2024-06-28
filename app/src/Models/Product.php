@@ -7,20 +7,23 @@ use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
+use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
 class Product extends Model implements PageModel {
-	use HasImageSizes, HasPurchases, HasCommissionStructure;
+	use HasImageSizes;
+	use HasPurchases;
+	use HasCommissionStructure;
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' ];
+	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
 
 	/**
 	 * Rest API endpoint
@@ -53,15 +56,18 @@ class Product extends Model implements PageModel {
 	/**
 	 * Immediately sync with a post.
 	 *
-	 * @param bool $with_collections Whether to sync with collections.
-	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync( $with_collections = false ) {
-		\SureCart::sync()
+	public function sync() {
+		// sync the product.
+		$synced = \SureCart::sync()->product()->sync( $this );
+
+		// on success, cancel any queued syncs.
+		if ( ! is_wp_error( $synced ) ) {
+			\SureCart::sync()
 			->product()
-			->withCollections( $with_collections )
-			->sync( $this );
+			->cancel( $this );
+		}
 
 		return $this;
 	}
@@ -101,22 +107,8 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Background\QueueService|false Whether the sync was queued.
 	 */
 	protected function maybeQueueSync() {
-		// we don't have an updated_at.
-		if ( empty( $this->updated_at ) ) {
-			return false;
-		}
-
-		// we don't have a post.
-		if ( empty( $this->post ) ) {
-			return false;
-		}
-
-		// we don't have a product updated_at.
-		if ( empty( $this->post->product->updated_at ) ) {
-			return false;
-		}
-
-		if ( $this->updated_at <= $this->post->product->updated_at ) {
+		// already in sync.
+		if ( $this->synced ) {
 			return false;
 		}
 
@@ -219,7 +211,65 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Models\Product
 	 */
 	protected function findSyncable( $id ) {
-		return $this->withSyncableExpands()->find( $id );
+		return $this->withSyncableExpands()->where( [ 'cached' => false ] )->find( $id );
+	}
+
+	/**
+	 * Get the is synced attribute.
+	 *
+	 * @return bool
+	 */
+	protected function getSyncedAttribute() {
+		// we don't have a post.
+		if ( empty( $this->post ) ) {
+			return false;
+		}
+
+		// the post is trashed.
+		if ( 'trash' === $this->post->post_status ) {
+			return false;
+		}
+
+		// this doesn't have updated at.
+		if ( empty( $this->updated_at ) ) {
+			return false;
+		}
+
+		// get the product.
+		$product = get_post_meta( $this->post->ID, 'product', true );
+		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
+			return false;
+		}
+
+		// sync if updated at is different.
+		return $this->updated_at === $product->updated_at;
+	}
+
+	/**
+	 * Check if model has syncable expands as properties
+	 *
+	 * @return bool
+	 */
+	protected function getHasSyncableExpandsAttribute() {
+		foreach ( $this->sync_expands as $expand ) {
+			// if expand contains a ., let's ignore it for now.
+			if ( false !== strpos( $expand, '.' ) ) {
+				return true;
+			}
+			if ( ! isset( $this->$expand ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Get the sync expands.
+	 *
+	 * @return array
+	 */
+	protected function getSyncExpands() {
+		return $this->sync_expands;
 	}
 
 	/**
@@ -396,6 +446,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the has multiple prices attribute.
+	 *
+	 * @return boolean
+	 */
+	public function getHasMultiplePricesAttribute() {
+		return count( $this->active_prices ) > 1;
+	}
+
+	/**
 	 * Return attached active prices.
 	 */
 	public function activeAdHocPrices() {
@@ -413,7 +472,8 @@ class Product extends Model implements PageModel {
 	 * @return SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
-		$gallery = $this->gallery ?? [];
+		$gallery = array_values( $this->gallery ?? array() );
+
 		if ( ! empty( $gallery ) ) {
 			return $gallery[0];
 		}
@@ -574,7 +634,7 @@ class Product extends Model implements PageModel {
 			if ( ! empty( $initial_variant->amount ) ) {
 				return $initial_variant->amount;
 			}
-			$prices        = $this->active_prices ?? [];
+			$prices        = $this->active_prices ?? array();
 			$initial_price = $prices[0] ?? null;
 			return $initial_price->amount ?? null;
 		}
@@ -586,7 +646,7 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getScratchAmountAttribute() {
-		$prices        = $this->active_prices ?? [];
+		$prices        = $this->active_prices ?? array();
 		$initial_price = $prices[0] ?? null;
 		return $initial_price->scratch_amount ?? null;
 	}
@@ -654,7 +714,7 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		$gallery_items = $this->post->gallery ?? [];
+		$gallery_items = $this->post->gallery ?? array();
 
 		return array_filter(
 			array_map(
@@ -694,19 +754,28 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getDisplayAmountAttribute() {
-		$initial_variant = $this->first_variant_with_stock;
+		$prices = $this->active_prices ?? array();
 
-		if ( ! empty( $initial_variant->amount ) ) {
-			return Currency::format( $initial_variant->amount, $initial_variant->currency );
+		// only if we have one price.
+		if ( count( $prices ) === 1 ) {
+			$initial_variant = $this->first_variant_with_stock;
+			if ( ! empty( $initial_variant->amount ) ) {
+				return Currency::format( $initial_variant->amount, $initial_variant->currency );
+			}
 		}
 
-		$prices        = $this->active_prices ?? [];
-		$initial_price = $prices[0] ?? null;
-		if ( empty( $initial_price ) ) {
+		// we don't have an initial price.
+		if ( empty( $this->initial_price ) ) {
 			return '';
 		}
 
-		return Currency::format( $initial_price->amount, $initial_price->currency );
+		// the initial price is ad hoc.
+		if ( $this->initial_price->ad_hoc ) {
+			return esc_html__( 'Custom Amount', 'surecart' );
+		}
+
+		// return the formatted amount.
+		return Currency::format( $this->initial_price->amount, $this->initial_price->currency );
 	}
 
 	/**
@@ -715,16 +784,26 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getRangeDisplayAmountAttribute() {
+		// there are no metrics.
 		if ( ! $this->metrics || empty( $this->metrics->min_price_amount ) || empty( $this->metrics->max_price_amount ) ) {
 			return '';
 		}
 
+		// the min and max are the same.
 		if ( $this->metrics->min_price_amount === $this->metrics->max_price_amount ) {
 			return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency );
 		}
 
-		return Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ) . ' - ' .
-			Currency::format( $this->metrics->max_price_amount, $this->metrics->currency );
+		// return the range.
+		return sprintf(
+			// translators: %1$1s is the min price, %2$2s is the max price.
+			__(
+				'%1$1s - %2$2s',
+				'surecart',
+			),
+			Currency::format( $this->metrics->min_price_amount, $this->metrics->currency ),
+			Currency::format( $this->metrics->max_price_amount, $this->metrics->currency )
+		);
 	}
 
 	/**
@@ -739,9 +818,9 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the image used in line items.
 	 *
-	 * @return array
+	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) [];
+		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) array();
 	}
 }

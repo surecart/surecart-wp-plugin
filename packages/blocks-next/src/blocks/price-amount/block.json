@@ -22,6 +22,7 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,
@@ -31,7 +32,8 @@
 			"__experimentalDefaultControls": {
 				"fontSize": true,
 				"fontAppearance": true,
-				"textTransform": true
+				"textTransform": true,
+				"textAlign": true
 			}
 		}
 	},

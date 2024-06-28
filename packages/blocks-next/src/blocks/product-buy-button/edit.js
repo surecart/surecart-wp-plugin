@@ -31,39 +31,7 @@ import {
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
 import { isKeyboardEvent } from '@wordpress/keycodes';
-
-function WidthPanel({ selectedWidth, setAttributes }) {
-	function handleChange(newWidth) {
-		// Check if we are toggling the width off
-		const width = selectedWidth === newWidth ? undefined : newWidth;
-
-		// Update attributes.
-		setAttributes({ width });
-	}
-
-	return (
-		<PanelBody title={__('Width settings')}>
-			<ButtonGroup aria-label={__('Button width')}>
-				{[25, 50, 75, 100].map((widthValue) => {
-					return (
-						<Button
-							key={widthValue}
-							isSmall
-							variant={
-								widthValue === selectedWidth
-									? 'primary'
-									: undefined
-							}
-							onClick={() => handleChange(widthValue)}
-						>
-							{widthValue}%
-						</Button>
-					);
-				})}
-			</ButtonGroup>
-		</PanelBody>
-	);
-}
+import WidthPanel from '../../components/WidthPanel';
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
@@ -120,6 +88,7 @@ export default (props) => {
 				<WidthPanel
 					selectedWidth={width}
 					setAttributes={setAttributes}
+					ariaLabel={__('Button width')}
 				/>
 			</InspectorControls>
 

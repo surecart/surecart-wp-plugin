@@ -124,6 +124,10 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dropdown/index.js',
 			array(
 				array(
+					'id'     => '@surecart/dialog',
+					'import' => 'dynamic',
+				),
+				array(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
 				),

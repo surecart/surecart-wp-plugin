@@ -25,7 +25,7 @@ class ProductListBlock {
 	 *
 	 * @var array
 	 */
-	protected $query_vars = array();
+	protected $query_vars = [];
 
 	/**
 	 * The query.
@@ -141,39 +141,39 @@ class ProductListBlock {
 
 		// handle featured.
 		if ( 'featured' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
-			$this->query_vars['meta_query'] = array(
-				array(
+			$this->query_vars['meta_query'] = [
+				[
 					'key'     => 'featured',
 					'value'   => '1',
 					'compare' => '=',
-				),
-			);
+				],
+			];
 		}
 
 		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
 			// fallback for older strings - get the ids of legacy products.
-			$legacy_ids           = array();
-			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? array(), 'is_string' );
+			$legacy_ids           = [];
+			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_string' );
 			if ( ! empty( $ids_that_are_strings ) ) {
 				$legacy_ids = get_posts(
-					array(
+					[
 						'post_type'      => 'sc_product',
 						'status'         => 'publish',
 						'fields'         => 'ids',
 						'posts_per_page' => -1,
-						'meta_query'     => array(
-							array(
+						'meta_query'     => [
+							[
 								'key'     => 'sc_id',
 								'value'   => $ids_that_are_strings,
 								'compare' => 'IN',
-							),
-						),
-					)
+							],
+						],
+					]
 				);
 			}
 
 			// get only ids that are integers.
-			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? array(), 'is_int' );
+			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_int' );
 
 			// post in.
 			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );

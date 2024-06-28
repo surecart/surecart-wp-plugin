@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-collection-badge",
+	"title": "Product Collection Badge",
+	"description": "Displays collection selector for a product.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"ancestor": ["surecart/product-collection-badges-v2"],
+	"usesContext": ["surecart/productCollectionBadge/name"],
+	"supports": {
+		"interactivity": true,
+		"inserter": false,
+		"color": {
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			},
+			"enableContrastChecker": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"lineHeight": true,
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
+		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"radius": true,
+			"__experimentalDefaultControls": {
+				"radius": true,
+				"color": true,
+				"width": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css"]
+}

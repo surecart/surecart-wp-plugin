@@ -12,7 +12,33 @@
 		"attributes": {}
 	},
 	"supports": {
-		"interactivity": true
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": false,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		},
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		}
 	},
 	"attributes": {
 		"label": {
@@ -22,5 +48,9 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/choice.css", "file:../../styles/label.css"]
+	"style": [
+		"file:../../styles/choice.css",
+		"file:../../styles/label.css",
+		"file:./style-index.css"
+	]
 }
