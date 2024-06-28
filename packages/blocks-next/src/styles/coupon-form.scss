@@ -86,7 +86,7 @@
 		align-items: flex-start;
 		text-align: left;
 		justify-content: center;
-    	align-items: center;
+		align-items: center;
 
 		&[hidden] {
 			display: none;
@@ -110,9 +110,10 @@
 				color: var(--sc-color-primary-500);
 				font-weight: var(--sc-font-weight-semibold);
 				padding: 0 6px;
+				transition: opacity var(--sc-transition-medium) ease;
 
 				&:hover {
-					color: var(--sc-color-gray-700);
+					opacity: 0.75;
 				}
 			}
 		}
