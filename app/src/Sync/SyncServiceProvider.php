@@ -2,6 +2,7 @@
 
 namespace SureCart\Sync;
 
+use SureCart\Sync\Collection\CollectionSyncService;
 use SureCart\Sync\Customers\CustomerSyncService;
 use SureCart\Sync\Post\ProductPostSyncService;
 use SureCart\Sync\Product\ProductSyncService;
@@ -31,6 +32,11 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		// the product sync service.
 		$container['surecart.sync.product'] = function ( $container ) {
 			return new ProductSyncService( $container[ SURECART_APPLICATION_KEY ] );
+		};
+
+		// the product sync service.
+		$container['surecart.sync.collection'] = function () {
+			return new CollectionSyncService();
 		};
 
 		// the products sync process.

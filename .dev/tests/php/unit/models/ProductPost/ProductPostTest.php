@@ -41,6 +41,7 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group sync
 	 */
 	public function test_syncs_taxonomies() {
+		$this->shouldSyncProduct(['testid_2','testid']);
 		$product = (new Product(
 			[
 				"id" => "testid",
@@ -67,7 +68,7 @@ class ProductPostTest extends SureCartUnitTestCase
 					]
 				],
 			]
-		))->sync( ['with_collections' => true] );
+		))->sync();
 
 		$post = $product->post;
 
@@ -103,7 +104,7 @@ class ProductPostTest extends SureCartUnitTestCase
 					]
 				],
 			]
-		))->sync( [ 'with_collections' => true ] );
+		))->sync();
 
 		$post = $product_2->post;
 
@@ -136,6 +137,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group account
 	 */
 	public function test_has_account_term() {
+		$this->shouldSyncProduct('testid');
+
 		// mock the account id.
 		\SureCart::alias('account', function () {
 			return (object) [
@@ -193,6 +196,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group account
 	 */
 	public function test_should_return_empty_if_account_switches() {
+		$this->shouldSyncProduct('testid');
+
 		// mock the account id.
 		\SureCart::alias('account', function () {
 			return (object) [
@@ -251,6 +256,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 */
 	public function test_syncs_product_directly()
 	{
+		$this->shouldSyncProduct('testid');
+
 		$product = (new Product(
 			[
 				"id" => "testid",
@@ -334,13 +341,15 @@ class ProductPostTest extends SureCartUnitTestCase
 		$this->assertSame('Other sneakers.', $post->post_title);
 		$this->assertSame('sc_archived', $post->post_status);
 		$this->assertSame('fancy-sneakers', $post->post_name);
-		$this->assertEmpty(get_the_terms($post->ID, 'sc_collection'));
+		$this->assertNotEmpty(get_the_terms($post->ID, 'sc_collection'));
 	}
 
 		/**
 	 * @group sync
 	 */
 	public function test_syncs_when_created() {
+		$this->shouldSyncProduct('testid');
+
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -366,6 +375,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group sync
 	 */
 	public function test_syncs_when_updated() {
+		$this->shouldSyncProduct('testid');
+
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -393,6 +404,9 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group sync
 	 */
 	public function test_syncs_when_deleted() {
+
+		$this->shouldSyncProduct('testid');
+
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -428,6 +442,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 */
 	public function test_creates_variant_option_values_in_database()
 	{
+		$this->shouldSyncProduct('testid');
+
 		(new Product(
 			[
 				"id" => "testid",
@@ -470,6 +486,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 */
 	public function test_multiple_syncs_does_not_create_duplicate_records()
 	{
+		$this->shouldSyncProduct('testid');
+
 		$product = new Product(
 			[
 				"id" => "testid",
@@ -529,6 +547,8 @@ class ProductPostTest extends SureCartUnitTestCase
 				'id' => 'test',
 			];
 		});
+
+		$this->shouldSyncProduct(['testid', 'testid2']);
 
 		$product = new Product(
 			[
@@ -668,6 +688,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group sync
 	 */
 	public function test_has_nested_variants() {
+		$this->shouldSyncProduct('testid2');
+
 		$product = new Product(
 			[
 				"id" => "testid2",
@@ -759,6 +781,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group sync
 	 */
 	public function test_queues_sync_if_post_type_is_old() {
+		$this->shouldSyncProduct('testid');
+
 		(new Product([
 			'id' => 'testid',
 			'object' => 'product',
@@ -772,6 +796,8 @@ class ProductPostTest extends SureCartUnitTestCase
 		\SureCart::alias('queue', function () use ($queue_service) {
 			return $queue_service;
 		});
+
+		// it should queue the an async request since the post has not yet been created.
 		$queue_service
 			->shouldReceive('async')
 			->once()
@@ -779,11 +805,11 @@ class ProductPostTest extends SureCartUnitTestCase
 				'surecart/sync/product',
 				[
 					'id'               => 'testid',
-					'with_collections' => false,
 				],
 				'product-testid', // unique id for the product.
 				true // force unique. This will replace any existing jobs.
 			)->andReturn(true);
+
 
 		// this should trigger it.
 		new Product([
@@ -801,15 +827,6 @@ class ProductPostTest extends SureCartUnitTestCase
 			'name' => 'Test',
 			'created_at' => 1111111111,
 			'updated_at' => 1111111110
-		]);
-
-		// this should not trigger it.
-		new Product([
-			'id' => 'testid',
-			'object' => 'product',
-			'name' => 'Test',
-			'created_at' => 1111111111,
-			'updated_at' => 1111111100
 		]);
 	}
  }

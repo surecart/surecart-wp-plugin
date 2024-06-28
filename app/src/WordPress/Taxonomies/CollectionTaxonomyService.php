@@ -21,8 +21,6 @@ class CollectionTaxonomyService {
 	public function bootstrap() {
 		add_action( 'init', array( $this, 'register' ) );
 		add_filter( 'taxonomy_template', array( $this, 'template' ) );
-		add_action( "{$this->slug}_edit_form_fields", array( $this, 'category_edit_form_fields' ) );
-		add_action( "{$this->slug}_add_form_fields", array( $this, 'category_edit_form_fields' ) );
 	}
 
 	/**
@@ -40,52 +38,6 @@ class CollectionTaxonomyService {
 
 		// check if we are on the collection taxonomy.
 		return plugin_dir_path( SURECART_PLUGIN_FILE ) . '/templates/pages/template-surecart-collection.php';
-	}
-
-	/**
-	 * Add the form fields to the category edit form.
-	 *
-	 * @param object $term The term object.
-	 *
-	 * @return void
-	 */
-	public function category_edit_form_fields( $term ) {
-		$term_id   = $term->term_id;
-		$term_meta = get_term_meta( $term_id );
-
-		// list all template parts.
-		$templates = get_block_templates(
-			array(),
-		);
-
-		// filter templates to only show custom product collection templates.
-		$templates = array_filter(
-			$templates,
-			function ( $template ) {
-				return 0 === strpos( $template->slug, 'sc - product - collection' );
-			}
-		);
-		?>
-
-		<tr class="form-field">
-			<th scope="row" valign="top">
-				<label for="term_meta[_wp_page_template]"><?php esc_html_e( 'Template', 'surecart' ); ?></label>
-			</th>
-			<td>
-				<select name="term_meta[_wp_page_template]" id="term_meta[_wp_page_template]">
-					<option value=""><?php esc_html_e( 'default Template', 'surecart' ); ?></option>
-					<?php
-					foreach ( $templates as $template ) {
-						?>
-						<option value="<?php echo esc_attr( $template->slug ); ?>" <?php selected( $term_meta['_wp_page_template'][0], $template->ID ); ?>><?php echo wp_kses_post( $template->title ); ?></option>
-						<?php
-					}
-					?>
-				</select>
-				<p class="description"><?php esc_html_e( 'Select a template for the collection', 'surecart' ); ?></p>
-			</td>
-		</tr>
-		<?php
 	}
 
 	/**

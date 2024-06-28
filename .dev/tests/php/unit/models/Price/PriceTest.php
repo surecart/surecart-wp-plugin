@@ -35,6 +35,8 @@ class PriceTest extends SureCartUnitTestCase
 
 	public function test_can_create_price()
 	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/price-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/price-created.json'));
 		$product_response = json_decode(file_get_contents(dirname(__FILE__) . '/../Product/product-created.json'));
@@ -72,6 +74,8 @@ class PriceTest extends SureCartUnitTestCase
 
 	public function test_can_update_price()
 	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/price-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/price-created.json'));
 		$product_response = json_decode(file_get_contents(dirname(__FILE__) . '/../Product/product-created.json'));

@@ -31,6 +31,7 @@ import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
+import Collection from './modules/Collection';
 import Taxonomies from './modules/Taxonomies';
 import MetaBoxes from './modules/MetaBoxes';
 
@@ -340,6 +341,12 @@ export default ({ id, setBrowserURL }) => {
 						/>
 
 						<Tax
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Collection
 							product={product}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
