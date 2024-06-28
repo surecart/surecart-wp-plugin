@@ -60,7 +60,7 @@ export default function ({
 						{__('Cancel', 'surecart')}
 					</ScButton>{' '}
 					<ScButton type="primary" disabled={busy} submit>
-						{isEdit()
+						{isEdit
 							? __('Update Address', 'surecart')
 							: __('Save Address', 'surecart')}
 					</ScButton>

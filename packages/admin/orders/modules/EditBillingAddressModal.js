@@ -26,8 +26,6 @@ export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 		setAddress(billingAddress);
 	}, [billingAddress]);
 
-	const isEdit = () => !!billingAddress?.id;
-
 	const onEditAddress = async () => {
 		try {
 			setBusy(true);
@@ -55,9 +53,9 @@ export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 
 	return (
 		<AddressModal
-			isEdit={isEdit}
+			isEdit={!!billingAddress?.id}
 			title={
-				isEdit()
+				!!billingAddress?.id
 					? __('Update Billing Address', 'surecart')
 					: __('Add Billing Address', 'surecart')
 			}

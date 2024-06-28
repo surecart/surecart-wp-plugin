@@ -26,8 +26,6 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 		setAddress(shippingAddress);
 	}, [shippingAddress]);
 
-	const isEdit = () => !!shippingAddress?.id;
-
 	const onEditAddress = async () => {
 		try {
 			setBusy(true);
@@ -54,9 +52,9 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 
 	return (
 		<AddressModal
-			isEdit={isEdit}
+			isEdit={!!shippingAddress?.id}
 			title={
-				isEdit()
+				!!shippingAddress?.id
 					? __('Update Shipping Address', 'surecart')
 					: __('Add Shipping Address', 'surecart')
 			}
