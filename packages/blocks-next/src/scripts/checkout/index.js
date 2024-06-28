@@ -14,7 +14,7 @@ import {
 import {
 	processCheckoutEvents,
 	processCartViewEvent,
-} from '@surecart/events';
+} from '@surecart/checkout-events';
 
 const { actions: cartDrawerActions } = store('surecart/cart-drawer');
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
