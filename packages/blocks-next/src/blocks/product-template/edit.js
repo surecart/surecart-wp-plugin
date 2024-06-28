@@ -9,7 +9,7 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { BlockControls } from '@wordpress/block-editor';
-import { list, grid } from '@wordpress/icons';
+import { list, grid, post } from '@wordpress/icons';
 import classnames from 'classnames';
 import { useEffect } from '@wordpress/element';
 
@@ -63,6 +63,7 @@ export default ({
 		{
 			page: 1,
 			per_page: limit || 15,
+			post_status: ['publish'],
 			...('custom' === type ? { include: ids } : {}),
 			...('featured' === type ? { featured: true } : {}),
 		}
