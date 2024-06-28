@@ -15,10 +15,10 @@ class ShortcodesService {
 	 *
 	 * @return string
 	 */
-	public function registerBlockShortcode( $name, $class, $defaults = [] ) {
+	public function registerBlockShortcode( $name, $class, $defaults = array() ) {
 		add_shortcode(
 			$name,
-			function( $attributes, $content ) use ( $name, $class, $defaults ) {
+			function ( $attributes, $content ) use ( $name, $class, $defaults ) {
 				return ( new ShortcodesBlockConversionService( $attributes, $content ) )->convert(
 					$name,
 					$class,
@@ -39,10 +39,10 @@ class ShortcodesService {
 	 *
 	 * @return void
 	 */
-	public function registerBlockShortcodeByName( $name, $block_name, $defaults = [] ) {
+	public function registerBlockShortcodeByName( $name, $block_name, $defaults = array() ) {
 		add_shortcode(
 			$name,
-			function( $attributes, $content ) use ( $name, $block_name, $defaults ) {
+			function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
 					foreach ( $attributes as $key => $value ) {
@@ -58,13 +58,13 @@ class ShortcodesService {
 				);
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
-				
-				if ( ! empty( $block_name ) && 'surecart/product-list' === $block_name ) {
+
+				if ( ! empty( $block_name ) && ( 'surecart/product-list' === $block_name || 'surecart/product-collection' === $block_name ) ) {
 					return wp_interactivity_process_directives( \SureCart::block()->productListMigration( $shortcode_attrs )->render() );
 				}
 
 				return wp_interactivity_process_directives(
-					do_blocks( '<!-- wp:' . $block_name . ' ' . wp_json_encode( $shortcode_attrs, JSON_FORCE_OBJECT ) . ' -->' . do_shortcode($content) . '<!-- /wp:' . $block_name . ' -->')
+					do_blocks( '<!-- wp:' . $block_name . ' ' . wp_json_encode( $shortcode_attrs, JSON_FORCE_OBJECT ) . ' -->' . do_shortcode( $content ) . '<!-- /wp:' . $block_name . ' -->' )
 				);
 			}
 		);

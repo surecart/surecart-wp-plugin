@@ -25,7 +25,7 @@ class ProductListBlock {
 	 *
 	 * @var array
 	 */
-	protected $query_vars = array();
+	protected $query_vars = [];
 
 	/**
 	 * The query.
@@ -56,7 +56,7 @@ class ProductListBlock {
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
-				'posts_per_page'      => $this->block->context['surecart/product-list/limit'] ?? 15,
+				'posts_per_page'      => $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
 				'paged'               => $this->url->getCurrentPage(),
 				'order'               => $this->url->getArg( 'order' ),
 				'orderby'             => $this->url->getArg( 'orderby' ),
@@ -70,53 +70,110 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
+		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
+
+		$sc_collection = $this->url->getArg( 'sc_collection' ); // collection id from url.
+
+		$collection_ids_to_filter = array();
+
+		// handle collection id send from "sc_product_collection" shortcode.
+		if ( ! empty( $collection_id ) ) {
+			$collection_ids     = explode( ',', $collection_id );
+			$collection_ids_int = array_map( 'intval', array_filter( $collection_ids, 'is_numeric' ) ); // WP taxonomy ids.
+
+			$legacy_collection_ids = get_terms(
+				array(
+					'taxonomy'   => 'sc_collection',
+					'field'      => 'term_id',
+					'meta_query' => array(
+						array(
+							'key'     => 'sc_id',
+							'value'   => $collection_ids,
+							'compare' => 'IN',
+						),
+					),
+
+				)
+			); // platform collection ids converted to WP taxonomy ids.
+
+			$new_collection_ids = get_terms(
+				array(
+					'taxonomy'         => 'sc_collection',
+					'field'            => 'term_id',
+					'term_taxonomy_id' => $collection_ids_int,
+				)
+			); // WP taxonomy ids.
+
+			// only get the term_id.
+			$legacy_collection_ids = array_map(
+				function ( $term ) {
+					return $term->term_id;
+				},
+				$legacy_collection_ids
+			);
+
+			// only get the term_id.
+			$new_collection_ids = array_map(
+				function ( $term ) {
+					return $term->term_id;
+				},
+				$new_collection_ids
+			);
+
+			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $new_collection_ids );
+		}
+
 		// handle collections query.
-		if ( ! empty( $this->url->getArg( 'sc_collection' ) ) ) {
+		if ( ! empty( $sc_collection ) ) {
+			$collection_ids_to_filter = array_merge( $collection_ids_to_filter, $sc_collection );
+		}
+
+		if ( ! empty( $collection_ids_to_filter ) ) {
 			$this->query_vars['tax_query'] =
 				array(
 					array(
 						'taxonomy' => 'sc_collection',
 						'field'    => 'term_id',
-						'terms'    => array_map( 'intval', $this->url->getArg( 'sc_collection' ) ?? array() ),
+						'terms'    => array_map( 'intval', $collection_ids_to_filter ?? array() ),
 					),
 				);
 		}
 
 		// handle featured.
 		if ( 'featured' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
-			$this->query_vars['meta_query'] = array(
-				array(
+			$this->query_vars['meta_query'] = [
+				[
 					'key'     => 'featured',
 					'value'   => '1',
 					'compare' => '=',
-				),
-			);
+				],
+			];
 		}
 
 		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
 			// fallback for older strings - get the ids of legacy products.
-			$legacy_ids           = array();
-			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? array(), 'is_string' );
+			$legacy_ids           = [];
+			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_string' );
 			if ( ! empty( $ids_that_are_strings ) ) {
 				$legacy_ids = get_posts(
-					array(
+					[
 						'post_type'      => 'sc_product',
 						'status'         => 'publish',
 						'fields'         => 'ids',
 						'posts_per_page' => -1,
-						'meta_query'     => array(
-							array(
+						'meta_query'     => [
+							[
 								'key'     => 'sc_id',
 								'value'   => $ids_that_are_strings,
 								'compare' => 'IN',
-							),
-						),
-					)
+							],
+						],
+					]
 				);
 			}
 
 			// get only ids that are integers.
-			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? array(), 'is_int' );
+			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_int' );
 
 			// post in.
 			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );
@@ -145,6 +202,7 @@ class ProductListBlock {
 	/**
 	 * Get the query attribute.
 	 *
+	 * @param string $key The key.
 	 * @return \WP_Query
 	 */
 	public function __get( $key ) {
