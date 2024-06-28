@@ -7,20 +7,25 @@ export const newShopTemplate = (attributes, childBlocks) => {
 		columns,
 	} = attributes;
 
-	const getChildBlocksAttributes = (blockName) => {
-		return childBlocks[0]?.innerBlocks.find(
-			(block) => block.name === blockName
-		)?.attributes;
-	};
-
-	const blockNames = [
-		'surecart/product-item-title',
-		'surecart/product-item-price',
-		'surecart/product-item-image',
-	];
-
-	const [titleAttributes, priceAttributes, imageAttributes] = blockNames.map(
-		getChildBlocksAttributes
+	const templateChildBlocks = childBlocks[0]?.innerBlocks.reduce(
+		(acc, block) => {
+			switch (block.name) {
+				case 'surecart/product-item-title':
+					acc.push([
+						'surecart/product-list-title',
+						{ ...block.attributes, level: 0 },
+					]);
+					break;
+				case 'surecart/product-item-price':
+					acc.push(['surecart/product-list-price', block.attributes]);
+					break;
+				case 'surecart/product-item-image':
+					acc.push(['surecart/product-image', block.attributes]);
+					break;
+			}
+			return acc;
+		},
+		[]
 	);
 
 	return [
@@ -46,23 +51,20 @@ export const newShopTemplate = (attributes, childBlocks) => {
 						layout: { type: 'flex', flexWrap: 'nowrap' },
 					},
 					[
-						sort_enabled
-							? ['surecart/product-list-sort', {}]
-							: null,
-						collection_enabled
-							? ['surecart/product-list-filter', {}]
-							: null,
+						sort_enabled && ['surecart/product-list-sort', {}],
+						collection_enabled && [
+							'surecart/product-list-filter',
+							{},
+						],
 					].filter(Boolean),
 				],
-				search_enabled
-					? [
-							'core/group',
-							{
-								layout: { type: 'flex', flexWrap: 'nowrap' },
-							},
-							[['surecart/product-list-search', {}]],
-					  ]
-					: null,
+				search_enabled && [
+					'core/group',
+					{
+						layout: { type: 'flex', flexWrap: 'nowrap' },
+					},
+					[['surecart/product-list-search', {}]],
+				],
 			].filter(Boolean),
 		],
 		[
@@ -80,7 +82,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					},
 				},
 			},
-			collection_enabled ? [['surecart/product-list-filter-tags']] : null,
+			collection_enabled && [['surecart/product-list-filter-tags']],
 		].filter(Boolean),
 		[
 			'surecart/product-template',
@@ -94,20 +96,10 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				[
 					'core/group',
 					childBlocks[0]?.attributes, // Product Item
-					[
-						['surecart/product-image', imageAttributes],
-						[
-							'surecart/product-list-title',
-							{
-								...titleAttributes,
-								level: 0,
-							},
-						],
-						['surecart/product-list-price', priceAttributes],
-					],
+					templateChildBlocks,
 				],
 			],
 		],
-		pagination_enabled ? ['surecart/product-pagination'] : null,
+		pagination_enabled && ['surecart/product-pagination'],
 	].filter(Boolean);
 };
