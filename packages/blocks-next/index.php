@@ -308,6 +308,14 @@ add_action(
 					'id'     => '@surecart/events',
 					'import' => 'dynamic',
 				),
+				[
+					'id'     => '@surecart/google-events',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				],
 				array(
 					'id'     => '@surecart/cart-drawer',
 					'import' => 'dynamic',

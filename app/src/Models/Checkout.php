@@ -101,6 +101,18 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the converted total amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getConvertedTotalAmountAttribute() {
+		if ( $this->is_zero_decimal || empty( $this->total_amount ) ) {
+			return $this->total_amount;
+		}
+		return $this->total_amount / 100;
+	}
+
+	/**
 	 * Is the checkout an installment
 	 *
 	 * @return bool

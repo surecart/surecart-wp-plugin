@@ -178,4 +178,16 @@ class LineItem extends Model {
 
 		return null;
 	}
+
+	/**
+	 * Get the converted discount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getConvertedDiscountAmountAttribute() {
+		if ( $this->is_zero_decimal || empty( $this->discount_amount ) ) {
+			return $this->discount_amount;
+		}
+		return $this->discount_amount / 100;
+	}
 }

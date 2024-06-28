@@ -61,3 +61,78 @@ window.addEventListener('scProductsViewed', (e) => {
 			})),
 	});
 });
+
+/**
+ * Handle add to cart event.
+ */
+window.addEventListener('scAddedToCart', (e) => {
+	const item = e.detail;
+
+	// sanity check.
+	if (!item?.price?.product) return;
+
+	trackEvent('add_to_cart', {
+		currency: item.price?.currency,
+		value: item?.price?.converted_amount || 0,
+		items: [
+			{
+				item_id: item.price?.product?.id,
+				item_name: item.price?.product?.name,
+				item_variant: (item.variant_options || []).join(' / '),
+				price: item?.price?.converted_amount || 0,
+				currency: item.price?.currency,
+				quantity: item.quantity,
+				discount: item?.discount_amount ? item?.converted_discount_amount : 0,
+			},
+		],
+	});
+});
+
+/**
+ * Handle remove from cart event.
+ */
+window.addEventListener('scRemovedFromCart', (e) => {
+	const item = e.detail;
+
+	// sanity check.
+	if (!item?.price?.product) return;
+
+	trackEvent('remove_from_cart', {
+		currency: item.price?.currency,
+		value: item?.price?.converted_amount || 0,
+		items: [
+			{
+				item_id: item.price?.product?.id,
+				item_name: item.price?.product?.name,
+				item_variant: (item.variant_options || []).join(' / '),
+				price: item?.price?.converted_amount || 0,
+				currency: item.price?.currency,
+				quantity: item.quantity,
+				discount: item?.discount_amount ? item?.converted_discount_amount : 0,
+			},
+		],
+	});
+});
+
+/**
+ * Handle view cart event.
+ */
+window.addEventListener('scViewedCart', (e) => {
+	const checkout = e.detail;
+
+	trackEvent('view_cart', {
+		currency: checkout.currency,
+		value: checkout.converted_total_amount,
+		items: (checkout.line_items?.data || []).map((item) => ({
+			item_id: item?.price?.product?.id,
+			item_name: item?.price?.product?.name,
+			currency: item.price?.currency,
+			discount: item?.discount_amount ? item?.converted_discount_amount : 0,
+			price: item?.price?.converted_amount || 0,
+			quantity: item.quantity,
+			...(item?.variant_options?.length
+				? { item_variant: (item.variant_options || []).join(' / ') }
+				: {}),
+		})),
+	});
+});
