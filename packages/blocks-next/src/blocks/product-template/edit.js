@@ -9,7 +9,7 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { BlockControls } from '@wordpress/block-editor';
-import { list, grid, post } from '@wordpress/icons';
+import { list, grid } from '@wordpress/icons';
 import classnames from 'classnames';
 import { useEffect } from '@wordpress/element';
 
