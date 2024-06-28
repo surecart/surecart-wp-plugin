@@ -26,8 +26,6 @@ export default ({ customerId, billingAddress, open, onRequestClose }) => {
 		setAddress(billingAddress);
 	}, [billingAddress]);
 
-	const isEdit = !!billingAddress?.id;
-
 	const onEditAddress = async () => {
 		try {
 			setBusy(true);
@@ -52,6 +50,8 @@ export default ({ customerId, billingAddress, open, onRequestClose }) => {
 			setBusy(false);
 		}
 	};
+
+	const isEdit = !!billingAddress?.id;
 
 	return (
 		<ScDialog
