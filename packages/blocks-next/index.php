@@ -79,27 +79,6 @@ add_filter(
 add_filter(
 	'render_block_context',
 	function ( $context, $parsed_block ) {
-		// we are passing an id.
-		if ( 'surecart/product-page' === $parsed_block['blockName'] && ! empty( $parsed_block['attrs']['product_id'] ) ) {
-			$product_post_ids = get_posts(
-				array(
-					'post_type'      => 'sc_product',
-					'status'         => 'publish',
-					'fields'         => 'ids',
-					'posts_per_page' => -1,
-					'meta_query'     => array(
-						array(
-							'key'     => 'sc_id',
-							'value'   => array( $parsed_block['attrs']['product_id'] ),
-							'compare' => 'IN',
-						),
-					),
-				)
-			);
-			$product          = sc_get_product( $product_post_ids[0] ?? 0 );
-			set_query_var( 'surecart_current_product', $product );
-		}
-
 		// we have product context.
 		if ( get_query_var( 'surecart_current_product' ) ) {
 			$context['surecart/product'] = sc_get_product();
@@ -107,15 +86,9 @@ add_filter(
 
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
-			$context['surecart/product-list/block_id'] = wp_unique_id();
+			$context['surecart/product-list/block_id']      = wp_unique_id();
+			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
 		}
-
-		// add context for required blocks.
-		if ( 'surecart/product-page' === $parsed_block['blockName'] ) {
-			$context['surecart/has-ad-hoc-block']    = ! empty( wp_get_first_block( array( $parsed_block ), 'surecart/product-selected-price-ad-hoc-amount' ) );
-			$context['surecart/has-variant-choices'] = ! empty( wp_get_first_block( array( $parsed_block ), 'surecart/product-variant-choices-v2' ) );
-		}
-
 		return $context;
 	},
 	10,

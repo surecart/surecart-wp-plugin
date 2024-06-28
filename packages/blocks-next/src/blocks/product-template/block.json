@@ -23,7 +23,8 @@
 		"surecart/product-list/block_id",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
-		"surecart/product-list/ids"
+		"surecart/product-list/ids",
+		"surecart/product-list/collection_id"
 	],
 	"supports": {
 		"interactivity": true,
