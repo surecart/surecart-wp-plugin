@@ -5,10 +5,8 @@ import {
 } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useEntityRecord } from '@wordpress/core-data';
 import {
-	PanelBody,
 	SelectControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
@@ -50,22 +48,12 @@ export default ({
 			[dimension]: parsedValue < 0 ? '0' : nextValue,
 		});
 	};
-	const product = useSelect(
-		(select) => {
-			if (!productId) {
-				return null;
-			}
-			return select(coreStore).getEntityRecord(
-				'surecart',
-				'product',
-				productId
-			);
-		},
-		[productId]
-	);
 
-	const alt = product?.featured_image?.alt || '';
-	const title = product?.featured_image?.title || '';
+	const {
+		record: {
+			meta: { product },
+		},
+	} = useEntityRecord('postType', 'sc_product', productId);
 
 	return (
 		<>
@@ -171,13 +159,19 @@ export default ({
 				/>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<img
-					src={product?.featured_image?.src}
-					alt={alt}
-					{...(title ? { title } : {})}
-				/>
-			</div>
+			<figure {...blockProps}>
+				{product?.preview_image?.src ? (
+					<img {...product?.preview_image} />
+				) : (
+					<img
+						src={
+							window.scData.plugin_url + '/images/placeholder.jpg'
+						}
+						width="1180"
+						height="1180"
+					/>
+				)}
+			</figure>
 		</>
 	);
 };

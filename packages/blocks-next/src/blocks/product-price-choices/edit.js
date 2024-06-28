@@ -1,23 +1,39 @@
+/**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
-
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
-
+import {
+	useBlockProps,
+	useInnerBlocksProps,
+	__experimentalUseColorProps as useColorProps,
+} from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 	const { label } = attributes;
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: __unstableLayoutClassNames,
+	});
+	const colorProps = useColorProps(attributes);
 
 	const TEMPLATE = [['surecart/product-price-choice-template']];
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		template: TEMPLATE,
-	});
+	const innerBlocksProps = useInnerBlocksProps(
+		{},
+		{
+			template: TEMPLATE,
+		}
+	);
 
 	return (
 		<div {...blockProps}>
 			<RichText
 				tagName="label"
-				className="sc-form-label"
+				className={classnames('sc-form-label', colorProps.className)}
 				aria-label={__('Label text', 'surecart')}
 				placeholder={__('Add label…', 'surecart')}
 				value={label}

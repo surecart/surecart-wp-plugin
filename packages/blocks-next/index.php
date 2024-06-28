@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 add_action(
 	'init',
-	function() {
+	function () {
 		foreach ( glob( __DIR__ . '/build/blocks/**/block.json' ) as $file ) {
 			register_block_type( dirname( $file ) );
 		}
@@ -21,7 +21,7 @@ add_action(
  */
 add_filter(
 	'block_type_metadata_settings',
-	function( $settings, $metadata ) {
+	function ( $settings, $metadata ) {
 		// if there is a controller file, use it.
 		$controller_path = wp_normalize_path(
 			realpath(
@@ -78,7 +78,7 @@ add_filter(
 
 add_filter(
 	'render_block_context',
-	function( $context, $parsed_block ) {
+	function ( $context, $parsed_block ) {
 		// we have product context.
 		if ( get_query_var( 'surecart_current_product' ) ) {
 			$context['surecart/product'] = sc_get_product();
@@ -86,7 +86,8 @@ add_filter(
 
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
-			$context['surecart/product-list/block_id'] = wp_unique_id();
+			$context['surecart/product-list/block_id']      = wp_unique_id();
+			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
 		}
 		return $context;
 	},
@@ -97,13 +98,13 @@ add_filter(
 
 add_action(
 	'init',
-	function() {
+	function () {
 		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/fetch/index.asset.php';
 		wp_register_script_module(
 			'@surecart/api-fetch',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
-			[],
+			array(),
 			$static_assets['version']
 		);
 
@@ -112,7 +113,7 @@ add_action(
 		wp_register_script_module(
 			'@surecart/dialog',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dialog/index.js',
-			[],
+			array(),
 			$static_assets['version']
 		);
 
@@ -121,12 +122,34 @@ add_action(
 		wp_register_script_module(
 			'@surecart/dropdown',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dropdown/index.js',
-			[
-				[
+			array(
+				array(
+					'id'     => '@surecart/dialog',
+					'import' => 'dynamic',
+				),
+				array(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
-				],
-			],
+				),
+			),
+			$static_assets['version']
+		);
+
+		// instead, use a static loader that injects the script at runtime.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/google/index.asset.php';
+		wp_register_script_module(
+			'@surecart/google-events',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/google/index.js',
+			[],
+			$static_assets['version']
+		);
+
+		// instead, use a static loader that injects the script at runtime.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/facebook/index.asset.php';
+		wp_register_script_module(
+			'@surecart/facebook-events',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/facebook/index.js',
+			[],
 			$static_assets['version']
 		);
 
@@ -135,12 +158,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/product-page',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
-			[
-				[
+			array(
+				array(
 					'id'     => '@surecart/dialog',
 					'import' => 'dynamic',
-				],
-			],
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -154,6 +177,14 @@ add_action(
 					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
 				],
+				[
+					'id'     => '@surecart/google-events',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				],
 			],
 			$static_assets['version']
 		);
@@ -163,12 +194,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/image-slider',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/image-slider/index.js',
-			[
-				[
+			array(
+				array(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
-				],
-			],
+				),
+			),
 			$static_assets['version']
 		);
 	}

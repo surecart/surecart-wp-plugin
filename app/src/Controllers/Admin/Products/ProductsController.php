@@ -31,24 +31,15 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => '<div><a href="' . esc_url(
-					esc_url(
-						add_query_arg(
-							[
-								'action' => 'sync',
-								'nonce'  => wp_create_nonce( 'sync_products' ),
-							],
-							\SureCart::getUrl()->index( 'products' )
-						)
-					)
-				) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
-			)
+				'suffix'      => '<div><a href="' . esc_url( \SureCart::getUrl()->syncAll( 'products' ) ) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
+			),
 		);
 
 		// add notices.
 		$this->withNotices(
 			array(
 				'sync_cancelled'        => __( 'The sync has been cancelled.', 'surecart' ),
+				'sync_success'          => __( 'Product synced successfully.', 'surecart' ),
 				'sync_cancel_scheduled' => __( 'The sync has been scheduled to be cancelled.', 'surecart' ),
 				'archived'              => __( 'Product archived.', 'surecart' ),
 				'unarchived'            => __( 'Product unarchived.', 'surecart' ),
@@ -170,24 +161,6 @@ class ProductsController extends AdminController {
 			);
 		}
 
-		// add product link.
-		add_action(
-			'admin_bar_menu',
-			function( $wp_admin_bar ) use ( $product ) {
-				$wp_admin_bar->add_node(
-					[
-						'id'    => 'view-product-page',
-						'title' => __( 'View Product', 'surecart' ),
-						'href'  => esc_url( $product->permalink ?? '#' ),
-						'meta'  => [
-							'class' => empty( $product->permalink ) ? 'hidden' : '',
-						],
-					]
-				);
-			},
-			99
-		);
-
 		return '<div id="app"></div><div id="metaboxes" class="hidden">' . $this->renderMetaBoxes( $product ) . '</div>';
 	}
 
@@ -251,12 +224,39 @@ class ProductsController extends AdminController {
 	 *
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
-	public function sync() {
+	public function syncAll() {
 		// dispatch the sync job.
-		\SureCart::sync()->products()->dispatch( [ 'with_collections' => true ] );
+		\SureCart::sync()->products()->dispatch();
 
 		// redirect to products page.
 		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
+	}
+
+	/**
+	 * Start product sync.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function sync( $request ) {
+		$product = Product::find( $request->query( 'id' ) );
+
+		if ( is_wp_error( $product ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
+		}
+
+		$product->sync();
+
+		// redirect to products page.
+		return \SureCart::redirect()->to(
+			esc_url_raw(
+				add_query_arg(
+					[ 'sync_success' => true ],
+					\SureCart::getUrl()->index( 'products' )
+				)
+			)
+		);
 	}
 
 	/**

@@ -20,48 +20,255 @@ class ProductPostTypeService {
 	 */
 	public function bootstrap() {
 		// register.
-		add_action( 'init', [ $this, 'registerPostType' ] );
+		add_action( 'init', array( $this, 'registerPostType' ) );
 
 		// register post status.
-		add_action( 'init', [ $this, 'registerPostStatus' ] );
+		add_action( 'init', array( $this, 'registerPostStatus' ) );
+
+		// register meta.
+		add_action( 'init', array( $this, 'registerMeta' ) );
 
 		// add variation option value query to posts_where.
-		add_filter( 'posts_where', [ $this, 'handleVariationOptionValueQuery' ], 10, 2 );
+		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
+		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
 
 		// ensure we always fetch with the current connected store id in case of store change.
-		add_filter( 'parse_query', [ $this, 'forceAccountIdScope' ], 10, 2 );
+		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
 
 		// add global $sc_product inside loops.
-		add_action( 'the_post', [ $this, 'setupData' ] );
+		add_action( 'the_post', array( $this, 'setupData' ) );
 
 		// add the rest api meta query.
-		add_action( "rest_{$this->post_type}_query", [ $this, 'addMetaQuery' ], 10, 2 );
+		add_action( "rest_{$this->post_type}_query", array( $this, 'addMetaQuery' ), 10, 2 );
 
 		// register rest fields.
-		add_action( 'rest_api_init', [ $this, 'registerRestFields' ] );
+		add_action( 'rest_api_init', array( $this, 'registerRestFields' ) );
 
 		// product gallery migration.
-		add_action( 'get_post_metadata', [ $this, 'defaultGalleryFallback' ], 10, 4 );
-
-		// add_filter(
-		// 'query_vars',
-		// function( $vars ) {
-		// $vars[] = 'variant_options';
-		// return $vars;
-		// }
-		// );
+		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
 		// update edit post link to edit the product directly.
-		// add_filter( 'get_edit_post_link', [ $this, 'updateEditPostLink' ], 10, 2 );
+		add_filter( 'get_edit_post_link', array( $this, 'updateEditPostLink' ), 10, 2 );
 
 		// when a product media is deleted, remove it from the gallery.
-		add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
+
+		// sync via webhook events.
+		add_action( 'surecart/price_created', array( $this, 'sync' ) );
+		add_action( 'surecart/price_deleted', array( $this, 'sync' ) );
+		add_action( 'surecart/price_updated', array( $this, 'sync' ) );
+		add_action( 'surecart/product_created', array( $this, 'sync' ) );
+		add_action( 'surecart/product_stock_adjusted', array( $this, 'sync' ) );
+		add_action( 'surecart/product_updated', array( $this, 'sync' ) );
+		add_action( 'surecart/product_deleted', array( $this, 'deleteSynced' ) );
 
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
-			add_filter( 'the_content', [ $this, 'replaceContentWithProductInfoPart' ], 10 );
+			add_filter( 'the_content', array( $this, 'replaceContentWithProductInfoPart' ), 10 );
+		} else {
+			// validate FSE template and return single if invalid.
+			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Sync the product.
+	 *
+	 * @param \SureCart\Models\Product $product The model.
+	 *
+	 * @return void
+	 */
+	public function sync( \SureCart\Models\Product $product ) {
+		$product->sync();
+	}
+
+	/**
+	 * Delete the synced product.
+	 *
+	 * @param \SureCart\Models\Product $product The model.
+	 *
+	 * @return void
+	 */
+	public function deleteSynced( \SureCart\Models\Product $product ) {
+		$product->deleteSynced();
+	}
+
+	/**
+	 * Validate the FSE template.
+	 *
+	 * @param string $template The template.
+	 *
+	 * @return string
+	 */
+	public function validateFSETemplate( $template ) {
+		// not our post type.
+		if ( ! is_singular( $this->post_type ) ) {
+			return $template;
+		}
+
+		// we have a php file, but we are in FSE.
+		if ( false !== strpos( $template, '.php' ) ) {
+			return get_single_template();
+		}
+
+		return $template;
+	}
+
+	/**
+	 * Register the meta.
+	 *
+	 * @return void
+	 */
+	public function registerMeta() {
+		// register the product meta.
+		register_meta(
+			'post',
+			'product',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => array(
+					'name'   => 'product',
+					'type'   => 'object',
+					'schema' => array(
+						'type'                 => 'object',
+						'context'              => array( 'edit' ),
+						'additionalProperties' => true,
+					),
+				),
+				'single'         => true,
+				'type'           => 'object',
+			)
+		);
+
+		register_meta(
+			'post',
+			'sc_id',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'string',
+			)
+		);
+
+		register_meta(
+			'post',
+			'min_price_amount',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'string',
+			)
+		);
+
+		register_meta(
+			'post',
+			'max_price_amount',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'string',
+			)
+		);
+
+		register_meta(
+			'post',
+			'available_stock',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'string',
+			)
+		);
+
+		register_meta(
+			'post',
+			'stock_enabled',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'boolean',
+			)
+		);
+
+		register_meta(
+			'post',
+			'allow_out_of_stock_purchases',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'boolean',
+			)
+		);
+
+		register_meta(
+			'post',
+			'featured',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'boolean',
+			)
+		);
+
+		register_meta(
+			'post',
+			'recurring',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'boolean',
+			)
+		);
+
+		register_meta(
+			'post',
+			'shipping_enabled',
+			array(
+				'object_subtype' => $this->post_type,
+				'auth_callback'  => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					return current_user_can( 'read_sc_products', $object_id );
+				},
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'boolean',
+			)
+		);
 	}
 
 	/**
@@ -143,9 +350,9 @@ class ProductPostTypeService {
 		}
 
 		// only if empty.
-		remove_filter( 'get_post_metadata', [ $this, __FUNCTION__ ], 10 );
+		remove_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10 );
 		$has_meta = get_post_meta( $object_id, $meta_key, true );
-		add_filter( 'get_post_metadata', [ $this, __FUNCTION__ ], 10, 4 );
+		add_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10, 4 );
 		if ( ! empty( $has_meta ) ) {
 			return $value;
 		}
@@ -154,18 +361,18 @@ class ProductPostTypeService {
 		$product = sc_get_product( $object_id );
 
 		// push the existing media to the gallery.
-		return [
+		return array(
 			array_filter(
 				array_map(
-					function( $media ) {
-						return (object) [
+					function ( $media ) {
+						return (object) array(
 							'id' => $media->id,
-						];
+						);
 					},
-					$product->product_medias->data ?? []
+					$product->product_medias->data ?? array()
 				)
 			),
-		];
+		);
 	}
 
 	/**
@@ -210,20 +417,20 @@ class ProductPostTypeService {
 		// add to tax_query.
 		if ( \SureCart::account()->id ) {
 			// get existing tax_query.
-			$existing = is_array( $query->get( 'tax_query' ) ) && ! empty( $query->get( 'tax_query' ) ) ? $query->get( 'tax_query' ) : [];
+			$existing = is_array( $query->get( 'tax_query' ) ) && ! empty( $query->get( 'tax_query' ) ) ? $query->get( 'tax_query' ) : array();
 
 			// set the tax query using account.
 			$query->set(
 				'tax_query',
 				array_merge(
-					[
+					array(
 						'relation' => 'AND',
-						[
+						array(
 							'taxonomy' => 'sc_account',
 							'field'    => 'name',
 							'terms'    => \SureCart::account()->id,
-						],
-					],
+						),
+					),
 					$existing,
 				),
 			);
@@ -303,7 +510,7 @@ class ProductPostTypeService {
 		// remove the post id from the gallery.
 		$updated = array_filter(
 			$gallery,
-			function( $id ) use ( $post_id ) {
+			function ( $id ) use ( $post_id ) {
 				return $id !== $post_id;
 			}
 		);
@@ -321,28 +528,28 @@ class ProductPostTypeService {
 		register_rest_field(
 			$this->post_type,
 			'gallery',
-			[
-				'get_callback'    => function( $post ) {
-					return ! empty( get_post_meta( $post['id'], 'gallery', true ) ) ? get_post_meta( $post['id'], 'gallery', true ) : [];
+			array(
+				'get_callback'    => function ( $post ) {
+					return ! empty( get_post_meta( $post['id'], 'gallery', true ) ) ? get_post_meta( $post['id'], 'gallery', true ) : array();
 				},
-				'update_callback' => function( $value, $post ) {
+				'update_callback' => function ( $value, $post ) {
 					// map each value to an object.
 					$value = array_map(
-						function( $item ) {
+						function ( $item ) {
 							return (object) $item;
 						},
 						$value
 					);
 					return update_post_meta( $post->ID, 'gallery', $value );
 				},
-				'schema'          => [
+				'schema'          => array(
 					'description' => __( 'Product gallery', 'surecart' ),
 					'type'        => 'array',
-					'items'       => [
+					'items'       => array(
 						'type' => 'object',
-					],
-				],
-			]
+					),
+				),
+			)
 		);
 	}
 
@@ -355,14 +562,25 @@ class ProductPostTypeService {
 	 * @return array
 	 */
 	public function addMetaQuery( $args, $request ) {
-		if ( ! empty( $request['sc_id'] ) ) {
-			$args['meta_query'][]   = [
-				'key'   => 'sc_id',
-				'value' => $request['sc_id'],
-			];
-			$args['post_status']    = [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
-			$args['posts_per_page'] = 1;
-			$args['no_found_rows']  = true;
+		if ( ! empty( $request ) ) {
+			if ( ! empty( $request['sc_id'] ) ) {
+				$args['meta_query'][] = array(
+					'key'     => 'sc_id',
+					'value'   => $request['sc_id'],
+					'compare' => 'IN',
+				);
+			}
+			if ( ! empty( $request['featured'] ) ) {
+				$args['meta_query'][] = array(
+					'key'     => 'featured',
+					'value'   => '1',
+					'compare' => '=',
+				);
+			}
+
+			$args['post_status'] = $request['post_status'] ?? [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
+
+			$args['no_found_rows'] = true;
 		}
 		return $args;
 	}
@@ -401,10 +619,10 @@ class ProductPostTypeService {
 				'public'            => true,
 				'show_ui'           => true,
 				'show_in_menu'      => true,
-				'rewrite'           => [
+				'rewrite'           => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,
-				],
+				),
 				'show_in_rest'      => true,
 				'show_in_nav_menus' => false,
 				'can_export'        => false,

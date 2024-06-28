@@ -1,7 +1,14 @@
 <?php
-$styles = sc_get_block_styles();
-$style = $styles['css'] ?? '';
-$class = $styles['classnames'] ?? '';
+// no price in the context.
+if ( empty( $block->context['sc_product_price'] ) ) {
+	return '';
+}
+
+// get the price.
+$price = $block->context['sc_product_price'];
+if ( is_wp_error( $price ) ) {
+	return '';
+}
 
 // return the view.
 return 'file:./view.php';

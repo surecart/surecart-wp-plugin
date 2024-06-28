@@ -16,7 +16,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.settings.permalinks.product'] = function() {
+		$container['surecart.settings.permalinks.product'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'product',
@@ -37,7 +37,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.buy'] = function() {
+		$container['surecart.settings.permalinks.buy'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'buy',
@@ -58,7 +58,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.collection'] = function() {
+		$container['surecart.settings.permalinks.collection'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'                => 'collection',
@@ -80,7 +80,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.upsell'] = function() {
+		$container['surecart.settings.permalinks.upsell'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'upsell',
@@ -123,14 +123,6 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->query( 'index.php?sc_checkout_product_id=$matches[1]' )
 			->create();
 
-		// Collection.
-		$container['surecart.settings.permalinks.collection']->bootstrap();
-		( new PermalinkService() )
-			->params( [ 'sc_collection_page_id' ] )
-			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_collection_page_id=$matches[1]' )
-			->create();
-
 		// Upsell.
 		$container['surecart.settings.permalinks.upsell']->bootstrap();
 		( new PermalinkService() )
@@ -152,8 +144,5 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->url( 'surecart/redirect' )
 			->query( 'index.php?sc_redirect=1' )
 			->create();
-
-		// Rewrite rules.
-		( new PermalinkRewriteRulesService() )->bootstrap();
 	}
 }

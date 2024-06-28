@@ -61,7 +61,21 @@ class Block extends ProductItemListBlock {
 			)
 		);
 
-		$products = $this->getProducts( $attributes );
+		// query posts.
+		$product_query = new \WP_Query(
+			array(
+				'post_type'      => 'sc_product',
+				'posts_per_page' => 10,
+			)
+		);
+
+		// get the product for each post.
+		$products = array_map(
+			function( $post ) {
+				return sc_get_product( $post );
+			},
+			$product_query->posts ?? []
+		);
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
@@ -71,8 +85,8 @@ class Block extends ProductItemListBlock {
 				'paginationAlignment'  => $attributes['pagination_alignment'],
 				'limit'                => (int) $attributes['limit'],
 				'pagination'           => [
-					'total'       => $products->total(),
-					'total_pages' => $products->totalPages(),
+					'total'       => $product_query->found_posts,
+					'total_pages' => $product_query->max_num_pages,
 				],
 				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
 				'paginationEnabled'    => ! ! $attributes['pagination_enabled'],
@@ -80,7 +94,7 @@ class Block extends ProductItemListBlock {
 				'paginationAutoScroll' => ! ! $attributes['pagination_auto_scroll'],
 				'searchEnabled'        => ! ! $attributes['search_enabled'],
 				'sortEnabled'          => ! ! $attributes['sort_enabled'],
-				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products,
 				'collectionEnabled'    => false,
 				'collectionId'         => $this->getCollectionId( $attributes ),
 				'pageTitle'            => get_the_title(),

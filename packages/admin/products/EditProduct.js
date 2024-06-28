@@ -31,6 +31,7 @@ import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
+import Collection from './modules/Collection';
 import Taxonomies from './modules/Taxonomies';
 import MetaBoxes from './modules/MetaBoxes';
 
@@ -60,7 +61,8 @@ export default ({ id, setBrowserURL }) => {
 				'postType',
 				'sc_product',
 				{
-					sc_id: id,
+					sc_id: [id],
+					per_page: 1,
 				},
 			];
 			const posts =
@@ -344,12 +346,25 @@ export default ({ id, setBrowserURL }) => {
 							loading={!hasLoadedProduct}
 						/>
 
+						<Collection
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
 						<Taxonomies post={post} loading={loadingPost} />
 
 						<Advanced
 							product={product}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
+						/>
+
+						<Affiliation
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+							error={error}
 						/>
 
 						<MetaBoxes location="side" />
@@ -411,6 +426,7 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
 					<SearchEngine
 						product={product}
 						updateProduct={editProduct}

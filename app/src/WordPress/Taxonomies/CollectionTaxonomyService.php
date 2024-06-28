@@ -2,9 +2,6 @@
 
 namespace SureCart\WordPress\Taxonomies;
 
-use SureCart\Models\Product;
-use SureCart\Models\ProductMedia;
-
 /**
  * Form post type service class.
  */
@@ -22,7 +19,25 @@ class CollectionTaxonomyService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'init', [ $this, 'register' ] );
+		add_action( 'init', array( $this, 'register' ) );
+		add_filter( 'taxonomy_template', array( $this, 'template' ) );
+	}
+
+	/**
+	 * Get the template for the taxonomy.
+	 *
+	 * @param string $template The template.
+	 *
+	 * @return string
+	 */
+	public function template( $template ) {
+		// the theme has provided a taxonomy template, or we are not on the collection taxonomy.
+		if ( ! empty( $template ) || ! is_tax( $this->slug ) ) {
+			return $template;
+		}
+
+		// check if we are on the collection taxonomy.
+		return plugin_dir_path( SURECART_PLUGIN_FILE ) . '/templates/pages/template-surecart-collection.php';
 	}
 
 	/**
@@ -33,32 +48,32 @@ class CollectionTaxonomyService {
 	public function register() {
 		register_taxonomy(
 			$this->slug,
-			[ 'sc_product' ],
-			[
+			array( 'sc_product' ),
+			array(
 				'label'             => __( 'Collections', 'surecart' ),
-				'labels'            => [
+				'labels'            => array(
 					'name'              => _x( 'Collections', 'taxonomy general name', 'surecart' ),
 					'singular_name'     => _x( 'Collection', 'taxonomy singular name', 'surecart' ),
 					'search_items'      => __( 'Search Collections', 'surecart' ),
 					'all_items'         => __( 'All Collections', 'surecart' ),
-					'parent_item'       => __( 'Parent Collection', 'surecart' ),
-					'parent_item_colon' => __( 'Parent Collection:', 'surecart' ),
+					'parent_item'       => __( 'parent Collection', 'surecart' ),
+					'parent_item_colon' => __( 'parent Collection:', 'surecart' ),
 					'edit_item'         => __( 'Edit Collection', 'surecart' ),
 					'update_item'       => __( 'Update Collection', 'surecart' ),
 					'add_new_item'      => __( 'Add New Collection', 'surecart' ),
 					'new_item_name'     => __( 'New Collection Name', 'surecart' ),
 					'menu_name'         => __( 'Collection', 'surecart' ),
-				],
-				'public'            => true,
+				),
+				'public '           => true,
 				'show_in_rest'      => true,
 				'hierarchical'      => false,
 				'show_in_ui'        => true,
-				// 'show_in_menu'      => false,
 				'show_admin_column' => true,
-				'rewrite'           => [
-					'slug' => 'collections',
-				],
-			]
+				'rewrite'           => array(
+					'slug'       => \SureCart::settings()->permalinks()->getBase( 'collection_page' ),
+					'with_front' => false,
+				),
+			)
 		);
 	}
 }

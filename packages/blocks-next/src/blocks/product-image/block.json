@@ -5,9 +5,9 @@
 	"title": "Image",
 	"description": "Display the product image.",
 	"version": "1.0.0",
-	"category": "surecart",
-	"icon": "media-interactive",
+	"category": "sc-product-list",
 	"example": {},
+	"usesContext": ["surecart/productId"],
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
 		"sizing": {

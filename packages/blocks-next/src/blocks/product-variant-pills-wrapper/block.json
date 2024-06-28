@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-variant-pills-wrapper",
+	"title": "Product Variants Pills Wrapper",
+	"description": "A wrapper container for the product pills.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"ancestor": ["surecart/product-variant-pills"],
+	"supports": {
+		"interactivity": true,
+		"html": false,
+		"inserter": false,
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
+		},
+		"spacing": {
+			"blockGap": {
+				"__experimentalDefault": "3px"
+			},
+			"margin": ["top", "bottom"],
+			"padding": ["horizontal", "vertical"]
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"render": "file:./view.php"
+}

@@ -10,8 +10,10 @@ export default ({ post, loading }) => {
 	);
 
 	// get all visible taxonomies for this post type.
-	const visibleTaxonomies = (taxonomies ?? []).filter((taxonomy) =>
-		taxonomy.types.includes(post?.type)
+	const visibleTaxonomies = (taxonomies ?? []).filter(
+		(taxonomy) =>
+			taxonomy.types.includes(post?.type) &&
+			taxonomy?.slug !== 'sc_collection'
 	);
 
 	// render all taxonomies.

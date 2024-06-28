@@ -24,5 +24,10 @@ $options = array_map(
 	$collections ?? []
 );
 
+// no filter options.
+if ( empty( $options ) )  {
+	return '';
+}
+
 // return the view.
 return 'file:./view.php';

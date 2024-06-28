@@ -29,8 +29,88 @@ class ProductTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
+	public function test_can_create()
+	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$instance = new Product($request['product']);
+		$created = $instance->create();
+
+		$this->assertNotEmpty($created->post);
+	}
+
+	public function test_can_update()
+	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$created = Product::update($request['product']);
+
+		$this->assertNotEmpty($created->post);
+	}
+
+	public function test_can_delete() {
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products/' . $response->id)
+			->andReturn($response);
+
+		$created = Product::update($request['product']);
+
+		$id = $created->post->ID;
+		$this->assertNotEmpty(get_post($id));
+
+		Product::delete($created->id);
+
+		$this->assertEmpty(get_post($id));
+	}
+
 	public function test_can_create_price()
 	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
 
@@ -59,6 +139,8 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group product
 	 */
 	public function test_has_images_from_featured_product_media() {
+		$this->shouldSyncProduct('test');
+
 		$product = new Product([
 			'id' => 'test',
 			'featured_product_media' => [
@@ -96,6 +178,8 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group product
 	 */
 	public function test_has_images_from_product_media_url() {
+		$this->shouldSyncProduct('test');
+
 		$product = new Product([
 			'id' => 'test',
 			'featured_product_media' => [
@@ -116,6 +200,8 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group product
 	 */
 	public function test_has_featured_image_from_attachment() {
+		$this->shouldSyncProduct('test');
+
 		$product = new Product([
 			'id' => 'test',
 			'name' => 'test',
@@ -146,15 +232,30 @@ class ProductTest extends SureCartUnitTestCase
 		$this->assertSame('async', $attributes->decoding);
 		$this->assertStringContainsString('test-image-large',$attributes->srcset);
 
+		$attributes = $product->featured_image->attributes('large');
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-large size-large', $attributes->class);
+		$this->assertSame('(max-width: 1024px) 100vw, 1024px', $attributes->sizes);
+		$this->assertSame(1024, $attributes->width);
+		$this->assertSame(768, $attributes->height);
+		$this->assertSame('lazy', $attributes->loading);
+		$this->assertSame('async', $attributes->decoding);
+		$this->assertStringContainsString('test-image-large',$attributes->srcset);
+
+		$attributes = $product->featured_image->attributes('thumbnail');
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $attributes->class);
+		$this->assertSame(150, $attributes->width);
+		$this->assertSame(150, $attributes->height);
+		$this->assertSame('lazy', $attributes->loading);
+		$this->assertSame('async', $attributes->decoding);
+
 		$line_item_image = $product->line_item_image;
-		var_dump($line_item_image);
 		$this->assertStringContainsString('test-image', $attributes->src);
 		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item_image->class);
-		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item_image->sizes);
 		$this->assertSame(150, $line_item_image->width);
-		$this->assertSame(113, $line_item_image->height);
+		$this->assertSame(150, $line_item_image->height);
 		$this->assertSame('lazy', $line_item_image->loading);
 		$this->assertSame('async', $line_item_image->decoding);
-		$this->assertStringContainsString('test-image-large', $line_item_image->srcset);
 	}
 }

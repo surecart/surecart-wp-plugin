@@ -34,25 +34,6 @@ class ProductPostSyncService {
 	protected $post_type = 'sc_product';
 
 	/**
-	 * Should we sync this with collections?
-	 *
-	 * @var string
-	 */
-	protected $with_collections = false;
-
-	/**
-	 * Should we do it with collections?
-	 *
-	 * @param string $with_collections Whether to sync with collections.
-	 *
-	 * @return self
-	 */
-	public function withCollections( $with_collections = true ) {
-		$this->with_collections = $with_collections;
-		return $this;
-	}
-
-	/**
 	 * Find the post from the model.
 	 *
 	 * @param string $model_id The model id.
@@ -67,18 +48,19 @@ class ProductPostSyncService {
 
 		// query the post.
 		$query = new \WP_Query(
-			[
-				'post_type'      => $this->post_type,
-				'post_status'    => [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ],
-				'posts_per_page' => 1,
-				'no_found_rows'  => true,
-				'meta_query'     => [
-					[
+			array(
+				'post_type'        => $this->post_type,
+				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
+				'posts_per_page'   => 1,
+				'no_found_rows'    => true,
+				'suppress_filters' => true,
+				'meta_query'       => array(
+					array(
 						'key'   => 'sc_id',
 						'value' => $model_id, // query by model id.
-					],
-				],
-			]
+					),
+				),
+			)
 		);
 
 		// handle error.
@@ -137,17 +119,18 @@ class ProductPostSyncService {
 	 */
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
 		$base_amount = ! empty( $model->prices->data[0]->amount ) ? $model->prices->data[0]->amount : 0;
-		return [
+		return array(
 			'post_title'        => $model->name,
 			'post_type'         => $this->post_type,
 			'post_name'         => $model->slug,
 			'menu_order'        => $model->position ?? 0,
+			'post_excerpt'      => $model->description ?? '',
 			'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
 			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 			'post_status'       => $this->getPostStatusFromModel( $model ),
-			'meta_input'        => [
+			'meta_input'        => array(
 				'sc_id'                        => $model->id,
 				'product'                      => $model,
 				'min_price_amount'             => ! empty( $model->metrics->min_price_amount ) ? $model->metrics->min_price_amount : $base_amount,
@@ -158,8 +141,8 @@ class ProductPostSyncService {
 				'featured'                     => $model->featured,
 				'recurring'                    => $model->recurring,
 				'shipping_enabled'             => $model->shipping_enabled,
-			],
-		];
+			),
+		);
 	}
 
 	/**
@@ -176,8 +159,9 @@ class ProductPostSyncService {
 
 		// not a FSE template.
 		if ( count( $parts ) < 2 ) {
-			return null;
+			return $id;
 		}
+
 		return $parts[1] ?? null;
 	}
 
@@ -190,7 +174,7 @@ class ProductPostSyncService {
 	 */
 	protected function create( \SureCart\Models\Model $model ) {
 		// don't do these actions as they can slow down the sync.
-		foreach ( [ 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ] as $action ) {
+		foreach ( array( 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ) as $action ) {
 			remove_all_actions( $action );
 		}
 
@@ -210,29 +194,26 @@ class ProductPostSyncService {
 
 		// update page template.
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
+		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
+
+		$this->syncCollections( $post_id, $model );
 
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
-
-		if ( ! empty( $this->with_collections ) ) {
-			// set the terms.
-			$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
-			wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
-		}
 
 		// delete existing.
 		VariantOptionValue::where( 'product_id', $model->id )->delete();
 
 		// create new.
-		foreach ( ( $model->variant_options->data ?? [] ) as $option ) {
+		foreach ( ( $model->variant_options->data ?? array() ) as $option ) {
 			foreach ( $option->values as $value ) {
 				$created = VariantOptionValue::create(
-					[
+					array(
 						'value'      => $value,
 						'name'       => $option->name,
 						'post_id'    => $post_id,
 						'product_id' => $model->id,
-					]
+					)
 				);
 				if ( is_wp_error( $created ) ) {
 					return $created;
@@ -270,9 +251,9 @@ class ProductPostSyncService {
 		$post_id = wp_update_post(
 			array_merge(
 				$props,
-				[
+				array(
 					'ID' => $this->post->ID,
-				]
+				)
 			)
 		);
 
@@ -282,16 +263,60 @@ class ProductPostSyncService {
 
 		// update page template.
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
+		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
 		// set the collection terms.
-		if ( ! empty( $this->with_collections ) ) {
-			$term_slugs = array_map( fn( $term ) => $term->name, $model->product_collections->data ?? [] );
-			wp_set_post_terms( $post_id, $term_slugs, 'sc_collection' );
-		}
+		$this->syncCollections( $post_id, $model );
 
 		$this->post = get_post( $post_id );
 
 		return $this->post;
+	}
+
+	/**
+	 * Sync the collections.
+	 *
+	 * @param int                    $post_id The post id.
+	 * @param \SureCart\Models\Model $model   The model.
+	 *
+	 * @return void
+	 */
+	protected function syncCollections( $post_id, $model ) {
+		// sanity check.
+		if ( ! isset( $model->product_collections ) || ! isset( $model->product_collections->data ) || ! is_array( $model->product_collections->data ) ) {
+			return;
+		}
+
+		// store the terms for the post.
+		$terms = array();
+
+		// Loop through the collections.
+		foreach ( $model->product_collections->data as $collection ) {
+			// sync the collection.
+			$collection->sync();
+
+			// get term by sc_id.
+			$term = $collection->term;
+
+			// error handling.
+			if ( is_wp_error( $term ) ) {
+				error_log( $term->get_error_message() );
+				continue;
+			}
+
+			// if we don't have a term id, skip.
+			if ( ! isset( $term->term_id ) || empty( $term->term_id ) ) {
+				error_log( 'Could not sync term for collection: ' . $collection->name );
+				error_log( print_r( $term, true ) );
+				continue;
+			}
+
+			// add to terms array.
+			$terms[] = (int) $term->term_id;
+		}
+
+		// set the terms.
+		wp_set_post_terms( $post_id, $terms, 'sc_collection' );
 	}
 
 	/**

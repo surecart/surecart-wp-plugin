@@ -1,12 +1,11 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-title-v2",
+	"name": "surecart/product-list-title",
 	"title": "Product Title",
 	"description": "Display the product title.",
 	"version": "1.0.0",
 	"category": "widgets",
-	"icon": "media-interactive",
 	"example": {},
 	"usesContext": ["surecart/productId"],
 	"attributes": {
@@ -49,6 +48,7 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,

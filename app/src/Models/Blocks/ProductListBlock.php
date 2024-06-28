@@ -52,16 +52,16 @@ class ProductListBlock {
 	public function parse_query() {
 		// build up the query.
 		$this->query_vars = array_filter(
-			[
+			array(
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
-				'posts_per_page'      => $this->block->context['surecart/product-list/limit'] ?? 15,
+				'posts_per_page'      => $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
 				'paged'               => $this->url->getCurrentPage(),
 				'order'               => $this->url->getArg( 'order' ),
 				'orderby'             => $this->url->getArg( 'orderby' ),
 				's'                   => $this->url->getArg( 'search' ),
-			]
+			)
 		);
 
 		// put together price query.
@@ -70,16 +70,73 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
+		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
+
+		$sc_collection = $this->url->getArg( 'sc_collection' ); // collection id from url.
+
+		$collection_ids_to_filter = array();
+
+		// handle collection id send from "sc_product_collection" shortcode.
+		if ( ! empty( $collection_id ) ) {
+			$collection_ids     = explode( ',', $collection_id );
+			$collection_ids_int = array_map( 'intval', array_filter( $collection_ids, 'is_numeric' ) ); // WP taxonomy ids.
+
+			$legacy_collection_ids = get_terms(
+				array(
+					'taxonomy'   => 'sc_collection',
+					'field'      => 'term_id',
+					'meta_query' => array(
+						array(
+							'key'     => 'sc_id',
+							'value'   => $collection_ids,
+							'compare' => 'IN',
+						),
+					),
+
+				)
+			); // platform collection ids converted to WP taxonomy ids.
+
+			$new_collection_ids = get_terms(
+				array(
+					'taxonomy'         => 'sc_collection',
+					'field'            => 'term_id',
+					'term_taxonomy_id' => $collection_ids_int,
+				)
+			); // WP taxonomy ids.
+
+			// only get the term_id.
+			$legacy_collection_ids = array_map(
+				function ( $term ) {
+					return $term->term_id;
+				},
+				$legacy_collection_ids
+			);
+
+			// only get the term_id.
+			$new_collection_ids = array_map(
+				function ( $term ) {
+					return $term->term_id;
+				},
+				$new_collection_ids
+			);
+
+			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $new_collection_ids );
+		}
+
 		// handle collections query.
-		if ( ! empty( $this->url->getArg( 'sc_collection' ) ) ) {
+		if ( ! empty( $sc_collection ) ) {
+			$collection_ids_to_filter = array_merge( $collection_ids_to_filter, $sc_collection );
+		}
+
+		if ( ! empty( $collection_ids_to_filter ) ) {
 			$this->query_vars['tax_query'] =
-				[
-					[
+				array(
+					array(
 						'taxonomy' => 'sc_collection',
 						'field'    => 'term_id',
-						'terms'    => array_map( 'intval', $this->url->getArg( 'sc_collection' ) ?? [] ),
-					],
-				];
+						'terms'    => array_map( 'intval', $collection_ids_to_filter ?? array() ),
+					),
+				);
 		}
 
 		// handle featured.
@@ -145,6 +202,7 @@ class ProductListBlock {
 	/**
 	 * Get the query attribute.
 	 *
+	 * @param string $key The key.
 	 * @return \WP_Query
 	 */
 	public function __get( $key ) {
@@ -159,12 +217,12 @@ class ProductListBlock {
 
 		if ( 'pagination_links' === $key ) {
 			return array_map(
-				function( $i ) {
-					return [
+				function ( $i ) {
+					return array(
 						'href'    => $this->url->addPageArg( $i )->url(),
 						'name'    => $i,
 						'current' => (int) $i === (int) $this->paged,
-					];
+					);
 				},
 				range( 1, $this->max_num_pages )
 			);
@@ -172,7 +230,7 @@ class ProductListBlock {
 
 		if ( 'products' === $key ) {
 			return array_map(
-				function( $post ) {
+				function ( $post ) {
 					return sc_get_product( $post );
 				},
 				$this->query->posts
