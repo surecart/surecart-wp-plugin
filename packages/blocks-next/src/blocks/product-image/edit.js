@@ -48,14 +48,12 @@ export default ({
 			[dimension]: parsedValue < 0 ? '0' : nextValue,
 		});
 	};
-	let { record: product } = useEntityRecord(
-		'postType',
-		'sc_product',
-		productId
-	);
-	product = product?.meta?.product;
-	const alt = product?.featured_media?.alt || '';
-	const title = product?.featured_media?.title || '';
+
+	const {
+		record: {
+			meta: { product },
+		},
+	} = useEntityRecord('postType', 'sc_product', productId);
 
 	return (
 		<>
@@ -161,13 +159,19 @@ export default ({
 				/>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<img
-					src={product?.featured_image?.src}
-					alt={alt}
-					{...(title ? { title } : {})}
-				/>
-			</div>
+			<figure {...blockProps}>
+				{product?.preview_image?.src ? (
+					<img {...product?.preview_image} />
+				) : (
+					<img
+						src={
+							window.scData.plugin_url + '/images/placeholder.jpg'
+						}
+						width="1180"
+						height="1180"
+					/>
+				)}
+			</figure>
 		</>
 	);
 };
