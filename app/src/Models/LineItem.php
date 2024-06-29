@@ -91,7 +91,7 @@ class LineItem extends Model {
 			'price_old_version'      => __( 'Price has changed', 'surecart' ),
 			'variant_missing'        => __( 'Options no longer available', 'surecart' ),
 			'variant_old_version'    => __( 'Price has changed', 'surecart' ),
-			'variant_gone'           => __( 'Options no longer available', 'surecart' ),
+			'variant_gone'           => __( 'Item no longer available', 'surecart' ),
 			'out_of_stock'           => __( 'Out of stock', 'surecart' ),
 			'exceeds_purchase_limit' => __( 'Exceeds purchase limit', 'surecart' ),
 		);
