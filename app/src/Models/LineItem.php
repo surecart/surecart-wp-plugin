@@ -87,7 +87,7 @@ class LineItem extends Model {
 
 		// translations for purchaseable status.
 		$translations = array(
-			'price_gone'             => __( 'No longer valid', 'surecart' ),
+			'price_gone'             => __( 'No longer available', 'surecart' ),
 			'price_old_version'      => __( 'Price has changed', 'surecart' ),
 			'variant_missing'        => __( 'Options no longer available', 'surecart' ),
 			'variant_old_version'    => __( 'Price has changed', 'surecart' ),

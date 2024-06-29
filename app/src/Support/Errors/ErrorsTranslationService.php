@@ -93,7 +93,7 @@ class ErrorsTranslationService {
 
 		if ( 'line_items' === $attribute && 'not_purchasable' === $type && ! empty( $options['purchasable_statuses'] ) ) {
 			$line_item_translations = array(
-				'price_gone'             => __( 'The price of one of the items on cart is no longer valid. Please review and try again.', 'surecart' ),
+				'price_gone'             => __( 'One or more items in your cart is no longer available. Please update your cart and try again.', 'surecart' ),
 				'price_old_version'      => __( 'The price of one of the items on cart has changed. Please review and try again.', 'surecart' ),
 				'variant_missing'        => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
 				'variant_gone'           => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
