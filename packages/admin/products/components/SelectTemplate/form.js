@@ -31,22 +31,26 @@ export default function PostTemplateForm({
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
-			const templates = (getEntityRecords(...selectorArgs) || []).filter(
-				(template) => {
+			const templates = getEntityRecords(...selectorArgs) || [];
+			const { type, slug } = post;
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: post?.slug ? `single-${type}-${slug}` : `single-${type}`,
+			});
+			return {
+				templates: templates.filter((template) => {
 					const slug = template?.slug || '';
 					return slug.includes('sc-products');
-				}
-			);
-			return {
-				templates,
-				defaultTemplate: templates.find(
-					(template) => template.theme === 'surecart/surecart'
+				}),
+				defaultTemplate: select(coreStore).getEditedEntityRecord(
+					'postType',
+					'wp_template',
+					defaultTemplateId
 				),
 				canCreate: canUser('create', 'templates'),
 				canEdit: canUser('create', 'templates'),
 			};
 		},
-		[]
+		[post?.slug, post?.type]
 	);
 
 	const options = (templates ?? [])
@@ -103,7 +107,13 @@ export default function PostTemplateForm({
 				label={__('Template')}
 				value={template?.slug}
 				options={[
-					{ value: '', label: __('Default template', 'surecart') },
+					{
+						value: '',
+						label:
+							defaultTemplate?.title?.rendered ||
+							defaultTemplate?.title ||
+							defaultTemplate?.slug,
+					},
 					...options,
 				]}
 				onChange={(slug) => {
@@ -138,6 +148,7 @@ export default function PostTemplateForm({
 				<PostTemplateCreateModal
 					template={defaultTemplate}
 					product={product}
+					post={post}
 					updateProduct={updateProduct}
 					onClose={() => setIsCreateModalOpen(false)}
 				/>

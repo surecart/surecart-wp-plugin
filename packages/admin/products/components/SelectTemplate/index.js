@@ -25,42 +25,34 @@ export default function PostTemplate({ product, updateProduct, post }) {
 	// get the assigned template.
 	const template = useSelect(
 		(select) => {
-			const currentTemplate = post?.template;
-			const { type, slug } = product;
+			const { type, slug, template: currentTemplate } = post || {};
+			const { getEntityRecords } = select(coreStore);
+			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const templates = getEntityRecords(...selectorArgs) || [];
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: post?.slug ? `single-${type}-${slug}` : `single-${type}`,
+			});
 
 			// have have set a current template with a slug.
 			if (currentTemplate) {
-				const templateWithSameSlug = select(coreStore)
-					.getEntityRecords('postType', 'wp_template', {
-						per_page: -1,
-					})
-					?.find((template) => template.slug === currentTemplate);
-
-				if (!templateWithSameSlug) {
-					return templateWithSameSlug;
-				}
-
-				return select(coreStore).getEditedEntityRecord(
-					'postType',
-					'wp_template',
-					templateWithSameSlug.id
+				const templateWithSameSlug = templates?.find(
+					(template) => template.slug === currentTemplate
 				);
+
+				if (templateWithSameSlug?.id) {
+					return select(coreStore).getEditedEntityRecord(
+						'postType',
+						'wp_template',
+						templateWithSameSlug.id
+					);
+				}
 			}
 
-			let slugToCheck;
-			// In `draft` status we might not have a slug available, so we use the `single`
-			// post type templates slug(ex page, single-post, single-product etc..).
-			// Pages do not need the `single` prefix in the slug to be prioritized
-			// through template hierarchy.
-			if (slug) {
-				slugToCheck = `single-${type}-${slug}`;
-			} else {
-				slugToCheck = `single-${type}`;
-			}
-
-			return select(coreStore).getDefaultTemplateId({
-				slug: slugToCheck,
-			});
+			return select(coreStore).getEditedEntityRecord(
+				'postType',
+				'wp_template',
+				defaultTemplateId
+			);
 		},
 		[post?.template, post?.slug]
 	);
@@ -155,7 +147,7 @@ function PostTemplateToggle({ isOpen, onClick, template }) {
 			}
 			onClick={onClick}
 		>
-			{template?.title ?? __('Default template')}
+			{template?.title}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
