@@ -1,4 +1,4 @@
-import { store as blockEditorStore, getBlocks } from '@wordpress/block-editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import { select } from '@wordpress/data';
 import {
 	createBlock,

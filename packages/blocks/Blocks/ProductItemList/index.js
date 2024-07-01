@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { grid as icon } from '@wordpress/icons';
-import { BlockReplacer } from './BlockReplacer';
+import { BlockReplacer } from '../../components/BlockReplacer';
 /**
  * Internal dependencies
  */

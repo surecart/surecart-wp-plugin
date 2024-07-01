@@ -600,7 +600,36 @@ class ProductPostTypeService {
 					'compare' => '=',
 				);
 			}
+			if ( ! empty( $request['collection_id'] ) ) {
+				$legacy_collection_ids = get_terms(
+					array(
+						'taxonomy'   => 'sc_collection',
+						'field'      => 'term_id',
+						'meta_query' => array(
+							array(
+								'key'     => 'sc_id',
+								'value'   => $request['collection_id'],
+								'compare' => '=',
+							),
+						),
+	
+					)
+				); // platform collection ids converted to WP taxonomy ids.
+	
+				// only get the term_id.
+				$legacy_collection_ids = array_map(
+					function ( $term ) {
+						return $term->term_id;
+					},
+					$legacy_collection_ids
+				);
 
+				$args['tax_query'][] = array(
+					'taxonomy' => 'sc_collection',
+					'field'    => 'term_id',
+					'terms'    => array_map( 'intval', $legacy_collection_ids ?? array() ),
+				);
+			}
 			$args['post_status'] = $request['post_status'] ?? [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
 
 			$args['no_found_rows'] = true;
