@@ -2,12 +2,9 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
-import { ScSkeleton } from '@surecart/components-react';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { useState } from 'react';
-import { ScBlockUi } from '@surecart/components-react';
 import AddImage from './AddImage';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
 import Error from '../../../components/Error';
@@ -20,29 +17,15 @@ const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
 	ADD_IMAGE_FROM_URL: 'add_image_from_url',
 };
-export default ({ post, productId, updateProduct }) => {
-	const { saveEntityRecord } = useDispatch(coreStore);
+export default ({ post }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
 	const { editEntityRecord } = useDispatch(coreStore);
-	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const onDragStop = (oldIndex, newIndex) => {
 		const gallery = arrayMove(post?.gallery || [], oldIndex, newIndex);
 		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
-	};
-
-	const saveProductMedia = async (media) => {
-		return saveEntityRecord(
-			'surecart',
-			'product-media',
-			{
-				product_id: productId,
-				media_id: media.id,
-			},
-			{ throwOnError: true }
-		);
 	};
 
 	const onRemoveMedia = (id) => {
