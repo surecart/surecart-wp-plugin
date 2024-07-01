@@ -273,10 +273,10 @@ add_action(
 		);
 
 		// Cart side drawer.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/cart-drawer/index.asset.php';
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/cart/index.asset.php';
 		wp_register_script_module(
-			'@surecart/cart-drawer',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart-drawer/index.js',
+			'@surecart/cart',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart/index.js',
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
@@ -313,7 +313,7 @@ add_action(
 					'import' => 'dynamic',
 				],
 				array(
-					'id'     => '@surecart/cart-drawer',
+					'id'     => '@surecart/cart',
 					'import' => 'dynamic',
 				),
 			),

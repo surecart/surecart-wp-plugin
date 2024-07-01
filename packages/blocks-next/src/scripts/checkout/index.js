@@ -11,12 +11,11 @@ import {
 	removeCheckoutLineItem,
 	handleCouponApply,
 } from '@surecart/checkout-service';
-import {
-	processCheckoutEvents,
-	processCartViewEvent,
-} from '@surecart/checkout-events';
+import { processCheckoutEvents } from '@surecart/checkout-events';
 
-const { actions: cartDrawerActions } = store('surecart/cart-drawer');
+// const { actions: cartDrawerActions } = store('surecart/cart');
+const { __, sprintf, _n } = wp.i18n;
+const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
 const getCheckoutData = (mode = 'live', formId) => {
@@ -42,7 +41,6 @@ const isNotKeySubmit = (e) => {
  */
 const { state, actions } = store('surecart/checkout', {
 	state: {
-		openCartSidebar: false,
 		loading: false,
 		error: null,
 		promotionCode: '',
@@ -86,9 +84,6 @@ const { state, actions } = store('surecart/checkout', {
 		},
 		get hasBumpAmount() {
 			return !!state?.checkout?.bump_amount;
-		},
-		get isCartOpen() {
-			return !!state.openCartSidebar;
 		},
 		get checkoutLineItems() {
 			return state.checkout?.line_items?.data || [];
@@ -134,6 +129,20 @@ const { state, actions } = store('surecart/checkout', {
 			const { cartMenuAlwaysShown } = getContext();
 			return state.getItemsCount > 0 || cartMenuAlwaysShown;
 		},
+
+		get getItemsCountAriaLabelByCount() {
+			const count = state.getItemsCount;
+			return sprintf(
+				_n(
+					/* translators: %d: number of items in the cart */
+					'Total of %d item in the cart',
+					'Total of %d items in the cart',
+					count,
+					'surecart'
+				),
+				count
+			);
+		},
 	},
 
 	callbacks: {
@@ -165,25 +174,6 @@ const { state, actions } = store('surecart/checkout', {
 	},
 
 	actions: {
-		toggleCartSidebar(e = null) {
-			// For Tab key press, do nothing.
-			if (e && e.key === 'Tab') {
-				return;
-			}
-
-			e?.preventDefault();
-			const wasOpen = state.openCartSidebar;
-			state.openCartSidebar = !state?.openCartSidebar || false;
-
-			// Trigger cart view event.
-			if (!wasOpen && state.openCartSidebar) {
-				processCartViewEvent(state.checkout);
-			}
-
-			// Toggle the cart dialog.
-			cartDrawerActions.toggle();
-		},
-
 		toggleDiscountInput(e) {
 			// check if keydown event and not enter/space key.
 			if (isNotKeySubmit(e)) {

@@ -52,5 +52,5 @@
 		"file:../../styles/quantity-selector.css",
 		"file:./style-index.css"
 	],
-	"viewScriptModule": ["@surecart/cart-drawer"]
+	"viewScriptModule": ["@surecart/cart"]
 }

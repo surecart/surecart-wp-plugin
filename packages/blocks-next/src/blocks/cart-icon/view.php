@@ -11,8 +11,8 @@
 		)
 	);
 	?>
-	data-wp-on--click="surecart/checkout::actions.toggleCartSidebar"
-	data-wp-on--keydown="surecart/checkout::actions.toggleCartSidebar"
+	data-wp-on--click="surecart/cart::actions.toggle"
+	data-wp-on--keydown="surecart/cart::actions.toggle"
 	tabindex="0"
 >
 	<div class="sc-cart-container">
@@ -20,10 +20,10 @@
 			<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
 		</div>
 
-		<span aria-label="<?php esc_attr_e( 'Total items in cart - ', 'surecart' ); ?>"></span>
 		<span
 			class="sc-cart-count"
 			data-wp-text="state.getItemsCount"
+			data-wp-bind--aria-label="state.getItemsCountAriaLabelByCount"
 		>
 		</span>
 	</div>

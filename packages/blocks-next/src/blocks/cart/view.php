@@ -16,7 +16,8 @@
 >
 	<dialog
 		class="sc-drawer"
-		data-wp-on--click="surecart/cart-drawer::actions.closeOverlay"
+		data-wp-on--click="surecart/cart::actions.closeOverlay"
+		aria-labelledby="sc-cart-title"
 	>
 		<div class="sc-drawer__wrapper">
 			<!-- Cart alert -->

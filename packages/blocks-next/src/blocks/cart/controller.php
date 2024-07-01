@@ -12,7 +12,6 @@ wp_interactivity_state(
 		'discountInputOpen'    => false,
 		'discountCode'         => '',
 		'loading'              => true,
-		'openCartSidebar'      => false,
 		'checkout'             => null,
 
 		// derived states.

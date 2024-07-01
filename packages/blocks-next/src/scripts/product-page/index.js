@@ -8,6 +8,7 @@ import { store, getContext } from '@wordpress/interactivity';
  */
 import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
+const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
@@ -250,7 +251,7 @@ const { state, actions } = store('surecart/product-page', {
 				context.busy = true;
 				const checkout = await addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
-				checkoutActions.toggleCartSidebar(null);
+				cartActions.toggle();
 			} catch (e) {
 				console.error(e);
 				throw e; // Re-throw the caught error

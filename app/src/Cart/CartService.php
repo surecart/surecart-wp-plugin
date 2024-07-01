@@ -25,8 +25,10 @@ class CartService {
 					\SureCart::assets()->enqueueComponents();
 
 					// Enqueue the cart drawer script modules.
-					wp_enqueue_script_module( '@surecart/cart-drawer' );
+					wp_enqueue_script_module( '@surecart/cart' );
 					wp_enqueue_script_module( '@surecart/checkout' );
+
+					// TODO: Remove this once we can add the module via interactivity dependency.
 					wp_enqueue_script( 'wp-a11y' );
 				}
 			);
@@ -202,7 +204,7 @@ class CartService {
 		ob_start();
 		?>
 
-		<!-- Render the cart-drawer -->
+		<!-- Render the cart. -->
 		<?php echo do_blocks( $template->content ); ?>
 
 		<!-- Render floating cart icon -->
