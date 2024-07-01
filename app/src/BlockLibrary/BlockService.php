@@ -133,4 +133,16 @@ class BlockService {
 	public function productPriceChoicesMigration( $attributes = array(), $block = null ) {
 		return new ProductPriceChoicesMigrationService( $attributes, $block );
 	}
+
+	/**
+	 * Get the product variant migration service.
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
+	 *
+	 * @return ProductVariantsMigrationService
+	 */
+	public function productVariantsMigration( $attributes = array(), $block = null ) {
+		return new ProductVariantsMigrationService( $attributes, $block );
+	}
 }
