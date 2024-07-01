@@ -34,10 +34,7 @@ export default function PostTemplateForm({
 			const templates = (getEntityRecords(...selectorArgs) || []).filter(
 				(template) => {
 					const slug = template?.slug || '';
-					return (
-						slug.includes('sc_product') ||
-						slug.includes('sc-products')
-					);
+					return slug.includes('sc-products');
 				}
 			);
 			return {
@@ -104,8 +101,11 @@ export default function PostTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={template?.slug || 'surecart/surecart//single-sc_product'}
-				options={options}
+				value={template?.slug}
+				options={[
+					{ value: '', label: __('Default template', 'surecart') },
+					...options,
+				]}
 				onChange={(slug) => {
 					editEntityRecord(
 						'postType',

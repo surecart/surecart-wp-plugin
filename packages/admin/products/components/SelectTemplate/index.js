@@ -26,6 +26,7 @@ export default function PostTemplate({ product, updateProduct, post }) {
 	const template = useSelect(
 		(select) => {
 			const currentTemplate = post?.template;
+			const { type, slug } = product;
 
 			// have have set a current template with a slug.
 			if (currentTemplate) {
@@ -46,17 +47,20 @@ export default function PostTemplate({ product, updateProduct, post }) {
 				);
 			}
 
-			const slugToCheck = post?.slug
-				? `single-sc_product-${post?.slug}`
-				: 'single-sc_product';
-			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+			let slugToCheck;
+			// In `draft` status we might not have a slug available, so we use the `single`
+			// post type templates slug(ex page, single-post, single-product etc..).
+			// Pages do not need the `single` prefix in the slug to be prioritized
+			// through template hierarchy.
+			if (slug) {
+				slugToCheck = `single-${type}-${slug}`;
+			} else {
+				slugToCheck = `single-${type}`;
+			}
+
+			return select(coreStore).getDefaultTemplateId({
 				slug: slugToCheck,
 			});
-			return select(coreStore).getEditedEntityRecord(
-				'postType',
-				'wp_template',
-				defaultTemplateId
-			);
 		},
 		[post?.template, post?.slug]
 	);
