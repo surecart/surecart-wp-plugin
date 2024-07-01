@@ -43,7 +43,7 @@ export default ({
 
 		return collections.slice(0, count).map((collection) => ({
 			...collection,
-			'surecart/productCollectionBadge/name': collection.name,
+			'surecart/productCollectionTag/name': collection.name,
 		}));
 	};
 

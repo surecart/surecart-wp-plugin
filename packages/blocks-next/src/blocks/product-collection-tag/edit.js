@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
 
 export default ({
-	context: { 'surecart/productCollectionBadge/name': name },
+	context: { 'surecart/productCollectionTag/name': name },
 	__unstableLayoutClassNames,
 }) => {
 	const blockProps = useBlockProps({
