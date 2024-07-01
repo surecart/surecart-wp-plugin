@@ -29,6 +29,10 @@
 			"type": "number",
 			"default": 5
 		},
+		"hide_empty": {
+			"type": "boolean",
+			"default": false
+		},
 		"id": {
 			"type": "string"
 		}
