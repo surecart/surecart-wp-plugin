@@ -180,15 +180,6 @@ class Checkout extends Model {
 	}
 
 	/**
-	 * Get the human discount redeemable status attribute.
-	 *
-	 * @return string
-	 */
-	public function getHumanDiscountRedeemableStatusAttribute() {
-		return sc_get_human_discount_redeemable_status( $this->discount->redeemable_status ?? '' );
-	}
-
-	/**
 	 * Set attributes during write actions.
 	 *
 	 * @return void

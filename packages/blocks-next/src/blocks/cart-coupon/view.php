@@ -58,7 +58,7 @@
 				<div class="sc-line-item__price-description" data-wp-bind--hidden="state.discountIsRedeemable">
 					<div class="sc-coupon__status">
 						<?php echo wp_kses( SureCart::svg()->get( 'alert-triangle', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
-						<span data-wp-text="state.checkout.human_discount_redeemable_status"></span>
+						<span data-wp-text="state.checkout.discount.redeemable_display_status"></span>
 					</div>
 				</div>
 			</div>

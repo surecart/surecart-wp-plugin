@@ -1,15 +1,32 @@
 <?php
 
-if ( ! function_exists( 'sc_get_human_discount_redeemable_status' ) ) {
+namespace SureCart\Models;
+
+/**
+ * Discount model
+ */
+class Discount extends Model {
 	/**
-	 * Get the human discount redeemable status.
+	 * Rest API endpoint
 	 *
-	 * @param string $status The status.
+	 * @var string
+	 */
+	protected $endpoint = 'discounts';
+
+	/**
+	 * Object name
+	 *
+	 * @var string
+	 */
+	protected $object_name = 'discount';
+
+	/**
+	 * Get the human discount redeemable status attribute.
 	 *
 	 * @return string
 	 */
-	function sc_get_human_discount_redeemable_status( $status ) {
-		switch ( $status ) {
+	public function getRedeemableDisplayStatusAttribute() {
+		switch ( $this->redeemable_status ) {
 			case 'invalid':
 				return __( 'Not valid', 'surecart' );
 			case 'expired':
