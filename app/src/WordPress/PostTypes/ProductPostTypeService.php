@@ -577,7 +577,9 @@ class ProductPostTypeService {
 					'compare' => '=',
 				);
 			}
-			$args['post_status']   = array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' );
+
+			$args['post_status'] = $request['post_status'] ?? [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
+
 			$args['no_found_rows'] = true;
 		}
 		return $args;

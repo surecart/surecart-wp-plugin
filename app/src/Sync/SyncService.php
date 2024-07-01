@@ -60,4 +60,13 @@ class SyncService {
 	public function customers() {
 		return $this->app->resolve( 'surecart.sync.customers' );
 	}
+
+	/**
+	 * Get the store sync service.
+	 *
+	 * @return StoreSyncService
+	 */
+	public function store() {
+		return $this->app->resolve( 'surecart.sync.store' );
+	}
 }

@@ -6,15 +6,14 @@
 	"title": "Template",
 	"description": "Displays products list.",
 	"version": "1.0.0",
-	"category": "surecart-product-page",
-	"icon": "media-interactive",
+	"category": "sc-product-list",
 	"example": {
 		"attributes": {}
 	},
 	"allowedBlocks": [
 		"surecart/product-image",
-		"surecart/product-title-v2",
-		"surecart/product-price-v2",
+		"surecart/product-list-title",
+		"surecart/product-list-price",
 		"surecart/product-scratch-price",
 		"surecart/product-description-v2",
 		"core/group"
@@ -24,7 +23,8 @@
 		"surecart/product-list/block_id",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
-		"surecart/product-list/ids"
+		"surecart/product-list/ids",
+		"surecart/product-list/collection_id"
 	],
 	"supports": {
 		"interactivity": true,
