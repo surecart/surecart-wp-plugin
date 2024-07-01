@@ -13,7 +13,7 @@ use SureCart\Support\Currency;
 /**
  * Price model
  */
-class Product extends Model implements PageModel, Syncable {
+class Product extends Model implements PageModel {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
@@ -56,23 +56,18 @@ class Product extends Model implements PageModel, Syncable {
 	/**
 	 * Immediately sync with a post.
 	 *
-	 * @param array $args Arguments.
-	 *                  - with_collections: bool Whether to sync with collections.
-	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function sync( $args = [] ) {
-		$args = wp_parse_args(
-			$args,
-			array(
-				'with_collections' => false,
-			)
-		);
+	public function sync() {
+		// sync the product.
+		$synced = \SureCart::sync()->product()->sync( $this );
 
-		\SureCart::sync()
+		// on success, cancel any queued syncs.
+		if ( ! is_wp_error( $synced ) ) {
+			\SureCart::sync()
 			->product()
-			->withCollections( $args['with_collections'] )
-			->sync( $this );
+			->cancel( $this );
+		}
 
 		return $this;
 	}
@@ -112,22 +107,8 @@ class Product extends Model implements PageModel, Syncable {
 	 * @return \SureCart\Background\QueueService|false Whether the sync was queued.
 	 */
 	protected function maybeQueueSync() {
-		// we don't have an updated_at.
-		if ( empty( $this->updated_at ) ) {
-			return false;
-		}
-
-		// we don't have a post.
-		if ( empty( $this->post ) ) {
-			return false;
-		}
-
-		// we don't have a product updated_at.
-		if ( empty( $this->post->product->updated_at ) ) {
-			return false;
-		}
-
-		if ( $this->updated_at <= $this->post->product->updated_at ) {
+		// already in sync.
+		if ( $this->synced ) {
 			return false;
 		}
 
@@ -230,7 +211,38 @@ class Product extends Model implements PageModel, Syncable {
 	 * @return \SureCart\Models\Product
 	 */
 	protected function findSyncable( $id ) {
-		return $this->withSyncableExpands()->find( $id );
+		return $this->withSyncableExpands()->where( [ 'cached' => false ] )->find( $id );
+	}
+
+	/**
+	 * Get the is synced attribute.
+	 *
+	 * @return bool
+	 */
+	protected function getSyncedAttribute() {
+		// we don't have a post.
+		if ( empty( $this->post ) ) {
+			return false;
+		}
+
+		// the post is trashed.
+		if ( 'trash' === $this->post->post_status ) {
+			return false;
+		}
+
+		// this doesn't have updated at.
+		if ( empty( $this->updated_at ) ) {
+			return false;
+		}
+
+		// get the product.
+		$product = get_post_meta( $this->post->ID, 'product', true );
+		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
+			return false;
+		}
+
+		// sync if updated at is different.
+		return $this->updated_at === $product->updated_at;
 	}
 
 	/**

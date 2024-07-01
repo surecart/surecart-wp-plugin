@@ -31,6 +31,8 @@ class ProductTest extends SureCartUnitTestCase
 
 	public function test_can_create()
 	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
 
@@ -53,6 +55,8 @@ class ProductTest extends SureCartUnitTestCase
 
 	public function test_can_update()
 	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
 
@@ -73,6 +77,8 @@ class ProductTest extends SureCartUnitTestCase
 	}
 
 	public function test_can_delete() {
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
 
@@ -103,6 +109,8 @@ class ProductTest extends SureCartUnitTestCase
 
 	public function test_can_create_price()
 	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
 
@@ -131,6 +139,8 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group product
 	 */
 	public function test_has_images_from_featured_product_media() {
+		$this->shouldSyncProduct('test');
+
 		$product = new Product([
 			'id' => 'test',
 			'featured_product_media' => [
@@ -168,6 +178,8 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group product
 	 */
 	public function test_has_images_from_product_media_url() {
+		$this->shouldSyncProduct('test');
+
 		$product = new Product([
 			'id' => 'test',
 			'featured_product_media' => [
@@ -188,6 +200,8 @@ class ProductTest extends SureCartUnitTestCase
 	 * @group product
 	 */
 	public function test_has_featured_image_from_attachment() {
+		$this->shouldSyncProduct('test');
+
 		$product = new Product([
 			'id' => 'test',
 			'name' => 'test',
