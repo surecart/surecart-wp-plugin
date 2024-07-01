@@ -1,7 +1,8 @@
 /**
- * External dependencies
+ * Wordpress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { plusCircle as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -14,4 +15,5 @@ import metadata from './block.json';
  */
 registerBlockType(metadata.name, {
 	edit,
+	icon,
 });

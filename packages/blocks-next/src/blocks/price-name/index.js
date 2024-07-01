@@ -1,8 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { layout as icon } from '@wordpress/icons';
 import { registerBlockType } from '@wordpress/blocks';
+import { postContent as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -14,6 +14,6 @@ import metadata from './block.json';
  * Every block starts by registering a new block type definition.
  */
 registerBlockType(metadata.name, {
-	icon,
 	edit,
+	icon,
 });

@@ -5,9 +5,10 @@
 	"title": "Price Setup Fee",
 	"description": "Displays the setup fee of a price.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
+	"category": "surecart-product-page",
+	"icon": "money-alt",
 	"usesContext": ["surecart/priceId", "surecart/price"],
+	"ancestor": ["surecart/product-price-choice-template"],
 	"supports": {
 		"interactivity": true,
 		"color": {
@@ -22,6 +23,7 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,

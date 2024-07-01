@@ -4,3 +4,23 @@
 		color: inherit;
 	}
 }
+
+.wp-block-surecart-product-price-choice-template {
+	container-type: inline-size;
+	.wp-block-group.is-vertical.is-content-justification-right {
+		text-align: right;
+	}
+}
+
+@container (max-width: 320px) {
+	.wp-block-surecart-product-price-choice-template {
+		.wp-block-group.is-vertical.is-content-justification-right {
+			align-items: flex-start;
+			width: 100%;
+			text-align: left;
+		}
+		> .wp-block-group.is-content-justification-space-between.is-nowrap.is-layout-flex {
+			flex-direction: column;
+		}
+	}
+}

@@ -5,7 +5,7 @@
 	"title": "Trial",
 	"description": "Displays the currently selected price trial.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "clock",
 	"ancestor": ["surecart/product-page"],
 	"example": {
@@ -24,7 +24,8 @@
 		},
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true
+			"lineHeight": true,
+			"textAlign": true
 		}
 	},
 	"textdomain": "surecart",

@@ -5,7 +5,7 @@
 	"title": "Custom Amount",
 	"description": "Displays the currently selected price custom amount.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "money-alt",
 	"ancestor": ["surecart/product-page"],
 	"example": {
@@ -45,7 +45,8 @@
 		},
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true
+			"lineHeight": true,
+			"textAlign": true
 		}
 	},
 	"textdomain": "surecart",

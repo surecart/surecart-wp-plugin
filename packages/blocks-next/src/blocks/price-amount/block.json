@@ -5,9 +5,10 @@
 	"title": "Price Amount",
 	"description": "Displays amount of a price.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
+	"category": "surecart-product-page",
 	"usesContext": ["surecart/priceId", "surecart/price"],
+	"ancestor": ["surecart/product-price-choice-template"],
+	"icon": "money-alt",
 	"supports": {
 		"interactivity": true,
 		"color": {
@@ -22,6 +23,7 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,
@@ -31,7 +33,8 @@
 			"__experimentalDefaultControls": {
 				"fontSize": true,
 				"fontAppearance": true,
-				"textTransform": true
+				"textTransform": true,
+				"textAlign": true
 			}
 		}
 	},

@@ -1,4 +1,6 @@
 <?php
+use SureCart\Models\Blocks\ProductListBlock;
+
 // Set the intitial state used in SSR.
 wp_interactivity_state(
 	'surecart/product-list',
@@ -8,8 +10,12 @@ wp_interactivity_state(
 	]
 );
 
-// TODO: change to snake_case.
 $block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
+
+// For Analytics.
+$controller = new ProductListBlock( $block );
+$query      = $controller->query();
+$products   = $query->products;
 
 // return the view.
 return 'file:./view.php';

@@ -5,7 +5,7 @@
 	"title": "Scratch Price",
 	"description": "Display the product scratch price.",
 	"version": "1.0.0",
-	"category": "surecart",
+	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"example": {},
 	"usesContext": ["surecart/productId"],
@@ -19,6 +19,7 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,

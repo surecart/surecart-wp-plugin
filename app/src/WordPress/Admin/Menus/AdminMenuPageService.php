@@ -114,18 +114,6 @@ class AdminMenuPageService {
 			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
 
-		global $current_screen;
-
-		$base      = $current_screen->base;
-		$post_type = $current_screen->post_type;
-		$taxonomy  = $current_screen->taxonomy;
-
-		if ( ( 'edit-tags' === $base && 'sc_product' === $post_type ) || ( 'term' === $base && 'sc_product' === $post_type ) ) {
-			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			$submenu_file = "edit-tags.php?taxonomy=$taxonomy&post_type=sc_product";
-			return 'sc-dashboard';
-		}
-
 		return $file;
 	}
 
@@ -202,11 +190,10 @@ class AdminMenuPageService {
 			'checkouts'               => in_array( $_GET['page'] ?? '', array( 'sc-checkouts' ) ) ? \add_submenu_page( $this->slug, __( 'Checkouts', 'surecart' ), '↳ ' . __( 'Add New', 'surecart' ), 'edit_sc_orders', 'sc-checkouts', '__return_false' ) : null,
 			'abandoned'               => in_array( $_GET['page'] ?? '', array( 'sc-orders', 'sc-abandoned-checkouts', 'sc-checkouts' ), true ) ? \add_submenu_page( $this->slug, __( 'Abandoned', 'surecart' ), '↳ ' . __( 'Abandoned', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-checkouts', '__return_false' ) : null,
 			'products'                => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),
-			'product-collections'     => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_posts', 'edit-tags.php?taxonomy=sc_collection&post_type=sc_product', '' ) : null,
+			'product-collections'     => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Product Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ) : null,
 			'bumps'                   => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ) : null,
 			'upsells'                 => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Upsells', 'surecart' ), '↳ ' . __( 'Upsells', 'surecart' ) . '<span class="awaiting-mod" style="background-color: rgba(255,255,255,0.1);">' . esc_html__( 'Beta', 'surecart' ) . '</span>', 'edit_sc_products', 'sc-upsell-funnels', '__return_false' ) : null,
 			'product-groups'          => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ) : null,
-			'tax-categories'          => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Tax Categories', 'surecart' ), '↳ ' . __( 'Tax Categories', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ) : null,
 			'coupons'                 => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
 			'licenses'                => ! empty( $entitlements->licensing ) ? \add_submenu_page( $this->slug, __( 'Licenses', 'surecart' ), __( 'Licenses', 'surecart' ), 'edit_sc_products', 'sc-licenses', '__return_false' ) : null,
 			'subscriptions'           => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),

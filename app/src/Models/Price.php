@@ -3,12 +3,13 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasProduct;
+use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
-class Price extends Model {
+class Price extends Model implements Syncable {
 	use HasProduct;
 
 	/**
@@ -105,7 +106,7 @@ class Price extends Model {
 	 *
 	 * @return void
 	 */
-	protected function sync( $args = [] ) {
+	public function sync( $args = [] ) {
 		$args = wp_parse_args(
 			$args,
 			array(

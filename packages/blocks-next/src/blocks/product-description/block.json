@@ -5,8 +5,7 @@
 	"title": "Product Description",
 	"description": "Display the product description.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
+	"category": "surecart-product-page",
 	"ancestor": ["surecart/product-page"],
 	"attributes": {
 		"textAlign": {
@@ -37,6 +36,7 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"textAlign": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,

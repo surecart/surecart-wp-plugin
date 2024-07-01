@@ -74,6 +74,7 @@ class LineItemTest extends SureCartUnitTestCase
 	 * @group media
 	 */
 	public function test_has_image_from_wp_gallery_media() {
+		$this->shouldSyncProduct('test2');
 		$product = new Product([
 			'id' => 'test2',
 			'name' => 'test',

@@ -6,11 +6,9 @@
 	"description": "Displays the price of a product with a choice of options.",
 	"version": "1.0.0",
 	"category": "widgets",
-	"icon": "media-interactive",
+	"icon": "money",
 	"usesContext": ["surecart/productId", "surecart/product", "surecart/price"],
-	"example": {
-		"attributes": {}
-	},
+	"ancestor": ["surecart/product-price-choices-template"],
 	"attributes": {
 		"highlight_border": {
 			"type": "string"
@@ -42,6 +40,20 @@
 			"__experimentalDefaultControls": {
 				"text": true,
 				"background": true
+			}
+		},
+		"__experimentalLayout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
 			}
 		}
 	},

@@ -7,6 +7,7 @@ use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
+use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
@@ -55,15 +56,18 @@ class Product extends Model implements PageModel {
 	/**
 	 * Immediately sync with a post.
 	 *
-	 * @param bool $with_collections Whether to sync with collections.
-	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync( $with_collections = false ) {
-		\SureCart::sync()
+	public function sync() {
+		// sync the product.
+		$synced = \SureCart::sync()->product()->sync( $this );
+
+		// on success, cancel any queued syncs.
+		if ( ! is_wp_error( $synced ) ) {
+			\SureCart::sync()
 			->product()
-			->withCollections( $with_collections )
-			->sync( $this );
+			->cancel( $this );
+		}
 
 		return $this;
 	}
@@ -103,22 +107,8 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Background\QueueService|false Whether the sync was queued.
 	 */
 	protected function maybeQueueSync() {
-		// we don't have an updated_at.
-		if ( empty( $this->updated_at ) ) {
-			return false;
-		}
-
-		// we don't have a post.
-		if ( empty( $this->post ) ) {
-			return false;
-		}
-
-		// we don't have a product updated_at.
-		if ( empty( $this->post->product->updated_at ) ) {
-			return false;
-		}
-
-		if ( $this->updated_at <= $this->post->product->updated_at ) {
+		// already in sync.
+		if ( $this->synced ) {
 			return false;
 		}
 
@@ -221,7 +211,38 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Models\Product
 	 */
 	protected function findSyncable( $id ) {
-		return $this->withSyncableExpands()->find( $id );
+		return $this->withSyncableExpands()->where( [ 'cached' => false ] )->find( $id );
+	}
+
+	/**
+	 * Get the is synced attribute.
+	 *
+	 * @return bool
+	 */
+	protected function getSyncedAttribute() {
+		// we don't have a post.
+		if ( empty( $this->post ) ) {
+			return false;
+		}
+
+		// the post is trashed.
+		if ( 'trash' === $this->post->post_status ) {
+			return false;
+		}
+
+		// this doesn't have updated at.
+		if ( empty( $this->updated_at ) ) {
+			return false;
+		}
+
+		// get the product.
+		$product = get_post_meta( $this->post->ID, 'product', true );
+		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
+			return false;
+		}
+
+		// sync if updated at is different.
+		return $this->updated_at === $product->updated_at;
 	}
 
 	/**
@@ -801,5 +822,14 @@ class Product extends Model implements PageModel {
 	 */
 	public function getLineItemImageAttribute() {
 		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) array();
+	}
+
+	/**
+	 * Get the image used in line items.
+	 *
+	 * @return object
+	 */
+	public function getPreviewImageAttribute() {
+		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'medium_large' ) : (object) [];
 	}
 }

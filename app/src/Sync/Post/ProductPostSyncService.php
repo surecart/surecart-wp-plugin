@@ -34,25 +34,6 @@ class ProductPostSyncService {
 	protected $post_type = 'sc_product';
 
 	/**
-	 * Should we sync this with collections?
-	 *
-	 * @var string
-	 */
-	protected $with_collections = false;
-
-	/**
-	 * Should we do it with collections?
-	 *
-	 * @param string $with_collections Whether to sync with collections.
-	 *
-	 * @return self
-	 */
-	public function withCollections( $with_collections = true ) {
-		$this->with_collections = $with_collections;
-		return $this;
-	}
-
-	/**
 	 * Find the post from the model.
 	 *
 	 * @param string $model_id The model id.
@@ -68,11 +49,12 @@ class ProductPostSyncService {
 		// query the post.
 		$query = new \WP_Query(
 			array(
-				'post_type'      => $this->post_type,
-				'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
-				'posts_per_page' => 1,
-				'no_found_rows'  => true,
-				'meta_query'     => array(
+				'post_type'        => $this->post_type,
+				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
+				'posts_per_page'   => 1,
+				'no_found_rows'    => true,
+				'suppress_filters' => true,
+				'meta_query'       => array(
 					array(
 						'key'   => 'sc_id',
 						'value' => $model_id, // query by model id.
@@ -214,12 +196,10 @@ class ProductPostSyncService {
 		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? 'default' ) );
 		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
+		$this->syncCollections( $post_id, $model );
+
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
-
-		if ( ! empty( $this->with_collections ) ) {
-			$this->syncCollections( $post_id, $model );
-		}
 
 		// delete existing.
 		VariantOptionValue::where( 'product_id', $model->id )->delete();
@@ -286,9 +266,7 @@ class ProductPostSyncService {
 		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
 
 		// set the collection terms.
-		if ( ! empty( $this->with_collections ) ) {
-			$this->syncCollections( $post_id, $model );
-		}
+		$this->syncCollections( $post_id, $model );
 
 		$this->post = get_post( $post_id );
 
@@ -314,17 +292,11 @@ class ProductPostSyncService {
 
 		// Loop through the collections.
 		foreach ( $model->product_collections->data as $collection ) {
-			// Check if the term exists by slug.
-			$term = term_exists( $collection->name, 'sc_collection' );
+			// sync the collection.
+			$collection->sync();
 
-			// error handling.
-			if ( is_wp_error( $term ) ) {
-				error_log( $term->get_error_message() );
-				continue;
-			}
-
-			// if the term does not exist, create it.
-			$term = ! isset( $term['term_id'] ) ? wp_insert_term( $collection->name, 'sc_collection' ) : $term;
+			// get term by sc_id.
+			$term = $collection->term;
 
 			// error handling.
 			if ( is_wp_error( $term ) ) {
@@ -333,27 +305,17 @@ class ProductPostSyncService {
 			}
 
 			// if we don't have a term id, skip.
-			if ( ! isset( $term['term_id'] ) || empty( $term['term_id'] ) ) {
-				error_log( 'Could not create term for collection: ' . $collection->name );
+			if ( ! isset( $term->term_id ) || empty( $term->term_id ) ) {
+				error_log( 'Could not sync term for collection: ' . $collection->name );
 				error_log( print_r( $term, true ) );
 				continue;
 			}
 
 			// add to terms array.
-			$terms[] = (int) $term['term_id'];
-
-			// add term meta.
-			update_term_meta( $term['term_id'], 'sc_account', \SureCart::account()->id );
-			update_term_meta( $term['term_id'], 'sc_id', $collection->id );
-			update_term_meta( $term['term_id'], '_wp_page_template', $this->convertTemplateId( $collection->template_id ?? 'default' ) );
-			update_term_meta( $term['term_id'], '_wp_page_template_part', $this->convertTemplateId( $collection->template_part_id ) );
+			$terms[] = (int) $term->term_id;
 		}
 
-		// we don't have terms, skip.
-		if ( empty( $terms ) ) {
-			return;
-		}
-
+		// set the terms.
 		wp_set_post_terms( $post_id, $terms, 'sc_collection' );
 	}
 

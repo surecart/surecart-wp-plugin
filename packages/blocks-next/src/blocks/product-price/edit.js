@@ -12,13 +12,12 @@ export default ({
 		className: 'product-price',
 	});
 
-	let { record: product } = useEntityRecord(
-		'postType',
-		'sc_product',
-		productId
-	);
+	const {
+		record: {
+			meta: { product },
+		},
+	} = useEntityRecord('postType', 'sc_product', productId);
 
-	product = product?.meta?.product;
 	return (
 		<>
 			<InspectorControls>

@@ -5,7 +5,7 @@
 	"title": "Sale Badge",
 	"description": "Display a badge if the product is currently on sale",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "tag",
 	"ancestor": ["surecart/product-page"],
 	"example": {
@@ -32,7 +32,8 @@
 		},
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true
+			"lineHeight": true,
+			"textAlign": true
 		},
 		"shadow": true,
 		"__experimentalBorder": {

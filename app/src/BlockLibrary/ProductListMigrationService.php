@@ -94,9 +94,9 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderProductList(): void {
-		$limit = $this->attributes['limit'] ?? 15;
-
-		$this->block_html .= '<!-- wp:surecart/product-list {"limit":' . $limit . '} -->';
+		$limit             = $this->attributes['limit'] ?? 15;
+		$collection_id     = wp_json_encode( $this->attributes['collection_id'] ) ?? '';
+		$this->block_html .= '<!-- wp:surecart/product-list {"limit":' . $limit . ' ,"collection_id":' . $collection_id . '} -->';
 
 		$this->renderSortFilterAndSearch();
 
@@ -197,7 +197,7 @@ class ProductListMigrationService {
 	 */
 	public function renderTitle(): void {
 		$product_title_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-title' ), JSON_FORCE_OBJECT );
-		$this->block_html   .= '<!-- wp:surecart/product-title-v2 ' . $product_title_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-list-title ' . $product_title_attrs . ' /-->';
 	}
 
 	/**
@@ -217,7 +217,7 @@ class ProductListMigrationService {
 	 */
 	public function renderPrice(): void {
 		$product_price_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-price' ), JSON_FORCE_OBJECT );
-		$this->block_html   .= '<!-- wp:surecart/product-price-v2 ' . $product_price_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-list-price ' . $product_price_attrs . ' /-->';
 	}
 
 	/**
