@@ -117,13 +117,13 @@ class ProductPostTypeService {
 		return $template;
 	}
 
-		/**
-		 * Add edit links
-		 *
-		 * @param \WP_Admin_bar $wp_admin_bar The admin bar.
-		 *
-		 * @return void
-		 */
+	/**
+	 * Add edit links
+	 *
+	 * @param \WP_Admin_bar $wp_admin_bar The admin bar.
+	 *
+	 * @return void
+	 */
 	public function addEditLink( $wp_admin_bar ) {
 		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_sc_products' ) ) {
 			return;
