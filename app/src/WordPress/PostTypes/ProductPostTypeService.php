@@ -340,7 +340,7 @@ class ProductPostTypeService {
 			return $content;
 		}
 		$product          = sc_get_product();
-		$template_part_id = ! empty( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
+		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
 		$blocks           = get_block_template( $template_part_id, 'wp_template_part' )->content;
 		$blocks           = shortcode_unautop( $blocks );
 		$blocks           = do_shortcode( $blocks );
@@ -352,6 +352,7 @@ class ProductPostTypeService {
 		global $wp_embed;
 		$blocks = $wp_embed->autoembed( $blocks );
 		$blocks = str_replace( ']]>', ']]&gt;', $blocks );
+
 		return $blocks . $content;
 	}
 
