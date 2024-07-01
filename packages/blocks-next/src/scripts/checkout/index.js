@@ -36,6 +36,15 @@ const isNotKeySubmit = (e) => {
 	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
 };
 
+const moveFocusToElement = (elementSelector) => {
+	const element = document.querySelector?.(elementSelector) || null;
+	if (element) {
+		setTimeout(() => {
+			element.focus();
+		}, 0);
+	}
+};
+
 /**
  * Checkout store.
  */
@@ -208,13 +217,8 @@ const { state, actions } = store('surecart/checkout', {
 				const context = getContext();
 				context.discountInputOpen = false;
 
-				// Move focus back to #sc-coupon-trigger element again.
-				const couponTriggerElement =
-					document.querySelector?.('#sc-coupon-trigger') || null;
-				if (couponTriggerElement) {
-					setTimeout(() => couponTriggerElement.focus(), 0);
-				}
-
+				// Move focus back to #sc-coupon-trigger button.
+				moveFocusToElement('#sc-coupon-trigger');
 				return;
 			}
 
@@ -231,7 +235,10 @@ const { state, actions } = store('surecart/checkout', {
 			e.preventDefault();
 			e.stopPropagation();
 
-			// const { ref } = getElement();
+			if (!state.promotionCode) {
+				return;
+			}
+
 			const { mode, formId } = getContext();
 			const checkout = await handleCouponApply(state.promotionCode);
 
@@ -248,24 +255,23 @@ const { state, actions } = store('surecart/checkout', {
 				state.error = '';
 				actions.setCheckout(checkout, mode, formId);
 
-				// focus the discount remove button.
-				const removeButton = document?.querySelector?.(
-					'#sc-coupon-remove-discount'
-				);
-
-				if (removeButton) {
-					setTimeout(() => removeButton.focus(), 0);
-				}
+				// Move focus back to #sc-coupon-remove-discount button.
+				moveFocusToElement('#sc-coupon-remove-discount');
 			}
 		},
 
 		removeDiscount: async () => {
-			const { mode, formId } = getContext();
+			const context = getContext();
+			const { mode, formId } = context;
 			const checkout = await handleCouponApply(null);
 
 			if (checkout) {
-				state.promotionCode = ''; //promotionCode
+				state.promotionCode = '';
+				context.discountInputOpen = false;
 				actions.setCheckout(checkout, mode, formId);
+
+				// Move focus back to #sc-coupon-trigger button.
+				moveFocusToElement('#sc-coupon-trigger');
 			}
 		},
 
