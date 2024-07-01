@@ -9,7 +9,7 @@ import { useEffect } from '@wordpress/element';
 import { newShopTemplate } from './NewShopTemplate';
 import { useEntityRecords } from '@wordpress/core-data';
 
-export const BlockReplacer = ({ clientId, blockType, attributes }) => {
+export default ({ clientId, blockType, attributes }) => {
 	const block = useSelect(
 		(select) => select(blockEditorStore).getBlock(clientId ?? ''),
 		[clientId]
