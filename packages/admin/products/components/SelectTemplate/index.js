@@ -30,7 +30,7 @@ export default function PostTemplate({ product, updateProduct, post }) {
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
 			const templates = getEntityRecords(...selectorArgs) || [];
 			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
-				slug: post?.slug ? `single-${type}-${slug}` : `single-${type}`,
+				slug: slug ? `single-${type}-${slug}` : `single-${type}`,
 			});
 
 			// have have set a current template with a slug.
