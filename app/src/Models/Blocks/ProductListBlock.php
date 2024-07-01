@@ -96,14 +96,6 @@ class ProductListBlock {
 				)
 			); // platform collection ids converted to WP taxonomy ids.
 
-			$new_collection_ids = get_terms(
-				array(
-					'taxonomy'         => 'sc_collection',
-					'field'            => 'term_id',
-					'term_taxonomy_id' => $collection_ids_int,
-				)
-			); // WP taxonomy ids.
-
 			// only get the term_id.
 			$legacy_collection_ids = array_map(
 				function ( $term ) {
@@ -112,13 +104,25 @@ class ProductListBlock {
 				$legacy_collection_ids
 			);
 
-			// only get the term_id.
-			$new_collection_ids = array_map(
-				function ( $term ) {
-					return $term->term_id;
-				},
-				$new_collection_ids
-			);
+			$new_collection_ids = [];
+
+			if ( ! empty( $collection_ids_int ) ) {
+				$new_collection_ids = get_terms(
+					array(
+						'taxonomy'         => 'sc_collection',
+						'field'            => 'term_id',
+						'term_taxonomy_id' => $collection_ids_int,
+					)
+				); // WP taxonomy ids.
+
+				// only get the term_id.
+				$new_collection_ids = array_map(
+					function ( $term ) {
+						return $term->term_id;
+					},
+					$new_collection_ids
+				);
+			}
 
 			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $new_collection_ids );
 		}
