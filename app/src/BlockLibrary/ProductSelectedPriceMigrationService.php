@@ -53,12 +53,11 @@ class ProductSelectedPriceMigrationService {
 	 * @return void
 	 */
 	public function renderSalesBadge() {
-		$sale_text        = $this->attributes['sale_text'] ?? 'Discounted';
 		$badge_attributes = array(
-			'text'  => $sale_text,
+			'text'  => $this->attributes['sale_text'] ?? __( 'Discounted', 'surecart' ),
 			'style' => array(
 				'border'     => array(
-					'radius' => '100px',
+					'radius' => '15px',
 				),
 				'typography' => array(
 					'fontSize' => '12px',
