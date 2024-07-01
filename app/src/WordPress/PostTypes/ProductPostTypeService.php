@@ -339,7 +339,8 @@ class ProductPostTypeService {
 		if ( ! empty( $content ) ) {
 			return $content;
 		}
-		$template_part_id = 'surecart/surecart//product-info'; // Get the template part ID.
+		$product          = sc_get_product();
+		$template_part_id = ! empty( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
 		$blocks           = get_block_template( $template_part_id, 'wp_template_part' )->content;
 		$blocks           = shortcode_unautop( $blocks );
 		$blocks           = do_shortcode( $blocks );
