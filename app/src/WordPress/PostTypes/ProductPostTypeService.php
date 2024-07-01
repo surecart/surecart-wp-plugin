@@ -47,7 +47,7 @@ class ProductPostTypeService {
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
 		// update edit post link to edit the product directly.
-		add_filter( 'get_edit_post_link', array( $this, 'updateEditPostLink' ), 10, 2 );
+		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
@@ -125,7 +125,12 @@ class ProductPostTypeService {
 		 * @return void
 		 */
 	public function addEditLink( $wp_admin_bar ) {
+		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_post', $product->ID ) || ! current_user_can( 'edit_sc_products ' ) ) {
+			return;
+		}
+
 		$product = sc_get_product();
+
 		if ( empty( $product ) ) {
 			return;
 		}
@@ -302,7 +307,7 @@ class ProductPostTypeService {
 	 *
 	 * @return string
 	 */
-	public function updateEditPostLink( $link, $post_id ) {
+	public function updateEditLink( $link, $post_id ) {
 		// only for our post type.
 		if ( get_post_type( $post_id ) !== $this->post_type ) {
 			return $link;
@@ -612,10 +617,10 @@ class ProductPostTypeService {
 								'compare' => '=',
 							),
 						),
-	
+
 					)
 				); // platform collection ids converted to WP taxonomy ids.
-	
+
 				// only get the term_id.
 				$legacy_collection_ids = array_map(
 					function ( $term ) {
