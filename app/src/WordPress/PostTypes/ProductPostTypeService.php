@@ -30,7 +30,6 @@ class ProductPostTypeService {
 
 		// add variation option value query to posts_where.
 		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
-		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
 
 		// ensure we always fetch with the current connected store id in case of store change.
 		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
@@ -49,6 +48,9 @@ class ProductPostTypeService {
 
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditPostLink' ), 10, 2 );
+
+		// Add edit product link to admin bar.
+		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
 
 		// when a product media is deleted, remove it from the gallery.
 		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
@@ -113,6 +115,27 @@ class ProductPostTypeService {
 		}
 
 		return $template;
+	}
+
+		/**
+		 * Add edit links
+		 *
+		 * @param \WP_Admin_bar $wp_admin_bar The admin bar.
+		 *
+		 * @return void
+		 */
+	public function addEditLink( $wp_admin_bar ) {
+		$product = sc_get_product();
+		if ( empty( $product ) ) {
+			return;
+		}
+		$wp_admin_bar->add_node(
+			[
+				'id'    => 'edit',
+				'title' => __( 'Edit Product', 'surecart' ),
+				'href'  => get_edit_post_link( $product->ID ),
+			]
+		);
 	}
 
 	/**
@@ -617,8 +640,8 @@ class ProductPostTypeService {
 				),
 				'hierarchical'      => true,
 				'public'            => true,
-				'show_ui'           => true,
-				'show_in_menu'      => true,
+				'show_ui'           => false,
+				'show_in_menu'      => false,
 				'rewrite'           => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,
