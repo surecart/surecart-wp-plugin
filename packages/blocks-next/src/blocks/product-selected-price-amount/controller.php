@@ -6,4 +6,4 @@ if ( empty( $product->initial_price ) ) {
 	return '';
 }
 
-return './view.php';
+return 'file:./view.php';
