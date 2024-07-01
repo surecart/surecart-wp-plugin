@@ -21,6 +21,32 @@ class CollectionTaxonomyService {
 	public function bootstrap() {
 		add_action( 'init', array( $this, 'register' ) );
 		add_filter( 'taxonomy_template', array( $this, 'template' ) );
+		add_filter( 'get_edit_term_link', array( $this, 'updateEditLink' ), 10, 3 );
+	}
+
+	/**
+	 * Update the edit collection link to edit the collection directly.
+	 *
+	 * @param string  $link     The link.
+	 * @param integer $term_id  The term ID.
+	 * @param string  $taxonomy The taxonomy.
+	 *
+	 * @return string
+	 */
+	public function updateEditLink( $link, $term_id, $taxonomy ) {
+		// only for our post type.
+		if ( $taxonomy !== $this->slug ) {
+			return $link;
+		}
+
+		$collection = get_term_meta( $term_id, 'collection', true );
+
+		// if we have a collection, return the edit link.
+		if ( ! empty( $collection ) ) {
+			return \SureCart::getUrl()->edit( 'product_collection', $collection->id );
+		}
+
+		return $link;
 	}
 
 	/**
