@@ -125,7 +125,7 @@ class ProductPostTypeService {
 		 * @return void
 		 */
 	public function addEditLink( $wp_admin_bar ) {
-		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_post', $product->ID ) || ! current_user_can( 'edit_sc_products ' ) ) {
+		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_sc_products' ) ) {
 			return;
 		}
 
@@ -134,6 +134,7 @@ class ProductPostTypeService {
 		if ( empty( $product ) ) {
 			return;
 		}
+
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit',
