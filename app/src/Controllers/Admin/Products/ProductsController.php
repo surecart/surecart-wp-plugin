@@ -31,7 +31,7 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => '<div><a href="' . esc_url( \SureCart::getUrl()->syncAll( 'products' ) ) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
+				'suffix'      => $this->syncDropdown(),
 			),
 		);
 
@@ -48,6 +48,27 @@ class ProductsController extends AdminController {
 
 		// return view.
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
+	}
+
+	/**
+	 * Sync dropdown.
+	 */
+	public function syncDropdown() {
+		ob_start();
+		?>
+		<sc-dropdown>
+			<sc-button slot="trigger" type="text" circle>
+				<sc-icon name="more-horizontal"  style="font-size: 20px"></sc-icon>
+			</sc-button>
+			<sc-menu>
+				<sc-menu-item href="<?php echo esc_url( \SureCart::getUrl()->syncAll( 'products' ) ); ?>">
+					<sc-icon slot="prefix" name="refresh-cw"></sc-icon>
+					<?php esc_html_e( 'Sync Products', 'surecart' ); ?>
+				</sc-menu-item>
+			</sc-menu>
+		</sc-dropdown>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
