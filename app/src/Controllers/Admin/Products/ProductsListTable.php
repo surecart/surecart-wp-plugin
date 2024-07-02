@@ -229,12 +229,10 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return array
+	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array(
-			'commission_amount',
-		);
+		return ( is_array( get_user_meta( get_current_user_id(), 'managesurecart_page_sc-productscolumnshidden', true ) ) ) ? get_user_meta( get_current_user_id(), 'managesurecart_page_sc-productscolumnshidden', true ) : array();
 	}
 
 	/**
