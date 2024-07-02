@@ -39,14 +39,37 @@ class ProductVariantsMigrationService {
 	}
 
 	/**
+	 * Render the variant pill
+	 */
+	public function renderVariantPill() {
+		$block_attributes = array_merge(
+			$this->attributes,
+			array(
+				'highlight_text'       => '#ffffff',
+				'highlight_background' => '#000000',
+				'highlight_border'     => '#000000',
+			)
+		);
+
+		// remove the margin since it is used for the parent block.
+		$block_attributes['style']['spacing'] = array(
+			'padding' => $block_attributes['style']['spacing']['padding'] ?? '',
+		);
+
+		$this->block_html .= '<!-- wp:surecart/product-variant-pill ' . wp_json_encode( $block_attributes ) . '  /-->';
+	}
+
+	/**
 	 * Render the product variant block.
 	 *
 	 * @return void
 	 */
 	public function renderProductVariants() {
-		$this->block_html  = '<!-- wp:surecart/product-variant-pills -->';
+		$wrapper_attributes['style']['spacing']['margin'] = $this->attributes['style']['spacing']['margin'] ?? '';
+
+		$this->block_html  = '<!-- wp:surecart/product-variant-pills ' . wp_json_encode( $wrapper_attributes ) . ' -->';
 		$this->block_html .= '<!-- wp:surecart/product-variant-pills-wrapper -->';
-		$this->block_html .= '<!-- wp:surecart/product-variant-pill /-->';
+		$this->renderVariantPill();
 		$this->block_html .= '<!-- /wp:surecart/product-variant-pills-wrapper -->';
 		$this->block_html .= '<!-- /wp:surecart/product-variant-pills -->';
 	}

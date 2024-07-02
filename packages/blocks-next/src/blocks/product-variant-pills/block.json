@@ -19,7 +19,7 @@
 			"enableContrastChecker": true
 		},
 		"spacing": {
-			"margin": ["top", "bottom"],
+			"margin": true,
 			"padding": ["horizontal", "vertical"]
 		},
 		"__experimentalBorder": {
@@ -37,7 +37,6 @@
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
 	"style": [
-		"file:../../styles/pill.css",
 		"file:../../styles/label.css",
 		"file:../../styles/product-variants.css"
 	]

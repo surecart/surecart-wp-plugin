@@ -65,13 +65,13 @@
 			background-color: var(
 				--sc-pill-option-active-background-color,
 				var(--sc-color-primary-500)
-			);
+			) !important;
 			border-color: var(
 				--sc-pill-option-active-background-color,
 				var(--sc-color-primary-500)
-			);
-			color: var(--sc-pill-option-active-text-color, white);
-			box-shadow: var(--sc-shadow-small);
+			) !important;
+			color: var(--sc-pill-option-active-text-color, white) !important;
+			box-shadow: var(--sc-shadow-small) !important;
 		}
 
 		&:focus-visible {
