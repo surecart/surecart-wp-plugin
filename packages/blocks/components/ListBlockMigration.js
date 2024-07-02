@@ -35,6 +35,7 @@ export default ({ clientId, blockType, attributes }) => {
 					style: attributes?.style,
 					ids: ids,
 					type: attributes?.type,
+					align: attributes?.align,
 				},
 				createBlocksFromInnerBlocksTemplate(newShop)
 			),
