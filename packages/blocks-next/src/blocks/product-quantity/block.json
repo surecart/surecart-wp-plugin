@@ -53,6 +53,7 @@
 	],
 	"style": [
 		"file:../../styles/quantity-selector.css",
-		"file:../../styles/input-group.css"
+		"file:../../styles/input-group.css",
+		"file:./style-index.css"
 	]
 }
