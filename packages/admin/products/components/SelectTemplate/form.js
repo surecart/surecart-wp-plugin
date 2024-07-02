@@ -124,6 +124,13 @@ export default function PostTemplateForm({
 						{ template: slug },
 						{ undoIgnore: true }
 					);
+					// needed to make sure sync does not overwrite the template
+					updateProduct({
+						metadata: {
+							...product.metadata,
+							wp_template_id: slug,
+						},
+					});
 				}}
 			/>
 
