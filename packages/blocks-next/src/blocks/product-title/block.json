@@ -1,13 +1,14 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-list-title",
+	"name": "surecart/product-title",
 	"title": "Product Title",
 	"description": "Display the product title.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"example": {},
 	"usesContext": ["surecart/productId"],
+	"ancestor": ["surecart/product-page"],
 	"attributes": {
 		"textAlign": {
 			"type": "string",
@@ -29,6 +30,9 @@
 		"linkTarget": {
 			"type": "string",
 			"default": "_self"
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"supports": {

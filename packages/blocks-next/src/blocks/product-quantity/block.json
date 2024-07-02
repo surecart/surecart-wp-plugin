@@ -1,11 +1,11 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-quantity-v2",
-	"title": "Product Quantity v2",
+	"name": "surecart/product-quantity",
+	"title": "Product Quantity",
 	"description": "Display the product quantity selector",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"ancestor": ["surecart/product-page"],
 	"keywords": ["quantity", "form", "product"],
@@ -13,6 +13,9 @@
 		"label": {
 			"type": "string",
 			"default": "Quantity"
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -50,6 +53,7 @@
 	],
 	"style": [
 		"file:../../styles/quantity-selector.css",
-		"file:../../styles/input-group.css"
+		"file:../../styles/input-group.css",
+		"file:./style-index.css"
 	]
 }

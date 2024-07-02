@@ -2,32 +2,26 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	__experimentalUseInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+} from '@wordpress/block-editor';
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 
 const TEMPLATE = [
 	[
-		'core/group',
-		{
-			layout: {
-				type: 'flex',
-				flexWrap: 'wrap',
-				justifyContent: 'space-between',
-			},
-		},
 		[
-			[
-				'core/paragraph',
-				{
-					content: __('Price Name', 'surecart'),
-				},
-			],
-			[
-				'core/paragraph',
-				{
-					content: __('$10', 'surecart'),
-				},
-			],
+			'core/paragraph',
+			{
+				content: __('Price Name', 'surecart'),
+			},
+		],
+		[
+			'core/paragraph',
+			{
+				content: __('$10', 'surecart'),
+			},
 		],
 	],
 ];
@@ -47,6 +41,17 @@ export default ({
 		}`,
 		style: {
 			borderColor: isChecked ? highlight_border : undefined,
+			boxShadow: isChecked ? `0 0 0 1px ${highlight_border}` : undefined,
+		},
+	});
+
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
+	const innerBlocksProps = useInnerBlocksProps({
+		style: {
+			width: '100%',
 		},
 	});
 
@@ -68,7 +73,7 @@ export default ({
 				panelId={clientId}
 			/>
 			<div {...blockProps}>
-				<InnerBlocks template={TEMPLATE} />
+				<div {...innerBlocksProps}></div>
 			</div>
 		</>
 	);

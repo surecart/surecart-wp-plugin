@@ -5,8 +5,7 @@
 	"title": "Product Variants Pills",
 	"description": "Display product variants as pills selector.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
+	"category": "surecart-product-page",
 	"ancestor": ["surecart/product-page"],
 	"supports": {
 		"interactivity": true,
@@ -20,7 +19,7 @@
 			"enableContrastChecker": true
 		},
 		"spacing": {
-			"margin": ["top", "bottom"],
+			"margin": true,
 			"padding": ["horizontal", "vertical"]
 		},
 		"__experimentalBorder": {
@@ -38,7 +37,6 @@
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
 	"style": [
-		"file:../../styles/pill.css",
 		"file:../../styles/label.css",
 		"file:../../styles/product-variants.css"
 	]

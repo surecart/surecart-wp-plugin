@@ -5,9 +5,7 @@
 	"title": "Product Page",
 	"description": "Display product page information.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
-	"example": {},
+	"category": "surecart-product-page",
 	"providesContext": {
 		"surecart/product_id": "product_id"
 	},

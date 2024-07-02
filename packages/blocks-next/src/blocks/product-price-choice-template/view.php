@@ -1,13 +1,3 @@
-<?php
-if ( ! empty( $attributes['highlight_border'] ) ) {
-
-	printf(
-		'<style>div.sc-choice--checked{border-color:%s!important;}</style>',
-		esc_attr( $attributes['highlight_border'] ?? '' )
-	);
-}
-?>
-
 <div
 	<?php
 		echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-choice' ) ) );
@@ -21,3 +11,14 @@ if ( ! empty( $attributes['highlight_border'] ) ) {
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </div>
+
+<?php
+if ( ! empty( $attributes['highlight_border'] ) ) {
+
+	printf(
+		'<style class="price-choice-custom-css">div.sc-choice--checked{border-color:%s!important;box-shadow: 0 0 0 1px %s;}</style>',
+		esc_attr( $attributes['highlight_border'] ?? '' ),
+		esc_attr( $attributes['highlight_border'] ?? '' )
+	);
+}
+?>

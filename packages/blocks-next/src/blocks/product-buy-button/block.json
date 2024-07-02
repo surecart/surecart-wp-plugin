@@ -1,11 +1,11 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-buy-button-v2",
+	"name": "surecart/product-buy-button",
 	"title": "Product Buy Button v2",
 	"description": "Display the product buy button.",
 	"version": "1.0.0",
-	"category": "widgets",
+	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-buy-buttons-v2"],

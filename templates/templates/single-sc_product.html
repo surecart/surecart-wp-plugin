@@ -4,13 +4,15 @@
 <div class="wp-block-group"><!-- wp:surecart/product-page {"align":"wide"} -->
 	<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"30px","left":"60px"}}}} -->
 	<div class="wp-block-columns"><!-- wp:column {"width":"50%"} -->
-		<div class="wp-block-column" style="flex-basis:50%"><!-- wp:surecart/product-media-v2 /--></div>
+		<div class="wp-block-column" style="flex-basis:50%"><!-- wp:surecart/product-media /--></div>
 		<!-- /wp:column -->
 
 		<!-- wp:column {"width":"50%"} -->
 		<div class="wp-block-column" style="flex-basis:50%">
-			<!-- wp:surecart/product-collection-badges-v2 {"count":"1","style":{"typography":{"fontSize":"14px"}}} /-->
-			<!-- wp:surecart/product-list-title /-->
+			<!-- wp:surecart/product-collection-tags {"count":1} -->
+			<!-- wp:surecart/product-collection-tag /-->
+			<!-- /wp:surecart/product-collection-tags -->
+			<!-- wp:surecart/product-title /-->
 
 			<!-- wp:group {"style":{"spacing":{"blockGap":"0"}}} -->
 			<div class="wp-block-group">
@@ -20,7 +22,7 @@
 
 					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px"}}} /-->
 
-					<!-- wp:surecart/product-sale-badge {"text":"Discounted","style":{"border":{"radius":"100px"},"typography":{"fontSize":"12px"},"layout":{"selfStretch":"fit","flexSize":null}}} /-->
+					<!-- wp:surecart/product-sale-badge {"text":"Sale","style":{"border":{"radius":"100px"},"typography":{"fontSize":"12px"},"layout":{"selfStretch":"fit","flexSize":null},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
 				</div>
 				<!-- /wp:group -->
 
@@ -34,7 +36,7 @@
 			</div>
 			<!-- /wp:group -->
 
-			<!-- wp:surecart/product-description-v2 /-->
+			<!-- wp:surecart/product-description /-->
 
 			<!-- wp:surecart/product-variant-pills -->
 			<!-- wp:surecart/product-variant-pills-wrapper -->
@@ -43,42 +45,45 @@
 			<!-- /wp:surecart/product-variant-pills -->
 
 			<!-- wp:surecart/product-price-choices-v2 -->
-			<!-- wp:surecart/product-price-choices-template {"layout":{"type":"grid","columnCount":1}} -->
-			<!-- wp:surecart/product-price-choice-template -->
-			<!-- wp:group {"style":{"spacing":{"blockGap":"10px"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-			<div class="wp-block-group">
-				<!-- wp:surecart/price-name {"style":{"layout":{"selfStretch":"fixed","flexSize":"50%"}}} /-->
+			<!-- wp:surecart/product-price-choices-template {"style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"blockGap":"var:preset|spacing|20"}},"layout":{"type":"grid","columnCount":2,"justifyContent":"stretch","orientation":"vertical","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+			<!-- wp:surecart/product-price-choice-template {"layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap","orientation":"vertical"}} -->
+			<!-- wp:surecart/price-name /-->
 
-				<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fixed","flexSize":"50%"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+			<!-- wp:group
+				{"style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right","flexWrap":"wrap"}}
+				-->
+			<div class="wp-block-group">
+				<!-- wp:surecart/price-amount {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->
+
+				<!-- wp:surecart/price-trial {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}},"fontSize":"small"}  /-->
+				<!-- wp:group {"style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->
 				<div class="wp-block-group">
 					<!-- wp:surecart/price-amount {"style":{"elements":{"link":{"color":{"text":"var:preset|color|accent-3"}}},"typography":{"fontStyle":"normal","fontWeight":"700"}},"textColor":"accent-3"} /-->
 
-					<!-- wp:surecart/price-trial {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}},"layout":{"selfStretch":"fit","flexSize":null}},"fontSize":"small"} /-->
+					<!-- wp:surecart/price-trial {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}},"fontSize":"small"} /-->
 
 					<!-- wp:surecart/price-setup-fee {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}},"fontSize":"small"} /-->
 				</div>
 				<!-- /wp:group -->
-			</div>
-			<!-- /wp:group -->
-			<!-- /wp:surecart/product-price-choice-template -->
-			<!-- /wp:surecart/product-price-choices-template -->
-			<!-- /wp:surecart/product-price-choices-v2 -->
+				<!-- /wp:surecart/product-price-choice-template -->
+				<!-- /wp:surecart/product-price-choices-template -->
+				<!-- /wp:surecart/product-price-choices-v2 -->
 
-			<!-- wp:surecart/product-quantity-v2 /-->
-			<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->
-			<!-- wp:surecart/product-buy-buttons-v2 -->
-			<div class="wp-block-surecart-product-buy-buttons-v2 wp-block-buttons sc-block-buttons is-layout-flex">
-				<!-- wp:surecart/product-buy-button-v2 {"add_to_cart":true,"text":"Add To Cart"} /-->
+				<!-- wp:surecart/product-quantity /-->
+				<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->
+				<!-- wp:surecart/product-buy-buttons -->
+				<div class="wp-block-surecart-product-buy-buttons wp-block-buttons sc-block-buttons is-layout-flex">
+					<!-- wp:surecart/product-buy-button {"add_to_cart":true,"text":"Add To Cart"} /-->
 
-				<!-- wp:surecart/product-buy-button-v2 {"text":"Buy Now","style":"outline"} /-->
+					<!-- wp:surecart/product-buy-button {"text":"Buy Now","style":"outline"} /-->
+				</div>
+				<!-- /wp:surecart/product-buy-buttons -->
 			</div>
-			<!-- /wp:surecart/product-buy-buttons-v2 -->
+			<!-- /wp:column -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /wp:columns -->
+		<!-- /wp:surecart/product-page -->
 	</div>
-	<!-- /wp:columns -->
-	<!-- /wp:surecart/product-page -->
-</div>
-<!-- /wp:group -->
+	<!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+	<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

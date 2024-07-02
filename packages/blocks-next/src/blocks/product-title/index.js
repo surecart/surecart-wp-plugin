@@ -17,4 +17,5 @@ import './style.scss';
 registerBlockType(metadata.name, {
 	icon,
 	edit,
+	icon,
 });

@@ -5,8 +5,7 @@
 	"title": "Product Variants Pill",
 	"description": "Displays a product variant choice as a pill.",
 	"version": "1.0.0",
-	"category": "widgets",
-	"icon": "media-interactive",
+	"category": "surecart-product-page",
 	"ancestor": ["surecart/product-variant-pills-wrapper"],
 	"usesContext": [
 		"surecart/productVariantPill/name",
@@ -57,5 +56,6 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"render": "file:./view.php"
+	"render": "file:./view.php",
+	"style": ["file:../../styles/pill.css"]
 }

@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { page as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -16,4 +17,5 @@ import metadata from './block.json';
 registerBlockType(metadata.name, {
 	edit,
 	save,
+	icon,
 });

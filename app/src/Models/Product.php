@@ -475,7 +475,7 @@ class Product extends Model implements PageModel {
 		$gallery = array_values( $this->gallery ?? array() );
 
 		if ( ! empty( $gallery ) ) {
-			return $gallery[0];
+			return $gallery[0] ?? null;
 		}
 		if ( empty( $this->featured_product_media ) ) {
 			return null;

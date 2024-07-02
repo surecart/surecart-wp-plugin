@@ -52,9 +52,9 @@
 						echo wp_kses_post(
 							$image->html(
 								'thumbnail',
-								[
+								array(
 									'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
-								]
+								)
 							)
 						);
 					?>
