@@ -1,5 +1,8 @@
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { createBlock } from '@wordpress/blocks';
+import {
+	createBlock,
+	createBlocksFromInnerBlocksTemplate,
+} from '@wordpress/blocks';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 export default ({ clientId, attributes }) => {
@@ -15,10 +18,20 @@ export default ({ clientId, attributes }) => {
 	}
 
 	replaceBlock(clientId, [
-		createBlock('surecart/product-collection-badges-v2', {
-			limit: attributes?.limit,
-			style: attributes?.style,
-			type: attributes?.type,
-		}),
+		createBlock(
+			'surecart/product-collection-tags',
+			{
+				count: attributes?.count,
+				style: {
+					spacing: {
+						blockGap: attributes?.spacing?.blockGap,
+					},
+				},
+				type: attributes?.type,
+			},
+			createBlocksFromInnerBlocksTemplate([
+				['surecart/product-collection-tag', attributes, []],
+			])
+		),
 	]);
 };
