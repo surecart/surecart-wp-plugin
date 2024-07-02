@@ -5,10 +5,10 @@
 	--swiper-navigation-size: 32px;
 	--swiper-navigation-color: var(--sc-color-primary-500);
 
-	@import 'swiper/scss';
-	@import 'swiper/scss/a11y';
-	@import 'swiper/scss/thumbs';
-	@import 'swiper/scss/navigation';
+	@import "swiper/scss";
+	@import "swiper/scss/a11y";
+	@import "swiper/scss/thumbs";
+	@import "swiper/scss/navigation";
 
 	// hide navigation if there are not enough slides.
 	.swiper-button-lock {
@@ -23,6 +23,7 @@
 		height: 40px;
 		border-radius: 9999px;
 		--swiper-navigation-size: 12px;
+		margin-top: -20px;
 	}
 
 	&__thumbs {

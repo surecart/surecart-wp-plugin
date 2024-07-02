@@ -24,7 +24,7 @@
 // Type modifiers
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-div.sc-tag--primary {
+.sc-tag--primary {
 	background-color: var(
 		--sc-tag-primary-background-color,
 		var(--sc-color-primary-500)
@@ -39,7 +39,7 @@ div.sc-tag--primary {
 	);
 }
 
-div.sc-tag--success {
+.sc-tag--success {
 	background-color: var(
 		--sc-tag-success-background-color,
 		var(--sc-color-success-100)
@@ -51,13 +51,13 @@ div.sc-tag--success {
 	color: var(--sc-tag-success-color, var(--sc-color-success-800));
 }
 
-div.sc-tag--info {
+.sc-tag--info {
 	background-color: var(--sc-color-info-100);
 	border-color: var(--sc-color-info-200);
 	color: var(--sc-color-info-700);
 }
 
-div.sc-tag--default {
+.sc-tag--default {
 	background-color: var(
 		--sc-tag-default-background-color,
 		var(--sc-color-gray-100)
@@ -72,7 +72,7 @@ div.sc-tag--default {
 	color: var(--sc-color-warning-700);
 }
 
-div.sc-tag--danger {
+.sc-tag--danger {
 	background-color: var(--sc-color-danger-100);
 	border-color: var(--sc-color-danger-200);
 	color: var(--sc-color-danger-700);
@@ -82,7 +82,7 @@ div.sc-tag--danger {
 // Size modifiers
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-div.sc-tag--small {
+.sc-tag--small {
 	font-size: var(--sc-button-font-size-small);
 	height: calc(var(--sc-input-height-small) * 0.75);
 	line-height: calc(
@@ -97,7 +97,7 @@ div.sc-tag--small {
 	}
 }
 
-div.sc-tag--medium {
+.sc-tag--medium {
 	font-size: var(--sc-font-size-small);
 	height: calc(var(--sc-input-height-medium) * 0.75);
 	line-height: calc(
@@ -112,7 +112,7 @@ div.sc-tag--medium {
 	}
 }
 
-div.sc-tag--large {
+.sc-tag--large {
 	font-size: var(--sc-button-font-size-large);
 	height: calc(var(--sc-input-height-large) * 0.75);
 	line-height: calc(
@@ -131,6 +131,6 @@ div.sc-tag--large {
 // Pill modifier
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-div.sc-tag--pill {
+.sc-tag--pill {
 	border-radius: var(--sc-border-radius-pill);
 }

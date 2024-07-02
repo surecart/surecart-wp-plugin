@@ -41,7 +41,7 @@ class ProductListBlock {
 	 */
 	public function __construct( \WP_Block $block ) {
 		$this->block = $block;
-		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( (int) $block->context['surecart/product-list/block_id'] ?? '' );
+		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block->context['surecart/product-list/block_id'] ?? '' );
 	}
 
 	/**
@@ -70,9 +70,11 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
-		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
-
-		$sc_collection = $this->url->getArg( 'sc_collection' ); // collection id from url.
+		$term = get_queried_object();
+		if ( $term ) {
+			$collection    = get_term_meta( $term->term_id, 'collection', true );
+			$collection_id = $collection->id ?? $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
+		}
 
 		$collection_ids_to_filter = array();
 
@@ -96,14 +98,6 @@ class ProductListBlock {
 				)
 			); // platform collection ids converted to WP taxonomy ids.
 
-			$new_collection_ids = get_terms(
-				array(
-					'taxonomy'         => 'sc_collection',
-					'field'            => 'term_id',
-					'term_taxonomy_id' => $collection_ids_int,
-				)
-			); // WP taxonomy ids.
-
 			// only get the term_id.
 			$legacy_collection_ids = array_map(
 				function ( $term ) {
@@ -112,20 +106,27 @@ class ProductListBlock {
 				$legacy_collection_ids
 			);
 
-			// only get the term_id.
-			$new_collection_ids = array_map(
-				function ( $term ) {
-					return $term->term_id;
-				},
-				$new_collection_ids
-			);
+			$new_collection_ids = [];
+
+			if ( ! empty( $collection_ids_int ) ) {
+				$new_collection_ids = get_terms(
+					array(
+						'taxonomy'         => 'sc_collection',
+						'field'            => 'term_id',
+						'term_taxonomy_id' => $collection_ids_int,
+					)
+				); // WP taxonomy ids.
+
+				// only get the term_id.
+				$new_collection_ids = array_map(
+					function ( $term ) {
+						return $term->term_id;
+					},
+					$new_collection_ids
+				);
+			}
 
 			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $new_collection_ids );
-		}
-
-		// handle collections query.
-		if ( ! empty( $sc_collection ) ) {
-			$collection_ids_to_filter = array_merge( $collection_ids_to_filter, $sc_collection );
 		}
 
 		if ( ! empty( $collection_ids_to_filter ) ) {

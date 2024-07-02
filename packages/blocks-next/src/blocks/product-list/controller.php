@@ -10,7 +10,7 @@ wp_interactivity_state(
 	]
 );
 
-$block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
+$block_id = $block->context['surecart/product-list/block_id'] ?? '';
 
 // For Analytics.
 $controller = new ProductListBlock( $block );

@@ -9,6 +9,7 @@ if ( is_wp_error( $price ) ) {
 }
 
 // get the display amount.
+// translators: %1$s: amount, %2$s: interval.
 $display_amount = sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), $price->display_amount, $price->short_interval_text );
 
 // return the view.

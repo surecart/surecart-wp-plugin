@@ -13,10 +13,12 @@
 							echo wp_kses_post(
 								$image->html(
 									'large',
-									[
-										'loading' => $index > 0 ? 'lazy' : 'eager',
-										'height'  => ! empty( $attributes['auto_height'] ) ? 'auto' : ( $attributes['height'] ?? 'auto' ),
-									]
+									array_filter(
+										[
+											'loading' => $index > 0 ? 'lazy' : 'eager',
+											'style'   => empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ? "height: {$attributes['height']}" : '',
+										]
+									)
 								)
 							);
 						?>

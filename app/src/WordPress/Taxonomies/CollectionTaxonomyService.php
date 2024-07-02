@@ -21,6 +21,32 @@ class CollectionTaxonomyService {
 	public function bootstrap() {
 		add_action( 'init', array( $this, 'register' ) );
 		add_filter( 'taxonomy_template', array( $this, 'template' ) );
+		add_filter( 'get_edit_term_link', array( $this, 'updateEditLink' ), 10, 3 );
+	}
+
+	/**
+	 * Update the edit collection link to edit the collection directly.
+	 *
+	 * @param string  $link     The link.
+	 * @param integer $term_id  The term ID.
+	 * @param string  $taxonomy The taxonomy.
+	 *
+	 * @return string
+	 */
+	public function updateEditLink( $link, $term_id, $taxonomy ) {
+		// only for our post type.
+		if ( $taxonomy !== $this->slug ) {
+			return $link;
+		}
+
+		$collection = get_term_meta( $term_id, 'collection', true );
+
+		// if we have a collection, return the edit link.
+		if ( ! empty( $collection ) ) {
+			return \SureCart::getUrl()->edit( 'product_collection', $collection->id );
+		}
+
+		return $link;
 	}
 
 	/**
@@ -31,6 +57,23 @@ class CollectionTaxonomyService {
 	 * @return string
 	 */
 	public function template( $template ) {
+		// not our taxonomy.
+		if ( ! is_tax( $this->slug ) ) {
+			return $template;
+		}
+
+		$term       = get_queried_object();
+		$collection = get_term_meta( $term->term_id, 'collection', true );
+
+		if ( wp_is_block_theme() && ! empty( $collection->metadata->wp_template_id ) ) {
+			global $_wp_current_template_id, $_wp_current_template_content;
+			$_wp_current_template_id = $collection->metadata->wp_template_id;
+			$block_template          = get_block_template( $collection->metadata->wp_template_id );
+			if ( ! empty( $block_template ) ) {
+				$_wp_current_template_content = $block_template->content ?? '';
+			}
+		}
+
 		// the theme has provided a taxonomy template, or we are not on the collection taxonomy.
 		if ( ! empty( $template ) || ! is_tax( $this->slug ) ) {
 			return $template;

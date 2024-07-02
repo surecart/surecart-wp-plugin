@@ -22,7 +22,7 @@
 		},
 		"color": {
 			"text": true,
-			"background": false,
+			"background": true,
 			"enableContrastChecker": true
 		}
 	},

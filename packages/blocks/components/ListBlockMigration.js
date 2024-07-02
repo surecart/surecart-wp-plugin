@@ -1,4 +1,4 @@
-import { store as blockEditorStore, getBlocks } from '@wordpress/block-editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import { select } from '@wordpress/data';
 import {
 	createBlock,
@@ -9,7 +9,7 @@ import { useEffect } from '@wordpress/element';
 import { newShopTemplate } from './NewShopTemplate';
 import { useEntityRecords } from '@wordpress/core-data';
 
-export const BlockReplacer = ({ clientId, blockType, attributes }) => {
+export default ({ clientId, blockType, attributes }) => {
 	const block = useSelect(
 		(select) => select(blockEditorStore).getBlock(clientId ?? ''),
 		[clientId]
@@ -35,6 +35,7 @@ export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 					style: attributes?.style,
 					ids: ids,
 					type: attributes?.type,
+					align: attributes?.align,
 				},
 				createBlocksFromInnerBlocksTemplate(newShop)
 			),
