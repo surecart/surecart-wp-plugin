@@ -243,58 +243,51 @@ export default () => {
 			<Subscriptions customerId={id} />
 			<PaymentMethods customerId={id} />
 
-			{!!currentModal ? (
-				<>
-					<EditAddressModal
-						open={currentModal === modals.EDIT_SHIPPING_ADDRESS}
-						shippingAddress={customer?.shipping_address}
-						onRequestClose={() => setCurrentModal('')}
-						customerId={id}
-					/>
-					<Confirm
-						open={currentModal === modals.CONFIRM_DELETE_ADDRESS}
-						onRequestClose={() => setCurrentModal('')}
-						onConfirm={() =>
-							deleteAddress(
-								{
-									shipping_address: {},
-								},
-								__('Shipping address deleted.', 'surecart')
-							)
-						}
-						loading={saving}
-						error={error}
-					>
-						{deleteConfirmMessage}
-					</Confirm>
-					<EditBillingAddressModal
-						open={currentModal === modals.EDIT_BILLING_ADDRESS}
-						billingAddress={customer?.billing_address}
-						onRequestClose={() => setCurrentModal('')}
-						customerId={id}
-					/>
-					<Confirm
-						open={
-							currentModal ===
-							modals.CONFIRM_DELETE_BILLING_ADDRESS
-						}
-						onRequestClose={() => setCurrentModal('')}
-						onConfirm={() =>
-							deleteAddress(
-								{
-									billing_matches_shipping: false,
-									billing_address: {},
-								},
-								__('Billing address deleted.', 'surecart')
-							)
-						}
-						loading={saving}
-						error={error}
-					>
-						{deleteConfirmMessage}
-					</Confirm>
-				</>
-			) : null}
+			<EditAddressModal
+				open={currentModal === modals.EDIT_SHIPPING_ADDRESS}
+				shippingAddress={customer?.shipping_address}
+				onRequestClose={() => setCurrentModal('')}
+				customerId={id}
+			/>
+			<Confirm
+				open={currentModal === modals.CONFIRM_DELETE_ADDRESS}
+				onRequestClose={() => setCurrentModal('')}
+				onConfirm={() =>
+					deleteAddress(
+						{
+							shipping_address: {},
+						},
+						__('Shipping address deleted.', 'surecart')
+					)
+				}
+				loading={saving}
+				error={error}
+			>
+				{deleteConfirmMessage}
+			</Confirm>
+			<EditBillingAddressModal
+				open={currentModal === modals.EDIT_BILLING_ADDRESS}
+				billingAddress={customer?.billing_address}
+				onRequestClose={() => setCurrentModal('')}
+				customerId={id}
+			/>
+			<Confirm
+				open={currentModal === modals.CONFIRM_DELETE_BILLING_ADDRESS}
+				onRequestClose={() => setCurrentModal('')}
+				onConfirm={() =>
+					deleteAddress(
+						{
+							billing_matches_shipping: false,
+							billing_address: {},
+						},
+						__('Billing address deleted.', 'surecart')
+					)
+				}
+				loading={saving}
+				error={error}
+			>
+				{deleteConfirmMessage}
+			</Confirm>
 		</UpdateModel>
 	);
 };
