@@ -1,6 +1,101 @@
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { createBlock } from '@wordpress/blocks';
+import {
+	createBlock,
+	createBlocksFromInnerBlocksTemplate,
+} from '@wordpress/blocks';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+
+const newPriceTemplate = (attributes) => {
+	const defaultColor = attributes?.textColor || '#8a8a8a';
+	const wrapperGroupAttributes = {
+		style: {
+			style: { spacing: { blockGap: '0.5em' } },
+			layout: {
+				type: 'flex',
+				flexWrap: 'nowrap',
+				justifyContent: attributes?.alignment || 'left',
+			},
+		},
+	};
+	return [
+		[
+			'core/group',
+			wrapperGroupAttributes,
+			[
+				[
+					'surecart/product-selected-price-scratch-amount',
+					{
+						style: {
+							typography: {
+								textDecoration: 'line-through',
+								fontSize: '24px',
+							},
+							color: { text: defaultColor },
+							elements: {
+								link: { color: { text: defaultColor } },
+							},
+						},
+					},
+					[],
+				],
+				[
+					'surecart/product-selected-price-amount',
+					{ style: { typography: { fontSize: '24px' } } },
+					[],
+				],
+				[
+					'surecart/product-sale-badge',
+					{
+						text: attributes?.sale_text || __('Sale', 'surecart'),
+						style: {
+							border: { radius: '15px' },
+							typography: { fontSize: '12px' },
+							layout: { selfStretch: 'fit', flexSize: null },
+							elements: {
+								link: {
+									color: { text: 'var:preset|color|white' },
+								},
+							},
+						},
+						textColor: 'white',
+					},
+					[],
+				],
+			],
+		],
+		[
+			'core/group',
+			wrapperGroupAttributes,
+			[
+				[
+					'surecart/product-selected-price-trial',
+					{
+						style: {
+							color: { text: defaultColor },
+							elements: {
+								link: { color: { text: defaultColor } },
+							},
+						},
+					},
+					[],
+				],
+				[
+					'surecart/product-selected-price-fees',
+					{
+						style: {
+							color: { text: defaultColor },
+							elements: {
+								link: { color: { text: defaultColor } },
+							},
+						},
+					},
+					[],
+				],
+			],
+		],
+	];
+};
 
 export default ({ clientId, attributes }) => {
 	const block = useSelect(
@@ -15,10 +110,14 @@ export default ({ clientId, attributes }) => {
 	}
 
 	replaceBlock(clientId, [
-		createBlock('surecart/product-collection-badges-v2', {
-			limit: attributes?.limit,
-			style: attributes?.style,
-			type: attributes?.type,
-		}),
+		createBlock(
+			'core/group',
+			{
+				style: attributes?.style,
+				textColor: attributes.textColor,
+				backgroundColor: attributes.backgroundColor,
+			},
+			createBlocksFromInnerBlocksTemplate(newPriceTemplate(attributes))
+		),
 	]);
 };
