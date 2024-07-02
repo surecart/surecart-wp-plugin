@@ -18,7 +18,8 @@
 			class="wp-block-button__link wp-element-button sc-button__link <?php echo esc_attr( $class ); ?>"
 			style="<?php echo esc_attr( $style ); ?>"
 			data-wp-bind--disabled="state.isUnavailable"
-			data-wp-bind--href="context.checkoutUrl"
+			data-wp-bind--href="state.checkoutUrl"
+			data-wp-on--click="actions.addToCart"
 		>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>

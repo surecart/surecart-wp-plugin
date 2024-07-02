@@ -134,3 +134,44 @@
 .sc-tag--pill {
 	border-radius: var(--sc-border-radius-pill);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dark Mode
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.surecart-theme-dark {
+	.sc-tag {
+		background-color: var(--sc-color-gray-950);
+		border-color: var(--sc-color-gray-900);
+		color: var(--sc-color-gray-300);
+	}
+
+	.sc-tag--primary {
+		background-color: var(--sc-color-primary-950);
+		border-color: var(--sc-color-primary-900);
+		color: var(--sc-color-primary-300);
+	}
+
+	.sc-tag--success {
+		background-color: var(--sc-color-success-950);
+		border-color: var(--sc-color-success-900);
+		color: var(--sc-color-success-300);
+	}
+
+	.sc-tag--info {
+		background-color: var(--sc-color-info-800);
+		border-color: var(--sc-color-info-700);
+		color: var(--sc-color-info-300);
+	}
+
+	.sc-tag--warning {
+		background-color: var(--sc-color-warning-950);
+		border-color: var(--sc-color-warning-900);
+		color: var(--sc-color-warning-300);
+	}
+
+	.sc-tag--danger {
+		background-color: var(--sc-color-danger-950);
+		border-color: var(--sc-color-danger-900);
+		color: var(--sc-color-danger-300);
+	}
+}

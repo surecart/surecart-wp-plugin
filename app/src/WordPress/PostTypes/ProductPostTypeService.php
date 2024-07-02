@@ -54,6 +54,7 @@ class ProductPostTypeService {
 
 		// when a product media is deleted, remove it from the gallery.
 		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
+		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
 
 		// sync via webhook events.
 		add_action( 'surecart/price_created', array( $this, 'sync' ) );

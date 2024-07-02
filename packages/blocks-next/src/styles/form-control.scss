@@ -63,7 +63,7 @@
 
 	&:focus {
 		color: var(--sc-input-color-focus);
-		background-color: var(--sc-input-background-color-focus);
+		background-color: var(--sc-input-background-color-focus) !important;
 		border-color: var(--sc-input-border-color-focus) !important;
 		outline: 0;
 		box-shadow: 0 0 0 var(--sc-focus-ring-width)

@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Get allowed SVG HTML.
+ * Get the allowed SVG for safe output.
  *
  * @return array
  */

@@ -1,0 +1,38 @@
+.wp-block-surecart-cart-coupon-v2 {
+	.trigger {
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.sc-tag {
+		button {
+			background: transparent;
+			border: none;
+			padding: 0px;
+			cursor: pointer;
+			margin-left: 0.5em;
+			color: var(--sc-color-gray-700);
+			box-shadow: none;
+
+			&:focus {
+				outline: none;
+				box-shadow: 0 0 0 var(--sc-focus-ring-width)
+					var(--sc-focus-ring-color-primary);
+			}
+
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+
+	.sc-line-item__price-description {
+		&[hidden] {
+			display: none;
+		}
+	}
+}
