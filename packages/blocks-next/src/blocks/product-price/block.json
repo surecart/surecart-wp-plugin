@@ -5,7 +5,7 @@
 	"title": "Price",
 	"description": "Display the product price.",
 	"version": "1.0.0",
-	"category": "surecart",
+	"category": "sc-product-list",
 	"example": {},
 	"usesContext": ["surecart/productId"],
 	"ancestor": ["surecart/product-list"],
