@@ -20,7 +20,7 @@ const TEMPLATE = [
 		[
 			['surecart/product-image'],
 			[
-				'surecart/product-list-title',
+				'surecart/product-title',
 				{
 					level: 2,
 					isLink: false,

@@ -195,7 +195,7 @@ class ProductListMigrationService {
 	 */
 	public function renderTitle(): void {
 		$product_title_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-title' ), JSON_FORCE_OBJECT );
-		$this->block_html   .= '<!-- wp:surecart/product-list-title ' . $product_title_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-title ' . $product_title_attrs . ' /-->';
 	}
 
 	/**

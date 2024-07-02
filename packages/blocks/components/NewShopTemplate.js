@@ -12,7 +12,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 			switch (block.name) {
 				case 'surecart/product-item-title':
 					acc.push([
-						'surecart/product-list-title',
+						'surecart/product-title',
 						{ ...block.attributes, level: 0 },
 					]);
 					break;

@@ -8,7 +8,7 @@
 	"category": "surecart-product-page",
 	"example": {},
 	"usesContext": ["surecart/productId"],
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"attributes": {
 		"textAlign": {
 			"type": "string",
