@@ -1,8 +1,8 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-icon-v2",
-	"title": "Cart Icon v2",
+	"name": "surecart/cart-icon",
+	"title": "Floating Cart Icon",
 	"description": "The cart icon that shows your cart quantity.",
 	"version": "1.0.0",
 	"category": "cart",
@@ -10,6 +10,7 @@
 	"attributes": {},
 	"supports": {
 		"interactivity": true,
+		"inserter": false,
 		"spacing": {
 			"padding": true,
 			"margin": true,
