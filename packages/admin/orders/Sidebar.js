@@ -101,58 +101,54 @@ export default ({ order, checkout, customer, loading }) => {
 			<Purchases checkoutId={checkout?.id} />
 			<MetaData order={order} loading={loading} />
 
-			{!!modal ? (
-				<>
-					<EditShippingAddressModal
-						open={modal === modals.EDIT_SHIPPING_ADDRESS}
-						shippingAddress={checkout?.shipping_address}
-						onRequestClose={() => setModal('')}
-						checkoutId={checkout?.id}
-					/>
+			<EditShippingAddressModal
+				open={modal === modals.EDIT_SHIPPING_ADDRESS}
+				shippingAddress={checkout?.shipping_address}
+				onRequestClose={() => setModal('')}
+				checkoutId={checkout?.id}
+			/>
 
-					<Confirm
-						open={modal === modals.CONFIRM_DELETE_ADDRESS}
-						onRequestClose={() => setModal('')}
-						onConfirm={() =>
-							onDeleteAddress(
-								{
-									shipping_address: {},
-								},
-								__('Shipping address deleted.', 'surecart')
-							)
-						}
-						loading={saving}
-						error={error}
-					>
-						{deleteConfirmMessage}
-					</Confirm>
+			<Confirm
+				open={modal === modals.CONFIRM_DELETE_ADDRESS}
+				onRequestClose={() => setModal('')}
+				onConfirm={() =>
+					onDeleteAddress(
+						{
+							shipping_address: {},
+						},
+						__('Shipping address deleted.', 'surecart')
+					)
+				}
+				loading={saving}
+				error={error}
+			>
+				{deleteConfirmMessage}
+			</Confirm>
 
-					<EditBillingAddressModal
-						open={modal === modals.EDIT_BILLING_ADDRESS}
-						billingAddress={checkout?.billing_address}
-						onRequestClose={() => setModal('')}
-						checkoutId={checkout?.id}
-					/>
+			<EditBillingAddressModal
+				open={modal === modals.EDIT_BILLING_ADDRESS}
+				billingAddress={checkout?.billing_address}
+				onRequestClose={() => setModal('')}
+				checkoutId={checkout?.id}
+			/>
 
-					<Confirm
-						open={modal === modals.CONFIRM_DELETE_BILLING_ADDRESS}
-						onRequestClose={() => setModal('')}
-						onConfirm={() =>
-							onDeleteAddress(
-								{
-									billing_matches_shipping: false,
-									billing_address: {},
-								},
-								__('Billing address deleted.', 'surecart')
-							)
-						}
-						loading={saving}
-						error={error}
-					>
-						{deleteConfirmMessage}
-					</Confirm>
-				</>
-			) : null}
+			<Confirm
+				open={modal === modals.CONFIRM_DELETE_BILLING_ADDRESS}
+				onRequestClose={() => setModal('')}
+				onConfirm={() =>
+					onDeleteAddress(
+						{
+							billing_matches_shipping: false,
+							billing_address: {},
+						},
+						__('Billing address deleted.', 'surecart')
+					)
+				}
+				loading={saving}
+				error={error}
+			>
+				{deleteConfirmMessage}
+			</Confirm>
 		</Fragment>
 	);
 };

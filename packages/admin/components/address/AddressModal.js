@@ -34,7 +34,7 @@ export default function ({
 		<ScDialog
 			label={title}
 			open={open}
-			onScRequestClose={onRequestClose}
+			onScAfterHide={onRequestClose}
 			style={{
 				'--dialog-body-overflow': 'visible',
 			}}
