@@ -8,7 +8,10 @@
 	"category": "sc-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
-	"usesContext": ["surecart/product-list/block_id"],
+	"usesContext": [
+		"surecart/product-list/block_id",
+		"surecart/product-list/collection_id"
+	],
 	"attributes": {
 		"label": {
 			"type": "string"
