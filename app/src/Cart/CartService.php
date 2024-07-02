@@ -200,7 +200,7 @@ class CartService {
 			return;
 		}
 
-		$cart_icon_block_content = '<!-- wp:surecart/cart-icon-v2 /-->';
+		$cart_icon_block_content = '<!-- wp:surecart/cart-icon /-->';
 		ob_start();
 		?>
 
