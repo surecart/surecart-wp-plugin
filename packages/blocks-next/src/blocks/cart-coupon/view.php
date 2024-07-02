@@ -20,7 +20,7 @@
 	<!-- Discount applied Applied coupon UI -->
 	<div
 		class="sc-line-item__item sc-coupon-form"
-		data-wp-bind--hidden="!state.isDiscountAdded"
+		data-wp-bind--hidden="!state.isDiscountApplied"
 		hidden
 	>
 		<div class="sc-line-item__text">
@@ -68,7 +68,7 @@
 	<!-- Discount Button and Form UI -->
 	<div
 		class="sc-coupon-form"
-		data-wp-bind--hidden="state.isDiscountAdded"
+		data-wp-bind--hidden="state.isDiscountApplied"
 	>
 		<div>
 			<?php if ( $attributes['collapsed'] ) : ?>

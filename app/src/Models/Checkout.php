@@ -113,7 +113,7 @@ class Checkout extends Model {
 	}
 
 	/**
-	 * Is the checkout an installment
+	 * Is the checkout an installment.
 	 *
 	 * @return bool
 	 */

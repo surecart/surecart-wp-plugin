@@ -29,7 +29,7 @@
 
 	<div
 		class="sc-product-line-item"
-		data-wp-bind--hidden="!state.checkout.is_installment"
+		data-wp-bind--hidden="!state.isInstallment"
 	>
 		<div class="sc-product-line-item__item">
 			<div class="sc-product-line-item__text">

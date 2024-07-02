@@ -9,15 +9,16 @@ $form_mode = \SureCart\Models\Form::getMode( $form->ID );
 wp_interactivity_state(
 	'surecart/checkout',
 	array(
-		'discountInputOpen'    => false,
-		'discountCode'         => '',
+		'promotionCode'        => '',
+		'error'                => null,
 		'loading'              => true,
 		'checkout'             => null,
+		'oldCheckout'          => null,
 
 		// derived states.
 		'discountIsRedeemable' => false,
-		'isDiscountAdded'      => false,
-		'isPromotionCodeSet'    => false,
+		'isDiscountApplied'    => false,
+		'isPromotionCodeSet'   => false,
 		'hasBumpAmount'        => false,
 	)
 );
