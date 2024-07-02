@@ -1,8 +1,4 @@
-import {
-	store as blockEditorStore,
-	useBlockProps,
-	__experimentalUseBorderProps as useBorderProps,
-} from '@wordpress/block-editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import {
 	createBlock,
 	createBlocksFromInnerBlocksTemplate,
