@@ -32,7 +32,7 @@ $options = [
 ];
 
 // get the currently selected option.
-$selected_options = array_filter( $options, fn( $option) => $option['value'] === $query_order . ':' . $query_order_by );
+$selected_options = array_filter( $options, fn( $option) => $option['value'] === $query_order_by . ':' . $query_order );
 $selected_option  = array_shift( $selected_options ) ?? $options[0];
 
 // return the view.
