@@ -41,7 +41,7 @@ class ProductListBlock {
 	 */
 	public function __construct( \WP_Block $block ) {
 		$this->block = $block;
-		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( (int) $block->context['surecart/product-list/block_id'] ?? '' );
+		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block->context['surecart/product-list/block_id'] ?? '' );
 	}
 
 	/**
@@ -70,11 +70,11 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
-		$term          = get_queried_object();
-		$collection    = get_term_meta( $term->term_id, 'collection', true );
-		$collection_id = $collection->id ?? $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
-
-		$sc_collection = $this->url->getArg( 'sc_collection' ); // collection id from url.
+		$term = get_queried_object();
+		if ( $term ) {
+			$collection    = get_term_meta( $term->term_id, 'collection', true );
+			$collection_id = $collection->id ?? $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
+		}
 
 		$collection_ids_to_filter = array();
 
