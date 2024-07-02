@@ -67,23 +67,24 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				],
 			].filter(Boolean),
 		],
-		[
-			'core/group',
-			{
-				layout: {
-					type: 'flex',
-					flexWrap: 'nowrap',
-				},
-				style: {
-					spacing: {
-						margin: {
-							bottom: '10px',
+		collection_enabled &&
+			[
+				'core/group',
+				{
+					layout: {
+						type: 'flex',
+						flexWrap: 'nowrap',
+					},
+					style: {
+						spacing: {
+							margin: {
+								bottom: '10px',
+							},
 						},
 					},
 				},
-			},
-			collection_enabled && [['surecart/product-list-filter-tags']],
-		].filter(Boolean),
+				collection_enabled && [['surecart/product-list-filter-tags']],
+			].filter(Boolean),
 		[
 			'surecart/product-template',
 			{
