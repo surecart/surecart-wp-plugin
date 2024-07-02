@@ -1,5 +1,4 @@
 .sc-choices {
-	margin: 0;
 	display: grid;
 	gap: var(--sc-choices-gap, 10px);
 	grid-template-columns: repeat(var(--columns, 1), 1fr);
@@ -124,8 +123,8 @@
 			border-radius: 4px;
 		}
 
-		input[type='radio'],
-		input[type='checkbox'] {
+		input[type="radio"],
+		input[type="checkbox"] {
 			position: absolute;
 			opacity: 0;
 			padding: 0;

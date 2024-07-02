@@ -31,7 +31,7 @@ return [
 	<!-- wp:group -->
 	<div class="wp-block-group"><!-- wp:surecart/product-image /-->
 
-	<!-- wp:surecart/product-list-title {"level":2,"style":{"typography":{"fontSize":"1.25em"},"spacing":{"margin":{"top":"5px","bottom":"5px"}}}} /-->
+	<!-- wp:surecart/product-title {"level":2,"style":{"typography":{"fontSize":"1.25em"},"spacing":{"margin":{"top":"5px","bottom":"5px"}}}} /-->
 
 	<!-- wp:surecart/product-list-price /--></div>
 	<!-- /wp:group -->

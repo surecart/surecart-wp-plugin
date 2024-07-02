@@ -9,7 +9,7 @@
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-buy-buttons-v2"],
-	"usesContext": ["surecart/product"],
+	"usesContext": ["surecart/product", "surecart/productId"],
 	"attributes": {
 		"add_to_cart": {
 			"type": "boolean",
@@ -106,6 +106,9 @@
 	"editorStyle": ["file:../../styles/wp-button.css"],
 	"style": [
 		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css"
-	]
+		"file:../../styles/spinner.css",
+		"file:../../styles/dialog.css",
+		"file:./style-index.css"
+	],
+	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
 }

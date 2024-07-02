@@ -11,7 +11,7 @@ class Currency {
 	 * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
 	 */
 	public static function getCurrencySymbol( $key ) {
-		$key     = strtoupper( $key );
+		$key     = strtoupper( $key ?? '' );
 		$symbols = apply_filters(
 			'surecart/currency_symbols',
 			array(

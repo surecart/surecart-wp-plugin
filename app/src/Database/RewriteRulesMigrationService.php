@@ -2,8 +2,6 @@
 
 namespace SureCart\Database;
 
-use SureCart\Models\RegisteredWebhook;
-
 /**
  * Run this migration when version changes or for new installations.
  */

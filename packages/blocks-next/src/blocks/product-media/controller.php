@@ -4,14 +4,17 @@ $product        = sc_get_product();
 $gallery        = $product->gallery;
 $featured_image = $gallery[0] ?? null;
 
+// handle empty.
 if ( empty( $gallery ) ) {
-	return 'file:./empty.php';
+	return ! empty( $attributes['hide_empty'] ) ? '' : 'file:./empty.php';
 }
 
+// handle image.
 if ( count( $gallery ) === 1 ) {
 	return 'file:./image.php';
 }
 
+// handle slideshow.
 $slider_options = array(
 	'sliderOptions'      => array(
 		'autoHeight'   => ! empty( $attributes['auto_height'] ),

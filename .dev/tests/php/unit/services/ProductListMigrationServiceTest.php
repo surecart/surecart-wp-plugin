@@ -28,7 +28,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 			'sort_enabled' => true,
 			'collection_enabled' => true,
 		];
-        
+
 		$block = (object) [
             'parsed_block' => [
                 'innerBlocks' => [
@@ -65,7 +65,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 			'sort_enabled' => true,
 			'collection_enabled' => true,
 		];
-        
+
         $this->assertSame($attributes, $this->service->attributes);
     }
 
@@ -114,7 +114,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_title()
 	{
 		$this->service->renderTitle();
-		$this->assertStringContainsString('<!-- wp:surecart/product-list-title {"key2":"value2","level":0} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-title {"key2":"value2","level":0} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -143,7 +143,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 		$this->service->renderProductTemplate();
 		$this->assertStringContainsString('<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":3}} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-image {"key1":"value1"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-list-title {"key2":"value2","level":0} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-title {"key2":"value2","level":0} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-list-price {"key3":"value3"} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- /wp:surecart/product-template -->', $this->service->block_html);
 	}
@@ -409,7 +409,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 		$this->assertStringContainsString('<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":3}} --><!-- wp:group --><div class="wp-block-group has-background has-accent-3-background-color has-border-color has-accent-4-border-color" style="background-color:var(--wp--preset--color--accent-3);border-radius:20px;border-width:12px;padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--10);margin-top:var(--wp--preset--spacing--10);margin-bottom:var(--wp--preset--spacing--10);margin-left:var(--wp--preset--spacing--10);margin-right:var(--wp--preset--spacing--10);">', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-image {"src":"https:\/\/images.unsplash.com\/photo-1617360547704-3da8b5363369?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=420&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZHVjdHx8fHx8fDE2NzU3OTY4NjM&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=360","sizing":"cover","ratio":"1\/1.33","borderColor":"base-2","style":{"border":{"radius":"6px","width":"6px"},"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|10","right":"var:preset|spacing|10"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|10","right":"var:preset|spacing|10"}}}} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-list-price {"style":{"spacing":{"padding":{"top":"6px"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}},"color":{"text":"#ffea00"},"typography":{"fontSize":"20px"}}} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-list-title {"title":"Product Title","textColor":"base","fontSize":"x-small","style":{"typography":{"fontWeight":"500"},"spacing":{"padding":{"top":"10px"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}}},"level":0} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-title {"title":"Product Title","textColor":"base","fontSize":"x-small","style":{"typography":{"fontWeight":"500"},"spacing":{"padding":{"top":"10px"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}}},"level":0} /-->', $this->service->block_html);
 		$this->assertStringContainsString('</div><!-- /wp:group --><!-- /wp:surecart/product-template -->', $this->service->block_html);
 	}
 
@@ -485,6 +485,6 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 		$this->service->renderProductTemplate();
 		$this->assertStringNotContainsString('<!-- wp:surecart/product-image', $this->service->block_html);
 		$this->assertStringNotContainsString('<!-- wp:surecart/product-list-price', $this->service->block_html);
-		$this->assertStringNotContainsString('<!-- wp:surecart/product-list-title', $this->service->block_html);
+		$this->assertStringNotContainsString('<!-- wp:surecart/product-title', $this->service->block_html);
 	}
 }

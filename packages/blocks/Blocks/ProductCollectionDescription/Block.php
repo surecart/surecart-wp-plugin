@@ -25,8 +25,18 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$collection = get_query_var( 'surecart_current_collection' );
-		if ( empty( $collection->description ) ) {
-			return '';
+
+		if ( empty( $collection ) ) {
+			$term = get_queried_object();
+			if ( empty( $term ) || empty( $term->term_id ) ) {
+				return '';
+			}
+
+			$collection = get_term_meta( $term->term_id, 'collection', true );
+
+			if ( empty( $collection ) ) {
+				return '';
+			}
 		}
 
 		$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'entry-content' ) );

@@ -41,7 +41,7 @@ class Price extends Model implements Syncable {
 	protected $cache_key = 'products_updated_at';
 
 	/**
-	 * Update a model
+	 * Set the product attribute
 	 *
 	 * @param array $attributes Attributes to update.
 	 *

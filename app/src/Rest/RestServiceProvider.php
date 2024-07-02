@@ -199,7 +199,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 
 			$response = rest_ensure_response( $this->filter_response_by_context( is_a( $model, Model::class ) ? $model->toArray() : $model, $context ) );
 
-			if ( is_a( $model, Model::class ) ) {
+			if ( is_a( $model, Model::class ) && ! empty( $model->getCacheStatus() ) ) {
 				$response->header( 'X-SURECART-CACHE-STATUS', $model->getCacheStatus() );
 			}
 

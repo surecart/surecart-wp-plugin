@@ -8,12 +8,17 @@ $collections = get_terms(
 	)
 );
 
+// the parent is forcing a collection.
+if ( ! empty( $block->context['surecart/product-list/collection_id'] ) ) {
+	return '';
+}
+
 $block_id   = $block->context['surecart/product-list/block_id'];
 $url        = \SureCart::block()->urlParams( 'products', $block_id );
 $filter_key = $url->getKey( 'filter' );
 
 $options = array_map(
-	function( $collection ) use ( $url ) {
+	function ( $collection ) use ( $url ) {
 		return [
 			'value'   => $collection->term_id,
 			'label'   => $collection->name,
@@ -25,7 +30,7 @@ $options = array_map(
 );
 
 // no filter options.
-if ( empty( $options ) )  {
+if ( empty( $options ) ) {
 	return '';
 }
 
