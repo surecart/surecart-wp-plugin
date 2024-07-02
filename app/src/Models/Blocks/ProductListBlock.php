@@ -129,11 +129,6 @@ class ProductListBlock {
 			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $new_collection_ids );
 		}
 
-		// handle collections query.
-		if ( ! empty( $sc_collection ) ) {
-			$collection_ids_to_filter = array_merge( $collection_ids_to_filter, $sc_collection );
-		}
-
 		if ( ! empty( $collection_ids_to_filter ) ) {
 			$this->query_vars['tax_query'] =
 				array(
