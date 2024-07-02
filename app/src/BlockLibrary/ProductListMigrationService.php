@@ -94,9 +94,9 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderProductList(): void {
-		$limit = $this->attributes['limit'] ?? 15;
-
-		$this->block_html .= '<!-- wp:surecart/product-list {"limit":' . $limit . '} -->';
+		$limit             = $this->attributes['limit'] ?? 15;
+		$collection_id     = wp_json_encode( $this->attributes['collection_id'] ) ?? '';
+		$this->block_html .= '<!-- wp:surecart/product-list {"limit":' . $limit . ' ,"collection_id":' . $collection_id . '} -->';
 
 		$this->renderSortFilterAndSearch();
 
