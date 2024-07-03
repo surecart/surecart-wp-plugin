@@ -23,7 +23,7 @@
 	"attributes": {
 		"paginationArrow": {
 			"type": "string",
-			"default": "none"
+			"default": "arrow"
 		},
 		"showLabel": {
 			"type": "boolean",
@@ -54,7 +54,8 @@
 			"allowSwitching": false,
 			"allowInheriting": false,
 			"default": {
-				"type": "flex"
+				"type": "flex",
+				"justifyContent": "space-between"
 			}
 		}
 	},
