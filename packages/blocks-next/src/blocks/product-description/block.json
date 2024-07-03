@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-description-v2",
+	"name": "surecart/product-description",
 	"title": "Product Description",
 	"description": "Display the product description.",
 	"version": "1.0.0",

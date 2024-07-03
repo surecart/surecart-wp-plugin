@@ -50,7 +50,7 @@ class ProductListService {
 	 */
 	public function __construct( $block ) {
 		$this->block    = $block;
-		$this->block_id = (int) $block->context['surecart/product-list/blockId'] ?? '';
+		$this->block_id = $block->context['surecart/product-list/blockId'] ?? '';
 		$this->url      = \SureCart::block()->urlParams( 'products' )->setInstanceId( $this->block_id );
 	}
 
@@ -160,7 +160,7 @@ class ProductListService {
 
 		if ( 'pagination_links' === $key ) {
 			return array_map(
-				function( $i ) {
+				function ( $i ) {
 					return [
 						'href'    => $this->url->addPageArg( $i )->url(),
 						'name'    => $i,
@@ -173,7 +173,7 @@ class ProductListService {
 
 		if ( 'products' === $key ) {
 			return array_map(
-				function( $post ) {
+				function ( $post ) {
 					return sc_get_product( $post );
 				},
 				$this->query->posts

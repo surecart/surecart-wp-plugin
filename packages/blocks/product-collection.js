@@ -22,5 +22,6 @@ registerBlocksForTemplates({
 		'surecart/surecart//product-collection',
 		'sc-product-collection',
 		'sc-part-product-collection',
+		'taxonomy-sc_collection',
 	],
 });

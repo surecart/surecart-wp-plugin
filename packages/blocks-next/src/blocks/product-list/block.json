@@ -10,7 +10,8 @@
 	"providesContext": {
 		"surecart/product-list/limit": "limit",
 		"surecart/product-list/type": "type",
-		"surecart/product-list/ids": "ids"
+		"surecart/product-list/ids": "ids",
+		"surecart/product-list/collection_id": "collection_id"
 	},
 	"usesContext": [
 		"surecart/product-list/block_id",
@@ -29,6 +30,10 @@
 		"limit": {
 			"type": "number",
 			"default": 15
+		},
+		"collection_id": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

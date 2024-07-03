@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-media-v2",
+	"name": "surecart/product-media",
 	"title": "Product Media",
 	"description": "A container to display the product media",
 	"category": "surecart-product-page",
@@ -28,6 +28,10 @@
 		"thumbnails_per_page": {
 			"type": "number",
 			"default": 5
+		},
+		"hide_empty": {
+			"type": "boolean",
+			"default": false
 		},
 		"id": {
 			"type": "string"

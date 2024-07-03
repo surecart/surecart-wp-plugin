@@ -31,7 +31,7 @@ class BlockService {
 	 * @param  array<string, mixed> $context Context to send.
 	 * @return string View html output.
 	 */
-	public function render( $views, $context = [] ) {
+	public function render( $views, $context = array() ) {
 		return apply_filters( 'surecart_block_output', $this->app->views()->make( $views )->with( $context )->toString() );
 	}
 
@@ -44,7 +44,7 @@ class BlockService {
 	 * @return array
 	 */
 	public function filterBy( $type, $name, $blocks ) {
-		$found_blocks = [];
+		$found_blocks = array();
 		$blocks       = (array) $blocks;
 		foreach ( $blocks as $block ) {
 			if ( $name === $block[ $type ] ) {
@@ -85,7 +85,7 @@ class BlockService {
 	 *
 	 * @return ProductListMigrationService
 	 */
-	public function productListMigration( $attributes = [], $block = null ) {
+	public function productListMigration( $attributes = array(), $block = null ) {
 		return new ProductListMigrationService( $attributes, $block );
 	}
 
@@ -99,7 +99,7 @@ class BlockService {
 	public function cartMigration( $attributes = [], $block = null ) {
 		return new CartMigrationService( $attributes, $block );
 	}
-	
+
 	/**
 	 * Get the product list service.
 	 *
@@ -107,5 +107,53 @@ class BlockService {
 	 */
 	public function productList( $block ) {
 		return new ProductListService( $block );
+	}
+
+	/**
+	 * Get the product price migration service.
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
+	 *
+	 * @return ProductSelectedPriceMigrationService
+	 */
+	public function productSelectedPriceMigration( $attributes = array(), $block = null ) {
+		return new ProductSelectedPriceMigrationService( $attributes, $block );
+	}
+
+	/**
+	 * Get the product collection badges migration service.
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
+	 *
+	 * @return ProductCollectionBadgesMigrationService
+	 */
+	public function productCollectionBadgesMigration( $attributes = array(), $block = null ) {
+		return new ProductCollectionBadgesMigrationService( $attributes, $block );
+	}
+
+	/**
+	 * Get the product price choices migration service.
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
+	 *
+	 * @return ProductPriceChoicesMigrationService
+	 */
+	public function productPriceChoicesMigration( $attributes = array(), $block = null ) {
+		return new ProductPriceChoicesMigrationService( $attributes, $block );
+	}
+
+	/**
+	 * Get the product variant migration service.
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param object $block Block.
+	 *
+	 * @return ProductVariantsMigrationService
+	 */
+	public function productVariantsMigration( $attributes = array(), $block = null ) {
+		return new ProductVariantsMigrationService( $attributes, $block );
 	}
 }

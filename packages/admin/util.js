@@ -29,7 +29,7 @@ export const maybeConvertAmount = (amount, currency) => {
 		'XPF',
 		'XPT',
 		'XTS',
-	].includes(currency.toUpperCase())
+	].includes(currency?.toUpperCase())
 		? amount
 		: amount / 100;
 };

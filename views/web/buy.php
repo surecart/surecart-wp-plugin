@@ -5,6 +5,24 @@ Template Name: SureCart
 
 use SureCartBlocks\Blocks\Form\Block as FormBlock;
 
+// this needs to happen before wp_head to ensure that blocks can add scripts and styles in wp_head().
+global $post;
+$post = $product->post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+setup_postdata( $product->post );
+ob_start();
+require 'buy-template.php';
+$content = ob_get_clean();
+
+$template_html = filter_block_content(
+	( new FormBlock() )->render(
+		[
+			'product'     => $product,
+			'mode'        => $mode,
+			'success_url' => $success_url,
+		],
+		do_blocks( $content )
+	),
+);
 
 ?>
 <!DOCTYPE html>
@@ -66,23 +84,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	</header>
 
 
-	<?php
-	ob_start();
-	require 'buy-template.php';
-	$content = ob_get_clean();
-
-	echo filter_block_content(
-		( new FormBlock() )->render(
-			[
-				'product'     => $product,
-				'mode'        => $mode,
-				'success_url' => $success_url,
-			],
-			do_blocks( $content )
-		),
-	);
-
-	?>
+	<?php echo $template_html; ?>
 
 	<?php wp_footer(); ?>
 </body>

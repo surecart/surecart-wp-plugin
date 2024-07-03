@@ -25,33 +25,29 @@ export default function PostTemplate({ product, updateProduct, post }) {
 	// get the assigned template.
 	const template = useSelect(
 		(select) => {
-			const currentTemplate = post?.template;
+			const { type, slug, template: currentTemplate } = post || {};
+			const { getEntityRecords } = select(coreStore);
+			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const templates = getEntityRecords(...selectorArgs) || [];
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: slug ? `single-${type}-${slug}` : `single-${type}`,
+			});
 
 			// have have set a current template with a slug.
 			if (currentTemplate) {
-				const templateWithSameSlug = select(coreStore)
-					.getEntityRecords('postType', 'wp_template', {
-						per_page: -1,
-					})
-					?.find((template) => template.slug === currentTemplate);
-
-				if (!templateWithSameSlug) {
-					return templateWithSameSlug;
-				}
-
-				return select(coreStore).getEditedEntityRecord(
-					'postType',
-					'wp_template',
-					templateWithSameSlug.id
+				const templateWithSameSlug = templates?.find(
+					(template) => template.slug === currentTemplate
 				);
+
+				if (templateWithSameSlug?.id) {
+					return select(coreStore).getEditedEntityRecord(
+						'postType',
+						'wp_template',
+						templateWithSameSlug.id
+					);
+				}
 			}
 
-			const slugToCheck = post?.slug
-				? `single-sc_product-${post?.slug}`
-				: 'single-sc_product';
-			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
-				slug: slugToCheck,
-			});
 			return select(coreStore).getEditedEntityRecord(
 				'postType',
 				'wp_template',
@@ -151,7 +147,7 @@ function PostTemplateToggle({ isOpen, onClick, template }) {
 			}
 			onClick={onClick}
 		>
-			{template?.title ?? __('Default template')}
+			{template?.title}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

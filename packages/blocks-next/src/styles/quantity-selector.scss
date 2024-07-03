@@ -59,7 +59,7 @@
 		border-left: 1px solid var(--sc-input-border-color);
 	}
 
-	input[type='number'].sc-quantity-selector__control {
+	input[type="number"].sc-quantity-selector__control {
 		line-height: 1;
 		font-size: var(--sc-font-size-small);
 		height: 100%;
@@ -80,13 +80,16 @@
 				height: var(--sc-font-size-small, 0.75em);
 			}
 		}
-		input[type='number'].sc-quantity-selector__control {
+		input[type="number"].sc-quantity-selector__control {
 			max-width: 24px;
 			font-size: var(--sc-font-size-x-small);
 		}
 	}
 }
 
-.wp-block-surecart-product-quantity-v2 .sc-form-label {
-	color: inherit !important;
+.wp-block-surecart-product-quantity {
+	margin-bottom: var(--sc-form-row-spacing, 0.75em);
+	.sc-form-label {
+		color: inherit !important;
+	}
 }

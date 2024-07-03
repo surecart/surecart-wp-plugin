@@ -171,7 +171,7 @@ class ProductsListTable extends ListTable {
 	 * @param Product $product The product model.
 	 */
 	public function column_sync_status( $product ) {
-		if ( \SureCart::sync()->products()->isActive() ) {
+		if ( \SureCart::sync()->products()->isActive() || \SureCart::sync()->product()->isScheduled( $product ) ) {
 			return '<span class="syncing-wrapper"><sc-icon name="loader" class="syncing"></sc-icon><span class="syncing-text">' . __( 'Syncing...', 'surecart' ) . '</span></span>';
 		}
 		return $product->synced ? '<sc-icon name="check" class="synced"></sc-icon>' : '<sc-icon name="x" class="unsynced"></sc-icon>';
@@ -229,12 +229,10 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return array
+	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array(
-			'commission_amount',
-		);
+		return ( is_array( get_user_meta( get_current_user_id(), 'managesurecart_page_sc-productscolumnshidden', true ) ) ) ? get_user_meta( get_current_user_id(), 'managesurecart_page_sc-productscolumnshidden', true ) : array();
 	}
 
 	/**

@@ -18,13 +18,14 @@ const DEFAULT_TITLE = __('Custom Single Product Page', 'surecart');
 
 export default function PostTemplateCreateModal({
 	onClose,
-	template,
 	product,
 	updateProduct,
+	template,
+	post,
 }) {
 	const [title, setTitle] = useState('');
 	const [isBusy, setIsBusy] = useState(false);
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, editEntityRecord } = useDispatch(coreStore);
 
 	const cancel = () => {
 		setTitle('');
@@ -40,9 +41,9 @@ export default function PostTemplateCreateModal({
 
 		setIsBusy(true);
 
-		const newTemplateContent = template?.content?.raw;
+		const newTemplateContent = template?.content?.raw || template?.content;
 
-		const { id } = await saveEntityRecord('postType', 'wp_template', {
+		const { id, slug } = await saveEntityRecord('postType', 'wp_template', {
 			slug: `sc-products-${cleanForSlug(title || DEFAULT_TITLE)}`,
 			content: newTemplateContent,
 			title: title || DEFAULT_TITLE,
@@ -54,6 +55,8 @@ export default function PostTemplateCreateModal({
 				wp_template_id: id,
 			},
 		});
+
+		editEntityRecord('postType', 'sc_product', post.id, { template: slug });
 
 		setIsBusy(false);
 		cancel();

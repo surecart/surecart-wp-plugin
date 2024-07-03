@@ -30,7 +30,6 @@ class ProductPostTypeService {
 
 		// add variation option value query to posts_where.
 		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
-		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
 
 		// ensure we always fetch with the current connected store id in case of store change.
 		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
@@ -48,7 +47,10 @@ class ProductPostTypeService {
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
 		// update edit post link to edit the product directly.
-		add_filter( 'get_edit_post_link', array( $this, 'updateEditPostLink' ), 10, 2 );
+		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
+
+		// Add edit product link to admin bar.
+		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
 
 		// when a product media is deleted, remove it from the gallery.
 		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
@@ -114,6 +116,33 @@ class ProductPostTypeService {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Add edit links
+	 *
+	 * @param \WP_Admin_bar $wp_admin_bar The admin bar.
+	 *
+	 * @return void
+	 */
+	public function addEditLink( $wp_admin_bar ) {
+		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_sc_products' ) ) {
+			return;
+		}
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$wp_admin_bar->add_node(
+			[
+				'id'    => 'edit',
+				'title' => __( 'Edit Product', 'surecart' ),
+				'href'  => get_edit_post_link( $product->ID ),
+			]
+		);
 	}
 
 	/**
@@ -280,7 +309,7 @@ class ProductPostTypeService {
 	 *
 	 * @return string
 	 */
-	public function updateEditPostLink( $link, $post_id ) {
+	public function updateEditLink( $link, $post_id ) {
 		// only for our post type.
 		if ( get_post_type( $post_id ) !== $this->post_type ) {
 			return $link;
@@ -311,7 +340,8 @@ class ProductPostTypeService {
 		if ( ! empty( $content ) ) {
 			return $content;
 		}
-		$template_part_id = 'surecart/surecart//product-info'; // Get the template part ID.
+		$product          = sc_get_product();
+		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
 		$blocks           = get_block_template( $template_part_id, 'wp_template_part' )->content;
 		$blocks           = shortcode_unautop( $blocks );
 		$blocks           = do_shortcode( $blocks );
@@ -323,6 +353,7 @@ class ProductPostTypeService {
 		global $wp_embed;
 		$blocks = $wp_embed->autoembed( $blocks );
 		$blocks = str_replace( ']]>', ']]&gt;', $blocks );
+
 		return $blocks . $content;
 	}
 
@@ -578,7 +609,36 @@ class ProductPostTypeService {
 					'compare' => '=',
 				);
 			}
+			if ( ! empty( $request['collection_id'] ) ) {
+				$legacy_collection_ids = get_terms(
+					array(
+						'taxonomy'   => 'sc_collection',
+						'field'      => 'term_id',
+						'meta_query' => array(
+							array(
+								'key'     => 'sc_id',
+								'value'   => $request['collection_id'],
+								'compare' => '=',
+							),
+						),
 
+					)
+				); // platform collection ids converted to WP taxonomy ids.
+
+				// only get the term_id.
+				$legacy_collection_ids = array_map(
+					function ( $term ) {
+						return $term->term_id;
+					},
+					$legacy_collection_ids
+				);
+
+				$args['tax_query'][] = array(
+					'taxonomy' => 'sc_collection',
+					'field'    => 'term_id',
+					'terms'    => array_map( 'intval', $legacy_collection_ids ?? array() ),
+				);
+			}
 			$args['post_status'] = $request['post_status'] ?? [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
 
 			$args['no_found_rows'] = true;
@@ -618,8 +678,8 @@ class ProductPostTypeService {
 				),
 				'hierarchical'      => true,
 				'public'            => true,
-				'show_ui'           => true,
-				'show_in_menu'      => true,
+				'show_ui'           => false,
+				'show_in_menu'      => false,
 				'rewrite'           => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,

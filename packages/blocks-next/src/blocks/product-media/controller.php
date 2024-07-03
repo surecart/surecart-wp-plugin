@@ -4,29 +4,32 @@ $product        = sc_get_product();
 $gallery        = $product->gallery;
 $featured_image = $gallery[0] ?? null;
 
+// handle empty.
 if ( empty( $gallery ) ) {
-	return 'file:./empty.php';
+	return ! empty( $attributes['hide_empty'] ) ? '' : 'file:./empty.php';
 }
 
+// handle image.
 if ( count( $gallery ) === 1 ) {
 	return 'file:./image.php';
 }
 
+// handle slideshow.
 $slider_options = array(
-	'sliderOptions'      => [
+	'sliderOptions'      => array(
 		'autoHeight'   => ! empty( $attributes['auto_height'] ),
 		'spaceBetween' => 40,
-	],
-	'thumbSliderOptions' => [
+	),
+	'thumbSliderOptions' => array(
 		'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
 		'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-		'breakpoints'    => [
-			320 => [
+		'breakpoints'    => array(
+			320 => array(
 				'slidesPerView'  => $attributes['thumbnails_per_page'] ?? 5,
 				'slidesPerGroup' => $attributes['thumbnails_per_page'] ?? 5,
-			],
-		],
-	],
+			),
+		),
+	),
 );
 
 $height = 'auto';
