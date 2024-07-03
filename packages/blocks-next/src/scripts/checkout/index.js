@@ -286,12 +286,7 @@ const { state, actions } = store('surecart/checkout', {
 		init() {
 			const { mode, formId } = getContext();
 			const checkout = getCheckoutData(mode, formId);
-
-			if (!checkout) {
-				return;
-			}
-
-			state.checkout = checkout;
+			actions.setCheckout(checkout, mode, formId);
 		},
 
 		syncTabs(e) {
@@ -469,30 +464,26 @@ const { state, actions } = store('surecart/checkout', {
 			state.oldCheckout = checkout;
 
 			// Find the checkout by mode and formId.
-			const checkoutData = checkout[mode]?.[formId];
 			let checkoutStorage = JSON.parse(
 				localStorage.getItem(LOCAL_STORAGE_KEY)
 			);
 
-			if (checkoutData) {
-				// update the existing checkout data.
+			// If there is no checkout storage, create a new one.
+			if (!checkoutStorage) {
 				checkoutStorage = {
-					...checkoutStorage,
-					[mode]: {
-						...checkoutStorage[mode],
-						[formId]: data,
-					},
-				};
-			} else {
-				// create a new checkout data.
-				checkoutStorage = {
-					...checkoutStorage,
-					[mode]: {
-						...checkoutStorage[mode],
-						[formId]: data,
-					},
+					live: {},
+					test: {},
 				};
 			}
+
+			// Update the checkout data in the storage.
+			checkoutStorage = {
+				...checkoutStorage,
+				[mode]: {
+					...checkoutStorage[mode],
+					[formId]: data,
+				},
+			};
 
 			localStorage.setItem(
 				LOCAL_STORAGE_KEY,
