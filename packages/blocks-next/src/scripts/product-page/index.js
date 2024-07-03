@@ -27,8 +27,8 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the amount based on the selected variant or price.
 		 */
 		get selectedAmount() {
-			const { selectedPrice } = getContext();
-			if (prices?.length > 1) {
+			const { selectedPrice, product } = getContext();
+			if (product?.active_prices?.length > 1) {
 				return selectedPrice?.amount || '';
 			}
 			return state.selectedVariant?.amount || selectedPrice?.amount || '';
@@ -66,9 +66,9 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is this product on sale?
 		 */
 		get isOnSale() {
-			const { selectedAmount, selectedPrice } = getContext();
+			const { selectedPrice } = getContext();
 			return !selectedPrice?.ad_hoc
-				? selectedPrice.scratch_amount > selectedAmount
+				? selectedPrice.scratch_amount > state.selectedAmount
 				: false;
 		},
 

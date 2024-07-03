@@ -624,20 +624,35 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the initial variant.
+	 *
+	 * @return string
+	 */
+	public function getInitialVariantAttribute() {
+		$initial_variant = $this->first_variant_with_stock;
+		if ( ! empty( $initial_variant ) ) {
+			return $initial_variant;
+		}
+		return $this->variants->data[0] ?? null;
+	}
+
+	/**
 	 * Get the initial amount.
 	 *
 	 * @return string
 	 */
 	public function getInitialAmountAttribute() {
-		$initial_variant = $this->first_variant_with_stock;
-		if ( ! empty( $initial_variant->amount ) ) {
-			if ( ! empty( $initial_variant->amount ) ) {
-				return $initial_variant->amount;
-			}
-			$prices        = $this->active_prices ?? array();
-			$initial_price = $prices[0] ?? null;
-			return $initial_price->amount ?? null;
+		$initial_price = $this->initial_price;
+		if ( count( $this->active_prices ) > 1 ) {
+			return $this->initial_price->amount;
 		}
+
+		$initial_variant = $this->initial_variant;
+		if ( ! empty( $initial_variant->amount ) ) {
+			return $initial_variant->amount;
+		}
+
+		return $initial_price->amount ?? null;
 	}
 
 	/**
