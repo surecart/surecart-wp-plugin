@@ -122,6 +122,24 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the line items count attribute.
+	 *
+	 * @return int
+	 */
+	public function getLineItemsCountAttribute() {
+		if ( empty( $this->line_items ) || empty( $this->line_items->data ) ) {
+			return 0;
+		}
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $count, $item ) {
+				return $count + ( $item->quantity ?? 0 );
+			},
+			0
+		);
+	}
+
+	/**
 	 * Get the has recurring attribute.
 	 *
 	 * Do any line items have a recurring price?

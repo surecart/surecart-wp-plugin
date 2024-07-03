@@ -106,7 +106,7 @@
 							<span class="sc-input-group-text" id="coupon-input-addon">
 								<button
 									type="submit"
-									data-wp-bind--hidden="!state.isPromotionCodeSet"
+									data-wp-bind--hidden="!state.promotionCode"
 									data-wp-on--click="actions.applyDiscount"
 								>
 									<?php esc_html_e( 'Apply', 'surecart' ); ?>
@@ -136,7 +136,7 @@
 						>
 						<span class="sc-input-group-text" id="basic-addon1">
 							<button
-								data-wp-bind--hidden="!state.isPromotionCodeSet"
+								data-wp-bind--hidden="!state.promotionCode"
 								data-wp-on--click="actions.applyDiscount"
 							>
 								<?php esc_html_e( 'Apply', 'surecart' ); ?>

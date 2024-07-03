@@ -6,7 +6,7 @@
 			)
 		)
 	); ?>
-	data-wp-bind--hidden="!state.hasBumpAmount"
+	data-wp-bind--hidden="!state.checkout.bump_amount"
 	hidden
 >
 	<div class="sc-product-line-item">

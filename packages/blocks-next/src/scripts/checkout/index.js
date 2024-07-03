@@ -88,10 +88,7 @@ const { state, actions } = store('surecart/checkout', {
 		 * Get the number of items in checkout.
 		 */
 		get itemsCount() {
-			return (state.checkout?.line_items?.data || []).reduce(
-				(count, item) => count + (item?.quantity || 0),
-				0
-			);
+			return state.checkout?.line_items_count || 0;
 		},
 
 		/**
@@ -142,39 +139,10 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Check if the promotion code is set on cart/checkout.
-		 */
-		get isPromotionCodeSet() {
-			return !!state?.promotionCode;
-		},
-
-		/**
-		 * Get the checkout discount amount.
-		 */
-		get discountAmount() {
-			return state?.checkout?.discount_amount || 0;
-		},
-
-		/**
-		 * Check if the checkout has a bump amount.
-		 */
-		get hasBumpAmount() {
-			return !!state?.checkout?.bump_amount;
-		},
-
-		/**
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
 			return state.checkout?.line_items?.data || [];
-		},
-
-		/**
-		 * Check if the line item has an image URL.
-		 */
-		get hasLineItemImageUrl() {
-			const { line_item } = getContext();
-			return !!line_item?.price?.product?.image_url;
 		},
 
 		/**
@@ -245,13 +213,6 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				count
 			);
-		},
-
-		/**
-		 * Is the current checkout an installment checkout?
-		 */
-		get isInstallment() {
-			return !!state?.checkout?.is_installment;
 		},
 
 		/**

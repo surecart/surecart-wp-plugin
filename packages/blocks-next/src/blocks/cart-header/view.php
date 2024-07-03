@@ -19,6 +19,6 @@
 	</span>
 
 	<div class="sc-tag sc-tag--default">
-		<span data-wp-text="surecart/checkout::state.itemsCount"></span>
+		<span data-wp-text="state.itemsCount"></span>
 	</div>
 </div>
