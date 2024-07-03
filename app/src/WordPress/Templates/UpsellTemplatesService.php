@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SureCart\WordPress\Templates;
 
-use \SureCartVendors\Pimple\Container;
+use SureCartVendors\Pimple\Container;
 
 /**
  * The Upsell template service.
@@ -154,7 +154,7 @@ class UpsellTemplatesService {
 	 *
 	 * @return array
 	 */
-	public function addTemplates( array $posts_templates ) : array {
+	public function addTemplates( array $posts_templates ): array {
 		return array_merge( $posts_templates, $this->templates );
 	}
 
@@ -176,6 +176,10 @@ class UpsellTemplatesService {
 
 		// check for upsell and use the template id.
 		$upsell = get_query_var( 'surecart_current_upsell' );
+
+		if ( empty( $upsell ) ) {
+			return $template;
+		}
 
 		if ( ! empty( $upsell->metadata->wp_template_id ) ) {
 			$page_template = $upsell->metadata->wp_template_id;
