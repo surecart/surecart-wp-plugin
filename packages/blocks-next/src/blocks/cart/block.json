@@ -22,7 +22,12 @@
 		"interactivity": true,
 		"layout": true,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"typography": {
+			"fontSize": true,
+			"lineHeight": false,
+			"textAlign": false
+		}
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
