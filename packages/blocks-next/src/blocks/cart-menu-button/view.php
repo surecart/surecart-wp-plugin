@@ -24,7 +24,7 @@
 		class="sc-cart-count"
 		data-wp-bind--hidden="!state.showCartMenuIcon"
 		hidden
-		data-wp-text="state.getItemsCount"
+		data-wp-text="state.itemsCount"
 	>
 	</span>
 </a>

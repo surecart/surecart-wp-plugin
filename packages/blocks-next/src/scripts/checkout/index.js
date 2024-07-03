@@ -87,7 +87,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Get the number of items in checkout.
 		 */
-		get getItemsCount() {
+		get itemsCount() {
 			return (state.checkout?.line_items?.data || []).reduce(
 				(count, item) => count + (item?.quantity || 0),
 				0
@@ -98,7 +98,7 @@ const { state, actions } = store('surecart/checkout', {
 		 * Check if the checkout has any line items.
 		 */
 		get hasItems() {
-			return state.getItemsCount > 0;
+			return state.itemsCount > 0;
 		},
 
 		/**
@@ -227,14 +227,14 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get showCartMenuIcon() {
 			const { cartMenuAlwaysShown } = getContext();
-			return state.getItemsCount > 0 || cartMenuAlwaysShown;
+			return state.itemsCount > 0 || cartMenuAlwaysShown;
 		},
 
 		/**
 		 * Get the aria label for the cart icon count.
 		 */
-		get getItemsCountAriaLabelByCount() {
-			const count = state.getItemsCount;
+		get itemsCountAriaLabel() {
+			const count = state.itemsCount;
 			return sprintf(
 				_n(
 					/* translators: %d: number of items in the cart */
