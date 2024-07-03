@@ -8,16 +8,23 @@ import { __ } from '@wordpress/i18n';
 
 const newPriceTemplate = (attributes) => {
 	const defaultColor = attributes?.textColor || '#8a8a8a';
+	const defaultFontSize = attributes?.style?.typography?.fontSize || '24px';
 	const wrapperGroupAttributes = {
-		style: {
-			style: { spacing: { blockGap: '0.5em' } },
-			layout: {
-				type: 'flex',
-				flexWrap: 'nowrap',
-				justifyContent: attributes?.alignment || 'left',
-			},
+		style: { spacing: { blockGap: '0.5em' } },
+		layout: {
+			type: 'flex',
+			flexWrap: 'nowrap',
+			justifyContent: attributes?.alignment || 'left',
 		},
 	};
+	const priceDescriptionAttributes = {
+		style: {
+			color: { text: defaultColor },
+			elements: { link: { color: { text: defaultColor } } },
+			typography: { fontSize: '16px' },
+		},
+	};
+
 	return [
 		[
 			'core/group',
@@ -29,7 +36,7 @@ const newPriceTemplate = (attributes) => {
 						style: {
 							typography: {
 								textDecoration: 'line-through',
-								fontSize: '24px',
+								fontSize: defaultFontSize,
 							},
 							color: { text: defaultColor },
 							elements: {
@@ -41,7 +48,7 @@ const newPriceTemplate = (attributes) => {
 				],
 				[
 					'surecart/product-selected-price-amount',
-					{ style: { typography: { fontSize: '24px' } } },
+					{ style: { typography: { fontSize: defaultFontSize } } },
 					[],
 				],
 				[
@@ -70,26 +77,12 @@ const newPriceTemplate = (attributes) => {
 			[
 				[
 					'surecart/product-selected-price-trial',
-					{
-						style: {
-							color: { text: defaultColor },
-							elements: {
-								link: { color: { text: defaultColor } },
-							},
-						},
-					},
+					priceDescriptionAttributes,
 					[],
 				],
 				[
 					'surecart/product-selected-price-fees',
-					{
-						style: {
-							color: { text: defaultColor },
-							elements: {
-								link: { color: { text: defaultColor } },
-							},
-						},
-					},
+					priceDescriptionAttributes,
 					[],
 				],
 			],
