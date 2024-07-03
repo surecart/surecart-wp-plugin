@@ -20,6 +20,8 @@ wp_interactivity_state(
 		'isDiscountApplied'    => false,
 		'isPromotionCodeSet'   => false,
 		'hasBumpAmount'        => false,
+		'getItemsCount'        => 0,
+		'hasItems'             => false,
 	)
 );
 

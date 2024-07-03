@@ -95,6 +95,13 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Check if the checkout has any line items.
+		 */
+		get hasItems() {
+			return state.getItemsCount > 0;
+		},
+
+		/**
 		 * Check if the discount is redeemable.
 		 */
 		get discountIsRedeemable() {
