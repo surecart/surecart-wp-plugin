@@ -10,7 +10,7 @@ const { speak } = wp.a11y;
 store('surecart/cart', {
 	actions: {
 		toggle: (e) => {
-			if (e && e.key === 'Tab') {
+			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
 			}
 
