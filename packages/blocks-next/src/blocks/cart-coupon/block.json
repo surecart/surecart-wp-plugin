@@ -1,14 +1,14 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-coupon-v2",
+	"name": "surecart/slide-out-cart-coupon",
 	"title": "Cart Coupon",
 	"description": "Display a coupon form in the cart",
 	"keywords": ["coupon", "promo"],
 	"version": "1.0.0",
 	"category": "cart",
 	"example": {},
-	"ancestor": ["surecart/cart-v2"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"text": {
 			"type": "string",

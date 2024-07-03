@@ -200,7 +200,7 @@ class CartService {
 			return;
 		}
 
-		$cart_icon_block_content = '<!-- wp:surecart/cart-icon-v2 /-->';
+		$cart_icon_block_content = '<!-- wp:surecart/cart-icon /-->';
 		ob_start();
 		?>
 
@@ -286,7 +286,7 @@ class CartService {
 	 * @return string
 	 */
 	public static function removeDeprecatedCartContent( $content ) {
-		$review_cart_present = strpos( $content, 'wp:surecart/cart-header-v2 {"text":"Review Your Cart"' );
+		$review_cart_present = strpos( $content, 'wp:surecart/slide-out-cart-header {"text":"Review Your Cart"' );
 		$my_cart_present     = strpos( $content, '<sc-cart-header><span>My Cart</span></sc-cart-header>' );
 
 		if ( false !== $review_cart_present && false !== $my_cart_present ) {

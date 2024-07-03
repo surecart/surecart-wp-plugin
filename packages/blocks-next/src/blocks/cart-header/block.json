@@ -1,13 +1,13 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-header-v2",
+	"name": "surecart/slide-out-cart-header",
 	"title": "Cart Header",
 	"description": "Display a cart header",
 	"version": "1.0.0",
 	"category": "cart",
 	"example": {},
-	"ancestor": ["surecart/cart-v2"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"text": {
 			"type": "string",

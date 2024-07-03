@@ -1,12 +1,12 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-bump-line-item-v2",
+	"name": "surecart/slide-out-cart-bump-line-item",
 	"title": "Cart Bump Line Item",
 	"description": "Display the cart bump line item",
 	"category": "cart",
 	"textdomain": "surecart",
-	"ancestor": ["surecart/cart-v2"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"label": {
 			"type": "string",

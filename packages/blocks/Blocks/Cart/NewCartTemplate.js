@@ -26,12 +26,12 @@ export const newCartTemplate = (attributes, childBlocks) => {
 	] = blockNames.map(getChildBlocksAttributes);
 
 	return [
-		['surecart/cart-header-v2', headerAttributes],
-		['surecart/cart-items-v2', itemsAttributes],
-		['surecart/cart-coupon-v2', couponAttributes],
-		['surecart/cart-bump-line-item-v2', bumpLineItemAttributes],
-		['surecart/cart-subtotal-v2', subtotalAttributes],
-		['surecart/cart-message-v2', messageAttributes],
-		['surecart/cart-submit-v2', submitAttributes],
+		['surecart/slide-out-cart-header', headerAttributes],
+		['surecart/slide-out-cart-items', itemsAttributes],
+		['surecart/slide-out-cart-coupon', couponAttributes],
+		['surecart/slide-out-cart-bump-line-item', bumpLineItemAttributes],
+		['surecart/slide-out-cart-subtotal', subtotalAttributes],
+		['surecart/slide-out-cart-message', messageAttributes],
+		['surecart/slide-out-cart-submit', submitAttributes],
 	].filter(Boolean);
 };

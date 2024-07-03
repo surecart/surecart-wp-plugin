@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-subtotal-v2",
+	"name": "surecart/slide-out-cart-subtotal",
 	"title": "Cart Subtotal",
 	"description": "Display the cart subtotal",
 	"keywords": ["cart", "subtotal"],
@@ -9,7 +9,7 @@
 	"textdomain": "surecart",
 	"version": "1.0.0",
 	"example": {},
-	"ancestor": ["surecart/cart-v2"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"label": {
 			"type": "string",
