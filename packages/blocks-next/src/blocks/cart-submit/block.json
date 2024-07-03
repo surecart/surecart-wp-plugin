@@ -40,5 +40,9 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/wp-buttons.css", "file:./style-index.css"]
+	"style": [
+		"file:../../styles/wp-buttons.css",
+		"file:./style-index.css",
+		"wp-block-button"
+	]
 }
