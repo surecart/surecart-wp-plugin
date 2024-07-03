@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/cart-menu-icon-button",
-	"title": "Cart Menu Icon v2",
+	"title": "Cart Menu Icon",
 	"description": "The cart menu icon that shows your cart quantity.",
 	"version": "1.0.0",
 	"category": "cart",
