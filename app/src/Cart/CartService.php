@@ -146,15 +146,15 @@ class CartService {
 	}
 
 	public function menuItemTemplate() {
-		$cart_menu_icon_attributes = [
+		$cart_menu_icon_attributes    = [
 			'cart_menu_always_shown' => $this->isAlwaysShown(),
-			'cart_icon' 			=> $this->getIcon( 'menu' ) ?? 'shopping-bag',
+			'cart_icon'              => $this->getIcon( 'menu' ) ?? 'shopping-bag',
 		];
 		$cart_menu_icon_block_content = '<!-- wp:surecart/cart-menu-icon-button ' . wp_json_encode( $cart_menu_icon_attributes ) . ' /-->';
 
 		ob_start(); ?>
 			<li class='menu-item'>
-				<?php echo do_blocks( $cart_menu_icon_block_content ); ?>
+				<?php echo do_blocks( $cart_menu_icon_block_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</li>
 		<?php
 		return ob_get_clean();
@@ -169,6 +169,13 @@ class CartService {
 		$form = $this->getForm();
 		if ( empty( $form->ID ) ) {
 			return '';
+		}
+
+		// If we have a checkout form block or shortcode, don't render the cart.
+		global $post;
+		$block = wp_get_first_block( parse_blocks( $post->post_content ), 'surecart/checkout-form' ) || has_shortcode( $post->post_content, 'sc_form' );
+		if ( ! empty( $block ) ) {
+			return;
 		}
 
 		// get cart block.
