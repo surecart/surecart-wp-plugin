@@ -21,6 +21,10 @@
 	box-shadow: var(--sc-shadow-small);
 	cursor: pointer;
 
+	&[hidden] {
+		display: none;
+	}
+
 	&:hover {
 		opacity: 0.8;
 	}

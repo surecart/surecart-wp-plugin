@@ -1,4 +1,4 @@
-.wp-block-surecart-cart-header-v2 {
+.wp-block-surecart-slide-out-cart-header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -27,12 +27,9 @@
 		padding: 0 var(--sc-spacing-small);
 	}
 
-	&__close {
+	&__close, &__close svg {
 		cursor: pointer;
-
-		svg {
-			width: 20px;
-			height: 20px;
-		}
+		width: 16px;
+		height: 16px;
 	}
 }

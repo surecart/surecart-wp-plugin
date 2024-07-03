@@ -1,14 +1,14 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-submit-v2",
+	"name": "surecart/slide-out-cart-submit",
 	"title": "Cart Submit Button",
 	"description": "The cart submit button",
 	"textdomain": "surecart",
 	"version": "1.0.0",
 	"category": "cart",
 	"example": {},
-	"ancestor": ["surecart/cart-v2"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"text": {
 			"type": "string",

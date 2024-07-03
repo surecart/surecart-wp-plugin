@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-v2",
-	"title": "SureCart Cart v2",
-	"description": "Display SureCart Cart",
+	"name": "surecart/slide-out-cart",
+	"title": "Cart",
+	"description": "Display SureCart slide out cart",
 	"version": "1.0.0",
 	"category": "cart",
 	"icon": "media-interactive",

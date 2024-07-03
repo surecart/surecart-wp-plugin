@@ -33,25 +33,6 @@ class CartService {
 				}
 			);
 
-			$form = $this->getForm();
-			if ( empty( $form->ID ) ) {
-				return;
-			}
-			$state = sc_initial_state();
-
-			if ( empty( $state['checkout']['formId'] ) ) {
-				sc_initial_state(
-					array_filter(
-						[
-							'checkout' => [
-								'formId'  => $form->ID,
-								'mode'    => Form::getMode( $form->ID ),
-								'persist' => 'browser',
-							],
-						]
-					)
-				);
-			}
 			add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
 		}
 	}
@@ -73,7 +54,7 @@ class CartService {
 	 * @return string
 	 */
 	public function getIcon( $type ) {
-		$icon = '<sc-icon name="' . $this->getIconNameFromSettings() . '"></sc-icon>';
+		$icon = $this->getIconNameFromSettings();
 
 		/**
 		 * Allow filtering of the cart menu icon.
@@ -165,19 +146,15 @@ class CartService {
 	}
 
 	public function menuItemTemplate() {
-		$form = $this->getForm();
-		$mode = $this->getMode();
+		$cart_menu_icon_attributes = [
+			'cart_menu_always_shown' => $this->isAlwaysShown(),
+			'cart_icon' 			=> $this->getIcon( 'menu' ) ?? 'shopping-bag',
+		];
+		$cart_menu_icon_block_content = '<!-- wp:surecart/cart-menu-icon-button ' . wp_json_encode( $cart_menu_icon_attributes ) . ' /-->';
 
 		ob_start(); ?>
 			<li class='menu-item'>
-				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link" tabindex="-1">
-					<sc-cart-button
-						cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
-						form-id='<?php echo esc_attr( $form->ID ); ?>'
-						mode='<?php echo esc_attr( $mode ); ?>'>
-						<?php echo wp_kses_post( $this->getIcon( 'menu' ) ); ?>
-					</sc-cart-button>
-				</a>
+				<?php echo do_blocks( $cart_menu_icon_block_content ); ?>
 			</li>
 		<?php
 		return ob_get_clean();
@@ -226,22 +203,8 @@ class CartService {
 		if ( empty( $form->ID ) ) {
 			return;
 		}
-		$template = $this->cartTemplate();
-		$state    = sc_initial_state();
 
-		if ( empty( $state['checkout']['formId'] ) ) {
-			sc_initial_state(
-				array_filter(
-					[
-						'checkout' => [
-							'formId' => $form->ID,
-						],
-					]
-				)
-			);
-		}
-
-		echo $template;
+		echo $this->cartTemplate();
 	}
 
 	/**
@@ -286,7 +249,7 @@ class CartService {
 	 * @return string
 	 */
 	public static function removeDeprecatedCartContent( $content ) {
-		$review_cart_present = strpos( $content, 'wp:surecart/cart-header-v2 {"text":"Review Your Cart"' );
+		$review_cart_present = strpos( $content, 'wp:surecart/slide-out-cart-header {"text":"Review Your Cart"' );
 		$my_cart_present     = strpos( $content, '<sc-cart-header><span>My Cart</span></sc-cart-header>' );
 
 		if ( false !== $review_cart_present && false !== $my_cart_present ) {

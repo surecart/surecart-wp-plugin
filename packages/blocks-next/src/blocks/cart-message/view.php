@@ -7,6 +7,7 @@
 			)
 		)
 	); ?>
+	<?php echo esc_attr( empty( $attributes['text'] ) ? 'hidden' : '' ); ?>
 >
 	<?php echo esc_html( $attributes['text'] ); ?>
 </div>

@@ -23,13 +23,13 @@ import { TEMPLATE } from './template';
 
 export default ({ attributes: { width }, setAttributes }) => {
 	// const allowedBlocks = [
-	// 	'surecart/cart-header-v2',
-	// 	'surecart/cart-items-v2',
-	// 	'surecart/cart-coupon-v2',
-	// 	'surecart/cart-subtotal-v2',
-	// 	'surecart/cart-submit-v2',
-	// 	'surecart/cart-message-v2',
-	// 	'surecart/cart-bump-line-item-v2',
+	// 	'surecart/slide-out-cart-header',
+	// 	'surecart/slide-out-cart-items',
+	// 	'surecart/slide-out-cart-coupon',
+	// 	'surecart/slide-out-cart-subtotal',
+	// 	'surecart/slide-out-cart-submit',
+	// 	'surecart/slide-out-cart-message',
+	// 	'surecart/slide-out-cart-bump-line-item',
 	// ];
 
 	const blockProps = useBlockProps({
