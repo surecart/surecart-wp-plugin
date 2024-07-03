@@ -52,5 +52,11 @@ export const TEMPLATE = [
 		[['surecart/product-list-filter-tags']],
 	],
 	['surecart/product-template'],
-	['surecart/product-pagination'],
+	[
+		'surecart/product-pagination',
+		{
+			paginationArrow: 'arrow',
+			layout: { type: 'flex', justifyContent: 'space-between' },
+		},
+	],
 ];
