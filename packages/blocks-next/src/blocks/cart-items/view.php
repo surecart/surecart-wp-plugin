@@ -33,6 +33,7 @@
 							<span data-wp-text="context.line_item.price.product.name"></span>
 						</div>
 						<div class="sc-product-line-item__description sc-product-line-item__price-variant">
+							<div data-wp-text="state.lineItemVariant"></div>
 							<div data-wp-text="context.line_item.price.name"></div>
 						</div>
 						<?php if ( ! $attributes['editable'] ) : ?>

@@ -253,6 +253,18 @@ const { state, actions } = store('surecart/checkout', {
 		get isInstallment() {
 			return !!state?.checkout?.is_installment;
 		},
+
+		/**
+		 * Get the line item variant.
+		 */
+		get lineItemVariant() {
+			const { line_item } = getContext();
+			return (
+				(line_item?.variant_options || [])
+					.filter(Boolean)
+					.join(' / ') || null
+			);
+		},
 	},
 
 	callbacks: {
