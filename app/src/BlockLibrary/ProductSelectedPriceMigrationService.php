@@ -11,7 +11,7 @@ class ProductSelectedPriceMigrationService {
 	 *
 	 * @var array
 	 */
-	protected $attributes = array();
+	public array $attributes = array();
 
 	/**
 	 * Block.
