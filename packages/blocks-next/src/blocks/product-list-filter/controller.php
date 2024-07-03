@@ -8,8 +8,9 @@ $collections = get_terms(
 	)
 );
 
-// the parent is forcing a collection.
-if ( ! empty( $block->context['surecart/product-list/collection_id'] ) ) {
+// we are on a collection page.
+$current_term = get_queried_object();
+if ( is_a( $current_term, \WP_Term::class ) ) {
 	return '';
 }
 
