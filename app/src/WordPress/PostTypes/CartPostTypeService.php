@@ -221,9 +221,9 @@ class CartPostTypeService {
 				'post_title'   => _x( 'Cart', 'Cart title', 'surecart' ),
 				'post_type'    => $this->post_type,
 				'post_status'  => 'publish',
-				'post_content' => '<!-- wp:surecart/cart --><sc-order-summary>
+				'post_content' => '<!-- wp:surecart/cart-v2 --><sc-order-summary>
 				<sc-line-items></sc-line-items>
-			</sc-order-summary><!-- /wp:surecart/cart -->',
+			</sc-order-summary><!-- /wp:surecart/cart-v2 -->',
 			]
 		);
 		return get_post( $post_id );
@@ -281,11 +281,11 @@ class CartPostTypeService {
 				),
 				'template'              => [
 					[
-						'surecart/cart',
+						'surecart/cart-v2',
 						[],
 						[
 							[
-								'surecart/cart-header',
+								'surecart/cart-header-v2',
 								[
 									'lock' => [
 										'remove' => true,
@@ -293,51 +293,51 @@ class CartPostTypeService {
 									],
 								],
 							],
-							[
-								'surecart/cart-items',
-								[
-									'lock' => [
-										'remove' => true,
-										'move'   => false,
-									],
-								],
-							],
-							[
-								'surecart/cart-coupon',
-								[
-									'lock' => [
-										'remove' => false,
-										'move'   => false,
-									],
-								],
-							],
-							[
-								'surecart/cart-subtotal',
-								[
-									'padding' => [
-										'top'    => '1.25em',
-										'left'   => '1.25em',
-										'bottom' => '0',
-										'right'  => '1.25em',
-									],
-									'border'  => false,
-									[
-										'lock' => [
-											'remove' => false,
-											'move'   => false,
-										],
-									],
-								],
-							],
-							[
-								'surecart/cart-submit',
-								[
-									'lock' => [
-										'remove' => true,
-										'move'   => false,
-									],
-								],
-							],
+							// [
+							// 	'surecart/cart-items',
+							// 	[
+							// 		'lock' => [
+							// 			'remove' => true,
+							// 			'move'   => false,
+							// 		],
+							// 	],
+							// ],
+							// [
+							// 	'surecart/cart-coupon',
+							// 	[
+							// 		'lock' => [
+							// 			'remove' => false,
+							// 			'move'   => false,
+							// 		],
+							// 	],
+							// ],
+							// [
+							// 	'surecart/cart-subtotal',
+							// 	[
+							// 		'padding' => [
+							// 			'top'    => '1.25em',
+							// 			'left'   => '1.25em',
+							// 			'bottom' => '0',
+							// 			'right'  => '1.25em',
+							// 		],
+							// 		'border'  => false,
+							// 		[
+							// 			'lock' => [
+							// 				'remove' => false,
+							// 				'move'   => false,
+							// 			],
+							// 		],
+							// 	],
+							// ],
+							// [
+							// 	'surecart/cart-submit',
+							// 	[
+							// 		'lock' => [
+							// 			'remove' => true,
+							// 			'move'   => false,
+							// 		],
+							// 	],
+							// ],
 						],
 					],
 				],

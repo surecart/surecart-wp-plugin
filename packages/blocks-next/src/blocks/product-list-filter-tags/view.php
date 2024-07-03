@@ -1,6 +1,6 @@
 <?php
 
-$block_id = (int) $block->context['surecart/product-list/block_id'] ?? '';
+$block_id = $block->context['surecart/product-list/block_id'] ?? '';
 $params   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block_id );
 $filter   = $params->getArg( 'sc_collection' );
 
@@ -19,7 +19,7 @@ $product_collections = get_terms(
 
 // map the collections to the view.
 $product_collections = array_map(
-	function( $collection ) use ( $params ) {
+	function ( $collection ) use ( $params ) {
 		return [
 			'href' => $params->removeFilterArg( 'sc_collection', $collection->term_id ),
 			'name' => $collection->name,

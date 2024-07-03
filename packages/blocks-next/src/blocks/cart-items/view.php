@@ -1,0 +1,125 @@
+<div
+	class="wp-block-surecart-cart-items__wrapper"
+	<?php echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'style' => $style,
+			)
+		)
+	); ?>
+>
+	<template
+		data-wp-each--line_item="state.checkoutLineItems"
+		data-wp-key="context.line_item.id"
+	>
+		<div
+			class="sc-product-line-item"
+			style="margin-bottom: 20px;"
+		>
+			<div class="sc-product-line-item__item">
+				<img
+					class="sc-product-line-item__image"
+					data-wp-bind--hidden="!state.hasLineItemImageUrl"
+					data-wp-bind--src="context.line_item.image.src"
+					data-wp-bind--alt="context.line_item.image.alt"
+					data-wp-bind--srcset="context.line_item.image.srcset"
+					data-wp-bind--sizes="context.line_item.image.sizes"
+					alt=""
+				/>
+
+				<div class="sc-product-line-item__text">
+					<div class="sc-product-line-item__text-details">
+						<div class="sc-product-line-item__title">
+							<span data-wp-text="context.line_item.price.product.name"></span>
+						</div>
+						<div class="sc-product-line-item__description sc-product-line-item__price-variant">
+							<div data-wp-text="context.line_item.price.name"></div>
+						</div>
+						<?php if ( ! $attributes['editable'] ) : ?>
+							<span class="sc-product-line-item__description">
+								<?php esc_html_e( 'Qty:', 'surecart' ); ?>
+								<span data-wp-text="context.line_item.quantity"></span>
+							</span>
+						<?php elseif ( $attributes['editable'] ) : ?>
+							<div
+								class="sc-input-group sc-quantity-selector"
+								data-wp-class--quantity--disabled="state.isQuantityDisabled"
+								data-wp-bind--hidden="!state.isEditable"
+								hidden
+							>
+								<div
+									class="sc-input-group-text sc-quantity-selector__decrease"
+									role="button"
+									tabindex="0"
+									data-wp-on--click="surecart/checkout::actions.onQuantityDecrease"
+									data-wp-on--keydown="surecart/checkout::actions.onQuantityDecrease"
+									data-wp-bind--disabled="state.isQuantityDecreaseDisabled"
+									data-wp-bind--aria-disabled="state.isQuantityDecreaseDisabled"
+									data-wp-class--button--disabled="state.isQuantityDecreaseDisabled"
+									aria-label="<?php echo esc_html__( 'Decrease quantity by one.', 'surecart' ); ?>"
+								>
+									<?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
+								</div>
+								<input
+									type="number"
+									class="sc-form-control sc-quantity-selector__control"
+									data-wp-bind--value="context.line_item.quantity"
+									data-wp-on--change="surecart/checkout::actions.onQuantityChange"
+									data-wp-bind--min="context.line_item.min"
+									data-wp-bind--aria-valuemin="context.line_item.min"
+									data-wp-bind--max="context.line_item.max"
+									data-wp-bind--aria-valuemax="context.line_item.max"
+									data-wp-bind--disabled="surecart/checkout::state.loading"
+									step="1"
+									autocomplete="off"
+									role="spinbutton"
+								/>
+								<div
+									class="sc-input-group-text sc-quantity-selector__increase"
+									role="button"
+									tabindex="0"
+									data-wp-on--click="surecart/checkout::actions.onQuantityIncrease"
+									data-wp-on--keydown="surecart/checkout::actions.onQuantityIncrease"
+									data-wp-bind--disabled="state.isQuantityIncreaseDisabled"
+									data-wp-bind--aria-disabled="state.isQuantityIncreaseDisabled"
+									data-wp-class--button--disabled="state.isQuantityIncreaseDisabled"
+									aria-label="<?php echo esc_html__( 'Increase quantity by one.', 'surecart' ); ?>"
+								>
+									<?php echo wp_kses( SureCart::svg()->get( 'plus' ), sc_allowed_svg_html() ); ?>
+								</div>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+
+				<div class="sc-product-line-item__suffix">
+					<?php if ( $attributes['removable'] ) : ?>
+						<button
+							class="sc-product-line-item__remove-button"
+							aria-label="<?php esc_attr_e( 'Remove item', 'surecart' ); ?>"
+							data-wp-on--click="surecart/checkout::actions.removeLineItem"
+						>
+							<?php echo wp_kses( SureCart::svg()->get( 'x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
+						</button>
+					<?php endif; ?>
+
+					<div class="sc-product-line-item__price">
+						<div class="price">
+							<span
+								data-wp-bind--hidden="!state.lineItemHasScratchAmount"
+								data-wp-text="context.line_item.price.scratchAmount"
+							></span>
+							<span data-wp-text="state.lineItemAmountDisplay"></span>
+						</div>
+						<div
+							data-wp-bind--hidden="!context.line_item.price.interval"
+							class="sc-product-line-item__price__description"
+							data-wp-text="context.line_item.price.interval"
+						>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+</div>

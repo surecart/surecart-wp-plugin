@@ -1,7 +1,14 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { store, getContext } from '@wordpress/interactivity';
+
+/**
+ * Internal dependencies.
+ */
+import { addCheckoutLineItem } from '@surecart/checkout-service';
+const { actions: checkoutActions } = store('surecart/checkout');
+const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
@@ -237,19 +244,17 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	actions: {
-		/**
-		 * Add to cart action.
-		 */
-		*addToCart() {
+		addToCart: async () => {
 			const context = getContext();
+			const { mode, formId } = context;
 			try {
 				context.busy = true;
-				// TODO: replace with interactivity when available.
-				yield window.sc.checkout.addLineItem(state.lineItem);
-				window.sc.cart.toggle(true);
-				// open cart.
-			} catch (error) {
-				context.error = error;
+				const checkout = await addCheckoutLineItem(state.lineItem);
+				checkoutActions.setCheckout(checkout, mode, formId);
+				cartActions.toggle();
+			} catch (e) {
+				console.error(e);
+				throw e; // Re-throw the caught error
 			} finally {
 				context.busy = false;
 			}

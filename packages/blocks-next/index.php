@@ -104,7 +104,16 @@ add_action(
 		wp_register_script_module(
 			'@surecart/api-fetch',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
-			array(),
+			array(
+				array(
+					'id'     => 'wp-url',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => 'wp-api-fetch',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -113,7 +122,12 @@ add_action(
 		wp_register_script_module(
 			'@surecart/dialog',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dialog/index.js',
-			array(),
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -202,5 +216,83 @@ add_action(
 			),
 			$static_assets['version']
 		);
-	}
+
+		// Checkout actions.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout-actions/index.asset.php';
+		wp_register_script_module(
+			'@surecart/checkout-service',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout-actions/index.js',
+			array(
+				array(
+					'id'     => '@surecart/api-fetch',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		// Checkout events.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout-events/index.asset.php';
+		wp_register_script_module(
+			'@surecart/checkout-events',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout-events/index.js',
+			array(
+				array(
+					'id'     => '@surecart/api-fetch',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		// Cart side drawer.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/cart/index.asset.php';
+		wp_register_script_module(
+			'@surecart/cart',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => 'wp-i18n',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		// SureCart Checkout.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout/index.asset.php';
+		wp_register_script_module(
+			'@surecart/checkout',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout/index.js',
+			array(
+				array(
+					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-events',
+					'import' => 'dynamic',
+				),
+				[
+					'id'     => '@surecart/google-events',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				],
+				array(
+					'id'     => '@surecart/cart',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+	},
+	10,
+	3
 );

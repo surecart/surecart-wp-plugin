@@ -69,6 +69,23 @@ class ProductSyncService {
 	}
 
 	/**
+	 * Check if the sync is scheduled.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return bool
+	 */
+	public function isScheduled( \SureCart\Models\Model $model ) {
+		return \SureCart::queue()->isScheduled(
+			$this->action_name,
+			[
+				'id'               => $model->id,
+			],
+			'product-' . $model->id
+		);
+	}
+
+	/**
 	 * Cancel the sync for a later time.
 	 *
 	 * @param \SureCart\Models\Model $model The model.

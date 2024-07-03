@@ -3,6 +3,10 @@
 	height: var(--sc-quantity-control-height, var(--sc-input-height-small));
 	border-radius: inherit !important;
 
+	.sc-quantity-selector__control {
+		color: var(--sc-input-control-color, var(--sc-color-black));
+	}
+
 	&.quantity--disabled {
 		background-color: var(--sc-input-background-color-disabled);
 		border-color: var(--sc-input-border-color-disabled);

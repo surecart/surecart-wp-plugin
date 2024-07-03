@@ -28,7 +28,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function html( $size = 'full', $attr = [] ) : string {
+	public function html( $size = 'full', $attr = [] ): string {
 		$image = '';
 
 		// Handle attachments.

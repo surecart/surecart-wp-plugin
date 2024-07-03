@@ -1,0 +1,38 @@
+.wp-block-surecart-cart-header-v2 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	button {
+		background: none;
+		border: none;
+		box-shadow: none;
+		padding: 0;
+		margin: 0;
+		cursor: pointer;
+		color: var(--sc-primary-color);
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 var(--sc-focus-ring-width)
+				var(--sc-focus-ring-color-primary);
+		}
+	}
+
+	&__title {
+		text-align: center;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		padding: 0 var(--sc-spacing-small);
+	}
+
+	&__close {
+		cursor: pointer;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
+}

@@ -20,7 +20,7 @@ const TEMPLATE = [
 		[
 			['surecart/product-image'],
 			[
-				'surecart/product-list-title',
+				'surecart/product-title',
 				{
 					level: 2,
 					isLink: false,
@@ -44,6 +44,7 @@ export default ({
 		'surecart/product-list/limit': limit,
 		'surecart/product-list/type': type,
 		'surecart/product-list/ids': ids,
+		'surecart/product-list/collection_id': collectionId,
 	},
 }) => {
 	const { type: layoutType, columnCount = 3 } = layout || {};
@@ -64,6 +65,7 @@ export default ({
 			page: 1,
 			per_page: limit || 15,
 			post_status: ['publish'],
+			...(collectionId ? { collection_id: collectionId } : {}),
 			...('custom' === type ? { include: ids } : {}),
 			...('featured' === type ? { featured: true } : {}),
 		}
