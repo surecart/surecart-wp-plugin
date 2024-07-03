@@ -18,7 +18,7 @@
 		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+		<!-- wp:group {"style":{"layout":{"selfStretch":"fixed","flexSize":"250px"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 		<div class="wp-block-group"><!-- wp:surecart/product-list-search /--></div>
 		<!-- /wp:group -->
 	</div>
@@ -28,16 +28,20 @@
 	<!-- wp:surecart/product-list-filter-tag /-->
 	<!-- /wp:surecart/product-list-filter-tags -->
 
-	<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"grid","columnCount":3}} -->
-	<!-- wp:surecart/product-image {"style":{"border":{"radius":"10px"},"spacing":{"margin":{"top":"0px","bottom":"20px"}}}} /-->
-
-	<!-- wp:surecart/product-title {"level":2,"style":{"typography":{"fontSize":"1.35em","fontStyle":"normal","fontWeight":"600"},"spacing":{"margin":{"top":"0px","bottom":"10px"}}}} /-->
-
-	<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+	<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"grid","columnCount":4}} -->
+	<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group">
-		<!-- wp:surecart/product-list-price {"style":{"elements":{"link":{"color":{"text":"var:preset|color|accent-3"}}},"spacing":{"margin":{"top":"0px","bottom":"0px"}}},"textColor":"accent-3"} /-->
+		<!-- wp:surecart/product-image {"style":{"spacing":{"margin":{"bottom":"15px"}},"border":{"radius":"6px"}}} /-->
 
-		<!-- wp:surecart/product-scratch-price /-->
+		<!-- wp:surecart/product-title {"level":2,"style":{"typography":{"fontWeight":"400","fontSize":"14px","lineHeight":"1.2"},"spacing":{"margin":{"bottom":"0px"}}}} /-->
+
+		<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+		<div class="wp-block-group">
+			<!-- wp:surecart/product-list-price {"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600"}}} /-->
+
+			<!-- wp:surecart/product-scratch-price {"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600"}}} /-->
+		</div>
+		<!-- /wp:group -->
 	</div>
 	<!-- /wp:group -->
 	<!-- /wp:surecart/product-template -->

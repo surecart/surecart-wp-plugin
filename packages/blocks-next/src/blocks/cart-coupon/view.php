@@ -52,7 +52,7 @@
 						data-wp-text="state.checkout.human_discount_with_duration"
 					></span>
 				</div>
-				<div class="sc-line-item__price" data-wp-bind--hidden="!state.discountIsRedeemable" data-wp-text="state.checkout.discount_amount_display"></div>
+				<div class="sc-line-item__price" data-wp-bind--hidden="!state.discountIsRedeemable" data-wp-text="state.checkout.discount_display_amount"></div>
 
 				<!-- non-redeemable UI -->
 				<div class="sc-line-item__price-description" data-wp-bind--hidden="state.discountIsRedeemable">
@@ -99,7 +99,7 @@
 								aria-label="quantity"
 								aria-describedby="coupon-input-addon"
 								placeholder="<?php esc_html_e( 'Enter coupon code', 'surecart' ); ?>"
-								data-wp-bind="state.promotionCode"
+								data-wp-bind--value="state.promotionCode"
 								data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 								data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 							>

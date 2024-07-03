@@ -95,7 +95,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getAdHocAmountDisplayAttribute() {
+	public function getAdHocDisplayAmountAttribute() {
 		return ! empty( $this->ad_hoc_amount ) ? Currency::format( $this->ad_hoc_amount, $this->currency ) : '';
 	}
 
@@ -104,7 +104,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getBumpAmountDisplayAttribute() {
+	public function getBumpDisplayAmountAttribute() {
 		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
 	}
 
@@ -113,7 +113,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getScratchAmountDisplayAttribute() {
+	public function getScratchDisplayAmountAttribute() {
 		return ! empty( $this->scratch_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
 	}
 
@@ -122,7 +122,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getTaxAmountDisplayAttribute() {
+	public function getTaxDisplayAmountAttribute() {
 		return ! empty( $this->tax_amount ) ? Currency::format( $this->tax_amount, $this->currency ) : '';
 	}
 
@@ -131,7 +131,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getSubtotalAmountDisplayAttribute() {
+	public function getSubtotalDisplayAmountAttribute() {
 		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
 	}
 
@@ -140,7 +140,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getTotalAmountDisplayAttribute() {
+	public function getTotalDisplayAmountAttribute() {
 		return ! empty( $this->total_amount ) ? Currency::format( $this->total_amount, $this->currency ) : '';
 	}
 
@@ -149,7 +149,7 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getFullAmountDisplayAttribute() {
+	public function getFullDisplayAmountAttribute() {
 		return ! empty( $this->full_amount ) ? Currency::format( $this->full_amount, $this->currency ) : '';
 	}
 
@@ -158,13 +158,13 @@ class LineItem extends Model {
 	 *
 	 * @return string
 	 */
-	public function getTrialAmountDisplayAttribute() {
+	public function getTrialDisplayAmountAttribute() {
 		return ! empty( $this->trial_amount ) ? Currency::format( $this->trial_amount, $this->currency ) : '';
 	}
 
 	/**
-	* Get the line item image.
-	*/
+	 * Get the line item image.
+	 */
 	public function getImageAttribute() {
 		// if we have a variant, use the variant image.
 		if ( ! empty( $this->variant ) && is_a( $this->variant, Variant::class ) && ! empty( (array) $this->variant->line_item_image ) ) {
