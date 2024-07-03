@@ -294,6 +294,15 @@ const { state, actions } = store('surecart/checkout', {
 			state.checkout = checkout;
 		},
 
+		syncTabs(e) {
+			if (e?.key !== LOCAL_STORAGE_KEY) {
+				return;
+			}
+			const { mode, formId } = getContext();
+			const checkout = getCheckoutData(mode, formId);
+			actions.setCheckout(checkout, mode, formId);
+		},
+
 		/**
 		 * Handle checkout change.
 		 */
