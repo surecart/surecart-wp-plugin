@@ -1,30 +1,17 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useEntityRecord } from '@wordpress/core-data';
 
 export default ({ context: { 'surecart/productId': productId } }) => {
 	const blockProps = useBlockProps({
 		className: 'product-price',
 	});
 
-	const product = useSelect(
-		(select) => {
-			if (!productId) {
-				return null;
-			}
-			return select(coreStore).getEntityRecord(
-				'surecart',
-				'product',
-				productId
-			);
+	const {
+		record: {
+			meta: { product },
 		},
-		[productId]
-	);
+	} = useEntityRecord('postType', 'sc_product', productId);
 
-	return (
-		<div {...blockProps}>
-			{product?.id ? product?.scratch_display_amount : '$10'}
-		</div>
-	);
+	return <div {...blockProps}>{product?.scratch_display_amount}</div>;
 };
