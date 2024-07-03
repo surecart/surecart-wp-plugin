@@ -652,7 +652,7 @@ class Product extends Model implements PageModel {
 			return $initial_variant->amount;
 		}
 
-		return $initial_price->amount;
+		return $initial_price->amount ?? null;
 	}
 
 	/**
