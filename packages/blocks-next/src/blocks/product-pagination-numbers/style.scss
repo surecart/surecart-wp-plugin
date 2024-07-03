@@ -6,6 +6,7 @@
 		line-height: 1;
 		gap: var(--sc-spacing-xx-small);
 		text-decoration: none;
+		color: inherit;
 
 		&[disabled] {
 			pointer-events: none;

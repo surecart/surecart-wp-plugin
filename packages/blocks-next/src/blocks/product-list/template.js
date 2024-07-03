@@ -51,6 +51,12 @@ export const TEMPLATE = [
 		},
 		[['surecart/product-list-filter-tags']],
 	],
-	['surecart/product-template'],
+	[
+		'surecart/product-template',
+		{
+			style: { spacing: { blockGap: '30px' } },
+			layout: { type: 'grid', columnCount: 4 },
+		},
+	],
 	['surecart/product-pagination'],
 ];

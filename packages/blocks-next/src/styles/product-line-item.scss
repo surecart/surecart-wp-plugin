@@ -42,7 +42,7 @@
 		gap: 6px;
 		flex-direction: column;
 		align-items: flex-start;
-		justify-content: flex-start;
+		justify-content: space-between;
 		flex: 1 1 0%;
 	}
 
@@ -98,7 +98,6 @@
 		align-items: flex-end;
 		min-width: 100px;
 		margin-left: auto;
-		align-self: center;
 	}
 
 	&__removable &__suffix {
@@ -161,7 +160,7 @@
 		cursor: pointer;
 		color: var(--sc-color-gray-400);
 		margin-bottom: var(--sc-spacing-small);
-        width: 16px;
+		width: 18px;
 	}
 
 	&__actions__divider {

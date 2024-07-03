@@ -12,10 +12,7 @@
 		data-wp-each--line_item="state.checkoutLineItems"
 		data-wp-key="context.line_item.id"
 	>
-		<div
-			class="sc-product-line-item"
-			style="margin-bottom: 20px;"
-		>
+		<div class="sc-product-line-item">
 			<div class="sc-product-line-item__item">
 				<img
 					class="sc-product-line-item__image"
@@ -43,7 +40,7 @@
 							</span>
 						<?php elseif ( $attributes['editable'] ) : ?>
 							<div
-								class="sc-input-group sc-quantity-selector"
+								class="sc-input-group sc-input-group-sm sc-quantity-selector"
 								data-wp-class--quantity--disabled="state.isQuantityDisabled"
 								data-wp-bind--hidden="!state.isEditable"
 								hidden
