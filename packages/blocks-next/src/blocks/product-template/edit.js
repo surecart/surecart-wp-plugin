@@ -41,17 +41,43 @@ const TEMPLATE = [
 				},
 			],
 			[
-				'surecart/product-list-price',
+				'core/group',
 				{
-					style: {
-						typography: {
-							fontSize: '18px',
-							fontStyle: 'normal',
-							fontWeight: '600',
-						},
-						spacing: { margin: { top: '5px', bottom: '5px' } },
-					},
+					style: { spacing: { blockGap: '0.5em' } },
+					layout: { type: 'flex', flexWrap: 'nowrap' },
 				},
+				[
+					[
+						'surecart/product-list-price',
+						{
+							style: {
+								typography: {
+									fontSize: '18px',
+									fontStyle: 'normal',
+									fontWeight: '600',
+								},
+								spacing: {
+									margin: { top: '5px', bottom: '5px' },
+								},
+							},
+						},
+					],
+					[
+						'surecart/product-scratch-price',
+						{
+							style: {
+								typography: {
+									fontSize: '18px',
+									fontStyle: 'normal',
+									fontWeight: '600',
+								},
+								spacing: {
+									margin: { top: '5px', bottom: '5px' },
+								},
+							},
+						},
+					],
+				],
 			],
 		],
 	],
