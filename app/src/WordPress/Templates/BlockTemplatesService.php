@@ -161,7 +161,7 @@ class BlockTemplatesService {
 		 * templates that aren't listed in theme.json.
 		 */
 		$query_result = array_map(
-			function( $template ) {
+			function ( $template ) {
 				if ( 'theme' === $template->origin && $this->utility->templateHasTitle( $template ) ) {
 					return $template;
 				}
@@ -275,7 +275,7 @@ class BlockTemplatesService {
 		$saved_sc_templates = $check_query->posts;
 
 		return array_map(
-			function( $saved_sc_template ) {
+			function ( $saved_sc_template ) {
 				return $this->utility->buildTemplateResultsFromPost( $saved_sc_template );
 			},
 			$saved_sc_templates
@@ -328,5 +328,4 @@ class BlockTemplatesService {
 
 		return $templates;
 	}
-
 }

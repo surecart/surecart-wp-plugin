@@ -60,9 +60,6 @@ class TemplatesService {
 		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
 		add_filter( 'body_class', [ $this, 'bodyClass' ] );
 		add_action( 'init', [ $this, 'registerMeta' ] );
-
-		// product page query overrides.
-		// add_filter( 'query_vars', [ $this, 'addCurrentProductQueryVar' ] );
 	}
 
 	/**
@@ -84,7 +81,7 @@ class TemplatesService {
 			'post',
 			'_surecart_dashboard_logo_width',
 			[
-				'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+				'auth_callback' => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
 					return current_user_can( 'edit_post', $object_id );
 				},
 				'default'       => '180px',
@@ -106,7 +103,7 @@ class TemplatesService {
 				'post',
 				'_surecart_dashboard_' . $toggle,
 				[
-					'auth_callback' => function( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+					'auth_callback' => function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
 						return current_user_can( 'edit_post', $object_id );
 					},
 					'default'       => true,
@@ -149,6 +146,10 @@ class TemplatesService {
 	public function includeTemplate( $template ) {
 		global $post;
 		$id = $post->ID ?? null;
+
+		if ( ! is_singular( $this->post_type ) ) {
+			return $template;
+		}
 
 		if ( wp_is_block_theme() ) {
 			return $template;
