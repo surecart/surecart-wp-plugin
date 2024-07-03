@@ -21,7 +21,7 @@ export const TEMPLATE = [
 				{
 					layout: { type: 'flex', flexWrap: 'nowrap' },
 				},
-				[['surecart/cart-header-v2', {}]],
+				[['surecart/slide-out-cart-header', {}]],
 			],
 		],
 		[
@@ -30,7 +30,7 @@ export const TEMPLATE = [
 				{
 					layout: { type: 'flex', flexWrap: 'nowrap' },
 				},
-				[['surecart/cart-items-v2', {}]],
+				[['surecart/slide-out-cart-items', {}]],
 			],
 		],
 	],

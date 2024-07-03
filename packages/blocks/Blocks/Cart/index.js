@@ -34,7 +34,7 @@ export const settings = {
 		<BlockReplacer
 			clientId={clientId}
 			attributes={attributes}
-			blockType="surecart/cart-v2"
+			blockType="surecart/slide-out-cart"
 		/>
 	),
 	save,
