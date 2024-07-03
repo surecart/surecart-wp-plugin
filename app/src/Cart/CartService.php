@@ -224,10 +224,13 @@ class CartService {
 	 */
 	public function isFloatingIconEnabled() {
 		// If we have a checkout form block or shortcode, don't render the cart.
-		global $post;
-		$block = wp_get_first_block( parse_blocks( $post->post_content ), 'surecart/checkout-form' ) || has_shortcode( $post->post_content, 'sc_form' );
-		if ( ! empty( $block ) ) {
-			return false;
+		$object = get_queried_object();
+
+		if ( is_a( $object, \WP_Post::class ) ) {
+			$block = wp_get_first_block( parse_blocks( $object->post_content ), 'surecart/checkout-form' ) || has_shortcode( $object->post_content, 'sc_form' );
+			if ( ! empty( $block ) ) {
+				return false;
+			}
 		}
 
 		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', 'floating_icon' );
