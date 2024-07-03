@@ -7,7 +7,6 @@ use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
-use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
@@ -672,12 +671,10 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getScratchDisplayAmountAttribute() {
-		$prices        = $this->active_prices ?? array();
-		$initial_price = $prices[0] ?? null;
-		if ( empty( $initial_price->scratch_amount ) ) {
+		if ( empty( $this->initial_price->scratch_amount ) ) {
 			return '';
 		}
-		return Currency::format( $initial_price->scratch_amount, $initial_price->currency );
+		return Currency::format( $this->initial_price->scratch_amount, $this->initial_price->currency );
 	}
 
 	/**
