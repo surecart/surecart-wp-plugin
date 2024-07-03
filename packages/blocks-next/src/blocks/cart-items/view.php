@@ -102,19 +102,39 @@
 					<?php endif; ?>
 
 					<div class="sc-product-line-item__price">
-						<div class="price">
+						<div class="sc-product-line-item__price-amount">
+							<span>
+								<span
+									data-wp-bind--hidden="!state.lineItemHasScratchAmount"
+									data-wp-text="context.line_item.price.scratchAmount"
+								></span>
+								<span data-wp-text="state.lineItemAmountDisplay"></span>
+							</span>
+
 							<span
-								data-wp-bind--hidden="!state.lineItemHasScratchAmount"
-								data-wp-text="context.line_item.price.scratchAmount"
+								class="sc-product-line-item__price-description"
+								data-wp-bind--hidden="!context.line_item.price.short_interval_text"
+								data-wp-text="context.line_item.price.short_interval_text"
 							></span>
-							<span data-wp-text="state.lineItemAmountDisplay"></span>
+
+							<span
+								class="sc-product-line-item__price-description"
+								data-wp-bind--hidden="!context.line_item.price.short_interval_count_text"
+								data-wp-text="context.line_item.price.short_interval_count_text"
+							></span>
 						</div>
+
 						<div
-							data-wp-bind--hidden="!context.line_item.price.interval"
-							class="sc-product-line-item__price__description"
-							data-wp-text="context.line_item.price.interval"
-						>
-						</div>
+							class="sc-product-line-item__trial sc-product-line-item__price-description"
+							data-wp-bind--hidden="!context.line_item.price.trial_text"
+							data-wp-text="context.line_item.price.trial_text"
+						></div>
+
+						<div
+							class="sc-product-line-item__setup-fee sc-product-line-item__price-description"
+							data-wp-bind--hidden="!context.line_item.price.setup_fee_text"
+							data-wp-text="context.line_item.price.setup_fee_text"
+						></div>
 					</div>
 				</div>
 			</div>
