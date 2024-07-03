@@ -1,5 +1,5 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<label for="quantity" class="sc-form-label">
+	<label for="sc-quantity" class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Quantity', 'surecart' ) ); ?>
 	</label>
 	<div
@@ -19,6 +19,7 @@
 			<?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
 		</div>
 		<input
+			id="sc-quantity"
 			type="number"
 			class="sc-form-control sc-quantity-selector__control"
 			data-wp-bind--value="context.quantity"
@@ -26,9 +27,7 @@
 			data-wp-bind--disabled="state.isQuantityDisabled"
 			data-wp-bind--aria-disabled="state.isQuantityDisabled"
 			data-wp-bind--max="state.maxQuantity"
-			data-wp-bind--aria-valuemax="state.maxQuantity"
 			min="1"
-			aria-min="1"
 			step="1"
 			autocomplete="off"
 			role="spinbutton"
