@@ -12,8 +12,8 @@
 	?>
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
 	data-wp-init="surecart/checkout::callbacks.init"
-	data-wp-on-window--storage="surecart/checkout::callbacks.syncTabs"
 	data-wp-watch="surecart/checkout::callbacks.onChangeCheckout"
+	data-wp-on-window--storage="surecart/checkout::callbacks.syncTabs"
 >
 	<dialog
 		class="sc-drawer"
