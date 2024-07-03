@@ -3,7 +3,7 @@
 	data-wp-bind--hidden="!context.selectedPrice.ad_hoc"
 	hidden
 >
-	<label for="amount" class="sc-form-label">
+	<label for="sc-product-custom-amount" class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
 	</label>
 
@@ -12,6 +12,7 @@
 
 		<input
 			class="sc-form-control"
+			id="sc-product-custom-amount"
 			type="number"
 			step="0.01"
 			data-wp-bind--value="context.adHocAmount"
