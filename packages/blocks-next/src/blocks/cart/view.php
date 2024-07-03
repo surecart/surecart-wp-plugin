@@ -11,8 +11,9 @@
 	);
 	?>
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
-	data-wp-init="surecart/checkout::callbacks.init"
-	data-wp-watch="surecart/checkout::callbacks.onChangeCheckout"
+	data-wp-init="callbacks.init"
+	data-wp-watch="callbacks.onChangeCheckout"
+	data-wp-on-window--storage="callbacks.syncTabs"
 >
 	<dialog
 		class="sc-drawer"
@@ -43,7 +44,7 @@
 
 			<?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
-			<div class="sc-block-ui" data-wp-bind--hidden="surecart/checkout::!state.loading" hidden></div>
+			<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
 		</div>
 	</dialog>
 </div>

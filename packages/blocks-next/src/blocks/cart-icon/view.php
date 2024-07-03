@@ -24,8 +24,8 @@
 
 		<span
 			class="sc-cart-count"
-			data-wp-text="state.getItemsCount"
-			data-wp-bind--aria-label="state.getItemsCountAriaLabelByCount"
+			data-wp-text="state.itemsCount"
+			data-wp-bind--aria-label="state.itemsCountAriaLabel"
 		>
 		</span>
 	</div>
