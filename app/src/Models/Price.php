@@ -249,38 +249,89 @@ class Price extends Model implements Syncable {
 	 */
 	public function getIntervalTextAttribute() {
 		$intervals = array(
-			'day'   => __( 'day', 'surecart' ),
-			'week'  => __( 'week', 'surecart' ),
-			'month' => __( 'month', 'surecart' ),
-			'year'  => __( 'year', 'surecart' ),
+			'day'   => [
+				'single' => __( 'day', 'surecart' ),
+				'plural' => __( 'days', 'surecart' ),
+			],
+			'week'  => [
+				'single' => __( 'week', 'surecart' ),
+				'plural' => __( 'weeks', 'surecart' ),
+			],
+			'month' => [
+				'single' => __( 'month', 'surecart' ),
+				'plural' => __( 'months', 'surecart' ),
+			],
+			'year'  => [
+				'single' => __( 'year', 'surecart' ),
+				'plural' => __( 'years', 'surecart' ),
+			],
 		);
 
-		if ( empty( $intervals[ $this->recurring_interval ] ) ) {
+		$key = (int) $this->recurring_interval_count > 1 ? 'plural' : 'single';
+
+		if ( empty( $intervals[ $this->recurring_interval ][ $key ] ) ) {
 			return '';
 		}
 
 		return sprintf(
 			// translators: %1$d is the number of intervals, %2$s is the interval.
-			_n( '/ %1s', '/ %1$2d %2$1s', $this->recurring_interval_count, 'surecart' ),
-			$intervals[ $this->recurring_interval ],
+			_n( 'every %2s', 'every %1$1s %2$2s', $this->recurring_interval_count, 'surecart' ),
 			(int) $this->recurring_interval_count,
+			$intervals[ $this->recurring_interval ][ $key ],
 		);
 	}
 
 	/**
-	 * Get the short interval text attribute
+	 * Get the interval text attribute
 	 *
 	 * @return string
 	 */
 	public function getShortIntervalTextAttribute() {
-		return $this->getIntervalTextAttribute(
-			[
-				'day'   => __( 'day', 'surecart' ),
-				'week'  => __( 'wk', 'surecart' ),
-				'month' => __( 'mo', 'surecart' ),
-				'year'  => __( 'yr', 'surecart' ),
-			]
+		$intervals = array(
+			'day'   => [
+				'single' => __( 'day', 'surecart' ),
+				'plural' => __( 'days', 'surecart' ),
+			],
+			'week'  => [
+				'single' => __( 'wk', 'surecart' ),
+				'plural' => __( 'wks', 'surecart' ),
+			],
+			'month' => [
+				'single' => __( 'mo', 'surecart' ),
+				'plural' => __( 'mos', 'surecart' ),
+			],
+			'year'  => [
+				'single' => __( 'yr', 'surecart' ),
+				'plural' => __( 'yrs', 'surecart' ),
+			],
 		);
+
+		$key = (int) $this->recurring_interval_count > 1 ? 'plural' : 'single';
+
+		if ( empty( $intervals[ $this->recurring_interval ][ $key ] ) ) {
+			return '';
+		}
+
+		return sprintf(
+			// translators: %1$d is the number of intervals, %2$s is the interval.
+			_n( '/ %2$2s', '/ %1$1s %2$2s', $this->recurring_interval_count, 'surecart' ),
+			(int) $this->recurring_interval_count,
+			$intervals[ $this->recurring_interval ][ $key ],
+		);
+	}
+
+	/**
+	 * Get the interval count text attribute
+	 *
+	 * @return string
+	 */
+	public function getShortIntervalCountTextAttribute() {
+		if ( (int) $this->recurring_period_count < 2 ) {
+			return '';
+		}
+
+		// translators: %d is the number of intervals.
+		return sprintf( __( ' x %s', 'surecart' ), (int) $this->recurring_period_count );
 	}
 
 	/**
