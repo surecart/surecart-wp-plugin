@@ -171,13 +171,6 @@ class CartService {
 			return '';
 		}
 
-		// If we have a checkout form block or shortcode, don't render the cart.
-		global $post;
-		$block = wp_get_first_block( parse_blocks( $post->post_content ), 'surecart/checkout-form' ) || has_shortcode( $post->post_content, 'sc_form' );
-		if ( ! empty( $block ) ) {
-			return;
-		}
-
 		// get cart block.
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
 		if ( ! $template || empty( $template->content ) ) {
@@ -185,6 +178,7 @@ class CartService {
 		}
 
 		$cart_icon_block_content = '<!-- wp:surecart/cart-icon /-->';
+
 		ob_start();
 		?>
 
@@ -229,6 +223,13 @@ class CartService {
 	 * @return string
 	 */
 	public function isFloatingIconEnabled() {
+		// If we have a checkout form block or shortcode, don't render the cart.
+		global $post;
+		$block = wp_get_first_block( parse_blocks( $post->post_content ), 'surecart/checkout-form' ) || has_shortcode( $post->post_content, 'sc_form' );
+		if ( ! empty( $block ) ) {
+			return false;
+		}
+
 		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', 'floating_icon' );
 		return in_array( $cart_icon_type, [ 'floating_icon', 'both' ] );
 	}
