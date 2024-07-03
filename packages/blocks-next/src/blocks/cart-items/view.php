@@ -21,6 +21,7 @@
 					data-wp-bind--alt="context.line_item.image.alt"
 					data-wp-bind--srcset="context.line_item.image.srcset"
 					data-wp-bind--sizes="context.line_item.image.sizes"
+					loading="lazy"
 					alt=""
 				/>
 
