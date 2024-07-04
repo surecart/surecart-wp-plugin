@@ -52,24 +52,11 @@ store('surecart/cart', {
 				// speak the cart dialog state.
 				speak(__('Cart opened', 'surecart'), 'assertive');
 			}
-
-			// Lock the body scroll when the dialog is open.
-			dialog?.open
-				? document.body.classList.add('sc-scroll-lock')
-				: document.body.classList.remove('sc-scroll-lock');
-
-			// Close the dialog when the Escape key is pressed.
-			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && dialog.open) {
-					document.body.classList.remove('sc-scroll-lock');
-				}
-			});
 		},
 		closeOverlay: (e) => {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
 				e.currentTarget.close();
-				document.body.classList.remove('sc-scroll-lock');
 			}
 		},
 	},
