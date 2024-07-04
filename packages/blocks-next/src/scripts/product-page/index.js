@@ -10,6 +10,7 @@ import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
+const { scProductViewed } = require('./events');
 
 // controls the product page.
 const { state, actions } = store('surecart/product-page', {
@@ -258,6 +259,10 @@ const { state, actions } = store('surecart/product-page', {
 			} finally {
 				context.busy = false;
 			}
+		},
+		init: () => {
+			const { selectedPrice, product } = getContext();
+			scProductViewed(product, selectedPrice, state.quantity);
 		},
 	},
 
