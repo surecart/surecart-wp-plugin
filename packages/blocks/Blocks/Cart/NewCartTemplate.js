@@ -1,37 +1,52 @@
-export const newCartTemplate = (attributes, childBlocks) => {
-	const getChildBlocksAttributes = (blockName) => {
-		return childBlocks[0]?.innerBlocks.find(
-			(block) => block.name === blockName
-		)?.attributes;
-	};
+export const newCartTemplate = (childBlocks) => {
+	const transformedBlocks = [];
 
-	const blockNames = [
-		'surecart/cart-header',
-		'surecart/cart-items',
-		'surecart/cart-coupon',
-		'surecart/cart-bump-line-item',
-		'surecart/cart-subtotal',
-		'surecart/cart-message',
-		'surecart/cart-submit',
-	];
+	childBlocks.forEach((block) => {
+		switch (block.name) {
+			case 'surecart/cart-header':
+				transformedBlocks.push([
+					'surecart/slide-out-cart-header',
+					block.attributes,
+				]);
+				break;
+			case 'surecart/cart-items':
+				transformedBlocks.push([
+					'surecart/slide-out-cart-items',
+					block.attributes,
+				]);
+				break;
+			case 'surecart/cart-coupon':
+				transformedBlocks.push([
+					'surecart/slide-out-cart-coupon',
+					block.attributes,
+				]);
+				break;
+			case 'surecart/cart-bump-line-item':
+				transformedBlocks.push([
+					'surecart/slide-out-cart-bump-line-item',
+					block.attributes,
+				]);
+				break;
+			case 'surecart/cart-subtotal':
+				transformedBlocks.push([
+					'surecart/slide-out-cart-subtotal',
+					block.attributes,
+				]);
+				break;
+			case 'surecart/cart-message':
+				transformedBlocks.push([
+					'surecart/slide-out-cart-message',
+					block.attributes,
+				]);
+				break;
+			case 'surecart/cart-submit':
+				transformedBlocks.push([
+					'surecart/slide-out-cart-submit',
+					block.attributes,
+				]);
+				break;
+		}
+	});
 
-	const [
-		headerAttributes,
-		itemsAttributes,
-		couponAttributes,
-		bumpLineItemAttributes,
-		subtotalAttributes,
-		messageAttributes,
-		submitAttributes,
-	] = blockNames.map(getChildBlocksAttributes);
-
-	return [
-		['surecart/slide-out-cart-header', headerAttributes],
-		['surecart/slide-out-cart-items', itemsAttributes],
-		['surecart/slide-out-cart-coupon', couponAttributes],
-		['surecart/slide-out-cart-bump-line-item', bumpLineItemAttributes],
-		['surecart/slide-out-cart-subtotal', subtotalAttributes],
-		['surecart/slide-out-cart-message', messageAttributes],
-		['surecart/slide-out-cart-submit', submitAttributes],
-	].filter(Boolean);
+	return transformedBlocks.filter(Boolean);
 };

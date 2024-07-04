@@ -23,7 +23,7 @@ export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 	const { replaceBlock } = useDispatch(blockEditorStore);
 
 	const childBlocks = select('core/block-editor').getBlocks(clientId);
-	const newCart = newCartTemplate(attributes, childBlocks);
+	const newCart = newCartTemplate(childBlocks);
 
 	useEffect(() => {
 		if (!block?.name || !replaceBlock || !clientId) return;
