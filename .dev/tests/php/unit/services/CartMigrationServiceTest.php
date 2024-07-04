@@ -21,7 +21,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 		], false);
 
 		$attributes = [
-			'text' => 'Cart',
+			'title' => 'Cart',
 			'width' => '500px',
 		];
 
@@ -53,7 +53,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_constructor_sets_attributes()
     {
         $attributes = [
-			'text' => 'Cart',
+			'title' => 'Cart',
 			'width' => '500px',
 		];
 

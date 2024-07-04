@@ -191,7 +191,7 @@ class CartMigrationService {
 	}
 
 	/**
-	 * Render the new product list.
+	 * Render the new cart block.
 	 *
 	 * @return string
 	 */
