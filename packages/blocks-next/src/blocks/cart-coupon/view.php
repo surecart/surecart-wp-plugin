@@ -73,7 +73,7 @@
 		<div>
 			<?php if ( $attributes['collapsed'] ) : ?>
 				<div>
-					<span
+					<div
 						data-wp-bind--hidden="context.discountInputOpen"
 						hidden
 						class="trigger"
@@ -84,7 +84,7 @@
 						id="sc-coupon-trigger"
 					>
 						<?php echo esc_attr( $attributes['text'] ); ?>
-					</span>
+					</div>
 
 					<form>
 						<div
@@ -98,7 +98,7 @@
 								class="sc-form-control sc-coupon-form__input"
 								aria-label="quantity"
 								aria-describedby="coupon-input-addon"
-								placeholder="<?php esc_html_e( 'Enter coupon code', 'surecart' ); ?>"
+								placeholder="<?php echo isset( $attributes['placeholder'] ) ? esc_attr( $attributes['placeholder'] ) : esc_html__( 'Enter coupon code', 'surecart' ); ?>"
 								data-wp-bind--value="state.promotionCode"
 								data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 								data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
@@ -129,7 +129,7 @@
 							class="sc-form-control sc-coupon-form__input"
 							aria-label="quantity"
 							aria-describedby="basic-addon1"
-							placeholder="<?php esc_attr_e( 'Enter coupon code', 'surecart' ); ?>"
+							placeholder="<?php echo isset( $attributes['placeholder'] ) ? esc_attr( $attributes['placeholder'] ) : esc_html__( 'Enter coupon code', 'surecart' ); ?>"
 							data-wp-bind="state.discountCode"
 							data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 							data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
