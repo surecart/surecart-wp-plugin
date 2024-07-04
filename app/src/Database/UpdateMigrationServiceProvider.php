@@ -181,7 +181,7 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 
 				$new_content = str_replace(
 					'<!-- wp:' . $insert_before_block,
-					'<!-- /wp:surecart/product-selected-price-ad-hoc-amount -->' . PHP_EOL . '<!-- wp:' . $insert_before_block,
+					'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<!-- wp:' . $insert_before_block,
 					$product_template->post_content
 				);
 
