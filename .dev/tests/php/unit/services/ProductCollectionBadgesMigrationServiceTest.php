@@ -14,7 +14,7 @@ class ProductCollectionBadgesMigrationServiceTest extends SureCartUnitTestCase {
 	/**
 	 * Setup
 	 */
-	public function setUp() {
+	public function setUp() : void {
 		// set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers'=>[
