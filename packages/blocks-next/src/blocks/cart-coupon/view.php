@@ -109,7 +109,7 @@
 									data-wp-bind--hidden="!state.promotionCode"
 									data-wp-on--click="actions.applyDiscount"
 								>
-									<?php esc_html_e( 'Apply', 'surecart' ); ?>
+									<?php echo isset( $attributes['button_text'] ) ? esc_attr( $attributes['button_text'] ) : esc_html__( 'Apply', 'surecart' ); ?>
 								</button>
 							</span>
 						</div>
@@ -139,7 +139,7 @@
 								data-wp-bind--hidden="!state.promotionCode"
 								data-wp-on--click="actions.applyDiscount"
 							>
-								<?php esc_html_e( 'Apply', 'surecart' ); ?>
+								<?php echo isset( $attributes['button_text'] ) ? esc_attr( $attributes['button_text'] ) : esc_html__( 'Apply', 'surecart' ); ?>
 							</button>
 						</span>
 					</div>
