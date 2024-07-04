@@ -116,6 +116,10 @@ class CartService {
 	 */
 	public function getMode() {
 		$form = $this->getForm();
+		if ( empty( $form->ID ) ) {
+			return '';
+		}
+
 		return Form::getMode( $form->ID );
 	}
 

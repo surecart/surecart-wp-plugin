@@ -29,7 +29,7 @@
 		},
 		"color": {
 			"text": true,
-			"background": true
+			"background": false
 		},
 		"__experimentalBorder": {
 			"width": true,
