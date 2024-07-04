@@ -32,8 +32,9 @@ export const BlockReplacer = ({ clientId, blockType, attributes }) => {
 			createBlock(
 				blockType,
 				{
-					text: attributes?.text,
-					width: attributes?.width,
+					...attributes,
+					title: attributes?.title || 'Cart',
+					width: attributes?.width || '500px',
 				},
 				createBlocksFromInnerBlocksTemplate(newCart)
 			),
