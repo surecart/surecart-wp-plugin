@@ -1,5 +1,5 @@
 <?php
-global $sc_block_id;
+global $sc_query_id;
 
 // get non-empty collections.
 $collections = get_terms(
@@ -14,7 +14,7 @@ if ( ! empty( $block->context['surecart/product-list/collection_id'] ) ) {
 	return '';
 }
 
-$url        = \SureCart::block()->urlParams( 'products', $sc_block_id );
+$url        = \SureCart::block()->urlParams( 'products' );
 $filter_key = $url->getKey( 'filter' );
 
 $options = array_map(

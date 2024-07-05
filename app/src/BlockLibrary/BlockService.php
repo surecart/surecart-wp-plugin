@@ -74,8 +74,8 @@ class BlockService {
 	 *
 	 * @return URLParamService
 	 */
-	public function urlParams( $type = '', $instance_id = '' ) {
-		return new URLParamService( $type, $instance_id );
+	public function urlParams( $type = '' ) {
+		return new URLParamService( $type );
 	}
 
 	/**

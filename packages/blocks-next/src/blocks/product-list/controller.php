@@ -1,7 +1,7 @@
 <?php
 use SureCart\Models\Blocks\ProductListBlock;
 
-global $sc_block_id;
+global $sc_query_id;
 
 // Set the intitial state used in SSR.
 wp_interactivity_state(

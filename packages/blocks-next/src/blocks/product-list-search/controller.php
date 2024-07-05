@@ -1,6 +1,6 @@
 <?php
 use SureCart\Models\Blocks\ProductListBlock;
-global $sc_block_id;
+global $sc_query_id;
 
 $controller = new ProductListBlock( $block );
 $list_query = $controller->query();

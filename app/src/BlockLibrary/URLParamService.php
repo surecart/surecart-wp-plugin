@@ -46,9 +46,10 @@ class URLParamService {
 	 *
 	 * @param string $prefix Prefix.
 	 */
-	public function __construct( $prefix = 'query', $instance_id = '' ) {
+	public function __construct( $prefix = 'query' ) {
+		global $sc_query_id;
 		$this->prefix      = $prefix;
-		$this->instance_id = $instance_id;
+		$this->instance_id = $sc_query_id;
 	}
 
 	/**
