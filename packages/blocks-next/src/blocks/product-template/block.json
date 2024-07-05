@@ -20,7 +20,6 @@
 	],
 	"ancestor": ["surecart/product-list"],
 	"usesContext": [
-		"surecart/product-list/block_id",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
 		"surecart/product-list/ids",

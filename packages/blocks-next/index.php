@@ -86,7 +86,8 @@ add_filter(
 
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
-			$context['surecart/product-list/block_id']      = wp_unique_id();
+			global $sc_query_id;
+			$sc_query_id = wp_unique_id();
 			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
 		}
 		return $context;

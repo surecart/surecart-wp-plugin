@@ -13,11 +13,7 @@
 		"surecart/product-list/ids": "ids",
 		"surecart/product-list/collection_id": "collection_id"
 	},
-	"usesContext": [
-		"surecart/product-list/block_id",
-		"surecart/product-list/type",
-		"surecart/product-list/ids"
-	],
+	"usesContext": ["surecart/product-list/type", "surecart/product-list/ids"],
 	"attributes": {
 		"ids": {
 			"type": "array",

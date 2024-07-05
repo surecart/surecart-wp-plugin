@@ -1,6 +1,6 @@
 <?php
-$block_id       = $block->context['surecart/product-list/block_id'] ?? '';
-$params         = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block_id );
+global $sc_query_id;
+$params         = \SureCart::block()->urlParams( 'products' );
 $query_order    = $params->getArg( 'order' ) ?? 'desc';
 $query_order_by = $params->getArg( 'orderby' ) ?? 'date';
 

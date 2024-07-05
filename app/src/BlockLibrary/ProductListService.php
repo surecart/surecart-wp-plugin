@@ -51,7 +51,7 @@ class ProductListService {
 	public function __construct( $block ) {
 		$this->block    = $block;
 		$this->block_id = $block->context['surecart/product-list/blockId'] ?? '';
-		$this->url      = \SureCart::block()->urlParams( 'products' )->setInstanceId( $this->block_id );
+		$this->url      = \SureCart::block()->urlParams( 'products' );
 	}
 
 	/**
