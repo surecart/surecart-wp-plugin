@@ -1,7 +1,6 @@
 <?php
-
-$block_id = $block->context['surecart/product-list/block_id'] ?? '';
-$params   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block_id );
+global $sc_query_id;
+$params   = \SureCart::block()->urlParams( 'products' );
 $filter   = $params->getArg( 'sc_collection' );
 
 // no filters, don't render this block.
