@@ -21,7 +21,7 @@ function sc_get_cart_block_style( $attributes ) {
 	$style = '';
 
 	// Border style.
-	$style .= ! empty( $attributes['border'] ) ? 'border-bottom: var(--sc-drawer-border);' : '';
+	$style .= isset( $attributes['border'] ) && $attributes['border'] !== false ? 'border-bottom: var(--sc-drawer-border);' : '';
 
 	// Padding style.
 	$style .= ! empty( $attributes['padding']['top'] ) ? 'padding-top: ' . $attributes['padding']['top'] . ';' : '';
