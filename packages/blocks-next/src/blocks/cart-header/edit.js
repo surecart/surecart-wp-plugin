@@ -26,7 +26,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-        <CartInspectorControls
+				<CartInspectorControls
 					attributes={attributes}
 					setAttributes={setAttributes}
 				/>
