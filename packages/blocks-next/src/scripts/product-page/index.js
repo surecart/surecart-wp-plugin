@@ -67,9 +67,9 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is this product on sale?
 		 */
 		get isOnSale() {
-			const { selectedAmount, selectedPrice } = getContext();
+			const { selectedPrice } = getContext();
 			return !selectedPrice?.ad_hoc
-				? selectedPrice.scratch_amount > selectedAmount
+				? selectedPrice.scratch_amount > state.selectedAmount
 				: false;
 		},
 
