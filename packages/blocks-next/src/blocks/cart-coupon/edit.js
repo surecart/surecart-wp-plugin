@@ -194,12 +194,7 @@ export default ({ attributes, setAttributes }) => {
 								</div>
 							) : (
 								<div>
-									<label
-										class="sc-form-label"
-										for="sc-coupon-input"
-									>
-										{text}
-									</label>
+									<label for="sc-coupon-input">{text}</label>
 									{renderDiscountInput()}
 								</div>
 							)}

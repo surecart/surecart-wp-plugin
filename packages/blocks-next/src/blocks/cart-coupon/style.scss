@@ -35,4 +35,11 @@
 			display: none;
 		}
 	}
+
+	.sc-coupon-input-label {
+		margin-bottom: var(--sc-input-label-margin);
+		font-style: normal;
+		font-size: var(--sc-input-label-font-size-medium);
+		font-weight: var(--sc-font-weight-normal);
+	}
 }
