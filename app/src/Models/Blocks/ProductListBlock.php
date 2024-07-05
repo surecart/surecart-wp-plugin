@@ -40,8 +40,9 @@ class ProductListBlock {
 	 * @param \WP_Block $block The block.
 	 */
 	public function __construct( \WP_Block $block = null ) {
+		global $sc_block_id;
 		$this->block = $block ? $block : \WP_Block_Supports::$block_to_render;
-		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block->context['surecart/product-list/block_id'] ?? '' );
+		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $sc_block_id ?? '' );
 	}
 
 	/**

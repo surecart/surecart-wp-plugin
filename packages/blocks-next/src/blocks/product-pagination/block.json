@@ -8,7 +8,6 @@
 	"category": "sc-product-list",
 	"example": {},
 	"usesContext": [
-		"surecart/product-list/block_id",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
 		"surecart/product-list/ids",

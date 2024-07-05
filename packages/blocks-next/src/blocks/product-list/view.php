@@ -4,14 +4,14 @@
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			array(
-				'blockId'  => $block_id,
+				'blockId'  => $sc_block_id,
 				'products' => $products,
 			)
 		)
 	);
 	?>
 	data-wp-interactive='{ "namespace": "surecart/product-list" }'
-	data-wp-router-region="<?php echo esc_attr( 'products-' . $block_id ); ?>"
+	data-wp-router-region="<?php echo esc_attr( 'products-' . $sc_block_id ); ?>"
 	data-wp-watch="callbacks.onChangeProducts"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

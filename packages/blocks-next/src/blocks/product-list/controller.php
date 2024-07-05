@@ -1,6 +1,8 @@
 <?php
 use SureCart\Models\Blocks\ProductListBlock;
 
+global $sc_block_id;
+
 // Set the intitial state used in SSR.
 wp_interactivity_state(
 	'surecart/product-list',
@@ -9,8 +11,6 @@ wp_interactivity_state(
 		'searching' => false,
 	]
 );
-
-$block_id = $block->context['surecart/product-list/block_id'] ?? '';
 
 // For Analytics.
 $controller = new ProductListBlock( $block );
