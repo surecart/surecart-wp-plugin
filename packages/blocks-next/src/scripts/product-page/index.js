@@ -29,6 +29,8 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		get selectedAmount() {
 			const { selectedPrice } = getContext();
+			const { prices } = state?.product || {};
+
 			if (prices?.length > 1) {
 				return selectedPrice?.amount || '';
 			}
