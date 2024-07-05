@@ -7,7 +7,7 @@
 	data-wp-class--sc-choice--checked="state.isPriceSelected"
 	data-wp-bind--aria-checked="state.isPriceSelected"
 	tabindex="0"
-	role="button"
+	role="radio"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </div>

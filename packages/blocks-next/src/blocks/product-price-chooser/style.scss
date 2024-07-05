@@ -1,0 +1,20 @@
+.wp-block-surecart-product-price-chooser .sc-form-label {
+	color: inherit !important;
+}
+
+.wp-block-surecart-product-price-chooser {
+	container-type: inline-size;
+	container-name: product-price-choices;
+}
+
+@container product-price-choices (max-width: 320px) {
+	.wp-block-surecart-product-price-choice-template {
+		flex-direction: column;
+
+		.wp-block-group.is-vertical.is-content-justification-right {
+			align-items: flex-start;
+			width: 100%;
+			text-align: left;
+		}
+	}
+}

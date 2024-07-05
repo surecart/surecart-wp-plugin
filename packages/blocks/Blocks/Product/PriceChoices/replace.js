@@ -127,7 +127,7 @@ export default ({ clientId, attributes }) => {
 
 	replaceBlock(clientId, [
 		createBlock(
-			'surecart/product-price-choices-v2',
+			'surecart/product-price-chooser',
 			{
 				limit: attributes?.limit,
 				type: attributes?.type,

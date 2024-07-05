@@ -12,13 +12,3 @@
 		text-align: right;
 	}
 }
-
-@container product-price-choice-template (max-width: 320px) {
-	.wp-block-surecart-product-price-choice-template {
-		.wp-block-group.is-vertical.is-content-justification-right {
-			align-items: flex-start;
-			width: 100%;
-			text-align: left;
-		}
-	}
-}
