@@ -55,7 +55,7 @@ window.addEventListener('scAddedToCart', function (e) {
 /**
  * Handle view content event.
  */
-window.addEventListener('scProductViewed', function (e: CustomEvent) {
+window.addEventListener('scProductViewed', function (e) {
 	if (!window?.fbq) return;
 
 	const product = e.detail;
