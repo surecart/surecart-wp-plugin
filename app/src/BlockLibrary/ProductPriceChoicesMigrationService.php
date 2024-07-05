@@ -86,7 +86,7 @@ class ProductPriceChoicesMigrationService {
 			),
 		);
 
-		$this->block_html .= '<!-- wp:surecart/product-price-choices-v2 ' . wp_json_encode( $choices_attributes ) . ' -->';
+		$this->block_html .= '<!-- wp:surecart/product-price-chooser ' . wp_json_encode( $choices_attributes ) . ' -->';
 		$this->block_html .= '<!-- wp:surecart/product-price-choice-template ' . wp_json_encode( $template_attributes ) . ' -->';
 		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
@@ -97,7 +97,7 @@ class ProductPriceChoicesMigrationService {
 		$this->block_html .= '</div>';
 		$this->block_html .= '<!-- /wp:group -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
-		$this->block_html .= '<!-- /wp:surecart/product-price-choices-v2 -->';
+		$this->block_html .= '<!-- /wp:surecart/product-price-chooser -->';
 	}
 
 	/**
