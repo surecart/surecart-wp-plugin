@@ -39,5 +39,5 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/line-item.css"]
+	"style": ["file:../../styles/line-item.css", "file:./style-index.css"]
 }

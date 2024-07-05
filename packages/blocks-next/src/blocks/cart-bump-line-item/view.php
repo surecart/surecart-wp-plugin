@@ -13,7 +13,7 @@
 		<div class="sc-product-line-item__item">
 			<div class="sc-product-line-item__text">
 				<div class="sc-product-line-item__text-details">
-					<div class="sc-product-line-item__description">
+					<div class="sc-bump-line-item-description">
 						<span>
 							<?php echo wp_kses_post( $attributes['label'] ?? __( 'Bundle Discount', 'surecart' ) ); ?>
 						</span>
@@ -22,7 +22,7 @@
 			</div>
 
 			<div class="sc-product-line-item__suffix">
-				<div class="sc-product-line-item__price">
+				<div class="sc-bump-line-item-price">
 					<div class="price">
 						<span data-wp-text="state.checkout.bump_display_amount"></span>
 					</div>
