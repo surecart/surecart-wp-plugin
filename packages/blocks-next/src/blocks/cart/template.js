@@ -10,7 +10,7 @@ export const TEMPLATE = [
 				left: '1.25em',
 			},
 			lock: { move: true, remove: true },
-			text: 'Review Your Cart',
+			title: 'Review Your Cart',
 		},
 	],
 	[

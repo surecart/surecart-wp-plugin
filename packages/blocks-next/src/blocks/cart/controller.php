@@ -1,7 +1,10 @@
 <?php
 $styles = sc_get_block_styles();
-$style  = $styles['css'] ?? '';
 $class  = $styles['classnames'] ?? '';
+$style  = $styles['css'] ?? '';
+
+// width style.
+$style .= ! empty( $attributes['width'] ) ? 'width: ' . $attributes['width'] . ';' : '';
 
 $form      = \SureCart::forms()->getDefault();
 $form_mode = \SureCart\Models\Form::getMode( $form->ID );

@@ -1,5 +1,4 @@
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	<?php
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
@@ -19,6 +18,13 @@
 		class="sc-drawer"
 		data-wp-on--click="surecart/cart::actions.closeOverlay"
 		aria-labelledby="sc-cart-title"
+		<?php echo wp_kses_data(
+			get_block_wrapper_attributes(
+				array(
+					'style' => $style,
+				)
+			)
+		); ?>
 	>
 		<div class="sc-drawer__wrapper">
 			<!-- Cart alert -->
