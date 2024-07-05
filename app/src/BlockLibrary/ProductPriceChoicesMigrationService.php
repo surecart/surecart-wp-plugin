@@ -91,7 +91,7 @@ class ProductPriceChoicesMigrationService {
 		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
 		$this->renderPriceName();
-		if ( $this->attributes['show-price'] ) {
+		if ( ! empty( $this->attributes['show-price'] ) ) {
 			$this->renderPriceAmountTrialAndSetupFee();
 		}
 		$this->block_html .= '</div>';
