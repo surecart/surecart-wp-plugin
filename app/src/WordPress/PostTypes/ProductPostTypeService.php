@@ -656,8 +656,8 @@ class ProductPostTypeService {
 			$this->post_type,
 			array(
 				'labels'            => array(
-					'name'                     => _x( 'Products', 'post type general name', 'surecart' ),
-					'singular_name'            => _x( 'Product', 'post type singular name', 'surecart' ),
+					'name'                     => _x( 'SureCart Product', 'post type general name', 'surecart' ),
+					'singular_name'            => _x( 'SureCart Product', 'post type singular name', 'surecart' ),
 					'add_new'                  => _x( 'Add New', 'Product', 'surecart' ),
 					'add_new_item'             => __( 'Add new Product', 'surecart' ),
 					'new_item'                 => __( 'New Product', 'surecart' ),
@@ -678,7 +678,7 @@ class ProductPostTypeService {
 				),
 				'hierarchical'      => true,
 				'public'            => true,
-				'show_ui'           => false,
+				'show_ui'           => true,
 				'show_in_menu'      => false,
 				'rewrite'           => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
