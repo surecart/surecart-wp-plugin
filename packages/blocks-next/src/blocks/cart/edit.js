@@ -6,8 +6,7 @@ import {
 	InspectorControls,
 	useBlockProps,
 	InnerBlocks,
-	useInnerBlocksProps as __stableUseInnerBlocksProps,
-	__experimentalUseInnerBlocksProps,
+	useInnerBlocksProps,
 	__experimentalUnitControl as UnitControl,
 	useSetting,
 } from '@wordpress/block-editor';
@@ -22,34 +21,22 @@ import {
 import { TEMPLATE } from './template';
 
 export default ({ attributes: { width }, setAttributes }) => {
-	// const allowedBlocks = [
-	// 	'surecart/slide-out-cart-header',
-	// 	'surecart/slide-out-cart-items',
-	// 	'surecart/slide-out-cart-coupon',
-	// 	'surecart/slide-out-cart-subtotal',
-	// 	'surecart/slide-out-cart-submit',
-	// 	'surecart/slide-out-cart-message',
-	// 	'surecart/slide-out-cart-bump-line-item',
-	// ];
-
 	const blockProps = useBlockProps({
 		style: {
 			fontSize: '16px',
 			fontFamily: 'var(--sc-font-sans)',
+			maxWidth: width,
 		},
+		className: 'sc-cart__editor-container',
 	});
 
-	const useInnerBlocksProps = __stableUseInnerBlocksProps
-		? __stableUseInnerBlocksProps
-		: __experimentalUseInnerBlocksProps;
-
 	const innerBlocksProps = useInnerBlocksProps(
+		blockProps,
 		{
-			className: 'sc-cart__editor-container',
+			template: TEMPLATE,
 			style: {
 				maxWidth: width,
 			},
-			template: TEMPLATE,
 		},
 		{
 			renderAppender: InnerBlocks.ButtonBlockAppender,
@@ -80,6 +67,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
+
 			<div {...blockProps}>
 				<div {...innerBlocksProps}></div>
 			</div>
