@@ -6,35 +6,69 @@ import {
 import { useSelect, useDispatch } from '@wordpress/data';
 
 const newPriceChoicesTemplate = (attributes) => {
+	const defaultTextColor = attributes?.textColor || defaultTextColor;
 	return [
 		[
 			'surecart/product-price-choices-template',
 			{
+				style: {
+					spacing: {
+						...(attributes?.styles?.spacing || {}),
+						blockGap: 'var:preset|spacing|20',
+					},
+				},
 				layout: {
 					type: 'grid',
 					columnCount: 2,
+					justifyContent: 'stretch',
+					orientation: 'vertical',
+					flexWrap: 'nowrap',
+					verticalAlignment: 'center',
 				},
 			},
 			[
 				[
 					'surecart/product-price-choice-template',
 					{
-						style: attributes?.style,
 						backgroundColor: attributes?.backgroundColor,
+						textColor: attributes?.textColor,
+						layout: {
+							type: 'flex',
+							justifyContent: 'space-between',
+							flexWrap: 'nowrap',
+							orientation: 'horizontal',
+						},
+						style: {
+							...attributes?.style,
+							spacing: null,
+						},
 					},
 					[
 						[
+							'surecart/price-name',
+							{
+								style: {
+									typography: {
+										fontStyle: 'normal',
+										fontWeight: '700',
+									},
+								},
+							},
+							[],
+						],
+						[
 							'core/group',
 							{
+								style: { spacing: { blockGap: '0px' } },
 								layout: {
 									type: 'flex',
-									flexWrap: 'wrap',
-									justifyContent: 'space-between',
+									orientation: 'vertical',
+									justifyContent: 'right',
 								},
 							},
 							[
 								[
-									'surecart/price-name',
+									'surecart/price-amount',
 									{
 										style: {
 											typography: {
@@ -46,63 +80,38 @@ const newPriceChoicesTemplate = (attributes) => {
 									[],
 								],
 								[
-									'core/group',
+									'surecart/price-trial',
 									{
-										style: { spacing: { blockGap: '0px' } },
-										layout: {
-											type: 'flex',
-											orientation: 'vertical',
-											justifyContent: 'right',
+										style: {
+											color: { text: defaultTextColor },
+											elements: {
+												link: {
+													color: {
+														text: defaultTextColor,
+													},
+												},
+											},
 										},
+										fontSize: 'small',
 									},
-									[
-										[
-											'surecart/price-amount',
-											{
-												style: {
-													typography: {
-														fontStyle: 'normal',
-														fontWeight: '700',
+									[],
+								],
+								[
+									'surecart/price-setup-fee',
+									{
+										style: {
+											color: { text: defaultTextColor },
+											elements: {
+												link: {
+													color: {
+														text: defaultTextColor,
 													},
 												},
 											},
-											[],
-										],
-										[
-											'surecart/price-trial',
-											{
-												style: {
-													color: { text: '#8a8a8a' },
-													elements: {
-														link: {
-															color: {
-																text: '#8a8a8a',
-															},
-														},
-													},
-												},
-												fontSize: 'small',
-											},
-											[],
-										],
-										[
-											'surecart/price-setup-fee',
-											{
-												style: {
-													color: { text: '#8a8a8a' },
-													elements: {
-														link: {
-															color: {
-																text: '#8a8a8a',
-															},
-														},
-													},
-												},
-												fontSize: 'small',
-											},
-											[],
-										],
-									],
+										},
+										fontSize: 'small',
+									},
+									[],
 								],
 							],
 						],
@@ -129,7 +138,6 @@ export default ({ clientId, attributes }) => {
 		createBlock(
 			'surecart/product-price-chooser',
 			{
-				limit: attributes?.limit,
 				type: attributes?.type,
 			},
 			createBlocksFromInnerBlocksTemplate(
