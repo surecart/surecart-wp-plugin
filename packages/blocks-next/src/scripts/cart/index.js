@@ -10,7 +10,7 @@ const { speak } = wp.a11y;
 store('surecart/cart', {
 	actions: {
 		toggle: (e) => {
-			if (e && e.key === 'Tab') {
+			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
 			}
 
@@ -52,17 +52,11 @@ store('surecart/cart', {
 				// speak the cart dialog state.
 				speak(__('Cart opened', 'surecart'), 'assertive');
 			}
-
-			// Lock the body scroll when the dialog is open.
-			dialog?.open
-				? document.body.classList.add('sc-scroll-lock')
-				: document.body.classList.remove('sc-scroll-lock');
 		},
 		closeOverlay: (e) => {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
 				e.currentTarget.close();
-				document.body.classList.remove('sc-scroll-lock');
 			}
 		},
 	},

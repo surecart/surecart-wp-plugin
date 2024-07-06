@@ -87,11 +87,15 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Get the number of items in checkout.
 		 */
-		get getItemsCount() {
-			return (state.checkout?.line_items?.data || []).reduce(
-				(count, item) => count + (item?.quantity || 0),
-				0
-			);
+		get itemsCount() {
+			return state.checkout?.line_items_count || 0;
+		},
+
+		/**
+		 * Check if the checkout has any line items.
+		 */
+		get hasItems() {
+			return state.itemsCount > 0;
 		},
 
 		/**
@@ -106,13 +110,13 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Get the line item display amount.
 		 */
-		get lineItemAmountDisplay() {
+		get lineItemDisplayAmount() {
 			const { line_item } = getContext();
 			if (!!line_item?.ad_hoc_amount) {
-				return line_item.ad_hoc_amount_display;
+				return line_item.ad_hoc_display_amount;
 			}
 
-			return line_item.subtotal_amount_display;
+			return line_item.subtotal_display_amount;
 		},
 
 		/**
@@ -135,39 +139,10 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Check if the promotion code is set on cart/checkout.
-		 */
-		get isPromotionCodeSet() {
-			return !!state?.promotionCode;
-		},
-
-		/**
-		 * Get the checkout discount amount.
-		 */
-		get discountAmount() {
-			return state?.checkout?.discount_amount || 0;
-		},
-
-		/**
-		 * Check if the checkout has a bump amount.
-		 */
-		get hasBumpAmount() {
-			return !!state?.checkout?.bump_amount;
-		},
-
-		/**
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
 			return state.checkout?.line_items?.data || [];
-		},
-
-		/**
-		 * Check if the line item has an image URL.
-		 */
-		get hasLineItemImageUrl() {
-			const { line_item } = getContext();
-			return !!line_item?.price?.product?.image_url;
 		},
 
 		/**
@@ -220,14 +195,14 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get showCartMenuIcon() {
 			const { cartMenuAlwaysShown } = getContext();
-			return state.getItemsCount > 0 || cartMenuAlwaysShown;
+			return state.itemsCount > 0 || cartMenuAlwaysShown;
 		},
 
 		/**
 		 * Get the aria label for the cart icon count.
 		 */
-		get getItemsCountAriaLabelByCount() {
-			const count = state.getItemsCount;
+		get itemsCountAriaLabel() {
+			const count = state.itemsCount;
 			return sprintf(
 				_n(
 					/* translators: %d: number of items in the cart */
@@ -241,10 +216,15 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Is the current checkout an installment checkout?
+		 * Get the line item variant.
 		 */
-		get isInstallment() {
-			return !!state?.checkout?.is_installment;
+		get lineItemVariant() {
+			const { line_item } = getContext();
+			return (
+				(line_item?.variant_options || [])
+					.filter(Boolean)
+					.join(' / ') || null
+			);
 		},
 	},
 
@@ -267,12 +247,16 @@ const { state, actions } = store('surecart/checkout', {
 		init() {
 			const { mode, formId } = getContext();
 			const checkout = getCheckoutData(mode, formId);
+			actions.setCheckout(checkout, mode, formId);
+		},
 
-			if (!checkout) {
+		syncTabs(e) {
+			if (e?.key !== LOCAL_STORAGE_KEY) {
 				return;
 			}
-
-			state.checkout = checkout;
+			const { mode, formId } = getContext();
+			const checkout = getCheckoutData(mode, formId);
+			actions.setCheckout(checkout, mode, formId);
 		},
 
 		/**
@@ -441,30 +425,26 @@ const { state, actions } = store('surecart/checkout', {
 			state.oldCheckout = checkout;
 
 			// Find the checkout by mode and formId.
-			const checkoutData = checkout[mode]?.[formId];
 			let checkoutStorage = JSON.parse(
 				localStorage.getItem(LOCAL_STORAGE_KEY)
 			);
 
-			if (checkoutData) {
-				// update the existing checkout data.
+			// If there is no checkout storage, create a new one.
+			if (!checkoutStorage) {
 				checkoutStorage = {
-					...checkoutStorage,
-					[mode]: {
-						...checkoutStorage[mode],
-						[formId]: data,
-					},
-				};
-			} else {
-				// create a new checkout data.
-				checkoutStorage = {
-					...checkoutStorage,
-					[mode]: {
-						...checkoutStorage[mode],
-						[formId]: data,
-					},
+					live: {},
+					test: {},
 				};
 			}
+
+			// Update the checkout data in the storage.
+			checkoutStorage = {
+				...checkoutStorage,
+				[mode]: {
+					...checkoutStorage[mode],
+					[formId]: data,
+				},
+			};
 
 			localStorage.setItem(
 				LOCAL_STORAGE_KEY,

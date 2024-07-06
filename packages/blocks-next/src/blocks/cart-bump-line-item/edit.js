@@ -16,7 +16,12 @@ export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
 
 	const blockProps = useBlockProps({
-		style: useCartStyles({ attributes }),
+		style: {
+			...{
+				color: 'var(--sc-price-label-color, var(--sc-input-help-text-color))',
+			},
+			...useCartStyles({ attributes }),
+		},
 	});
 
 	return (
@@ -43,7 +48,7 @@ export default ({ attributes, setAttributes }) => {
 					<div className="sc-product-line-item__item">
 						<div className="sc-product-line-item__text">
 							<div className="sc-product-line-item__text-details">
-								<div className="sc-product-line-item__description">
+								<div className="sc-bump-line-item-description">
 									<span>
 										{label ||
 											__('Bundle Discount', 'surecart')}
@@ -53,7 +58,7 @@ export default ({ attributes, setAttributes }) => {
 						</div>
 
 						<div className="sc-product-line-item__suffix">
-							<div className="sc-product-line-item__price">
+							<div className="sc-bump-line-item-price">
 								<div className="price">
 									<span>-{scData?.currency_symbol}1.20</span>
 								</div>

@@ -1,5 +1,4 @@
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	<?php
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
@@ -11,13 +10,21 @@
 	);
 	?>
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
-	data-wp-init="surecart/checkout::callbacks.init"
-	data-wp-watch="surecart/checkout::callbacks.onChangeCheckout"
+	data-wp-init="callbacks.init"
+	data-wp-watch="callbacks.onChangeCheckout"
+	data-wp-on-window--storage="callbacks.syncTabs"
 >
 	<dialog
 		class="sc-drawer"
 		data-wp-on--click="surecart/cart::actions.closeOverlay"
 		aria-labelledby="sc-cart-title"
+		<?php echo wp_kses_data(
+			get_block_wrapper_attributes(
+				array(
+					'style' => $style,
+				)
+			)
+		); ?>
 	>
 		<div class="sc-drawer__wrapper">
 			<!-- Cart alert -->
@@ -43,7 +50,7 @@
 
 			<?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
-			<div class="sc-block-ui" data-wp-bind--hidden="surecart/checkout::!state.loading" hidden></div>
+			<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
 		</div>
 	</dialog>
 </div>

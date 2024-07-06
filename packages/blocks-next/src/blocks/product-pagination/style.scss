@@ -37,7 +37,7 @@ $pagination-margin: 0.5em;
 		// chevron(`»`) symbol doesn't need the mirroring by us.
 		&:not(.is-arrow-chevron) {
 			// Flip for RTL.
-			transform: scaleX(1) #{'/*rtl:scaleX(-1);*/'}; // This points the arrow right for LTR and left for RTL.
+			transform: scaleX(1) #{"/*rtl:scaleX(-1);*/"}; // This points the arrow right for LTR and left for RTL.
 		}
 	}
 	.wp-block-surecart-product-pagination-next-arrow {
@@ -46,7 +46,7 @@ $pagination-margin: 0.5em;
 		// chevron(`»`) symbol doesn't need the mirroring by us.
 		&:not(.is-arrow-chevron) {
 			// Flip for RTL.
-			transform: scaleX(1) #{'/*rtl:scaleX(-1);*/'}; // This points the arrow right for LTR and left for RTL.
+			transform: scaleX(1) #{"/*rtl:scaleX(-1);*/"}; // This points the arrow right for LTR and left for RTL.
 		}
 	}
 

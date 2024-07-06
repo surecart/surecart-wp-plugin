@@ -297,6 +297,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-tooltip-arrow-size: 5px;
   --sc-tooltip-arrow-start-end-offset: 8px;
   --sc-quantity-control-height: 2em;
+  --sc-quantity-control-height-small: 1.7em;
   --sc-z-index-drawer: 99999;
   --sc-z-index-dialog: 100000;
   --sc-z-index-dropdown: 900;

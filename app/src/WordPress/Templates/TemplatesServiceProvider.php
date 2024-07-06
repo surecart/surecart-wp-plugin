@@ -15,7 +15,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.templates.page'] = function( $c ) {
+		$container['surecart.templates.page'] = function ( $c ) {
 			return new TemplatesService(
 				$c,
 				[
@@ -26,7 +26,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.templates.product'] = function( $c ) {
+		$container['surecart.templates.product'] = function ( $c ) {
 			return new TemplatesService(
 				$c,
 				[
@@ -36,16 +36,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.templates.collection'] = function( $c ) {
-			return new CollectionTemplatesService(
-				$c,
-				[
-					'pages/template-surecart-collection.php' => esc_html__( 'SureCart Layout', 'surecart' ),
-				],
-			);
-		};
-
-		$container['surecart.templates.upsell'] = function( $c ) {
+		$container['surecart.templates.upsell'] = function ( $c ) {
 			return new UpsellTemplatesService(
 				$c,
 				[
@@ -54,7 +45,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.templates.blocks'] = function( $c ) {
+		$container['surecart.templates.blocks'] = function ( $c ) {
 			$root_path = trailingslashit( $c[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . '/templates/';
 			return new BlockTemplatesService( $root_path . 'templates', $root_path . 'parts' );
 		};
@@ -72,7 +63,6 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.templates.page']->bootstrap();
 		$container['surecart.templates.product']->bootstrap();
-		$container['surecart.templates.collection']->bootstrap();
 		$container['surecart.templates.upsell']->bootstrap();
 		$container['surecart.templates.blocks']->bootstrap();
 	}

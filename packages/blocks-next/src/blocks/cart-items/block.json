@@ -1,14 +1,14 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-items-v2",
+	"name": "surecart/slide-out-cart-items",
 	"title": "Cart Items",
 	"description": "The cart items",
 	"category": "cart",
 	"version": "1.0.0",
 	"example": {},
 	"textdomain": "surecart",
-	"ancestor": ["surecart/cart-v2"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"removable": {
 			"type": "boolean",

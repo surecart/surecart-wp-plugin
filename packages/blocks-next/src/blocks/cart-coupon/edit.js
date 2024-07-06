@@ -106,7 +106,9 @@ export default ({ attributes, setAttributes }) => {
 					class="sc-form-control sc-coupon-form__input"
 					aria-label="quantity"
 					aria-describedby="basic-addon1"
-					placeholder={_('Enter coupon code', 'surecart')}
+					placeholder={
+						placeholder || __('Enter coupon code', 'surecart')
+					}
 					value={prmotionCode}
 					onChange={(e) => setPromotionCode(e.target.value)}
 				/>
@@ -118,7 +120,7 @@ export default ({ attributes, setAttributes }) => {
 							setPromotionApplied(true);
 						}}
 					>
-						{__('Apply', 'surecart')}
+						{button_text || __('Apply', 'surecart')}
 					</button>
 				</span>
 			</div>
@@ -192,12 +194,7 @@ export default ({ attributes, setAttributes }) => {
 								</div>
 							) : (
 								<div>
-									<label
-										class="sc-form-label"
-										for="sc-coupon-input"
-									>
-										{text}
-									</label>
+									<label for="sc-coupon-input">{text}</label>
 									{renderDiscountInput()}
 								</div>
 							)}

@@ -21,7 +21,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 		], false);
 
 		$attributes = [
-			'text' => 'Cart',
+			'title' => 'Cart',
 			'width' => '500px',
 		];
 
@@ -53,10 +53,10 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_constructor_sets_attributes()
     {
         $attributes = [
-			'text' => 'Cart',
+			'title' => 'Cart',
 			'width' => '500px',
 		];
-        
+
         $this->assertSame($attributes, $this->service->attributes);
     }
 
@@ -104,7 +104,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_header()
 	{
 		$this->service->renderCartHeader();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-header-v2 {"key1":"value1"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-header {"key1":"value1"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -113,7 +113,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_items()
 	{
 		$this->service->renderCartItems();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-items-v2 {"key2":"value2"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-items {"key2":"value2"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -122,7 +122,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_coupon()
 	{
 		$this->service->renderCartCoupon();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-coupon-v2 {"key3":"value3"} /-->',$this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-coupon {"key3":"value3"} /-->',$this->service->block_html);
 	}
 
 	/**
@@ -131,7 +131,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_bump_line_item()
 	{
 		$this->service->renderCartBumpLineItem();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-bump-line-item-v2 {"key4":"value4"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-bump-line-item {"key4":"value4"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -140,7 +140,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_subtotal()
 	{
 		$this->service->renderCartSubtotal();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-subtotal-v2 {"key5":"value5"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-subtotal {"key5":"value5"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -149,7 +149,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_message()
 	{
 		$this->service->renderCartMessage();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-message-v2 {"key6":"value6"} /-->',$this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-message {"key6":"value6"} /-->',$this->service->block_html);
 	}
 
 	/**
@@ -158,7 +158,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_submit()
 	{
 		$this->service->renderCartSubmit();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-submit-v2 {"key7":"value7"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-submit {"key7":"value7"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -167,12 +167,12 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_cart_template()
 	{
 		$this->service->renderCartTemplate();
-		$this->assertStringContainsString('<!-- wp:surecart/cart-header-v2 {"key1":"value1"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/cart-items-v2 {"key2":"value2"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/cart-coupon-v2 {"key3":"value3"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/cart-bump-line-item-v2 {"key4":"value4"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/cart-subtotal-v2 {"key5":"value5"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/cart-message-v2 {"key6":"value6"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/cart-submit-v2 {"key7":"value7"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-header {"key1":"value1"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-items {"key2":"value2"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-coupon {"key3":"value3"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-bump-line-item {"key4":"value4"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-subtotal {"key5":"value5"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-message {"key6":"value6"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-submit {"key7":"value7"} /-->', $this->service->block_html);
 	}
 }

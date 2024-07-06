@@ -40,8 +40,9 @@ class ProductListBlock {
 	 * @param \WP_Block $block The block.
 	 */
 	public function __construct( \WP_Block $block = null ) {
+		global $sc_query_id;
 		$this->block = $block ? $block : \WP_Block_Supports::$block_to_render;
-		$this->url   = \SureCart::block()->urlParams( 'products' )->setInstanceId( $block->context['surecart/product-list/block_id'] ?? '' );
+		$this->url   = \SureCart::block()->urlParams( 'products' );
 	}
 
 	/**
@@ -106,27 +107,14 @@ class ProductListBlock {
 				$legacy_collection_ids
 			);
 
-			$new_collection_ids = [];
+			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $collection_ids_to_filter );
+		}
 
-			if ( ! empty( $collection_ids_int ) ) {
-				$new_collection_ids = get_terms(
-					array(
-						'taxonomy'         => 'sc_collection',
-						'field'            => 'term_id',
-						'term_taxonomy_id' => $collection_ids_int,
-					)
-				); // WP taxonomy ids.
+		$new_collection_ids = $this->url->getArg( 'sc_collection' );
 
-				// only get the term_id.
-				$new_collection_ids = array_map(
-					function ( $term ) {
-						return $term->term_id;
-					},
-					$new_collection_ids
-				);
-			}
-
-			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $new_collection_ids );
+		// handle collections query.
+		if ( ! empty( $new_collection_ids ) ) {
+			$collection_ids_to_filter = array_merge( $new_collection_ids, $collection_ids_to_filter );
 		}
 
 		if ( ! empty( $collection_ids_to_filter ) ) {
@@ -135,7 +123,7 @@ class ProductListBlock {
 					array(
 						'taxonomy' => 'sc_collection',
 						'field'    => 'term_id',
-						'terms'    => array_map( 'intval', $collection_ids_to_filter ?? array() ),
+						'terms'    => array_unique( array_map( 'intval', $collection_ids_to_filter ?? array() ) ),
 					),
 				);
 		}

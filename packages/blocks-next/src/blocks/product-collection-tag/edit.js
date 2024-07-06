@@ -6,7 +6,7 @@ export default ({
 	__unstableLayoutClassNames,
 }) => {
 	const blockProps = useBlockProps({
-		className: `sc-product-collection-badge ${__unstableLayoutClassNames}`,
+		className: `sc-tag sc-tag--default sc-tag--medium ${__unstableLayoutClassNames}`,
 		role: 'button',
 	});
 	return <span {...blockProps}>{name}</span>;

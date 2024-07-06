@@ -20,7 +20,8 @@
 			<div class="sc-product-line-item__suffix">
 				<div class="sc-product-line-item__price">
 					<div class="price">
-						<span data-wp-text="state.checkout.subtotal_display_amount"></span>
+						<span data-wp-text="state.checkout.subtotal_display_amount" data-wp-bind--hidden="state.isDiscountApplied"></span>
+						<span data-wp-text="state.checkout.total_display_amount" data-wp-bind--hidden="!state.isDiscountApplied"></span>
 					</div>
 				</div>
 			</div>
@@ -29,7 +30,7 @@
 
 	<div
 		class="sc-product-line-item"
-		data-wp-bind--hidden="!state.isInstallment"
+		data-wp-bind--hidden="!state.checkout.is_installment"
 	>
 		<div class="sc-product-line-item__item">
 			<div class="sc-product-line-item__text">
@@ -43,7 +44,7 @@
 			<div class="sc-product-line-item__suffix">
 				<div class="sc-product-line-item__price">
 					<div class="price">
-						<span data-wp-text="state.checkout.full_amount_display"></span>
+						<span data-wp-text="state.checkout.full_display_amount"></span>
 					</div>
 				</div>
 			</div>

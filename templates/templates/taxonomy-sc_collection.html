@@ -17,20 +17,26 @@
 		<div class="wp-block-group"><!-- wp:surecart/product-list-sort /--></div>
 		<!-- /wp:group -->
 
-		<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+		<!-- wp:group {"style":{"layout":{"selfStretch":"fixed","flexSize":"250px"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 		<div class="wp-block-group"><!-- wp:surecart/product-list-search /--></div>
 		<!-- /wp:group -->
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":4}} -->
-	<!-- wp:group {"style":{"spacing":{"blockGap":"12px"}}} -->
+	<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"grid","columnCount":4}} -->
+	<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"constrained"}} -->
 	<div class="wp-block-group">
-		<!-- wp:surecart/product-image {"style":{"border":{"radius":"6px"},"spacing":{"margin":{"bottom":"16px"}}}} /-->
+		<!-- wp:surecart/product-image {"style":{"spacing":{"margin":{"bottom":"15px"}},"border":{"radius":"6px"}}} /-->
 
-		<!-- wp:surecart/product-title {"level":0,"style":{"typography":{"fontWeight":"400","fontSize":"14px","lineHeight":"1.2"},"spacing":{"margin":{"bottom":"10px"}},"color":{"text":"#374151"}}} /-->
+		<!-- wp:surecart/product-title {"level":2,"style":{"typography":{"fontWeight":"400","fontSize":"14px","lineHeight":"1.2"},"spacing":{"margin":{"bottom":"0px"}}}} /-->
 
-		<!-- wp:surecart/product-list-price {"style":{"color":{"text":"#111827"},"typography":{"fontSize":"18px","fontWeight":"500"}}} /-->
+		<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+		<div class="wp-block-group">
+			<!-- wp:surecart/product-list-price {"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600"}}} /-->
+
+			<!-- wp:surecart/product-scratch-price {"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600"}}} /-->
+		</div>
+		<!-- /wp:group -->
 	</div>
 	<!-- /wp:group -->
 	<!-- /wp:surecart/product-template -->

@@ -28,10 +28,8 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the amount based on the selected variant or price.
 		 */
 		get selectedAmount() {
-			const { selectedPrice } = getContext();
-			const { prices } = state?.product || {};
-
-			if (prices?.length > 1) {
+			const { selectedPrice, product } = getContext();
+			if (product?.active_prices?.length > 1) {
 				return selectedPrice?.amount || '';
 			}
 			return state.selectedVariant?.amount || selectedPrice?.amount || '';

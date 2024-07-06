@@ -73,7 +73,7 @@ class CartMigrationService {
 	 */
 	public function renderCartHeader(): void {
 		$cart_header_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-header' ), JSON_FORCE_OBJECT );
-		$this->block_html .= '<!-- wp:surecart/cart-header-v2 ' . $cart_header_attrs . ' /-->';
+		$this->block_html .= '<!-- wp:surecart/slide-out-cart-header ' . $cart_header_attrs . ' /-->';
 	}
 
 	/**
@@ -83,7 +83,7 @@ class CartMigrationService {
 	 */
 	public function renderCartItems(): void {
 		$cart_items_attrs  = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-items' ), JSON_FORCE_OBJECT );
-		$this->block_html .= '<!-- wp:surecart/cart-items-v2 ' . $cart_items_attrs . ' /-->';
+		$this->block_html .= '<!-- wp:surecart/slide-out-cart-items ' . $cart_items_attrs . ' /-->';
 	}
 
 	/**
@@ -93,7 +93,7 @@ class CartMigrationService {
 	 */
 	public function renderCartCoupon(): void {
 		$cart_coupon_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-coupon' ), JSON_FORCE_OBJECT );
-		$this->block_html .= '<!-- wp:surecart/cart-coupon-v2 ' . $cart_coupon_attrs . ' /-->';
+		$this->block_html .= '<!-- wp:surecart/slide-out-cart-coupon ' . $cart_coupon_attrs . ' /-->';
 	}
 
 	/**
@@ -103,7 +103,7 @@ class CartMigrationService {
 	 */
 	public function renderCartSubtotal(): void {
 		$cart_subtotal_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-subtotal' ), JSON_FORCE_OBJECT );
-		$this->block_html   .= '<!-- wp:surecart/cart-subtotal-v2 ' . $cart_subtotal_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/slide-out-cart-subtotal ' . $cart_subtotal_attrs . ' /-->';
 	}
 
 	/**
@@ -113,7 +113,7 @@ class CartMigrationService {
 	 */
 	public function renderCartBumpLineItem(): void {
 		$cart_bump_line_item_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-bump-line-item' ), JSON_FORCE_OBJECT );
-		$this->block_html         .= '<!-- wp:surecart/cart-bump-line-item-v2 ' . $cart_bump_line_item_attrs . ' /-->';
+		$this->block_html         .= '<!-- wp:surecart/slide-out-cart-bump-line-item ' . $cart_bump_line_item_attrs . ' /-->';
 	}
 
 	/**
@@ -123,7 +123,7 @@ class CartMigrationService {
 	 */
 	public function renderCartSubmit(): void {
 		$cart_submit_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-submit' ), JSON_FORCE_OBJECT );
-		$this->block_html .= '<!-- wp:surecart/cart-submit-v2 ' . $cart_submit_attrs . ' /-->';
+		$this->block_html .= '<!-- wp:surecart/slide-out-cart-submit ' . $cart_submit_attrs . ' /-->';
 	}
 
 	/**
@@ -132,8 +132,13 @@ class CartMigrationService {
 	 * @return void
 	 */
 	public function renderCartMessage(): void {
-		$cart_message_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/cart-message' ), JSON_FORCE_OBJECT );
-		$this->block_html  .= '<!-- wp:surecart/cart-message-v2 ' . $cart_message_attrs . ' /-->';
+		$cart_message_attrs = $this->getChildBlocksAttributes( 'surecart/cart-message' );
+		if ( empty( $cart_message_attrs['text'] ) ) {
+			return;
+		}
+
+		$cart_message_attrs = wp_json_encode( $cart_message_attrs, JSON_FORCE_OBJECT );
+		$this->block_html  .= '<!-- wp:surecart/slide-out-cart-message ' . $cart_message_attrs . ' /-->';
 	}
 
 	/**
@@ -143,7 +148,7 @@ class CartMigrationService {
 	 */
 	public function renderCartTemplate(): void {
 		$cart_block_attrs  = wp_json_encode( $this->attributes, JSON_FORCE_OBJECT );
-		$this->block_html .= '<!-- wp:surecart/cart-v2 ' . $cart_block_attrs . ' -->';
+		$this->block_html .= '<!-- wp:surecart/slide-out-cart ' . $cart_block_attrs . ' -->';
 
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks ) ) {
@@ -173,7 +178,7 @@ class CartMigrationService {
 				}
 			}
 		}
-		$this->block_html .= '<!-- /wp:surecart/cart-v2 -->';
+		$this->block_html .= '<!-- /wp:surecart/slide-out-cart -->';
 	}
 
 	/**
@@ -186,7 +191,7 @@ class CartMigrationService {
 	}
 
 	/**
-	 * Render the new product list.
+	 * Render the new cart block.
 	 *
 	 * @return string
 	 */

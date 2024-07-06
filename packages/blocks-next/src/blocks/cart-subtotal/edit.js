@@ -41,7 +41,7 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<div
 					className="sc-product-line-item"
-					style={{ marginBottom: '20px', borderBottom: 'none' }}
+					style={{ borderBottom: 'none' }}
 				>
 					<div className="sc-product-line-item__item">
 						<div className="sc-product-line-item__text">
@@ -57,9 +57,7 @@ export default ({ attributes, setAttributes }) => {
 						<div className="sc-product-line-item__suffix">
 							<div className="sc-product-line-item__price">
 								<div className="price">
-									<span>
-										{scData?.currency_symbol}135.79
-									</span>
+									<span>{scData?.currency_symbol}135.79</span>
 								</div>
 							</div>
 						</div>

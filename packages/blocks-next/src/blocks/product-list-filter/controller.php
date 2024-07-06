@@ -1,4 +1,5 @@
 <?php
+global $sc_query_id;
 
 // get non-empty collections.
 $collections = get_terms(
@@ -8,13 +9,13 @@ $collections = get_terms(
 	)
 );
 
-// the parent is forcing a collection.
-if ( ! empty( $block->context['surecart/product-list/collection_id'] ) ) {
+// we are on a collection page.
+$current_term = get_queried_object();
+if ( is_a( $current_term, \WP_Term::class ) ) {
 	return '';
 }
 
-$block_id   = $block->context['surecart/product-list/block_id'];
-$url        = \SureCart::block()->urlParams( 'products', $block_id );
+$url        = \SureCart::block()->urlParams( 'products' );
 $filter_key = $url->getKey( 'filter' );
 
 $options = array_map(

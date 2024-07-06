@@ -1,7 +1,15 @@
 .sc-input-group.sc-quantity-selector {
 	width: var(--sc-quantity-select-width, 100px);
 	height: var(--sc-quantity-control-height, var(--sc-input-height-small));
-	border-radius: inherit !important;
+	border-radius: var(--sc-input-border-radius-small);
+
+	&.sc-input-group-sm {
+		width: var(--sc-quantity-select-width-small, 85px);
+		height: var(
+			--sc-quantity-control-height-small,
+			var(--sc-input-height-x-small)
+		);
+	}
 
 	.sc-quantity-selector__control {
 		color: var(--sc-input-control-color, var(--sc-color-black));
@@ -51,11 +59,11 @@
 		}
 	}
 
-	.sc-quantity-selector__decrease {
+	&:not(.sc-input-group-sm) .sc-quantity-selector__decrease {
 		border-right: 1px solid var(--sc-input-border-color);
 	}
 
-	.sc-quantity-selector__increase {
+	&:not(.sc-input-group-sm) .sc-quantity-selector__increase {
 		border-left: 1px solid var(--sc-input-border-color);
 	}
 

@@ -19,7 +19,6 @@ const TEMPLATE = [
 ];
 
 export default ({
-	context: { 'surecart/product-list/block_id': blockId },
 	clientId,
 	attributes: { paginationArrow, showLabel },
 	setAttributes,

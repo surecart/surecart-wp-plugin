@@ -14,10 +14,10 @@ wp_interactivity_state(
 	array(
 		'quantity'                     => 1,
 		'selectedDisplayAmount'        => $product->display_amount,
-		'selectedScratchDisplayAmount' => ! empty( $product->initial_price ) ? $product->initial_price->scratch_display_amount : '',
-		'isOnSale'                     => ! empty( $product->initial_price ) ? $product->initial_price->is_on_sale : false,
+		'selectedScratchDisplayAmount' => ! empty( $selected_price ) ? $selected_price->scratch_display_amount : '',
+		'isOnSale'                     => empty( $selected_price->ad_hoc ) ? $product->scratch_amount > $product->initial_amount : false,
 		'busy'                         => false,
-		'adHocAmount'                  => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
+		'adHocAmount'                  => ( ! empty( $selected_price->ad_hoc ) ? $selected_price->amount : 0 ) / ( ! empty( $selected_price->is_zero_decimal ) ? 1 : 100 ),
 	)
 );
 

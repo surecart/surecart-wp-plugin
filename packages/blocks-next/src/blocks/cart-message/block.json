@@ -1,14 +1,14 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-message-v2",
+	"name": "surecart/slide-out-cart-message",
 	"title": "Cart Message",
 	"description": "Display a custom message in the cart",
 	"category": "cart",
 	"version": "1.0.0",
 	"example": {},
 	"textdomain": "surecart",
-	"ancestor": ["surecart/cart-v2"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"text": {
 			"type": "string"
@@ -44,5 +44,5 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/text.css"]
+	"style": ["file:../../styles/text.css", "file:./style-index.css"]
 }

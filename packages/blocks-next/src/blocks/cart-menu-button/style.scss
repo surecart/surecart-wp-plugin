@@ -1,4 +1,4 @@
-.wp-block-surecart-cart-menu-icon-v2 {
+.wp-block-surecart-cart-menu-icon-button {
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
@@ -9,7 +9,8 @@
 		cursor: pointer;
 
 		svg {
-			color: var(--sc-color-white);
+			width: 18px;
+			height: 18px;
 		}
 	}
 

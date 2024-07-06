@@ -17,7 +17,21 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					]);
 					break;
 				case 'surecart/product-item-price':
-					acc.push(['surecart/product-list-price', block.attributes]);
+					const price = [
+						'core/group',
+						{
+							style: { spacing: { blockGap: '0.5em' } },
+							layout: { type: 'flex', flexWrap: 'nowrap' },
+						},
+						[
+							['surecart/product-list-price', block.attributes],
+							[
+								'surecart/product-scratch-price',
+								block.attributes,
+							],
+						],
+					];
+					acc.push(price);
 					break;
 				case 'surecart/product-item-image':
 					acc.push(['surecart/product-image', block.attributes]);

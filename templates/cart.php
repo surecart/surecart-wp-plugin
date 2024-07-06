@@ -6,17 +6,17 @@ return [
 	'title'      => __( 'Cart', 'surecart' ),
 	'categories' => [],
 	'blockTypes' => [],
-	'content'    => '<!-- wp:surecart/cart-v2 {"layout":{"type":"default"}} -->
-	<!-- wp:surecart/cart-header-v2 {"text":"Review Your Cart"} /-->
+	'content'    => '<!-- wp:surecart/slide-out-cart {"layout":{"type":"default"}} -->
+	<!-- wp:surecart/slide-out-cart-header {"text":"Review Your Cart"} /-->
 
-	<!-- wp:surecart/cart-items-v2 /-->
+	<!-- wp:surecart/slide-out-cart-items /-->
 
-	<!-- wp:surecart/cart-coupon-v2 /-->
+	<!-- wp:surecart/slide-out-cart-coupon /-->
 
-	<!-- wp:surecart/cart-subtotal-v2 /-->
+	<!-- wp:surecart/slide-out-cart-subtotal /-->
 
-	<!-- wp:surecart/cart-bump-line-item-v2 /-->
+	<!-- wp:surecart/slide-out-cart-bump-line-item /-->
 
-	<!-- wp:surecart/cart-submit-v2 /-->
-	<!-- /wp:surecart/cart-v2 -->',
+	<!-- wp:surecart/slide-out-cart-submit /-->
+	<!-- /wp:surecart/slide-out-cart -->',
 ];

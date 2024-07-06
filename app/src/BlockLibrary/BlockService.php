@@ -74,8 +74,8 @@ class BlockService {
 	 *
 	 * @return URLParamService
 	 */
-	public function urlParams( $type = '', $instance_id = '' ) {
-		return new URLParamService( $type, $instance_id );
+	public function urlParams( $type = '' ) {
+		return new URLParamService( $type );
 	}
 
 	/**
@@ -98,6 +98,17 @@ class BlockService {
 	 */
 	public function cartMigration( $attributes = [], $block = null ) {
 		return new CartMigrationService( $attributes, $block );
+	}
+
+	/**
+	 * Get cart menu icon migration service.
+	 *
+	 * @param array $attributes Attributes.
+	 *
+	 * @return CartMenuIconMigrationService
+	 */
+	public function cartMenuIconMigration( $attributes = [], $block = null ) {
+		return new CartMenuIconMigrationService( $attributes, $block );
 	}
 
 	/**

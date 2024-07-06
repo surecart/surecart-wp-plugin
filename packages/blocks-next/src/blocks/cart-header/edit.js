@@ -26,7 +26,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-        <CartInspectorControls
+				<CartInspectorControls
 					attributes={attributes}
 					setAttributes={setAttributes}
 				/>
@@ -43,7 +43,7 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<ScIcon
 					name="arrow-right"
-					class="wp-block-surecart-cart-header-v2__close"
+					class="wp-block-surecart-slide-out-cart-header__close"
 				/>
 				<RichText
 					aria-label={__('Header Text')}

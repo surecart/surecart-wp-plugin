@@ -52,7 +52,7 @@
 						data-wp-text="state.checkout.human_discount_with_duration"
 					></span>
 				</div>
-				<div class="sc-line-item__price" data-wp-bind--hidden="!state.discountIsRedeemable" data-wp-text="state.checkout.discount_amount_display"></div>
+				<div class="sc-line-item__price" data-wp-bind--hidden="!state.discountIsRedeemable" data-wp-text="state.checkout.discount_display_amount"></div>
 
 				<!-- non-redeemable UI -->
 				<div class="sc-line-item__price-description" data-wp-bind--hidden="state.discountIsRedeemable">
@@ -70,81 +70,79 @@
 		class="sc-coupon-form"
 		data-wp-bind--hidden="state.isDiscountApplied"
 	>
-		<div>
-			<?php if ( $attributes['collapsed'] ) : ?>
-				<div>
-					<span
-						data-wp-bind--hidden="context.discountInputOpen"
-						hidden
-						class="trigger"
-						data-wp-on--click="surecart/checkout::actions.toggleDiscountInput"
-						data-wp-on--keydown="surecart/checkout::actions.toggleDiscountInput"
-						aria-role="button"
-						tabindex="0"
-						id="sc-coupon-trigger"
-					>
-						<?php echo esc_attr( $attributes['text'] ); ?>
-					</span>
-
-					<form>
-						<div
-							data-wp-bind--hidden="!context.discountInputOpen"
-							hidden
-							class="sc-input-group sc-coupon-form__input-group"
-						>
-							<input
-								type="text"
-								id="coupon"
-								class="sc-form-control sc-coupon-form__input"
-								aria-label="quantity"
-								aria-describedby="coupon-input-addon"
-								placeholder="<?php esc_html_e( 'Enter coupon code', 'surecart' ); ?>"
-								data-wp-bind="state.promotionCode"
-								data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
-								data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
-							>
-							<span class="sc-input-group-text" id="coupon-input-addon">
-								<button
-									type="submit"
-									data-wp-bind--hidden="!state.isPromotionCodeSet"
-									data-wp-on--click="actions.applyDiscount"
-								>
-									<?php esc_html_e( 'Apply', 'surecart' ); ?>
-								</button>
-							</span>
-						</div>
-					</form>
-				</div>
-			<?php else : ?>
+		<?php if ( $attributes['collapsed'] ) : ?>
+			<div>
 				<div
+					data-wp-bind--hidden="context.discountInputOpen"
+					hidden
+					class="trigger"
+					data-wp-on--click="surecart/checkout::actions.toggleDiscountInput"
+					data-wp-on--keydown="surecart/checkout::actions.toggleDiscountInput"
+					aria-role="button"
+					tabindex="0"
+					id="sc-coupon-trigger"
 				>
-					<label class="sc-form-label" for="sc-coupon-input">
-						<?php echo esc_html( $attributes['text'] ); ?>
-					</label>
+					<?php echo esc_attr( $attributes['text'] ); ?>
+				</div>
 
-					<div class="sc-input-group sc-coupon-form__input-group">
+				<form>
+					<div
+						data-wp-bind--hidden="!context.discountInputOpen"
+						hidden
+						class="sc-input-group sc-coupon-form__input-group"
+					>
 						<input
 							type="text"
-							id="sc-coupon-input"
+							id="coupon"
 							class="sc-form-control sc-coupon-form__input"
 							aria-label="quantity"
-							aria-describedby="basic-addon1"
-							placeholder="<?php esc_attr_e( 'Enter coupon code', 'surecart' ); ?>"
-							data-wp-bind="state.discountCode"
+							aria-describedby="coupon-input-addon"
+							placeholder="<?php echo isset( $attributes['placeholder'] ) ? esc_attr( $attributes['placeholder'] ) : esc_html__( 'Enter coupon code', 'surecart' ); ?>"
+							data-wp-bind--value="state.promotionCode"
 							data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 							data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
 						>
-						<span class="sc-input-group-text" id="basic-addon1">
+						<span class="sc-input-group-text" id="coupon-input-addon">
 							<button
-								data-wp-bind--hidden="!state.isPromotionCodeSet"
+								type="submit"
+								data-wp-bind--hidden="!state.promotionCode"
 								data-wp-on--click="actions.applyDiscount"
 							>
-								<?php esc_html_e( 'Apply', 'surecart' ); ?>
+								<?php echo isset( $attributes['button_text'] ) ? esc_attr( $attributes['button_text'] ) : esc_html__( 'Apply', 'surecart' ); ?>
 							</button>
 						</span>
 					</div>
+				</form>
+			</div>
+		<?php else : ?>
+			<div
+			>
+				<label class="sc-coupon-input-label" for="sc-coupon-input" style="color: <?php echo ! empty( $attributes['textColor'] ) ? esc_attr( $attributes['textColor'] ) : 'var(--sc-input-label-color)'; ?>">
+					<?php echo esc_html( $attributes['text'] ); ?>
+				</label>
+
+				<div class="sc-input-group sc-coupon-form__input-group">
+					<input
+						type="text"
+						id="sc-coupon-input"
+						class="sc-form-control sc-coupon-form__input"
+						aria-label="quantity"
+						aria-describedby="basic-addon1"
+						placeholder="<?php echo isset( $attributes['placeholder'] ) ? esc_attr( $attributes['placeholder'] ) : esc_html__( 'Enter coupon code', 'surecart' ); ?>"
+						data-wp-bind="state.discountCode"
+						data-wp-on--keydown="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
+						data-wp-on--keyup="surecart/checkout::actions.maybeApplyDiscountOnKeyChange"
+					>
+					<span class="sc-input-group-text" id="basic-addon1">
+						<button
+							data-wp-bind--hidden="!state.promotionCode"
+							data-wp-on--click="actions.applyDiscount"
+						>
+							<?php echo isset( $attributes['button_text'] ) ? esc_attr( $attributes['button_text'] ) : esc_html__( 'Apply', 'surecart' ); ?>
+						</button>
+					</span>
 				</div>
-			<?php endif; ?>
-		</div>
+			</div>
+		<?php endif; ?>
 	</div>
 </div>

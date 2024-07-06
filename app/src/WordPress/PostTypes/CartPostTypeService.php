@@ -221,9 +221,9 @@ class CartPostTypeService {
 				'post_title'   => _x( 'Cart', 'Cart title', 'surecart' ),
 				'post_type'    => $this->post_type,
 				'post_status'  => 'publish',
-				'post_content' => '<!-- wp:surecart/cart-v2 --><sc-order-summary>
+				'post_content' => '<!-- wp:surecart/slide-out-cart --><sc-order-summary>
 				<sc-line-items></sc-line-items>
-			</sc-order-summary><!-- /wp:surecart/cart-v2 -->',
+			</sc-order-summary><!-- /wp:surecart/slide-out-cart -->',
 			]
 		);
 		return get_post( $post_id );
@@ -281,11 +281,11 @@ class CartPostTypeService {
 				),
 				'template'              => [
 					[
-						'surecart/cart-v2',
+						'surecart/slide-out-cart',
 						[],
 						[
 							[
-								'surecart/cart-header-v2',
+								'surecart/slide-out-cart-header',
 								[
 									'lock' => [
 										'remove' => true,

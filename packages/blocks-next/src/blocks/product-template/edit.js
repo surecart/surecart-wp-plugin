@@ -9,7 +9,7 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { BlockControls } from '@wordpress/block-editor';
-import { list, grid, post } from '@wordpress/icons';
+import { list, grid } from '@wordpress/icons';
 import classnames from 'classnames';
 import { useEffect } from '@wordpress/element';
 
@@ -18,19 +18,67 @@ const TEMPLATE = [
 		'core/group',
 		{},
 		[
-			['surecart/product-image'],
+			[
+				'surecart/product-image',
+				{
+					border: { radius: '6px' },
+					style: { spacing: { margin: { bottom: '15px' } } },
+				},
+			],
 			[
 				'surecart/product-title',
 				{
 					level: 2,
 					isLink: false,
 					style: {
-						typography: { fontSize: '1.25em' },
+						typography: {
+							fontSize: '15px',
+							fontStyle: 'normal',
+							fontWeight: '400',
+						},
 						spacing: { margin: { top: '5px', bottom: '5px' } },
 					},
 				},
 			],
-			['surecart/product-list-price'],
+			[
+				'core/group',
+				{
+					style: { spacing: { blockGap: '0.5em' } },
+					layout: { type: 'flex', flexWrap: 'nowrap' },
+				},
+				[
+					[
+						'surecart/product-list-price',
+						{
+							style: {
+								typography: {
+									fontSize: '18px',
+									fontStyle: 'normal',
+									fontWeight: '600',
+								},
+								spacing: {
+									margin: { top: '5px', bottom: '5px' },
+								},
+							},
+						},
+					],
+					[
+						'surecart/product-scratch-price',
+						{
+							style: {
+								typography: {
+									fontSize: '18px',
+									fontStyle: 'normal',
+									fontWeight: '600',
+								},
+								spacing: {
+									margin: { top: '5px', bottom: '5px' },
+								},
+							},
+						},
+					],
+				],
+			],
 		],
 	],
 ];

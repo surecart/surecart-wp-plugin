@@ -19,16 +19,16 @@ use SureCart\Support\Currency;
  * Order model
  */
 class Checkout extends Model {
-	use HasCustomer,
-		HasSubscriptions,
-		HasDiscount,
-		HasShippingAddress,
-		HasPaymentIntent,
-		HasPaymentMethod,
-		HasPurchases,
-		CanFinalize,
-		HasProcessorType,
-		HasBillingAddress;
+	use HasCustomer;
+	use HasSubscriptions;
+	use HasDiscount;
+	use HasShippingAddress;
+	use HasPaymentIntent;
+	use HasPaymentMethod;
+	use HasPurchases;
+	use CanFinalize;
+	use HasProcessorType;
+	use HasBillingAddress;
 
 	/**
 	 * Rest API endpoint
@@ -69,8 +69,8 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getTotalAmountDisplayAttribute() {
-		return ! empty( $this->total_amount ) ? Currency::format( $this->total_amount, $this->currency ) : '';
+	public function getTotalDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_amount, $this->currency );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getFullAmountDisplayAttribute() {
+	public function getFullDisplayAmountAttribute() {
 		return ! empty( $this->full_amount ) ? Currency::format( $this->full_amount, $this->currency ) : '';
 	}
 
@@ -87,7 +87,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getDiscountAmountDisplayAttribute() {
+	public function getDiscountDisplayAmountAttribute() {
 		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
 	}
 
@@ -96,7 +96,7 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
-	public function getBumpAmountDisplayAttribute() {
+	public function getBumpDisplayAmountAttribute() {
 		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
 	}
 
@@ -122,6 +122,24 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the line items count attribute.
+	 *
+	 * @return int
+	 */
+	public function getLineItemsCountAttribute() {
+		if ( empty( $this->line_items ) || empty( $this->line_items->data ) ) {
+			return 0;
+		}
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $count, $item ) {
+				return $count + ( $item->quantity ?? 0 );
+			},
+			0
+		);
+	}
+
+	/**
 	 * Get the has recurring attribute.
 	 *
 	 * Do any line items have a recurring price?
@@ -129,9 +147,13 @@ class Checkout extends Model {
 	 * @return bool
 	 */
 	public function getHasRecurringAttribute() {
-		return array_reduce($this->line_items->data ?? [], function($carry, $item) {
-			return $carry || isset($item->price->recurring_interval);
-		}, false);
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $carry, $item ) {
+				return $carry || isset( $item->price->recurring_interval );
+			},
+			false
+		);
 	}
 
 	/**
@@ -165,7 +187,7 @@ class Checkout extends Model {
 			return $this->human_discount;
 		}
 
-		$duration = $this->discount->coupon->duration ?? '';
+		$duration           = $this->discount->coupon->duration ?? '';
 		$duration_in_months = $this->discount->coupon->duration_in_months ?? 0;
 
 		switch ( $duration ) {

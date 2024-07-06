@@ -94,7 +94,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderProductList(): void {
-		$this->block_html .= '<!-- wp:surecart/product-list ' . wp_json_encode( array_filter( $this->attributes ) ) . ' -->';
+		$this->block_html .= '<!-- wp:surecart/product-list' . ( ! empty( $this->attributes ) ? ' ' . wp_json_encode( $this->attributes ) : '' ) . ' -->';
 
 		$this->renderSortFilterAndSearch();
 
@@ -215,7 +215,12 @@ class ProductListMigrationService {
 	 */
 	public function renderPrice(): void {
 		$product_price_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-price' ), JSON_FORCE_OBJECT );
+		$this->block_html   .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
+		$this->block_html   .= '<div class="wp-block-group">';
 		$this->block_html   .= '<!-- wp:surecart/product-list-price ' . $product_price_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-list-price-sale ' . $product_price_attrs . ' /-->';
+		$this->block_html   .= '</div>';
+		$this->block_html   .= '<!-- /wp:group -->';
 	}
 
 	/**
@@ -225,13 +230,13 @@ class ProductListMigrationService {
 	 */
 	public function renderProductTemplate(): void {
 		$columns           = $this->attributes['columns'] ?? 3;
-		$this->block_html .= '<!-- wp:surecart/product-template {"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
+		$this->block_html .= '<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
 		$group_attrs       = ! empty( $this->inner_blocks[0]['attrs'] ) ? wp_json_encode( $this->inner_blocks[0]['attrs'] ) : '{}';
 		$group_block       = parse_blocks( '<!-- wp:group ' . $group_attrs . ' -->' )[0];
 		$group_styles      = sc_get_block_styles( true, $group_block );
 		$group_classnames  = ! empty( $group_styles['classnames'] ) ? $group_styles['classnames'] : '';
 		$group_css         = ! empty( $group_styles['css'] ) ? $group_styles['css'] : '';
-		$this->block_html .= '<!-- wp:group -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"constrained"}} -->';
 		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="' . $group_css . '">';
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {

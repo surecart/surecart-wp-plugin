@@ -36,7 +36,7 @@
 	</div>
 
 	<div class="sc-image-slider__thumbs">
-		<div class="sc-image-slider-button__prev" tabindex="-1" role="button">
+		<div class="sc-image-slider-button__prev" tabindex="-1" role="button" aria-label="<?php esc_attr_e( 'Previous Page', 'surecart' ); ?>">
 			<?php echo wp_kses( SureCart::svg()->get( 'chevron-left' ), sc_allowed_svg_html() ); ?>
 		</div>
 
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 
-		<div class="sc-image-slider-button__next" tabindex="-1" role="button">
+		<div class="sc-image-slider-button__next" tabindex="-1" role="button" aria-label="<?php esc_attr_e( 'Next Page', 'surecart' ); ?>">
 			<?php echo wp_kses( SureCart::svg()->get( 'chevron-right' ), sc_allowed_svg_html() ); ?>
 		</div>
 	</div>

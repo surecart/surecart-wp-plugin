@@ -1,4 +1,4 @@
-.wp-block-surecart-cart-coupon-v2 {
+.wp-block-surecart-slide-out-cart-coupon {
 	.trigger {
 		cursor: pointer;
 
@@ -34,5 +34,12 @@
 		&[hidden] {
 			display: none;
 		}
+	}
+
+	.sc-coupon-input-label {
+		margin-bottom: var(--sc-input-label-margin);
+		font-style: normal;
+		font-size: var(--sc-input-label-font-size-medium);
+		font-weight: var(--sc-font-weight-normal);
 	}
 }

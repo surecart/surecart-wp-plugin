@@ -1,7 +1,7 @@
 <?php
 use SureCart\Models\Blocks\ProductListBlock;
+global $sc_query_id;
 
-$block_id   = $block->context['surecart/product-list/block_id'] ?? '';
 $controller = new ProductListBlock( $block );
 $list_query = $controller->query();
 $value      = $list_query->s;

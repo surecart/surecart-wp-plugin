@@ -80,7 +80,7 @@ class CollectionTaxonomyService {
 		}
 
 		// check if we are on the collection taxonomy.
-		return plugin_dir_path( SURECART_PLUGIN_FILE ) . '/templates/pages/template-surecart-collection.php';
+		return untrailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . '/templates/pages/template-surecart-collection.php';
 	}
 
 	/**

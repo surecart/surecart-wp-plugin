@@ -1,4 +1,4 @@
-.wp-block-surecart-cart-icon-v2 {
+.wp-block-surecart-cart-icon {
 	position: fixed;
 	bottom: var(--sc-cart-icon-bottom, 30px);
 	right: var(--sc-cart-icon-right, 30px);
@@ -20,6 +20,10 @@
 	transition: opacity var(--sc-transition-medium) ease;
 	box-shadow: var(--sc-shadow-small);
 	cursor: pointer;
+
+	&[hidden] {
+		display: none;
+	}
 
 	&:hover {
 		opacity: 0.8;
