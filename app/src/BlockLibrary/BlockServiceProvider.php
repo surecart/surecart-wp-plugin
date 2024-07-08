@@ -124,11 +124,11 @@ class BlockServiceProvider implements ServiceProviderInterface {
 				),
 				array(
 					'slug'  => 'surecart-product-page',
-					'title' => esc_html__( 'SureCart Product Page', 'surecart' ),
+					'title' => esc_html__( 'SureCart Product', 'surecart' ),
 				),
 				array(
 					'slug'  => 'surecart-product-list',
-					'title' => esc_html__( 'SureCart Product List', 'surecart' ),
+					'title' => esc_html__( 'SureCart Shop', 'surecart' ),
 				),
 			),
 			...$categories,
