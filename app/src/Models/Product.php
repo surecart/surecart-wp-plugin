@@ -58,17 +58,18 @@ class Product extends Model implements PageModel {
 	 * @return \WP_Post|\WP_Error
 	 */
 	public function sync() {
+		$product = $this->withSyncableExpands()->where( array( 'cached' => false ) )->find( $this->id );
 		// sync the product.
-		$synced = \SureCart::sync()->product()->sync( $this );
+		$synced = \SureCart::sync()->product()->sync( $product );
 
 		// on success, cancel any queued syncs.
 		if ( ! is_wp_error( $synced ) ) {
 			\SureCart::sync()
 			->product()
-			->cancel( $this );
+			->cancel( $product );
 		}
 
-		return $this;
+		return $product;
 	}
 
 	/**
