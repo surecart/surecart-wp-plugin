@@ -20,7 +20,10 @@ export default ({ attributes, setAttributes }) => {
 	const { text, align } = attributes;
 
 	const blockProps = useBlockProps({
-		style: useCartStyles({ attributes }),
+		style: {
+			...useCartStyles({ attributes }),
+			textAlign: align,
+		},
 	});
 
 	return (
@@ -40,20 +43,21 @@ export default ({ attributes, setAttributes }) => {
 			</BlockControls>
 
 			<div {...blockProps}>
-				<div className="sc-text" style={{ textAlign: align }}>
-					<RichText
-						aria-label={__('Message Text')}
-						placeholder={__('I.E. Free shipping on all orders…')}
-						value={text}
-						onChange={(text) => setAttributes({ text })}
-						withoutInteractiveFormatting
-						allowedFormats={[
-							'core/bold',
-							'core/italic',
-							'core/strikethrough',
-						]}
-					/>
-				</div>
+				<RichText
+					aria-label={__('Message Text', 'surecart')}
+					placeholder={__(
+						'I.E. Free shipping on all orders…',
+						'surecart'
+					)}
+					value={text}
+					onChange={(text) => setAttributes({ text })}
+					withoutInteractiveFormatting
+					allowedFormats={[
+						'core/bold',
+						'core/italic',
+						'core/strikethrough',
+					]}
+				/>
 			</div>
 		</>
 	);
