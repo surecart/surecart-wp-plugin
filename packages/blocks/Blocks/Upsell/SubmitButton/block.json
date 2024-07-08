@@ -2,7 +2,7 @@
 	"name": "surecart/upsell-submit",
 	"title": "Upsell Submit Button",
 	"description": "Display an upsell submit button.",
-	"category": "surecart",
+	"category": "surecart-upsell-page",
 	"keywords": ["submit", "button", "order", "upsell"],
 	"ancestor": ["surecart/upsell"],
 	"textdomain": "surecart",
