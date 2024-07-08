@@ -19,7 +19,7 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 		$this->test_attributes = array(
 			'label' => 'Test label',
 			'columns' => 3,
-			'show-price' => true
+			'show_price' => true
 		);
 
 		$this->block = (object) [
@@ -57,7 +57,7 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 	 */
 	public function test_render_price_amount_trial_and_setup_fee(){
 		$this->service->renderPriceAmountTrialAndSetupFee();
-		$this->assertStringContainsString('<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/price-amount', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/price-trial', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/price-setup-fee', $this->service->block_html);
@@ -68,9 +68,8 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 	 */
 	public function test_render_price_choices(){
 		$this->service->renderPriceChoices();
-		$this->assertStringContainsString('<!-- wp:surecart/product-price-choices-v2', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-price-choice-template', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-price-chooser', $this->service->block_html);
+		$this->assertStringContainsString('{"textColor":"black","backgroundColor":"white","style":{"elements":{"link":{"color":{"text":"#8a8a8a"}}}}}', $this->service->block_html);
 	}
 
 	/**
@@ -80,7 +79,7 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 		$this->test_attributes = array(
 			'label' => 'Custom label',
 			'columns' => 3,
-			'show-price' => true
+			'show_price' => true
 		);
 
 		$this->service = new ProductPriceChoicesMigrationService(
@@ -89,7 +88,7 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 		);
 
 		$this->service->renderPriceChoices();
-		$this->assertStringContainsString('<!-- wp:surecart/product-price-choices-v2 {"label":"Custom label"} -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-price-chooser {"label":"Custom label"} -->', $this->service->block_html);
 	}
 
 	/**
@@ -99,7 +98,7 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 		$this->test_attributes = array(
 			'label' => 'Custom label',
 			'columns' => 3,
-			'show-price' => false
+			'show_price' => false
 		);
 
 		$this->service = new ProductPriceChoicesMigrationService(
@@ -120,7 +119,7 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 		$this->test_attributes = array(
 			'label' => 'Custom label',
 			'columns' => 3,
-			'show-price' => true,
+			'show_price' => true,
 			'textColor' => 'black',
 			'backgroundColor' => 'white',
 			'elements' => array(
@@ -138,7 +137,7 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 		);
 
 		$this->service->renderPriceChoices();
-		$this->assertStringContainsString('<!-- wp:surecart/product-price-choices-v2 {"label":"Custom label"} -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-price-chooser {"label":"Custom label"} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-price-choice-template {"textColor":"black","backgroundColor":"white","style":{"elements":{"link":{"color":{"text":"red"}}}}} -->', $this->service->block_html);
 	}
 }
