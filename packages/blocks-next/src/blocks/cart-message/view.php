@@ -9,7 +9,5 @@
 	); ?>
 	<?php echo esc_attr( empty( $attributes['text'] ) ? 'hidden' : '' ); ?>
 >
-	<div class="sc-text">
-		<?php echo wp_kses_post( $attributes['text'] ); ?>
-	</div>
+	<?php echo wp_kses_post( $attributes['text'] ); ?>
 </div>
