@@ -35,9 +35,7 @@ class CompatibilityService {
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 
 		// Load Divi Compatibility CSS.
-		if ( is_plugin_active( 'divi-builder/divi-builder.php' ) ) {
-			add_action( 'wp_enqueue_scripts', [ $this, 'diviCompatibility' ] );
-		}
+		add_action( 'wp_enqueue_scripts', [ $this, 'diviCompatibility' ] );
 
 		// Load Blocks Global Styles if enabled by Merchant in the setting.
 		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
@@ -51,6 +49,9 @@ class CompatibilityService {
 	 * @return void
 	 */
 	public function diviCompatibility() {
+		if ( ! is_plugin_active( 'divi-builder/divi-builder.php' ) ) {
+			return;
+		}
 		wp_enqueue_style( 'surecart-divi-compatibility', plugins_url( 'styles/divi-compatibility.css', SURECART_PLUGIN_FILE ), '', \SureCart::plugin()->version(), 'all' );
 	}
 
