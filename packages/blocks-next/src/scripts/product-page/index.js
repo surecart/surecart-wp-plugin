@@ -138,9 +138,9 @@ const { state, actions } = store('surecart/product-page', {
 		get isUnavailable() {
 			const { product, variants } = getContext();
 			return (
-				product?.archived || // archived.
-				state?.isSoldOut || // sold out.
-				(variants?.length && !state.selectedVariant?.id) // no selected variant.
+				!!product?.archived || // archived.
+				!!state?.isSoldOut || // sold out.
+				!!(variants?.length && !state.selectedVariant?.id) // no selected variant.
 			);
 		},
 
