@@ -43,7 +43,13 @@ const TEMPLATE = [
 			[
 				'core/group',
 				{
-					style: { spacing: { blockGap: '0.5em' } },
+					style: {
+						spacing: {
+							blockGap: '0.5em',
+							margin: { top: '0px', bottom: '0px' },
+						},
+						margin: { top: '0px', bottom: '0px' },
+					},
 					layout: { type: 'flex', flexWrap: 'nowrap' },
 				},
 				[
@@ -154,6 +160,8 @@ export default ({
 		'product-item-list': true,
 		[`columns-${columnCount}`]: layoutType === 'grid' && columnCount,
 	});
+
+	console.log({ TEMPLATE });
 
 	return (
 		<>
