@@ -10,16 +10,6 @@
 	<?php echo esc_attr( empty( $attributes['text'] ) ? 'hidden' : '' ); ?>
 >
 	<div class="sc-text">
-		<?php echo wp_kses( $attributes['text'],
-			array(
-				'strong' => array(),
-				'b'      => array(),
-				'i'      => array(),
-				'em'     => array(),
-				'strike' => array(),
-				'del'    => array(),
-				's'      => array(),
-			)
-		); ?>
+		<?php echo wp_kses_post( $attributes['text'] ); ?>
 	</div>
 </div>
