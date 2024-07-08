@@ -7,10 +7,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 export default ({ clientId, attributes }) => {
-	const block = useSelect(
-		(select) => select(blockEditorStore).getBlock(clientId || ''),
-		[clientId]
-	);
 	const { replaceBlock } = useDispatch(blockEditorStore);
 
 	// if the block is not set return.

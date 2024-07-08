@@ -116,7 +116,7 @@ class Price extends Model implements Syncable {
 		);
 
 		// if the product is already attached, and syncable, use that. Otherwise, find it.
-		$product = ! empty( $this->product ) && $this->product->has_syncable_expands && ! $args['refetch'] ? $this->product : Product::withSyncableExpands()->where( array( 'cached' => $args['cached'] ) )->find( $this->product_id );
+		$product = ! empty( $this->product->id ) ? $this->product : Product::withSyncableExpands()->where( array( 'cached' => $args['cached'] ) )->find( $this->product_id );
 
 		$product->sync();
 	}
