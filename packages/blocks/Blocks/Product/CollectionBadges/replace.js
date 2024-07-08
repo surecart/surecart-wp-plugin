@@ -3,14 +3,19 @@ import {
 	createBlock,
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
 
 export default ({ clientId, attributes }) => {
 	const { replaceBlock } = useDispatch(blockEditorStore);
 
+	// if the block is not set return.
+	if (!block?.name || !replaceBlock || !clientId) {
+		return;
+	}
+
 	useEffect(() => {
-		setTimeout(() => {
+		setTimeout(() =>
 			replaceBlock(clientId, [
 				createBlock(
 					'surecart/product-collection-tags',
@@ -27,7 +32,7 @@ export default ({ clientId, attributes }) => {
 						['surecart/product-collection-tag', attributes, []],
 					])
 				),
-			]);
-		});
-	});
+			])
+		);
+	}, []);
 };

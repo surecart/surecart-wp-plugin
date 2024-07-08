@@ -5,6 +5,7 @@ import {
 } from '@wordpress/blocks';
 import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 const newPriceChoicesTemplate = (attributes) => {
 	const defaultTextColor = attributes?.textColor || defaultTextColor;
@@ -130,8 +131,13 @@ export default ({ clientId, attributes }) => {
 	);
 	const { replaceBlock } = useDispatch(blockEditorStore);
 
+	// if the block is not set return.
+	if (!block?.name || !replaceBlock || !clientId) {
+		return;
+	}
+
 	useEffect(() => {
-		setTimeout(() => {
+		setTimeout(() =>
 			replaceBlock(clientId, [
 				createBlock(
 					'surecart/product-price-chooser',
@@ -142,7 +148,7 @@ export default ({ clientId, attributes }) => {
 						newPriceChoicesTemplate(attributes)
 					)
 				),
-			]);
-		});
-	});
+			])
+		);
+	}, []);
 };
