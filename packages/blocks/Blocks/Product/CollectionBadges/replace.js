@@ -4,6 +4,7 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 export default ({ clientId, attributes }) => {
 	const block = useSelect(
@@ -17,21 +18,25 @@ export default ({ clientId, attributes }) => {
 		return;
 	}
 
-	replaceBlock(clientId, [
-		createBlock(
-			'surecart/product-collection-tags',
-			{
-				count: attributes?.count,
-				style: {
-					spacing: {
-						blockGap: attributes?.spacing?.blockGap,
+	useEffect(() => {
+		setTimeout(() =>
+			replaceBlock(clientId, [
+				createBlock(
+					'surecart/product-collection-tags',
+					{
+						count: attributes?.count,
+						style: {
+							spacing: {
+								blockGap: attributes?.spacing?.blockGap,
+							},
+						},
+						type: attributes?.type,
 					},
-				},
-				type: attributes?.type,
-			},
-			createBlocksFromInnerBlocksTemplate([
-				['surecart/product-collection-tag', attributes, []],
+					createBlocksFromInnerBlocksTemplate([
+						['surecart/product-collection-tag', attributes, []],
+					])
+				),
 			])
-		),
-	]);
+		);
+	}, []);
 };

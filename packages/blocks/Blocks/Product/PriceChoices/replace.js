@@ -4,6 +4,7 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 const newPriceChoicesTemplate = (attributes) => {
 	const defaultTextColor = attributes?.textColor || defaultTextColor;
@@ -134,15 +135,19 @@ export default ({ clientId, attributes }) => {
 		return;
 	}
 
-	replaceBlock(clientId, [
-		createBlock(
-			'surecart/product-price-chooser',
-			{
-				type: attributes?.type,
-			},
-			createBlocksFromInnerBlocksTemplate(
-				newPriceChoicesTemplate(attributes)
-			)
-		),
-	]);
+	useEffect(() => {
+		setTimeout(() =>
+			replaceBlock(clientId, [
+				createBlock(
+					'surecart/product-price-chooser',
+					{
+						type: attributes?.type,
+					},
+					createBlocksFromInnerBlocksTemplate(
+						newPriceChoicesTemplate(attributes)
+					)
+				),
+			])
+		);
+	}, []);
 };

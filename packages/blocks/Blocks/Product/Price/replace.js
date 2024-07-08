@@ -5,6 +5,7 @@ import {
 } from '@wordpress/blocks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 
 const newPriceTemplate = (attributes) => {
 	const defaultColor = attributes?.textColor || '#8a8a8a';
@@ -102,15 +103,21 @@ export default ({ clientId, attributes }) => {
 		return;
 	}
 
-	replaceBlock(clientId, [
-		createBlock(
-			'core/group',
-			{
-				style: attributes?.style,
-				textColor: attributes.textColor,
-				backgroundColor: attributes.backgroundColor,
-			},
-			createBlocksFromInnerBlocksTemplate(newPriceTemplate(attributes))
-		),
-	]);
+	useEffect(() => {
+		setTimeout(() =>
+			replaceBlock(clientId, [
+				createBlock(
+					'core/group',
+					{
+						style: attributes?.style,
+						textColor: attributes.textColor,
+						backgroundColor: attributes.backgroundColor,
+					},
+					createBlocksFromInnerBlocksTemplate(
+						newPriceTemplate(attributes)
+					)
+				),
+			])
+		);
+	}, []);
 };
