@@ -133,7 +133,7 @@ class ProductSelectedPriceMigrationService {
 			)
 		);
 
-		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
 		$this->block_html .= '<div class="wp-block-group" >';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-trial ' . wp_json_encode( $child_block_attributes ) . ' /-->';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-fees ' . wp_json_encode( $child_block_attributes ) . ' /-->';
