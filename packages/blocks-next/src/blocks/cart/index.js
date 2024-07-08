@@ -22,9 +22,12 @@ registerBlockType(metadata.name, {
 			fill="none"
 			width="16"
 			height="16"
-			viewBox="0 0 24 24"
+			viewBox="0 0 28 28"
 			stroke="currentColor"
 			style={{ fill: 'none' }}
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
 		>
 			<circle cx="9" cy="21" r="1"></circle>
 			<circle cx="20" cy="21" r="1"></circle>
