@@ -5,7 +5,7 @@
 	"title": "Cart Menu Icon",
 	"description": "The cart menu icon that shows your cart quantity.",
 	"version": "1.0.0",
-	"category": "cart",
+	"category": "surecart-cart",
 	"example": {},
 	"attributes": {
 		"cart_icon": {

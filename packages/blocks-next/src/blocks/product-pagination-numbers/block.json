@@ -5,7 +5,7 @@
 	"title": "Numbers",
 	"description": "Display the product pagination numbers.",
 	"version": "1.0.0",
-	"category": "sc-product-list",
+	"category": "surecart-product-listt-list",
 	"example": {},
 	"ancestor": ["surecart/product-pagination"],
 	"usesContext": [

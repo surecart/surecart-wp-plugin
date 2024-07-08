@@ -4,7 +4,7 @@
 	"name": "surecart/slide-out-cart-bump-line-item",
 	"title": "Cart Bump Line Item",
 	"description": "Display the cart bump line item",
-	"category": "cart",
+	"category": "surecart-cart",
 	"textdomain": "surecart",
 	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {

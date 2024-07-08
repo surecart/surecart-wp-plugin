@@ -4,7 +4,7 @@
 	"name": "surecart/slide-out-cart-items",
 	"title": "Cart Items",
 	"description": "The cart items",
-	"category": "cart",
+	"category": "surecart-cart",
 	"version": "1.0.0",
 	"example": {},
 	"textdomain": "surecart",

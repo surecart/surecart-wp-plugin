@@ -115,16 +115,20 @@ class BlockServiceProvider implements ServiceProviderInterface {
 					'title' => esc_html__( 'SureCart', 'surecart' ),
 				),
 				array(
+					'slug'  => 'surecart-customer-dashboard',
+					'title' => esc_html__( 'SureCart Customer Dashboard', 'surecart' ),
+				),
+				array(
 					'slug'  => 'cart',
-					'title' => esc_html__( 'Cart', 'surecart' ),
+					'title' => esc_html__( 'SureCart Cart', 'surecart' ),
 				),
 				array(
 					'slug'  => 'surecart-product-page',
-					'title' => esc_html__( 'Product Page', 'surecart' ),
+					'title' => esc_html__( 'SureCart Product Page', 'surecart' ),
 				),
 				array(
-					'slug'  => 'sc-product-list',
-					'title' => esc_html__( 'Product List', 'surecart' ),
+					'slug'  => 'surecart-product-list',
+					'title' => esc_html__( 'SureCart Product List', 'surecart' ),
 				),
 			),
 			...$categories,

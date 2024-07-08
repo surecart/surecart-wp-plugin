@@ -6,7 +6,7 @@
 	"description": "The cart submit button",
 	"textdomain": "surecart",
 	"version": "1.0.0",
-	"category": "cart",
+	"category": "surecart-cart",
 	"example": {},
 	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {

@@ -6,7 +6,7 @@
 	"description": "Display a coupon form in the cart",
 	"keywords": ["coupon", "promo"],
 	"version": "1.0.0",
-	"category": "cart",
+	"category": "surecart-cart",
 	"example": {},
 	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
