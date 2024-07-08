@@ -115,7 +115,6 @@ class ProductPriceChoicesMigrationService {
 	 */
 	public function render() {
 		$this->renderPriceChoices();
-		error_log( $this->block_html );
 		return $this->doBlocks();
 	}
 }
