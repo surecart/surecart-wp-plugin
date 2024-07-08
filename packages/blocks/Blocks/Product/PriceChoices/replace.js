@@ -3,6 +3,7 @@ import {
 	createBlock,
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
+import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 const newPriceChoicesTemplate = (attributes) => {
@@ -129,20 +130,19 @@ export default ({ clientId, attributes }) => {
 	);
 	const { replaceBlock } = useDispatch(blockEditorStore);
 
-	// if the block is not set return.
-	if (!block?.name || !replaceBlock || !clientId) {
-		return;
-	}
-
-	replaceBlock(clientId, [
-		createBlock(
-			'surecart/product-price-chooser',
-			{
-				type: attributes?.type,
-			},
-			createBlocksFromInnerBlocksTemplate(
-				newPriceChoicesTemplate(attributes)
-			)
-		),
-	]);
+	useEffect(() => {
+		setTimeout(() => {
+			replaceBlock(clientId, [
+				createBlock(
+					'surecart/product-price-chooser',
+					{
+						type: attributes?.type,
+					},
+					createBlocksFromInnerBlocksTemplate(
+						newPriceChoicesTemplate(attributes)
+					)
+				),
+			]);
+		});
+	});
 };
