@@ -3,11 +3,15 @@ import {
 	createBlock,
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
-import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 export default ({ clientId, attributes }) => {
 	const { replaceBlock } = useDispatch(blockEditorStore);
+	const block = useSelect(
+		(select) => select(blockEditorStore).getBlock(clientId || ''),
+		[clientId]
+	);
 
 	// if the block is not set return.
 	if (!block?.name || !replaceBlock || !clientId) {

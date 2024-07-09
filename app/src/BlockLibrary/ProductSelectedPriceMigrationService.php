@@ -149,7 +149,14 @@ class ProductSelectedPriceMigrationService {
 	public function renderPrice() {
 		$group_attributes = array(
 			'style'  => array(
-				'spacing' => $this->attributes['style']['spacing'] ?? array(),
+				'spacing' => $this->attributes['style']['spacing'] ?? array(
+					'padding' => array(
+						'top'    => '1em',
+						'right'  => '1em',
+						'bottom' => '1em',
+						'left'   => '1em',
+					),
+				),
 			),
 			'layout' => array(
 				'type' => 'constrained',

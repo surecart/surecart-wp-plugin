@@ -112,6 +112,15 @@ export default ({ clientId, attributes }) => {
 						style: attributes?.style,
 						textColor: attributes.textColor,
 						backgroundColor: attributes.backgroundColor,
+						spacing: {
+							padding: {
+								top: '0',
+								bottom: '0',
+								left: '0',
+								right: '0',
+							},
+							...(attributes?.style?.spacing || {}),
+						},
 					},
 					createBlocksFromInnerBlocksTemplate(
 						newPriceTemplate(attributes)

@@ -5,7 +5,6 @@ import {
 } from '@wordpress/blocks';
 import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
 
 const newPriceChoicesTemplate = (attributes) => {
 	const defaultTextColor = attributes?.textColor || defaultTextColor;
