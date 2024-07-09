@@ -16,7 +16,6 @@ const newPriceChoicesTemplate = (attributes) => {
 				style: {
 					spacing: {
 						...(attributes?.styles?.spacing || {}),
-						blockGap: 'var:preset|spacing|20',
 					},
 				},
 				layout: {
