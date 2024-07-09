@@ -263,9 +263,9 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	callbacks: {
-    *init() {
-      // maybe import analytics handlers.
-      if (window?.dataLayer || window?.gtag) {
+		*init() {
+			// maybe import analytics handlers.
+			if (window?.dataLayer || window?.gtag) {
 				yield import(
 					/* webpackIgnore: true */
 					'@surecart/google-events'
@@ -279,9 +279,9 @@ const { state, actions } = store('surecart/product-page', {
 				);
 			}
 
-      const { selectedPrice, product } = getContext();
+			const { selectedPrice, product } = getContext();
 			scProductViewed(product, selectedPrice, state.quantity);
-    }
+		},
 
 		/**
 		 * Handle submit callback.
