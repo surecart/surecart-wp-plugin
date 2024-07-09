@@ -92,11 +92,11 @@ class ProductsSyncService {
 			\SureCart::notices()->render(
 				[
 					'type'  => 'info',
-					'title' => esc_html__( 'SureCart Product Sync In Progress', 'surecart' ),
+					'title' => esc_html__( 'SureCart: Getting things ready...', 'surecart' ),
 					'text'  => wp_sprintf(
 						'<p>%s</p>
 						<p><a href="%s" class="button button-secondary" id="surecart-migration-cancel">%s</a></p>',
-						esc_html__( 'SureCart is syncing products in the background. The process may take a little while, so please be patient.', 'surecart' ),
+						esc_html__( 'We are getting things ready and optimized in the background. This may take a few minutes.', 'surecart' ),
 						esc_url(
 							add_query_arg(
 								[

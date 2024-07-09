@@ -3,13 +3,12 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasProduct;
-use SureCart\Support\Contracts\Syncable;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
-class Price extends Model implements Syncable {
+class Price extends Model {
 	use HasProduct;
 
 	/**
@@ -91,7 +90,7 @@ class Price extends Model implements Syncable {
 		$response = parent::delete( $id );
 
 		// sync product.
-		$this->sync( [ 'refetch' => true ] );
+		$this->sync();
 
 		// return.
 		return $response;
@@ -100,25 +99,16 @@ class Price extends Model implements Syncable {
 	/**
 	 * Sync the product
 	 *
-	 * @param array $args Arguments.
-	 *                  - refetch: boolean (default: false) - refetch the product.
-	 *                  - cached: boolean (default: false) - use the cached product.
-	 *
-	 * @return void
+	 * @return $this
 	 */
-	public function sync( $args = [] ) {
-		$args = wp_parse_args(
-			$args,
-			array(
-				'refetch' => false,
-				'cached'  => false,
-			)
-		);
+	protected function sync() {
+		$product = Product::sync( $this->product_id );
 
-		// if the product is already attached, and syncable, use that. Otherwise, find it.
-		$product = ! empty( $this->product ) && $this->product->has_syncable_expands && ! $args['refetch'] ? $this->product : Product::withSyncableExpands()->where( array( 'cached' => $args['cached'] ) )->find( $this->product_id );
+		if ( is_wp_error( $product ) ) {
+			return $product;
+		}
 
-		$product->sync();
+		return $this;
 	}
 
 	/**

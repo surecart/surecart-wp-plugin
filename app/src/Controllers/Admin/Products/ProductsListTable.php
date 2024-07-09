@@ -171,10 +171,15 @@ class ProductsListTable extends ListTable {
 	 * @param Product $product The product model.
 	 */
 	public function column_sync_status( $product ) {
+		if ( $product->synced ) {
+			return '<sc-icon name="check" class="synced"></sc-icon>';
+		}
+
 		if ( \SureCart::sync()->products()->isActive() || \SureCart::sync()->product()->isScheduled( $product ) ) {
 			return '<span class="syncing-wrapper"><sc-icon name="loader" class="syncing"></sc-icon><span class="syncing-text">' . __( 'Syncing...', 'surecart' ) . '</span></span>';
 		}
-		return $product->synced ? '<sc-icon name="check" class="synced"></sc-icon>' : '<sc-icon name="x" class="unsynced"></sc-icon>';
+
+		return '<sc-icon name="x" class="unsynced"></sc-icon>';
 	}
 
 	/**
