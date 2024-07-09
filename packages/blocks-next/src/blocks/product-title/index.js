@@ -14,11 +14,8 @@ import './style.scss';
 /**
  * Every block starts by registering a new block type definition.
  */
-registerBlockType(
-	metadata.name,
-	{
-		icon,
-		edit,
-		icon,
-	}
-);
+registerBlockType(metadata.name, {
+	icon,
+	edit,
+	icon,
+});
