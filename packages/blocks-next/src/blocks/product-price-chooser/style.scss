@@ -8,7 +8,7 @@
 }
 
 @container product-price-choices (max-width: 600px) {
-	.wp-container-surecart-product-price-choices-template-is-layout-1 {
+	.is-layout-grid {
 		grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
 	}
 	.wp-block-surecart-product-price-choice-template {
