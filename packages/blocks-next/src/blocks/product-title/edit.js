@@ -24,13 +24,17 @@ export default ({
 	setAttributes,
 	context: { 'surecart/productId': productId },
 }) => {
-	const TagName = 0 === level ? 'p' : 'h' + level;
+	const TagName                 = 0 === level ? 'p' : 'h' + level;
 
-	const blockProps = useBlockProps({
-		className: classnames({
-			[`has-text-align-${textAlign}`]: textAlign,
-		}),
-	});
+		const blockProps = useBlockProps(
+			{
+				className: classnames(
+					{
+						[`has - text - align - ${textAlign}`]: textAlign,
+					}
+				),
+			}
+		);
 
 	let { record: product } = useEntityRecord(
 		'postType',
@@ -39,23 +43,23 @@ export default ({
 	);
 
 	return (
-		<>
-			<BlockControls group="block">
-				<HeadingLevelDropdown
-					selectedLevel={level}
-					onChange={(level) => setAttributes({ level })}
-				/>
-				<AlignmentControl
-					value={textAlign}
-					onChange={(nextAlign) => {
-						setAttributes({ textAlign: nextAlign });
-					}}
-				/>
-			</BlockControls>
+		< >
+			< BlockControls group = "block" >
+				< HeadingLevelDropdown
+					selectedLevel = {level}
+					onChange      = {(level) => setAttributes( { level } )}
+				/ >
+				< AlignmentControl
+					value         = {textAlign}
+					onChange      = {(nextAlign) => {
+						setAttributes( { textAlign: nextAlign } );
+						}}
+				/ >
+			< / BlockControls >
 
-			<TagName {...blockProps}>
-				{product?.title?.raw || __('Product Name', 'surecart')}
-			</TagName>
-		</>
+			< TagName {...blockProps} >
+				{product ? .title ? .raw || __( 'Product Name', 'surecart' )}
+			< / TagName >
+		< / >
 	);
 };
