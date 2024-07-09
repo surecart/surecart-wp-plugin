@@ -1,9 +1,9 @@
 .wp-block-surecart-product-template {
 	width: 100%; // prevent collapsing during loading.
-	list-style: none;
+	list-style: none !important;
 	max-width: 100%;
-	margin: 0;
-	padding: 0;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
 .sc-product-item {

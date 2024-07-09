@@ -5,7 +5,7 @@
 	"title": "Cart",
 	"description": "Display SureCart slide out cart",
 	"version": "1.0.0",
-	"category": "cart",
+	"category": "surecart-cart",
 	"icon": "media-interactive",
 	"example": {},
 	"attributes": {

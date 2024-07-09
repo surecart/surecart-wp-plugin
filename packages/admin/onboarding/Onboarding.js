@@ -5,7 +5,8 @@ import { __ } from '@wordpress/i18n';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
 import Layout from './components/Layout';
@@ -94,6 +95,49 @@ export default () => {
 				object: 'brand',
 				color: brandColor,
 			});
+
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'store'
+			);
+
+			// check seed status for up to 1 minute.
+			let hasSeeded = false;
+			let attempts = 0;
+			const maxAttempts = 12; // Example: max 1 minute wait if seeded_at is not set.
+			while (!hasSeeded && attempts < maxAttempts) {
+				try {
+					const { seeded_at } = await apiFetch({
+						path: baseURL + '/account',
+					});
+
+					if (seeded_at) {
+						hasSeeded = true;
+					} else {
+						// wait 5 seconds.
+						await new Promise((resolve) =>
+							setTimeout(resolve, 5000)
+						);
+						attempts++;
+					}
+				} catch (error) {
+					console.error('Error fetching API:', error);
+					// Optionally, wait before retrying or break out of the loop
+					await new Promise((resolve) => setTimeout(resolve, 5000));
+					attempts++;
+				}
+			}
+
+			if (!hasSeeded) {
+				createErrorNotice(
+					error?.message ||
+						__(
+							'Store was created, but seeding of new products failed.',
+							'surecart'
+						),
+					{ type: 'snackbar' }
+				);
+			}
 
 			handleStepChange('forward');
 		} catch (error) {

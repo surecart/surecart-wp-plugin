@@ -22,6 +22,28 @@ class CollectionTaxonomyService {
 		add_action( 'init', array( $this, 'register' ) );
 		add_filter( 'taxonomy_template', array( $this, 'template' ) );
 		add_filter( 'get_edit_term_link', array( $this, 'updateEditLink' ), 10, 3 );
+		add_filter( 'get_terms_args', array( $this, 'getTermsArgs' ), 10, 2 );
+	}
+
+	/**
+	 * Always fetch taxonomy terms with sc_id metadata.
+	 *
+	 * @param array $args     The arguments.
+	 * @param array $taxonomies The taxonomies.
+	 *
+	 * @return array
+	 */
+	public function getTermsArgs( $args, $taxonomies ) {
+		if ( in_array( $this->slug, $taxonomies, true ) ) {
+			$args['meta_query'] = array(
+				array(
+					'key'   => 'sc_account',
+					'value' => \SureCart::account()->id,
+				),
+			);
+		}
+
+		return $args;
 	}
 
 	/**

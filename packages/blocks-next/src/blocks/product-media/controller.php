@@ -1,6 +1,11 @@
 <?php
 
-$product        = sc_get_product();
+$product = sc_get_product();
+
+if ( empty( $product ) ) {
+	return '';
+}
+
 $gallery        = $product->gallery;
 $featured_image = $gallery[0] ?? null;
 

@@ -3,7 +3,7 @@
 	"name": "surecart/upsell-title",
 	"title": "Upsell Title",
 	"description": "Displays the title.",
-	"category": "surecart",
+	"category": "surecart-upsell-page",
 	"keywords": ["title", "upsell", "cta", "heading"],
 	"ancestor": ["surecart/upsell"],
 	"attributes": {

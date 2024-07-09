@@ -20,7 +20,13 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					const price = [
 						'core/group',
 						{
-							style: { spacing: { blockGap: '0.5em' } },
+							style: {
+								spacing: {
+									blockGap: '0.5em',
+									margin: { top: '0px', bottom: '0px' },
+								},
+								margin: { top: '0px', bottom: '0px' },
+							},
 							layout: { type: 'flex', flexWrap: 'nowrap' },
 						},
 						[

@@ -342,13 +342,18 @@ class ProductPostTypeService {
 		}
 		$product          = sc_get_product();
 		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
-		$blocks           = get_block_template( $template_part_id, 'wp_template_part' )->content;
-		$blocks           = shortcode_unautop( $blocks );
-		$blocks           = do_shortcode( $blocks );
-		$blocks           = do_blocks( $blocks );
-		$blocks           = wptexturize( $blocks );
-		$blocks           = convert_smilies( $blocks );
-		$blocks           = wp_filter_content_tags( $blocks, 'template_part_uncategorized' );
+		$template         = get_block_template( $template_part_id, 'wp_template_part' );
+		if ( ! $template ) {
+			$template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+		}
+
+		$blocks = $template->content ?? '';
+		$blocks = shortcode_unautop( $blocks );
+		$blocks = do_shortcode( $blocks );
+		$blocks = do_blocks( $blocks );
+		$blocks = wptexturize( $blocks );
+		$blocks = convert_smilies( $blocks );
+		$blocks = wp_filter_content_tags( $blocks, 'template_part_uncategorized' );
 		// Handle embeds for block template parts.
 		global $wp_embed;
 		$blocks = $wp_embed->autoembed( $blocks );

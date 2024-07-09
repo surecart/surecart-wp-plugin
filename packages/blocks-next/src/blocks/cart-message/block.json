@@ -4,7 +4,7 @@
 	"name": "surecart/slide-out-cart-message",
 	"title": "Cart Message",
 	"description": "Display a custom message in the cart",
-	"category": "cart",
+	"category": "surecart-cart",
 	"version": "1.0.0",
 	"example": {},
 	"textdomain": "surecart",

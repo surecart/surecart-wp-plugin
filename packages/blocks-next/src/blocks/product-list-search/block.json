@@ -5,7 +5,7 @@
 	"title": "Search",
 	"description": "Display the product search.",
 	"version": "1.0.0",
-	"category": "sc-product-list",
+	"category": "surecart-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
 	"usesContext": [

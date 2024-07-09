@@ -2,7 +2,7 @@
 	"name": "surecart/add-to-cart-button",
 	"title": "Add To Cart Button",
 	"description": "Display a button to add a specific price to the cart.",
-	"category": "surecart",
+	"category": "surecart-product-page",
 	"keywords": ["name", "customer"],
 	"textdomain": "surecart",
 	"parent": null,

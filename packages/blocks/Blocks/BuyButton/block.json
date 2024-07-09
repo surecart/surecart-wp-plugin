@@ -2,7 +2,7 @@
 	"name": "surecart/buy-button",
 	"title": "Buy Button",
 	"description": "Display a button to immediately redirect to the checkout page with the product in the cart.",
-	"category": "surecart",
+	"category": "surecart-product-page",
 	"keywords": ["name", "customer"],
 	"textdomain": "surecart",
 	"parent": null,

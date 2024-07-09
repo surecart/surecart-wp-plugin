@@ -1,13 +1,7 @@
 <?php
-$styles = sc_get_block_styles();
-$class  = $styles['classnames'] ?? '';
-$style  = $styles['css'] ?? '';
-
-// width style.
-$style .= ! empty( $attributes['width'] ) ? 'width: ' . $attributes['width'] . ';' : '';
-
 $form      = \SureCart::forms()->getDefault();
 $form_mode = \SureCart\Models\Form::getMode( $form->ID );
+$style     = ! empty( $attributes['width'] ) ? 'width: ' . $attributes['width'] . ';' : '';
 
 wp_interactivity_state(
 	'surecart/checkout',

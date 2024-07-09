@@ -5,7 +5,7 @@
 	"title": "Cart Subtotal",
 	"description": "Display the cart subtotal",
 	"keywords": ["cart", "subtotal"],
-	"category": "cart",
+	"category": "surecart-cart",
 	"textdomain": "surecart",
 	"version": "1.0.0",
 	"example": {},
@@ -24,7 +24,7 @@
 			"default": {
 				"top": "1.25em",
 				"left": "1.25em",
-				"bottom": 0,
+				"bottom": "1.25em",
 				"right": "1.25em"
 			}
 		},

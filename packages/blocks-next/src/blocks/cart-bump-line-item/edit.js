@@ -48,7 +48,7 @@ export default ({ attributes, setAttributes }) => {
 					<div className="sc-product-line-item__item">
 						<div className="sc-product-line-item__text">
 							<div className="sc-product-line-item__text-details">
-								<div className="sc-bump-line-item-description">
+								<div className="sc-bump-line-item__description">
 									<span>
 										{label ||
 											__('Bundle Discount', 'surecart')}
@@ -58,7 +58,7 @@ export default ({ attributes, setAttributes }) => {
 						</div>
 
 						<div className="sc-product-line-item__suffix">
-							<div className="sc-bump-line-item-price">
+							<div className="sc-bump-line-item__price">
 								<div className="price">
 									<span>-{scData?.currency_symbol}1.20</span>
 								</div>

@@ -5,7 +5,7 @@
 	"title": "Floating Cart Icon",
 	"description": "The cart icon that shows your cart quantity.",
 	"version": "1.0.0",
-	"category": "cart",
+	"category": "surecart-cart",
 	"example": {},
 	"attributes": {},
 	"supports": {

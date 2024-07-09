@@ -5,7 +5,7 @@
 		padding: 0.25em;
 		line-height: 1;
 		gap: var(--sc-spacing-xx-small);
-		text-decoration: none;
+		text-decoration: none !important;
 		color: inherit;
 
 		&[disabled] {
