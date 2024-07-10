@@ -62,8 +62,8 @@ class Block extends ProductBlock {
 				></sc-image-slider>',
 				get_block_wrapper_attributes(),
 				esc_attr( $product->id ),
-				htmlspecialchars( wp_json_encode( $images ), ENT_QUOTES, 'UTF-8' ),
-				htmlspecialchars( wp_json_encode( $thumbnails ), ENT_QUOTES, 'UTF-8' ),
+				wp_json_encode( $images ),
+				wp_json_encode( $thumbnails ),
 				esc_attr( $attributes['thumbnails_per_page'] ?? 5 ),
 				esc_attr( wp_validate_boolean( $attributes['auto_height'] ) ? 'true' : 'false' ),
 				esc_attr( wp_validate_boolean( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) )
