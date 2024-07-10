@@ -65,7 +65,7 @@ class ShortcodesService {
 						case 'surecart/product-collection':
 							return wp_interactivity_process_directives( \SureCart::block()->productListMigration( $shortcode_attrs )->render() );
 
-						case 'surecart/product-collection-badges':
+						case 'surecart/product-collection-tags':
 							return wp_interactivity_process_directives( \SureCart::block()->productCollectionBadgesMigration( $shortcode_attrs )->render() );
 
 						case 'surecart/product-price':

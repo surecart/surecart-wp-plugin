@@ -45,7 +45,7 @@ class ProductCollectionBadgesMigrationService {
 	 */
 	public function renderProductCollectionBadges() {
 		$layout_attributes = array(
-			'count' => $this->attributes['count'],
+			'count' => $this->attributes['count'] ?? 1,
 			'style' => array(
 				'spacing' => array(
 					'blockGap' => $this->attributes['style']['spacing']['blockGap'] ?? '3px',
