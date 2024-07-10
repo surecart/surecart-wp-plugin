@@ -59,6 +59,26 @@ class ShortcodesService {
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
 
+				if ( ! empty( $block_name ) ) {
+					switch ( $block_name ) {
+						case 'surecart/product-list':
+						case 'surecart/product-collection':
+							return wp_interactivity_process_directives( \SureCart::block()->productListMigration( $shortcode_attrs )->render() );
+
+						case 'surecart/product-collection-badges':
+							return wp_interactivity_process_directives( \SureCart::block()->productCollectionBadgesMigration( $shortcode_attrs )->render() );
+
+						case 'surecart/product-price':
+							return wp_interactivity_process_directives( \SureCart::block()->productSelectedPriceMigration( $shortcode_attrs )->render() );
+
+						case 'surecart/product-price-choices':
+							return wp_interactivity_process_directives( \SureCart::block()->productPriceChoicesMigration( $shortcode_attrs )->render() );
+
+						case 'surecart/product-variant-choices':
+							return wp_interactivity_process_directives( \SureCart::block()->productVariantsMigration( $shortcode_attrs )->render() );
+					}
+				}
+
 				if ( ! empty( $block_name ) && ( 'surecart/product-list' === $block_name || 'surecart/product-collection' === $block_name ) ) {
 					return wp_interactivity_process_directives( \SureCart::block()->productListMigration( $shortcode_attrs )->render() );
 				}
