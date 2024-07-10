@@ -7,10 +7,8 @@
 
 namespace SureCart\WordPress\Sitemap;
 
-use SureCart\Models\Product;
-
 /**
- * XML sitemap provider.
+ * Product XML sitemap provider.
  */
 class ProductSiteMap extends \WP_Sitemaps_Provider {
 	/**
@@ -31,43 +29,24 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 	 * @return array[] Array of URL information for a sitemap.
 	 */
 	public function get_url_list( $page_num, $object_subtype = '' ) {
-		/**
-		 * Filters the users URL list before it is generated.
-		 *
-		 * Returning a non-null value will effectively short-circuit the generation,
-		 * returning that value instead.
-		 *
-		 * @param array[]|null $url_list The URL list. Default null.
-		 * @param int        $page_num Page of results.
-		 */
-		$url_list = apply_filters(
-			'wp_sitemaps_sc_products_pre_url_list',
-			null,
-			$page_num
-		);
+		$args          = $this->get_product_query_args();
+		$args['paged'] = $page_num;
+		$query         = new \WP_Query( $args );
+		$url_list      = array();
 
-		if ( null !== $url_list ) {
-			return $url_list;
-		}
-
-		$products = $this->get_products( $page_num );
-
-		if ( is_wp_error( $products ) ) {
-			return [];
-		}
-
-		foreach ( $products->data as $product ) {
+		foreach ( $query->posts as $post ) {
 			$sitemap_entry = array(
-				'loc' => $product->permalink,
+				'loc'     => get_permalink( $post ),
+				'lastmod' => wp_date( DATE_W3C, strtotime( $post->post_modified_gmt ) ),
 			);
 
 			/**
 			 * Filters the sitemap entry for an individual product.
 			 *
 			 * @param array   $sitemap_entry Sitemap entry for the user.
-			 * @param \SureCart\Models\Product $product          Product object.
+			 * @param \WP_Post               object.
 			 */
-			$sitemap_entry = apply_filters( 'wp_sitemaps_sc_products_entry', $sitemap_entry, $product );
+			$sitemap_entry = apply_filters( 'wp_sitemaps_sc_products_entry', $sitemap_entry, $post );
 			$url_list[]    = $sitemap_entry;
 		}
 
@@ -99,67 +78,31 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 			return $max_num_pages;
 		}
 
-		$products = $this->get_products( 1 );
+		$args           = $this->get_product_query_args();
+		$args['fields'] = 'ids';
+		$query          = new \WP_Query( $args );
 
-		if ( is_wp_error( $products ) ) {
-			return 1;
-		}
-
-		$total_products = $products->pagination->count;
-
-		return (int) ceil( $total_products / $this->get_max_urls() );
+		return $query->max_num_pages;
 	}
 
 	/**
-	 * Get products
+	 * Gets the post query arguments for the sitemap.
 	 *
-	 * @param integer $page_num The page number.
-	 *
-	 * @return Collection
+	 * @return array Query arguments.
 	 */
-	protected function get_products( $page_num ) {
-		$args = $this->get_products_query_args();
-
-		return Product::where( $args )->paginate(
-			[
-				'page'     => $page_num,
-				'per_page' => $this->get_max_urls(),
-			]
-		);
-	}
-
-	/**
-	 * Returns the query args for retrieving users to list in the sitemap.
-	 *
-	 * @return array Array of WP_User_Query arguments.
-	 */
-	protected function get_products_query_args() {
-		/**
-		 * Filters the query arguments for authors with public posts.
-		 *
-		 * Allows modification of the authors query arguments before querying.
-		 *
-		 * @see WP_User_Query for a full list of arguments
-		 *
-		 * @param array $args Array of WP_User_Query arguments.
-		 */
-		$args = apply_filters(
+	private function get_product_query_args() {
+		return apply_filters(
 			'wp_sitemaps_sc_products_query_args',
 			array(
-				'status' => [ 'published' ],
-				'archived' => false,
+				'post_type'              => 'sc_product',
+				'post_status'            => 'publish',
+				'posts_per_page'         => wp_sitemaps_get_max_urls( $this->object_type ),
+				'orderby '               => 'ID',
+				'order'                  => 'ASC',
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'ignore_sticky_posts'    => true,
 			)
 		);
-
-		return $args;
-	}
-
-	/**
-	 * We need to change this since 100 is the max.
-	 *
-	 * @return integer
-	 */
-	protected function get_max_urls() {
-		return apply_filters( 'wp_sitemaps_max_urls', 100, 'sc_product' );
 	}
 }
