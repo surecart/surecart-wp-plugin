@@ -50,14 +50,12 @@ class ProductsSyncProcess extends BackgroundProcess {
 
 		try {
 			// find and sync.
-			$model = Product::findSyncable( $item['id'] );
+			$product = Product::sync( $item['id'] );
 
-			if ( is_wp_error( $model ) ) {
-				error_log( $model->get_error_message() );
+			if ( is_wp_error( $product ) ) {
+				error_log( $product->get_error_message() );
 				return false;
 			}
-
-			$model->sync();
 		} catch ( \Exception $e ) {
 			error_log( 'Error syncing model: ' . $item['model'] . ' with id: ' . $item['id'] );
 			error_log( $e->getMessage() );

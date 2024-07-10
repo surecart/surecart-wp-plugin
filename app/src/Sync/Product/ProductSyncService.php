@@ -61,7 +61,7 @@ class ProductSyncService {
 		return \SureCart::queue()->async(
 			$this->action_name,
 			[
-				'id'               => $model->id,
+				'id' => $model->id,
 			],
 			'product-' . $model->id, // unique id for the product.
 			true // force unique. This will replace any existing jobs.
@@ -79,7 +79,7 @@ class ProductSyncService {
 		return \SureCart::queue()->isScheduled(
 			$this->action_name,
 			[
-				'id'               => $model->id,
+				'id' => $model->id,
 			],
 			'product-' . $model->id
 		);
@@ -96,7 +96,7 @@ class ProductSyncService {
 		return \SureCart::queue()->cancel(
 			$this->action_name,
 			[
-				'id'               => $model->id,
+				'id' => $model->id,
 			],
 			'product-' . $model->id, // unique id for the product.
 			true // force unique. This will replace any existing jobs.
@@ -106,12 +106,12 @@ class ProductSyncService {
 	/**
 	 * Run the model sync immediately.
 	 *
-	 * @param \SureCart\Models\Model $model The model.
+	 * @param \SureCart\Models\Product $product The Product.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function sync( \SureCart\Models\Model $model ) {
-		return $this->post()->sync( $model );
+	public function sync( \SureCart\Models\Product $product ) {
+		return $this->post()->sync( $product );
 	}
 
 	/**
@@ -135,14 +135,6 @@ class ProductSyncService {
 	 * @return \WP_Post|\WP_Error
 	 */
 	public function handleScheduledSync( $id ) {
-		// get product.
-		$product = Product::findSyncable( $id );
-
-		// handle error.
-		if ( is_wp_error( $product ) ) {
-			throw( $product->get_error_message() );
-		}
-
-		return $this->sync( $product );
+		return Product::sync( $id );
 	}
 }

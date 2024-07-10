@@ -53,23 +53,81 @@ class Product extends Model implements PageModel {
 	protected $cache_key = 'products_updated_at';
 
 	/**
+	 * Create a new model
+	 *
+	 * @param array $attributes Attributes to create.
+	 *
+	 * @return $this|false
+	 */
+	protected function create( $attributes = array() ) {
+		// create the model.
+		$created = parent::create( $attributes );
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		// return.
+		return $this;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		// update the model.
+		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		// return.
+		return $this;
+	}
+
+	/**
 	 * Immediately sync with a post.
+	 *
+	 * @param string $id The id of the product to sync.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
 	public function sync() {
-		$product = $this->withSyncableExpands()->where( array( 'cached' => false ) )->find( $this->id );
+		// set the id.
+		if ( ! empty( $id ) ) {
+			$this->id = $id;
+		}
+
+		// we need an id.
+		if ( empty( $this->id ) ) {
+			return new \WP_Error( 'missing_id', __( 'Missing ID', 'surecart' ) );
+		}
+
+		// if there are no syncable expands, let's fetch them.
+		if ( ! $this->has_syncable_expands ) {
+			$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
+		}
+
 		// sync the product.
-		$synced = \SureCart::sync()->product()->sync( $product );
+		$synced = \SureCart::sync()->product()->sync( $this );
 
 		// on success, cancel any queued syncs.
 		if ( ! is_wp_error( $synced ) ) {
 			\SureCart::sync()
 			->product()
-			->cancel( $product );
+			->cancel( $this );
 		}
 
-		return $product;
+		return $this;
 	}
 
 	/**
@@ -115,62 +173,6 @@ class Product extends Model implements PageModel {
 		return $this->queueSync();
 	}
 
-	/**
-	 * Get the attached post.
-	 *
-	 * @return int|false
-	 */
-	public function getPostAttribute() {
-		return \SureCart::sync()->product()->post()->findByModelId( $this->id );
-	}
-
-	/**
-	 * Create a new model
-	 *
-	 * @param array $attributes Attributes to create.
-	 *
-	 * @return $this|false
-	 */
-	protected function create( $attributes = array() ) {
-		// always expand these on create since we need to sync with the post.
-		$this->withSyncableExpands();
-
-		// create the model.
-		$created = parent::create( $attributes );
-		if ( is_wp_error( $created ) ) {
-			return $created;
-		}
-
-		// sync with the post.
-		$this->sync();
-
-		// return.
-		return $this;
-	}
-
-	/**
-	 * Update a model
-	 *
-	 * @param array $attributes Attributes to update.
-	 *
-	 * @return $this|false
-	 */
-	protected function update( $attributes = array() ) {
-		// always expand these on update since we need to sync with the post.
-		$this->withSyncableExpands();
-
-		// update the model.
-		$updated = parent::update( $attributes );
-		if ( is_wp_error( $updated ) ) {
-			return $updated;
-		}
-
-		// sync with the post.
-		$this->sync();
-
-		// return.
-		return $this;
-	}
 
 	/**
 	 * Update a model
@@ -195,23 +197,12 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * The model with the expanded items needed for syncing.
+	 * Get the attached post.
 	 *
-	 * @return \SureCart\Models\Product
+	 * @return int|false
 	 */
-	protected function withSyncableExpands() {
-		return $this->with( $this->sync_expands );
-	}
-
-	/**
-	 * Find the model for syncing.
-	 *
-	 * @param string $id The id of the model to find.
-	 *
-	 * @return \SureCart\Models\Product
-	 */
-	protected function findSyncable( $id ) {
-		return $this->withSyncableExpands()->where( [ 'cached' => false ] )->find( $id );
+	public function getPostAttribute() {
+		return \SureCart::sync()->product()->post()->findByModelId( $this->id );
 	}
 
 	/**
