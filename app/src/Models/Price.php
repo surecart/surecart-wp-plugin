@@ -267,7 +267,7 @@ class Price extends Model {
 
 		return sprintf(
 			// translators: %1$d is the number of intervals, %2$s is the interval.
-			_n( 'every %2s', 'every %1$1s %2$2s', $this->recurring_interval_count, 'surecart' ),
+			_n( 'every %2$2s', 'every %1$1s %2$2s', $this->recurring_interval_count, 'surecart' ),
 			(int) $this->recurring_interval_count,
 			$intervals[ $this->recurring_interval ][ $key ],
 		);
