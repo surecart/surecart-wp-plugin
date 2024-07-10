@@ -29,6 +29,25 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 	 * @return array[] Array of URL information for a sitemap.
 	 */
 	public function get_url_list( $page_num, $object_subtype = '' ) {
+		/**
+		 * Filters the users URL list before it is generated.
+		 *
+		 * Returning a non-null value will effectively short-circuit the generation,
+		 * returning that value instead.
+		 *
+		 * @param array[]|null $url_list The URL list. Default null.
+		 * @param int        $page_num Page of results.
+		 */
+		$url_list = apply_filters(
+			'wp_sitemaps_sc_products_pre_url_list',
+			null,
+			$page_num
+		);
+
+		if ( null !== $url_list ) {
+			return $url_list;
+		}
+
 		$args          = $this->get_product_query_args();
 		$args['paged'] = $page_num;
 		$query         = new \WP_Query( $args );
