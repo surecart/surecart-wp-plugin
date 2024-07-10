@@ -260,13 +260,29 @@ const { state, actions } = store('surecart/product-page', {
 				context.busy = false;
 			}
 		},
-		init: () => {
-			const { selectedPrice, product } = getContext();
-			scProductViewed(product, selectedPrice, state.quantity);
-		},
 	},
 
 	callbacks: {
+		*init() {
+			// maybe import analytics handlers.
+			if (window?.dataLayer || window?.gtag) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/google-events'
+				);
+			}
+
+			if (window?.fbq) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/facebook-events'
+				);
+			}
+
+			const { selectedPrice, product } = getContext();
+			scProductViewed(product, selectedPrice, state.quantity);
+		},
+
 		/**
 		 * Handle submit callback.
 		 */

@@ -116,14 +116,14 @@ export default () => {
 					} else {
 						// wait 5 seconds.
 						await new Promise((resolve) =>
-							setTimeout(resolve, 5000)
+							setTimeout(resolve, 3000)
 						);
 						attempts++;
 					}
 				} catch (error) {
 					console.error('Error fetching API:', error);
 					// Optionally, wait before retrying or break out of the loop
-					await new Promise((resolve) => setTimeout(resolve, 5000));
+					await new Promise((resolve) => setTimeout(resolve, 3000));
 					attempts++;
 				}
 			}
@@ -223,7 +223,7 @@ export default () => {
 										slot="prefix"
 										style={{ fontSize: '18px' }}
 									/>
-									{__('View My Store', 'surecart')}
+									{__('View My Products', 'surecart')}
 								</ScButton>
 							)
 						}
