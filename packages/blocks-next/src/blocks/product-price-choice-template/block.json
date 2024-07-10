@@ -8,7 +8,7 @@
 	"category": "widgets",
 	"icon": "money",
 	"usesContext": ["surecart/productId", "surecart/product", "surecart/price"],
-	"ancestor": ["surecart/product-price-choices-template"],
+	"ancestor": ["surecart/product-price-chooser"],
 	"attributes": {
 		"highlight_border": {
 			"type": "string"
