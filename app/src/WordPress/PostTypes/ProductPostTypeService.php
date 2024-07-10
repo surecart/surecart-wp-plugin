@@ -73,6 +73,9 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+
+		// add schema markup.
+		add_action( 'wp_head', array( $this, 'addJsonSchema' ) );
 	}
 
 	/**
@@ -726,5 +729,31 @@ class ProductPostTypeService {
 				'label_count'               => _n_noop( 'Archived <span class="count">(%s)</span>', 'Archived <span class="count">(%s)</span>', 'surecart' ),
 			)
 		);
+	}
+
+	/**
+	 * Add the JSON-LD schema for the product.
+	 *
+	 * @return void
+	 */
+	public function addJsonSchema() {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return;
+		}
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$schema = $product->getJsonSchemaArray() ?? [];
+
+		if ( empty( $schema ) ) {
+			return;
+		}
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
+		<?php
 	}
 }
