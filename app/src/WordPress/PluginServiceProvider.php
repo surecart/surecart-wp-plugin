@@ -3,7 +3,6 @@
 namespace SureCart\WordPress;
 
 use SureCart\WordPress\PluginService;
-use SureCart\WordPress\Sitemap\SitemapsService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -33,10 +32,6 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new HealthService();
 		};
 
-		$container['surecart.sitemaps'] = function() {
-			return new SitemapsService();
-		};
-
 		$container['surecart.compatibility'] = function() {
 			return new CompatibilityService();
 		};
@@ -58,7 +53,6 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.sitemaps']->bootstrap();
 		$container['surecart.health']->bootstrap();
 		$container['surecart.compatibility']->bootstrap();
 		$container['surecart.initialstate']->bootstrap();
