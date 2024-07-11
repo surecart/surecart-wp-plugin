@@ -5,6 +5,7 @@
 	<div
 		class="sc-input-group sc-quantity-selector"
 		data-wp-class--quantity--disabled="state.isQuantityDisabled"
+		style="<?php echo esc_attr( $styles['css'] ?? '' ); ?>"
 	>
 		<div
 			class="sc-input-group-text sc-quantity-selector__decrease"

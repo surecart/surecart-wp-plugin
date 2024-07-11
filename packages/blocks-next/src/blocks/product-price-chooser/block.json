@@ -1,8 +1,8 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-price-choices-v2",
-	"title": "Product Prices",
+	"name": "surecart/product-price-chooser",
+	"title": "Product Price Chooser",
 	"description": "Displays possible choices for product prices.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
@@ -44,6 +44,7 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
+	"render": "file:./view.php",
 	"style": [
 		"file:../../styles/choice.css",
 		"file:../../styles/label.css",

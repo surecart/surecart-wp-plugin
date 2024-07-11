@@ -12,7 +12,12 @@ import { ToolbarGroup } from '@wordpress/components';
 import { list, grid } from '@wordpress/icons';
 import TemplateListEdit from '../../components/TemplateListEdit';
 
-const TEMPLATE = [['surecart/product-price-choice-template']];
+const TEMPLATE = [
+	[
+		'surecart/product-price-choice-template',
+		{ layout: { type: 'flex', justifyContent: 'space-between' } },
+	],
+];
 
 export default ({
 	attributes,

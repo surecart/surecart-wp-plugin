@@ -5,19 +5,27 @@ import {
 } from '@wordpress/blocks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 
 const newPriceTemplate = (attributes) => {
 	const defaultColor = attributes?.textColor || '#8a8a8a';
+	const defaultFontSize = attributes?.style?.typography?.fontSize || '24px';
 	const wrapperGroupAttributes = {
-		style: {
-			style: { spacing: { blockGap: '0.5em' } },
-			layout: {
-				type: 'flex',
-				flexWrap: 'nowrap',
-				justifyContent: attributes?.alignment || 'left',
-			},
+		style: { spacing: { blockGap: '0.5em' } },
+		layout: {
+			type: 'flex',
+			flexWrap: 'nowrap',
+			justifyContent: attributes?.alignment || 'left',
 		},
 	};
+	const priceDescriptionAttributes = {
+		style: {
+			color: { text: defaultColor },
+			elements: { link: { color: { text: defaultColor } } },
+			typography: { fontSize: '16px' },
+		},
+	};
+
 	return [
 		[
 			'core/group',
@@ -29,7 +37,7 @@ const newPriceTemplate = (attributes) => {
 						style: {
 							typography: {
 								textDecoration: 'line-through',
-								fontSize: '24px',
+								fontSize: defaultFontSize,
 							},
 							color: { text: defaultColor },
 							elements: {
@@ -41,7 +49,7 @@ const newPriceTemplate = (attributes) => {
 				],
 				[
 					'surecart/product-selected-price-amount',
-					{ style: { typography: { fontSize: '24px' } } },
+					{ style: { typography: { fontSize: defaultFontSize } } },
 					[],
 				],
 				[
@@ -70,26 +78,12 @@ const newPriceTemplate = (attributes) => {
 			[
 				[
 					'surecart/product-selected-price-trial',
-					{
-						style: {
-							color: { text: defaultColor },
-							elements: {
-								link: { color: { text: defaultColor } },
-							},
-						},
-					},
+					priceDescriptionAttributes,
 					[],
 				],
 				[
 					'surecart/product-selected-price-fees',
-					{
-						style: {
-							color: { text: defaultColor },
-							elements: {
-								link: { color: { text: defaultColor } },
-							},
-						},
-					},
+					priceDescriptionAttributes,
 					[],
 				],
 			],
@@ -109,15 +103,30 @@ export default ({ clientId, attributes }) => {
 		return;
 	}
 
-	replaceBlock(clientId, [
-		createBlock(
-			'core/group',
-			{
-				style: attributes?.style,
-				textColor: attributes.textColor,
-				backgroundColor: attributes.backgroundColor,
-			},
-			createBlocksFromInnerBlocksTemplate(newPriceTemplate(attributes))
-		),
-	]);
+	useEffect(() => {
+		setTimeout(() =>
+			replaceBlock(clientId, [
+				createBlock(
+					'core/group',
+					{
+						style: attributes?.style,
+						textColor: attributes.textColor,
+						backgroundColor: attributes.backgroundColor,
+						spacing: {
+							padding: {
+								top: '0',
+								bottom: '0',
+								left: '0',
+								right: '0',
+							},
+							...(attributes?.style?.spacing || {}),
+						},
+					},
+					createBlocksFromInnerBlocksTemplate(
+						newPriceTemplate(attributes)
+					)
+				),
+			])
+		);
+	}, []);
 };

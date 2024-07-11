@@ -21,7 +21,12 @@ export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 	});
 	const colorProps = useColorProps(attributes);
 
-	const TEMPLATE = [['surecart/product-price-choice-template']];
+	const TEMPLATE = [
+		[
+			'surecart/product-price-choices-template',
+			{ layout: { type: 'grid', columnCount: 2 } },
+		],
+	];
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{

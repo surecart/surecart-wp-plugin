@@ -12,7 +12,7 @@
 $product = sc_get_product();
 
 // make sure we have a product.
-if ( empty( $product->id ) || ! $product->has_multiple_prices ) {
+if ( empty( $product->id ) ) {
 	return '';
 }
 

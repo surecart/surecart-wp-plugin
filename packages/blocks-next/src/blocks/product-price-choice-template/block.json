@@ -52,6 +52,7 @@
 		"layout": {
 			"allowSwitching": false,
 			"allowInheriting": false,
+			"allowSizingOnChildren": true,
 			"default": {
 				"type": "flex"
 			}

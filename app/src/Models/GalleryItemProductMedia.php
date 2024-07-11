@@ -70,7 +70,8 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 		}
 
 		return (object) array(
-			'src' => $this->item->url,
+			'src'   => $this->item->url,
+			'class' => 'attachment-' . $size . ' size-' . $size,
 		);
 	}
 }

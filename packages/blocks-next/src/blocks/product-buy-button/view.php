@@ -19,7 +19,6 @@
 			style="<?php echo esc_attr( $style ); ?>"
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-bind--href="state.checkoutUrl"
-			data-wp-on--click="actions.addToCart"
 		>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>

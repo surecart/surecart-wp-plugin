@@ -206,7 +206,7 @@ class ProductsController extends AdminController {
 	/**
 	 * Render meta boxes.
 	 *
-	 * @param \SureCart\Models\Product $product Product.
+	 * @param \SureCart\Models\Product|null $product Product.
 	 */
 	public function renderMetaBoxes( $product ) {
 		if ( empty( $product ) || empty( $product->post ) ) {

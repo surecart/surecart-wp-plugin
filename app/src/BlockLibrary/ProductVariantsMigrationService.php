@@ -11,7 +11,7 @@ class ProductVariantsMigrationService {
 	 *
 	 * @var array
 	 */
-	protected $attributes = array();
+	public $attributes = array();
 
 	/**
 	 * Block.
