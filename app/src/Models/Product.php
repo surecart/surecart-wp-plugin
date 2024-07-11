@@ -6,13 +6,13 @@ use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
-use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
+use SureCart\Support\Models\PageModel;
 
 /**
- * Price model
+ * Product model
  */
-class Product extends Model implements PageModel {
+class Product extends PageModel {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
