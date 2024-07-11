@@ -101,7 +101,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function sync() {
+	protected function sync() {
 		// set the id.
 		if ( ! empty( $id ) ) {
 			$this->id = $id;

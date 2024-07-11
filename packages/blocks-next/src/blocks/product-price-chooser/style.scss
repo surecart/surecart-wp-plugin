@@ -20,6 +20,7 @@
 	.wp-block-surecart-product-price-choice-template {
 		flex-direction: column;
 		justify-content: flex-start;
+		gap: 5px;
 
 		&,
 		&.is-layout-flex {
@@ -28,6 +29,7 @@
 
 		.wp-block-group.is-vertical.is-content-justification-right {
 			align-items: flex-start;
+			justify-content: flex-end;
 			width: 100%;
 			text-align: left;
 		}

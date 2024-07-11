@@ -191,8 +191,8 @@ class Price extends Model {
 		return $this->trial_duration_days ? sprintf(
 			// translators: %s is the number of days.
 			_n(
-				'Starting in %s day',
-				'Starting in %s days',
+				'Starting in %s day.',
+				'Starting in %s days.',
 				$this->trial_duration_days,
 				'surecart'
 			),
@@ -210,7 +210,7 @@ class Price extends Model {
 		}
 		return sprintf(
 			// translators: %1$1s is the setup fee amount, %2$2s is the setup fee name.
-			__( '%1$1s %2$2s', 'surecart' ),
+			__( '%1$1s %2$2s.', 'surecart' ),
 			Currency::format( $this->setup_fee_amount, $this->currency ),
 			$this->setup_fee_name ?? __( 'Setup Fee', 'surecart' )
 		);
@@ -267,7 +267,7 @@ class Price extends Model {
 
 		return sprintf(
 			// translators: %1$d is the number of intervals, %2$s is the interval.
-			_n( 'every %2s', 'every %1$1s %2$2s', $this->recurring_interval_count, 'surecart' ),
+			_n( 'every %2$2s', 'every %1$1s %2$2s', $this->recurring_interval_count, 'surecart' ),
 			(int) $this->recurring_interval_count,
 			$intervals[ $this->recurring_interval ][ $key ],
 		);
@@ -324,6 +324,20 @@ class Price extends Model {
 
 		// translators: %d is the number of intervals.
 		return sprintf( __( ' x %s', 'surecart' ), (int) $this->recurring_period_count );
+	}
+
+	/**
+	 * Get the interval count text attribute
+	 *
+	 * @return string
+	 */
+	public function getIntervalCountTextAttribute() {
+		if ( (int) $this->recurring_period_count < 2 ) {
+			return '';
+		}
+
+		// translators: %d is the number of intervals.
+		return sprintf( __( '(%d payments)', 'surecart' ), (int) $this->recurring_period_count );
 	}
 
 	/**
