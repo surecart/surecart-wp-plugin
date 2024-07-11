@@ -57,6 +57,21 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
+	 * Get the media url.
+	 *
+	 * @param string $size The size of the image.
+	 *
+	 * @return string
+	 */
+	public function url( $size = 'full' ) {
+		if ( isset( $this->item->media ) ) {
+			return $this->item->media->url( $size );
+		}
+
+		return $this->item->url;
+	}
+
+	/**
 	 * Get the image data.
 	 *
 	 * @param string $size The size of the image.

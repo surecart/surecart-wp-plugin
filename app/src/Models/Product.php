@@ -512,7 +512,7 @@ class Product extends Model implements PageModel {
 				'@context'    => 'http://schema.org',
 				'@type'       => 'Product',
 				'name'        => $this->name,
-				'image'       => $this->image_url ?? '',
+				'image'       => ! empty( $this->gallery_image_urls ) ? $this->gallery_image_urls : '',
 				'description' => sanitize_text_field( $this->description ),
 				'offers'      => $offers,
 			),
@@ -750,6 +750,20 @@ class Product extends Model implements PageModel {
 				$gallery_items
 			)
 		);
+	}
+
+	/**
+	 * Get the gallery image urls attribute.
+	 *
+	 * @return string[]
+	 */
+	public function getGalleryImageUrlsAttribute() {
+		return array_map(
+			function ( $item ) {
+				return $item->url();
+			},
+			$this->gallery
+		) ?? array();
 	}
 
 	/**
