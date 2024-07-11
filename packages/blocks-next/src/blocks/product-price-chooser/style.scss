@@ -1,10 +1,11 @@
-.wp-block-surecart-product-price-chooser .sc-form-label {
-	color: inherit !important;
-}
-
 .wp-block-surecart-product-price-chooser {
 	container-type: inline-size;
 	container-name: product-price-choices;
+	margin-bottom: var(--sc-form-row-spacing, 0.75em);
+
+	.sc-form-label {
+		color: inherit !important;
+	}
 }
 
 @container product-price-choices (max-width: 600px) {
