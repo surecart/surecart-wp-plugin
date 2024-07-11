@@ -224,6 +224,13 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'count' => 1,
 			]
 		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_page',
+			'surecart/product-page',
+			[
+				'id' => null,
+			]
+		);
 
 		// generate shortcodes for all our blocks.
 		foreach ( glob( SURECART_PLUGIN_DIR . '/packages/blocks-next/build/blocks/**/block.json' ) as $file ) {
