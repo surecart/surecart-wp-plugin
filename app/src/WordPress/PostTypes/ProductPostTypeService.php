@@ -75,7 +75,8 @@ class ProductPostTypeService {
 		}
 
 		// add schema markup.
-		add_action( 'wp_head', array( $this, 'addJsonSchema' ) );
+		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
+		add_action( 'wp_head', array( $this, 'addProductMetaData' ), 10 );
 	}
 
 	/**
@@ -732,12 +733,33 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Add the JSON-LD schema for the product.
+	 * Update the document title name to match the model[eg-product] name.
+	 *
+	 * @param array $parts The parts of the document title.
+	 */
+	public function documentTitle( $parts ): array {
+		if ( ! is_singular('sc_product') ) {
+			return $parts;
+		}
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return $parts;
+		}
+
+		$parts['title'] = esc_html( sanitize_text_field( $product->page_title ?? $parts['title'] ) );
+
+		return $parts;
+	}
+
+	/**
+	 * Add the JSON-LD schema and SEO meta for the product.
 	 *
 	 * @return void
 	 */
-	public function addJsonSchema() {
-		if ( ! is_singular( 'sc_product' ) ) {
+	public function addProductMetaData() {
+		if ( ! is_singular('sc_product') ) {
 			return;
 		}
 
@@ -747,13 +769,18 @@ class ProductPostTypeService {
 			return;
 		}
 
-		$schema = $product->getJsonSchemaArray() ?? [];
-
-		if ( empty( $schema ) ) {
-			return;
+		// JSON-LD Schema.
+		$schema         = $product->getJsonSchemaArray() ?? [];
+		$display_schema = apply_filters( 'sc_display_product_json_ld_schema', true, $schema );
+		if ( ! empty( $schema ) && $display_schema ) {
+			echo '<script type="application/ld+json">' . wp_json_encode( $schema ) . '</script>';
 		}
-		?>
-		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
-		<?php
+
+		// SEO Meta.
+		$seo_meta    = $product->getSeoMetaData();
+		$display_seo = apply_filters( 'sc_display_product_seo_meta', true, $seo_meta );
+		if ( ! empty( $seo_meta ) && $display_seo ) {
+			echo $seo_meta;
+		}
 	}
 }
