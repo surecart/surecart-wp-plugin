@@ -163,7 +163,6 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_product_title',
 			'surecart/product-title',
 			[
-				'id'    => null,
 				'level' => 1,
 			]
 		);
