@@ -320,7 +320,7 @@ export default () => {
 						<EmailRow
 							title={__('Card Expiration', 'surecart')}
 							description={__(
-								"Sent one month before a customer's card expires",
+								"Sent one month before a customer's card expires.",
 								'surecart'
 							)}
 							model="payment_method"
