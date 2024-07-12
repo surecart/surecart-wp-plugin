@@ -487,12 +487,12 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get the JSON Schema Array
+	 * Get the JSON Schema Array.
 	 *
 	 * @return array
 	 */
 	public function getJsonSchemaArray(): array {
-		return []; // Will be handled from PostTypeService.
+		return []; // Will be handled from ProductPostTypeService.
 	}
 
 	/**
