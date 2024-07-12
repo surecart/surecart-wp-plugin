@@ -67,38 +67,37 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 		}
 
 		ob_start(); ?>
-
-		<sc-cart-form
-			price-id="<?php echo esc_attr( $attributes['price_id'] ); ?>"
-			variant-id="<?php echo esc_attr( $attributes['variant_id'] ?? '' ); ?>"
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
-			<?php if ( ! empty( $styles ) ) { ?>
-				 style="<?php echo esc_attr( $styles ); ?>"
-			<?php } ?>>
-
-			<?php if ( $price->ad_hoc ) : ?>
-				<sc-price-input
-					currency-code="<?php echo esc_attr( $price->currency ); ?>"
-					label="<?php echo esc_attr( ! empty( $attributes['ad_hoc_label'] ) ? $attributes['ad_hoc_label'] : __( 'Amount', 'surecart' ) ); ?>"
-					min="<?php echo (int) $price->ad_hoc_min_amount; ?>"
-					max="<?php echo (int) $price->ad_hoc_max_amount; ?>"
-					placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? '' ); ?>"
-					required
-					help="<?php echo esc_attr( $attributes['help'] ?? '' ); ?>"
-					name="price"
-				></sc-price-input>
-			<?php endif; ?>
-
-			<sc-cart-form-submit
-				type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>"
-				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>"
-			>
-				<?php echo ! empty( $attributes['button_text'] ) ? wp_kses_post( $attributes['button_text'] ) : esc_html__( 'Add To Cart', 'surecart' ); ?>
-			</sc-cart-form-submit>
-		</sc-cart-form>
-
+		<div
+			class="wp-block-buttons"
+			data-wp-interactive='{ "namespace": "surecart/checkout" }'
 			<?php
-			return wp_kses_post( ob_get_clean() );
+				echo wp_kses_data(
+					wp_interactivity_data_wp_context(
+						[
+							'formId'    => intval( $form->ID ),
+							'mode'      => esc_attr( Form::getMode( $form->ID ) ),
+							'priceId'   => $attributes['price_id'] ?? null,
+							'variantId' => $attributes['variant_id'] ?? null,
+						]
+					)
+				);
+				echo wp_kses_data( get_block_wrapper_attributes() );
+			?>
+		>
+			<div class="wp-block-button">
+				<button
+					class="wp-block-button__link wp-element-button sc-button"
+					data-wp-on--click="actions.addToCartByPriceOrVariant"
+					data-wp-class--sc-button__link--busy="state.loading"
+				>
+					<span class="sc-spinner"></span>
+					<span class="sc-button__link-text">
+						<?php echo wp_kses_post( $attributes['button_text'] ); ?>
+					</span>
+				</button>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
 	}
 }

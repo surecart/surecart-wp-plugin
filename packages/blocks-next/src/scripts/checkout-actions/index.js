@@ -299,6 +299,89 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 	return item?.checkout;
 };
 
+/**
+ * Convert line items to a line item data.
+ */
+export const convertLineItemsToLineItemData = (lineItems) => {
+	return (lineItems?.data || []).map((item) => {
+		return {
+			...(!!item?.id ? { id: item.id } : {}),
+			price_id: item.price.id,
+			quantity: item.quantity,
+		};
+	});
+};
+
+/**
+ * Add a line item to the checkout from Add to Cart Button.
+ */
+export const handleAddToCartByPriceOrVariant = async (data) => {
+	// get the current line item from the price id.
+	let lineItem = null; //cTODO: Change this.
+	const { formId, mode, priceId, variantId } = getContext();
+
+	// convert line items response to line items post.
+	let existingData = convertLineItemsToLineItemData(
+		checkoutState?.checkout?.line_items || []
+	);
+
+	// Line item does not exist. Add it.
+	return await createOrUpdateCheckout({
+		id: checkoutState?.checkout?.id,
+		data: {
+			live_mode: mode === 'live',
+			line_items: [
+				...(existingData || [])
+					.map((item) => {
+						// if the price ids match (we have already a line item)
+						if (priceId === item?.price_id) {
+							const priceOrVariantMatches = variantId
+								? item.price_id === priceId &&
+								  item.variant_id === variantId
+								: item.price_id === priceId;
+
+							if (priceOrVariantMatches) {
+								return {
+									...item,
+									...(!!data?.ad_hoc_amount
+										? { ad_hoc_amount: data?.ad_hoc_amount }
+										: {}),
+									...(!!data?.variant_id
+										? { variant_id: data?.variant_id }
+										: {}),
+									quantity: !item?.ad_hoc_amount
+										? item?.quantity + 1
+										: 1, // only increase quantity if not ad_hoc.
+								};
+							}
+							// return item.
+							return item;
+						}
+						return null; // Ensure there's always a return value within map
+					})
+					.filter((item) => item !== null), // Filter out any nulls that might have been added
+				// add a line item if one does not exist.
+				...(!lineItem
+					? [
+							{
+								price_id: priceId,
+								variant_id: variantId,
+								...(!!data?.ad_hoc_amount
+									? { ad_hoc_amount: data?.ad_hoc_amount }
+									: {}),
+								quantity: 1,
+							},
+					  ]
+					: []),
+			],
+		},
+		query: {
+			// ...query,
+			form_id: formId,
+		},
+	});
+};
+
 export const handleCouponApply = async (promotionCode) => {
 	try {
 		checkoutState.loading = true;
