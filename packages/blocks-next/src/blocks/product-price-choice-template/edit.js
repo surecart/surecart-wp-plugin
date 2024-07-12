@@ -68,7 +68,7 @@ export default ({
 	const isChecked = context['surecart/price']?.checked || false;
 	const blockProps = useBlockProps({
 		className: `sc-choice ${__unstableLayoutClassNames} ${
-			isChecked ? 'sc-choice--selected' : ''
+			isChecked ? 'sc-choice--checked' : ''
 		}`,
 		style: {
 			borderColor: isChecked ? highlight_border : undefined,

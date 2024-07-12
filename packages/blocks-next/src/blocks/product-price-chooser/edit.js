@@ -9,30 +9,68 @@ import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
-	useInnerBlocksProps,
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
+import TemplateListEdit from '../../components/TemplateListEdit';
 
-export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
+const TEMPLATE = [
+	[
+		'surecart/product-price-choices-template',
+		{},
+		[
+			[
+				'surecart/product-price-choice-template',
+				{
+					layout: {
+						type: 'flex',
+						justifyContent: 'space-between',
+					},
+				},
+			],
+		],
+	],
+];
+
+export default ({
+	attributes,
+	setAttributes,
+	__unstableLayoutClassNames,
+	clientId,
+}) => {
 	const { label } = attributes;
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
 	});
 	const colorProps = useColorProps(attributes);
 
-	const TEMPLATE = [
-		[
-			'surecart/product-price-choices-template',
-			{ layout: { type: 'grid', columnCount: 2 } },
-		],
-	];
-	const innerBlocksProps = useInnerBlocksProps(
-		{},
-		{
-			template: TEMPLATE,
+	const getBlockContexts = () => {
+		const blockContexts = [];
+		const prices = {
+			0: {
+				name: __('Subscribe & Save', 'surecart'),
+				display_amount: '$8',
+				short_interval_text: __('/ mo', 'surecart'),
+			},
+			1: {
+				name: __('One Time', 'surecart'),
+				display_amount: '$10',
+				short_interval_text: '',
+			},
+		};
+
+		for (let i = 1; i <= 2; i++) {
+			blockContexts.push({
+				id: `price${i}`,
+				'surecart/price': {
+					...prices[i % 2],
+					checked: i === 1,
+				},
+			});
 		}
-	);
+
+		return blockContexts;
+	};
 
 	return (
 		<div {...blockProps}>
@@ -46,9 +84,15 @@ export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 				withoutInteractiveFormatting
 				allowedFormats={['core/bold', 'core/italic']}
 			/>
-			<div className="sc-choices">
-				<div {...innerBlocksProps} />
-			</div>
+			<TemplateListEdit
+				className={classnames(__unstableLayoutClassNames, {
+					'sc-choices': true,
+				})}
+				template={TEMPLATE}
+				blockContexts={getBlockContexts()}
+				clientId={clientId}
+				renderAppender={false}
+			/>
 		</div>
 	);
 };
