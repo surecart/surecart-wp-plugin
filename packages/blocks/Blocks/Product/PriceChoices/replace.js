@@ -10,42 +10,51 @@ const newPriceChoicesTemplate = (attributes) => {
 	const defaultTextColor = attributes?.textColor || defaultTextColor;
 	return [
 		[
-			'surecart/product-price-choices-template',
+			'surecart/product-price-choice-template',
 			{
-				style: {
-					spacing: {
-						...(attributes?.styles?.spacing || {}),
-					},
-				},
+				backgroundColor: attributes?.backgroundColor,
+				textColor: attributes?.textColor,
+				borderColor: attributes?.borderColor,
 				layout: {
-					type: 'grid',
-					columnCount: 2,
-					justifyContent: 'stretch',
-					orientation: 'vertical',
+					type: 'flex',
+					justifyContent: 'left',
 					flexWrap: 'nowrap',
-					verticalAlignment: 'center',
+					orientation: 'horizontal',
+				},
+				style: {
+					...(attributes?.style || {}),
 				},
 			},
 			[
 				[
-					'surecart/product-price-choice-template',
+					'surecart/price-name',
 					{
-						backgroundColor: attributes?.backgroundColor,
-						textColor: attributes?.textColor,
+						style: {
+							layout: { selfStretch: 'fill', flexSize: null },
+							typography: {
+								fontStyle: 'normal',
+								fontWeight: '600',
+							},
+						},
+					},
+					[],
+				],
+				[
+					'core/group',
+					{
+						style: {
+							spacing: { blockGap: '0px' },
+							layout: { selfStretch: 'fit', flexSize: null },
+						},
 						layout: {
 							type: 'flex',
-							justifyContent: 'space-between',
-							flexWrap: 'nowrap',
-							orientation: 'horizontal',
-						},
-						style: {
-							...attributes?.style,
-							spacing: null,
+							orientation: 'vertical',
+							justifyContent: 'right',
 						},
 					},
 					[
 						[
-							'surecart/price-name',
+							'surecart/price-amount',
 							{
 								style: {
 									typography: {
@@ -57,63 +66,38 @@ const newPriceChoicesTemplate = (attributes) => {
 							[],
 						],
 						[
-							'core/group',
+							'surecart/price-trial',
 							{
-								style: { spacing: { blockGap: '0px' } },
-								layout: {
-									type: 'flex',
-									orientation: 'vertical',
-									justifyContent: 'right',
+								style: {
+									color: { text: defaultTextColor },
+									elements: {
+										link: {
+											color: {
+												text: defaultTextColor,
+											},
+										},
+									},
 								},
+								fontSize: 'small',
 							},
-							[
-								[
-									'surecart/price-amount',
-									{
-										style: {
-											typography: {
-												fontStyle: 'normal',
-												fontWeight: '700',
+							[],
+						],
+						[
+							'surecart/price-setup-fee',
+							{
+								style: {
+									color: { text: defaultTextColor },
+									elements: {
+										link: {
+											color: {
+												text: defaultTextColor,
 											},
 										},
 									},
-									[],
-								],
-								[
-									'surecart/price-trial',
-									{
-										style: {
-											color: { text: defaultTextColor },
-											elements: {
-												link: {
-													color: {
-														text: defaultTextColor,
-													},
-												},
-											},
-										},
-										fontSize: 'small',
-									},
-									[],
-								],
-								[
-									'surecart/price-setup-fee',
-									{
-										style: {
-											color: { text: defaultTextColor },
-											elements: {
-												link: {
-													color: {
-														text: defaultTextColor,
-													},
-												},
-											},
-										},
-										fontSize: 'small',
-									},
-									[],
-								],
-							],
+								},
+								fontSize: 'small',
+							},
+							[],
 						],
 					],
 				],

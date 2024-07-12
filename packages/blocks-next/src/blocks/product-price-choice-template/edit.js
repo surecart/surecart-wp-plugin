@@ -82,12 +82,15 @@ export default ({
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
+			...blockProps,
 			style: {
 				width: '100%',
 			},
 		},
 		{
 			template: TEMPLATE,
+			templateLock: false,
+			renderAppender: false,
 		}
 	);
 
@@ -108,9 +111,7 @@ export default ({
 				]}
 				panelId={clientId}
 			/>
-			<div {...blockProps}>
-				<div {...innerBlocksProps}></div>
-			</div>
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };

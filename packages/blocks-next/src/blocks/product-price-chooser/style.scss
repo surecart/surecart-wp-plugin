@@ -8,15 +8,6 @@
 	}
 }
 
-@container product-price-choices (max-width: 600px) {
-	.is-layout-grid {
-		grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-	}
-	.wp-block-surecart-product-price-choice-template {
-		justify-content: space-between;
-	}
-}
-
 @container product-price-choices (max-width: 320px) {
 	.wp-block-surecart-product-price-choice-template {
 		flex-direction: column;
