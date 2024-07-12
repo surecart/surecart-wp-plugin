@@ -757,7 +757,7 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Add the JSON-LD schema and SEO meta for the product.
+	 * Add the JSON-LD schema for the product.
 	 *
 	 * @return void
 	 */
@@ -830,9 +830,9 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Get SEO Meta Data for the model.
+	 * Add SEO Meta Tags for the product.
 	 *
-	 * @return string|null
+	 * @return void
 	 */
 	public function addProductSeoMeta() {
 		if ( ! is_singular('sc_product') ) {
