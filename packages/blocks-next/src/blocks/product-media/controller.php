@@ -1,5 +1,4 @@
 <?php
-
 $product = sc_get_product();
 
 if ( empty( $product ) ) {
@@ -8,6 +7,7 @@ if ( empty( $product ) ) {
 
 $gallery        = $product->gallery;
 $featured_image = $gallery[0] ?? null;
+$width          = ! empty( $attributes['width'] ) ? $attributes['width'] . 'px' : '';
 
 // handle empty.
 if ( empty( $gallery ) ) {

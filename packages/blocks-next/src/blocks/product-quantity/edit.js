@@ -48,7 +48,7 @@ export default ({ attributes, setAttributes }) => {
 					style={{
 						...(borderStyle?.borderRadius
 							? {
-									'--border-radius': borderStyle.borderRadius,
+									'border-radius': borderStyle.borderRadius,
 							  }
 							: {}),
 					}}

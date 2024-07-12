@@ -29,7 +29,6 @@ const TEMPLATE = [
 				'surecart/product-title',
 				{
 					level: 2,
-					isLink: false,
 					style: {
 						typography: {
 							fontSize: '15px',

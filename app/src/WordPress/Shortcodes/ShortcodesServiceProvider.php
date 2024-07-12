@@ -163,7 +163,6 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_product_title',
 			'surecart/product-title',
 			[
-				'id'    => null,
 				'level' => 1,
 			]
 		);
@@ -222,6 +221,13 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'id'    => null,
 				'count' => 1,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_page',
+			'surecart/product-page',
+			[
+				'id' => null,
 			]
 		);
 

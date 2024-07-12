@@ -10,29 +10,9 @@
 	"usesContext": ["surecart/productId"],
 	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"attributes": {
-		"textAlign": {
-			"type": "string",
-			"default": "left"
-		},
 		"level": {
 			"type": "number",
 			"default": 1
-		},
-		"isLink": {
-			"type": "boolean",
-			"default": false
-		},
-		"rel": {
-			"type": "string",
-			"attribute": "rel",
-			"default": ""
-		},
-		"linkTarget": {
-			"type": "string",
-			"default": "_self"
-		},
-		"id": {
-			"type": "string"
 		}
 	},
 	"supports": {
