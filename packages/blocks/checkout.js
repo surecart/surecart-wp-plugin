@@ -1,6 +1,7 @@
+import { registerBlocks } from './register-block';
+
 import * as address from '@blocks/Address';
 import * as bumpLineItem from '@blocks/BumpLineItem';
-// blocks
 import * as button from '@blocks/Button';
 import * as checkbox from '@blocks/Checkbox';
 import * as checkoutErrors from '@blocks/CheckoutErrors';
@@ -47,8 +48,6 @@ import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 import * as shippingChoices from '@blocks/ShippingChoices';
 import * as billingAddress from '@blocks/BillingAddress';
-
-import { registerBlocks } from './register-block';
 
 registerBlocks([
 	button,
