@@ -771,11 +771,6 @@ class Product extends Model implements PageModel {
 			return '';
 		}
 
-		// the initial price is ad hoc.
-		if ( $this->initial_price->ad_hoc ) {
-			return esc_html__( 'Custom Amount', 'surecart' );
-		}
-
 		// return the formatted amount.
 		return Currency::format( $this->initial_price->amount, $this->initial_price->currency );
 	}
