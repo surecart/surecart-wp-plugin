@@ -332,7 +332,6 @@ class Product extends Model implements PageModel {
 		$this->setCollection( 'variants', $value, Variant::class );
 	}
 
-
 	/**
 	 * Set the variants attribute.
 	 *
@@ -406,6 +405,36 @@ class Product extends Model implements PageModel {
 	 */
 	public function getMetaDescriptionAttribute(): string {
 		return $this->metadata->meta_description ?? $this->description ?? '';
+	}
+
+	/**
+	 * Get the product in stock attribute.
+	 *
+	 * @param Product $product The product.
+	 *
+	 * @return bool
+	 */
+	public function getInStockAttribute(): bool {
+		if ( ! $this->stock_enabled ) {
+			return true;
+		}
+
+		if ( $this->allow_out_of_stock_purchases ) {
+			return true;
+		}
+
+		// TODO: Remove this once API has support summing of available_stock for variants.
+		// If product has variants, check if any variant has stock.
+		if ( ! empty( $this->variants->data ) ) {
+			foreach ( $this->variants->data as $variant ) {
+				if ( ! empty( $variant->available_stock ) && $variant->available_stock > 0 ) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		return $this->available_stock > 0;
 	}
 
 	/**
