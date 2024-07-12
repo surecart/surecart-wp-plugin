@@ -802,7 +802,7 @@ class ProductPostTypeService {
 					'@type'         => 'Offer',
 					'price'         => Currency::maybeConvertAmount( $price->amount, $price->currency ),
 					'priceCurrency' => $price->currency,
-					'availability'  => $this->productHasStock( $product ) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+					'availability'  => $product->in_stock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
 				);
 			},
 			$active_prices ?? array()
@@ -810,7 +810,7 @@ class ProductPostTypeService {
 
 		$gallery_image_urls = ! empty( $product->gallery ) ? array_map(
 			function ( $media ) {
-				return $media->attributes( 'full', [ 'src' ] );
+				return $media->attributes()->src;
 			},
 			$product->gallery
 		) : '';
@@ -870,34 +870,5 @@ class ProductPostTypeService {
 		<?php endif; ?>
 
 		<?php
-	}
-
-	/**
-	 * Check if the product has stock - including variants.
-	 *
-	 * @param \SureCart\Models\Product $product The product.
-	 *
-	 * @return bool
-	 */
-	private function productHasStock( $product ): bool {
-		if ( ! $product->stock_enabled ) {
-			return true;
-		}
-
-		if ( $product->allow_out_of_stock_purchases ) {
-			return true;
-		}
-
-		// If product has variants, check if any variant has stock.
-		if ( ! empty( $product->variants->data ) ) {
-			foreach ( $product->variants->data as $variant ) {
-				if ( ! empty( $variant->available_stock ) && $variant->available_stock > 0 ) {
-					return true;
-				}
-			}
-			return false;
-		}
-
-		return $product->available_stock > 0;
 	}
 }
