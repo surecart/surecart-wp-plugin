@@ -6,13 +6,13 @@ use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
+use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
-use SureCart\Support\Models\PageModel;
 
 /**
  * Product model
  */
-class Product extends PageModel {
+class Product extends Model implements PageModel {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
@@ -492,32 +492,7 @@ class Product extends PageModel {
 	 * @return array
 	 */
 	public function getJsonSchemaArray(): array {
-		$active_prices = (array) $this->active_prices;
-
-		$offers = array_map(
-			function ( $price ) {
-				return array(
-					'@type'         => 'Offer',
-					'price'         => Currency::maybeConvertAmount( $price->amount, $price->currency ),
-					'priceCurrency' => $price->currency,
-					'availability'  => 'https://schema.org/InStock',
-				);
-			},
-			$active_prices ?? array()
-		);
-
-		return apply_filters(
-			'surecart/product/json_schema',
-			array(
-				'@context'    => 'http://schema.org',
-				'@type'       => 'Product',
-				'name'        => $this->name,
-				'image'       => ! empty( $this->gallery_image_urls ) ? $this->gallery_image_urls : '',
-				'description' => sanitize_text_field( $this->description ),
-				'offers'      => $offers,
-			),
-			$this
-		);
+		return []; // Will be handled from PostTypeService.
 	}
 
 	/**
@@ -750,20 +725,6 @@ class Product extends PageModel {
 				$gallery_items
 			)
 		);
-	}
-
-	/**
-	 * Get the gallery image urls attribute.
-	 *
-	 * @return string[]
-	 */
-	public function getGalleryImageUrlsAttribute() {
-		return array_map(
-			function ( $item ) {
-				return $item->url();
-			},
-			$this->gallery
-		) ?? array();
 	}
 
 	/**
