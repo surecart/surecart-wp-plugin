@@ -2,6 +2,8 @@
 
 namespace SureCart\WordPress\PostTypes;
 
+use SureCart\Support\Currency;
+
 /**
  * Form post type service class.
  */
@@ -76,7 +78,8 @@ class ProductPostTypeService {
 
 		// add schema markup.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
-		add_action( 'wp_head', array( $this, 'addProductMetaData' ), 10 );
+		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
+		add_action( 'wp_head', array( $this, 'addProductSeoMeta' ), 10 );
 	}
 
 	/**
@@ -758,7 +761,7 @@ class ProductPostTypeService {
 	 *
 	 * @return void
 	 */
-	public function addProductMetaData() {
+	public function addProductJsonSchema() {
 		if ( ! is_singular('sc_product') ) {
 			return;
 		}
@@ -769,18 +772,132 @@ class ProductPostTypeService {
 			return;
 		}
 
-		// JSON-LD Schema.
-		$schema         = $product->getJsonSchemaArray() ?? [];
-		$display_schema = apply_filters( 'sc_display_product_json_ld_schema', true, $schema );
-		if ( ! empty( $schema ) && $display_schema ) {
-			echo '<script type="application/ld+json">' . wp_json_encode( $schema ) . '</script>';
+		$display_schema = apply_filters( 'sc_display_product_json_ld_schema', true, $product );
+		if ( ! $display_schema ) {
+			return;
 		}
 
-		// SEO Meta.
-		$seo_meta    = $product->getSeoMetaData();
-		$display_seo = apply_filters( 'sc_display_product_seo_meta', true, $seo_meta );
-		if ( ! empty( $seo_meta ) && $display_seo ) {
-			echo $seo_meta;
+		$schema = $this->getJsonSchemaArray( $product ) ?? [];
+		if ( empty( $schema ) ) {
+			return;
 		}
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
+		<?php
+	}
+
+	/**
+	 * Get the JSON-LD schema for the product.
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return array
+	 */
+	public function getJsonSchemaArray( $product ): array {
+		$active_prices = (array) $product->active_prices;
+
+		$offers = array_map(
+			function ( $price ) use ( $product ) {
+				return array(
+					'@type'         => 'Offer',
+					'price'         => Currency::maybeConvertAmount( $price->amount, $price->currency ),
+					'priceCurrency' => $price->currency,
+					'availability'  => $this->productHasStock( $product ) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+				);
+			},
+			$active_prices ?? array()
+		);
+
+		$gallery_image_urls = ! empty( $product->gallery ) ? array_map(
+			function ( $media ) {
+				return $media->attributes( 'full', [ 'src' ] );
+			},
+			$product->gallery
+		) : '';
+
+		return apply_filters(
+			'surecart/product/json_schema',
+			array(
+				'@context'    => 'http://schema.org',
+				'@type'       => 'Product',
+				'name'        => $product->name,
+				'image'       => $gallery_image_urls,
+				'description' => sanitize_text_field( $product->description ),
+				'offers'      => $offers,
+			),
+			$this
+		);
+	}
+
+	/**
+	 * Get SEO Meta Data for the model.
+	 *
+	 * @return string|null
+	 */
+	public function addProductSeoMeta() {
+		if ( ! is_singular('sc_product') ) {
+			return;
+		}
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$display_seo_meta = apply_filters( 'sc_display_product_seo_meta', true, $product );
+		if ( ! $display_seo_meta ) {
+			return;
+		}
+
+		$product_image_url = $product->getImageUrl( 800 );
+		?>
+
+		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>">
+		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="<?php echo esc_attr( $product->page_title ); ?>" />
+		<meta property="og:description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>" />
+		<meta property="og:url" content="<?php echo esc_url( $product->permalink ); ?>" />
+		<meta property="og:site_name" content="<?php echo get_bloginfo('name'); ?>" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="<?php echo esc_attr( $product->page_title ); ?>" />
+		<meta name="twitter:description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>" />
+
+		<?php if ( ! empty( $product_image_url ) ) : ?>
+		<meta property="og:image" content="<?php echo esc_url( $product_image_url ); ?>" />
+		<meta name="twitter:image" content="<?php echo esc_url( $product_image_url ); ?>" />
+		<?php endif; ?>
+
+		<?php
+	}
+
+	/**
+	 * Check if the product has stock - including variants.
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return bool
+	 */
+	private function productHasStock( $product ): bool {
+		if ( ! $product->stock_enabled ) {
+			return true;
+		}
+
+		if ( $product->allow_out_of_stock_purchases ) {
+			return true;
+		}
+
+		// If product has variants, check if any variant has stock.
+		if ( ! empty( $product->variants->data ) ) {
+			foreach ( $product->variants->data as $variant ) {
+				if ( ! empty( $variant->available_stock ) && $variant->available_stock > 0 ) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		return $product->available_stock > 0;
 	}
 }
