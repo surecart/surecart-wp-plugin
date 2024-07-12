@@ -29,8 +29,9 @@
 		opacity: 0.8;
 	}
 
-	.sc-cart-container {
+	&__container {
 		font-size: 24px;
+		line-height: 0;
 		position: relative;
 		display: flex;
 		align-items: center;
@@ -39,7 +40,7 @@
 		height: 100%;
 	}
 
-	.sc-cart-icon {
+	&__icon {
 		font-size: var(--sc-cart-icon-size, 1.1em);
 		cursor: pointer;
 
@@ -48,7 +49,7 @@
 		}
 	}
 
-	.sc-cart-count {
+	&__count {
 		position: absolute;
 		top: -8px;
 		left: auto;
