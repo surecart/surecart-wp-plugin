@@ -8,11 +8,18 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import {
+	InspectorControls,
 	useBlockProps,
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import TemplateListEdit from '../../components/TemplateListEdit';
+import {
+	PanelBody,
+	PanelRow,
+	__experimentalNumberControl as NumberControl,
+} from '@wordpress/components';
+import { Fragment } from '@wordpress/element';
 
 const TEMPLATE = [
 	[
@@ -38,7 +45,7 @@ export default ({
 	__unstableLayoutClassNames,
 	clientId,
 }) => {
-	const { label } = attributes;
+	const { label, columns } = attributes;
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
 	});
@@ -59,7 +66,7 @@ export default ({
 			},
 		};
 
-		for (let i = 1; i <= 2; i++) {
+		for (let i = 1; i <= Math.max(2, columns); i++) {
 			blockContexts.push({
 				id: `price${i}`,
 				'surecart/price': {
@@ -73,26 +80,44 @@ export default ({
 	};
 
 	return (
-		<div {...blockProps}>
-			<RichText
-				tagName="label"
-				className={classnames('sc-form-label', colorProps.className)}
-				aria-label={__('Label text', 'surecart')}
-				placeholder={__('Add label…', 'surecart')}
-				value={label}
-				onChange={(label) => setAttributes({ label })}
-				withoutInteractiveFormatting
-				allowedFormats={['core/bold', 'core/italic']}
-			/>
-			<TemplateListEdit
-				className={classnames(__unstableLayoutClassNames, {
-					'sc-choices': true,
-				})}
-				template={TEMPLATE}
-				blockContexts={getBlockContexts()}
-				clientId={clientId}
-				renderAppender={false}
-			/>
-		</div>
+		<Fragment>
+			<InspectorControls>
+				<PanelBody>
+					<PanelRow>
+						<NumberControl
+							label={__('Number of Columns', 'surecart')}
+							value={columns}
+							onChange={(columns) => setAttributes({ columns })}
+							max={3}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+
+			<div {...blockProps}>
+				<RichText
+					tagName="label"
+					className={classnames(
+						'sc-form-label',
+						colorProps.className
+					)}
+					aria-label={__('Label text', 'surecart')}
+					placeholder={__('Add label…', 'surecart')}
+					value={label}
+					onChange={(label) => setAttributes({ label })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
+				<TemplateListEdit
+					className={classnames(__unstableLayoutClassNames, {
+						'sc-choices': true,
+					})}
+					template={TEMPLATE}
+					blockContexts={getBlockContexts()}
+					clientId={clientId}
+					renderAppender={false}
+				/>
+			</div>
+		</Fragment>
 	);
 };
