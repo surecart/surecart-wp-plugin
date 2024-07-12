@@ -389,6 +389,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Is the post published?
+	 *
+	 * @return string
+	 */
+	public function getIsPublishedAttribute(): bool {
+		return ! empty( $this->post ) && 'publish' === $this->post->post_status;
+	}
+
+	/**
 	 * Get the page title.
 	 *
 	 * @return string
