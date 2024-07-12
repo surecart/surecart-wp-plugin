@@ -101,7 +101,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync() {
+	protected function sync( $id = '' ) {
 		// set the id.
 		if ( ! empty( $id ) ) {
 			$this->id = $id;
@@ -113,9 +113,7 @@ class Product extends Model implements PageModel {
 		}
 
 		// if there are no syncable expands, let's fetch them.
-		if ( ! $this->has_syncable_expands ) {
-			$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
-		}
+		$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
 
 		// sync the product.
 		$synced = \SureCart::sync()->product()->sync( $this );
