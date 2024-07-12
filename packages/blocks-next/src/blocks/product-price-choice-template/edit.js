@@ -68,7 +68,7 @@ export default ({
 	const isChecked = context['surecart/price']?.checked || false;
 	const blockProps = useBlockProps({
 		className: `sc-choice ${__unstableLayoutClassNames} ${
-			isChecked ? 'sc-choice--selected' : ''
+			isChecked ? 'sc-choice--checked' : ''
 		}`,
 		style: {
 			borderColor: isChecked ? highlight_border : undefined,
@@ -82,12 +82,15 @@ export default ({
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
+			...blockProps,
 			style: {
 				width: '100%',
 			},
 		},
 		{
 			template: TEMPLATE,
+			templateLock: false,
+			renderAppender: false,
 		}
 	);
 
@@ -108,9 +111,7 @@ export default ({
 				]}
 				panelId={clientId}
 			/>
-			<div {...blockProps}>
-				<div {...innerBlocksProps}></div>
-			</div>
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };

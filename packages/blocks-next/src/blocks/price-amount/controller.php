@@ -1,10 +1,8 @@
 <?php
 // no price in the context.
-if ( empty( $block->context['sc_product_price'] ) ) {
-	return '';
-}
-$price = $block->context['sc_product_price'];
-if ( is_wp_error( $price ) ) {
+$price = $block->context['price'] ?? '';
+
+if ( empty( $price ) || is_wp_error( $price ) ) {
 	return '';
 }
 

@@ -74,28 +74,24 @@ class ProductPriceChoicesMigrationService {
 		);
 
 		$template_attributes = array(
+			'layout'          => [
+				'type'           => 'flex',
+				'justifyContent' => 'left',
+				'flexWrap'       => 'nowrap',
+				'orientation'    => 'horizontal',
+			],
 			'textColor'       => $this->attributes['textColor'] ?? 'black',
 			'backgroundColor' => $this->attributes['backgroundColor'] ?? 'white',
-			'style'           => array(
-				'elements' => array(
-					'link' => array(
-						'color' => array(
-							'text' => $this->attributes['elements']['link']['color']['text'] ?? '#8a8a8a',
-						),
-					),
-				),
-			),
+			'style'           => $this->attributes['style'] ?? [],
 		);
 
 		$this->block_html .= '<!-- wp:surecart/product-price-chooser ' . wp_json_encode( $choices_attributes ) . ' -->';
-		$this->block_html .= '<!-- wp:surecart/product-price-choices-template {"style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"blockGap":"var:preset|spacing|20"}},"layout":{"type":"grid","columnCount":2,"justifyContent":"stretch","orientation":"vertical","flexWrap":"nowrap","verticalAlignment":"center"}} -->';
 		$this->block_html .= '<!-- wp:surecart/product-price-choice-template ' . wp_json_encode( $template_attributes ) . ' -->';
 		$this->renderPriceName();
 		if ( $this->attributes['show_price'] ) {
 			$this->renderPriceAmountTrialAndSetupFee();
 		}
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
-		$this->block_html .= '<!-- /wp:surecart/product-price-choices-template -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-chooser -->';
 	}
 

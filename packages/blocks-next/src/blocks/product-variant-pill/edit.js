@@ -7,11 +7,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-	useBlockProps,
-	__experimentalUseBorderProps as useBorderProps,
-	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
-} from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
 /**
@@ -87,7 +83,7 @@ export default ({
 				]}
 				panelId={clientId}
 			/>
-			<button
+			<div
 				{...blockProps}
 				className={
 					selected
@@ -99,7 +95,7 @@ export default ({
 				}
 			>
 				{name}
-			</button>
+			</div>
 		</Fragment>
 	);
 };
