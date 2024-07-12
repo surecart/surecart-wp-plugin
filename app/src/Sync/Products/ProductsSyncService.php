@@ -14,6 +14,13 @@ class ProductsSyncService {
 	protected $app = null;
 
 	/**
+	 * The notice id.
+	 *
+	 * @var string
+	 */
+	protected $notice_id = 'surecart_products_sync';
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \SureCart\Application $app The application.
@@ -91,22 +98,12 @@ class ProductsSyncService {
 		echo wp_kses_post(
 			\SureCart::notices()->render(
 				[
+					'name'  => $this->notice_id,
 					'type'  => 'info',
 					'title' => esc_html__( 'SureCart: Getting things ready...', 'surecart' ),
 					'text'  => wp_sprintf(
-						'<p>%s</p>
-						<p><a href="%s" class="button button-secondary" id="surecart-migration-cancel">%s</a></p>',
-						esc_html__( 'We are getting things ready and optimized in the background. This may take a few minutes.', 'surecart' ),
-						esc_url(
-							add_query_arg(
-								[
-									'action' => 'cancel_sync_products',
-									'nonce'  => wp_create_nonce( 'cancel_sync_products' ),
-								],
-								\SureCart::getUrl()->index( 'products' )
-							)
-						),
-						esc_html__( 'Cancel', 'surecart' )
+						'<p>%s</p>',
+						esc_html__( 'We are getting things ready and optimized in the background. This may take a few minutes.', 'surecart' )
 					),
 				]
 			)
@@ -128,6 +125,11 @@ class ProductsSyncService {
 				'per_page' => 25,
 			]
 		);
+
+		$this->cancel();
+
+		// reset the notice.
+		\SureCart::notices()->reset( $this->notice_id );
 
 		// save and dispatch the process.
 		return $this->queue()->push_to_queue( $args )->save()->dispatch();
