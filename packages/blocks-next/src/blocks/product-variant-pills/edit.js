@@ -25,6 +25,7 @@ export default ({ clientId }) => {
 				className={`sc-pill-option__wrapper `}
 				clientId={clientId}
 				renderAppender={false}
+				attachBlockProps={false}
 			/>
 		</div>
 	);
