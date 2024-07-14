@@ -9,13 +9,37 @@
 	"ancestor": ["surecart/product-page"],
 	"supports": {
 		"interactivity": true,
-		"html": false
+		"html": false,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
 	"style": [
 		"file:../../styles/label.css",
-		"file:../../styles/product-variants.css"
+		"file:../../styles/product-variants.css",
+		"file:./style-index.css"
 	]
 }

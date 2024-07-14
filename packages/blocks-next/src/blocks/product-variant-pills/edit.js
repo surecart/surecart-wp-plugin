@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 
 import TemplateListEdit from '../../components/TemplateListEdit';
+import { useBlockProps } from '@wordpress/block-editor';
 
 const TEST_VARIANTS = [
 	{
@@ -13,14 +14,15 @@ const TEST_VARIANTS = [
 	{ name: 'Green', id: 3, 'surecart/productVariantPill/name': 'Green' },
 ];
 
-export default ({ __unstableLayoutClassNames, clientId }) => {
+export default ({ clientId }) => {
+	const blockProps = useBlockProps();
 	return (
-		<div>
+		<div {...blockProps}>
 			<label class="sc-form-label">Color</label>
 			<TemplateListEdit
 				template={[['surecart/product-variant-pill']]}
 				blockContexts={TEST_VARIANTS}
-				className={`sc-pill-option__wrapper ${__unstableLayoutClassNames}`}
+				className={`sc-pill-option__wrapper `}
 				clientId={clientId}
 				renderAppender={false}
 			/>
