@@ -69,7 +69,10 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 	public function test_render_price_choices(){
 		$this->service->renderPriceChoices();
 		$this->assertStringContainsString('<!-- wp:surecart/product-price-chooser', $this->service->block_html);
-		$this->assertStringContainsString('{"textColor":"black","backgroundColor":"white","style":{"elements":{"link":{"color":{"text":"#8a8a8a"}}}}}', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-price-choice-template', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/price-amount', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/price-trial', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/price-setup-fee', $this->service->block_html);
 	}
 
 	/**
@@ -138,6 +141,6 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 
 		$this->service->renderPriceChoices();
 		$this->assertStringContainsString('<!-- wp:surecart/product-price-chooser {"label":"Custom label"} -->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-price-choice-template {"textColor":"black","backgroundColor":"white","style":{"elements":{"link":{"color":{"text":"red"}}}}} -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-price-choice-template {"layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap","orientation":"horizontal"},"textColor":"black","backgroundColor":"white","style":[]} -->', $this->service->block_html);
 	}
 }
