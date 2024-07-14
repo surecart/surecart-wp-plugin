@@ -8,6 +8,12 @@
 	}
 }
 
+@container product-price-choices (max-width: 768px) {
+	.sc-choices {
+		grid-template-columns: repeat(1, 1fr) !important;
+	}
+}
+
 @container product-price-choices (max-width: 320px) {
 	.wp-block-surecart-product-price-choice-template {
 		flex-direction: column;

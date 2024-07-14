@@ -3,7 +3,7 @@
 		<?php echo wp_kses_post( $attributes['label'] ?? __( 'Pricing', 'surecart' ) ); ?>
 	</label>
 
-	<div class="sc-choices">
+	<div class="sc-choices" style="--columns:<?php echo esc_attr( $attributes['columns'] ); ?>">
 	<?php
 	foreach ( $prices as $price ) :
 		// Get an instance of the current Post Template block.

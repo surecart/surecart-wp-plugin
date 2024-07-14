@@ -109,13 +109,14 @@ export default ({
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 				<TemplateListEdit
-					className={classnames(__unstableLayoutClassNames, {
-						'sc-choices': true,
-					})}
+					className="sc-choices"
 					template={TEMPLATE}
 					blockContexts={getBlockContexts()}
 					clientId={clientId}
 					renderAppender={false}
+					style={{
+						'--columns': columns,
+					}}
 				/>
 			</div>
 		</Fragment>
