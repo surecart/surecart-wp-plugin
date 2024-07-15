@@ -555,16 +555,16 @@ const { state, actions } = store('surecart/checkout', {
 				mode,
 				formId,
 				priceId,
+				selectedPrice,
 				variantId,
 				adHocAmount,
-				isZeroDecimal,
 			} = getContext();
 
 			state.loading = true;
 			const checkout = await handleAddToCartByPriceOrVariant({
 				price_id: priceId,
 				variant_id: variantId,
-				ad_hoc_amount: !isZeroDecimal ? adHocAmount * 100 : adHocAmount,
+				ad_hoc_amount: !selectedPrice.is_zero_decimal ? adHocAmount * 100 : adHocAmount,
 			});
 
 			if (checkout) {

@@ -306,6 +306,7 @@ export const convertLineItemsToLineItemData = (lineItems) => {
 	return (lineItems?.data || []).map((item) => {
 		return {
 			...(!!item?.id ? { id: item.id } : {}),
+			variant_id: item.variant?.id,
 			price_id: item.price.id,
 			quantity: item.quantity,
 		};
@@ -313,12 +314,37 @@ export const convertLineItemsToLineItemData = (lineItems) => {
 };
 
 /**
+ * Find a line item by it's price and variant.
+ */
+export const getLineItemByPriceAndVariant = (priceId, variantId = null) => {
+	const lineItem = (checkoutState?.checkout?.line_items?.data || []).find(
+		(item) => {
+			return variantId
+				? item.variant?.id === variantId && item.price?.id === priceId
+				: item.price?.id === priceId;
+		}
+	);
+
+	if (!lineItem?.id) {
+		return false;
+	}
+
+	return {
+		id: lineItem?.id,
+		price_id: lineItem?.price?.id,
+		quantity: lineItem?.quantity,
+		variant_id: lineItem?.variant?.id,
+	};
+};
+
+/**
  * Add a line item to the checkout from Add to Cart Button.
  */
 export const handleAddToCartByPriceOrVariant = async (data) => {
-	// get the current line item from the price id.
-	let lineItem = null; //TODO: Change this.
 	const { formId, mode, priceId, variantId } = getContext();
+
+	// get the current line item from the price id.
+	const lineItem = getLineItemByPriceAndVariant(priceId, variantId);
 
 	// convert line items response to line items post.
 	let existingData = convertLineItemsToLineItemData(
@@ -357,7 +383,7 @@ export const handleAddToCartByPriceOrVariant = async (data) => {
 							// return item.
 							return item;
 						}
-						return null; // Ensure there's always a return value within map
+						return item;
 					})
 					.filter((item) => item !== null), // Filter out any nulls that might have been added
 				// add a line item if one does not exist.
@@ -376,7 +402,6 @@ export const handleAddToCartByPriceOrVariant = async (data) => {
 			],
 		},
 		query: {
-			// ...query,
 			form_id: formId,
 		},
 	});

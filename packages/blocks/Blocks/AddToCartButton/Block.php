@@ -82,15 +82,12 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 				echo wp_kses_data(
 					wp_interactivity_data_wp_context(
 						[
-							'formId'                  => intval( $form->ID ),
-							'mode'                    => esc_attr( Form::getMode( $form->ID ) ),
-							'priceId'                 => $attributes['price_id'] ?? null,
-							'variantId'               => $attributes['variant_id'] ?? null,
-							'currencySymbol'          => $price->currency_symbol,
-							'adHocAmount'             => null,
-							'isZeroDecimal'           => $price->is_zero_decimal,
-							'convertedAdHocMinAmount' => $price->converted_ad_hoc_min_amount,
-							'convertedAdHocMaxAmount' => $price->converted_ad_hoc_max_amount,
+							'formId'        => intval( $form->ID ),
+							'mode'          => esc_attr( Form::getMode( $form->ID ) ),
+							'selectedPrice' => $price,
+							'priceId'       => $attributes['price_id'] ?? null,
+							'variantId'     => $attributes['variant_id'] ?? null,
+							'adHocAmount'   => null,
 						]
 					)
 				);
@@ -103,7 +100,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 						<?php echo wp_kses_post( $attributes['ad_hoc_label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
 					</label>
 					<div class="sc-input-group" style="margin-bottom: 20px;">
-						<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.currencySymbol"></span>
+						<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
 
 						<input
 							class="sc-form-control"
@@ -111,8 +108,8 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 							type="number"
 							required
 							placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? '' ); ?>"
-							data-wp-bind--min="context.convertedAdHocMinAmount"
-							data-wp-bind--max="context.convertedAdHocMaxAmount"
+							data-wp-bind--min="context.selectedPrice.convertedAdHocMinAmount"
+							data-wp-bind--max="context.selectedPrice.convertedAdHocMaxAmount"
 							data-wp-bind--value="context.adHocAmount"
 							data-wp-on--input="actions.setAdHocAmount"
 						/>
