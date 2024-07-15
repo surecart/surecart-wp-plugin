@@ -59,7 +59,8 @@
 		"wp-block-button",
 		"surecart-themes-default",
 		"file:./style.css",
-		"file:../../styles/spinner.css"
+		"file:../../styles/spinner.css",
+		"file:../../styles/input-group.css"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
