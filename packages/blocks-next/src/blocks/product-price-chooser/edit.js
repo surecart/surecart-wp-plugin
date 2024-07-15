@@ -114,6 +114,7 @@ export default ({
 					blockContexts={getBlockContexts()}
 					clientId={clientId}
 					renderAppender={false}
+					attachBlockProps={false}
 					style={{
 						'--columns': columns,
 					}}

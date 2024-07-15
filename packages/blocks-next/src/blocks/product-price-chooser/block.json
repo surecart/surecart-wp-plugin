@@ -11,28 +11,9 @@
 		"interactivity": true,
 		"spacing": {
 			"padding": true,
-			"margin": false,
+			"margin": true,
 			"__experimentalDefaultControls": {
 				"padding": true
-			}
-		},
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"width": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"width": true
-			}
-		},
-		"color": {
-			"gradients": true,
-			"text": true,
-			"background": true,
-			"__experimentalDefaultControls": {
-				"text": true,
-				"background": true
 			}
 		}
 	},

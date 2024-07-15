@@ -10,28 +10,9 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"color": {
-			"gradients": true,
-			"text": true,
-			"background": true,
-			"__experimentalDefaultControls": {
-				"text": true,
-				"background": true
-			}
-		},
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]
-		},
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"width": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"width": true
-			}
 		}
 	},
 	"textdomain": "surecart",
@@ -39,7 +20,6 @@
 	"render": "file:./view.php",
 	"style": [
 		"file:../../styles/label.css",
-		"file:../../styles/product-variants.css",
-		"file:./style-index.css"
+		"file:../../styles/product-variants.css"
 	]
 }
