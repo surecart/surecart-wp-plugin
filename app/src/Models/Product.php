@@ -166,8 +166,9 @@ class Product extends Model implements PageModel {
 		if ( ! get_option( 'permalink_structure' ) ) {
 			return add_query_arg( 'sc_product_page_id', $this->slug, get_home_url() );
 		}
+		
 		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . trailingslashit( $this->slug );
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . trailingslashit( $this->slug ?? '' );
 	}
 
 	/**
