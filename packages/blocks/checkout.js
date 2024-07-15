@@ -47,7 +47,6 @@ import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 import * as shippingChoices from '@blocks/ShippingChoices';
-import * as billingAddress from '@blocks/BillingAddress';
 
 registerBlocks([
 	button,
@@ -95,7 +94,6 @@ registerBlocks([
 	totals,
 	shippingChoices,
 	shippingLineItem,
-	billingAddress,
 	orderBumps,
 	conditionalForm,
 ]);

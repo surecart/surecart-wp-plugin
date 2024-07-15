@@ -26,8 +26,9 @@
 - [sc-column](../../../ui/column)
 - [sc-input](../../../ui/input)
 - [sc-phone-input](../../../ui/phone-input)
+- [sc-flex](../../../ui/flex)
 - [sc-address](../../../ui/address)
-- [sc-switch](../../../ui/switch)
+- [sc-checkbox](../../../ui/checkbox)
 - [sc-tax-id-input](../../../ui/tax-id-input)
 - [sc-button](../../../ui/button)
 - [sc-block-ui](../../../ui/block-ui)
@@ -43,8 +44,9 @@ graph TD;
   sc-customer-edit --> sc-column
   sc-customer-edit --> sc-input
   sc-customer-edit --> sc-phone-input
+  sc-customer-edit --> sc-flex
   sc-customer-edit --> sc-address
-  sc-customer-edit --> sc-switch
+  sc-customer-edit --> sc-checkbox
   sc-customer-edit --> sc-tax-id-input
   sc-customer-edit --> sc-button
   sc-customer-edit --> sc-block-ui

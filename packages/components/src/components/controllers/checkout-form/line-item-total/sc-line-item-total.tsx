@@ -32,7 +32,9 @@ export class ScLineItemTotal {
   }
 
   hasSubscription(checkout: Checkout) {
-    return (checkout?.line_items?.data || []).some(lineItem => lineItem?.price?.recurring_interval === 'month' && !!lineItem?.price?.recurring_interval && !lineItem?.price?.recurring_period_count);
+    return (checkout?.line_items?.data || []).some(
+      lineItem => lineItem?.price?.recurring_interval === 'month' && !!lineItem?.price?.recurring_interval && !lineItem?.price?.recurring_period_count,
+    );
   }
 
   renderLineItemTitle(checkout: Checkout) {
@@ -104,7 +106,7 @@ export class ScLineItemTotal {
           {!!checkout.trial_amount && (
             <sc-line-item>
               <span slot="description">
-                <slot name="free-trial-description">{__('Free Trial', 'surecart')}</slot>
+                <slot name="free-trial-description">{__('Trial', 'surecart')}</slot>
               </span>
               <span slot="price">
                 <sc-format-number type="currency" value={checkout.trial_amount} currency={checkout.currency} />
