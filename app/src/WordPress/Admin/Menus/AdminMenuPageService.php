@@ -285,15 +285,15 @@ class AdminMenuPageService {
 			$name,
 			'manage_options',
 			add_query_arg(
-				array(
+				[
 					'postId'   => rawurlencode( $template_slug ),
 					'postType' => 'wp_template_part',
-					'canvas'   => 'edit'
-					],
-					'site-editor.php',
-				),
-				''
-			);
+					'canvas'   => 'edit',
+				],
+				'site-editor.php',
+			),
+			''
+		);
 	}
 
 	/**

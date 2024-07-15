@@ -508,7 +508,7 @@ class Product extends Model implements PageModel {
 
 		return apply_filters(
 			'surecart/product/json_schema',
-			array(
+			[
 				'@context'    => 'http://schema.org',
 				'@type'       => 'Product',
 				'productId'   => $this->sku ?? $this->slug,
@@ -517,9 +517,9 @@ class Product extends Model implements PageModel {
 				'image'       => $this->image_url ?? '',
 				'offers'      => $offers,
 				'url'         => $this->permalink,
-				],
-				$this,
-			);
+			],
+			$this,
+		);
 	}
 
 	/**
