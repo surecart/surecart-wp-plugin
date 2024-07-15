@@ -37,12 +37,18 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 		// Use backgroundColor and textColor if exist.
 		$styles = '';
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
-			$styles .= '--sc-color-primary-500: ' . $attributes['backgroundColor'] . '; ';
-			$styles .= '--sc-focus-ring-color-primary: ' . $attributes['backgroundColor'] . '; ';
-			$styles .= '--sc-input-border-color-focus: ' . $attributes['backgroundColor'] . '; ';
+			$styles .= "background-color: {$attributes['backgroundColor']}; ";
 		}
 		if ( ! empty( $attributes['textColor'] ) ) {
-			$styles .= '--sc-color-primary-text: ' . $attributes['textColor'] . '; ';
+			$styles .= "color: {$attributes['textColor']}; ";
+		}
+
+		$classes = '';
+		if ( ! empty( $attributes['type'] ) ) {
+			$classes .= " sc-button--{$attributes['type']}";
+		}
+		if ( ! empty( $attributes['size'] ) ) {
+			$classes .= " sc-button--{$attributes['size']}";
 		}
 
 		// Slide-out is disabled, go directly to checkout.
@@ -50,10 +56,11 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			return \SureCart::block()->render(
 				'blocks/buy-button',
 				[
-					'type'  => $attributes['type'] ?? 'primary',
-					'size'  => $attributes['size'] ?? 'medium',
-					'style' => $styles,
-					'href'  => $this->href(
+					'type'    => $attributes['type'] ?? 'primary',
+					'size'    => $attributes['size'] ?? 'medium',
+					'style'   => $styles,
+					'classes' => $classes,
+					'href'    => $this->href(
 						[
 							[
 								'id'         => $price->id,
@@ -62,7 +69,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 							],
 						]
 					),
-					'label' => $attributes['button_text'] ?? __( 'Buy Now', 'surecart' ),
+					'label'   => $attributes['button_text'] ?? __( 'Buy Now', 'surecart' ),
 				]
 			);
 		}
@@ -112,7 +119,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 					</div>
 				<?php endif; ?>
 
-				<div class="wp-block-button">
+				<div class="wp-block-button <?php echo esc_attr( $classes ); ?>" style="<?php echo esc_attr( $styles ); ?>">
 					<button
 						type="submit"
 						class="wp-block-button__link wp-element-button sc-button"
