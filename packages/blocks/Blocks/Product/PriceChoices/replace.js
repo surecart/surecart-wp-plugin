@@ -30,7 +30,7 @@ const newPriceChoicesTemplate = (attributes) => {
 					'surecart/price-name',
 					{
 						style: {
-							layout: { selfStretch: 'fill', flexSize: null },
+							layout: { selfStretch: 'fixed', flexSize: '50%' },
 							typography: {
 								fontStyle: 'normal',
 								fontWeight: '600',
@@ -44,7 +44,7 @@ const newPriceChoicesTemplate = (attributes) => {
 					{
 						style: {
 							spacing: { blockGap: '0px' },
-							layout: { selfStretch: 'fit', flexSize: null },
+							layout: { selfStretch: 'fixed', flexSize: '50%' },
 						},
 						layout: {
 							type: 'flex',

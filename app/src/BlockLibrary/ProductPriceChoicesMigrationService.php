@@ -44,7 +44,7 @@ class ProductPriceChoicesMigrationService {
 	 * @return void
 	 */
 	public function renderPriceName() {
-		$this->block_html .= '<!-- wp:surecart/price-name /-->';
+		$this->block_html .= '<!-- wp:surecart/price-name {"style":{"layout":{"selfStretch":"fixed","flexSize":"50%"},"typography":{"fontStyle":"normal","fontWeight":"600"}}} /-->';
 	}
 
 	/**
@@ -54,7 +54,7 @@ class ProductPriceChoicesMigrationService {
 	 */
 	public function renderPriceAmountTrialAndSetupFee() {
 		$text_color        = $this->attributes['textColor'] ?? '#8a8a8a';
-		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fixed","flexSize":"50%"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
 		$this->block_html .= '<!-- wp:surecart/price-amount {"style":{"elements":{"link":{"color":{"text":"var:preset|color|accent-3"}}},"typography":{"fontStyle":"normal","fontWeight":"700"}},"textColor":"accent-3"} /-->';
 		$this->block_html .= '<!-- wp:surecart/price-trial {"style":{"color":{"text":"' . $text_color . '"},"elements":{"link":{"color":{"text":"' . $text_color . '"}}}},"fontSize":"small"} /-->';
