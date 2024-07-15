@@ -317,7 +317,7 @@ export const convertLineItemsToLineItemData = (lineItems) => {
  */
 export const handleAddToCartByPriceOrVariant = async (data) => {
 	// get the current line item from the price id.
-	let lineItem = null; //cTODO: Change this.
+	let lineItem = null; //TODO: Change this.
 	const { formId, mode, priceId, variantId } = getContext();
 
 	// convert line items response to line items post.

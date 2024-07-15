@@ -538,21 +538,40 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Set the ad_hoc_amount
+		 */
+		setAdHocAmount: (e) => {
+			const context = getContext();
+			context.adHocAmount = parseFloat(e.target.value);
+		},
+
+		/**
 		 * Add to cart by price or variant.
 		 */
-		addToCartByPriceOrVariant: async () => {
-			const { mode, formId, priceId, variantId } = getContext();
+		addToCartByPriceOrVariant: async (e) => {
+			e.preventDefault();
+
+			const {
+				mode,
+				formId,
+				priceId,
+				variantId,
+				adHocAmount,
+				isZeroDecimal,
+			} = getContext();
+
 			state.loading = true;
 			const checkout = await handleAddToCartByPriceOrVariant({
 				price_id: priceId,
 				variant_id: variantId,
+				ad_hoc_amount: !isZeroDecimal ? adHocAmount * 100 : adHocAmount,
 			});
 
 			if (checkout) {
-				state.loading = false;
 				actions.setCheckout(checkout, mode, formId);
 				cartActions?.toggle();
 			}
+			state.loading = false;
 		},
 	},
 });
