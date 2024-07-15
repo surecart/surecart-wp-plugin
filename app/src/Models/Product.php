@@ -511,13 +511,15 @@ class Product extends Model implements PageModel {
 			array(
 				'@context'    => 'http://schema.org',
 				'@type'       => 'Product',
+				'productId'   => $this->sku ?? $this->slug,
 				'name'        => $this->name,
-				'image'       => $this->image_url ?? '',
 				'description' => sanitize_text_field( $this->description ),
+				'image'       => $this->image_url ?? '',
 				'offers'      => $offers,
-			),
-			$this
-		);
+				'url'         => $this->permalink,
+				],
+				$this,
+			);
 	}
 
 	/**

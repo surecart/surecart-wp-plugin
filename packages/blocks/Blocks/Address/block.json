@@ -1,7 +1,7 @@
 {
 	"apiVersion": 2,
 	"name": "surecart/address",
-	"title": "Shipping Address",
+	"title": "Address",
 	"description": "Display an shipping address form. This is used for shipping and tax calculations.",
 	"category": "surecart",
 	"keywords": ["address", "shipping", "tax"],
@@ -16,6 +16,14 @@
 		"label": {
 			"type": "string",
 			"default": "Shipping Address"
+		},
+		"billing_label": {
+			"type": "string",
+			"default": "Billing Address"
+		},
+		"billing_toggle_label": {
+			"type": "string",
+			"default": "Billing address is same as shipping"
 		},
 		"required": {
 			"type": "boolean",
@@ -59,6 +67,10 @@
 		"state_placeholder": {
 			"type": "string",
 			"default": "State/Province/Region"
+		},
+		"collect_billing": {
+			"type": "boolean",
+			"default": true
 		}
 	}
 }

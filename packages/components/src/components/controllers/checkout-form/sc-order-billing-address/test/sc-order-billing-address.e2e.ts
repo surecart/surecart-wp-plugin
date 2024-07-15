@@ -9,27 +9,27 @@ describe('sc-order-billing-address', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  it('should show billing address when switch is toggled', async () => {
+  it('Should show billing address input when checkbox is unchecked', async () => {
     const page = await newE2EPage();
     await page.setContent('<sc-order-shipping-address></sc-order-shipping-address><sc-order-billing-address></sc-order-billing-address>');
     page.waitForChanges();
 
     const addressField = await page.find('sc-order-billing-address >>> .order-billing-address__toggle');
-    const switchField = await page.find('sc-order-billing-address >>> sc-switch');
+    const checkBox = await page.find('sc-order-billing-address >>> sc-checkbox');
 
     // address field is not visible & switch is visible and checked
     expect(addressField).toBeNull();
-    expect(switchField).not.toBeNull();
-    expect(await switchField.getProperty('checked')).toBeTruthy();
+    expect(checkBox).not.toBeNull();
+    expect(await checkBox.getProperty('checked')).toBeTruthy();
 
-    // toggle switch
-    switchField.setAttribute('checked', false);
+    // toggle checkbox
+    checkBox.setAttribute('checked', false);
     await page.waitForChanges();
 
     // address field is visible & switch is visible and not checked
     expect(addressField).not.toBeNull();
-    expect(switchField).not.toBeNull();
-    expect(await switchField.getProperty('checked')).toBeFalsy();
+    expect(checkBox).not.toBeNull();
+    expect(await checkBox.getProperty('checked')).toBeFalsy();
   });
 
   it('should show billing address if shipping address field does not exist', async () => {

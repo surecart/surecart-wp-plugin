@@ -70,7 +70,7 @@ class Block extends BaseBlock {
 			description="<?php echo esc_attr( $attributes['description'] ?? '' ); ?>"
 			checked="<?php echo esc_attr( ! empty( $attributes['checked'] ) ? 'true' : 'false' ); ?>"
 			show-label="<?php echo esc_attr( ! empty( $attributes['show_label'] ) ? 'true' : 'false' ); ?>"
-			show-price="<?php echo esc_attr( ! empty( $attributes['show_price'] ) ? 'true' : 'false' ); ?>"
+			show-price="<?php echo esc_attr( wp_validate_boolean( $attributes['show_price'] ) ? 'true' : 'false' ); ?>"
 			show-control="<?php echo esc_attr( ! empty( $attributes['show_control'] ) ? 'true' : 'false' ); ?>"
 			quantity="<?php echo esc_attr( $attributes['quantity'] ?? '1' ); ?>"
 		></sc-price-choice>
