@@ -20,6 +20,7 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
+import { Notice } from '@wordpress/components';
 
 const TEMPLATE = [
 	[
@@ -90,6 +91,15 @@ export default ({
 							onChange={(columns) => setAttributes({ columns })}
 							max={3}
 						/>
+					</PanelRow>
+					<PanelRow>
+						{columns > 1 && (
+							<Notice status="warning" isDismissible={false}>
+								{__(
+									'This block will only show multiple columns if the width of the container is over 600px.'
+								)}
+							</Notice>
+						)}
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>

@@ -4,7 +4,7 @@
 	margin-bottom: var(--sc-form-row-spacing, 0.75em);
 }
 
-@container product-price-choices (max-width: 768px) {
+@container product-price-choices (max-width: 600px) {
 	.sc-choices {
 		grid-template-columns: repeat(1, 1fr) !important;
 	}
