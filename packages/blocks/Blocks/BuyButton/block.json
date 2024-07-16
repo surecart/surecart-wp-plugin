@@ -1,6 +1,8 @@
 {
 	"name": "surecart/buy-button",
 	"title": "Buy Button",
+	"apiVersion": 3,
+	"version": "1.0.0",
 	"description": "Display a button to immediately redirect to the checkout page with the product in the cart.",
 	"category": "surecart-product-page",
 	"keywords": ["name", "customer"],
