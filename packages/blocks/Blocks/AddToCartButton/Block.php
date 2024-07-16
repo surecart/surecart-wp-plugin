@@ -122,7 +122,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 						class="wp-block-button__link wp-element-button sc-button"
 						data-wp-class--sc-button__link--busy="state.loading"
 					>
-						<span class="sc-spinner"></span>
+						<span class="sc-spinner" aria-hidden="true" data-wp-bind--hidden="!state.loading" hidden></span>
 						<span class="sc-button__link-text">
 							<?php echo wp_kses_post( $attributes['button_text'] ); ?>
 						</span>
