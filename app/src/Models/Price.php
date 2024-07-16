@@ -222,7 +222,7 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getPaymentsTextAttribute() {
-		return empty( $this->recurring_period_count ) || $this->recurring_period_count > 1 ? sprintf(
+		return ! empty( $this->recurring_period_count ) && $this->recurring_period_count > 1 ? sprintf(
 			// translators: %d is the number of payments.
 			_n(
 				'%d payment',
