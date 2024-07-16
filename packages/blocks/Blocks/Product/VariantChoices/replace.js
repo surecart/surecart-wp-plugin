@@ -20,17 +20,11 @@ const newVariantPillsTemplate = (attributes) => {
 
 	return [
 		[
-			'surecart/product-variant-pills-wrapper',
-			{},
-			[
-				[
-					'surecart/product-variant-pill',
-					{
-						...pillAttributes,
-					},
-					[],
-				],
-			],
+			'surecart/product-variant-pill',
+			{
+				...pillAttributes,
+			},
+			[],
 		],
 	];
 };

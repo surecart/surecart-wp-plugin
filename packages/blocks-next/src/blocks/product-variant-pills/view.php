@@ -17,8 +17,9 @@
 				// This ensures that for the inner instances of the Post Template block, we do not render any block supports.
 				$block_instance['blockName'] = 'core/null';
 
-				$filter_block_context = static function ( $context ) use ( $value ) {
+				$filter_block_context = static function ( $context ) use ( $value, $option ) {
 					$context['value'] = $value;
+					$context['name']  = $option->name;
 					return $context;
 				};
 

@@ -129,7 +129,7 @@ class ProductSelectedPriceMigrationServiceTest extends SureCartUnitTestCase {
 		);
 		$this->service->renderPrice();
 
-		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":[]},"layout":{"type":"constrained"},"backgroundColor":"red"} -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":{"padding":{"top":"1em","right":"1em","bottom":"1em","left":"1em"}}},"layout":{"type":"constrained"},"backgroundColor":"red"} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-selected-price-scratch-amount {"alignment":"center","sale_text":"Test Sale","backgroundColor":"red","textColor":"black","style":{"typography":{"textDecoration":"line-through","fontSize":"24px"},"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-selected-price-amount {"alignment":"center","sale_text":"Test Sale","backgroundColor":"red","textColor":"black","style":{"typography":{"textDecoration":"line-through","fontSize":"24px"},"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}}}', $this->service->block_html);

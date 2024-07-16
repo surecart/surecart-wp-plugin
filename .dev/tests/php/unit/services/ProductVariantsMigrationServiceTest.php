@@ -64,7 +64,6 @@ class ProductVariantsMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_product_variants(){
 		$this->service->renderProductVariants();
 		$this->assertStringContainsString('<!-- wp:surecart/product-variant-pills', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-variant-pills-wrapper', $this->service->block_html);
 	}
 
 	/**
@@ -115,7 +114,6 @@ class ProductVariantsMigrationServiceTest extends SureCartUnitTestCase {
 		$this->service->renderProductVariants();
 
 		$this->assertStringContainsString('<!-- wp:surecart/product-variant-pills {"style":{"spacing":{"margin":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80","left":"var:preset|spacing|80","right":"var:preset|spacing|80"}}}} -->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-variant-pills-wrapper', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-variant-pill {"style":{"typography":{"fontSize":"16px"},"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|20","left":"var:preset|spacing|20","right":"var:preset|spacing|20"}},"elements":{"link":{"color":{"text":"var:preset|color|vivid-red"}}},"border":{"width":"2px","color":"#0693e3","radius":"8px"}},"backgroundColor":"pale-pink","textColor":"vivid-red","highlight_text":"#ffffff","highlight_background":"#000000","highlight_border":"#000000"}  /-->', $this->service->block_html);
 	}
 }

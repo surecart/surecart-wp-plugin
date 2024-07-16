@@ -19,7 +19,8 @@ import {
 	PanelRow,
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
+import { Notice } from '@wordpress/components';
 
 const TEMPLATE = [
 	[
@@ -46,10 +47,24 @@ export default ({
 	clientId,
 }) => {
 	const { label, columns } = attributes;
+	const priceContainerRef = useRef(null);
+	const [isContainerSmall, setIsContainerSmall] = useState(true);
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
 	});
 	const colorProps = useColorProps(attributes);
+
+	useEffect(() => {
+		if (priceContainerRef) {
+			// watch for resize events on the price container
+			const observer = new ResizeObserver(() => {
+				const containerWidth = priceContainerRef?.current?.offsetWidth;
+				setIsContainerSmall(containerWidth <= 600);
+			});
+
+			observer.observe(priceContainerRef?.current);
+		}
+	}, [priceContainerRef]);
 
 	const getBlockContexts = () => {
 		const blockContexts = [];
@@ -87,14 +102,25 @@ export default ({
 						<NumberControl
 							label={__('Number of Columns', 'surecart')}
 							value={columns}
-							onChange={(columns) => setAttributes({ columns })}
+							onChange={(columns) =>
+								setAttributes({ columns: parseInt(columns) })
+							}
 							max={3}
 						/>
+					</PanelRow>
+					<PanelRow>
+						{columns > 1 && isContainerSmall && (
+							<Notice status="warning" isDismissible={false}>
+								{__(
+									'This block will only show multiple columns if the width of the container is over 600px.'
+								)}
+							</Notice>
+						)}
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
+			<div {...blockProps} ref={priceContainerRef}>
 				<RichText
 					tagName="label"
 					className={classnames(
@@ -109,13 +135,15 @@ export default ({
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 				<TemplateListEdit
-					className={classnames(__unstableLayoutClassNames, {
-						'sc-choices': true,
-					})}
+					className="sc-choices"
 					template={TEMPLATE}
 					blockContexts={getBlockContexts()}
 					clientId={clientId}
 					renderAppender={false}
+					attachBlockProps={false}
+					style={{
+						'--columns': columns,
+					}}
 				/>
 			</div>
 		</Fragment>

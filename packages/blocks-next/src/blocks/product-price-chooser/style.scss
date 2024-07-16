@@ -2,9 +2,11 @@
 	container-type: inline-size;
 	container-name: product-price-choices;
 	margin-bottom: var(--sc-form-row-spacing, 0.75em);
+}
 
-	.sc-form-label {
-		color: inherit !important;
+@container product-price-choices (max-width: 600px) {
+	.sc-choices {
+		grid-template-columns: repeat(1, 1fr) !important;
 	}
 }
 
