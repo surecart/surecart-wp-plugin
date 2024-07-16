@@ -101,7 +101,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	protected function sync() {
+	protected function sync( $id = '' ) {
 		// set the id.
 		if ( ! empty( $id ) ) {
 			$this->id = $id;
@@ -113,9 +113,7 @@ class Product extends Model implements PageModel {
 		}
 
 		// if there are no syncable expands, let's fetch them.
-		if ( ! $this->has_syncable_expands ) {
-			$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
-		}
+		$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
 
 		// sync the product.
 		$synced = \SureCart::sync()->product()->sync( $this );
@@ -391,6 +389,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Is the post published?
+	 *
+	 * @return string
+	 */
+	public function getIsPublishedAttribute(): bool {
+		return ! empty( $this->post ) && 'publish' === $this->post->post_status;
+	}
+
+	/**
 	 * Get the page title.
 	 *
 	 * @return string
@@ -508,15 +515,17 @@ class Product extends Model implements PageModel {
 
 		return apply_filters(
 			'surecart/product/json_schema',
-			array(
+			[
 				'@context'    => 'http://schema.org',
 				'@type'       => 'Product',
+				'productId'   => $this->sku ?? $this->slug,
 				'name'        => $this->name,
-				'image'       => $this->image_url ?? '',
 				'description' => sanitize_text_field( $this->description ),
+				'image'       => $this->image_url ?? '',
 				'offers'      => $offers,
-			),
-			$this
+				'url'         => $this->permalink,
+			],
+			$this,
 		);
 	}
 
@@ -771,11 +780,6 @@ class Product extends Model implements PageModel {
 		// we don't have an initial price.
 		if ( empty( $this->initial_price ) ) {
 			return '';
-		}
-
-		// the initial price is ad hoc.
-		if ( $this->initial_price->ad_hoc ) {
-			return esc_html__( 'Custom Amount', 'surecart' );
 		}
 
 		// return the formatted amount.

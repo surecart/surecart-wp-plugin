@@ -14,7 +14,7 @@ export class ScUpsellTotals {
     return state.amount_due > 0 ? (
       <sc-format-number type="currency" value={state.amount_due} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
     ) : !!state?.line_item?.trial_amount ? (
-      __('Free Trial', 'surecart')
+      __('Trial', 'surecart')
     ) : (
       __('Free', 'surecart')
     );

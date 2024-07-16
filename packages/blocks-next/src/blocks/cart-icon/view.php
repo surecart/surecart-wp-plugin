@@ -17,13 +17,13 @@
 	data-wp-bind--hidden="!state.hasItems"
 	hidden
 >
-	<div class="sc-cart-container">
-		<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Cart Button.', 'surecart' ); ?>">
+	<div class="wp-block-surecart-cart-icon__container">
+		<div class="wp-block-surecart-cart-icon__icon" aria-label="<?php esc_attr_e( 'Cart Button.', 'surecart' ); ?>">
 			<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
 		</div>
 
 		<span
-			class="sc-cart-count"
+			class="wp-block-surecart-cart-icon__count"
 			data-wp-text="state.itemsCount"
 			data-wp-bind--aria-label="state.itemsCountAriaLabel"
 		>

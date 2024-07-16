@@ -1,27 +1,11 @@
-/**
- * Internal dependencies.
- */
-import { registerBlocksForTemplates } from './conditional-block-registration';
+import { registerBlocks } from './register-block';
 
 import * as ProductCollectionTitle from '@blocks/ProductCollectionTitle';
 import * as ProductCollectionDescription from '@blocks/ProductCollectionDescription';
-// import * as ProductCollectionImage from '@blocks/ProductCollectionImage';
 import * as ProductCollection from '@blocks/ProductCollection';
 
-registerBlocksForTemplates({
-	blocks: [
-		ProductCollectionTitle,
-		ProductCollectionDescription,
-		// ProductCollectionImage,
-		ProductCollection,
-	],
-
-	// include only for these templates.
-	include: [
-		'surecart/surecart//product-collection-part',
-		'surecart/surecart//product-collection',
-		'sc-product-collection',
-		'sc-part-product-collection',
-		'taxonomy-sc_collection',
-	],
-});
+registerBlocks([
+	ProductCollectionTitle,
+	ProductCollectionDescription,
+	ProductCollection,
+]);

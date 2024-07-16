@@ -74,7 +74,7 @@ export default ({
 				)}
 				{!!hasTrial && (
 					<ScLineItem>
-						<span slot="title">{__('Free Trial', 'surecart')}</span>
+						<span slot="title">{__('Trial', 'surecart')}</span>
 						<span slot="price">
 							{sprintf(
 								_n(

@@ -14,13 +14,10 @@ import {
 } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import TemplateListEdit from '../../components/TemplateListEdit';
-import {
-	PanelBody,
-	PanelRow,
-	__experimentalNumberControl as NumberControl,
-} from '@wordpress/components';
+import { PanelBody } from '@wordpress/components';
 import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 import { Notice } from '@wordpress/components';
+import { RangeControl } from '@wordpress/components';
 
 const TEMPLATE = [
 	[
@@ -98,25 +95,24 @@ export default ({
 		<Fragment>
 			<InspectorControls>
 				<PanelBody>
-					<PanelRow>
-						<NumberControl
-							label={__('Number of Columns', 'surecart')}
-							value={columns}
-							onChange={(columns) =>
-								setAttributes({ columns: parseInt(columns) })
-							}
-							max={3}
-						/>
-					</PanelRow>
-					<PanelRow>
-						{columns > 1 && isContainerSmall && (
-							<Notice status="warning" isDismissible={false}>
-								{__(
-									'This block will only show multiple columns if the width of the container is over 600px.'
-								)}
-							</Notice>
-						)}
-					</PanelRow>
+					<RangeControl
+						__nextHasNoMarginBottom
+						label={__('Columns', 'surecart')}
+						value={columns}
+						onChange={(columns) =>
+							setAttributes({ columns: parseInt(columns) })
+						}
+						min={1}
+						max={2}
+					/>
+
+					{columns > 1 && isContainerSmall && (
+						<Notice status="warning" isDismissible={false}>
+							{__(
+								'This block will only show multiple columns if the width of the container is over 600px.'
+							)}
+						</Notice>
+					)}
 				</PanelBody>
 			</InspectorControls>
 
