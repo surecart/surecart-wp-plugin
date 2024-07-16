@@ -9,6 +9,7 @@
 	"ancestor": ["surecart/product-page"],
 	"supports": {
 		"interactivity": true,
+		"html": false,
 		"spacing": {
 			"padding": true,
 			"margin": true,
