@@ -57,9 +57,11 @@
 	"script": "surecart-components",
 	"style": [
 		"wp-block-button",
+		"surecart-wp-button",
 		"surecart-themes-default",
 		"surecart-input-group",
-		"surecart-spinner"
+		"surecart-spinner",
+		"surecart-button"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]

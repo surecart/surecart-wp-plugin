@@ -43,12 +43,21 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			$styles .= "color: {$attributes['textColor']}; ";
 		}
 
-		$classes = '';
+		$class = 'sc-button';
 		if ( ! empty( $attributes['type'] ) ) {
-			$classes .= " sc-button--{$attributes['type']}";
+			if ('default' === $attributes['type']) {
+				$class .= ' wp-element-button sc-button--outline sc-button--default';
+			} else {
+				if ('text' !== $attributes['type']) {
+					$class .= ' wp-element-button wp-block-button__link';
+				}
+
+				$class .= " sc-button__link sc-button--{$attributes['type']}";
+			}
 		}
+
 		if ( ! empty( $attributes['size'] ) ) {
-			$classes .= " sc-button--{$attributes['size']}";
+			$class .= " sc-button--{$attributes['size']}";
 		}
 
 		// Slide-out is disabled, go directly to checkout.
@@ -56,11 +65,11 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			return \SureCart::block()->render(
 				'blocks/buy-button',
 				[
-					'type'    => $attributes['type'] ?? 'primary',
-					'size'    => $attributes['size'] ?? 'medium',
-					'style'   => $styles,
-					'classes' => $classes,
-					'href'    => $this->href(
+					'type'  => $attributes['type'] ?? 'primary',
+					'size'  => $attributes['size'] ?? 'medium',
+					'style' => $styles,
+					'class' => $class,
+					'href'  => $this->href(
 						[
 							[
 								'id'         => $price->id,
@@ -69,14 +78,13 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 							],
 						]
 					),
-					'label'   => $attributes['button_text'] ?? __( 'Buy Now', 'surecart' ),
+					'label' => $attributes['button_text'] ?? __( 'Buy Now', 'surecart' ),
 				]
 			);
 		}
 
 		ob_start(); ?>
 		<div
-			class="wp-block-buttons"
 			data-wp-interactive='{ "namespace": "surecart/checkout" }'
 			<?php
 				echo wp_kses_data(
@@ -91,7 +99,6 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 						]
 					)
 				);
-				echo wp_kses_data( get_block_wrapper_attributes() );
 			?>
 		>
 			<form class="sc-form" data-wp-on--submit="actions.addToCartByPriceOrVariant">
@@ -116,10 +123,21 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 					</div>
 				<?php endif; ?>
 
-				<div class="wp-block-button <?php echo esc_attr( $classes ); ?>" style="<?php echo esc_attr( $styles ); ?>">
+				<div
+					<?php
+						echo wp_kses_data(
+							get_block_wrapper_attributes(
+								array(
+									'class' => 'wp-block-button',
+									'styles' => $styles
+								)
+							)
+						);
+					?>
+				>
 					<button
 						type="submit"
-						class="wp-block-button__link wp-element-button sc-button"
+						class="<?php echo esc_attr( $class ); ?>"
 						data-wp-class--sc-button__link--busy="state.loading"
 					>
 						<span class="sc-spinner" aria-hidden="true" data-wp-bind--hidden="!state.loading" hidden></span>

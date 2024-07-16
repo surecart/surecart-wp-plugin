@@ -274,8 +274,9 @@
 
 /* Default */
 .sc-button--outline.sc-button--default {
-	border-color: var(--sc-color-gray-300);
+	border-color: var(--sc-button-default-border-color, var(--sc-color-gray-300));
 	color: var(--sc-color-gray-700);
+	background: none;
 }
 .sc-button--outline.sc-button--default:hover:not(.sc-button--disabled) {
 	border-color: var(--primary-background);
@@ -396,6 +397,7 @@
 .sc-button--text {
 	background-color: transparent;
 	border-color: transparent;
+	box-shadow: none;
 	color: inherit;
 
 	&:hover:not(.sc-button--disabled) {
@@ -513,15 +515,15 @@
 }
 
 .sc-button--large {
-	font-size: var(--sc-button-font-size-large);
-	height: var(--sc-input-height-large);
+	font-size: var(--sc-button-font-size-large) !important;
+	height: var(--sc-input-height-large) !important;
 	line-height: calc(
 		var(--sc-input-height-large) - var(--sc-input-border-width) * 2
 	);
 	border-radius: var(
 		--button-border-radius,
 		var(--sc-input-border-radius-large)
-	);
+	) !important;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
