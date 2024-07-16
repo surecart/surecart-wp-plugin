@@ -101,7 +101,7 @@ class ProductSelectedPriceMigrationService {
 		);
 
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
-		$this->block_html .= '<div class="wp-block-group" >';
+		$this->block_html .= '<div class="wp-block-group">';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-scratch-amount ' . wp_json_encode( $child_block_attributes ) . ' /-->';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-amount ' . wp_json_encode( $child_block_attributes ) . ' /-->';
 		$this->renderSalesBadge();
@@ -148,18 +148,10 @@ class ProductSelectedPriceMigrationService {
 	 */
 	public function renderPrice() {
 		$group_attributes = array(
-			'style'  => array(
+			'style' => array(
 				'spacing' => $this->attributes['style']['spacing'] ?? array(
-					'padding' => array(
-						'top'    => '1em',
-						'right'  => '1em',
-						'bottom' => '1em',
-						'left'   => '1em',
-					),
+					'blockGap' => '0px',
 				),
-			),
-			'layout' => array(
-				'type' => 'constrained',
 			),
 		);
 
