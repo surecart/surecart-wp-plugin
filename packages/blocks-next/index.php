@@ -96,6 +96,27 @@ add_filter(
 	2
 );
 
+/**
+ * Register all css at src/styles folder.
+ */
+add_action(
+	'init',
+	function () {
+    	$css_files = glob( __DIR__ . '/build/styles/*.css' ) ?? [];
+
+		foreach ( $css_files as $css_file ) {
+			// Extract the file name without the extension and prepend with 'surecart-'.
+			$handle = 'surecart-' . basename( $css_file, '.css' );
+
+			wp_register_style(
+				$handle,
+				plugins_url( 'build/styles/' . basename( $css_file ), __FILE__ ),
+				[],
+				filemtime( $css_file )
+			);
+		}
+	}
+);
 
 add_action(
 	'init',
