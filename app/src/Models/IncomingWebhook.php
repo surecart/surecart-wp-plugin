@@ -70,6 +70,6 @@ class IncomingWebhook extends DatabaseModel {
 		$date           = new \DateTime();
 		$table_name     = $wpdb->prefix . 'surecart_incoming_webhooks';
 		$formatted_date = $date->modify( '-' . $time_ago )->format( 'Y-m-d H:i:s' );
-		return $wpdb->query( $wpdb->prepare( 'DELETE FROM %s WHERE created_at < %s', $wpdb->esc_like( $table_name ), $formatted_date ) );
+		return $wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE created_at < %s", $formatted_date ) );
 	}
 }
