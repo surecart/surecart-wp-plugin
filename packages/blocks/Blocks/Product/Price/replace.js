@@ -10,12 +10,15 @@ import { useEffect } from '@wordpress/element';
 const newPriceTemplate = (attributes) => {
 	const defaultColor = attributes?.textColor || '#8a8a8a';
 	const defaultFontSize = attributes?.style?.typography?.fontSize || '24px';
+	const defaultLineHeight =
+		attributes?.style?.typography?.lineHeight || '1.4';
 	const wrapperGroupAttributes = {
 		style: { spacing: { blockGap: '0.5em' } },
 		layout: {
 			type: 'flex',
 			flexWrap: 'nowrap',
 			justifyContent: attributes?.alignment || 'left',
+			verticalAlignment: 'bottom',
 		},
 	};
 	const priceDescriptionAttributes = {
@@ -38,6 +41,7 @@ const newPriceTemplate = (attributes) => {
 							typography: {
 								textDecoration: 'line-through',
 								fontSize: defaultFontSize,
+								lineHeight: defaultLineHeight,
 							},
 							color: { text: defaultColor },
 							elements: {
@@ -49,7 +53,26 @@ const newPriceTemplate = (attributes) => {
 				],
 				[
 					'surecart/product-selected-price-amount',
-					{ style: { typography: { fontSize: defaultFontSize } } },
+					{
+						style: {
+							typography: {
+								fontSize: defaultFontSize,
+								lineHeight: defaultLineHeight,
+							},
+						},
+					},
+					[],
+				],
+				[
+					'surecart/product-selected-price-interval',
+					{
+						style: {
+							typography: {
+								fontSize: '18px',
+								lineHeight: '1.8',
+							},
+						},
+					},
 					[],
 				],
 				[
