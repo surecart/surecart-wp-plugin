@@ -102,7 +102,9 @@ export default ({
 						<NumberControl
 							label={__('Number of Columns', 'surecart')}
 							value={columns}
-							onChange={(columns) => setAttributes({ columns })}
+							onChange={(columns) =>
+								setAttributes({ columns: parseInt(columns) })
+							}
 							max={3}
 						/>
 					</PanelRow>
