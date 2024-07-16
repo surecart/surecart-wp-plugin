@@ -128,8 +128,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 						echo wp_kses_data(
 							get_block_wrapper_attributes(
 								array(
-									'class' => 'wp-block-button',
-									'styles' => $styles
+									'class' => 'wp-block-button'
 								)
 							)
 						);
@@ -139,6 +138,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 						type="submit"
 						class="<?php echo esc_attr( $class ); ?>"
 						data-wp-class--sc-button__link--busy="state.loading"
+						style="<?php echo esc_attr( $styles ); ?>"
 					>
 						<span class="sc-spinner" aria-hidden="true" data-wp-bind--hidden="!state.loading" hidden></span>
 						<span class="sc-button__link-text">
