@@ -78,6 +78,9 @@ class ProductPostTypeService {
 
 		// add schema markup.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
+		// disallow pre title filter.
+		add_filter( 'pre_get_document_title', [ $this, 'disallowPreTitle' ], 214748364 );
+		// add schema and seo meta
 		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
 		add_action( 'wp_head', array( $this, 'addProductSeoMeta' ), 10 );
 	}
@@ -740,20 +743,19 @@ class ProductPostTypeService {
 	 *
 	 * @param array $parts The parts of the document title.
 	 */
-	public function documentTitle( $parts ): array {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return $parts;
+	public function disallowPreTitle( $parts ): array {
+	}
+
+	/**
+	 * Update the document title name to match the model[eg-product] name.
+	 *
+	 * @param string $title The title.
+	 */
+	public function documentTitle( $title ): array {
+		if ( is_singular( 'sc_product' ) ) {
+			return '';
 		}
-
-		$product = sc_get_product();
-
-		if ( empty( $product ) ) {
-			return $parts;
-		}
-
-		$parts['title'] = esc_html( sanitize_text_field( $product->page_title ?? $parts['title'] ) );
-
-		return $parts;
+		return $title;
 	}
 
 	/**
