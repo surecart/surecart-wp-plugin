@@ -544,7 +544,8 @@ class Product extends Model implements PageModel {
 			// this is acceptable.
 			return $this->attributes['metadata']->wp_template_id;
 		}
-		return 'single-sc_product';
+
+		return '';
 	}
 
 	/**
