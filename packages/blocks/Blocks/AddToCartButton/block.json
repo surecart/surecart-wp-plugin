@@ -58,5 +58,5 @@
 		"surecart-text"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
-	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
+	"viewScriptModule": ["@surecart/product-page", "@surecart/cart"]
 }
