@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import useEntity from '../../hooks/useEntity';
 import Logo from '../../templates/Logo';
 import SaveButton from '../../templates/SaveButton';
 import UpdateModel from '../../templates/UpdateModel';
@@ -34,6 +33,7 @@ export default () => {
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
 	const [skipProration, setSkipProration] = useState(false);
 	const [savingSubscription, setSavingSubscription] = useState(false);
+	const [refreshPriceVersion, setRefreshPriceVersion] = useState(false);
 	const [updateBehavior, setUpdateBehavior] = useState('pending');
 	const { editEntityRecord } = useDispatch(coreStore);
 
@@ -87,6 +87,12 @@ export default () => {
 		skipProration,
 		updateBehavior,
 	]);
+
+	useEffect(() => {
+		if (subscription?.id && refreshPriceVersion) {
+			onSubmit();
+		}
+	}, [refreshPriceVersion]);
 
 	const fetchUpcomingPeriod = async () => {
 		setLoadingUpcoming(true);
@@ -161,6 +167,7 @@ export default () => {
 					skip_proration: skipProration,
 					update_behavior: updateBehavior,
 					skip_product_group_validation: true,
+					refresh_price_version: refreshPriceVersion,
 					expand: [
 						'period.checkout',
 						'checkout.line_items',
@@ -241,7 +248,21 @@ export default () => {
 				</div>
 			}
 			button={
-				<ScFlex alignItems="center">
+				<div
+					css={css`
+						display: flex;
+						gap: var(
+							--sc-flex-column-gap,
+							var(--sc-spacing-x-small)
+						);
+						align-items: center;
+
+						// small mobile screens.
+						@media screen and (max-width: 600px) {
+							flex-direction: column;
+						}
+					`}
+				>
 					{!subscription?.finite && (
 						<>
 							<ScSwitch
@@ -267,7 +288,7 @@ export default () => {
 							</SaveButton>
 						</>
 					)}
-				</ScFlex>
+				</div>
 			}
 			sidebar={
 				<>
@@ -288,6 +309,10 @@ export default () => {
 					upcoming={upcoming}
 					loading={loadingUpcoming}
 					priceId={subscription?.price?.id || subscription?.price}
+					refresh={refreshPriceVersion}
+					setRefresh={setRefreshPriceVersion}
+					setUpdateBehavior={setUpdateBehavior}
+					setSkipProration={setSkipProration}
 				/>
 				<Trial
 					subscription={subscription}

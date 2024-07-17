@@ -269,7 +269,7 @@ class BumpsListTable extends ListTable {
 		?>
 
 	  <div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ); ?>">
 			<?php echo esc_html( $bump->name ? $bump->name : $bump->price->product->name ); ?>
 		</a>
 

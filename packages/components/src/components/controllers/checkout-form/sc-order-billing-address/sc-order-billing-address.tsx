@@ -5,7 +5,7 @@ import { state as checkoutState, onChange } from '@store/checkout';
 import { formLoading } from '@store/form/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
-import { ScSwitchCustomEvent } from 'src/components';
+import { ScCheckboxCustomEvent } from 'src/components';
 
 @Component({
   tag: 'sc-order-billing-address',
@@ -47,7 +47,7 @@ export class ScOrderBillingAddress {
   @Prop() defaultCountry: string;
 
   /** Toggle label */
-  @Prop() toggleLabel: string = __('Billing address is different from shipping address.', 'surecart');
+  @Prop() toggleLabel: string = __('Billing address is same as shipping', 'surecart');
 
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
@@ -102,10 +102,10 @@ export class ScOrderBillingAddress {
     }
   }
 
-  async onToggleBillingMatchesShipping(e: ScSwitchCustomEvent<void>) {
+  async onToggleBillingMatchesShipping(e: ScCheckboxCustomEvent<void>) {
     checkoutState.checkout = {
       ...checkoutState.checkout,
-      billing_matches_shipping: !e.target.checked,
+      billing_matches_shipping: e.target.checked,
     };
   }
 
@@ -118,9 +118,9 @@ export class ScOrderBillingAddress {
       <Fragment>
         {/* Only display this toggle if there is a shipping address. */}
         {this.shippingAddressFieldExists() && (
-          <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleBillingMatchesShipping(e)} checked={!checkoutState.checkout?.billing_matches_shipping}>
+          <sc-checkbox class="order-billing-address__toggle" onScChange={e => this.onToggleBillingMatchesShipping(e)} checked={checkoutState.checkout?.billing_matches_shipping}>
             {this.toggleLabel}
-          </sc-switch>
+          </sc-checkbox>
         )}
 
         {/* If the shipping address field does not exist, always display this field. */}

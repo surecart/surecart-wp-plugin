@@ -1,4 +1,4 @@
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import {
@@ -11,12 +11,16 @@ import {
 	ScAddress,
 	ScSelect,
 	ScCompactAddress,
+	ScCheckbox,
+	ScFlex,
 } from '@surecart/components-react';
 import { countryChoices } from '@surecart/components';
 
 export default ({ attributes, setAttributes }) => {
 	const {
 		label,
+		billing_label,
+		billing_toggle_label,
 		required,
 		full,
 		show_name,
@@ -27,8 +31,9 @@ export default ({ attributes, setAttributes }) => {
 		line_1_placeholder,
 		postal_code_placeholder,
 		state_placeholder,
+		collect_billing,
 	} = attributes;
-
+	const [sameAsShipping, setSameAsShipping] = useState(false);
 	const blockProps = useBlockProps();
 
 	const Tag = full ? ScAddress : ScCompactAddress;
@@ -53,11 +58,46 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'surecart')}
+							label={__('Shipping Address Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Collect Billing Address', 'surecart')}
+							checked={collect_billing}
+							onChange={(collect_billing) =>
+								setAttributes({ collect_billing })
+							}
+							help={__(
+								'If enabled, the user can enter a separate billing address. Otherwise, the billing address will be the same as the shipping address.',
+								'surecart'
+							)}
+						/>
+					</PanelRow>
+					{collect_billing && (
+						<PanelRow>
+							<TextControl
+								label={__('Billing Address Toggle', 'surecart')}
+								value={billing_toggle_label}
+								onChange={(billing_toggle_label) =>
+									setAttributes({ billing_toggle_label })
+								}
+							/>
+						</PanelRow>
+					)}
+					{!sameAsShipping && collect_billing && (
+						<PanelRow>
+							<TextControl
+								label={__('Billing Address Label', 'surecart')}
+								value={billing_label}
+								onChange={(billing_label) =>
+									setAttributes({ billing_label })
+								}
+							/>
+						</PanelRow>
+					)}
 					<PanelRow>
 						<ToggleControl
 							label={__(
@@ -166,22 +206,56 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<Tag
-					label={label}
-					showName={show_name}
-					required={required}
-					placeholders={{
-						name: name_placeholder,
-						country: country_placeholder,
-						city: city_placeholder,
-						line_1: line_1_placeholder,
-						postal_code: postal_code_placeholder,
-						state: state_placeholder,
-					}}
-					address={{
-						country: default_country,
-					}}
-				/>
+				<ScFlex
+					flexDirection="column"
+					style={{ '--sc-flex-column-gap': '25px' }}
+				>
+					<Tag
+						label={label}
+						showName={show_name}
+						required={required}
+						placeholders={{
+							name: name_placeholder,
+							country: country_placeholder,
+							city: city_placeholder,
+							line_1: line_1_placeholder,
+							postal_code: postal_code_placeholder,
+							state: state_placeholder,
+						}}
+						address={{
+							country: default_country,
+						}}
+					/>
+
+					{collect_billing && (
+						<ScCheckbox
+							checked={sameAsShipping}
+							onScChange={(e) =>
+								setSameAsShipping(e.target.checked)
+							}
+						>
+							{billing_toggle_label}
+						</ScCheckbox>
+					)}
+					{!sameAsShipping && collect_billing && (
+						<ScAddress
+							label={billing_label}
+							showName={show_name}
+							required={true}
+							placeholders={{
+								name: name_placeholder,
+								country: country_placeholder,
+								city: city_placeholder,
+								line_1: line_1_placeholder,
+								postal_code: postal_code_placeholder,
+								state: state_placeholder,
+							}}
+							address={{
+								country: default_country,
+							}}
+						/>
+					)}
+				</ScFlex>
 			</div>
 		</Fragment>
 	);

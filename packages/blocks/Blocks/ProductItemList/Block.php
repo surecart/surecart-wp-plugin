@@ -211,10 +211,10 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		if ( isset( $attributes[ 'sort_enabled' ] ) ) { // This way we know it's the old block.
+		if ( isset( $attributes['sort_enabled'] ) ) { // This way we know it's the old block.
 			return \SureCart::block()->productListMigration( $attributes, $this->block )->render();
 		}
-		
+
 		self::$instance = wp_unique_id( 'sc-product-item-list-' );
 
 		// check for inner blocks.
@@ -224,7 +224,7 @@ class Block extends BaseBlock {
 		$product_item_attributes   = $product_inner_blocks[0]['attrs'] ?? $attributes;
 
 		$layout_config = array_map(
-			function( $inner_block ) {
+			function ( $inner_block ) {
 				return (object) [
 					'blockName'  => $inner_block['blockName'],
 					'attributes' => $inner_block['attrs'],
@@ -270,7 +270,7 @@ class Block extends BaseBlock {
 
 		// get the product for each post.
 		$products = array_map(
-			function( $post ) {
+			function ( $post ) {
 				return sc_get_product( $post );
 			},
 			$product_query->posts ?? []
@@ -290,14 +290,14 @@ class Block extends BaseBlock {
 				],
 				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
-				'paginationEnabled'    => \SureCart::account()->isConnected() ? $attributes['pagination_enabled'] : false,
-				'ajaxPagination'       => $attributes['ajax_pagination'],
+				'paginationEnabled'    => \SureCart::account()->isConnected() ? wp_validate_boolean( $attributes['pagination_enabled'] ) : false,
+				'ajaxPagination'       => wp_validate_boolean( $attributes['ajax_pagination'] ),
 				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
-				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
-				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
+				'searchEnabled'        => \SureCart::account()->isConnected() ? wp_validate_boolean( $attributes['search_enabled'] ) : false,
+				'sortEnabled'          => \SureCart::account()->isConnected() ? wp_validate_boolean( $attributes['sort_enabled'] ) : false,
 				'featured'             => 'featured' === $attributes['type'],
 				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products,
-				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
+				'collectionEnabled'    => \SureCart::account()->isConnected() ? wp_validate_boolean( $attributes['collection_enabled'] ) : false,
 				'pageTitle'            => get_the_title(),
 			]
 		);
