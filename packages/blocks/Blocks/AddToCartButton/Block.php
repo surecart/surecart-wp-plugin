@@ -43,22 +43,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			$styles .= "color: {$attributes['textColor']}; ";
 		}
 
-		$class = 'sc-button';
-		if ( ! empty( $attributes['type'] ) ) {
-			if ('default' === $attributes['type']) {
-				$class .= ' wp-element-button sc-button--outline sc-button--default';
-			} else {
-				if ('text' !== $attributes['type']) {
-					$class .= ' wp-element-button wp-block-button__link';
-				}
-
-				$class .= " sc-button__link sc-button--{$attributes['type']}";
-			}
-		}
-
-		if ( ! empty( $attributes['size'] ) ) {
-			$class .= " sc-button--{$attributes['size']}";
-		}
+		$class = 'sc-button wp-element-button wp-block-button__link sc-button__link';
 
 		// Slide-out is disabled, go directly to checkout.
 		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
@@ -106,7 +91,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 					<label for="sc-product-custom-amount" class="sc-form-label">
 						<?php echo wp_kses_post( $attributes['ad_hoc_label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
 					</label>
-					<div class="sc-input-group" style="margin-bottom: 20px;">
+					<div class="sc-input-group">
 						<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
 
 						<input
@@ -121,6 +106,11 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 							data-wp-on--input="actions.setAdHocAmount"
 						/>
 					</div>
+					<?php if ( ! empty( $attributes['help'] ) ) : ?>
+						<div class="sc-help-text">
+							<?php echo wp_kses_post( $attributes['help'] ); ?>
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
 
 				<div
@@ -128,7 +118,8 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 						echo wp_kses_data(
 							get_block_wrapper_attributes(
 								array(
-									'class' => 'wp-block-button'
+									'class' => 'wp-block-button',
+									'style' => $price->ad_hoc ? 'margin-top: 1rem;' : '',
 								)
 							)
 						);

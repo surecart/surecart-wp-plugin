@@ -21,14 +21,6 @@
 			"type": "string",
 			"default": "Amount"
 		},
-		"type": {
-			"type": "string",
-			"default": "primary"
-		},
-		"size": {
-			"type": "string",
-			"default": "medium"
-		},
 		"backgroundColor": {
 			"type": "string"
 		},
@@ -61,7 +53,9 @@
 		"surecart-themes-default",
 		"surecart-input-group",
 		"surecart-spinner",
-		"surecart-button"
+		"surecart-button",
+		"surecart-form-control",
+		"surecart-text"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
