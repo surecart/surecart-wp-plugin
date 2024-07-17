@@ -88,6 +88,21 @@ Type: `Promise<void>`
 | `"label"`              | The label.                 |
 
 
+## Dependencies
+
+### Used by
+
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-order-billing-address](../../controllers/checkout-form/sc-order-billing-address)
+
+### Graph
+```mermaid
+graph TD;
+  sc-customer-edit --> sc-checkbox
+  sc-order-billing-address --> sc-checkbox
+  style sc-checkbox fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

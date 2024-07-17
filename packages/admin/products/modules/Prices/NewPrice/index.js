@@ -21,6 +21,8 @@ import Error from '../../../../components/Error';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
 
 export default ({ isOpen, onRequestClose, product }) => {
+	if (!isOpen) return null;
+
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [price, setPrice] = useState({
@@ -34,17 +36,6 @@ export default ({ isOpen, onRequestClose, product }) => {
 	// update the price.
 	const updatePrice = (data) => {
 		setPrice({ ...price, ...data });
-	};
-
-	const onClose = () => {
-		if (price?.amount) {
-			const r = confirm(
-				__('Are you sure you want to discard this price?', 'surecart')
-			);
-			if (!r) return;
-		}
-		setPrice(null);
-		onRequestClose();
 	};
 
 	const onSubmit = async (e) => {
@@ -106,7 +97,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 			<ScDrawer
 				label={__('Add A Price', 'surecart')}
 				style={{ '--sc-drawer-size': '32rem' }}
-				onScRequestClose={onClose}
+				onScAfterHide={onRequestClose}
 				open={isOpen}
 				stickyHeader
 				onScAfterShow={() => ref.current.triggerFocus()}
@@ -155,29 +146,29 @@ export default ({ isOpen, onRequestClose, product }) => {
 							]}
 						/>
 
-            {type === 'subscription' && (
-              <Subscription
-                price={price}
-                updatePrice={updatePrice}
-                product={product}
-              />
-            )}
+						{type === 'subscription' && (
+							<Subscription
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
 
-            {type === 'multiple' && (
-              <Multiple
-                price={price}
-                updatePrice={updatePrice}
-                product={product}
-              />
-            )}
+						{type === 'multiple' && (
+							<Multiple
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
 
-            {type === 'once' && (
-              <OneTime
-                price={price}
-                updatePrice={updatePrice}
-                product={product}
-              />
-            )}
+						{type === 'once' && (
+							<OneTime
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
 
 						<CanUpgrade price={price} updatePrice={updatePrice} />
 					</div>
@@ -198,7 +189,12 @@ export default ({ isOpen, onRequestClose, product }) => {
 						>
 							{__('Create Price', 'surecart')}
 						</ScButton>
-						<ScButton type="text" onClick={onClose}>
+						<ScButton
+							type="text"
+							onClick={(e) =>
+								e.target.closest('sc-drawer').requestClose()
+							}
+						>
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>

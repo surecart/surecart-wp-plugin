@@ -1,12 +1,9 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import {
 	ScAlert,
 	ScBlockUi,
 	ScButton,
 	ScDialog,
 	ScFlex,
-	ScForm,
 	ScText,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';

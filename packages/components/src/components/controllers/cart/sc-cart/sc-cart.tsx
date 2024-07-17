@@ -95,6 +95,10 @@ export class ScCart {
 
   /** Fetch the order */
   async fetchOrder() {
+    if (!checkoutState.checkout?.id) {
+      return;
+    }
+
     try {
       updateFormState('FETCH');
       checkoutState.checkout = (await apiFetch({

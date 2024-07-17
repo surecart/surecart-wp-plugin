@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import DataTable from '../../../components/DataTable';
-import { intervalString } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import {
 	ScBlockUi,
 	ScInput,
@@ -13,14 +13,23 @@ import {
 	ScMenuItem,
 	ScTag,
 } from '@surecart/components-react';
-import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import LineItemLabel from '../../components/LineItemLabel';
+import DataTable from '../../../components/DataTable';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
+import UpdateRecentPrice from './Modals/UpdateRecentPrice';
 import { getHumanDiscount } from '../../../util';
-import LineItemLabel from '../../components/LineItemLabel';
+import { intervalString } from '../../../util/translations';
 
-export default ({ subscription, updateSubscription, upcoming, loading }) => {
+export default ({
+	subscription,
+	updateSubscription,
+	setRefresh,
+	setUpdateBehavior,
+	setSkipProration,
+	upcoming,
+	loading,
+}) => {
 	const [price, setPrice] = useState(null);
 	const [dialog, setDialog] = useState(null);
 	const lineItem = upcoming?.checkout?.line_items?.data?.[0];
@@ -90,6 +99,14 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 											{intervalString(price, {
 												labels: { interval: '/' },
 											})}
+											{!price?.current_version && (
+												<ScTag type="info" pill>
+													{__(
+														'Previous Price Version',
+														'surecart'
+													)}
+												</ScTag>
+											)}
 										</div>
 									</LineItemLabel>
 								</div>
@@ -118,6 +135,18 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 										>
 											{__('Change Price', 'surecart')}
 										</ScMenuItem>
+										{!price?.current_version && (
+											<ScMenuItem
+												onClick={() =>
+													setDialog('recent_price')
+												}
+											>
+												{__(
+													'Use Current Version',
+													'surecart'
+												)}
+											</ScMenuItem>
+										)}
 									</ScMenu>
 								</ScDropdown>
 							</div>
@@ -198,6 +227,23 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 					});
 				}}
 				open={dialog === 'price'}
+				onRequestClose={() => setDialog(null)}
+			/>
+
+			<UpdateRecentPrice
+				price={price}
+				subscription={subscription}
+				onUpdateRecentVersion={(
+					updateBehavior = null,
+					skipProration
+				) => {
+					setRefresh(true);
+					setSkipProration(skipProration);
+					if (updateBehavior) {
+						setUpdateBehavior('immediate');
+					}
+				}}
+				open={dialog === 'recent_price'}
 				onRequestClose={() => setDialog(null)}
 			/>
 		</div>

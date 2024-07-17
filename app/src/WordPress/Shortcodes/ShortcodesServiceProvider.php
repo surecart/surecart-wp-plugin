@@ -163,7 +163,6 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_product_title',
 			'surecart/product-title',
 			[
-				'id'    => null,
 				'level' => 1,
 			]
 		);
@@ -220,8 +219,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		// generate shortcodes for all our blocks.
 		foreach ( glob( SURECART_PLUGIN_DIR . '/packages/blocks-next/build/blocks/**/block.json' ) as $file ) {
 			$metadata = wp_json_file_decode( $file, array( 'associative' => true ) );
-			$name = str_replace('surecart/', '', $metadata['name']);
-			$name = str_replace( '-', '_', sanitize_title_with_dashes( $name ) );
+			$name     = str_replace( 'surecart/', '', $metadata['name'] );
+			$name     = str_replace( '-', '_', sanitize_title_with_dashes( $name ) );
 
 			$container['surecart.shortcodes']->registerBlockShortcodeByName(
 				'sc_' . $name,

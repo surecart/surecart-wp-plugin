@@ -81,7 +81,7 @@ export class ScOrderShippingAddress {
     try {
       lockCheckout('shipping-address');
       checkoutState.checkout = (await createOrUpdateCheckout({
-        id: checkoutState.checkout.id,
+        id: checkoutState.checkout?.id,
         data: {
           shipping_address: this.address as Address,
         },
