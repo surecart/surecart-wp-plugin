@@ -741,7 +741,7 @@ class ProductPostTypeService {
 	 * @param array $parts The parts of the document title.
 	 */
 	public function documentTitle( $parts ): array {
-		if ( ! is_singular('sc_product') ) {
+		if ( ! is_singular( 'sc_product' ) ) {
 			return $parts;
 		}
 
@@ -762,7 +762,7 @@ class ProductPostTypeService {
 	 * @return void
 	 */
 	public function addProductJsonSchema() {
-		if ( ! is_singular('sc_product') ) {
+		if ( ! is_singular( 'sc_product' ) ) {
 			return;
 		}
 
@@ -835,7 +835,7 @@ class ProductPostTypeService {
 	 * @return void
 	 */
 	public function addProductSeoMeta() {
-		if ( ! is_singular('sc_product') ) {
+		if ( ! is_singular( 'sc_product' ) ) {
 			return;
 		}
 
@@ -850,7 +850,8 @@ class ProductPostTypeService {
 			return;
 		}
 
-		$product_image_url = $product->getImageUrl( 800 );
+		$image_attributes  = $product->featured_image ? $product->featured_image->attributes( apply_filters( 'surecart/og:image/size', 'full' ) ) : null;
+		$product_image_url = $image_attributes ? $image_attributes->src : '';
 		?>
 
 		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>">
@@ -859,7 +860,7 @@ class ProductPostTypeService {
 		<meta property="og:title" content="<?php echo esc_attr( $product->page_title ); ?>" />
 		<meta property="og:description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>" />
 		<meta property="og:url" content="<?php echo esc_url( $product->permalink ); ?>" />
-		<meta property="og:site_name" content="<?php echo get_bloginfo('name'); ?>" />
+		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content="<?php echo esc_attr( $product->page_title ); ?>" />
 		<meta name="twitter:description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>" />
