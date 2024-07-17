@@ -423,17 +423,6 @@ class Product extends Model implements PageModel {
 			return true;
 		}
 
-		// TODO: Remove this once API has support summing of available_stock for variants.
-		// If product has variants, check if any variant has stock.
-		if ( ! empty( $this->variants->data ) ) {
-			foreach ( $this->variants->data as $variant ) {
-				if ( ! empty( $variant->available_stock ) && $variant->available_stock > 0 ) {
-					return true;
-				}
-			}
-			return false;
-		}
-
 		return $this->available_stock > 0;
 	}
 
