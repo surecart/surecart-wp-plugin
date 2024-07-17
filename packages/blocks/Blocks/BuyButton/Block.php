@@ -25,30 +25,13 @@ class Block extends BaseBlock {
 			$styles .= "color: {$attributes['textColor']}; ";
 		}
 
-		$class = 'sc-button';
-		if ( ! empty( $attributes['type'] ) ) {
-			if ('default' === $attributes['type']) {
-				$class .= ' wp-element-button sc-button--outline sc-button--default';
-			} else {
-				if ('text' !== $attributes['type']) {
-					$class .= ' wp-element-button wp-block-button__link';
-				}
-
-				$class .= " sc-button__link sc-button--{$attributes['type']}";
-			}
-		}
-
-		if ( ! empty( $attributes['size'] ) ) {
-			$class .= " sc-button--{$attributes['size']}";
-		}
-
 		return \SureCart::block()->render(
 			'blocks/buy-button',
 			[
 				'type'  => $attributes['type'] ?? 'primary',
 				'size'  => $attributes['size'] ?? 'medium',
 				'style' => $styles,
-				'class' => $class,
+				'class' => 'sc-button wp-element-button wp-block-button__link sc-button__link',
 				'href'  => $this->href( $attributes['line_items'] ?? [] ),
 				'label' => $attributes['label'] ?? __( 'Buy Now', 'surecart' ),
 			]
