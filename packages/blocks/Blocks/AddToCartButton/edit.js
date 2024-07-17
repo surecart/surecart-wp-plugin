@@ -207,7 +207,7 @@ export default ({ className, attributes, setAttributes }) => {
 									setAttributes({ button_text })
 								}
 								withoutInteractiveFormatting
-								allowedFormats={[]}
+								allowedFormats={['core/bold', 'core/italic']}
 							/>
 						</span>
 					</button>

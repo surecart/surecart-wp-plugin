@@ -5,7 +5,7 @@
 		style="<?php echo esc_attr( $style ); ?>"
 	>
 		<span class="sc-button__link-text">
-			<?php echo esc_html( $label ); ?>
+			<?php echo wp_kses_post( $label ); ?>
 		</span>
 	</a>
 </div>
