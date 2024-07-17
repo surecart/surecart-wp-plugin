@@ -279,13 +279,11 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function sync( $request ) {
-		$product = Product::find( $request->query( 'id' ) );
+		$product = Product::sync( $request->query( 'id' ) );
 
 		if ( is_wp_error( $product ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
 		}
-
-		$product->sync();
 
 		// redirect to products page.
 		return \SureCart::redirect()->to(

@@ -10,8 +10,8 @@ export default ({ subscription, updateSubscription, loading }) => {
 				showLabel={subscription?.trial_end_at}
 				label={
 					subscription?.trial_end_at
-						? __('Free Trial Ends', 'surecart')
-						: __('Free Trial', 'surecart')
+						? __('Trial Ends', 'surecart')
+						: __('Trial', 'surecart')
 				}
 			>
 				<ScFlex
@@ -20,7 +20,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 					justifyContent="flex-start"
 				>
 					<DatePicker
-						placeholder={__('Add Free Trial', 'surecart')}
+						placeholder={__('Add Trial', 'surecart')}
 						title={__('Choose a trial end date', 'surecart')}
 						currentDate={
 							subscription?.trial_end_at

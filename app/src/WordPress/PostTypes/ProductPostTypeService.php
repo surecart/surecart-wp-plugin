@@ -479,8 +479,15 @@ class ProductPostTypeService {
 	 * @return \WP_Query
 	 */
 	public function forceAccountIdScope( $query ) {
+		global $pagenow;
+
 		// not our post type.
 		if ( $query->get( 'post_type' ) !== 'sc_product' ) {
+			return $query;
+		}
+
+		// allow if editing direction on admin.
+		if ( is_admin() && 'edit.php' === $pagenow ) {
 			return $query;
 		}
 

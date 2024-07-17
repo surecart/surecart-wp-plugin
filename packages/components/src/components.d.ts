@@ -2442,6 +2442,10 @@ export namespace Components {
     }
     interface ScPaymentMethodsList {
         /**
+          * Whether default payment method can be detached
+         */
+        "canDetachDefaultPaymentMethod": boolean;
+        /**
           * The heading
          */
         "heading": string;
@@ -9508,6 +9512,10 @@ declare namespace LocalJSX {
         "paymentMethod"?: PaymentMethod;
     }
     interface ScPaymentMethodsList {
+        /**
+          * Whether default payment method can be detached
+         */
+        "canDetachDefaultPaymentMethod"?: boolean;
         /**
           * The heading
          */

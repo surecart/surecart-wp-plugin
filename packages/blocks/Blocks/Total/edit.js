@@ -26,12 +26,12 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Free Trial Label', 'surecart')}
+							label={__('Trial Label', 'surecart')}
 							value={free_trial_text}
 							onChange={(free_trial_text) =>
 								setAttributes({ free_trial_text })
 							}
-							placeholder={__('Free Trial', 'surecart')}
+							placeholder={__('Trial', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -73,11 +73,10 @@ export default ({ attributes, setAttributes }) => {
 					{subscription_text || text || __('Total', 'surecart')}
 				</span>
 				<span slot="first-payment-total-description">
-					{first_payment_total_text ||
-						__('Subtotal', 'surecart')}
+					{first_payment_total_text || __('Subtotal', 'surecart')}
 				</span>
 				<span slot="free-trial-description">
-					{free_trial_text || __('Free Trial', 'surecart')}
+					{free_trial_text || __('Trial', 'surecart')}
 				</span>
 				<span slot="due-amount-description">
 					{due_amount_text || __('Amount Due', 'surecart')}
