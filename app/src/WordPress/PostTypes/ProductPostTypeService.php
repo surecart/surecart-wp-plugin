@@ -741,21 +741,34 @@ class ProductPostTypeService {
 	/**
 	 * Update the document title name to match the model[eg-product] name.
 	 *
-	 * @param array $parts The parts of the document title.
+	 * @param string $title The title.
 	 */
-	public function disallowPreTitle( $parts ): array {
+	public function disallowPreTitle( $title ): string {
+		if ( is_singular( 'sc_product' ) ) {
+			return '';
+		}
+		return $title;
 	}
 
 	/**
 	 * Update the document title name to match the model[eg-product] name.
 	 *
-	 * @param string $title The title.
+	 * @param array $parts The parts of the document title.
 	 */
-	public function documentTitle( $title ): array {
-		if ( is_singular( 'sc_product' ) ) {
-			return '';
+	public function documentTitle( $parts ): array {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return $parts;
 		}
-		return $title;
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return $parts;
+		}
+
+		$parts['title'] = esc_html( sanitize_text_field( $product->page_title ?? $parts['title'] ) );
+
+		return $parts;
 	}
 
 	/**
