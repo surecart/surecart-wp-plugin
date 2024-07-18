@@ -14,7 +14,7 @@ class CartService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_filter( 'wp_nav_menu_items', [ $this, 'addCartMenu' ], 10, 2 );
+		add_filter( 'wp_nav_menu_items', array( $this, 'addCartMenu' ), 10, 2 );
 
 		// only load scripts if cart is enabled.
 		if ( $this->isCartEnabled() ) {
@@ -34,17 +34,17 @@ class CartService {
 			if ( empty( $state['checkout']['formId'] ) ) {
 				sc_initial_state(
 					array_filter(
-						[
-							'checkout' => [
+						array(
+							'checkout' => array(
 								'formId'  => $form->ID,
 								'mode'    => Form::getMode( $form->ID ),
 								'persist' => 'browser',
-							],
-						]
+							),
+						)
 					)
 				);
 			}
-			add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
+			add_action( 'wp_footer', array( $this, 'renderCartComponent' ) );
 		}
 	}
 
@@ -139,7 +139,8 @@ class CartService {
 	 * @return array
 	 */
 	public function addCartMenu( $items, $args ) {
-		$id = is_int( $args->menu ) ? $args->menu : ( $args->menu->term_id ?? false );
+		$menu = wp_get_nav_menu_object( $args->menu );
+		$id   = $menu ? $menu->term_id : false;
 
 		// if there is no id, or the menu icon is not enabled, or the cart is disabled, return.
 		if ( ! $id || ! $this->isMenuIconEnabled( $id ) || ! $this->isCartEnabled() ) {
@@ -195,7 +196,7 @@ class CartService {
 		// get first block attributes.
 		$template_blocks    = parse_blocks( $template->content );
 		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart' );
-		$attributes         = isset( $post_content_block['attrs'] ) ? $post_content_block['attrs'] : [];
+		$attributes         = isset( $post_content_block['attrs'] ) ? $post_content_block['attrs'] : array();
 
 		ob_start();
 		?>
@@ -237,11 +238,11 @@ class CartService {
 		if ( empty( $state['checkout']['formId'] ) ) {
 			sc_initial_state(
 				array_filter(
-					[
-						'checkout' => [
+					array(
+						'checkout' => array(
 							'formId' => $form->ID,
-						],
-					]
+						),
+					)
 				)
 			);
 		}
@@ -269,7 +270,7 @@ class CartService {
 	 */
 	public function isFloatingIconEnabled() {
 		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', 'floating_icon' );
-		return in_array( $cart_icon_type, [ 'floating_icon', 'both' ] );
+		return in_array( $cart_icon_type, array( 'floating_icon', 'both' ) );
 	}
 
 	/**
@@ -281,7 +282,7 @@ class CartService {
 	public function isMenuIconEnabled( $term_id ) {
 		$cart_menu_ids  = (array) $this->getSelectedIds();
 		$cart_icon_type = (string) $this->getIconType();
-		if ( ! in_array( $cart_icon_type, [ 'menu_icon', 'both' ] ) ) {
+		if ( ! in_array( $cart_icon_type, array( 'menu_icon', 'both' ) ) ) {
 			return;
 		}
 		return in_array( $term_id, $cart_menu_ids );
