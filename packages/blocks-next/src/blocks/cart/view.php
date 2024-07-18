@@ -15,14 +15,14 @@
 	data-wp-on-window--storage="callbacks.syncTabs"
 >
 	<dialog
-		class="sc-drawer"
-		data-wp-on--click="surecart/cart::actions.closeOverlay"
-		aria-labelledby="sc-cart-title"
 		<?php
 		echo wp_kses_data(
 			get_block_wrapper_attributes(
 				array(
-					'style' => $style,
+					'style'             => $style,
+					'class'             => 'sc-drawer sc-cart-drawer',
+					'aria-labelledby'   => 'sc-cart-title',
+					'data-wp-on--click' => 'surecart/cart::actions.closeOverlay',
 				)
 			)
 		);
@@ -40,6 +40,7 @@
 				<div class="sc-alert__icon">
 					<?php echo wp_kses( SureCart::svg()->get( 'alert-circle', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
 				</div>
+
 				<div class="sc-alert__text">
 					<div class="sc-alert__title">
 						<span data-wp-text="state.errorTitle"></span>
