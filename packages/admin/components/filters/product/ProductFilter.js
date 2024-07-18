@@ -15,6 +15,7 @@ export default (props) => {
 					expand: [
 						'prices',
 						'featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 				},

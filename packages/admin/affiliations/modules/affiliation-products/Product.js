@@ -56,6 +56,7 @@ export default ({ productId, onSelect, ...props }) => {
 				path: addQueryArgs(`${baseURL}/${productId}`, {
 					expand: [
 						'featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 						'prices',
 					],
