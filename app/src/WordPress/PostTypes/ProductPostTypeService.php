@@ -78,13 +78,13 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Add the product page wrapper.
+	 * Handle Elementor content.
 	 *
 	 * @param string $content The content.
 	 *
 	 * @return string
 	 */
-	public function addProductPageWrapper( $content ) {
+	public function handleElementorContent( string $content ): string {
 		if ( ! is_singular( 'sc_product' ) ) {
 			return $content;
 		}
