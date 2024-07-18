@@ -11,7 +11,7 @@ class ProductPageMigrationService extends VersionMigration {
 	 *
 	 * @var string
 	 */
-	protected $migration_key = 'surecart_product_page_3_0_migration_version';
+	protected $migration_key = 'surecart_product_page_migration_version';
 
 	/**
 	 * Run the migration.
