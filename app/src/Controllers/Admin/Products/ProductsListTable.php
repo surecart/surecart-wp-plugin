@@ -244,6 +244,7 @@ class ProductsListTable extends ListTable {
 			array(
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
+				'cached'   => false
 			)
 		)->with(
 			array(
@@ -454,7 +455,7 @@ class ProductsListTable extends ListTable {
 		<?php } ?>
 
 		<div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html( $product->name ); ?>
 		</a>
 

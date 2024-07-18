@@ -41,9 +41,7 @@ export default ({
 				{!!price?.trial_duration_days && (
 					<>
 						{' '}
-						<sc-tag type="info">
-							{__('Free Trial', 'surecart')}
-						</sc-tag>
+						<sc-tag type="info">{__('Trial', 'surecart')}</sc-tag>
 					</>
 				)}
 			</>

@@ -76,7 +76,7 @@ class ScriptsService {
 			wp_register_script(
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
-				[ 'wp-i18n' ],
+				[ 'wp-i18n', 'regenerator-runtime' ],
 				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ) . '-' . \SureCart::plugin()->version(),
 				true
 			);
@@ -86,7 +86,7 @@ class ScriptsService {
 			wp_register_script(
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
-				array_merge( [ 'wp-i18n' ], $static_assets['dependencies'] ?? [] ),
+				array_merge( [ 'wp-i18n', 'regenerator-runtime' ], $static_assets['dependencies'] ?? [] ),
 				$static_assets['version'] . '-' . \SureCart::plugin()->version(),
 				true
 			);
@@ -136,6 +136,7 @@ class ScriptsService {
 
 		// core-data.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
+		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'sc-core-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/data.js',
@@ -146,6 +147,7 @@ class ScriptsService {
 
 		// ui.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
+		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'sc-ui-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/ui.js',
@@ -166,6 +168,7 @@ class ScriptsService {
 
 		// templates.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/admin.asset.php';
+		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'surecart-templates-admin',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/admin.js',
@@ -176,6 +179,7 @@ class ScriptsService {
 
 		// admin notices.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/webhook-notice.asset.php';
+		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_style(
 			'surecart-webhook-admin-notices',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/webhook-notice.css',

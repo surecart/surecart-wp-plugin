@@ -23,13 +23,16 @@ class PaymentMethodController extends BaseController {
 			return false;
 		}
 
+		$protocol = \SureCart::account()->subscription_protocol;
+
 		return wp_kses_post(
 			Component::tag( 'sc-payment-methods-list' )
 			->id( 'sc-customer-payment-methods-list' )
 			->with(
 				[
-					'isCustomer' => User::current()->isCustomer(),
-					'query'      => [
+					'isCustomer'                    => User::current()->isCustomer(),
+					'canDetachDefaultPaymentMethod' => $protocol->default_payment_method_detach_enabled ?? false,
+					'query'                         => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
 						'per_page'     => 100,
