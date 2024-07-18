@@ -69,12 +69,41 @@ class ProductPostTypeService {
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
 			add_filter( 'the_content', array( $this, 'replaceContentWithProductInfoPart' ), 10 );
+			add_action( 'elementor/frontend/the_content', array( $this, 'handleElementorContent' ) );
+			add_action( 'bricks/content/html_after_begin', array( $this, 'handleBricksBeginContent' ) );
+			add_action( 'bricks/content/html_before_end', array( $this, 'handleBricksEndContent' ) );
 		} else {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
 
-		add_action( 'elementor/frontend/the_content', array( $this, 'addProductPageWrapper' ), 10 );
+	/**
+	 * Handle bricks begin content
+	 *
+	 * @return void
+	 */
+	public function handleBricksBeginContent() {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return;
+		}
+
+		$product_page_blocks = '<!-- wp:surecart/product-page --><!-- wp:surecart/product-selected-price-ad-hoc-amount /--><!-- /wp:surecart/product-page -->';
+		$product_page_html   = do_blocks( $product_page_blocks );
+		$product_page_html   = substr( $product_page_html, 0, -8 ); // remove the </form> tag at the end.
+		echo $product_page_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Handle bricks end content
+	 *
+	 * @return void
+	 */
+	public function handleBricksEndContent() {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return;
+		}
+		echo '</form>';
 	}
 
 	/**
@@ -381,6 +410,7 @@ class ProductPostTypeService {
 		}
 
 		$blocks = $template->content ?? '';
+		error_log( 'template_part_id: ' . $template_part_id );
 		$blocks = shortcode_unautop( $blocks );
 		$blocks = do_shortcode( $blocks );
 		$blocks = do_blocks( $blocks );
