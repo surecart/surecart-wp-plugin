@@ -18,6 +18,8 @@ class BuyPageController extends BasePageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+		// add json schema.
+		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
 	}
 
 	/**
@@ -202,5 +204,31 @@ class BuyPageController extends BasePageController {
 		}
 
 		return '';
+	}
+
+	/**
+	 * Add the JSON-LD schema for the product.
+	 *
+	 * @return void
+	 */
+	public function addProductJsonSchema() {
+		$product = $this->model;
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$display_schema = apply_filters( 'sc_display_instant_checkout_json_ld_schema', true, $product );
+		if ( ! $display_schema ) {
+			return;
+		}
+
+		$schema = \SureCart::productPost()->getJsonSchemaArray( $product ) ?? [];
+		if ( empty( $schema ) ) {
+			return;
+		}
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
+		<?php
 	}
 }
