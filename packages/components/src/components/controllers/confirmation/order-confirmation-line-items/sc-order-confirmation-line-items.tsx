@@ -48,6 +48,7 @@ export class ScOrderConfirmationLineItems {
                   currency={this.order?.currency}
                   trialDurationDays={item?.price?.trial_duration_days}
                   interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
+                  purchasableStatusDisplay={item?.purchasable_status_display}
                 ></sc-product-line-item>
               </div>
             );

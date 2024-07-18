@@ -3101,6 +3101,10 @@ export namespace Components {
          */
         "priceName"?: string;
         /**
+          * The purchasable status display
+         */
+        "purchasableStatusDisplay": string;
+        /**
           * Quantity
          */
         "quantity": number;
@@ -9360,6 +9364,10 @@ declare namespace LocalJSX {
           * Price name
          */
         "priceName"?: string;
+        /**
+          * The purchasable status display
+         */
+        "purchasableStatusDisplay"?: string;
         /**
           * Quantity
          */
