@@ -166,17 +166,32 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 
 		// update each template if it doesn't have the wp:surecart/product-page block.
 		foreach ( $product_templates as $product_template ) {
-			if ( has_block( 'surecart/product-page', $product_template ) ) {
-				continue;
+
+			if ( ! has_block( 'surecart/product-page', $product_template ) ) {
+				wp_update_post(
+					array(
+						'ID'           => $product_template->ID,
+						'post_content' => '<!-- wp:surecart/product-page -->' . $product_template->post_content . '<!-- /wp:surecart/product-page -->',
+					)
+				);
 			}
 
-			// update the post content.
-			wp_update_post(
-				array(
-					'ID'           => $product_template->ID,
-					'post_content' => '<!-- wp:surecart/product-page -->' . $product_template->post_content . '<!-- /wp:surecart/product-page -->',
-				)
-			);
+			if ( ! has_block( 'surecart/product-selected-price-ad-hoc-amount', $product_template ) ) {
+				$insert_before_block = has_block( 'surecart/product-buy-buttons', $product_template ) ? 'surecart/product-buy-buttons' : 'surecart/product-buy-button';
+
+				$new_content = str_replace(
+					'<!-- wp:' . $insert_before_block,
+					'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<!-- wp:' . $insert_before_block,
+					$product_template->post_content
+				);
+
+				wp_update_post(
+					array(
+						'ID'           => $product_template->ID,
+						'post_content' => $new_content,
+					)
+				);
+			}
 		}
 	}
 }

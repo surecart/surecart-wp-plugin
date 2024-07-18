@@ -35,7 +35,7 @@
 	display: inline-block;
 	box-sizing: border-box;
 
-	&[disabled] {
+	&[disabled="true"] {
 		pointer-events: none;
 	}
 }

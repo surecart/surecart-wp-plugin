@@ -10,6 +10,7 @@ import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
+const { scProductViewed } = require('./events');
 
 // controls the product page.
 const { state, actions } = store('surecart/product-page', {
@@ -137,9 +138,9 @@ const { state, actions } = store('surecart/product-page', {
 		get isUnavailable() {
 			const { product, variants } = getContext();
 			return (
-				product?.archived || // archived.
-				state?.isSoldOut || // sold out.
-				(variants?.length && !state.selectedVariant?.id) // no selected variant.
+				!!product?.archived || // archived.
+				!!state?.isSoldOut || // sold out.
+				!!(variants?.length && !state.selectedVariant?.id) // no selected variant.
 			);
 		},
 
@@ -262,6 +263,26 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	callbacks: {
+		*init() {
+			// maybe import analytics handlers.
+			if (window?.dataLayer || window?.gtag) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/google-events'
+				);
+			}
+
+			if (window?.fbq) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/facebook-events'
+				);
+			}
+
+			const { selectedPrice, product } = getContext();
+			scProductViewed(product, selectedPrice, state.quantity);
+		},
+
 		/**
 		 * Handle submit callback.
 		 */

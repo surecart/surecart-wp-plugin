@@ -20,10 +20,6 @@
 	},
 	"supports": {
 		"interactivity": true,
-		"spacing": {
-			"margin": true,
-			"padding": true
-		},
 		"typography": {
 			"fontSize": true
 		},

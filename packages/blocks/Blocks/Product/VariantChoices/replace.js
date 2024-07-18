@@ -4,6 +4,7 @@ import {
 	createBlock,
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
+import { useEffect } from '@wordpress/element';
 
 const newVariantPillsTemplate = (attributes) => {
 	const pillAttributes = {
@@ -19,17 +20,11 @@ const newVariantPillsTemplate = (attributes) => {
 
 	return [
 		[
-			'surecart/product-variant-pills-wrapper',
-			{},
-			[
-				[
-					'surecart/product-variant-pill',
-					{
-						...pillAttributes,
-					},
-					[],
-				],
-			],
+			'surecart/product-variant-pill',
+			{
+				...pillAttributes,
+			},
+			[],
 		],
 	];
 };
@@ -47,20 +42,23 @@ export default ({ clientId, attributes }) => {
 		return;
 	}
 
-	// Replace the block with the new block.
-	replaceBlock(clientId, [
-		createBlock(
-			'surecart/product-variant-pills',
-			{
-				style: {
-					spacing: {
-						margin: attributes?.style?.spacing?.margin,
+	useEffect(() => {
+		setTimeout(() => {
+			replaceBlock(clientId, [
+				createBlock(
+					'surecart/product-variant-pills',
+					{
+						style: {
+							spacing: {
+								margin: attributes?.style?.spacing?.margin,
+							},
+						},
 					},
-				},
-			},
-			createBlocksFromInnerBlocksTemplate(
-				newVariantPillsTemplate(attributes)
-			)
-		),
-	]);
+					createBlocksFromInnerBlocksTemplate(
+						newVariantPillsTemplate(attributes)
+					)
+				),
+			]);
+		});
+	}, []);
 };

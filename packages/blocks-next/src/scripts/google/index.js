@@ -82,7 +82,9 @@ window.addEventListener('scAddedToCart', (e) => {
 				price: item?.price?.converted_amount || 0,
 				currency: item.price?.currency,
 				quantity: item.quantity,
-				discount: item?.discount_amount ? item?.converted_discount_amount : 0,
+				discount: item?.discount_amount
+					? item?.converted_discount_amount
+					: 0,
 			},
 		],
 	});
@@ -108,7 +110,9 @@ window.addEventListener('scRemovedFromCart', (e) => {
 				price: item?.price?.converted_amount || 0,
 				currency: item.price?.currency,
 				quantity: item.quantity,
-				discount: item?.discount_amount ? item?.converted_discount_amount : 0,
+				discount: item?.discount_amount
+					? item?.converted_discount_amount
+					: 0,
 			},
 		],
 	});
@@ -127,12 +131,60 @@ window.addEventListener('scViewedCart', (e) => {
 			item_id: item?.price?.product?.id,
 			item_name: item?.price?.product?.name,
 			currency: item.price?.currency,
-			discount: item?.discount_amount ? item?.converted_discount_amount : 0,
+			discount: item?.discount_amount
+				? item?.converted_discount_amount
+				: 0,
 			price: item?.price?.converted_amount || 0,
 			quantity: item.quantity,
 			...(item?.variant_options?.length
 				? { item_variant: (item.variant_options || []).join(' / ') }
 				: {}),
 		})),
+	});
+});
+
+/**
+ * Handle the product viewed event.
+ */
+window.addEventListener('scProductViewed', (e) => {
+	const product = e.detail;
+	trackEvent('view_item', {
+		value: maybeConvertAmount(
+			product.price?.amount || 0,
+			product.price?.currency || 'USD'
+		),
+		currency: product.price?.currency,
+		items: [
+			{
+				item_id: product?.id,
+				item_name: product?.name,
+				currency: product?.price?.currency,
+				discount: product?.discount_amount
+					? maybeConvertAmount(
+							product?.discount_amount,
+							product?.price?.currency
+					  )
+					: 0,
+				price: maybeConvertAmount(
+					product?.price?.amount,
+					product?.price?.currency
+				),
+				quantity: product?.quantity || 1,
+				...(product?.variant_options?.length
+					? {
+							item_variant: product?.variant_options
+								.map((option) => option.name)
+								.join(' / '),
+					  }
+					: {}),
+				...(product?.product_collections?.data?.length
+					? {
+							item_category: product?.product_collections?.data
+								?.map((collection) => collection.name)
+								.join(', '),
+					  }
+					: {}),
+			},
+		],
 	});
 });
