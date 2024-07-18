@@ -25,6 +25,7 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
+		"inserter": false,
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
