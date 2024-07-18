@@ -305,6 +305,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.29.2 - July 18th, 2024 =
+- Improvement: Add link to card expiration email edit on settings page.
+- Improvement: Inline error handling for line items that have exceeded purchase limit.
+- Fix: Don't use hardcoded prefix when deleting expired incoming webhook rows.
+- Fix: Cart menu icon not visible in Elementor menu when it was added via Theme Builder.
+- Fix: Issue with user subscription upgrade not always running integrations.
+- Fix: Allow customers to cancel subscriptions without a payment method on customer dashboard.
+
 = 2.29.1 - July 15th, 2024 =
 - Fix: Compatibility with WordPress 6.6.
 
