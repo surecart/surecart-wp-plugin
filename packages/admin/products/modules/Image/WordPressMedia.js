@@ -4,8 +4,10 @@ import { ScIcon, ScSkeleton, ScTag } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
+import { MediaUpload } from '@wordpress/block-editor';
+const ALLOWED_MEDIA_TYPES = ['image'];
 
-export default ({ id, onRemove, isFeatured }) => {
+export default ({ id, onRemove, isFeatured, onSelect }) => {
 	const media = useSelect((select) => {
 		return select(coreStore).getMedia(id);
 	});
@@ -21,14 +23,16 @@ export default ({ id, onRemove, isFeatured }) => {
 				aspect-ratio: 1 / 1;
 
 				.overlay,
-				.delete-icon {
+				.delete-icon,
+				.edit-icon {
 					opacity: 0;
 					visibility: hidden;
 					transition: all var(--sc-transition-medium) ease-in-out;
 				}
 
 				:hover .overlay,
-				:hover .delete-icon {
+				:hover .delete-icon,
+				:hover .edit-icon {
 					opacity: 1;
 					visibility: visible;
 				}
@@ -66,6 +70,38 @@ export default ({ id, onRemove, isFeatured }) => {
 				`}
 				name="x"
 			/>
+
+			<MediaUpload
+				addToGallery={false}
+				multiple={false}
+				value={id}
+				onSelect={onSelect}
+				allowedTypes={ALLOWED_MEDIA_TYPES}
+				render={({ open }) => (
+					<ScIcon
+						className="edit-icon"
+						css={css`
+							position: absolute;
+							bottom: 4px;
+							right: 4px;
+							z-index: 10;
+							cursor: pointer;
+							padding: var(--sc-spacing-x-small);
+							font-size: var(--sc-font-size-small);
+							border-radius: var(--sc-border-radius-small);
+							color: var(--sc-color-gray-800);
+							font-weight: var(--sc-font-weight-semibold);
+							background-color: var(--sc-color-white);
+						`}
+						name="edit-2"
+						onClick={open}
+						onMouseDown={(e) => {
+							e.stopPropagation(); // prevents sortable from being triggered
+						}}
+					/>
+				)}
+			/>
+
 			<div
 				className="overlay"
 				css={css`
