@@ -2,9 +2,6 @@
 get_header();
 global $content_width;
 echo '<style>
-.wp-block-group {
-	width: 100%;
-}
 .is-layout-constrained .alignwide {
 	max-width: var(--wp--style--global--wide-size, ' . (int) ( $content_width ?? 1170 ) . 'px) !important;
 	margin-left: auto;
