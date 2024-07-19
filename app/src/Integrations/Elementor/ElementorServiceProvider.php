@@ -41,6 +41,10 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
+
+			if ( ! wp_is_block_theme() ) {
+				add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
+			}
 		}
 	}
 
@@ -163,5 +167,36 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function product_theme_conditions( $conditions_manager ) {
 		$conditions_manager->register_condition_instance( new Conditions() );
+	}
+
+	/**
+	 * Handle Elementor content.
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function handle_product_page_wrapper( string $content ): string {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return $content;
+		}
+
+		// check if the product page wrapper is not already added.
+		if ( false === strpos( $content, '<form class="wp-block-surecart-product-page"' ) ) {
+			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
+		}
+
+		// check if the custom amount block is not already added.
+		if ( false === strpos( $content, 'class="wp-block-surecart-product-selected-price-ad-hoc-amount"' ) ) {
+			$content = str_replace(
+				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
+				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
+				$content
+			);
+		}
+
+		$content = do_blocks( $content );
+
+		return $content;
 	}
 }
