@@ -30,6 +30,7 @@ import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
 import * as storeLogo from '@blocks/StoreLogo';
 import * as collectionPage from '@blocks/CollectionPage';
+import * as productBuyButton from '@blocks/Product/BuyButton';
 
 // deprecated
 import * as customerCharges from '@blocks/Dashboard/Deprecated/CustomerCharges';
@@ -64,4 +65,5 @@ registerBlocks([
 	dashboardPages,
 	dashboardTab,
 	dashboardTabs,
+	productBuyButton,
 ]);

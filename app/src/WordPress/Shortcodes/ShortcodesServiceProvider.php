@@ -200,7 +200,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_cart_button',
-			'surecart/product-buy-button',
+			'surecart/product-buy-button-old',
 			[
 				'add_to_cart' => true,
 				'text'        => __( 'Add To Cart', 'surecart' ),
