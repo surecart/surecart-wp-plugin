@@ -260,6 +260,7 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		syncTabs(e) {
+			console.log('syncTabs', e);
 			if (e?.key !== LOCAL_STORAGE_KEY) {
 				return;
 			}

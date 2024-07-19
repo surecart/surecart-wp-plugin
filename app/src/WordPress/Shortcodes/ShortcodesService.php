@@ -59,7 +59,7 @@ class ShortcodesService {
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
 
-				if ( 'surecart/product-buy-button-old' === $block_name ) {
+				if ( 'surecart/product-buy-button-old' === $block_name || 'surecart/product-price-choices' === $block_name ) {
 					$block = new \WP_Block(
 						[
 							'blockName'    => $block_name,

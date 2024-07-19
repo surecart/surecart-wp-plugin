@@ -571,6 +571,34 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Return attached active prices.
+	 *
+	 * @return array
+	 */
+	public function activePrices() {
+		$active_prices = array_values(
+			array_filter(
+				$this->prices->data ?? [],
+				function( $price ) {
+					return ! $price->archived;
+				}
+			)
+		);
+
+		usort(
+			$active_prices,
+			function( $a, $b ) {
+				if ( $a->position == $b->position ) {
+					return 0;
+				}
+				return ( $a->position < $b->position ) ? -1 : 1;
+			}
+		);
+
+		return $active_prices;
+	}
+
+	/**
 	 * Get product with acgive and sorted prices.
 	 *
 	 * @return this
@@ -839,5 +867,52 @@ class Product extends Model implements PageModel {
 	 */
 	public function getPreviewImageAttribute() {
 		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'medium_large' ) : (object) [];
+	}
+
+	/**
+	 * Get the first variant with stock.
+	 *
+	 * @return \SureCart\Models\Variant;
+	 */
+	public function getFirstVariantWithStock() {
+		$first_variant_with_stock = $this->variants->data[0] ?? null;
+
+		// stock is enabled.
+		if ( $this->stock_enabled ) {
+			foreach ( $this->variants->data as $variant ) {
+				if ( $variant->available_stock > 0 ) {
+					$first_variant_with_stock = $variant;
+					break;
+				}
+			}
+		}
+		return $first_variant_with_stock;
+	}
+	
+	/**
+	 * Get the product page initial state
+	 *
+	 * @param array $args Array of arguments.
+	 *
+	 * @return array
+	 */
+	public function getInitialPageState( $args = [] ) {
+		$form = \SureCart::forms()->getDefault();
+
+		return wp_parse_args(
+			$args,
+			[
+				'formId'          => $form->ID,
+				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
+				'product'         => $this,
+				'prices'          => $this->activePrices(),
+				'selectedPrice'   => ( $this->activePrices() ?? [] )[0] ?? null,
+				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
+				'variant_options' => $this->variant_options->data ?? [],
+				'variants'        => $this->variants->data ?? [],
+				'selectedVariant' => $this->getFirstVariantWithStock() ?? null,
+				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
+			]
+		);
 	}
 }

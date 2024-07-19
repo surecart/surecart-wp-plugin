@@ -8,6 +8,8 @@ export const getCheckout = (formId: number | string, mode: 'live' | 'test') => s
 
 /** Set the checkout. */
 export const setCheckout = (data: Checkout, formId: number | string) => {
+  console.log(data);
+
   const mode = data?.live_mode ? 'live' : 'test';
   store.set(mode, { ...store.state[mode], [formId]: data });
   // update the current checkout state.

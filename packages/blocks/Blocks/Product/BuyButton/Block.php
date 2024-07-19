@@ -1,7 +1,6 @@
 <?php
 
 namespace SureCartBlocks\Blocks\Product\BuyButton;
-use SureCart\Models\Product;
 use SureCartBlocks\Blocks\Product\ProductBlock;
 
 /**
@@ -99,36 +98,37 @@ class Block extends ProductBlock {
 	public function render( $attributes, $content ) {
 		self::$instance++;
 
-		$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $attributes['id'] );
-		;
+		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 
 		if ( empty( $product ) ) {
 			return '';
 		}
-
 		// set width class.
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 		$form        = \SureCart::forms()->getDefault();
-
+		$form_mode   = \SureCart\Models\Form::getMode( $form->ID );
 		ob_start();
 		?>
 		<div
 			class="wp-block-button sc-block-button"
-			data-wp-interactive='{ "namespace": "surecart/product-buy-button" }'
+			data-wp-interactive='{ "namespace": "surecart/checkout" }'
+			data-wp-on-window--storage="callbacks.syncTabs"
 			<?php
 				echo wp_kses_data(
 					wp_interactivity_data_wp_context(
-						array(
+						[
+							'formId' => intval( $form->ID ),
+							'mode'   => esc_attr( $form_mode ),
 							'addToCartText'       => 'Add to Cart',
-						)
+						]
 					)
 				);
-			?> 
+			?>
 		>
 		<button
 			data-wp-text="context.addToCartText" 
 			class="wp-block-button sc-block-button" 
-			data-wp-on--click="surecart/product-page::actions.addToCart"
+			data-wp-on--click="surecart/cart::actions.toggle"
 		>Add to Cart</button>
 		</div>
 		<sc-product-buy-button
@@ -140,7 +140,7 @@ class Block extends ProductBlock {
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
 			id="sc-product-buy-button-<?php echo esc_attr( (int) self::$instance ); ?>"
 			>
-			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button raj <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
 				<?php echo wp_validate_boolean( $attributes['add_to_cart'] ) ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
 			</a>

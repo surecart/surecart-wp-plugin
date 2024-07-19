@@ -140,6 +140,8 @@ export const finalizeCheckout = async ({ id, data = {}, query = {}, processor }:
  * Add a line item.
  */
 export const addLineItem = async ({ checkout, data, live_mode = false }) => {
+  console.log(checkout);
+
   const existingLineItem = (checkout?.line_items?.data || []).find(item => {
     if (!item?.variant?.id) {
       return item.price.id === data.price;
