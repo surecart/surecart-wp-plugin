@@ -112,6 +112,8 @@ class Block extends ProductBlock {
 		<div
 			class="wp-block-button sc-block-button"
 			data-wp-interactive='{ "namespace": "surecart/checkout" }'
+			data-wp-init="callbacks.init"
+			data-wp-watch="callbacks.onChangeCheckout"
 			data-wp-on-window--storage="callbacks.syncTabs"
 			<?php
 				echo wp_kses_data(
@@ -119,7 +121,7 @@ class Block extends ProductBlock {
 						[
 							'formId' => intval( $form->ID ),
 							'mode'   => esc_attr( $form_mode ),
-							'addToCartText'       => 'Add to Cart',
+							'addToCartText'       => 'Opens new Cart for testing',
 						]
 					)
 				);
