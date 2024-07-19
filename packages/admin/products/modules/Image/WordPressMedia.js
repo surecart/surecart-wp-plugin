@@ -5,9 +5,12 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { MediaUpload } from '@wordpress/block-editor';
+import { useDispatch } from '@wordpress/data';
 const ALLOWED_MEDIA_TYPES = ['image'];
 
 export default ({ id, onRemove, isFeatured, onSelect }) => {
+	const { invalidateResolution } = useDispatch(coreStore);
+
 	const media = useSelect((select) => {
 		return select(coreStore).getMedia(id);
 	});
@@ -91,6 +94,7 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 				value={id}
 				onSelect={onSelect}
 				allowedTypes={ALLOWED_MEDIA_TYPES}
+				onClose={() => invalidateResolution('getMedia', [id])}
 				render={({ open }) => (
 					<ScIcon
 						className="edit-icon"
