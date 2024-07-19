@@ -53,6 +53,20 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 				</ScTag>
 			)}
 
+			{media?.meta?.sc_variant_option && (
+				<ScTag
+					className="featured-badge"
+					size="small"
+					css={css`
+						position: absolute;
+						bottom: 5px;
+						left: 5px;
+					`}
+				>
+					{media?.meta?.sc_variant_option}
+				</ScTag>
+			)}
+
 			<ScIcon
 				className="delete-icon"
 				onClick={onRemove}
@@ -83,15 +97,16 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 						css={css`
 							position: absolute;
 							bottom: 4px;
-							right: 4px;
+							left: 4px;
 							z-index: 10;
 							cursor: pointer;
-							padding: var(--sc-spacing-x-small);
+							padding: var(--sc-spacing-small);
 							font-size: var(--sc-font-size-small);
 							border-radius: var(--sc-border-radius-small);
 							color: var(--sc-color-gray-800);
 							font-weight: var(--sc-font-weight-semibold);
 							background-color: var(--sc-color-white);
+							border-radius: var(--sc-border-radius-small);
 						`}
 						name="edit-2"
 						onClick={open}

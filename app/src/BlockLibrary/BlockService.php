@@ -121,6 +121,15 @@ class BlockService {
 	}
 
 	/**
+	 * Get the product service.
+	 *
+	 * @return ProductPageService
+	 */
+	public function product( $block ) {
+		return new ProductPageService( $block );
+	}
+
+	/**
 	 * Get the product price migration service.
 	 *
 	 * @param array  $attributes Attributes.
