@@ -348,7 +348,6 @@ class ProductPostTypeService {
 		}
 
 		$blocks = $template->content ?? '';
-		error_log( 'template_part_id: ' . $template_part_id );
 		$blocks = shortcode_unautop( $blocks );
 		$blocks = do_shortcode( $blocks );
 		$blocks = do_blocks( $blocks );
