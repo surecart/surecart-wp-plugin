@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.6
-Stable tag: 2.29.1
+Stable tag: 2.29.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.29.2 - July 18th, 2024 =
+= 2.29.2 - July 22nd, 2024 =
 - Improvement: Add link to card expiration email edit on settings page.
 - Improvement: Inline error handling for line items that have exceeded purchase limit.
 - Fix: Don't use hardcoded prefix when deleting expired incoming webhook rows.
