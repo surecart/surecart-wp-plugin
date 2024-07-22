@@ -416,6 +416,7 @@ export interface Coupon extends Model {
 export interface LineItemData extends Object {
   id?: string;
   price_id?: string;
+  variant_id?: string;
   bump?: string;
   quantity: number;
   ad_hoc_amount?: number;
