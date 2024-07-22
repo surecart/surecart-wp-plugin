@@ -758,7 +758,11 @@ class Product extends Model implements PageModel {
 					return null;
 				},
 				$gallery_items
-			)
+			),
+			function ( $item ) {
+				// it must have a src at least.
+				return ! empty( $item->attributes()->src );
+			}
 		);
 	}
 

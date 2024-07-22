@@ -5,12 +5,56 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { MediaUpload } from '@wordpress/block-editor';
+import { Notice } from '@wordpress/components';
 const ALLOWED_MEDIA_TYPES = ['image'];
 
 export default ({ id, onRemove, isFeatured, onSelect }) => {
-	const media = useSelect((select) => {
-		return select(coreStore).getMedia(id);
+	const { media, hasLoadedMedia } = useSelect((select) => {
+		return {
+			media: select(coreStore).getMedia(id),
+			hasLoadedMedia: select(coreStore).hasFinishedResolution(
+				'getMedia',
+				[id]
+			),
+		};
 	});
+
+	if (hasLoadedMedia && !media) {
+		return (
+			<div
+				css={css`
+					.components-notice {
+						aspect-ratio: 1 / 1;
+						box-sizing: border-box;
+						background-color: #ffecec;
+						border-radius: var(--sc-border-radius-medium);
+						box-shadow: var(--sc-input-box-shadow);
+					}
+					button.components-button.components-notice__action.is-link {
+						margin: 10px 0 0 0;
+					}
+				`}
+			>
+				<Notice
+					status="error"
+					isDismissible={false}
+					actions={[
+						{
+							label: __('Remove', 'surecart'),
+							onClick: onRemove,
+							noDefaultClasses: true,
+							variant: 'link',
+						},
+					]}
+				>
+					{__(
+						'This image has been deleted or is unavailable.',
+						'surecart'
+					)}
+				</Notice>
+			</div>
+		);
+	}
 
 	return (
 		<div
