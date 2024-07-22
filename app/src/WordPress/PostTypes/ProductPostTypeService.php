@@ -91,7 +91,7 @@ class ProductPostTypeService {
 	 * @return void
 	 */
 	public function saveAttachmentFields( $post, $attachment ) {
-		$attachid = $post['ID']; // yes this is actually an array here
+		$attachid = $post['ID']; // yes this is actually an array here.
 		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] );
 	}
 
@@ -105,7 +105,7 @@ class ProductPostTypeService {
 	 */
 	public function addAttachmentFields( $form_fields, $post = null ) {
 		$form_fields['sc_variant_option'] = array(
-			'label'    => esc_html__( 'Variant Value', 'surecart' ),
+			'label'    => esc_html__( 'Variant', 'surecart' ),
 			'input'    => 'text',
 			'required' => false,
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
