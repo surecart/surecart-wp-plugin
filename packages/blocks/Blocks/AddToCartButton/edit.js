@@ -38,7 +38,9 @@ export default ({ className, attributes, setAttributes }) => {
 		backgroundColor,
 		textColor,
 	} = attributes;
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: 'sc-form',
+	});
 	const price = useSelect(
 		(select) =>
 			select(coreStore).getEntityRecord('root', 'price', price_id, {
@@ -59,7 +61,7 @@ export default ({ className, attributes, setAttributes }) => {
 	}
 
 	return (
-		<div className={className}>
+		<>
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
@@ -72,46 +74,6 @@ export default ({ className, attributes, setAttributes }) => {
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					{price?.ad_hoc && (
-						<>
-							<PanelRow>
-								<TextControl
-									label={__('Input Label', 'surecart')}
-									value={ad_hoc_label}
-									onChange={(ad_hoc_label) =>
-										setAttributes({ ad_hoc_label })
-									}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<TextControl
-									label={__('Input Help', 'surecart')}
-									value={help}
-									onChange={(help) => setAttributes({ help })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<TextControl
-									label={__('Input Placeholder', 'surecart')}
-									value={placeholder}
-									onChange={(placeholder) =>
-										setAttributes({ placeholder })
-									}
-								/>
-							</PanelRow>
-						</>
-					)}
-					<PanelRow>
-						<TextControl
-							label={__('Button Text', 'surecart')}
-							value={button_text}
-							onChange={(button_text) =>
-								setAttributes({ button_text })
-							}
-						/>
-					</PanelRow>
-				</PanelBody>
 				<PanelColorSettings
 					title={__('Color Settings')}
 					colorSettings={[
@@ -139,80 +101,86 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScForm
-				style={{
-					...(backgroundColor
-						? {
-								'--sc-color-primary-500': backgroundColor,
-								'--sc-focus-ring-color-primary':
-									backgroundColor,
-								'--sc-input-border-color-focus':
-									backgroundColor,
-						  }
-						: {}),
-					...(textColor
-						? { '--sc-color-primary-text': textColor }
-						: {}),
-				}}
-			>
-				{price?.ad_hoc && (
-					<div>
-						<label
-							for="sc-product-custom-amount"
-							class="sc-form-label"
-						>
-							{ad_hoc_label || __('Amount', 'surecart')}
-						</label>
-						<div class="sc-input-group">
-							<span
-								class="sc-input-group-text"
-								id="basic-addon1"
-							>
-								{scData?.currency_symbol}
-							</span>
-
-							<input
-								class="sc-form-control"
-								id="sc-product-custom-amount"
-								type="number"
-								required
-								placeholder={placeholder}
-								min={price?.converted_ad_hoc_min_amount}
-								max={price?.converted_ad_hoc_max_amount}
-							/>
-						</div>
-						{help && <div class="sc-help-text">{help}</div>}
-					</div>
-				)}
-
-				<div className="wp-block-button">
-					<button
-						type="button"
-						class="sc-button wp-element-button wp-block-button__link sc-button__link"
-						style={{
-							...(backgroundColor
-								? {
-										backgroundColor: backgroundColor,
-								  }
-								: {}),
-							...(textColor ? { color: textColor } : {}),
-						}}
-					>
-						<span class="sc-button__link-text">
+			<div {...blockProps}>
+				<>
+					{price?.ad_hoc && (
+						<div class="sc-form-group">
 							<RichText
-								aria-label={__('Button text')}
-								placeholder={__('Add text…')}
-								value={button_text}
-								onChange={(button_text) =>
-									setAttributes({ button_text })
+								aria-label={__('Custom amount label')}
+								placeholder={__('Enter a label...')}
+								value={ad_hoc_label}
+								onChange={(ad_hoc_label) =>
+									setAttributes({ ad_hoc_label })
 								}
+								tagName="label"
 								withoutInteractiveFormatting
 								allowedFormats={['core/bold', 'core/italic']}
 							/>
-						</span>
-					</button>
-				</div>
-			</ScForm>
-		</div>
+
+							<div class="sc-input-group">
+								<span
+									class="sc-input-group-text"
+									id="basic-addon1"
+								>
+									{price?.currency_symbol ||
+										scData?.currency_symbol}
+								</span>
+
+								<input
+									class="sc-form-control"
+									id="sc-product-custom-amount"
+									type="number"
+									required
+									placeholder={placeholder}
+									min={price?.converted_ad_hoc_min_amount}
+									max={price?.converted_ad_hoc_max_amount}
+								/>
+							</div>
+							<RichText
+								aria-label={__('Help text')}
+								placeholder={__('Add help text...')}
+								value={help}
+								onChange={(help) => setAttributes({ help })}
+								tagName="div"
+								className="sc-help-text"
+								withoutInteractiveFormatting
+								allowedFormats={['core/bold', 'core/italic']}
+							/>
+						</div>
+					)}
+
+					<div className="wp-block-button">
+						<button
+							type="button"
+							class="sc-button wp-element-button wp-block-button__link sc-button__link"
+							style={{
+								...(backgroundColor
+									? {
+											backgroundColor: backgroundColor,
+									  }
+									: {}),
+								...(textColor ? { color: textColor } : {}),
+							}}
+						>
+							<span class="sc-button__link-text">
+								<RichText
+									aria-label={__('Button text')}
+									placeholder={__('Add text…')}
+									value={button_text}
+									onChange={(button_text) =>
+										setAttributes({ button_text })
+									}
+									withoutInteractiveFormatting
+									allowedFormats={[
+										'core/bold',
+										'core/italic',
+									]}
+								/>
+							</span>
+						</button>
+					</div>
+				</>
+			</div>
+		</>
 	);
 };

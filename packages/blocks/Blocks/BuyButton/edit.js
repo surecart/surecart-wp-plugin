@@ -7,11 +7,11 @@ import {
 	InspectorControls,
 	PanelColorSettings,
 	RichText,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
-	TextControl,
 	ToolbarButton,
 	ToolbarGroup,
 } from '@wordpress/components';
@@ -27,6 +27,9 @@ import PriceInfo from '../../components/PriceInfo';
 export default ({ className, attributes, setAttributes }) => {
 	const { label, line_items, backgroundColor, textColor } = attributes;
 	const [showChangeProducts, setShowChangeProducts] = useState(false);
+	const blockProps = useBlockProps({
+		className: 'wp-block-button',
+	});
 
 	if (showChangeProducts || !line_items?.length) {
 		return (
@@ -52,15 +55,6 @@ export default ({ className, attributes, setAttributes }) => {
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Button Text', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-				</PanelBody>
 				<PanelColorSettings
 					title={__('Color Settings')}
 					colorSettings={[
@@ -92,7 +86,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div className="wp-block-button">
+			<div {...blockProps}>
 				<button
 					type="button"
 					class="sc-button wp-element-button wp-block-button__link sc-button__link"
