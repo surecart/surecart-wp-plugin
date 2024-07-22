@@ -40,6 +40,10 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 		$container['surecart.migrations.rewrites'] = function () {
 			return new RewriteRulesMigrationService();
 		};
+
+		$container['surecart.migrations.product_page'] = function () {
+			return new ProductPageMigrationService();
+		};
 	}
 
 	/**
@@ -54,5 +58,6 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 		$container['surecart.migrations.usermeta']->bootstrap();
 		$container['surecart.migrations.webhook']->bootstrap();
 		$container['surecart.migrations.rewrites']->bootstrap();
+		$container['surecart.migrations.product_page']->bootstrap();
 	}
 }
