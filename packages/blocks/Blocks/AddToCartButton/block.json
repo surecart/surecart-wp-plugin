@@ -55,6 +55,7 @@
 		"surecart-spinner",
 		"surecart-button",
 		"surecart-form-control",
+		"surecart-form-group",
 		"surecart-text"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch"],
