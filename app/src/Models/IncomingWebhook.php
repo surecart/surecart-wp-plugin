@@ -26,7 +26,7 @@ class IncomingWebhook extends DatabaseModel {
 	 *
 	 * @var array
 	 */
-	protected $fillable = [ 'id', 'webhook_id', 'processed_at', 'data', 'source', 'created_at', 'updated_at', 'deleted_at' ];
+	protected $fillable = array( 'id', 'webhook_id', 'processed_at', 'data', 'source', 'created_at', 'updated_at', 'deleted_at' );
 
 	/**
 	 * Force `data` to be an object.
@@ -67,7 +67,9 @@ class IncomingWebhook extends DatabaseModel {
 	 */
 	protected function deleteExpired( $time_ago = '30 days' ) {
 		global $wpdb;
-		$date = new \DateTime();
-		return $wpdb->query( $wpdb->prepare( 'DELETE FROM wp_surecart_incoming_webhooks WHERE created_at < %s', [ $date->modify( '-' . $time_ago )->format( 'Y-m-d H:i:s' ) ] ) );
+		$date           = new \DateTime();
+		$table_name     = $wpdb->prefix . 'surecart_incoming_webhooks';
+		$formatted_date = $date->modify( '-' . $time_ago )->format( 'Y-m-d H:i:s' );
+		return $wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE created_at < %s", $formatted_date ) );
 	}
 }

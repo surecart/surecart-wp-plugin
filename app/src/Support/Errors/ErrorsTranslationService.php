@@ -91,6 +91,24 @@ class ErrorsTranslationService {
 			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'], $options['currency'] ) );
 		}
 
+		if ( 'line_items' === $attribute && 'not_purchasable' === $type && ! empty( $options['purchasable_statuses'] ) ) {
+			$line_item_translations = array(
+				'price_gone'             => __( 'One or more items in your cart is no longer available. Please update your cart and try again.', 'surecart' ),
+				'price_old_version'      => __( 'The price of one of the items on cart has changed. Please review and try again.', 'surecart' ),
+				'variant_missing'        => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
+				'variant_gone'           => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
+				'variant_old_version'    => __( 'One of the items on cart has changed. Please review and try again.', 'surecart' ),
+				'out_of_stock'           => __( 'One of the items on cart is out of stock. Please review and try again.', 'surecart' ),
+				'exceeds_purchase_limit' => __( 'One or more items in your cart exceed the purchase limit. Please adjust the quantity or remove the item to proceed with the checkout.', 'surecart' ),
+			);
+
+			$line_item_translated_error = $line_item_translations[ $options['purchasable_statuses'][0] ?? '' ] ?? false;
+
+			if ( $line_item_translated_error ) {
+				return $line_item_translated_error;
+			}
+		}
+
 		return false;
 	}
 

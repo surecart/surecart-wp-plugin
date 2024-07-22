@@ -89,6 +89,7 @@ export class ScLineItems {
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                purchasableStatusDisplay={item?.purchasable_status_display}
                 {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
                 removable={this.removable}

@@ -184,12 +184,13 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
 		}
 
-		$restored = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/restore/',
+		$restored = $this->with( array( 'purchase' ) )
+		->makeRequest(
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-			]
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/restore/'
 		);
 
 		if ( is_wp_error( $restored ) ) {
@@ -201,6 +202,11 @@ class Subscription extends Model {
 		$this->fill( $restored );
 
 		$this->fireModelEvent( 'restored' );
+
+		// purchase invoked event.
+		if ( ! empty( $this->purchase ) ) {
+			do_action( 'surecart/purchase_invoked', $this->purchase );
+		}
 
 		return $this;
 	}

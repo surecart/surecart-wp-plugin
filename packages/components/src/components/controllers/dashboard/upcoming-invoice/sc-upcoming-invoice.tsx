@@ -242,6 +242,7 @@ export class ScUpcomingInvoice {
             priceName={item?.price?.name}
             variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
             editable={this.quantityUpdatesEnabled}
+            purchasableStatusDisplay={item?.purchasable_status_display}
             removable={false}
             quantity={item?.quantity}
             amount={item?.total_amount}

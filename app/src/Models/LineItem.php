@@ -74,4 +74,28 @@ class LineItem extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Purchasable status display
+	 *
+	 * @return string
+	 */
+	public function getPurchasableStatusDisplayAttribute() {
+		if ( 'purchasable' === $this->purchasable_status ) {
+			return;
+		}
+
+		// translations for purchaseable status.
+		$translations = array(
+			'price_gone'             => __( 'No longer available', 'surecart' ),
+			'price_old_version'      => __( 'Price has changed', 'surecart' ),
+			'variant_missing'        => __( 'Options no longer available', 'surecart' ),
+			'variant_old_version'    => __( 'Price has changed', 'surecart' ),
+			'variant_gone'           => __( 'Item no longer available', 'surecart' ),
+			'out_of_stock'           => __( 'Out of stock', 'surecart' ),
+			'exceeds_purchase_limit' => __( 'Exceeds purchase limit', 'surecart' ),
+		);
+
+		return $translations[ $this->purchasable_status ] ?? '';
+	}
 }
