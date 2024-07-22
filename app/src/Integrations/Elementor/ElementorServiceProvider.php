@@ -3,6 +3,7 @@ namespace SureCart\Integrations\Elementor;
 
 use SureCart\Integrations\Elementor\Conditions\Conditions;
 use SureCart\Integrations\Elementor\Documents\ProductDocument;
+use SureCart\Migration\ProductPageWrapperService;
 use SureCart\Models\Product;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
@@ -177,26 +178,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function handle_product_page_wrapper( string $content ): string {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return $content;
-		}
-
-		// check if the product page wrapper is not already added.
-		if ( false === strpos( $content, '<form class="wp-block-surecart-product-page"' ) ) {
-			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
-		}
-
-		// check if the custom amount block is not already added.
-		if ( false === strpos( $content, 'class="wp-block-surecart-product-selected-price-ad-hoc-amount"' ) ) {
-			$content = str_replace(
-				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				$content
-			);
-		}
-
-		$content = do_blocks( $content );
-
-		return $content;
+		return (new ProductPageWrapperService( $content ))->wrap();
 	}
 }

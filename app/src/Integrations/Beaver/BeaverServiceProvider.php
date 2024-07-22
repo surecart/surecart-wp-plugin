@@ -1,6 +1,7 @@
 <?php
 namespace SureCart\Integrations\Beaver;
 
+use SureCart\Migration\ProductPageWrapperService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -95,24 +96,6 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function handle_product_page_wrapper( $content ) {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return $content;
-		}
-
-		// check if the product page wrapper is not already added.
-		if ( false === strpos( $content, '<form class="wp-block-surecart-product"' ) ) {
-			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
-		}
-
-		// check if the custom amount block is not already added.
-		if ( false === strpos( $content, '<form class="wp-block-surecart-custom-amount"' ) ) {
-			$content = str_replace(
-				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				$content
-			);
-		}
-
-		return do_blocks( $content );
+		return (new ProductPageWrapperService( $content ))->wrap();
 	}
 }
