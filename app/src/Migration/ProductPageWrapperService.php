@@ -31,7 +31,7 @@ class ProductPageWrapperService {
 	 * @return boolean
 	 */
 	public function hasProductPageWrapper() {
-		return false !== strpos( $this->content, '<form class="wp-block-surecart-product"' );
+		return preg_match( '/data-sc-block-id=(?:"product-page"|\'product-page\'|\\"product-page\\"|\\\'product-page\\\')/', $this->content );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class ProductPageWrapperService {
 	 * @return boolean
 	 */
 	public function hasCustomAmountBlock() {
-		return false !== strpos( $this->content, '<form class="wp-block-surecart-custom-amount"' );
+		return preg_match( '/data-sc-block-id=(?:"custom-amount"|\'custom-amount\'|\\"custom-amount\\"|\\\'custom-amount\\\')/', $this->content );
 	}
 
 	/**
