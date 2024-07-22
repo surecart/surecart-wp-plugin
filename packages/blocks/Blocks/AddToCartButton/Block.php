@@ -27,8 +27,9 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			return '';
 		}
 
-		$product  = $price->product;
-		$variants = $attributes['variant_id'] ? array_filter(
+		$product = $price->product;
+
+		$variants = ! empty( $attributes['variant_id'] ) ? array_filter(
 			$product->variants->data ?? [],
 			function ( $variant ) use ( $attributes ) {
 				return $variant->id == $attributes['variant_id'];
@@ -36,7 +37,6 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 		) : null;
 		$variant  = $variants ? array_shift( $variants ) : null;
 
-		// need a form for checkout.
 		$form = \SureCart::forms()->getDefault();
 		if ( empty( $form->ID ) ) {
 			return '';
@@ -111,31 +111,33 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			?>
 		>
 			<form class="sc-form" data-wp-on--submit="callbacks.handleSubmit">
-				<?php if ( $price->ad_hoc ) : ?>
-					<label for="sc-product-custom-amount" class="sc-form-label">
-						<?php echo wp_kses_post( $attributes['ad_hoc_label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
-					</label>
-					<div class="sc-input-group">
-						<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
+				<?php if ( ! empty( $price->ad_hoc ) ) : ?>
+					<div class="sc-form-group">
+						<label for="sc-product-custom-amount" class="sc-form-label">
+							<?php echo wp_kses_post( $attributes['ad_hoc_label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
+						</label>
+						<div class="sc-input-group">
+							<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
 
-						<input
-							class="sc-form-control"
-							id="sc-product-custom-amount"
-							type="number"
-							step="0.01"
-							required
-							placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? '' ); ?>"
-							data-wp-bind--min="context.selectedPrice.convertedAdHocMinAmount"
-							data-wp-bind--max="context.selectedPrice.convertedAdHocMaxAmount"
-							data-wp-bind--value="context.adHocAmount"
-							data-wp-on--input="callbacks.setAdHocAmount"
-						/>
-					</div>
-					<?php if ( ! empty( $attributes['help'] ) ) : ?>
-						<div class="sc-help-text">
-							<?php echo wp_kses_post( $attributes['help'] ); ?>
+							<input
+								class="sc-form-control"
+								id="sc-product-custom-amount"
+								type="number"
+								step="0.01"
+								required
+								placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? '' ); ?>"
+								data-wp-bind--min="context.selectedPrice.converted_ad_hoc_min_amount1"
+								data-wp-bind--max="context.selectedPrice.converted_ad_hoc_max_amount1"
+								data-wp-bind--value="context.adHocAmount"
+								data-wp-on--input="callbacks.setAdHocAmount"
+							/>
 						</div>
-					<?php endif; ?>
+						<?php if ( ! empty( $attributes['help'] ) ) : ?>
+							<div class="sc-help-text">
+								<?php echo wp_kses_post( $attributes['help'] ); ?>
+							</div>
+						<?php endif; ?>
+					</div>
 				<?php endif; ?>
 
 				<div
@@ -144,7 +146,6 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 							get_block_wrapper_attributes(
 								array(
 									'class' => 'wp-block-button',
-									'style' => $price->ad_hoc ? 'margin-top: 1rem;' : '',
 								)
 							)
 						);
