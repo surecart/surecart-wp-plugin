@@ -1,5 +1,12 @@
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'style' => 'width:' . esc_attr( $attributes['width'] ) . ';' ) ) ); ?>
+	<?php echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'style'            => 'width:' . esc_attr( $attributes['width'] ) . ';',
+				'data-sc-block-id' => 'custom-amount',
+			)
+		)
+	); ?>
 	data-wp-bind--hidden="!context.selectedPrice.ad_hoc"
 	hidden
 >
