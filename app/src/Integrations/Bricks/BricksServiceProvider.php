@@ -24,9 +24,7 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		if ( ! wp_is_block_theme() ) {
-			add_filter( 'bricks/frontend/render_data', [ $this, 'handleProductPageWrapper' ], 10, 2 );
-		}
+		add_filter( 'bricks/frontend/render_data', [ $this, 'handleProductPageWrapper' ], 10, 2 );
 	}
 
 	/**
@@ -37,6 +35,6 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	 * @return string $content Content of the product page.
 	 */
 	public function handleProductPageWrapper( string $content ): string {
-		return (new ProductPageWrapperService( $content ))->wrap();
+		return ( new ProductPageWrapperService( $content ) )->wrap();
 	}
 }

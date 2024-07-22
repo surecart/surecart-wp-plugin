@@ -42,10 +42,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
-
-			if ( ! wp_is_block_theme() ) {
-				add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
-			}
+			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
 	}
 
@@ -178,6 +175,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function handle_product_page_wrapper( string $content ): string {
-		return (new ProductPageWrapperService( $content ))->wrap();
+		return ( new ProductPageWrapperService( $content ) )->wrap();
 	}
 }
