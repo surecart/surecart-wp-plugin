@@ -13,7 +13,7 @@ $style .= ! empty( $attributes['height'] )
 	: '';
 
 
-$product_image_html = sc_get_product_featured_image( 'medium_large', [ 'loading' => 'eager' ] );
+$product_image_html = sc_get_product_featured_image( 'medium_large', [ 'loading' => 'lazy' ] );
 
 if ( $product_image_html ) {
 	return 'file:./view.php';

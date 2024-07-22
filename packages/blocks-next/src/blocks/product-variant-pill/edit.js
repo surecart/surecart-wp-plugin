@@ -7,11 +7,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-	useBlockProps,
-	__experimentalUseBorderProps as useBorderProps,
-	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
-} from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
 /**
@@ -35,18 +31,17 @@ export default ({
 	const blockProps = useBlockProps({
 		className: classnames({
 			'sc-pill-option__button': true,
-			'sc-pill-option__button--selected': selected,
 			[__unstableLayoutClassNames]: true,
 		}),
 		...(selected
 			? {
 					style: {
-						backgroundColor: highlight_background,
-						color: highlight_text,
-						borderTopColor: highlight_border,
-						borderBottomColor: highlight_border,
-						borderLeftColor: highlight_border,
-						borderRightColor: highlight_border,
+						backgroundColor: highlight_background || '#000000',
+						color: highlight_text || '#ffffff',
+						borderTopColor: highlight_border || '#000000',
+						borderBottomColor: highlight_border || '#000000',
+						borderLeftColor: highlight_border || '#000000',
+						borderRightColor: highlight_border || '#000000',
 					},
 			  }
 			: {}),
@@ -88,7 +83,7 @@ export default ({
 				]}
 				panelId={clientId}
 			/>
-			<button
+			<div
 				{...blockProps}
 				className={
 					selected
@@ -100,7 +95,7 @@ export default ({
 				}
 			>
 				{name}
-			</button>
+			</div>
 		</Fragment>
 	);
 };

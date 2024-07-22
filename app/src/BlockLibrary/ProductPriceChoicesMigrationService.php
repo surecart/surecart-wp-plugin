@@ -11,7 +11,7 @@ class ProductPriceChoicesMigrationService {
 	 *
 	 * @var array
 	 */
-	protected $attributes = array();
+	public array $attributes = array();
 
 	/**
 	 * Block.
@@ -44,7 +44,7 @@ class ProductPriceChoicesMigrationService {
 	 * @return void
 	 */
 	public function renderPriceName() {
-		$this->block_html .= '<!-- wp:surecart/price-name /-->';
+		$this->block_html .= '<!-- wp:surecart/price-name {"style":{"layout":{"selfStretch":"fixed","flexSize":"50%"},"typography":{"fontStyle":"normal","fontWeight":"600"}}} /-->';
 	}
 
 	/**
@@ -53,11 +53,12 @@ class ProductPriceChoicesMigrationService {
 	 * @return void
 	 */
 	public function renderPriceAmountTrialAndSetupFee() {
-		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
+		$text_color        = $this->attributes['textColor'] ?? '#8a8a8a';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fixed","flexSize":"50%"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
 		$this->block_html .= '<!-- wp:surecart/price-amount {"style":{"elements":{"link":{"color":{"text":"var:preset|color|accent-3"}}},"typography":{"fontStyle":"normal","fontWeight":"700"}},"textColor":"accent-3"} /-->';
-		$this->block_html .= '<!-- wp:surecart/price-trial {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}},"fontSize":"small"} /-->';
-		$this->block_html .= '<!-- wp:surecart/price-setup-fee {"style":{"color":{"text":"#8a8a8a"},"elements":{"link":{"color":{"text":"#8a8a8a"}}}},"fontSize":"small"} /-->';
+		$this->block_html .= '<!-- wp:surecart/price-trial {"style":{"color":{"text":"' . $text_color . '"},"elements":{"link":{"color":{"text":"' . $text_color . '"}}}},"fontSize":"small"} /-->';
+		$this->block_html .= '<!-- wp:surecart/price-setup-fee {"style":{"color":{"text":"' . $text_color . '"},"elements":{"link":{"color":{"text":"' . $text_color . '"}}}},"fontSize":"small"} /-->';
 		$this->block_html .= '</div>';
 		$this->block_html .= '<!-- /wp:group -->';
 	}
@@ -73,31 +74,25 @@ class ProductPriceChoicesMigrationService {
 		);
 
 		$template_attributes = array(
+			'layout'          => [
+				'type'           => 'flex',
+				'justifyContent' => 'left',
+				'flexWrap'       => 'nowrap',
+				'orientation'    => 'horizontal',
+			],
 			'textColor'       => $this->attributes['textColor'] ?? 'black',
 			'backgroundColor' => $this->attributes['backgroundColor'] ?? 'white',
-			'style'           => array(
-				'elements' => array(
-					'link' => array(
-						'color' => array(
-							'text' => $this->attributes['elements']['link']['color']['text'] ?? '#8a8a8a',
-						),
-					),
-				),
-			),
+			'style'           => $this->attributes['style'] ?? [],
 		);
 
-		$this->block_html .= '<!-- wp:surecart/product-price-choices-v2 ' . wp_json_encode( $choices_attributes ) . ' -->';
+		$this->block_html .= '<!-- wp:surecart/product-price-chooser ' . wp_json_encode( $choices_attributes ) . ' -->';
 		$this->block_html .= '<!-- wp:surecart/product-price-choice-template ' . wp_json_encode( $template_attributes ) . ' -->';
-		$this->block_html .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->';
-		$this->block_html .= '<div class="wp-block-group">';
 		$this->renderPriceName();
-		if ( ! empty( $this->attributes['show-price'] ) ) {
+		if ( $this->attributes['show_price'] ) {
 			$this->renderPriceAmountTrialAndSetupFee();
 		}
-		$this->block_html .= '</div>';
-		$this->block_html .= '<!-- /wp:group -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
-		$this->block_html .= '<!-- /wp:surecart/product-price-choices-v2 -->';
+		$this->block_html .= '<!-- /wp:surecart/product-price-chooser -->';
 	}
 
 	/**

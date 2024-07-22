@@ -13,15 +13,15 @@ import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Disabled } from '@wordpress/components';
 
-export default ({ attributes, setAttributes, isSelected }) => {
+export default ({ attributes, setAttributes }) => {
 	const swiperRef = useRef(null);
 	const thumbSwiperRef = useRef(null);
 	const swiper = useRef(null);
+	const thumbSwiper = useRef(null);
 
 	const { height, show_thumbnails, thumbnails_per_page, auto_height, width } =
 		attributes;
 	const [images, setImages] = useState([]);
-	const [renderKey, setRenderKey] = useState(0);
 	const blockProps = useBlockProps({});
 
 	const units = useCustomUnits({
@@ -29,12 +29,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 	});
 
 	useEffect(() => {
-		setRenderKey(renderKey + 1);
-	}, [show_thumbnails, thumbnails_per_page, images, height, auto_height]);
-
-	useEffect(() => {
 		setImages(
-			[...Array(thumbnails_per_page + 1)].map(() => {
+			[...Array(20)].map(() => {
 				return {
 					src: scBlockData?.plugin_url + '/images/placeholder.jpg',
 					width: width,
@@ -43,9 +39,24 @@ export default ({ attributes, setAttributes, isSelected }) => {
 		);
 	}, [width, thumbnails_per_page]);
 
+	// update the slider when the props change.
+	useEffect(() => {
+		if (!swiper.current) {
+			return;
+		}
+		swiper.current.update();
+	}, [height, auto_height, width]);
+
+	useEffect(() => {
+		if (!thumbSwiper.current) {
+			return;
+		}
+		thumbSwiper.current.update();
+	}, [show_thumbnails, thumbnails_per_page]);
+
 	useEffect(() => {
 		if (swiperRef && thumbSwiperRef) {
-			const thumbsSwiper = new Swiper(
+			thumbSwiper.current = new Swiper(
 				thumbSwiperRef.current.querySelector('.swiper'),
 				{
 					modules: [Navigation],
@@ -90,7 +101,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					),
 				},
 				thumbs: {
-					swiper: thumbsSwiper,
+					swiper: thumbSwiper.current,
 				},
 			});
 		}
@@ -135,7 +146,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					<RangeControl
 						label={__('Thumbnails Per Page', 'surecart')}
 						min={2}
-						max={20}
+						max={12}
 						value={thumbnails_per_page}
 						onChange={(thumbnails_per_page) =>
 							setAttributes({
@@ -147,7 +158,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<Disabled isDisabled={!isSelected}>
+				<Disabled>
 					<div className="sc-image-slider">
 						<div className="swiper" ref={swiperRef}>
 							<div className="swiper-wrapper">

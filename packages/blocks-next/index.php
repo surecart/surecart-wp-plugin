@@ -87,7 +87,7 @@ add_filter(
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
 			global $sc_query_id;
-			$sc_query_id = wp_unique_id();
+			$sc_query_id                                    = wp_unique_id();
 			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
 		}
 		return $context;
@@ -194,12 +194,20 @@ add_action(
 		wp_register_script_module(
 			'@surecart/product-page',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
-			array(
-				array(
+			[
+				[
 					'id'     => '@surecart/dialog',
 					'import' => 'dynamic',
-				),
-			),
+				],
+				[
+					'id'     => '@surecart/google-events',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				],
+			],
 			$static_assets['version']
 		);
 

@@ -189,6 +189,15 @@ const { state, actions } = store('surecart/checkout', {
 			return state.error?.message || '';
 		},
 
+		get lineItemPermalink() {
+			const { line_item } = getContext();
+			const product = line_item?.price?.product;
+			if (!product?.is_published) {
+				return null;
+			}
+			return product?.permalink;
+		},
+
 		/**
 		 * Get the cart/checkout additional errors.
 		 */

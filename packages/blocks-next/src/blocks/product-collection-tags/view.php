@@ -10,7 +10,7 @@
 
 		$collection_term_id   = $collection->term_id;
 		$filter_block_context = static function ( $context ) use ( $collection_term_id ) {
-			$context['sc_collection_id'] = $collection_term_id;
+			$context['surecart/collection_id'] = $collection_term_id;
 			return $context;
 		};
 

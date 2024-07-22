@@ -33,6 +33,7 @@
 	?>
 	data-wp-interactive='{ "namespace": "surecart/product-page" }'
 	data-wp-on--submit="callbacks.handleSubmit"
+	data-wp-init="callbacks.init"
 >
 	<?php echo do_blocks( $content );  // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </form>

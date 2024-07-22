@@ -19,6 +19,7 @@ export const expand = [
 	'price.product',
 	'product.featured_product_media',
 	'product.product_collections',
+	'product.product_medias',
 	'product_media.media',
 	'customer',
 	'customer.shipping_address',

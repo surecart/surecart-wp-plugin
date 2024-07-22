@@ -55,9 +55,12 @@ export const getHumanDiscount = (coupon, currency = 'usd') => {
 export const getFormattedPrice = ({ amount, currency = 'usd' }) => {
 	const converted = maybeConvertAmount(parseFloat(amount), currency);
 
+	const minimumFractionDigits = amount % 1 == 0 ? 0 : 2;
+
 	return `${new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency,
+		minimumFractionDigits,
 	}).format(parseFloat(converted.toFixed(2)))}`;
 };
 

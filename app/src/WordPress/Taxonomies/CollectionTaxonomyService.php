@@ -34,6 +34,12 @@ class CollectionTaxonomyService {
 	 * @return array
 	 */
 	public function getTermsArgs( $args, $taxonomies ) {
+		global $pagenow;
+		// allow if editing direction on admin.
+		if ( is_admin() && 'edit-tags.php' === $pagenow ) {
+			return $args;
+		}
+
 		if ( in_array( $this->slug, $taxonomies, true ) ) {
 			$args['meta_query'] = array(
 				array(

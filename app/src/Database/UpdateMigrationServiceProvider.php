@@ -42,8 +42,6 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 		\SureCart::page_seeder()->createShopPage();
 		// make sure to check for and create cart post on every update.
 		$this->handleCartMigration();
-		// update the product page to have a wrapper block.
-		$this->handleProductPageMigration();
 	}
 
 	/**
@@ -127,56 +125,5 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 
 		// return result.
 		return $result;
-	}
-
-	/**
-	 * Handle the product page migration.
-	 *
-	 * @return void
-	 */
-	public function handleProductPageMigration() {
-		$args = array(
-			'post_type'           => array( 'wp_template_part', 'wp_template' ), // specify the post types.
-			'post_status'         => array( 'auto-draft', 'draft', 'publish' ), // specify the post status.
-			'posts_per_page'      => -1,
-			'lazy_load_term_meta' => false,
-		);
-
-		$query     = new \WP_Query( $args );
-		$templates = $query->posts ?? array();
-
-		if ( empty( $templates ) ) {
-			return;
-		}
-
-		// filter out the templates that have post_name as product.
-		$product_templates = array_filter(
-			$templates,
-			function ( $template ) {
-				return in_array( $template->post_name, array( 'product-info', 'single-product' ) ) ||
-				strpos( $template->post_name, 'sc-part-products-info-' ) !== false ||
-				strpos( $template->post_name, 'sc-products-' ) !== false;
-			}
-		);
-
-		// if we don't have any product templates, return.
-		if ( empty( $product_templates ) ) {
-			return;
-		}
-
-		// update each template if it doesn't have the wp:surecart/product-page block.
-		foreach ( $product_templates as $product_template ) {
-			if ( has_block( 'surecart/product-page', $product_template ) ) {
-				continue;
-			}
-
-			// update the post content.
-			wp_update_post(
-				array(
-					'ID'           => $product_template->ID,
-					'post_content' => '<!-- wp:surecart/product-page -->' . $product_template->post_content . '<!-- /wp:surecart/product-page -->',
-				)
-			);
-		}
 	}
 }

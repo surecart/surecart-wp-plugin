@@ -77,17 +77,10 @@ export default ({ post }) => {
 						const mediaIds = (media || []).map(({ id }) => ({
 							id,
 						}));
-						// Add media ids to the end of the array of objects, but only if they do not yet exist.
+
+						// Update the media ids.
 						editEntityRecord('postType', 'sc_product', post?.id, {
-							gallery: [
-								...post?.gallery,
-								...mediaIds.filter(
-									({ id }) =>
-										!post?.gallery.some(
-											(item) => item.id === id
-										)
-								),
-							],
+							gallery: mediaIds,
 						});
 					}}
 				/>

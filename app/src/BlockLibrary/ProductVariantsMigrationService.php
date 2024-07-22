@@ -11,7 +11,7 @@ class ProductVariantsMigrationService {
 	 *
 	 * @var array
 	 */
-	protected $attributes = array();
+	public $attributes = array();
 
 	/**
 	 * Block.
@@ -67,10 +67,8 @@ class ProductVariantsMigrationService {
 	public function renderProductVariants() {
 		$wrapper_attributes['style']['spacing']['margin'] = $this->attributes['style']['spacing']['margin'] ?? '';
 
-		$this->block_html  = '<!-- wp:surecart/product-variant-pills ' . wp_json_encode( $wrapper_attributes ) . ' -->';
-		$this->block_html .= '<!-- wp:surecart/product-variant-pills-wrapper -->';
+		$this->block_html = '<!-- wp:surecart/product-variant-pills ' . wp_json_encode( $wrapper_attributes ) . ' -->';
 		$this->renderVariantPill();
-		$this->block_html .= '<!-- /wp:surecart/product-variant-pills-wrapper -->';
 		$this->block_html .= '<!-- /wp:surecart/product-variant-pills -->';
 	}
 
