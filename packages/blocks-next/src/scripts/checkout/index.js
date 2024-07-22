@@ -10,11 +10,9 @@ import {
 	updateCheckoutLineItem,
 	removeCheckoutLineItem,
 	handleCouponApply,
-	handleAddToCartByPriceOrVariant,
 } from '@surecart/checkout-service';
 import { processCheckoutEvents } from '@surecart/checkout-events';
 
-const { actions: cartActions } = store('surecart/cart');
 const { __, sprintf, _n } = wp.i18n;
 const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
@@ -533,43 +531,6 @@ const { state, actions } = store('surecart/checkout', {
 
 			if (checkout) {
 				actions.setCheckout(checkout, mode, formId);
-			}
-			state.loading = false;
-		},
-
-		/**
-		 * Set the ad_hoc_amount
-		 */
-		setAdHocAmount: (e) => {
-			const context = getContext();
-			context.adHocAmount = parseFloat(e.target.value);
-		},
-
-		/**
-		 * Add to cart by price or variant.
-		 */
-		addToCartByPriceOrVariant: async (e) => {
-			e.preventDefault();
-
-			const {
-				mode,
-				formId,
-				priceId,
-				selectedPrice,
-				variantId,
-				adHocAmount,
-			} = getContext();
-
-			state.loading = true;
-			const checkout = await handleAddToCartByPriceOrVariant({
-				price_id: priceId,
-				variant_id: variantId,
-				ad_hoc_amount: !selectedPrice.is_zero_decimal ? adHocAmount * 100 : adHocAmount,
-			});
-
-			if (checkout) {
-				actions.setCheckout(checkout, mode, formId);
-				cartActions?.toggle();
 			}
 			state.loading = false;
 		},
