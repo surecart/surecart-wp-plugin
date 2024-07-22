@@ -13,7 +13,6 @@ import {
 } from '@surecart/checkout-service';
 import { processCheckoutEvents } from '@surecart/checkout-events';
 
-// const { actions: cartDrawerActions } = store('surecart/cart');
 const { __, sprintf, _n } = wp.i18n;
 const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
@@ -197,6 +196,15 @@ const { state, actions } = store('surecart/checkout', {
 				return null;
 			}
 			return product?.permalink;
+		},
+
+		/**
+		 * Get the cart/checkout additional errors.
+		 */
+		get additionalErrors() {
+			return (state?.error?.additional_errors || []).map(
+				(e) => e.message
+			);
 		},
 
 		/**
