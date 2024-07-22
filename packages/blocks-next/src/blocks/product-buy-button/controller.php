@@ -7,7 +7,7 @@ $product = sc_get_product();
 
 // handle the width attribute.
 if ( ! empty( $attributes['width'] ) ) {
-	$class .= ' ' . 'has-custom-width sc-button__width-' . $attributes['width'];
+	$class .= ' ' . 'has-custom-width wp-block-button__width-' . $attributes['width'];
 }
 
 wp_interactivity_state(

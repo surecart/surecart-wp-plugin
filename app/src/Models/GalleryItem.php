@@ -28,6 +28,11 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return string
 	 */
 	public function __get( $key ) {
+		// normalize the ID.
+		if ( 'id' === $key && isset( $this->item->ID ) ) {
+			return $this->item->ID;
+		}
+
 		if ( isset( $this->item->{$key} ) ) {
 			return $this->item->{$key};
 		}

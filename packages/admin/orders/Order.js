@@ -102,6 +102,7 @@ export default () => {
 						'customer.balances',
 						'price.product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 						'variant.image',
 					],

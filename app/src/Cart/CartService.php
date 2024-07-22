@@ -187,11 +187,11 @@ class CartService {
 		?>
 
 		<!-- Render the cart. -->
-		<?php echo do_blocks( $template->content ); ?>
+		<?php echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 		<!-- Render floating cart icon -->
 		<?php if ( $this->isFloatingIconEnabled() ) : ?>
-			<?php echo do_blocks( $cart_icon_block_content ); ?>
+			<?php echo do_blocks( $cart_icon_block_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<?php endif; ?>
 
 		<?php

@@ -43,6 +43,7 @@ export default () => {
 						'invoice_item.price',
 						'price.product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 						'subscription',
 						'subscription.price',

@@ -7,12 +7,15 @@
 		)
 	); ?>
 >
-	<button
+	<div
 		class="wp-block-surecart-slide-out-cart-header__close"
 		data-wp-on--click="surecart/cart::actions.toggle"
+		role="button"
+		tabindex="0"
+		aria-label="<?php esc_attr_e( 'Close cart', 'surecart' ); ?>"
 	>
 		<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
-	</button>
+	</div>
 
 	<span class="wp-block-surecart-slide-out-cart-header__title" id="sc-cart-title">
 		<?php echo esc_html( $attributes['text'] ); ?>

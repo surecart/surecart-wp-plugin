@@ -22,9 +22,9 @@
 
 	<span
 		class="sc-cart-count"
-		data-wp-bind--hidden="!state.showCartMenuIcon"
-		hidden
 		data-wp-text="state.itemsCount"
+		data-wp-bind--hidden="!state.hasItems"
+		hidden
 	>
 	</span>
 </a>
