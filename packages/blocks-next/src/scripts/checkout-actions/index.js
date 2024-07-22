@@ -151,6 +151,7 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -168,6 +169,7 @@ export const removeCheckoutLineItem = async (id) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -186,6 +188,7 @@ export const addCheckoutLineItem = async (data) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -313,9 +316,9 @@ export const handleCouponApply = async (promotionCode) => {
 				},
 			},
 		});
-	} catch (error) {
-		console.error(error);
-		checkoutState.error = error;
+	} catch (e) {
+		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}

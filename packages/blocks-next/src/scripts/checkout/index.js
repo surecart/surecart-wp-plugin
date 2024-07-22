@@ -190,6 +190,15 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Get the cart/checkout additional errors.
+		 */
+		get additionalErrors() {
+			return (state?.error?.additional_errors || []).map(
+				(e) => e.message
+			);
+		},
+
+		/**
 		 * Get the cart menu icon visibility.
 		 */
 		get showCartMenuIcon() {

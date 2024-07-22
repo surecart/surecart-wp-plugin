@@ -45,7 +45,12 @@
 						<span data-wp-text="state.errorTitle"></span>
 					</div>
 					<div class="sc-alert__message">
-						<span data-wp-text="state.errorMessage"></span>
+						<div data-wp-text="state.errorMessage"></div>
+						<template data-wp-each--message="state.additionalErrors">
+							<div>
+								<span data-wp-text="context.message"></span>
+							</div>
+						</template>
 					</div>
 				</div>
 			</div>
