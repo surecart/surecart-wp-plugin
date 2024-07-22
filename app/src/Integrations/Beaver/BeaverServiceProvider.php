@@ -29,6 +29,7 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 		}
 		add_action( 'init', [ $this, 'module' ] );
 		add_action( 'wp_ajax_surecart_fetch_forms', [ $this, 'fetch_forms' ] );
+		add_action( 'fl_builder_after_render_shortcodes', [ $this, 'handle_product_page_wrapper' ] );
 	}
 
 	/**
@@ -84,5 +85,34 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 		$beaverModule = new BeaverFormModule();
 
 		\FLBuilder::register_module( BeaverFormModule::class, $beaverModule::getSettings() );
+	}
+
+	/**
+	 * Handle product page wrapper
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function handle_product_page_wrapper( $content ) {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return $content;
+		}
+
+		// check if the product page wrapper is not already added.
+		if ( false === strpos( $content, '<form class="wp-block-surecart-product"' ) ) {
+			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
+		}
+
+		// check if the custom amount block is not already added.
+		if ( false === strpos( $content, '<form class="wp-block-surecart-custom-amount"' ) ) {
+			$content = str_replace(
+				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
+				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
+				$content
+			);
+		}
+
+		return do_blocks( $content );
 	}
 }
