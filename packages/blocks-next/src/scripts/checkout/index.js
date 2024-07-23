@@ -57,7 +57,7 @@ const moveFocusToElement = (elementSelector) => {
 /**
  * Checkout store.
  */
-const { state, actions, callbacks } = store('surecart/checkout', {
+const { state, actions } = store('surecart/checkout', {
 	state: {
 		/**
 		 * Checkout loading state.
