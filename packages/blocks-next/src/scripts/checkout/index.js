@@ -57,7 +57,7 @@ const moveFocusToElement = (elementSelector) => {
 /**
  * Checkout store.
  */
-const { state, actions } = store('surecart/checkout', {
+const { state, actions, callbacks } = store('surecart/checkout', {
 	state: {
 		/**
 		 * Checkout loading state.
@@ -142,6 +142,7 @@ const { state, actions } = store('surecart/checkout', {
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
+			console.log('checkoutLineItems', state.checkout?.line_items?.data);
 			return state.checkout?.line_items?.data || [];
 		},
 
@@ -254,6 +255,12 @@ const { state, actions } = store('surecart/checkout', {
 		 * This is called when the store is initialized.
 		 */
 		init() {
+			const pricesSelector = document.querySelector(
+				'sc-product-price-choices'
+			);
+			pricesSelector?.addEventListener('click', function (e) {
+				callbacks.syncTabs({ key: LOCAL_STORAGE_KEY });
+			});
 			const { mode, formId } = getContext();
 			const checkout = getCheckoutData(mode, formId);
 			actions.setCheckout(checkout, mode, formId);
