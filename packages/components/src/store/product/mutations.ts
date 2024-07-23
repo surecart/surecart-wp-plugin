@@ -6,8 +6,6 @@ import { addCheckoutLineItem } from '@store/checkout/mutations';
 
 export const submitCartForm = async (productId: string) => {
   const productState = state[productId];
-  console.log(productState);
-
   if (!productState) return;
   if (!productState.selectedPrice?.id) return;
   if (productState.selectedPrice?.ad_hoc && (null === productState.adHocAmount || undefined === productState.adHocAmount)) return;

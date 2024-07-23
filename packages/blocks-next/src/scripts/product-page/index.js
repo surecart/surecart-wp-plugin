@@ -246,7 +246,6 @@ const { state, actions } = store('surecart/product-page', {
 
 	actions: {
 		addToCart: async () => {
-			console.log('Adding to cart');
 			const context = getContext();
 			const { mode, formId } = context;
 			try {

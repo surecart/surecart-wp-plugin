@@ -5,7 +5,6 @@ import { getQueryArg } from '@wordpress/url';
 const { checkout } = getSerializedState();
 
 const notPersistCart = checkout?.persist !== 'browser' || !!getQueryArg(window.location.href, 'no_cart');
-console.log(notPersistCart);
 
 const store = notPersistCart
   ? createStore<{ live: any; test: any }>({

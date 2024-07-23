@@ -35,7 +35,6 @@ export const createStorageStore = <T extends object>(storage: MinimumStorage, ke
   if (syncAcrossTabs) {
     window.addEventListener('storage', () => {
       const currentState = safeRead<T>(storage, key);
-      console.log(currentState);
 
       if (currentState === null) {
         return;

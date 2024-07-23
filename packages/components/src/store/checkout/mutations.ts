@@ -61,8 +61,6 @@ export const removeCheckoutLineItem = async id => {
  * Add the checkout line item.
  */
 export const addCheckoutLineItem = async data => {
-  console.log(data);
-
   try {
     updateFormState('FETCH');
     state.checkout = await addLineItem({
@@ -70,8 +68,6 @@ export const addCheckoutLineItem = async data => {
       data,
       live_mode: state?.mode === 'live',
     });
-    console.log(state.checkout);
-
     updateFormState('RESOLVE');
   } catch (e) {
     console.error(e);
