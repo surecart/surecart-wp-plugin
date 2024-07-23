@@ -25,7 +25,6 @@ class Block extends ProductBlock {
 	 */
 	public function render( $attributes, $content ) {
 		global $content_width;
-var_dump($attributes);
 		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 		if ( empty( $product ) ) {
 			return '';
