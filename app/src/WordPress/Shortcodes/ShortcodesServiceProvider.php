@@ -154,14 +154,14 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_description',
-			'surecart/product-description',
+			'surecart/product-description-old',
 			[
 				'id' => null,
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_title',
-			'surecart/product-title',
+			'surecart/product-title-old',
 			[
 				'level' => 1,
 			]
@@ -185,7 +185,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_media',
-			'surecart/product-media',
+			'surecart/product-media-old',
 			[
 				'auto_height' => true,
 				'id'          => null,
@@ -193,7 +193,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_quantity',
-			'surecart/product-quantity',
+			'surecart/product-quantity-old',
 			[
 				'id' => null,
 			]
@@ -237,6 +237,21 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			$name     = str_replace( 'surecart/', '', $metadata['name'] );
 			$name     = str_replace( '-', '_', sanitize_title_with_dashes( $name ) );
 
+			if ( 'product_title' === $name ) {
+				$name = 'product_title_new';
+			}
+
+			if ( 'product_description' === $name ) {
+				$name = 'product_description_new';
+			}
+
+			if ( 'product_quantity' === $name ) {
+				$name = 'product_quantity_new';
+			}
+
+			if ( 'product_media' === $name ) {
+				$name = 'product_media_new';
+			}
 			$container['surecart.shortcodes']->registerBlockShortcodeByName(
 				'sc_' . $name,
 				$metadata['name'],

@@ -59,7 +59,7 @@ class ShortcodesService {
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
 
-				if ( 'surecart/product-buy-button-old' === $block_name || 'surecart/product-price-choices' === $block_name ) {
+				if ( 'surecart/product-buy-button-old' === $block_name || 'surecart/product-price-choices' === $block_name || 'surecart/product-title-old' === $block_name || 'surecart/product-price' === $block_name || 'surecart/product-description-old' === $block_name || 'surecart/product-variant-choices' === $block_name || 'surecart/product-quantity-old' === $block_name || 'surecart/product-media-old' === $block_name ) {
 					$block = new \WP_Block(
 						[
 							'blockName'    => $block_name,
@@ -67,7 +67,7 @@ class ShortcodesService {
 							'innerContent' => do_shortcode( $content ),
 						]
 					);
-					
+
 					return $block->render();
 				}
 

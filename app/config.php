@@ -208,6 +208,10 @@ return array(
 		\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\CollectionBadges\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
+		\SureCartBlocks\Blocks\Product\Title\Block::class,
+		\SureCartBlocks\Blocks\Product\Description\Block::class,
+		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
