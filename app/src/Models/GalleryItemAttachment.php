@@ -59,7 +59,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return object
 	 */
 	public function attributes( $size = 'full', $attr = [] ) {
-		$attachment_id = $this->item->ID;
+		$attachment_id = ! empty( $this->item->ID ) ? $this->item->ID : 0;
 		$image         = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
 
 		if ( $image ) {
