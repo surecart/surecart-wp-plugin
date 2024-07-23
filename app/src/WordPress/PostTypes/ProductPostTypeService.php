@@ -65,6 +65,10 @@ class ProductPostTypeService {
 		add_action( 'surecart/product_updated', array( $this, 'sync' ) );
 		add_action( 'surecart/product_deleted', array( $this, 'deleteSynced' ) );
 
+		add_filter( 'post_thumbnail_id', array( $this, 'postThumbnailId' ), 10, 5 );
+		add_filter( 'wp_get_attachment_image', array( $this, 'getAttachmentImage' ), 10, 5 );
+		add_filter( 'has_post_thumbnail', array( $this, 'hasPostThumbnail' ), 10, 2 );
+
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
@@ -76,6 +80,74 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Filter the post thumbnail id.
+	 * This is used to set the featured image for the product.
+	 *
+	 * @param integer $thumbnail_id The thumbnail ID.
+	 * @param integer $post_id The post ID.
+	 *
+	 * @return integer
+	 */
+	public function postThumbnailId( $thumbnail_id, $post_id ) {
+		$post = get_post( $post_id );
+		if ( $post->post_type === $this->post_type ) {
+			$product = sc_get_product( $post_id );
+			return $product->featured_image->ID;
+		}
+		return $thumbnail_id;
+	}
+
+	/**
+	 * Get the attachment image.
+	 * We need this for backwards compatibility for ProductMedia.
+	 *
+	 * @param string  $html The HTML.
+	 * @param integer $attachment_id The attachment ID.
+	 * @param integer $post_thumbnail_id The post thumbnail ID.
+	 * @param string  $size The size.
+	 * @param array   $attr The attributes.
+	 *
+	 * @return string
+	 */
+	public function getAttachmentImage( $html, $attachment_id, $post_thumbnail_id, $size, $attr ) {
+		// check if we have an attachment id.
+		if ( ! empty( $attachment_id ) ) {
+			return $html;
+		}
+
+		// check post type.
+		global $post;
+		if ( $post->post_type !== $this->post_type ) {
+			return $html;
+		}
+
+		$product = sc_get_product();
+		if ( empty( $product ) ) {
+			return $html;
+		}
+
+		return $product->featured_image->html( $size, $attr );
+	}
+
+	/**
+	 * Since we are using the first gallery image as the post thumbnail,
+	 * we need to check if the product has a featured image.
+	 *
+	 * @param boolean $has_thumbnail Whether the post has a thumbnail.
+	 * @param integer $post_id The post ID.
+	 *
+	 * @return boolean
+	 */
+	public function hasPostThumbnail( $has_thumbnail, $post_id ) {
+		$post = get_post( $post_id );
+		if ( $post->post_type === $this->post_type ) {
+			$product = sc_get_product( $post_id );
+			return ! empty( $product->featured_image );
+		}
+		return $has_thumbnail;
 	}
 
 	/**
