@@ -6,6 +6,23 @@ namespace SureCart\WordPress\Shortcodes;
  * The shortcodes service.
  */
 class ShortcodesService {
+
+	/**
+	 * Old Shortcode block names which we want to not render through interactivity.
+	 * 
+	 * @var array
+	 */
+	protected $old_shortcode_block_names = [
+		'surecart/product-buy-button-old',
+		'surecart/product-price-choices',
+		'surecart/product-title-old',
+		'surecart/product-price',
+		'surecart/product-description-old',
+		'surecart/product-variant-choices',
+		'surecart/product-quantity-old',
+		'surecart/product-media-old'
+	];
+
 	/**
 	 * Convert the block
 	 *
@@ -59,7 +76,7 @@ class ShortcodesService {
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
 
-				if ( 'surecart/product-buy-button-old' === $block_name || 'surecart/product-price-choices' === $block_name || 'surecart/product-title-old' === $block_name || 'surecart/product-price' === $block_name || 'surecart/product-description-old' === $block_name || 'surecart/product-variant-choices' === $block_name || 'surecart/product-quantity-old' === $block_name || 'surecart/product-media-old' === $block_name ) {
+				if ( in_array( $block_name, $this->old_shortcode_block_names, true ) ) {
 					$block = new \WP_Block(
 						[
 							'blockName'    => $block_name,

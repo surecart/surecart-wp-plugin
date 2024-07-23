@@ -237,21 +237,17 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			$name     = str_replace( 'surecart/', '', $metadata['name'] );
 			$name     = str_replace( '-', '_', sanitize_title_with_dashes( $name ) );
 
-			if ( 'product_title' === $name ) {
-				$name = 'product_title_new';
-			}
+			$old_shortcode_names = [
+				'product_title',
+				'product_description',
+				'product_quantity',
+				'product_media',
+			];
 
-			if ( 'product_description' === $name ) {
-				$name = 'product_description_new';
+			if ( in_array( $name, $old_shortcode_names, true ) ) {
+				$name = $name . '_new';
 			}
-
-			if ( 'product_quantity' === $name ) {
-				$name = 'product_quantity_new';
-			}
-
-			if ( 'product_media' === $name ) {
-				$name = 'product_media_new';
-			}
+			
 			$container['surecart.shortcodes']->registerBlockShortcodeByName(
 				'sc_' . $name,
 				$metadata['name'],
