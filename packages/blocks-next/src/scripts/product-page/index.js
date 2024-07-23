@@ -315,7 +315,7 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 					'@wordpress/interactivity-router'
 				);
 
-				yield actions.navigate(ref.href);
+				yield actions.navigate(ref.href, { replace: true });
 			}
 		},
 		/** Prefetch upcoming urls. */
