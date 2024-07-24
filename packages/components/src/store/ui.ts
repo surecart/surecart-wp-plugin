@@ -1,6 +1,8 @@
 import { createStore } from '@stencil/store';
 import { speak } from '@wordpress/a11y';
 import { __ } from '@wordpress/i18n';
+import { state as checkoutState } from '@store/checkout';
+import { getCheckout } from '@store/checkouts/mutations';
 
 export const store = createStore<any>(
   () => ({
@@ -13,9 +15,21 @@ export const store = createStore<any>(
   },
 );
 
-const { state } = store;
+// const { state } = store;
 
-export const toggleCart = (open = null) => store.set('cart', { ...state.cart, ...{ open: open !== null ? open : !state.cart.open } });
+export const toggleCart = (open = null) => {
+  if (!open) {
+    return;
+  }
+  const checkout = getCheckout(checkoutState.formId, checkoutState.mode);
+
+  const event = new CustomEvent('sCheckoutUpdatedOnProductPage', {
+    // This is for the product page which is created using shortcodes.
+    detail: { checkout, formId: checkoutState.formId, mode: checkoutState.mode },
+    bubbles: true,
+  });
+  document.dispatchEvent(event);
+};
 
 const { on } = store;
 on('set', (key, newState) => {
