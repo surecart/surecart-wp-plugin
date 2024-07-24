@@ -152,6 +152,7 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -300,6 +301,9 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 	return item?.checkout;
 };
 
+/**
+ * Apply coupon on cart.
+ */
 export const handleCouponApply = async (promotionCode) => {
 	try {
 		checkoutState.loading = true;
