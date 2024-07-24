@@ -91,6 +91,7 @@ on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
   if (JSON.stringify(checkout) === JSON.stringify(oldCheckout)) return; // we only care about changes.
 
   const event = new CustomEvent('sCheckoutUpdatedOnProductPage', {
+    // This is for the product page which is created using shortcodes.
     detail: { checkout, formId: state.formId, mode: state.mode },
     bubbles: true,
   });
