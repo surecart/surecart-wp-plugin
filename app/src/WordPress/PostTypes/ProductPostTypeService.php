@@ -143,6 +143,9 @@ class ProductPostTypeService {
 	 */
 	public function hasPostThumbnail( $has_thumbnail, $post_id ) {
 		$post = get_post( $post_id );
+		if ( empty( $post ) ) {
+			return $has_thumbnail;
+		}
 		if ( $post->post_type === $this->post_type ) {
 			$product = sc_get_product( $post_id );
 			return ! empty( $product->featured_image );

@@ -59,3 +59,66 @@ add_filter(
 		return $url;
 	}
 );
+
+
+add_filter( 'bricks/dynamic_tags_list', 'add_my_tag_to_builder' );
+function add_my_tag_to_builder( $tags ) {
+	// Ensure your tag is unique (best to prefix it)
+	$tags[] = [
+		'name'  => '{sc_media}',
+		'label' => esc_attr__( 'SureCart Media', 'surecart' ),
+		'group' => 'SureCart',
+	];
+
+	return $tags;
+}
+
+
+add_filter( 'bricks/dynamic_data/render_tag', 'get_my_tag_value', 10, 3 );
+function get_my_tag_value( $tag, $post, $context = 'text' ) {
+
+	$blocks = [
+		'sc_media' => 'surecart/product-media',
+	];
+
+	if ( ! isset( $blocks[ $tag ] ) ) {
+		return $tag;
+	}
+
+	$argument   = str_replace( $tag . ':', '', $tag );
+	$arguments  = explode( ',', $argument );
+	$assoc_args = [];
+	foreach ( $arguments as $arg ) {
+		$parts              = explode( '=', $arg );
+		$key                = $parts[0];
+		$value              = $parts[1] ?? '';
+		$assoc_args[ $key ] = $value;
+	}
+
+	return do_blocks( '<!-- wp:' . $blocks[ $tag ] . ' ' . wp_json_encode( [ $argument ], JSON_FORCE_OBJECT ) . ' --><!-- /wp:' . $blocks[ $tag ] . ' -->' );
+}
+
+add_filter( 'bricks/dynamic_data/render_content', 'render_my_tag', 10, 3 );
+add_filter( 'bricks/frontend/render_data', 'render_my_tag', 10, 2 );
+function render_my_tag( $content, $post, $context = 'text' ) {
+
+	$blocks = [
+		'{sc_media}' => 'surecart/product-media',
+	];
+
+	foreach ( $blocks as $block => $tag ) {
+		if ( strpos( $content, $block ) === false ) {
+			continue;
+		}
+
+		$rendered = renderBlock( $tag );
+
+		$content = str_replace( $block, $rendered, $content );
+	}
+
+	return $content;
+}
+
+function renderBlock( $name, $attributes = [] ) {
+	return do_blocks( '<!-- wp:' . $name . ' ' . wp_json_encode( $attributes, JSON_FORCE_OBJECT ) . ' --><!-- /wp:' . $name . ' -->' );
+}
