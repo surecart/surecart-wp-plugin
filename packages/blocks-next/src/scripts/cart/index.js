@@ -42,7 +42,7 @@ store('surecart/cart', {
 				dialog?.close();
 
 				// speak the cart dialog state.
-				speak(__('Cart closed', 'surecart'), 'assertive');
+				speak(__('Cart closed.', 'surecart'), 'assertive');
 			} else {
 				dialog?.showModal();
 
@@ -50,7 +50,7 @@ store('surecart/cart', {
 				processCartViewEvent(checkoutState?.checkout);
 
 				// speak the cart dialog state.
-				speak(__('Cart opened', 'surecart'), 'assertive');
+				speak(__('Cart opened.', 'surecart'), 'assertive');
 			}
 		},
 		closeOverlay: (e) => {

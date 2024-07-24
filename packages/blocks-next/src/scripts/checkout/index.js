@@ -466,13 +466,13 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Increase the quantity of the line item.
 		 */
-		onQuantityIncrease: (e) => {
+		onQuantityIncrease: async (e) => {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity + 1;
-			actions.updateLineItem({ quantity });
+			await actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -486,7 +486,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Decrease the quantity of the line item.
 		 */
-		onQuantityDecrease: (e) => {
+		onQuantityDecrease: async (e) => {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -495,7 +495,7 @@ const { state, actions } = store('surecart/checkout', {
 			if (quantity < 1) {
 				return;
 			}
-			actions.updateLineItem({ quantity });
+			await actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -509,9 +509,18 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Change the quantity of the line item.
 		 */
-		onQuantityChange: (e) => {
+		onQuantityChange: async (e) => {
 			const quantity = parseInt(e.target.value || '');
-			actions.updateLineItem({ quantity });
+			await actions.updateLineItem({ quantity });
+
+			speak(
+				sprintf(
+					/* translators: %d: quantity */
+					__('Quantity changed to %d.', 'surecart'),
+					quantity
+				),
+				'assertive'
+			);
 		},
 
 		/**
@@ -537,10 +546,13 @@ const { state, actions } = store('surecart/checkout', {
 		removeLineItem: async () => {
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
+			speak(__('Removing line item.', 'surecart'), 'assertive');
+
 			const checkout = await removeCheckoutLineItem(line_item?.id);
 
 			if (checkout) {
 				actions.setCheckout(checkout, mode, formId);
+				speak(__('Line item removed.', 'surecart'), 'assertive');
 			}
 			state.loading = false;
 		},
