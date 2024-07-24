@@ -40,7 +40,7 @@ trait ConvertsBlocks {
 		// we need to remove this since this is processed twice for some blocks.
 		add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
 
-		$block = do_blocks( '<!-- wp:' . $this->block_name . ' ' . wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->' );
+		$block = do_blocks( '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->' );
 
 		remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
 
