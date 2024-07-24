@@ -1,6 +1,7 @@
 <?php
 namespace SureCart\Integrations;
 
+use SureCart\Migration\ProductPageWrapperService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 class DiviServiceProvider implements ServiceProviderInterface {
@@ -19,6 +20,7 @@ class DiviServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		add_filter( 'surecart/shortcode/render', [ $this, 'handleDiviShortcode' ], 10, 4 );
+		add_filter( 'et_builder_render_layout', [ $this,'handleProductPageWrapper' ], 12 );
 	}
 
 	/**
@@ -33,10 +35,21 @@ class DiviServiceProvider implements ServiceProviderInterface {
 	 */
 	public function handleDiviShortcode( $content, $atts, $name, $form = false ) {
 
-		if ( 'sc_form' !== $name || empty( $atts['id'] ) || empty( $_GET['et_pb_preview'] )) {
+		if ( 'sc_form' !== $name || empty( $atts['id'] ) || empty( $_GET['et_pb_preview'] ) ) {
 			return $content;
 		}
-		
+
 		return '[sc_form id="' . $atts['id'] . '"]';
+	}
+
+	/**
+	 * Handle product page wrapper
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function handleProductPageWrapper( $content ) {
+		return ( new ProductPageWrapperService( $content ) )->wrap();
 	}
 }
