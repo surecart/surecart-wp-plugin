@@ -15,8 +15,6 @@ export const store = createStore<any>(
   },
 );
 
-// const { state } = store;
-
 export const toggleCart = (open = null) => {
   if (!open) {
     return;
