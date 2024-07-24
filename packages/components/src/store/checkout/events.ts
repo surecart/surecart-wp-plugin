@@ -84,3 +84,15 @@ on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
   });
   document.dispatchEvent(event);
 });
+
+on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
+  if (key !== 'checkout') return; // we only care about checkout
+  if (!checkout?.id) return; // we don't have a saved checkout.
+  if (JSON.stringify(checkout) === JSON.stringify(oldCheckout)) return; // we only care about changes.
+
+  const event = new CustomEvent('sCheckoutUpdatedOnProductPage', {
+    detail: { checkout, formId: state.formId, mode: state.mode },
+    bubbles: true,
+  });
+  document.dispatchEvent(event);
+});

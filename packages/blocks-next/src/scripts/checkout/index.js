@@ -254,6 +254,10 @@ const { state, actions } = store('surecart/checkout', {
 		 * This is called when the store is initialized.
 		 */
 		init() {
+			addEventListener(
+				'sCheckoutUpdatedOnProductPage',
+				actions.updateCheckoutOnProductPage
+			);
 			const { mode, formId } = getContext();
 			const checkout = getCheckoutData(mode, formId);
 			actions.setCheckout(checkout, mode, formId);
@@ -543,6 +547,21 @@ const { state, actions } = store('surecart/checkout', {
 				actions.setCheckout(checkout, mode, formId);
 			}
 			state.loading = false;
+		},
+		updateCheckoutOnProductPage(e) {
+			if (
+				!e?.detail?.checkout ||
+				!e?.detail?.mode ||
+				!e?.detail?.formId
+			) {
+				return;
+			}
+
+			actions.setCheckout(
+				e.detail.checkout,
+				e.detail.mode,
+				e.detail.formId
+			);
 		},
 	},
 });
