@@ -55,5 +55,10 @@
 
 			<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
 		</div>
+
+		<!-- speak elements -->
+		<p id="a11y-speak-intro-text" class="a11y-speak-intro-text"></p>
+		<div id="a11y-speak-assertive" class="a11y-speak-region" aria-live="assertive" aria-relevant="additions text" aria-atomic="true">&nbsp;</div>
+		<div id="a11y-speak-polite" class="a11y-speak-region" aria-live="polite" aria-relevant="additions text" aria-atomic="true"></div>
 	</dialog>
 </div>
