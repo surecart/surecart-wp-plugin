@@ -17,6 +17,7 @@ import { processCheckoutEvents } from '@surecart/checkout-events';
 const { __, sprintf, _n } = wp.i18n;
 const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
+const { actions: cartActions } = store('surecart/cart');
 
 /**
  * Get checkout data from local storage based on mode and formId.
@@ -254,10 +255,6 @@ const { state, actions } = store('surecart/checkout', {
 		 * This is called when the store is initialized.
 		 */
 		init() {
-			addEventListener(
-				'sCheckoutUpdatedOnProductPage',
-				actions.updateCheckoutOnProductPage
-			);
 			const { mode, formId } = getContext();
 			const checkout = getCheckoutData(mode, formId);
 			actions.setCheckout(checkout, mode, formId);
@@ -562,6 +559,12 @@ const { state, actions } = store('surecart/checkout', {
 				e.detail.mode,
 				e.detail.formId
 			);
+			cartActions.toggle();
 		},
 	},
 });
+
+addEventListener(
+	'sCheckoutUpdatedOnProductPage',
+	actions.updateCheckoutOnProductPage
+); // Listen for checkout update on product page.
