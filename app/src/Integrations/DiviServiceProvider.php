@@ -4,6 +4,9 @@ namespace SureCart\Integrations;
 use SureCart\Migration\ProductPageWrapperService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
+/**
+ * Divi Service Provider
+ */
 class DiviServiceProvider implements ServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
@@ -50,6 +53,16 @@ class DiviServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function handleProductPageWrapper( $content ) {
-		return ( new ProductPageWrapperService( $content ) )->wrap();
+		$original_post = get_post();
+		global $post;
+		$post = get_queried_object(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		setup_postdata( $post );
+
+		$output = ( new ProductPageWrapperService( $content ) )->wrap();
+
+		$post = $original_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		setup_postdata( $original_post );
+
+		return $output;
 	}
 }
