@@ -83,6 +83,6 @@ class ProductPageWrapperService {
 			$this->content = $this->addCustomAmountBlock();
 		}
 
-		return do_blocks( $this->content) ;
+		return do_blocks( $this->content );
 	}
 }
