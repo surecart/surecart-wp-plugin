@@ -43,13 +43,6 @@ class Media extends \Bricks\Element {
 	public $icon = 'ti-layout-slider-alt';
 
 	/**
-	 * Element CSS selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.sc-image-slider';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -100,11 +93,6 @@ class Media extends \Bricks\Element {
 			'pasteStyles' => false,
 			'default'     => 'info',
 		];
-	}
-
-	// Enqueue element styles and scripts
-	public function enqueue_scripts() {
-		wp_enqueue_script( 'prefix-test-script' );
 	}
 
 	/**

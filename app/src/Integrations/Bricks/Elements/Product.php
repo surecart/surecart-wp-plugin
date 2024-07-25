@@ -85,6 +85,6 @@ class Product extends Element {
 	 * @return void
 	 */
 	public function render() {
-		echo $this->html( '', \Bricks\Frontend::render_children( $this ) );
+		echo $this->html( '', \Bricks\Frontend::render_children( $this ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

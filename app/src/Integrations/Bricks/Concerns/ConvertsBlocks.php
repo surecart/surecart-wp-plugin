@@ -21,7 +21,7 @@ trait ConvertsBlocks {
 	 * @return string
 	 */
 	protected function html( $block_attributes = [], $content = '' ) {
-		// Previewing a template.
+		// Previewing a template, show a placeholder to populate.
 		if ( $this->show_populate_on_empty ) {
 			$product = sc_get_product();
 			if ( empty( $product ) && Helpers::is_bricks_template( $this->post_id ) ) {
@@ -34,26 +34,21 @@ trait ConvertsBlocks {
 			}
 		}
 
+		// get the bricks attributes.
 		$key        = '_root';
 		$attributes = apply_filters( 'bricks/element/render_attributes', $this->attributes, $key, $this );
 
-		// we need to remove this since this is processed twice for some blocks.
+		// This is because we need to render blocks out of order.
 		add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
 
 		$block = do_blocks( '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->' );
 
+		// This is because we need to render blocks out of order.
 		remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
 
-		// Return: No attributes set for this element.
-		if ( ! isset( $attributes[ $key ] ) ) {
-			return $block;
-		}
-
+		// start the processor and select the first tag.
 		$processor = new \WP_HTML_Tag_Processor( $block );
 		$processor->next_tag();
-
-		$key        = '_root';
-		$attributes = apply_filters( 'bricks/element/render_attributes', $this->attributes, $key, $this );
 
 		// Return: No attributes set for this element.
 		if ( ! isset( $attributes[ $key ] ) ) {
@@ -61,8 +56,8 @@ trait ConvertsBlocks {
 		}
 
 		foreach ( $attributes[ $key ] as $name => $value ) {
+			// handle array and filter out empty values.
 			if ( is_array( $value ) ) {
-				// Filter out empty values.
 				$value = array_filter(
 					$value,
 					function ( $val ) {
@@ -71,19 +66,29 @@ trait ConvertsBlocks {
 				);
 			}
 
+			// handle class array.
 			if ( 'class' === $name ) {
 				foreach ( $value as $class ) {
 					$processor->add_class( $class );
 				}
+				continue;
+			}
+
+			// handle the rest of the string value attributes.
+			if ( is_string( $value ) ) {
+				$processor->set_attribute( $name, $value );
 			}
 		}
 
 		// return updated html.
-		return $processor->get_updated_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		return $processor->get_updated_html();
 	}
 
 	/**
-	 * Remove interactivity doing it wrong
+	 * Remove interactivity doing it wrong.
+	 *
+	 * This is because we need to render blocks out of order in order to
+	 * add the attributes from bricks to the block.
 	 *
 	 * @param string $trigger Trigger.
 	 * @param string $function_name Function name.

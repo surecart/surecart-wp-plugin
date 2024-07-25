@@ -6,7 +6,7 @@ use Bricks\Element;
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -53,21 +53,10 @@ class AddToCart extends Element {
 	}
 
 	/**
-	 * Set control groups.
+	 * Set controls.
+	 *
+	 * @return void
 	 */
-	public function set_control_groups() {
-		// $this->control_groups['text'] = [ // Unique group identifier (lowercase, no spaces)
-		// 'title' => esc_html__( 'Text', 'bricks' ), // Localized control group title
-		// 'tab'   => 'content', // Set to either "content" or "style"
-		// ];
-
-		// $this->control_groups['settings'] = [
-		// 'title' => esc_html__( 'Settings', 'bricks' ),
-		// 'tab'   => 'content',
-		// ];
-	}
-
-	// Set builder controls
 	public function set_controls() {
 		$this->controls['content'] = [
 			'tab'     => 'content',
@@ -90,10 +79,22 @@ class AddToCart extends Element {
 	 * @return void
 	 */
 	public function render() {
-		echo $this->html(
+		if ( bricks_is_builder() ) {
+			$content = wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) );
+			echo <<<BRICKS
+				<span {$this->render_attributes( '_root' )}>
+					<a class="wp-block-button__link wp-element-button sc-button__link">
+						<span class="sc-button__link-text">{$content}</span>
+					</a>
+				</span>
+			BRICKS;
+			return;
+		}
+
+		echo $this->html(  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'text'        => $this->settings['content'] ?? 'Add To Cart',
-				'add_to_cart' => empty( $this->settings['buy_now'] ?? false ),
+				'text'        => wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) ),
+				'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
 			]
 		);
 	}
