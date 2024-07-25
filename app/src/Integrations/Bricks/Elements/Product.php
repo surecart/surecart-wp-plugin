@@ -6,7 +6,7 @@ use Bricks\Element;
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -44,13 +44,6 @@ class Product extends Element {
 	public $icon = 'ti-shopping-cart';
 
 	/**
-	 * Element CSS selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-page';
-
-	/**
 	 * This is nestable.
 	 *
 	 * @var string
@@ -66,6 +59,11 @@ class Product extends Element {
 		return esc_html__( 'Product', 'surecart' );
 	}
 
+	/**
+	 * Template for the product.
+	 *
+	 * @return string
+	 */
 	public function get_nestable_item() {
 		return [
 			[
@@ -80,15 +78,6 @@ class Product extends Element {
 	public function get_nestable_children() {
 		return $this->get_nestable_item();
 	}
-
-	// // Set builder controls
-	// public function set_controls() {
-	// $this->controls['_children'] = [
-	// 'type'          => 'repeater',
-	// 'titleProperty' => 'label',
-	// 'items'         => 'children', // NOTE: Undocumented
-	// ];
-	// }
 
 	/**
 	 * Render element.

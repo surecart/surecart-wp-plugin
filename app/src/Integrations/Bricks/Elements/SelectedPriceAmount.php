@@ -57,6 +57,14 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
+		// Bricks does not process directives so we need to fake it here.
+		if ( ! bricks_is_frontend() ) {
+			$product = sc_get_product();
+			echo "<div {$this->render_attributes( '_root' )}>";
+			echo $product->initial_price->display_amount ?? '$50';
+			echo '</div>';
+			return;
+		}
 		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
