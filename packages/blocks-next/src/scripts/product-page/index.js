@@ -255,7 +255,6 @@ const { state, actions } = store('surecart/product-page', {
 				cartActions.toggle();
 			} catch (e) {
 				console.error(e);
-				throw e; // Re-throw the caught error
 			} finally {
 				context.busy = false;
 			}
