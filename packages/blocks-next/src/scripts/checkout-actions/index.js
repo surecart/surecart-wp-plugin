@@ -300,6 +300,9 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 	return item?.checkout;
 };
 
+/**
+ * Handle the coupon apply. Applies for both add/remove coupon.
+ */
 export const handleCouponApply = async (promotionCode) => {
 	try {
 		checkoutState.loading = true;
