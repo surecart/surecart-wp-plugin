@@ -357,15 +357,6 @@ const { state, actions } = store('surecart/checkout', {
 			const checkout = await handleCouponApply(state.promotionCode);
 
 			if (checkout) {
-				if (!checkout?.discount?.coupon) {
-					// TODO: Change this from API.
-					state.error = {
-						title: 'Failed to update. Please check for errors and try again.',
-						message: 'This coupon code is invalid.',
-					};
-					return;
-				}
-
 				speak(
 					sprintf(
 						/* translators: %s: promotion code */
