@@ -72,7 +72,13 @@
 		}
 	}
 
-    .wp-block-button__link {
-        border-radius: 9999px !important;
-    }
+	.wp-block-button__link {
+		border-radius: 9999px !important;
+	}
+
+	// Thrive theme compatibility
+	&.wp-block {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 }
