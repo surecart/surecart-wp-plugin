@@ -105,10 +105,10 @@ class Media extends \Bricks\Element {
 	public function render() {
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'auto_height'         => (bool) $this->settings['auto_height'],
+				'auto_height'         => (bool) ! empty( $this->settings['auto_height'] ),
 				'height'              => esc_html( $this->settings['height'] ),
 				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
-				'thumbnails_per_page' => (int) $this->settings['thumbnails_per_page'],
+				'thumbnails_per_page' => ! empty( $this->settings['thumbnails_per_page'] ) ? (int) $this->settings['thumbnails_per_page'] : null,
 			]
 		);
 	}
