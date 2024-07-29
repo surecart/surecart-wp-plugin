@@ -10,6 +10,7 @@ import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
+const { speak } = wp.a11y;
 const { scProductViewed } = require('./events');
 
 // controls the product page.
@@ -335,6 +336,7 @@ const { state, actions } = store('surecart/product-page', {
 				Math.min(state.maxQuantity, parseInt(e.target.value)),
 				1
 			);
+      speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
@@ -344,6 +346,7 @@ const { state, actions } = store('surecart/product-page', {
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
+      speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
@@ -353,6 +356,7 @@ const { state, actions } = store('surecart/product-page', {
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.min(state.maxQuantity, state.quantity + 1);
+      speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},
 });
