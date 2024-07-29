@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Product element.
  */
 class Media extends \Bricks\Element {
-	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
+	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
 	 * Element category.
@@ -52,46 +52,49 @@ class Media extends \Bricks\Element {
 	}
 
 	/**
-	 * Set control groups.
+	 * Set controls.
+	 *
+	 * @return void
 	 */
-	public function set_control_groups() {
-		$this->control_groups['text'] = [ // Unique group identifier (lowercase, no spaces)
-			'title' => esc_html__( 'Text', 'bricks' ), // Localized control group title
-			'tab'   => 'content', // Set to either "content" or "style"
-		];
-
-		$this->control_groups['settings'] = [
-			'title' => esc_html__( 'Settings', 'bricks' ),
-			'tab'   => 'content',
-		];
-	}
-
-	// Set builder controls
 	public function set_controls() {
-		$this->controls['content'] = [ // Unique control identifier (lowercase, no spaces)
-			'tab'     => 'content', // Control tab: content/style
-			'group'   => 'text', // Show under control group
-			'label'   => esc_html__( 'Content', 'bricks' ), // Control label
-			'type'    => 'text', // Control type
-			'default' => esc_html__( 'Content goes here ..', 'bricks' ), // Default setting
+		$this->controls['auto_height'] = [
+			'tab'        => 'content',
+			'label'      => esc_html__( 'Auto height', 'surecart' ),
+			'type'       => 'checkbox',
+			'inline'     => true,
+			'fullAccess' => true,
+			'default'    => true,
 		];
 
-		$this->controls['type'] = [
+		$this->controls['height'] = [
 			'tab'         => 'content',
-			'group'       => 'settings',
-			'label'       => esc_html__( 'Type', 'bricks' ),
-			'type'        => 'select',
-			'options'     => [
-				'info'    => esc_html__( 'Info', 'bricks' ),
-				'success' => esc_html__( 'Success', 'bricks' ),
-				'warning' => esc_html__( 'Warning', 'bricks' ),
-				'danger'  => esc_html__( 'Danger', 'bricks' ),
-				'muted'   => esc_html__( 'Muted', 'bricks' ),
+			'label'       => esc_html__( 'Height', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'default'     => '310px',
+			'placeholder' => '310px',
+			'required'    => [
+				[ 'auto_height', '!=', true ],
 			],
-			'inline'      => true,
-			'clearable'   => false,
-			'pasteStyles' => false,
-			'default'     => 'info',
+			'fullAccess'  => true,
+		];
+
+		$this->controls['width'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Max Image Width', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'placeholder' => esc_html__( 'Unlimited', 'surecart' ),
+		];
+
+		$this->controls['thumbnails_per_page'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Thumbnails per page', 'surecart' ),
+			'type'        => 'number',
+			'default'     => 5,
+			'min'         => 2,
+			'rerender'    => true,
+			'placeholder' => 5,
 		];
 	}
 
@@ -101,6 +104,13 @@ class Media extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			[
+				'auto_height'         => (bool) $this->settings['auto_height'],
+				'height'              => esc_html( $this->settings['height'] ),
+				'width'               => esc_html( $this->settings['width'] ),
+				'thumbnails_per_page' => (int) $this->settings['thumbnails_per_page'],
+			]
+		);
 	}
 }
