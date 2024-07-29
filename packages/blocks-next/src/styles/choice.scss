@@ -12,7 +12,6 @@
 .sc-choice {
 	min-width: 0;
 	align-self: stretch;
-	height: 100%;
 	background: var(--sc-choice-background-color);
 	font-family: var(--sc-input-font-family);
 	font-size: var(--sc-input-font-size-medium);
@@ -230,4 +229,9 @@
 // Thrive architect compatibility
 .thrv_wrapper div.sc-choices {
   box-sizing: border-box !important;
+}
+
+.wp-block.sc-choice {
+  margin-top: 0;
+  margin-bottom: 0;
 }
