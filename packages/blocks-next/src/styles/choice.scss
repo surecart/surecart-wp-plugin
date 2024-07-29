@@ -226,3 +226,8 @@
 		display: block;
 	}
 }
+
+// Thrive architect compatibility
+.thrv_wrapper div.sc-choices {
+  box-sizing: border-box !important;
+}
