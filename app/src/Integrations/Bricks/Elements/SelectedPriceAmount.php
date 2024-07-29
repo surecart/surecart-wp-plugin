@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Product element.
+ * Currently selected price element.
  */
 class SelectedPriceAmount extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
@@ -60,11 +60,11 @@ class SelectedPriceAmount extends \Bricks\Element {
 		if ( ! bricks_is_frontend() ) {
 			$product       = sc_get_product();
 			$initial_price = $product->initial_price->display_amount ?? '$50';
-			echo <<<BRICKS
+			echo <<<HTML
 				<span {$this->render_attributes( '_root' )}>
 					<span>{$initial_price}</span>
 				</span>
-			BRICKS;
+			HTML;
 			return;
 		}
 

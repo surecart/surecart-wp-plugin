@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Product element.
+ * Add to cart button element.
  */
 class AddToCart extends Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
@@ -81,13 +81,13 @@ class AddToCart extends Element {
 	public function render() {
 		if ( bricks_is_builder() ) {
 			$content = wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) );
-			echo <<<BRICKS
+			echo <<<HTML
 				<span {$this->render_attributes( '_root' )}>
 					<a class="wp-block-button__link wp-element-button sc-button__link">
 						<span class="sc-button__link-text">{$content}</span>
 					</a>
 				</span>
-			BRICKS;
+			HTML;
 			return;
 		}
 

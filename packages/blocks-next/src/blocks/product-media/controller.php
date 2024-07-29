@@ -7,7 +7,13 @@ if ( empty( $product ) ) {
 
 $gallery        = $product->gallery;
 $featured_image = $gallery[0] ?? null;
-$width          = ! empty( $attributes['width'] ) ? $attributes['width'] . 'px' : '';
+
+// get the width.
+if ( ! empty( $attributes['width'] ) ) {
+	$width = is_numeric( $attributes['width'] ) ? $attributes['width'] . 'px' : $attributes['width'];
+} else {
+	$width = null;
+}
 
 // handle empty.
 if ( empty( $gallery ) ) {

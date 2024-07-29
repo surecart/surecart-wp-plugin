@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Product element.
+ * Media element.
  */
 class Media extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
@@ -79,11 +79,12 @@ class Media extends \Bricks\Element {
 			'fullAccess'  => true,
 		];
 
-		$this->controls['width'] = [
+		$this->controls['max_image_width'] = [
 			'tab'         => 'content',
 			'label'       => esc_html__( 'Max Image Width', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
+			'rerender'    => true,
 			'placeholder' => esc_html__( 'Unlimited', 'surecart' ),
 		];
 
@@ -108,7 +109,7 @@ class Media extends \Bricks\Element {
 			[
 				'auto_height'         => (bool) $this->settings['auto_height'],
 				'height'              => esc_html( $this->settings['height'] ),
-				'width'               => esc_html( $this->settings['width'] ),
+				'width'               => esc_html( $this->settings['max_image_width'] ),
 				'thumbnails_per_page' => (int) $this->settings['thumbnails_per_page'],
 			]
 		);
