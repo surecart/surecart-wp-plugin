@@ -24,5 +24,5 @@
 	"editorStyle": "file:./editor.css",
 	"style": "file:./style-index.css",
 	"viewScript": ["wp-url", "wp-api-fetch"],
-	"viewScriptModule": ["@surecart/checkout", "@surecart/product-page","@surecart/accessibility"]
+	"viewScriptModule": ["@surecart/checkout", "@surecart/product-page"]
 }
