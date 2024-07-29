@@ -8,6 +8,7 @@
 	data-wp-bind--aria-checked="state.isPriceSelected"
 	tabindex="0"
 	role="radio"
+	data-wp-on--keydown="callbacks.setPrice"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </div>
