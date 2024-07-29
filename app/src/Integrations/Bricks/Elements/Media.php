@@ -81,20 +81,18 @@ class Media extends \Bricks\Element {
 
 		$this->controls['max_image_width'] = [
 			'tab'         => 'content',
-			'label'       => esc_html__( 'Max Image Width', 'surecart' ),
+			'label'       => esc_html__( 'Max image width', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
-			'rerender'    => true,
 			'placeholder' => esc_html__( 'Unlimited', 'surecart' ),
 		];
 
 		$this->controls['thumbnails_per_page'] = [
 			'tab'         => 'content',
-			'label'       => esc_html__( 'Thumbnails per page', 'surecart' ),
+			'label'       => esc_html__( 'Thumbs per page', 'surecart' ),
 			'type'        => 'number',
 			'default'     => 5,
 			'min'         => 2,
-			'rerender'    => true,
 			'placeholder' => 5,
 		];
 	}
@@ -109,7 +107,7 @@ class Media extends \Bricks\Element {
 			[
 				'auto_height'         => (bool) $this->settings['auto_height'],
 				'height'              => esc_html( $this->settings['height'] ),
-				'width'               => esc_html( $this->settings['max_image_width'] ),
+				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
 				'thumbnails_per_page' => (int) $this->settings['thumbnails_per_page'],
 			]
 		);

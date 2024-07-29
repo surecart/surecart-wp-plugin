@@ -12,7 +12,7 @@ $featured_image = $gallery[0] ?? null;
 if ( ! empty( $attributes['width'] ) ) {
 	$width = is_numeric( $attributes['width'] ) ? $attributes['width'] . 'px' : $attributes['width'];
 } else {
-	$width = null;
+	$width = false;
 }
 
 // handle empty.
