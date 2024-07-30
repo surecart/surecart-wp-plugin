@@ -43,6 +43,8 @@ class ShortcodesService {
 		add_shortcode(
 			$name,
 			function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
+				wp_enqueue_global_styles();
+				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
 					foreach ( $attributes as $key => $value ) {
