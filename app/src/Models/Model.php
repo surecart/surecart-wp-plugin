@@ -905,7 +905,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * Update the model.
 	 *
 	 * @param array $attributes Attributes to update.
-	 * @return $this|false
+	 * @return $this|\WP_Error|false
 	 */
 	protected function update( $attributes = [] ) {
 		if ( $this->fireModelEvent( 'updating' ) === false ) {
