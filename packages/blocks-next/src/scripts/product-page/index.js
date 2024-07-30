@@ -10,7 +10,15 @@ import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
+const { speak } = wp.a11y;
 const { scProductViewed } = require('./events');
+
+/**
+ * Check if the key is not submit key.
+ */
+const isNotKeySubmit = (e) => {
+  return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+};
 
 /**
  * Check if the link is valid.
@@ -357,7 +365,13 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 		/**
 		 * Set the price
 		 */
-		setPrice: () => {
+		setPrice: (e) => {
+      if(isNotKeySubmit(e)) {
+        return true;
+      }
+
+      e?.preventDefault();
+
 			const context = getContext();
 			const { product, price } = context;
 			const selectedPrice = product.prices?.data.find(
@@ -385,24 +399,41 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 				Math.min(state.maxQuantity, parseInt(e.target.value)),
 				1
 			);
+      speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity decrease.
 		 */
-		onQuantityDecrease: () => {
+		onQuantityDecrease: (e) => {
+      if(isNotKeySubmit(e)) {
+        return true;
+      }
+
+      e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
+
+      speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity increase.
 		 */
-		onQuantityIncrease: () => {
+		onQuantityIncrease: (e) => {
+      if(isNotKeySubmit(e)) {
+        return true;
+      }
+
+      e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.min(state.maxQuantity, state.quantity + 1);
+
+      speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},
 });
