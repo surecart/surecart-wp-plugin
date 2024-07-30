@@ -40,7 +40,7 @@ class Quantity extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-layout-slider-alt';
+	public $icon = 'ti-plus';
 
 	/**
 	 * Get element label.
@@ -48,7 +48,7 @@ class Quantity extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Quantity', 'surecart' );
+		return esc_html__( 'Quantity', 'surecart' );
 	}
 
 	/**
