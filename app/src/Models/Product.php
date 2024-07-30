@@ -113,9 +113,7 @@ class Product extends Model implements PageModel {
 		}
 
 		// if there are no syncable expands, let's fetch them.
-		if ( ! $this->has_syncable_expands ) {
-			$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
-		}
+		$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
 
 		// sync the product.
 		$synced = \SureCart::sync()->product()->sync( $this );
@@ -391,6 +389,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Is the post published?
+	 *
+	 * @return string
+	 */
+	public function getIsPublishedAttribute(): bool {
+		return ! empty( $this->post ) && 'publish' === $this->post->post_status;
+	}
+
+	/**
 	 * Get the page title.
 	 *
 	 * @return string
@@ -537,7 +544,8 @@ class Product extends Model implements PageModel {
 			// this is acceptable.
 			return $this->attributes['metadata']->wp_template_id;
 		}
-		return 'single-sc_product';
+
+		return '';
 	}
 
 	/**
@@ -773,11 +781,6 @@ class Product extends Model implements PageModel {
 		// we don't have an initial price.
 		if ( empty( $this->initial_price ) ) {
 			return '';
-		}
-
-		// the initial price is ad hoc.
-		if ( $this->initial_price->ad_hoc ) {
-			return esc_html__( 'Custom Amount', 'surecart' );
 		}
 
 		// return the formatted amount.

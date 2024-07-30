@@ -267,6 +267,7 @@ class ProductsListTable extends ListTable {
 				'prices',
 				'product_collections',
 				'featured_product_media',
+				'product.product_medias',
 				'product_media.media',
 				'commission_structure',
 			)

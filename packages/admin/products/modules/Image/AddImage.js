@@ -11,7 +11,7 @@ export default ({ value, onSelect }) => {
 			title={__('Select Media', 'surecart')}
 			onSelect={onSelect}
 			value={value}
-			multiple={true}
+			multiple={'add'}
 			allowedTypes={ALLOWED_MEDIA_TYPES}
 			render={({ open }) => (
 				<div

@@ -17,6 +17,7 @@ export default ({ attributes, setAttributes }) => {
 			aria-label={text ? __('Sale Label') : __('Empty Sale label')}
 			data-empty={text ? false : true}
 			placeholder={__('Type in sale badge text', 'surecart')}
+			allowedFormats={['core/bold', 'core/italic']}
 			{...blockProps}
 		/>
 	);

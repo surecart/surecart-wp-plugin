@@ -1,8 +1,8 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { InnerBlocks } from '@wordpress/block-editor';
 
-export default function PostTemplateSave() {
+export default function save() {
 	return <InnerBlocks.Content />;
 }
