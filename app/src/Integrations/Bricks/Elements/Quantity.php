@@ -57,13 +57,22 @@ class Quantity extends \Bricks\Element {
 	 * @return void
 	 */
 	public function set_controls() {
-		$this->controls['quantity'] = [
-			'type' => 'number',
-			'label' => esc_html__( 'Quantity', 'surecart' ),
-			'default' => 1,
-			'min' => 1,
-			'max' => 100,
-			'step' => 1,
+		$this->controls['label'] = [
+			'label' => esc_html__( 'Label', 'surecart' ),
+			'type'  => 'text',
 		];
+	}
+
+	/**
+	 * Render element.
+	 *
+	 * @return void
+	 */
+	public function render() {
+		echo $this->html(// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			array(
+				'label' => esc_html( $this->settings['label'] ?? null ),
+			)
+		);
 	}
 }
