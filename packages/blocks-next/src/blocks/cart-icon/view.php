@@ -1,4 +1,4 @@
-<a
+<div
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	<?php
@@ -14,6 +14,7 @@
 	data-wp-on--click="surecart/cart::actions.toggle"
 	data-wp-on--keydown="surecart/cart::actions.toggle"
 	tabindex="0"
+	role="button"
 	data-wp-bind--hidden="!state.hasItems"
 	hidden
 >
@@ -29,4 +30,4 @@
 		>
 		</span>
 	</div>
-</a>
+</div>
