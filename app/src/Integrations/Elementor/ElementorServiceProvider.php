@@ -3,6 +3,7 @@ namespace SureCart\Integrations\Elementor;
 
 use SureCart\Integrations\Elementor\Conditions\Conditions;
 use SureCart\Integrations\Elementor\Documents\ProductDocument;
+use SureCart\Migration\ProductPageWrapperService;
 use SureCart\Models\Product;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
@@ -41,6 +42,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
+			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
 	}
 
@@ -163,5 +165,16 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function product_theme_conditions( $conditions_manager ) {
 		$conditions_manager->register_condition_instance( new Conditions() );
+	}
+
+	/**
+	 * Handle Elementor content.
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function handle_product_page_wrapper( string $content ): string {
+		return ( new ProductPageWrapperService( $content ) )->wrap();
 	}
 }
