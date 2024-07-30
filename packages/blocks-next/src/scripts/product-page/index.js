@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -20,8 +20,29 @@ const isNotKeySubmit = (e) => {
   return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
 };
 
+/**
+ * Check if the link is valid.
+ */
+const isValidLink = (ref) =>
+	ref &&
+	ref instanceof window.HTMLAnchorElement &&
+	ref.href &&
+	(!ref.target || ref.target === '_self') &&
+	ref.origin === window.location.origin;
+
+/**
+ * Check if the event is a valid click event.
+ */
+const isValidEvent = (event) =>
+	event.button === 0 && // Left clicks only.
+	!event.metaKey && // Open in new tab (Mac).
+	!event.ctrlKey && // Open in new tab (Windows).
+	!event.altKey && // Download.
+	!event.shiftKey &&
+	!event.defaultPrevented;
+
 // controls the product page.
-const { state, actions } = store('surecart/product-page', {
+const { state, actions, callbacks } = store('surecart/product-page', {
 	state: {
 		/**
 		 * Get the product quantity based on the selected price.
@@ -290,6 +311,32 @@ const { state, actions } = store('surecart/product-page', {
 			scProductViewed(product, selectedPrice, state.quantity);
 		},
 
+		/** Navigate to a url using the router region. */
+		*navigate(event) {
+			const { ref } = getElement();
+			const queryRef = ref.closest('[data-wp-router-region]');
+			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
+				event.preventDefault();
+				const { actions } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+
+				yield actions.navigate(ref.href, { replace: true });
+			}
+		},
+		/** Prefetch upcoming urls. */
+		*prefetch() {
+			const { ref } = getElement();
+			if (isValidLink(ref)) {
+				const { actions } = yield import(
+					/* webpackIgnore: true */
+					'@wordpress/interactivity-router'
+				);
+				yield actions.prefetch(ref.href);
+			}
+		},
+
 		/**
 		 * Handle submit callback.
 		 */
@@ -306,10 +353,13 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Set the option.
 		 */
-		setOption: () => {
+		setOption: (e) => {
 			const context = getContext();
+			// first we set the option to optimistically update all the ui.
 			context.variantValues[`option_${context?.optionNumber}`] =
 				context?.option_value || e?.target?.value;
+			// then we navigate to update SSR.
+			return callbacks.navigate(e);
 		},
 
 		/**

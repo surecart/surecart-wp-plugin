@@ -2,6 +2,7 @@
 	class="sc-image-slider"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
 	data-wp-init="actions.init"
+	data-wp-watch="actions.updateOnRoute"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
 >
 	<div class="swiper" style="height: <?php echo esc_attr( $height ); ?>">
@@ -48,7 +49,7 @@
 						data-wp-key="<?php echo esc_attr( $image->id ); ?>"
 						<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'slideIndex' => (int) $thumb_index ) ) ); ?>
 					>
-					<?php
+						<?php
 						echo wp_kses_post(
 							$image->html(
 								'thumbnail',
@@ -57,7 +58,7 @@
 								)
 							)
 						);
-					?>
+						?>
 
 						<?php if ( $thumb_index > $attributes['thumbnails_per_page'] ) : ?>
 							<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
