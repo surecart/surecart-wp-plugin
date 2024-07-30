@@ -9,7 +9,7 @@ class ShortcodesService {
 
 	/**
 	 * Old Shortcode block names which we want to not render through interactivity.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $old_shortcode_block_names = [
@@ -20,7 +20,7 @@ class ShortcodesService {
 		'surecart/product-description-old',
 		'surecart/product-variant-choices',
 		'surecart/product-quantity-old',
-		'surecart/product-media-old'
+		'surecart/product-media-old',
 	];
 
 	/**
@@ -76,16 +76,17 @@ class ShortcodesService {
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
 
-				if ( in_array( $block_name, $this->old_shortcode_block_names, true ) ) {
-					$block = new \WP_Block(
-						[
-							'blockName'    => $block_name,
-							'attrs'        => $shortcode_attrs,
-							'innerContent' => do_shortcode( $content ),
-						]
-					);
-
-					return $block->render();
+				if ( in_array( $block_name, $this->old_shortcode_block_names, true ) && ! empty( $shortcode_attrs['id'] ) ) {
+					// translators: %s is the shortcode name.
+					wp_trigger_error( '', sprintf( esc_html__( 'Passing an id to the [%s] shortcode is deprecated. Please use the page wrapper shortcode instead.', 'surecart' ), $name ) );
+						$block = new \WP_Block(
+							[
+								'blockName'    => $block_name,
+								'attrs'        => $shortcode_attrs,
+								'innerContent' => do_shortcode( $content ),
+							]
+						);
+						return $block->render();
 				}
 
 				if ( ! empty( $block_name ) ) {
@@ -112,9 +113,9 @@ class ShortcodesService {
 					return wp_interactivity_process_directives( \SureCart::block()->productListMigration( $shortcode_attrs )->render() );
 				}
 
-				return wp_interactivity_process_directives(
-					do_blocks( '<!-- wp:' . $block_name . ' ' . wp_json_encode( $shortcode_attrs, JSON_FORCE_OBJECT ) . ' -->' . do_shortcode( $content ) . '<!-- /wp:' . $block_name . ' -->' )
-				);
+						return wp_interactivity_process_directives(
+							do_blocks( '<!-- wp:' . $block_name . ' ' . wp_json_encode( $shortcode_attrs, JSON_FORCE_OBJECT ) . ' -->' . do_shortcode( $content ) . '<!-- /wp:' . $block_name . ' -->' )
+						);
 			}
 		);
 	}
