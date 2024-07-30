@@ -1,5 +1,4 @@
 <?php
-
 $product = sc_get_product();
 if ( empty( $product ) ) {
 	return '';
