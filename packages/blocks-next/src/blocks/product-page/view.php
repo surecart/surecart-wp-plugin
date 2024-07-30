@@ -18,7 +18,7 @@
 				'selectedPrice'                => $product->initial_price,
 				'variant_options'              => $product->variant_options->data ?? array(),
 				'variants'                     => $product->variants->data ?? array(),
-				'selectedVariant'              => $product->first_variant_with_stock ?? null,
+				'selectedVariant'              => $selected_variant ?? null,
 				'quantity'                     => 1,
 				'selectedDisplayAmount'        => $product->display_amount,
 				'selectedScratchDisplayAmount' => ! empty( $product->initial_price ) ? $product->initial_price->scratch_display_amount : '',
@@ -27,16 +27,17 @@
 				'adHocAmount'                  => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
 				'variantValues'                => (object) array_filter(
 					array(
-						'option_1' => $product->first_variant_with_stock->option_1 ?? null,
-						'option_2' => $product->first_variant_with_stock->option_2 ?? null,
-						'option_3' => $product->first_variant_with_stock->option_3 ?? null,
+						'option_1' => $selected_variant->option_1 ?? null,
+						'option_2' => $selected_variant->option_2 ?? null,
+						'option_3' => $selected_variant->option_3 ?? null,
 					)
 				),
 			)
 		)
 	);
 	?>
-		data-wp-interactive='{ "namespace": "surecart/product-page" }'
+	data-wp-router-region="<?php echo esc_attr( 'product-' . $product->id ); ?>"
+	data-wp-interactive='{ "namespace": "surecart/product-page" }'
 	data-wp-on--submit="callbacks.handleSubmit"
 	data-wp-init="callbacks.init"
 >
