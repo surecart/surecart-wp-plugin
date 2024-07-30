@@ -43,6 +43,20 @@ class CollectionTags extends \Bricks\Element {
 	public $icon = 'ti-layout-slider-alt';
 
 	/**
+	 * This is nestable.
+	 *
+	 * @var string
+	 */
+	public $nestable = true;
+
+	/**
+	 * The css selector.
+	 *
+	 * @var string
+	 */
+	public $css_selector = '.wp-block-surecart-product-collection-tags';
+
+	/**
 	 * Get element label
 	 *
 	 * @return string
@@ -52,20 +66,54 @@ class CollectionTags extends \Bricks\Element {
 	}
 
 	/**
+	 * Template for the product.
+	 *
+	 * @return string
+	 */
+	public function get_nestable_item() {
+		return [
+			[
+				'name' => 'surecart-product-collection-tag',
+			],
+		];
+	}
+
+	/**
+	 * Get nestable children.
+	 *
+	 * @return array
+	 */
+	public function get_nestable_children() {
+		return $this->get_nestable_item();
+	}
+
+	/**
+	 * Set controls.
+	 *
+	 * @return void
+	 */
+	public function set_controls() {
+		$this->controls['count'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Number to display', 'surecart' ),
+			'type'        => 'number',
+			'default'     => 1,
+			'min'         => 1,
+			'placeholder' => 1,
+		];
+	}
+
+	/**
 	 * Render element.
 	 *
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
-			echo <<<HTML
-				<span>hello html</span>
-			HTML;
-
-			return;
-		}
-
-		error_log( 'Collection Tags element: '. $this->html() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo "<div {$this->render_attributes( '_root' )}>" . $this->raw(  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			[
+				'count' => $this->settings['count'],
+			],
+			\Bricks\Frontend::render_children( $this )
+		) . '</div>';
 	}
 }

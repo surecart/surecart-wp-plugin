@@ -44,6 +44,13 @@ class AddToCart extends Element {
 	public $icon = 'ti-shopping-cart';
 
 	/**
+	 * The css selector.
+	 *
+	 * @var string
+	 */
+	public $css_selector = '.wp-block-surecart-product-buy-button .sc-button__link';
+
+	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -82,20 +89,22 @@ class AddToCart extends Element {
 		if ( bricks_is_builder() ) {
 			$content = wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) );
 			echo <<<HTML
-				<span {$this->render_attributes( '_root' )}>
-					<a class="wp-block-button__link wp-element-button sc-button__link">
-						<span class="sc-button__link-text">{$content}</span>
-					</a>
-				</span>
+				<div {$this->render_attributes( '_root' )}>
+					<div class="wp-block-button has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button">
+						<a class="wp-block-button__link wp-element-button sc-button__link">
+							<span class="sc-button__link-text">{$content}</span>
+						</a>
+					</div>
+				</div>
 			HTML;
 			return;
 		}
 
-		echo $this->html(  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo "<div {$this->render_attributes( '_root' )}>" . $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'text'        => wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) ),
 				'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
 			]
-		);
+		) . '</div>';
 	}
 }

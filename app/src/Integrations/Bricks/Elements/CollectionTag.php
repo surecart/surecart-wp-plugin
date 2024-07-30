@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Selected Price Ad Hoc Amount element.
+ * Collection Tags element.
  */
-class SelectedPriceAdHocAmount extends \Bricks\Element {
+class CollectionTag extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
@@ -26,29 +26,36 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $name = 'surecart-product-selected-price-ad-hoc-amount';
+	public $name = 'surecart-product-collection-tag';
 
 	/**
-	 * Element block name.
+	 * Element block name
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-selected-price-ad-hoc-amount';
+	public $block_name = 'surecart/product-collection-tag';
 
 	/**
-	 * Element icon.
+	 * Element icon
 	 *
 	 * @var string
 	 */
 	public $icon = 'ti-layout-slider-alt';
 
 	/**
-	 * Get element label.
+	 * The css selector.
+	 *
+	 * @var string
+	 */
+	public $css_selector = '.wp-block-surecart-product-collection-tag';
+
+	/**
+	 * Get element label
 	 *
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Selected Price Ad Hoc Amount', 'surecart' );
+		return esc_html__( 'Product Collection Tag', 'surecart' );
 	}
 
 	/**
@@ -58,10 +65,12 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
-			echo 'something';
+			echo <<<HTML
+				<span>hello html</span>
+			HTML;
 			return;
 		}
 
-		echo $this->raw();
+		echo "<span {$this->render_attributes( '_root' )}>" . $this->raw() . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
