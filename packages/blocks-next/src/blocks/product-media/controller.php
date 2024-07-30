@@ -1,4 +1,7 @@
 <?php
+
+use SureCart\Models\Blocks\ProductPageBlock;
+
 $product = sc_get_product();
 
 if ( empty( $product ) ) {
@@ -41,5 +44,8 @@ $height = 'auto';
 if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
+
+$controller = new ProductPageBlock( $block );
+$gallery    = $controller->filteredGallery();
 
 return 'file:./slideshow.php';

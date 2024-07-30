@@ -86,9 +86,20 @@ add_filter(
 
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
+			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
+			static $products_counter = -1;
 			global $sc_query_id;
-			$sc_query_id                                    = wp_unique_id();
+			$sc_query_id = ++$products_counter;
+
 			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
+		}
+
+		// pass a unique id to each product list block.
+		if ( 'surecart/product-page' === $parsed_block['blockName'] ) {
+			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
+			static $product_counter = -1;
+			global $sc_query_id;
+			$sc_query_id = ++$product_counter;
 		}
 		return $context;
 	},
@@ -205,6 +216,10 @@ add_action(
 				],
 				[
 					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
 				],
 			],
