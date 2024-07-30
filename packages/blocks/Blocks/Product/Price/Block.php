@@ -26,7 +26,7 @@ class Block extends ProductBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
-		if ( empty( $product ) || empty( $product->activePrices() ) ) {
+		if ( empty( $product ) || empty( $product->active_prices ) ) {
 			return '';
 		}
 
@@ -40,7 +40,7 @@ class Block extends ProductBlock {
 		);
 
 		// first price.
-		$first_price = $product->activePrices()[0];
+		$first_price = $product->active_prices[0];
 
 		return wp_sprintf(
 			'<sc-product-price %1$s>
