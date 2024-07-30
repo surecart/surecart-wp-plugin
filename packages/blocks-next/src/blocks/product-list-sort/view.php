@@ -25,6 +25,12 @@
 		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
 		role="button"
 		tabindex="0"
+		aria-label="
+		<?php
+			// translators: %s is the current selected option.
+			printf( esc_html__( 'Order By: %s', 'surecart' ), wp_kses_post( $selected_option['label'] ) );
+		?>
+		"
 	>
 		<span class="sc-button__label">
 			<?php echo wp_kses_post( $selected_option['label'] ); ?>

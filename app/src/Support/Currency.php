@@ -192,6 +192,10 @@ class Currency {
 	 * @return string
 	 */
 	public static function format( $amount, $currency_code = 'USD' ) {
+		if ( empty( $currency_code ) ) {
+			$currency_code = 'USD';
+		}
+
 		if ( class_exists( 'NumberFormatter' ) ) {
 			$fmt = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
 			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, apply_filters( 'surecart/currency/max_cents', 0 ) );
@@ -440,6 +444,6 @@ class Currency {
 	 * @return int
 	 */
 	public static function maybeConvertAmount( $amount, $currency ) {
-		return self::isZeroDecimal( $currency ) ? $amount : $amount / 100;
+		return self::isZeroDecimal( (string) $currency ) ? $amount : $amount / 100;
 	}
 }
