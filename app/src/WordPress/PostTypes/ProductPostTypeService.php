@@ -92,7 +92,9 @@ class ProductPostTypeService {
 		$post = get_post( $post_id );
 		if ( $post->post_type === $this->post_type ) {
 			$product = sc_get_product( $post_id );
-			return $product->featured_image->ID;
+			if ( ! empty( $product->featured_image ) ) {
+				return $product->featured_image->ID;
+			}
 		}
 		return $thumbnail_id;
 	}
