@@ -16,7 +16,6 @@ import * as confirmation from '@blocks/Confirmation';
 import * as confirmationLineItems from '@blocks/OrderConfirmationLineItems';
 import * as customerDashboardButton from '@blocks/CustomerDashboardButton';
 import * as customerDashboard from '@blocks/Dashboard/CustomerDashboard';
-
 import * as customerDownloads from '@blocks/Dashboard/CustomerDownloads';
 import * as customerOrders from '@blocks/Dashboard/CustomerOrders';
 import * as customerSubscriptions from '@blocks/Dashboard/CustomerSubscriptions';
@@ -36,7 +35,6 @@ import * as collectionPage from '@blocks/CollectionPage';
 import * as customerCharges from '@blocks/Dashboard/Deprecated/CustomerCharges';
 import * as customerInvoices from '@blocks/Dashboard/Deprecated/CustomerInvoices';
 import * as customerShippingAddress from '@blocks/Dashboard/Deprecated/CustomerShippingAddress';
-import { registerBlocksForTemplates } from './conditional-block-registration';
 
 registerBlocks([
 	collectionPage,
@@ -45,48 +43,25 @@ registerBlocks([
 	buyButton,
 	addToCartButton,
 	logoutButton,
+	checkout,
+	card,
+	confirmation,
+	confirmationLineItems,
+	customerDashboardButton,
+	customerCharges,
+	customerDashboard,
+	customerShippingAddress,
+	customerDownloads,
+	customerOrders,
+	customerInvoices,
+	customerSubscriptions,
+	customerPaymentMethods,
+	customerLicenses,
+	customerBillingDetails,
+	WordPressAccount,
+	dashboardArea,
+	dashboardPage,
+	dashboardPages,
+	dashboardTab,
+	dashboardTabs,
 ]);
-
-// unregister these blocks on product page templates.
-// @todo Refactor when there will be possible to show a block according on a template/post with a Gutenberg API. https://github.com/WordPress/gutenberg/pull/41718
-registerBlocksForTemplates({
-	blocks: [
-		checkout,
-		card,
-		confirmation,
-		confirmationLineItems,
-		customerDashboardButton,
-		customerCharges,
-		customerDashboard,
-		customerShippingAddress,
-		customerDownloads,
-		customerOrders,
-		customerInvoices,
-		customerSubscriptions,
-		customerPaymentMethods,
-		customerLicenses,
-		customerBillingDetails,
-		WordPressAccount,
-		dashboardArea,
-		dashboardPage,
-		dashboardPages,
-		dashboardTab,
-		dashboardTabs,
-	],
-	// exclude for these templates.
-	exclude: [
-		'surecart/surecart//product-info',
-		'surecart/surecart//single-sc_product',
-		'surecart/surecart//product-collection-part',
-		'surecart/surecart//product-collection',
-		'sc-products',
-		'sc-part-products-info',
-		'sc-product-collection',
-		'sc-part-product-collection',
-
-		'surecart/surecart//upsell-info',
-		'surecart/surecart//single-upsell',
-		'sc-upsell',
-		'sc-part-upsell-info',
-	],
-});

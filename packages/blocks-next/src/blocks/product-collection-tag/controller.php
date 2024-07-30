@@ -1,11 +1,11 @@
 <?php
 // no collection id context.
-if ( empty( $block->context['sc_collection_id'] ) ) {
+if ( empty( $block->context['surecart/collection_id'] ) ) {
 	return;
 }
 
 // Get the collection.
-$collection = get_term( $block->context['sc_collection_id'], 'sc_collection' );
+$collection = get_term( $block->context['surecart/collection_id'], 'sc_collection' );
 if ( is_wp_error( $collection ) ) {
 	return;
 }

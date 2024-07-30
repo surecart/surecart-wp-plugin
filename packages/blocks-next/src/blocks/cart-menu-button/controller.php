@@ -32,5 +32,13 @@ $icon = apply_filters(
 	SureCart::svg()->get( $attributes['cart_icon'] ?? 'shopping-bag' ),
 );
 
+wp_interactivity_state(
+	'surecart/checkout',
+	array(
+		// set derived state for SSR.
+		'hasItems' => false,
+	)
+);
+
 // return the view.
 return 'file:./view.php';

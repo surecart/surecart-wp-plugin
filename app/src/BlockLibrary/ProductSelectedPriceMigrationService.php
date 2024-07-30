@@ -11,7 +11,7 @@ class ProductSelectedPriceMigrationService {
 	 *
 	 * @var array
 	 */
-	protected $attributes = array();
+	public array $attributes = array();
 
 	/**
 	 * Block.
@@ -77,33 +77,58 @@ class ProductSelectedPriceMigrationService {
 	 *
 	 * @return void
 	 */
-	public function renderScratchAmountAndSalesBadge() {
-		$child_block_attributes = array_merge(
+	public function renderAmountLine() {
+		$scratch_block_attributes = array_merge(
 			$this->attributes,
 			array(
 				'style' => array(
 					'typography' => array(
 						'textDecoration' => 'line-through',
 						'fontSize'       => '24px',
+						'lineHeight'     => '1.4',
 					),
 					'color'      => array(
 						'text' => $attributes['textColor'] ?? '#8a8a8a',
 					),
-					'elements'   => array(
-						'link' => array(
-							'color' => array(
-								'text' => $attributes['textColor'] ?? '#8a8a8a',
-							),
-						),
+				),
+			)
+		);
+		$amount_block_attributes  = array_merge(
+			$this->attributes,
+			array(
+				'style' => array(
+					'typography' => array(
+						'fontSize'   => '24px',
+						'lineHeight' => '1.4',
+					),
+					'color'      => array(
+						'text' => $attributes['textColor'] ?? '#8a8a8a',
 					),
 				),
 			)
 		);
 
-		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
-		$this->block_html .= '<div class="wp-block-group" >';
-		$this->block_html .= '<!-- wp:surecart/product-selected-price-scratch-amount ' . wp_json_encode( $child_block_attributes ) . ' /-->';
-		$this->block_html .= '<!-- wp:surecart/product-selected-price-amount ' . wp_json_encode( $child_block_attributes ) . ' /-->';
+		$interval_block_attributes = array_merge(
+			$this->attributes,
+			array(
+				'style' => array(
+					'typography' => array(
+						'fontSize'   => '18px',
+						'lineHeight' => '1.8',
+					),
+					'color'      => array(
+						'text' => $attributes['textColor'] ?? '#8a8a8a',
+					),
+				),
+			)
+		);
+
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '","verticalAlignment":"bottom"}} -->';
+		$this->block_html .= '<div class="wp-block-group">';
+		$this->block_html .= '<!-- wp:surecart/product-selected-price-scratch-amount ' . wp_json_encode( $scratch_block_attributes ) . ' /-->';
+		$this->block_html .= '<!-- wp:surecart/product-selected-price-amount ' . wp_json_encode( $amount_block_attributes ) . ' /-->';
+		$this->block_html .= '<!-- wp:surecart/product-selected-price-interval ' . wp_json_encode( $interval_block_attributes ) . ' /-->';
+
 		$this->renderSalesBadge();
 		$this->block_html .= '</div>';
 		$this->block_html .= '<!-- /wp:group -->';
@@ -133,7 +158,7 @@ class ProductSelectedPriceMigrationService {
 			)
 		);
 
-		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"' . $this->getContentAlignment() . '"}} -->';
 		$this->block_html .= '<div class="wp-block-group" >';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-trial ' . wp_json_encode( $child_block_attributes ) . ' /-->';
 		$this->block_html .= '<!-- wp:surecart/product-selected-price-fees ' . wp_json_encode( $child_block_attributes ) . ' /-->';
@@ -148,13 +173,10 @@ class ProductSelectedPriceMigrationService {
 	 */
 	public function renderPrice() {
 		$group_attributes = array(
-			'style'  => array(
-				'spacing' => array(
-					'blockGap' => '0',
+			'style' => array(
+				'spacing' => $this->attributes['style']['spacing'] ?? array(
+					'blockGap' => '0px',
 				),
-			),
-			'layout' => array(
-				'type' => 'constrained',
 			),
 		);
 
@@ -173,7 +195,7 @@ class ProductSelectedPriceMigrationService {
 
 		$this->block_html .= '<!-- wp:group ' . wp_json_encode( $group_attributes ) . ' -->';
 		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="' . $group_css . '">';
-		$this->renderScratchAmountAndSalesBadge();
+		$this->renderAmountLine();
 		$this->renderSelectedPriceTrialAndFees();
 		$this->block_html .= '</div>';
 		$this->block_html .= '<!-- /wp:group -->';

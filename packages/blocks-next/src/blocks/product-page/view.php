@@ -13,7 +13,6 @@
 				'selectedPrice'                => $product->initial_price,
 				'variant_options'              => $product->variant_options->data ?? array(),
 				'variants'                     => $product->variants->data ?? array(),
-				'selectedVariant'              => $product->first_variant_with_stock ?? null,
 				'quantity'                     => 1,
 				'selectedDisplayAmount'        => $product->display_amount,
 				'selectedScratchDisplayAmount' => ! empty( $product->initial_price ) ? $product->initial_price->scratch_display_amount : '',
@@ -33,6 +32,7 @@
 	?>
 	data-wp-interactive='{ "namespace": "surecart/product-page" }'
 	data-wp-on--submit="callbacks.handleSubmit"
+	data-wp-init="callbacks.init"
 >
 	<?php echo do_blocks( $content );  // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </form>

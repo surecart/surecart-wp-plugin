@@ -19,9 +19,9 @@ export default ({ product, updateProduct, post, loading }) => {
 		if (!link || !tag) {
 			return;
 		}
-		if (product?.slug) {
+		if (product?.permalink) {
 			tag.classList.remove('hidden');
-			link.href = `${scData?.home_url}/${scData?.product_page_slug}/${product?.slug}`;
+			link.href = product.permalink;
 		} else {
 			tag.classList.add('hidden');
 		}
