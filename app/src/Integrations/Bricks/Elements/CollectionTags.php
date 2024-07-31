@@ -50,13 +50,6 @@ class CollectionTags extends \Bricks\Element {
 	public $nestable = true;
 
 	/**
-	 * This is nestable.
-	 *
-	 * @var string
-	 */
-	public $nestable = true;
-
-	/**
 	 * The css selector.
 	 *
 	 * @var string
