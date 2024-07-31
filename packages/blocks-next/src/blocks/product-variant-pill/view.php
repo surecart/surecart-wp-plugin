@@ -8,12 +8,18 @@ printf(
 
 ?>
 
-<a
+<div
 <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-pill-option__button' ) ) ); ?>
-<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'option_value' => $block->context['value'] ) ) ); ?>
-href="<?php echo esc_url_raw( $url ); ?>"
-data-wp-on--click="callbacks.setOption"
-type="button"
+<?php
+echo wp_kses_data(
+	wp_interactivity_data_wp_context(
+		array(
+			'option_value' => $block->context['value'],
+			'option_name'  => $block->context['name'],
+		)
+	)
+);
+?>
 data-wp-on--click="callbacks.setOption"
 data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
 data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
@@ -33,4 +39,4 @@ role="radio"
 		?>
 	</span>
 	<?php echo esc_html( $block->context['value'] ); ?>
-</a>
+</div>

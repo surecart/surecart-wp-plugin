@@ -14,6 +14,7 @@
 				'formId'                       => \SureCart::forms()->getDefaultId(),
 				'mode'                         => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
 				'checkoutUrl'                  => \SureCart::pages()->url( 'checkout' ),
+				'urlPrefix'                    => $controller->urlParams()->getKey(),
 				'product'                      => $product,
 				'prices'                       => $product->active_prices,
 				'selectedPrice'                => $product->initial_price,

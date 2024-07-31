@@ -17,7 +17,7 @@ const { scProductViewed } = require('./events');
  * Check if the key is not submit key.
  */
 const isNotKeySubmit = (e) => {
-  return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
 };
 
 /**
@@ -343,28 +343,46 @@ const { state, actions } = store('surecart/product-page', {
 		 * Set the option.
 		 */
 		setOption: (e) => {
-			const context = getContext();
-			const { ref } = getElement();
-			// first we set the option to optimistically update all the ui.
-			context.variantValues[`option_${context?.optionNumber}`] =
-				context?.option_value || e?.target?.value;
+			e.preventDefault();
 
-			if (isValidLink(ref)) {
-				window.history.replaceState({}, '', ref.href);
+			const {
+				variantValues,
+				optionNumber,
+				option_value,
+				option_name,
+				urlPrefix,
+			} = getContext();
+
+			// get the value.
+			const value = option_value || e?.target?.value;
+
+			// first we set the option to optimistically update all the ui.
+			variantValues[`option_${optionNumber}`] = value;
+
+			// if we have the name and value, update the url.
+			if (!option_value || !option_name) {
+				return;
 			}
 
-			e.preventDefault();
+			window.history.replaceState(
+				{},
+				'',
+				addQueryArgs(window.location.href, {
+					[`${urlPrefix}-${option_name.toLowerCase()}`]:
+						option_value.toLowerCase(),
+				})
+			);
 		},
 
 		/**
 		 * Set the price
 		 */
 		setPrice: (e) => {
-      if(isNotKeySubmit(e)) {
-        return true;
-      }
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
 
-      e?.preventDefault();
+			e?.preventDefault();
 
 			const context = getContext();
 			const { product, price } = context;
@@ -393,41 +411,41 @@ const { state, actions } = store('surecart/product-page', {
 				Math.min(state.maxQuantity, parseInt(e.target.value)),
 				1
 			);
-      speak(`Quantity set to ${context.quantity}`, 'polite');
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity decrease.
 		 */
 		onQuantityDecrease: (e) => {
-      if(isNotKeySubmit(e)) {
-        return true;
-      }
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
 
-      e?.preventDefault();
+			e?.preventDefault();
 
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
 
-      speak(`Quantity set to ${context.quantity}`, 'polite');
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity increase.
 		 */
 		onQuantityIncrease: (e) => {
-      if(isNotKeySubmit(e)) {
-        return true;
-      }
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
 
-      e?.preventDefault();
+			e?.preventDefault();
 
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.min(state.maxQuantity, state.quantity + 1);
 
-      speak(`Quantity set to ${context.quantity}`, 'polite');
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},
 });

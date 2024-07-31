@@ -4,8 +4,8 @@
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			array(
-				'blockId'  => $sc_query_id,
-				'products' => $products,
+				'urlPrefix' => $controller->urlParams()->getKey(),
+				'products'  => $products,
 			)
 		)
 	);
