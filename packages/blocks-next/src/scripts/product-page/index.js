@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -11,6 +11,16 @@ const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 const { scProductViewed } = require('./events');
+
+/**
+ * Check if the link is valid.
+ */
+const isValidLink = (ref) =>
+	ref &&
+	ref instanceof window.HTMLAnchorElement &&
+	ref.href &&
+	(!ref.target || ref.target === '_self') &&
+	ref.origin === window.location.origin;
 
 // controls the product page.
 const { state, actions } = store('surecart/product-page', {
@@ -93,6 +103,32 @@ const { state, actions } = store('surecart/product-page', {
 		get isOptionSelected() {
 			const { optionNumber, option_value, variantValues } = getContext();
 			return variantValues?.[`option_${optionNumber}`] === option_value;
+		},
+
+		/**
+		 * Is the option value selected
+		 */
+		get isOptionValueSelected() {
+			const context = getContext();
+			const { optionValue, variantValues } = context;
+
+			// this applies to all variants.
+			if (!optionValue) {
+				return true;
+			}
+
+			const values = Object.values(variantValues).map((value) =>
+				value.toLowerCase()
+			);
+
+			return values.includes(optionValue.toLowerCase());
+		},
+
+		/**
+		 * Get the image display.
+		 */
+		get imageDisplay() {
+			return state.isOptionValueSelected ? 'block' : 'none';
 		},
 
 		/**
@@ -299,10 +335,18 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Set the option.
 		 */
-		setOption: () => {
+		setOption: (e) => {
 			const context = getContext();
+			const { ref } = getElement();
+			// first we set the option to optimistically update all the ui.
 			context.variantValues[`option_${context?.optionNumber}`] =
 				context?.option_value || e?.target?.value;
+
+			if (isValidLink(ref)) {
+				window.history.replaceState({}, '', ref.href);
+			}
+
+			e.preventDefault();
 		},
 
 		/**

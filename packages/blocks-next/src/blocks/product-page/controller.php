@@ -1,5 +1,8 @@
 <?php
 // get product.
+
+use SureCart\Models\Blocks\ProductPageBlock;
+
 $product = sc_get_product();
 
 // if no product id, return.
@@ -7,7 +10,9 @@ if ( empty( $product ) ) {
 	return;
 }
 
-$selected_price = $product->initial_price;
+$selected_price   = $product->initial_price;
+$controller       = new ProductPageBlock( $block );
+$selected_variant = $controller->getSelectedVariant();
 
 wp_interactivity_state(
 	'surecart/product-page',
@@ -19,6 +24,27 @@ wp_interactivity_state(
 		'selectedVariant'              => $product->first_variant_with_stock ?? null,
 		'busy'                         => false,
 		'adHocAmount'                  => ( ! empty( $selected_price->ad_hoc ) ? $selected_price->amount : 0 ) / ( ! empty( $selected_price->is_zero_decimal ) ? 1 : 100 ),
+		'selectedVariant'              => $selected_variant ?? null,
+		'isOptionValueSelected'        => function () {
+			$context = wp_interactivity_get_context();
+
+			if ( empty( $context['optionValue'] ) ) {
+				return true;
+			}
+
+			$values = array_map(
+				function ( $value ) {
+					return strtolower( $value );
+				},
+				array_values( $context['variantValues'] )
+			);
+
+			return in_array( strtolower( $context['optionValue'] ), $values );
+		},
+		'imageDisplay'                 => function () {
+			$state = wp_interactivity_state();
+			return $state['isOptionValueSelected']() ? 'block' : 'none';
+		},
 		'isSoldOut'                    => function () {
 			$context = wp_interactivity_get_context();
 			$state = wp_interactivity_state();
