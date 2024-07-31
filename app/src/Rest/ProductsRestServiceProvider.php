@@ -43,6 +43,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/sync_all',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'syncAll' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**

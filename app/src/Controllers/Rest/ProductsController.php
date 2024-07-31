@@ -73,4 +73,13 @@ class ProductsController extends RestController {
 		}
 		return $model->sync( $request['id'] );
 	}
+
+	/**
+	 * Sync model.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function syncAll() {
+		return \SureCart::sync()->products()->dispatch();
+	}
 }
