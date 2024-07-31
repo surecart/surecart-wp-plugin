@@ -31,53 +31,6 @@ class ProductPageBlock {
 	}
 
 	/**
-	 * Filters the gallery based on the variant options.
-	 *
-	 * @return \SureCart\Models\Product|null
-	 */
-	public function filteredGallery() {
-		$product = sc_get_product();
-
-		if ( empty( $product ) || empty( $product->gallery ) ) {
-			return null;
-		}
-
-		$keys = $this->getVariantsQuery();
-
-		return array_values(
-			array_filter(
-				( $product->gallery ?? [] ),
-				function ( $image ) use ( $keys ) {
-					// no variant option, include.
-					if ( empty( $image->variant_option ) ) {
-						return true;
-					}
-
-					foreach ( $keys as $value ) {
-						if ( strtolower( trim( $image->variant_option ) ) === strtolower( trim( $value ) ) ) {
-							return true;
-						}
-					}
-					return false;
-				}
-			)
-		);
-
-		var_dump( $gallery );
-
-		return array_filter(
-			$product->gallery ?? [],
-			function ( $image ) {
-				if ( empty( $image->variant_option ) ) {
-					return true;
-				}
-
-				return true;
-			}
-		);
-	}
-
-	/**
 	 * Get the variants query.
 	 *
 	 * @return array|null

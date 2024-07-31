@@ -13,7 +13,6 @@ printf(
 <?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'option_value' => $block->context['value'] ) ) ); ?>
 href="<?php echo esc_url_raw( $url ); ?>"
 data-wp-on--click="callbacks.setOption"
-data-wp-on--mouseenter="callbacks.prefetch"
 type="button"
 data-wp-on--click="callbacks.setOption"
 data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
