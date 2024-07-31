@@ -17,6 +17,7 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import CustomerSyncModal from './components/CustomerSyncModal';
 import { useEntityProp } from '@wordpress/core-data';
+import ProductSyncButton from './components/ProductSyncButton';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -409,8 +410,10 @@ export default () => {
 			>
 				<div
 					css={css`
-						display: grid;
-						gap: 0.5em;
+						display: flex;
+						gap: 1em;
+						justify-content: space-between;
+						--sc-input-label-margin: 0;
 					`}
 				>
 					<ScFormControl
@@ -422,9 +425,28 @@ export default () => {
 					/>
 					<div>
 						<ScButton onClick={() => setModal('customer-sync')}>
-							<ScIcon name="users" slot="prefix"></ScIcon>
-							{__('Sync Customers', 'surecart')}
+							<ScIcon name="refresh-ccw" slot="prefix"></ScIcon>
+							{__('Sync', 'surecart')}
 						</ScButton>
+					</div>
+				</div>
+				<div
+					css={css`
+						display: flex;
+						gap: 1em;
+						justify-content: space-between;
+						--sc-input-label-margin: 0;
+					`}
+				>
+					<ScFormControl
+						label={__('Products', 'surecart')}
+						help={__(
+							'Run a sync on all SureCart products to post types.',
+							'surecart'
+						)}
+					/>
+					<div>
+						<ProductSyncButton />
 					</div>
 				</div>
 			</SettingsBox>
