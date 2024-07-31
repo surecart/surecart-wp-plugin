@@ -21,6 +21,7 @@ wp_interactivity_state(
 		'selectedDisplayAmount'        => $product->display_amount,
 		'selectedScratchDisplayAmount' => ! empty( $selected_price ) ? $selected_price->scratch_display_amount : '',
 		'isOnSale'                     => empty( $selected_price->ad_hoc ) ? $product->scratch_amount > $product->initial_amount : false,
+		'selectedVariant'              => $product->first_variant_with_stock ?? null,
 		'busy'                         => false,
 		'adHocAmount'                  => ( ! empty( $selected_price->ad_hoc ) ? $selected_price->amount : 0 ) / ( ! empty( $selected_price->is_zero_decimal ) ? 1 : 100 ),
 		'selectedVariant'              => $selected_variant ?? null,

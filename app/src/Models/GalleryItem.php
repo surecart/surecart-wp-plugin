@@ -21,6 +21,18 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	protected $item = null;
 
 	/**
+	 * Convert object to array.
+	 *
+	 * @return Array
+	 */
+	public function toArray() {
+		if ( isset( $this->item->ID ) ) {
+			$this->item->id = $this->item->ID;
+		}
+		return (array) $this->item;
+	}
+
+	/**
 	 * Get the image markup.
 	 *
 	 * @param string $key The key to get.
