@@ -45,7 +45,6 @@ if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
 
-$controller = new ProductPageBlock( $block );
-$gallery    = $controller->filteredGallery();
+$gallery = $product->gallery;
 
 return 'file:./slideshow.php';

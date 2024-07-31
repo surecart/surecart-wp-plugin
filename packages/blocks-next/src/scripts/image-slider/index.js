@@ -17,13 +17,24 @@ const { state } = store('surecart/image-slider', {
 		swiper: null,
 	},
 	actions: {
-		updateOnRoute: () => {
-			const { state: routerState } = store('core/router');
-			if (routerState.url && state.thumbsSwiper && state.swiper) {
+		updateSlider: () => {
+			const { state: productState } = store('surecart/product-page');
+
+			// the selected variant has not changed.
+			if (!productState.selectedVariant) {
+				return;
+			}
+
+			// it's important that the thumbs swiper initializes first before the main swiper.
+			if (state.thumbsSwiper) {
 				state.thumbsSwiper.update();
+			}
+
+			if (state.swiper) {
 				state.swiper.update();
 			}
 		},
+
 		init: () => {
 			const { ref } = getElement();
 			const context = getContext();
