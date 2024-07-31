@@ -62,19 +62,6 @@ class ProductPageBlock {
 				}
 			)
 		);
-
-		var_dump( $gallery );
-
-		return array_filter(
-			$product->gallery ?? [],
-			function ( $image ) {
-				if ( empty( $image->variant_option ) ) {
-					return true;
-				}
-
-				return true;
-			}
-		);
 	}
 
 	/**
@@ -120,6 +107,30 @@ class ProductPageBlock {
 		}
 
 		return $keys;
+	}
+
+	/**
+	 * Check if the image is visible.
+	 *
+	 * @param object $image The image.
+	 *
+	 * @return bool
+	 */
+	public function isImageVisible( $image ) {
+		// loop through the attributes.
+		$keys = $this->getVariantsQuery();
+
+		// no variant option, include.
+		if ( empty( $image->variant_option ) ) {
+			return true;
+		}
+
+		foreach ( $keys as $value ) {
+			if ( strtolower( trim( $image->variant_option ) ) === strtolower( trim( $value ) ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

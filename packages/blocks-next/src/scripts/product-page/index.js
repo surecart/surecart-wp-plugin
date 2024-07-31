@@ -328,10 +328,13 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 			scProductViewed(product, selectedPrice, state.quantity);
 		},
 
-		/** Navigate to a url using the router region. */
-		*navigate(event) {
+		/** Set the slideshow router region */
+		*fetchGallery(event) {
+			const { product } = getContext();
+			const queryRef = document.querySelector(
+				`[data-wp-router-region="product-gallery-${product.id}"]`
+			);
 			const { ref } = getElement();
-			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
 				event.preventDefault();
 				const { actions } = yield import(
@@ -340,6 +343,9 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 				);
 
 				yield actions.navigate(ref.href, { replace: true });
+			} else {
+				window.history.replaceState({}, '', ref.href);
+				event.preventDefault();
 			}
 		},
 		/** Prefetch upcoming urls. */
@@ -376,7 +382,7 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 			context.variantValues[`option_${context?.optionNumber}`] =
 				context?.option_value || e?.target?.value;
 			// then we navigate to update SSR.
-			return callbacks.navigate(e);
+			return callbacks.fetchGallery(e);
 		},
 
 		/**

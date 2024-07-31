@@ -3,6 +3,7 @@
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
 	data-wp-init="actions.init"
 	data-wp-watch="actions.updateOnRoute"
+	data-wp-router-region="<?php echo esc_attr( 'product-gallery-' . $product->id ); ?>"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
 >
 	<div class="swiper" style="height: <?php echo esc_attr( $height ); ?>">

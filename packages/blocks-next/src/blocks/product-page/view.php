@@ -30,7 +30,6 @@
 		)
 	);
 	?>
-	data-wp-router-region="<?php echo esc_attr( 'product-' . $product->id ); ?>"
 	data-wp-interactive='{ "namespace": "surecart/product-page" }'
 	data-wp-on--submit="callbacks.handleSubmit"
 	data-wp-init="callbacks.init"
