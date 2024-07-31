@@ -85,6 +85,18 @@ trait ConvertsBlocks {
 	}
 
 	/**
+	 * Render the raw block output.
+	 *
+	 * @param array  $block_attributes The block attributes.
+	 * @param string $content          The block content.
+	 *
+	 * @return string
+	 */
+	public function raw( $block_attributes = [], $content = '' ) {
+		return '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->';
+	}
+
+	/**
 	 * Remove interactivity doing it wrong.
 	 *
 	 * This is because we need to render blocks out of order in order to

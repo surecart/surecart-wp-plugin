@@ -68,6 +68,6 @@ class PriceChoices extends \Bricks\Element {
 			return;
 		}
 
-		echo $this->html();
+		echo $this->raw();
 	}
 }
