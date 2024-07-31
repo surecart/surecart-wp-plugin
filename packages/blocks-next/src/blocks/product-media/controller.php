@@ -1,7 +1,5 @@
 <?php
 
-use SureCart\Models\Blocks\ProductPageBlock;
-
 $product = sc_get_product();
 
 if ( empty( $product ) ) {

@@ -64,11 +64,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the selected variant.
 		 */
 		get selectedVariant() {
-			const context = getContext();
-			if (!context) {
-				return true;
-			}
-			const { variants, variantValues } = context;
+			const { variants, variantValues } = getContext();
 			return variantValues
 				? getVariantFromValues({
 						variants: variants,
@@ -105,11 +101,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is the option selected?
 		 */
 		get isOptionSelected() {
-			const context = getContext();
-			if (!context) {
-				return true;
-			}
-			const { optionNumber, option_value, variantValues } = context;
+			const { optionNumber, option_value, variantValues } = getContext();
 			return variantValues?.[`option_${optionNumber}`] === option_value;
 		},
 
@@ -143,11 +135,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is the price selected?
 		 */
 		get isPriceSelected() {
-			const context = getContext();
-			if (!context) {
-				return true;
-			}
-			const { price, selectedPrice } = context;
+			const { price, selectedPrice } = getContext();
 			return selectedPrice?.id === price?.id;
 		},
 
@@ -169,11 +157,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the button text based on the product state.
 		 */
 		get buttonText() {
-			const context = getContext();
-			if (!context) {
-				return true;
-			}
-			const { text, outOfStockText, unavailableText } = context;
+			const { text, outOfStockText, unavailableText } = getContext();
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
@@ -188,11 +172,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * due to being archived, sold out, or no variant selected.
 		 */
 		get isUnavailable() {
-			const context = getContext();
-			if (!context) {
-				return true;
-			}
-			const { product, variants } = context;
+			const { product, variants } = getContext();
 			return (
 				!!product?.archived || // archived.
 				!!state?.isSoldOut || // sold out.
@@ -204,11 +184,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is the product sold out?
 		 */
 		get isSoldOut() {
-			const context = getContext();
-			if (!context) {
-				return true;
-			}
-			const { product } = context;
+			const { product } = getContext();
 			if (
 				!product?.stock_enabled ||
 				product?.allow_out_of_stock_purchases
