@@ -34,6 +34,9 @@ class ProductPostTypeService {
 		// ensure we always fetch with the current connected store id in case of store change.
 		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
 
+		// redirect to 404 if we are not in the correct store
+		add_action( 'template_redirect', array( $this, 'maybeRedirectTo404' ) );
+
 		// add global $sc_product inside loops.
 		add_action( 'the_post', array( $this, 'setupData' ) );
 
@@ -590,6 +593,41 @@ class ProductPostTypeService {
 	}
 
 	/**
+	 * Redirect to 404 if we are not in the correct store.
+	 *
+	 * @return void
+	 */
+	public function maybeRedirectTo404() {
+		global $post;
+
+		// not a post.
+		if ( ! isset( $post ) ) {
+			return;
+		}
+
+		// not our post type.
+		if ( $this->post_type !== $post->post_type ) {
+			return;
+		}
+
+		// check if the post has the taxonomy sc_acccount that matches the current account.
+		$account = get_the_terms( $post->ID, 'sc_account' );
+
+		if ( empty( $account ) ) {
+			return;
+		}
+
+		// account id does not match.
+		if ( \SureCart::account()->id !== $account[0]->name ) {
+			global $wp_query;
+			$wp_query->set_404();
+			status_header( 404 );
+			get_template_part( 404 );
+			exit();
+		}
+	}
+
+	/**
 	 * Handle the variation option value query.
 	 *
 	 * @param string   $where The WHERE clause of the query.
@@ -797,7 +835,7 @@ class ProductPostTypeService {
 				'hierarchical'      => true,
 				'public'            => true,
 				'show_ui'           => true,
-				'show_in_menu'      => false,
+				'show_in_menu'      => true,
 				'rewrite'           => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,
