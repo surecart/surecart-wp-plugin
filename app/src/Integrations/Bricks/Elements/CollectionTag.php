@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Collection Tags element.
+ * Collection Tag element.
  */
 class CollectionTag extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
@@ -29,7 +29,7 @@ class CollectionTag extends \Bricks\Element {
 	public $name = 'surecart-product-collection-tag';
 
 	/**
-	 * Element block name
+	 * Element block name.
 	 *
 	 * @var string
 	 */
@@ -40,7 +40,7 @@ class CollectionTag extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-layout-slider-alt';
+	public $icon = 'ion-md-pricetag';
 
 	/**
 	 * The css selector.

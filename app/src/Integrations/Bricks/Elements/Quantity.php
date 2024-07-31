@@ -57,9 +57,6 @@ class Quantity extends \Bricks\Element {
 	 * @return void
 	 */
 	public function set_controls() {
-		$this->controls['label']    = [
-			'label' => esc_html__( 'Label', 'surecart' ),
-			'type'  => 'text',
 		$this->controls['quantity'] = [
 			'type'    => 'number',
 			'label'   => esc_html__( 'Quantity', 'surecart' ),
@@ -67,7 +64,12 @@ class Quantity extends \Bricks\Element {
 			'min'     => 1,
 			'max'     => 100,
 			'step'    => 1,
-			];
+		];
+
+		$this->controls['label'] = array(
+			'label' => esc_html__( 'Label', 'surecart' ),
+			'type'  => 'text',
+		);
 	}
 
 	/**

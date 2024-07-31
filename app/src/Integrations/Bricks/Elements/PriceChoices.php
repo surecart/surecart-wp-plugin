@@ -40,7 +40,7 @@ class PriceChoices extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-layout-slider-alt';
+	public $icon = 'ion-md-cash';
 
 	/**
 	 * Get element label.

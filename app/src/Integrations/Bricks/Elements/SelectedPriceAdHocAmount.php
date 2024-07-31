@@ -40,7 +40,7 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-layout-slider-alt';
+	public $icon = 'ti-money';
 
 	/**
 	 * Get element label.
@@ -48,7 +48,27 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Selected Price Ad Hoc Amount', 'surecart' );
+		return esc_html__( 'Custom Amount', 'surecart' );
+	}
+
+	/**
+	 * Set controls.
+	 *
+	 * @return void
+	 */
+	public function set_controls() {
+		$this->controls['width'] = array(
+			'label'   => esc_html__( 'Width', 'surecart' ),
+			'type'    => 'number',
+			'default' => 100,
+			'min'     => 0,
+			'max'     => 100,
+			'step'    => 1,
+			'unit'    => '%',
+			'css'     => array(
+				array( 'property' => 'width' ),
+			),
+		);
 	}
 
 	/**

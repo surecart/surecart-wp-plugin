@@ -62,17 +62,17 @@ class Product extends Element {
 	/**
 	 * Template for the product.
 	 *
-	 * @return string
+	 * @return array[]
 	 */
 	public function get_nestable_item() {
-		return [
-			[
-				'name' => 'surecart-product-media',
-			],
-			[
-				'name' => 'post-title',
-			],
-		];
+		return array(
+			array( 'name' => 'surecart-product-media' ),
+			array( 'name' => 'post-title' ),
+			array( 'name' => 'surecart-product-selected-price-amount' ),
+			array( 'name' => 'surecart-product-variant-choices' ),
+			array( 'name' => 'surecart-product-collection-tags' ),
+			array( 'name' => 'post-content' ),
+		);
 	}
 
 	public function get_nestable_children() {

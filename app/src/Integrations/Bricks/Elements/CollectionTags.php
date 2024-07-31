@@ -40,7 +40,14 @@ class CollectionTags extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-layout-slider-alt';
+	public $icon = 'ti-layout-grid2';
+
+	/**
+	 * This is nestable.
+	 *
+	 * @var string
+	 */
+	public $nestable = true;
 
 	/**
 	 * This is nestable.
@@ -66,22 +73,20 @@ class CollectionTags extends \Bricks\Element {
 	}
 
 	/**
-	 * Template for the product.
+	 * Template for the tags.
 	 *
-	 * @return string
+	 * @return array[]
 	 */
 	public function get_nestable_item() {
-		return [
-			[
-				'name' => 'surecart-product-collection-tag',
-			],
-		];
+		return array(
+			array( 'name' => 'surecart-product-collection-tag' ),
+		);
 	}
 
 	/**
 	 * Get nestable children.
 	 *
-	 * @return array
+	 * @return array[]
 	 */
 	public function get_nestable_children() {
 		return $this->get_nestable_item();

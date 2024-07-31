@@ -40,7 +40,7 @@ class VariantChoices extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-layout-slider-alt';
+	public $icon = 'ion-md-options';
 
 	/**
 	 * Get element label.
