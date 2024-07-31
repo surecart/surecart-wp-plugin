@@ -31,7 +31,7 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => $this->syncDropdown(),
+				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null,
 			),
 		);
 
