@@ -64,6 +64,23 @@ class CollectionTag extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		echo "<span {$this->render_attributes( '_root' )}>" . $this->raw() . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$output = '';
+
+		if ( ! bricks_is_frontend() ) {
+			$product     = sc_get_product();
+			$collections = $product->product_collections->data ?? [ [ 'name' => 'Collection1' ] ];
+
+			foreach ( $collections as $collection ) {
+				$output .= '<div ' . $this->render_attributes( '_root' ) . '>';
+				$output .= '<span class="sc-tag sc-tag--default sc-tag--medium wp-block-surecart-product-collection-tag">' . $collection->name . '</span>';
+				$output .= '</div>';
+			}
+
+			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return;
+		}
+
+		$output = '<div ' . $this->render_attributes( '_root' ) . '>' . $this->raw() . '</div>';
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
