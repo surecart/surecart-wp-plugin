@@ -79,7 +79,7 @@ export class ScSessionProvider {
 
     if (checkoutState?.checkout?.payment_method_required && selectedProcessor?.id === 'stripe' && processorsState.config.stripe.paymentElement) {
       // not initialized.
-      if (typeof processorsState?.instances?.stripeElements === undefined) {
+      if (!processorsState?.instances?.stripeElements) {
         updateFormState('REJECT');
         this.handleErrorResponse({ message: 'Stripe Elements not found.', code: 'stripe_elements_not_found' });
         return new Error('Stripe Elements not found.');
