@@ -10,24 +10,64 @@ class ShortcodesService {
 	 * Convert the block
 	 *
 	 * @param string $name Block name.
-	 * @param string $block Block class.
+	 * @param string $block Block block.
 	 * @param array  $defaults Default attributes.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function registerBlockShortcode( $name, $class, $defaults = array() ) {
+	public function registerBlockShortcode( $name, $block, $defaults = array() ) {
 		add_shortcode(
 			$name,
-			function ( $attributes, $content ) use ( $name, $class, $defaults ) {
+			function ( $attributes, $content ) use ( $name, $block, $defaults ) {
 				return ( new ShortcodesBlockConversionService( $attributes, $content ) )->convert(
 					$name,
-					$class,
+					$block,
 					$defaults
 				);
 			},
 			10,
 			2
 		);
+	}
+
+	/**
+	 * Render shortcode
+	 *
+	 * @param array  $attributes Attributes.
+	 * @param string $name Name.
+	 *
+	 * @return string
+	 */
+	public function renderShortcode( $attributes, $name ) {
+		// Build the shortcode string dynamically.
+		$shortcode_parts = array( '[' . esc_attr( $name ) );
+
+		// Add each attribute to the shortcode string.
+		foreach ( $attributes as $key => $value ) {
+			$shortcode_parts[] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
+		}
+
+		// Close the shortcode.
+		$shortcode_parts[] = ']';
+
+		// Join the parts into a single string.
+		return implode( ' ', $shortcode_parts );
+	}
+
+	/**
+	 * Check if shortcode should render itself
+	 *
+	 * @param string $name Name of the shortcode.
+	 * @return boolean
+	 */
+	public function shouldRenderShortcodeItself( $name ) {
+		if ( ! is_admin() || 'sc_product_list' !== $name ) {
+			return false;
+		}
+
+		if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
+			return true;
+		}
 	}
 
 	/**
@@ -43,6 +83,10 @@ class ShortcodesService {
 		add_shortcode(
 			$name,
 			function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
+				if ( $this->shouldRenderShortcodeItself( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
+					return $this->renderShortcode( $attributes, $name );
+				}
+
 				wp_enqueue_global_styles();
 				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
 				// convert comma separated attributes to array.
