@@ -5,6 +5,7 @@ import Box from '../../../ui/Box';
 import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import AddImage from './AddImage';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
 import Error from '../../../components/Error';
@@ -21,6 +22,7 @@ export default ({ product, updateProduct }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
+	const { createErrorNotice } = useDispatch(noticesStore);
 	const { invalidateResolution } = useDispatch(coreStore);
 
 	const onDragStop = (oldIndex, newIndex) =>
@@ -38,6 +40,15 @@ export default ({ product, updateProduct }) => {
 		});
 
 	const onSwapMedia = (id, newId) => {
+		// if it's in the product?.gallery_ids already, throw an error.
+		if (product?.gallery_ids.includes(newId)) {
+			createErrorNotice(
+				__('This image is already in the gallery.', 'surecart'),
+				{ type: 'snackbar' }
+			);
+			return;
+		}
+
 		const gallery_ids = (product?.gallery_ids || []).map((galleryId) => {
 			if (galleryId === id) {
 				return newId;
