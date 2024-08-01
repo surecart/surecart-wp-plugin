@@ -64,16 +64,6 @@ class CollectionTag extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
-			$output  = "<span {$this->render_attributes( '_root' )}>";
-			$output .= '<span class="sc-tag sc-tag--default sc-tag-medium wp-block-surecart-product-collection-tag">Hello world</span>';
-			$output .= '</span>';
-
-			echo $output;
-
-			return;
-		}
-
 		echo "<span {$this->render_attributes( '_root' )}>" . $this->raw() . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

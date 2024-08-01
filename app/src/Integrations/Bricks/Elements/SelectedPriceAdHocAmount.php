@@ -77,11 +77,6 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
-			echo 'something';
-			return;
-		}
-
 		echo $this->raw();
 	}
 }

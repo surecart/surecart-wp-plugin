@@ -24,7 +24,8 @@ trait ConvertsBlocks {
 		// Previewing a template, show a placeholder to populate.
 		if ( $this->show_populate_on_empty ) {
 			$product = sc_get_product();
-			if ( empty( $product ) && Helpers::is_bricks_template( $this->post_id ) ) {
+
+			if ( empty( $product ) ) {
 				return $this->render_element_placeholder(
 					[
 						'title'       => esc_html__( 'For better preview select content to show.', 'surecart' ),
@@ -93,6 +94,19 @@ trait ConvertsBlocks {
 	 * @return string
 	 */
 	public function raw( $block_attributes = [], $content = '' ) {
+		if ( $this->show_populate_on_empty ) {
+			$product = sc_get_product();
+
+			if ( empty( $product ) ) {
+				return $this->render_element_placeholder(
+					[
+						'title'       => esc_html__( 'For better preview select content to show.', 'surecart' ),
+						'description' => esc_html__( 'Go to: Settings > Template Settings > Populate Content', 'surecart' ),
+					]
+				);
+			}
+		}
+
 		return '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->';
 	}
 

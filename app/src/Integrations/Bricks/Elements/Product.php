@@ -60,7 +60,7 @@ class Product extends Element {
 	}
 
 	/**
-	 * Template for the product.
+	 * Get nestable item.
 	 *
 	 * @return array[]
 	 */
@@ -75,6 +75,11 @@ class Product extends Element {
 		);
 	}
 
+	/**
+	 * Get nestable children.
+	 *
+	 * @return array
+	 */
 	public function get_nestable_children() {
 		return $this->get_nestable_item();
 	}
@@ -85,6 +90,7 @@ class Product extends Element {
 	 * @return void
 	 */
 	public function render() {
+		$this->show_populate_on_empty = true;
 		echo $this->html( '', \Bricks\Frontend::render_children( $this ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
