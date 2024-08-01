@@ -25,6 +25,7 @@
 		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
 		role="button"
 		tabindex="0"
+		aria-label="<?php esc_html_e( 'Filter by: Collection', 'surecart' ); ?>"
 	>
 		<span class="sc-button__label"><?php esc_html_e( 'Filter', 'surecart' ); ?></span>
 		<span class="sc-button__caret"><?php echo wp_kses( SureCart::svg()->get( 'chevron-down' ), sc_allowed_svg_html() ); ?></span>

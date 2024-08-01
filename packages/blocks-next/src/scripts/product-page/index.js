@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -10,6 +10,25 @@ import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
+const { speak } = wp.a11y;
+const { scProductViewed } = require('./events');
+
+/**
+ * Check if the key is not submit key.
+ */
+const isNotKeySubmit = (e) => {
+	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+};
+
+/**
+ * Check if the link is valid.
+ */
+const isValidLink = (ref) =>
+	ref &&
+	ref instanceof window.HTMLAnchorElement &&
+	ref.href &&
+	(!ref.target || ref.target === '_self') &&
+	ref.origin === window.location.origin;
 
 // controls the product page.
 const { state, actions } = store('surecart/product-page', {
@@ -95,6 +114,32 @@ const { state, actions } = store('surecart/product-page', {
 		},
 
 		/**
+		 * Is the option value selected
+		 */
+		get isOptionValueSelected() {
+			const context = getContext();
+			const { optionValue, variantValues } = context;
+
+			// this applies to all variants.
+			if (!optionValue) {
+				return true;
+			}
+
+			const values = Object.values(variantValues).map((value) =>
+				value.toLowerCase()
+			);
+
+			return values.includes(optionValue.toLowerCase());
+		},
+
+		/**
+		 * Get the image display.
+		 */
+		get imageDisplay() {
+			return state.isOptionValueSelected ? 'block' : 'none';
+		},
+
+		/**
 		 * Is the price selected?
 		 */
 		get isPriceSelected() {
@@ -137,9 +182,9 @@ const { state, actions } = store('surecart/product-page', {
 		get isUnavailable() {
 			const { product, variants } = getContext();
 			return (
-				product?.archived || // archived.
-				state?.isSoldOut || // sold out.
-				(variants?.length && !state.selectedVariant?.id) // no selected variant.
+				!!product?.archived || // archived.
+				!!state?.isSoldOut || // sold out.
+				!!(variants?.length && !state.selectedVariant?.id) // no selected variant.
 			);
 		},
 
@@ -254,7 +299,6 @@ const { state, actions } = store('surecart/product-page', {
 				cartActions.toggle();
 			} catch (e) {
 				console.error(e);
-				throw e; // Re-throw the caught error
 			} finally {
 				context.busy = false;
 			}
@@ -262,6 +306,26 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	callbacks: {
+		*init() {
+			// maybe import analytics handlers.
+			if (window?.dataLayer || window?.gtag) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/google-events'
+				);
+			}
+
+			if (window?.fbq) {
+				yield import(
+					/* webpackIgnore: true */
+					'@surecart/facebook-events'
+				);
+			}
+
+			const { selectedPrice, product } = getContext();
+			scProductViewed(product, selectedPrice, state.quantity);
+		},
+
 		/**
 		 * Handle submit callback.
 		 */
@@ -278,16 +342,48 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Set the option.
 		 */
-		setOption: () => {
-			const context = getContext();
-			context.variantValues[`option_${context?.optionNumber}`] =
-				context?.option_value || e?.target?.value;
+		setOption: (e) => {
+			e.preventDefault();
+
+			const {
+				variantValues,
+				optionNumber,
+				option_value,
+				option_name,
+				urlPrefix,
+			} = getContext();
+
+			// get the value.
+			const value = option_value || e?.target?.value;
+
+			// first we set the option to optimistically update all the ui.
+			variantValues[`option_${optionNumber}`] = value;
+
+			// if we have the name and value, update the url.
+			if (!option_value || !option_name) {
+				return;
+			}
+
+			window.history.replaceState(
+				{},
+				'',
+				addQueryArgs(window.location.href, {
+					[`${urlPrefix}-${option_name.toLowerCase()}`]:
+						option_value.toLowerCase(),
+				})
+			);
 		},
 
 		/**
 		 * Set the price
 		 */
-		setPrice: () => {
+		setPrice: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			const { product, price } = context;
 			const selectedPrice = product.prices?.data.find(
@@ -315,24 +411,41 @@ const { state, actions } = store('surecart/product-page', {
 				Math.min(state.maxQuantity, parseInt(e.target.value)),
 				1
 			);
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity decrease.
 		 */
-		onQuantityDecrease: () => {
+		onQuantityDecrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
+
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity increase.
 		 */
-		onQuantityIncrease: () => {
+		onQuantityIncrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.min(state.maxQuantity, state.quantity + 1);
+
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},
 });

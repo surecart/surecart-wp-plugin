@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-buy-buttons",
-	"title": "Product Buy Buttons",
+	"title": "Buy Buttons",
 	"description": "Displays product buy and add to cart buttons",
 	"category": "surecart-product-page",
 	"keywords": ["button", "buy", "product"],
@@ -13,13 +13,14 @@
 		"align": ["wide", "full"],
 		"html": false,
 		"__experimentalExposeControlsToChildren": true,
-		"spacing": {
-			"blockGap": true,
-			"margin": ["top", "bottom"],
-			"__experimentalDefaultControls": {
-				"blockGap": true
-			}
-		},
+    "spacing": {
+      "padding": true,
+      "margin": true,
+      "__experimentalDefaultControls": {
+        "padding": true,
+        "margin": true
+      }
+    },
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,

@@ -21,7 +21,7 @@ export default ({ post }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
-	const { editEntityRecord } = useDispatch(coreStore);
+	const { editEntityRecord, invalidateResolution } = useDispatch(coreStore);
 
 	const onDragStop = (oldIndex, newIndex) => {
 		const gallery = arrayMove(post?.gallery || [], oldIndex, newIndex);
@@ -30,6 +30,16 @@ export default ({ post }) => {
 
 	const onRemoveMedia = (id) => {
 		const gallery = post?.gallery.filter((item) => item.id !== id);
+		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
+	};
+
+	const onSwapMedia = (id, newId) => {
+		const gallery = post?.gallery.map((item) => {
+			if (item.id === id) {
+				return { id: newId };
+			}
+			return item;
+		});
 		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
 	};
 
@@ -65,6 +75,9 @@ export default ({ post }) => {
 								<WordPressMedia
 									id={id}
 									onRemove={() => onRemoveMedia(id)}
+									onSelect={(media) =>
+										onSwapMedia(id, media.id)
+									}
 									isFeatured={index === 0}
 								/>
 							)}
@@ -73,21 +86,19 @@ export default ({ post }) => {
 				))}
 				<AddImage
 					value={(post?.gallery || []).map(({ id }) => id)}
+					onClose={() =>
+						(post?.gallery || []).forEach(({ id }) =>
+							invalidateResolution('getMedia', [id])
+						)
+					}
 					onSelect={(media) => {
 						const mediaIds = (media || []).map(({ id }) => ({
 							id,
 						}));
-						// Add media ids to the end of the array of objects, but only if they do not yet exist.
+
+						// Update the media ids.
 						editEntityRecord('postType', 'sc_product', post?.id, {
-							gallery: [
-								...post?.gallery,
-								...mediaIds.filter(
-									({ id }) =>
-										!post?.gallery.some(
-											(item) => item.id === id
-										)
-								),
-							],
+							gallery: mediaIds,
 						});
 					}}
 				/>

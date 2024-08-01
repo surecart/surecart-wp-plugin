@@ -19,6 +19,7 @@ export const expand = [
 	'price.product',
 	'product.featured_product_media',
 	'product.product_collections',
+	'product.product_medias',
 	'product_media.media',
 	'customer',
 	'customer.shipping_address',
@@ -151,6 +152,7 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -168,6 +170,7 @@ export const removeCheckoutLineItem = async (id) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -186,6 +189,7 @@ export const addCheckoutLineItem = async (data) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -299,6 +303,9 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 	return item?.checkout;
 };
 
+/**
+ * Handle the coupon apply. Applies for both add/remove coupon.
+ */
 export const handleCouponApply = async (promotionCode) => {
 	try {
 		checkoutState.loading = true;
@@ -313,9 +320,9 @@ export const handleCouponApply = async (promotionCode) => {
 				},
 			},
 		});
-	} catch (error) {
-		console.error(error);
-		checkoutState.error = error;
+	} catch (e) {
+		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}

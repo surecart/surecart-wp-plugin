@@ -14,18 +14,21 @@ export default ({ address = {} }) => {
 		}
 	}, [country]);
 
-	const parsedAddress = formatAddress({
-		name,
-		postalCountry: country,
-		administrativeArea: state,
-		locality: city,
-		postalCode: postal_code,
-		addressLines: [line_1, line_2],
-	});
+	const parsedAddress = [
+		...(formatAddress({
+			name: name || '',
+			postalCountry: country || '',
+			administrativeArea: state || '',
+			locality: city || '',
+			postalCode: postal_code || '',
+			addressLines: [line_1, line_2].filter(Boolean),
+		}) || []),
+		countryName || country,
+	];
 
 	return (
 		<>
-			{(parsedAddress || []).map((attribute, index) => {
+			{parsedAddress.map((attribute, index) => {
 				const isLast = parsedAddress.length === index + 1;
 				return (
 					<Fragment key={index}>
@@ -40,8 +43,6 @@ export default ({ address = {} }) => {
 					</Fragment>
 				);
 			})}
-			<br />
-			{countryName || country}
 		</>
 	);
 };

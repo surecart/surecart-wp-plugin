@@ -146,6 +146,7 @@ return array(
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
 		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
+		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 	),
 
 	/**
@@ -154,7 +155,6 @@ return array(
 	'blocks'                 => array(
 		\SureCartBlocks\Blocks\Email\Block::class,
 		\SureCartBlocks\Blocks\Address\Block::class,
-		\SureCartBlocks\Blocks\BillingAddress\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Coupon\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,

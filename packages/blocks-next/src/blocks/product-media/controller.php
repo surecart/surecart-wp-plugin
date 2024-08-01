@@ -8,6 +8,7 @@ if ( empty( $product ) ) {
 
 $gallery        = $product->gallery;
 $featured_image = $gallery[0] ?? null;
+$width          = ! empty( $attributes['width'] ) ? $attributes['width'] . 'px' : '';
 
 // handle empty.
 if ( empty( $gallery ) ) {
@@ -41,5 +42,7 @@ $height = 'auto';
 if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
+
+$gallery = $product->gallery;
 
 return 'file:./slideshow.php';

@@ -1,0 +1,31 @@
+.wp-block-surecart-product-price-chooser {
+	container-type: inline-size;
+	container-name: product-price-choices;
+	margin-bottom: var(--sc-form-row-spacing, 0.75em);
+}
+
+@container product-price-choices (max-width: 600px) {
+	.sc-choices {
+		grid-template-columns: repeat(1, 1fr) !important;
+	}
+}
+
+@container product-price-choices (max-width: 320px) {
+	.wp-block-surecart-product-price-choice-template {
+		flex-direction: column;
+		justify-content: flex-start;
+		gap: 5px;
+
+		&,
+		&.is-layout-flex {
+			align-items: flex-start;
+		}
+
+		.wp-block-group.is-vertical.is-content-justification-right {
+			align-items: flex-start;
+			justify-content: flex-end;
+			width: 100%;
+			text-align: left;
+		}
+	}
+}

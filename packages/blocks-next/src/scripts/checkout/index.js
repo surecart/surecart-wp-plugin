@@ -13,7 +13,6 @@ import {
 } from '@surecart/checkout-service';
 import { processCheckoutEvents } from '@surecart/checkout-events';
 
-// const { actions: cartDrawerActions } = store('surecart/cart');
 const { __, sprintf, _n } = wp.i18n;
 const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
@@ -190,6 +189,24 @@ const { state, actions } = store('surecart/checkout', {
 			return state.error?.message || '';
 		},
 
+		get lineItemPermalink() {
+			const { line_item } = getContext();
+			const product = line_item?.price?.product;
+			if (!product?.is_published) {
+				return null;
+			}
+			return product?.permalink;
+		},
+
+		/**
+		 * Get the cart/checkout additional errors.
+		 */
+		get additionalErrors() {
+			return (state?.error?.additional_errors || []).map(
+				(e) => e.message
+			);
+		},
+
 		/**
 		 * Get the cart menu icon visibility.
 		 */
@@ -348,15 +365,6 @@ const { state, actions } = store('surecart/checkout', {
 			const checkout = await handleCouponApply(state.promotionCode);
 
 			if (checkout) {
-				if (!checkout?.discount?.coupon) {
-					// TODO: Change this from API.
-					state.error = {
-						title: 'Failed to update. Please check for errors and try again.',
-						message: 'This coupon code is invalid.',
-					};
-					return;
-				}
-
 				speak(
 					sprintf(
 						/* translators: %s: promotion code */

@@ -50,12 +50,36 @@ class ProductsController extends RestController {
 		$request['variants'] = array_values(
 			array_filter(
 				$request['variants'],
-				function( $variation ) {
+				function ( $variation ) {
 					return ! in_array( $variation['status'] ?? 'publish', [ 'draft', 'deleted' ] );
 				}
 			)
 		);
 
 		return parent::edit( $request );
+	}
+
+	/**
+	 * Sync model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function sync( \WP_REST_Request $request ) {
+		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+		return $model->sync( $request['id'] );
+	}
+
+	/**
+	 * Sync model.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function syncAll() {
+		return \SureCart::sync()->products()->dispatch();
 	}
 }

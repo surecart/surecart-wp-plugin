@@ -17,6 +17,7 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import CustomerSyncModal from './components/CustomerSyncModal';
 import { useEntityProp } from '@wordpress/core-data';
+import ProductSyncButton from './components/ProductSyncButton';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -279,24 +280,28 @@ export default () => {
 						)}
 					</>
 				)}
-				{(scData.processors || []).some(
-					(processor) => processor.processor_type === 'stripe'
-				) && (
-					<ScSwitch
-						checked={stripeScriptEnabled}
-						onScChange={(e) =>
-							setStripeScriptEnabled(e.target.checked)
-						}
-					>
-						{__('Stripe Fraud Monitoring', 'surecart')}
-						<span slot="description" style={{ lineHeight: '1.4' }}>
-							{__(
-								'This will load stripe.js on every page to help with Fraud monitoring.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-				)}
+				{Array.isArray(scData.processors) &&
+					scData.processors.some(
+						(processor) => processor.processor_type === 'stripe'
+					) && (
+						<ScSwitch
+							checked={stripeScriptEnabled}
+							onScChange={(e) =>
+								setStripeScriptEnabled(e.target.checked)
+							}
+						>
+							{__('Stripe Fraud Monitoring', 'surecart')}
+							<span
+								slot="description"
+								style={{ lineHeight: '1.4' }}
+							>
+								{__(
+									'This will load stripe.js on every page to help with Fraud monitoring.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+					)}
 				<ScSwitch
 					checked={passwordValidation}
 					onScChange={(e) => setPasswordValidation(e.target.checked)}
@@ -405,8 +410,10 @@ export default () => {
 			>
 				<div
 					css={css`
-						display: grid;
-						gap: 0.5em;
+						display: flex;
+						gap: 1em;
+						justify-content: space-between;
+						--sc-input-label-margin: 0;
 					`}
 				>
 					<ScFormControl
@@ -418,9 +425,28 @@ export default () => {
 					/>
 					<div>
 						<ScButton onClick={() => setModal('customer-sync')}>
-							<ScIcon name="users" slot="prefix"></ScIcon>
-							{__('Sync Customers', 'surecart')}
+							<ScIcon name="refresh-ccw" slot="prefix"></ScIcon>
+							{__('Sync', 'surecart')}
 						</ScButton>
+					</div>
+				</div>
+				<div
+					css={css`
+						display: flex;
+						gap: 1em;
+						justify-content: space-between;
+						--sc-input-label-margin: 0;
+					`}
+				>
+					<ScFormControl
+						label={__('Products', 'surecart')}
+						help={__(
+							'Run a sync on all SureCart products to post types.',
+							'surecart'
+						)}
+					/>
+					<div>
+						<ProductSyncButton />
 					</div>
 				</div>
 			</SettingsBox>

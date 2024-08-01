@@ -2442,6 +2442,10 @@ export namespace Components {
     }
     interface ScPaymentMethodsList {
         /**
+          * Whether default payment method can be detached
+         */
+        "canDetachDefaultPaymentMethod": boolean;
+        /**
           * The heading
          */
         "heading": string;
@@ -3088,6 +3092,10 @@ export namespace Components {
           * Price name
          */
         "priceName"?: string;
+        /**
+          * The purchasable status display
+         */
+        "purchasableStatusDisplay": string;
         /**
           * Quantity
          */
@@ -9509,6 +9517,10 @@ declare namespace LocalJSX {
     }
     interface ScPaymentMethodsList {
         /**
+          * Whether default payment method can be detached
+         */
+        "canDetachDefaultPaymentMethod"?: boolean;
+        /**
           * The heading
          */
         "heading"?: string;
@@ -10207,6 +10219,10 @@ declare namespace LocalJSX {
           * Price name
          */
         "priceName"?: string;
+        /**
+          * The purchasable status display
+         */
+        "purchasableStatusDisplay"?: string;
         /**
           * Quantity
          */

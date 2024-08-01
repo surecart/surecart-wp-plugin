@@ -29,12 +29,13 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return string
 	 */
 	public function html( $size = 'full', $attr = [] ): string {
-		$image = '';
+		// If the item is not set, return null.
+		if ( ! isset( $this->item->ID ) ) {
+			return '';
+		}
 
 		// Handle attachments.
-		if ( isset( $this->item->ID ) ) {
-			$image = wp_get_attachment_image( $this->item->ID, $size, false, $attr );
-		}
+		$image = wp_get_attachment_image( $this->item->ID, $size, false, $attr );
 
 		// add any styles.
 		$tags = new \WP_HTML_Tag_Processor( $image );
@@ -56,10 +57,10 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
 	 *
-	 * @return object
+	 * @return object|null
 	 */
 	public function attributes( $size = 'full', $attr = [] ) {
-		$attachment_id = $this->item->ID;
+		$attachment_id = ! empty( $this->item->ID ) ? $this->item->ID : 0;
 		$image         = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
 
 		if ( $image ) {

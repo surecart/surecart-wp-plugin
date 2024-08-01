@@ -66,6 +66,13 @@
 		-moz-box-lines: 3;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		text-decoration: none;
+		color: inherit;
+
+		&:hover {
+			text-decoration: none;
+			color: inherit;
+		}
 	}
 
 	&__variant {

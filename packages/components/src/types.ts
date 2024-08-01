@@ -416,6 +416,7 @@ export interface Coupon extends Model {
 export interface LineItemData extends Object {
   id?: string;
   price_id?: string;
+  variant_id?: string;
   bump?: string;
   quantity: number;
   ad_hoc_amount?: number;
@@ -466,6 +467,8 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';
+  purchasable_status_display: string;
   variant_options: Array<string>;
   variant?: Variant;
 }

@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-price-chooser",
+	"title": "Price Selector",
+	"description": "Displays possible choices for product prices.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": ["surecart/product-page"],
+	"supports": {
+		"interactivity": true,
+		"html": false,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+        "margin": true
+			}
+		}
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Pricing"
+		},
+		"columns": {
+			"type": "number",
+			"default": 1
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"render": "file:./view.php",
+	"style": [
+		"file:../../styles/choice.css",
+		"file:../../styles/label.css",
+		"file:./style-index.css"
+	]
+}

@@ -10,18 +10,49 @@ import {
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 
 const TEMPLATE = [
+	['surecart/price-name', {}, []],
 	[
-		[
-			'core/paragraph',
-			{
-				content: __('Price Name', 'surecart'),
+		'core/group',
+		{
+			style: { spacing: { blockGap: '0px' } },
+			layout: {
+				type: 'flex',
+				orientation: 'vertical',
+				justifyContent: 'right',
 			},
-		],
+		},
 		[
-			'core/paragraph',
-			{
-				content: __('$10', 'surecart'),
-			},
+			[
+				'surecart/price-amount',
+				{
+					style: {
+						typography: { fontStyle: 'normal', fontWeight: '700' },
+					},
+				},
+				[],
+			],
+			[
+				'surecart/price-trial',
+				{
+					style: {
+						color: { text: '#8a8a8a' },
+						elements: { link: { color: { text: '#8a8a8a' } } },
+					},
+					fontSize: 'small',
+				},
+				[],
+			],
+			[
+				'surecart/price-setup-fee',
+				{
+					style: {
+						color: { text: '#8a8a8a' },
+						elements: { link: { color: { text: '#8a8a8a' } } },
+					},
+					fontSize: 'small',
+				},
+				[],
+			],
 		],
 	],
 ];
@@ -37,7 +68,7 @@ export default ({
 	const isChecked = context['surecart/price']?.checked || false;
 	const blockProps = useBlockProps({
 		className: `sc-choice ${__unstableLayoutClassNames} ${
-			isChecked ? 'sc-choice--selected' : ''
+			isChecked ? 'sc-choice--checked' : ''
 		}`,
 		style: {
 			borderColor: isChecked ? highlight_border : undefined,
@@ -49,11 +80,19 @@ export default ({
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const innerBlocksProps = useInnerBlocksProps({
-		style: {
-			width: '100%',
+	const innerBlocksProps = useInnerBlocksProps(
+		{
+			...blockProps,
+			style: {
+				width: '100%',
+			},
 		},
-	});
+		{
+			template: TEMPLATE,
+			templateLock: false,
+			renderAppender: false,
+		}
+	);
 
 	return (
 		<>
@@ -72,9 +111,7 @@ export default ({
 				]}
 				panelId={clientId}
 			/>
-			<div {...blockProps}>
-				<div {...innerBlocksProps}></div>
-			</div>
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };

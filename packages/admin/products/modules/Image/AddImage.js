@@ -5,13 +5,13 @@ import { __ } from '@wordpress/i18n';
 const ALLOWED_MEDIA_TYPES = ['image'];
 import { MediaUpload } from '@wordpress/media-utils';
 
-export default ({ value, onSelect }) => {
+export default ({ value, onSelect, ...rest }) => {
 	return (
 		<MediaUpload
 			title={__('Select Media', 'surecart')}
 			onSelect={onSelect}
 			value={value}
-			multiple={true}
+			multiple={'add'}
 			allowedTypes={ALLOWED_MEDIA_TYPES}
 			render={({ open }) => (
 				<div
@@ -47,6 +47,7 @@ export default ({ value, onSelect }) => {
 					</ScFlex>
 				</div>
 			)}
+			{...rest}
 		/>
 	);
 };

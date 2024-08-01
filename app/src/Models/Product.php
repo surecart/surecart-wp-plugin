@@ -113,9 +113,7 @@ class Product extends Model implements PageModel {
 		}
 
 		// if there are no syncable expands, let's fetch them.
-		if ( ! $this->has_syncable_expands ) {
-			$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
-		}
+		$this->with( $this->sync_expands )->where( array( 'cached' => false ) )->find( $this->id );
 
 		// sync the product.
 		$synced = \SureCart::sync()->product()->sync( $this );
@@ -391,6 +389,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Is the post published?
+	 *
+	 * @return string
+	 */
+	public function getIsPublishedAttribute(): bool {
+		return ! empty( $this->post ) && 'publish' === $this->post->post_status;
+	}
+
+	/**
 	 * Get the page title.
 	 *
 	 * @return string
@@ -508,15 +515,17 @@ class Product extends Model implements PageModel {
 
 		return apply_filters(
 			'surecart/product/json_schema',
-			array(
+			[
 				'@context'    => 'http://schema.org',
 				'@type'       => 'Product',
+				'productId'   => $this->sku ?? $this->slug,
 				'name'        => $this->name,
-				'image'       => $this->image_url ?? '',
 				'description' => sanitize_text_field( $this->description ),
+				'image'       => $this->image_url ?? '',
 				'offers'      => $offers,
-			),
-			$this
+				'url'         => $this->permalink,
+			],
+			$this,
 		);
 	}
 
@@ -535,7 +544,8 @@ class Product extends Model implements PageModel {
 			// this is acceptable.
 			return $this->attributes['metadata']->wp_template_id;
 		}
-		return 'single-sc_product';
+
+		return '';
 	}
 
 	/**
@@ -592,15 +602,24 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Models\Variant;
 	 */
 	public function getFirstVariantWithStockAttribute() {
-		// stock is enabled.
+		return $this->in_stock_variants[0] ?? null;
+	}
+
+	/**
+	 * Get the in stock variants.
+	 *
+	 * @return array
+	 */
+	public function getInStockVariantsAttribute() {
 		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases && ! empty( $this->variants->data ) ) {
-			foreach ( $this->variants->data as $variant ) {
-				if ( $variant->available_stock > 0 ) {
-					return $variant;
-				}
-			}
+			return array_map(
+				function ( $variant ) {
+					return $variant->available_stock > 0;
+				},
+				$this->variants->data,
+			);
 		}
-		return $this->variants->data[0] ?? null;
+		return $this->variants->data ?? null;
 	}
 
 	/**
@@ -748,7 +767,11 @@ class Product extends Model implements PageModel {
 					return null;
 				},
 				$gallery_items
-			)
+			),
+			function ( $item ) {
+				// it must have a src at least.
+				return ! empty( $item ) && ! empty( $item->attributes()->src );
+			}
 		);
 	}
 
@@ -773,11 +796,6 @@ class Product extends Model implements PageModel {
 			return '';
 		}
 
-		// the initial price is ad hoc.
-		if ( $this->initial_price->ad_hoc ) {
-			return esc_html__( 'Custom Amount', 'surecart' );
-		}
-
 		// return the formatted amount.
 		return Currency::format( $this->initial_price->amount, $this->initial_price->currency );
 	}
@@ -800,7 +818,7 @@ class Product extends Model implements PageModel {
 
 		// return the range.
 		return sprintf(
-			// translators: %1$1s is the min price, %2$2s is the max price.
+		// translators: %1$1s is the min price, %2$2s is the max price.
 			__(
 				'%1$1s - %2$2s',
 				'surecart',

@@ -92,6 +92,7 @@ export class ScSubscriptionNextPayment {
       );
 
     const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
+    const paymentMethodExists = this?.subscription.payment_method || this?.subscription.manual_payment;
 
     return (
       <Host>
@@ -121,6 +122,7 @@ export class ScSubscriptionNextPayment {
                 amount={item?.total_amount}
                 currency={item?.price?.currency}
                 interval={intervalString(item?.price)}
+                purchasableStatusDisplay={item?.purchasable_status_display}
               ></sc-product-line-item>
             ))}
 
@@ -145,7 +147,7 @@ export class ScSubscriptionNextPayment {
 
             {!!checkout.trial_amount && (
               <sc-line-item>
-                <span slot="description">{__('Free Trial', 'surecart')}</span>
+                <span slot="description">{__('Trial', 'surecart')}</span>
                 <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
               </sc-line-item>
             )}
@@ -175,12 +177,27 @@ export class ScSubscriptionNextPayment {
 
             <sc-line-item>
               <span slot="description">{__('Payment', 'surecart')}</span>
-              <a href={this.updatePaymentMethodUrl} slot="price-description">
-                <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-                  {manualPaymentMethod ? <sc-manual-payment-method paymentMethod={manualPaymentMethod} /> : <sc-payment-method paymentMethod={checkout?.payment_method} />}
-                  <sc-icon name="edit-3"></sc-icon>
-                </sc-flex>
-              </a>
+              {paymentMethodExists && (
+                <a href={this.updatePaymentMethodUrl} slot="price-description">
+                  <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
+                    {manualPaymentMethod ? <sc-manual-payment-method paymentMethod={manualPaymentMethod} /> : <sc-payment-method paymentMethod={checkout?.payment_method} />}
+                    <sc-icon name="edit-3"></sc-icon>
+                  </sc-flex>
+                </a>
+              )}
+              {!paymentMethodExists && (
+                <a
+                  href={addQueryArgs(window.location.href, {
+                    action: 'create',
+                    model: 'payment_method',
+                    id: this?.subscription.id,
+                    ...(this?.subscription?.live_mode === false ? { live_mode: false } : {}),
+                  })}
+                  slot="price-description"
+                >
+                  {__('Add Payment Method', 'surecart')}
+                </a>
+              )}
             </sc-line-item>
 
             <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
