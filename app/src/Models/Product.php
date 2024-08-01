@@ -800,12 +800,12 @@ class Product extends Model implements PageModel {
 						return null;
 					},
 					$this->gallery_ids
-				)
+				),
+				function ( $item ) {
+					// it must have a src at least.
+					return ! empty( $item ) && ! empty( $item->attributes()->src );
+				}
 			),
-			function ( $item ) {
-				// it must have a src at least.
-				return ! empty( $item ) && ! empty( $item->attributes()->src );
-			}
 		);
 	}
 
