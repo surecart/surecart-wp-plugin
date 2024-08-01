@@ -934,6 +934,17 @@ class ProductPostTypeService {
 			return;
 		}
 
+		$this->renderProductSeoMeta( $product );
+	}
+
+	/**
+	 * Render the SEO meta tags for the product.
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return void
+	 */
+	public function renderProductSeoMeta( $product ) {
 		$image_attributes  = $product->featured_image ? $product->featured_image->attributes( apply_filters( 'surecart/og:image/size', 'full' ) ) : null;
 		$product_image_url = $image_attributes ? $image_attributes->src : '';
 		?>

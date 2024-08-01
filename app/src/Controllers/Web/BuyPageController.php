@@ -2,7 +2,7 @@
 namespace SureCart\Controllers\Web;
 
 /**
- * Handles webhooks
+ * Handles Instant Checkout Page.
  */
 class BuyPageController extends BasePageController {
 	/**
@@ -18,8 +18,10 @@ class BuyPageController extends BasePageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+		// add seo meta data.
+		add_action( 'wp_head', [ $this, 'addSeoMetaData' ] );
 		// add json schema.
-		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
+		add_action( 'wp_head', [ $this, 'addProductJsonSchema' ] );
 	}
 
 	/**
@@ -207,11 +209,32 @@ class BuyPageController extends BasePageController {
 	}
 
 	/**
+	 * Add the SEO meta data.
+	 *
+	 * @return void
+	 */
+	public function addSeoMetaData(): void {
+		$product = $this->model;
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$display_seo_meta = apply_filters( 'sc_display_instant_checkout_seo_meta', true, $product );
+		if ( ! $display_seo_meta ) {
+			return;
+		}
+
+		// render the seo meta.
+		\SureCart::productPost()->renderProductSeoMeta( $product );
+	}
+
+	/**
 	 * Add the JSON-LD schema for the product.
 	 *
 	 * @return void
 	 */
-	public function addProductJsonSchema() {
+	public function addProductJsonSchema(): void {
 		$product = $this->model;
 
 		if ( empty( $product ) ) {
