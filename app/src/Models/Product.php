@@ -597,6 +597,18 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Is the product or any variants in stock.
+	 *
+	 * @return int
+	 */
+	public function getHasUnlimitedStockAttribute() {
+		if ( empty( $this->stock_enabled ) ) {
+			return true;
+		}
+		return $this->allow_out_of_stock_purchases;
+	}
+
+	/**
 	 * Get the first variant with stock.
 	 *
 	 * @return \SureCart\Models\Variant;
@@ -611,7 +623,7 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getInStockVariantsAttribute() {
-		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases && ! empty( $this->variants->data ) ) {
+		if ( ! $this->has_unlimited_stock && ! empty( $this->variants->data ) ) {
 			return array_map(
 				function ( $variant ) {
 					return $variant->available_stock > 0;

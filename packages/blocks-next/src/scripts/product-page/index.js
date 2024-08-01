@@ -193,10 +193,7 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		get isSoldOut() {
 			const { product } = getContext();
-			if (
-				!product?.stock_enabled ||
-				product?.allow_out_of_stock_purchases
-			) {
+			if (product?.has_unlimited_stock) {
 				return false;
 			}
 			return state.selectedVariant?.id
@@ -247,10 +244,7 @@ const { state, actions } = store('surecart/product-page', {
 			}
 
 			// if stock is not enabled, or out of stock purchases are allowed, return infinity.
-			if (
-				!product?.stock_enabled ||
-				product?.allow_out_of_stock_purchases
-			) {
+			if (product?.has_unlimited_stock) {
 				return Infinity;
 			}
 
@@ -515,8 +509,7 @@ export const isProductVariantOptionSoldOut = (
 	product
 ) => {
 	// product stock is not enabled or out of stock purchases are allowed.
-	if (!product?.stock_enabled || product?.allow_out_of_stock_purchases)
-		return false;
+	if (product?.has_unlimited_stock) return false;
 
 	// if this is option 1, check to see if there are any variants with this option.
 	if (optionNumber === 1) {
