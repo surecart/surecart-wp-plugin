@@ -61,7 +61,7 @@ class ShortcodesService {
 	 * @return boolean
 	 */
 	public function shouldRenderShortcodeItself( $name ) {
-		if ( ! is_admin() || 'sc_product_list' !== $name ) {
+		if ( ! is_admin() || 'sc_product_list' !== $name ) { // If we are not in the admin or the shortcode is not Product List, return false.
 			return false;
 		}
 
