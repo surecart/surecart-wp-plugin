@@ -3,16 +3,17 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
+use SureCart\Support\Currency;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 /**
- * Currently selected price element.
+ * Selected Price Fees element.
  */
-class SelectedPriceAmount extends \Bricks\Element {
-	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
+class SelectedPriceFees extends \Bricks\Element {
+	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
 	 * Element category.
@@ -26,14 +27,14 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $name = 'surecart-product-selected-price-amount';
+	public $name = 'surecart-product-selected-price-fees';
 
 	/**
 	 * Element block name.
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-selected-price-amount';
+	public $block_name = 'surecart/product-selected-price-fees';
 
 	/**
 	 * Element icon.
@@ -43,19 +44,12 @@ class SelectedPriceAmount extends \Bricks\Element {
 	public $icon = 'ti-money';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-selected-price-amount';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Selected Price Amount', 'surecart' );
+		return esc_html__( 'Selected Price Fees', 'surecart' );
 	}
 
 	/**
@@ -65,11 +59,16 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
-			$product       = sc_get_product();
-			// translators: %1$s: amount, %2$s: interval.
-			$output        = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output       .= '<span class="wp-block-surecart-product-selected-price-amount sc-price__amount">' . $product->display_amount . '</span>';
-			$output       .= '</div>';
+			$product    = sc_get_product();
+			$setup_fees_text = $product->initial_price->setup_fee_text ?? '';
+
+			if ( empty( $setup_fees_text ) ) {
+				$setup_fees_text = sprintf( __( '%s Setup Fee', 'surecart' ), Currency::format( 100, $product->currency ?? 'USD' ) );
+			}
+
+			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
+			$output .= '<span class="wp-block-surecart-product-selected-price-trial">' . $setup_fees_text . '</span>';
+			$output .= '</div>';
 
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;

@@ -9,10 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Currently selected price element.
+ * Selected Price Interval element.
  */
-class SelectedPriceAmount extends \Bricks\Element {
-	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
+class SelectedPriceInterval extends \Bricks\Element {
+	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
 	 * Element category.
@@ -26,14 +26,14 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $name = 'surecart-product-selected-price-amount';
+	public $name = 'surecart-product-selected-price-interval';
 
 	/**
 	 * Element block name.
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-selected-price-amount';
+	public $block_name = 'surecart/product-selected-price-interval';
 
 	/**
 	 * Element icon.
@@ -43,19 +43,12 @@ class SelectedPriceAmount extends \Bricks\Element {
 	public $icon = 'ti-money';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-selected-price-amount';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Selected Price Amount', 'surecart' );
+		return esc_html__( 'Selected Price Interval', 'surecart' );
 	}
 
 	/**
@@ -65,11 +58,11 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
-			$product       = sc_get_product();
-			// translators: %1$s: amount, %2$s: interval.
-			$output        = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output       .= '<span class="wp-block-surecart-product-selected-price-amount sc-price__amount">' . $product->display_amount . '</span>';
-			$output       .= '</div>';
+			$product  = sc_get_product();
+			$interval = ! empty( $product->initial_price->short_interval_text ) ? $product->initial_price->short_interval_text : '/ day (20 payments)';
+			$output   = '<div ' . $this->render_attributes( '_root' ) . '>';
+			$output  .= '<span class="wp-block-surecart-product-selected-price-scratch-amount sc-price__amount">' . $interval . '</span>';
+			$output  .= '</div>';
 
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;

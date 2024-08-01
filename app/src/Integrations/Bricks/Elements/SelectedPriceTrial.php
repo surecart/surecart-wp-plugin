@@ -3,16 +3,17 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
+use SureCart\Support\Currency;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 /**
- * Currently selected price element.
+ * Selected Price Trial element.
  */
-class SelectedPriceAmount extends \Bricks\Element {
-	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
+class SelectedPriceTrial extends \Bricks\Element {
+	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
 	 * Element category.
@@ -26,14 +27,14 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $name = 'surecart-product-selected-price-amount';
+	public $name = 'surecart-product-selected-price-trial';
 
 	/**
 	 * Element block name.
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-selected-price-amount';
+	public $block_name = 'surecart/product-selected-price-trial';
 
 	/**
 	 * Element icon.
@@ -47,7 +48,7 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $css_selector = '.wp-block-surecart-product-selected-price-amount';
+	public $css_selector = '.wp-block-surecart-product-selected-price-trial';
 
 	/**
 	 * Get element label.
@@ -55,7 +56,7 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Selected Price Amount', 'surecart' );
+		return esc_html__( 'Selected Price Trial', 'surecart' );
 	}
 
 	/**
@@ -65,11 +66,12 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
-			$product       = sc_get_product();
-			// translators: %1$s: amount, %2$s: interval.
-			$output        = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output       .= '<span class="wp-block-surecart-product-selected-price-amount sc-price__amount">' . $product->display_amount . '</span>';
-			$output       .= '</div>';
+			$product    = sc_get_product();
+			$trial_text = ! empty( $product->initial_price->trial_text ) ? $product->initial_price->trial_text : esc_html__( 'Starting in 7 days.', 'surecart' );
+
+			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
+			$output .= '<span class="wp-block-surecart-product-selected-price-trial">' . $trial_text . '</span>';
+			$output .= '</div>';
 
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
