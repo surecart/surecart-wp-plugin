@@ -602,15 +602,24 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Models\Variant;
 	 */
 	public function getFirstVariantWithStockAttribute() {
-		// stock is enabled.
+		return $this->in_stock_variants[0] ?? null;
+	}
+
+	/**
+	 * Get the in stock variants.
+	 *
+	 * @return array
+	 */
+	public function getInStockVariantsAttribute() {
 		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases && ! empty( $this->variants->data ) ) {
-			foreach ( $this->variants->data as $variant ) {
-				if ( $variant->available_stock > 0 ) {
-					return $variant;
-				}
-			}
+			return array_map(
+				function ( $variant ) {
+					return $variant->available_stock > 0;
+				},
+				$this->variants->data,
+			);
 		}
-		return $this->variants->data[0] ?? null;
+		return $this->variants->data ?? null;
 	}
 
 	/**
@@ -792,7 +801,11 @@ class Product extends Model implements PageModel {
 					},
 					$this->gallery_ids
 				)
-			)
+			),
+			function ( $item ) {
+				// it must have a src at least.
+				return ! empty( $item ) && ! empty( $item->attributes()->src );
+			}
 		);
 	}
 
@@ -839,7 +852,7 @@ class Product extends Model implements PageModel {
 
 		// return the range.
 		return sprintf(
-			// translators: %1$1s is the min price, %2$2s is the max price.
+		// translators: %1$1s is the min price, %2$2s is the max price.
 			__(
 				'%1$1s - %2$2s',
 				'surecart',

@@ -1,4 +1,5 @@
 <?php
+
 $product = sc_get_product();
 
 if ( empty( $product ) ) {
@@ -41,5 +42,7 @@ $height = 'auto';
 if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
+
+$gallery = $product->gallery;
 
 return 'file:./slideshow.php';

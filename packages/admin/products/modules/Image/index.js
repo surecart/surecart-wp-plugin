@@ -3,6 +3,8 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { useState } from 'react';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import AddImage from './AddImage';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
 import Error from '../../../components/Error';
@@ -19,6 +21,7 @@ export default ({ product, updateProduct }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
+	const { invalidateResolution } = useDispatch(coreStore);
 
 	const onDragStop = (oldIndex, newIndex) =>
 		updateProduct({
@@ -33,6 +36,18 @@ export default ({ product, updateProduct }) => {
 		updateProduct({
 			gallery_ids: product?.gallery_ids.filter((itemId) => itemId !== id),
 		});
+
+	const onSwapMedia = (id, newId) => {
+		const gallery_ids = (product?.gallery_ids || []).map((galleryId) => {
+			if (galleryId === id) {
+				return newId;
+			}
+			return galleryId;
+		});
+		updateProduct({
+			gallery_ids,
+		});
+	};
 
 	return (
 		<Box title={__('Images', 'surecart')}>
@@ -65,7 +80,12 @@ export default ({ product, updateProduct }) => {
 							) : (
 								<WordPressMedia
 									id={id}
+									product={product}
+									updateProduct={updateProduct}
 									onRemove={() => onRemoveMedia(id)}
+									onSelect={(media) =>
+										onSwapMedia(id, media.id)
+									}
 									isFeatured={index === 0}
 								/>
 							)}
@@ -74,6 +94,11 @@ export default ({ product, updateProduct }) => {
 				))}
 				<AddImage
 					value={product?.gallery_ids || []}
+					onClose={() =>
+						(product?.gallery_ids || []).forEach(({ id }) =>
+							invalidateResolution('getMedia', [id])
+						)
+					}
 					onSelect={(media) => {
 						const gallery_ids = (media || []).map(({ id }) => id);
 						updateProduct({ gallery_ids });

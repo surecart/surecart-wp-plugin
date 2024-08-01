@@ -23,6 +23,14 @@
 		"typography": {
 			"fontSize": true
 		},
+    "spacing": {
+      "padding": true,
+      "margin": true,
+      "__experimentalDefaultControls": {
+        "padding": true,
+        "margin": true
+      }
+    },
 		"color": {
 			"gradients": false,
 			"background": false,

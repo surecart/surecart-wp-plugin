@@ -36,7 +36,7 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					css={css`
 						position: absolute;
 						top: 5px;
-						right: 5px;
+						left: 5px;
 					`}
 				>
 					{__('Featured', 'surecart')}

@@ -16,7 +16,7 @@
 	data-wp-on--keydown="surecart/cart::actions.toggle"
 	tabindex="0"
 >
-	<div class="sc-cart-icon">
+	<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Cart Button.', 'surecart' ); ?>">
 		<?php echo wp_kses( $icon, sc_allowed_svg_html() ); ?>
 	</div>
 
@@ -24,6 +24,7 @@
 		class="sc-cart-count"
 		data-wp-text="state.itemsCount"
 		data-wp-bind--hidden="!state.hasItems"
+		data-wp-bind--aria-label="state.itemsCountAriaLabel"
 		hidden
 	>
 	</span>

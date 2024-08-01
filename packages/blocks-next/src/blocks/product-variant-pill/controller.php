@@ -1,6 +1,6 @@
 <?php
 
-if(!isset($block->context['value'])){
+if ( ! isset( $block->context['value'] ) ) {
 	return;
 }
 

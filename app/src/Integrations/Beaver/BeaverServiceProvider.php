@@ -1,6 +1,7 @@
 <?php
 namespace SureCart\Integrations\Beaver;
 
+use SureCart\Migration\ProductPageWrapperService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -29,6 +30,7 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 		}
 		add_action( 'init', [ $this, 'module' ] );
 		add_action( 'wp_ajax_surecart_fetch_forms', [ $this, 'fetch_forms' ] );
+		add_action( 'fl_builder_after_render_shortcodes', [ $this, 'handle_product_page_wrapper' ] );
 	}
 
 	/**
@@ -84,5 +86,16 @@ class BeaverServiceProvider implements ServiceProviderInterface {
 		$beaverModule = new BeaverFormModule();
 
 		\FLBuilder::register_module( BeaverFormModule::class, $beaverModule::getSettings() );
+	}
+
+	/**
+	 * Handle product page wrapper
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function handle_product_page_wrapper( $content ) {
+		return (new ProductPageWrapperService( $content ))->wrap();
 	}
 }

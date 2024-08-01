@@ -40,6 +40,11 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return string
 	 */
 	public function __get( $key ) {
+		// normalize the variant option.
+		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
+			return get_post_meta( $this->item->ID, 'sc_variant_option', true );
+		}
+
 		// normalize the ID.
 		if ( 'id' === $key && isset( $this->item->ID ) ) {
 			return $this->item->ID;
@@ -49,5 +54,62 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 			return $this->item->{$key};
 		}
 		return null;
+	}
+
+	/**
+	 * Determine if the given attribute exists.
+	 *
+	 * @param  mixed $offset Name.
+	 * @return bool
+	 */
+	public function offsetExists( $offset ): bool {
+		return ! is_null( $this->item->{$offset} );
+	}
+
+	/**
+	 * Get the value for a given offset.
+	 *
+	 * @param  mixed $offset Name.
+	 * @return mixed
+	 */
+	#[\ReturnTypeWillChange]
+	public function offsetGet( $offset ) {
+		return $this->item->{$offset};
+	}
+
+	/**
+	 * Set the value for a given offset.
+	 *
+	 * @param  mixed $offset Name.
+	 * @param  mixed $value Value.
+	 * @return void
+	 */
+	public function offsetSet( $offset, $value ): void {
+		$this->item->{$offset} = $value;
+	}
+
+	/**
+	 * Unset the value for a given offset.
+	 *
+	 * @param  mixed $offset Name.
+	 * @return void
+	 */
+	public function offsetUnset( $offset ): void {
+		$this->item->{$offset} = null;
+	}
+
+	/**
+	 * Determine if an attribute or relation exists on the model.
+	 *
+	 * @param  string $key Name.
+	 * @return bool
+	 */
+	public function __isset( $key ) {
+		// normalize the variant option.
+		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
+			return ! empty( get_post_meta( $this->item->ID, 'sc_variant_option', true ) );
+		}
+
+		return isset( $this->item->{$key} );
 	}
 }

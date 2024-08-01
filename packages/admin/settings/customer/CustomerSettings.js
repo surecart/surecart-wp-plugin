@@ -318,6 +318,15 @@ export default () => {
 							action="notification3"
 						/>
 						<EmailRow
+							title={__('Card Expiration', 'surecart')}
+							description={__(
+								"Sent one month before a customer's card expires.",
+								'surecart'
+							)}
+							model="payment_method"
+							action="card_expiration_notification"
+						/>
+						<EmailRow
 							title={__('Order Confirmation', 'surecart')}
 							description={__(
 								'Sent after an order is placed.',
