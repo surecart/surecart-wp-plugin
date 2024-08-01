@@ -178,10 +178,10 @@ class ProductsController extends AdminController {
 		// preload paths.
 		if ( ! empty( $product ) ) {
 			$gallery_paths = [];
-			$gallery       = $product->post->gallery ?? [];
-			foreach ( $gallery as $item ) {
-				if ( is_int( $item->id ) ) {
-					$gallery_paths[] = '/wp/v2/media/' . $item->id . '?context=edit';
+			$gallery       = $product->gallery_ids ?? [];
+			foreach ( $gallery as $id ) {
+				if ( is_int( $id ) ) {
+					$gallery_paths[] = '/wp/v2/media/' . $id . '?context=edit';
 				}
 			}
 
