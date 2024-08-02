@@ -69,7 +69,7 @@ class CollectionTag extends \Bricks\Element {
 		if ( ! bricks_is_frontend() ) {
 			$product     = sc_get_product();
 			$collections = $product->product_collections->data ?? [];
-			$collection = $collections[0] ?? [ 'name' => 'Collection1' ];
+			$collection  = $collections[0] ?? [ 'name' => 'Collection1' ];
 
 			$output .= '<div ' . $this->render_attributes( '_root' ) . '>';
 			$output .= '<span class="sc-tag sc-tag--default sc-tag--medium wp-block-surecart-product-collection-tag">' . $collection->name . '</span>';

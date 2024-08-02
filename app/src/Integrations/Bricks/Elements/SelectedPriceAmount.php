@@ -65,11 +65,11 @@ class SelectedPriceAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
-			$product       = sc_get_product();
+			$product = sc_get_product();
 			// translators: %1$s: amount, %2$s: interval.
-			$output        = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output       .= '<span class="wp-block-surecart-product-selected-price-amount sc-price__amount">' . $product->display_amount . '</span>';
-			$output       .= '</div>';
+			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
+			$output .= '<span class="wp-block-surecart-product-selected-price-amount sc-price__amount">' . $product->display_amount . '</span>';
+			$output .= '</div>';
 
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;

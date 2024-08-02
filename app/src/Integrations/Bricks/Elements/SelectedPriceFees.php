@@ -59,7 +59,7 @@ class SelectedPriceFees extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
-			$product    = sc_get_product();
+			$product         = sc_get_product();
 			$setup_fees_text = $product->initial_price->setup_fee_text ?? '';
 
 			if ( empty( $setup_fees_text ) ) {
