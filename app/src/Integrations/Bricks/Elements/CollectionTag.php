@@ -68,13 +68,12 @@ class CollectionTag extends \Bricks\Element {
 
 		if ( ! bricks_is_frontend() ) {
 			$product     = sc_get_product();
-			$collections = $product->product_collections->data ?? [ [ 'name' => 'Collection1' ] ];
+			$collections = $product->product_collections->data ?? [];
+			$collection = $collections[0] ?? [ 'name' => 'Collection1' ];
 
-			foreach ( $collections as $collection ) {
-				$output .= '<div ' . $this->render_attributes( '_root' ) . '>';
-				$output .= '<span class="sc-tag sc-tag--default sc-tag--medium wp-block-surecart-product-collection-tag">' . $collection->name . '</span>';
-				$output .= '</div>';
-			}
+			$output .= '<div ' . $this->render_attributes( '_root' ) . '>';
+			$output .= '<span class="sc-tag sc-tag--default sc-tag--medium wp-block-surecart-product-collection-tag">' . $collection->name . '</span>';
+			$output .= '</div>';
 
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
