@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getContext } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -46,8 +46,8 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the amount based on the selected variant or price.
 		 */
 		get selectedAmount() {
-			const { selectedPrice, product } = getContext();
-			if (product?.active_prices?.length > 1) {
+			const { selectedPrice, prices } = getContext();
+			if (prices?.length > 1) {
 				return selectedPrice?.amount || '';
 			}
 			return state.selectedVariant?.amount || selectedPrice?.amount || '';
@@ -95,12 +95,18 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is the option unavailable due to missing variants or stock.
 		 */
 		get isOptionUnavailable() {
-			const { optionNumber, option_value, product, variantValues } =
-				getContext();
+			const {
+				optionNumber,
+				option_value,
+				product,
+				variants,
+				variantValues,
+			} = getContext();
 			return isProductVariantOptionSoldOut(
 				parseInt(optionNumber),
 				option_value,
 				variantValues,
+				variants,
 				product
 			);
 		},
@@ -344,6 +350,8 @@ const { state, actions } = store('surecart/product-page', {
 				optionNumber,
 				option_value,
 				option_name,
+				option_name_slug,
+				option_value_slug,
 				urlPrefix,
 			} = getContext();
 
@@ -362,8 +370,7 @@ const { state, actions } = store('surecart/product-page', {
 				{},
 				'',
 				addQueryArgs(window.location.href, {
-					[`${urlPrefix}${option_name.toLowerCase()}`]:
-						option_value.toLowerCase(),
+					[`${urlPrefix}${option_name_slug}`]: option_value_slug,
 				})
 			);
 		},
@@ -379,8 +386,8 @@ const { state, actions } = store('surecart/product-page', {
 			e?.preventDefault();
 
 			const context = getContext();
-			const { product, price } = context;
-			const selectedPrice = product.prices?.data.find(
+			const { price, prices } = context;
+			const selectedPrice = (prices || []).find(
 				(p) => p.id === price?.id
 			);
 
@@ -466,46 +473,13 @@ export const getVariantFromValues = ({ variants, values }) => {
 };
 
 /**
- * Is this variant option missing/unavailable?
- */
-export const isProductVariantOptionMissing = (
-	optionNumber,
-	option,
-	variantValues,
-	product
-) => {
-	// if this is option 1, check to see if there are any variants with this option.
-	if (optionNumber === 1) {
-		return !(product?.variants?.data || []).some(
-			(variant) => variant.option_1 === option
-		);
-	}
-
-	// if this is option 2, check to see if there are any variants with this option and option 1
-	if (optionNumber === 2) {
-		return !(product?.variants?.data || []).some(
-			(variant) =>
-				variant?.option_1 === variantValues?.option_1 &&
-				variant?.option_2 === option
-		);
-	}
-
-	// if this is option 3, check to see if there are any variants with all the options.
-	return !(product?.variants?.data || []).some(
-		(variant) =>
-			variant?.option_1 === variantValues?.option_1 &&
-			variant?.option_2 === variantValues?.option_2 &&
-			variant.option_3 === option
-	);
-};
-
-/**
  * Is this variant option sold out.
  */
 export const isProductVariantOptionSoldOut = (
 	optionNumber,
 	option,
 	variantValues,
+	variants = [],
 	product
 ) => {
 	// product stock is not enabled or out of stock purchases are allowed.
@@ -513,7 +487,7 @@ export const isProductVariantOptionSoldOut = (
 
 	// if this is option 1, check to see if there are any variants with this option.
 	if (optionNumber === 1) {
-		const items = (product.variants?.data || []).filter?.(
+		const items = (variants || []).filter?.(
 			(variant) => variant.option_1 === option
 		);
 		const highestStock = Math.max(
@@ -524,7 +498,7 @@ export const isProductVariantOptionSoldOut = (
 
 	// if this is option 2, check to see if there are any variants with this option and option 1
 	if (optionNumber === 2) {
-		const items = (product.variants?.data || []).filter(
+		const items = (variants || []).filter(
 			(variant) =>
 				variant?.option_1 === variantValues.option_1 &&
 				variant.option_2 === option
@@ -536,7 +510,7 @@ export const isProductVariantOptionSoldOut = (
 	}
 
 	// if this is option 4, check to see if there are any variants with all the options.
-	const items = (product.variants?.data || []).filter(
+	const items = (variants || []).filter(
 		(variant) =>
 			variant?.option_1 === variantValues.option_1 &&
 			variant?.option_2 === variantValues.option_2 &&

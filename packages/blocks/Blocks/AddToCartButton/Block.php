@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\AddToCartButton;
 
+use SureCart\Models\Blocks\ProductPageBlock;
 use SureCart\Models\Price;
 
 /**
@@ -27,7 +28,13 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			return '';
 		}
 
+		// get the product.
 		$product = $price->product;
+
+		// setup the postdata.
+		global $post;
+		$post = $product->post;  // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,
+		setup_postdata( $post );
 
 		$variants = ! empty( $attributes['variant_id'] ) ? array_filter(
 			$product->variants->data ?? [],
@@ -76,39 +83,39 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			);
 		}
 
+		$controller = new ProductPageBlock( $this->block );
+
+		$price_attributes = [
+			'id',
+			'archived',
+			'amount',
+			'display_amount',
+			'scratch_amount',
+			'scratch_display_amount',
+			'ad_hoc',
+			'is_zero_decimal',
+			'currency_symbol',
+			'converted_ad_hoc_min_amount',
+			'converted_ad_hoc_max_amount',
+			'setup_fee_text',
+			'interval_text',
+			'short_interval_text',
+			'interval_count_text',
+			'payments_text',
+			'trial_text',
+		];
+
+		$context = $controller->context(
+			[
+				'selectedPrice' => $price ? $price->only( $price_attributes ) : null,
+				'prices'        => array_map( fn( $price ) => $price->only( $price_attributes ), [ $price ] ),
+			]
+		);
+
 		ob_start(); ?>
 		<div
 			data-wp-interactive='{ "namespace": "surecart/product-page" }'
-			<?php
-			echo wp_kses_data(
-				wp_interactivity_data_wp_context(
-					array(
-						'formId'                       => \SureCart::forms()->getDefaultId(),
-						'mode'                         => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
-						'checkoutUrl'                  => \SureCart::pages()->url( 'checkout' ),
-						'product'                      => $product,
-						'prices'                       => [ $price ],
-						'selectedPrice'                => $price,
-						'variant_options'              => $product->variant_options->data ?? array(),
-						'variants'                     => $product->variants->data ?? array(),
-						'selectedVariant'              => $variant,
-						'quantity'                     => 1,
-						'selectedDisplayAmount'        => $product->display_amount,
-						'selectedScratchDisplayAmount' => ! empty( $product->initial_price ) ? $product->initial_price->scratch_display_amount : '',
-						'isOnSale'                     => ! empty( $product->initial_price ) ? $product->initial_price->is_on_sale : false,
-						'busy'                         => false,
-						'adHocAmount'                  => '',
-						'variantValues'                => (object) array_filter(
-							array(
-								'option_1' => $product->first_variant_with_stock->option_1 ?? null,
-								'option_2' => $product->first_variant_with_stock->option_2 ?? null,
-								'option_3' => $product->first_variant_with_stock->option_3 ?? null,
-							)
-						),
-					)
-				)
-			);
-			?>
+			<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
 		>
 			<form class="sc-form" data-wp-on--submit="callbacks.handleSubmit">
 				<?php if ( ! empty( $price->ad_hoc ) ) : ?>
@@ -166,6 +173,8 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			</form>
 		</div>
 		<?php
-		return ob_get_clean();
+		$output = ob_get_clean();
+		wp_reset_postdata();
+		return $output;
 	}
 }
