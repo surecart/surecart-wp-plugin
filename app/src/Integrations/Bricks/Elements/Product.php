@@ -2,7 +2,6 @@
 
 namespace SureCart\Integrations\Bricks\Elements;
 
-use Bricks\Element;
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product element.
  */
-class Product extends Element {
+class Product extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
 
 	/**
@@ -46,9 +45,19 @@ class Product extends Element {
 	/**
 	 * This is nestable.
 	 *
-	 * @var string
+	 * @var bool
 	 */
 	public $nestable = true;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param array $element Element.
+	 */
+	public function __construct( $element = null ) {
+		parent::__construct( $element );
+		$this->show_populate_on_empty = true;
+	}
 
 	/**
 	 * Get element label.
