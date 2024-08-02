@@ -92,7 +92,7 @@ abstract class AsyncRequest {
 
 		$args = array(
 			'action' => $this->identifier,
-			'nonce'  => wp_create_nonce( $this->identifier ),
+			'nonce'  => \wp_create_nonce( $this->identifier ),
 		);
 
 		/**

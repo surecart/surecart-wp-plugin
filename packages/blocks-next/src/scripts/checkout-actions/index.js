@@ -170,6 +170,7 @@ export const removeCheckoutLineItem = async (id) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -188,6 +189,7 @@ export const addCheckoutLineItem = async (data) => {
 		});
 	} catch (e) {
 		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -302,7 +304,7 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 };
 
 /**
- * Apply coupon on cart.
+ * Handle the coupon apply. Applies for both add/remove coupon.
  */
 export const handleCouponApply = async (promotionCode) => {
 	try {
@@ -318,9 +320,9 @@ export const handleCouponApply = async (promotionCode) => {
 				},
 			},
 		});
-	} catch (error) {
-		console.error(error);
-		checkoutState.error = error;
+	} catch (e) {
+		console.error(e);
+		checkoutState.error = e;
 	} finally {
 		checkoutState.loading = false;
 	}

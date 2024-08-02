@@ -31,7 +31,7 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => $this->syncDropdown(),
+				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null,
 			),
 		);
 
@@ -109,13 +109,40 @@ class ProductsController extends AdminController {
 	 * Bulk Delete.
 	 */
 	public function bulkDelete() {
+		$product_ids = array_map(
+			'sanitize_text_field',
+			$_REQUEST['bulk_action_product_ids'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		);
+
+		// get all posts where the sc_id meta key is in the product_ids using wp_query.
+		$query = new \WP_Query(
+			[
+				'post_type'      => 'sc_product',
+				'posts_per_page' => -1,
+				'meta_query'     => [
+					[
+						'key'     => 'sc_id',
+						'value'   => $product_ids,
+						'compare' => 'IN',
+					],
+				],
+			]
+		);
+
+		// handle error.
+		if ( is_wp_error( $query ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $query->get_error_messages() ) ) );
+		}
+
+		// delete the posts.
+		foreach ( $query->posts as $post ) {
+			wp_delete_post( $post->ID, true );
+		}
+
 		// create bulk action.
 		$action = \SureCart::bulkAction()->createBulkAction(
 			'delete_products',
-			array_map(
-				'sanitize_text_field',
-				$_REQUEST['bulk_action_product_ids'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			)
+			$product_ids
 		);
 
 		// handle error.
@@ -151,10 +178,10 @@ class ProductsController extends AdminController {
 		// preload paths.
 		if ( ! empty( $product ) ) {
 			$gallery_paths = [];
-			$gallery       = $product->post->gallery ?? [];
-			foreach ( $gallery as $item ) {
-				if ( is_int( $item->id ) ) {
-					$gallery_paths[] = '/wp/v2/media/' . $item->id . '?context=edit';
+			$gallery       = $product->gallery_ids ?? [];
+			foreach ( $gallery as $id ) {
+				if ( is_int( $id ) ) {
+					$gallery_paths[] = '/wp/v2/media/' . $id . '?context=edit';
 				}
 			}
 
