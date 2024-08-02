@@ -44,7 +44,7 @@ class BlockAssetsLoadService {
 		 *                        is to ensure the content exists.
 		 * @return string Block content.
 		 */
-		$callback = static function( $content, $block ) use ( $block_name, $enqueue_callback ) {
+		$callback = static function ( $content, $block ) use ( $block_name, $enqueue_callback ) {
 			// Sanity check.
 			if ( empty( $block['blockName'] ) || $block_name !== $block['blockName'] ) {
 				return $content;
@@ -74,6 +74,7 @@ class BlockAssetsLoadService {
 	/**
 	 * Handle when using a page builder.
 	 *
+	 * @param string $enqueue_callback Function Name.
 	 * @return void
 	 */
 	public function whenUsingPageBuilder( $enqueue_callback ) {
@@ -106,6 +107,14 @@ class BlockAssetsLoadService {
 		if ( isset( $_GET['elementor-preview'] ) ) {
 			return 'elementor';
 		}
+
+		if ( class_exists( '\Elementor\Plugin' ) ) { // We are doing this because since elementor refresh editor using ajax if shortcode changes, the $_GET['action'] is not available.
+			$elementor_instance = \Elementor\Plugin::instance();
+			if ( isset( $elementor_instance->editor ) && method_exists( $elementor_instance->editor, 'is_edit_mode' ) && $elementor_instance->editor->is_edit_mode() ) {
+				return 'elementor';
+			}
+		}
+
 		// load for beaver builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['fl_builder'] ) ) {
@@ -119,8 +128,12 @@ class BlockAssetsLoadService {
 
 		// load for thrive architect builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( isset( $_POST['tve_content'] )  ) {
+		if ( isset( $_POST['tve_content'] ) ) {
 			return 'thrive';
+		}
+
+		if ( class_exists( '\Bricks\Builder' ) && method_exists( '\Bricks\Builder', 'is_builder_call' ) && \Bricks\Builder::is_builder_call() ) {
+			return 'bricks';
 		}
 
 		return '';

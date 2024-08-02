@@ -2,6 +2,7 @@
 
 namespace SureCart\WordPress\Shortcodes;
 
+use SureCart\WordPress\Assets\BlockAssetsLoadService;
 /**
  * The shortcodes service.
  */
@@ -61,13 +62,13 @@ class ShortcodesService {
 	 * @return boolean
 	 */
 	public function shouldRenderShortcodeItself( $name ) {
-		if ( ! is_admin() || 'sc_product_list' !== $name ) { // If we are not in the admin or the shortcode is not Product List, return false.
+		if ( 'sc_product_list' !== $name ) { // If the shortcode is not Product List, return false.
 			return false;
 		}
 
-		if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
-			return true;
-		}
+		$assets_service = new BlockAssetsLoadService();
+
+		return $assets_service->isUsingPageBuilder();
 	}
 
 	/**
@@ -89,7 +90,7 @@ class ShortcodesService {
 				if ( $this->shouldRenderShortcodeItself( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
 					return $this->renderShortcode( $attributes, $name );
 				}
-				
+
 				wp_enqueue_global_styles(); // Enqueue global styles.
 				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 ); // Disable loading separate core block assets.
 
