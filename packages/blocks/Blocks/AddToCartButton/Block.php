@@ -109,11 +109,24 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			[
 				'selectedPrice' => $price ? $price->only( $price_attributes ) : null,
 				'prices'        => array_map( fn( $price ) => $price->only( $price_attributes ), [ $price ] ),
+				'variantValues' => $variant ? array_filter(
+					[
+						'option_1' => $variant->option_1 ?? null,
+						'option_2' => $variant->option_2 ?? null,
+						'option_3' => $variant->option_3 ?? null,
+					]
+				) : [],
 			]
 		);
 
 		ob_start(); ?>
+		<style>
+			.sc-form, .sc-form-wrapper {
+				display: inline-block;
+			}
+		</style>
 		<div
+			class="sc-form-wrapper"
 			data-wp-interactive='{ "namespace": "surecart/product-page" }'
 			<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
 		>
@@ -166,7 +179,10 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 					>
 						<span class="sc-spinner" aria-hidden="true" data-wp-bind--hidden="!context.busy" hidden></span>
 						<span class="sc-button__link-text">
-							<?php echo wp_kses_post( $attributes['button_text'] ); ?>
+							<?php
+							// pass content for shortcode usage.
+							echo wp_kses_post( ! empty( $content ) ? $content : $attributes['button_text'] );
+							?>
 						</span>
 					</button>
 				</div>
