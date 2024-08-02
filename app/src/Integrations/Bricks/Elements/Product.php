@@ -53,6 +53,8 @@ class Product extends \Bricks\Element {
 	 * Constructor.
 	 *
 	 * @param array $element Element.
+	 *
+	 * @return void
 	 */
 	public function __construct( $element = null ) {
 		parent::__construct( $element );
