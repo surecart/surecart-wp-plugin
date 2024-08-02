@@ -43,10 +43,13 @@ class ProductPageBlock {
 		}
 
 		// get the initial defaults if there were no args.
+		// we need to turn into slugs for comparison to make sure capitalization,
+		// spacing, etc. doesn't matter.
 		$initial_defaults = array_reduce(
 			$product->variant_options->data ?? [],
 			function ( $carry, $option ) {
-				$carry[ $option->name ] = strtolower( $option->values[0] );
+				$name           = sanitize_title( $option->name );
+				$carry[ $name ] = sanitize_title( $option->values[0] );
 				return $carry;
 			},
 			[]
@@ -68,7 +71,18 @@ class ProductPageBlock {
 		$keys = [];
 		foreach ( $attributes as $option_name => $value ) {
 			// find the option index based on the name.
-			$option_index                              = array_search( $option_name, array_column( $product->variant_options->data, 'name' ) );
+			$option_index = array_search(
+				// get the sanitized option name for comparison.
+				sanitize_title( $option_name ),
+				// get the sanitized option names for comparison.
+				array_map(
+					fn( $name ) => sanitize_title( $name ),
+					array_column( $product->variant_options->data, 'name' )
+				),
+				true
+			);
+
+			// if the option index is not found, skip.
 			$keys[ 'option_' . ( $option_index + 1 ) ] = $value;
 		}
 
@@ -95,7 +109,7 @@ class ProductPageBlock {
 				( $product->variants->data ?? [] ),
 				function ( $variant ) use ( $keys ) {
 					foreach ( $keys as $key => $value ) {
-						if ( strtolower( $variant->$key ) !== strtolower( $value ) ) {
+						if ( sanitize_title( $variant->$key ) !== sanitize_title( $value ) ) {
 							return false;
 						}
 					}
