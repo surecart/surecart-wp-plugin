@@ -51,6 +51,18 @@ class SelectedPriceScratchAmount extends \Bricks\Element {
 	public $css_selector = '.wp-block-surecart-product-selected-price-scratch-amount';
 
 	/**
+	 * The constructor.
+	 *
+	 * @param array $element Element data.
+	 *
+	 * @return void
+	 */
+	public function __construct( $element = null ) {
+		$element['settings']['_typography']['text-decoration'] = 'line-through';
+		parent::__construct( $element );
+	}
+
+	/**
 	 * Get element label.
 	 *
 	 * @return string
