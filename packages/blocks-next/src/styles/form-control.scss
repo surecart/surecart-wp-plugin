@@ -167,3 +167,10 @@ textarea {
 	font-weight: var(--sc-font-weight-normal);
 	color: var(--sc-input-label-color);
 }
+
+// Form Help Text style.
+.sc-help-text {
+	display: block;
+	font-size: var(--sc-input-help-text-font-size-medium);
+    color: var(--sc-input-help-text-color);
+}

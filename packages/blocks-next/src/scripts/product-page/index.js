@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -13,6 +13,23 @@ const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when ava
 const { speak } = wp.a11y;
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
+
+/**
+ * Check if the key is not submit key.
+ */
+const isNotKeySubmit = (e) => {
+	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+};
+
+/**
+ * Check if the link is valid.
+ */
+const isValidLink = (ref) =>
+	ref &&
+	ref instanceof window.HTMLAnchorElement &&
+	ref.href &&
+	(!ref.target || ref.target === '_self') &&
+	ref.origin === window.location.origin;
 
 // controls the product page.
 const { state, actions } = store('surecart/product-page', {
@@ -98,6 +115,32 @@ const { state, actions } = store('surecart/product-page', {
 		},
 
 		/**
+		 * Is the option value selected
+		 */
+		get isOptionValueSelected() {
+			const context = getContext();
+			const { optionValue, variantValues } = context;
+
+			// this applies to all variants.
+			if (!optionValue) {
+				return true;
+			}
+
+			const values = Object.values(variantValues).map((value) =>
+				value.toLowerCase()
+			);
+
+			return values.includes(optionValue.toLowerCase());
+		},
+
+		/**
+		 * Get the image display.
+		 */
+		get imageDisplay() {
+			return state.isOptionValueSelected ? 'block' : 'none';
+		},
+
+		/**
 		 * Is the price selected?
 		 */
 		get isPriceSelected() {
@@ -151,10 +194,7 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		get isSoldOut() {
 			const { product } = getContext();
-			if (
-				!product?.stock_enabled ||
-				product?.allow_out_of_stock_purchases
-			) {
+			if (product?.has_unlimited_stock) {
 				return false;
 			}
 			return state.selectedVariant?.id
@@ -205,10 +245,7 @@ const { state, actions } = store('surecart/product-page', {
 			}
 
 			// if stock is not enabled, or out of stock purchases are allowed, return infinity.
-			if (
-				!product?.stock_enabled ||
-				product?.allow_out_of_stock_purchases
-			) {
+			if (product?.has_unlimited_stock) {
 				return Infinity;
 			}
 
@@ -273,7 +310,6 @@ const { state, actions } = store('surecart/product-page', {
 				cartActions.toggle();
 			} catch (e) {
 				console.error(e);
-				throw e; // Re-throw the caught error
 			} finally {
 				context.busy = false;
 			}
@@ -317,16 +353,48 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Set the option.
 		 */
-		setOption: () => {
-			const context = getContext();
-			context.variantValues[`option_${context?.optionNumber}`] =
-				context?.option_value || e?.target?.value;
+		setOption: (e) => {
+			e.preventDefault();
+
+			const {
+				variantValues,
+				optionNumber,
+				option_value,
+				option_name,
+				urlPrefix,
+			} = getContext();
+
+			// get the value.
+			const value = option_value || e?.target?.value;
+
+			// first we set the option to optimistically update all the ui.
+			variantValues[`option_${optionNumber}`] = value;
+
+			// if we have the name and value, update the url.
+			if (!option_value || !option_name) {
+				return;
+			}
+
+			window.history.replaceState(
+				{},
+				'',
+				addQueryArgs(window.location.href, {
+					[`${urlPrefix}${option_name.toLowerCase()}`]:
+						option_value.toLowerCase(),
+				})
+			);
 		},
 
 		/**
 		 * Set the price
 		 */
-		setPrice: () => {
+		setPrice: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			const { product, price } = context;
 			const selectedPrice = product.prices?.data.find(
@@ -354,24 +422,41 @@ const { state, actions } = store('surecart/product-page', {
 				Math.min(state.maxQuantity, parseInt(e.target.value)),
 				1
 			);
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity decrease.
 		 */
-		onQuantityDecrease: () => {
+		onQuantityDecrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
+
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity increase.
 		 */
-		onQuantityIncrease: () => {
+		onQuantityIncrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.min(state.maxQuantity, state.quantity + 1);
+
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},
 });
@@ -441,8 +526,7 @@ export const isProductVariantOptionSoldOut = (
 	product
 ) => {
 	// product stock is not enabled or out of stock purchases are allowed.
-	if (!product?.stock_enabled || product?.allow_out_of_stock_purchases)
-		return false;
+	if (product?.has_unlimited_stock) return false;
 
 	// if this is option 1, check to see if there are any variants with this option.
 	if (optionNumber === 1) {

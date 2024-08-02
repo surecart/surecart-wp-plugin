@@ -33,6 +33,15 @@ class ProductSyncService {
 	}
 
 	/**
+	 * Bulk action service.
+	 *
+	 * @return \SureCart\Background\BulkActionService
+	 */
+	protected function bulkActionService() {
+		return $this->app->resolve( 'surecart.bulk_action' );
+	}
+
+	/**
 	 * Bootstrap any actions.
 	 *
 	 * @return void
@@ -86,6 +95,17 @@ class ProductSyncService {
 	}
 
 	/**
+	 * Check if there is a bulk action for the model.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return bool
+	 */
+	public function isBulkDeleting( $model ) {
+		return $this->bulkActionService()->modelHasPendingAction( $model, 'delete_products' );
+	}
+
+	/**
 	 * Cancel the sync for a later time.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
@@ -135,6 +155,11 @@ class ProductSyncService {
 	 * @return \WP_Post|\WP_Error
 	 */
 	public function handleScheduledSync( $id ) {
+		// if the model is bulk deleting, return.
+		if ( $this->isBulkDeleting( $id ) ) {
+			return;
+		}
+
 		return Product::sync( $id );
 	}
 }

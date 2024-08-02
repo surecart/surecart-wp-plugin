@@ -597,20 +597,41 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Is the product or any variants in stock.
+	 *
+	 * @return int
+	 */
+	public function getHasUnlimitedStockAttribute() {
+		if ( empty( $this->stock_enabled ) ) {
+			return true;
+		}
+		return $this->allow_out_of_stock_purchases;
+	}
+
+	/**
 	 * Get the first variant with stock.
 	 *
 	 * @return \SureCart\Models\Variant;
 	 */
 	public function getFirstVariantWithStockAttribute() {
-		// stock is enabled.
-		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases && ! empty( $this->variants->data ) ) {
-			foreach ( $this->variants->data as $variant ) {
-				if ( $variant->available_stock > 0 ) {
-					return $variant;
-				}
-			}
+		return $this->in_stock_variants[0] ?? null;
+	}
+
+	/**
+	 * Get the in stock variants.
+	 *
+	 * @return array
+	 */
+	public function getInStockVariantsAttribute() {
+		if ( ! $this->has_unlimited_stock && ! empty( $this->variants->data ) ) {
+			return array_map(
+				function ( $variant ) {
+					return $variant->available_stock > 0;
+				},
+				$this->variants->data,
+			);
 		}
-		return $this->variants->data[0] ?? null;
+		return $this->variants->data ?? null;
 	}
 
 	/**
@@ -721,6 +742,43 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the gallery ids attribute.
+	 *
+	 * @return array
+	 */
+	public function getGalleryIdsAttribute() {
+		// fallback.
+		if ( empty( $this->attributes['metadata']->gallery_ids ) ) {
+			return array_values(
+				array_filter(
+					array_map(
+						function ( $media ) {
+							return $media->id;
+						},
+						$this->product_medias->data ?? array()
+					)
+				),
+			);
+		}
+
+			// gallery.
+			return json_decode( $this->attributes['metadata']->gallery_ids ?? '' );
+	}
+
+	/**
+	 * Set the gallery ids attribute.
+	 *
+	 * @param array $value The gallery array.
+	 * @return void
+	 */
+	public function setGalleryIdsAttribute( $value ) {
+		$this->attributes['metadata'] = wp_parse_args(
+			[ 'gallery_ids' => wp_json_encode( $value ) ],
+			$this->attributes['metadata'] ?? array(),
+		);
+	}
+
+	/**
 	 * Get the gallery attribute.
 	 *
 	 * Map the post gallery array to GalleryItem objects.
@@ -728,37 +786,38 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		$gallery_items = $this->post->gallery ?? array();
-
-		return array_filter(
-			array_map(
-				function ( $gallery_item ) {
-					// force object.
-					$gallery_item = (object) $gallery_item;
-
-					// this is an attachment id.
-					if ( is_int( $gallery_item->id ) ) {
-						return new GalleryItemAttachment( $gallery_item->id );
-					}
-
-					// get the product media item that matches the id.
-					$item = array_filter(
-						$this->getAttribute( 'product_medias' )->data ?? array(),
-						function ( $item ) use ( $gallery_item ) {
-							return $item->id === $gallery_item->id;
+		return array_values(
+			array_filter(
+				array_map(
+					function ( $id ) {
+						// this is an attachment id.
+						if ( is_int( $id ) ) {
+							return new GalleryItemAttachment( $id );
 						}
-					);
 
-					// get the first item.
-					$item = array_shift( $item );
-					if ( ! empty( $item ) ) {
-						return new GalleryItemProductMedia( $item );
-					}
+						// get the product media item that matches the id.
+						$item = array_filter(
+							$this->getAttribute( 'product_medias' )->data ?? array(),
+							function ( $item ) use ( $id ) {
+								return $item->id === $id;
+							}
+						);
 
-					return null;
-				},
-				$gallery_items
-			)
+						// get the first item.
+						$item = array_shift( $item );
+						if ( ! empty( $item ) ) {
+							return new GalleryItemProductMedia( $item );
+						}
+
+						return null;
+					},
+					$this->gallery_ids
+				),
+				function ( $item ) {
+					// it must have a src at least.
+					return ! empty( $item ) && ! empty( $item->attributes()->src );
+				}
+			),
 		);
 	}
 
@@ -805,7 +864,7 @@ class Product extends Model implements PageModel {
 
 		// return the range.
 		return sprintf(
-			// translators: %1$1s is the min price, %2$2s is the max price.
+		// translators: %1$1s is the min price, %2$2s is the max price.
 			__(
 				'%1$1s - %2$2s',
 				'surecart',

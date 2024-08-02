@@ -26,11 +26,12 @@ export const TEMPLATE = [
 				],
 			],
 			[
-				'core/group',
+				'surecart/product-list-search',
 				{
-					layout: { type: 'flex', flexWrap: 'nowrap' },
+					style: {
+						layout: { selfStretch: 'fixed', flexSize: '250px' },
+					},
 				},
-				[['surecart/product-list-search', {}]],
 			],
 		],
 	],

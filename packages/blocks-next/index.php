@@ -86,9 +86,20 @@ add_filter(
 
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
+			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
+			static $products_counter = -1;
 			global $sc_query_id;
-			$sc_query_id                                    = wp_unique_id();
+			$sc_query_id = ++$products_counter;
+
 			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
+		}
+
+		// pass a unique id to each product list block.
+		if ( 'surecart/product-page' === $parsed_block['blockName'] ) {
+			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
+			static $product_counter = -1;
+			global $sc_query_id;
+			$sc_query_id = ++$product_counter;
 		}
 		return $context;
 	},
@@ -96,6 +107,27 @@ add_filter(
 	2
 );
 
+/**
+ * Register all css at src/styles folder.
+ */
+add_action(
+	'init',
+	function () {
+    	$css_files = glob( __DIR__ . '/build/styles/*.css' ) ?? [];
+
+		foreach ( $css_files as $css_file ) {
+			// Extract the file name without the extension and prepend with 'surecart-'.
+			$handle = 'surecart-' . basename( $css_file, '.css' );
+
+			wp_register_style(
+				$handle,
+				plugins_url( 'build/styles/' . basename( $css_file ), __FILE__ ),
+				[],
+				filemtime( $css_file )
+			);
+		}
+	}
+);
 
 add_action(
 	'init',
@@ -184,6 +216,10 @@ add_action(
 				],
 				[
 					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
 				],
 			],

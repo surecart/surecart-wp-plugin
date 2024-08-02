@@ -217,7 +217,7 @@ class Price extends Model {
 	}
 
 	/**
-	 * Get the recurring text attribute
+	 * Get the payments text attribute
 	 *
 	 * @return string
 	 */

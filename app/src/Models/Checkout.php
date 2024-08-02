@@ -265,9 +265,7 @@ class Checkout extends Model {
 	protected function update( $attributes = [] ) {
 		$this->setWriteAttributes();
 
-		parent::update( $attributes );
-
-		return $this;
+		return parent::update( $attributes );
 	}
 
 	/**

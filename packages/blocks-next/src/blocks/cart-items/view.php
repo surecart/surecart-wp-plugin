@@ -136,6 +136,12 @@
 							data-wp-bind--hidden="!context.line_item.price.setup_fee_text"
 							data-wp-text="context.line_item.price.setup_fee_text"
 						></div>
+
+						<div
+							class="sc-product-line-item__purchasable-status sc-product-line-item__price-description "
+							data-wp-bind--hidden="!context.line_item.purchasable_status_display"
+							data-wp-text="context.line_item.purchasable_status_display"
+						></div>
 					</div>
 				</div>
 			</div>
