@@ -27,7 +27,7 @@ class ProductPageBlock {
 	 */
 	public function __construct( $block ) {
 		$this->block = $block;
-		$this->url   = \SureCart::block()->urlParams( 'product' );
+		$this->url   = \SureCart::block()->urlParams();
 	}
 
 	/**

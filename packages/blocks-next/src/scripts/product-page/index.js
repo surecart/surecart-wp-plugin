@@ -362,7 +362,7 @@ const { state, actions } = store('surecart/product-page', {
 				{},
 				'',
 				addQueryArgs(window.location.href, {
-					[`${urlPrefix}-${option_name.toLowerCase()}`]:
+					[`${urlPrefix}${option_name.toLowerCase()}`]:
 						option_value.toLowerCase(),
 				})
 			);
