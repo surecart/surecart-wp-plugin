@@ -46,7 +46,12 @@ class SettingsController {
 					return $validate;
 				}
 			}
+
+			// Update the API token.
 			ApiToken::save( $request['api_token'] );
+
+			// Clear the account cache.
+			\SureCart::account()->clearCache();
 		}
 
 		// update uninstall option.

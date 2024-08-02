@@ -50,6 +50,12 @@ class StylesService {
 			'surecart-themes-default',
 			$style
 		);
+
+		// blocks-next.
+		wp_add_inline_style(
+			'surecart-theme-base',
+			$style
+		);
 	}
 
 	/**
