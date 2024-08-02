@@ -11,7 +11,7 @@
 >
 	<template
 		data-wp-each--line_item="state.checkoutLineItems"
-		data-wp-key="context.line_item.id"
+		data-wp-each-key="context.line_item.id"
 	>
 		<div class="sc-product-line-item" role="listitem">
 			<div class="sc-product-line-item__item">
