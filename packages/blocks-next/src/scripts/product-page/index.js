@@ -444,7 +444,8 @@ const { state, actions } = store('surecart/product-page', {
 
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
-			context.quantity = Math.min(state.maxQuantity, state.quantity + 1);
+			context.quantity =
+				Math.min(state.maxQuantity, state.quantity + 1) || 1;
 
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
