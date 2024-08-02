@@ -225,10 +225,12 @@ class ProductPageBlock {
 				'isOnSale'      => ! empty( $product->initial_price ) ? $product->initial_price->is_on_sale : false,
 				'busy'          => false,
 				'adHocAmount'   => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
-				'variantValues' => array(
-					'option_1' => $selected_variant->option_1 ?? null,
-					'option_2' => $selected_variant->option_2 ?? null,
-					'option_3' => $selected_variant->option_3 ?? null,
+				'variantValues' => array_filter(
+					array(
+						'option_1' => $selected_variant->option_1 ?? null,
+						'option_2' => $selected_variant->option_2 ?? null,
+						'option_3' => $selected_variant->option_3 ?? null,
+					)
 				),
 			),
 		);
