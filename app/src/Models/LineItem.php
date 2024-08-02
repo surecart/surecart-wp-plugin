@@ -212,6 +212,10 @@ class LineItem extends Model {
 			'exceeds_purchase_limit' => __( 'Exceeds purchase limit', 'surecart' ),
 		);
 
+		if ( $this->quantity > 1 ) {
+			$translations['out_of_stock'] = __( 'Quantity unavailable', 'surecart' );
+		}
+
 		return $translations[ $this->purchasable_status ] ?? '';
 	}
 }
