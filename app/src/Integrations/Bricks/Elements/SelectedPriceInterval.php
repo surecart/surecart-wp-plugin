@@ -40,7 +40,7 @@ class SelectedPriceInterval extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-money';
+	public $icon = 'ti-time';
 
 	/**
 	 * Get element label.
