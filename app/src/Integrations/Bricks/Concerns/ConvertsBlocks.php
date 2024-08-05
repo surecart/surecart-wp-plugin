@@ -111,6 +111,55 @@ trait ConvertsBlocks {
 	}
 
 	/**
+	 * Render raw layout block.
+	 *
+	 * @param array $block_attributes The block attributes.
+	 *
+	 * @return string
+	 */
+	public function raw_layout( $block_attributes = [] ) {
+		$rendered_attributes       = $this->get_block_rendered_attributes();
+		$block_attributes['class'] = $rendered_attributes['class'];
+		$block_attributes['id']    = $rendered_attributes['id'];
+
+		return $this->raw( $block_attributes, \Bricks\Frontend::render_children( $this ) );
+	}
+
+	/**
+	 *  Preview layout block.
+	 *
+	 * @param string $class_name Class name.
+	 *
+	 * @return string
+	 */
+	public function preview_layout( string $class_name = '' ) {
+		$rendered_attributes = $this->get_block_rendered_attributes();
+		$class               = $class_name . ' ' . $rendered_attributes['class'];
+		$id                  = $rendered_attributes['id'];
+
+		$output  = "<div id='$id' class='$class'>";
+		$output .= \Bricks\Frontend::render_children( $this );
+		$output .= '</div>';
+
+		return $output;
+	}
+
+	/**
+	 * Get the rendered attributes.
+	 *
+	 * @return array
+	 */
+	public function get_block_rendered_attributes(): array {
+		$rendered_attributes = $this->render_attributes( '_root' );
+		preg_match( '/\bid\s*=\s*"([^"]*)"/', $rendered_attributes, $id_matches );
+		preg_match( '/\bclass\s*=\s*"([^"]*)"/', $rendered_attributes, $class_matches );
+		$block_attributes['class'] = $class_matches[1] ?? '';
+		$block_attributes['id']    = $id_matches[1] ?? '';
+
+		return $block_attributes;
+	}
+
+	/**
 	 * Remove interactivity doing it wrong.
 	 *
 	 * This is because we need to render blocks out of order in order to
