@@ -110,7 +110,7 @@ class PriceChoiceTemplate extends \Bricks\Element {
 
 		echo $this->raw_layout(
 			[
-				'highlight_border' => $this->settings['highlight_border'],
+				'highlight_border' => $this->settings['highlight_border']['hex'] ?? '',
 			]
 		);
 	}
