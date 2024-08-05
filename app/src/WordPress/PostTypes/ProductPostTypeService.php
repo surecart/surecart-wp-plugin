@@ -34,7 +34,7 @@ class ProductPostTypeService {
 		// ensure we always fetch with the current connected store id in case of store change.
 		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
 
-		// redirect to 404 if we are not in the correct store
+		// redirect to 404 if we are not in the correct store.
 		add_action( 'template_redirect', array( $this, 'maybeRedirectTo404' ) );
 
 		// add global $sc_product inside loops.
@@ -611,7 +611,8 @@ class ProductPostTypeService {
 		}
 
 		// check if the post has the taxonomy sc_acccount that matches the current account.
-		$account = get_the_terms( $post->ID, 'sc_account' );
+		// cached version fails here for some reason: https://core.trac.wordpress.org/ticket/41679.
+		$account = wp_get_object_terms( $post, 'sc_account' );
 
 		if ( empty( $account ) ) {
 			return;
