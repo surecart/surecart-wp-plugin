@@ -135,7 +135,7 @@ class CollectionTaxonomyService {
 					'new_item_name'     => __( 'New Collection Name', 'surecart' ),
 					'menu_name'         => __( 'Collection', 'surecart' ),
 				),
-				'public '           => true,
+				'public'            => true,
 				'show_in_rest'      => true,
 				'hierarchical'      => false,
 				'show_in_ui'        => true,
