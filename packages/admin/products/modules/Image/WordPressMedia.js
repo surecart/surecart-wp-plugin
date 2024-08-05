@@ -7,6 +7,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { MediaUpload } from '@wordpress/block-editor';
 import { Notice } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
+import { SortableKnob } from 'react-easy-sort';
 const ALLOWED_MEDIA_TYPES = ['image'];
 
 export default ({ id, onRemove, isFeatured, onSelect }) => {
@@ -145,7 +146,7 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 						css={css`
 							position: absolute;
 							bottom: 4px;
-							left: 4px;
+							right: 4px;
 							z-index: 10;
 							cursor: pointer;
 							padding: var(--sc-spacing-small);
@@ -165,18 +166,20 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 				)}
 			/>
 
-			<div
-				className="overlay"
-				css={css`
-					background-color: var(--sc-overlay-background-color);
-					position: absolute;
-					top: 0;
-					right: 0;
-					bottom: 0;
-					left: 0;
-					z-index: 2;
-				`}
-			></div>
+			<SortableKnob>
+				<div
+					className="overlay"
+					css={css`
+						background-color: var(--sc-overlay-background-color);
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+						z-index: 2;
+					`}
+				></div>
+			</SortableKnob>
 
 			{media?.source_url ? (
 				<img

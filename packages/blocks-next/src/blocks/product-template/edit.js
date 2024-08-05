@@ -17,6 +17,13 @@ const TEMPLATE = [
 	[
 		'core/group',
 		{
+			style: {
+				spacing: {
+					blockGap: '0',
+					margin: { top: '0px', bottom: '0px' },
+				},
+				margin: { top: '0px', bottom: '0px' },
+			},
 			layout: { type: 'flex', orientation: 'vertical' },
 		},
 		[
@@ -162,8 +169,6 @@ export default ({
 		[`columns-${columnCount}`]: layoutType === 'grid' && columnCount,
 	});
 
-	console.log({ TEMPLATE });
-
 	return (
 		<>
 			<BlockControls>
@@ -172,6 +177,8 @@ export default ({
 			<TemplateListEdit
 				template={TEMPLATE}
 				blockContexts={products?.map((product) => ({
+					postId: product?.id,
+					postType: 'sc_product',
 					id: product?.id,
 					'surecart/productId': product?.id,
 				}))}

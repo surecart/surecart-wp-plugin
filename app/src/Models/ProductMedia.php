@@ -78,4 +78,16 @@ class ProductMedia extends Model {
 	public function getSrcset( $sizes ) {
 		return ! empty( $this->media ) ? $this->media->withImageSizes( $sizes )->srcset : '';
 	}
+
+	/**
+	 * Download the media to the wp install.
+	 *
+	 * @return integer The attachment id.
+	 */
+	public function download() {
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		return \media_sideload_image( ! empty( $this->media->url ) ? 'https://surecart.com/cdn-cgi/image/format=png/' . $this->media->url . '?extension=.png' : $this->url, 0, null, 'id' );
+	}
 }

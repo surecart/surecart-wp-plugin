@@ -122,6 +122,6 @@ export const createErrorString = (error) => {
 		.map((error) => error?.message)
 		.filter((n) => n);
 	return `${error?.message || __('Something went wrong.', 'surecart')}${
-		additionalErrors?.length && ` ${additionalErrors.join('. ')}`
+		!!additionalErrors?.length ? ` ${additionalErrors.join('. ')}` : ''
 	}`;
 };
