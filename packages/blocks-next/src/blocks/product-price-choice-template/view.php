@@ -1,6 +1,6 @@
 <div
 	<?php
-		echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-choice '. $attributes['class'] ?? '' ) ) );
+		echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-choice ' . $attributes['class'] ?? '' ) ) );
 		echo wp_kses_data( wp_interactivity_data_wp_context( array( 'price' => $price ) ) );
 	?>
 	data-wp-on--click="callbacks.setPrice"
@@ -14,7 +14,7 @@
 </div>
 
 <?php
-if ( ! empty( $attributes['highlight_border'] ) ) {
+if ( isset( $attributes['highlight_border'] ) && ! empty( $attributes['highlight_border'] ) ) {
 	printf(
 		'<style class="price-choice-custom-css">div.sc-choice--checked{border-color:%s!important;box-shadow: 0 0 0 1px %s;}</style>',
 		esc_attr( $attributes['highlight_border'] ?? '' ),
