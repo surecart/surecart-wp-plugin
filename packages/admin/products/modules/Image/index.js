@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
-import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
+import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import AddImage from './AddImage';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
@@ -13,23 +13,18 @@ import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
 import WordPressMedia from './WordPressMedia';
 import ProductMedia from './ProductMedia';
+import { select } from '@wordpress/data';
 
 const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
 	ADD_IMAGE_FROM_URL: 'add_image_from_url',
 };
-export default ({ productId }) => {
+export default ({ productId, product, updateProduct }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { invalidateResolution } = useDispatch(coreStore);
-
-	const { editedRecord: product, edit: updateProduct } = useEntityRecord(
-		'surecart',
-		'product',
-		productId
-	);
 
 	const onDragStop = (oldIndex, newIndex) =>
 		updateProduct({
@@ -46,6 +41,12 @@ export default ({ productId }) => {
 		});
 
 	const onSwapMedia = (id, newId) => {
+		// for some reason we need to select this again.
+		const product = select(coreStore).getEditedEntityRecord(
+			'surecart',
+			'product',
+			productId
+		);
 		// if it's in the product?.gallery_ids already, throw an error.
 		if (product?.gallery_ids.includes(newId)) {
 			createErrorNotice(
@@ -55,7 +56,7 @@ export default ({ productId }) => {
 			return;
 		}
 
-		const gallery_ids = product?.gallery_ids;
+		const gallery_ids = [...(product?.gallery_ids || [])];
 		// find the index of the old id
 		const index = product?.gallery_ids.indexOf(id);
 		gallery_ids[index] = newId;

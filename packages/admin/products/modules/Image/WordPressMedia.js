@@ -159,9 +159,6 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 						`}
 						name="edit-2"
 						onClick={open}
-						onMouseDown={(e) => {
-							e.stopPropagation(); // prevents sortable from being triggered
-						}}
 					/>
 				)}
 			/>

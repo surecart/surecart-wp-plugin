@@ -387,8 +387,8 @@ export default ({ id, setBrowserURL }) => {
 
 					<Image
 						productId={id}
+						product={product}
 						updateProduct={editProduct}
-						loadingPost={loadingPost}
 					/>
 
 					<Prices
