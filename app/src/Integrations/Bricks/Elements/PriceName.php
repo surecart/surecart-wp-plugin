@@ -34,7 +34,7 @@ class PriceName extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-price-name';
+	public $block_name = 'surecart/price-name';
 
 	/**
 	 * Element icon.

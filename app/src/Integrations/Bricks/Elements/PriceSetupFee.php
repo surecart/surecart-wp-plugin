@@ -32,7 +32,7 @@ class PriceSetupFee extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-price-setup-fee';
+	public $block_name = 'surecart/price-setup-fee';
 
 	/**
 	 * Element icon.

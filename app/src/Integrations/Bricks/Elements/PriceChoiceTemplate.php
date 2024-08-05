@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Price element.
+ * Price Choice Template element.
  */
-class Price extends \Bricks\Element {
+class PriceChoiceTemplate extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
@@ -27,14 +27,14 @@ class Price extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $name = 'surecart-product-price';
+	public $name = 'surecart-product-price-choice-template';
 
 	/**
 	 * Element block name.
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-price';
+	public $block_name = 'surecart/product-price-choice-template';
 
 	/**
 	 * Element icon.
@@ -49,13 +49,6 @@ class Price extends \Bricks\Element {
 	 * @var bool
 	 */
 	public $nestable = true;
-
-	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-price';
 
 	/**
 	 * Get element label.
@@ -111,19 +104,14 @@ class Price extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( bricks_is_builder_call() ) {
-			$output  = "<div  class='sc-choice' {$this->render_attributes('_root')}>";
-			$output .= \Bricks\Frontend::render_children( $this );
-			$output .= '</div>';
-
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview_layout( 'sc-choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 
-		echo "<div {$this->render_attributes( '_root' )}>" . $this->raw(  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			array(
-				'highlight_border' => $this->settings['highlight_border'] ?? '#000000',
-			),
-			\Bricks\Frontend::render_children( $this )
-		) . '</div>';
+		echo $this->raw_layout(
+			[
+				'highlight_border' => $this->settings['highlight_border'],
+			]
+		);
 	}
 }

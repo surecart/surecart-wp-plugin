@@ -55,7 +55,6 @@ class PriceChooser extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $css_selector = '.wp-block-surecart-product-price-selector';
 
 	/**
 	 * The constructor.
@@ -140,19 +139,21 @@ class PriceChooser extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( bricks_is_builder_call() ) {
-			$output  = "<div class='sc-choices' {$this->render_attributes('_root')}>";
+			$label   = ! empty( $this->settings['label'] ) ? $this->settings['label'] : esc_html__( 'Pricing', 'surecart' );
+			$output  = "<div {$this->render_attributes( '_root' )}>";
+			$output .= "<label class='sc-form-label'>" . $label . '</label>';
+			$output .= "<div class='sc-choices'>";
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';
-
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$output .= '</div>';
+			echo $output;
 			return;
 		}
 
-		echo "<div {$this->render_attributes( '_root' )}>" . $this->raw(  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			array(
-				'label' => $this->settings['label'] ?? esc_html__( 'Pricing', 'surecart' ),
-			),
-			\Bricks\Frontend::render_children( $this )
-		) . '</div>';
+		echo $this->raw_layout(
+			[
+				'label' => $this->settings['label'],
+			]
+		);
 	}
 }
