@@ -41,7 +41,7 @@ class PriceChooser extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-money';
+	public $icon = 'fas fa-money-bills';
 
 	/**
 	 * This is nestable.

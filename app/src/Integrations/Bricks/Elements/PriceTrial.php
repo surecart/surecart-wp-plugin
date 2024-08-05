@@ -39,7 +39,7 @@ class PriceTrial extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-money';
+	public $icon = 'ti-time';
 
 	/**
 	 * The css selector.
