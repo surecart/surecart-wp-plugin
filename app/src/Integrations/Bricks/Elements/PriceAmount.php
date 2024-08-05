@@ -2,6 +2,7 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
+use SureCart\Support\Currency;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -64,11 +65,18 @@ class PriceAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
+			$price          = ( sc_get_product() )->initial_price ?? [
+				'amount'              => Currency::format( 200 ),
+				'short_interval_text' => '/mo',
+			];
+			$display_amount = sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), $price->display_amount, $price->short_interval_text );
+
 			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
 			$output .= '<div class="wp-block-surecart-product-price-amount">';
-			$output .= '<span class="sc-price-name">$300</span>';
+			$output .= '<span class="sc-price-name">' . $display_amount . '</span>';
 			$output .= '</div>';
 			$output .= '</div>';
+
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 

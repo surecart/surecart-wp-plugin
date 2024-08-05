@@ -64,9 +64,13 @@ class PriceTrial extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
+			$price = ( sc_get_product() )->initial_price ?? [
+				'trial_text' => esc_html__( 'Starting in 15 days', 'surecart' ),
+			];
+
 			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
 			$output .= '<div class="wp-block-surecart-product-price-trial">';
-			$output .= '<span class="sc-price-name">Starting in 15 days</span>';
+			$output .= '<span class="sc-price-name">' . $price->trial_text . '</span>';
 			$output .= '</div>';
 			$output .= '</div>';
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

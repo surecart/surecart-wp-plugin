@@ -64,10 +64,11 @@ class PriceSetupFee extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
+			$price   = ( sc_get_product() )->initial_price ?? [
+				'setup_fee_text' => esc_html__( '$12 Signup Fee', 'surecart' ),
+			];
 			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<div class="wp-block-surecart-product-price-setup-fee">';
-			$output .= 'dkfhalfkds';
-			$output .= '</div>';
+			$output .= '<div class="wp-block-surecart-product-price-setup-fee">' . $price->setup_fee_text . '</div>';
 			$output .= '</div>';
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}

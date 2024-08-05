@@ -91,6 +91,7 @@ class PriceChooser extends \Bricks\Element {
 					'_display'        => 'flex',
 					'_direction'      => 'row',
 					'_justifyContent' => 'flex-start',
+					'_alignItems'     => 'center',
 					'_width'          => '100%',
 				),
 				'children' => array(
@@ -115,7 +116,7 @@ class PriceChooser extends \Bricks\Element {
 						),
 					),
 				),
-			)
+			),
 		);
 	}
 
@@ -138,7 +139,7 @@ class PriceChooser extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if (  bricks_is_builder_call() ) {
+		if ( bricks_is_builder_call() ) {
 			$output  = "<div class='sc-choices' {$this->render_attributes('_root')}>";
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';

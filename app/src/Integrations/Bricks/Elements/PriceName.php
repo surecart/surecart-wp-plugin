@@ -66,9 +66,11 @@ class PriceName extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( ! bricks_is_frontend() ) {
+			$initial_price = ( sc_get_product() )->initial_price ?? [ 'name' => esc_html__( 'Price Name', 'surecart' ) ];
+
 			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
 			$output .= '<div class="wp-block-surecart-product-price-name">';
-			$output .= '<span class="sc-price-name">Price Name</span>';
+			$output .= '<span class="sc-price-name">' . $initial_price->name . '</span>';
 			$output .= '</div>';
 			$output .= '</div>';
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
