@@ -110,7 +110,7 @@ class Price extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if (  bricks_is_builder_call() ) {
+		if ( bricks_is_builder_call() ) {
 			$output  = "<div  class='sc-choice' {$this->render_attributes('_root')}>";
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';

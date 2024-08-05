@@ -103,7 +103,7 @@ class SelectedPrice extends \Bricks\Element {
 	public function render() {
 		$output = "<div {$this->render_attributes( '_root' )}>";
 
-		// Render children elements (= individual items)
+		// Render children elements (= individual items).
 		$output .= \Bricks\Frontend::render_children( $this );
 
 		$output .= '</div>';

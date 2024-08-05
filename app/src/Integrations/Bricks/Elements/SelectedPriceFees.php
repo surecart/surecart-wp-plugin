@@ -63,6 +63,7 @@ class SelectedPriceFees extends \Bricks\Element {
 			$setup_fees_text = $product->initial_price->setup_fee_text ?? '';
 
 			if ( empty( $setup_fees_text ) ) {
+				// translators: %s: Setup Fee.
 				$setup_fees_text = sprintf( __( '%s Setup Fee', 'surecart' ), Currency::format( 100, $product->currency ?? 'USD' ) );
 			}
 
