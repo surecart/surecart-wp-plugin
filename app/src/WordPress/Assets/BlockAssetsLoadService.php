@@ -122,7 +122,7 @@ class BlockAssetsLoadService {
 		}
 		// load for Divi builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['et_fb'] ) ) {
+		if ( isset( $_GET['et_fb'] ) || isset( $_GET['et_pb_preview'] ) ) {
 			return 'divi';
 		}
 
