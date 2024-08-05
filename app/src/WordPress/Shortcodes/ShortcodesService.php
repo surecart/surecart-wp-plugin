@@ -78,7 +78,7 @@ class ShortcodesService {
 
 				if ( in_array( $block_name, $this->old_shortcode_block_names, true ) && ! empty( $shortcode_attrs['id'] ) ) {
 					// translators: %s is the shortcode name.
-					wp_trigger_error( '', sprintf( esc_html__( 'Passing an id to the [%s] shortcode is deprecated. Please use the page wrapper shortcode instead.', 'surecart' ), $name ) );
+					wp_trigger_error( '', sprintf( esc_html__( 'Passing an id to the [%s] shortcode is deprecated. Please use these shortcodes on product pages directly.', 'surecart' ), $name ) );
 						$block = new \WP_Block(
 							[
 								'blockName'    => $block_name,
