@@ -124,10 +124,10 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		get isOptionValueSelected() {
 			const context = getContext();
-			const { optionValue, variantValues } = context;
+			const { optionValue, variantValues, alwaysDisplay } = context;
 
 			// this applies to all variants.
-			if (!optionValue) {
+			if (!optionValue || alwaysDisplay) {
 				return true;
 			}
 
