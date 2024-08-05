@@ -50,13 +50,6 @@ class CollectionTags extends \Bricks\Element {
 	public $nestable = true;
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-collection-tags';
-
-	/**
 	 * Get element label
 	 *
 	 * @return string
@@ -76,7 +69,10 @@ class CollectionTags extends \Bricks\Element {
 
 		for ( $i = 0; $i < $count; $i++ ) {
 			$children[] = array(
-				'type' => 'surecart-product-collection-tag',
+				'name'     => 'surecart-product-collection-tag',
+				'settings' => array(
+					'_width' => 'max-content',
+				),
 			);
 		}
 
@@ -106,24 +102,14 @@ class CollectionTags extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( bricks_is_builder_call() ) {
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= $this->html(  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				[
-					'count' => $this->settings['count'],
-				],
-				\Bricks\Frontend::render_children( $this )
-			);
-			$output .= '</div>';
-
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview_layout(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 
-		echo "<div {$this->render_attributes( '_root' )}>" . $this->raw(  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw_layout(
 			[
 				'count' => $this->settings['count'],
-			],
-			\Bricks\Frontend::render_children( $this )
-		) . '</div>';
+			]
+		);
 	}
 }

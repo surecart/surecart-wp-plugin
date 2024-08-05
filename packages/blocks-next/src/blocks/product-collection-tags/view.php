@@ -1,4 +1,7 @@
-<ul <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<ul
+	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class'=> $attributes['class'] ) ) ); ?>
+	id="<?php echo esc_attr( $attributes['id'] ?? '' ); ?>"
+>
 	<?php
 	foreach ( $collections as $collection ) :
 		// Get an instance of the current Post Template block.
