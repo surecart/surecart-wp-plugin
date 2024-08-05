@@ -612,7 +612,7 @@ class ProductPostTypeService {
 
 		// check if the post has the taxonomy sc_acccount that matches the current account.
 		// cached version fails here for some reason: https://core.trac.wordpress.org/ticket/41679.
-		$account = wp_get_object_terms( $post, 'sc_account' );
+		$account = wp_get_object_terms( $post->ID, 'sc_account' );
 
 		if ( empty( $account ) ) {
 			return;
