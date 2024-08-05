@@ -132,7 +132,7 @@ class BlockAssetsLoadService {
 			return 'thrive';
 		}
 
-		if ( class_exists( '\Bricks\Builder' ) && method_exists( '\Bricks\Builder', 'is_builder_call' ) && \Bricks\Builder::is_builder_call() ) {
+		if ( ( ! empty( $_GET['bricks'] ) && 'run' === $_GET['bricks'] ) || ( \defined( 'BRICKS_IS_BUILDER' ) && \BRICKS_IS_BUILDER ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return 'bricks';
 		}
 
