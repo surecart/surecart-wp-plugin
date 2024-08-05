@@ -52,31 +52,11 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	}
 
 	/**
-	 * Set controls.
-	 *
-	 * @return void
-	 */
-	public function set_controls() {
-		$this->controls['width'] = array(
-			'label'   => esc_html__( 'Width', 'surecart' ),
-			'type'    => 'number',
-			'default' => 100,
-			'min'     => 0,
-			'max'     => 100,
-			'step'    => 1,
-			'unit'    => '%',
-			'css'     => array(
-				array( 'property' => 'width' ),
-			),
-		);
-	}
-
-	/**
 	 * Render element.
 	 *
 	 * @return void
 	 */
 	public function render() {
-		echo $this->raw();
+		echo $this->html();
 	}
 }
