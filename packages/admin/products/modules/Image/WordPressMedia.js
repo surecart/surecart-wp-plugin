@@ -200,6 +200,7 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 					{...(media?.title?.rendered
 						? { title: media?.title?.rendered }
 						: {})}
+					loading="lazy"
 				/>
 			) : (
 				<ScSkeleton

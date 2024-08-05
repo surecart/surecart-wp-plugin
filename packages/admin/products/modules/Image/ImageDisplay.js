@@ -103,6 +103,7 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 				`}
 				alt={productMedia?.media?.alt}
 				{...(productMedia?.title ? { title: productMedia?.title } : {})}
+				loading="lazy"
 			/>
 		</div>
 	);
