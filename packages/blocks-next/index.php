@@ -113,7 +113,7 @@ add_filter(
 add_action(
 	'init',
 	function () {
-    	$css_files = glob( __DIR__ . '/build/styles/*.css' ) ?? [];
+		$css_files = glob( __DIR__ . '/build/styles/*.css' ) ?? [];
 
 		foreach ( $css_files as $css_file ) {
 			// Extract the file name without the extension and prepend with 'surecart-'.
