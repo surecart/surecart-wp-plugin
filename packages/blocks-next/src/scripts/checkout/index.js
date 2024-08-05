@@ -545,26 +545,11 @@ const { state, actions } = store('surecart/checkout', {
 			}
 			state.loading = false;
 		},
-		updateCheckoutOnProductPage(e) {
-			if (
-				!e?.detail?.checkout ||
-				!e?.detail?.mode ||
-				!e?.detail?.formId
-			) {
-				return;
-			}
-
-			actions.setCheckout(
-				e.detail.checkout,
-				e.detail.mode,
-				e.detail.formId
-			);
-			cartActions.toggle();
+		updateCheckout(e) {
+			const { checkout, mode, formId } = e.detail;
+			actions.setCheckout(checkout, mode, formId);
 		},
 	},
 });
 
-addEventListener(
-	'sCheckoutUpdatedOnProductPage',
-	actions.updateCheckoutOnProductPage
-); // Listen for checkout update on product page.
+addEventListener('scCheckoutUpdated', actions.updateCheckout); // Listen for checkout update on product page.

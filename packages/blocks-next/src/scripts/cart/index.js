@@ -7,7 +7,7 @@ const { state: checkoutState } = store('surecart/checkout');
 const { __ } = wp.i18n;
 const { speak } = wp.a11y;
 
-store('surecart/cart', {
+const { actions } = store('surecart/cart', {
 	actions: {
 		toggle: (e) => {
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
@@ -61,3 +61,5 @@ store('surecart/cart', {
 		},
 	},
 });
+
+addEventListener('scToggleCart', actions.toggle); // Listen for checkout update on product page.
