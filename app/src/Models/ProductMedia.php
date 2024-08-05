@@ -88,6 +88,6 @@ class ProductMedia extends Model {
 		require_once ABSPATH . 'wp-admin/includes/media.php';
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 		require_once ABSPATH . 'wp-admin/includes/image.php';
-		return \media_sideload_image( ! empty( $this->media->url ) ? $this->media->url . '?download=1&extension=.png' : $this->url, 0, null, 'id' );
+		return \media_sideload_image( ! empty( $this->media->url ) ? $this->media->url . '?' . $this->media->filename : $this->url, 0, null, 'id' );
 	}
 }
