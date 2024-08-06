@@ -47,6 +47,7 @@
 	"style": [
 		"file:./index.css",
 		"file:../../styles/block-ui.css",
-		"file:../../styles/tag.css"
+		"file:../../styles/tag.css",
+		"surecart-theme-base"
 	]
 }

@@ -18,6 +18,7 @@ export default ({ licenseId }) => {
 					expand: [
 						'product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 					per_page: 100,

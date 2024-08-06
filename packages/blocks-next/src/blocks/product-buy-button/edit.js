@@ -16,8 +16,6 @@ import {
 	TextControl,
 } from '@wordpress/components';
 import {
-	AlignmentControl,
-	BlockControls,
 	InspectorControls,
 	RichText,
 	useBlockProps,

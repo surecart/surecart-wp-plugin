@@ -25,6 +25,12 @@ class Block extends ProductBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( empty( $attributes['id'] ) ) {
+			return \SureCart::block()
+			->productSelectedPriceMigration( $attributes, $this->block )
+			->render();
+		}
+
 		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 		if ( empty( $product ) || empty( $product->active_prices ) ) {
 			return '';

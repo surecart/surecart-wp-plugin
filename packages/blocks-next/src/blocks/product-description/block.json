@@ -7,15 +7,6 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"ancestor": ["surecart/product-page"],
-	"attributes": {
-		"textAlign": {
-			"type": "string",
-			"default": "left"
-		},
-		"id": {
-			"type": "string"
-		}
-	},
 	"supports": {
 		"interactivity": true,
 		"reusable": false,
