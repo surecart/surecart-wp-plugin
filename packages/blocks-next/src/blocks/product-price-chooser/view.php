@@ -1,4 +1,4 @@
-<div id="<?php echo esc_attr($attributes['id'] ?? '') ?>" <?php echo wp_kses_data( get_block_wrapper_attributes(['class' => $attributes['class'] ?? '']) ); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'id' => $attributes['id'] ?? '' ) ) ); ?>>
 	<label class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? __( 'Pricing', 'surecart' ) ); ?>
 	</label>

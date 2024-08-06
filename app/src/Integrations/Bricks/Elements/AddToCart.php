@@ -48,7 +48,7 @@ class AddToCart extends Element {
 	 *
 	 * @var string
 	 */
-	public $css_selector = '.wp-block-surecart-product-buy-button .sc-button__link';
+//	public $css_selector = '.wp-block-surecart-product-buy-button .sc-button__link';
 
 	/**
 	 * Get element label.
@@ -86,7 +86,7 @@ class AddToCart extends Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( bricks_is_builder() ) {
+		if ( $this->is_admin_editor() ) {
 			$content = wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) );
 			echo <<<HTML
 				<div {$this->render_attributes( '_root' )}>

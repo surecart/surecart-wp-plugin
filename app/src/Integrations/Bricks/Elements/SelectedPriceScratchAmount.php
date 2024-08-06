@@ -75,7 +75,7 @@ class SelectedPriceScratchAmount extends \Bricks\Element {
 	 * Render element.
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
+		if ( $this->is_admin_editor() ) {
 			$product       = sc_get_product();
 			$scratch_price = $product->initial_price->scratch_display_amount ?? Currency::format( 100, $product->currency ?? 'USD' );
 			$output        = '<div ' . $this->render_attributes( '_root' ) . '>';

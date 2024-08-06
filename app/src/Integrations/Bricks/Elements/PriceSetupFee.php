@@ -63,7 +63,7 @@ class PriceSetupFee extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
+		if ( $this->is_admin_editor() ) {
 			$price   = ( sc_get_product() )->initial_price ?? [
 				'setup_fee_text' => esc_html__( '$12 Signup Fee', 'surecart' ),
 			];

@@ -108,6 +108,6 @@ class SelectedPrice extends \Bricks\Element {
 
 		$output .= '</div>';
 
-		echo $output;
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

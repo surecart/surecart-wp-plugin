@@ -65,7 +65,7 @@ class PriceName extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
+		if ( $this->is_admin_editor() ) {
 			$initial_price = ( sc_get_product() )->initial_price ?? [ 'name' => esc_html__( 'Price Name', 'surecart' ) ];
 
 			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';

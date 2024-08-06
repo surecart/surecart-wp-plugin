@@ -119,7 +119,7 @@ trait ConvertsBlocks {
 	 */
 	public function raw_layout( $block_attributes = [] ) {
 		$rendered_attributes       = $this->get_block_rendered_attributes();
-		$block_attributes['class'] = $rendered_attributes['class'];
+		$block_attributes['className'] = $rendered_attributes['class'];
 		$block_attributes['id']    = $rendered_attributes['id'];
 
 		return $this->raw( $block_attributes, \Bricks\Frontend::render_children( $this ) );
@@ -175,5 +175,14 @@ trait ConvertsBlocks {
 			return $trigger;
 		}
 		return false;
+	}
+
+	/**
+	 * Whether it is editor or not.
+	 *
+	 * @return bool
+	 */
+	public function is_admin_editor() {
+		return !bricks_is_frontend() || bricks_is_builder_call();
 	}
 }

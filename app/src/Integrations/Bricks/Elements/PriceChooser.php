@@ -138,7 +138,7 @@ class PriceChooser extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( bricks_is_builder_call() ) {
+		if ( $this->is_admin_editor() ) {
 			$label   = ! empty( $this->settings['label'] ) ? $this->settings['label'] : esc_html__( 'Pricing', 'surecart' );
 			$output  = "<div {$this->render_attributes( '_root' )}>";
 			$output .= "<label class='sc-form-label'>" . $label . '</label>';
@@ -146,7 +146,8 @@ class PriceChooser extends \Bricks\Element {
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';
 			$output .= '</div>';
-			echo $output;
+			
+			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 

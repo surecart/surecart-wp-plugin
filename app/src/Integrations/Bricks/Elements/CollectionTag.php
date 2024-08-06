@@ -78,7 +78,7 @@ class CollectionTag extends \Bricks\Element {
 	public function render() {
 		$output = '';
 
-		if ( ! bricks_is_frontend() ) {
+		if ( $this->is_admin_editor() ) {
 			$product     = sc_get_product();
 			$collections = $product->product_collections->data ?? [];
 			$collection  = $collections[0] ?? [ 'name' => 'Collection1' ];

@@ -99,7 +99,7 @@ class VariantPill extends \Bricks\Element {
 	public function render() {
 		$output = '';
 
-		if ( ! bricks_is_frontend() || bricks_is_builder_call() ) {
+		if ( $this->is_admin_editor() ) {
 			$output .= '<div ' . $this->render_attributes( '_root' ) . '>';
 			$output .= '<span class="sc-pill-option__button wp-block-surecart-product-variant-pill">' . esc_html__( 'Red', 'surecart' ) . '</span>';
 			$output .= '</div>';

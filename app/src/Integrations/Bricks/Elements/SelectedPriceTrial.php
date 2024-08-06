@@ -65,7 +65,7 @@ class SelectedPriceTrial extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
+		if ( $this->is_admin_editor() ) {
 			$product    = sc_get_product();
 			$trial_text = ! empty( $product->initial_price->trial_text ) ? $product->initial_price->trial_text : esc_html__( 'Starting in 7 days.', 'surecart' );
 

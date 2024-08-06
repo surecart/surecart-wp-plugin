@@ -64,7 +64,7 @@ class PriceAmount extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
+		if ( $this->is_admin_editor() ) {
 			$price          = ( sc_get_product() )->initial_price ?? [
 				'amount'              => Currency::format( 200 ),
 				'short_interval_text' => '/mo',

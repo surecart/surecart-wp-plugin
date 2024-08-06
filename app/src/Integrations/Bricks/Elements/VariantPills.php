@@ -75,7 +75,7 @@ class VariantPills extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( bricks_is_builder_call() ) {
+		if ( $this->is_admin_editor() ) {
 			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
 			$output .= '<label class="sc-form-label">' . esc_html__( 'Color', 'surecart' ) . '</label>';
 			$output .= '<div class="sc-pill-option__wrapper">';

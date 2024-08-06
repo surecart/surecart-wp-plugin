@@ -63,7 +63,7 @@ class PriceTrial extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( ! bricks_is_frontend() ) {
+		if ( $this->is_admin_editor() ) {
 			$price = ( sc_get_product() )->initial_price ?? [
 				'trial_text' => esc_html__( 'Starting in 15 days', 'surecart' ),
 			];
