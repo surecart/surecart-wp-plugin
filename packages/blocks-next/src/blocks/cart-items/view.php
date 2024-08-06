@@ -73,6 +73,7 @@
 									step="1"
 									autocomplete="off"
 									role="spinbutton"
+									data-wp-key="context.line_item.id"
 								/>
 								<div
 									class="sc-input-group-text sc-quantity-selector__increase"
