@@ -1,0 +1,95 @@
+<?php
+
+namespace SureCart\Integrations\Bricks\Elements;
+
+use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Variant Pills element.
+ */
+class VariantPills extends \Bricks\Element {
+	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
+
+	/**
+	 * Element category.
+	 *
+	 * @var string
+	 */
+	public $category = 'surecart';
+
+	/**
+	 * Element name.
+	 *
+	 * @var string
+	 */
+	public $name = 'surecart-product-variant-pills';
+
+	/**
+	 * Element block name
+	 *
+	 * @var string
+	 */
+	public $block_name = 'surecart/product-variant-pills';
+
+	/**
+	 * Element icon
+	 *
+	 * @var string
+	 */
+	public $icon = 'ion-md-options';
+
+	/**
+	 * This is nestable.
+	 *
+	 * @var string
+	 */
+	public $nestable = true;
+
+	/**
+	 * Get element label
+	 *
+	 * @return string
+	 */
+	public function get_label() {
+		return esc_html__( 'Product Variant Pills', 'surecart' );
+	}
+
+	/**
+	 * Get nestable children.
+	 *
+	 * @return array[]
+	 */
+	public function get_nestable_children() {
+		return array(
+			array( 'name' => 'surecart-product-variant-pill' ),
+		);
+	}
+
+	/**
+	 * Render element.
+	 *
+	 * @return void
+	 */
+	public function render() {
+		if ( bricks_is_builder_call() ) {
+			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
+			$output .= '<label class="sc-form-label">' . esc_html__( 'Color', 'surecart' ) . '</label>';
+			$output .= '<div class="sc-pill-option__wrapper">';
+			$output .= \Bricks\Frontend::render_children( $this );
+			$output .= '</div>';
+			$output .= '</div>';
+
+			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+
+		echo $this->raw_layout( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			[
+				'count' => $this->settings['count'],
+			]
+		);
+	}
+}
