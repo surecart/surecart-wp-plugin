@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Add to cart button element.
+ * Buy Button element.
  */
-class AddToCart extends Element {
+class BuyButton extends Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
 
 	/**
@@ -27,7 +27,7 @@ class AddToCart extends Element {
 	 *
 	 * @var string
 	 */
-	public $name = 'surecart-add-to-cart';
+	public $name = 'surecart-product-buy-button';
 
 	/**
 	 * Element block name.
@@ -48,7 +48,7 @@ class AddToCart extends Element {
 	 *
 	 * @var string
 	 */
-//	public $css_selector = '.wp-block-surecart-product-buy-button .sc-button__link';
+	public $css_selector = '.wp-block-surecart-product-buy-button .sc-button__link';
 
 	/**
 	 * Get element label.
@@ -56,7 +56,7 @@ class AddToCart extends Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Add to cart', 'surecart' );
+		return esc_html__( 'Buy Button', 'surecart' );
 	}
 
 	/**
@@ -86,8 +86,13 @@ class AddToCart extends Element {
 	 * @return void
 	 */
 	public function render() {
+		$content = wp_kses_post( $this->settings['content'] ?? '' );
+
+		if ( empty( $content ) ) {
+			$content = $this->settings['add_to_cart'] ? esc_html__( 'Add To Cart', 'surecart' ) : esc_html__( 'Buy Now', 'surecart' );
+		}
+
 		if ( $this->is_admin_editor() ) {
-			$content = wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) );
 			echo <<<HTML
 				<div {$this->render_attributes( '_root' )}>
 					<div class="wp-block-button has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button">
@@ -102,7 +107,7 @@ class AddToCart extends Element {
 
 		echo "<div {$this->render_attributes( '_root' )}>" . $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'text'        => wp_kses_post( $this->settings['content'] ?? esc_html__( 'Add To Cart', 'surecart' ) ),
+				'text'        => $content,
 				'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
 			]
 		) . '</div>';
