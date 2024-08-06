@@ -32,27 +32,24 @@ class ShortcodesService {
 	}
 
 	/**
-	 * Render shortcode
+	 * Render shortcode notice
 	 *
-	 * @param array  $attributes Attributes.
 	 * @param string $name Name.
 	 *
 	 * @return string
 	 */
-	public function renderShortcode( $attributes, $name ) {
-		// Build the shortcode string dynamically.
-		$shortcode_parts = array( '[' . esc_attr( $name ) );
-
-		// Add each attribute to the shortcode string.
-		foreach ( $attributes as $key => $value ) {
-			$shortcode_parts[] = esc_attr( $key ) . '="' . esc_attr( $value ) . '"';
-		}
-
-		// Close the shortcode.
-		$shortcode_parts[] = ']';
-
-		// Join the parts into a single string.
-		return implode( ' ', $shortcode_parts );
+	public function renderShortcodeNotice( $name ) {
+		return sprintf(
+			'<h5 style="%s">%s</h5>',
+			'background: #e2e2e2; padding: 1em; border-radius: 0.5em;',
+			esc_html(
+				sprintf(
+				/* translators: %s: shortcode name */
+					'Please visit the frontend of your page builder to see the %s shortcode.',
+					esc_html( $name )
+				)
+			)
+		);
 	}
 
 	/**
@@ -88,7 +85,7 @@ class ShortcodesService {
 					return '';
 				}
 				if ( $this->shouldRenderShortcodeItself( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
-					return $this->renderShortcode( $attributes, $name );
+					return $this->renderShortcodeNotice( $name );
 				}
 
 				wp_enqueue_global_styles(); // Enqueue global styles.
