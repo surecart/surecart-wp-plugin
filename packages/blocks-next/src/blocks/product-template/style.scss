@@ -25,11 +25,16 @@
 	}
 }
 
-.sc-product-item-link {
+a.sc-product-item-link {
 	box-sizing: border-box;
 	display: block;
 	height: 100%;
 	text-decoration: none !important;
+	color: inherit;
+
+	&:hover {
+		color: inherit;
+	}
 
 	&:focus:not(:focus-visible) {
 		outline: none;
