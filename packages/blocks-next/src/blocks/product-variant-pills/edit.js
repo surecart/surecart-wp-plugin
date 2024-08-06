@@ -18,7 +18,7 @@ export default ({ clientId }) => {
 	const blockProps = useBlockProps();
 	return (
 		<div {...blockProps}>
-			<label class="sc-form-label">Color</label>
+			<label class="sc-form-label">{__('Color', 'surecart')}</label>
 			<TemplateListEdit
 				template={[['surecart/product-variant-pill']]}
 				blockContexts={TEST_VARIANTS}
