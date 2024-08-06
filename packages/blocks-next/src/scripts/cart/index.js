@@ -16,7 +16,7 @@ const { actions } = store('surecart/cart', {
 
 			e?.preventDefault();
 			let dialog = null;
-			const target = getContext()?.target || '.sc-drawer' || null;
+			const target = getContext()?.target || '.sc-cart-drawer' || null;
 
 			// Get passed target or <dialog>.
 			if (typeof target === 'string') {

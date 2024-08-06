@@ -138,18 +138,20 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array(
-			'cb'                  => '<input type="checkbox" />',
-			'name'                => __( 'Name', 'surecart' ),
-			'price'               => __( 'Price', 'surecart' ),
-			'commission_amount'   => __( 'Commission Amount', 'surecart' ),
-			'quantity'            => __( 'Quantity', 'surecart' ),
-			'integrations'        => __( 'Integrations', 'surecart' ),
-			'product_collections' => __( 'Collections', 'surecart' ),
-			'status'              => __( 'Product Page', 'surecart' ),
-			'featured'            => __( 'Featured', 'surecart' ),
-			'sync_status'         => __( 'Synced', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
+		return array_filter(
+			array(
+				'cb'                  => '<input type="checkbox" />',
+				'name'                => __( 'Name', 'surecart' ),
+				'price'               => __( 'Price', 'surecart' ),
+				'commission_amount'   => __( 'Commission Amount', 'surecart' ),
+				'quantity'            => __( 'Quantity', 'surecart' ),
+				'integrations'        => __( 'Integrations', 'surecart' ),
+				'product_collections' => __( 'Collections', 'surecart' ),
+				'status'              => __( 'Product Page', 'surecart' ),
+				'featured'            => __( 'Featured', 'surecart' ),
+				'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
+				'date'                => __( 'Date', 'surecart' ),
+			)
 		);
 	}
 
@@ -267,6 +269,7 @@ class ProductsListTable extends ListTable {
 				'prices',
 				'product_collections',
 				'featured_product_media',
+				'product.product_medias',
 				'product_media.media',
 				'commission_structure',
 			)
@@ -510,12 +513,14 @@ class ProductsListTable extends ListTable {
 		}
 
 		return $this->row_actions(
-			[
-				'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
-				'trash'        => $this->action_toggle_archive( $product ),
-				'sync'         => '<a href="' . esc_url( \SureCart::getUrl()->sync( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Sync Product', 'surecart' ) . '">' . esc_html__( 'Sync', 'surecart' ) . '</a>',
-				'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
-			]
+			array_filter(
+				[
+					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'trash'        => $this->action_toggle_archive( $product ),
+					'sync'         => isset( $_GET['debug'] ) ? '<a href="' . esc_url( \SureCart::getUrl()->sync( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Sync Product', 'surecart' ) . '">' . esc_html__( 'Sync', 'surecart' ) . '</a>' : null,
+					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				]
+			)
 		);
 	}
 

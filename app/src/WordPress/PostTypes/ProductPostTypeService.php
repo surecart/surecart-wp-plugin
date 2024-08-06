@@ -34,6 +34,9 @@ class ProductPostTypeService {
 		// ensure we always fetch with the current connected store id in case of store change.
 		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
 
+		// redirect to 404 if we are not in the correct store
+		add_action( 'template_redirect', array( $this, 'maybeRedirectTo404' ) );
+
 		// add global $sc_product inside loops.
 		add_action( 'the_post', array( $this, 'setupData' ) );
 
@@ -65,6 +68,10 @@ class ProductPostTypeService {
 		add_action( 'surecart/product_updated', array( $this, 'sync' ) );
 		add_action( 'surecart/product_deleted', array( $this, 'deleteSynced' ) );
 
+		// attachment fields.
+		add_filter( 'attachment_fields_to_edit', [ $this, 'addAttachmentFields' ], 1, 2 );
+		add_filter( 'attachment_fields_to_save', [ $this, 'saveAttachmentFields' ], 10, 2 );
+
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
@@ -73,6 +80,97 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Save the attachment fields.
+	 *
+	 * @param array $post The post.
+	 * @param array $attachment The attachment.
+	 *
+	 * @return void
+	 */
+	public function saveAttachmentFields( $post, $attachment ) {
+		$attachid = $post['ID']; // yes this is actually an array here.
+		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] );
+	}
+
+	/**
+	 * Add a custom variant value attachment field.
+	 *
+	 * @param array    $form_fields The form fields.
+	 * @param \WP_Post $post        The post.
+	 *
+	 * @return array
+	 */
+	public function addAttachmentFields( $form_fields, $post = null ) {
+		$form_fields['sc_variant_option'] = array(
+			'label'    => esc_html__( 'Variant', 'surecart' ),
+			'input'    => 'text',
+			'required' => false,
+			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
+			'helps'    => esc_html__( 'Enter the SureCart variant option value (e.g. Blue, Green, etc.)' ),
+		);
+		return $form_fields;
+	}
+
+	/**
+	 * Handle bricks begin content
+	 *
+	 * @return void
+	 */
+	public function handleBricksBeginContent() {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return;
+		}
+
+		$product_page_blocks = '<!-- wp:surecart/product-page --><!-- wp:surecart/product-selected-price-ad-hoc-amount /--><!-- /wp:surecart/product-page -->';
+		$product_page_html   = do_blocks( $product_page_blocks );
+		$product_page_html   = substr( $product_page_html, 0, -8 ); // remove the </form> tag at the end.
+		echo $product_page_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Handle bricks end content
+	 *
+	 * @return void
+	 */
+	public function handleBricksEndContent() {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return;
+		}
+		echo '</form>';
+	}
+
+	/**
+	 * Handle Elementor content.
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function handleElementorContent( string $content ): string {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return $content;
+		}
+
+		// check if the product page wrapper is not already added.
+		if ( false === strpos( $content, '<form class="wp-block-surecart-product-page"' ) ) {
+			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
+		}
+
+		// check if the custom amount block is not already added.
+		if ( false === strpos( $content, 'class="wp-block-surecart-product-selected-price-ad-hoc-amount"' ) ) {
+			$content = str_replace(
+				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
+				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
+				$content
+			);
+		}
+
+		$content = do_blocks( $content );
+
+		return $content;
 	}
 
 	/**
@@ -299,6 +397,17 @@ class ProductPostTypeService {
 				'type'           => 'boolean',
 			)
 		);
+
+		register_meta(
+			'post',
+			'sc_variant_option',
+			array(
+				'object_subtype' => 'attachment',
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'string',
+			)
+		);
 	}
 
 	/**
@@ -481,6 +590,41 @@ class ProductPostTypeService {
 		}
 
 		return $query;
+	}
+
+	/**
+	 * Redirect to 404 if we are not in the correct store.
+	 *
+	 * @return void
+	 */
+	public function maybeRedirectTo404() {
+		global $post;
+
+		// not a post.
+		if ( ! isset( $post ) ) {
+			return;
+		}
+
+		// not our post type.
+		if ( $this->post_type !== $post->post_type ) {
+			return;
+		}
+
+		// check if the post has the taxonomy sc_acccount that matches the current account.
+		$account = get_the_terms( $post->ID, 'sc_account' );
+
+		if ( empty( $account ) ) {
+			return;
+		}
+
+		// account id does not match.
+		if ( \SureCart::account()->id !== $account[0]->name ) {
+			global $wp_query;
+			$wp_query->set_404();
+			status_header( 404 );
+			get_template_part( 404 );
+			exit();
+		}
 	}
 
 	/**

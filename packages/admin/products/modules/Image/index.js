@@ -2,9 +2,10 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
+import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from 'react';
+import { store as noticesStore } from '@wordpress/notices';
 import AddImage from './AddImage';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
 import Error from '../../../components/Error';
@@ -17,20 +18,46 @@ const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
 	ADD_IMAGE_FROM_URL: 'add_image_from_url',
 };
-export default ({ post }) => {
+export default ({ product, updateProduct }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
-	const { editEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
+	const { invalidateResolution } = useDispatch(coreStore);
 
-	const onDragStop = (oldIndex, newIndex) => {
-		const gallery = arrayMove(post?.gallery || [], oldIndex, newIndex);
-		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
-	};
+	const onDragStop = (oldIndex, newIndex) =>
+		updateProduct({
+			gallery_ids: arrayMove(
+				product?.gallery_ids || [],
+				oldIndex,
+				newIndex
+			),
+		});
 
-	const onRemoveMedia = (id) => {
-		const gallery = post?.gallery.filter((item) => item.id !== id);
-		editEntityRecord('postType', 'sc_product', post?.id, { gallery });
+	const onRemoveMedia = (id) =>
+		updateProduct({
+			gallery_ids: product?.gallery_ids.filter((itemId) => itemId !== id),
+		});
+
+	const onSwapMedia = (id, newId) => {
+		// if it's in the product?.gallery_ids already, throw an error.
+		if (product?.gallery_ids.includes(newId)) {
+			createErrorNotice(
+				__('This image is already in the gallery.', 'surecart'),
+				{ type: 'snackbar' }
+			);
+			return;
+		}
+
+		const gallery_ids = (product?.gallery_ids || []).map((galleryId) => {
+			if (galleryId === id) {
+				return newId;
+			}
+			return galleryId;
+		});
+		updateProduct({
+			gallery_ids,
+		});
 	};
 
 	return (
@@ -40,14 +67,14 @@ export default ({ post }) => {
 				css={css`
 					display: grid;
 					gap: 1em;
-					grid-template-columns: ${post?.gallery?.length
+					grid-template-columns: ${product?.gallery_ids?.length
 						? 'repeat(4, 1fr)'
 						: '1fr'};
 				`}
 				draggedItemClassName="sc-dragging"
 				onSortEnd={onDragStop}
 			>
-				{(post?.gallery || []).map(({ id }, index) => (
+				{(product?.gallery_ids || []).map((id, index) => (
 					<SortableItem key={id}>
 						<div
 							css={css`
@@ -64,7 +91,12 @@ export default ({ post }) => {
 							) : (
 								<WordPressMedia
 									id={id}
+									product={product}
+									updateProduct={updateProduct}
 									onRemove={() => onRemoveMedia(id)}
+									onSelect={(media) =>
+										onSwapMedia(id, media.id)
+									}
 									isFeatured={index === 0}
 								/>
 							)}
@@ -72,23 +104,15 @@ export default ({ post }) => {
 					</SortableItem>
 				))}
 				<AddImage
-					value={(post?.gallery || []).map(({ id }) => id)}
+					value={product?.gallery_ids || []}
+					onClose={() =>
+						(product?.gallery_ids || []).forEach(({ id }) =>
+							invalidateResolution('getMedia', [id])
+						)
+					}
 					onSelect={(media) => {
-						const mediaIds = (media || []).map(({ id }) => ({
-							id,
-						}));
-						// Add media ids to the end of the array of objects, but only if they do not yet exist.
-						editEntityRecord('postType', 'sc_product', post?.id, {
-							gallery: [
-								...post?.gallery,
-								...mediaIds.filter(
-									({ id }) =>
-										!post?.gallery.some(
-											(item) => item.id === id
-										)
-								),
-							],
-						});
+						const gallery_ids = (media || []).map(({ id }) => id);
+						updateProduct({ gallery_ids });
 					}}
 				/>
 			</SortableList>

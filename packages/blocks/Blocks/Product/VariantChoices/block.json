@@ -10,6 +10,7 @@
 		"reusable": false,
 		"html": false,
 		"multiple": false,
+		"inserter": false,
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
