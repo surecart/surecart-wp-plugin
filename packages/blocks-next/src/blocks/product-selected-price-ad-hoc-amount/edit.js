@@ -55,8 +55,8 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 				<div className="sc-input-group">
-					<span class="sc-input-group-text sc-product-custom-amount-currency" id="basic-addon1">
-						{scData?.currency}
+					<span class="sc-input-group-text" id="basic-addon1">
+						{scData?.currency_symbol}
 					</span>
 					<input
 						class="sc-form-control"

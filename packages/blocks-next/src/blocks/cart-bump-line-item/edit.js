@@ -11,7 +11,6 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
  */
 import useCartStyles from '../../hooks/useCartStyles';
 import CartInspectorControls from '../../components/CartInspectorControls';
-import { getFormattedPrice } from '../../../../admin/util';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
@@ -61,12 +60,7 @@ export default ({ attributes, setAttributes }) => {
 						<div className="sc-product-line-item__suffix">
 							<div className="sc-bump-line-item__price">
 								<div className="price">
-									<span>
-										{getFormattedPrice({
-											amount: -120,
-											currency: scData?.currency
-										})}
-									</span>
+									<span>-{scData?.currency_symbol}1.20</span>
 								</div>
 							</div>
 						</div>

@@ -11,7 +11,6 @@ import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 import ScIcon from '../../components/ScIcon';
 import useCartStyles from '../../hooks/useCartStyles';
 import CartInspectorControls from '../../components/CartInspectorControls';
-import { getFormattedPrice } from '../../../../admin/util';
 
 export default ({ attributes, setAttributes }) => {
 	const { removable, editable } = attributes;
@@ -35,10 +34,7 @@ export default ({ attributes, setAttributes }) => {
 					name: 'Example Product',
 					image_url: placeholderImageUrl,
 				},
-				display_amount: getFormattedPrice({
-					amount: 1234,
-					currency: scData?.currency,
-				}),
+				display_amount: scData?.currency_symbol + '12.34',
 			},
 		},
 		{
@@ -49,11 +45,7 @@ export default ({ attributes, setAttributes }) => {
 					name: 'Example Product',
 					image_url: placeholderImageUrl,
 				},
-				display_amount:
-					getFormattedPrice({
-						amount: 12345,
-						currency: scData?.currency,
-					}),
+				display_amount: scData?.currency_symbol + '123.45',
 			},
 		},
 	];

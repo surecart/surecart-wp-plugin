@@ -18,7 +18,6 @@ import { PanelBody } from '@wordpress/components';
 import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 import { Notice } from '@wordpress/components';
 import { RangeControl } from '@wordpress/components';
-import { getFormattedPrice } from '../../../../admin/util';
 
 const TEMPLATE = [
 	[
@@ -69,18 +68,12 @@ export default ({
 		const prices = {
 			0: {
 				name: __('Subscribe & Save', 'surecart'),
-				display_amount: getFormattedPrice({
-					amount: 800,
-					currency: scData?.currency,
-				}),
+				display_amount: scData?.currency_symbol +'8',
 				short_interval_text: __('/ mo', 'surecart'),
 			},
 			1: {
 				name: __('One Time', 'surecart'),
-				display_amount: getFormattedPrice({
-					amount: 1000,
-					currency: scData?.currency,
-				}),
+				display_amount: scData?.currency_symbol +'10',
 				short_interval_text: '',
 			},
 		};

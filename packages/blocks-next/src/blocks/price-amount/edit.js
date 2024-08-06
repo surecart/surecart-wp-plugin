@@ -1,6 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { getFormattedPrice } from '../../../../admin/util';
 
 export default ({ context }) => {
 	const blockProps = useBlockProps();
@@ -14,12 +13,5 @@ export default ({ context }) => {
 		);
 	}
 
-	return (
-		<div {...blockProps}>
-			{getFormattedPrice({
-				amount: 10,
-				currency: scData?.currency,
-			})} / mo
-		</div>
-	);
+	return <div {...blockProps}>{scData?.currency_symbol}10 / mo</div>;
 };
