@@ -91,9 +91,8 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	 */
 	public function set_controls() {
 		$this->controls['highlight_border'] = array(
-			'label'   => esc_html__( 'Highlight Border', 'surecart' ),
-			'type'    => 'color',
-			'default' => '#000000',
+			'label' => esc_html__( 'Highlight Border', 'surecart' ),
+			'type'  => 'color',
 		);
 	}
 
