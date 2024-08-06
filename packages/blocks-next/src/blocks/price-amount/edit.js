@@ -16,7 +16,10 @@ export default ({ context }) => {
 
 	return (
 		<div {...blockProps}>
-			{getFormattedPrice(10, scData?.currency)} / mo
+			{getFormattedPrice({
+				amount: 10,
+				currency: scData?.currency,
+			})} / mo
 		</div>
 	);
 };
