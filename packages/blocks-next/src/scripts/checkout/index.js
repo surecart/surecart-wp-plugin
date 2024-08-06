@@ -551,7 +551,6 @@ const { state, actions } = store('surecart/checkout', {
 
 			if (checkout) {
 				actions.setCheckout(checkout, mode, formId);
-				speak(__('Line item removed.', 'surecart'), 'assertive');
 			}
 			state.loading = false;
 		},
