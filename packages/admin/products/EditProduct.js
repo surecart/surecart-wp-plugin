@@ -38,6 +38,7 @@ import MetaBoxes from './modules/MetaBoxes';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
+	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const {
@@ -108,6 +109,7 @@ export default ({ id, setBrowserURL }) => {
 	const onSubmit = async (e) => {
 		try {
 			setError(null);
+			setSaving(true);
 
 			// if we don't have any product edits, run sync directly.
 			if (
@@ -173,6 +175,8 @@ export default ({ id, setBrowserURL }) => {
 		} catch (e) {
 			console.error(e);
 			setError(e);
+		} finally {
+			setSaving(false);
 		}
 	};
 
@@ -314,7 +318,8 @@ export default ({ id, setBrowserURL }) => {
 								deletingProduct ||
 								savingProduct ||
 								!hasLoadedProduct ||
-								isSavingMetaBoxes
+								isSavingMetaBoxes ||
+								saving
 							}
 							disabled={false} // in order to save metaboxes
 						>
