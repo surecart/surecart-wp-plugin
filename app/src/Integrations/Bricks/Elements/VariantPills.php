@@ -86,10 +86,6 @@ class VariantPills extends \Bricks\Element {
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
-		echo $this->raw_layout( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			[
-				'count' => $this->settings['count'],
-			]
-		);
+		echo $this->raw_layout(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
