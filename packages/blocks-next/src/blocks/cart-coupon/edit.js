@@ -17,6 +17,7 @@ import {
 import ScIcon from '../../components/ScIcon';
 import CartInspectorControls from '../../components/CartInspectorControls';
 import useCartStyles from '../../hooks/useCartStyles';
+import { getFormattedPrice } from '../../../../admin/util';
 
 export default ({ attributes, setAttributes }) => {
 	const { text, button_text, collapsed, placeholder } = attributes;
@@ -83,7 +84,12 @@ export default ({ attributes, setAttributes }) => {
 									class="coupon-human-discount"
 									hidden={!discountIsRedeemable}
 								>
-									{scData?.currency?.toUpperCase()} 50.00
+									{
+										getFormattedPrice({
+											amount: -5000,
+											currency: scData?.currency,
+										})
+									}
 								</span>
 							</span>
 						</div>

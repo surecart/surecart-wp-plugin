@@ -11,6 +11,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
  */
 import useCartStyles from '../../hooks/useCartStyles';
 import CartInspectorControls from '../../components/CartInspectorControls';
+import { getFormattedPrice } from '../../../../admin/util';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
@@ -57,7 +58,14 @@ export default ({ attributes, setAttributes }) => {
 						<div className="sc-product-line-item__suffix">
 							<div className="sc-product-line-item__price">
 								<div className="price">
-									<span>{scData?.currency?.toUpperCase()} 135.79</span>
+									<span>
+										{
+											getFormattedPrice({
+												amount: 13579,
+												currency: scData?.currency
+											})
+										}
+									</span>
 								</div>
 							</div>
 						</div>
