@@ -15,7 +15,7 @@
 	</label>
 
 	<div class="sc-input-group">
-		<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
+		<span class="sc-input-group-text sc-product-custom-amount-currency" id="basic-addon1" data-wp-text="context.selectedPrice.currency"></span>
 
 		<input
 			class="sc-form-control"
