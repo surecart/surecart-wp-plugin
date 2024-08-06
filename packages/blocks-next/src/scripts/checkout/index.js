@@ -17,7 +17,6 @@ import { processCheckoutEvents } from '@surecart/checkout-events';
 const { __, sprintf, _n } = wp.i18n;
 const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
-const { actions: cartActions } = store('surecart/cart');
 
 /**
  * Get checkout data from local storage based on mode and formId.
