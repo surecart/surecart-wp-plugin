@@ -80,8 +80,11 @@ class BlockTemplatesService {
 
 		$directory          = $this->utility->getTemplatesDirectory( $template_type );
 		$template_file_path = $directory . '/' . $template_slug . '.html';
-		$template_object    = $this->utility->createNewBlockTemplateObject( $template_file_path, $template_type, $template_slug );
-		$template_built     = $this->utility->buildTemplateResultFromFile( $template_object, $template_type );
+		if ( ! is_readable( $template_file_path ) ) {
+			return $template;
+		}
+		$template_object = $this->utility->createNewBlockTemplateObject( $template_file_path, $template_type, $template_slug );
+		$template_built  = $this->utility->buildTemplateResultFromFile( $template_object, $template_type );
 
 		if ( null !== $template_built ) {
 			return $template_built;
