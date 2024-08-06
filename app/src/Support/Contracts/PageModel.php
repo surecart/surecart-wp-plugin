@@ -53,13 +53,6 @@ interface PageModel {
 	public function getTemplatePartAttribute();
 
 	/**
-	 * Must return a schema array.
-	 *
-	 * @return array
-	 */
-	public function getJsonSchemaArray(): array;
-
-	/**
 	 * Get the content.
 	 *
 	 * @return string

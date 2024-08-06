@@ -10,7 +10,7 @@ use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
 /**
- * Price model
+ * Product model
  */
 class Product extends Model implements PageModel {
 	use HasImageSizes;
@@ -330,7 +330,6 @@ class Product extends Model implements PageModel {
 		$this->setCollection( 'variants', $value, Variant::class );
 	}
 
-
 	/**
 	 * Set the variants attribute.
 	 *
@@ -416,6 +415,25 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the product in stock attribute.
+	 *
+	 * @param Product $product The product.
+	 *
+	 * @return bool
+	 */
+	public function getInStockAttribute(): bool {
+		if ( ! $this->stock_enabled ) {
+			return true;
+		}
+
+		if ( $this->allow_out_of_stock_purchases ) {
+			return true;
+		}
+
+		return $this->available_stock > 0;
+	}
+
+	/**
 	 * Return attached active prices.
 	 *
 	 * @return array
@@ -491,42 +509,6 @@ class Product extends Model implements PageModel {
 	 */
 	public function getFeaturedMediaAttribute() {
 		return $this->featured_product_image;
-	}
-
-	/**
-	 * Get the JSON Schema Array
-	 *
-	 * @return array
-	 */
-	public function getJsonSchemaArray(): array {
-		$active_prices = (array) $this->active_prices;
-
-		$offers = array_map(
-			function ( $price ) {
-				return array(
-					'@type'         => 'Offer',
-					'price'         => Currency::maybeConvertAmount( $price->amount, $price->currency ),
-					'priceCurrency' => $price->currency,
-					'availability'  => 'https://schema.org/InStock',
-				);
-			},
-			$active_prices ?? array()
-		);
-
-		return apply_filters(
-			'surecart/product/json_schema',
-			[
-				'@context'    => 'http://schema.org',
-				'@type'       => 'Product',
-				'productId'   => $this->sku ?? $this->slug,
-				'name'        => $this->name,
-				'description' => sanitize_text_field( $this->description ),
-				'image'       => $this->image_url ?? '',
-				'offers'      => $offers,
-				'url'         => $this->permalink,
-			],
-			$this,
-		);
 	}
 
 	/**
