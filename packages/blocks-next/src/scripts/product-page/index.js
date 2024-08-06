@@ -8,9 +8,10 @@ import { store, getContext } from '@wordpress/interactivity';
  */
 import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
-const { actions: cartActions } = store('surecart/cart');
+const { actions: cartActions, state: cartState } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 const { speak } = wp.a11y;
+const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
 
 /**
@@ -291,12 +292,20 @@ const { state, actions } = store('surecart/product-page', {
 	actions: {
 		addToCart: async () => {
 			const context = getContext();
-			const { mode, formId } = context;
+			const { mode, formId, product } = context;
 			try {
 				context.busy = true;
+
 				const checkout = await addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
 				cartActions.toggle();
+
+				// speak the cart dialog state.
+				cartState.label = sprintf(
+					/* translators: %s: product name */
+					__('%s has been added to your cart.', 'surecart'),
+					product?.name
+				);
 			} catch (e) {
 				console.error(e);
 			} finally {

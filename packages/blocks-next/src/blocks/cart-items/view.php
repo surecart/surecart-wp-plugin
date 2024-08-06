@@ -7,12 +7,13 @@
 			)
 		)
 	); ?>
+	role="list"
 >
 	<template
 		data-wp-each--line_item="state.checkoutLineItems"
 		data-wp-each-key="context.line_item.id"
 	>
-		<div class="sc-product-line-item">
+		<div class="sc-product-line-item" role="listitem">
 			<div class="sc-product-line-item__item">
 				<img
 					class="sc-product-line-item__image"
@@ -72,6 +73,7 @@
 									step="1"
 									autocomplete="off"
 									role="spinbutton"
+									data-wp-key="context.line_item.id"
 								/>
 								<div
 									class="sc-input-group-text sc-quantity-selector__increase"
