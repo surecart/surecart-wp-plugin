@@ -57,7 +57,7 @@ export default ({ attributes, setAttributes }) => {
 						<div className="sc-product-line-item__suffix">
 							<div className="sc-product-line-item__price">
 								<div className="price">
-									<span>{scData?.currency_symbol}135.79</span>
+									<span>{scData?.currency?.toUpperCase()} 135.79</span>
 								</div>
 							</div>
 						</div>

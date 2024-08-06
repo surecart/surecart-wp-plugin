@@ -83,7 +83,7 @@ export default ({ attributes, setAttributes }) => {
 									class="coupon-human-discount"
 									hidden={!discountIsRedeemable}
 								>
-									{scData?.currency_symbol}50.00
+									{scData?.currency?.toUpperCase()} 50.00
 								</span>
 							</span>
 						</div>
