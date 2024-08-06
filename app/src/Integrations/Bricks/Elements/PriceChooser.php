@@ -85,7 +85,7 @@ class PriceChooser extends \Bricks\Element {
 	public function get_nestable_children() {
 		return array(
 			array(
-				'name'     => 'surecart-product-price',
+				'name'     => 'surecart-product-price-choice-template',
 				'settings' => array(
 					'_display'        => 'flex',
 					'_direction'      => 'row',
@@ -146,7 +146,7 @@ class PriceChooser extends \Bricks\Element {
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';
 			$output .= '</div>';
-			
+
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
