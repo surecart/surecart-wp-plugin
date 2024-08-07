@@ -156,13 +156,12 @@ class ProductPageBlock {
 		return wp_parse_args(
 			$context,
 			array(
-				'formId'               => \SureCart::forms()->getDefaultId(),
-				'mode'                 => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
-				'checkoutUrl'          => \SureCart::pages()->url( 'checkout' ),
-				'urlPrefix'            => $this->urlParams()->getKey(),
-				'variantImagesEnabled' => true,
-				'product'              => ! empty( $product ) ? $product->only( [ 'id', 'has_unlimited_stock', 'archived', 'permalink' ] ) : null,
-				'selectedPrice'        => ! empty( $product->initial_price ) ? $product->initial_price->only(
+				'formId'        => \SureCart::forms()->getDefaultId(),
+				'mode'          => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
+				'checkoutUrl'   => \SureCart::pages()->url( 'checkout' ),
+				'urlPrefix'     => $this->urlParams()->getKey(),
+				'product'       => ! empty( $product ) ? $product->only( [ 'id', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink' ] ) : null,
+				'selectedPrice' => ! empty( $product->initial_price ) ? $product->initial_price->only(
 					[
 						'id',
 						'archived',
@@ -183,7 +182,7 @@ class ProductPageBlock {
 						'trial_text',
 					]
 				) : null,
-				'prices'               => array_map(
+				'prices'        => array_map(
 					fn( $price ) => $price->only(
 						[
 							'id',
@@ -207,7 +206,7 @@ class ProductPageBlock {
 					),
 					$product->active_prices
 				),
-				'variants'             => array_map(
+				'variants'      => array_map(
 					fn( $variant ) => $variant->only(
 						[
 							'id',
@@ -222,10 +221,10 @@ class ProductPageBlock {
 					),
 					$product->variants->data ?? array()
 				),
-				'quantity'             => 1,
-				'busy'                 => false,
-				'adHocAmount'          => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
-				'variantValues'        => array_filter(
+				'quantity'      => 1,
+				'busy'          => false,
+				'adHocAmount'   => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
+				'variantValues' => array_filter(
 					array(
 						'option_1' => $selected_variant->option_1 ?? null,
 						'option_2' => $selected_variant->option_2 ?? null,
@@ -279,7 +278,7 @@ class ProductPageBlock {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
 
-					if ( empty( $context['variantImagesEnabled'] ) ) {
+					if ( empty( $context['variants'] ) ) {
 						return true;
 					}
 

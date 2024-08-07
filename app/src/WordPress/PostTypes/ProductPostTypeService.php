@@ -78,6 +78,7 @@ class ProductPostTypeService {
 		add_filter( 'post_thumbnail_id', array( $this, 'postThumbnailId' ), 10, 5 );
 		add_filter( 'wp_get_attachment_image', array( $this, 'getAttachmentImage' ), 10, 5 );
 		add_filter( 'has_post_thumbnail', array( $this, 'hasPostThumbnail' ), 10, 2 );
+		add_filter( 'post_thumbnail_html', array( $this, 'postThumbnailHTML' ), 10, 5 );
 
 		// add schema markup.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
@@ -170,6 +171,22 @@ class ProductPostTypeService {
 			return ! empty( $product->featured_image );
 		}
 		return $has_thumbnail;
+	}
+
+	/**
+	 * Get the post thumbnail html
+	 *
+	 * @return void
+	 */
+	public function postThumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+		$post = get_post( $post_id );
+		if ( $post->post_type === $this->post_type ) {
+			$product = sc_get_product( $post_id );
+			if ( ! empty( $product->featured_image ) ) {
+				return $product->featured_image->html( $size, $attr );
+			}
+		}
+		return $html;
 	}
 
 	/**

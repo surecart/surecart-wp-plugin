@@ -100,10 +100,12 @@ class Media extends Model {
 			$sizes
 		);
 
+		$attachment_class = 'attachment-' . $size . ' size-' . $size;
+
 		// set attributes.
 		$attr['src']    = $this->getUrl( $width );
 		$attr['alt']    = $this->alt ?? '';
-		$attr['class']  = 'attachment-' . $size . ' size-' . $size;
+		$attr['class']  = $attachment_class . ' ' . ( ! empty( $attr['class'] ) ? $attr['class'] : '' );
 		$attr['sizes']  = sprintf( '(max-width: %1$dpx) 100vw, %1$dpx', $width );
 		$attr['width']  = (int) $width;
 		$attr['height'] = (int) $height;

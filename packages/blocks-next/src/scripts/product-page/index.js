@@ -157,8 +157,8 @@ const { state, actions } = store('surecart/product-page', {
 			if (!context) {
 				return true;
 			}
-			const { variantImagesEnabled } = context;
-			if (!variantImagesEnabled) {
+			const { variants } = context;
+			if (!variants?.length) {
 				return true;
 			}
 			return state.isOptionValueSelected;

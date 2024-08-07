@@ -13,9 +13,6 @@ if ( ! $query->have_posts() ) {
 	while ( $query->have_posts() ) :
 		$query->the_post();
 
-		global $sc_query_id;
-		++$sc_query_id;
-
 		// Get an instance of the current Post Template block.
 		$block_instance = $block->parsed_block;
 

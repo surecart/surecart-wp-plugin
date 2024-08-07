@@ -132,3 +132,26 @@ if ( ! function_exists( 'sc_html_attributes' ) ) {
 	}
 }
 
+/**
+ * Get the product page id.
+ *
+ * @param string $prefix The prefix.
+ *
+ * @return string
+ */
+function sc_unique_product_page_id( $prefix = '' ) {
+	static $id_counter = -1;
+	return $prefix . (string) ++$id_counter;
+}
+
+/**
+ * Get the product list id.
+ *
+ * @param string $prefix The prefix.
+ *
+ * @return string
+ */
+function sc_unique_product_list_id( $prefix = '' ) {
+	static $id_counter = -1;
+	return $prefix . (string) ++$id_counter;
+}
