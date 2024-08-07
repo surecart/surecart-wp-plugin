@@ -28,6 +28,7 @@ data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
 data-wp-bind--aria-checked="state.isOptionSelected"
 data-wp-bind--aria-disabled="state.isOptionUnavailable"
 role="radio"
+tabindex="0"
 >
 	<span class="sc-screen-reader-text">
 		<?php
