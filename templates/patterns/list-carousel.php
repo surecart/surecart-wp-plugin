@@ -6,6 +6,7 @@ return [
 	'title'      => __( 'Carousel', 'surecart' ),
 	'categories' => [ 'surecart_shop' ],
 	'blockTypes' => [ 'surecart/product-list' ],
+	'priority'   => 1,
 	'content'    => '<!-- wp:surecart/product-list {"limit":3,"metadata":{"categories":["surecart_shop"],"patternName":"surecart-carousel","name":"Standard"},"style":{"spacing":{"blockGap":"24px"}}} -->
 <!-- wp:group {"style":{"position":{"type":""}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","orientation":"horizontal","verticalAlignment":"bottom"}} -->
 <div class="wp-block-group"><!-- wp:heading {"align":"wide","className":"is-style-asterisk"} -->
