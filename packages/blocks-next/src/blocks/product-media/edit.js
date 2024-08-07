@@ -1,6 +1,7 @@
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import Swiper from 'swiper';
 import { Thumbs, Navigation } from 'swiper/modules';
+import { useEntityRecord } from '@wordpress/core-data';
 import {
 	PanelBody,
 	RangeControl,
@@ -13,7 +14,7 @@ import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Disabled } from '@wordpress/components';
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, context: { postId } }) => {
 	const swiperRef = useRef(null);
 	const thumbSwiperRef = useRef(null);
 	const swiper = useRef(null);
@@ -24,20 +25,35 @@ export default ({ attributes, setAttributes }) => {
 	const [images, setImages] = useState([]);
 	const blockProps = useBlockProps({});
 
+	const {
+		record: {
+			meta: { product },
+		},
+	} = useEntityRecord('postType', 'sc_product', postId);
+
 	const units = useCustomUnits({
 		availableUnits: ['px', 'em', 'rem', 'vh'],
 	});
 
 	useEffect(() => {
 		setImages(
-			[...Array(20)].map(() => {
-				return {
-					src: scBlockData?.plugin_url + '/images/placeholder.jpg',
-					width: width,
-				};
-			})
+			product?.gallery
+				? product?.gallery.map((image) => {
+						return {
+							src: image?.url,
+							width,
+						};
+				  })
+				: [...Array(20)].map(() => {
+						return {
+							src:
+								scBlockData?.plugin_url +
+								'/images/placeholder.jpg',
+							width,
+						};
+				  })
 		);
-	}, [width, thumbnails_per_page]);
+	}, [width, thumbnails_per_page, product]);
 
 	// update the slider when the props change.
 	useEffect(() => {
@@ -45,17 +61,17 @@ export default ({ attributes, setAttributes }) => {
 			return;
 		}
 		swiper.current.update();
-	}, [height, auto_height, width]);
+	}, [height, auto_height, width, images]);
 
 	useEffect(() => {
 		if (!thumbSwiper.current) {
 			return;
 		}
 		thumbSwiper.current.update();
-	}, [show_thumbnails, thumbnails_per_page]);
+	}, [show_thumbnails, thumbnails_per_page, images]);
 
 	useEffect(() => {
-		if (swiperRef && thumbSwiperRef) {
+		if (swiperRef && thumbSwiperRef?.current) {
 			thumbSwiper.current = new Swiper(
 				thumbSwiperRef.current.querySelector('.swiper'),
 				{
@@ -182,68 +198,72 @@ export default ({ attributes, setAttributes }) => {
 							<div class="swiper-button-next"></div>
 						</div>
 
-						<div
-							className="sc-image-slider__thumbs"
-							ref={thumbSwiperRef}
-						>
+						{images?.length > 1 ? (
 							<div
-								className="sc-image-slider-button__prev"
-								tabIndex="-1"
-								role="button"
+								className="sc-image-slider__thumbs"
+								ref={thumbSwiperRef}
 							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								>
-									<polyline points="15 18 9 12 15 6" />
-								</svg>
-							</div>
-
-							<div className="swiper">
 								<div
-									className={`swiper-wrapper  sc-has-${thumbnails_per_page}-thumbs`}
+									className="sc-image-slider-button__prev"
+									tabIndex="-1"
+									role="button"
 								>
-									{images.map((image, index) => (
-										<div
-											className="swiper-slide"
-											key={index}
-											onClick={() =>
-												swiper?.current?.slideTo(index)
-											}
-										>
-											<img src={image.src} alt="" />
-										</div>
-									))}
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<polyline points="15 18 9 12 15 6" />
+									</svg>
+								</div>
+
+								<div className="swiper">
+									<div
+										className={`swiper-wrapper  sc-has-${thumbnails_per_page}-thumbs`}
+									>
+										{images.map((image, index) => (
+											<div
+												className="swiper-slide"
+												key={index}
+												onClick={() =>
+													swiper?.current?.slideTo(
+														index
+													)
+												}
+											>
+												<img src={image.src} alt="" />
+											</div>
+										))}
+									</div>
+								</div>
+
+								<div
+									className="sc-image-slider-button__next"
+									tabIndex="-1"
+									role="button"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<polyline points="9 18 15 12 9 6" />
+									</svg>
 								</div>
 							</div>
-
-							<div
-								className="sc-image-slider-button__next"
-								tabIndex="-1"
-								role="button"
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								>
-									<polyline points="9 18 15 12 9 6" />
-								</svg>
-							</div>
-						</div>
+						) : null}
 					</div>
 				</Disabled>
 			</div>
