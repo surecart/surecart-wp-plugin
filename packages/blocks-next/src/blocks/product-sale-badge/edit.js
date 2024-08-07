@@ -3,14 +3,10 @@ import { useBlockProps } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import { useEntityRecord } from '@wordpress/core-data';
 
-export default ({
-	attributes,
-	setAttributes,
-	context: { 'surecart/productId': productId },
-}) => {
+export default ({ attributes, setAttributes, context: { postId } }) => {
 	const { text } = attributes;
 
-	const { record } = useEntityRecord('postType', 'sc_product', productId);
+	const { record } = useEntityRecord('postType', 'sc_product', postId);
 	const product = record?.meta?.product;
 
 	const blockProps = useBlockProps({

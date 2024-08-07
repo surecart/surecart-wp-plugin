@@ -180,7 +180,6 @@ export default ({
 					postId: product?.id, // for core blocks.
 					postType: 'sc_product', // for core blocks.
 					id: product?.id,
-					'surecart/productId': product?.id,
 				}))}
 				clientId={clientId}
 				className={className}

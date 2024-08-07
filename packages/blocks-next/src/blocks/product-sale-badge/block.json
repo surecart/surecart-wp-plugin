@@ -8,7 +8,7 @@
 	"category": "surecart-product-page",
 	"icon": "tag",
 	"ancestor": ["surecart/product-page", "surecart/product-template"],
-	"usesContext": ["surecart/productId"],
+	"usesContext": ["postId"],
 	"example": {
 		"attributes": {
 			"text": "Sale"

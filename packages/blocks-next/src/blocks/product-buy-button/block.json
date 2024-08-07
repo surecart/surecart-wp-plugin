@@ -9,7 +9,7 @@
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-buy-buttons", "surecart/product-template"],
-	"usesContext": ["surecart/product", "surecart/productId"],
+	"usesContext": ["surecart/product", "postId"],
 	"attributes": {
 		"add_to_cart": {
 			"type": "boolean",
