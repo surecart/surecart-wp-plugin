@@ -16,7 +16,9 @@ import { useEffect } from '@wordpress/element';
 const TEMPLATE = [
 	[
 		'core/group',
-		{},
+		{
+			layout: { type: 'flex', orientation: 'vertical' },
+		},
 		[
 			[
 				'surecart/product-image',

@@ -93,7 +93,7 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 					css={css`
 						position: absolute;
 						top: 5px;
-						right: 5px;
+						left: 5px;
 					`}
 				>
 					{__('Featured', 'surecart')}

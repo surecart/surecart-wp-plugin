@@ -10,7 +10,15 @@ import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
+const { speak } = wp.a11y;
 const { scProductViewed } = require('./events');
+
+/**
+ * Check if the key is not submit key.
+ */
+const isNotKeySubmit = (e) => {
+	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+};
 
 /**
  * Check if the link is valid.
@@ -22,19 +30,8 @@ const isValidLink = (ref) =>
 	(!ref.target || ref.target === '_self') &&
 	ref.origin === window.location.origin;
 
-/**
- * Check if the event is a valid click event.
- */
-const isValidEvent = (event) =>
-	event.button === 0 && // Left clicks only.
-	!event.metaKey && // Open in new tab (Mac).
-	!event.ctrlKey && // Open in new tab (Windows).
-	!event.altKey && // Download.
-	!event.shiftKey &&
-	!event.defaultPrevented;
-
 // controls the product page.
-const { state, actions, callbacks } = store('surecart/product-page', {
+const { state, actions } = store('surecart/product-page', {
 	state: {
 		/**
 		 * Get the product quantity based on the selected price.
@@ -117,6 +114,32 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 		},
 
 		/**
+		 * Is the option value selected
+		 */
+		get isOptionValueSelected() {
+			const context = getContext();
+			const { optionValue, variantValues } = context;
+
+			// this applies to all variants.
+			if (!optionValue) {
+				return true;
+			}
+
+			const values = Object.values(variantValues).map((value) =>
+				value.toLowerCase()
+			);
+
+			return values.includes(optionValue.toLowerCase());
+		},
+
+		/**
+		 * Get the image display.
+		 */
+		get imageDisplay() {
+			return state.isOptionValueSelected ? 'block' : 'none';
+		},
+
+		/**
 		 * Is the price selected?
 		 */
 		get isPriceSelected() {
@@ -170,10 +193,7 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 		 */
 		get isSoldOut() {
 			const { product } = getContext();
-			if (
-				!product?.stock_enabled ||
-				product?.allow_out_of_stock_purchases
-			) {
+			if (product?.has_unlimited_stock) {
 				return false;
 			}
 			return state.selectedVariant?.id
@@ -224,10 +244,7 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 			}
 
 			// if stock is not enabled, or out of stock purchases are allowed, return infinity.
-			if (
-				!product?.stock_enabled ||
-				product?.allow_out_of_stock_purchases
-			) {
+			if (product?.has_unlimited_stock) {
 				return Infinity;
 			}
 
@@ -303,32 +320,6 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 			scProductViewed(product, selectedPrice, state.quantity);
 		},
 
-		/** Navigate to a url using the router region. */
-		*navigate(event) {
-			const { ref } = getElement();
-			const queryRef = ref.closest('[data-wp-router-region]');
-			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
-				event.preventDefault();
-				const { actions } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-
-				yield actions.navigate(ref.href, { replace: true });
-			}
-		},
-		/** Prefetch upcoming urls. */
-		*prefetch() {
-			const { ref } = getElement();
-			if (isValidLink(ref)) {
-				const { actions } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-				yield actions.prefetch(ref.href);
-			}
-		},
-
 		/**
 		 * Handle submit callback.
 		 */
@@ -346,18 +337,47 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 		 * Set the option.
 		 */
 		setOption: (e) => {
-			const context = getContext();
+			e.preventDefault();
+
+			const {
+				variantValues,
+				optionNumber,
+				option_value,
+				option_name,
+				urlPrefix,
+			} = getContext();
+
+			// get the value.
+			const value = option_value || e?.target?.value;
+
 			// first we set the option to optimistically update all the ui.
-			context.variantValues[`option_${context?.optionNumber}`] =
-				context?.option_value || e?.target?.value;
-			// then we navigate to update SSR.
-			return callbacks.navigate(e);
+			variantValues[`option_${optionNumber}`] = value;
+
+			// if we have the name and value, update the url.
+			if (!option_value || !option_name) {
+				return;
+			}
+
+			window.history.replaceState(
+				{},
+				'',
+				addQueryArgs(window.location.href, {
+					[`${urlPrefix}-${option_name.toLowerCase()}`]:
+						option_value.toLowerCase(),
+				})
+			);
 		},
 
 		/**
 		 * Set the price
 		 */
-		setPrice: () => {
+		setPrice: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			const { product, price } = context;
 			const selectedPrice = product.prices?.data.find(
@@ -385,24 +405,41 @@ const { state, actions, callbacks } = store('surecart/product-page', {
 				Math.min(state.maxQuantity, parseInt(e.target.value)),
 				1
 			);
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity decrease.
 		 */
-		onQuantityDecrease: () => {
+		onQuantityDecrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
+
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity increase.
 		 */
-		onQuantityIncrease: () => {
+		onQuantityIncrease: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e?.preventDefault();
+
 			const context = getContext();
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.min(state.maxQuantity, state.quantity + 1);
+
+			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},
 });
@@ -472,8 +509,7 @@ export const isProductVariantOptionSoldOut = (
 	product
 ) => {
 	// product stock is not enabled or out of stock purchases are allowed.
-	if (!product?.stock_enabled || product?.allow_out_of_stock_purchases)
-		return false;
+	if (product?.has_unlimited_stock) return false;
 
 	// if this is option 1, check to see if there are any variants with this option.
 	if (optionNumber === 1) {

@@ -83,6 +83,21 @@ class BulkActionService {
 	}
 
 	/**
+	 * Check if the model has a pending action.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 * @param string                 $name The action name.
+	 *
+	 * @return boolean
+	 */
+	public function modelHasPendingAction( $model, $name = 'delete_products' ) {
+		$pending_record_ids    = $this->getRecordIds( $name, 'pending' );
+		$processing_record_ids = $this->getRecordIds( $name, 'processing' );
+
+		return in_array( $model->id, $pending_record_ids ) || in_array( $model->id, $processing_record_ids );
+	}
+
+	/**
 	 * Group the bulk actions data by action type and status.
 	 *
 	 * @return array
@@ -117,7 +132,7 @@ class BulkActionService {
 	public function getCompletedBulkActions() {
 		return array_filter(
 			$this->bulk_actions,
-			function( $action ) {
+			function ( $action ) {
 				return in_array( $action->status, [ 'pending', 'processing' ] );
 			}
 		);
@@ -132,15 +147,18 @@ class BulkActionService {
 		// get any bulk actions that are processing.
 		$processing = array_filter(
 			$this->bulk_actions,
-			function( $action ) {
+			function ( $action ) {
 				return in_array( $action->status, [ 'pending', 'processing' ] );
 			}
 		);
+
+		$completed = false;
 
 		// for each of our cookies, if the bulk action is not processing, delete the cookie.
 		foreach ( $_COOKIE as $key => $value ) {
 			if ( 0 === strpos( $key, $this->cookie_prefix ) ) {
 				if ( ! in_array( $value, array_column( $processing, 'id' ) ) ) {
+					$completed = true;
 					setcookie(
 						$key,
 						'',
@@ -152,6 +170,10 @@ class BulkActionService {
 					);
 				}
 			}
+		}
+
+		if ( ! $completed ) {
+			return;
 		}
 
 		// make sure to clear cache since these are now deleted.
