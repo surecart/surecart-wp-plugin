@@ -177,8 +177,8 @@ export default ({
 			<TemplateListEdit
 				template={TEMPLATE}
 				blockContexts={products?.map((product) => ({
-					postId: product?.id,
-					postType: 'sc_product',
+					postId: product?.id, // for core blocks.
+					postType: 'sc_product', // for core blocks.
 					id: product?.id,
 					'surecart/productId': product?.id,
 				}))}

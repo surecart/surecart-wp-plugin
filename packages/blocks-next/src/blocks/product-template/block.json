@@ -10,14 +10,6 @@
 	"example": {
 		"attributes": {}
 	},
-	"allowedBlocks": [
-		"surecart/product-image",
-		"surecart/product-title",
-		"surecart/product-list-price",
-		"surecart/product-scratch-price",
-		"surecart/product-description-v2",
-		"core/group"
-	],
 	"ancestor": ["surecart/product-list"],
 	"usesContext": [
 		"surecart/product-list/limit",
@@ -62,7 +54,7 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": "@surecart/product-list",
+	"viewScriptModule": ["@surecart/product-list", "@surecart/product-page"],
 	"style": "file:./style-index.css",
 	"render": "file:./view.php"
 }

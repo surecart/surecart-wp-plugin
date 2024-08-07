@@ -26,6 +26,7 @@ class BlockPatternsService {
 	public function __construct() {
 		$this->categories = [
 			'surecart_form' => [ 'label' => __( 'Checkout Form', 'surecart' ) ],
+			'surecart_shop' => [ 'label' => __( 'Shop', 'surecart' ) ],
 		];
 
 		$this->patterns = [
@@ -52,7 +53,7 @@ class BlockPatternsService {
 	 * Register block patterns and
 	 */
 	public function registerPatternsAndCategories() {
-		// $this->registerCategories();
+		$this->registerCategories();
 		$this->registerPatterns();
 	}
 
@@ -90,6 +91,14 @@ class BlockPatternsService {
 	 * @return void
 	 */
 	public function registerPatterns() {
+		// register the block patterns from patterns directory.
+		foreach ( glob( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/patterns/*.php' ) as $pattern_file ) {
+			register_block_pattern(
+				'surecart-' . basename( $pattern_file, '.php' ),
+				require $pattern_file
+			);
+		}
+
 		/**
 		 * Filters the plugin block patterns.
 		 *

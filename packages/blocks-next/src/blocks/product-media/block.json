@@ -7,7 +7,7 @@
 	"category": "surecart-product-page",
 	"keywords": ["image", "media"],
 	"textdomain": "surecart",
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"supports": {
 		"interactivity": true,
 		"reusable": false,
@@ -24,6 +24,10 @@
 		},
 		"width": {
 			"type": "number"
+		},
+		"show_thumbs": {
+			"type": "boolean",
+			"default": true
 		},
 		"thumbnails_per_page": {
 			"type": "number",

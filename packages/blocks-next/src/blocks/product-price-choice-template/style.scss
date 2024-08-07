@@ -9,5 +9,6 @@
 	// this is needed for some page builders.
 	&.is-layout-flex {
 		display: flex;
+		justify-content: space-between;
 	}
 }

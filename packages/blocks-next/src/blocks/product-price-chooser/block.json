@@ -6,7 +6,7 @@
 	"description": "Displays possible choices for product prices.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"supports": {
 		"interactivity": true,
 		"html": false,
@@ -15,7 +15,7 @@
 			"margin": true,
 			"__experimentalDefaultControls": {
 				"padding": true,
-        "margin": true
+				"margin": true
 			}
 		}
 	},
