@@ -875,17 +875,10 @@ class ProductPostTypeService {
 			'gallery',
 			array(
 				'get_callback'    => function ( $post ) {
-					return ! empty( get_post_meta( $post['id'], 'gallery', true ) ) ? get_post_meta( $post['id'], 'gallery', true ) : array();
+					$product = get_post_meta( $post['id'], 'product', true );
+					return $product->gallery ?? [];
 				},
 				'update_callback' => function ( $value, $post ) {
-					// map each value to an object.
-					$value = array_map(
-						function ( $item ) {
-							return (object) $item;
-						},
-						$value
-					);
-					return update_post_meta( $post->ID, 'gallery', $value );
 				},
 				'schema'          => array(
 					'description' => __( 'Product gallery', 'surecart' ),
