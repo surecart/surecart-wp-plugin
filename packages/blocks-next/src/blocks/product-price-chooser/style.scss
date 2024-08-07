@@ -2,6 +2,10 @@
 	container-type: inline-size;
 	container-name: product-price-choices;
 	margin-bottom: var(--sc-form-row-spacing, 0.75em);
+
+  &, .sc-choices {
+    width: 100%;
+  }
 }
 
 @container product-price-choices (max-width: 600px) {
