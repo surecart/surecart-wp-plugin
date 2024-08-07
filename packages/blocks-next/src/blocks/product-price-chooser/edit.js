@@ -38,18 +38,18 @@ const TEMPLATE = [
 	],
 ];
 
-const DEMO_CONTEXT = {
-	0: {
+const DEMO_CONTEXT = [
+	{
 		name: __('Subscribe & Save', 'surecart'),
 		display_amount: '$8',
 		short_interval_text: __('/ mo', 'surecart'),
 	},
-	1: {
+	{
 		name: __('One Time', 'surecart'),
 		display_amount: '$10',
 		short_interval_text: '',
 	},
-};
+];
 
 export default ({
 	attributes,
@@ -62,11 +62,11 @@ export default ({
 	const priceContainerRef = useRef(null);
 	const [isContainerSmall, setIsContainerSmall] = useState(true);
 
-	const {
-		record: {
-			meta: { product },
-		},
-	} = useEntityRecord('postType', 'sc_product', postId);
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
 
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,

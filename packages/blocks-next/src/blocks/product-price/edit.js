@@ -12,11 +12,11 @@ export default ({
 		className: 'product-price',
 	});
 
-	const {
-		record: {
-			meta: { product },
-		},
-	} = useEntityRecord('postType', 'sc_product', postId);
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
 
 	return (
 		<>

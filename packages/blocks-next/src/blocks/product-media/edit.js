@@ -25,11 +25,11 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 	const [images, setImages] = useState([]);
 	const blockProps = useBlockProps({});
 
-	const {
-		record: {
-			meta: { product },
-		},
-	} = useEntityRecord('postType', 'sc_product', postId);
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
 
 	const units = useCustomUnits({
 		availableUnits: ['px', 'em', 'rem', 'vh'],

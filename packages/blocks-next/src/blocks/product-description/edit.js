@@ -8,11 +8,11 @@ import { useEntityRecord } from '@wordpress/core-data';
 export default ({ context: { postId } }) => {
 	const blockProps = useBlockProps();
 
-	const {
-		record: {
-			meta: { product },
-		},
-	} = useEntityRecord('postType', 'sc_product', postId);
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
 
 	return (
 		<div {...blockProps}>

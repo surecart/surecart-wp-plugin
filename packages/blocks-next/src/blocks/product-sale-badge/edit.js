@@ -6,8 +6,11 @@ import { useEntityRecord } from '@wordpress/core-data';
 export default ({ attributes, setAttributes, context: { postId } }) => {
 	const { text } = attributes;
 
-	const { record } = useEntityRecord('postType', 'sc_product', postId);
-	const product = record?.meta?.product;
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
 
 	const blockProps = useBlockProps({
 		className: 'sc-tag sc-tag--primary',
