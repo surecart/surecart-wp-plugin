@@ -297,7 +297,7 @@ class ProductPageBlock {
 						'display_amount',
 						'available_stock',
 					]
-				) : null,
+				) : [],
 				'isOptionUnavailable'   => function () {
 					$context        = wp_interactivity_get_context();
 					$variants       = $context['variants'];
