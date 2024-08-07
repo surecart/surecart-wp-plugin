@@ -352,6 +352,10 @@ const { state, actions } = store('surecart/product-page', {
 		 * Set the option.
 		 */
 		setOption: (e) => {
+      if (isNotKeySubmit(e)) {
+        return true;
+      }
+
 			e.preventDefault();
 
 			const {
