@@ -10,6 +10,10 @@
 	@import "swiper/scss/thumbs";
 	@import "swiper/scss/navigation";
 
+	.swiper:not(.swiper-initialized) .swiper-wrapper {
+		justify-content: center;
+	}
+
 	// hide navigation if there are not enough slides.
 	.swiper-button-lock {
 		display: none;
