@@ -79,6 +79,7 @@ class ProductPostTypeService {
 		add_filter( 'wp_get_attachment_image', array( $this, 'getAttachmentImage' ), 10, 5 );
 		add_filter( 'has_post_thumbnail', array( $this, 'hasPostThumbnail' ), 10, 2 );
 		add_filter( 'post_thumbnail_html', array( $this, 'postThumbnailHTML' ), 10, 5 );
+		add_filter( 'post_thumbnail_url', array( $this, 'postThumbnailURL' ), 10, 2 );
 
 		// add schema markup.
 		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
@@ -110,14 +111,25 @@ class ProductPostTypeService {
 	 * @return integer
 	 */
 	public function postThumbnailId( $thumbnail_id, $post_id ) {
-		$post = get_post( $post_id );
-		if ( $post->post_type === $this->post_type ) {
-			$product = sc_get_product( $post_id );
-			if ( ! empty( $product->featured_image ) ) {
-				return $product->featured_image->ID;
-			}
+		// we already have a thumbnail id.
+		if ( ! empty( $thumbnail_id ) ) {
+			return $thumbnail_id;
 		}
-		return $thumbnail_id;
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $thumbnail_id;
+		}
+
+		// use the first gallery image (product model featured image).
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image->ID ) ) {
+			return $product->featured_image->ID;
+		}
+
+		// fake a thumbnail id so we can filter thumbnail html output.
+		return PHP_INT_MAX;
 	}
 
 	/**
@@ -140,7 +152,7 @@ class ProductPostTypeService {
 
 		// check post type.
 		global $post;
-		if ( $post->post_type !== $this->post_type ) {
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
 			return $html;
 		}
 
@@ -162,31 +174,68 @@ class ProductPostTypeService {
 	 * @return boolean
 	 */
 	public function hasPostThumbnail( $has_thumbnail, $post_id ) {
-		$post = get_post( $post_id );
-		if ( empty( $post ) ) {
+		// check if we have an attachment id.
+		if ( ! empty( $has_thumbnail ) ) {
 			return $has_thumbnail;
 		}
-		if ( $post->post_type === $this->post_type ) {
-			$product = sc_get_product( $post_id );
-			return ! empty( $product->featured_image );
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $has_thumbnail;
 		}
-		return $has_thumbnail;
+
+		// check if the product has a featured image.
+		$product = sc_get_product( $post_id );
+		return ! empty( $product->featured_image->ID );
 	}
 
 	/**
 	 * Get the post thumbnail html
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function postThumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
-		$post = get_post( $post_id );
-		if ( $post->post_type === $this->post_type ) {
-			$product = sc_get_product( $post_id );
-			if ( ! empty( $product->featured_image ) ) {
-				return $product->featured_image->html( $size, $attr );
-			}
+		if ( ! empty( $html ) ) {
+			return $html;
 		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $html;
+		}
+
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image ) ) {
+			return $product->featured_image->html( $size, $attr );
+		}
+
 		return $html;
+	}
+
+	/**
+	 * Get the post thumbnail url
+	 *
+	 * @return string
+	 */
+	public function postThumbnailURL( $url, $post_id ) {
+		if ( ! empty( $url ) ) {
+			return $url;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $url;
+		}
+
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image ) ) {
+			return $product->featured_image->attributes()->src;
+		}
+
+		return $url;
 	}
 
 	/**
