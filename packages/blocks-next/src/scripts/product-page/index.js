@@ -69,7 +69,7 @@ const { state, actions } = store('surecart/product-page', {
 		get selectedVariant() {
 			const context = getContext();
 			if (!context) {
-				return true;
+				return {};
 			}
 			const { variants, variantValues } = context;
 			return variantValues
@@ -77,7 +77,7 @@ const { state, actions } = store('surecart/product-page', {
 						variants: variants,
 						values: variantValues || {},
 				  })
-				: null;
+				: {};
 		},
 
 		/**
