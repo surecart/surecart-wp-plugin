@@ -118,9 +118,9 @@ trait ConvertsBlocks {
 	 * @return string
 	 */
 	public function raw_layout( $block_attributes = [] ) {
-		$rendered_attributes       = $this->get_block_rendered_attributes();
+		$rendered_attributes           = $this->get_block_rendered_attributes();
 		$block_attributes['className'] = $rendered_attributes['class'];
-		$block_attributes['id']    = $rendered_attributes['id'];
+		$block_attributes['id']        = $rendered_attributes['id'];
 
 		return $this->raw( $block_attributes, \Bricks\Frontend::render_children( $this ) );
 	}
@@ -150,11 +150,11 @@ trait ConvertsBlocks {
 	 * @return array
 	 */
 	public function get_block_rendered_attributes(): array {
-		$rendered_attributes = $this->render_attributes( '_root' );
-		preg_match( '/\bid\s*=\s*"([^"]*)"/', $rendered_attributes, $id_matches );
-		preg_match( '/\bclass\s*=\s*"([^"]*)"/', $rendered_attributes, $class_matches );
-		$block_attributes['class'] = $class_matches[1] ?? '';
-		$block_attributes['id']    = $id_matches[1] ?? '';
+		$processor = new \WP_HTML_Tag_Processor( "<div {$this->render_attributes( '_root' )}></div>" );
+		$processor->next_tag();
+
+		$block_attributes['class'] = $processor->get_attribute( 'class' ) ?? '';
+		$block_attributes['id']    = $processor->get_attribute( 'id' ) ?? '';
 
 		return $block_attributes;
 	}
@@ -183,6 +183,6 @@ trait ConvertsBlocks {
 	 * @return bool
 	 */
 	public function is_admin_editor() {
-		return !bricks_is_frontend() || bricks_is_builder_call();
+		return ! bricks_is_frontend() || bricks_is_builder_call();
 	}
 }
