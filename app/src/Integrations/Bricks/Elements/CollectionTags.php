@@ -3,6 +3,7 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
+use SureCart\Integrations\Bricks\Concerns\NestableBlockChildren;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -13,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class CollectionTags extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
+	use NestableBlockChildren;
 
 	/**
 	 * Element category.
@@ -56,27 +58,6 @@ class CollectionTags extends \Bricks\Element {
 	 */
 	public function get_label() {
 		return esc_html__( 'Product Collection Tags', 'surecart' );
-	}
-
-	/**
-	 * Get nestable children.
-	 *
-	 * @return array[]
-	 */
-	public function get_nestable_children() {
-		$count    = $this->settings['count'] ?? 1;
-		$children = array();
-
-		for ( $i = 0; $i < $count; $i++ ) {
-			$children[] = array(
-				'name'     => 'surecart-product-collection-tag',
-				'settings' => array(
-					'_width' => 'max-content',
-				),
-			);
-		}
-
-		return $children;
 	}
 
 	/**

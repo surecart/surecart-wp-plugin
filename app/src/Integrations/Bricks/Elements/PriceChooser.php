@@ -4,6 +4,7 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
+use SureCart\Integrations\Bricks\Concerns\NestableBlockChildren;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -14,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class PriceChooser extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
+	use NestableBlockChildren;
 
 	/**
 	 * Element category.
@@ -75,48 +77,6 @@ class PriceChooser extends \Bricks\Element {
 	 */
 	public function get_label() {
 		return esc_html__( 'Product Price Chooser', 'surecart' );
-	}
-
-	/**
-	 * Get nestable children.
-	 *
-	 * @return array[]
-	 */
-	public function get_nestable_children() {
-		return array(
-			array(
-				'name'     => 'surecart-product-price-choice-template',
-				'settings' => array(
-					'_display'        => 'flex',
-					'_direction'      => 'row',
-					'_justifyContent' => 'flex-start',
-					'_alignItems'     => 'center',
-					'_width'          => '100%',
-				),
-				'children' => array(
-					array(
-						'name'     => 'surecart-product-price-name',
-						'settings' => array(
-							'_width' => '50%',
-						),
-					),
-					array(
-						'name'     => 'block',
-						'settings' => array(
-							'display'     => 'flex',
-							'_direction'  => 'column',
-							'_alignItems' => 'flex-end',
-							'_width'      => '50%',
-						),
-						'children' => array(
-							array( 'name' => 'surecart-product-price-amount' ),
-							array( 'name' => 'surecart-product-price-trial' ),
-							array( 'name' => 'surecart-product-price-setup-fee' ),
-						),
-					),
-				),
-			),
-		);
 	}
 
 	/**
