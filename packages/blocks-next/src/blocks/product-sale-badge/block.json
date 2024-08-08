@@ -34,7 +34,16 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"textAlign": true
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true
+		},
+		"spacing": {
+			"padding": true
 		},
 		"shadow": true,
 		"__experimentalBorder": {
