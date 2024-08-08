@@ -1,4 +1,5 @@
-<a
+<?php $html_tag = $attributes['isLink'] ? 'a' : 'div'; ?>
+<<?php echo esc_html( $html_tag ); ?>
 	<?php
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
@@ -9,9 +10,9 @@
 		)
 	);
 	?>
-	href="<?php echo esc_url( $url ); ?>"
+	<?php echo $attributes['isLink'] ? 'href="' . esc_url( $url ) . '"' : ''; ?>
 	<?php // translators: You are currently on a %s collection link. ?>
 	aria-label="<?php echo esc_attr( sprintf( __( '%s collection' ), $collection->name ) ); ?>"
 >
 	<?php echo wp_kses_post( $collection->name ); ?>
-</a>
+</<?php echo esc_html( $html_tag ); ?>>
