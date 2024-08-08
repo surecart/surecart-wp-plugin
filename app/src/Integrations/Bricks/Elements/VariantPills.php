@@ -76,14 +76,15 @@ class VariantPills extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( $this->is_admin_editor() ) {
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<label class="sc-form-label">' . esc_html__( 'Color', 'surecart' ) . '</label>';
+			$output  = '<label class="sc-form-label">' . esc_html__( 'Color', 'surecart' ) . '</label>';
 			$output .= '<div class="sc-pill-option__wrapper">';
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';
-			$output .= '</div>';
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview_layout(// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$output,
+				'wp-block-surecart-product-variant-pills'
+			);
 		}
 
 		echo $this->raw_layout(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
