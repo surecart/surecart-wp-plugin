@@ -3,7 +3,7 @@
  * Donation form block pattern
  */
 return [
-	'title'      => __( 'Standard', 'surecart' ),
+	'title'      => __( 'Classic Product List', 'surecart' ),
 	'categories' => [ 'surecart_shop' ],
 	'blockTypes' => [ 'surecart/product-list' ],
 	'priority'   => 0,
