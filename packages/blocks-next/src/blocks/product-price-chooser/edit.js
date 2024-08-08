@@ -22,19 +22,13 @@ import { RangeControl } from '@wordpress/components';
 
 const TEMPLATE = [
 	[
-		'surecart/product-price-choices-template',
-		{},
-		[
-			[
-				'surecart/product-price-choice-template',
-				{
-					layout: {
-						type: 'flex',
-						justifyContent: 'space-between',
-					},
-				},
-			],
-		],
+		'surecart/product-price-choice-template',
+		{
+			layout: {
+				type: 'flex',
+				justifyContent: 'space-between',
+			},
+		},
 	],
 ];
 
