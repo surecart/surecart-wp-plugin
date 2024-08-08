@@ -103,7 +103,10 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( $this->is_admin_editor() ) {
-			echo $this->preview_layout( 'sc-choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview_layout( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				\Bricks\Frontend::render_children( $this ),
+				'sc-choice'
+			);
 			return;
 		}
 

@@ -128,17 +128,18 @@ trait ConvertsBlocks {
 	/**
 	 *  Preview layout block.
 	 *
-	 * @param string $class_name Class name.
+	 * @param string $content    The block content.
+	 * @param string $class_name The class name.
 	 *
 	 * @return string
 	 */
-	public function preview_layout( string $class_name = '' ) {
+	public function preview_layout( $content = '', string $class_name = '' ) {
 		$rendered_attributes = $this->get_block_rendered_attributes();
 		$class               = $class_name . ' ' . $rendered_attributes['class'];
 		$id                  = $rendered_attributes['id'];
 
 		$output  = "<div id='$id' class='$class'>";
-		$output .= \Bricks\Frontend::render_children( $this );
+		$output .= $content;
 		$output .= '</div>';
 
 		return $output;
