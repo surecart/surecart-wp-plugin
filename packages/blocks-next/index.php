@@ -89,9 +89,6 @@ add_filter(
 			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
 			global $sc_query_id;
 			$sc_query_id = sc_unique_product_list_id();
-
-			// pass the collection id to the context.
-			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
 		}
 
 		// pass a unique id to each product list block.
