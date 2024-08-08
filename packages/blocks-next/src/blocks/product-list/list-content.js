@@ -3,6 +3,7 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	InspectorControls,
+	BlockControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -16,10 +17,14 @@ import { useEntityRecords } from '@wordpress/core-data';
 import { TEMPLATE } from './template';
 import ProductSelector from '../../components/ProductSelector';
 import Icon from '../../components/Icon';
+import ListToolbar from './list-toolbar';
 
 export default function ProductListEdit({
 	setAttributes,
 	attributes: { limit, ids, type },
+	name,
+	clientId,
+	openPatternSelectionModal,
 }) {
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -127,6 +132,13 @@ export default function ProductListEdit({
 					)}
 				</PanelBody>
 			</InspectorControls>
+			<BlockControls>
+				<ListToolbar
+					name={name}
+					clientId={clientId}
+					openPatternSelectionModal={openPatternSelectionModal}
+				/>
+			</BlockControls>
 			<div {...innerBlocksProps} />
 		</>
 	);
