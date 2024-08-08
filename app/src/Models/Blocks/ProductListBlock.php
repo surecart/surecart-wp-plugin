@@ -69,13 +69,19 @@ class ProductListBlock {
 	 */
 	public function parse_query() {
 		$query = $this->getQueryContext();
+
+		$offset   = absint( $query['offset'] ?? 0 );
+		$per_page = $query['perPage'] ?? $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15;
+		$page     = $this->url->getCurrentPage();
+
 		// build up the query.
 		$this->query_vars = array_filter(
 			array(
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
-				'posts_per_page'      => $query['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
+				'posts_per_page'      => $query['perPage'] ?? $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
+				'offset'              => ( $per_page * ( $page - 1 ) ) + $offset,
 				'paged'               => $this->url->getCurrentPage(),
 				'order'               => $this->url->getArg( 'order' ),
 				'orderby'             => $this->url->getArg( 'orderby' ),
@@ -197,6 +203,21 @@ class ProductListBlock {
 	}
 
 	/**
+	 * Offset the found posts.
+	 * See: https://codex.wordpress.org/Making_Custom_Queries_using_Offset_and_Pagination
+	 *
+	 * @param int $found_posts The found posts.
+	 *
+	 * @return int The found posts with offset.
+	 */
+	public function offsetFoundPosts( $found_posts ) {
+		$query  = $this->getQueryContext();
+		$offset = absint( $query['offset'] ?? 0 );
+
+		return $found_posts - $offset;
+	}
+
+	/**
 	 * Run the query
 	 *
 	 * @return $this|\WP_Error
@@ -204,7 +225,11 @@ class ProductListBlock {
 	public function query() {
 		$this->parse_query();
 		wp_reset_postdata();
+
+		add_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
 		$this->query = new \WP_Query( $this->query_vars );
+		remove_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
+
 		return $this;
 	}
 
