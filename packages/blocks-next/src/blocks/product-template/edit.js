@@ -105,7 +105,7 @@ export default ({
 	__unstableLayoutClassNames,
 	setAttributes,
 	context: {
-		query: { perPage, include, taxQuery, postType },
+		query: { perPage, include, taxQuery, postType, offset = 0 },
 		'surecart/product-list/type': type,
 	},
 }) => {
@@ -151,6 +151,7 @@ export default ({
 			page: 1,
 			per_page: perPage || 15,
 			post_status: ['publish'],
+			offset: offset || 0,
 			...(!!Object.keys(builtTaxQuery).length ? builtTaxQuery : {}),
 			...('custom' === type ? { include } : {}),
 			...('featured' === type ? { featured: true } : {}),
