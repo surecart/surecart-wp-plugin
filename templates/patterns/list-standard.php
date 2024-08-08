@@ -1,6 +1,6 @@
 <?php
 /**
- * Donation form block pattern
+ * Classic Product Carousel block pattern.
  */
 return [
 	'title'      => __( 'Classic Product List', 'surecart' ),
