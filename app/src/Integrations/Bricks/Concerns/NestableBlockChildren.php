@@ -12,6 +12,12 @@ trait NestableBlockChildren {
 	 * @return array
 	 */
 	public function getPriceChoiceNestedChildren() {
+		$settings = array(
+			'_typography' => array(
+				'text-align' => 'right',
+			)
+		);
+
 		return array(
 			array(
 				'name'     => 'surecart-product-price-name',
@@ -28,9 +34,9 @@ trait NestableBlockChildren {
 					'_width'      => '50%',
 				),
 				'children' => array(
-					array( 'name' => 'surecart-product-price-amount' ),
-					array( 'name' => 'surecart-product-price-trial' ),
-					array( 'name' => 'surecart-product-price-setup-fee' ),
+					array( 'name' => 'surecart-product-price-amount', 'settings' => $settings ),
+					array( 'name' => 'surecart-product-price-trial', 'settings' => $settings ),
+					array( 'name' => 'surecart-product-price-setup-fee', 'settings' => $settings ),
 				),
 			),
 		);
@@ -65,7 +71,7 @@ trait NestableBlockChildren {
 	public function getCollectionTagsNestedChildren() {
 		return array(
 			array(
-				'name'     => 'surecart-product-collection-tags',
+				'name'     => 'surecart-product-collection-tag',
 				'settings' => array(
 					'_width' => 'max-content',
 				),
@@ -166,6 +172,8 @@ trait NestableBlockChildren {
 						'label'    => esc_html__( 'Column', 'surecart' ),
 						'settings' => array(
 							'_width' => '50%',
+							'_width:mobile_portrait' => '100%',
+							'_width:mobile_landscape' => '100%',
 						),
 						'children' => $left_column_children,
 					),
@@ -174,6 +182,10 @@ trait NestableBlockChildren {
 						'label'    => esc_html__( 'Column', 'surecart' ),
 						'settings' => array(
 							'_width' => '50%',
+							'_width:mobile_portrait' => '100%',
+							'_width:mobile_landscape' => '100%',
+							'_direction' => 'column',
+							'_rowGap' => '0.75em',
 						),
 						'children' => $right_column_children,
 					),
