@@ -79,7 +79,7 @@ class SelectedPriceScratchAmount extends \Bricks\Element {
 			$product       = sc_get_product();
 			$scratch_price = $product->initial_price->scratch_display_amount ?? Currency::format( 100, $product->currency ?? 'USD' );
 			$output        = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output       .= '<span class="wp-block-surecart-product-selected-price-scratch-amoun sc-price__amount">' . $scratch_price . '</span>';
+			$output       .= '<span class="wp-block-surecart-product-selected-price-scratch-amount sc-price__amount">' . $scratch_price . '</span>';
 			$output       .= '</div>';
 
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
