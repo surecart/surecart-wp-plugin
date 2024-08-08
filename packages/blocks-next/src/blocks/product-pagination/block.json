@@ -8,6 +8,7 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"usesContext": [
+		"query",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
 		"surecart/product-list/ids",

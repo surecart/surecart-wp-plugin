@@ -54,18 +54,28 @@ class ProductListBlock {
 	}
 
 	/**
+	 * Get the query context.
+	 *
+	 * @return array
+	 */
+	public function getQueryContext() {
+		return $this->block->context['query'] ?? [];
+	}
+
+	/**
 	 * Build the query
 	 *
 	 * @return $this
 	 */
 	public function parse_query() {
+		$query = $this->getQueryContext();
 		// build up the query.
 		$this->query_vars = array_filter(
 			array(
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
-				'posts_per_page'      => $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
+				'posts_per_page'      => $query['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
 				'paged'               => $this->url->getCurrentPage(),
 				'order'               => $this->url->getArg( 'order' ),
 				'orderby'             => $this->url->getArg( 'orderby' ),
@@ -89,8 +99,7 @@ class ProductListBlock {
 
 		// handle collection id send from "sc_product_collection" shortcode.
 		if ( ! empty( $collection_id ) ) {
-			$collection_ids     = explode( ',', $collection_id );
-			$collection_ids_int = array_map( 'intval', array_filter( $collection_ids, 'is_numeric' ) ); // WP taxonomy ids.
+			$collection_ids = explode( ',', $collection_id );
 
 			$legacy_collection_ids = get_terms(
 				array(
@@ -148,9 +157,12 @@ class ProductListBlock {
 		}
 
 		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
+			$query = $this->getQueryContext();
+			// backward compatibility.
+			$ids = $query['include'] ?? $this->block->context['surecart/product-list/ids'] ?? $this->block->parsed_block['attrs']['ids'] ?? [];
 			// fallback for older strings - get the ids of legacy products.
 			$legacy_ids           = [];
-			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_string' );
+			$ids_that_are_strings = array_filter( $ids, 'is_string' );
 			if ( ! empty( $ids_that_are_strings ) ) {
 				$legacy_ids = get_posts(
 					[
@@ -170,7 +182,7 @@ class ProductListBlock {
 			}
 
 			// get only ids that are integers.
-			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_int' );
+			$ids_that_are_integers = array_filter( $ids, 'is_int' );
 
 			// post in.
 			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );

@@ -12,6 +12,8 @@ import { BlockControls } from '@wordpress/block-editor';
 import { list, grid } from '@wordpress/icons';
 import classnames from 'classnames';
 import { useEffect } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 const TEMPLATE = [
 	[
@@ -103,10 +105,8 @@ export default ({
 	__unstableLayoutClassNames,
 	setAttributes,
 	context: {
-		'surecart/product-list/limit': limit,
+		query: { perPage, include, taxQuery, postType },
 		'surecart/product-list/type': type,
-		'surecart/product-list/ids': ids,
-		'surecart/product-list/collection_id': collectionId,
 	},
 }) => {
 	const { type: layoutType, columnCount = 3 } = layout || {};
@@ -120,15 +120,39 @@ export default ({
 		}
 	}, [layoutType]);
 
+	// get taxonomies.
+	const taxonomies = useSelect((select) =>
+		select(coreStore).getTaxonomies({
+			type: postType,
+			per_page: -1,
+			context: 'view',
+		})
+	);
+
+	// We have to build the tax query for the REST API and use as
+	// keys the taxonomies `rest_base` with the `term ids` as values.
+	const builtTaxQuery = Object.entries(taxQuery || {}).reduce(
+		(accumulator, [taxonomySlug, terms]) => {
+			const taxonomy = taxonomies?.find(
+				({ slug }) => slug === taxonomySlug
+			);
+			if (taxonomy?.rest_base) {
+				accumulator[taxonomy?.rest_base] = terms;
+			}
+			return accumulator;
+		},
+		{}
+	);
+
 	const { records: products, isResolving } = useEntityRecords(
 		'postType',
 		'sc_product',
 		{
 			page: 1,
-			per_page: limit || 15,
+			per_page: perPage || 15,
 			post_status: ['publish'],
-			...(collectionId ? { collection_id: collectionId } : {}),
-			...('custom' === type ? { include: ids } : {}),
+			...(!!Object.keys(builtTaxQuery).length ? builtTaxQuery : {}),
+			...('custom' === type ? { include } : {}),
 			...('featured' === type ? { featured: true } : {}),
 		}
 	);

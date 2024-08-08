@@ -21,11 +21,18 @@ import ListToolbar from './list-toolbar';
 
 export default function ProductListEdit({
 	setAttributes,
-	attributes: { limit, ids, type },
+	attributes: { limit, ids, type, query },
 	name,
 	clientId,
 	openPatternSelectionModal,
 }) {
+	// backwards compatibility.
+	const per_page = query.perPage || limit;
+	const include = query.include || ids;
+
+	const updateQuery = (newQuery) =>
+		setAttributes({ query: { ...query, ...newQuery } });
+
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
@@ -36,14 +43,14 @@ export default function ProductListEdit({
 		'sc_product',
 		{
 			page: 1,
-			per_page: limit,
-			include: ids,
+			per_page,
+			include,
 		}
 	);
 
 	const onProductSelect = (product) => {
-		setAttributes({
-			ids: [...ids, product.id],
+		updateQuery({
+			include: [...new Set([...query.include, product.id])],
 		});
 	};
 
@@ -53,8 +60,8 @@ export default function ProductListEdit({
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<RangeControl
 						label={__('Products Per Page', 'surecart')}
-						value={limit}
-						onChange={(limit) => setAttributes({ limit })}
+						value={per_page}
+						onChange={(perPage) => updateQuery({ perPage })}
 						step={1}
 						min={1}
 						max={40}
@@ -78,7 +85,9 @@ export default function ProductListEdit({
 								label: __('Hand Pick Products', 'surecart'),
 							},
 						]}
-						onChange={(type) => setAttributes({ type })}
+						onChange={(type) => {
+							setAttributes({ type });
+						}}
 					/>
 					{type === 'custom' && (
 						<>
@@ -98,11 +107,13 @@ export default function ProductListEdit({
 											className="sc-tag sc-tag--default sc-tag--medium"
 											key={product.id}
 											onClick={() => {
-												setAttributes({
-													ids: ids.filter(
-														(id) =>
-															id !== product.id
-													),
+												updateQuery({
+													include:
+														query.include.filter(
+															(id) =>
+																id !==
+																product.id
+														),
 												});
 											}}
 											style={{
@@ -126,7 +137,7 @@ export default function ProductListEdit({
 							</div>
 							<ProductSelector
 								onProductSelect={onProductSelect}
-								currentSelectedIds={ids}
+								currentSelectedIds={include}
 							/>
 						</>
 					)}
