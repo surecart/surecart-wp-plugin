@@ -32,7 +32,7 @@ class PriceTrial extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $block_name = 'surecart/product-price-trial';
+	public $block_name = 'surecart/price-trial';
 
 	/**
 	 * Element icon.
@@ -46,7 +46,7 @@ class PriceTrial extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $css_selector = '.wp-block-surecart-product-price-trial';
+	public $css_selector = '.wp-block-surecart-price-trial';
 
 	/**
 	 * Get element label.
