@@ -139,19 +139,17 @@ class PriceChooser extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( $this->is_admin_editor() ) {
-			$label   = ! empty( $this->settings['label'] ) ? $this->settings['label'] : esc_html__( 'Pricing', 'surecart' );
-			$rendered_attributes = $this->get_block_rendered_attributes();
-			$class               = 'wp-block-surecart-product-price-chooser ' . $rendered_attributes['class'];
-			$id                  = $rendered_attributes['id'];
+			$label = ! empty( $this->settings['label'] ) ? $this->settings['label'] : esc_html__( 'Pricing', 'surecart' );
 
-			$output  = "<div id='$id' class='$class'>";
-			$output .= "<label class='sc-form-label'>" . $label . '</label>';
+			$output  = "<label class='sc-form-label'>" . $label . '</label>';
 			$output .= "<div class='sc-choices'>";
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';
-			$output .= '</div>';
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview_layout( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$output,
+				'wp-block-surecart-product-price-chooser'
+			);
 			return;
 		}
 
