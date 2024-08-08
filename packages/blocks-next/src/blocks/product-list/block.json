@@ -15,7 +15,6 @@
 		"surecart/product-list/ids": "ids",
 		"surecart/product-list/collection_id": "collection_id"
 	},
-	"usesContext": ["surecart/product-list/type", "surecart/product-list/ids"],
 	"attributes": {
 		"ids": {
 			"type": "array",
@@ -26,8 +25,7 @@
 			"default": "all"
 		},
 		"limit": {
-			"type": "number",
-			"default": 15
+			"type": "number"
 		},
 		"collection_id": {
 			"type": "string",
@@ -36,10 +34,10 @@
 		"query": {
 			"type": "object",
 			"default": {
-				"perPage": null,
+				"perPage": 15,
 				"pages": 0,
 				"offset": 0,
-				"postType": "post",
+				"postType": "sc_product",
 				"order": "desc",
 				"orderBy": "date",
 				"author": "",
