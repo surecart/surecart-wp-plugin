@@ -15,8 +15,7 @@
 		"query",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
-		"surecart/product-list/ids",
-		"surecart/product-list/collection_id"
+		"surecart/product-list/ids"
 	],
 	"supports": {
 		"interactivity": true,

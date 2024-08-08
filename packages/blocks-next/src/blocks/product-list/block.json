@@ -12,8 +12,7 @@
 		"surecart/product-list/limit": "limit",
 		"surecart/product-list/offset": "offset",
 		"surecart/product-list/type": "type",
-		"surecart/product-list/ids": "ids",
-		"surecart/product-list/collection_id": "collection_id"
+		"surecart/product-list/ids": "ids"
 	},
 	"attributes": {
 		"ids": {
