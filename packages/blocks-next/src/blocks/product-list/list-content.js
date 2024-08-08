@@ -18,20 +18,31 @@ import { TEMPLATE } from './template';
 import ProductSelector from '../../components/ProductSelector';
 import Icon from '../../components/Icon';
 import ListToolbar from './list-toolbar';
+import { useEffect } from '@wordpress/element';
 
 export default function ProductListEdit({
 	setAttributes,
-	attributes: { limit, ids, type, query },
+	attributes,
+	attributes: {
+		limit,
+		ids,
+		type,
+		query,
+		query: { perPage, include, offset },
+	},
 	name,
 	clientId,
 	openPatternSelectionModal,
 }) {
-	// backwards compatibility.
-	const per_page = query.perPage || limit;
-	const include = query.include || ids;
-
 	const updateQuery = (newQuery) =>
 		setAttributes({ query: { ...query, ...newQuery } });
+
+	useEffect(() => {
+		updateQuery({
+			perPage: limit || perPage,
+			include: ids || include,
+		});
+	}, [limit, ids]);
 
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -43,7 +54,7 @@ export default function ProductListEdit({
 		'sc_product',
 		{
 			page: 1,
-			per_page,
+			per_page: perPage,
 			include,
 		}
 	);
@@ -60,11 +71,19 @@ export default function ProductListEdit({
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<RangeControl
 						label={__('Products Per Page', 'surecart')}
-						value={per_page}
+						value={perPage}
 						onChange={(perPage) => updateQuery({ perPage })}
 						step={1}
 						min={1}
 						max={40}
+					/>
+					<RangeControl
+						label={__('Offset', 'surecart')}
+						value={offset}
+						onChange={(offset) => updateQuery({ offset })}
+						step={1}
+						min={0}
+						max={100}
 					/>
 				</PanelBody>
 				<PanelBody title={__('Products', 'surecart')}>
