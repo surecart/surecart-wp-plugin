@@ -95,11 +95,7 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
-		$term = get_queried_object();
-		if ( $term ) {
-			$collection    = get_term_meta( $term->term_id, 'collection', true );
-			$collection_id = $collection->id ?? $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
-		}
+		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
 
 		$collection_ids_to_filter = array();
 
@@ -131,6 +127,9 @@ class ProductListBlock {
 			);
 
 			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $collection_ids_to_filter );
+		} elseif ( is_tax() ) {
+				$term                     = get_queried_object();
+				$collection_ids_to_filter = [ $term->term_id ];
 		}
 
 		$new_collection_ids = $this->url->getArg( 'sc_collection' );
