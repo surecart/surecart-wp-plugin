@@ -170,6 +170,7 @@ class ProductPageBlock {
 						'scratch_amount',
 						'scratch_display_amount',
 						'ad_hoc',
+						'is_on_sale',
 						'is_zero_decimal',
 						'currency_symbol',
 						'converted_ad_hoc_min_amount',
@@ -257,9 +258,8 @@ class ProductPageBlock {
 				'selectedDisplayAmount' => $product->display_amount,
 				'isOnSale'              => function () {
 					$context        = wp_interactivity_get_context();
-					$state          = wp_interactivity_state();
 					$selected_price = $context['selectedPrice'];
-					return empty( $selected_price['ad_hoc'] ) ? $selected_price['scratch_amount'] > $state['selectedAmount']() : false;
+					return $selected_price['is_on_sale'] ?? false;
 				},
 				'selectedAmount'        => function () {
 					$context        = wp_interactivity_get_context();

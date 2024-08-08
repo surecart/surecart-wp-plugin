@@ -89,9 +89,7 @@ const { state, actions } = store('surecart/product-page', {
 				return true;
 			}
 			const { selectedPrice } = context;
-			return !selectedPrice?.ad_hoc
-				? selectedPrice.scratch_amount > state.selectedAmount
-				: false;
+			return selectedPrice?.is_on_sale || false;
 		},
 
 		/**
