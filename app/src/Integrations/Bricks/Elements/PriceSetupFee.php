@@ -46,7 +46,7 @@ class PriceSetupFee extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $css_selector = '.wp-block-surecart-product-price-setup-fee';
+	public $css_selector = '.wp-block-surecart-price-setup-fee';
 
 	/**
 	 * Get element label.
@@ -68,7 +68,7 @@ class PriceSetupFee extends \Bricks\Element {
 				'setup_fee_text' => esc_html__( '$12 Signup Fee', 'surecart' ),
 			];
 			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<div class="wp-block-surecart-product-price-setup-fee">' . $price->setup_fee_text . '</div>';
+			$output .= '<div class="wp-block-surecart-price-setup-fee">' . $price->setup_fee_text . '</div>';
 			$output .= '</div>';
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
