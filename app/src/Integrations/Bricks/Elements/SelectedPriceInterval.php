@@ -43,6 +43,13 @@ class SelectedPriceInterval extends \Bricks\Element {
 	public $icon = 'ti-time';
 
 	/**
+	 * The css selector.
+	 *
+	 * @var string
+	 */
+	public $css_selector = '.wp-block-surecart-product-selected-price-interval';
+
+	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -61,7 +68,7 @@ class SelectedPriceInterval extends \Bricks\Element {
 			$product  = sc_get_product();
 			$interval = ! empty( $product->initial_price->short_interval_text ) ? $product->initial_price->short_interval_text : '/ day (20 payments)';
 			$output   = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output  .= '<span class="wp-block-surecart-product-selected-price-scratch-amount sc-price__amount">' . $interval . '</span>';
+			$output  .= '<span class="wp-block-surecart-product-selected-price-interval sc-price__amount">' . $interval . '</span>';
 			$output  .= '</div>';
 
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
