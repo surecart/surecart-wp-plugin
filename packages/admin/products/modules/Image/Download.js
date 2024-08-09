@@ -32,16 +32,10 @@ export default ({ className, media, onDownloaded }) => {
 				path: `${baseURL}/${media?.id}/download`,
 				method: 'POST',
 			});
-
-			createSuccessNotice(
-				__('Image successfully migrated to server.', 'surecart'),
-				{ type: 'snackbar' }
-			);
 			onDownloaded(newId);
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(createErrorString(e), { type: 'snackbar' });
-		} finally {
 			setLoading(false);
 		}
 	};
