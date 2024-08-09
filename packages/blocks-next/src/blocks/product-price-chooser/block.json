@@ -18,6 +18,10 @@
 				"padding": true,
 				"margin": true
 			}
+		},
+		"color": {
+			"text": true,
+			"background": false
 		}
 	},
 	"attributes": {

@@ -13,12 +13,17 @@
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"text": true,
+			"background": false
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
 	"style": [
+		"file:./style-index.css",
 		"file:../../styles/label.css",
 		"file:../../styles/product-variants.css"
 	]
