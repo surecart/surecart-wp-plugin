@@ -8,7 +8,7 @@ import { store as blockEditorStore } from '@wordpress/block-editor';
 /**
  * Internal dependencies
  */
-import QueryContent from './list-content';
+import QueryContent from './product-page-content';
 import QueryPlaceholder from './list-placeholder';
 import PatternSelectionModal from './pattern-selection-modal';
 

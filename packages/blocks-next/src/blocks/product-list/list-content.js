@@ -17,7 +17,7 @@ import { useEntityRecords } from '@wordpress/core-data';
 import { TEMPLATE } from './template';
 import ProductSelector from '../../components/ProductSelector';
 import Icon from '../../components/Icon';
-import ListToolbar from './list-toolbar';
+import ListToolbar from '../../utilities/patterns-toolbar';
 import { useEffect } from '@wordpress/element';
 
 export default function ProductListEdit({
