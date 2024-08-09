@@ -15,7 +15,7 @@ trait NestableBlockChildren {
 		$settings = array(
 			'_typography' => array(
 				'text-align' => 'right',
-			)
+			),
 		);
 
 		return array(
@@ -34,9 +34,18 @@ trait NestableBlockChildren {
 					'_width'      => '50%',
 				),
 				'children' => array(
-					array( 'name' => 'surecart-product-price-amount', 'settings' => $settings ),
-					array( 'name' => 'surecart-product-price-trial', 'settings' => $settings ),
-					array( 'name' => 'surecart-product-price-setup-fee', 'settings' => $settings ),
+					array(
+						'name'     => 'surecart-product-price-amount',
+						'settings' => $settings,
+					),
+					array(
+						'name'     => 'surecart-product-price-trial',
+						'settings' => $settings,
+					),
+					array(
+						'name'     => 'surecart-product-price-setup-fee',
+						'settings' => $settings,
+					),
 				),
 			),
 		);
@@ -171,8 +180,8 @@ trait NestableBlockChildren {
 						'name'     => 'block',
 						'label'    => esc_html__( 'Column', 'surecart' ),
 						'settings' => array(
-							'_width' => '50%',
-							'_width:mobile_portrait' => '100%',
+							'_width'                  => '50%',
+							'_width:mobile_portrait'  => '100%',
 							'_width:mobile_landscape' => '100%',
 						),
 						'children' => $left_column_children,
@@ -181,11 +190,11 @@ trait NestableBlockChildren {
 						'name'     => 'block',
 						'label'    => esc_html__( 'Column', 'surecart' ),
 						'settings' => array(
-							'_width' => '50%',
-							'_width:mobile_portrait' => '100%',
+							'_width'                  => '50%',
+							'_width:mobile_portrait'  => '100%',
 							'_width:mobile_landscape' => '100%',
-							'_direction' => 'column',
-							'_rowGap' => '0.75em',
+							'_direction'              => 'column',
+							'_rowGap'                 => '0.75em',
 						),
 						'children' => $right_column_children,
 					),
