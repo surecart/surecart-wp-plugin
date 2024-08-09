@@ -421,10 +421,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 			// set attribute.
 			if ( ! $is_guarded ) {
 				$this->setAttribute( $key, $value );
-			} else {
-				if ( $this->isFillable( $key ) ) {
+			} elseif ( $this->isFillable( $key ) ) {
 					$this->setAttribute( $key, $value );
-				}
 			}
 		}
 
@@ -902,6 +900,28 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	}
 
 	/**
+	 * Only return specific properties from the model.
+	 *
+	 * @param array $attributes Attributes to return.
+	 *
+	 * @return array
+	 */
+	protected function only( $attributes ) {
+		$attributes = is_array( $attributes ) ? $attributes : func_get_args();
+		return array_intersect_key( $this->toArray(), array_flip( $attributes ) );
+	}
+
+	/**
+	 * Return all attributes except the ones passed.
+	 *
+	 * @param array $attributes Attributes to exclude.
+	 */
+	protected function without( $attributes ) {
+		$attributes = is_array( $attributes ) ? $attributes : func_get_args();
+		return array_diff_key( $this->toArray(), array_flip( $attributes ) );
+	}
+
+	/**
 	 * Update the model.
 	 *
 	 * @param array $attributes Attributes to update.
@@ -1281,7 +1301,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) : void {
+	public function offsetUnset( $offset ): void {
 		unset( $this->attributes[ $offset ], $this->relations[ $offset ] );
 	}
 

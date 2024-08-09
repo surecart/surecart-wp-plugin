@@ -75,7 +75,7 @@ class ProductListBlock {
 
 		// put together price query.
 		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
-			$this->query_vars['meta_key'] = 'max_price_amount';
+			$this->query_vars['meta_key'] = 'min_price_amount';
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 

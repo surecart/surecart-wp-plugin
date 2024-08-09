@@ -268,6 +268,9 @@ class ProductPostSyncService {
 		// set the collection terms.
 		$this->syncCollections( $post_id, $model );
 
+		// we need to do this because tax_input checks permissions for some ungodly reason.
+		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
+
 		$this->post = get_post( $post_id );
 
 		return $this->post;

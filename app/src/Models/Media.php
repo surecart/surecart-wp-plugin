@@ -94,7 +94,7 @@ class Media extends Model {
 		}
 
 		$srcset_sizes = array_map(
-			function( $size ) {
+			function ( $size ) {
 				return $size['width'];
 			},
 			$sizes

@@ -13,7 +13,16 @@
 					data-wp-key="<?php echo esc_attr( $image->id ); ?>"
 					data-wp-class--swiper-slide="state.isOptionValueSelected"
 					data-wp-style--display="state.imageDisplay"
-					<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionValue' => $image->variant_option ] ) ); ?>
+					<?php
+					echo wp_kses_data(
+						wp_interactivity_data_wp_context(
+							[
+								'optionValue'   => $image->variant_option,
+								'alwaysDisplay' => (bool) get_query_var( 'sc_checkout_product_id' ),
+							]
+						)
+					);
+					?>
 				>
 					<div class="swiper-zoom-container" data-swiper-zoom="5">
 						<?php
@@ -51,7 +60,16 @@
 						data-wp-key="<?php echo esc_attr( $image->id ); ?>"
 						data-wp-class--swiper-slide="state.isOptionValueSelected"
 						data-wp-style--display="state.imageDisplay"
-						<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'optionValue' => $image->variant_option ] ) ); ?>
+						<?php
+						echo wp_kses_data(
+							wp_interactivity_data_wp_context(
+								[
+									'optionValue'   => $image->variant_option,
+									'alwaysDisplay' => (bool) get_query_var( 'sc_checkout_product_id' ),
+								]
+							)
+						);
+						?>
 					>
 						<?php
 						echo wp_kses_post(

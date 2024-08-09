@@ -29,9 +29,6 @@
 		}
 	},
 	"usesContext": ["surecart/has-ad-hoc-block"],
-	"blockHooks": {
-		"surecart/product-buy-buttons-v2": "before"
-	},
 	"supports": {
 		"interactivity": true,
 		"color": {
@@ -48,14 +45,14 @@
 			"lineHeight": true,
 			"textAlign": true
 		},
-    "spacing": {
-      "padding": true,
-      "margin": true,
-      "__experimentalDefaultControls": {
-        "padding": true,
-        "margin": true
-      }
-    }
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		}
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",

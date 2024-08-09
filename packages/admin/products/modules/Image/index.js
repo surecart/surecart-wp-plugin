@@ -13,12 +13,13 @@ import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
 import WordPressMedia from './WordPressMedia';
 import ProductMedia from './ProductMedia';
+import { select } from '@wordpress/data';
 
 const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
 	ADD_IMAGE_FROM_URL: 'add_image_from_url',
 };
-export default ({ product, updateProduct }) => {
+export default ({ productId, product, updateProduct }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
@@ -40,6 +41,12 @@ export default ({ product, updateProduct }) => {
 		});
 
 	const onSwapMedia = (id, newId) => {
+		// for some reason we need to select this again.
+		const product = select(coreStore).getEditedEntityRecord(
+			'surecart',
+			'product',
+			productId
+		);
 		// if it's in the product?.gallery_ids already, throw an error.
 		if (product?.gallery_ids.includes(newId)) {
 			createErrorNotice(
@@ -49,12 +56,11 @@ export default ({ product, updateProduct }) => {
 			return;
 		}
 
-		const gallery_ids = (product?.gallery_ids || []).map((galleryId) => {
-			if (galleryId === id) {
-				return newId;
-			}
-			return galleryId;
-		});
+		const gallery_ids = [...(product?.gallery_ids || [])];
+		// find the index of the old id
+		const index = product?.gallery_ids.indexOf(id);
+		gallery_ids[index] = newId;
+
 		updateProduct({
 			gallery_ids,
 		});
@@ -81,11 +87,15 @@ export default ({ product, updateProduct }) => {
 								user-select: none;
 								cursor: grab;
 							`}
+							key={id}
 						>
 							{typeof id === 'string' ? (
 								<ProductMedia
 									id={id}
 									onRemove={() => onRemoveMedia(id)}
+									onDownloaded={(newId) =>
+										onSwapMedia(id, newId)
+									}
 									isFeatured={index === 0}
 								/>
 							) : (

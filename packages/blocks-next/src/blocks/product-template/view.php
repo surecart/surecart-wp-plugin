@@ -39,7 +39,6 @@ if ( ! $query->have_posts() ) {
 		<li class="sc-product-item sc-has-animation-fade-up" data-wp-key="post-template-item-<?php echo (int) $product_post_id; ?>">
 			<a class="sc-product-item-link"
 				href="<?php echo esc_url( get_the_permalink() ); ?>"
-				title="<?php echo esc_attr( the_title_attribute( [ 'echo' => false ] ) ); ?>"
 			>
 				<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</a>
