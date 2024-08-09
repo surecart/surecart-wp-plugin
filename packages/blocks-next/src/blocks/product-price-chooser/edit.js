@@ -79,15 +79,15 @@ export default ({
 		}
 	}, [priceContainerRef]);
 
-	const blockContexts = (product?.prices?.data || DEMO_CONTEXT).map(
-		(price, index) => ({
+	const blockContexts = (product?.prices?.data || DEMO_CONTEXT)
+		.filter((price) => !price?.archived)
+		.map((price, index) => ({
 			id: `price${index}`,
 			'surecart/price': {
 				...price,
 				checked: index === 0,
 			},
-		})
-	);
+		}));
 
 	return (
 		<Fragment>
