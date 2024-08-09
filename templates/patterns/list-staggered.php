@@ -7,8 +7,8 @@ return [
 	'categories' => [ 'surecart_shop' ],
 	'blockTypes' => [ 'surecart/product-list' ],
 	'priority'   => 2,
-	'content'    => '<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"80px"}}}} -->
-<div class="wp-block-columns"><!-- wp:column {"width":"50%"} -->
+	'content'    => '<!-- wp:columns {"metadata":{"categories":["surecart_shop"],"patternName":"surecart-list-staggered","name":"Staggered Product List"},"style":{"spacing":{"blockGap":{"left":"80px"},"padding":{"top":"0px","bottom":"0px","left":"0px","right":"0px"}}}} -->
+<div class="wp-block-columns" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px"><!-- wp:column {"width":"50%"} -->
 <div class="wp-block-column" style="flex-basis:50%"><!-- wp:group {"style":{"position":{"type":""},"spacing":{"padding":{"right":"0","left":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group" style="padding-right:0;padding-left:0"><!-- wp:surecart/product-list {"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","inherit":true,"taxQuery":null,"parents":[]},"align":"wide","style":{"spacing":{"blockGap":"10px"}}} -->
 <!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"default","columnCount":"1"}} -->
