@@ -4,7 +4,6 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
-use SureCart\Integrations\Bricks\Concerns\NestableBlockChildren;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -15,7 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class PriceChooser extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
-	use NestableBlockChildren;
 
 	/**
 	 * Element category.
@@ -89,6 +87,27 @@ class PriceChooser extends \Bricks\Element {
 			'label'   => esc_html__( 'Label', 'surecart' ),
 			'type'    => 'text',
 			'default' => esc_html__( 'Pricing', 'surecart' ),
+		);
+	}
+
+	/**
+	 * Get nestable children.
+	 *
+	 * @return array
+	 */
+	public function get_nestable_children() {
+		return array(
+			array(
+				'name'     => 'surecart-product-price-choice-template',
+				'settings' => array(
+					'_display'        => 'flex',
+					'_direction'      => 'row',
+					'_justifyContent' => 'flex-start',
+					'_alignItems'     => 'center',
+					'_width'          => '100%',
+				),
+				'children' => ( new PriceChoiceTemplate() )->get_nestable_children(),
+			),
 		);
 	}
 

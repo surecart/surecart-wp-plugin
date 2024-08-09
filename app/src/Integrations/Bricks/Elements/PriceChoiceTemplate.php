@@ -15,7 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class PriceChoiceTemplate extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
-	use NestableBlockChildren;
 
 	/**
 	 * Element category.
@@ -70,6 +69,51 @@ class PriceChoiceTemplate extends \Bricks\Element {
 		$this->controls['highlight_border'] = array(
 			'label' => esc_html__( 'Highlight Border', 'surecart' ),
 			'type'  => 'color',
+		);
+	}
+
+	/**
+	 * Get nestable children.
+	 *
+	 * @return array
+	 */
+	public function get_nestable_children() {
+		$settings = array(
+			'_typography' => array(
+				'text-align' => 'right',
+			),
+		);
+
+		return array(
+			array(
+				'name'     => 'surecart-product-price-name',
+				'settings' => array(
+					'_width' => '50%',
+				),
+			),
+			array(
+				'name'     => 'block',
+				'settings' => array(
+					'display'     => 'flex',
+					'_direction'  => 'column',
+					'_alignItems' => 'flex-end',
+					'_width'      => '50%',
+				),
+				'children' => array(
+					array(
+						'name'     => 'surecart-product-price-amount',
+						'settings' => $settings,
+					),
+					array(
+						'name'     => 'surecart-product-price-trial',
+						'settings' => $settings,
+					),
+					array(
+						'name'     => 'surecart-product-price-setup-fee',
+						'settings' => $settings,
+					),
+				),
+			),
 		);
 	}
 

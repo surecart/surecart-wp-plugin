@@ -3,7 +3,6 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
-use SureCart\Integrations\Bricks\Concerns\NestableBlockChildren;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -14,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class VariantPills extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
-	use NestableBlockChildren;
 
 	/**
 	 * Element category.
@@ -58,6 +56,17 @@ class VariantPills extends \Bricks\Element {
 	 */
 	public function get_label() {
 		return esc_html__( 'Product Variant Pills', 'surecart' );
+	}
+
+	/**
+	 * Get nestable children.
+	 *
+	 * @return array
+	 */
+	public function get_nestable_children() {
+		return array(
+			array( 'name' => 'surecart-product-variant-pill' ),
+		);
 	}
 
 	/**
