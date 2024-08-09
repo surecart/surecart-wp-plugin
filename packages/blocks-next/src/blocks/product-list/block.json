@@ -56,14 +56,14 @@
 		"align": true,
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"],
+			"margin": true,
 			"blockGap": true
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:./index.css",
+		"file:./style-index.css",
 		"file:../../styles/block-ui.css",
 		"file:../../styles/tag.css",
 		"surecart-theme-base"
