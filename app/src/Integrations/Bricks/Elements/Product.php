@@ -76,10 +76,37 @@ class Product extends \Bricks\Element {
 	 * @return array
 	 */
 	public function get_nestable_children() {
+		$row_block_settings = array(
+			'_direction'      => 'row',
+			'_justifyContent' => 'flex-start',
+			'_alignItems'     => 'baseline',
+			'_columnGap'      => '0.5em',
+		);
+
+		$selected_price_template = array(
+			array(
+				'name'     => 'block',
+				'settings' => $row_block_settings,
+				'children' => array(
+					array( 'name' => 'surecart-product-selected-price-scratch-amount' ),
+					array( 'name' => 'surecart-product-selected-price-amount' ),
+					array( 'name' => 'surecart-product-selected-price-interval' ),
+					array( 'name' => 'surecart-product-sale-badge' ),
+				),
+			),
+			array(
+				'name'     => 'block',
+				'settings' => $row_block_settings,
+				'children' => array(
+					array( 'name' => 'surecart-product-selected-price-trial' ),
+					array( 'name' => 'surecart-product-selected-price-fees' ),
+				),
+			),
+		);
+
 		$left_column_children = array(
 			array( 'name' => 'surecart-product-media' ),
 		);
-
 
 		$right_column_children = array(
 			array(
@@ -89,7 +116,7 @@ class Product extends \Bricks\Element {
 			array( 'name' => 'post-title' ),
 			array(
 				'name'     => 'surecart-product-selected-price',
-				'children' => ( new SelectedPrice() )->get_nestable_children(),
+				'children' => $selected_price_template,
 			),
 			array( 'name' => 'post-excerpt' ),
 			array(
@@ -98,7 +125,9 @@ class Product extends \Bricks\Element {
 			),
 			array(
 				'name'     => 'surecart-product-variant-pills',
-				'children' => ( new VariantPills() )->get_nestable_children(),
+				'children' => array(
+					array( 'name' => 'surecart-product-variant-pill' ),
+				),
 			),
 			array( 'name' => 'surecart-product-quantity' ),
 			array( 'name' => 'surecart-product-buy-button' ),
