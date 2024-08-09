@@ -68,12 +68,12 @@ export default ({
 		const prices = {
 			0: {
 				name: __('Subscribe & Save', 'surecart'),
-				display_amount: '$8',
+				display_amount: scData?.currency_symbol +'8',
 				short_interval_text: __('/ mo', 'surecart'),
 			},
 			1: {
 				name: __('One Time', 'surecart'),
-				display_amount: '$10',
+				display_amount: scData?.currency_symbol +'10',
 				short_interval_text: '',
 			},
 		};
