@@ -19,22 +19,37 @@ const TEMPLATE = [
 	[
 		'core/group',
 		{
-			style: {
-				spacing: {
-					blockGap: '0',
-					margin: { top: '0px', bottom: '0px' },
-				},
-				margin: { top: '0px', bottom: '0px' },
-			},
-			layout: { type: 'flex', orientation: 'vertical' },
+			layout: { type: 'default' },
 		},
 		[
 			[
-				'surecart/product-image',
+				'core/cover',
 				{
-					border: { radius: '6px' },
-					style: { spacing: { margin: { bottom: '15px' } } },
+					useFeaturedImage: true,
+					dimRatio: 0,
+					isUserOverlayColor: true,
+					focalPoint: { x: 0.5, y: 0.5 },
+					contentPosition: 'top right',
+					isDark: false,
+					style: {
+						dimensions: { aspectRatio: '3/4' },
+						layout: { selfStretch: 'fit', flexSize: null },
+						spacing: { margin: { bottom: '15px' } },
+						border: { radius: '10px' },
+					},
+					layout: { type: 'default' },
 				},
+				[
+					[
+						'surecart/product-sale-badge',
+						{
+							style: {
+								typography: { fontSize: '12px' },
+								border: { radius: '100px' },
+							},
+						},
+					],
+				],
 			],
 			[
 				'surecart/product-title',
@@ -46,7 +61,7 @@ const TEMPLATE = [
 							fontStyle: 'normal',
 							fontWeight: '400',
 						},
-						spacing: { margin: { top: '5px', bottom: '5px' } },
+						spacing: { margin: { bottom: '5px', top: '0px' } },
 					},
 				},
 			],
@@ -59,6 +74,7 @@ const TEMPLATE = [
 							margin: { top: '0px', bottom: '0px' },
 						},
 						margin: { top: '0px', bottom: '0px' },
+						typography: { lineHeight: '1' },
 					},
 					layout: { type: 'flex', flexWrap: 'nowrap' },
 				},
