@@ -41,11 +41,11 @@ class ShortcodesService {
 	public function renderShortcodeNotice( $name ) {
 		return sprintf(
 			'<h5 style="%s">%s</h5>',
-			'background: #e2e2e2; padding: 1em; border-radius: 0.5em;',
+			'background: #F1F1F1; color: #434242; padding: 2em; border-radius: 0.5em;',
 			esc_html(
 				sprintf(
 				/* translators: %s: shortcode name */
-					'Please visit the frontend of your page builder to see the %s shortcode.',
+					__( 'Please visit the frontend of your page builder to view the %s shortcode contents.', 'surecart' ),
 					esc_html( $name )
 				)
 			)
@@ -58,7 +58,7 @@ class ShortcodesService {
 	 * @param string $name Name of the shortcode.
 	 * @return boolean
 	 */
-	public function shouldRenderShortcodeItself( $name ) {
+	public function cannotRenderShortcode( $name ) {
 		if ( 'sc_product_list' !== $name ) { // If the shortcode is not Product List, return false.
 			return false;
 		}
@@ -84,12 +84,12 @@ class ShortcodesService {
 				if ( empty( $block_name ) ) {
 					return '';
 				}
-				if ( $this->shouldRenderShortcodeItself( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
+				if ( $this->cannotRenderShortcode( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
 					return $this->renderShortcodeNotice( $name );
 				}
 
-				wp_enqueue_global_styles(); // Enqueue global styles.
 				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 ); // Disable loading separate core block assets.
+				wp_enqueue_global_styles(); // Enqueue global styles.
 
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
