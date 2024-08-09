@@ -35,12 +35,12 @@ const TEMPLATE = [
 const DEMO_CONTEXT = [
 	{
 		name: __('Subscribe & Save', 'surecart'),
-		display_amount: `#{scData?.currency_symbol}8`,
+		display_amount: `${window?.scData?.currency_symbol}8`,
 		short_interval_text: __('/ mo', 'surecart'),
 	},
 	{
 		name: __('One Time', 'surecart'),
-		display_amount: `${scData?.currency_symbol}10`,
+		display_amount: `${window?.scData?.currency_symbol}10`,
 		short_interval_text: '',
 	},
 ];
