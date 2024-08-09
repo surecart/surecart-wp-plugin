@@ -6,7 +6,6 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	store as blocksStore,
 } from '@wordpress/blocks';
-import { useState } from '@wordpress/element';
 import {
 	useBlockProps,
 	store as blockEditorStore,
@@ -14,6 +13,22 @@ import {
 } from '@wordpress/block-editor';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+
+const BLANK = [
+	[
+		'surecart/product-template',
+		{
+			style: {
+				spacing: { blockGap: '30px' },
+			},
+			layout: {
+				type: 'grid',
+				columnCount: 4,
+			},
+		},
+	],
+	['surecart/product-pagination'],
+];
 
 /**
  * Internal dependencies
@@ -26,7 +41,7 @@ export default function QueryPlaceholder({
 	name,
 	openPatternSelectionModal,
 }) {
-	const [isStartingBlank, setIsStartingBlank] = useState(false);
+	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 	const blockProps = useBlockProps();
 	const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
 	const { blockType, activeBlockVariation, hasPatterns } = useSelect(
@@ -52,23 +67,13 @@ export default function QueryPlaceholder({
 		activeBlockVariation?.icon ||
 		blockType?.icon?.src;
 	const label = activeBlockVariation?.title || blockType?.title;
-	if (isStartingBlank) {
-		return (
-			<QueryVariationPicker
-				clientId={clientId}
-				attributes={attributes}
-				icon={icon}
-				label={label}
-			/>
-		);
-	}
 	return (
 		<div {...blockProps}>
 			<Placeholder
 				icon={icon}
 				label={label}
 				instructions={__(
-					'Choose a pattern for the product list or start blank.'
+					'Choose a pattern for the product list or start with a basic layout.'
 				)}
 			>
 				{!!hasPatterns && (
@@ -83,38 +88,16 @@ export default function QueryPlaceholder({
 				<Button
 					variant="secondary"
 					onClick={() => {
-						setIsStartingBlank(true);
-					}}
-				>
-					{__('Start blank', 'surecart')}
-				</Button>
-			</Placeholder>
-		</div>
-	);
-}
-
-function QueryVariationPicker({ clientId, attributes, icon, label }) {
-	const scopeVariations = useScopedBlockVariations(attributes);
-	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
-	const blockProps = useBlockProps();
-	return (
-		<div {...blockProps}>
-			<__experimentalBlockVariationPicker
-				icon={icon}
-				label={label}
-				variations={scopeVariations}
-				onSelect={(variation) => {
-					if (variation.innerBlocks) {
 						replaceInnerBlocks(
 							clientId,
-							createBlocksFromInnerBlocksTemplate(
-								variation.innerBlocks
-							),
+							createBlocksFromInnerBlocksTemplate(BLANK),
 							false
 						);
-					}
-				}}
-			/>
+					}}
+				>
+					{__('Start basic', 'surecart')}
+				</Button>
+			</Placeholder>
 		</div>
 	);
 }
