@@ -50,17 +50,6 @@ class VariantPill extends \Bricks\Element {
 	public $css_selector = '.wp-block-surecart-product-variant-pill';
 
 	/**
-	 * The constructor.
-	 *
-	 * @param array $element Element data.
-	 *
-	 * @return void
-	 */
-	public function __construct( $element = null ) {
-		parent::__construct( $element );
-	}
-
-	/**
 	 * Get element label
 	 *
 	 * @return string
