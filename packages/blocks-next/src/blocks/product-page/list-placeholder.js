@@ -13,22 +13,7 @@ import {
 } from '@wordpress/block-editor';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-
-const BLANK = [
-	[
-		'surecart/product-template',
-		{
-			style: {
-				spacing: { blockGap: '30px' },
-			},
-			layout: {
-				type: 'grid',
-				columnCount: 4,
-			},
-		},
-	],
-	['surecart/product-pagination'],
-];
+import template from './template';
 
 /**
  * Internal dependencies
@@ -78,7 +63,7 @@ export default function QueryPlaceholder({
 				icon={icon}
 				label={label}
 				instructions={__(
-					'Choose a pattern for the product list or start with a basic layout.'
+					'Choose a pattern for the product page or start with a basic layout.'
 				)}
 			>
 				{!!hasPatterns && (
@@ -95,7 +80,7 @@ export default function QueryPlaceholder({
 					onClick={() => {
 						replaceInnerBlocks(
 							clientId,
-							createBlocksFromInnerBlocksTemplate(BLANK),
+							createBlocksFromInnerBlocksTemplate(template),
 							false
 						);
 					}}

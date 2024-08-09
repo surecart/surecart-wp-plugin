@@ -13,7 +13,7 @@ import QueryPlaceholder from './list-placeholder';
 import PatternSelectionModal from './pattern-selection-modal';
 
 export default (props) => {
-	const { clientId, attributes } = props;
+	const { clientId, attributes, name } = props;
 	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
 		useState(false);
 	const hasInnerBlocks = useSelect(
@@ -36,6 +36,7 @@ export default (props) => {
 					setIsPatternSelectionModalOpen={
 						setIsPatternSelectionModalOpen
 					}
+					name={name}
 				/>
 			)}
 		</>

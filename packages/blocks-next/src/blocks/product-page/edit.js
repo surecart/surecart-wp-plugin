@@ -1,19 +1,44 @@
-import {
-	useInnerBlocksProps,
-	useBlockProps,
-	InnerBlocks,
-} from '@wordpress/block-editor';
-import template from './template';
+/**
+ * WordPress dependencies
+ */
+import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
-export default () => {
-	const blockProps = useBlockProps({
-		className: 'sc-product-page__editor-container',
-	});
+/**
+ * Internal dependencies
+ */
+import QueryContent from './list-content';
+import QueryPlaceholder from './list-placeholder';
+import PatternSelectionModal from './pattern-selection-modal';
 
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		template,
-		renderAppender: InnerBlocks.ButtonBlockAppender,
-	});
-
-	return <div {...innerBlocksProps} />;
+export default (props) => {
+	const { clientId, attributes, name } = props;
+	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
+		useState(false);
+	const hasInnerBlocks = useSelect(
+		(select) => !!select(blockEditorStore).getBlocks(clientId).length,
+		[clientId]
+	);
+	const Component = hasInnerBlocks ? QueryContent : QueryPlaceholder;
+	return (
+		<>
+			<Component
+				{...props}
+				openPatternSelectionModal={() =>
+					setIsPatternSelectionModalOpen(true)
+				}
+			/>
+			{isPatternSelectionModalOpen && (
+				<PatternSelectionModal
+					clientId={clientId}
+					attributes={attributes}
+					setIsPatternSelectionModalOpen={
+						setIsPatternSelectionModalOpen
+					}
+					name={name}
+				/>
+			)}
+		</>
+	);
 };
