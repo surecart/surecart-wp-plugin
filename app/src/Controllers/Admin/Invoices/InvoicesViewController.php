@@ -22,6 +22,7 @@ class InvoicesViewController extends AdminController {
 						'title' => __( 'Invoices', 'surecart' ),
 					],
 				],
+				'test_mode_toggle' => true,
 			)
 		);
 		return \SureCart::view( 'admin/invoices/index' )->with(
