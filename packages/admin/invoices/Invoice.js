@@ -1,109 +1,383 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { dispatch } from '@wordpress/data';
-import { Fragment } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-import { useEffect } from 'react';
-
-import FlashError from '../components/FlashError';
-import useCurrentPage from '../mixins/useCurrentPage';
+import { __, sprintf } from '@wordpress/i18n';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as dataStore } from '@surecart/data';
+import { store as noticesStore } from '@wordpress/notices';
+import {
+	ScButton,
+	ScBlockUi,
+	ScDialog,
+	ScAlert,
+} from '@surecart/components-react';
+import Prices from './modules/Prices';
+import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
-// template
-import Template from '../templates/SingleModel';
-import Charges from './modules/Charges';
-import Details from './modules/Details';
-import LineItems from './modules/LineItems';
-import Subscriptions from './modules/Subscriptions';
-import Sidebar from './Sidebar';
-import { store } from './store';
+import { useState, useEffect } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import expand from './query';
+import expandInvoice from './invoice-query';
+import SelectCustomer from './modules/SelectCustomer';
+import SelectShipping from './modules/SelectShipping';
+import Address from './modules/Address';
+import Payment from './modules/Payment';
+import Error from '../components/Error';
+import { formatNumber } from '../util';
+import Tax from './modules/Tax';
+import Dates from './modules/Dates';
+
+/**
+ * Returns the Model Edit URL.
+ *
+ * @param {number} postId Post ID.
+ *
+ * @return {string} Post edit URL.
+ */
+export function getEditURL(id) {
+	return addQueryArgs(window.location.href, { id });
+}
 
 export default () => {
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		dispatch(store).save();
-	};
+	const [historyId, setHistoryId] = useState(null);
+	const [confirmCheckout, setConfirmCheckout] = useState(false);
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+	const [liveMode, setLiveMode] = useState(true);
+	const id = useSelect((select) => select(dataStore).selectPageId());
+	const [busy, setBusy] = useState(false);
+	const [checkoutError, setCheckoutError] = useState(false);
+	const [paymentMethod, setPaymentMethod] = useState(false);
 
-	const onInvalid = () => {
-		dispatch(uiStore).setInvalid(true);
-	};
+	const { invoice, checkout, loading, error } = useSelect(
+		(select) => {
+			// we don't yet have an invoice.
+			if (!id) {
+				return {};
+			}
 
-	const { id, invoice, isLoading, error, fetchInvoice, getRelation } =
-		useCurrentPage('invoice');
-	const customer = getRelation('customer');
-	const charge = getRelation('charge');
-	const subscription = getRelation('subscription');
+			// our entity query data.
+			const entityData = [
+				'surecart',
+				'invoice',
+				id,
+				{ expandInvoice },
+			];
 
+			const invoice = select(coreStore).getEditedEntityRecord(
+				...entityData
+			);
+
+			const checkoutId = invoice?.checkout || null;
+			const checkoutEntityData = [
+				'surecart',
+				'checkout',
+				checkoutId,
+				{ expandInvoice },
+			];
+			const checkout = select(coreStore).getEditedEntityRecord(
+				...checkoutEntityData
+			);
+
+			const loading = !select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			);
+
+			return {
+				invoice,
+				checkout,
+				loading: !checkout?.id && loading,
+				error: select(coreStore)?.getResolutionError?.(
+					'getEditedEntityRecord',
+					...entityData
+				),
+			};
+		},
+		[id]
+	);
+
+	// we don't yet have a checkout.
 	useEffect(() => {
-		if (id) {
-			fetchInvoice({
-				query: {
-					context: 'edit',
-					expand: [
-						'invoice_items',
-						'invoice_item.price',
-						'price.product',
-						'product.featured_product_media',
-						'product_media.media',
-						'subscription',
-						'subscription.price',
-						'charge',
-						'charge.payment_method',
-						'shipping_address',
-						'payment_method.card',
-						'customer',
-					],
-				},
-			});
+		if (!id) {
+			createInvoice();
 		}
 	}, [id]);
 
+	useEffect(() => {
+		if (error) {
+			setCheckoutError(error);
+		}
+	}, [error]);
+
+	// create the checkout for the first time.
+	const createInvoice = async () => {
+		try {
+			setBusy(true);
+			const { id } = await saveEntityRecord(
+				'surecart',
+				'invoice',
+				{
+					live_mode: liveMode,
+				}
+			);
+
+			setInvoiceId(id);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong.', 'surecart')
+			);
+			(e?.additional_errors || []).map((e) => {
+				if (e?.message) {
+					createErrorNotice(e.message, {
+						type: 'snackbar',
+					});
+				}
+			});
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	/**
+	 * Replaces the browser URL with a edit link for a given id ID.
+	 *
+	 * @param {number} id id for the model for which to generate edit URL.
+	 */
+	const setBrowserURL = (id) => {
+		window.history.replaceState({ id }, 'Checkout ' + id, getEditURL(id));
+		setHistoryId(id);
+	};
+
+	const setInvoiceId = (id) => {
+		if (id && id !== historyId) {
+			setBrowserURL(id);
+		}
+	};
+
+	const finalizeCheckout = async ({ id }) => {
+		return await apiFetch({
+			method: 'PATCH',
+			path: addQueryArgs(`surecart/v1/draft-checkouts/${id}/finalize`, {
+				manual_payment: paymentMethod?.id ? false : true,
+				payment_method_id: paymentMethod?.id || null,
+			}),
+		});
+	};
+
+	/**
+	 * Save the checkout.
+	 */
+	const saveCheckout = async () => {
+		try {
+			setCheckoutError(false);
+			setBusy(true);
+			const { order } = await finalizeCheckout({
+				id: checkout?.id,
+			});
+			window.location.href = `admin.php?page=sc-invoices&action=edit&id=${order?.id || order
+				}`;
+			createSuccessNotice(__('Invoice Created.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			setCheckoutError(e);
+			setBusy(false);
+		}
+	};
+
+	const isDisabled =
+		checkout?.selected_shipping_choice_required &&
+		!checkout?.selected_shipping_choice;
+
+	if (checkout?.order) {
+		return (
+			<ScAlert
+				type="danger"
+				title={__('Invoice Complete', 'surecart')}
+				open
+				css={css`
+					margin-top: 20px;
+					margin-right: 20px;
+				`}
+			>
+				{__(
+					'This invoice has already been created. Please create a new invoice.',
+					'surecart'
+				)}
+			</ScAlert>
+		);
+	}
+
 	return (
-		<Template
-			status={status}
-			pageModelName={'invoices'}
-			onSubmit={onSubmit}
-			onInvalid={onInvalid}
-			backUrl={'admin.php?page=sc-invoices'}
-			backText={__('Back to All Invoices', 'surecart')}
-			title={
-				<sc-breadcrumbs>
-					<sc-breadcrumb>
-						<Logo display="block" />
-					</sc-breadcrumb>
-					<sc-breadcrumb href="admin.php?page=sc-invoices">
-						{__('Invoices', 'surecart')}
-					</sc-breadcrumb>
-					<sc-breadcrumb>
-						<sc-flex style={{ gap: '1em' }}>
-							{id
-								? __('View Invoice', 'surecart')
-								: __('Create Invoice', 'surecart')}
-						</sc-flex>
-					</sc-breadcrumb>
-				</sc-breadcrumbs>
-			}
-			sidebar={
-				<Sidebar
-					customer={customer}
-					loading={isLoading}
+		<>
+			<UpdateModel
+				onSubmit={() => setConfirmCheckout(true)}
+				entitled={!!scData?.entitlements?.invoices}
+				title={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 1em;
+						`}
+					>
+						<ScButton
+							circle
+							size="small"
+							href="admin.php?page=sc-invoices"
+						>
+							<sc-icon name="arrow-left"></sc-icon>
+						</ScButton>
+						<sc-breadcrumbs>
+							<sc-breadcrumb>
+								<Logo display="block" />
+							</sc-breadcrumb>
+							<sc-breadcrumb href="admin.php?page=sc-invoices">
+								{__('Invoices', 'surecart')}
+							</sc-breadcrumb>
+							<sc-breadcrumb>
+								<sc-flex style={{ gap: '1em' }}>
+									{__('Create Invoice', 'surecart')}
+								</sc-flex>
+							</sc-breadcrumb>
+						</sc-breadcrumbs>
+					</div>
+				}
+				button={
+					<ScButton
+						type="primary"
+						submit
+						busy={busy}
+						disabled={
+							isDisabled ||
+							busy ||
+							!scData?.entitlements?.invoices
+						}
+					>
+						{__('Create Invoice', 'surecart')}
+					</ScButton>
+				}
+				sidebar={
+					<>
+						<Dates
+							invoice={invoice}
+							loading={loading}
+							busy={busy}
+							setBusy={setBusy}
+						/>
+						<SelectCustomer
+							checkout={checkout}
+							setBusy={setBusy}
+							loading={loading}
+							liveMode={liveMode}
+							onSuccess={() => setPaymentMethod(null)}
+						/>
+						<Address
+							checkout={checkout}
+							loading={loading}
+							busy={busy}
+							setBusy={setBusy}
+						/>
+						<Tax
+							checkout={checkout}
+							loading={loading}
+							busy={busy}
+							setBusy={setBusy}
+						/>
+					</>
+				}
+			>
+				<Error
+					error={checkoutError}
+					setError={setCheckoutError}
+					margin="80px"
+				/>
+
+				<Prices
+					checkout={checkout}
 					invoice={invoice}
+					loading={loading}
+					setBusy={setBusy}
 				/>
-			}
-		>
-			<Fragment>
-				<FlashError path="invoices" scrollIntoView />
-				<Details invoice={invoice} loading={isLoading} />
-				<LineItems
-					invoice={invoice}
-					charge={charge}
-					loading={isLoading}
+
+				<SelectShipping
+					checkout={checkout}
+					loading={loading}
+					setBusy={setBusy}
 				/>
-				<Charges charge={charge} loading={isLoading} />
-				<Subscriptions
-					subscription={subscription}
-					loading={isLoading}
-				/>
-			</Fragment>
-		</Template>
+
+				{!!checkout?.line_items?.data?.length && (
+					<Payment
+						checkout={checkout}
+						loading={loading}
+						setBusy={setBusy}
+						paymentMethod={paymentMethod}
+						setPaymentMethod={setPaymentMethod}
+					/>
+				)}
+
+				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
+			</UpdateModel>
+
+			<ScDialog
+				open={confirmCheckout}
+				onScRequestClose={() => setConfirmCheckout(false)}
+				label={
+					paymentMethod?.id && checkout?.amount_due
+						? __('Confirm Charge', 'surecart')
+						: __('Confirm Manual Payment', 'surecart')
+				}
+			>
+				{paymentMethod?.id && checkout?.amount_due ? (
+					<ScAlert
+						type="warning"
+						title={sprintf(
+							__('This will charge the customer %s.', 'surecart'),
+							formatNumber(
+								checkout?.amount_due || 0,
+								checkout?.currency || 'usd'
+							)
+						)}
+						open
+					>
+						{__('Are you sure you want to continue?', 'surecart')}
+					</ScAlert>
+				) : (
+					<ScAlert
+						type="warning"
+						title={__('Confirm Manual Payment', 'surecart')}
+						open
+					>
+						{sprintf(
+							__(
+								'This will create an invoice that requires a manual payment (i.e. cash or check). Once you create this invoice it is not possible to pay it another way. Do you want to continue?',
+								'surecart'
+							)
+						)}
+					</ScAlert>
+				)}
+				<ScButton
+					slot="footer"
+					type="primary"
+					onClick={() => {
+						setConfirmCheckout(false);
+						saveCheckout();
+					}}
+				>
+					{__('Create Invoice', 'surecart')}
+				</ScButton>
+				<ScButton
+					slot="footer"
+					type="text"
+					onClick={() => setConfirmCheckout(false)}
+				>
+					{__('Cancel', 'surecart')}
+				</ScButton>
+			</ScDialog>
+		</>
 	);
 };
