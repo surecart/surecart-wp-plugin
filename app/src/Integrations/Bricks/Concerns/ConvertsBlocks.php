@@ -120,21 +120,22 @@ trait ConvertsBlocks {
 	}
 
 	/**
-	 *  Preview layout block.
+	 * Preview block.
 	 *
 	 * @param string $content    The block content.
 	 * @param string $class_name The class name.
+	 * @param string $tag        The tag.
 	 *
 	 * @return string
 	 */
-	public function preview_layout( $content = '', string $class_name = '' ) {
+	public function preview( $content = '', $class_name = '', $tag = 'div' ) {
 		$rendered_attributes = $this->get_block_rendered_attributes();
 		$class               = $class_name . ' ' . $rendered_attributes['class'];
 		$id                  = $rendered_attributes['id'];
 
-		$output  = "<div id='$id' class='$class'>";
+		$output  = "<$tag id='$id' class='$class'>";
 		$output .= $content;
-		$output .= '</div>';
+		$output .= "</$tag>";
 
 		return $output;
 	}

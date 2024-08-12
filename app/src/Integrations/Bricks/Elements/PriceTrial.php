@@ -42,13 +42,6 @@ class PriceTrial extends \Bricks\Element {
 	public $icon = 'ti-time';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-price-trial';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -68,12 +61,13 @@ class PriceTrial extends \Bricks\Element {
 				'trial_text' => esc_html__( 'Starting in 15 days', 'surecart' ),
 			];
 
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<div class="wp-block-surecart-product-price-trial">';
-			$output .= '<span class="sc-price-name">' . $price->trial_text . '</span>';
-			$output .= '</div>';
-			$output .= '</div>';
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$content = '<span class="sc-price-name">' . $price->trial_text . '</span>';
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$content,
+				'wp-block-surecart-product-price-trial',
+			);
+
+			return;
 		}
 
 		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

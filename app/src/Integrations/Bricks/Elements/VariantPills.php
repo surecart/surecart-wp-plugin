@@ -81,7 +81,7 @@ class VariantPills extends \Bricks\Element {
 			$output .= \Bricks\Frontend::render_children( $this );
 			$output .= '</div>';
 
-			echo $this->preview_layout(// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview(// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$output,
 				'wp-block-surecart-product-variant-pills'
 			);

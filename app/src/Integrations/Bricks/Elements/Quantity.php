@@ -69,8 +69,12 @@ class Quantity extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		echo $this->html([ // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			'label' => $this->settings['label'] ?? esc_html__( 'Quantity', 'surecart' ),
-		]);
+		$label = ! empty( $this->settings['label'] ) ? $this->settings['label'] : esc_html__( 'Quantity', 'surecart' );
+
+		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			array(
+				'label' => esc_attr( $label ),
+			)
+		);
 	}
 }

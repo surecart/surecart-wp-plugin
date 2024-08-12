@@ -44,13 +44,6 @@ class SaleBadge extends \Bricks\Element {
 	public $icon = 'ion-md-pricetag';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-sale-badge';
-
-	/**
 	 * Get element label
 	 *
 	 * @return string
@@ -75,9 +68,11 @@ class SaleBadge extends \Bricks\Element {
 	 * Render element.
 	 */
 	public function render() {
+		$text = ! empty( $this->settings['text'] ) ? $this->settings['text'] : esc_html__( 'Sale', 'surecart' );
+
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
-				'text' => ! empty( $this->settings['text'] ) ? $this->settings['text'] : esc_html__( 'Sale', 'surecart' ),
+				'text' => esc_attr( $text ),
 			)
 		);
 	}

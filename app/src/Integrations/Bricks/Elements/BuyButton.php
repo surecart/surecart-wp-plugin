@@ -43,12 +43,6 @@ class BuyButton extends Element {
 	 */
 	public $icon = 'ti-shopping-cart';
 
-	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-buy-button .sc-button__link';
 
 	/**
 	 * Get element label.
@@ -86,28 +80,28 @@ class BuyButton extends Element {
 	 * @return void
 	 */
 	public function render() {
-		$content = wp_kses_post( $this->settings['content'] ?? '' );
+		$text = $this->settings['content'] ?? '';
 
-		if ( empty( $content ) ) {
-			$content = $this->settings['add_to_cart'] ? esc_html__( 'Add To Cart', 'surecart' ) : esc_html__( 'Buy Now', 'surecart' );
+		if ( empty( $text ) ) {
+			$text = $this->settings['add_to_cart'] ? esc_html__( 'Add To Cart', 'surecart' ) : esc_html__( 'Buy Now', 'surecart' );
 		}
 
 		if ( $this->is_admin_editor() ) {
-			echo <<<HTML
-				<div {$this->render_attributes( '_root' )}>
-					<div class="wp-block-button has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button">
-						<a class="wp-block-button__link wp-element-button sc-button__link">
-							<span class="sc-button__link-text">{$content}</span>
-						</a>
-					</div>
-				</div>
-			HTML;
+			$content  = '<a class="wp-block-button__link wp-element-button sc-button__link">';
+			$content .= '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
+			$content .= '</a>';
+
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$content,
+				'wp-block-button has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button',
+			);
+
 			return;
 		}
 
-		$this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'text'        => $content,
+				'text'        => esc_attr( $text ),
 				'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
 			]
 		);

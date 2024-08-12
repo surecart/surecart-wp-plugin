@@ -44,13 +44,6 @@ class PriceName extends \Bricks\Element {
 	public $icon = 'ti-align-left';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-price-name';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -68,12 +61,14 @@ class PriceName extends \Bricks\Element {
 		if ( $this->is_admin_editor() ) {
 			$initial_price = ( sc_get_product() )->initial_price ?? [ 'name' => esc_html__( 'Price Name', 'surecart' ) ];
 
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<div class="wp-block-surecart-product-price-name">';
-			$output .= '<span class="sc-price-name">' . $initial_price->name . '</span>';
-			$output .= '</div>';
-			$output .= '</div>';
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$content = '<span class="sc-price-name">' . $initial_price->name . '</span>';
+
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$content,
+				'wp-block-surecart-product-price-name',
+			);
+
+			return;
 		}
 
 		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

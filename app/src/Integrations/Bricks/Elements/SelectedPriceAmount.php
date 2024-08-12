@@ -43,13 +43,6 @@ class SelectedPriceAmount extends \Bricks\Element {
 	public $icon = 'ti-money';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-selected-price-amount';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -66,12 +59,13 @@ class SelectedPriceAmount extends \Bricks\Element {
 	public function render() {
 		if ( $this->is_admin_editor() ) {
 			$product = sc_get_product();
-			// translators: %1$s: amount, %2$s: interval.
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<span class="wp-block-surecart-product-selected-price-amount sc-price__amount">' . $product->display_amount . '</span>';
-			$output .= '</div>';
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$product->display_amount,
+				'wp-block-surecart-product-selected-price-amount',
+				'span'
+			);
+
 			return;
 		}
 

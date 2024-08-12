@@ -43,13 +43,6 @@ class VariantPill extends \Bricks\Element {
 	public $icon = 'ion-md-pricetag';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-variant-pill';
-
-	/**
 	 * Get element label
 	 *
 	 * @return string
@@ -86,22 +79,22 @@ class VariantPill extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-
 		if ( $this->is_admin_editor() ) {
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<span class="sc-pill-option__button wp-block-surecart-product-variant-pill">' . esc_html__( 'Red', 'surecart' ) . '</span>';
-			$output .= '</div>';
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				esc_html__( 'Red', 'surecart' ),
+				'sc-pill-option__button wp-block-surecart-product-variant-pill',
+				'span'
+			);
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 
 		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			[
-				'highlight_text'       => $this->settings['highlight_text']['hex'] ?? '',
-				'highlight_background' => $this->settings['highlight_background']['hex'] ?? '',
-				'highlight_border'     => $this->settings['highlight_border']['hex'] ?? '',
-			]
+			array(
+				'highlight_text'       => esc_attr( $this->settings['highlight_text']['hex'] ?? '' ),
+				'highlight_background' => esc_attr( $this->settings['highlight_background']['hex'] ?? '' ),
+				'highlight_border'     => esc_attr( $this->settings['highlight_border']['hex'] ?? '' ),
+			)
 		);
 	}
 }

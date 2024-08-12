@@ -42,13 +42,6 @@ class PriceSetupFee extends \Bricks\Element {
 	public $icon = 'ti-money';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-price-setup-fee';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -64,13 +57,16 @@ class PriceSetupFee extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( $this->is_admin_editor() ) {
-			$price   = ( sc_get_product() )->initial_price ?? [
+			$price = ( sc_get_product() )->initial_price ?? [
 				'setup_fee_text' => esc_html__( '$12 Signup Fee', 'surecart' ),
 			];
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<div class="wp-block-surecart-price-setup-fee">' . $price->setup_fee_text . '</div>';
-			$output .= '</div>';
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$price->setup_fee_text,
+				'wp-block-surecart-price-setup-fee',
+			);
+
+			return;
 		}
 
 		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

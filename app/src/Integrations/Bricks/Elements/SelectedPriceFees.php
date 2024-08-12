@@ -67,11 +67,12 @@ class SelectedPriceFees extends \Bricks\Element {
 				$setup_fees_text = sprintf( __( '%s Setup Fee', 'surecart' ), Currency::format( 100, $product->currency ?? 'USD' ) );
 			}
 
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<span class="wp-block-surecart-product-selected-price-trial">' . $setup_fees_text . '</span>';
-			$output .= '</div>';
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$setup_fees_text,
+				'wp-block-surecart-product-selected-price-fees',
+				'span'
+			);
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 

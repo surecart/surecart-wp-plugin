@@ -57,6 +57,6 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		echo $this->html();
+		echo $this->html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

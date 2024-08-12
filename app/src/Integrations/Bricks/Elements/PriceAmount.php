@@ -43,13 +43,6 @@ class PriceAmount extends \Bricks\Element {
 	public $icon = 'ti-money';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-price-amount';
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -65,19 +58,21 @@ class PriceAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( $this->is_admin_editor() ) {
-			$price          = ( sc_get_product() )->initial_price ?? [
+			$price = ( sc_get_product() )->initial_price ?? [
 				'amount'              => Currency::format( 200 ),
 				'short_interval_text' => '/mo',
 			];
+			// Translators: %1$s is the price amount, %2$s is the short interval text.
 			$display_amount = sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), $price->display_amount, $price->short_interval_text );
 
-			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<div class="wp-block-surecart-product-price-amount">';
-			$output .= '<span class="sc-price-name">' . $display_amount . '</span>';
-			$output .= '</div>';
-			$output .= '</div>';
+			$content = '<span class="sc-price-name">' . $display_amount . '</span>';
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$content,
+				'wp-block-surecart-product-price-amount',
+			);
+
+			return;
 		}
 
 		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -44,13 +44,6 @@ class SelectedPriceScratchAmount extends \Bricks\Element {
 	public $icon = 'ti-money';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-selected-price-scratch-amount';
-
-	/**
 	 * The constructor.
 	 *
 	 * @param array $element Element data.
@@ -78,11 +71,13 @@ class SelectedPriceScratchAmount extends \Bricks\Element {
 		if ( $this->is_admin_editor() ) {
 			$product       = sc_get_product();
 			$scratch_price = $product->initial_price->scratch_display_amount ?? Currency::format( 100, $product->currency ?? 'USD' );
-			$output        = '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output       .= '<span class="wp-block-surecart-product-selected-price-scratch-amount sc-price__amount">' . $scratch_price . '</span>';
-			$output       .= '</div>';
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$scratch_price,
+				'wp-block-surecart-product-selected-price-scratch-amount sc-price__amount',
+				'span'
+			);
+
 			return;
 		}
 

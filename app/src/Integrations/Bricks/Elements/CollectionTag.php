@@ -43,13 +43,6 @@ class CollectionTag extends \Bricks\Element {
 	public $icon = 'ion-md-pricetag';
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.wp-block-surecart-product-collection-tag';
-
-	/**
 	 * The constructor.
 	 *
 	 * @param array $element Element data.
@@ -76,18 +69,17 @@ class CollectionTag extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$output = '';
-
 		if ( $this->is_admin_editor() ) {
 			$product     = sc_get_product();
 			$collections = $product->product_collections->data ?? [];
 			$collection  = $collections[0] ?? [ 'name' => 'Collection1' ];
 
-			$output .= '<div ' . $this->render_attributes( '_root' ) . '>';
-			$output .= '<span class="sc-tag sc-tag--default sc-tag--medium wp-block-surecart-product-collection-tag">' . $collection->name . '</span>';
-			$output .= '</div>';
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$collection->name,
+				'sc-tag sc-tag--default sc-tag--medium wp-block-surecart-product-collection-tag',
+				'span'
+			);
 
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 
