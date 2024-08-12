@@ -18,6 +18,7 @@ const expand = [
 	'manual_payment_method',
 	'shipping_choices',
 	'shipping_choices.shipping_method',
+	'order',
 ];
 
 export default expand;

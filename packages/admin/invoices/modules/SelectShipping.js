@@ -8,12 +8,12 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import expand from '../query';
+import expand from '../checkout-query';
 import { useDispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 
-export default ({ checkout, setBusy, loading }) => {
+export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 

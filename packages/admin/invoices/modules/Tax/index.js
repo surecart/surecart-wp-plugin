@@ -18,9 +18,9 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
 import TaxIdDisplay from './TaxIdDisplay';
-import expand from '../../query';
+import expand from '../../checkout-query';
 
-export default ({ checkout, loading, busy, setBusy }) => {
+export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const [open, setOpen] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
@@ -89,7 +89,8 @@ export default ({ checkout, loading, busy, setBusy }) => {
 				loading={loading}
 				footer={
 					!loading &&
-					!checkout?.tax_identifier?.id && (
+					!checkout?.tax_identifier?.id &&
+					isDraftInvoice && (
 						<ScButton onClick={() => setOpen(true)}>
 							{__('Add A Tax ID', 'surecart')}
 						</ScButton>

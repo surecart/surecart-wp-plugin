@@ -6,7 +6,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useDispatch, select } from '@wordpress/data';
-import expand from '../query';
+import expand from '../checkout-query';
 import PriceSelector from '@admin/components/PriceSelector';
 
 export default ({ checkout, setBusy }) => {
