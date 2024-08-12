@@ -20,7 +20,7 @@ import {
 	getTransformedBlocksFromPattern,
 	usePatterns,
 	searchPatterns,
-} from '../utils';
+} from '../blocks/utils';
 
 export default function PatternSelectionModal({
 	clientId,
