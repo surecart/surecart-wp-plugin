@@ -1,5 +1,8 @@
 <?php
 // we have no posts.
+
+use SureCart\Models\Blocks\ProductPageBlock;
+
 if ( ! $query->have_posts() ) {
 	return '';
 }
@@ -34,14 +37,26 @@ if ( ! $query->have_posts() ) {
 
 		// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 		$post_classes = implode( ' ', get_post_class( 'wp-block-post' ) );
+
+		$controller = new ProductPageBlock( $block );
+		$state      = $controller->state();
+		$context    = $controller->context();
+
+		wp_interactivity_state( 'surecart/product-page', $state );
 		?>
 
 		<li class="sc-product-item sc-has-animation-fade-up" data-wp-key="post-template-item-<?php echo (int) $product_post_id; ?>">
-			<a class="sc-product-item-link"
+			<<?php echo esc_html( $html_tag ); ?> class="sc-product-item-link"
 				href="<?php echo esc_url( get_the_permalink() ); ?>"
+				<?php
+				echo wp_kses_data( wp_interactivity_data_wp_context( $context ) );
+				?>
+				data-wp-interactive='{ "namespace": "surecart/product-page" }'
+				data-wp-on--submit="callbacks.handleSubmit"
+				data-wp-init="callbacks.init"
 			>
 				<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			</a>
+			</<?php echo esc_html( $html_tag ); ?>>
 		</li>
 	<?php endwhile; ?>
 </ul>

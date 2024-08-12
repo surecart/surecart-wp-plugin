@@ -74,6 +74,23 @@ class ProductPostTypeService {
 		add_filter( 'attachment_fields_to_edit', [ $this, 'addAttachmentFields' ], 1, 2 );
 		add_filter( 'attachment_fields_to_save', [ $this, 'saveAttachmentFields' ], 10, 2 );
 
+		// handle post thumbnails from gallery.
+		add_filter( 'post_thumbnail_id', array( $this, 'postThumbnailId' ), 10, 5 );
+		add_filter( 'wp_get_attachment_image', array( $this, 'getAttachmentImage' ), 10, 5 );
+		add_filter( 'has_post_thumbnail', array( $this, 'hasPostThumbnail' ), 10, 2 );
+		add_filter( 'post_thumbnail_html', array( $this, 'postThumbnailHTML' ), 10, 5 );
+		add_filter( 'post_thumbnail_url', array( $this, 'postThumbnailURL' ), 10, 2 );
+
+		// add schema markup.
+		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
+
+		// disallow pre title filter.
+		add_filter( 'pre_get_document_title', [ $this, 'disallowPreTitle' ], 214748364 );
+
+		// add schema and seo meta.
+		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
+		add_action( 'wp_head', array( $this, 'addProductSeoMeta' ), 10 );
+
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
@@ -82,14 +99,143 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
 
-		// add schema markup.
-		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
-		// disallow pre title filter.
-		add_filter( 'pre_get_document_title', [ $this, 'disallowPreTitle' ], 214748364 );
-		// add schema and seo meta
-		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
-		add_action( 'wp_head', array( $this, 'addProductSeoMeta' ), 10 );
+	/**
+	 * Filter the post thumbnail id.
+	 * This is used to set the featured image for the product.
+	 *
+	 * @param integer $thumbnail_id The thumbnail ID.
+	 * @param integer $post_id The post ID.
+	 *
+	 * @return integer
+	 */
+	public function postThumbnailId( $thumbnail_id, $post_id ) {
+		// we already have a thumbnail id.
+		if ( ! empty( $thumbnail_id ) ) {
+			return $thumbnail_id;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $thumbnail_id;
+		}
+
+		// use the first gallery image (product model featured image).
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image->ID ) ) {
+			return $product->featured_image->ID;
+		}
+
+		// fake a thumbnail id so we can filter thumbnail html output.
+		return PHP_INT_MAX;
+	}
+
+	/**
+	 * Get the attachment image.
+	 * We need this for backwards compatibility for ProductMedia.
+	 *
+	 * @param string  $html The HTML.
+	 * @param integer $attachment_id The attachment ID.
+	 * @param integer $post_thumbnail_id The post thumbnail ID.
+	 * @param string  $size The size.
+	 * @param array   $attr The attributes.
+	 *
+	 * @return string
+	 */
+	public function getAttachmentImage( $html, $attachment_id, $post_thumbnail_id, $size, $attr ) {
+		// check if we have an attachment id.
+		if ( ! empty( $attachment_id ) ) {
+			return $html;
+		}
+
+		// check post type.
+		global $post;
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $html;
+		}
+
+		$product = sc_get_product();
+		if ( empty( $product ) ) {
+			return $html;
+		}
+
+		return $product->featured_image->html( $size, $attr );
+	}
+
+	/**
+	 * Since we are using the first gallery image as the post thumbnail,
+	 * we need to check if the product has a featured image.
+	 *
+	 * @param boolean $has_thumbnail Whether the post has a thumbnail.
+	 * @param integer $post_id The post ID.
+	 *
+	 * @return boolean
+	 */
+	public function hasPostThumbnail( $has_thumbnail, $post_id ) {
+		// check if we have an attachment id.
+		if ( ! empty( $has_thumbnail ) ) {
+			return $has_thumbnail;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $has_thumbnail;
+		}
+
+		// check if the product has a featured image.
+		$product = sc_get_product( $post_id );
+		return ! empty( $product->featured_image->ID );
+	}
+
+	/**
+	 * Get the post thumbnail html
+	 *
+	 * @return string
+	 */
+	public function postThumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+		if ( ! empty( $html ) ) {
+			return $html;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $html;
+		}
+
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image ) ) {
+			return $product->featured_image->html( $size, $attr );
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Get the post thumbnail url
+	 *
+	 * @return string
+	 */
+	public function postThumbnailURL( $url, $post_id ) {
+		if ( ! empty( $url ) ) {
+			return $url;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $url;
+		}
+
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image ) ) {
+			return $product->featured_image->attributes()->src;
+		}
+
+		return $url;
 	}
 
 	/**
@@ -729,17 +875,10 @@ class ProductPostTypeService {
 			'gallery',
 			array(
 				'get_callback'    => function ( $post ) {
-					return ! empty( get_post_meta( $post['id'], 'gallery', true ) ) ? get_post_meta( $post['id'], 'gallery', true ) : array();
+					$product = get_post_meta( $post['id'], 'product', true );
+					return $product->gallery ?? [];
 				},
 				'update_callback' => function ( $value, $post ) {
-					// map each value to an object.
-					$value = array_map(
-						function ( $item ) {
-							return (object) $item;
-						},
-						$value
-					);
-					return update_post_meta( $post->ID, 'gallery', $value );
 				},
 				'schema'          => array(
 					'description' => __( 'Product gallery', 'surecart' ),
@@ -861,6 +1000,7 @@ class ProductPostTypeService {
 					'excerpt',
 					'custom-fields',
 					'editor',
+					'thumbnail',
 					'page-attributes',
 				),
 			)

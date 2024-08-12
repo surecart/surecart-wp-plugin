@@ -160,7 +160,7 @@ class ProductPageBlock {
 				'mode'          => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
 				'checkoutUrl'   => \SureCart::pages()->url( 'checkout' ),
 				'urlPrefix'     => $this->urlParams()->getKey(),
-				'product'       => ! empty( $product ) ? $product->only( [ 'id', 'has_unlimited_stock', 'archived', 'permalink' ] ) : null,
+				'product'       => ! empty( $product ) ? $product->only( [ 'id', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink' ] ) : null,
 				'selectedPrice' => ! empty( $product->initial_price ) ? $product->initial_price->only(
 					[
 						'id',
@@ -170,6 +170,7 @@ class ProductPageBlock {
 						'scratch_amount',
 						'scratch_display_amount',
 						'ad_hoc',
+						'is_on_sale',
 						'is_zero_decimal',
 						'currency_symbol',
 						'converted_ad_hoc_min_amount',
@@ -222,7 +223,6 @@ class ProductPageBlock {
 					$product->variants->data ?? array()
 				),
 				'quantity'      => 1,
-				'isOnSale'      => ! empty( $product->initial_price ) ? $product->initial_price->is_on_sale : false,
 				'busy'          => false,
 				'adHocAmount'   => ( ! empty( $product->initial_price->ad_hoc ) ? $product->initial_price->amount : 0 ) / ( ! empty( $product->initial_price->is_zero_decimal ) ? 1 : 100 ),
 				'variantValues' => array_filter(
@@ -256,8 +256,34 @@ class ProductPageBlock {
 			[
 				'quantity'              => 1,
 				'selectedDisplayAmount' => $product->display_amount,
-				'isOnSale'              => empty( $selected_price->ad_hoc ) ? $product->scratch_amount > $product->initial_amount : false,
+				'isOnSale'              => function () {
+					$context        = wp_interactivity_get_context();
+					$selected_price = $context['selectedPrice'];
+					return $selected_price['is_on_sale'] ?? false;
+				},
+				'selectedAmount'        => function () {
+					$context        = wp_interactivity_get_context();
+					$state          = wp_interactivity_state();
+					$selected_price = $context['selectedPrice'];
+					$prices         = $context['prices'];
+
+					if ( ! empty( $prices ) && count( $prices ) > 1 ) {
+						return $selected_price['amount'];
+					}
+
+					return $state['selectedVariant']['amount'] ?? $selected_price['amount'];
+				},
 				'busy'                  => false,
+				'shouldDisplayImage'    => function () {
+					$context = wp_interactivity_get_context();
+					$state   = wp_interactivity_state();
+
+					if ( empty( $context['variants'] ) ) {
+						return true;
+					}
+
+					return $state['isOptionValueSelected']();
+				},
 				'adHocAmount'           => ( ! empty( $selected_price->ad_hoc ) ? $selected_price->amount : 0 ) / ( ! empty( $selected_price->is_zero_decimal ) ? 1 : 100 ),
 				'selectedVariant'       => ! empty( $selected_variant ) ? $selected_variant->only(
 					[
@@ -270,7 +296,7 @@ class ProductPageBlock {
 						'display_amount',
 						'available_stock',
 					]
-				) : null,
+				) : [],
 				'isOptionUnavailable'   => function () {
 					$context        = wp_interactivity_get_context();
 					$variants       = $context['variants'];
@@ -357,7 +383,7 @@ class ProductPageBlock {
 				},
 				'imageDisplay'          => function () {
 					$state = wp_interactivity_state();
-					return $state['isOptionValueSelected']() ? 'block' : 'none';
+					return $state['shouldDisplayImage']() ? 'inherit' : 'none';
 				},
 				'isSoldOut'             => function () {
 					$context = wp_interactivity_get_context();

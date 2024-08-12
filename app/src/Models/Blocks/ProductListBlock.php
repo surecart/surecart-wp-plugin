@@ -54,18 +54,34 @@ class ProductListBlock {
 	}
 
 	/**
+	 * Get the query context.
+	 *
+	 * @return array
+	 */
+	public function getQueryContext() {
+		return $this->block->context['query'] ?? [];
+	}
+
+	/**
 	 * Build the query
 	 *
 	 * @return $this
 	 */
 	public function parse_query() {
+		$query = $this->getQueryContext();
+
+		$offset   = absint( $query['offset'] ?? 0 );
+		$per_page = $query['perPage'] ?? $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15;
+		$page     = $this->url->getCurrentPage();
+
 		// build up the query.
 		$this->query_vars = array_filter(
 			array(
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
-				'posts_per_page'      => $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
+				'posts_per_page'      => $query['perPage'] ?? $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
+				'offset'              => ( $per_page * ( $page - 1 ) ) + $offset,
 				'paged'               => $this->url->getCurrentPage(),
 				'order'               => $this->url->getArg( 'order' ),
 				'orderby'             => $this->url->getArg( 'orderby' ),
@@ -79,18 +95,13 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
-		$term = get_queried_object();
-		if ( $term ) {
-			$collection    = get_term_meta( $term->term_id, 'collection', true );
-			$collection_id = $collection->id ?? $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
-		}
+		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
 
 		$collection_ids_to_filter = array();
 
 		// handle collection id send from "sc_product_collection" shortcode.
 		if ( ! empty( $collection_id ) ) {
-			$collection_ids     = explode( ',', $collection_id );
-			$collection_ids_int = array_map( 'intval', array_filter( $collection_ids, 'is_numeric' ) ); // WP taxonomy ids.
+			$collection_ids = explode( ',', $collection_id );
 
 			$legacy_collection_ids = get_terms(
 				array(
@@ -103,7 +114,6 @@ class ProductListBlock {
 							'compare' => 'IN',
 						),
 					),
-
 				)
 			); // platform collection ids converted to WP taxonomy ids.
 
@@ -116,6 +126,9 @@ class ProductListBlock {
 			);
 
 			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $collection_ids_to_filter );
+		} elseif ( is_tax() ) {
+				$term                     = get_queried_object();
+				$collection_ids_to_filter = [ $term->term_id ];
 		}
 
 		$new_collection_ids = $this->url->getArg( 'sc_collection' );
@@ -148,9 +161,12 @@ class ProductListBlock {
 		}
 
 		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
+			$query = $this->getQueryContext();
+			// backward compatibility.
+			$ids = $query['include'] ?? $this->block->context['surecart/product-list/ids'] ?? $this->block->parsed_block['attrs']['ids'] ?? [];
 			// fallback for older strings - get the ids of legacy products.
 			$legacy_ids           = [];
-			$ids_that_are_strings = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_string' );
+			$ids_that_are_strings = array_filter( $ids, 'is_string' );
 			if ( ! empty( $ids_that_are_strings ) ) {
 				$legacy_ids = get_posts(
 					[
@@ -170,7 +186,7 @@ class ProductListBlock {
 			}
 
 			// get only ids that are integers.
-			$ids_that_are_integers = array_filter( $this->block->context['surecart/product-list/ids'] ?? [], 'is_int' );
+			$ids_that_are_integers = array_filter( $ids, 'is_int' );
 
 			// post in.
 			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );
@@ -185,6 +201,21 @@ class ProductListBlock {
 	}
 
 	/**
+	 * Offset the found posts.
+	 * See: https://codex.wordpress.org/Making_Custom_Queries_using_Offset_and_Pagination
+	 *
+	 * @param int $found_posts The found posts.
+	 *
+	 * @return int The found posts with offset.
+	 */
+	public function offsetFoundPosts( $found_posts ) {
+		$query  = $this->getQueryContext();
+		$offset = absint( $query['offset'] ?? 0 );
+
+		return $found_posts - $offset;
+	}
+
+	/**
 	 * Run the query
 	 *
 	 * @return $this|\WP_Error
@@ -192,7 +223,11 @@ class ProductListBlock {
 	public function query() {
 		$this->parse_query();
 		wp_reset_postdata();
+
+		add_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
 		$this->query = new \WP_Query( $this->query_vars );
+		remove_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
+
 		return $this;
 	}
 

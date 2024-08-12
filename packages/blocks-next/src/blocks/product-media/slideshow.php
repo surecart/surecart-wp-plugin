@@ -11,14 +11,13 @@
 				<div
 					data-wp-interactive='{ "namespace": "surecart/product-page" }'
 					data-wp-key="<?php echo esc_attr( $image->id ); ?>"
-					data-wp-class--swiper-slide="state.isOptionValueSelected"
+					data-wp-class--swiper-slide="state.shouldDisplayImage"
 					data-wp-style--display="state.imageDisplay"
 					<?php
 					echo wp_kses_data(
 						wp_interactivity_data_wp_context(
 							[
-								'optionValue'   => $image->variant_option,
-								'alwaysDisplay' => (bool) get_query_var( 'sc_checkout_product_id' ),
+								'optionValue' => $image->variant_option,
 							]
 						)
 					);
@@ -47,47 +46,48 @@
 		<div class="swiper-button-next"></div>
 	</div>
 
-	<div class="sc-image-slider__thumbs">
-		<div class="sc-image-slider-button__prev" tabindex="-1" role="button" aria-label="<?php esc_attr_e( 'Previous Page', 'surecart' ); ?>">
-			<?php echo wp_kses( SureCart::svg()->get( 'chevron-left' ), sc_allowed_svg_html() ); ?>
-		</div>
+	<?php if ( ! empty( $attributes['show_thumbs'] ) ) : ?>
+		<div class="sc-image-slider__thumbs">
+			<div class="sc-image-slider-button__prev" tabindex="-1" role="button" aria-label="<?php esc_attr_e( 'Previous Page', 'surecart' ); ?>">
+				<?php echo wp_kses( SureCart::svg()->get( 'chevron-left' ), sc_allowed_svg_html() ); ?>
+			</div>
 
-		<div class="swiper">
-			<div class="swiper-wrapper <?php echo esc_attr( 'sc-has-' . $attributes['thumbnails_per_page'] . '-thumbs' ); ?>">
-				<?php foreach ( $gallery as $thumb_index => $image ) : ?>
-					<div
-						data-wp-interactive='{ "namespace": "surecart/product-page" }'
-						data-wp-key="<?php echo esc_attr( $image->id ); ?>"
-						data-wp-class--swiper-slide="state.isOptionValueSelected"
-						data-wp-style--display="state.imageDisplay"
-						<?php
-						echo wp_kses_data(
-							wp_interactivity_data_wp_context(
-								[
-									'optionValue'   => $image->variant_option,
-									'alwaysDisplay' => (bool) get_query_var( 'sc_checkout_product_id' ),
-								]
-							)
-						);
-						?>
-					>
-						<?php
-						echo wp_kses_post(
-							$image->html(
-								'thumbnail',
-								array(
-									'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
+			<div class="swiper">
+				<div class="swiper-wrapper <?php echo esc_attr( 'sc-has-' . $attributes['thumbnails_per_page'] . '-thumbs' ); ?>">
+					<?php foreach ( $gallery as $thumb_index => $image ) : ?>
+						<div
+							data-wp-interactive='{ "namespace": "surecart/product-page" }'
+							data-wp-key="<?php echo esc_attr( $image->id ); ?>"
+							data-wp-class--swiper-slide="state.shouldDisplayImage"
+							data-wp-style--display="state.imageDisplay"
+							<?php
+							echo wp_kses_data(
+								wp_interactivity_data_wp_context(
+									[
+										'optionValue' => $image->variant_option,
+									]
 								)
-							)
-						);
-						?>
-					</div>
-				<?php endforeach; ?>
+							);
+							?>
+						>
+							<?php
+							echo wp_kses_post(
+								$image->html(
+									'thumbnail',
+									array(
+										'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
+									)
+								)
+							);
+							?>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+
+			<div class="sc-image-slider-button__next" tabindex="-1" role="button" aria-label="<?php esc_attr_e( 'Next Page', 'surecart' ); ?>">
+				<?php echo wp_kses( SureCart::svg()->get( 'chevron-right' ), sc_allowed_svg_html() ); ?>
 			</div>
 		</div>
-
-		<div class="sc-image-slider-button__next" tabindex="-1" role="button" aria-label="<?php esc_attr_e( 'Next Page', 'surecart' ); ?>">
-			<?php echo wp_kses( SureCart::svg()->get( 'chevron-right' ), sc_allowed_svg_html() ); ?>
-		</div>
-	</div>
+	<?php endif; ?>
 </div>

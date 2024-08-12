@@ -87,19 +87,15 @@ add_filter(
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
 			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
-			static $products_counter = -1;
 			global $sc_query_id;
-			$sc_query_id = ++$products_counter;
-
-			$context['surecart/product-list/collection_id'] = $parsed_block['attrs']['collection_id'] ?? array();
+			$sc_query_id = sc_unique_product_list_id();
 		}
 
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-page' === $parsed_block['blockName'] ) {
 			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
-			static $product_counter = -1;
 			global $sc_query_id;
-			$sc_query_id = ++$product_counter;
+			$sc_query_id = sc_unique_product_page_id();
 		}
 		return $context;
 	},

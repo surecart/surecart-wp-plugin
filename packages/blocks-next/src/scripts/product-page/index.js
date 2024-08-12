@@ -21,16 +21,6 @@ const isNotKeySubmit = (e) => {
 	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
 };
 
-/**
- * Check if the link is valid.
- */
-const isValidLink = (ref) =>
-	ref &&
-	ref instanceof window.HTMLAnchorElement &&
-	ref.href &&
-	(!ref.target || ref.target === '_self') &&
-	ref.origin === window.location.origin;
-
 // controls the product page.
 const { state, actions } = store('surecart/product-page', {
 	state: {
@@ -47,7 +37,11 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the amount based on the selected variant or price.
 		 */
 		get selectedAmount() {
-			const { selectedPrice, prices } = getContext();
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { selectedPrice, prices } = context;
 			if (prices?.length > 1) {
 				return selectedPrice?.amount || '';
 			}
@@ -73,36 +67,46 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the selected variant.
 		 */
 		get selectedVariant() {
-			const { variants, variantValues } = getContext();
+			const context = getContext();
+			if (!context) {
+				return {};
+			}
+			const { variants, variantValues } = context;
 			return variantValues
 				? getVariantFromValues({
 						variants: variants,
 						values: variantValues || {},
 				  })
-				: null;
+				: {};
 		},
 
 		/**
 		 * Is this product on sale?
 		 */
 		get isOnSale() {
-			const { selectedPrice } = getContext();
-			return !selectedPrice?.ad_hoc
-				? selectedPrice.scratch_amount > state.selectedAmount
-				: false;
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { selectedPrice } = context;
+			return selectedPrice?.is_on_sale || false;
 		},
 
 		/**
 		 * Is the option unavailable due to missing variants or stock.
 		 */
 		get isOptionUnavailable() {
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
 			const {
 				optionNumber,
 				option_value,
 				product,
 				variants,
 				variantValues,
-			} = getContext();
+			} = context;
 			return isProductVariantOptionSoldOut(
 				parseInt(optionNumber),
 				option_value,
@@ -116,7 +120,11 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is the option selected?
 		 */
 		get isOptionSelected() {
-			const { optionNumber, option_value, variantValues } = getContext();
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { optionNumber, option_value, variantValues } = context;
 			return variantValues?.[`option_${optionNumber}`] === option_value;
 		},
 
@@ -125,10 +133,13 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		get isOptionValueSelected() {
 			const context = getContext();
-			const { optionValue, variantValues, alwaysDisplay } = context;
+			if (!context) {
+				return true;
+			}
+			const { optionValue, variantValues } = context;
 
 			// this applies to all variants or the option is always displayed.
-			if (!optionValue || alwaysDisplay) {
+			if (!optionValue) {
 				return true;
 			}
 
@@ -139,18 +150,34 @@ const { state, actions } = store('surecart/product-page', {
 			return values.includes(optionValue.toLowerCase());
 		},
 
+		get shouldDisplayImage() {
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { variants } = context;
+			if (!variants?.length) {
+				return true;
+			}
+			return state.isOptionValueSelected;
+		},
+
 		/**
 		 * Get the image display.
 		 */
 		get imageDisplay() {
-			return state.isOptionValueSelected ? 'block' : 'none';
+			return state.shouldDisplayImage ? 'initial' : 'none';
 		},
 
 		/**
 		 * Is the price selected?
 		 */
 		get isPriceSelected() {
-			const { price, selectedPrice } = getContext();
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { price, selectedPrice } = context;
 			return selectedPrice?.id === price?.id;
 		},
 
@@ -172,7 +199,11 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the button text based on the product state.
 		 */
 		get buttonText() {
-			const { text, outOfStockText, unavailableText } = getContext();
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { text, outOfStockText, unavailableText } = context;
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
@@ -187,7 +218,11 @@ const { state, actions } = store('surecart/product-page', {
 		 * due to being archived, sold out, or no variant selected.
 		 */
 		get isUnavailable() {
-			const { product, variants } = getContext();
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { product, variants } = context;
 			return (
 				!!product?.archived || // archived.
 				!!state?.isSoldOut || // sold out.
@@ -199,7 +234,11 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is the product sold out?
 		 */
 		get isSoldOut() {
-			const { product } = getContext();
+			const context = getContext();
+			if (!context) {
+				return true;
+			}
+			const { product } = context;
 			if (product?.has_unlimited_stock) {
 				return false;
 			}
@@ -379,7 +418,8 @@ const { state, actions } = store('surecart/product-page', {
 				{},
 				'',
 				addQueryArgs(window.location.href, {
-					[`${urlPrefix}${option_name_slug}`]: option_value_slug,
+					[`${urlPrefix ? urlPrefix + '-' : ''}${option_name_slug}`]:
+						option_value_slug,
 				})
 			);
 		},

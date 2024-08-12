@@ -2,7 +2,7 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
-Requires at least: 6.3
+Requires at least: 6.6
 Tested up to: 6.6
 Stable tag: 2.29.2
 Requires PHP: 7.4

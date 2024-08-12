@@ -38,8 +38,14 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 
 		// Handle media url.
 		if ( isset( $this->item->url ) ) {
-			// We cannot lazy load this or use srcset since we don't know the width/height of an external url.
-			$image = sprintf( '<img src="%s" alt="%s" title="%s" loading="lazy" />', $this->item->url, $this->item->alt ?? '', $this->item->title ?? '' );
+			$attributes = $this->attributes( $size, $attr );
+
+			// build the image tag.
+			$image = '<img';
+			foreach ( $attributes as $key => $value ) {
+				$image .= sprintf( ' %s="%s"', $key, esc_attr( $value ) );
+			}
+			$image .= ' />';
 		}
 
 		// add any styles.
@@ -69,9 +75,12 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 			return $this->item->media->attributes( $size, $attr );
 		}
 
+		$attachment_class = 'attachment-' . $size . ' size-' . $size;
+
 		return (object) array(
 			'src'   => $this->item->url,
-			'class' => 'attachment-' . $size . ' size-' . $size,
+			'class' => $attachment_class . ' ' . ( ! empty( $attr['class'] ) ? $attr['class'] : '' ),
+			'alt'   => get_the_title(),
 		);
 	}
 }

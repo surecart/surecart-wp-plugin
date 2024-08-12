@@ -9,10 +9,10 @@
 	"example": {},
 	"ancestor": ["surecart/product-pagination"],
 	"usesContext": [
+		"query",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
 		"surecart/product-list/ids",
-		"surecart/product-list/collection_id",
 		"paginationArrow",
 		"showLabel"
 	],

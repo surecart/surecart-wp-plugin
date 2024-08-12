@@ -8,8 +8,8 @@
 	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-buy-buttons"],
-	"usesContext": ["surecart/product", "surecart/productId"],
+	"ancestor": ["surecart/product-buy-buttons", "surecart/product-template"],
+	"usesContext": ["surecart/product", "postId"],
 	"attributes": {
 		"add_to_cart": {
 			"type": "boolean",

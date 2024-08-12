@@ -9,6 +9,7 @@
 	"example": {},
 	"ancestor": ["surecart/product-list"],
 	"usesContext": [
+		"query",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
 		"surecart/product-list/ids"
