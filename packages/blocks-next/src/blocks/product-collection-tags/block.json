@@ -16,6 +16,7 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
+		"anchor": true,
 		"layout": {
 			"allowSwitching": false,
 			"allowInheriting": false,

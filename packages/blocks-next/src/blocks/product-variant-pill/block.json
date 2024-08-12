@@ -25,6 +25,7 @@
 	"supports": {
 		"interactivity": true,
 		"inserter": false,
+		"anchor": true,
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,

@@ -11,6 +11,7 @@
 	"supports": {
 		"interactivity": true,
 		"inserter": false,
+		"anchor": true,
 		"color": {
 			"gradients": true,
 			"__experimentalDefaultControls": {

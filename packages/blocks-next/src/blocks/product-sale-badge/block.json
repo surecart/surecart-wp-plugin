@@ -21,6 +21,7 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"anchor": true,
 		"color": {
 			"gradients": true,
 			"text": true,
