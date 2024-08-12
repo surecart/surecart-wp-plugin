@@ -105,6 +105,7 @@ class PriceChooser extends \Bricks\Element {
 					'_justifyContent' => 'flex-start',
 					'_alignItems'     => 'center',
 					'_width'          => '100%',
+					'_gap'            => '0',
 				),
 				'children' => ( new PriceChoiceTemplate() )->get_nestable_children(),
 			),

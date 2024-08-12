@@ -52,6 +52,18 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	public $nestable = true;
 
 	/**
+	 * Constructor.
+	 *
+	 * @param array $element Element.
+	 *
+	 * @return void
+	 */
+	public function __construct( $element = null ) {
+		$element['settings']['_gap'] = '0';
+		parent::__construct( $element );
+	}
+
+	/**
 	 * Get element label.
 	 *
 	 * @return string
