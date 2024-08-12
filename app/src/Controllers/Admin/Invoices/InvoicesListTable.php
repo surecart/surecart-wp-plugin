@@ -115,6 +115,7 @@ class InvoicesListTable extends ListTable {
 		$status = $this->getStatus();
 		$where  = array(
 			'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'query'     => $this->get_search_query(),
 		);
 
 		if ( $status ) {
@@ -127,7 +128,7 @@ class InvoicesListTable extends ListTable {
 		}
 
 		return Invoice::where( $where )
-		->with( [ 'charge', 'invoice.checkout', 'checkout.customer', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
+		->with( [ 'charge', 'invoice.checkout', 'checkout.order', 'checkout.customer', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'invoices' ),
@@ -215,7 +216,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_due_date( $invoice ) {
-		return '<sc-format-date date="' . (int) $invoice->due_date . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+		return $invoice->due_date ? '<sc-format-date date="' . (int) $invoice->due_date . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '-';
 	}
 
 	/**
@@ -226,7 +227,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_issue_date( $invoice ) {
-		return '<sc-format-date date="' . (int) $invoice->issue_date . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+		return $invoice->issue_date ? '<sc-format-date date="' . (int) $invoice->issue_date . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '-';
 	}
 
 	/**
@@ -293,7 +294,7 @@ class InvoicesListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Invoice', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
-			<?php echo esc_html( $invoice->number ?? $invoice->id ); ?>
+			<?php echo ! empty( $invoice->checkout->order->number ) ? '#' . esc_html( $invoice->checkout->order->number ) : esc_html_e( 'DRAFT', 'surecart' ); ?>
 		</a>
 		<?php
 
