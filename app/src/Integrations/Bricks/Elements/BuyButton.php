@@ -105,11 +105,11 @@ class BuyButton extends Element {
 			return;
 		}
 
-		echo "<div {$this->render_attributes( '_root' )}>" . $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'text'        => $content,
 				'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
 			]
-		) . '</div>';
+		);
 	}
 }

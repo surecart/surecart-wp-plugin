@@ -131,10 +131,11 @@ class PriceChoiceTemplate extends \Bricks\Element {
 			return;
 		}
 
-		echo $this->raw_layout(
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'highlight_border' => $this->settings['highlight_border']['hex'] ?? '',
-			]
+			],
+			\Bricks\Frontend::render_children( $this )
 		);
 	}
 }

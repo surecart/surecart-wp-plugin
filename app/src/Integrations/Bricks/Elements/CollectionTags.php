@@ -103,10 +103,11 @@ class CollectionTags extends \Bricks\Element {
 			return;
 		}
 
-		echo $this->raw_layout(
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'count' => $this->settings['count'],
-			]
+			],
+			\Bricks\Frontend::render_children( $this )
 		);
 	}
 }

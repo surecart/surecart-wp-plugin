@@ -75,14 +75,10 @@ class SaleBadge extends \Bricks\Element {
 	 * Render element.
 	 */
 	public function render() {
-		$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
-		$output .= $this->html(
+		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
 				'text' => ! empty( $this->settings['text'] ) ? $this->settings['text'] : esc_html__( 'Sale', 'surecart' ),
 			)
 		);
-		$output .= '</div>';
-
-		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

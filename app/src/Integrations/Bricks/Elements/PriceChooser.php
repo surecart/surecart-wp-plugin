@@ -132,10 +132,11 @@ class PriceChooser extends \Bricks\Element {
 			return;
 		}
 
-		echo $this->raw_layout(
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'label' => $this->settings['label'],
-			]
+			],
+			\Bricks\Frontend::render_children( $this )
 		);
 	}
 }

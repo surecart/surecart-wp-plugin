@@ -86,10 +86,9 @@ class VariantPill extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$output = '';
 
 		if ( $this->is_admin_editor() ) {
-			$output .= '<div ' . $this->render_attributes( '_root' ) . '>';
+			$output  = '<div ' . $this->render_attributes( '_root' ) . '>';
 			$output .= '<span class="sc-pill-option__button wp-block-surecart-product-variant-pill">' . esc_html__( 'Red', 'surecart' ) . '</span>';
 			$output .= '</div>';
 
@@ -97,13 +96,12 @@ class VariantPill extends \Bricks\Element {
 			return;
 		}
 
-		$output = '<div ' . $this->render_attributes( '_root' ) . '>' . $this->raw(
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'highlight_text'       => $this->settings['highlight_text']['hex'] ?? '',
 				'highlight_background' => $this->settings['highlight_background']['hex'] ?? '',
 				'highlight_border'     => $this->settings['highlight_border']['hex'] ?? '',
 			]
-		) . '</div>';
-		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		);
 	}
 }

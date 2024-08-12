@@ -76,7 +76,6 @@ class PriceName extends \Bricks\Element {
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
-		$output = '<div ' . $this->render_attributes( '_root' ) . '>' . $this->raw() . '</div>';
-		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

@@ -75,7 +75,6 @@ class SelectedPriceFees extends \Bricks\Element {
 			return;
 		}
 
-		$output = '<div ' . $this->render_attributes( '_root' ) . '>' . $this->raw() . '</div>';
-		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
