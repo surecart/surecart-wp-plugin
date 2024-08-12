@@ -1,5 +1,5 @@
 <ul
-	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'id' => $attributes['id'] ) ) ); ?>
+	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 >
 	<?php
 	foreach ( $collections as $collection ) :
