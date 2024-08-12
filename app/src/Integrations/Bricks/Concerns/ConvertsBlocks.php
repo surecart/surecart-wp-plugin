@@ -35,6 +35,11 @@ trait ConvertsBlocks {
 			}
 		}
 
+		// add the rendered class and id.
+		$rendered_attributes           = $this->get_block_rendered_attributes();
+		$block_attributes['className'] = $rendered_attributes['class'];
+		$block_attributes['anchor']    = $rendered_attributes['id'];
+
 		// get the bricks attributes.
 		$key        = '_root';
 		$attributes = apply_filters( 'bricks/element/render_attributes', $this->attributes, $key, $this );
@@ -107,22 +112,11 @@ trait ConvertsBlocks {
 			}
 		}
 
-		return '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->';
-	}
-
-	/**
-	 * Render raw layout block.
-	 *
-	 * @param array $block_attributes The block attributes.
-	 *
-	 * @return string
-	 */
-	public function raw_layout( $block_attributes = [] ) {
 		$rendered_attributes           = $this->get_block_rendered_attributes();
 		$block_attributes['className'] = $rendered_attributes['class'];
-		$block_attributes['id']        = $rendered_attributes['id'];
+		$block_attributes['anchor']    = $rendered_attributes['id'];
 
-		return $this->raw( $block_attributes, \Bricks\Frontend::render_children( $this ) );
+		return '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->';
 	}
 
 	/**
