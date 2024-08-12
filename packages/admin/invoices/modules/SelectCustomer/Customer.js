@@ -15,7 +15,7 @@ import { __ } from '@wordpress/i18n';
 import useAvatar from '../../../hooks/useAvatar';
 import { store as coreStore } from '@wordpress/core-data';
 
-export default ({ id, onChange }) => {
+export default ({ id, onChange, isDraftInvoice }) => {
 	const { customer, loading } = useSelect(
 		(select) => {
 			if (!id) {
@@ -60,23 +60,25 @@ export default ({ id, onChange }) => {
 					</div>
 				</ScFlex>
 
-				<ScDropdown placement="bottom-end">
-					<ScButton type="text" slot="trigger" circle>
-						<ScIcon name="more-horizontal" />
-					</ScButton>
-					<ScMenu>
-						<ScMenuItem onClick={() => onChange(null)}>
-							<ScIcon
-								slot="prefix"
-								name="trash"
-								style={{
-									opacity: 0.5,
-								}}
-							/>
-							{__('Remove', 'surecart')}
-						</ScMenuItem>
-					</ScMenu>
-				</ScDropdown>
+				{isDraftInvoice && (
+					<ScDropdown placement="bottom-end">
+						<ScButton type="text" slot="trigger" circle>
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={() => onChange(null)}>
+								<ScIcon
+									slot="prefix"
+									name="trash"
+									style={{
+										opacity: 0.5,
+									}}
+								/>
+								{__('Remove', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+				)}
 			</ScFlex>
 		</ScCard>
 	);

@@ -15,7 +15,7 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch, select } from '@wordpress/data';
-import expand from '../query';
+import expand from '../checkout-query';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
@@ -28,6 +28,7 @@ export default ({
 	setBusy,
 	paymentMethod,
 	setPaymentMethod,
+	isDraftInvoice,
 }) => {
 	const [modal, setModal] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -263,12 +264,14 @@ export default ({
 				title={__('Payment', 'surecart')}
 				loading={loading}
 				footer={
-					<ScButton
-						type="primary"
-						onClick={() => setModal('payment')}
-					>
-						{__('Add Payment Method', 'surecart')}
-					</ScButton>
+					isDraftInvoice && (
+						<ScButton
+							type="primary"
+							onClick={() => setModal('payment')}
+						>
+							{__('Add Payment Method', 'surecart')}
+						</ScButton>
+					)
 				}
 				footerStyle={{
 					justifyContent: 'flex-end',

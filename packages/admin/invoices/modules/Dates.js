@@ -1,19 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
-import {
-	ScButton,
-	ScIcon,
-	ScDialog,
-	ScAddress,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
-	ScForm,
-	ScFormatDate,
-} from '@surecart/components-react';
+import { ScFormatDate} from '@surecart/components-react';
 
 export default ({ invoice, loading, busy, setBusy }) => {
 
@@ -23,7 +12,10 @@ export default ({ invoice, loading, busy, setBusy }) => {
 				title={__('', 'surecart')}
 				loading={loading}
 			>
-				<div>
+				<div css={css`
+					display: flex;
+					justify-content: space-between;
+				`}>
 					{__('Due Date')}{' '}
 					<ScFormatDate
 						date={invoice?.due_date}
@@ -33,7 +25,10 @@ export default ({ invoice, loading, busy, setBusy }) => {
 						year="numeric"
 					/>
 				</div>
-				<div>
+				<div css={css`
+					display: flex;
+					justify-content: space-between;
+				`}>
 					{__('Issue Date')}{' '}
 					<ScFormatDate
 						date={invoice?.issue_date}

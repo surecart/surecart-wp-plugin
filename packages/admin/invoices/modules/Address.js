@@ -18,10 +18,10 @@ import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
-import expand from '../query';
+import expand from '../checkout-query';
 import Error from '../../components/Error';
 
-export default ({ checkout, loading, busy, setBusy }) => {
+export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const [open, setOpen] = useState(false);
 	const [error, setError] = useState(false);
@@ -77,7 +77,8 @@ export default ({ checkout, loading, busy, setBusy }) => {
 				loading={loading}
 				footer={
 					!loading &&
-					!checkout?.shipping_address?.id && (
+					!checkout?.shipping_address?.id &&
+					isDraftInvoice && (
 						<ScButton onClick={() => setOpen(true)}>
 							{__('Add A Shipping Address', 'surecart')}
 						</ScButton>

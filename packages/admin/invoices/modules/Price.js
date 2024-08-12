@@ -30,7 +30,9 @@ export default ({
 	subtotal_amount,
 	ad_hoc_amount,
 	lineItem,
+	invoiceStatus,
 }) => {
+	const isDraftInvoice = invoiceStatus === 'draft';
 	const media = getFeaturedProductMediaAttributes(price?.product);
 	const [open, setOpen] = useState(false);
 	const maxStockQuantity = getMaxStockQuantity(
@@ -128,15 +130,20 @@ export default ({
 						__('--', 'surecart')
 					) : (
 						<>
-							<ScQuantitySelect
-								quantity={quantity}
-								onScChange={(e) =>
-									onChange({ quantity: e.detail })
-								}
-								{...(!!maxStockQuantity
-									? { max: maxStockQuantity }
-									: {})}
-							/>
+							{isDraftInvoice ? (
+								<ScQuantitySelect
+									quantity={quantity}
+									onScChange={(e) =>
+										onChange({ quantity: e.detail })
+									}
+									{...(!!maxStockQuantity
+										? { max: maxStockQuantity }
+										: {})}
+								/>
+							) : (
+								quantity
+							)}
+
 							<div
 								css={css`
 									margin-top: var(--sc-spacing-small);
@@ -174,7 +181,7 @@ export default ({
 										: subtotal_amount
 								}
 							/>
-							{!!price?.ad_hoc && (
+							{!!price?.ad_hoc && isDraftInvoice && (
 								<ScButton
 									size="small"
 									onClick={() => setOpen(true)}
@@ -231,17 +238,24 @@ export default ({
 						)}
 					</div>
 				</ScTableCell>
-				<ScTableCell
-					css={css`
+				{isDraftInvoice && (
+					<ScTableCell
+						css={css`
 						text-align: right;
 					`}
-				>
-					<ScButton size="small" onClick={onRemove}>
-						{__('Remove', 'surecart')}
-					</ScButton>
-				</ScTableCell>
+					>
+
+						<ScButton size="small" onClick={onRemove}>
+							{__('Remove', 'surecart')}
+						</ScButton>
+					</ScTableCell>
+				)}
 				<ScForm
 					onScFormSubmit={(e) => {
+						if (!isDraftInvoice) {
+							return;
+						}
+
 						e.stopImmediatePropagation(); // prevents the page form from submitting.
 						setOpen(false);
 						onChange({ ad_hoc_amount: addHocAmount });
@@ -265,6 +279,7 @@ export default ({
 								setAddHocAmount(parseInt(e?.target?.value));
 							}}
 							required
+							{...(!isDraftInvoice && { disabled: true })}
 						/>
 						<ScButton slot="footer" type="primary" submit>
 							{__('Update', 'surecart')}

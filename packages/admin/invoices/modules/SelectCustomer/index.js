@@ -14,16 +14,20 @@ import { useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import expand from '../../query';
+import expand from '../../checkout-query';
 import Customer from './Customer';
 import CreateCustomer from './CreateCustomer';
 
-export default ({ checkout, setBusy, loading, onSuccess, liveMode }) => {
+export default ({ checkout, setBusy, loading, onSuccess, liveMode, isDraftInvoice }) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const onCustomerUpdate = async (customerID = false) => {
+		if (!isDraftInvoice) {
+			return;
+		}
+
 		try {
 			setBusy(true);
 
@@ -89,6 +93,8 @@ export default ({ checkout, setBusy, loading, onSuccess, liveMode }) => {
 		}
 	};
 
+	console.log('checkout', checkout)
+
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
@@ -109,10 +115,11 @@ export default ({ checkout, setBusy, loading, onSuccess, liveMode }) => {
 				)
 			}
 		>
-			{checkout?.customer_id ? (
+			{checkout?.customer?.id ? (
 				<Customer
-					id={checkout?.customer_id}
+					id={checkout?.customer?.id}
 					onChange={onCustomerUpdate}
+					isDraftInvoice={isDraftInvoice}
 				/>
 			) : (
 				<ScFormControl
@@ -134,9 +141,7 @@ export default ({ checkout, setBusy, loading, onSuccess, liveMode }) => {
 							</div>
 						}
 						display={(item) =>
-							`${!!item?.name ? `${item?.name} - ` : ''}${
-								item.email
-							}`
+							`${!!item?.name ? `${item?.name} - ` : ''}${item.email}`
 						}
 						onSelect={(customer) => onCustomerUpdate(customer)}
 					/>

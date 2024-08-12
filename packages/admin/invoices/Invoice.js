@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -17,8 +17,7 @@ import Logo from '../templates/Logo';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import expand from './query';
-import expandInvoice from './invoice-query';
+import expand from './checkout-query';
 import SelectCustomer from './modules/SelectCustomer';
 import SelectShipping from './modules/SelectShipping';
 import Address from './modules/Address';
@@ -27,6 +26,7 @@ import Error from '../components/Error';
 import { formatNumber } from '../util';
 import Tax from './modules/Tax';
 import Dates from './modules/Dates';
+import ConfirmChangeInvoiceStatus from './components/ConfirmChangeInvoiceStatus';
 
 /**
  * Returns the Model Edit URL.
@@ -42,7 +42,7 @@ export function getEditURL(id) {
 export default () => {
 	const [historyId, setHistoryId] = useState(null);
 	const [confirmCheckout, setConfirmCheckout] = useState(false);
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, receiveEntityRecords, editEntityRecord, saveEditedEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const [liveMode, setLiveMode] = useState(true);
@@ -50,8 +50,9 @@ export default () => {
 	const [busy, setBusy] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
 	const [paymentMethod, setPaymentMethod] = useState(false);
+	const [modal, setModal] = useState(null);
 
-	const { invoice, checkout, loading, error } = useSelect(
+	const { invoice, invoiceStatus, checkout, loading, error } = useSelect(
 		(select) => {
 			// we don't yet have an invoice.
 			if (!id) {
@@ -63,19 +64,18 @@ export default () => {
 				'surecart',
 				'invoice',
 				id,
-				{ expandInvoice },
 			];
 
 			const invoice = select(coreStore).getEditedEntityRecord(
 				...entityData
 			);
 
-			const checkoutId = invoice?.checkout || null;
+			const checkoutId = invoice?.checkout;
 			const checkoutEntityData = [
 				'surecart',
 				'checkout',
 				checkoutId,
-				{ expandInvoice },
+				{ expand },
 			];
 			const checkout = select(coreStore).getEditedEntityRecord(
 				...checkoutEntityData
@@ -88,6 +88,7 @@ export default () => {
 
 			return {
 				invoice,
+				invoiceStatus: invoice?.status,
 				checkout,
 				loading: !checkout?.id && loading,
 				error: select(coreStore)?.getResolutionError?.(
@@ -99,7 +100,11 @@ export default () => {
 		[id]
 	);
 
-	// we don't yet have a checkout.
+	const invoiceId = invoice?.id;
+	const isDraftInvoice = invoiceStatus === 'draft';
+	const invoiceOrder = checkout?.order;
+
+	// we don't yet have an invoice.
 	useEffect(() => {
 		if (!id) {
 			createInvoice();
@@ -189,33 +194,103 @@ export default () => {
 		}
 	};
 
+	const editInvoice = () => {
+		return editEntityRecord('surecart', 'invoice', invoiceId);
+	};
+
+	const changeInvoiceStatus = async (status) => {
+		try {
+			setBusy(true);
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'invoice'
+			);
+
+			const action = status === 'draft' ? 'make_draft' : 'open';
+			const data = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${invoice?.id}/${action}`, {}),
+				data: {},
+			});
+
+			// update the checkout in the redux store.
+			receiveEntityRecords(
+				'surecart',
+				'invoice',
+				data,
+				undefined,
+				false,
+				invoice
+			);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e);
+		} finally {
+			setBusy(false);
+		}
+	}
+
+	const saveInvoice = async () => {
+		if (!isDraftInvoice) {
+			return;
+		}
+
+		try {
+			setBusy(true);
+			await saveEditedEntityRecord(
+				'surecart',
+				'invoice',
+				invoice?.id,
+			);
+
+			if (isDraftInvoice) {
+				await changeInvoiceStatus('open');
+			}
+
+			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e);
+		} finally {
+			setBusy(false);
+		}
+	}
+
 	const isDisabled =
 		checkout?.selected_shipping_choice_required &&
 		!checkout?.selected_shipping_choice;
 
-	if (checkout?.order) {
-		return (
-			<ScAlert
-				type="danger"
-				title={__('Invoice Complete', 'surecart')}
-				open
-				css={css`
-					margin-top: 20px;
-					margin-right: 20px;
-				`}
-			>
-				{__(
-					'This invoice has already been created. Please create a new invoice.',
-					'surecart'
-				)}
-			</ScAlert>
-		);
+	const getViewButtonTitle = () => {
+		if (invoiceOrder?.id && isDraftInvoice) {
+			return __('Edit Invoice', 'surecart');
+		}
+
+		if (invoiceOrder?.id && !isDraftInvoice) {
+			return __('View Invoice', 'surecart');
+		}
+
+		return __('Create Invoice', 'surecart');
+	}
+
+	const getSubmitButtonTitle = () => {
+		console.log('invoiceOrder', invoiceOrder);
+		if (invoiceOrder?.id && isDraftInvoice) {
+			return __('Update Invoice', 'surecart');
+		}
+
+		if (invoiceOrder?.id && !isDraftInvoice) {
+			return __('Edit Invoice', 'surecart');
+		}
+
+		return __('Create Invoice', 'surecart');
 	}
 
 	return (
 		<>
 			<UpdateModel
-				onSubmit={() => setConfirmCheckout(true)}
+				onSubmit={saveInvoice}
 				entitled={!!scData?.entitlements?.invoices}
 				title={
 					<div
@@ -241,7 +316,16 @@ export default () => {
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
-									{__('Create Invoice', 'surecart')}
+									{getViewButtonTitle()}
+									{
+										!loading &&
+										<span>
+											{' '} {checkout?.order?.number ? '#' + checkout?.order?.number : ''} {' '}
+											<sc-tag type={isDraftInvoice ? 'default' : 'success'}>
+												{invoiceStatus}
+											</sc-tag>
+										</span>
+									}
 								</sc-flex>
 							</sc-breadcrumb>
 						</sc-breadcrumbs>
@@ -249,7 +333,7 @@ export default () => {
 				}
 				button={
 					<ScButton
-						type="primary"
+						type={isDraftInvoice ? 'primary' : 'default'}
 						submit
 						busy={busy}
 						disabled={
@@ -257,8 +341,17 @@ export default () => {
 							busy ||
 							!scData?.entitlements?.invoices
 						}
+						onClick={() => {
+							if (isDraftInvoice) {
+								return;
+							}
+
+							if (invoiceStatus !== 'draft' && invoiceStatus !== 'paid') {
+								setModal('change_status_to_draft')
+							}
+						}}
 					>
-						{__('Create Invoice', 'surecart')}
+						{getSubmitButtonTitle()}
 					</ScButton>
 				}
 				sidebar={
@@ -268,6 +361,7 @@ export default () => {
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
+							status={invoiceStatus}
 						/>
 						<SelectCustomer
 							checkout={checkout}
@@ -275,18 +369,21 @@ export default () => {
 							loading={loading}
 							liveMode={liveMode}
 							onSuccess={() => setPaymentMethod(null)}
+							isDraftInvoice={isDraftInvoice}
 						/>
 						<Address
 							checkout={checkout}
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
+							isDraftInvoice={isDraftInvoice}
 						/>
 						<Tax
 							checkout={checkout}
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
+							isDraftInvoice={isDraftInvoice}
 						/>
 					</>
 				}
@@ -308,6 +405,7 @@ export default () => {
 					checkout={checkout}
 					loading={loading}
 					setBusy={setBusy}
+					isDraftInvoice={isDraftInvoice}
 				/>
 
 				{!!checkout?.line_items?.data?.length && (
@@ -317,6 +415,7 @@ export default () => {
 						setBusy={setBusy}
 						paymentMethod={paymentMethod}
 						setPaymentMethod={setPaymentMethod}
+						isDraftInvoice={isDraftInvoice}
 					/>
 				)}
 
@@ -360,16 +459,23 @@ export default () => {
 						)}
 					</ScAlert>
 				)}
-				<ScButton
-					slot="footer"
-					type="primary"
-					onClick={() => {
-						setConfirmCheckout(false);
-						saveCheckout();
-					}}
-				>
-					{__('Create Invoice', 'surecart')}
-				</ScButton>
+
+				{
+					isDraftInvoice && (
+						<ScButton
+							slot="footer"
+							type="primary"
+							onClick={async () => {
+								// setConfirmCheckout(false);
+								await saveInvoice(isDraftInvoice ? 'open' : null);
+								// await saveCheckout();
+							}}
+						>
+							{getSubmitButtonTitle()}
+						</ScButton>
+					)
+				}
+
 				<ScButton
 					slot="footer"
 					type="text"
@@ -378,6 +484,15 @@ export default () => {
 					{__('Cancel', 'surecart')}
 				</ScButton>
 			</ScDialog>
+
+			{modal && (
+				<ConfirmChangeInvoiceStatus
+					open={modal === 'change_status_to_draft'}
+					onRequestClose={() => setModal(null)}
+					changeInvoiceStatus={changeInvoiceStatus}
+					invoice={invoice}
+				/>
+			)}
 		</>
 	);
 };
