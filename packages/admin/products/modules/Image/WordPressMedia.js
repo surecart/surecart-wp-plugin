@@ -109,6 +109,14 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 						position: absolute;
 						bottom: 5px;
 						left: 5px;
+
+            &::part(content) {
+              max-width: 140px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: inline;
+            }
 					`}
 				>
 					{media?.meta?.sc_variant_option}
