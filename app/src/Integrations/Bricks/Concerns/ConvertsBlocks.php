@@ -2,8 +2,6 @@
 
 namespace SureCart\Integrations\Bricks\Concerns;
 
-use Bricks\Helpers;
-
 trait ConvertsBlocks {
 	/**
 	 * Show if we should populate content on empty.
