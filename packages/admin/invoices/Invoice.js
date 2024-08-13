@@ -352,6 +352,7 @@ export default () => {
 					<>
 						<Details
 							invoice={invoice}
+							updateInvoice={updateInvoice}
 							checkout={checkout}
 							loading={loading}
 							busy={busy}
