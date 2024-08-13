@@ -27,6 +27,7 @@ import { formatNumber } from '../util';
 import Tax from './modules/Tax';
 import Dates from './modules/Dates';
 import ConfirmChangeInvoiceStatus from './components/ConfirmChangeInvoiceStatus';
+import AdditionalOptions from './modules/AdditionalOptions';
 
 /**
  * Returns the Model Edit URL.
@@ -42,7 +43,12 @@ export function getEditURL(id) {
 export default () => {
 	const [historyId, setHistoryId] = useState(null);
 	const [confirmCheckout, setConfirmCheckout] = useState(false);
-	const { saveEntityRecord, receiveEntityRecords, editEntityRecord, saveEditedEntityRecord } = useDispatch(coreStore);
+	const {
+		saveEntityRecord,
+		receiveEntityRecords,
+		editEntityRecord,
+		saveEditedEntityRecord,
+	} = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const [liveMode, setLiveMode] = useState(true);
@@ -60,11 +66,7 @@ export default () => {
 			}
 
 			// our entity query data.
-			const entityData = [
-				'surecart',
-				'invoice',
-				id,
-			];
+			const entityData = ['surecart', 'invoice', id];
 
 			const invoice = select(coreStore).getEditedEntityRecord(
 				...entityData
@@ -121,13 +123,9 @@ export default () => {
 	const createInvoice = async () => {
 		try {
 			setBusy(true);
-			const { id } = await saveEntityRecord(
-				'surecart',
-				'invoice',
-				{
-					live_mode: liveMode,
-				}
-			);
+			const { id } = await saveEntityRecord('surecart', 'invoice', {
+				live_mode: liveMode,
+			});
 
 			setInvoiceId(id);
 		} catch (e) {
@@ -183,8 +181,9 @@ export default () => {
 			const { order } = await finalizeCheckout({
 				id: checkout?.id,
 			});
-			window.location.href = `admin.php?page=sc-invoices&action=edit&id=${order?.id || order
-				}`;
+			window.location.href = `admin.php?page=sc-invoices&action=edit&id=${
+				order?.id || order
+			}`;
 			createSuccessNotice(__('Invoice Created.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -194,8 +193,8 @@ export default () => {
 		}
 	};
 
-	const editInvoice = () => {
-		return editEntityRecord('surecart', 'invoice', invoiceId);
+	const updateInvoice = (data) => {
+		return editEntityRecord('surecart', 'invoice', invoiceId, data);
 	};
 
 	const changeInvoiceStatus = async (status) => {
@@ -228,7 +227,7 @@ export default () => {
 		} finally {
 			setBusy(false);
 		}
-	}
+	};
 
 	const saveInvoice = async () => {
 		if (!isDraftInvoice) {
@@ -237,11 +236,7 @@ export default () => {
 
 		try {
 			setBusy(true);
-			await saveEditedEntityRecord(
-				'surecart',
-				'invoice',
-				invoice?.id,
-			);
+			await saveEditedEntityRecord('surecart', 'invoice', invoice?.id);
 
 			if (isDraftInvoice) {
 				await changeInvoiceStatus('open');
@@ -256,7 +251,7 @@ export default () => {
 		} finally {
 			setBusy(false);
 		}
-	}
+	};
 
 	const isDisabled =
 		checkout?.selected_shipping_choice_required &&
@@ -272,7 +267,7 @@ export default () => {
 		}
 
 		return __('Create Invoice', 'surecart');
-	}
+	};
 
 	const getSubmitButtonTitle = () => {
 		console.log('invoiceOrder', invoiceOrder);
@@ -285,7 +280,7 @@ export default () => {
 		}
 
 		return __('Create Invoice', 'surecart');
-	}
+	};
 
 	return (
 		<>
@@ -317,15 +312,23 @@ export default () => {
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
 									{getViewButtonTitle()}
-									{
-										!loading &&
+									{!loading && (
 										<span>
-											{' '} {checkout?.order?.number ? '#' + checkout?.order?.number : ''} {' '}
-											<sc-tag type={isDraftInvoice ? 'default' : 'success'}>
+											{' '}
+											{checkout?.order?.number
+												? '#' + checkout?.order?.number
+												: ''}{' '}
+											<sc-tag
+												type={
+													isDraftInvoice
+														? 'default'
+														: 'success'
+												}
+											>
 												{invoiceStatus}
 											</sc-tag>
 										</span>
-									}
+									)}
 								</sc-flex>
 							</sc-breadcrumb>
 						</sc-breadcrumbs>
@@ -346,8 +349,11 @@ export default () => {
 								return;
 							}
 
-							if (invoiceStatus !== 'draft' && invoiceStatus !== 'paid') {
-								setModal('change_status_to_draft')
+							if (
+								invoiceStatus !== 'draft' &&
+								invoiceStatus !== 'paid'
+							) {
+								setModal('change_status_to_draft');
 							}
 						}}
 					>
@@ -408,6 +414,14 @@ export default () => {
 					isDraftInvoice={isDraftInvoice}
 				/>
 
+				<AdditionalOptions
+					invoice={invoice}
+					updateInvoice={updateInvoice}
+					loading={loading}
+					busy={busy}
+					setBusy={setBusy}
+				/>
+
 				{!!checkout?.line_items?.data?.length && (
 					<Payment
 						checkout={checkout}
@@ -460,21 +474,19 @@ export default () => {
 					</ScAlert>
 				)}
 
-				{
-					isDraftInvoice && (
-						<ScButton
-							slot="footer"
-							type="primary"
-							onClick={async () => {
-								// setConfirmCheckout(false);
-								await saveInvoice(isDraftInvoice ? 'open' : null);
-								// await saveCheckout();
-							}}
-						>
-							{getSubmitButtonTitle()}
-						</ScButton>
-					)
-				}
+				{isDraftInvoice && (
+					<ScButton
+						slot="footer"
+						type="primary"
+						onClick={async () => {
+							// setConfirmCheckout(false);
+							await saveInvoice(isDraftInvoice ? 'open' : null);
+							// await saveCheckout();
+						}}
+					>
+						{getSubmitButtonTitle()}
+					</ScButton>
+				)}
 
 				<ScButton
 					slot="footer"
