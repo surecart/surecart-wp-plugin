@@ -51,6 +51,9 @@ class ProductPostTypeService {
 		// product gallery migration.
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
+		// allow product meta to be exposed top-level.
+		add_action( 'get_post_metadata', array( $this, 'exposeProductMeta' ), 10, 4 );
+
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
@@ -675,6 +678,35 @@ class ProductPostTypeService {
 				)
 			),
 		);
+	}
+
+	/**
+	 * Expose product meta.
+	 *
+	 * This allows us to expose the product meta to the top level.
+	 *
+	 * @param array   $value  The value.
+	 * @param integer $object_id The object ID.
+	 * @param string  $meta_key The meta key.
+	 * @param bool    $single Whether to return a single value.
+	 *
+	 * @return array|mixed;
+	 */
+	public function exposeProductMeta( $value, $object_id, $meta_key, $single ) {
+		// only for our post type.
+		if ( get_post_type( $object_id ) !== $this->post_type ) {
+			return $value;
+		}
+
+		// only if empty.
+		remove_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10 );
+		$product = get_post_meta( $object_id, 'product', true );
+		add_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10, 4 );
+		if ( empty( $product ) ) {
+			return $value;
+		}
+
+		return $product->$meta_key ?? $value;
 	}
 
 	/**
