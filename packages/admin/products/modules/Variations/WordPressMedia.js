@@ -6,8 +6,14 @@ import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ id, onRemove }) => {
-	const media = useSelect((select) => {
-		return select(coreStore).getMedia(id);
+	const { media, hasLoadedMedia } = useSelect((select) => {
+		return {
+			media: select(coreStore).getMedia(id),
+			hasLoadedMedia: select(coreStore).hasFinishedResolution(
+				'getMedia',
+				[id]
+			),
+		};
 	});
 
 	return (
@@ -56,7 +62,14 @@ export default ({ id, onRemove }) => {
 					}
 				`}
 			>
-				{media?.source_url ? (
+				{!hasLoadedMedia ? (
+					<ScSkeleton
+						style={{
+							aspectRatio: '1 / 1',
+							'--border-radius': 'var(--sc-border-radius-medium)',
+						}}
+					/>
+				) : (
 					<img
 						src={
 							media?.media_details?.sizes?.medium?.source_url ||
@@ -71,13 +84,6 @@ export default ({ id, onRemove }) => {
 						{...(media?.title?.rendered
 							? { title: media?.title?.rendered }
 							: {})}
-					/>
-				) : (
-					<ScSkeleton
-						style={{
-							aspectRatio: '1 / 1',
-							'--border-radius': 'var(--sc-border-radius-medium)',
-						}}
 					/>
 				)}
 			</div>

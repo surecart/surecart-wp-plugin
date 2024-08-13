@@ -13,7 +13,6 @@ import {
 } from '@surecart/checkout-service';
 import { processCheckoutEvents } from '@surecart/checkout-events';
 
-// const { actions: cartDrawerActions } = store('surecart/cart');
 const { __, sprintf, _n } = wp.i18n;
 const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
@@ -200,6 +199,15 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Get the cart/checkout additional errors.
+		 */
+		get additionalErrors() {
+			return (state?.error?.additional_errors || []).map(
+				(e) => e.message
+			);
+		},
+
+		/**
 		 * Get the cart menu icon visibility.
 		 */
 		get showCartMenuIcon() {
@@ -357,15 +365,6 @@ const { state, actions } = store('surecart/checkout', {
 			const checkout = await handleCouponApply(state.promotionCode);
 
 			if (checkout) {
-				if (!checkout?.discount?.coupon) {
-					// TODO: Change this from API.
-					state.error = {
-						title: 'Failed to update. Please check for errors and try again.',
-						message: 'This coupon code is invalid.',
-					};
-					return;
-				}
-
 				speak(
 					sprintf(
 						/* translators: %s: promotion code */
@@ -466,13 +465,13 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Increase the quantity of the line item.
 		 */
-		onQuantityIncrease: (e) => {
+		onQuantityIncrease: async (e) => {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity + 1;
-			actions.updateLineItem({ quantity });
+			await actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -486,7 +485,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Decrease the quantity of the line item.
 		 */
-		onQuantityDecrease: (e) => {
+		onQuantityDecrease: async (e) => {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -495,7 +494,7 @@ const { state, actions } = store('surecart/checkout', {
 			if (quantity < 1) {
 				return;
 			}
-			actions.updateLineItem({ quantity });
+			await actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -509,9 +508,18 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Change the quantity of the line item.
 		 */
-		onQuantityChange: (e) => {
+		onQuantityChange: async (e) => {
 			const quantity = parseInt(e.target.value || '');
-			actions.updateLineItem({ quantity });
+			await actions.updateLineItem({ quantity });
+
+			speak(
+				sprintf(
+					/* translators: %d: quantity */
+					__('Quantity changed to %d.', 'surecart'),
+					quantity
+				),
+				'assertive'
+			);
 		},
 
 		/**
@@ -537,6 +545,8 @@ const { state, actions } = store('surecart/checkout', {
 		removeLineItem: async () => {
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
+			speak(__('Removing line item.', 'surecart'), 'assertive');
+
 			const checkout = await removeCheckoutLineItem(line_item?.id);
 
 			if (checkout) {

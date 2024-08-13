@@ -40,20 +40,20 @@ function debounce(func, delay) {
 
 // Define a debounced version of the search function
 const debouncedSearch = debounce(
-	async (term, routerState, actions, blockId) => {
+	async (term, routerState, actions, urlPrefix) => {
 		// Get the current URL.
 		const url = new URL(routerState?.url);
 
 		// reset to page 1.
-		url.searchParams.delete(`products-${blockId}-page`);
+		url.searchParams.delete(`${urlPrefix}-page`);
 
 		// set param or delete it if term is empty
 		term
-			? url.searchParams.set(`products-${blockId}-search`, term)
-			: url.searchParams.delete(`products-${blockId}-search`);
+			? url.searchParams.set(`${urlPrefix}-search`, term)
+			: url.searchParams.delete(`${urlPrefix}-search`);
 
 		// Navigate to the new URL.
-		return actions.navigate(url.toString());
+		return actions.navigate(url.toString(), { replace: true });
 	},
 	500
 );
@@ -109,11 +109,11 @@ const { state } = store('surecart/product-list', {
 				'@wordpress/interactivity-router'
 			);
 			const { ref } = getElement();
-			const { blockId } = getContext();
+			const { urlPrefix } = getContext();
 
 			state.loading = true;
 			state.searching = true;
-			yield debouncedSearch(ref?.value, routerState, actions, blockId);
+			yield debouncedSearch(ref?.value, routerState, actions, urlPrefix);
 			const { products } = getContext();
 			const scSearchedEvent = new CustomEvent('scSearched', {
 				detail: {
@@ -143,11 +143,11 @@ const { state } = store('surecart/product-list', {
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
 			);
-			const { blockId } = getContext();
+			const { urlPrefix } = getContext();
 
 			state.loading = true;
 			state.searching = true;
-			yield debouncedSearch('', routerState, actions, blockId);
+			yield debouncedSearch('', routerState, actions, urlPrefix);
 			state.loading = false;
 			state.searching = false;
 		},

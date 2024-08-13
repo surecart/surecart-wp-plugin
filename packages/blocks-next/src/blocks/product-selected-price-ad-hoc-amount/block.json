@@ -7,7 +7,7 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"icon": "money-alt",
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"example": {
 		"attributes": {}
 	},
@@ -29,9 +29,6 @@
 		}
 	},
 	"usesContext": ["surecart/has-ad-hoc-block"],
-	"blockHooks": {
-		"surecart/product-buy-buttons-v2": "before"
-	},
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
@@ -48,6 +45,14 @@
 			"fontSize": true,
 			"lineHeight": true,
 			"textAlign": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
 		}
 	},
 	"textdomain": "surecart",

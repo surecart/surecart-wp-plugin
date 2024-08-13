@@ -40,7 +40,7 @@ if ( empty( $product_collections ) ) {
 >
 	<template
 		data-wp-each--collection="context.collections"
-		data-wp-key="context.collection.id"
+		data-wp-each-key="context.collection.id"
 	>
 		<span>
 			<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

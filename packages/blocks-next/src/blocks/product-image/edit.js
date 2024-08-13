@@ -17,7 +17,7 @@ import {
 
 export default ({
 	attributes: { sizing, aspectRatio, height, width },
-	context: { 'surecart/productId': productId },
+	context: { postId },
 	setAttributes,
 	clientId,
 }) => {
@@ -49,11 +49,11 @@ export default ({
 		});
 	};
 
-	const {
-		record: {
-			meta: { product },
-		},
-	} = useEntityRecord('postType', 'sc_product', productId);
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
 
 	return (
 		<>

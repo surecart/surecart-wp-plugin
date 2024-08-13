@@ -2,8 +2,10 @@
 import { css, jsx } from '@emotion/core';
 import { ScIcon, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
+import Download from './Download';
+import { SortableKnob } from 'react-easy-sort';
 
-export default ({ productMedia, onDeleteImage, isFeatured }) => {
+export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 	return (
 		<div
 			css={css`
@@ -36,7 +38,7 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					css={css`
 						position: absolute;
 						top: 5px;
-						right: 5px;
+						left: 5px;
 					`}
 				>
 					{__('Featured', 'surecart')}
@@ -60,18 +62,33 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 				`}
 				name="x"
 			/>
-			<div
-				className="overlay"
+
+			<Download
+				className="download-icon"
 				css={css`
-					background-color: var(--sc-overlay-background-color);
 					position: absolute;
-					top: 0;
-					right: 0;
-					bottom: 0;
-					left: 0;
-					z-index: 2;
+					bottom: 4px;
+					right: 4px;
+					line-height: 0;
 				`}
-			></div>
+				media={productMedia}
+				onDownloaded={onDownloaded}
+			/>
+
+			<SortableKnob>
+				<div
+					className="overlay"
+					css={css`
+						background-color: var(--sc-overlay-background-color);
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+						z-index: 2;
+					`}
+				></div>
+			</SortableKnob>
 
 			<img
 				src={productMedia?.url || productMedia?.media?.url}
@@ -86,6 +103,7 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 				`}
 				alt={productMedia?.media?.alt}
 				{...(productMedia?.title ? { title: productMedia?.title } : {})}
+				loading="lazy"
 			/>
 		</div>
 	);

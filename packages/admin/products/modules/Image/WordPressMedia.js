@@ -5,12 +5,60 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { MediaUpload } from '@wordpress/block-editor';
+import { Notice } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
+import { SortableKnob } from 'react-easy-sort';
 const ALLOWED_MEDIA_TYPES = ['image'];
 
 export default ({ id, onRemove, isFeatured, onSelect }) => {
-	const media = useSelect((select) => {
-		return select(coreStore).getMedia(id);
+	const { invalidateResolution } = useDispatch(coreStore);
+
+	const { media, hasLoadedMedia } = useSelect((select) => {
+		return {
+			media: select(coreStore).getMedia(id),
+			hasLoadedMedia: select(coreStore).hasFinishedResolution(
+				'getMedia',
+				[id]
+			),
+		};
 	});
+
+	if (hasLoadedMedia && !media) {
+		return (
+			<div
+				css={css`
+					.components-notice {
+						aspect-ratio: 1 / 1;
+						box-sizing: border-box;
+						background-color: #ffecec;
+						border-radius: var(--sc-border-radius-medium);
+						box-shadow: var(--sc-input-box-shadow);
+					}
+					button.components-button.components-notice__action.is-link {
+						margin: 10px 0 0 0;
+					}
+				`}
+			>
+				<Notice
+					status="error"
+					isDismissible={false}
+					actions={[
+						{
+							label: __('Remove', 'surecart'),
+							onClick: onRemove,
+							noDefaultClasses: true,
+							variant: 'link',
+						},
+					]}
+				>
+					{__(
+						'This image has been deleted or is unavailable.',
+						'surecart'
+					)}
+				</Notice>
+			</div>
+		);
+	}
 
 	return (
 		<div
@@ -46,10 +94,32 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 					css={css`
 						position: absolute;
 						top: 5px;
-						right: 5px;
+						left: 5px;
 					`}
 				>
 					{__('Featured', 'surecart')}
+				</ScTag>
+			)}
+
+			{media?.meta?.sc_variant_option && (
+				<ScTag
+					className="featured-badge"
+					size="small"
+					css={css`
+						position: absolute;
+						bottom: 5px;
+						left: 5px;
+
+            &::part(content) {
+              max-width: 140px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: inline;
+            }
+					`}
+				>
+					{media?.meta?.sc_variant_option}
 				</ScTag>
 			)}
 
@@ -77,6 +147,7 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 				value={id}
 				onSelect={onSelect}
 				allowedTypes={ALLOWED_MEDIA_TYPES}
+				onClose={() => invalidateResolution('getMedia', [id])}
 				render={({ open }) => (
 					<ScIcon
 						className="edit-icon"
@@ -86,34 +157,34 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 							right: 4px;
 							z-index: 10;
 							cursor: pointer;
-							padding: var(--sc-spacing-x-small);
+							padding: var(--sc-spacing-small);
 							font-size: var(--sc-font-size-small);
 							border-radius: var(--sc-border-radius-small);
 							color: var(--sc-color-gray-800);
 							font-weight: var(--sc-font-weight-semibold);
 							background-color: var(--sc-color-white);
+							border-radius: var(--sc-border-radius-small);
 						`}
 						name="edit-2"
 						onClick={open}
-						onMouseDown={(e) => {
-							e.stopPropagation(); // prevents sortable from being triggered
-						}}
 					/>
 				)}
 			/>
 
-			<div
-				className="overlay"
-				css={css`
-					background-color: var(--sc-overlay-background-color);
-					position: absolute;
-					top: 0;
-					right: 0;
-					bottom: 0;
-					left: 0;
-					z-index: 2;
-				`}
-			></div>
+			<SortableKnob>
+				<div
+					className="overlay"
+					css={css`
+						background-color: var(--sc-overlay-background-color);
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+						z-index: 2;
+					`}
+				></div>
+			</SortableKnob>
 
 			{media?.source_url ? (
 				<img
@@ -134,6 +205,7 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 					{...(media?.title?.rendered
 						? { title: media?.title?.rendered }
 						: {})}
+					loading="lazy"
 				/>
 			) : (
 				<ScSkeleton

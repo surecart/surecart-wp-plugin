@@ -8,6 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
 import { applyFilters, doAction } from '@wordpress/hooks';
+import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -37,8 +38,9 @@ import MetaBoxes from './modules/MetaBoxes';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
+	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const {
 		product,
 		saveProduct,
@@ -107,27 +109,28 @@ export default ({ id, setBrowserURL }) => {
 	const onSubmit = async (e) => {
 		try {
 			setError(null);
+			setSaving(true);
 
-			// get draft prices.
-			const { prices } = select(coreStore).getEditedEntityRecord(
-				'surecart',
-				'product',
-				id
-			);
-
-			// save pending prices.
-			const pendingPrices = [];
-			(Array.isArray(prices) ? prices : []).forEach((price) => {
-				pendingPrices.push(
-					saveEntityRecord('surecart', 'price', {
-						product: id,
-						...price,
-					})
+			// if we don't have any product edits, run sync directly.
+			if (
+				!select(coreStore).hasEditsForEntityRecord(
+					'surecart',
+					'product',
+					id
+				)
+			) {
+				const { baseURL } = select(coreStore).getEntityConfig(
+					'surecart',
+					'product'
 				);
-			});
-			await Promise.all(pendingPrices);
+				// sync the item.
+				await apiFetch({
+					method: 'POST',
+					path: addQueryArgs(`${baseURL}/${id}/sync`, {}),
+				});
+			}
 
-			// build up pending records to save.
+			// build up pending records to save (like post, or product)
 			const dirtyRecords =
 				select(coreStore).__experimentalGetDirtyEntityRecords();
 			const pendingSavedRecords = [];
@@ -172,6 +175,8 @@ export default ({ id, setBrowserURL }) => {
 		} catch (e) {
 			console.error(e);
 			setError(e);
+		} finally {
+			setSaving(false);
 		}
 	};
 
@@ -313,7 +318,8 @@ export default ({ id, setBrowserURL }) => {
 								deletingProduct ||
 								savingProduct ||
 								!hasLoadedProduct ||
-								isSavingMetaBoxes
+								isSavingMetaBoxes ||
+								saving
 							}
 							disabled={false} // in order to save metaboxes
 						>
@@ -386,9 +392,8 @@ export default ({ id, setBrowserURL }) => {
 
 					<Image
 						productId={id}
+						product={product}
 						updateProduct={editProduct}
-						post={post}
-						loadingPost={loadingPost}
 					/>
 
 					<Prices

@@ -82,7 +82,11 @@ class URLParamService {
 	 */
 	public function getKey( $name = '', $instance_id = '' ) {
 		$instance_id = $instance_id ? $instance_id : $this->instance_id;
-		return trim( $this->prefix . '-' . $instance_id . '-' . $name, '-' );
+		$prefix      = ! empty( $this->prefix ) ? ( $this->prefix . '-' ) : '';
+		if ( ! $instance_id ) {
+			return trim( $prefix . strtolower( $name ), '-' );
+		}
+		return trim( $prefix . $instance_id . '-' . strtolower( $name ), '-' );
 	}
 
 
@@ -116,8 +120,8 @@ class URLParamService {
 	/**
 	 * Add a generic argument to the URL.
 	 *
-	 * @param  string $key Key.
-	 * @param  string $value Value.
+	 * @param  string       $key Key.
+	 * @param  string|array $value Value.
 	 * @return string
 	 */
 	public function addArg( $key, $value, $instance_id = '' ) {
@@ -125,8 +129,10 @@ class URLParamService {
 		$instance_id = $instance_id ? $instance_id : $this->instance_id;
 		// get the key for this filter argument.
 		$key = $this->getKey( $key, $instance_id );
+		// make sure the value is always lowercase.
+		$value = is_array( $value ) ? array_map( 'strtolower', $value ) : strtolower( $value );
 		// return the new URL without pagination for filtering.
-		$this->url = add_query_arg( $key, $value, $this->url );
+		$this->url = add_query_arg( strtolower( $key ), $value, $this->url );
 		// return this.
 		return $this;
 	}

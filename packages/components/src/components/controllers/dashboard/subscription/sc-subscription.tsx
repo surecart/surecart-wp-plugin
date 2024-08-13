@@ -194,14 +194,30 @@ export class ScSubscription {
   }
 
   render() {
+    const paymentMethodExists = this?.subscription.payment_method || this?.subscription.manual_payment;
+
     return (
       <sc-dashboard-module heading={this.heading || __('Current Plan', 'surecart')} class="subscription" error={this.error}>
         {!!this.subscription && (
           <sc-flex slot="end" class="subscription__action-buttons">
-            {this.updatePaymentMethodUrl && (
+            {this.updatePaymentMethodUrl && paymentMethodExists && (
               <sc-button type="link" href={this.updatePaymentMethodUrl}>
                 <sc-icon name="credit-card" slot="prefix"></sc-icon>
                 {__('Update Payment Method', 'surecart')}
+              </sc-button>
+            )}
+            {!paymentMethodExists && (
+              <sc-button
+                type="link"
+                href={addQueryArgs(window.location.href, {
+                  action: 'create',
+                  model: 'payment_method',
+                  id: this?.subscription.id,
+                  ...(this?.subscription?.live_mode === false ? { live_mode: false } : {}),
+                })}
+              >
+                <sc-icon name="credit-card" slot="prefix"></sc-icon>
+                {__('Add Payment Method', 'surecart')}
               </sc-button>
             )}
             {!!Object.keys(this.subscription?.pending_update).length && (

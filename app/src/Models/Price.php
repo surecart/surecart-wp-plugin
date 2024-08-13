@@ -122,7 +122,10 @@ class Price extends Model {
 		if ( $this->ad_hoc ) {
 			return esc_html__( 'Custom Amount', 'surecart' );
 		}
-		return empty( $this->amount ) ? '' : Currency::format( $this->amount, $this->currency );
+		if ( empty( $this->amount ) && empty( $this->recurring_interval ) ) {
+			return apply_filters( 'surecart/display_amount/free', esc_html__( 'Free', 'surecart' ) );
+		}
+		return Currency::format( $this->amount, $this->currency );
 	}
 
 	/**
@@ -217,7 +220,7 @@ class Price extends Model {
 	}
 
 	/**
-	 * Get the recurring text attribute
+	 * Get the payments text attribute
 	 *
 	 * @return string
 	 */

@@ -52,10 +52,10 @@ class StoreSyncService {
 	 */
 	public function maybeStartSync() {
 		$current_account_id = $this->currentAccountId();
-		$stored_account_id = $this->getStoredAccount();
+		$stored_account_id  = $this->getStoredAccount();
 
 		// there is no current account id, or the stored account id is the same as the current account id.
-		if ( empty( $current_account_id ) || $current_account_id === $stored_account_id) {
+		if ( empty( $current_account_id ) || $current_account_id === $stored_account_id ) {
 			return false;
 		}
 
@@ -75,9 +75,12 @@ class StoreSyncService {
 	/**
 	 * Sync the store data.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function sync() {
-		return \SureCart::sync()->products()->dispatch( [ 'with_collections' => true ] );
+		if ( \SureCart::sync()->products()->isActive() ) {
+			return false;
+		}
+		return \SureCart::sync()->products()->dispatch();
 	}
 }

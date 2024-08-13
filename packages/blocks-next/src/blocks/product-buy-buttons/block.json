@@ -6,7 +6,7 @@
 	"description": "Displays product buy and add to cart buttons",
 	"category": "surecart-product-page",
 	"keywords": ["button", "buy", "product"],
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
@@ -14,10 +14,11 @@
 		"html": false,
 		"__experimentalExposeControlsToChildren": true,
 		"spacing": {
-			"blockGap": true,
-			"margin": ["top", "bottom"],
+			"padding": true,
+			"margin": true,
 			"__experimentalDefaultControls": {
-				"blockGap": true
+				"padding": true,
+				"margin": true
 			}
 		},
 		"typography": {

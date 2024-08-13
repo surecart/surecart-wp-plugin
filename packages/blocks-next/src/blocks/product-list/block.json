@@ -8,12 +8,12 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"providesContext": {
+		"query": "query",
 		"surecart/product-list/limit": "limit",
+		"surecart/product-list/offset": "offset",
 		"surecart/product-list/type": "type",
-		"surecart/product-list/ids": "ids",
-		"surecart/product-list/collection_id": "collection_id"
+		"surecart/product-list/ids": "ids"
 	},
-	"usesContext": ["surecart/product-list/type", "surecart/product-list/ids"],
 	"attributes": {
 		"ids": {
 			"type": "array",
@@ -24,12 +24,30 @@
 			"default": "all"
 		},
 		"limit": {
-			"type": "number",
-			"default": 15
+			"type": "number"
 		},
 		"collection_id": {
 			"type": "string",
 			"default": ""
+		},
+		"query": {
+			"type": "object",
+			"default": {
+				"perPage": 15,
+				"pages": 0,
+				"offset": 0,
+				"postType": "sc_product",
+				"order": "desc",
+				"orderBy": "date",
+				"author": "",
+				"search": "",
+				"exclude": [],
+				"include": [],
+				"sticky": "",
+				"inherit": true,
+				"taxQuery": null,
+				"parents": []
+			}
 		}
 	},
 	"supports": {
@@ -38,15 +56,16 @@
 		"align": true,
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"],
+			"margin": true,
 			"blockGap": true
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:./index.css",
+		"file:./style-index.css",
 		"file:../../styles/block-ui.css",
-		"file:../../styles/tag.css"
+		"file:../../styles/tag.css",
+		"surecart-theme-base"
 	]
 }

@@ -6,17 +6,17 @@ import { PanelBody, ToggleControl } from '@wordpress/components';
 export default ({
 	attributes: { show_range },
 	setAttributes,
-	context: { 'surecart/productId': productId },
+	context: { postId },
 }) => {
 	const blockProps = useBlockProps({
 		className: 'product-price',
 	});
 
-	const {
-		record: {
-			meta: { product },
-		},
-	} = useEntityRecord('postType', 'sc_product', productId);
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
 
 	return (
 		<>

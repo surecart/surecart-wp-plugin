@@ -11,8 +11,30 @@ import Swiper from 'swiper';
 import { Thumbs, Navigation, A11y } from 'swiper/modules';
 
 // controls the slider
-store('surecart/image-slider', {
+const { state } = store('surecart/image-slider', {
+	state: {
+		thumbsSwiper: null,
+		swiper: null,
+	},
 	actions: {
+		updateSlider: () => {
+			const { state: productState } = store('surecart/product-page');
+
+			// the selected variant has not changed.
+			if (!productState.selectedVariant) {
+				return;
+			}
+
+			// it's important that the thumbs swiper initializes first before the main swiper.
+			if (state.thumbsSwiper) {
+				state.thumbsSwiper.update();
+			}
+
+			if (state.swiper) {
+				state.swiper.update();
+			}
+		},
+
 		init: () => {
 			const { ref } = getElement();
 			const context = getContext();
@@ -34,12 +56,14 @@ store('surecart/image-slider', {
 			const thumbsContainer = ref.querySelector(
 				'.sc-image-slider__thumbs'
 			);
-			const thumbs = thumbsContainer.querySelector(
-				'.sc-image-slider__thumbs .swiper'
-			);
+			const thumbs = thumbsContainer
+				? thumbsContainer.querySelector(
+						'.sc-image-slider__thumbs .swiper'
+				  )
+				: null;
 
 			// if we have a thumbs container.
-			const thumbsSwiper =
+			state.thumbsSwiper =
 				!!thumbs &&
 				new Swiper(thumbs, {
 					modules: [Navigation],
@@ -78,7 +102,7 @@ store('surecart/image-slider', {
 					...(thumbSliderOptions || {}),
 				});
 
-			new Swiper(
+			state.swiper = new Swiper(
 				ref.querySelector(
 					'.swiper:not(.sc-image-slider__thumbs .swiper)'
 				),
@@ -94,9 +118,9 @@ store('surecart/image-slider', {
 						prevEl: ref.querySelector('.swiper-button-prev'),
 					},
 					...(!!thumbs &&
-						thumbsSwiper && {
+						state.thumbsSwiper && {
 							thumbs: {
-								swiper: thumbsSwiper,
+								swiper: state.thumbsSwiper,
 							},
 						}),
 					...(sliderOptions || {}),

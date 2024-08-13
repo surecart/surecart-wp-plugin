@@ -23,6 +23,7 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./editor.css",
+	"style": ["file:./style-index.css", "surecart-theme-base"],
 	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/product-page"]
 }

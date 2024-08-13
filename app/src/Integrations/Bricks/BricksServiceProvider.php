@@ -1,10 +1,12 @@
 <?php
+
 namespace SureCart\Integrations\Bricks;
 
+use SureCart\Migration\ProductPageWrapperService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
- * Elementor service provider.
+ * Handles the Bricks Service.
  */
 class BricksServiceProvider implements ServiceProviderInterface {
 	/**
@@ -31,6 +33,9 @@ class BricksServiceProvider implements ServiceProviderInterface {
 
 		// handle the default active template for our post type.
 		add_filter( 'bricks/active_templates', [ $this, 'setDefaultTemplate' ], 10, 3 );
+
+		// Handle the product page wrapper.
+		add_filter( 'bricks/frontend/render_data', [ $this, 'handleProductPageWrapper' ], 10, 2 );
 	}
 
 	/**
@@ -110,5 +115,16 @@ class BricksServiceProvider implements ServiceProviderInterface {
 		$control_options['templateTypes'] = $template_types;
 
 		return $control_options;
+	}
+
+	/**
+	 * Handle the product page wrapper
+	 *
+	 * @param string $content Content of Shortcode.
+	 *
+	 * @return string $content Content of the product page.
+	 */
+	public function handleProductPageWrapper( string $content ): string {
+		return ( new ProductPageWrapperService( $content ) )->wrap();
 	}
 }

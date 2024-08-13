@@ -7,12 +7,13 @@
 			)
 		)
 	); ?>
+	role="list"
 >
 	<template
 		data-wp-each--line_item="state.checkoutLineItems"
-		data-wp-key="context.line_item.id"
+		data-wp-each-key="context.line_item.id"
 	>
-		<div class="sc-product-line-item">
+		<div class="sc-product-line-item" role="listitem">
 			<div class="sc-product-line-item__item">
 				<img
 					class="sc-product-line-item__image"
@@ -72,6 +73,7 @@
 									step="1"
 									autocomplete="off"
 									role="spinbutton"
+									data-wp-key="context.line_item.id"
 								/>
 								<div
 									class="sc-input-group-text sc-quantity-selector__increase"
@@ -135,6 +137,12 @@
 							class="sc-product-line-item__setup-fee sc-product-line-item__price-description"
 							data-wp-bind--hidden="!context.line_item.price.setup_fee_text"
 							data-wp-text="context.line_item.price.setup_fee_text"
+						></div>
+
+						<div
+							class="sc-product-line-item__purchasable-status sc-product-line-item__price-description "
+							data-wp-bind--hidden="!context.line_item.purchasable_status_display"
+							data-wp-text="context.line_item.purchasable_status_display"
 						></div>
 					</div>
 				</div>

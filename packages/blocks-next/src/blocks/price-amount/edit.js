@@ -13,5 +13,5 @@ export default ({ context }) => {
 		);
 	}
 
-	return <div {...blockProps}>$10 / mo</div>;
+	return <div {...blockProps}>{scData?.currency_symbol}10 / mo</div>;
 };

@@ -18,7 +18,7 @@ import { useSelect } from '@wordpress/data';
  */
 import { __ } from '@wordpress/i18n';
 
-const BUTTON_BLOCK_NAME = 'surecart/product-buy-button-v2';
+const BUTTON_BLOCK_NAME = 'surecart/product-buy-button';
 const ALLOWED_BLOCKS = [
 	BUTTON_BLOCK_NAME,
 	'surecart/product-selected-price-ad-hoc-amount',
@@ -54,7 +54,9 @@ export default ({ attributes, className }) => {
 			[
 				BUTTON_BLOCK_NAME,
 				{
-					className: preferredStyle && `is-style-${preferredStyle}`,
+					className: preferredStyle
+						? `is-style-${preferredStyle}`
+						: 'is-style-outline',
 					text: __('Buy Now', 'surecart'),
 					add_to_cart: false,
 					width: 100,

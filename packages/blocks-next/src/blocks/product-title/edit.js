@@ -13,16 +13,16 @@ import HeadingLevelDropdown from '../../components/HeadingLebelDropdown';
 export default ({
 	attributes: { level },
 	setAttributes,
-	context: { 'surecart/productId': productId },
+	context: { postId },
 }) => {
 	const TagName = 0 === level ? 'p' : 'h' + level;
 
 	const blockProps = useBlockProps();
 
-	let { record: product } = useEntityRecord(
+	const { record: product } = useEntityRecord(
 		'postType',
 		'sc_product',
-		productId
+		postId
 	);
 
 	return (

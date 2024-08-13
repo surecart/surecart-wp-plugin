@@ -5,9 +5,13 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 import { processCartViewEvent } from '@surecart/checkout-events';
 const { state: checkoutState } = store('surecart/checkout');
 const { __ } = wp.i18n;
-const { speak } = wp.a11y;
 
-store('surecart/cart', {
+const { state } = store('surecart/cart', {
+	state: {
+		get ariaLabel() {
+			return state.label + ' ' + __('Review your cart.', 'surecart');
+		},
+	},
 	actions: {
 		toggle: (e) => {
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
@@ -41,8 +45,7 @@ store('surecart/cart', {
 			if (dialog?.open) {
 				dialog?.close();
 
-				// speak the cart dialog state.
-				speak(__('Cart closed', 'surecart'), 'assertive');
+				state.label = __('Cart closed.', 'surecart');
 			} else {
 				dialog?.showModal();
 
@@ -50,7 +53,7 @@ store('surecart/cart', {
 				processCartViewEvent(checkoutState?.checkout);
 
 				// speak the cart dialog state.
-				speak(__('Cart opened', 'surecart'), 'assertive');
+				state.label = __('Cart opened.', 'surecart');
 			}
 		},
 		closeOverlay: (e) => {
