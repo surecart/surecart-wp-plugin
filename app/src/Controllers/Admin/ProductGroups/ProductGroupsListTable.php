@@ -78,6 +78,8 @@ class ProductGroupsListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 
+			$link = esc_url_raw( $link );
+
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
 

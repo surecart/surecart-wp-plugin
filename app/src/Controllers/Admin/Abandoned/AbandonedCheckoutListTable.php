@@ -23,27 +23,27 @@ class AbandonedCheckoutListTable extends ListTable {
 
 		$query = $this->table_data();
 		if ( is_wp_error( $query ) ) {
-			$this->items = [];
+			$this->items = array();
 			return;
 		}
 
 		$this->set_pagination_args(
-			[
+			array(
 				'total_items' => $query->pagination->count,
 				'per_page'    => $this->get_items_per_page( 'abandoned_checkout' ),
-			]
+			)
 		);
 
 		$this->items = $query->data;
 	}
 
 	protected function get_views() {
-		$stati = [
+		$stati = array(
 			'all'           => __( 'All', 'surecart' ),
 			'scheduled'     => __( 'Scheduled', 'surecart' ),
 			'sent'          => __( 'Sent', 'surecart' ),
 			'not_scheduled' => __( 'Not Scheduled', 'surecart' ),
-		];
+		);
 
 		$link = \SureCart::getUrl()->index( 'abandoned-checkout' );
 
@@ -63,6 +63,8 @@ class AbandonedCheckoutListTable extends ListTable {
 			if ( isset( $_GET['live_mode'] ) ) {
 				$link = add_query_arg( 'live_mode', $_GET['live_mode'], $link );
 			}
+
+			$link = esc_url_raw( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -97,14 +99,14 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
+		return array(
 			'placed_by'           => __( 'Placed By', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
 			'notification_status' => __( 'Email Status', 'surecart' ),
 			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
 			'total'               => __( 'Total', 'surecart' ),
 			'mode'                => '',
-		];
+		);
 	}
 
 	/**
@@ -119,17 +121,17 @@ class AbandonedCheckoutListTable extends ListTable {
 		);
 
 		if ( $status ) {
-			$where['notification_status'] = [ $status ];
+			$where['notification_status'] = array( $status );
 		}
 
 		return AbandonedCheckout::where( $where )
-		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
+		->with( array( 'recovered_checkout', 'checkout', 'customer' ) )
 		->paginate(
-			[
+			array(
 				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
 				'page'     => $this->get_pagenum(),
-				'expand'   => [ 'checkout' ],
-			]
+				'expand'   => array( 'checkout' ),
+			)
 		);
 	}
 
@@ -143,7 +145,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		if ( 'all' === $status ) {
 			return null;
 		}
-		return $status ? [ esc_html( $status ) ] : [];
+		return $status ? array( esc_html( $status ) ) : array();
 	}
 
 	/**
@@ -188,7 +190,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			case 'sent':
 				return '<sc-tag type="success">' . __( 'Email Sent', 'surecart' ) . '</sc-tag>';
 		}
-		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
+		return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
 	}
 
 	/**
@@ -234,7 +236,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php
 			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
+			printf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
 			?>
 		</a>
 		<br />
