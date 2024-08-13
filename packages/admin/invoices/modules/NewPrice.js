@@ -49,7 +49,7 @@ export default ({ checkout, setBusy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'draft-checkout',
+				'checkout',
 				checkout,
 				undefined,
 				false,
@@ -98,7 +98,7 @@ export default ({ checkout, setBusy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'draft-checkout',
+				'checkout',
 				checkout,
 				undefined,
 				false,
