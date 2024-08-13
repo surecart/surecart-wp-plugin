@@ -246,7 +246,7 @@ class ProductPageBlock {
 	public function state( $state = [] ) {
 		$product = sc_get_product();
 		if ( empty( $product ) ) {
-			return null;
+			return [];
 		}
 		$selected_price   = $product->initial_price;
 		$selected_variant = $this->getSelectedVariant();

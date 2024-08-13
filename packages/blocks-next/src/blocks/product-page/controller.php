@@ -5,11 +5,6 @@ use SureCart\Models\Blocks\ProductPageBlock;
 
 $product = sc_get_product();
 
-// if no product id, return.
-if ( empty( $product ) ) {
-	return;
-}
-
 $controller = new ProductPageBlock( $block );
 $state      = $controller->state();
 $context    = $controller->context();
