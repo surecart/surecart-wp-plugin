@@ -12,6 +12,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import { getQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -49,6 +50,9 @@ export function getEditURL(id) {
 }
 
 export default () => {
+	const urlParams = getQueryArgs(window.location.href);
+	const defaultLiveMode = urlParams.live_mode === 'false' ? false : true;
+
 	const [historyId, setHistoryId] = useState(null);
 	const [confirmCheckout, setConfirmCheckout] = useState(false);
 	const {
@@ -58,7 +62,7 @@ export default () => {
 		saveEditedEntityRecord,
 	} = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const [liveMode, setLiveMode] = useState(true);
+	const [liveMode, setLiveMode] = useState(defaultLiveMode);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
 	const [invoiceError, setInvoiceError] = useState(false);
@@ -118,6 +122,13 @@ export default () => {
 		}
 	}, [id]);
 
+	// Update live mode when invoice is loaded.
+	useEffect(() => {
+		if (invoice?.id) {
+			setLiveMode(invoice?.live_mode);
+		}
+	}, [invoice]);
+
 	useEffect(() => {
 		if (error) {
 			setInvoiceError(error);
@@ -166,6 +177,24 @@ export default () => {
 	const changeInvoiceStatus = async (status) => {
 		try {
 			setBusy(true);
+
+			// For open status, we need to add minimum one line item and customer.
+			// if (status === 'open') {
+			// 	if (!checkout?.line_items?.data?.length) {
+			// 		setInvoiceError(
+			// 			__('Please add at least one line item.', 'surecart')
+			// 		);
+			// 		return;
+			// 	}
+
+			// 	if (!checkout?.customer_id) {
+			// 		setInvoiceError(
+			// 			__('Please select a customer.', 'surecart')
+			// 		);
+			// 		return;
+			// 	}
+			// }
+
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'invoice'

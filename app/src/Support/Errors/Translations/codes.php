@@ -13,6 +13,7 @@ return array(
 	'checkout.discount.promotion_code.invalid_code'        => __( 'Invalid promotion code.', 'surecart' ),
 	'checkout.invalid'                                     => __( 'Invalid Checkout', 'surecart' ),
 	'checkout.line_items.required'                         => __( 'Please add at least one product.', 'surecart' ),
+	'checkout.line_items.blank'                            => __( 'No products found. Please add at least one product.', 'surecart' ),
 	'checkout.line_items.unpurchasable_prices'             => __( 'One of these products is no longer purchaseable.', 'surecart' ),
 	'checkout.shipping_address.missing_tax_info'           => __( 'Please fill out your address.', 'surecart' ),
 	'checkout.discount.coupon.invalid'                     => __( 'This coupon is not valid. Please double-check it and try again.', 'surecart' ),
