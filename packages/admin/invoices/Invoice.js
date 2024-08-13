@@ -276,7 +276,6 @@ export default () => {
 	};
 
 	const getSubmitButtonTitle = () => {
-		console.log('invoiceOrder', invoiceOrder);
 		if (invoiceOrder?.id && isDraftInvoice) {
 			return __('Update Invoice', 'surecart');
 		}
@@ -406,6 +405,8 @@ export default () => {
 
 				{!!checkout?.line_items?.data?.length && (
 					<Payment
+						invoice={invoice}
+						updateInvoice={updateInvoice}
 						checkout={checkout}
 						loading={loading}
 						setBusy={setBusy}

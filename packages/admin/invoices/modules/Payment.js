@@ -20,9 +20,11 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
-import PaymentMethods from './PaymentMethods';
+import PaymentCollection from './PaymentCollection';
 
 export default ({
+	invoice,
+	updateInvoice,
 	checkout,
 	loading,
 	setBusy,
@@ -66,19 +68,7 @@ export default ({
 			);
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-			(e?.additional_errors || []).map((e) => {
-				if (e?.message) {
-					createErrorNotice(e.message, {
-						type: 'snackbar',
-					});
-				}
-			});
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}
@@ -260,32 +250,19 @@ export default ({
 
 	return (
 		<>
-			<Box
-				title={__('Payment', 'surecart')}
-				loading={loading}
-				footer={
-					isDraftInvoice && (
-						<ScButton
-							type="primary"
-							onClick={() => setModal('payment')}
-						>
-							{__('Add Payment Method', 'surecart')}
-						</ScButton>
-					)
-				}
-				footerStyle={{
-					justifyContent: 'flex-end',
-				}}
-			>
+			<Box title={__('Payment', 'surecart')} loading={loading}>
 				{renderPaymentDetails()}
 			</Box>
 
-			<PaymentMethods
-				open={modal === 'payment'}
-				onRequestClose={() => setModal(null)}
-				customerId={checkout?.customer_id}
+			<PaymentCollection
+				invoice={invoice}
+				updateInvoice={updateInvoice}
+				checkout={checkout}
+				loading={loading}
+				setBusy={setBusy}
 				paymentMethod={paymentMethod}
 				setPaymentMethod={setPaymentMethod}
+				isDraftInvoice={isDraftInvoice}
 			/>
 		</>
 	);
