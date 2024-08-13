@@ -72,9 +72,9 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return string
 	 */
 	protected function get_views() {
-		$link = admin_url( 'admin.php?page=sc-affiliate-referrals' );
-
 		foreach ( $this->getStatuses() as $status => $label ) {
+			$link = admin_url( 'admin.php?page=sc-affiliate-referrals' );
+
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -90,7 +90,7 @@ class AffiliationReferralsListTable extends ListTable {
 				$link = add_query_arg( 'live_mode', $_GET['live_mode'], $link );
 			}
 
-			$link = esc_url_raw( $link );
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}

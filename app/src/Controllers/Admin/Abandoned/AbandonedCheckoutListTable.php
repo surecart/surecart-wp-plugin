@@ -23,31 +23,31 @@ class AbandonedCheckoutListTable extends ListTable {
 
 		$query = $this->table_data();
 		if ( is_wp_error( $query ) ) {
-			$this->items = array();
+			$this->items = [];
 			return;
 		}
 
 		$this->set_pagination_args(
-			array(
+			[
 				'total_items' => $query->pagination->count,
 				'per_page'    => $this->get_items_per_page( 'abandoned_checkout' ),
-			)
+			]
 		);
 
 		$this->items = $query->data;
 	}
 
 	protected function get_views() {
-		$stati = array(
+		$stati = [
 			'all'           => __( 'All', 'surecart' ),
 			'scheduled'     => __( 'Scheduled', 'surecart' ),
 			'sent'          => __( 'Sent', 'surecart' ),
 			'not_scheduled' => __( 'Not Scheduled', 'surecart' ),
-		);
-
-		$link = \SureCart::getUrl()->index( 'abandoned-checkout' );
+		];
 
 		foreach ( $stati as $status => $label ) {
+			$link = \SureCart::getUrl()->index( 'abandoned-checkout' );
+
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -61,10 +61,10 @@ class AbandonedCheckoutListTable extends ListTable {
 			$link = add_query_arg( 'status', $status, $link );
 
 			if ( isset( $_GET['live_mode'] ) ) {
-				$link = add_query_arg( 'live_mode', $_GET['live_mode'], $link );
+				$link = add_query_arg( 'live_mode', esc_attr($_GET['live_mode']), $link );
 			}
 
-			$link = esc_url_raw( $link );
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -99,14 +99,14 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return array(
+		return [
 			'placed_by'           => __( 'Placed By', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
 			'notification_status' => __( 'Email Status', 'surecart' ),
 			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
 			'total'               => __( 'Total', 'surecart' ),
 			'mode'                => '',
-		);
+		];
 	}
 
 	/**
@@ -121,17 +121,17 @@ class AbandonedCheckoutListTable extends ListTable {
 		);
 
 		if ( $status ) {
-			$where['notification_status'] = array( $status );
+			$where['notification_status'] = [ $status ];
 		}
 
 		return AbandonedCheckout::where( $where )
-		->with( array( 'recovered_checkout', 'checkout', 'customer' ) )
+		->with( [ 'recovered_checkout', 'checkout', 'customer' ] )
 		->paginate(
-			array(
+			[
 				'per_page' => $this->get_items_per_page( 'abandoned-checkouts' ),
 				'page'     => $this->get_pagenum(),
-				'expand'   => array( 'checkout' ),
-			)
+				'expand'   => [ 'checkout' ],
+			]
 		);
 	}
 
@@ -145,7 +145,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		if ( 'all' === $status ) {
 			return null;
 		}
-		return $status ? array( esc_html( $status ) ) : array();
+		return $status ? [ esc_html( $status ) ] : [];
 	}
 
 	/**
@@ -190,7 +190,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			case 'sent':
 				return '<sc-tag type="success">' . __( 'Email Sent', 'surecart' ) . '</sc-tag>';
 		}
-		return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
+		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
 	}
 
 	/**
@@ -236,7 +236,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php
 			// translators: Customer name.
-			printf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
+			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
 			?>
 		</a>
 		<br />

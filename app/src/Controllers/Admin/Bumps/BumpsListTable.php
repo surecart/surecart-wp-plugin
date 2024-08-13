@@ -54,9 +54,8 @@ class BumpsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=sc-bumps' );
-
 		foreach ( $stati as $status => $label ) {
+			$link = admin_url( 'admin.php?page=sc-bumps' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -69,7 +68,7 @@ class BumpsListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 
-			$link = esc_url_raw( $link );
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
