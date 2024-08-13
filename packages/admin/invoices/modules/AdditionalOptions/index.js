@@ -27,45 +27,61 @@ export default ({ invoice, updateInvoice, loading }) => {
 						margin-bottom: var(--sc-spacing-x-small);
 					`}
 				>
-					<h4
+					<div
 						css={css`
-							margin-bottom: var(--sc-spacing-x-small);
-							margin-top: 0;
+							display: flex;
+							justify-content: space-between;
 						`}
 					>
-						{__('Memo', 'surecart')}
-					</h4>
-					<p>{invoice?.memo || '-'}</p>
-					{isDraftInvoice && (
-						<ScButton
-							size="small"
-							onClick={() => setModal('edit_memo')}
+						<h4
+							css={css`
+								margin-bottom: var(--sc-spacing-x-small);
+								margin-top: 0;
+							`}
 						>
-							<ScIcon name="edit" slot="prefix"></ScIcon>
-							{__('Edit', 'surecart')}
-						</ScButton>
-					)}
+							{__('Memo', 'surecart')}
+						</h4>
+
+						{isDraftInvoice && (
+							<ScButton
+								size="small"
+								onClick={() => setModal('edit_memo')}
+							>
+								<ScIcon name="edit" slot="prefix"></ScIcon>
+								{__('Edit', 'surecart')}
+							</ScButton>
+						)}
+					</div>
+					<p>{invoice?.memo || '-'}</p>
 				</div>
 
 				<div>
-					<h4
+					<div
 						css={css`
-							margin-bottom: var(--sc-spacing-x-small);
-							margin-top: 0;
+							display: flex;
+							justify-content: space-between;
 						`}
 					>
-						{__('Footer Text', 'surecart')}
-					</h4>
-					<p>{invoice?.footer || '-'}</p>
-					{isDraftInvoice && (
-						<ScButton
-							size="small"
-							onClick={() => setModal('edit_footer')}
+						<h4
+							css={css`
+								margin-bottom: var(--sc-spacing-x-small);
+								margin-top: 0;
+							`}
 						>
-							<ScIcon name="edit" slot="prefix"></ScIcon>
-							{__('Edit', 'surecart')}
-						</ScButton>
-					)}
+							{__('Footer Text', 'surecart')}
+						</h4>
+
+						{isDraftInvoice && (
+							<ScButton
+								size="small"
+								onClick={() => setModal('edit_footer')}
+							>
+								<ScIcon name="edit" slot="prefix"></ScIcon>
+								{__('Edit', 'surecart')}
+							</ScButton>
+						)}
+					</div>
+					<p>{invoice?.footer || '-'}</p>
 				</div>
 
 				{modal === 'edit_memo' && (
