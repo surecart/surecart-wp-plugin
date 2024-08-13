@@ -5,7 +5,6 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -24,7 +23,6 @@ export default ({
 	setBusy,
 }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
-	const [modal, setModal] = useState(false);
 
 	return (
 		<>

@@ -12,7 +12,15 @@ import { useState } from '@wordpress/element';
  */
 import PaymentMethods from './PaymentMethods';
 import Box from '../../ui/Box';
-import { ScButton, ScSwitch } from '@surecart/components-react';
+import {
+	ScButton,
+	ScFormControl,
+	ScIcon,
+	ScRadio,
+	ScRadioGroup,
+	ScText,
+} from '@surecart/components-react';
+import DatePicker from '../../components/DatePicker';
 
 export default ({
 	invoice,
@@ -30,29 +38,70 @@ export default ({
 		<Box
 			loading={loading}
 			css={css`
-				margin-top: 1rem;
+				margin-top: var(--sc-spacing-medium);
 			`}
 			title={__('Payment Collection', 'surecart')}
 		>
-			<ScSwitch
-				checked={invoice?.automatic_collection}
-				onScChange={() =>
+			<ScRadioGroup
+				onScChange={(e) =>
 					updateInvoice({
 						automatic_collection: !invoice?.automatic_collection,
 					})
 				}
-				disabled={!isDraftInvoice}
 			>
-				{__('Autocharge customer', 'surecart')}
-				<span slot="description">
-					{__(
-						'Automatically charge a payment method on file for this customer.',
-						'surecart'
-					)}
-				</span>
-			</ScSwitch>
+				<ScRadio value="false" checked={!invoice?.automatic_collection}>
+					<ScText
+						tag="h3"
+						style={{
+							'--font-weight': 'var(--sc-font-weight-bold)',
+							'--font-size': 'var(--sc-font-size-medium)',
+						}}
+					>
+						{__('Request Payment', 'surecart')}
+					</ScText>
 
-			{!invoice?.automatic_collection && (
+					<div
+						css={css`
+							margin-top: var(--sc-spacing-small);
+							margin-bottom: var(--sc-spacing-medium);
+						`}
+					>
+						<ScText>
+							{__(
+								'Create an invoice requesting payment on a specific date',
+								'surecart'
+							)}
+						</ScText>
+					</div>
+				</ScRadio>
+
+				<ScRadio value="true" checked={invoice?.automatic_collection}>
+					<ScText
+						tag="h3"
+						style={{
+							'--font-weight': 'var(--sc-font-weight-bold)',
+							'--font-size': 'var(--sc-font-size-medium)',
+						}}
+					>
+						{__('Autocharge Customer', 'surecart')}
+					</ScText>
+
+					<div
+						css={css`
+							margin-top: var(--sc-spacing-small);
+						`}
+					>
+						<ScText>
+							{__(
+								'Automatically charge a payment method on file for this customer.',
+								'surecart'
+							)}
+						</ScText>
+					</div>
+				</ScRadio>
+			</ScRadioGroup>
+
+			{invoice?.automatic_collection ? (
 				<>
 					<PaymentMethods
 						open={modal === 'payment'}
@@ -73,6 +122,43 @@ export default ({
 						</div>
 					)}
 				</>
+			) : (
+				<ScFormControl label={__('Due Date', 'surecart')}>
+					<div
+						css={css`
+							display: flex;
+						`}
+					>
+						<DatePicker
+							title={__('Choose a due date', 'surecart')}
+							placeholder={__('Due date', 'surecart')}
+							currentDate={
+								invoice?.due_date
+									? new Date(invoice?.due_date * 1000)
+									: null
+							}
+							onChoose={(due_date) => {
+								updateInvoice({
+									due_date: Date.parse(due_date) / 1000,
+								});
+							}}
+						/>
+
+						{!!invoice?.due_date && (
+							<ScButton
+								type="text"
+								onClick={() =>
+									updateInvoice({ due_date: null })
+								}
+								css={css`
+									max-width: 25px;
+								`}
+							>
+								<ScIcon name="x"></ScIcon>
+							</ScButton>
+						)}
+					</div>
+				</ScFormControl>
 			)}
 		</Box>
 	);
