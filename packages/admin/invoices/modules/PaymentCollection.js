@@ -14,6 +14,7 @@ import PaymentMethods from './PaymentMethods';
 import Box from '../../ui/Box';
 import {
 	ScButton,
+	ScFormatDate,
 	ScFormControl,
 	ScIcon,
 	ScRadio,
@@ -34,14 +35,30 @@ export default ({
 	const [modal, setModal] = useState(false);
 	const isDraftInvoice = invoice?.status === 'draft';
 
-	return (
-		<Box
-			loading={loading}
-			css={css`
-				margin-top: var(--sc-spacing-medium);
-			`}
-			title={__('Payment Collection', 'surecart')}
-		>
+	const renderViewModePaymentCollections = () => {
+		return (
+			<ScText>
+				{invoice?.automatic_collection &&
+					__('Autocharge From Customer', 'surecart')}
+
+				{invoice?.due_date && !invoice?.automatic_collection && (
+					<ScText tag="span">
+						{__('Request By Payment due by ', 'surecart')}{' '}
+						<ScFormatDate
+							date={invoice?.due_date}
+							type="timestamp"
+							month="long"
+							day="numeric"
+							year="numeric"
+						/>
+					</ScText>
+				)}
+			</ScText>
+		);
+	};
+
+	const renderDraftModelPaymentCollection = () => {
+		return (
 			<ScRadioGroup
 				onScChange={(e) =>
 					updateInvoice({
@@ -72,6 +89,67 @@ export default ({
 								'surecart'
 							)}
 						</ScText>
+
+						{!invoice?.automatic_collection && (
+							<div
+								css={css`
+									margin-top: var(--sc-spacing-medium);
+								`}
+							>
+								<ScFormControl
+									label={__('Payment Due Date', 'surecart')}
+								>
+									<div
+										css={css`
+											display: flex;
+											margin-top: var(--sc-spacing-small);
+										`}
+									>
+										<DatePicker
+											title={__(
+												'Choose a due date',
+												'surecart'
+											)}
+											placeholder={__(
+												'Due date',
+												'surecart'
+											)}
+											currentDate={
+												invoice?.due_date
+													? new Date(
+															invoice?.due_date *
+																1000
+													  )
+													: null
+											}
+											onChoose={(due_date) => {
+												updateInvoice({
+													due_date:
+														Date.parse(due_date) /
+														1000,
+												});
+											}}
+										/>
+
+										{!!invoice?.due_date && (
+											<ScButton
+												type="text"
+												onClick={() =>
+													updateInvoice({
+														due_date: null,
+													})
+												}
+												css={css`
+													max-width: 25px;
+												`}
+											>
+												<ScIcon name="x"></ScIcon>
+											</ScButton>
+										)}
+									</div>
+								</ScFormControl>
+							</div>
+						)}
 					</div>
 				</ScRadio>
 
@@ -97,69 +175,59 @@ export default ({
 								'surecart'
 							)}
 						</ScText>
+
+						{invoice?.automatic_collection && (
+							<div
+								css={css`
+									margin-top: var(--sc-spacing-medium);
+								`}
+							>
+								<PaymentMethods
+									open={modal === 'payment'}
+									onRequestClose={() => setModal(null)}
+									customerId={checkout?.customer_id}
+									paymentMethod={paymentMethod}
+									setPaymentMethod={setPaymentMethod}
+								/>
+
+								{isDraftInvoice && (
+									<div>
+										<ScButton
+											type="primary"
+											onClick={() => setModal('payment')}
+										>
+											{__(
+												'Add Payment Method',
+												'surecart'
+											)}
+										</ScButton>
+									</div>
+								)}
+							</div>
+						)}
 					</div>
 				</ScRadio>
 			</ScRadioGroup>
+		);
+	};
 
-			{invoice?.automatic_collection ? (
-				<>
-					<PaymentMethods
-						open={modal === 'payment'}
-						onRequestClose={() => setModal(null)}
-						customerId={checkout?.customer_id}
-						paymentMethod={paymentMethod}
-						setPaymentMethod={setPaymentMethod}
-					/>
+	const renderPaymentCollection = () => {
+		if (isDraftInvoice) {
+			return renderDraftModelPaymentCollection();
+		}
 
-					{isDraftInvoice && (
-						<div>
-							<ScButton
-								type="primary"
-								onClick={() => setModal('payment')}
-							>
-								{__('Add Payment Method', 'surecart')}
-							</ScButton>
-						</div>
-					)}
-				</>
-			) : (
-				<ScFormControl label={__('Due Date', 'surecart')}>
-					<div
-						css={css`
-							display: flex;
-						`}
-					>
-						<DatePicker
-							title={__('Choose a due date', 'surecart')}
-							placeholder={__('Due date', 'surecart')}
-							currentDate={
-								invoice?.due_date
-									? new Date(invoice?.due_date * 1000)
-									: null
-							}
-							onChoose={(due_date) => {
-								updateInvoice({
-									due_date: Date.parse(due_date) / 1000,
-								});
-							}}
-						/>
+		return renderViewModePaymentCollections();
+	};
 
-						{!!invoice?.due_date && (
-							<ScButton
-								type="text"
-								onClick={() =>
-									updateInvoice({ due_date: null })
-								}
-								css={css`
-									max-width: 25px;
-								`}
-							>
-								<ScIcon name="x"></ScIcon>
-							</ScButton>
-						)}
-					</div>
-				</ScFormControl>
-			)}
+	return (
+		<Box
+			loading={loading}
+			css={css`
+				margin-top: var(--sc-spacing-medium);
+			`}
+			title={__('Payment Collection', 'surecart')}
+		>
+			{renderPaymentCollection()}
 		</Box>
 	);
 };
