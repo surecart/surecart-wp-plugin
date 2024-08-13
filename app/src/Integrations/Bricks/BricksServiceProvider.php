@@ -15,9 +15,7 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	 * @param \Pimple\Container $container Service container.
 	 * @return void
 	 */
-	public function register( $container ) {
-		// nothing to register.
-	}
+	public function register( $container ) {}
 
 	/**
 	 * {@inheritDoc}
