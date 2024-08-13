@@ -85,3 +85,22 @@
 		width: 75%;
 	}
 }
+
+.wp-block-button.wp-block-button__width-25{
+	width:calc(25% - var(--wp--style--block-gap, .5em)*.75);
+}
+.wp-block-button.wp-block-button__width-50{
+	width:calc(50% - var(--wp--style--block-gap, .5em)*.5);
+}
+.wp-block-button.wp-block-button__width-75{
+	width:calc(75% - var(--wp--style--block-gap, .5em)*.25);
+}
+.wp-block-button.wp-block-button__width-100{
+	flex-basis:100%;
+	width:100%;
+}
+.wp-block-button.has-custom-width {
+    .wp-block-button__link {
+        width: 100%;
+    }
+}
