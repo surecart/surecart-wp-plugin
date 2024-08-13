@@ -1,7 +1,5 @@
 <?php
 
-use SureCart\BlockLibrary\BlockAnchorSupportService;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -339,10 +337,3 @@ add_action(
 	10,
 	3
 );
-
-/**
- * Register block anchor support.
- */
-\SureCart::block()
-	->anchorSupport()
-	->register();
