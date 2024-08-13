@@ -1,10 +1,21 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __, sprintf } from '@wordpress/i18n';
+
+/**
+ * External dependencies.
+ */
+import { useState, useEffect } from '@wordpress/element';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
+import { __, sprintf } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScButton,
 	ScBlockUi,
@@ -14,9 +25,6 @@ import {
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
-import { useState, useEffect } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import expand from './checkout-query';
 import SelectCustomer from './modules/SelectCustomer';
 import SelectShipping from './modules/SelectShipping';
@@ -25,7 +33,7 @@ import Payment from './modules/Payment';
 import Error from '../components/Error';
 import { formatNumber } from '../util';
 import Tax from './modules/Tax';
-import Dates from './modules/Dates';
+import Details from './modules/Details';
 import ConfirmChangeInvoiceStatus from './components/ConfirmChangeInvoiceStatus';
 import AdditionalOptions from './modules/AdditionalOptions';
 
@@ -60,16 +68,14 @@ export default () => {
 
 	const { invoice, invoiceStatus, checkout, loading, error } = useSelect(
 		(select) => {
-			// we don't yet have an invoice.
+			// we don't have an invoice id yet.
 			if (!id) {
 				return {};
 			}
 
-			// our entity query data.
-			const entityData = ['surecart', 'invoice', id];
-
+			const invoiceEntityData = ['surecart', 'invoice', id];
 			const invoice = select(coreStore).getEditedEntityRecord(
-				...entityData
+				...invoiceEntityData
 			);
 
 			const checkoutId = invoice?.checkout;
@@ -85,7 +91,7 @@ export default () => {
 
 			const loading = !select(coreStore)?.hasFinishedResolution?.(
 				'getEditedEntityRecord',
-				[...entityData]
+				[...invoiceEntityData]
 			);
 
 			return {
@@ -95,7 +101,7 @@ export default () => {
 				loading: !checkout?.id && loading,
 				error: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
-					...entityData
+					...invoiceEntityData
 				),
 			};
 		},
@@ -312,23 +318,6 @@ export default () => {
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
 									{getViewButtonTitle()}
-									{!loading && (
-										<span>
-											{' '}
-											{checkout?.order?.number
-												? '#' + checkout?.order?.number
-												: ''}{' '}
-											<sc-tag
-												type={
-													isDraftInvoice
-														? 'default'
-														: 'success'
-												}
-											>
-												{invoiceStatus}
-											</sc-tag>
-										</span>
-									)}
 								</sc-flex>
 							</sc-breadcrumb>
 						</sc-breadcrumbs>
@@ -362,8 +351,9 @@ export default () => {
 				}
 				sidebar={
 					<>
-						<Dates
+						<Details
 							invoice={invoice}
+							checkout={checkout}
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
@@ -414,14 +404,6 @@ export default () => {
 					isDraftInvoice={isDraftInvoice}
 				/>
 
-				<AdditionalOptions
-					invoice={invoice}
-					updateInvoice={updateInvoice}
-					loading={loading}
-					busy={busy}
-					setBusy={setBusy}
-				/>
-
 				{!!checkout?.line_items?.data?.length && (
 					<Payment
 						checkout={checkout}
@@ -432,6 +414,14 @@ export default () => {
 						isDraftInvoice={isDraftInvoice}
 					/>
 				)}
+
+				<AdditionalOptions
+					invoice={invoice}
+					updateInvoice={updateInvoice}
+					loading={loading}
+					busy={busy}
+					setBusy={setBusy}
+				/>
 
 				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 			</UpdateModel>
