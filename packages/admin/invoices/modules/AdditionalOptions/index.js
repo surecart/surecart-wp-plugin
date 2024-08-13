@@ -35,7 +35,7 @@ export default ({ invoice, updateInvoice, loading }) => {
 					>
 						{__('Memo', 'surecart')}
 					</h4>
-					<p>{invoice?.memo}</p>
+					<p>{invoice?.memo || '-'}</p>
 					{isDraftInvoice && (
 						<ScButton
 							size="small"
@@ -56,7 +56,7 @@ export default ({ invoice, updateInvoice, loading }) => {
 					>
 						{__('Footer Text', 'surecart')}
 					</h4>
-					<p>{invoice?.footer}</p>
+					<p>{invoice?.footer || '-'}</p>
 					{isDraftInvoice && (
 						<ScButton
 							size="small"
