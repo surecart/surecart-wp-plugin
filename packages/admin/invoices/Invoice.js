@@ -57,12 +57,11 @@ export default () => {
 		editEntityRecord,
 		saveEditedEntityRecord,
 	} = useDispatch(coreStore);
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [liveMode, setLiveMode] = useState(true);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
-	const [checkoutError, setCheckoutError] = useState(false);
+	const [invoiceError, setInvoiceError] = useState(false);
 	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
 
@@ -121,11 +120,13 @@ export default () => {
 
 	useEffect(() => {
 		if (error) {
-			setCheckoutError(error);
+			setInvoiceError(error);
 		}
 	}, [error]);
 
-	// create the checkout for the first time.
+	/**
+	 * Creates a new invoice on page load.
+	 */
 	const createInvoice = async () => {
 		try {
 			setBusy(true);
@@ -136,16 +137,7 @@ export default () => {
 			setInvoiceId(id);
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong.', 'surecart')
-			);
-			(e?.additional_errors || []).map((e) => {
-				if (e?.message) {
-					createErrorNotice(e.message, {
-						type: 'snackbar',
-					});
-				}
-			});
+			setInvoiceError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -157,45 +149,13 @@ export default () => {
 	 * @param {number} id id for the model for which to generate edit URL.
 	 */
 	const setBrowserURL = (id) => {
-		window.history.replaceState({ id }, 'Checkout ' + id, getEditURL(id));
+		window.history.replaceState({ id }, 'Invoice ' + id, getEditURL(id));
 		setHistoryId(id);
 	};
 
 	const setInvoiceId = (id) => {
 		if (id && id !== historyId) {
 			setBrowserURL(id);
-		}
-	};
-
-	const finalizeCheckout = async ({ id }) => {
-		return await apiFetch({
-			method: 'PATCH',
-			path: addQueryArgs(`surecart/v1/draft-checkouts/${id}/finalize`, {
-				manual_payment: paymentMethod?.id ? false : true,
-				payment_method_id: paymentMethod?.id || null,
-			}),
-		});
-	};
-
-	/**
-	 * Save the checkout.
-	 */
-	const saveCheckout = async () => {
-		try {
-			setCheckoutError(false);
-			setBusy(true);
-			const { order } = await finalizeCheckout({
-				id: checkout?.id,
-			});
-			window.location.href = `admin.php?page=sc-invoices&action=edit&id=${
-				order?.id || order
-			}`;
-			createSuccessNotice(__('Invoice Created.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			setCheckoutError(e);
-			setBusy(false);
 		}
 	};
 
@@ -215,10 +175,9 @@ export default () => {
 			const data = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${invoice?.id}/${action}`, {}),
-				data: {},
 			});
 
-			// update the checkout in the redux store.
+			// Update the invoice in the redux store.
 			receiveEntityRecords(
 				'surecart',
 				'invoice',
@@ -227,9 +186,23 @@ export default () => {
 				false,
 				invoice
 			);
+
+			const message =
+				status === 'draft'
+					? __(
+							'Invoice marked as draft, you can now edit it.',
+							'surecart'
+					  )
+					: __('Invoice Updated.', 'surecart');
+
+			createSuccessNotice(message, {
+				type: 'snackbar',
+			});
+
+			return data;
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(e);
+			setInvoiceError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -242,10 +215,11 @@ export default () => {
 
 		try {
 			setBusy(true);
+			setInvoiceError(false);
 			await saveEditedEntityRecord('surecart', 'invoice', invoice?.id);
 
 			if (isDraftInvoice) {
-				await changeInvoiceStatus('open');
+				return await changeInvoiceStatus('open');
 			}
 
 			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
@@ -253,7 +227,7 @@ export default () => {
 			});
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(e);
+			setInvoiceError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -385,8 +359,8 @@ export default () => {
 				}
 			>
 				<Error
-					error={checkoutError}
-					setError={setCheckoutError}
+					error={invoiceError}
+					setError={setInvoiceError}
 					margin="80px"
 				/>
 
@@ -471,9 +445,7 @@ export default () => {
 						slot="footer"
 						type="primary"
 						onClick={async () => {
-							// setConfirmCheckout(false);
 							await saveInvoice(isDraftInvoice ? 'open' : null);
-							// await saveCheckout();
 						}}
 					>
 						{getSubmitButtonTitle()}
