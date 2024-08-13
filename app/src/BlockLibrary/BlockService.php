@@ -174,6 +174,6 @@ class BlockService {
 	 * @return BlockAnchorSupportService
 	 */
 	public function anchorSupport() {
-		return new BlockAnchorSupportService();
+		return $this->app->resolve( 'block.support.anchor' );
 	}
 }

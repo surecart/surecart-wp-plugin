@@ -3,6 +3,7 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
+use SureCart\Support\Currency;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -61,7 +62,7 @@ class SelectedPriceAmount extends \Bricks\Element {
 			$product = sc_get_product();
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$product->display_amount,
+				$product->display_amount ?? Currency::format( 200 ),
 				'wp-block-surecart-product-selected-price-amount',
 				'span'
 			);

@@ -81,11 +81,10 @@ class VariantPill extends \Bricks\Element {
 	public function render() {
 		if ( $this->is_admin_editor() ) {
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				esc_html__( 'Red', 'surecart' ),
+				esc_html__( 'Option Value', 'surecart' ),
 				'sc-pill-option__button wp-block-surecart-product-variant-pill',
 				'span'
 			);
-
 			return;
 		}
 

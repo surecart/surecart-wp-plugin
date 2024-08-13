@@ -56,7 +56,7 @@ class BlockAnchorSupportService {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function bootstrap() {
 		\WP_Block_Supports::get_instance()->register(
 			'anchor',
 			array(

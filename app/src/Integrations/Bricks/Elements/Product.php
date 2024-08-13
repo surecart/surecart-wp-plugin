@@ -50,18 +50,6 @@ class Product extends \Bricks\Element {
 	public $nestable = true;
 
 	/**
-	 * Constructor.
-	 *
-	 * @param array $element Element.
-	 *
-	 * @return void
-	 */
-	public function __construct( $element = null ) {
-		parent::__construct( $element );
-		$this->show_populate_on_empty = true;
-	}
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
