@@ -390,7 +390,12 @@ class InvoicesListTable extends ListTable {
 			return;
 		}
 
-		$customers            = Customer::get( array( 'per_page' => -1 ) );
+		// Get the customers for specfic live or test mode.
+		$customers = Customer::where(
+			[
+				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			]
+		)->get();
 		$displayed_customer = isset( $_GET['sc_customer'] ) ? sanitize_text_field( wp_unslash( $_GET['sc_customer'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 
