@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 import DatePicker from '../../components/DatePicker';
-import { ScButton, ScFormatDate, ScIcon } from '@surecart/components-react';
+import { ScButton, ScFormatDate, ScIcon, ScInvoiceStatusBadge } from '@surecart/components-react';
 
 export default ({
 	invoice,
@@ -34,9 +34,7 @@ export default ({
 				</Definition>
 
 				<Definition title={__('Status', 'surecart')}>
-					<sc-tag type={isDraftInvoice ? 'default' : 'success'}>
-						{invoice?.status?.toUpperCase()}
-					</sc-tag>
+					<ScInvoiceStatusBadge status={invoice?.status} />
 				</Definition>
 
 				<Definition title={__('Due Date', 'surecart')}>

@@ -891,6 +891,16 @@
     "class": true,
     "slot": true
   },
+  "sc-invoice-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-invoices-list": {
     "all-link": true,
     "heading": true,

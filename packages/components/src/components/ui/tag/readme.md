@@ -43,6 +43,7 @@
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillment-shipping-status-badge](../fulfillment-shipping-status-badge)
+ - [sc-invoice-status-badge](../invoice-status-badge)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -76,6 +77,7 @@ graph TD;
   sc-customer-edit --> sc-tag
   sc-downloads-list --> sc-tag
   sc-fulfillment-shipping-status-badge --> sc-tag
+  sc-invoice-status-badge --> sc-tag
   sc-invoices-list --> sc-tag
   sc-license --> sc-tag
   sc-licenses-list --> sc-tag

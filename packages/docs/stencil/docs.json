@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-08-14T09:08:48",
+  "timestamp": "2024-08-14T11:43:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -14913,6 +14913,116 @@
         ],
         "sc-wordpress-user-edit": [
           "sc-input"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/invoice-status-badge/sc-invoice-status-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-invoice-status-badge",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"draft\" | \"open\" | \"paid\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "open",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-invoice-status-badge": [
+          "sc-tag"
         ]
       }
     },
@@ -33308,6 +33418,7 @@
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-fulfillment-shipping-status-badge",
+        "sc-invoice-status-badge",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -33354,6 +33465,9 @@
           "sc-tag"
         ],
         "sc-fulfillment-shipping-status-badge": [
+          "sc-tag"
+        ],
+        "sc-invoice-status-badge": [
           "sc-tag"
         ],
         "sc-invoices-list": [

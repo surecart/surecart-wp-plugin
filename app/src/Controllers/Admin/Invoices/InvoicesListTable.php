@@ -73,7 +73,7 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Show the payment method for the invoice.
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Invoice model.
+	 * @param Invoice $invoice Invoice model.
 	 *
 	 * @return string
 	 */
@@ -189,7 +189,7 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Invoice Model.
+	 * @param Invoice $invoice Invoice Model.
 	 *
 	 * @return string
 	 */
@@ -200,7 +200,7 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Invoice model.
+	 * @param Invoice $invoice Invoice model.
 	 *
 	 * @return string
 	 */
@@ -272,21 +272,21 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the status.
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Invoice Model.
+	 * @param Invoice $invoice Invoice Model.
 	 *
 	 * @return string
 	 */
 	public function column_status( $invoice ) {
-		if ( ! empty( $invoice->charge->fully_refunded ) ) {
+		if ( ! empty( $invoice->checkout->charge->fully_refunded ) ) {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
-		return '<sc-order-status-badge status="' . esc_attr( $invoice->status ) . '"></sc-order-status-badge>';
+		return '<sc-invoice-status-badge status="' . esc_attr( $invoice->status ) . '"></sc-invoice-status-badge>';
 	}
 
 	/**
 	 * Handle Invoice column.
 	 *
-	 * @param \SureCart\Models\Promotion $promotion Promotion model.
+	 * @param Invoice $invoice Invoice model.
 	 *
 	 * @return string
 	 */
