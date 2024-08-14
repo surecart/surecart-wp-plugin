@@ -392,6 +392,12 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+
+      // Handle any invalid coupon set on checkout URL.
+      if (e?.additional_errors?.[0]?.code === 'checkout.discount.coupon.blank') {
+        await this.handleNewCheckout(false);
+        createErrorNotice(e);
+      }
     }
   }
 
@@ -413,6 +419,12 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+
+      // Handle any invalid coupon set on checkout URL.
+      if (e?.additional_errors?.[0]?.code === 'checkout.discount.coupon.blank') {
+        await this.handleExistingCheckout(id, false);
+        createErrorNotice(e);
+      }
     }
   }
 
