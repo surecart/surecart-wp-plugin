@@ -1,26 +1,26 @@
-import Box from '../../ui/Box';
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch, select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScFormatNumber,
 	ScLineItem,
 	ScCouponForm,
 	ScDivider,
-	ScPaymentMethod,
-	ScButton,
-	ScIcon,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch, select } from '@wordpress/data';
+import Box from '../../ui/Box';
 import expand from '../checkout-query';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { useState } from 'react';
-import { formatTaxDisplay } from '../../util/tax';
 import PaymentCollection from './PaymentCollection';
+import { formatTaxDisplay } from '../../util/tax';
 
 export default ({
 	invoice,
@@ -32,14 +32,12 @@ export default ({
 	setPaymentMethod,
 	isDraftInvoice,
 }) => {
-	const [modal, setModal] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const onCouponChange = async (e) => {
 		try {
 			setBusy(true);
-			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'checkout'
@@ -186,63 +184,6 @@ export default ({
 							value={checkout?.amount_due}
 						></ScFormatNumber>
 					</ScLineItem>
-				)}
-
-				{!!paymentMethod && (
-					<>
-						<ScDivider
-							style={{ '--spacing': 'var(--sc-spacing-small)' }}
-						/>
-						<div
-							style={{
-								display: 'flex',
-								width: '100%',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}
-						>
-							<ScPaymentMethod paymentMethod={paymentMethod} />
-							<div
-								style={{
-									display: 'flex',
-									alignItems: 'center',
-									gap: '2em',
-								}}
-							>
-								{!!paymentMethod?.card?.exp_month && (
-									<span>
-										{__('Exp.', 'surecart')}
-										{paymentMethod?.card?.exp_month}/
-										{paymentMethod?.card?.exp_year}
-									</span>
-								)}
-								{!!paymentMethod?.paypal_account?.email &&
-									paymentMethod?.paypal_account?.email}
-
-								<ScDropdown placement="bottom-end">
-									<ScButton type="text" slot="trigger" circle>
-										<ScIcon name="more-horizontal" />
-									</ScButton>
-									<ScMenu>
-										<ScMenuItem
-											onClick={() =>
-												setPaymentMethod(false)
-											}
-										>
-											<ScIcon
-												slot="prefix"
-												name="trash"
-												style={{
-													opacity: 0.5,
-												}}
-											/>
-											{__('Remove', 'surecart')}
-										</ScMenuItem>
-									</ScMenu>
-								</ScDropdown>
-							</div>
-						</div>
-					</>
 				)}
 			</>
 		);
