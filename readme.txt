@@ -305,6 +305,11 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.29.4 - August 15th, 2024 =
+- Fix: Appending invalid coupon code to custom checkout form causes payment element not to load.
+- Fix: Incorrect public key in manual affiliate script display.
+- Fix: Addressed a security bug (props to Patchstack for the report).
+
 = 2.29.3 - August 8th, 2024 =
 - Improvement: Add billing address same as shipping checkbox to Instant Checkout.
 - Fix: Incorrect "every month then cancels" text on price edit.
