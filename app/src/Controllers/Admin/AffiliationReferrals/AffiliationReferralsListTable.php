@@ -87,7 +87,7 @@ class AffiliationReferralsListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 			if ( isset( $_GET['live_mode'] ) ) {
-				$link = add_query_arg( 'live_mode', esc_attr($_GET['live_mode']), $link );
+				$link = add_query_arg( 'live_mode', sanitize_text_field($_GET['live_mode']), $link );
 			}
 
 			$link = esc_url( $link );
