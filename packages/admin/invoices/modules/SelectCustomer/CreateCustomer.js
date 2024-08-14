@@ -1,17 +1,25 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+import { Modal } from '@wordpress/components';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
+import { useRef, useState, useEffect } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScBlockUi,
 	ScButton,
 	ScForm,
 	ScInput,
 } from '@surecart/components-react';
-import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch } from '@wordpress/data';
-import { useRef, useState, useEffect } from '@wordpress/element';
-import { Modal } from '@wordpress/components';
 
 export default ({ onRequestClose, onCreate, liveMode }) => {
 	const name = useRef();
@@ -52,19 +60,7 @@ export default ({ onRequestClose, onCreate, liveMode }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-			(e?.additional_errors || []).map((e) => {
-				if (e?.message) {
-					createErrorNotice(e.message, {
-						type: 'snackbar',
-					});
-				}
-			});
+			createErrorNotice(e);
 			setBusy(false);
 		}
 	};

@@ -1,3 +1,17 @@
+/**
+ * External dependencies.
+ */
+import { useDispatch, select } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useState } from '@wordpress/element';
+import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScFormControl,
 	ScIcon,
@@ -5,20 +19,20 @@ import {
 	ScMenuDivider,
 	ScButton,
 } from '@surecart/components-react';
-import Box from '../../../ui/Box';
-import { useDispatch, select } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
-import ModelSelector from '../../../components/ModelSelector';
-import { store as coreStore } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
-import { store as noticesStore } from '@wordpress/notices';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import expand from '../../checkout-query';
 import Customer from './Customer';
+import Box from '../../../ui/Box';
 import CreateCustomer from './CreateCustomer';
+import ModelSelector from '../../../components/ModelSelector';
 
-export default ({ checkout, setBusy, loading, onSuccess, liveMode, isDraftInvoice }) => {
+export default ({
+	checkout,
+	setBusy,
+	loading,
+	onSuccess,
+	liveMode,
+	isDraftInvoice,
+}) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -37,32 +51,28 @@ export default ({ checkout, setBusy, loading, onSuccess, liveMode, isDraftInvoic
 				'checkout'
 			);
 
-			// update the customer.
-			let data = await apiFetch({
+			// Update the customer.
+			const data = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
 					expand,
 				}),
 				data: {
 					customer_id: customerID, // update the customer.
+					...(!customerID
+						? {
+								// remove the customer data also if no customer is selected.
+								customer: null,
+								email: null,
+						  }
+						: {}),
+					...(data?.customer?.shipping_address
+						? { shipping_address: data.customer.shipping_address }
+						: {}),
 				},
 			});
 
-			// maybe update the shipping address.
-			if (data?.customer?.shipping_address) {
-				data = await apiFetch({
-					method: 'PATCH',
-					path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-						expand,
-					}),
-					data: {
-						customer_id: customerID, // update the customer.
-						shipping_address: data?.customer?.shipping_address,
-					},
-				});
-			}
-
-			// update the checkout in the redux store.
+			// Update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
 				'checkout',
@@ -101,9 +111,9 @@ export default ({ checkout, setBusy, loading, onSuccess, liveMode, isDraftInvoic
 				)
 			}
 		>
-			{checkout?.customer?.id ? (
+			{!!checkout?.customer_id ? (
 				<Customer
-					id={checkout?.customer?.id}
+					id={checkout?.customer_id}
 					onChange={onCustomerUpdate}
 					isDraftInvoice={isDraftInvoice}
 				/>
@@ -127,7 +137,9 @@ export default ({ checkout, setBusy, loading, onSuccess, liveMode, isDraftInvoic
 							</div>
 						}
 						display={(item) =>
-							`${!!item?.name ? `${item?.name} - ` : ''}${item.email}`
+							`${!!item?.name ? `${item?.name} - ` : ''}${
+								item.email
+							}`
 						}
 						onSelect={(customer) => onCustomerUpdate(customer)}
 					/>

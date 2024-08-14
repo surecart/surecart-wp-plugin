@@ -1,5 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScButton,
 	ScCard,
@@ -10,8 +20,6 @@ import {
 	ScMenuItem,
 	ScSkeleton,
 } from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
 import useAvatar from '../../../hooks/useAvatar';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -21,13 +29,14 @@ export default ({ id, onChange, isDraftInvoice }) => {
 			if (!id) {
 				return {};
 			}
-			// our entity query data.
-			const entityData = ['surecart', 'customer', id];
+			const customerEntityData = ['surecart', 'customer', id];
 			return {
-				customer: select(coreStore).getEntityRecord(...entityData),
+				customer: select(coreStore).getEntityRecord(
+					...customerEntityData
+				),
 				loading: !select(coreStore)?.hasFinishedResolution?.(
 					'getEntityRecord',
-					[...entityData]
+					[...customerEntityData]
 				),
 			};
 		},
