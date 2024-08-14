@@ -92,16 +92,21 @@ export default () => {
 				...checkoutEntityData
 			);
 
-			const loading = !select(coreStore)?.hasFinishedResolution?.(
+			const loadingInvoice = !select(coreStore)?.hasFinishedResolution?.(
 				'getEditedEntityRecord',
 				[...invoiceEntityData]
+			);
+
+			const loadingCheckout = !select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...checkoutEntityData]
 			);
 
 			return {
 				invoice,
 				invoiceStatus: invoice?.status,
 				checkout,
-				loading: !checkout?.id && loading,
+				loading: loadingInvoice && loadingCheckout, // && !invoice?.id
 				error: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
 					...invoiceEntityData
@@ -250,6 +255,16 @@ export default () => {
 			if (isDraftInvoice) {
 				return await changeInvoiceStatus('open');
 			}
+
+			// Update the checkout in the redux store as invoice number is added to checkout.order
+			receiveEntityRecords(
+				'surecart',
+				'checkout',
+				checkout,
+				undefined,
+				false,
+				checkout
+			);
 
 			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
 				type: 'snackbar',
