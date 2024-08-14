@@ -70,6 +70,14 @@ class SaleBadge extends \Bricks\Element {
 	public function render() {
 		$text = ! empty( $this->settings['text'] ) ? $this->settings['text'] : esc_html__( 'Sale', 'surecart' );
 
+		if ( $this->is_admin_editor() ) {
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				esc_attr( $text ),
+				'sc-tag sc-tag--primary',
+			);
+			return;
+		}
+
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
 				'text' => esc_attr( $text ),
