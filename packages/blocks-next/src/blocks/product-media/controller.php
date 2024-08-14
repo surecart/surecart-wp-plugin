@@ -2,11 +2,8 @@
 
 $product = sc_get_product();
 
-if ( empty( $product ) ) {
-	return '';
-}
 
-$gallery        = $product->gallery;
+$gallery        = $product->gallery ?? [];
 $featured_image = $gallery[0] ?? null;
 
 // get the width.
@@ -48,7 +45,5 @@ $height = 'auto';
 if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
-
-$gallery = $product->gallery;
 
 return 'file:./slideshow.php';
