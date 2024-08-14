@@ -10,19 +10,14 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
-import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { getQueryArgs } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import {
-	ScButton,
-	ScBlockUi,
-	ScDialog,
-	ScAlert,
-} from '@surecart/components-react';
+import { ScButton, ScBlockUi, ScTag } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
@@ -32,7 +27,6 @@ import SelectShipping from './modules/SelectShipping';
 import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
-import { formatNumber } from '../util';
 import Tax from './modules/Tax';
 import Details from './modules/Details';
 import ConfirmChangeInvoiceStatus from './components/ConfirmChangeInvoiceStatus';
@@ -54,7 +48,6 @@ export default () => {
 	const defaultLiveMode = urlParams.live_mode === 'false' ? false : true;
 
 	const [historyId, setHistoryId] = useState(null);
-	const [confirmCheckout, setConfirmCheckout] = useState(false);
 	const {
 		saveEntityRecord,
 		receiveEntityRecords,
@@ -206,9 +199,25 @@ export default () => {
 			);
 
 			const action = status === 'draft' ? 'make_draft' : 'open';
+			let requestData = {};
+			if (status === 'open' && !!paymentMethod?.id) {
+				requestData = {
+					...(paymentMethod?.manual
+						? {
+								manual_payment: true,
+								manual_payment_method_id: paymentMethod?.id,
+						  }
+						: {
+								manual_payment: false,
+								payment_method_id: paymentMethod?.id,
+						  }),
+				};
+			}
+
 			const data = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${invoice?.id}/${action}`, {}),
+				data: requestData,
 			});
 
 			// Update the invoice in the redux store.
@@ -294,6 +303,14 @@ export default () => {
 	};
 
 	const getSubmitButtonTitle = () => {
+		if (
+			invoice?.automatic_collection &&
+			isDraftInvoice &&
+			!!paymentMethod?.id
+		) {
+			return __('Charge Customer', 'surecart');
+		}
+
 		if (invoiceOrder?.id && isDraftInvoice) {
 			return __('Update Invoice', 'surecart');
 		}
@@ -334,37 +351,39 @@ export default () => {
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
-									{getViewButtonTitle()}
+									{getViewButtonTitle()}{' '}
+									{!liveMode && (
+										<ScTag type="warning">
+											{__('Test Mode', 'surecart')}
+										</ScTag>
+									)}
 								</sc-flex>
 							</sc-breadcrumb>
 						</sc-breadcrumbs>
 					</div>
 				}
 				button={
-					<ScButton
-						type={isDraftInvoice ? 'primary' : 'default'}
-						submit
-						busy={busy}
-						disabled={
-							isDisabled ||
-							busy ||
-							!scData?.entitlements?.invoices
-						}
-						onClick={() => {
-							if (isDraftInvoice) {
-								return;
+					invoice?.status !== 'paid' && (
+						<ScButton
+							type={isDraftInvoice ? 'primary' : 'default'}
+							submit
+							busy={busy}
+							disabled={
+								isDisabled ||
+								busy ||
+								!scData?.entitlements?.invoices
 							}
+							onClick={() => {
+								if (isDraftInvoice) {
+									return;
+								}
 
-							if (
-								invoiceStatus !== 'draft' &&
-								invoiceStatus !== 'paid'
-							) {
 								setModal('change_status_to_draft');
-							}
-						}}
-					>
-						{getSubmitButtonTitle()}
-					</ScButton>
+							}}
+						>
+							{getSubmitButtonTitle()}
+						</ScButton>
+					)
 				}
 				sidebar={
 					<>
@@ -445,65 +464,6 @@ export default () => {
 
 				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 			</UpdateModel>
-
-			<ScDialog
-				open={confirmCheckout}
-				onScRequestClose={() => setConfirmCheckout(false)}
-				label={
-					paymentMethod?.id && checkout?.amount_due
-						? __('Confirm Charge', 'surecart')
-						: __('Confirm Manual Payment', 'surecart')
-				}
-			>
-				{paymentMethod?.id && checkout?.amount_due ? (
-					<ScAlert
-						type="warning"
-						title={sprintf(
-							__('This will charge the customer %s.', 'surecart'),
-							formatNumber(
-								checkout?.amount_due || 0,
-								checkout?.currency || 'usd'
-							)
-						)}
-						open
-					>
-						{__('Are you sure you want to continue?', 'surecart')}
-					</ScAlert>
-				) : (
-					<ScAlert
-						type="warning"
-						title={__('Confirm Manual Payment', 'surecart')}
-						open
-					>
-						{sprintf(
-							__(
-								'This will create an invoice that requires a manual payment (i.e. cash or check). Once you create this invoice it is not possible to pay it another way. Do you want to continue?',
-								'surecart'
-							)
-						)}
-					</ScAlert>
-				)}
-
-				{isDraftInvoice && (
-					<ScButton
-						slot="footer"
-						type="primary"
-						onClick={async () => {
-							await saveInvoice(isDraftInvoice ? 'open' : null);
-						}}
-					>
-						{getSubmitButtonTitle()}
-					</ScButton>
-				)}
-
-				<ScButton
-					slot="footer"
-					type="text"
-					onClick={() => setConfirmCheckout(false)}
-				>
-					{__('Cancel', 'surecart')}
-				</ScButton>
-			</ScDialog>
 
 			{modal && (
 				<ConfirmChangeInvoiceStatus
