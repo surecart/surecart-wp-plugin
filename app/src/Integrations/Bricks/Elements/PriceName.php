@@ -59,9 +59,9 @@ class PriceName extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( $this->is_admin_editor() ) {
-			$initial_price = ( sc_get_product() )->initial_price ?? [ 'name' => esc_html__( 'Price Name', 'surecart' ) ];
-
-			$content = '<span class="sc-price-name">' . $initial_price->name ?? __( 'Price Name', 'surecart' ) . '</span>';
+			$product = sc_get_product();
+			$name    = $product->initial_price->name ?? __( 'Price Name', 'surecart' );
+			$content = '<span class="sc-price-name">' . $name . '</span>';
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$content,
