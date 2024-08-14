@@ -58,8 +58,8 @@ class PriceAmount extends \Bricks\Element {
 	 */
 	public function render() {
 		if ( $this->is_admin_editor() ) {
-			$price = ( sc_get_product() )->initial_price ?? [
-				'amount'              => Currency::format( 200 ),
+			$price = ( sc_get_product() )->initial_price ?? (object) [
+				'display_amount'      => Currency::format( 200 ),
 				'short_interval_text' => '/mo',
 			];
 			// Translators: %1$s is the price amount, %2$s is the short interval text.
