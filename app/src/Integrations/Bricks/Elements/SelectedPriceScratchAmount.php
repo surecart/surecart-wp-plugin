@@ -70,7 +70,7 @@ class SelectedPriceScratchAmount extends \Bricks\Element {
 	public function render() {
 		if ( $this->is_admin_editor() ) {
 			$product       = sc_get_product();
-			$scratch_price = $product->initial_price->scratch_display_amount ?? Currency::format( 100, $product->currency ?? 'USD' );
+			$scratch_price = ! empty( $product->initial_price->scratch_display_amount ) ? $product->initial_price->scratch_display_amount : Currency::format( 100, $product->currency ?? 'USD' );
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$scratch_price,
