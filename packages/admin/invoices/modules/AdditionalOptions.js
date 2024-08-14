@@ -35,7 +35,7 @@ export default ({ invoice, updateInvoice, loading }) => {
 								updateInvoice({ footer: e.target.value })
 							}
 							help={__(
-								'The default memo that is shown on all order statements (i.e. invoices and receipts).',
+								'The footer appears at the bottom of your invoices and receipts.',
 								'surecart'
 							)}
 						></ScTextarea>

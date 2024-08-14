@@ -10,8 +10,6 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import PaymentMethods from './PaymentMethods';
-import Box from '../../ui/Box';
 import {
 	ScButton,
 	ScFormatDate,
@@ -21,6 +19,8 @@ import {
 	ScRadioGroup,
 	ScText,
 } from '@surecart/components-react';
+import Box from '../../ui/Box';
+import PaymentMethods from './PaymentMethods';
 import DatePicker from '../../components/DatePicker';
 
 export default ({
@@ -28,7 +28,6 @@ export default ({
 	updateInvoice,
 	checkout,
 	loading,
-	setBusy,
 	paymentMethod,
 	setPaymentMethod,
 }) => {
@@ -38,19 +37,26 @@ export default ({
 	const renderViewModePaymentCollections = () => {
 		return (
 			<ScText>
-				{invoice?.automatic_collection &&
-					__('Autocharge From Customer', 'surecart')}
+				{invoice?.automatic_collection && (
+					<ScText tag="span">
+						{__('Will be Autocharge From Customer', 'surecart')}
+					</ScText>
+				)}
 
-				{invoice?.due_date && !invoice?.automatic_collection && (
+				{!invoice?.automatic_collection && (
 					<ScText tag="span">
 						{__('Request By Payment due by ', 'surecart')}{' '}
-						<ScFormatDate
-							date={invoice?.due_date}
-							type="timestamp"
-							month="long"
-							day="numeric"
-							year="numeric"
-						/>
+						{invoice?.due_date ? (
+							<ScFormatDate
+								date={invoice?.due_date}
+								type="timestamp"
+								month="long"
+								day="numeric"
+								year="numeric"
+							/>
+						) : (
+							'-'
+						)}
 					</ScText>
 				)}
 			</ScText>

@@ -1,4 +1,14 @@
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useEffect, useState } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScAlert,
 	ScBlockUi,
@@ -10,9 +20,6 @@ import {
 	ScPaymentMethod,
 	ScTag,
 } from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { useEffect, useState } from '@wordpress/element';
 
 export default ({
 	open,

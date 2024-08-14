@@ -75,25 +75,11 @@ export default ({ checkout, setBusy, loading, onSuccess, liveMode, isDraftInvoic
 			onSuccess();
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-			(e?.additional_errors || []).map((e) => {
-				if (e?.message) {
-					createErrorNotice(e.message, {
-						type: 'snackbar',
-					});
-				}
-			});
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}
 	};
-
-	console.log('checkout', checkout)
 
 	return (
 		<Box
