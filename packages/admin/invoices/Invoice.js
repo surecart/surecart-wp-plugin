@@ -106,7 +106,7 @@ export default () => {
 				invoice,
 				invoiceStatus: invoice?.status,
 				checkout,
-				loading: loadingInvoice && loadingCheckout, // && !invoice?.id
+				loading: loadingInvoice || loadingCheckout, // && !invoice?.id
 				error: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
 					...invoiceEntityData

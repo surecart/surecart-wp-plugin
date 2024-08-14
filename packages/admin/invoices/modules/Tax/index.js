@@ -40,7 +40,7 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'draft-checkout'
+				'checkout'
 			);
 
 			const data = await apiFetch({
@@ -54,7 +54,7 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'draft-checkout',
+				'checkout',
 				data,
 				undefined,
 				false,
@@ -64,19 +64,7 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 			setOpen(false);
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-			(e?.additional_errors || []).map((e) => {
-				if (e?.message) {
-					createErrorNotice(e.message, {
-						type: 'snackbar',
-					});
-				}
-			});
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}
