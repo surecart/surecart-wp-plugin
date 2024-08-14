@@ -69,10 +69,9 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$link = admin_url( 'admin.php?page=sc-affiliate-payouts' );
-
 		foreach ( $this->getStatuses() as $status => $label ) {
 			$current_link_attributes = '';
+			$link = admin_url( 'admin.php?page=sc-affiliate-payouts' );
 
 			if ( ! empty( $_GET['status'] ) ) {
 				if ( $status === $_GET['status'] ) {
@@ -83,6 +82,8 @@ class AffiliationPayoutsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
