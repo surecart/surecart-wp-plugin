@@ -33,16 +33,11 @@ export default () => {
 		editItem: editAffiliationProtocolItem,
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
-	const { publicToken } = useSelect((select) => {
-		const account = select(coreStore)?.getEditedEntityRecord?.(
-			'surecart',
-			'store',
-			'account',
+	const { public_token } = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecord('surecart', 'store', 'account') ||
 			{}
-		);
-
-		return { publicToken: account?.public_token || '' };
-	}, []);
+	);
 
 	const signupsUrl = `https://${scData?.account_slug}.surecart.com/affiliates/sign_up`;
 	const successFunction = () => {
@@ -52,7 +47,7 @@ export default () => {
 		});
 	};
 	const signupsUrlRef = useCopyToClipboard(signupsUrl, successFunction);
-	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"${publicToken}"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
+	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"${public_token}"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
 	const trackingScriptRef = useCopyToClipboard(
 		trackingScript,
 		successFunction
