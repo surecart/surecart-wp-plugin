@@ -72,7 +72,7 @@ class CollectionTag extends \Bricks\Element {
 		if ( $this->is_admin_editor() ) {
 			$product     = sc_get_product();
 			$collections = $product->product_collections->data ?? [];
-			$collection  = $collections[0] ?? (object) [ 'name' => 'Collection1' ];
+			$collection  = $collections[0] ?? (object) [ 'name' => 'Collection Name' ];
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$collection->name,
