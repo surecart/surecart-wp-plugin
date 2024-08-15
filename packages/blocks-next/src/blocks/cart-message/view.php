@@ -3,7 +3,6 @@
 		get_block_wrapper_attributes(
 			array(
 				'style' => $style,
-				'class' => 'sc-text',
 			)
 		)
 	); ?>
