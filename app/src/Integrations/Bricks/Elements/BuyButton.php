@@ -98,18 +98,6 @@ class BuyButton extends Element {
 			return;
 		}
 
-		if ( $this->show_populate_on_empty ) {
-			$product = sc_get_product();
-
-			if ( empty( $product ) ) {
-				echo $this->render_element_placeholder( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					[
-						'title'       => esc_html__( 'For better preview select content to show.', 'surecart' ),
-						'description' => esc_html__( 'Go to: Settings > Template Settings > Populate Content', 'surecart' ),
-					]
-				);
-			}
-		}
 
 		$block_attributes                    = array(
 			'text'        => esc_attr( $text ),
