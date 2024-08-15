@@ -132,6 +132,18 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 						'-'
 					)}
 				</Definition>
+
+				{!!checkout?.id && !invoice?.automatic_collection && (
+					<Definition title={__('Payment Page', 'surecart')}>
+						<a
+							href={`${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{`${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`}
+						</a>
+					</Definition>
+				)}
 			</Box>
 		</>
 	);
