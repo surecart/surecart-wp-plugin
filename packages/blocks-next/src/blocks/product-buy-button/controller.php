@@ -1,7 +1,8 @@
 <?php
 $styles = sc_get_block_styles();
 $style  = $styles['css'] ?? '';
-$class  = $styles['classnames'] ?? '';
+$class  = ( $styles['classnames'] ?? '' ) . ' ' . ( $attributes['buttonClassName'] ?? '' ) . ' ';
+error_log( $class );
 
 $product = sc_get_product();
 

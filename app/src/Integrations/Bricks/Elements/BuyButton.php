@@ -87,23 +87,38 @@ class BuyButton extends Element {
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$content  = '<a class="wp-block-button__link wp-element-button sc-button__link">';
-			$content .= '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
-			$content .= '</a>';
+			$rendered_attributes = $this->get_block_rendered_attributes();
+			$content             = '<div class="wp-block-button has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button">';
+			$content            .= '<a class="wp-block-button__link wp-element-button sc-button__link ' . $rendered_attributes['class'] . '" id="' . $rendered_attributes['id'] . '" >';
+			$content            .= '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
+			$content            .= '</a></div>';
 
-			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$content,
-				'wp-block-button has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button',
-			);
+			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			return;
 		}
 
-		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			[
-				'text'        => esc_attr( $text ),
-				'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
-			]
+		if ( $this->show_populate_on_empty ) {
+			$product = sc_get_product();
+
+			if ( empty( $product ) ) {
+				echo $this->render_element_placeholder( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					[
+						'title'       => esc_html__( 'For better preview select content to show.', 'surecart' ),
+						'description' => esc_html__( 'Go to: Settings > Template Settings > Populate Content', 'surecart' ),
+					]
+				);
+			}
+		}
+
+		$block_attributes                    = array(
+			'text'        => esc_attr( $text ),
+			'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
 		);
+		$rendered_attributes                 = $this->get_block_rendered_attributes();
+		$block_attributes['buttonClassName'] = $rendered_attributes['class'];
+		$block_attributes['buttonAnchor']    = $rendered_attributes['id'];
+
+		echo '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' --><!-- /wp:' . $this->block_name . ' -->'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
