@@ -94,13 +94,11 @@ class BuyButton extends Element {
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$content  = '<a class="wp-block-button__link wp-element-button sc-button__link">';
-			$content .= '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
-			$content .= '</a>';
+			$content = '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
 
 			echo $this->preview(
 				$content,
-				'wp-block-button'
+				'wp-block-button__link wp-element-button sc-button__link'
 			); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			return;
