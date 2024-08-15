@@ -14,7 +14,6 @@ import arrayMove from 'array-move';
 import WordPressMedia from './WordPressMedia';
 import ProductMedia from './ProductMedia';
 import { select } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
 
 const modals = {
 	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
@@ -24,10 +23,8 @@ export default ({ productId, product, updateProduct }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedImage, setSelectedImage] = useState();
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
-	const { invalidateResolution, receiveEntityRecords } =
-		useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
+	const { invalidateResolution } = useDispatch(coreStore);
 
 	const onDragStop = (oldIndex, newIndex) =>
 		updateProduct({
@@ -42,61 +39,6 @@ export default ({ productId, product, updateProduct }) => {
 		updateProduct({
 			gallery_ids: product?.gallery_ids.filter((itemId) => itemId !== id),
 		});
-
-	const onMediaMigrated = async (oldId, newId) => {
-		// for some reason we need to select this again.
-		const product = select(coreStore).getEditedEntityRecord(
-			'surecart',
-			'product',
-			productId
-		);
-
-		// if it's in the product?.gallery_ids already, throw an error.
-		if (product?.gallery_ids.includes(newId)) {
-			createErrorNotice(
-				__('This image is already in the gallery.', 'surecart'),
-				{ type: 'snackbar' }
-			);
-			return;
-		}
-
-		const gallery_ids = [...(product?.gallery_ids || [])];
-		// find the index of the old id
-		const index = product?.gallery_ids.indexOf(oldId);
-		gallery_ids[index] = newId;
-
-		const baseUrl = select(coreStore).getEntityConfig(
-			'surecart',
-			'product'
-		)?.baseURL;
-
-		const updatedProduct = await apiFetch({
-			path: `${baseUrl}/${productId}`,
-			method: 'PATCH',
-			data: {
-				gallery_ids,
-			},
-		});
-
-		receiveEntityRecords(
-			'surecart',
-			'product',
-			{
-				...product,
-				gallery_ids: updatedProduct?.gallery_ids,
-			},
-			undefined,
-			false,
-			{
-				gallery_ids: updatedProduct?.gallery_ids,
-			}
-		);
-
-		createSuccessNotice(
-			__('Image successfully migrated to server.', 'surecart'),
-			{ type: 'snackbar' }
-		);
-	};
 
 	const onSwapMedia = (id, newId) => {
 		// for some reason we need to select this again.
@@ -152,7 +94,7 @@ export default ({ productId, product, updateProduct }) => {
 									id={id}
 									onRemove={() => onRemoveMedia(id)}
 									onDownloaded={(newId) =>
-										onMediaMigrated(id, newId)
+										onSwapMedia(id, newId)
 									}
 									isFeatured={index === 0}
 								/>
