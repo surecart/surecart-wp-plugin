@@ -149,7 +149,7 @@ class InvoicesListTable extends ListTable {
 		$statuses = [
 			'all'   => __( 'All', 'surecart' ),
 			'paid'  => __( 'Paid', 'surecart' ),
-			'draft' => __( 'draft', 'surecart' ),
+			'draft' => __( 'Draft', 'surecart' ),
 			'open'  => __( 'Open', 'surecart' ),
 		];
 
@@ -168,6 +168,10 @@ class InvoicesListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			if ( isset( $_GET['live_mode'] ) ) {
+				$link = add_query_arg( 'live_mode', sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ), $link );
+			}
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
