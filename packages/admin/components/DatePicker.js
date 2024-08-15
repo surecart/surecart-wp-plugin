@@ -51,7 +51,10 @@ export default (props) => {
 			return;
 		}
 
-		onChoose(date);
+		// If date is not set and not required, set current date.
+		const updatedDate = !date && !required ? new Date() : date;
+
+		onChoose(updatedDate);
 		toggleVisible();
 	};
 
