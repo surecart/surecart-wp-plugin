@@ -10,7 +10,7 @@ import { useDispatch } from '@wordpress/data';
 import { SortableKnob } from 'react-easy-sort';
 const ALLOWED_MEDIA_TYPES = ['image'];
 
-export default ({ id, onRemove, isFeatured, onSelect }) => {
+export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 	const { invalidateResolution } = useDispatch(coreStore);
 
 	const { media, hasLoadedMedia } = useSelect((select) => {
@@ -101,6 +101,21 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 				</ScTag>
 			)}
 
+			{isNew && (
+				<ScTag
+					type="success"
+					className="featured-badge"
+					size="small"
+					css={css`
+						position: absolute;
+						top: ${isFeatured ? '25px' : '5px'};
+						left: 5px;
+					`}
+				>
+					{__('New', 'surecart')}
+				</ScTag>
+			)}
+
 			{media?.meta?.sc_variant_option && (
 				<ScTag
 					className="featured-badge"
@@ -110,13 +125,13 @@ export default ({ id, onRemove, isFeatured, onSelect }) => {
 						bottom: 5px;
 						left: 5px;
 
-            &::part(content) {
-              max-width: 140px;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              display: inline;
-            }
+						&::part(content) {
+							max-width: 140px;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							display: inline;
+						}
 					`}
 				>
 					{media?.meta?.sc_variant_option}
