@@ -12,12 +12,7 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 import DatePicker from '../../components/DatePicker';
-import {
-	ScButton,
-	ScFormatDate,
-	ScIcon,
-	ScInvoiceStatusBadge,
-} from '@surecart/components-react';
+import { ScFormatDate, ScInvoiceStatusBadge } from '@surecart/components-react';
 
 export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
@@ -28,7 +23,7 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 
 	return (
 		<>
-			<Box title={__('', 'surecart')} loading={loading || busy}>
+			<Box title={__('', 'surecart')} loading={loading}>
 				{!!checkout?.order?.number && (
 					<Definition title={__('Invoice Number', 'surecart')}>
 						#{checkout.order.number}

@@ -142,6 +142,11 @@ export default () => {
 		}
 	}, [error]);
 
+	const invoiceListPageURL = addQueryArgs('admin.php', {
+		page: 'sc-invoices',
+		live_mode: liveMode ? 'true' : 'false',
+	});
+
 	/**
 	 * Creates a new invoice on page load.
 	 */
@@ -185,43 +190,21 @@ export default () => {
 		try {
 			setBusy(true);
 
-			// For open status, we need to add minimum one line item and customer.
-			// if (status === 'open') {
-			// 	if (!checkout?.line_items?.data?.length) {
-			// 		setInvoiceError(
-			// 			__('Please add at least one line item.', 'surecart')
-			// 		);
-			// 		return;
-			// 	}
-
-			// 	if (!checkout?.customer_id) {
-			// 		setInvoiceError(
-			// 			__('Please select a customer.', 'surecart')
-			// 		);
-			// 		return;
-			// 	}
-			// }
-
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'invoice'
 			);
 
 			const action = status === 'draft' ? 'make_draft' : 'open';
-			let requestData = {};
-			if (status === 'open' && !!paymentMethod?.id) {
-				requestData = {
-					...(paymentMethod?.manual
-						? {
-								manual_payment: true,
-								manual_payment_method_id: paymentMethod?.id,
-						  }
-						: {
-								manual_payment: false,
-								payment_method_id: paymentMethod?.id,
-						  }),
-				};
-			}
+			const requestData =
+				status === 'open' && paymentMethod?.id
+					? {
+							manual_payment: !!paymentMethod.manual,
+							...(paymentMethod.manual
+								? { manual_payment_method_id: paymentMethod.id }
+								: { payment_method_id: paymentMethod.id }),
+					  }
+					: {};
 
 			const data = await apiFetch({
 				method: 'PATCH',
@@ -240,18 +223,6 @@ export default () => {
 				false,
 				invoice
 			);
-
-			const message =
-				status === 'draft'
-					? __(
-							'Invoice marked as draft, you can now edit it.',
-							'surecart'
-					  )
-					: __('Invoice Updated.', 'surecart');
-
-			createSuccessNotice(message, {
-				type: 'snackbar',
-			});
 
 			return data;
 		} catch (e) {
@@ -272,15 +243,16 @@ export default () => {
 			setInvoiceError(false);
 			await saveEditedEntityRecord('surecart', 'invoice', invoice?.id);
 
-			if (isDraftInvoice) {
-				return await changeInvoiceStatus('open');
-			}
+			// Save the invoice as open.
+			await changeInvoiceStatus('open');
 
 			// Update the checkout in the redux store as invoice number is added to checkout.order
 			receiveEntityRecords(
 				'surecart',
 				'checkout',
-				checkout,
+				{
+					...checkout,
+				},
 				undefined,
 				false,
 				checkout
@@ -346,25 +318,21 @@ export default () => {
 							gap: 1em;
 						`}
 					>
-						<ScButton
-							circle
-							size="small"
-							href="admin.php?page=sc-invoices"
-						>
+						<ScButton circle size="small" href={invoiceListPageURL}>
 							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
 						<sc-breadcrumbs>
 							<sc-breadcrumb>
 								<Logo display="block" />
 							</sc-breadcrumb>
-							<sc-breadcrumb href="admin.php?page=sc-invoices">
+							<sc-breadcrumb href={invoiceListPageURL}>
 								{__('Invoices', 'surecart')}
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
 									{getViewButtonTitle()}{' '}
 									{!liveMode && (
-										<ScTag type="warning">
+										<ScTag type="warning" pill>
 											{__('Test Mode', 'surecart')}
 										</ScTag>
 									)}
