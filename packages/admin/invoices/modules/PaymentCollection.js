@@ -40,79 +40,73 @@ export default ({
 	const [modal, setModal] = useState(false);
 	const isDraftInvoice = invoice?.status === 'draft';
 
+	const renderCollectedPayment = () => {
+		if (invoice?.status !== 'paid') return null;
+
+		return (
+			<ScText tag="span">
+				{__('Charged from customer on ', 'surecart')}{' '}
+				{checkout?.paid_at ? (
+					<>
+						<ScFormatDate
+							date={checkout?.paid_at}
+							type="timestamp"
+							month="long"
+							day="numeric"
+							year="numeric"
+						/>
+
+						{!!paymentMethod?.id && !checkout?.manual_payment && (
+							<div
+								style={{
+									display: 'flex',
+									width: '100%',
+									justifyContent: 'space-between',
+									alignItems: 'center',
+									marginTop: '1em',
+								}}
+							>
+								<ScPaymentMethod
+									paymentMethod={paymentMethod}
+								/>
+
+								<div
+									style={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: '2em',
+									}}
+								>
+									{!!paymentMethod?.card?.exp_month && (
+										<span>
+											{__('Exp.', 'surecart')}
+											{paymentMethod?.card?.exp_month}/
+											{paymentMethod?.card?.exp_year}
+										</span>
+									)}
+									{!!paymentMethod?.paypal_account?.email &&
+										paymentMethod?.paypal_account?.email}
+								</div>
+							</div>
+						)}
+
+						{!!paymentMethod?.id && checkout?.manual_payment && (
+							<ScManualPaymentMethod
+								paymentMethod={paymentMethod}
+							/>
+						)}
+					</>
+				) : (
+					'-'
+				)}
+			</ScText>
+		);
+	};
+
 	const renderViewModePaymentCollection = () => {
 		if (invoice?.automatic_collection) {
 			if (invoice?.status === 'paid') {
-				return (
-					<ScText tag="span">
-						{__('Charged from customer on ', 'surecart')}{' '}
-						{checkout?.paid_at ? (
-							<>
-								<ScFormatDate
-									date={checkout?.paid_at}
-									type="timestamp"
-									month="long"
-									day="numeric"
-									year="numeric"
-								/>
-
-								{!!paymentMethod?.id &&
-									!checkout?.manual_payment && (
-										<div
-											style={{
-												display: 'flex',
-												width: '100%',
-												justifyContent: 'space-between',
-												alignItems: 'center',
-												marginTop: '1em',
-											}}
-										>
-											<ScPaymentMethod
-												paymentMethod={paymentMethod}
-											/>
-
-											<div
-												style={{
-													display: 'flex',
-													alignItems: 'center',
-													gap: '2em',
-												}}
-											>
-												{!!paymentMethod?.card
-													?.exp_month && (
-													<span>
-														{__('Exp.', 'surecart')}
-														{
-															paymentMethod?.card
-																?.exp_month
-														}
-														/
-														{
-															paymentMethod?.card
-																?.exp_year
-														}
-													</span>
-												)}
-												{!!paymentMethod?.paypal_account
-													?.email &&
-													paymentMethod
-														?.paypal_account?.email}
-											</div>
-										</div>
-									)}
-
-								{!!paymentMethod?.id &&
-									checkout?.manual_payment && (
-										<ScManualPaymentMethod
-											paymentMethod={paymentMethod}
-										/>
-									)}
-							</>
-						) : (
-							'-'
-						)}
-					</ScText>
-				);
+				return renderCollectedPayment();
 			}
 
 			return (
@@ -120,6 +114,10 @@ export default ({
 					{__('Will be autocharged from customer.', 'surecart')}
 				</ScText>
 			);
+		}
+
+		if (invoice?.status === 'paid') {
+			return renderCollectedPayment();
 		}
 
 		return (
