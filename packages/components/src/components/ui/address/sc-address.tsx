@@ -96,7 +96,7 @@ export class ScAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
-    if (!this.address.country) return;
+    if (!this.address?.country) return;
     this.setRegions();
     this.showPostal = hasPostal(this.address.country);
     this.showCity = hasCity(this.address.country);
