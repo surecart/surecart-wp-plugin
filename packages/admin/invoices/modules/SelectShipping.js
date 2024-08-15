@@ -1,17 +1,28 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import apiFetch from '@wordpress/api-fetch';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
+import { useDispatch, select } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScFormatNumber,
 	ScAlert,
 	ScChoices,
 	ScChoice,
+	ScText,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import expand from '../checkout-query';
-import { useDispatch, select } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
+import expand from '../checkout-query';
 
 export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 	const { createErrorNotice } = useDispatch(noticesStore);
@@ -21,7 +32,6 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 		try {
 			setBusy(true);
 
-			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'checkout'
@@ -49,20 +59,7 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 			);
 		} catch (e) {
 			console.error(e);
-
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-			(e?.additional_errors || []).map((e) => {
-				if (e?.message) {
-					createErrorNotice(e.message, {
-						type: 'snackbar',
-					});
-				}
-			});
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}
@@ -70,6 +67,72 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 
 	if (!checkout?.selected_shipping_choice_required) {
 		return null;
+	}
+
+	if (!isDraftInvoice) {
+		if (
+			!checkout?.shipping_choices?.data?.length ||
+			!checkout?.selected_shipping_choice
+		) {
+			return null;
+		}
+
+		const selectedShippingMethod = checkout?.shipping_choices?.data?.find(
+			({ id }) => id === checkout?.selected_shipping_choice
+		);
+
+		return (
+			<Box title={__('Shipping', 'surecart')} loading={loading}>
+				<div
+					css={css`
+						display: flex;
+						justify-content: space-between;
+					`}
+				>
+					<div>
+						<ScText tag="strong">
+							{selectedShippingMethod?.shipping_method?.name ||
+								__('Shipping', 'surecart')}
+						</ScText>
+
+						{!!selectedShippingMethod?.shipping_method
+							?.description && (
+							<ScText
+								css={css`
+									font-size: 0.9em;
+									color: var(--sc-color-gray-600);
+								`}
+							>
+								{
+									selectedShippingMethod?.shipping_method
+										?.description
+								}
+							</ScText>
+						)}
+					</div>
+
+					<div>
+						<ScFormatNumber
+							type="currency"
+							currency={
+								checkout?.shipping_choices?.data?.find(
+									({ id }) =>
+										id ===
+										checkout?.selected_shipping_choice
+								)?.currency
+							}
+							value={
+								checkout?.shipping_choices?.data?.find(
+									({ id }) =>
+										id ===
+										checkout?.selected_shipping_choice
+								)?.amount
+							}
+						/>
+					</div>
+				</div>
+			</Box>
+		);
 	}
 
 	if (!checkout?.shipping_choices?.data?.length) {
