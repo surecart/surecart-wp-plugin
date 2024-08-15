@@ -98,7 +98,6 @@ class BuyButton extends Element {
 			return;
 		}
 
-
 		$block_attributes                    = array(
 			'text'        => esc_attr( $text ),
 			'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
