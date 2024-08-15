@@ -44,14 +44,6 @@ class BuyButton extends Element {
 	public $icon = 'ti-shopping-cart';
 
 	/**
-	 * CSS selector.
-	 *
-	 * @var string
-	 */
-	public $css_selector = '.sc-button__link';
-
-
-	/**
 	 * Get element label.
 	 *
 	 * @return string
