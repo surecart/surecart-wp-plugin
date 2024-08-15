@@ -20,10 +20,18 @@ class InvoicesController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return \SureCart\Models\Invoice|\WP_Error
+	 * @return Invoice|\WP_Error
 	 */
 	public function makeDraft( \WP_REST_Request $request ) {
-		return Invoice::makeDraft( $request['id'] );
+		$class     = new $this->class( $request->get_json_params() );
+		$class->id = $request['id'];
+		$model     = $this->middleware( $class, $request );
+
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
+		return $model->where( $request->get_query_params() )->makeDraft( $request['id'] );
 	}
 
 	/**
@@ -31,9 +39,17 @@ class InvoicesController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return \SureCart\Models\Invoice|\WP_Error
+	 * @return Invoice|\WP_Error
 	 */
 	public function open( \WP_REST_Request $request ) {
-		return Invoice::open( $request['id'] );
+		$class     = new $this->class( $request->get_json_params() );
+		$class->id = $request['id'];
+		$model     = $this->middleware( $class, $request );
+
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
+		return $model->where( $request->get_query_params() )->open( $request['id'] );
 	}
 }

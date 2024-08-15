@@ -42,7 +42,7 @@ class Invoice extends Model {
 	/**
 	 * Make draft invoice.
 	 *
-	 * @param string|null $id Request ID.
+	 * @param string|null $id Invoice ID.
 	 *
 	 * @return self|\WP_Error
 	 */
@@ -64,9 +64,6 @@ class Invoice extends Model {
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-				'body'   => [
-					$this->object_name => $this->getAttributes(),
-				],
 			]
 		);
 
@@ -108,9 +105,6 @@ class Invoice extends Model {
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-				'body'   => [
-					$this->object_name => $this->getAttributes(),
-				],
 			]
 		);
 
@@ -119,9 +113,7 @@ class Invoice extends Model {
 		}
 
 		$this->resetAttributes();
-
 		$this->fill( $opened );
-
 		$this->fireModelEvent( 'opened' );
 
 		return $this;
