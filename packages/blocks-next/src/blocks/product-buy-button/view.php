@@ -19,7 +19,6 @@
 			style="<?php echo esc_attr( $style ); ?>"
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-bind--href="state.checkoutUrl"
-			id="<?php echo esc_attr( $attributes['buttonAnchor'] ); ?>"
 		>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>
@@ -32,7 +31,6 @@
 			style="<?php echo esc_attr( $style ); ?>"
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-class--sc-button__link--busy="context.busy"
-			id="<?php echo esc_attr( $attributes['buttonAnchor'] ); ?>"
 		>
 			<span class="sc-spinner" aria-hidden="false"></span>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
