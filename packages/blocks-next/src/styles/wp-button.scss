@@ -1,22 +1,10 @@
-.wp-block-buttons .wp-block-button {
+.wp-block-button {
 	width: 100%;
 
 	&.is-style-outline {
-		button.wp-block-button__link.wp-element-button:not(
-				.has-background,
-				:hover,
-				:focus
-			),
-		div.wp-block-button__link.wp-element-button:not(
-				.has-background,
-				:hover,
-				:focus
-			),
-		a.wp-block-button__link.wp-element-button:not(
-				.has-background,
-				:hover,
-				:focus
-			) {
+		button.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus),
+		div.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus),
+		a.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus) {
 			background-color: transparent;
 			background-image: none;
 		}
