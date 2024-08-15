@@ -3,6 +3,8 @@
  */
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 
 /**
@@ -19,11 +21,18 @@ export default ({ onRequestClose, open, invoice, changeInvoiceStatus }) => {
 
 	const [error, setError] = useState(null);
 	const [changingStatus, setChangingStatus] = useState(false);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const onChangeInvoiceStatusToDraft = async () => {
 		try {
 			setChangingStatus(true);
 			await changeInvoiceStatus('draft');
+			createSuccessNotice(
+				__('Invoice marked as draft, you can now edit it.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 			onRequestClose();
 		} catch (e) {
 			setChangingStatus(false);
@@ -40,7 +49,10 @@ export default ({ onRequestClose, open, invoice, changeInvoiceStatus }) => {
 			onCancel={onRequestClose}
 		>
 			<Error error={error} />
-			{__('Are you sure you want to change the status of this invoice to draft?', 'surecart')}
+			{__(
+				'Are you sure you want to change the status of this invoice to draft?',
+				'surecart'
+			)}
 			{changingStatus && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
