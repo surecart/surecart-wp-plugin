@@ -329,7 +329,14 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	actions: {
-		addToCart: async () => {
+		addToCart: async (e) => {
+			const hasContextBusy = Object.values(e.submitter.dataset).includes(
+				'context.busy'
+			);
+
+			// no busy context, toggle cart right away.
+			!hasContextBusy && cartActions.toggle();
+
 			const context = getContext();
 			const { mode, formId, product } = context;
 			try {
@@ -337,7 +344,9 @@ const { state, actions } = store('surecart/product-page', {
 
 				const checkout = await addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
-				cartActions.toggle();
+
+				// no busy context, wait to toggle cart
+				hasContextBusy && cartActions.toggle();
 
 				// speak the cart dialog state.
 				cartState.label = sprintf(
