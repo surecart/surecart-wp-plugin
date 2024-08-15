@@ -134,6 +134,7 @@ export default ({
 					discount={checkout?.discount}
 					currency={checkout?.currency}
 					discountAmount={checkout?.discount_amount}
+					disabledActions={!isDraftInvoice}
 				/>
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />

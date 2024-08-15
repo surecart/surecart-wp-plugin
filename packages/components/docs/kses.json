@@ -413,6 +413,7 @@
     "button-text": true,
     "collapsed": true,
     "currency": true,
+    "disabled-actions": true,
     "discount": true,
     "discount-amount": true,
     "error": true,
