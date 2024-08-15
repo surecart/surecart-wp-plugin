@@ -27,7 +27,7 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 			<Box title={__('', 'surecart')} loading={loading || busy}>
 				{!!checkout?.order?.number && (
 					<Definition title={__('Invoice Number', 'surecart')}>
-						{checkout.order.number}
+						#{checkout.order.number}
 					</Definition>
 				)}
 

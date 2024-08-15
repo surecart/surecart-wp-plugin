@@ -127,6 +127,15 @@ export default () => {
 		}
 	}, [invoice]);
 
+	// Update payment methods when checkout is loaded.
+	useEffect(() => {
+		if (checkout?.payment_method?.id && !checkout?.manual_payment) {
+			setPaymentMethod(checkout?.payment_method);
+		} else if (checkout?.manual_payment_method?.id) {
+			setPaymentMethod(checkout?.manual_payment_method);
+		}
+	}, [checkout]);
+
 	useEffect(() => {
 		if (error) {
 			setInvoiceError(error);

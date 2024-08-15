@@ -17,6 +17,7 @@ import {
 	ScFormatDate,
 	ScFormControl,
 	ScIcon,
+	ScManualPaymentMethod,
 	ScMenu,
 	ScMenuItem,
 	ScPaymentMethod,
@@ -39,51 +40,101 @@ export default ({
 	const [modal, setModal] = useState(false);
 	const isDraftInvoice = invoice?.status === 'draft';
 
-	const renderViewModePaymentCollections = () => {
-		return (
-			<ScText>
-				{invoice?.status === 'paid' && invoice?.automatic_collection && (
+	const renderViewModePaymentCollection = () => {
+		if (invoice?.automatic_collection) {
+			if (invoice?.status === 'paid') {
+				return (
 					<ScText tag="span">
 						{__('Charged from customer on ', 'surecart')}{' '}
 						{checkout?.paid_at ? (
-							<ScFormatDate
-								date={checkout?.paid_at}
-								type="timestamp"
-								month="long"
-								day="numeric"
-								year="numeric"
-							/>
+							<>
+								<ScFormatDate
+									date={checkout?.paid_at}
+									type="timestamp"
+									month="long"
+									day="numeric"
+									year="numeric"
+								/>
+
+								{!!paymentMethod?.id &&
+									!checkout?.manual_payment && (
+										<div
+											style={{
+												display: 'flex',
+												width: '100%',
+												justifyContent: 'space-between',
+												alignItems: 'center',
+												marginTop: '1em',
+											}}
+										>
+											<ScPaymentMethod
+												paymentMethod={paymentMethod}
+											/>
+
+											<div
+												style={{
+													display: 'flex',
+													alignItems: 'center',
+													gap: '2em',
+												}}
+											>
+												{!!paymentMethod?.card
+													?.exp_month && (
+													<span>
+														{__('Exp.', 'surecart')}
+														{
+															paymentMethod?.card
+																?.exp_month
+														}
+														/
+														{
+															paymentMethod?.card
+																?.exp_year
+														}
+													</span>
+												)}
+												{!!paymentMethod?.paypal_account
+													?.email &&
+													paymentMethod
+														?.paypal_account?.email}
+											</div>
+										</div>
+									)}
+
+								{!!paymentMethod?.id &&
+									checkout?.manual_payment && (
+										<ScManualPaymentMethod
+											paymentMethod={paymentMethod}
+										/>
+									)}
+							</>
 						) : (
 							'-'
 						)}
 					</ScText>
-				)}
+				);
+			}
 
-				{invoice?.status !== 'paid' &&
-					invoice?.automatic_collection && (
-						<ScText tag="span">
-							{__(
-								'Will be autocharged from customer.',
-								'surecart'
-							)}
-						</ScText>
-					)}
+			return (
+				<ScText tag="span">
+					{__('Will be autocharged from customer.', 'surecart')}
+				</ScText>
+			);
+		}
 
-				{!invoice?.automatic_collection && (
-					<ScText tag="span">
-						{__('Request By Payment due by ', 'surecart')}{' '}
-						{invoice?.due_date ? (
-							<ScFormatDate
-								date={invoice?.due_date}
-								type="timestamp"
-								month="long"
-								day="numeric"
-								year="numeric"
-							/>
-						) : (
-							'-'
-						)}
-					</ScText>
+		return (
+			<ScText tag="span">
+				{__('Request by payment due by ', 'surecart')}{' '}
+				{invoice?.due_date ? (
+					<ScFormatDate
+						date={invoice?.due_date}
+						type="timestamp"
+						month="long"
+						day="numeric"
+						year="numeric"
+					/>
+				) : (
+					'-'
 				)}
 			</ScText>
 		);
@@ -200,144 +251,151 @@ export default ({
 						value="true"
 						checked={invoice?.automatic_collection}
 					>
-						<ScText
-							tag="h3"
-							style={{
-								'--font-weight': 'var(--sc-font-weight-bold)',
-								'--font-size': 'var(--sc-font-size-medium)',
-							}}
-						>
-							{__('Autocharge Customer', 'surecart')}
-						</ScText>
-
-						<div
-							css={css`
-								margin-top: var(--sc-spacing-small);
-							`}
-						>
-							<ScText>
-								{__(
-									'Automatically charge a payment method on file for this customer.',
-									'surecart'
-								)}
+						<div>
+							<ScText
+								tag="h3"
+								style={{
+									'--font-weight':
+										'var(--sc-font-weight-bold)',
+									'--font-size': 'var(--sc-font-size-medium)',
+								}}
+							>
+								{__('Autocharge Customer', 'surecart')}
 							</ScText>
 
-							{invoice?.automatic_collection && (
-								<div
-									css={css`
-										margin-top: var(--sc-spacing-medium);
-									`}
-								>
-									{isDraftInvoice && !paymentMethod && (
-										<div>
-											<ScButton
-												type="primary"
-												onClick={() =>
-													setModal('payment')
-												}
-											>
-												{__(
-													'Add Payment Method',
-													'surecart'
-												)}
-											</ScButton>
-										</div>
+							<div
+								css={css`
+									margin-top: var(--sc-spacing-small);
+								`}
+								slot="description"
+							>
+								<ScText>
+									{__(
+										'Automatically charge a payment method on file for this customer.',
+										'surecart'
 									)}
+								</ScText>
 
-									{!!paymentMethod && (
-										<>
-											<ScDivider
-												style={{
-													'--spacing':
-														'var(--sc-spacing-small)',
-												}}
-											/>
-											<div
-												style={{
-													display: 'flex',
-													width: '100%',
-													justifyContent:
-														'space-between',
-													alignItems: 'center',
-												}}
-											>
-												<ScPaymentMethod
-													paymentMethod={
-														paymentMethod
+								{invoice?.automatic_collection && (
+									<div
+										css={css`
+											margin-top: var(
+												--sc-spacing-medium
+											);
+										`}
+									>
+										{isDraftInvoice && !paymentMethod && (
+											<div>
+												<ScButton
+													type="primary"
+													onClick={() =>
+														setModal('payment')
 													}
+												>
+													{__(
+														'Add Payment Method',
+														'surecart'
+													)}
+												</ScButton>
+											</div>
+										)}
+
+										{!!paymentMethod && (
+											<>
+												<ScDivider
+													style={{
+														'--spacing':
+															'var(--sc-spacing-small)',
+													}}
 												/>
 												<div
 													style={{
 														display: 'flex',
+														width: '100%',
+														justifyContent:
+															'space-between',
 														alignItems: 'center',
-														gap: '2em',
 													}}
 												>
-													{!!paymentMethod?.card
-														?.exp_month && (
-														<span>
-															{__(
-																'Exp.',
-																'surecart'
-															)}
-															{
-																paymentMethod
-																	?.card
-																	?.exp_month
-															}
-															/
-															{
-																paymentMethod
-																	?.card
-																	?.exp_year
-															}
-														</span>
-													)}
-													{!!paymentMethod
-														?.paypal_account
-														?.email &&
-														paymentMethod
+													<ScPaymentMethod
+														paymentMethod={
+															paymentMethod
+														}
+													/>
+													<div
+														style={{
+															display: 'flex',
+															alignItems:
+																'center',
+															gap: '2em',
+														}}
+													>
+														{!!paymentMethod?.card
+															?.exp_month && (
+															<span>
+																{__(
+																	'Exp.',
+																	'surecart'
+																)}
+																{
+																	paymentMethod
+																		?.card
+																		?.exp_month
+																}
+																/
+																{
+																	paymentMethod
+																		?.card
+																		?.exp_year
+																}
+															</span>
+														)}
+														{!!paymentMethod
 															?.paypal_account
-															?.email}
+															?.email &&
+															paymentMethod
+																?.paypal_account
+																?.email}
 
-													{isDraftInvoice && (
-														<ScDropdown placement="bottom-end">
-															<ScButton
-																type="text"
-																slot="trigger"
-																circle
-															>
-																<ScIcon name="more-horizontal" />
-															</ScButton>
-															<ScMenu>
-																<ScMenuItem
-																	onClick={() =>
-																		setPaymentMethod(
-																			false
-																		)
-																	}
+														{isDraftInvoice && (
+															<ScDropdown placement="bottom-end">
+																<ScButton
+																	type="text"
+																	slot="trigger"
+																	circle
 																>
-																	<ScIcon
-																		slot="prefix"
-																		name="trash"
-																		style={{
-																			opacity: 0.5,
-																		}}
-																	/>
-																	{__(
-																		'Remove',
-																		'surecart'
-																	)}
-																</ScMenuItem>
-															</ScMenu>
-														</ScDropdown>
-													)}
+																	<ScIcon name="more-horizontal" />
+																</ScButton>
+																<ScMenu>
+																	<ScMenuItem
+																		onClick={() =>
+																			setPaymentMethod(
+																				false
+																			)
+																		}
+																	>
+																		<ScIcon
+																			slot="prefix"
+																			name="trash"
+																			style={{
+																				opacity: 0.5,
+																			}}
+																		/>
+																		{__(
+																			'Remove',
+																			'surecart'
+																		)}
+																	</ScMenuItem>
+																</ScMenu>
+															</ScDropdown>
+														)}
+													</div>
 												</div>
-											</div>
-										</>
-									)}
-								</div>
-							)}
+											</>
+										)}
+									</div>
+								)}
+							</div>
 						</div>
 					</ScRadio>
 				</ScRadioGroup>
@@ -358,7 +416,7 @@ export default ({
 			return renderDraftModePaymentCollection();
 		}
 
-		return renderViewModePaymentCollections();
+		return renderViewModePaymentCollection();
 	};
 
 	return (

@@ -19,6 +19,9 @@ const expand = [
 	'shipping_choices',
 	'shipping_choices.shipping_method',
 	'order',
+	'checkout.payment_method',
+	'payment_method.card',
+	'checkout.manual_payment_method',
 ];
 
 export default expand;
