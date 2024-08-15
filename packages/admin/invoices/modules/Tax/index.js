@@ -1,7 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import Box from '../../../ui/Box';
+
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import { useState, useEffect } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { select, useDispatch } from '@wordpress/data';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScButton,
 	ScIcon,
@@ -11,12 +24,7 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { select, useDispatch } from '@wordpress/data';
+import Box from '../../../ui/Box';
 import TaxIdDisplay from './TaxIdDisplay';
 import expand from '../../checkout-query';
 
@@ -37,7 +45,7 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 	const onChange = async (tax_identifier) => {
 		try {
 			setBusy(true);
-			// get the line items endpoint.
+
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'checkout'
@@ -70,47 +78,10 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 		}
 	};
 
-	return (
-		<>
-			<Box
-				title={__('Tax', 'surecart')}
-				loading={loading}
-				footer={
-					!loading &&
-					!checkout?.tax_identifier?.id &&
-					isDraftInvoice && (
-						<ScButton onClick={() => setOpen(true)}>
-							{__('Add A Tax ID', 'surecart')}
-						</ScButton>
-					)
-				}
-			>
-				{!!checkout?.tax_identifier?.id && (
-					<div
-						css={css`
-							display: flex;
-							justify-content: space-between;
-						`}
-					>
-						<TaxIdDisplay taxId={checkout?.tax_identifier} />
+	const renderEditTaxDialog = () => {
+		if (!isDraftInvoice) return null;
 
-						<ScDropdown placement="bottom-end">
-							<ScButton slot="trigger" type="text" circle>
-								<ScIcon name="more-horizontal" />
-							</ScButton>
-							<ScMenu>
-								<ScMenuItem onClick={() => setOpen(true)}>
-									{__('Edit', 'surecart')}
-								</ScMenuItem>
-								<ScMenuItem onClick={() => onChange(null)}>
-									{__('Delete', 'surecart')}
-								</ScMenuItem>
-							</ScMenu>
-						</ScDropdown>
-					</div>
-				)}
-			</Box>
-
+		return (
 			<ScDialog
 				label={__('Edit Tax ID', 'surecart')}
 				open={open}
@@ -142,6 +113,53 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 					{__('Update', 'surecart')}
 				</ScButton>
 			</ScDialog>
+		);
+	};
+
+	return (
+		<>
+			<Box
+				title={__('Tax', 'surecart')}
+				loading={loading}
+				footer={
+					!loading &&
+					!checkout?.tax_identifier?.id &&
+					isDraftInvoice && (
+						<ScButton onClick={() => setOpen(true)}>
+							{__('Add A Tax ID', 'surecart')}
+						</ScButton>
+					)
+				}
+			>
+				{!!checkout?.tax_identifier?.id && (
+					<div
+						css={css`
+							display: flex;
+							justify-content: space-between;
+						`}
+					>
+						<TaxIdDisplay taxId={checkout?.tax_identifier} />
+
+						{isDraftInvoice && (
+							<ScDropdown placement="bottom-end">
+								<ScButton slot="trigger" type="text" circle>
+									<ScIcon name="more-horizontal" />
+								</ScButton>
+								<ScMenu>
+									<ScMenuItem onClick={() => setOpen(true)}>
+										{__('Edit', 'surecart')}
+									</ScMenuItem>
+									<ScMenuItem onClick={() => onChange(null)}>
+										{__('Delete', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
+						)}
+					</div>
+				)}
+			</Box>
+
+			{renderEditTaxDialog()}
 		</>
 	);
 };
