@@ -88,8 +88,7 @@ class BuyButton extends Element {
 
 		if ( $this->is_admin_editor() ) {
 			$rendered_attributes = $this->get_block_rendered_attributes();
-			$content             = '<div class="wp-block-button has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button">';
-			$content            .= '<a class="wp-block-button__link wp-element-button sc-button__link ' . $rendered_attributes['class'] . '" id="' . $rendered_attributes['id'] . '" >';
+			$content             = '<a class="wp-block-button__link wp-element-button sc-button__link ' . $rendered_attributes['class'] . '" id="' . $rendered_attributes['id'] . '" >';
 			$content            .= '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
 			$content            .= '</a></div>';
 
