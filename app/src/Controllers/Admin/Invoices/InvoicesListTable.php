@@ -78,14 +78,17 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_method( $invoice ) {
-		if ( ! empty( $invoice->checkout->payment_intent->processor_type ) && 'paypal' === $invoice->checkout->payment_intent->processor_type ) {
-			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
+		if ( isset( $invoice->checkout->manual_payment_method->name ) ) {
+			return '<sc-tag>' . $invoice->checkout->manual_payment_method->name . '</sc-tag>';
 		}
-		if ( ! empty( $invoice->checkout->payment_intent->payment_method->card->brand ) ) {
-			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $invoice->checkout->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
-		}
-
-		return $invoice->checkout->payment_intent->processor_type ?? '-';
+		ob_start();
+		?>
+			<sc-payment-method id="sc-method-<?php echo esc_attr( $invoice->id ); ?>"></sc-payment-method>
+			<script>
+				document.getElementById('sc-method-<?php echo esc_attr( $invoice->id ); ?>').paymentMethod = <?php echo wp_json_encode( $invoice->checkout->payment_method ); ?>;
+			</script>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -128,7 +131,7 @@ class InvoicesListTable extends ListTable {
 		}
 
 		return Invoice::where( $where )
-		->with( [ 'charge', 'invoice.checkout', 'checkout.order', 'checkout.customer', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
+		->with( [ 'charge', 'invoice.checkout', 'checkout.order', 'checkout.charge', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.customer', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'invoices' ),
@@ -179,7 +182,7 @@ class InvoicesListTable extends ListTable {
 	 * @return array
 	 */
 	public function getStatus() {
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'all' ) );  //TODO:change it to open.
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'all' ) );
 		if ( 'all' === $status ) {
 			return [];
 		}
