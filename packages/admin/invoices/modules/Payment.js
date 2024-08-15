@@ -125,7 +125,7 @@ export default ({
 					</ScLineItem>
 				)}
 
-				{!!checkout?.discount_amount && isDraftInvoice && (
+				{(isDraftInvoice || !!checkout?.discount_amount) && (
 					<ScCouponForm
 						collapsed={true}
 						placeholder={__('Enter Coupon Code', 'surecart')}
