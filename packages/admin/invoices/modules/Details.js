@@ -21,6 +21,10 @@ import {
 
 export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
+	const paymentPageUrl =
+		!!checkout?.id && !invoice?.automatic_collection
+			? `${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`
+			: null;
 
 	return (
 		<>
@@ -55,20 +59,10 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 										due_date: Date.parse(due_date) / 1000,
 									});
 								}}
+								onClear={() =>
+									updateInvoice({ due_date: null })
+								}
 							/>
-							{!!invoice?.due_date && (
-								<ScButton
-									type="text"
-									onClick={() =>
-										updateInvoice({ due_date: null })
-									}
-									css={css`
-										max-width: 25px;
-									`}
-								>
-									<ScIcon name="x"></ScIcon>
-								</ScButton>
-							)}
 						</div>
 					) : invoice?.due_date ? (
 						<ScFormatDate
@@ -104,21 +98,10 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 											Date.parse(issue_date) / 1000,
 									});
 								}}
+								onClear={() =>
+									updateInvoice({ issue_date: null })
+								}
 							/>
-
-							{!!invoice?.issue_date && (
-								<ScButton
-									type="text"
-									onClick={() =>
-										updateInvoice({ issue_date: null })
-									}
-									css={css`
-										max-width: 25px;
-									`}
-								>
-									<ScIcon name="x"></ScIcon>
-								</ScButton>
-							)}
 						</div>
 					) : invoice?.issue_date ? (
 						<ScFormatDate
@@ -133,14 +116,14 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 					)}
 				</Definition>
 
-				{!!checkout?.id && !invoice?.automatic_collection && (
+				{!!paymentPageUrl && (
 					<Definition title={__('Payment Page', 'surecart')}>
 						<a
-							href={`${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`}
+							href={paymentPageUrl}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							{`${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`}
+							{paymentPageUrl}
 						</a>
 					</Definition>
 				)}

@@ -1,10 +1,18 @@
 /** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
-import { ScFormatDate, ScButton, ScIcon } from '@surecart/components-react';
 import { DateTimePicker, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { css, jsx } from '@emotion/core';
-import { useEffect } from 'react';
+import { useEffect } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
+import { ScFormatDate, ScButton, ScIcon } from '@surecart/components-react';
 import Error from './Error';
 
 export default (props) => {
@@ -12,9 +20,11 @@ export default (props) => {
 		currentDate,
 		onChange,
 		onChoose,
+		onClear = () => {},
 		placeholder,
 		title,
 		chooseDateLabel,
+		clearDateLabel,
 		required,
 		children,
 		...rest
@@ -59,25 +69,23 @@ export default (props) => {
 			{children ? (
 				<a onClick={toggleVisible}>{children}</a>
 			) : (
-				<>
-					<ScButton onClick={toggleVisible}>
-						{currentDate ? (
-							<ScFormatDate
-								date={currentDate}
-								month="long"
-								day="numeric"
-								year="numeric"
-							/>
-						) : (
-							placeholder || __('Select date', 'surecart')
-						)}
-						{currentDate ? (
-							<ScIcon name="edit" slot="suffix" />
-						) : (
-							<ScIcon name="plus" slot="suffix" />
-						)}
-					</ScButton>
-				</>
+				<ScButton onClick={toggleVisible}>
+					{currentDate ? (
+						<ScFormatDate
+							date={currentDate}
+							month="long"
+							day="numeric"
+							year="numeric"
+						/>
+					) : (
+						placeholder || __('Select date', 'surecart')
+					)}
+
+					<ScIcon
+						name={currentDate ? 'edit' : 'plus'}
+						slot="suffix"
+					/>
+				</ScButton>
 			)}
 
 			{isVisible && (
@@ -99,8 +107,13 @@ export default (props) => {
 						<ScButton type="primary" onClick={onChooseDate}>
 							{chooseDateLabel || __('Choose', 'surecart')}
 						</ScButton>
-						<ScButton onClick={toggleVisible}>
-							{__('Cancel', 'surecart')}
+						<ScButton
+							onClick={() => {
+								onClear();
+								toggleVisible();
+							}}
+						>
+							{clearDateLabel || __('Clear', 'surecart')}
 						</ScButton>
 					</div>
 				</Modal>

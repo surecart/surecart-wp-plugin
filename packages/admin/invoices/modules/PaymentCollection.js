@@ -221,6 +221,11 @@ export default ({
 															) / 1000,
 													});
 												}}
+												onClear={() =>
+													updateInvoice({
+														due_date: null,
+													})
+												}
 											/>
 
 											{!!invoice?.due_date && (

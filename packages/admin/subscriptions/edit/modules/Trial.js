@@ -32,17 +32,11 @@ export default ({ subscription, updateSubscription, loading }) => {
 								trial_end_at: Date.parse(trial_end_at) / 1000,
 							});
 						}}
+						onClear={() =>
+							updateSubscription({ trial_end_at: null })
+						}
+						clearDateLabel={__('Remove', 'surecart')}
 					/>
-					{!!subscription?.trial_end_at && (
-						<ScButton
-							type="text"
-							onClick={() =>
-								updateSubscription({ trial_end_at: null })
-							}
-						>
-							{__('Remove', 'surecart')}
-						</ScButton>
-					)}
 				</ScFlex>
 			</ScFormControl>
 		</Box>
