@@ -406,7 +406,7 @@ class InvoicesListTable extends ListTable {
 			<option <?php selected( $displayed_customer, '' ); ?> value=""><?php esc_html_e( 'All Customers', 'surecart' ); ?></option>
 			<?php foreach ( $customers as $customer ) : ?>
 				<option <?php selected( $displayed_customer, $customer->id ); ?> value="<?php echo esc_attr( $customer->id ); ?>">
-					<?php echo esc_html( $customer->first_name ); ?>
+					<?php echo esc_html( $customer->first_name . ' ' . $customer->last_name ); ?>
 				</option>
 			<?php endforeach; ?>
 		</select>
