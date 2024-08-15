@@ -125,17 +125,19 @@ export default ({
 					</ScLineItem>
 				)}
 
-				<ScCouponForm
-					collapsed={true}
-					placeholder={__('Enter Coupon Code', 'surecart')}
-					label={__('Add Coupon Code', 'surecart')}
-					buttonText={__('Apply', 'surecart')}
-					onScApplyCoupon={onCouponChange}
-					discount={checkout?.discount}
-					currency={checkout?.currency}
-					discountAmount={checkout?.discount_amount}
-					disabledActions={!isDraftInvoice}
-				/>
+				{!!checkout?.discount_amount && !isDraftInvoice && (
+					<ScCouponForm
+						collapsed={true}
+						placeholder={__('Enter Coupon Code', 'surecart')}
+						label={__('Add Coupon Code', 'surecart')}
+						buttonText={__('Apply', 'surecart')}
+						onScApplyCoupon={onCouponChange}
+						discount={checkout?.discount}
+						currency={checkout?.currency}
+						discountAmount={checkout?.discount_amount}
+						disabledActions={!isDraftInvoice}
+					/>
+				)}
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
