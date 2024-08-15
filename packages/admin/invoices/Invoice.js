@@ -225,8 +225,10 @@ export default () => {
 
 			const data = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${invoice?.id}/${action}`, {}),
-				data: requestData,
+				path: addQueryArgs(
+					`${baseURL}/${invoice?.id}/${action}`,
+					requestData
+				),
 			});
 
 			// Update the invoice in the redux store.
