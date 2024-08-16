@@ -40,7 +40,7 @@ export default ({ checkout, setBusy }) => {
 								? item
 								: `checkout.${item}`;
 						}),
-						'checkout',
+						'draft-checkout',
 					],
 				}),
 				data,
@@ -49,7 +49,7 @@ export default ({ checkout, setBusy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				checkout,
 				undefined,
 				false,
@@ -98,7 +98,7 @@ export default ({ checkout, setBusy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				checkout,
 				undefined,
 				false,

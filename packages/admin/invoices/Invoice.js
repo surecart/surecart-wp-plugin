@@ -77,7 +77,7 @@ export default () => {
 			const checkoutId = invoice?.checkout;
 			const checkoutEntityData = [
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				checkoutId,
 				{ expand },
 			];
@@ -249,7 +249,7 @@ export default () => {
 			// Update the checkout in the redux store as invoice number is added to checkout.order
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				{
 					...checkout,
 				},

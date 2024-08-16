@@ -33,7 +33,7 @@ export default ({ invoice, checkout, loading, setBusy }) => {
 			// get the checkouts endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'checkout'
+				'draft-checkout'
 			);
 
 			// fetch the updated checkout.
@@ -46,7 +46,7 @@ export default ({ invoice, checkout, loading, setBusy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				data,
 				undefined,
 				false,
@@ -93,7 +93,7 @@ export default ({ invoice, checkout, loading, setBusy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				checkout,
 				undefined,
 				false,

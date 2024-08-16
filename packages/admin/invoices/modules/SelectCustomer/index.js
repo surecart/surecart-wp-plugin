@@ -48,7 +48,7 @@ export default ({
 			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'checkout'
+				'draft-checkout'
 			);
 
 			// Update the customer.
@@ -75,7 +75,7 @@ export default ({
 			// Update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				data,
 				undefined,
 				false,
