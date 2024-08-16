@@ -881,4 +881,31 @@ class Product extends Model implements PageModel {
 	public function getPreviewImageAttribute() {
 		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'medium_large' ) : (object) [];
 	}
+
+	/**
+	 * Get the product page initial state
+	 *
+	 * @param array $args Array of arguments.
+	 *
+	 * @return array
+	 */
+	public function getInitialPageState( $args = [] ) {
+		$form = \SureCart::forms()->getDefault();
+
+		return wp_parse_args(
+			$args,
+			[
+				'formId'          => $form->ID,
+				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
+				'product'         => $this,
+				'prices'          => $this->active_prices,
+				'selectedPrice'   => ( $this->active_prices ?? [] )[0] ?? null,
+				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
+				'variant_options' => $this->variant_options->data ?? [],
+				'variants'        => $this->variants->data ?? [],
+				'selectedVariant' => $this->first_variant_with_stock ?? null,
+				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
+			]
+		);
+	}
 }
