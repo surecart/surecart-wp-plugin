@@ -6,21 +6,21 @@
 	"description": "Displays product buy and add to cart buttons",
 	"category": "surecart-product-page",
 	"keywords": ["button", "buy", "product"],
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
 		"align": ["wide", "full"],
 		"html": false,
 		"__experimentalExposeControlsToChildren": true,
-    "spacing": {
-      "padding": true,
-      "margin": true,
-      "__experimentalDefaultControls": {
-        "padding": true,
-        "margin": true
-      }
-    },
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,

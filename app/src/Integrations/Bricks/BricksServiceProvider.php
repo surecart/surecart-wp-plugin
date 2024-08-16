@@ -16,6 +16,13 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
+		$container['surecart.bricks.elements'] = function () {
+			return new BricksElementsService();
+		};
+
+		$container['surecart.bricks.dynamic_data'] = function () {
+			return new BricksDynamicDataService();
+		};
 	}
 
 	/**
@@ -24,17 +31,7 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		add_filter( 'bricks/frontend/render_data', [ $this, 'handleProductPageWrapper' ], 10, 2 );
-	}
-
-	/**
-	 * Handle the product page wrapper
-	 *
-	 * @param string $content Content of Shortcode.
-	 *
-	 * @return string $content Content of the product page.
-	 */
-	public function handleProductPageWrapper( string $content ): string {
-		return ( new ProductPageWrapperService( $content ) )->wrap();
+		$container['surecart.bricks.elements']->bootstrap();
+		$container['surecart.bricks.dynamic_data']->bootstrap();
 	}
 }

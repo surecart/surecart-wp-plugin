@@ -30,7 +30,6 @@ class MediaRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	protected $methods = [ 'index', 'create', 'find', 'delete', 'edit' ];
 
-
 	/**
 	 * Get our sample schema for a post.
 	 *

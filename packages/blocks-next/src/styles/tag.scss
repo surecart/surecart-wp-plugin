@@ -13,6 +13,7 @@
 	border-width: 0;
 	border-radius: var(--sc-input-border-radius-medium);
 	padding: 0 var(--sc-spacing-small);
+	box-sizing: border-box;
 
 	&__clear {
 		width: 1em;

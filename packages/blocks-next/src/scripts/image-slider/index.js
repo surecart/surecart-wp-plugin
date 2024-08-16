@@ -56,9 +56,11 @@ const { state } = store('surecart/image-slider', {
 			const thumbsContainer = ref.querySelector(
 				'.sc-image-slider__thumbs'
 			);
-			const thumbs = thumbsContainer.querySelector(
-				'.sc-image-slider__thumbs .swiper'
-			);
+			const thumbs = thumbsContainer
+				? thumbsContainer.querySelector(
+						'.sc-image-slider__thumbs .swiper'
+				  )
+				: null;
 
 			// if we have a thumbs container.
 			state.thumbsSwiper =

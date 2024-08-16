@@ -16,6 +16,7 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"anchor": true,
 		"align": ["wide", "full"]
 	},
 	"textdomain": "surecart",

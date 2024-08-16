@@ -144,118 +144,89 @@ export default [
 						],
 					],
 					[
-						'surecart/product-price-choices-v2',
+						'surecart/product-price-chooser',
 						[
 							[
-								'surecart/product-price-choices-template',
+								'surecart/product-price-choice-template',
 								{
-									style: {
-										spacing: {
-											padding: {
-												top: '0',
-												bottom: '0',
-												left: '0',
-												right: '0',
-											},
-											blockGap: 'var:preset|spacing|20',
-										},
-									},
 									layout: {
-										type: 'grid',
-										columnCount: 2,
-										justifyContent: 'stretch',
-										orientation: 'vertical',
+										type: 'flex',
+										justifyContent: 'left',
 										flexWrap: 'nowrap',
-										verticalAlignment: 'center',
+										orientation: 'vertical',
 									},
 								},
 								[
+									['surecart/price-name'],
 									[
-										'surecart/product-price-choice-template',
+										'core/group',
 										{
+											style: {
+												spacing: {
+													blockGap: '0px',
+												},
+											},
 											layout: {
 												type: 'flex',
-												justifyContent: 'left',
-												flexWrap: 'nowrap',
 												orientation: 'vertical',
+												justifyContent: 'right',
 											},
 										},
 										[
-											['surecart/price-name'],
 											[
-												'core/group',
+												'surecart/price-amount',
 												{
 													style: {
-														spacing: {
-															blockGap: '0px',
+														elements: {
+															link: {
+																color: {
+																	text: 'var:preset|color|accent-3',
+																},
+															},
+														},
+														typography: {
+															fontStyle: 'normal',
+															fontWeight: '700',
 														},
 													},
-													layout: {
-														type: 'flex',
-														orientation: 'vertical',
-														justifyContent: 'right',
-													},
+													textColor: 'accent-3',
 												},
-												[
-													[
-														'surecart/price-amount',
-														{
-															style: {
-																elements: {
-																	link: {
-																		color: {
-																			text: 'var:preset|color|accent-3',
-																		},
-																	},
-																},
-																typography: {
-																	fontStyle:
-																		'normal',
-																	fontWeight:
-																		'700',
-																},
-															},
-															textColor:
-																'accent-3',
+											],
+											[
+												'surecart/price-trial',
+												{
+													style: {
+														color: {
+															text: '#8a8a8a',
 														},
-													],
-													[
-														'surecart/price-trial',
-														{
-															style: {
+														elements: {
+															link: {
 																color: {
 																	text: '#8a8a8a',
 																},
-																elements: {
-																	link: {
-																		color: {
-																			text: '#8a8a8a',
-																		},
-																	},
-																},
 															},
-															fontSize: 'small',
 														},
-													],
-													[
-														'surecart/price-setup-fee',
-														{
-															style: {
+													},
+													fontSize: 'small',
+												},
+											],
+											[
+												'surecart/price-setup-fee',
+												{
+													style: {
+														color: {
+															text: '#8a8a8a',
+														},
+														elements: {
+															link: {
 																color: {
 																	text: '#8a8a8a',
 																},
-																elements: {
-																	link: {
-																		color: {
-																			text: '#8a8a8a',
-																		},
-																	},
-																},
 															},
-															fontSize: 'small',
 														},
-													],
-												],
+													},
+													fontSize: 'small',
+												},
 											],
 										],
 									],

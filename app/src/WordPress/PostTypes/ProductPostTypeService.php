@@ -2,6 +2,8 @@
 
 namespace SureCart\WordPress\PostTypes;
 
+use SureCart\Support\Currency;
+
 /**
  * Form post type service class.
  */
@@ -34,7 +36,7 @@ class ProductPostTypeService {
 		// ensure we always fetch with the current connected store id in case of store change.
 		add_filter( 'parse_query', array( $this, 'forceAccountIdScope' ), 10, 2 );
 
-		// redirect to 404 if we are not in the correct store
+		// redirect to 404 if we are not in the correct store.
 		add_action( 'template_redirect', array( $this, 'maybeRedirectTo404' ) );
 
 		// add global $sc_product inside loops.
@@ -48,6 +50,9 @@ class ProductPostTypeService {
 
 		// product gallery migration.
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
+
+		// allow product meta to be exposed top-level.
+		add_action( 'get_post_metadata', array( $this, 'exposeProductMeta' ), 10, 4 );
 
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
@@ -72,6 +77,23 @@ class ProductPostTypeService {
 		add_filter( 'attachment_fields_to_edit', [ $this, 'addAttachmentFields' ], 1, 2 );
 		add_filter( 'attachment_fields_to_save', [ $this, 'saveAttachmentFields' ], 10, 2 );
 
+		// handle post thumbnails from gallery.
+		add_filter( 'post_thumbnail_id', array( $this, 'postThumbnailId' ), 10, 5 );
+		add_filter( 'wp_get_attachment_image', array( $this, 'getAttachmentImage' ), 10, 5 );
+		add_filter( 'has_post_thumbnail', array( $this, 'hasPostThumbnail' ), 10, 2 );
+		add_filter( 'post_thumbnail_html', array( $this, 'postThumbnailHTML' ), 10, 5 );
+		add_filter( 'post_thumbnail_url', array( $this, 'postThumbnailURL' ), 10, 2 );
+
+		// add schema markup.
+		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
+
+		// disallow pre title filter.
+		add_filter( 'pre_get_document_title', [ $this, 'disallowPreTitle' ], 214748364 );
+
+		// add schema and seo meta.
+		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
+		add_action( 'wp_head', array( $this, 'addProductSeoMeta' ), 10 );
+
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
@@ -80,6 +102,143 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Filter the post thumbnail id.
+	 * This is used to set the featured image for the product.
+	 *
+	 * @param integer $thumbnail_id The thumbnail ID.
+	 * @param integer $post_id The post ID.
+	 *
+	 * @return integer
+	 */
+	public function postThumbnailId( $thumbnail_id, $post_id ) {
+		// we already have a thumbnail id.
+		if ( ! empty( $thumbnail_id ) ) {
+			return $thumbnail_id;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $thumbnail_id;
+		}
+
+		// use the first gallery image (product model featured image).
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image->ID ) ) {
+			return $product->featured_image->ID;
+		}
+
+		// fake a thumbnail id so we can filter thumbnail html output.
+		return PHP_INT_MAX;
+	}
+
+	/**
+	 * Get the attachment image.
+	 * We need this for backwards compatibility for ProductMedia.
+	 *
+	 * @param string  $html The HTML.
+	 * @param integer $attachment_id The attachment ID.
+	 * @param integer $post_thumbnail_id The post thumbnail ID.
+	 * @param string  $size The size.
+	 * @param array   $attr The attributes.
+	 *
+	 * @return string
+	 */
+	public function getAttachmentImage( $html, $attachment_id, $post_thumbnail_id, $size, $attr ) {
+		// check if we have an attachment id.
+		if ( ! empty( $attachment_id ) ) {
+			return $html;
+		}
+
+		// check post type.
+		global $post;
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $html;
+		}
+
+		$product = sc_get_product();
+		if ( empty( $product ) ) {
+			return $html;
+		}
+
+		return $product->featured_image->html( $size, $attr );
+	}
+
+	/**
+	 * Since we are using the first gallery image as the post thumbnail,
+	 * we need to check if the product has a featured image.
+	 *
+	 * @param boolean $has_thumbnail Whether the post has a thumbnail.
+	 * @param integer $post_id The post ID.
+	 *
+	 * @return boolean
+	 */
+	public function hasPostThumbnail( $has_thumbnail, $post_id ) {
+		// check if we have an attachment id.
+		if ( ! empty( $has_thumbnail ) ) {
+			return $has_thumbnail;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $has_thumbnail;
+		}
+
+		// check if the product has a featured image.
+		$product = sc_get_product( $post_id );
+		return ! empty( $product->featured_image->ID );
+	}
+
+	/**
+	 * Get the post thumbnail html
+	 *
+	 * @return string
+	 */
+	public function postThumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+		if ( ! empty( $html ) ) {
+			return $html;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $html;
+		}
+
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image ) ) {
+			return $product->featured_image->html( $size, $attr );
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Get the post thumbnail url
+	 *
+	 * @return string
+	 */
+	public function postThumbnailURL( $url, $post_id ) {
+		if ( ! empty( $url ) ) {
+			return $url;
+		}
+
+		// check post type.
+		$post = get_post( $post_id );
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $url;
+		}
+
+		$product = sc_get_product( $post_id );
+		if ( ! empty( $product->featured_image ) ) {
+			return $product->featured_image->attributes()->src;
+		}
+
+		return $url;
 	}
 
 	/**
@@ -109,68 +268,9 @@ class ProductPostTypeService {
 			'input'    => 'text',
 			'required' => false,
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
-			'helps'    => esc_html__( 'Enter the SureCart variant option value (e.g. Blue, Green, etc.)' ),
+			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).' ) . ' <a href="https://surecart.com/docs" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
 		return $form_fields;
-	}
-
-	/**
-	 * Handle bricks begin content
-	 *
-	 * @return void
-	 */
-	public function handleBricksBeginContent() {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return;
-		}
-
-		$product_page_blocks = '<!-- wp:surecart/product-page --><!-- wp:surecart/product-selected-price-ad-hoc-amount /--><!-- /wp:surecart/product-page -->';
-		$product_page_html   = do_blocks( $product_page_blocks );
-		$product_page_html   = substr( $product_page_html, 0, -8 ); // remove the </form> tag at the end.
-		echo $product_page_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Handle bricks end content
-	 *
-	 * @return void
-	 */
-	public function handleBricksEndContent() {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return;
-		}
-		echo '</form>';
-	}
-
-	/**
-	 * Handle Elementor content.
-	 *
-	 * @param string $content The content.
-	 *
-	 * @return string
-	 */
-	public function handleElementorContent( string $content ): string {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return $content;
-		}
-
-		// check if the product page wrapper is not already added.
-		if ( false === strpos( $content, '<form class="wp-block-surecart-product-page"' ) ) {
-			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
-		}
-
-		// check if the custom amount block is not already added.
-		if ( false === strpos( $content, 'class="wp-block-surecart-product-selected-price-ad-hoc-amount"' ) ) {
-			$content = str_replace(
-				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				$content
-			);
-		}
-
-		$content = do_blocks( $content );
-
-		return $content;
 	}
 
 	/**
@@ -522,6 +622,35 @@ class ProductPostTypeService {
 	}
 
 	/**
+	 * Expose product meta.
+	 *
+	 * This allows us to expose the product meta to the top level.
+	 *
+	 * @param array   $value  The value.
+	 * @param integer $object_id The object ID.
+	 * @param string  $meta_key The meta key.
+	 * @param bool    $single Whether to return a single value.
+	 *
+	 * @return array|mixed;
+	 */
+	public function exposeProductMeta( $value, $object_id, $meta_key, $single ) {
+		// only for our post type.
+		if ( get_post_type( $object_id ) !== $this->post_type ) {
+			return $value;
+		}
+
+		// only if empty.
+		remove_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10 );
+		$product = get_post_meta( $object_id, 'product', true );
+		add_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10, 4 );
+		if ( empty( $product ) ) {
+			return $value;
+		}
+
+		return $product->$meta_key ?? $value;
+	}
+
+	/**
 	 * Setup the product.
 	 *
 	 * @param \WP_Post $post The post.
@@ -611,7 +740,8 @@ class ProductPostTypeService {
 		}
 
 		// check if the post has the taxonomy sc_acccount that matches the current account.
-		$account = get_the_terms( $post->ID, 'sc_account' );
+		// cached version fails here for some reason: https://core.trac.wordpress.org/ticket/41679.
+		$account = wp_get_object_terms( $post->ID, 'sc_account' );
 
 		if ( empty( $account ) ) {
 			return;
@@ -718,17 +848,10 @@ class ProductPostTypeService {
 			'gallery',
 			array(
 				'get_callback'    => function ( $post ) {
-					return ! empty( get_post_meta( $post['id'], 'gallery', true ) ) ? get_post_meta( $post['id'], 'gallery', true ) : array();
+					$product = get_post_meta( $post['id'], 'product', true );
+					return $product->gallery ?? [];
 				},
 				'update_callback' => function ( $value, $post ) {
-					// map each value to an object.
-					$value = array_map(
-						function ( $item ) {
-							return (object) $item;
-						},
-						$value
-					);
-					return update_post_meta( $post->ID, 'gallery', $value );
 				},
 				'schema'          => array(
 					'description' => __( 'Product gallery', 'surecart' ),
@@ -850,6 +973,7 @@ class ProductPostTypeService {
 					'excerpt',
 					'custom-fields',
 					'editor',
+					'thumbnail',
 					'page-attributes',
 				),
 			)
@@ -877,5 +1001,166 @@ class ProductPostTypeService {
 				'label_count'               => _n_noop( 'Archived <span class="count">(%s)</span>', 'Archived <span class="count">(%s)</span>', 'surecart' ),
 			)
 		);
+	}
+
+	/**
+	 * Update the document title name to match the model[eg-product] name.
+	 *
+	 * @param string $title The title.
+	 */
+	public function disallowPreTitle( $title ): string {
+		if ( is_singular( 'sc_product' ) ) {
+			return '';
+		}
+		return $title;
+	}
+
+	/**
+	 * Update the document title name to match the model[eg-product] name.
+	 *
+	 * @param array $parts The parts of the document title.
+	 */
+	public function documentTitle( $parts ): array {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return $parts;
+		}
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return $parts;
+		}
+
+		$parts['title'] = esc_html( sanitize_text_field( $product->page_title ?? $parts['title'] ) );
+
+		return $parts;
+	}
+
+	/**
+	 * Add the JSON-LD schema for the product.
+	 *
+	 * @return void
+	 */
+	public function addProductJsonSchema() {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return;
+		}
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$display_schema = apply_filters( 'sc_display_product_json_ld_schema', true, $product );
+		if ( ! $display_schema ) {
+			return;
+		}
+
+		$schema = $this->getJsonSchemaArray( $product ) ?? [];
+		if ( empty( $schema ) ) {
+			return;
+		}
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
+		<?php
+	}
+
+	/**
+	 * Get the JSON-LD schema for the product.
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return array
+	 */
+	public function getJsonSchemaArray( $product ): array {
+		$active_prices = (array) $product->active_prices;
+
+		$offers = array_map(
+			function ( $price ) use ( $product ) {
+				return array(
+					'@type'         => 'Offer',
+					'price'         => Currency::maybeConvertAmount( $price->amount, $price->currency ),
+					'priceCurrency' => $price->currency,
+					'availability'  => $product->in_stock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+				);
+			},
+			$active_prices ?? array()
+		);
+
+		$gallery_image_urls = ! empty( $product->gallery ) ? array_map(
+			function ( $media ) {
+				return $media->attributes()->src;
+			},
+			$product->gallery
+		) : '';
+
+		return apply_filters(
+			'surecart/product/json_schema',
+			array(
+				'@context'    => 'http://schema.org',
+				'@type'       => 'Product',
+				'name'        => $product->name,
+				'image'       => $gallery_image_urls,
+				'description' => sanitize_text_field( $product->description ),
+				'offers'      => $offers,
+			),
+			$this
+		);
+	}
+
+	/**
+	 * Add SEO Meta Tags for the product.
+	 *
+	 * @return void
+	 */
+	public function addProductSeoMeta() {
+		if ( ! is_singular( 'sc_product' ) ) {
+			return;
+		}
+
+		$product = sc_get_product();
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$display_seo_meta = apply_filters( 'sc_display_product_seo_meta', true, $product );
+		if ( ! $display_seo_meta ) {
+			return;
+		}
+
+		$this->renderProductSeoMeta( $product );
+	}
+
+	/**
+	 * Render the SEO meta tags for the product.
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return void
+	 */
+	public function renderProductSeoMeta( $product ) {
+		$image_attributes  = $product->featured_image ? $product->featured_image->attributes( apply_filters( 'surecart/og:image/size', 'full' ) ) : null;
+		$product_image_url = $image_attributes ? $image_attributes->src : '';
+		?>
+
+		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>">
+		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="<?php echo esc_attr( $product->page_title ); ?>" />
+		<meta property="og:description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>" />
+		<meta property="og:url" content="<?php echo esc_url( $product->permalink ); ?>" />
+		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="<?php echo esc_attr( $product->page_title ); ?>" />
+		<meta name="twitter:description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>" />
+
+		<?php if ( ! empty( $product_image_url ) ) : ?>
+		<meta property="og:image" content="<?php echo esc_url( $product_image_url ); ?>" />
+		<meta name="twitter:image" content="<?php echo esc_url( $product_image_url ); ?>" />
+		<?php endif; ?>
+
+		<?php
 	}
 }

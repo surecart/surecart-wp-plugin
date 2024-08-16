@@ -7,12 +7,13 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"icon": "money-alt",
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"example": {
 		"attributes": {}
 	},
 	"supports": {
 		"interactivity": true,
+		"anchor": true,
 		"color": {
 			"gradients": true,
 			"text": true,

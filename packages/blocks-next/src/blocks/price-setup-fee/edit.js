@@ -6,7 +6,7 @@ export default ({ context }) => {
 	const { setup_fee_text } = context['surecart/price'];
 	return (
 		<div {...blockProps}>
-			{setup_fee_text || __('$12 Signup Fee', 'surecart')}
+			{setup_fee_text || scData?.currency_symbol + __('12 Signup Fee', 'surecart')}
 		</div>
 	);
 };

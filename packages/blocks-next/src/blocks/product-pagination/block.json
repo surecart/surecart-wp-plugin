@@ -8,10 +8,10 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"usesContext": [
+		"query",
 		"surecart/product-list/limit",
 		"surecart/product-list/type",
-		"surecart/product-list/ids",
-		"surecart/product-list/collection_id"
+		"surecart/product-list/ids"
 	],
 	"ancestor": ["surecart/product-list"],
 	"allowedBlocks": [
@@ -37,7 +37,8 @@
 		"interactivity": true,
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"]
+			"margin": ["top", "bottom"],
+			"blockGap": true
 		},
 		"typography": {
 			"fontSize": true,

@@ -174,15 +174,6 @@ class ProductCollection extends Model implements PageModel {
 	}
 
 	/**
-	 * Get the JSON Schema Array
-	 *
-	 * @return array
-	 */
-	public function getJsonSchemaArray(): array {
-		return [];
-	}
-
-	/**
 	 * Get the page title for SEO.
 	 *
 	 * @return string

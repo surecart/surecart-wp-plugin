@@ -132,7 +132,7 @@ class LineItem extends Model {
 	 * @return string
 	 */
 	public function getSubtotalDisplayAmountAttribute() {
-		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
+		return Currency::format( (int) $this->subtotal_amount, $this->currency );
 	}
 
 	/**
@@ -141,7 +141,7 @@ class LineItem extends Model {
 	 * @return string
 	 */
 	public function getTotalDisplayAmountAttribute() {
-		return ! empty( $this->total_amount ) ? Currency::format( $this->total_amount, $this->currency ) : '';
+		return Currency::format( (int) $this->total_amount, $this->currency );
 	}
 
 	/**
@@ -211,6 +211,10 @@ class LineItem extends Model {
 			'out_of_stock'           => __( 'Out of stock', 'surecart' ),
 			'exceeds_purchase_limit' => __( 'Exceeds purchase limit', 'surecart' ),
 		);
+
+		if ( $this->quantity > 1 ) {
+			$translations['out_of_stock'] = __( 'Quantity unavailable', 'surecart' );
+		}
 
 		return $translations[ $this->purchasable_status ] ?? '';
 	}

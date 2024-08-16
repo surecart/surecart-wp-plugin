@@ -29,6 +29,12 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 		if ( isset( $this->item->ID ) ) {
 			$this->item->id = $this->item->ID;
 		}
+		if ( method_exists( $this->item, 'toArray' ) ) {
+			return $this->item->toArray();
+		}
+		if ( $this->item->guid ) {
+			$this->item->url = $this->item->guid;
+		}
 		return (array) $this->item;
 	}
 

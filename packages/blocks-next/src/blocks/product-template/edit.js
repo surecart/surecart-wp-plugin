@@ -12,20 +12,44 @@ import { BlockControls } from '@wordpress/block-editor';
 import { list, grid } from '@wordpress/icons';
 import classnames from 'classnames';
 import { useEffect } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 const TEMPLATE = [
 	[
 		'core/group',
 		{
-			layout: { type: 'flex', orientation: 'vertical' },
+			layout: { type: 'default' },
 		},
 		[
 			[
-				'surecart/product-image',
+				'core/cover',
 				{
-					border: { radius: '6px' },
-					style: { spacing: { margin: { bottom: '15px' } } },
+					useFeaturedImage: true,
+					dimRatio: 0,
+					isUserOverlayColor: true,
+					focalPoint: { x: 0.5, y: 0.5 },
+					contentPosition: 'top right',
+					isDark: false,
+					style: {
+						dimensions: { aspectRatio: '3/4' },
+						layout: { selfStretch: 'fit', flexSize: null },
+						spacing: { margin: { bottom: '15px' } },
+						border: { radius: '10px' },
+					},
+					layout: { type: 'default' },
 				},
+				[
+					[
+						'surecart/product-sale-badge',
+						{
+							style: {
+								typography: { fontSize: '12px' },
+								border: { radius: '100px' },
+							},
+						},
+					],
+				],
 			],
 			[
 				'surecart/product-title',
@@ -37,7 +61,7 @@ const TEMPLATE = [
 							fontStyle: 'normal',
 							fontWeight: '400',
 						},
-						spacing: { margin: { top: '5px', bottom: '5px' } },
+						spacing: { margin: { bottom: '5px', top: '0px' } },
 					},
 				},
 			],
@@ -50,6 +74,7 @@ const TEMPLATE = [
 							margin: { top: '0px', bottom: '0px' },
 						},
 						margin: { top: '0px', bottom: '0px' },
+						typography: { lineHeight: '1' },
 					},
 					layout: { type: 'flex', flexWrap: 'nowrap' },
 				},
@@ -96,10 +121,8 @@ export default ({
 	__unstableLayoutClassNames,
 	setAttributes,
 	context: {
-		'surecart/product-list/limit': limit,
+		query: { perPage, include, taxQuery, postType, offset = 0 },
 		'surecart/product-list/type': type,
-		'surecart/product-list/ids': ids,
-		'surecart/product-list/collection_id': collectionId,
 	},
 }) => {
 	const { type: layoutType, columnCount = 3 } = layout || {};
@@ -113,15 +136,40 @@ export default ({
 		}
 	}, [layoutType]);
 
+	// get taxonomies.
+	const taxonomies = useSelect((select) =>
+		select(coreStore).getTaxonomies({
+			type: postType,
+			per_page: -1,
+			context: 'view',
+		})
+	);
+
+	// We have to build the tax query for the REST API and use as
+	// keys the taxonomies `rest_base` with the `term ids` as values.
+	const builtTaxQuery = Object.entries(taxQuery || {}).reduce(
+		(accumulator, [taxonomySlug, terms]) => {
+			const taxonomy = taxonomies?.find(
+				({ slug }) => slug === taxonomySlug
+			);
+			if (taxonomy?.rest_base) {
+				accumulator[taxonomy?.rest_base] = terms;
+			}
+			return accumulator;
+		},
+		{}
+	);
+
 	const { records: products, isResolving } = useEntityRecords(
 		'postType',
 		'sc_product',
 		{
 			page: 1,
-			per_page: limit || 15,
+			per_page: perPage || 15,
 			post_status: ['publish'],
-			...(collectionId ? { collection_id: collectionId } : {}),
-			...('custom' === type ? { include: ids } : {}),
+			offset: offset || 0,
+			...(!!Object.keys(builtTaxQuery).length ? builtTaxQuery : {}),
+			...('custom' === type ? { include } : {}),
 			...('featured' === type ? { featured: true } : {}),
 		}
 	);
@@ -162,8 +210,6 @@ export default ({
 		[`columns-${columnCount}`]: layoutType === 'grid' && columnCount,
 	});
 
-	console.log({ TEMPLATE });
-
 	return (
 		<>
 			<BlockControls>
@@ -172,8 +218,9 @@ export default ({
 			<TemplateListEdit
 				template={TEMPLATE}
 				blockContexts={products?.map((product) => ({
+					postId: product?.id, // for core blocks.
+					postType: 'sc_product', // for core blocks.
 					id: product?.id,
-					'surecart/productId': product?.id,
 				}))}
 				clientId={clientId}
 				className={className}

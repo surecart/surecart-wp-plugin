@@ -16,7 +16,7 @@
 	data-wp-on--keydown="surecart/cart::actions.toggle"
 	tabindex="0"
 >
-	<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Cart Button.', 'surecart' ); ?>">
+	<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Open cart', 'surecart' ); ?>">
 		<?php echo wp_kses( $icon, sc_allowed_svg_html() ); ?>
 	</div>
 

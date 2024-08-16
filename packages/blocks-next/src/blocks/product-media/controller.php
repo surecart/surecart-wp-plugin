@@ -2,13 +2,16 @@
 
 $product = sc_get_product();
 
-if ( empty( $product ) ) {
-	return '';
-}
 
-$gallery        = $product->gallery;
+$gallery        = $product->gallery ?? [];
 $featured_image = $gallery[0] ?? null;
-$width          = ! empty( $attributes['width'] ) ? $attributes['width'] . 'px' : '';
+
+// get the width.
+if ( ! empty( $attributes['width'] ) ) {
+	$width = is_numeric( $attributes['width'] ) ? $attributes['width'] . 'px' : $attributes['width'];
+} else {
+	$width = false;
+}
 
 // handle empty.
 if ( empty( $gallery ) ) {
@@ -42,7 +45,5 @@ $height = 'auto';
 if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
-
-$gallery = $product->gallery;
 
 return 'file:./slideshow.php';

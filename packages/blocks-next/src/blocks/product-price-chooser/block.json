@@ -6,17 +6,23 @@
 	"description": "Displays possible choices for product prices.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,
 		"html": false,
+		"anchor": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,
 			"__experimentalDefaultControls": {
 				"padding": true,
-        "margin": true
+				"margin": true
 			}
+		},
+		"color": {
+			"text": true,
+			"background": false
 		}
 	},
 	"attributes": {

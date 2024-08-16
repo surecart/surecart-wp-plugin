@@ -82,10 +82,11 @@ class URLParamService {
 	 */
 	public function getKey( $name = '', $instance_id = '' ) {
 		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+		$prefix      = ! empty( $this->prefix ) ? ( $this->prefix . '-' ) : '';
 		if ( ! $instance_id ) {
-			return trim( $this->prefix . '-' . strtolower( $name ), '-' );
+			return trim( $prefix . strtolower( $name ), '-' );
 		}
-		return trim( $this->prefix . '-' . $instance_id . '-' . strtolower( $name ), '-' );
+		return trim( $prefix . $instance_id . '-' . strtolower( $name ), '-' );
 	}
 
 

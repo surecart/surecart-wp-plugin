@@ -94,6 +94,10 @@ class BulkActionService {
 		$pending_record_ids    = $this->getRecordIds( $name, 'pending' );
 		$processing_record_ids = $this->getRecordIds( $name, 'processing' );
 
+		if ( empty( $model->id ) ) {
+			return false;
+		}
+
 		return in_array( $model->id, $pending_record_ids ) || in_array( $model->id, $processing_record_ids );
 	}
 

@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { useEntityRecord } from '@wordpress/core-data';
 
 import TemplateListEdit from '../../components/TemplateListEdit';
 import { useBlockProps } from '@wordpress/block-editor';
@@ -14,11 +15,22 @@ const TEST_VARIANTS = [
 	{ name: 'Green', id: 3, 'surecart/productVariantPill/name': 'Green' },
 ];
 
-export default ({ clientId }) => {
+export default ({ clientId, context: { postId } }) => {
 	const blockProps = useBlockProps();
+
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
+
+	if (product?.id && !product?.variants?.data?.length) {
+		return null;
+	}
+
 	return (
 		<div {...blockProps}>
-			<label class="sc-form-label">Color</label>
+			<label class="sc-form-label">{__('Color', 'surecart')}</label>
 			<TemplateListEdit
 				template={[['surecart/product-variant-pill']]}
 				blockContexts={TEST_VARIANTS}

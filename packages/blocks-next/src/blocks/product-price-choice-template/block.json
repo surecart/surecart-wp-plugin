@@ -7,7 +7,7 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "money",
-	"usesContext": ["surecart/productId", "surecart/product", "surecart/price"],
+	"usesContext": ["postId", "surecart/product", "surecart/price"],
 	"ancestor": ["surecart/product-price-chooser"],
 	"attributes": {
 		"highlight_border": {
@@ -16,6 +16,7 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"anchor": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,

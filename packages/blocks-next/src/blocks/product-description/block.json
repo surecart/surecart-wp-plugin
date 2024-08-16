@@ -6,7 +6,8 @@
 	"description": "Display the product description.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": ["surecart/product-page"],
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,
 		"reusable": false,

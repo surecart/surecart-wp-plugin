@@ -53,7 +53,7 @@ const debouncedSearch = debounce(
 			: url.searchParams.delete(`${urlPrefix}-search`);
 
 		// Navigate to the new URL.
-		return actions.navigate(url.toString());
+		return actions.navigate(url.toString(), { replace: true });
 	},
 	500
 );

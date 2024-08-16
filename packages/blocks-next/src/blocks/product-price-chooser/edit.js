@@ -13,6 +13,7 @@ import {
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
+import { useEntityRecord } from '@wordpress/core-data';
 import TemplateListEdit from '../../components/TemplateListEdit';
 import { PanelBody } from '@wordpress/components';
 import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
@@ -21,20 +22,27 @@ import { RangeControl } from '@wordpress/components';
 
 const TEMPLATE = [
 	[
-		'surecart/product-price-choices-template',
-		{},
-		[
-			[
-				'surecart/product-price-choice-template',
-				{
-					layout: {
-						type: 'flex',
-						justifyContent: 'space-between',
-					},
-				},
-			],
-		],
+		'surecart/product-price-choice-template',
+		{
+			layout: {
+				type: 'flex',
+				justifyContent: 'space-between',
+			},
+		},
 	],
+];
+
+const DEMO_CONTEXT = [
+	{
+		name: __('Subscribe & Save', 'surecart'),
+		display_amount: `${window?.scData?.currency_symbol || '$'}8`,
+		short_interval_text: __('/ mo', 'surecart'),
+	},
+	{
+		name: __('One Time', 'surecart'),
+		display_amount: `${window?.scData?.currency_symbol || '$'}10`,
+		short_interval_text: '',
+	},
 ];
 
 export default ({
@@ -42,17 +50,25 @@ export default ({
 	setAttributes,
 	__unstableLayoutClassNames,
 	clientId,
+	context: { postId },
 }) => {
 	const { label, columns } = attributes;
 	const priceContainerRef = useRef(null);
 	const [isContainerSmall, setIsContainerSmall] = useState(true);
+
+	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
+		'postType',
+		'sc_product',
+		postId
+	);
+
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
 	});
 	const colorProps = useColorProps(attributes);
 
 	useEffect(() => {
-		if (priceContainerRef) {
+		if (priceContainerRef?.current) {
 			// watch for resize events on the price container
 			const observer = new ResizeObserver(() => {
 				const containerWidth = priceContainerRef?.current?.offsetWidth;
@@ -63,33 +79,15 @@ export default ({
 		}
 	}, [priceContainerRef]);
 
-	const getBlockContexts = () => {
-		const blockContexts = [];
-		const prices = {
-			0: {
-				name: __('Subscribe & Save', 'surecart'),
-				display_amount: '$8',
-				short_interval_text: __('/ mo', 'surecart'),
+	const blockContexts = (product?.active_prices || DEMO_CONTEXT).map(
+		(price, index) => ({
+			id: `price${index}`,
+			'surecart/price': {
+				...price,
+				checked: index === 0,
 			},
-			1: {
-				name: __('One Time', 'surecart'),
-				display_amount: '$10',
-				short_interval_text: '',
-			},
-		};
-
-		for (let i = 1; i <= Math.max(2, columns); i++) {
-			blockContexts.push({
-				id: `price${i}`,
-				'surecart/price': {
-					...prices[i % 2],
-					checked: i === 1,
-				},
-			});
-		}
-
-		return blockContexts;
-	};
+		})
+	);
 
 	return (
 		<Fragment>
@@ -116,32 +114,34 @@ export default ({
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps} ref={priceContainerRef}>
-				<RichText
-					tagName="label"
-					className={classnames(
-						'sc-form-label',
-						colorProps.className
-					)}
-					aria-label={__('Label text', 'surecart')}
-					placeholder={__('Add label…', 'surecart')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-				<TemplateListEdit
-					className="sc-choices"
-					template={TEMPLATE}
-					blockContexts={getBlockContexts()}
-					clientId={clientId}
-					renderAppender={false}
-					attachBlockProps={false}
-					style={{
-						'--columns': columns,
-					}}
-				/>
-			</div>
+			{blockContexts?.length > 1 ? (
+				<div {...blockProps} ref={priceContainerRef}>
+					<RichText
+						tagName="label"
+						className={classnames(
+							'sc-form-label',
+							colorProps.className
+						)}
+						aria-label={__('Label text', 'surecart')}
+						placeholder={__('Add label…', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+					<TemplateListEdit
+						className="sc-choices"
+						template={TEMPLATE}
+						blockContexts={blockContexts}
+						clientId={clientId}
+						renderAppender={false}
+						attachBlockProps={false}
+						style={{
+							'--columns': columns,
+						}}
+					/>
+				</div>
+			) : null}
 		</Fragment>
 	);
 };
