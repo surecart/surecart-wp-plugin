@@ -18,7 +18,7 @@ import template from './template';
 /**
  * Internal dependencies
  */
-import { useScopedBlockVariations, useBlockNameForPatterns } from '../utils';
+import { useBlockNameForPatterns } from '../utils';
 
 export default function QueryPlaceholder({
 	attributes,
