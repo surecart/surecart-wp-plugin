@@ -24,17 +24,17 @@ class CompatibilityService {
 	 */
 	public function bootstrap() {
 		// UAG fix.
-		add_action( 'render_block_data', array( $this, 'maybeEnqueueUAGBAssets' ) );
+		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
 		// SC Form Shortcode fix.
-		add_filter( 'surecart/shortcode/render', array( $this, 'maybeEnqueueUAGBAssetsForShortcode' ), 5, 3 );
+		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
 		// rankmath fix.
-		add_action( 'rank_math/head', array( $this, 'rankMathFix' ) );
+		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
 
 		// Yoast SEO fix.
-		add_action( 'wpseo_frontend_presenters', array( $this, 'yoastSEOFix' ) );
+		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
 
 		// Show gutenberg active notice.
-		add_action( 'admin_init', array( $this, 'gutenbergActiveNotice' ) );
+		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 
 		// Load Blocks Global Styles if enabled by Merchant in the setting.
 		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
@@ -95,7 +95,7 @@ class CompatibilityService {
 			return $parsed_block;
 		}
 
-		$upsell = \SureCart\Models\Upsell::with( array( 'price' ) )->find( get_post()->upsell->id );
+		$upsell = \SureCart\Models\Upsell::with( [ 'price' ] )->find( get_post()->upsell->id );
 
 		if ( is_wp_error( $upsell ) || empty( $upsell ) || empty( $upsell->id ) ) {
 			return $parsed_block;
@@ -154,12 +154,12 @@ class CompatibilityService {
 	public function gutenbergActiveNotice(): void {
 		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
 			( new AdminNoticesService() )->add(
-				array(
+				[
 					'name'  => 'gutenberg_active_notice',
 					'type'  => 'warning',
 					'title' => esc_html__( 'SureCart', 'surecart' ),
 					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, consider disabling the Gutenberg plugin.<p>', 'surecart' ) ),
-				)
+				]
 			);
 		}
 	}

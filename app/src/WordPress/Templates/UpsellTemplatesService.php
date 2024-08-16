@@ -22,7 +22,7 @@ class UpsellTemplatesService {
 	 *
 	 * @var array
 	 */
-	private array $templates = array();
+	private array $templates = [];
 
 	/**
 	 * The post type for the templates.
@@ -57,12 +57,12 @@ class UpsellTemplatesService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_filter( 'theme_' . $this->post_type . '_templates', array( $this, 'addTemplates' ) );
-		add_filter( 'template_include', array( $this, 'includeTemplate' ), 9 );
+		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
+		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
 
 		// Upsell page query overrides.
-		add_filter( 'posts_pre_query', array( $this, 'overrideUpsellPostQuery' ), 10, 2 );
-		add_filter( 'query_vars', array( $this, 'addCurrentUpsellQueryVar' ) );
+		add_filter( 'posts_pre_query', [ $this, 'overrideUpsellPostQuery' ], 10, 2 );
+		add_filter( 'query_vars', [ $this, 'addCurrentUpsellQueryVar' ] );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class UpsellTemplatesService {
 			return $posts;
 		}
 
-		$upsell = \SureCart\Models\Upsell::with( array( 'price' ) )->find( $upsell_id );
+		$upsell = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $upsell_id );
 		if ( is_wp_error( $upsell ) ) {
 			$wp_query->is_404 = true;
 			return $posts;
@@ -105,7 +105,7 @@ class UpsellTemplatesService {
 
 		set_query_var( 'surecart_current_upsell', $upsell );
 
-		$product = \SureCart\Models\Product::with( array( 'prices', 'image', 'variants', 'variant_options' ) )->find( $upsell->price->product ?? '' );
+		$product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $upsell->price->product ?? '' );
 		set_query_var( 'surecart_current_product', $product );
 		$content = wp_is_block_theme() ? $upsell->template->content : $upsell->template_part->content;
 
