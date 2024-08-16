@@ -13,13 +13,28 @@ import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 import DatePicker from '../../components/DatePicker';
 import { ScFormatDate, ScInvoiceStatusBadge } from '@surecart/components-react';
+import { ExternalLink } from '@wordpress/components';
 
 export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
-	const paymentPageUrl =
-		!!checkout?.id && !invoice?.automatic_collection
-			? `${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`
-			: null;
+
+	const paymentPageUrl = checkout?.id
+		? `${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`
+		: null;
+
+	const orderPdfUrl = checkout?.order?.pdf_url;
+
+	const orderPageUrl = checkout?.order?.id
+		? `admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
+		: null;
+
+	const getTrancatedUrl = (url, baseUrl, maxChars = 30) => {
+		baseUrl = baseUrl || window.scData?.home_url;
+		return (
+			url.replace(baseUrl, '').substring(0, maxChars) +
+			(url.replace(baseUrl, '').length > maxChars ? '...' : '')
+		);
+	};
 
 	return (
 		<>
@@ -113,13 +128,37 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 
 				{!!paymentPageUrl && (
 					<Definition title={__('Payment Page', 'surecart')}>
-						<a
+						<ExternalLink
+							className="editor-post-url__link"
 							href={paymentPageUrl}
 							target="_blank"
-							rel="noopener noreferrer"
 						>
-							{paymentPageUrl}
-						</a>
+							{getTrancatedUrl(paymentPageUrl)}
+						</ExternalLink>
+					</Definition>
+				)}
+
+				{!!orderPageUrl && (
+					<Definition title={__('Order Page', 'surecart')}>
+						<ExternalLink
+							className="editor-post-url__link"
+							href={orderPageUrl}
+							target="_blank"
+						>
+							{getTrancatedUrl(orderPageUrl)}
+						</ExternalLink>
+					</Definition>
+				)}
+
+				{!!orderPdfUrl && (
+					<Definition title={__('PDF Link', 'surecart')}>
+						<ExternalLink
+							className="editor-post-url__link"
+							href={orderPdfUrl}
+							target="_blank"
+						>
+							{getTrancatedUrl(orderPdfUrl)}
+						</ExternalLink>
 					</Definition>
 				)}
 			</Box>
