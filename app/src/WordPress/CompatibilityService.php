@@ -1,5 +1,7 @@
 <?php
 /**
+ * Compatibility service.
+ *
  * @package   SureCartAppCore
  * @author    SureCart <support@surecart.com>
  * @copyright  SureCart
@@ -22,17 +24,17 @@ class CompatibilityService {
 	 */
 	public function bootstrap() {
 		// UAG fix.
-		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
+		add_action( 'render_block_data', array( $this, 'maybeEnqueueUAGBAssets' ) );
 		// SC Form Shortcode fix.
-		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
+		add_filter( 'surecart/shortcode/render', array( $this, 'maybeEnqueueUAGBAssetsForShortcode' ), 5, 3 );
 		// rankmath fix.
-		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
+		add_action( 'rank_math/head', array( $this, 'rankMathFix' ) );
 
 		// Yoast SEO fix.
-		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
+		add_action( 'wpseo_frontend_presenters', array( $this, 'yoastSEOFix' ) );
 
 		// Show gutenberg active notice.
-		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
+		add_action( 'admin_init', array( $this, 'gutenbergActiveNotice' ) );
 
 		// Load Blocks Global Styles if enabled by Merchant in the setting.
 		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
@@ -49,7 +51,7 @@ class CompatibilityService {
 		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_upsell' ) ) {
 			$title_presenters = array_filter(
 				$presenters,
-				function( $item ) {
+				function ( $item ) {
 					return strpos( get_class( $item ), 'SEO\Presenters\Title_Presenter' );
 				}
 			);
@@ -85,17 +87,24 @@ class CompatibilityService {
 		}
 
 		// must be our checkout form block.
-		if ( 'surecart/checkout-form' !== $parsed_block['blockName'] ) {
+		if ( 'surecart/checkout-form' !== $parsed_block['blockName'] && 'surecart/upsell' !== $parsed_block['blockName'] ) {
 			return $parsed_block;
 		}
 
-		// must have an ID.
-		if ( empty( $parsed_block['attrs']['id'] ) ) {
+		if ( ! isset( $parsed_block['attrs']['id'] ) && empty( get_post()->upsell->id ) ) {
 			return $parsed_block;
 		}
+
+		$upsell = \SureCart\Models\Upsell::with( array( 'price' ) )->find( get_post()->upsell->id );
+
+		if ( is_wp_error( $upsell ) || empty( $upsell ) || empty( $upsell->id ) ) {
+			return $parsed_block;
+		}
+
+		$id = ! empty( $parsed_block['attrs']['id'] ) ? $parsed_block['attrs']['id'] : $upsell->id;
 
 		// If Spectra Blocks are present in the form, enqueue the assets.
-		$post_assets_instance = new \UAGB_Post_Assets( $parsed_block['attrs']['id'] );
+		$post_assets_instance = new \UAGB_Post_Assets( $id );
 		$post_assets_instance->enqueue_scripts(); // This will enqueue the JS and CSS files.
 
 		if ( ! empty( $post_assets_instance->file_generation ) && 'disabled' === $post_assets_instance->file_generation ) {
@@ -145,14 +154,13 @@ class CompatibilityService {
 	public function gutenbergActiveNotice(): void {
 		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
 			( new AdminNoticesService() )->add(
-				[
+				array(
 					'name'  => 'gutenberg_active_notice',
 					'type'  => 'warning',
 					'title' => esc_html__( 'SureCart', 'surecart' ),
 					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, consider disabling the Gutenberg plugin.<p>', 'surecart' ) ),
-				]
+				)
 			);
 		}
 	}
 }
-

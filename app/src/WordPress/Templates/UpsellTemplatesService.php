@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SureCart\WordPress\Templates;
 
-use \SureCartVendors\Pimple\Container;
+use SureCartVendors\Pimple\Container;
 
 /**
  * The Upsell template service.
@@ -22,7 +22,7 @@ class UpsellTemplatesService {
 	 *
 	 * @var array
 	 */
-	private array $templates = [];
+	private array $templates = array();
 
 	/**
 	 * The post type for the templates.
@@ -57,12 +57,12 @@ class UpsellTemplatesService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
-		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
+		add_filter( 'theme_' . $this->post_type . '_templates', array( $this, 'addTemplates' ) );
+		add_filter( 'template_include', array( $this, 'includeTemplate' ), 9 );
 
 		// Upsell page query overrides.
-		add_filter( 'posts_pre_query', [ $this, 'overrideUpsellPostQuery' ], 10, 2 );
-		add_filter( 'query_vars', [ $this, 'addCurrentUpsellQueryVar' ] );
+		add_filter( 'posts_pre_query', array( $this, 'overrideUpsellPostQuery' ), 10, 2 );
+		add_filter( 'query_vars', array( $this, 'addCurrentUpsellQueryVar' ) );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class UpsellTemplatesService {
 			return $posts;
 		}
 
-		$upsell = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $upsell_id );
+		$upsell = \SureCart\Models\Upsell::with( array( 'price' ) )->find( $upsell_id );
 		if ( is_wp_error( $upsell ) ) {
 			$wp_query->is_404 = true;
 			return $posts;
@@ -105,14 +105,15 @@ class UpsellTemplatesService {
 
 		set_query_var( 'surecart_current_upsell', $upsell );
 
-		$product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $upsell->price->product ?? '' );
+		$product = \SureCart\Models\Product::with( array( 'prices', 'image', 'variants', 'variant_options' ) )->find( $upsell->price->product ?? '' );
 		set_query_var( 'surecart_current_product', $product );
+		$content = wp_is_block_theme() ? $upsell->template->content : $upsell->template_part->content;
 
 		// create a fake post for the upsell.
 		$post                    = new \stdClass();
 		$post->post_title        = $upsell->name;
 		$post->post_name         = $upsell->id;
-		$post->post_content      = '<div>' . ( $upsell->template_part->content ?? '' ) . '</div>';
+		$post->post_content      = '<div>' . ( $content ?? '' ) . '</div>';
 		$post->post_status       = 'publish';
 		$post->post_type         = $this->post_type;
 		$post->sc_id             = $upsell->id;
@@ -154,7 +155,7 @@ class UpsellTemplatesService {
 	 *
 	 * @return array
 	 */
-	public function addTemplates( array $posts_templates ) : array {
+	public function addTemplates( array $posts_templates ): array {
 		return array_merge( $posts_templates, $this->templates );
 	}
 
