@@ -146,7 +146,6 @@ return array(
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
-		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 	),
 
