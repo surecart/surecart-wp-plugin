@@ -141,7 +141,7 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 				<Box title={__('Shipping', 'surecart')} loading={loading}>
 					<ScAlert type="warning" open>
 						{__(
-							'This order requires shipping. Please enter an address.',
+							'Shipping is required. Please enter a shipping address.',
 							'surecart'
 						)}
 					</ScAlert>
@@ -152,7 +152,7 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 			<Box title={__('Shipping', 'surecart')} loading={loading}>
 				<ScAlert type="warning" open>
 					{__(
-						'This order has products that are not shippable to this address.',
+						'The products in this invoice cannot be shipped to the provided address.',
 						'surecart'
 					)}
 				</ScAlert>
