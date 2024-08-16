@@ -63,7 +63,7 @@ export default function PatternSelectionModal({
 	return (
 		<Modal
 			overlayClassName="block-library-query-pattern__selection-modal"
-			title={__('Choose a template', 'surecart')}
+			title={__('Choose a pattern', 'surecart')}
 			onRequestClose={() => setIsPatternSelectionModalOpen(false)}
 			isFullScreen
 		>
