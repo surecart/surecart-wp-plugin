@@ -100,7 +100,8 @@ class PriceChoiceTemplate extends \Bricks\Element {
 			array(
 				'name'     => 'surecart-product-price-name',
 				'settings' => array(
-					'_width' => '50%',
+					'_width'     => '50%',
+					'_flexBasis' => '50%',
 				),
 			),
 			array(
@@ -110,6 +111,7 @@ class PriceChoiceTemplate extends \Bricks\Element {
 					'_direction'  => 'column',
 					'_alignItems' => 'flex-end',
 					'_width'      => '50%',
+					'_flexBasis'  => '50%',
 				),
 				'children' => array(
 					array(
