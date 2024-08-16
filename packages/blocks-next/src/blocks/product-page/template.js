@@ -144,7 +144,7 @@ export default [
 						],
 					],
 					[
-						'surecart/product-price-choices-v2',
+						'surecart/product-price-chooser',
 						[
 							[
 								'surecart/product-price-choice-template',

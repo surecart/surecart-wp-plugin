@@ -20,19 +20,21 @@ import {
 	getTransformedBlocksFromPattern,
 	usePatterns,
 	searchPatterns,
-} from '../utils';
+} from '../blocks/utils';
 
 export default function PatternSelectionModal({
 	clientId,
 	attributes,
 	setIsPatternSelectionModalOpen,
+	name,
 }) {
 	const [searchValue, setSearchValue] = useState('');
 	const { replaceBlock, selectBlock } = useDispatch(blockEditorStore);
 	const onBlockPatternSelect = (_, blocks) => {
 		const { newBlocks, queryClientIds } = getTransformedBlocksFromPattern(
 			blocks,
-			attributes
+			attributes,
+			name
 		);
 		replaceBlock(clientId, newBlocks);
 		if (queryClientIds[0]) {
@@ -47,7 +49,11 @@ export default function PatternSelectionModal({
 		}),
 		['sc_product']
 	);
-	const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
+	const blockNameForPatterns = useBlockNameForPatterns(
+		clientId,
+		attributes,
+		name
+	);
 	const blockPatterns = usePatterns(clientId, blockNameForPatterns);
 	const filteredBlockPatterns = useMemo(() => {
 		return searchPatterns(blockPatterns, searchValue);
@@ -57,7 +63,7 @@ export default function PatternSelectionModal({
 	return (
 		<Modal
 			overlayClassName="block-library-query-pattern__selection-modal"
-			title={__('Choose a template', 'surecart')}
+			title={__('Choose a pattern', 'surecart')}
 			onRequestClose={() => setIsPatternSelectionModalOpen(false)}
 			isFullScreen
 		>
