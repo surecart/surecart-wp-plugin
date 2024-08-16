@@ -130,3 +130,8 @@
 		}
 	}
 }
+
+// Bricks fix: TODO: move to bricks specific css::after
+.dynamic:has(.sc-image-slider) {
+	width: 100%;
+}

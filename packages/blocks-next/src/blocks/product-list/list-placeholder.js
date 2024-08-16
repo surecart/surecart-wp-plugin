@@ -33,7 +33,7 @@ const BLANK = [
 /**
  * Internal dependencies
  */
-import { useScopedBlockVariations, useBlockNameForPatterns } from '../utils';
+import { useBlockNameForPatterns } from '../utils';
 
 export default function QueryPlaceholder({
 	attributes,
@@ -43,7 +43,12 @@ export default function QueryPlaceholder({
 }) {
 	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 	const blockProps = useBlockProps();
-	const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
+	const blockNameForPatterns = useBlockNameForPatterns(
+		clientId,
+		attributes,
+		name
+	);
+
 	const { blockType, activeBlockVariation, hasPatterns } = useSelect(
 		(select) => {
 			const { getActiveBlockVariation, getBlockType } =

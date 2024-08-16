@@ -20,12 +20,14 @@ export const convertLineItemsToLineItemData = (
 ): Array<{
   price_id: string;
   quantity: number;
+  variant_id?: string;
 }> => {
   return (lineItems?.data || []).map(item => {
     return {
       ...(!!item?.id ? { id: item.id } : {}),
       price_id: item.price.id,
       quantity: item.quantity,
+      variant_id: item.variant?.id,
     };
   });
 };

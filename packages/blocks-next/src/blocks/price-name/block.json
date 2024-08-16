@@ -10,6 +10,7 @@
 	"ancestor": ["surecart/product-price-choice-template"],
 	"supports": {
 		"interactivity": true,
+		"anchor": true,
 		"color": {
 			"gradients": true,
 			"text": true,

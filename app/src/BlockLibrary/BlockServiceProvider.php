@@ -30,6 +30,10 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockService( $app );
 		};
 
+		$container['block.support.anchor'] = function () use ( $app ) {
+			return new BlockAnchorSupportService();
+		};
+
 		$container['blocks.patterns'] = function () use ( $app ) {
 			return new BlockPatternsService( $app );
 		};
@@ -68,6 +72,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		$container['blocks.patterns']->bootstrap();
 		$container['blocks.validations']->bootstrap();
 		$container['blocks.mode_switcher']->bootstrap();
+		$container['block.support.anchor']->bootstrap();
 
 		// allow design tokens in css.
 		add_filter(

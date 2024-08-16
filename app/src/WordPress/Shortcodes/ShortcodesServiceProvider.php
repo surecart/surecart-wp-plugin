@@ -153,14 +153,14 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_description',
-			'surecart/product-description',
+			'surecart/product-description-old',
 			[
 				'id' => null,
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_title',
-			'surecart/product-title',
+			'surecart/product-title-old',
 			[
 				'level' => 1,
 			]
@@ -184,7 +184,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_media',
-			'surecart/product-media',
+			'surecart/product-media-old',
 			[
 				'auto_height' => true,
 				'id'          => null,
@@ -192,14 +192,14 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_quantity',
-			'surecart/product-quantity',
+			'surecart/product-quantity-old',
 			[
 				'id' => null,
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_cart_button',
-			'surecart/product-buy-button',
+			'surecart/product-buy-button-old',
 			[
 				'add_to_cart' => true,
 				'text'        => __( 'Add To Cart', 'surecart' ),
@@ -247,6 +247,17 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			$name     = str_replace( 'surecart/', '', $metadata['name'] );
 			$name     = str_replace( '-', '_', sanitize_title_with_dashes( $name ) );
 
+			$old_shortcode_names = [
+				'product_title',
+				'product_description',
+				'product_quantity',
+				'product_media',
+			];
+
+			if ( in_array( $name, $old_shortcode_names, true ) ) {
+				$name = $name . '_new';
+			}
+			
 			$container['surecart.shortcodes']->registerBlockShortcodeByName(
 				'sc_' . $name,
 				$metadata['name'],

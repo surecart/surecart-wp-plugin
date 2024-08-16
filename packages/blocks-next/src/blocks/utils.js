@@ -213,7 +213,8 @@ export function isControlAllowed(allowedControls, key) {
  */
 export const getTransformedBlocksFromPattern = (
 	blocks,
-	queryBlockAttributes
+	queryBlockAttributes,
+	name
 ) => {
 	const { namespace } = queryBlockAttributes;
 	const clonedBlocks = blocks.map((block) => cloneBlock(block));
@@ -221,7 +222,7 @@ export const getTransformedBlocksFromPattern = (
 	const blocksQueue = [...clonedBlocks];
 	while (blocksQueue.length > 0) {
 		const block = blocksQueue.shift();
-		if (block.name === 'surecart/product-list') {
+		if (block.name === name) {
 			if (namespace) {
 				block.attributes.namespace = namespace;
 			}
@@ -248,16 +249,13 @@ export const getTransformedBlocksFromPattern = (
  * @param {Object} attributes The block's attributes.
  * @return {string} The block name to be used in the patterns suggestions.
  */
-export function useBlockNameForPatterns(clientId, attributes) {
+export function useBlockNameForPatterns(clientId, attributes, name) {
 	const activeVariationName = useSelect(
 		(select) =>
-			select(blocksStore).getActiveBlockVariation(
-				'surecart/product-list',
-				attributes
-			)?.name,
+			select(blocksStore).getActiveBlockVariation(name, attributes)?.name,
 		[attributes]
 	);
-	const blockName = `surecart/product-list/${activeVariationName}`;
+	const blockName = `${name}/${activeVariationName}`;
 	const hasActiveVariationPatterns = useSelect(
 		(select) => {
 			if (!activeVariationName) {
@@ -274,7 +272,7 @@ export function useBlockNameForPatterns(clientId, attributes) {
 		},
 		[clientId, activeVariationName, blockName]
 	);
-	return hasActiveVariationPatterns ? blockName : 'surecart/product-list';
+	return hasActiveVariationPatterns ? blockName : name;
 }
 
 /**

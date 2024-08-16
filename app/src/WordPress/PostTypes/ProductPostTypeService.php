@@ -51,6 +51,9 @@ class ProductPostTypeService {
 		// product gallery migration.
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
+		// allow product meta to be exposed top-level.
+		add_action( 'get_post_metadata', array( $this, 'exposeProductMeta' ), 10, 4 );
+
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
@@ -268,65 +271,6 @@ class ProductPostTypeService {
 			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).' ) . ' <a href="https://surecart.com/docs" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
 		return $form_fields;
-	}
-
-	/**
-	 * Handle bricks begin content
-	 *
-	 * @return void
-	 */
-	public function handleBricksBeginContent() {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return;
-		}
-
-		$product_page_blocks = '<!-- wp:surecart/product-page --><!-- wp:surecart/product-selected-price-ad-hoc-amount /--><!-- /wp:surecart/product-page -->';
-		$product_page_html   = do_blocks( $product_page_blocks );
-		$product_page_html   = substr( $product_page_html, 0, -8 ); // remove the </form> tag at the end.
-		echo $product_page_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Handle bricks end content
-	 *
-	 * @return void
-	 */
-	public function handleBricksEndContent() {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return;
-		}
-		echo '</form>';
-	}
-
-	/**
-	 * Handle Elementor content.
-	 *
-	 * @param string $content The content.
-	 *
-	 * @return string
-	 */
-	public function handleElementorContent( string $content ): string {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return $content;
-		}
-
-		// check if the product page wrapper is not already added.
-		if ( false === strpos( $content, '<form class="wp-block-surecart-product-page"' ) ) {
-			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
-		}
-
-		// check if the custom amount block is not already added.
-		if ( false === strpos( $content, 'class="wp-block-surecart-product-selected-price-ad-hoc-amount"' ) ) {
-			$content = str_replace(
-				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				$content
-			);
-		}
-
-		$content = do_blocks( $content );
-
-		return $content;
 	}
 
 	/**
@@ -675,6 +619,35 @@ class ProductPostTypeService {
 				)
 			),
 		);
+	}
+
+	/**
+	 * Expose product meta.
+	 *
+	 * This allows us to expose the product meta to the top level.
+	 *
+	 * @param array   $value  The value.
+	 * @param integer $object_id The object ID.
+	 * @param string  $meta_key The meta key.
+	 * @param bool    $single Whether to return a single value.
+	 *
+	 * @return array|mixed;
+	 */
+	public function exposeProductMeta( $value, $object_id, $meta_key, $single ) {
+		// only for our post type.
+		if ( get_post_type( $object_id ) !== $this->post_type ) {
+			return $value;
+		}
+
+		// only if empty.
+		remove_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10 );
+		$product = get_post_meta( $object_id, 'product', true );
+		add_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10, 4 );
+		if ( empty( $product ) ) {
+			return $value;
+		}
+
+		return $product->$meta_key ?? $value;
 	}
 
 	/**

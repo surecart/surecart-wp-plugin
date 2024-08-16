@@ -13,10 +13,6 @@
 		"text": {
 			"type": "string"
 		},
-		"align": {
-			"type": "string",
-			"default": "left"
-		},
 		"border": {
 			"type": "boolean",
 			"default": true
@@ -40,7 +36,23 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",

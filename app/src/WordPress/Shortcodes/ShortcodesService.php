@@ -6,6 +6,23 @@ namespace SureCart\WordPress\Shortcodes;
  * The shortcodes service.
  */
 class ShortcodesService {
+
+	/**
+	 * Old Shortcode block names which we want to not render through interactivity.
+	 *
+	 * @var array
+	 */
+	protected $old_shortcode_block_names = [
+		'surecart/product-buy-button-old',
+		'surecart/product-price-choices',
+		'surecart/product-title-old',
+		'surecart/product-price',
+		'surecart/product-description-old',
+		'surecart/product-variant-choices',
+		'surecart/product-quantity-old',
+		'surecart/product-media-old',
+	];
+
 	/**
 	 * Convert the block
 	 *
@@ -13,15 +30,15 @@ class ShortcodesService {
 	 * @param string $block Block class.
 	 * @param array  $defaults Default attributes.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function registerBlockShortcode( $name, $class, $defaults = array() ) {
+	public function registerBlockShortcode( $name, $block, $defaults = array() ) {
 		add_shortcode(
 			$name,
-			function ( $attributes, $content ) use ( $name, $class, $defaults ) {
+			function ( $attributes, $content ) use ( $name, $block, $defaults ) {
 				return ( new ShortcodesBlockConversionService( $attributes, $content ) )->convert(
 					$name,
-					$class,
+					$block,
 					$defaults
 				);
 			},
@@ -62,6 +79,19 @@ class ShortcodesService {
 				);
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
+
+				if ( in_array( $block_name, $this->old_shortcode_block_names, true ) && ! empty( $shortcode_attrs['id'] ) ) {
+					// translators: %s is the shortcode name.
+					wp_trigger_error( '', sprintf( esc_html__( 'Passing an id to the [%s] shortcode is deprecated. Please use these shortcodes on product pages directly.', 'surecart' ), $name ) );
+						$block = new \WP_Block(
+							[
+								'blockName'    => $block_name,
+								'attrs'        => $shortcode_attrs,
+								'innerContent' => do_shortcode( $content ),
+							]
+						);
+						return $block->render();
+				}
 
 				// we need to remove this since this is processed twice for some blocks.
 				add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );

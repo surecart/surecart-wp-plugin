@@ -1,33 +1,18 @@
-.wp-block-buttons .wp-block-button {
+.wp-block-button {
 	width: 100%;
 
 	&.is-style-outline {
-		button.wp-block-button__link.wp-element-button:not(
-				.has-background,
-				:hover,
-				:focus
-			),
-		div.wp-block-button__link.wp-element-button:not(
-				.has-background,
-				:hover,
-				:focus
-			),
-		a.wp-block-button__link.wp-element-button:not(
-				.has-background,
-				:hover,
-				:focus
-			) {
+		button.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus),
+		div.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus),
+		a.wp-block-button__link.wp-element-button:not(.has-background, :hover, :focus) {
 			background-color: transparent;
 			background-image: none;
 		}
 	}
+}
 
-	.wp-block-button__link {
-		font-weight: inherit !important;
-		font-style: inherit !important;
-		font-size: inherit !important;
-		text-transform: inherit !important;
-	}
+.wp-block-button__link {
+	width: 100%;
 }
 
 .sc-button__link {

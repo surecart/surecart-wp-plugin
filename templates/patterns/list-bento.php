@@ -20,7 +20,7 @@ return [
 
 <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"15px","left":"15px"}}}} -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:surecart/product-list {"query":{"perPage":1,"pages":0,"offset":0,"postType":"sc_product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","inherit":true,"taxQuery":null,"parents":[]},"metadata":{"categories":["surecart_shop"],"patternName":"surecart-list-carousel","name":"Classic Product Carousel"},"style":{"spacing":{"blockGap":"24px"},"layout":{"columnSpan":"1","rowSpan":"2"}}} -->
+<div class="wp-block-column"><!-- wp:surecart/product-list {"query":{"perPage":1,"pages":0,"offset":0,"postType":"sc_product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","inherit":true,"taxQuery":null,"parents":[]},"style":{"spacing":{"blockGap":"24px"},"layout":{"columnSpan":"1","rowSpan":"2"}}} -->
 <!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"default","columnCount":"3"}} -->
 <!-- wp:group {"style":{"dimensions":{"minHeight":"100%"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group" style="min-height:100%"><!-- wp:cover {"useFeaturedImage":true,"dimRatio":40,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"minHeight":29,"minHeightUnit":"rem","customGradient":"linear-gradient(180deg,rgba(0,0,0,0.28) 0%,rgb(0,0,0) 100%)","contentPosition":"bottom left","style":{"layout":{"selfStretch":"fit","flexSize":null},"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"25px","bottom":"25px","left":"25px","right":"25px"}},"border":{"radius":"10px"}},"layout":{"type":"default"}} -->
@@ -42,7 +42,7 @@ return [
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:surecart/product-list {"query":{"perPage":2,"pages":0,"offset":1,"postType":"sc_product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","inherit":true,"taxQuery":null,"parents":[]},"metadata":{"categories":["surecart_shop"],"patternName":"surecart-list-carousel","name":"Classic Product Carousel"},"style":{"spacing":{"blockGap":"24px"},"layout":{"columnSpan":"1","rowSpan":"1"}}} -->
+<div class="wp-block-column"><!-- wp:surecart/product-list {"query":{"perPage":2,"pages":0,"offset":1,"postType":"sc_product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","inherit":true,"taxQuery":null,"parents":[]},"style":{"spacing":{"blockGap":"24px"},"layout":{"columnSpan":"1","rowSpan":"1"}}} -->
 <!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"15px"}},"layout":{"type":"default","columnCount":"3"}} -->
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group"><!-- wp:cover {"useFeaturedImage":true,"dimRatio":40,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"minHeight":14,"minHeightUnit":"rem","customGradient":"linear-gradient(180deg,rgba(0,0,0,0.28) 0%,rgb(0,0,0) 100%)","contentPosition":"bottom left","style":{"layout":{"selfStretch":"fit","flexSize":null},"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"25px","bottom":"25px","left":"25px","right":"25px"}},"border":{"radius":"10px"}},"layout":{"type":"default"}} -->

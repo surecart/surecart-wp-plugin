@@ -12,7 +12,8 @@
 	"supports": {
 		"interactivity": true,
 		"reusable": false,
-		"html": false
+		"html": false,
+		"anchor": true
 	},
 	"attributes": {
 		"auto_height": {

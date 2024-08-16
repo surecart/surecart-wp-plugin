@@ -11,7 +11,9 @@
 	);
 	?>
 	data-wp-interactive='{ "namespace": "surecart/dropdown" }'
-	data-wp-on-document--click="surecart/dropdown::actions.closeOnClickOutside"
+	data-wp-on-async-window--click="surecart/dropdown::callbacks.maybeCloseMenu"
+	data-wp-on-async-window--focusin="surecart/dropdown::callbacks.maybeCloseMenu"
+	data-wp-on-async-window--keydown="surecart/dropdown::callbacks.maybeCloseMenu"
 	data-wp-bind--aria-activedescendant="context.activeMenuItemId"
 	data-wp-on--keyup="surecart/dropdown::actions.menuKeyUp"
 	data-wp-on--keydown="surecart/dropdown::actions.menuKeyDown"

@@ -32,10 +32,16 @@ export default ({ className, media, onDownloaded }) => {
 				path: `${baseURL}/${media?.id}/download`,
 				method: 'POST',
 			});
+
+			createSuccessNotice(
+				__('Image added to media library.', 'surecart'),
+				{ type: 'snackbar' }
+			);
 			onDownloaded(newId);
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(createErrorString(e), { type: 'snackbar' });
+		} finally {
 			setLoading(false);
 		}
 	};

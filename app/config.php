@@ -143,9 +143,9 @@ return array(
 		\SureCart\Integrations\TutorLMS\TutorLMSServiceProvider::class,
 		\SureCart\Integrations\User\UserServiceProvider::class,
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
+		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
-		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 	),
 
@@ -208,7 +208,12 @@ return array(
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\CollectionBadges\Block::class,
-
+		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
+		\SureCartBlocks\Blocks\Product\Title\Block::class,
+		\SureCartBlocks\Blocks\Product\Description\Block::class,
+		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+		\SureCartBlocks\Blocks\Product\Media\Block::class,
+		
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,

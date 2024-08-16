@@ -6,7 +6,7 @@ import { processCartViewEvent } from '@surecart/checkout-events';
 const { state: checkoutState } = store('surecart/checkout');
 const { __ } = wp.i18n;
 
-const { state } = store('surecart/cart', {
+const { state, actions } = store('surecart/cart', {
 	state: {
 		get ariaLabel() {
 			return state.label + ' ' + __('Review your cart.', 'surecart');
@@ -64,3 +64,5 @@ const { state } = store('surecart/cart', {
 		},
 	},
 });
+
+addEventListener('scToggleCart', actions.toggle); // Listen for checkout update on product page.

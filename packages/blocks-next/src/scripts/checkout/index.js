@@ -554,5 +554,11 @@ const { state, actions } = store('surecart/checkout', {
 			}
 			state.loading = false;
 		},
+		updateCheckout(e) {
+			const { checkout, mode, formId } = e.detail;
+			actions.setCheckout(checkout, mode, formId);
+		},
 	},
 });
+
+addEventListener('scCheckoutUpdated', actions.updateCheckout); // Listen for checkout update on product page.

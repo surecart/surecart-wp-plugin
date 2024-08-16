@@ -14,7 +14,7 @@ import TemplateListEdit from '../../components/TemplateListEdit';
  */
 import { useSelect } from '@wordpress/data';
 
-const TEMPLATE = [['surecart/product-collection-badge']];
+const TEMPLATE = [['surecart/product-collection-tag']];
 
 export default ({
 	attributes,

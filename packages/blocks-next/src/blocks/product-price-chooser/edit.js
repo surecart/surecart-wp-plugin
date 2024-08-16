@@ -32,7 +32,6 @@ const TEMPLATE = [
 	],
 ];
 
-console.log({ window });
 const DEMO_CONTEXT = [
 	{
 		name: __('Subscribe & Save', 'surecart'),

@@ -59,8 +59,8 @@ class ProductPageWrapperService {
 	 */
 	public function addCustomAmountBlock() {
 		return str_replace(
-			'<div class="wp-block-button wp-block-surecart-product-buy-button"',
-			'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
+			'<div class="wp-block-button  has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button"',
+			'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button  has-custom-width wp-block-button__width-100 wp-block-surecart-product-buy-button"',
 			$this->content
 		);
 	}

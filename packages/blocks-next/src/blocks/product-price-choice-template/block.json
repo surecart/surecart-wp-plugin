@@ -16,6 +16,7 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"anchor": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,

@@ -167,4 +167,13 @@ class BlockService {
 	public function productVariantsMigration( $attributes = array(), $block = null ) {
 		return new ProductVariantsMigrationService( $attributes, $block );
 	}
+
+	/**
+	 * Block anchor support service.
+	 *
+	 * @return BlockAnchorSupportService
+	 */
+	public function anchorSupport() {
+		return $this->app->resolve( 'block.support.anchor' );
+	}
 }

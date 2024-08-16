@@ -98,7 +98,7 @@ class ProductsSyncService {
 		echo wp_kses_post(
 			\SureCart::notices()->render(
 				[
-					'name'  => $this->notice_id,
+					// 'name'  => $this->notice_id,
 					'type'  => 'info',
 					'title' => esc_html__( 'SureCart: Getting things ready...', 'surecart' ),
 					'text'  => wp_sprintf(

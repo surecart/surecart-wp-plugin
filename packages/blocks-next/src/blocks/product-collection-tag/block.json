@@ -17,6 +17,7 @@
 	"supports": {
 		"interactivity": true,
 		"inserter": false,
+		"anchor": true,
 		"color": {
 			"gradients": true,
 			"__experimentalDefaultControls": {
@@ -52,5 +53,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+  "style": ["file:./style-index.css"]
 }
