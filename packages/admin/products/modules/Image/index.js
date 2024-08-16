@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import AddImage from './AddImage';
 import ConfirmDeleteImage from './ConfirmDeleteImage';
@@ -25,6 +25,11 @@ export default ({ productId, product, updateProduct }) => {
 	const [selectedImage, setSelectedImage] = useState();
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { invalidateResolution } = useDispatch(coreStore);
+	const { record: savedProduct } = useEntityRecord(
+		'surecart',
+		'product',
+		productId
+	);
 
 	const onDragStop = (oldIndex, newIndex) =>
 		updateProduct({
@@ -102,6 +107,9 @@ export default ({ productId, product, updateProduct }) => {
 								<WordPressMedia
 									id={id}
 									product={product}
+									isNew={
+										!savedProduct.gallery_ids?.includes(id)
+									}
 									updateProduct={updateProduct}
 									onRemove={() => onRemoveMedia(id)}
 									onSelect={(media) =>

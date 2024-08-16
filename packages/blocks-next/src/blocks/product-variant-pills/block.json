@@ -7,18 +7,24 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,
 		"html": false,
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"text": true,
+			"background": false
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
 	"style": [
+		"file:./style-index.css",
 		"file:../../styles/label.css",
 		"file:../../styles/product-variants.css"
 	]

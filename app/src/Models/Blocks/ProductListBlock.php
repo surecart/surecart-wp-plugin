@@ -114,7 +114,6 @@ class ProductListBlock {
 							'compare' => 'IN',
 						),
 					),
-
 				)
 			); // platform collection ids converted to WP taxonomy ids.
 

@@ -20,15 +20,6 @@ const { actions } = store('surecart/dropdown', {
 			context.isMenuOpen = !context.isMenuOpen;
 		},
 
-		// Close menu on click outside.
-		closeOnClickOutside: (e) => {
-			const context = getContext();
-			// if the click is inside the dropdown, do nothing.
-			if (e && e.target.closest('.sc-dropdown')) return;
-			if (!context.isMenuOpen) return;
-			context.isMenuOpen = false;
-		},
-
 		// Select item programmatically.
 		selectItem: () => {
 			const context = getContext();
@@ -89,6 +80,25 @@ const { actions } = store('surecart/dropdown', {
 		menuKeyDown: (e) => {
 			if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(e.key)) {
 				e.preventDefault();
+			}
+		},
+	},
+
+	callbacks: {
+		// Close the menu when focused outside
+		maybeCloseMenu: (e) => {
+			const context = getContext();
+			const { ref } = getElement();
+
+			// close on escape key.
+			if (e?.key === 'Escape') {
+				context.isMenuOpen = false;
+				return;
+			}
+
+			// if the focus or click is outside the dropdown, close the menu.
+			if (!ref.contains(e.target)) {
+				context.isMenuOpen = false;
 			}
 		},
 	},

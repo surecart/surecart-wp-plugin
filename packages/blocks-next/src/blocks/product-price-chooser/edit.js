@@ -35,12 +35,12 @@ const TEMPLATE = [
 const DEMO_CONTEXT = [
 	{
 		name: __('Subscribe & Save', 'surecart'),
-		display_amount: '$8',
+		display_amount: `${window?.scData?.currency_symbol || '$'}8`,
 		short_interval_text: __('/ mo', 'surecart'),
 	},
 	{
 		name: __('One Time', 'surecart'),
-		display_amount: '$10',
+		display_amount: `${window?.scData?.currency_symbol || '$'}10`,
 		short_interval_text: '',
 	},
 ];
@@ -79,7 +79,7 @@ export default ({
 		}
 	}, [priceContainerRef]);
 
-	const blockContexts = (product?.prices?.data || DEMO_CONTEXT).map(
+	const blockContexts = (product?.active_prices || DEMO_CONTEXT).map(
 		(price, index) => ({
 			id: `price${index}`,
 			'surecart/price': {

@@ -84,6 +84,7 @@ export default ({
 		{
 			...blockProps,
 			style: {
+				...(blockProps.style || {}),
 				width: '100%',
 			},
 		},

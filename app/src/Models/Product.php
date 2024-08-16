@@ -171,7 +171,6 @@ class Product extends Model implements PageModel {
 		return $this->queueSync();
 	}
 
-
 	/**
 	 * Update a model
 	 *
@@ -743,8 +742,8 @@ class Product extends Model implements PageModel {
 			);
 		}
 
-			// gallery.
-			return json_decode( $this->attributes['metadata']->gallery_ids ?? '' );
+		// gallery.
+		return json_decode( $this->attributes['metadata']->gallery_ids ?? '' );
 	}
 
 	/**

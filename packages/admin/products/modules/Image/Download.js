@@ -34,7 +34,7 @@ export default ({ className, media, onDownloaded }) => {
 			});
 
 			createSuccessNotice(
-				__('Image successfully migrated to server.', 'surecart'),
+				__('Image added to media library.', 'surecart'),
 				{ type: 'snackbar' }
 			);
 			onDownloaded(newId);

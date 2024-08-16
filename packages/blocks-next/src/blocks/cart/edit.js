@@ -25,7 +25,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 		style: {
 			fontSize: '16px',
 			fontFamily: 'var(--sc-font-sans)',
-			maxWidth: width,
+			maxWidth: `max(400px, ${width})`,
 		},
 		className: 'sc-cart__editor-container',
 	});
@@ -35,7 +35,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 		{
 			template: TEMPLATE,
 			style: {
-				maxWidth: width,
+				maxWidth: `max(400px, ${width})`,
 			},
 		},
 		{
