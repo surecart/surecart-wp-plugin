@@ -10,10 +10,10 @@ import { store as blockEditorStore } from '@wordpress/block-editor';
  */
 import QueryContent from './list-content';
 import QueryPlaceholder from './list-placeholder';
-import PatternSelectionModal from './pattern-selection-modal';
+import PatternSelectionModal from '../../utilities/pattern-selection-modal';
 
 export default (props) => {
-	const { clientId, attributes } = props;
+	const { clientId, attributes, name } = props;
 	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
 		useState(false);
 	const hasInnerBlocks = useSelect(
@@ -36,6 +36,7 @@ export default (props) => {
 					setIsPatternSelectionModalOpen={
 						setIsPatternSelectionModalOpen
 					}
+					name={name}
 				/>
 			)}
 		</>

@@ -7,7 +7,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { usePatterns } from '../utils';
+import { usePatterns } from '../blocks/utils';
 
 export default ({ openPatternSelectionModal, name, clientId }) => {
 	const hasPatterns = !!usePatterns(clientId, name).length;
