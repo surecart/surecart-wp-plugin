@@ -274,65 +274,6 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Handle bricks begin content
-	 *
-	 * @return void
-	 */
-	public function handleBricksBeginContent() {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return;
-		}
-
-		$product_page_blocks = '<!-- wp:surecart/product-page --><!-- wp:surecart/product-selected-price-ad-hoc-amount /--><!-- /wp:surecart/product-page -->';
-		$product_page_html   = do_blocks( $product_page_blocks );
-		$product_page_html   = substr( $product_page_html, 0, -8 ); // remove the </form> tag at the end.
-		echo $product_page_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Handle bricks end content
-	 *
-	 * @return void
-	 */
-	public function handleBricksEndContent() {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return;
-		}
-		echo '</form>';
-	}
-
-	/**
-	 * Handle Elementor content.
-	 *
-	 * @param string $content The content.
-	 *
-	 * @return string
-	 */
-	public function handleElementorContent( string $content ): string {
-		if ( ! is_singular( 'sc_product' ) ) {
-			return $content;
-		}
-
-		// check if the product page wrapper is not already added.
-		if ( false === strpos( $content, '<form class="wp-block-surecart-product-page"' ) ) {
-			$content = '<!-- wp:surecart/product-page -->' . $content . '<!-- /wp:surecart/product-page -->';
-		}
-
-		// check if the custom amount block is not already added.
-		if ( false === strpos( $content, 'class="wp-block-surecart-product-selected-price-ad-hoc-amount"' ) ) {
-			$content = str_replace(
-				'<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				'<!-- wp:surecart/product-selected-price-ad-hoc-amount /-->' . PHP_EOL . '<div class="wp-block-button wp-block-surecart-product-buy-button"',
-				$content
-			);
-		}
-
-		$content = do_blocks( $content );
-
-		return $content;
-	}
-
-	/**
 	 * Sync the product.
 	 *
 	 * @param \SureCart\Models\Product $product The model.

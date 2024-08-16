@@ -191,9 +191,9 @@ class Currency {
 	 *
 	 * @return string
 	 */
-	public static function format( $amount, $currency_code = 'USD' ) {
+	public static function format( $amount, $currency_code = null ) {
 		if ( empty( $currency_code ) ) {
-			$currency_code = 'USD';
+			$currency_code = \SureCart::account()->currency;
 		}
 
 		if ( class_exists( 'NumberFormatter' ) ) {
@@ -451,7 +451,10 @@ class Currency {
 	 *
 	 * @return int
 	 */
-	public static function maybeConvertAmount( $amount, $currency ) {
+	public static function maybeConvertAmount( $amount, $currency = null ) {
+		if ( ! $currency ) {
+			$currency = \SureCart::account()->currency;
+		}
 		return self::isZeroDecimal( (string) $currency ) ? $amount : $amount / 100;
 	}
 }
