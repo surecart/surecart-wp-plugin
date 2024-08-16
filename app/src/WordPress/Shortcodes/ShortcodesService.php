@@ -2,6 +2,7 @@
 
 namespace SureCart\WordPress\Shortcodes;
 
+use SureCart\WordPress\Assets\BlockAssetsLoadService;
 /**
  * The shortcodes service.
  */
@@ -27,7 +28,7 @@ class ShortcodesService {
 	 * Convert the block
 	 *
 	 * @param string $name Block name.
-	 * @param string $block Block class.
+	 * @param string $block Block block.
 	 * @param array  $defaults Default attributes.
 	 *
 	 * @return void
@@ -48,6 +49,43 @@ class ShortcodesService {
 	}
 
 	/**
+	 * Render shortcode notice
+	 *
+	 * @param string $name Name.
+	 *
+	 * @return string
+	 */
+	public function renderShortcodeNotice( $name ) {
+		return sprintf(
+			'<h5 style="%s">%s</h5>',
+			'background: #F1F1F1; color: #434242; padding: 2em; border-radius: 0.5em;',
+			esc_html(
+				sprintf(
+				/* translators: %s: shortcode name */
+					__( 'Please visit the frontend of your page builder to view the %s shortcode contents.', 'surecart' ),
+					esc_html( $name )
+				)
+			)
+		);
+	}
+
+	/**
+	 * Check if shortcode should render itself
+	 *
+	 * @param string $name Name of the shortcode.
+	 * @return boolean
+	 */
+	public function cannotRenderShortcode( $name ) {
+		if ( 'sc_product_list' !== $name ) { // If the shortcode is not Product List, return false.
+			return false;
+		}
+
+		$assets_service = new BlockAssetsLoadService();
+
+		return $assets_service->isUsingPageBuilder();
+	}
+
+	/**
 	 * Register shortcode by name
 	 *
 	 * @param string $name Name of the shortcode.
@@ -63,6 +101,12 @@ class ShortcodesService {
 				if ( empty( $block_name ) ) {
 					return '';
 				}
+				if ( $this->cannotRenderShortcode( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
+					return $this->renderShortcodeNotice( $name );
+				}
+
+				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 ); // Disable loading separate core block assets.
+				wp_enqueue_global_styles(); // Enqueue global styles.
 
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
