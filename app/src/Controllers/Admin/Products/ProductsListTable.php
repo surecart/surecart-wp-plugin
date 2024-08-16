@@ -103,9 +103,8 @@ class ProductsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		);
 
-		$link = admin_url( 'admin.php?page=sc-products' );
-
 		foreach ( $statuses as $status => $label ) {
+			$link = admin_url( 'admin.php?page=sc-products' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -117,6 +116,8 @@ class ProductsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
