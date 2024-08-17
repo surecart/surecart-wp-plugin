@@ -141,6 +141,8 @@ class BricksDynamicDataService {
 			case 'product_on_sale':
 				return esc_html( $product ? $product->is_on_sale : '' );
 		}
+
+		return $name;
 	}
 
 	/**
