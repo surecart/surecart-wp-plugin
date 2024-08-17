@@ -24,10 +24,6 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 
 	const orderPdfUrl = checkout?.order?.pdf_url;
 
-	const orderPageUrl = checkout?.order?.id
-		? `admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
-		: null;
-
 	const getTrancatedUrl = (url, baseUrl, maxChars = 30) => {
 		baseUrl = baseUrl || window.scData?.home_url;
 		return (
@@ -134,18 +130,6 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 							target="_blank"
 						>
 							{getTrancatedUrl(paymentPageUrl)}
-						</ExternalLink>
-					</Definition>
-				)}
-
-				{!!orderPageUrl && (
-					<Definition title={__('Order Page', 'surecart')}>
-						<ExternalLink
-							className="editor-post-url__link"
-							href={orderPageUrl}
-							target="_blank"
-						>
-							{getTrancatedUrl(orderPageUrl)}
 						</ExternalLink>
 					</Definition>
 				)}

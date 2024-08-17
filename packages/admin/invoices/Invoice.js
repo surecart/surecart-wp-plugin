@@ -31,6 +31,7 @@ import Tax from './modules/Tax';
 import Details from './modules/Details';
 import ConfirmChangeInvoiceStatus from './components/ConfirmChangeInvoiceStatus';
 import AdditionalOptions from './modules/AdditionalOptions';
+import Order from './modules/Order';
 
 /**
  * Returns the Model Edit URL.
@@ -382,6 +383,12 @@ export default () => {
 							liveMode={liveMode}
 							onSuccess={() => setPaymentMethod(null)}
 							isDraftInvoice={isDraftInvoice}
+						/>
+						<Order
+							invoice={invoice}
+							checkout={checkout}
+							loading={loading}
+							busy={busy}
 						/>
 						<Address
 							checkout={checkout}
