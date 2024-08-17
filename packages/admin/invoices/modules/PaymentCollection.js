@@ -12,7 +12,6 @@ import { useState } from '@wordpress/element';
  */
 import {
 	ScButton,
-	ScDivider,
 	ScDropdown,
 	ScFormatDate,
 	ScFormControl,
@@ -278,130 +277,77 @@ export default ({
 										'surecart'
 									)}
 								</ScText>
-
-								{invoice?.automatic_collection && (
-									<div
-										css={css`
-											margin-top: var(
-												--sc-spacing-medium
-											);
-										`}
-									>
-										{isDraftInvoice && !paymentMethod && (
-											<div>
-												<ScButton
-													type="primary"
-													onClick={() =>
-														setModal('payment')
-													}
-												>
-													{__(
-														'Add Payment Method',
-														'surecart'
-													)}
-												</ScButton>
-											</div>
-										)}
-
-										{!!paymentMethod && (
-											<>
-												<ScDivider
-													style={{
-														'--spacing':
-															'var(--sc-spacing-small)',
-													}}
-												/>
-												<div
-													style={{
-														display: 'flex',
-														width: '100%',
-														justifyContent:
-															'space-between',
-														alignItems: 'center',
-													}}
-												>
-													<ScPaymentMethod
-														paymentMethod={
-															paymentMethod
-														}
-													/>
-													<div
-														style={{
-															display: 'flex',
-															alignItems:
-																'center',
-															gap: '2em',
-														}}
-													>
-														{!!paymentMethod?.card
-															?.exp_month && (
-															<span>
-																{__(
-																	'Exp.',
-																	'surecart'
-																)}
-																{
-																	paymentMethod
-																		?.card
-																		?.exp_month
-																}
-																/
-																{
-																	paymentMethod
-																		?.card
-																		?.exp_year
-																}
-															</span>
-														)}
-														{!!paymentMethod
-															?.paypal_account
-															?.email &&
-															paymentMethod
-																?.paypal_account
-																?.email}
-
-														{isDraftInvoice && (
-															<ScDropdown placement="bottom-end">
-																<ScButton
-																	type="text"
-																	slot="trigger"
-																	circle
-																>
-																	<ScIcon name="more-horizontal" />
-																</ScButton>
-																<ScMenu>
-																	<ScMenuItem
-																		onClick={() =>
-																			setPaymentMethod(
-																				false
-																			)
-																		}
-																	>
-																		<ScIcon
-																			slot="prefix"
-																			name="trash"
-																			style={{
-																				opacity: 0.5,
-																			}}
-																		/>
-																		{__(
-																			'Remove',
-																			'surecart'
-																		)}
-																	</ScMenuItem>
-																</ScMenu>
-															</ScDropdown>
-														)}
-													</div>
-												</div>
-											</>
-										)}
-									</div>
-								)}
 							</div>
 						</div>
 					</ScRadio>
 				</ScRadioGroup>
+
+				{invoice?.automatic_collection && (
+					<div
+						css={css`
+							margin-left: var(--sc-spacing-x-large);
+						`}
+					>
+						{!!paymentMethod ? (
+							<div
+								css={css`
+									display: flex;
+									justify-content: space-between;
+								`}
+							>
+								<ScPaymentMethod
+									paymentMethod={paymentMethod}
+								/>
+								<div>
+									{!!paymentMethod?.card?.exp_month && (
+										<span>
+											{__('Exp.', 'surecart')}
+											{paymentMethod?.card?.exp_month}/
+											{paymentMethod?.card?.exp_year}
+										</span>
+									)}
+									{!!paymentMethod?.paypal_account?.email &&
+										paymentMethod?.paypal_account?.email}
+
+									{isDraftInvoice && (
+										<ScDropdown placement="bottom-end">
+											<ScButton
+												type="text"
+												slot="trigger"
+												circle
+											>
+												<ScIcon name="more-horizontal" />
+											</ScButton>
+											<ScMenu>
+												<ScMenuItem
+													onClick={() =>
+														setPaymentMethod(false)
+													}
+												>
+													<ScIcon
+														slot="prefix"
+														name="trash"
+														style={{
+															opacity: 0.5,
+														}}
+													/>
+													{__('Remove', 'surecart')}
+												</ScMenuItem>
+											</ScMenu>
+										</ScDropdown>
+									)}
+								</div>
+							</div>
+						) : (
+							<ScButton
+								type="primary"
+								onClick={() => setModal('payment')}
+							>
+								{__('Add Payment Method', 'surecart')}
+							</ScButton>
+						)}
+					</div>
+				)}
 
 				<PaymentMethods
 					open={modal === 'payment'}
