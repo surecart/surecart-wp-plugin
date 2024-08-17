@@ -5,6 +5,9 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { useCopyToClipboard } from '@wordpress/compose';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
 
 /**
  * Internal dependencies.
@@ -12,25 +15,33 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 import DatePicker from '../../components/DatePicker';
-import { ScFormatDate, ScInvoiceStatusBadge } from '@surecart/components-react';
-import { ExternalLink } from '@wordpress/components';
+import {
+	ScButton,
+	ScDropdown,
+	ScFormatDate,
+	ScIcon,
+	ScInvoiceStatusBadge,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 
 export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const isDraftInvoice = invoice?.status === 'draft';
 
-	const paymentPageUrl = checkout?.id
+	const checkoutPageUrl = checkout?.id
 		? `${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`
 		: null;
+	const checkoutPageUrlRef = useCopyToClipboard(checkoutPageUrl, () =>
+		createSuccessNotice(
+			__('Checkout Page URL Copied to clipboard.', 'surecart'),
+			{
+				type: 'snackbar',
+			}
+		)
+	);
 
 	const orderPdfUrl = checkout?.order?.pdf_url;
-
-	const getTrancatedUrl = (url, baseUrl, maxChars = 30) => {
-		baseUrl = baseUrl || window.scData?.home_url;
-		return (
-			url.replace(baseUrl, '').substring(0, maxChars) +
-			(url.replace(baseUrl, '').length > maxChars ? '...' : '')
-		);
-	};
 
 	return (
 		<>
@@ -122,27 +133,39 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 					)}
 				</Definition>
 
-				{!!paymentPageUrl && (
-					<Definition title={__('Payment Page', 'surecart')}>
-						<ExternalLink
-							className="editor-post-url__link"
-							href={paymentPageUrl}
-							target="_blank"
-						>
-							{getTrancatedUrl(paymentPageUrl)}
-						</ExternalLink>
+				{!!checkoutPageUrl && (
+					<Definition title={__('Checkout Page', 'surecart')}>
+						<ScDropdown placement="bottom-end">
+							<ScButton type="text" slot="trigger">
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem
+									onClick={() => {
+										window.open(checkoutPageUrl, '_blank');
+									}}
+								>
+									{__('View', 'surecart')}
+								</ScMenuItem>
+								<ScMenuItem ref={checkoutPageUrlRef}>
+									{__('Copy URL', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
 					</Definition>
 				)}
 
 				{!!orderPdfUrl && (
-					<Definition title={__('PDF Link', 'surecart')}>
-						<ExternalLink
-							className="editor-post-url__link"
+					<Definition title={__('Receipt', 'surecart')}>
+						<ScButton
+							size="small"
 							href={orderPdfUrl}
 							target="_blank"
 						>
-							{getTrancatedUrl(orderPdfUrl)}
-						</ExternalLink>
+							{__('Download', 'surecart')}
+
+							<ScIcon name="download" slot="suffix" />
+						</ScButton>
 					</Definition>
 				)}
 			</Box>
