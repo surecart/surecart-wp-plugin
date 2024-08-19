@@ -193,6 +193,7 @@ class ProductPageBlock {
 							'scratch_amount',
 							'scratch_display_amount',
 							'ad_hoc',
+							'is_on_sale',
 							'is_zero_decimal',
 							'currency_symbol',
 							'converted_ad_hoc_min_amount',
