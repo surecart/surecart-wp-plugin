@@ -36,7 +36,18 @@ class BricksElementsService {
 		if ( ! class_exists( '\Bricks\Elements' ) ) {
 			return;
 		}
-		foreach ( glob( __DIR__ . '/Elements/**' ) as $file ) {
+
+		$elements = glob( __DIR__ . '/Elements/**' );
+		foreach ( $elements as $file ) {
+			if ( basename( $file ) === 'Product.php' ) {
+				\Bricks\Elements::register_element( $file );
+			}
+		}
+
+		foreach ( $elements as $file ) {
+			if ( basename( $file ) === 'Product.php' ) {
+				continue;
+			}
 			\Bricks\Elements::register_element( $file );
 		}
 	}
