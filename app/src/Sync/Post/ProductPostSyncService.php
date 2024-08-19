@@ -40,7 +40,7 @@ class ProductPostSyncService {
 	 *
 	 * @return \WP_Post|\WP_Error|null
 	 */
-	protected function findByModelId( string $model_id ) {
+	protected function findByModelId( $model_id ) {
 		// if we don't have a model id, return null.
 		if ( empty( $model_id ) ) {
 			return null;
@@ -107,7 +107,18 @@ class ProductPostSyncService {
 		}
 
 		// force delete post.
-		return wp_delete_post( $this->post->ID, true );
+		$deleted = wp_delete_post( $this->post->ID, true );
+		if ( is_wp_error( $deleted ) ) {
+			return $deleted;
+		}
+
+		// delete variant option values where post_id is the post id.
+		$deleted_option = VariantOptionValue::where( 'product_id', $id )->delete();
+		if ( is_wp_error( $deleted_option ) ) {
+			return $deleted_option;
+		}
+
+		return $deleted;
 	}
 
 	/**
@@ -209,24 +220,9 @@ class ProductPostSyncService {
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
 
-		// delete existing.
-		VariantOptionValue::where( 'product_id', $model->id )->delete();
-
-		// create new.
-		foreach ( ( $model->variant_options->data ?? array() ) as $option ) {
-			foreach ( $option->values as $value ) {
-				$created = VariantOptionValue::create(
-					array(
-						'value'      => $value,
-						'name'       => $option->name,
-						'post_id'    => $post_id,
-						'product_id' => $model->id,
-					)
-				);
-				if ( is_wp_error( $created ) ) {
-					return $created;
-				}
-			}
+		$values = $this->syncVariantValues( $model, $post_id );
+		if ( is_wp_error( $values ) ) {
+			return $values;
 		}
 
 		// set the post on the model.
@@ -279,9 +275,46 @@ class ProductPostSyncService {
 		// we need to do this because tax_input checks permissions for some ungodly reason.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
 
+		$values = $this->syncVariantValues( $model, $post_id );
+		if ( is_wp_error( $values ) ) {
+			return $values;
+		}
+
 		$this->post = get_post( $post_id );
 
 		return $this->post;
+	}
+
+	/**
+	 * Sync the variant values.
+	 *
+	 * @param int $model_id The model id.
+	 * @param int $post_id  The post id.
+	 *
+	 * @return bool|\WP_Error
+	 */
+	protected function syncVariantValues( $model, $post_id ) {
+		// delete existing.
+		VariantOptionValue::where( 'product_id', $model->id )->delete();
+
+		// create new.
+		foreach ( ( $model->variant_options->data ?? array() ) as $option ) {
+			foreach ( $option->values as $value ) {
+				$created = VariantOptionValue::create(
+					array(
+						'value'      => $value,
+						'name'       => $option->name,
+						'post_id'    => $post_id,
+						'product_id' => $model->id,
+					)
+				);
+				if ( is_wp_error( $created ) ) {
+					return $created;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
