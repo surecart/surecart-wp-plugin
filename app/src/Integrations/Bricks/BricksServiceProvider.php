@@ -2,7 +2,6 @@
 
 namespace SureCart\Integrations\Bricks;
 
-use SureCart\Migration\ProductPageWrapperService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
