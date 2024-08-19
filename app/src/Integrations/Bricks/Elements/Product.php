@@ -96,10 +96,23 @@ class Product extends \Bricks\Element {
 			array( 'name' => 'surecart-product-media' ),
 		);
 
+		$price_choice_template_settings = array(
+			'_typography' => array(
+				'text-align' => 'right',
+			),
+		);
+
 		$right_column_children = array(
 			array(
 				'name'     => 'surecart-product-collection-tags',
-				'children' => ( new CollectionTags() )->get_nestable_children(),
+				'children' => array(
+					array(
+						'name'     => 'surecart-product-collection-tag',
+						'settings' => array(
+							'_width' => 'max-content',
+						),
+					),
+				),
 			),
 			array( 'name' => 'post-title' ),
 			array(
@@ -109,7 +122,52 @@ class Product extends \Bricks\Element {
 			array( 'name' => 'post-excerpt' ),
 			array(
 				'name'     => 'surecart-product-price-chooser',
-				'children' => ( new PriceChooser() )->get_nestable_children(),
+				'children' => array(
+					array(
+						'name'     => 'surecart-product-price-choice-template',
+						'settings' => array(
+							'_display'        => 'flex',
+							'_direction'      => 'row',
+							'_justifyContent' => 'flex-start',
+							'_alignItems'     => 'center',
+							'_width'          => '100%',
+							'_gap'            => '0',
+						),
+						'children' => array(
+							array(
+								'name'     => 'surecart-product-price-name',
+								'settings' => array(
+									'_width'     => '50%',
+									'_flexBasis' => '50%',
+								),
+							),
+							array(
+								'name'     => 'block',
+								'settings' => array(
+									'display'     => 'flex',
+									'_direction'  => 'column',
+									'_alignItems' => 'flex-end',
+									'_width'      => '50%',
+									'_flexBasis'  => '50%',
+								),
+								'children' => array(
+									array(
+										'name'     => 'surecart-product-price-amount',
+										'settings' => $price_choice_template_settings,
+									),
+									array(
+										'name'     => 'surecart-product-price-trial',
+										'settings' => $price_choice_template_settings,
+									),
+									array(
+										'name'     => 'surecart-product-price-setup-fee',
+										'settings' => $price_choice_template_settings,
+									),
+								),
+							),
+						),
+					),
+				),
 			),
 			array(
 				'name'     => 'surecart-product-variant-pills',
