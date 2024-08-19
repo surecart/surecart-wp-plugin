@@ -21,7 +21,7 @@ class VariantOptionValues {
 	 *
 	 * @var integer
 	 */
-	protected $version = 1;
+	protected $version = 2;
 
 	/**
 	 * Table name.
@@ -64,6 +64,7 @@ class VariantOptionValues {
 			name varchar(155) NOT NULL,
 			post_id bigint(20) unsigned NOT NULL,
 			product_id varchar(155) NOT NULL,
+			account_id varchar(155) NOT NULL,
 			created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
             updated_at TIMESTAMP NULL,
 			PRIMARY KEY  (id),
@@ -71,6 +72,7 @@ class VariantOptionValues {
             KEY name (name),
 			KEY post_id (post_id),
 			KEY product_id (product_id),
+			KEY account_id (account_id),
 			KEY created_at (created_at),
             KEY updated_at (updated_at)
 			',
