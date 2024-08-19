@@ -95,7 +95,7 @@ class BricksElementsService {
 	 * @return array
 	 */
 	public function addTemplateTypes( $control_options ) {
-		$control_options['templateTypes']['sc_product'] = esc_html__( 'Surecart - single product', 'surecart' );
+		$control_options['templateTypes']['sc_product'] = esc_html__( 'SureCart - single product', 'surecart' );
 
 		return $control_options;
 	}
