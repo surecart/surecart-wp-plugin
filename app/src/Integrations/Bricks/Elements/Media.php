@@ -103,6 +103,19 @@ class Media extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
+		$product = sc_get_product();
+
+		if ( $this->is_admin_editor() && 1 < count( ( $product->gallery ?? [] ) ) ) {
+			echo $this->render_element_placeholder( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				array(
+					'title'       => esc_html__( 'Not available for preview.', 'surecart' ),
+					'description' => esc_html__( 'Due to compatibility issues, this block can only be previewed on the frontend side.', 'surecart' ),
+				)
+			);
+
+			return;
+		}
+
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'auto_height'         => (bool) ! empty( $this->settings['auto_height'] ),
