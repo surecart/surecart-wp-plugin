@@ -291,7 +291,6 @@ class BricksDynamicDataService {
 	 *
 	 * @param string $tag    Tag name.
 	 * @param object $post   Post object.
-	 * @param array  $context Context.
 	 *
 	 * @return string
 	 */
