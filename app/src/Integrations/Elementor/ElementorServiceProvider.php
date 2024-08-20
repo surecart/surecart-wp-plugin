@@ -19,6 +19,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		// nothing to register.
+		$container['surecart.elementor.widgets'] = function () {
+			return new ElementorWidgetsService();
+		};
 	}
 
 	/**
@@ -44,6 +47,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
+
+		// Bootstrap the widgets.
+		$container['surecart.elementor.widgets']->bootstrap();
 	}
 
 	/**
