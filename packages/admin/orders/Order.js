@@ -180,7 +180,7 @@ export default () => {
 	const getMenuItems = (orderStatus) => {
 		const menuItems = [];
 
-		if (!['paid'].includes(orderStatus)) {
+		if (!['draft', 'paid'].includes(orderStatus)) {
 			menuItems.push({
 				title: __('Mark As Paid', 'surecart'),
 				modal: 'order_status_update',

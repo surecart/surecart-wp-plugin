@@ -146,4 +146,5 @@ return array(
 	'affiliation_product.product_id.taken'                 => __( 'Affiliate commission already exists for this product. Please choose a different product.', 'surecart' ),
 	'payout_group.end_date.no_applicable_affiliations'     => __( 'No affiliates have earned more than the minimum commission amount within the selected date range.', 'surecart' ),
 	'invoice.missing_automatic_collection_payment_method'  => __( 'Please add a valid payment method to enable automatic collection.', 'surecart' ),
+	'checkout.invoice.draft'                               => __( 'This invoice is draft and cannot be paid.', 'surecart' ),
 );
