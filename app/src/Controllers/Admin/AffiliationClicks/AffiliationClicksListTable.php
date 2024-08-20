@@ -49,9 +49,8 @@ class AffiliationClicksListTable extends ListTable {
 	 * Get views for the list table status links.
 	 */
 	protected function get_views() {
-		$link = admin_url( 'admin.php?page=sc-affiliate-clicks' );
-
 		foreach ( $this->getStatuses() as $status => $label ) {
+			$link = admin_url( 'admin.php?page=sc-affiliate-clicks' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -63,6 +62,8 @@ class AffiliationClicksListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}

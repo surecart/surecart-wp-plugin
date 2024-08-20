@@ -22,6 +22,7 @@
 ### Depends on
 
 - [sc-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
+- [sc-order-billing-address](../../controllers/checkout-form/sc-order-billing-address)
 - [sc-order-tax-id-input](../../controllers/checkout-form/order-tax-id-input)
 - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
 - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
@@ -32,6 +33,7 @@
 ```mermaid
 graph TD;
   sc-form-components-validator --> sc-order-shipping-address
+  sc-form-components-validator --> sc-order-billing-address
   sc-form-components-validator --> sc-order-tax-id-input
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
@@ -58,6 +60,8 @@ graph TD;
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
   sc-compact-address --> sc-block-ui
+  sc-order-billing-address --> sc-checkbox
+  sc-order-billing-address --> sc-address
   sc-order-tax-id-input --> sc-tax-id-input
   sc-tax-id-input --> sc-icon
   sc-tax-id-input --> sc-input
