@@ -53,7 +53,7 @@ class InvoiceRestServiceProviderTest extends SureCartUnitTestCase
 
 			'Delete: Unauthenticated' => [null, 'DELETE', '/surecart/v1/invoices/test', 401],
 			'Delete: Missing Capability' => [[], 'DELETE', '/surecart/v1/invoices/test', 403],
-			'Delete: Has Capability' => [['edit_sc_invoices'], 'DELETE', '/surecart/v1/invoices/test', 200],
+			'Delete: Has Capability' => [['delete_sc_invoices'], 'DELETE', '/surecart/v1/invoices/test', 200],
 
 			'Make Draft: Unauthenticated' => [null, 'PATCH', '/surecart/v1/invoices/test/make_draft', 401],
 			'Make Draft: Missing Capability' => [[], 'PATCH', '/surecart/v1/invoices/test/make_draft', 403],
