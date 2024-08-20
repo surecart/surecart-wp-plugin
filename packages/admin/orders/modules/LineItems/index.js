@@ -29,6 +29,7 @@ const status = {
 	paid: __('Paid', 'surecart'),
 	canceled: __('Canceled', 'surecart'),
 	void: __('Canceled', 'surecart'),
+	draft: __('Draft', 'surecart'),
 };
 
 export default ({ order, checkout, loading }) => {
