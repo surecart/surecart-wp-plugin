@@ -71,35 +71,8 @@ class Product extends \Bricks\Element {
 			'_columnGap'      => '0.5em',
 		);
 
-		$selected_price_template = array(
-			array(
-				'name'     => 'block',
-				'settings' => $row_block_settings,
-				'children' => array(
-					array( 'name' => 'surecart-product-selected-price-scratch-amount' ),
-					array( 'name' => 'surecart-product-selected-price-amount' ),
-					array( 'name' => 'surecart-product-selected-price-interval' ),
-					array( 'name' => 'surecart-product-sale-badge' ),
-				),
-			),
-			array(
-				'name'     => 'block',
-				'settings' => $row_block_settings,
-				'children' => array(
-					array( 'name' => 'surecart-product-selected-price-trial' ),
-					array( 'name' => 'surecart-product-selected-price-fees' ),
-				),
-			),
-		);
-
 		$left_column_children = array(
 			array( 'name' => 'surecart-product-media' ),
-		);
-
-		$price_choice_template_settings = array(
-			'_typography' => array(
-				'text-align' => 'right',
-			),
 		);
 
 		$right_column_children = array(
@@ -117,8 +90,66 @@ class Product extends \Bricks\Element {
 			),
 			array( 'name' => 'post-title' ),
 			array(
-				'name'     => 'surecart-product-selected-price',
-				'children' => $selected_price_template,
+				'name'     => 'block',
+				'children' => array(
+					array(
+						'name'     => 'block',
+						'settings' => array(
+							'_direction'  => 'row',
+							'_alignItems' => 'baseline',
+							'_columnGap'  => '8px',
+						),
+						'children' => array(
+							array(
+								'name'     => 'surecart-product-data',
+								'settings' => array(
+									'direction'   => 'row',
+									'_fontSize'   => '1.4em',
+									'_gap'        => '5px',
+									'_typography' => array(
+										'font-size' => '1.4em',
+									),
+									'meta'        => [
+										[
+											'dynamicData' => '{sc_product_scratch_price}',
+										],
+										[
+											'dynamicData' => '{sc_product_price}',
+										],
+									],
+								),
+							),
+							array(
+								'name'     => 'surecart-product-data',
+								'settings' => array(
+									'direction' => 'row',
+									'_gap'      => '5px',
+									'meta'      => [
+										[
+											'dynamicData' => '{sc_product_billing_interval}',
+										],
+									],
+								),
+							),
+							array( 'name' => 'surecart-product-sale-badge' ),
+						),
+					),
+					array(
+						'name'     => 'surecart-product-data',
+						'settings' => array(
+							'direction' => 'row',
+							'_gap'      => '5px',
+							'meta'      => [
+								[
+									'dynamicData' => '{sc_product_trial}',
+								],
+								[
+									'dynamicData' => '{sc_product_setup_fee}',
+								],
+							],
+						),
+					),
+				),
 			),
 			array( 'name' => 'post-excerpt' ),
 			array(
@@ -132,46 +163,45 @@ class Product extends \Bricks\Element {
 							'_justifyContent' => 'flex-start',
 							'_alignItems'     => 'center',
 							'_width'          => '100%',
-							'_gap'            => '0',
+							'_gap'            => '10px',
 						),
 						'children' => array(
 							array(
 								'name'     => 'surecart-price-data',
-								'meta'     => [
-									[
-										'dynamicData' => '{sc_price_name}',
-										'id'          => \Bricks\Helpers::generate_random_id( false ),
-									],
-								],
 								'settings' => array(
-									'direction'  => 'column',
-									'alignItems' => 'center',
-									'_width'     => '50%',
-									'_flexBasis' => '50%',
+									'direction'       => 'column',
+									'alignItems'      => 'flex-start',
+									'_justifyContent' => 'center',
+									'_width'          => '50%',
+									'_flexBasis'      => '50%',
+									'meta'            => [
+										[
+											'dynamicData' => '{sc_price_name}',
+										],
+									],
 								),
 							),
 							array(
-								'name'     => 'block',
+								'name'     => 'surecart-price-data',
 								'settings' => array(
-									'display'     => 'flex',
-									'_direction'  => 'column',
-									'_alignItems' => 'flex-end',
-									'_width'      => '50%',
-									'_flexBasis'  => '50%',
-								),
-								'children' => array(
-									array(
-										'name'     => 'surecart-product-price-amount',
-										'settings' => $price_choice_template_settings,
-									),
-									array(
-										'name'     => 'surecart-product-price-trial',
-										'settings' => $price_choice_template_settings,
-									),
-									array(
-										'name'     => 'surecart-product-price-setup-fee',
-										'settings' => $price_choice_template_settings,
-									),
+									'direction'       => 'column',
+									'alignItems'      => 'flex-end',
+									'_justifyContent' => 'center',
+									'_width'          => '50%',
+									'_flexBasis'      => '50%',
+									'_gap'            => '5px',
+									'_lineHeight'     => '1',
+									'meta'            => [
+										[
+											'dynamicData' => '{sc_price_amount}',
+										],
+										[
+											'dynamicData' => '{sc_price_trial}',
+										],
+										[
+											'dynamicData' => '{sc_price_setup_fee}',
+										],
+									],
 								),
 							),
 						),
