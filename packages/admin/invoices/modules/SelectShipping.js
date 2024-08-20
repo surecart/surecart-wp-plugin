@@ -19,14 +19,18 @@ import {
 	ScAlert,
 	ScChoices,
 	ScChoice,
-	ScText,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import expand from '../checkout-query';
 
-export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
+export default ({
+	invoice,
+	checkout,
+	setBusy,
+	loading,
+	onUpdateInvoiceEntityRecord,
+}) => {
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const onShippingChange = async (shippingId) => {
 		try {
@@ -48,15 +52,10 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 				},
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: data,
+			});
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e);
@@ -67,72 +66,6 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 
 	if (!checkout?.selected_shipping_choice_required) {
 		return null;
-	}
-
-	if (!isDraftInvoice) {
-		if (
-			!checkout?.shipping_choices?.data?.length ||
-			!checkout?.selected_shipping_choice
-		) {
-			return null;
-		}
-
-		const selectedShippingMethod = checkout?.shipping_choices?.data?.find(
-			({ id }) => id === checkout?.selected_shipping_choice
-		);
-
-		return (
-			<Box title={__('Shipping', 'surecart')} loading={loading}>
-				<div
-					css={css`
-						display: flex;
-						justify-content: space-between;
-					`}
-				>
-					<div>
-						<ScText tag="strong">
-							{selectedShippingMethod?.shipping_method?.name ||
-								__('Shipping', 'surecart')}
-						</ScText>
-
-						{!!selectedShippingMethod?.shipping_method
-							?.description && (
-							<ScText
-								css={css`
-									font-size: 0.9em;
-									color: var(--sc-color-gray-600);
-								`}
-							>
-								{
-									selectedShippingMethod?.shipping_method
-										?.description
-								}
-							</ScText>
-						)}
-					</div>
-
-					<div>
-						<ScFormatNumber
-							type="currency"
-							currency={
-								checkout?.shipping_choices?.data?.find(
-									({ id }) =>
-										id ===
-										checkout?.selected_shipping_choice
-								)?.currency
-							}
-							value={
-								checkout?.shipping_choices?.data?.find(
-									({ id }) =>
-										id ===
-										checkout?.selected_shipping_choice
-								)?.amount
-							}
-						/>
-					</div>
-				</div>
-			</Box>
-		);
 	}
 
 	if (!checkout?.shipping_choices?.data?.length) {
@@ -158,6 +91,10 @@ export default ({ checkout, setBusy, loading, isDraftInvoice }) => {
 				</ScAlert>
 			</Box>
 		);
+	}
+
+	if (invoice?.status !== 'draft') {
+		return null;
 	}
 
 	return (

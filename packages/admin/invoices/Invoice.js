@@ -36,9 +36,9 @@ import Payment from './modules/Payment';
 import Error from '../components/Error';
 import Tax from './modules/Tax';
 import Details from './modules/Details';
-import DraftInvoiceConfirmModal from './components/DraftInvoiceConfirmModal';
 import AdditionalOptions from './modules/AdditionalOptions';
-import PaidInvoiceConfirmModal from './components/PaidInvoiceConfirmModal';
+import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
+import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
 
 /**
  * Returns the Model Edit URL.
@@ -388,7 +388,6 @@ export default () => {
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
-							isDraftInvoice={isDraftInvoice}
 						/>
 						<Tax
 							invoice={invoice}
@@ -399,7 +398,6 @@ export default () => {
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
-							isDraftInvoice={isDraftInvoice}
 						/>
 					</>
 				}
@@ -424,7 +422,6 @@ export default () => {
 					checkout={checkout}
 					loading={loading}
 					setBusy={setBusy}
-					isDraftInvoice={isDraftInvoice}
 				/>
 
 				{!!checkout?.line_items?.data?.length && (
@@ -437,7 +434,6 @@ export default () => {
 						setBusy={setBusy}
 						paymentMethod={paymentMethod}
 						setPaymentMethod={setPaymentMethod}
-						isDraftInvoice={isDraftInvoice}
 					/>
 				)}
 

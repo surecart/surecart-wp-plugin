@@ -5,8 +5,8 @@ import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch, select } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -25,15 +25,22 @@ import { formatTaxDisplay } from '../../util/tax';
 export default ({
 	invoice,
 	updateInvoice,
+	onUpdateInvoiceEntityRecord,
 	checkout,
 	loading,
 	setBusy,
 	paymentMethod,
 	setPaymentMethod,
-	isDraftInvoice,
 }) => {
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const isDraftInvoice = invoice?.status === 'draft';
 	const { createErrorNotice } = useDispatch(noticesStore);
+	const selectedShippingMethod = (
+		checkout?.shipping_choices?.data || []
+	)?.find(
+		({ id }) => checkout?.selected_shipping_choice === id
+	)?.shipping_method;
+
+	console.log('selectedShippingMethod', selectedShippingMethod);
 
 	const onCouponChange = async (e) => {
 		try {
@@ -51,19 +58,14 @@ export default ({
 				data: {
 					discount: {
 						promotion_code: e?.detail,
-					}, // update the coupon.
+					},
 				},
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: data,
+			});
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e);
@@ -93,6 +95,30 @@ export default ({
 					<ScLineItem>
 						<span slot="description">
 							{__('Shipping', 'surecart')}
+
+							{!!selectedShippingMethod?.name && (
+								<div>
+									<span
+										style={{
+											color: 'var(--sc-color-gray-600)',
+										}}
+									>
+										{`${selectedShippingMethod?.name}`}
+									</span>
+
+									{!!selectedShippingMethod?.description && (
+										<span
+											style={{
+												fontSize:
+													'var(--sc-font-size-small)',
+												color: 'var(--sc-color-gray-600)',
+											}}
+										>
+											{` - ${selectedShippingMethod?.description}`}
+										</span>
+									)}
+								</div>
+							)}
 						</span>
 						<ScFormatNumber
 							slot="price"
