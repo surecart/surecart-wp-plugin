@@ -136,7 +136,7 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 					)}
 				</Definition>
 
-				{!!checkoutPageUrl && (
+				{!!checkoutPageUrl && invoice?.status !== 'paid' && (
 					<Definition title={__('Checkout Page', 'surecart')}>
 						<ScDropdown placement="bottom-end">
 							<ScButton
