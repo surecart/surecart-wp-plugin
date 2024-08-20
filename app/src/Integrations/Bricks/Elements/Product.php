@@ -149,7 +149,10 @@ class Product extends \Bricks\Element {
 					),
 				),
 			),
-			array( 'name' => 'post-excerpt' ),
+			array(
+				'name'     => 'post-excerpt',
+				'settings' => array( 'keepHTML' => true ),
+			),
 			array(
 				'name'     => 'surecart-product-price-chooser',
 				'children' => array(
