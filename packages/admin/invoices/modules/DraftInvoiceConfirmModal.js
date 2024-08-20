@@ -5,7 +5,6 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
-import { store as coreStore } from '@wordpress/core-data';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 
 /**
@@ -21,17 +20,15 @@ export default ({
 	changeInvoiceStatus,
 	onUpdateInvoiceEntityRecord,
 }) => {
-	const invoiceId = invoice?.id;
-	if (!invoiceId) {
+	if (!invoice?.id) {
 		return null;
 	}
 
 	const [error, setError] = useState(null);
 	const [changingStatus, setChangingStatus] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 
-	const onChangeInvoiceStatusToDraft = async () => {
+	const onConfirm = async () => {
 		try {
 			setChangingStatus(true);
 			const invoiceData = await changeInvoiceStatus('draft');
@@ -54,9 +51,7 @@ export default ({
 	return (
 		<ConfirmDialog
 			isOpen={open}
-			onConfirm={() => {
-				onChangeInvoiceStatusToDraft();
-			}}
+			onConfirm={onConfirm}
 			onCancel={onRequestClose}
 		>
 			<Error error={error} />

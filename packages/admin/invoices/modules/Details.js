@@ -32,6 +32,7 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 	const checkoutPageUrl = checkout?.id
 		? `${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`
 		: null;
+
 	const checkoutPageUrlRef = useCopyToClipboard(checkoutPageUrl, () =>
 		createSuccessNotice(
 			__('Checkout Page URL Copied to clipboard.', 'surecart'),
@@ -145,7 +146,7 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 								caret
 								loading={loading}
 							>
-								{__('View/Copy', 'surecart')}
+								{__('View / Copy', 'surecart')}
 							</ScButton>
 							<ScMenu>
 								<ScMenuItem
@@ -153,7 +154,7 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 										window.open(checkoutPageUrl, '_blank');
 									}}
 								>
-									{__('View', 'surecart')}
+									{__('View Page', 'surecart')}
 								</ScMenuItem>
 								<ScMenuItem ref={checkoutPageUrlRef}>
 									{__('Copy URL', 'surecart')}

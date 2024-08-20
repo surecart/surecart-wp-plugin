@@ -34,13 +34,12 @@ export default ({
 }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
 	const { createErrorNotice } = useDispatch(noticesStore);
+
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
 	)?.find(
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
-
-	console.log('selectedShippingMethod', selectedShippingMethod);
 
 	const onCouponChange = async (e) => {
 		try {

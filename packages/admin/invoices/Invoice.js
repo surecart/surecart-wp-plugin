@@ -174,16 +174,7 @@ export default () => {
 
 			// Save the invoice as open.
 			const invoiceData = await changeInvoiceStatus('open');
-
-			// Update the checkout in the redux store as invoice number is added to checkout.order
-			receiveEntityRecords(
-				'surecart',
-				'invoice',
-				invoiceData,
-				undefined,
-				false,
-				invoice
-			);
+			updateInvoiceEntityRecord(invoiceData);
 
 			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
 				type: 'snackbar',
@@ -221,12 +212,10 @@ export default () => {
 			return __('Charge Customer', 'surecart');
 		}
 
-		if (checkout?.order?.id && isDraftInvoice) {
-			return __('Update Invoice', 'surecart');
-		}
-
-		if (checkout?.order?.id && !isDraftInvoice) {
-			return __('Edit Invoice', 'surecart');
+		if (checkout?.order?.id) {
+			return isDraftInvoice
+				? __('Update Invoice', 'surecart')
+				: __('Edit Invoice', 'surecart');
 		}
 
 		return __('Create Invoice', 'surecart');
@@ -290,12 +279,7 @@ export default () => {
 				}
 				button={
 					invoice?.status !== 'paid' && (
-						<div
-							css={css`
-								display: flex;
-								gap: 1em;
-							`}
-						>
+						<div>
 							{invoiceStatus === 'draft' && (
 								<ScButton
 									type={
