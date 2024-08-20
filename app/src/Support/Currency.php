@@ -10,8 +10,8 @@ class Currency {
 	 * Get all available Currency symbols.
 	 * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
 	 */
-	public static function getCurrencySymbol( $key ) {
-		$key     = strtoupper( $key ?? '' );
+	public static function getCurrencySymbol( $key = null ) {
+		$key     = strtoupper( $key ?? \SureCart::account()->currency ?? '' );
 		$symbols = apply_filters(
 			'surecart/currency_symbols',
 			array(
