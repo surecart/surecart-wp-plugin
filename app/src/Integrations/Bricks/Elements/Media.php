@@ -106,11 +106,15 @@ class Media extends \Bricks\Element {
 		$product = sc_get_product();
 
 		if ( $this->is_admin_editor() && 1 < count( ( $product->gallery ?? [] ) ) ) {
-			echo $this->render_element_placeholder( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				array(
-					'title'       => esc_html__( 'Not available for preview.', 'surecart' ),
-					'description' => esc_html__( 'Due to compatibility issues, this block can only be previewed on the frontend side.', 'surecart' ),
-				)
+			$content  = '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
+			$content .= ' style="' . ( ! empty( $this->settings['max_image_width'] ) ? 'max-width:' . esc_attr( $this->settings['max_image_width'] ) : '' ) . '"';
+			$content .= ' alt="' . esc_attr( get_the_title() ) . '" />';
+			$content .= '<div class="bricks-draggable-handle bricks-draggable-item bricks-element-placeholder" id="brxe-uxzbpx" data-id="uxzbpx" data-parent-id="metihm" data-script-id="uxzbpx" data-index="0" data-type="info" draggable="false" style=""><i class="ti-layout-slider-alt brx-child-node"></i><div class="placeholder-inner brx-child-node"><div class="placeholder-description">The accurate preview for this block is only available on frontend due to compatibility issues.</div></div></div>';
+
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$content,
+				'',
+				'figure'
 			);
 
 			return;
