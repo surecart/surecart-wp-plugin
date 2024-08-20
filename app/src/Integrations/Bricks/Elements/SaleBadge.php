@@ -49,7 +49,7 @@ class SaleBadge extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Sale Badge', 'surecart' );
+		return esc_html__( 'Sale Badge', 'surecart' );
 	}
 
 	/**

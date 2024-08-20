@@ -64,19 +64,12 @@ class Product extends \Bricks\Element {
 	 * @return array
 	 */
 	public function get_nestable_children() {
-		$row_block_settings = array(
-			'_direction'      => 'row',
-			'_justifyContent' => 'flex-start',
-			'_alignItems'     => 'baseline',
-			'_columnGap'      => '0.5em',
-		);
 
 		$left_column_children = array(
 			array( 'name' => 'surecart-product-media' ),
 		);
 
 		$right_column_children = array(
-
 			array(
 				'name'     => 'surecart-product-collection-tags',
 				'children' => array(
@@ -91,9 +84,11 @@ class Product extends \Bricks\Element {
 			array( 'name' => 'post-title' ),
 			array(
 				'name'     => 'block',
+				'label'    => esc_html__( 'Pricing', 'surecart' ),
 				'children' => array(
 					array(
 						'name'     => 'block',
+						'label'    => esc_html__( 'Amount', 'surecart' ),
 						'settings' => array(
 							'_direction'  => 'row',
 							'_alignItems' => 'baseline',
@@ -102,6 +97,7 @@ class Product extends \Bricks\Element {
 						'children' => array(
 							array(
 								'name'     => 'surecart-product-data',
+								'label'    => esc_html__( 'Price', 'surecart' ),
 								'settings' => array(
 									'direction'   => 'row',
 									'_fontSize'   => '1.4em',
@@ -121,6 +117,7 @@ class Product extends \Bricks\Element {
 							),
 							array(
 								'name'     => 'surecart-product-data',
+								'label'    => esc_html__( 'Interval', 'surecart' ),
 								'settings' => array(
 									'direction' => 'row',
 									'_gap'      => '5px',
@@ -136,6 +133,7 @@ class Product extends \Bricks\Element {
 					),
 					array(
 						'name'     => 'surecart-product-data',
+						'label'    => esc_html__( 'Trial/Fees', 'surecart' ),
 						'settings' => array(
 							'direction' => 'row',
 							'_gap'      => '5px',
@@ -168,6 +166,7 @@ class Product extends \Bricks\Element {
 						'children' => array(
 							array(
 								'name'     => 'surecart-price-data',
+								'label'    => esc_html__( 'Name', 'surecart' ),
 								'settings' => array(
 									'direction'       => 'column',
 									'alignItems'      => 'flex-start',
@@ -183,13 +182,14 @@ class Product extends \Bricks\Element {
 							),
 							array(
 								'name'     => 'surecart-price-data',
+								'label'    => esc_html__( 'Details', 'surecart' ),
 								'settings' => array(
 									'direction'       => 'column',
 									'alignItems'      => 'flex-end',
 									'_justifyContent' => 'center',
 									'_width'          => '50%',
 									'_flexBasis'      => '50%',
-									'_gap'            => '5px',
+									'_gap'            => '0',
 									'_lineHeight'     => '1',
 									'meta'            => [
 										[

@@ -115,40 +115,42 @@ class PriceChooser extends \Bricks\Element {
 				'children' => array(
 					array(
 						'name'     => 'surecart-price-data',
-						'meta'     => [
-							[
-								'dynamicData' => '{sc_price_name}',
-							],
-						],
+						'label'    => esc_html__( 'Name', 'surecart' ),
 						'settings' => array(
-							'direction'  => 'column',
-							'alignItems' => 'center',
-							'_width'     => '50%',
-							'_flexBasis' => '50%',
+							'direction'       => 'column',
+							'alignItems'      => 'flex-start',
+							'_justifyContent' => 'center',
+							'_width'          => '50%',
+							'_flexBasis'      => '50%',
+							'meta'            => [
+								[
+									'dynamicData' => '{sc_price_name}',
+								],
+							],
 						),
 					),
 					array(
-						'name'     => 'block',
+						'name'     => 'surecart-price-data',
+						'label'    => esc_html__( 'Details', 'surecart' ),
 						'settings' => array(
-							'display'     => 'flex',
-							'_direction'  => 'column',
-							'_alignItems' => 'flex-end',
-							'_width'      => '50%',
-							'_flexBasis'  => '50%',
-						),
-						'children' => array(
-							array(
-								'name'     => 'surecart-product-price-amount',
-								'settings' => $price_choice_template_settings,
-							),
-							array(
-								'name'     => 'surecart-product-price-trial',
-								'settings' => $price_choice_template_settings,
-							),
-							array(
-								'name'     => 'surecart-product-price-setup-fee',
-								'settings' => $price_choice_template_settings,
-							),
+							'direction'       => 'column',
+							'alignItems'      => 'flex-end',
+							'_justifyContent' => 'center',
+							'_width'          => '50%',
+							'_flexBasis'      => '50%',
+							'_gap'            => '0',
+							'_lineHeight'     => '1',
+							'meta'            => [
+								[
+									'dynamicData' => '{sc_price_amount}',
+								],
+								[
+									'dynamicData' => '{sc_price_trial}',
+								],
+								[
+									'dynamicData' => '{sc_price_setup_fee}',
+								],
+							],
 						),
 					),
 				),
