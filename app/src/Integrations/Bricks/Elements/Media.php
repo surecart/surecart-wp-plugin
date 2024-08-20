@@ -103,6 +103,23 @@ class Media extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
+		$product = sc_get_product();
+
+		if ( $this->is_admin_editor() && 1 < count( ( $product->gallery ?? [] ) ) ) {
+			$content  = '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
+			$content .= ' style="' . ( ! empty( $this->settings['max_image_width'] ) ? 'max-width:' . esc_attr( $this->settings['max_image_width'] ) : '' ) . '"';
+			$content .= ' alt="' . esc_attr( get_the_title() ) . '" />';
+			$content .= '<div class="bricks-element-placeholder" data-type="info" draggable="false"><i class="ti-layout-slider-alt"></i><div class="placeholder-inner"><div class="placeholder-description">' . __( 'The accurate preview for this element is only available on frontend due to compatibility issues.', 'surecart' ) . '</div></div></div>';
+
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$content,
+				'',
+				'figure'
+			);
+
+			return;
+		}
+
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'auto_height'         => (bool) ! empty( $this->settings['auto_height'] ),
