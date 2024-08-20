@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-08-14T11:43:24",
+  "timestamp": "2024-08-19T13:02:43",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -6657,6 +6657,23 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabledActions",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled-actions",
+          "reflectToAttr": false,
+          "docs": "Disable the action buttons or not",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -14920,6 +14937,7 @@
       "filePath": "./src/components/ui/invoice-status-badge/sc-invoice-status-badge.tsx",
       "encapsulation": "shadow",
       "tag": "sc-invoice-status-badge",
+      "readme": "# sc-invoice-status-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -19545,7 +19563,7 @@
         },
         {
           "name": "status",
-          "type": "\"canceled\" | \"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
+          "type": "\"canceled\" | \"draft\" | \"paid\" | \"payment_failed\" | \"processing\" | \"void\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
@@ -19554,6 +19572,10 @@
           "values": [
             {
               "value": "canceled",
+              "type": "string"
+            },
+            {
+              "value": "draft",
               "type": "string"
             },
             {
