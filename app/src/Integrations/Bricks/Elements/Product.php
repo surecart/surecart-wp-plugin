@@ -211,6 +211,7 @@ class Product extends \Bricks\Element {
 					),
 				),
 			),
+			array( 'name' => 'surecart-product-selected-price-ad-hoc-amount' ),
 			array(
 				'name'     => 'surecart-product-variant-pills',
 				'children' => array(
