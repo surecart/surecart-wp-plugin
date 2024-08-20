@@ -91,17 +91,14 @@ class CompatibilityService {
 			return $parsed_block;
 		}
 
-		if ( ! isset( $parsed_block['attrs']['id'] ) && empty( get_post()->upsell->id ) ) {
+		$post      = get_post();
+		$upsell_id = isset( $post->upsell->id ) ? $post->upsell->id : null;
+
+		$id = $parsed_block['attrs']['id'] ?? $upsell_id;
+
+		if ( empty( $id ) ) {
 			return $parsed_block;
 		}
-
-		$upsell = \SureCart\Models\Upsell::with( [ 'price' ] )->find( get_post()->upsell->id );
-
-		if ( is_wp_error( $upsell ) || empty( $upsell ) || empty( $upsell->id ) ) {
-			return $parsed_block;
-		}
-
-		$id = ! empty( $parsed_block['attrs']['id'] ) ? $parsed_block['attrs']['id'] : $upsell->id;
 
 		// If Spectra Blocks are present in the form, enqueue the assets.
 		$post_assets_instance = new \UAGB_Post_Assets( $id );
