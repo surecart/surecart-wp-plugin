@@ -9,6 +9,36 @@ use SureCart\Models\Invoice;
  */
 class InvoicesController extends RestController {
 	/**
+	 * Always fetch with these subcollections.
+	 *
+	 * @var array
+	 */
+	protected $with = [
+		'checkout',
+		'checkout.line_items',
+		'line_item.price',
+		'line_item.fees',
+		'line_item.variant',
+		'price.product',
+		'product.featured_product_media',
+		'product_media.media',
+		'checkout.customer',
+		'customer.shipping_address',
+		'checkout.payment_intent',
+		'checkout.discount',
+		'discount.promotion',
+		'discount.coupon',
+		'checkout.shipping_address',
+		'checkout.shipping_choices',
+		'shipping_choices.shipping_method',
+		'payment_method.card',
+		'checkout.tax_identifier',
+		'checkout.order',
+		'checkout.payment_method',
+		'checkout.manual_payment_method',
+ 	];
+
+	/**
 	 * Class to make the requests.
 	 *
 	 * @var string

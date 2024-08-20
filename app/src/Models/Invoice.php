@@ -2,6 +2,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\CanFinalize;
+use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasSubscription;
 use SureCart\Models\Traits\HasPaymentIntent;
@@ -12,7 +13,7 @@ use SureCart\Models\Traits\HasProcessorType;
  * Invoice model
  */
 class Invoice extends Model {
-	use HasCustomer, HasSubscription, HasPaymentIntent, HasPaymentMethod, CanFinalize, HasProcessorType;
+	use HasCheckout, HasCustomer, HasSubscription, HasPaymentIntent, HasPaymentMethod, CanFinalize, HasProcessorType;
 
 	/**
 	 * Rest API endpoint
