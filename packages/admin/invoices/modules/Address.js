@@ -8,7 +8,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -29,8 +29,15 @@ import expand from '../checkout-query';
 import Error from '../../components/Error';
 import AddressDisplay from '../../components/AddressDisplay';
 
-export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
-	const { receiveEntityRecords } = useDispatch(coreStore);
+export default ({
+	invoice,
+	checkout,
+	loading,
+	busy,
+	setBusy,
+	onUpdateInvoiceEntityRecord,
+}) => {
+	const isDraftInvoice = invoice?.status === 'draft';
 	const [open, setOpen] = useState(false);
 	const [error, setError] = useState(false);
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
@@ -59,15 +66,10 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 				},
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: data,
+			});
 
 			setOpen(false);
 		} catch (e) {

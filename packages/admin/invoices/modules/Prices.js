@@ -12,8 +12,15 @@ import { useDispatch, select } from '@wordpress/data';
 import expand from '../checkout-query';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import { checkoutExpands } from '../Invoice';
 
-export default ({ invoice, checkout, loading, setBusy }) => {
+export default ({
+	invoice,
+	checkout,
+	loading,
+	setBusy,
+	onUpdateInvoiceEntityRecord,
+}) => {
 	const invoiceStatus = invoice?.status;
 	const isDraftInvoice = invoiceStatus === 'draft';
 	const line_items = checkout?.line_items?.data || [];
@@ -43,15 +50,10 @@ export default ({ invoice, checkout, loading, setBusy }) => {
 				}),
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: data,
+			});
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -74,31 +76,18 @@ export default ({ invoice, checkout, loading, setBusy }) => {
 				'line_item'
 			);
 
-			const { checkout } = await apiFetch({
+			const { checkout: updatedCheckout } = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${id}`, {
-					expand: [
-						// expand the checkout and the checkout's required expands.
-						...(expand || []).map((item) => {
-							return item.includes('.')
-								? item
-								: `checkout.${item}`;
-						}),
-						'checkout',
-					],
+					expand: checkoutExpands,
 				}),
 				data,
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				checkout,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: updatedCheckout,
+			});
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e, {
@@ -113,7 +102,9 @@ export default ({ invoice, checkout, loading, setBusy }) => {
 		if (!line_items?.length && isDraftInvoice) {
 			return (
 				<ScEmpty icon="shopping-bag">
-					<p>{__('Add some products to this invoice.', 'surecart')}</p>
+					<p>
+						{__('Add some products to this invoice.', 'surecart')}
+					</p>
 				</ScEmpty>
 			);
 		}
@@ -189,12 +180,15 @@ export default ({ invoice, checkout, loading, setBusy }) => {
 				title={__('Products', 'surecart')}
 				loading={loading}
 				footer={
-					(!loading && isDraftInvoice) && (
+					!loading &&
+					isDraftInvoice && (
 						<NewPrice
+							invoice={invoice}
 							checkout={checkout}
 							open={modal}
 							setBusy={setBusy}
 							onRequestClose={() => setModal(false)}
+							onUpdateInvoiceEntityRecord={onUpdateInvoiceEntityRecord}
 						/>
 					)
 				}

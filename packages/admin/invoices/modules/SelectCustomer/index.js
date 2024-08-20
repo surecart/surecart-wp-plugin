@@ -26,6 +26,8 @@ import CreateCustomer from './CreateCustomer';
 import ModelSelector from '../../../components/ModelSelector';
 
 export default ({
+	invoice,
+	onUpdateInvoiceEntityRecord,
 	checkout,
 	setBusy,
 	loading,
@@ -35,7 +37,6 @@ export default ({
 }) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const onCustomerUpdate = async (customerID = false) => {
 		if (!isDraftInvoice) {
@@ -72,15 +73,10 @@ export default ({
 				},
 			});
 
-			// Update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: data,
+			});
 
 			onSuccess();
 		} catch (e) {

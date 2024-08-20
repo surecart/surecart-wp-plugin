@@ -5,12 +5,12 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -28,8 +28,15 @@ import Box from '../../../ui/Box';
 import TaxIdDisplay from './TaxIdDisplay';
 import expand from '../../checkout-query';
 
-export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
-	const { receiveEntityRecords } = useDispatch(coreStore);
+export default ({
+	invoice,
+	checkout,
+	loading,
+	busy,
+	setBusy,
+	onUpdateInvoiceEntityRecord,
+}) => {
+	const isDraftInvoice = invoice?.status === 'draft';
 	const [open, setOpen] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const [taxId, setTaxId] = useState(checkout?.tax_identifier);
@@ -59,15 +66,10 @@ export default ({ checkout, loading, busy, setBusy, isDraftInvoice }) => {
 				},
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: data,
+			});
 
 			setOpen(false);
 		} catch (e) {

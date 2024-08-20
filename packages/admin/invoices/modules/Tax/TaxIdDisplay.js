@@ -1,5 +1,12 @@
-import { ScTag } from '@surecart/components-react';
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import { ScTag } from '@surecart/components-react';
 
 const labels = {
 	ca_gst: __('GST Number', 'surecart'),
@@ -7,6 +14,7 @@ const labels = {
 	gb_vat: __('VAT Number', 'surecart'),
 	eu_vat: __('VAT Number', 'surecart'),
 };
+
 export default ({ taxId }) => {
 	const { number, number_type = 'other', valid_eu_vat } = taxId || {};
 	return (

@@ -1,15 +1,27 @@
-import { ScButton, ScIcon } from '@surecart/components-react';
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useDispatch, select } from '@wordpress/data';
-import expand from '../checkout-query';
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies.
+ */
+import { ScButton, ScIcon } from '@surecart/components-react';
+import { checkoutExpands } from '../Invoice';
 import PriceSelector from '@admin/components/PriceSelector';
 
-export default ({ checkout, setBusy }) => {
+export default ({
+	invoice,
+	checkout,
+	setBusy,
+	onUpdateInvoiceEntityRecord,
+}) => {
 	const [price, setPrice] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
@@ -30,31 +42,18 @@ export default ({ checkout, setBusy }) => {
 				'line_item'
 			);
 
-			const { checkout } = await apiFetch({
+			const { checkout: checkoutUpdated } = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${id}`, {
-					expand: [
-						// expand the checkout and the checkout's required expands.
-						...(expand || []).map((item) => {
-							return item.includes('.')
-								? item
-								: `checkout.${item}`;
-						}),
-						'draft-checkout',
-					],
+					expand: checkoutExpands,
 				}),
 				data,
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				checkout,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: checkoutUpdated,
+			});
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -79,31 +78,18 @@ export default ({ checkout, setBusy }) => {
 			);
 
 			// add the line item.
-			const { checkout } = await apiFetch({
+			const { checkout: checkoutUpdated } = await apiFetch({
 				method: 'POST',
 				path: addQueryArgs(baseURL, {
-					expand: [
-						// expand the checkout and the checkout's required expands.
-						...(expand || []).map((item) => {
-							return item.includes('.')
-								? item
-								: `checkout.${item}`;
-						}),
-						'checkout',
-					],
+					expand: checkoutExpands,
 				}),
 				data,
 			});
 
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				checkout,
-				undefined,
-				false,
-				checkout
-			);
+			onUpdateInvoiceEntityRecord({
+				...invoice,
+				checkout: checkoutUpdated,
+			});
 			setPrice(false);
 		} catch (e) {
 			console.error(e);
