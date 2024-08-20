@@ -40,7 +40,7 @@ class Product extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-shopping-cart';
+	public $icon = 'ti-tag';
 
 	/**
 	 * This is nestable.
@@ -103,6 +103,7 @@ class Product extends \Bricks\Element {
 		);
 
 		$right_column_children = array(
+
 			array(
 				'name'     => 'surecart-product-collection-tags',
 				'children' => array(
@@ -135,8 +136,16 @@ class Product extends \Bricks\Element {
 						),
 						'children' => array(
 							array(
-								'name'     => 'surecart-product-price-name',
+								'name'     => 'surecart-price-data',
+								'meta'     => [
+									[
+										'dynamicData' => '{sc_price_name}',
+										'id'          => \Bricks\Helpers::generate_random_id( false ),
+									],
+								],
 								'settings' => array(
+									'direction'  => 'column',
+									'alignItems' => 'center',
 									'_width'     => '50%',
 									'_flexBasis' => '50%',
 								),

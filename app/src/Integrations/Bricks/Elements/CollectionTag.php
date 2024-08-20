@@ -60,7 +60,7 @@ class CollectionTag extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Collection Tag', 'surecart' );
+		return esc_html__( 'Collection Tag', 'surecart' );
 	}
 
 	/**

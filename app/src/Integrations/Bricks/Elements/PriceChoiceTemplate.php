@@ -69,7 +69,7 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Price', 'surecart' );
+		return esc_html__( 'Price Choice', 'surecart' );
 	}
 
 	/**
