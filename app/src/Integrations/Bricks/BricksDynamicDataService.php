@@ -28,6 +28,15 @@ class BricksDynamicDataService {
 	}
 
 	/**
+	 * Check if we are in the admin editor.
+	 *
+	 * @return bool
+	 */
+	public function is_admin_editor() {
+		return ! bricks_is_frontend() || bricks_is_builder_call();
+	}
+
+	/**
 	 * Register Tags.
 	 *
 	 * @param array $tags Existing tags.
@@ -80,6 +89,48 @@ class BricksDynamicDataService {
 					'label' => esc_html__( 'Product on sale', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
+				[
+					'slug'  => 'sc_product_trial',
+					'name'  => '{sc_product_trial}',
+					'label' => esc_html__( 'Product trial', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_billing_interval',
+					'name'  => '{sc_product_billing_interval}',
+					'label' => esc_html__( 'Product billing interval', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_setup_fee',
+					'name'  => '{sc_product_setup_fee}',
+					'label' => esc_html__( 'Product setup fee', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_name',
+					'name'  => '{sc_price_name}',
+					'label' => esc_html__( 'Price name', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_amount',
+					'name'  => '{sc_price_amount}',
+					'label' => esc_html__( 'Price amount', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_trial',
+					'name'  => '{sc_price_trial}',
+					'label' => esc_html__( 'Price trial', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_setup_fee',
+					'name'  => '{sc_price_setup_fee}',
+					'label' => esc_html__( 'Price setup fee', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
 			]
 		);
 	}
@@ -101,23 +152,41 @@ class BricksDynamicDataService {
 				if ( isset( $filters['value'] ) ) {
 					return esc_html( $product ? Currency::maybeConvertAmount( $product->initial_amount ) : '' );
 				}
+
+				// Support ':raw' filter to get the price value as a simple string (e.g.: 1250, 250, 5 ).
 				if ( isset( $filters['raw'] ) ) {
 					return esc_html( $product ? $product->initial_amount : '' );
 				}
-				return esc_html( $product ? $product->display_amount : '' );
+
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-amount'>" . ( $product->display_amount ?? Currency::format( 1200 ) ) . '</span>';
+				}
+
+				// frontend.
+				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount -->';
 
 			case 'product_price_range':
 				return esc_html( $product ? $product->range_display_amount : '' );
 
-			case 'product_scratch_amount':
+			case 'product_scratch_price':
 				// Support ':value' filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
 				if ( isset( $filters['value'] ) ) {
 					return esc_html( $product ? Currency::maybeConvertAmount( $product->scratch_amount ) : '' );
 				}
+
+				// Support ':raw' filter to get the price value as a simple string (e.g.: 1450, 250, 5 ).
 				if ( isset( $filters['raw'] ) ) {
 					return esc_html( $product ? $product->scratch_amount : '' );
 				}
-				return esc_html( $product ? $product->scratch_display_amount : '' );
+
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-scratch-amount sc-price__amount'>" . ( $product->scratch_display_amount ?? '$14' ) . '</span>';
+				}
+
+				// frontend.
+				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount -->';
 
 			case 'product_description':
 				return wp_kses_post( \Bricks\Helpers::get_the_excerpt( $post, ! empty( $filters['num_words'] ) ? $filters['num_words'] : 55, null, true ) );
@@ -140,6 +209,53 @@ class BricksDynamicDataService {
 
 			case 'product_on_sale':
 				return esc_html( $product ? $product->is_on_sale : '' );
+
+			case 'product_trial':
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-trial'>" . esc_html__( 'Starting in 15 days', 'surecart' ) . '</span>';
+				}
+				return '<!-- wp:surecart/product-selected-price-trial --><!-- /wp:surecart/product-selected-price-trial -->';
+
+			case 'product_billing_interval':
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-interval sc-price__amount'>" . esc_html__( '/ day (3 payments)', 'surecart' ) . '</span>';
+				}
+				return '<!-- wp:surecart/product-selected-price-interval --><!-- /wp:surecart/product-selected-price-interval -->';
+
+			case 'product_setup_fee':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';
+				}
+				return '<!-- wp:surecart/product-selected-price-fees --><!-- /wp:surecart/product-selected-price-fees -->';
+
+			case 'price_name':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-price-name'>" . esc_html__( 'Price name', 'surecart' ) . '</span>';
+				}
+				return '<!-- wp:surecart/price-name --><!-- /wp:surecart/price-name -->';
+
+			case 'price_amount':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-price-amount'>" . sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), Currency::format( 200 ), '/mo' ) . '</span>';
+				}
+				return '<!-- wp:surecart/price-amount --><!-- /wp:surecart/price-amount -->';
+
+			case 'price_trial':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-product-price-trial'>" . esc_html__( 'Starting in 15 days', 'surecart' ) . '</span>';
+				}
+				return '<!-- wp:surecart/price-trial --><!-- /wp:surecart/price-trial -->';
+
+			case 'price_setup_fee':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-product-price-setup-fee'>" . esc_html__( '$12 Signup Fee', 'surecart' ) . '</span>';
+				}
+				return '<!-- wp:surecart/price-setup-fee --><!-- /wp:surecart/price-trial -->';
 		}
 
 		return $name;

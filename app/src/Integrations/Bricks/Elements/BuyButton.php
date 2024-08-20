@@ -49,7 +49,7 @@ class BuyButton extends Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Buy Button', 'surecart' );
+		return esc_html__( 'Add To Cart', 'surecart' );
 	}
 
 	/**

@@ -45,6 +45,12 @@ class BricksElementsService {
 		}
 
 		foreach ( $elements as $file ) {
+			if ( basename( $file ) === 'ProductCard.php' ) {
+				\Bricks\Elements::register_element( $file );
+			}
+		}
+
+		foreach ( $elements as $file ) {
 			if ( basename( $file ) === 'Product.php' ) {
 				continue;
 			}
