@@ -42,6 +42,9 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 	);
 
 	const orderPdfUrl = checkout?.order?.pdf_url;
+	const orderViewUrl = checkout?.order?.id
+		? `admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
+		: null;
 
 	return (
 		<>
@@ -136,8 +139,13 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 				{!!checkoutPageUrl && (
 					<Definition title={__('Checkout Page', 'surecart')}>
 						<ScDropdown placement="bottom-end">
-							<ScButton type="text" slot="trigger">
-								<ScIcon name="more-horizontal" />
+							<ScButton
+								size="small"
+								slot="trigger"
+								caret
+								loading={loading}
+							>
+								{__('View/Copy', 'surecart')}
 							</ScButton>
 							<ScMenu>
 								<ScMenuItem
@@ -152,6 +160,18 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 								</ScMenuItem>
 							</ScMenu>
 						</ScDropdown>
+					</Definition>
+				)}
+
+				{!!orderViewUrl && (
+					<Definition title={__('Order Page', 'surecart')}>
+						<ScButton
+							size="small"
+							href={orderViewUrl}
+							target="_blank"
+						>
+							{__('View', 'surecart')}
+						</ScButton>
 					</Definition>
 				)}
 
