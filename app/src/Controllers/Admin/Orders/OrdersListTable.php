@@ -76,9 +76,8 @@ class OrdersListTable extends ListTable {
 			'canceled'       => __( 'Canceled', 'surecart' ),
 		];
 
-		$link = \SureCart::getUrl()->index( 'orders' );
-
 		foreach ( $stati as $status => $label ) {
+			$link = \SureCart::getUrl()->index( 'orders' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -90,6 +89,8 @@ class OrdersListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}

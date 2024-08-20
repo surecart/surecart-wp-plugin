@@ -17,8 +17,9 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { useCopyToClipboard } from '@wordpress/compose';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
+import { store as coreStore } from '@wordpress/core-data';
 import CommissionStructure from '../../components/affiliates/commission/CommissionStructure';
 
 export default () => {
@@ -32,6 +33,11 @@ export default () => {
 		editItem: editAffiliationProtocolItem,
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
+	const { public_token } = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecord('surecart', 'store', 'account') ||
+			{}
+	);
 
 	const signupsUrl = `https://${scData?.account_slug}.surecart.com/affiliates/sign_up`;
 	const successFunction = () => {
@@ -41,7 +47,7 @@ export default () => {
 		});
 	};
 	const signupsUrlRef = useCopyToClipboard(signupsUrl, successFunction);
-	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"pt_vihbRpGvy8e5BprY2ukthxgM"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
+	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"${public_token}"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
 	const trackingScriptRef = useCopyToClipboard(
 		trackingScript,
 		successFunction

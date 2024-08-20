@@ -63,9 +63,8 @@ class ProductGroupsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = \SureCart::getUrl()->index( 'product_groups' );
-
 		foreach ( $stati as $status => $label ) {
+			$link = \SureCart::getUrl()->index( 'product_groups' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -77,6 +76,8 @@ class ProductGroupsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}

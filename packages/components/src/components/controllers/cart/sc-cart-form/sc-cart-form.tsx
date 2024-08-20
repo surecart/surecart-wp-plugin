@@ -103,7 +103,9 @@ export class ScCartForm {
         line_items: [
           ...(existingData || []).map((item: LineItemData) => {
             // if the price ids match (we have already a line item)
-            if (this.priceId === item?.price_id) {
+            const priceOrVariantMatches = this.variantId ? item.price_id === this.priceId && item.variant_id === this.variantId : item.price_id === this.priceId;
+
+            if (priceOrVariantMatches) {
               return {
                 ...item,
                 ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
