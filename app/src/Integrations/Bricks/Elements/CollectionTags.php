@@ -40,7 +40,7 @@ class CollectionTags extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-layout-grid2';
+	public $icon = 'ion-md-pricetags';
 
 	/**
 	 * This is nestable.

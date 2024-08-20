@@ -41,7 +41,7 @@ class SaleBadge extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ion-md-pricetag';
+	public $icon = 'ion-md-ribbon';
 
 	/**
 	 * Get element label

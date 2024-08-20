@@ -40,7 +40,7 @@ class VariantPill extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ion-md-pricetag';
+	public $icon = 'ion-md-radio-button-on';
 
 	/**
 	 * Get element label
