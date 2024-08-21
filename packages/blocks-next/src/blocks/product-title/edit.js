@@ -42,7 +42,7 @@ export default ({
 				<PanelBody title={__('Settings', 'surecart')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Make title a link')}
+						label={__('Make title a link', 'surecart')}
 						onChange={(isLink) => setAttributes({ isLink })}
 						checked={isLink}
 					/>
@@ -51,7 +51,7 @@ export default ({
 						<>
 							<ToggleControl
 								__nextHasNoMarginBottom
-								label={__('Open in new tab')}
+								label={__('Open in new tab', 'surecart')}
 								onChange={(value) =>
 									setAttributes({
 										linkTarget: value ? '_blank' : '_self',
@@ -61,7 +61,7 @@ export default ({
 							/>
 							<TextControl
 								__nextHasNoMarginBottom
-								label={__('Link rel')}
+								label={__('Link rel', 'surecart')}
 								value={rel}
 								onChange={(rel) => setAttributes({ rel })}
 							/>

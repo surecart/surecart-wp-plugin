@@ -5,7 +5,7 @@
 			href="<?php echo esc_url( get_the_permalink() ); ?>"
 			title="<?php echo esc_attr( the_title_attribute( [ 'echo' => false ] ) ); ?>"
 			target="<?php echo esc_attr( $attributes['linkTarget'] ); ?>"
-			<?php echo ! empty( $attributes['rel'] ) ? 'rel="' . esc_attr( $attributes['rel'] ) . '"' : ''; ?>
+			<?php echo ! empty( $rel ) ? 'rel="' . esc_attr( $rel ) . '"' : ''; ?>
 		>
 	<?php endif; ?>
 
