@@ -163,8 +163,8 @@ class BricksDynamicDataService {
 					return "<span class='wp-block-surecart-product-selected-price-amount'>" . ( $product->display_amount ?? Currency::format( 1200 ) ) . '</span>';
 				}
 
-				// frontend.
-				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
 
 			case 'product_price_range':
 				return esc_html( $product ? $product->range_display_amount : '' );
@@ -185,8 +185,8 @@ class BricksDynamicDataService {
 					return "<span class='wp-block-surecart-product-selected-price-scratch-amount sc-price__amount'>" . ( $product->scratch_display_amount ?? '$14' ) . '</span>';
 				}
 
-				// frontend.
-				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount --> ';
 
 			case 'product_description':
 				return wp_kses_post( \Bricks\Helpers::get_the_excerpt( $post, ! empty( $filters['num_words'] ) ? $filters['num_words'] : 55, null, true ) );
@@ -214,48 +214,55 @@ class BricksDynamicDataService {
 				if ( $this->is_admin_editor() ) {
 					return "<span class='wp-block-surecart-product-selected-price-trial'>" . esc_html__( 'Starting in 15 days', 'surecart' ) . '</span>';
 				}
-				return '<!-- wp:surecart/product-selected-price-trial --><!-- /wp:surecart/product-selected-price-trial -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-trial --><!-- /wp:surecart/product-selected-price-trial --> ';
 
 			case 'product_billing_interval':
 				if ( $this->is_admin_editor() ) {
 					return "<span class='wp-block-surecart-product-selected-price-interval sc-price__amount'>" . esc_html__( '/ day (3 payments)', 'surecart' ) . '</span>';
 				}
-				return '<!-- wp:surecart/product-selected-price-interval --><!-- /wp:surecart/product-selected-price-interval -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-interval --><!-- /wp:surecart/product-selected-price-interval --> ';
 
 			case 'product_setup_fee':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
 					return "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';
 				}
-				return '<!-- wp:surecart/product-selected-price-fees --><!-- /wp:surecart/product-selected-price-fees -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-fees --><!-- /wp:surecart/product-selected-price-fees --> ';
 
 			case 'price_name':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
 					return "<span class='wp-block-surecart-price-name'>" . esc_html__( 'Price name', 'surecart' ) . '</span>';
 				}
-				return '<!-- wp:surecart/price-name --><!-- /wp:surecart/price-name -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-name --><!-- /wp:surecart/price-name --> ';
 
 			case 'price_amount':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
 					return "<span class='wp-block-surecart-price-amount'>" . sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), Currency::format( 200 ), '/mo' ) . '</span>';
 				}
-				return '<!-- wp:surecart/price-amount --><!-- /wp:surecart/price-amount -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-amount --><!-- /wp:surecart/price-amount --> ';
 
 			case 'price_trial':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
 					return "<span class='wp-block-surecart-product-price-trial'>" . esc_html__( 'Starting in 15 days', 'surecart' ) . '</span>';
 				}
-				return '<!-- wp:surecart/price-trial --><!-- /wp:surecart/price-trial -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-trial --><!-- /wp:surecart/price-trial --> ';
 
 			case 'price_setup_fee':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
 					return "<span class='wp-block-surecart-product-price-setup-fee'>" . esc_html__( '$12 Signup Fee', 'surecart' ) . '</span>';
 				}
-				return '<!-- wp:surecart/price-setup-fee --><!-- /wp:surecart/price-setup-fee -->';
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-setup-fee --><!-- /wp:surecart/price-setup-fee --> ';
 		}
 
 		return $name;
