@@ -38,7 +38,7 @@ if ( ! $query->have_posts() ) {
 		// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 		$post_classes = implode( ' ', get_post_class( 'wp-block-post' ) );
 
-		$controller = new ProductPageBlock( $block );
+		$controller = new ProductPageBlock();
 		$state      = $controller->state();
 		$context    = $controller->context();
 

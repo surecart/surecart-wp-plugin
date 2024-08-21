@@ -5,7 +5,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 
 $product = sc_get_product();
 
-$controller = new ProductPageBlock( $block );
+$controller = new ProductPageBlock();
 $state      = $controller->state();
 $context    = $controller->context();
 

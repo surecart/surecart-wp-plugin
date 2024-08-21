@@ -7,13 +7,6 @@ namespace SureCart\Models\Blocks;
  */
 class ProductPageBlock {
 	/**
-	 * The block.
-	 *
-	 * @var \WP_Block
-	 */
-	protected $block;
-
-	/**
 	 * The URL.
 	 *
 	 * @var object
@@ -22,12 +15,9 @@ class ProductPageBlock {
 
 	/**
 	 * Constructor.
-	 *
-	 * @param \WP_Block $block The block.
 	 */
-	public function __construct( $block ) {
-		$this->block = $block;
-		$this->url   = \SureCart::block()->urlParams();
+	public function __construct() {
+		$this->url = \SureCart::block()->urlParams();
 	}
 
 	/**
