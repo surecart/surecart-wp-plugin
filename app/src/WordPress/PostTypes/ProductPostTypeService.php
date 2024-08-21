@@ -57,6 +57,9 @@ class ProductPostTypeService {
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
+		// we need to disable the gutenberg editor for our post type so that blocks don't load there.
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'disableGutenberg' ], 10, 2 );
+
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
 
@@ -533,6 +536,24 @@ class ProductPostTypeService {
 		}
 
 		return $link;
+	}
+
+	/**
+	 * Disables gutenburg for our post type.
+	 *
+	 * This prevents blocks from loading in the editor, and other scripts that may
+	 * expect the editor.
+	 *
+	 * @param bool   $current_status The current status.
+	 * @param string $post_type The post type.
+	 *
+	 * @return bool
+	 */
+	public function disableGutenberg( $current_status, $post_type ) {
+		if ( $post_type === $this->post_type ) {
+			return false;
+		}
+		return $current_status;
 	}
 
 	/**
