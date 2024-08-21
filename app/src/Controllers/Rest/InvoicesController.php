@@ -36,7 +36,7 @@ class InvoicesController extends RestController {
 		'checkout.order',
 		'checkout.payment_method',
 		'checkout.manual_payment_method',
- 	];
+	];
 
 	/**
 	 * Class to make the requests.

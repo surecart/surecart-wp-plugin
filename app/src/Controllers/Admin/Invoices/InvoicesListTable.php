@@ -117,7 +117,7 @@ class InvoicesListTable extends ListTable {
 		}
 
 		return Invoice::where( $where )
-		->with( [ 'charge', 'invoice.checkout', 'checkout.order', 'checkout.charge', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.customer', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
+		->with( [ 'charge', 'checkout', 'checkout.order', 'checkout.charge', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.customer', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'invoices' ),

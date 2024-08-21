@@ -34,7 +34,7 @@ class InvoicesViewController extends AdminController {
 	}
 
 	/**
-	 * Edit a invoice.
+	 * Edit the invoice.
 	 */
 	public function edit( $request ) {
 		// enqueue needed script.
@@ -42,7 +42,32 @@ class InvoicesViewController extends AdminController {
 
 		$invoice = null;
 		if ( $request->query( 'id' ) ) {
-			$invoice = Invoice::find( $request->query( 'id' ) );
+			$invoice = Invoice::with(
+				[
+					'checkout',
+					'checkout.line_items',
+					'line_item.price',
+					'line_item.fees',
+					'line_item.variant',
+					'price.product',
+					'product.featured_product_media',
+					'product_media.media',
+					'checkout.customer',
+					'customer.shipping_address',
+					'checkout.payment_intent',
+					'checkout.discount',
+					'discount.promotion',
+					'discount.coupon',
+					'checkout.shipping_address',
+					'checkout.shipping_choices',
+					'shipping_choices.shipping_method',
+					'payment_method.card',
+					'checkout.tax_identifier',
+					'checkout.order',
+					'checkout.payment_method',
+					'checkout.manual_payment_method',
+				]
+			)->find( $request->query( 'id' ) );
 
 			if ( is_wp_error( $invoice ) ) {
 				wp_die( implode( ' ', array_map( 'esc_html', $invoice->get_error_messages() ) ) );

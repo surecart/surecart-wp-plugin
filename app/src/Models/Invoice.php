@@ -84,7 +84,7 @@ class Invoice extends Model {
 	/**
 	 * Open invoice.
 	 *
-	 * @param string|null $id Request ID.
+	 * @param string|null $id Invoice ID.
 	 *
 	 * @return self|\WP_Error
 	 */

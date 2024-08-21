@@ -24,13 +24,6 @@ class InvoicesRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $controller = InvoicesController::class;
 
 	/**
-	 * Methods allowed for the model.
-	 *
-	 * @var array
-	 */
-	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
-
-	/**
 	 * Register REST Routes
 	 *
 	 * @return void
