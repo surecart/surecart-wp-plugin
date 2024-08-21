@@ -1,9 +1,16 @@
 <?php
 printf(
-	'<style>button.sc-pill-option__button--selected,button.sc-pill-option__button--selected:hover,button.sc-pill-option__button--selected:focus{background-color:%s!important;color:%s!important;border-color:%s!important;}</style>',
+	'<style>div.sc-pill-option__button--selected,div.sc-pill-option__button--selected:hover,div.sc-pill-option__button--selected:focus{background-color:%s!important;color:%s!important;border-color:%s!important;}</style>',
 	esc_attr( $attributes['highlight_background'] ?? '' ),
 	esc_attr( $attributes['highlight_text'] ?? '' ),
 	esc_attr( $attributes['highlight_border'] ?? '' )
+);
+
+printf(
+	'<style>div.sc-pill-option__button:hover:not(.sc-pill-option__button--selected){background-color:%s!important;color:%s!important;border-color:%s!important;}</style>',
+	esc_attr( $attributes['highlight_text'] ?? '' ),
+	esc_attr( $attributes['highlight_background'] ?? '' ),
+	esc_attr( $attributes['highlight_background'] ?? '' )
 );
 
 ?>
