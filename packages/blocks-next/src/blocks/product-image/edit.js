@@ -13,10 +13,13 @@ import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalUseCustomUnits as useCustomUnits,
+	PanelBody,
+	TextControl,
+	ToggleControl,
 } from '@wordpress/components';
 
 export default ({
-	attributes: { sizing, aspectRatio, height, width },
+	attributes: { sizing, aspectRatio, height, width, isLink, rel, linkTarget },
 	context: { postId },
 	setAttributes,
 	clientId,
@@ -158,7 +161,37 @@ export default ({
 					units={units}
 				/>
 			</InspectorControls>
+			<InspectorControls>
+				<PanelBody title={__('Settings', 'surecart')}>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={__('Make title a link')}
+						onChange={(isLink) => setAttributes({ isLink })}
+						checked={isLink}
+					/>
 
+					{isLink && (
+						<>
+							<ToggleControl
+								__nextHasNoMarginBottom
+								label={__('Open in new tab')}
+								onChange={(value) =>
+									setAttributes({
+										linkTarget: value ? '_blank' : '_self',
+									})
+								}
+								checked={linkTarget === '_blank'}
+							/>
+							<TextControl
+								__nextHasNoMarginBottom
+								label={__('Link rel')}
+								value={rel}
+								onChange={(rel) => setAttributes({ rel })}
+							/>
+						</>
+					)}
+				</PanelBody>
+			</InspectorControls>
 			<figure {...blockProps}>
 				{product?.preview_image?.src ? (
 					<img {...product?.preview_image} />
