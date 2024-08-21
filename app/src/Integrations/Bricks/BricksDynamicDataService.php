@@ -255,7 +255,7 @@ class BricksDynamicDataService {
 					// translators: %s: Setup Fee amount.
 					return "<span class='wp-block-surecart-product-price-setup-fee'>" . esc_html__( '$12 Signup Fee', 'surecart' ) . '</span>';
 				}
-				return '<!-- wp:surecart/price-setup-fee --><!-- /wp:surecart/price-trial -->';
+				return '<!-- wp:surecart/price-setup-fee --><!-- /wp:surecart/price-setup-fee -->';
 		}
 
 		return $name;
