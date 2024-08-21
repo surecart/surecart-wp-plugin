@@ -60,11 +60,4 @@ class InvoicesViewController extends AdminController {
 		// return view.
 		return '<div id="app"></div>';
 	}
-
-	public function archive( $request ) {
-		// flash an error message
-		\SureCart::flash()->add( 'errors', 'Please enter a valid email address.' );
-		// redirect to order index page.
-		return \SureCart::redirect()->to( \SureCart::getUrl()->index( 'invoice' ) );
-	}
 }
