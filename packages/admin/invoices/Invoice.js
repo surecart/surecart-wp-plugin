@@ -10,9 +10,9 @@ import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
 import { getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -65,8 +65,7 @@ export default () => {
 	const urlParams = getQueryArgs(window.location.href);
 	const defaultLiveMode = urlParams.live_mode === 'false' ? false : true;
 
-	const { receiveEntityRecords, editEntityRecord, saveEditedEntityRecord } =
-		useDispatch(coreStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [liveMode, setLiveMode] = useState(defaultLiveMode);
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -75,19 +74,18 @@ export default () => {
 	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
 
-	const { isResolving: loading, editedRecord: invoice } = useEntityRecord(
-		'surecart',
-		'invoice',
-		id,
-		{
-			enabled: true,
-		}
-	);
+	const {
+		isResolving: loading,
+		editedRecord: invoice,
+		edit: updateInvoice,
+		save: saveInvoice,
+		hasEdits: hasInvoiceEdits,
+	} = useEntityRecord('surecart', 'invoice', id, {
+		enabled: true,
+	});
 
 	const checkout = invoice?.checkout;
-	const invoiceStatus = invoice?.status;
-	const invoiceId = invoice?.id;
-	const isDraftInvoice = invoiceStatus === 'draft';
+	const isDraftInvoice = invoice?.status === 'draft';
 
 	// Update live mode when invoice is loaded.
 	useEffect(() => {
@@ -110,10 +108,6 @@ export default () => {
 		live_mode: liveMode ? 'true' : 'false',
 	});
 
-	const updateInvoice = (data) => {
-		return editEntityRecord('surecart', 'invoice', invoiceId, data);
-	};
-
 	const changeInvoiceStatus = async (status) => {
 		try {
 			setBusy(true);
@@ -127,6 +121,7 @@ export default () => {
 
 			const requestData = {
 				expand: checkoutExpands,
+				// Append payment method for open status only.
 				...(status === 'open' &&
 					paymentMethod?.id && {
 						manual_payment: !!paymentMethod.manual,
@@ -138,10 +133,7 @@ export default () => {
 
 			return await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(
-					`${baseURL}/${invoice?.id}/${action}`,
-					requestData
-				),
+				path: addQueryArgs(`${baseURL}/${id}/${action}`, requestData),
 			});
 		} catch (e) {
 			console.error(e);
@@ -162,17 +154,11 @@ export default () => {
 		);
 	};
 
-	const saveInvoice = async () => {
-		if (!isDraftInvoice) {
-			return;
-		}
-
+	const onSaveInvoice = async () => {
 		try {
 			setBusy(true);
 			setInvoiceError(false);
-			await saveEditedEntityRecord('surecart', 'invoice', invoice?.id);
-
-			// Save the invoice as open.
+			await saveInvoice();
 			const invoiceData = await changeInvoiceStatus('open');
 			updateInvoiceEntityRecord(invoiceData);
 
@@ -244,7 +230,7 @@ export default () => {
 	return (
 		<>
 			<UpdateModel
-				onSubmit={saveInvoice}
+				onSubmit={onSaveInvoice}
 				entitled={!!scData?.entitlements?.invoices}
 				title={
 					<div
@@ -280,7 +266,7 @@ export default () => {
 				button={
 					invoice?.status !== 'paid' && (
 						<div>
-							{invoiceStatus === 'draft' && (
+							{isDraftInvoice && (
 								<ScButton
 									type={
 										isDraftInvoice ? 'primary' : 'default'
@@ -290,15 +276,9 @@ export default () => {
 									disabled={
 										isDisabled ||
 										busy ||
+										!hasInvoiceEdits ||
 										!scData?.entitlements?.invoices
 									}
-									onClick={() => {
-										if (isDraftInvoice) {
-											return;
-										}
-
-										setModal('change_status_to_draft');
-									}}
 								>
 									{getSubmitButtonTitle()}
 								</ScButton>
@@ -349,7 +329,6 @@ export default () => {
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
-							status={invoiceStatus}
 						/>
 						<SelectCustomer
 							invoice={invoice}
