@@ -107,18 +107,6 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Get the line item display amount.
-		 */
-		get lineItemDisplayAmount() {
-			const { line_item } = getContext();
-			if (!!line_item?.ad_hoc_amount) {
-				return line_item.ad_hoc_display_amount;
-			}
-
-			return line_item.subtotal_display_amount;
-		},
-
-		/**
 		 * Check if the current line item has a scratch amount.
 		 */
 		get lineItemHasScratchAmount() {
