@@ -25,7 +25,7 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 
-export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
+export default ({ invoice, updateInvoice, checkout, loading }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const isDraftInvoice = invoice?.status === 'draft';
 
@@ -47,6 +47,74 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 		? `admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
 		: null;
 
+	const renderDueDate = () => {
+		if (isDraftInvoice) {
+			return (
+				<DatePicker
+					title={__('Choose a due date', 'surecart')}
+					placeholder={__('Due date', 'surecart')}
+					currentDate={
+						invoice?.due_date
+							? new Date(invoice?.due_date * 1000)
+							: null
+					}
+					onChoose={(due_date) => {
+						updateInvoice({
+							due_date: Date.parse(due_date) / 1000,
+						});
+					}}
+					onClear={() => updateInvoice({ due_date: null })}
+				/>
+			);
+		}
+
+		return invoice?.due_date ? (
+			<ScFormatDate
+				date={invoice?.due_date}
+				type="timestamp"
+				month="long"
+				day="numeric"
+				year="numeric"
+			/>
+		) : (
+			'-'
+		);
+	};
+
+	const renderIssueDate = () => {
+		if (isDraftInvoice) {
+			return (
+				<DatePicker
+					title={__('Choose an issue date', 'surecart')}
+					placeholder={__('Issue date', 'surecart')}
+					currentDate={
+						invoice?.issue_date
+							? new Date(invoice?.issue_date * 1000)
+							: null
+					}
+					onChoose={(issue_date) => {
+						updateInvoice({
+							issue_date: Date.parse(issue_date) / 1000,
+						});
+					}}
+					onClear={() => updateInvoice({ issue_date: null })}
+				/>
+			);
+		}
+
+		return invoice?.issue_date ? (
+			<ScFormatDate
+				date={invoice?.issue_date}
+				type="timestamp"
+				month="long"
+				day="numeric"
+				year="numeric"
+			/>
+		) : (
+			'-'
+		);
+	};
+
 	return (
 		<>
 			<Box title={__('', 'surecart')} loading={loading}>
@@ -61,80 +129,11 @@ export default ({ invoice, updateInvoice, checkout, loading, busy }) => {
 				</Definition>
 
 				<Definition title={__('Due Date', 'surecart')}>
-					{isDraftInvoice ? (
-						<div
-							css={css`
-								display: flex;
-							`}
-						>
-							<DatePicker
-								title={__('Choose a due date', 'surecart')}
-								placeholder={__('Due date', 'surecart')}
-								currentDate={
-									invoice?.due_date
-										? new Date(invoice?.due_date * 1000)
-										: null
-								}
-								onChoose={(due_date) => {
-									updateInvoice({
-										due_date: Date.parse(due_date) / 1000,
-									});
-								}}
-								onClear={() =>
-									updateInvoice({ due_date: null })
-								}
-							/>
-						</div>
-					) : invoice?.due_date ? (
-						<ScFormatDate
-							date={invoice?.due_date}
-							type="timestamp"
-							month="long"
-							day="numeric"
-							year="numeric"
-						/>
-					) : (
-						'-'
-					)}
+					{renderDueDate()}
 				</Definition>
 
 				<Definition title={__('Issue Date', 'surecart')}>
-					{isDraftInvoice ? (
-						<div
-							css={css`
-								display: flex;
-							`}
-						>
-							<DatePicker
-								title={__('Choose an issue date', 'surecart')}
-								placeholder={__('Issue date', 'surecart')}
-								currentDate={
-									invoice?.issue_date
-										? new Date(invoice?.issue_date * 1000)
-										: null
-								}
-								onChoose={(issue_date) => {
-									updateInvoice({
-										issue_date:
-											Date.parse(issue_date) / 1000,
-									});
-								}}
-								onClear={() =>
-									updateInvoice({ issue_date: null })
-								}
-							/>
-						</div>
-					) : invoice?.issue_date ? (
-						<ScFormatDate
-							date={invoice?.issue_date}
-							type="timestamp"
-							month="long"
-							day="numeric"
-							year="numeric"
-						/>
-					) : (
-						'-'
-					)}
+					{renderIssueDate()}
 				</Definition>
 
 				{!!checkoutPageUrl && invoice?.status !== 'paid' && (
