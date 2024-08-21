@@ -10,10 +10,8 @@ use SureCart\Models\Invoice;
  * Create a new table class that will extend the WP_List_Table
  */
 class InvoicesListTable extends ListTable {
-	public $checkbox = true;
-
 	/**
-	 * Prepare the items for the table to process
+	 * Prepare the items for the table to process.
 	 *
 	 * @return void
 	 */
@@ -41,7 +39,7 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Override the parent columns method. Defines the columns to use in your listing table
+	 * Override the parent columns method. Defines the columns to use in your listing table.
 	 *
 	 * @return array
 	 */
@@ -56,18 +54,6 @@ class InvoicesListTable extends ListTable {
 			'total'      => __( 'Total', 'surecart' ),
 			'mode'       => '',
 		];
-	}
-
-	/**
-	 * Displays the checkbox column.
-	 *
-	 * @param Invoice $invoice The invoice model.
-	 */
-	public function column_cb( $invoice ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $invoice['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $invoice['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $invoice['id'] ); ?>" />
-		<?php
 	}
 
 	/**
@@ -92,7 +78,7 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Define which columns are hidden
+	 * Define which columns are hidden.
 	 *
 	 * @return array
 	 */
@@ -101,7 +87,7 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Define the sortable columns
+	 * Define the sortable columns.
 	 *
 	 * @return array
 	 */
@@ -110,7 +96,7 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Get the table data
+	 * Get the table data.
 	 *
 	 * @return array
 	 */
@@ -141,9 +127,9 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * @global int $post_id
-	 * @global string $comment_status
-	 * @global string $comment_type
+	 * Generates views links.
+	 *
+	 * @return array
 	 */
 	protected function get_views() {
 		$statuses = [
@@ -194,7 +180,7 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the total column
+	 * Handle the total column.
 	 *
 	 * @param Invoice $invoice Invoice Model.
 	 *
@@ -205,7 +191,7 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the total column
+	 * Handle the total column.
 	 *
 	 * @param Invoice $invoice Invoice model.
 	 *
@@ -238,7 +224,7 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Show customers as tag.
+	 * Show customer as tag.
 	 *
 	 * @param Invoice $invoice The invoice model.
 	 */
@@ -260,20 +246,6 @@ class InvoicesListTable extends ListTable {
 		}
 
 		return '<a href="' . esc_url( $url ) . '">' . $customer->name . '</a>';
-	}
-
-	/**
-	 * Render the "Redeem By"
-	 *
-	 * @param string $timestamp Redeem timestamp.
-	 * @return string
-	 */
-	public function get_expiration_string( $timestamp = '' ) {
-		if ( ! $timestamp ) {
-			return '';
-		}
-		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
 	}
 
 	/**
