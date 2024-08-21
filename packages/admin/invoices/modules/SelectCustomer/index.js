@@ -33,16 +33,11 @@ export default ({
 	loading,
 	onSuccess,
 	liveMode,
-	isDraftInvoice,
 }) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const onCustomerUpdate = async (customerID = false) => {
-		if (!isDraftInvoice) {
-			return;
-		}
-
 		try {
 			setBusy(true);
 
@@ -111,7 +106,7 @@ export default ({
 				<Customer
 					id={checkout?.customer_id}
 					onChange={onCustomerUpdate}
-					isDraftInvoice={isDraftInvoice}
+					isDraftInvoice={invoice?.status === 'draft'}
 				/>
 			) : (
 				<ScFormControl

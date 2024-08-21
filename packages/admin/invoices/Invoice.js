@@ -350,7 +350,6 @@ export default () => {
 							loading={loading}
 							liveMode={liveMode}
 							onSuccess={() => setPaymentMethod(null)}
-							isDraftInvoice={isDraftInvoice}
 						/>
 						<Address
 							invoice={invoice}

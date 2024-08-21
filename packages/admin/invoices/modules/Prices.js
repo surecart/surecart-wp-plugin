@@ -26,7 +26,7 @@ export default ({
 	const line_items = checkout?.line_items?.data || [];
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { deleteEntityRecord } = useDispatch(coreStore);
 
 	const onRemove = async (id) => {
 		try {
@@ -56,12 +56,7 @@ export default ({
 			});
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}
@@ -188,7 +183,9 @@ export default ({
 							open={modal}
 							setBusy={setBusy}
 							onRequestClose={() => setModal(false)}
-							onUpdateInvoiceEntityRecord={onUpdateInvoiceEntityRecord}
+							onUpdateInvoiceEntityRecord={
+								onUpdateInvoiceEntityRecord
+							}
 						/>
 					)
 				}
