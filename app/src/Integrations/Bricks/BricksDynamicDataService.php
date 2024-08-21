@@ -21,8 +21,8 @@ class BricksDynamicDataService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'bricks/dynamic_tags_list', [ $this, 'dynamic_tags' ] );
-		add_filter( 'bricks/dynamic_data/render_tag', [ $this, 'get_the_tag_value' ], 10, 2 );
+		add_action( 'bricks/dynamic_tags_list', [ $this, 'dynamicTags' ] );
+		add_filter( 'bricks/dynamic_data/render_tag', [ $this, 'getTheTagValue' ], 10, 2 );
 		add_filter( 'bricks/frontend/render_data', [ $this, 'render' ], 10, 3 );
 		add_filter( 'bricks/dynamic_data/render_content', [ $this, 'render' ], 10, 3 );
 	}
@@ -43,7 +43,7 @@ class BricksDynamicDataService {
 	 *
 	 * @return array
 	 */
-	public function dynamic_tags( $tags = [] ) {
+	public function dynamicTags( $tags = [] ) {
 		return array_merge(
 			$tags,
 			[
@@ -310,7 +310,7 @@ class BricksDynamicDataService {
 		// Get all registered tags except the excluded ones.
 		// Example: [0 => "post_title", 1 => "woo_product_price", 2 => "echo"].
 		$registered_tags = array_filter(
-			array_column( $this->dynamic_tags(), 'slug' ),
+			array_column( $this->dynamicTags(), 'slug' ),
 			function ( $tag ) use ( $exclude_tags ) {
 				return ! in_array( $tag, $exclude_tags, true );
 			}
@@ -384,7 +384,7 @@ class BricksDynamicDataService {
 					continue;
 				}
 
-				$value = $this->get_the_tag_value( $match, $post, $context );
+				$value = $this->getTheTagValue( $match, $post, $context );
 
 				// Value is a WP_Error: Set value to false to avoid error in builder.
 				if ( is_a( $value, 'WP_Error' ) ) {
@@ -410,7 +410,15 @@ class BricksDynamicDataService {
 	 *
 	 * @return string
 	 */
-	public function get_the_tag_value( $tag, $post ) {
+	public function getTheTagValue( $tag, $post ) {
+		$tags = $this->dynamicTags();
+
+		// Check if the tag exists in the registered tags.
+		$tag_exists = array_search( $tag, array_column( $tags, 'slug' ), true );
+		if ( false === $tag_exists ) {
+			return $tag;
+		}
+
 		// parse tag and args.
 		$parsed = is_string( $tag ) ? $this->parse_tag_and_args( $tag ) : [
 			'tag'  => $tag,
@@ -421,12 +429,10 @@ class BricksDynamicDataService {
 
 		// Check for filter args.
 		$filters = $this->get_filters_from_args( $args );
-		$tags    = $this->dynamic_tags();
 
 		// Get the tag name.
 		$name = isset( $tags[ $tag ]['render'] ) ? $tags[ $tag ]['render'] : str_replace( 'sc_', '', $tag );
 
-		// Parse the tag.
 		return $this->parseTag( $name, $post, $filters );
 	}
 
