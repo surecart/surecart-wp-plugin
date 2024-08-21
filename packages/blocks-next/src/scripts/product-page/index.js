@@ -335,7 +335,7 @@ const { state, actions } = store('surecart/product-page', {
 			);
 
 			// no busy context, toggle cart right away.
-			!hasContextBusy && cartActions.toggle();
+			!hasContextBusy && cartActions.open();
 
 			const context = getContext();
 			const { mode, formId, product } = context;
@@ -346,7 +346,7 @@ const { state, actions } = store('surecart/product-page', {
 				checkoutActions.setCheckout(checkout, mode, formId);
 
 				// no busy context, wait to toggle cart
-				hasContextBusy && cartActions.toggle();
+				hasContextBusy && cartActions.open();
 
 				// speak the cart dialog state.
 				cartState.label = sprintf(
@@ -400,9 +400,9 @@ const { state, actions } = store('surecart/product-page', {
 		 * Set the option.
 		 */
 		setOption: (e) => {
-      if (isNotKeySubmit(e)) {
-        return true;
-      }
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
 
 			e.preventDefault();
 
