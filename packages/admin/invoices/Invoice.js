@@ -78,8 +78,6 @@ export default () => {
 		isResolving: loading,
 		editedRecord: invoice,
 		edit: updateInvoice,
-		save: saveInvoice,
-		hasEdits: hasInvoiceEdits,
 	} = useEntityRecord('surecart', 'invoice', id, {
 		enabled: true,
 	});
@@ -158,7 +156,20 @@ export default () => {
 		try {
 			setBusy(true);
 			setInvoiceError(false);
-			await saveInvoice();
+
+			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
+			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'invoice'
+			);
+
+			await apiFetch({
+				method: 'PATCH',
+				path: `${baseURL}/${id}`,
+				data: invoice,
+			});
+
 			const invoiceData = await changeInvoiceStatus('open');
 			updateInvoiceEntityRecord(invoiceData);
 
@@ -276,7 +287,6 @@ export default () => {
 									disabled={
 										isDisabled ||
 										busy ||
-										!hasInvoiceEdits ||
 										!scData?.entitlements?.invoices
 									}
 								>
