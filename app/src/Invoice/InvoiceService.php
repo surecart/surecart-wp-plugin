@@ -22,9 +22,9 @@ class InvoiceService {
 		if (
 			! is_admin()
 			|| empty( $_GET['page'] )
-			|| 'sc-invoices' !== $_GET['page']
+			|| 'sc-invoices' !== sanitize_text_field( wp_unslash( $_GET[ 'page' ] ) )
 			|| ! isset( $_GET[ 'action' ] )
-			|| 'edit' !== $_GET[ 'action' ]
+			|| 'edit' !== sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) )
 			|| ! empty( $_GET['id'] )
 		) {
 			return;
