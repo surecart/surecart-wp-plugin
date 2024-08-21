@@ -187,7 +187,7 @@ export default () => {
 			});
 		}
 
-		if (['processing', 'paid'].includes(orderStatus)) {
+		if (['draft', 'processing', 'paid'].includes(orderStatus)) {
 			menuItems.push({
 				title: __('Cancel Order', 'surecart'),
 				modal: 'order_cancel',
