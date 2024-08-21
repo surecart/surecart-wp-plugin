@@ -43,6 +43,8 @@ export default (props) => {
 		setIsVisible((state) => !state);
 	};
 
+	const noDateSetOrRequired = !date && !required;
+
 	const onChooseDate = () => {
 		if (!date && required) {
 			setError({
@@ -52,7 +54,7 @@ export default (props) => {
 		}
 
 		// If date is not set and not required, set current date.
-		const updatedDate = !date && !required ? new Date() : date;
+		const updatedDate = noDateSetOrRequired ? new Date() : date;
 
 		onChoose(updatedDate);
 		toggleVisible();
@@ -116,7 +118,9 @@ export default (props) => {
 								toggleVisible();
 							}}
 						>
-							{clearDateLabel || __('Clear', 'surecart')}
+							{noDateSetOrRequired
+								? __('Cancel', 'surecart')
+								: clearDateLabel || __('Clear', 'surecart')}
 						</ScButton>
 					</div>
 				</Modal>
