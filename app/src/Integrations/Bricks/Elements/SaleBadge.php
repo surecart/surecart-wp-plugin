@@ -78,7 +78,7 @@ class SaleBadge extends \Bricks\Element {
 			return;
 		}
 
-		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
 				'text' => esc_attr( $text ),
 			)
