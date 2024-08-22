@@ -959,6 +959,13 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-invoice-receipt-download": {
+    "checkout": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-item-shipping": {
     "label": true,
     "style": true,

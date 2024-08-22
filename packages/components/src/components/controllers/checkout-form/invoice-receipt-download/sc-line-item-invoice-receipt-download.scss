@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+sc-line-item {
+  text-align: left;
+  font-size: var(--sc-font-size-small);
+  line-height: var(--sc-line-height-dense);
+  color: var(--sc-input-label-color);
+}
+
+sc-line-item::part(base) {
+  grid-template-columns: max-content auto auto;
+}
+
+sc-icon {
+  color: var(--sc-color-gray-400);
+}
+
+.sc-invoice-download-link {
+  color: var(--sc-color-gray-400);
+
+  svg {
+    color: var(--sc-color-gray-400);
+  }
+}

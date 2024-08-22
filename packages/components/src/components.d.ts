@@ -1798,6 +1798,9 @@ export namespace Components {
     interface ScLineItemInvoiceNumber {
         "checkout": Checkout;
     }
+    interface ScLineItemInvoiceReceiptDownload {
+        "checkout": Checkout;
+    }
     interface ScLineItemShipping {
         /**
           * Label
@@ -5019,6 +5022,12 @@ declare global {
         prototype: HTMLScLineItemInvoiceNumberElement;
         new (): HTMLScLineItemInvoiceNumberElement;
     };
+    interface HTMLScLineItemInvoiceReceiptDownloadElement extends Components.ScLineItemInvoiceReceiptDownload, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceReceiptDownloadElement: {
+        prototype: HTMLScLineItemInvoiceReceiptDownloadElement;
+        new (): HTMLScLineItemInvoiceReceiptDownloadElement;
+    };
     interface HTMLScLineItemShippingElement extends Components.ScLineItemShipping, HTMLStencilElement {
     }
     var HTMLScLineItemShippingElement: {
@@ -5936,6 +5945,7 @@ declare global {
         "sc-line-item-bump": HTMLScLineItemBumpElement;
         "sc-line-item-invoice-due-date": HTMLScLineItemInvoiceDueDateElement;
         "sc-line-item-invoice-number": HTMLScLineItemInvoiceNumberElement;
+        "sc-line-item-invoice-receipt-download": HTMLScLineItemInvoiceReceiptDownloadElement;
         "sc-line-item-shipping": HTMLScLineItemShippingElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
@@ -8044,6 +8054,9 @@ declare namespace LocalJSX {
         "checkout"?: Checkout;
     }
     interface ScLineItemInvoiceNumber {
+        "checkout"?: Checkout;
+    }
+    interface ScLineItemInvoiceReceiptDownload {
         "checkout"?: Checkout;
     }
     interface ScLineItemShipping {
@@ -10730,6 +10743,7 @@ declare namespace LocalJSX {
         "sc-line-item-bump": ScLineItemBump;
         "sc-line-item-invoice-due-date": ScLineItemInvoiceDueDate;
         "sc-line-item-invoice-number": ScLineItemInvoiceNumber;
+        "sc-line-item-invoice-receipt-download": ScLineItemInvoiceReceiptDownload;
         "sc-line-item-shipping": ScLineItemShipping;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
@@ -10973,6 +10987,7 @@ declare module "@stencil/core" {
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
             "sc-line-item-invoice-due-date": LocalJSX.ScLineItemInvoiceDueDate & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceDueDateElement>;
             "sc-line-item-invoice-number": LocalJSX.ScLineItemInvoiceNumber & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceNumberElement>;
+            "sc-line-item-invoice-receipt-download": LocalJSX.ScLineItemInvoiceReceiptDownload & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceReceiptDownloadElement>;
             "sc-line-item-shipping": LocalJSX.ScLineItemShipping & JSXBase.HTMLAttributes<HTMLScLineItemShippingElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;

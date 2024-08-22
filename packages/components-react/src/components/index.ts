@@ -95,6 +95,7 @@ export const ScLineItem = /*@__PURE__*/createReactComponent<JSX.ScLineItem, HTML
 export const ScLineItemBump = /*@__PURE__*/createReactComponent<JSX.ScLineItemBump, HTMLScLineItemBumpElement>('sc-line-item-bump');
 export const ScLineItemInvoiceDueDate = /*@__PURE__*/createReactComponent<JSX.ScLineItemInvoiceDueDate, HTMLScLineItemInvoiceDueDateElement>('sc-line-item-invoice-due-date');
 export const ScLineItemInvoiceNumber = /*@__PURE__*/createReactComponent<JSX.ScLineItemInvoiceNumber, HTMLScLineItemInvoiceNumberElement>('sc-line-item-invoice-number');
+export const ScLineItemInvoiceReceiptDownload = /*@__PURE__*/createReactComponent<JSX.ScLineItemInvoiceReceiptDownload, HTMLScLineItemInvoiceReceiptDownloadElement>('sc-line-item-invoice-receipt-download');
 export const ScLineItemShipping = /*@__PURE__*/createReactComponent<JSX.ScLineItemShipping, HTMLScLineItemShippingElement>('sc-line-item-shipping');
 export const ScLineItemTax = /*@__PURE__*/createReactComponent<JSX.ScLineItemTax, HTMLScLineItemTaxElement>('sc-line-item-tax');
 export const ScLineItemTotal = /*@__PURE__*/createReactComponent<JSX.ScLineItemTotal, HTMLScLineItemTotalElement>('sc-line-item-total');
