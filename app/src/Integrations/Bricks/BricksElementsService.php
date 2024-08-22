@@ -132,10 +132,15 @@ class BricksElementsService {
 			return $active_templates;
 		}
 
+		if ( ! empty( $active_templates['archive'] ) ) {
+			return $active_templates;
+		}
+
 		// apply a template, but only if there are no conditions.
 		$template_ids = \Bricks\Templates::get_templates_by_type( 'sc_collection' );
 		foreach ( $template_ids as $id ) {
 			$template_conditions = \Bricks\Helpers::get_template_setting( 'templateConditions', $id );
+			var_dump( $template_conditions );
 			if ( empty( $template_conditions ) ) {
 				$active_templates['archive'] = $id;
 				return $active_templates;
