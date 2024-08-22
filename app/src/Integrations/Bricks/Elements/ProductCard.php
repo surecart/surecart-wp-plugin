@@ -143,6 +143,7 @@ class ProductCard extends \Bricks\Element {
 				'settings' => array(
 					'_direction'  => 'row',
 					'_columnGap'  => '5',
+					'_rowGap'     => '5',
 					'_typography' => array(
 						'font-size'   => '18px',
 						'font-weight' => '600',
