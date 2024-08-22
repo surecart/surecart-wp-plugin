@@ -25,6 +25,11 @@ class BricksDynamicDataService {
 		add_filter( 'bricks/dynamic_data/render_tag', [ $this, 'getTheTagValue' ], 10, 2 );
 		add_filter( 'bricks/frontend/render_data', [ $this, 'render' ], 10, 3 );
 		add_filter( 'bricks/dynamic_data/render_content', [ $this, 'render' ], 10, 3 );
+
+		// make sure scripts load in footer.
+		if ( ! defined( 'ACSS_FLAG_LOAD_DASHBOARD_SCRIPTS_IN_FOOTER' ) ) {
+			define( 'ACSS_FLAG_LOAD_DASHBOARD_SCRIPTS_IN_FOOTER', true );
+		}
 	}
 
 	/**
@@ -54,9 +59,21 @@ class BricksDynamicDataService {
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
+					'slug'  => 'sc_product_selected_price',
+					'name'  => '{sc_product_selected_price}',
+					'label' => esc_html__( 'Product selected price', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
 					'slug'  => 'sc_product_scratch_price',
 					'name'  => '{sc_product_scratch_price}',
 					'label' => esc_html__( 'Product scratch price', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_selected_scratch_price',
+					'name'  => '{sc_product_selected_scratch_price}',
+					'label' => esc_html__( 'Product selected scratch price', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
@@ -96,15 +113,33 @@ class BricksDynamicDataService {
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
+					'slug'  => 'sc_product_selected_price_trial',
+					'name'  => '{sc_product_selected_price_trial}',
+					'label' => esc_html__( 'Product selected price trial', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
 					'slug'  => 'sc_product_billing_interval',
 					'name'  => '{sc_product_billing_interval}',
 					'label' => esc_html__( 'Product billing interval', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
+					'slug'  => 'sc_product_selected_price_billing_interval',
+					'name'  => '{sc_product_selected_pricebilling_interval}',
+					'label' => esc_html__( 'Product selected price billing interval', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
 					'slug'  => 'sc_product_setup_fee',
 					'name'  => '{sc_product_setup_fee}',
 					'label' => esc_html__( 'Product setup fee', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_selected_price_setup_fee',
+					'name'  => '{sc_product_selected_price_setup_fee}',
+					'label' => esc_html__( 'Product selected price setup fee', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
@@ -147,6 +182,17 @@ class BricksDynamicDataService {
 		$product = $post_id ? sc_get_product( $post_id ) : false;
 
 		switch ( $name ) {
+			// the dymamically selected price for the product.
+			case 'product_selected_price':
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-amount'>" . ( $product->display_amount ?? Currency::format( 1200 ) ) . '</span>';
+				}
+
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
+
+			// static product price.
 			case 'product_price':
 				// Support ':value' filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
 				if ( isset( $filters['value'] ) ) {
@@ -160,11 +206,10 @@ class BricksDynamicDataService {
 
 				// preview in the admin editor.
 				if ( $this->is_admin_editor() ) {
-					return "<span class='wp-block-surecart-product-selected-price-amount'>" . ( $product->display_amount ?? Currency::format( 1200 ) ) . '</span>';
+					return ( $product->display_amount ?? Currency::format( 1200 ) );
 				}
 
-				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
-				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
+				return $product->display_amount;
 
 			case 'product_price_range':
 				return esc_html( $product ? $product->range_display_amount : '' );
