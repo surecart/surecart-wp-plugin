@@ -117,7 +117,7 @@ export default ({ invoice, updateInvoice, checkout, loading }) => {
 
 	return (
 		<>
-			<Box title={__('', 'surecart')} loading={loading}>
+			<Box title={__('Invoice Summary', 'surecart')} loading={loading}>
 				{!!checkout?.order?.number && (
 					<Definition title={__('Invoice Number', 'surecart')}>
 						#{checkout.order.number}
