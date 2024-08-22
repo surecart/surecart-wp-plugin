@@ -64,23 +64,23 @@ class ProductData extends \Bricks\Element {
 			],
 			'default'       => [
 				[
-					'dynamicData' => '{sc_product_scratch_price}',
+					'dynamicData' => '{sc_product_selected_scratch_price}',
 					'id'          => \Bricks\Helpers::generate_random_id( false ),
 				],
 				[
-					'dynamicData' => '{sc_product_price}',
+					'dynamicData' => '{sc_product_selected_price}',
 					'id'          => \Bricks\Helpers::generate_random_id( false ),
 				],
 				[
-					'dynamicData' => '{sc_product_billing_interval}',
+					'dynamicData' => '{sc_product_selected_billing_interval}',
 					'id'          => \Bricks\Helpers::generate_random_id( false ),
 				],
 				[
-					'dynamicData' => '{sc_product_trial}',
+					'dynamicData' => '{sc_product_selected_trial}',
 					'id'          => \Bricks\Helpers::generate_random_id( false ),
 				],
 				[
-					'dynamicData' => '{sc_product_setup_fee}',
+					'dynamicData' => '{sc_product_selected_setup_fee}',
 					'id'          => \Bricks\Helpers::generate_random_id( false ),
 				],
 			],

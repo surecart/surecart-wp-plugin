@@ -107,10 +107,10 @@ class Product extends \Bricks\Element {
 									),
 									'meta'        => [
 										[
-											'dynamicData' => '{sc_product_scratch_price}',
+											'dynamicData' => '{sc_product_selected_scratch_price}',
 										],
 										[
-											'dynamicData' => '{sc_product_price}',
+											'dynamicData' => '{sc_product_selected_price}',
 										],
 									],
 								),
@@ -123,7 +123,7 @@ class Product extends \Bricks\Element {
 									'_gap'      => '5px',
 									'meta'      => [
 										[
-											'dynamicData' => '{sc_product_billing_interval}',
+											'dynamicData' => '{sc_product_selected_billing_interval}',
 										],
 									],
 								),
@@ -139,10 +139,10 @@ class Product extends \Bricks\Element {
 							'_gap'      => '5px',
 							'meta'      => [
 								[
-									'dynamicData' => '{sc_product_trial}',
+									'dynamicData' => '{sc_product_selected_trial}',
 								],
 								[
-									'dynamicData' => '{sc_product_setup_fee}',
+									'dynamicData' => '{sc_product_selected_setup_fee}',
 								],
 							],
 						),

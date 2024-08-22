@@ -113,8 +113,8 @@ class BricksDynamicDataService {
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
-					'slug'  => 'sc_product_selected_price_trial',
-					'name'  => '{sc_product_selected_price_trial}',
+					'slug'  => 'sc_product_selected_trial',
+					'name'  => '{sc_product_selected_trial}',
 					'label' => esc_html__( 'Product selected price trial', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
@@ -125,8 +125,8 @@ class BricksDynamicDataService {
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
-					'slug'  => 'sc_product_selected_price_billing_interval',
-					'name'  => '{sc_product_selected_pricebilling_interval}',
+					'slug'  => 'sc_product_selected_billing_interval',
+					'name'  => '{sc_product_selected_billing_interval}',
 					'label' => esc_html__( 'Product selected price billing interval', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
@@ -137,8 +137,8 @@ class BricksDynamicDataService {
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
-					'slug'  => 'sc_product_selected_price_setup_fee',
-					'name'  => '{sc_product_selected_price_setup_fee}',
+					'slug'  => 'sc_product_selected_setup_fee',
+					'name'  => '{sc_product_selected_setup_fee}',
 					'label' => esc_html__( 'Product selected price setup fee', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
@@ -182,16 +182,6 @@ class BricksDynamicDataService {
 		$product = $post_id ? sc_get_product( $post_id ) : false;
 
 		switch ( $name ) {
-			// the dymamically selected price for the product.
-			case 'product_selected_price':
-				// preview in the admin editor.
-				if ( $this->is_admin_editor() ) {
-					return "<span class='wp-block-surecart-product-selected-price-amount'>" . ( $product->display_amount ?? Currency::format( 1200 ) ) . '</span>';
-				}
-
-				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
-				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
-
 			// static product price.
 			case 'product_price':
 				// Support ':value' filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
@@ -211,9 +201,21 @@ class BricksDynamicDataService {
 
 				return $product->display_amount;
 
+			// the dymamically selected price for the product.
+			case 'product_selected_price':
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-amount'>" . ( $product->display_amount ?? Currency::format( 1200 ) ) . '</span>';
+				}
+
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
+
+			// the static price range.
 			case 'product_price_range':
 				return esc_html( $product ? $product->range_display_amount : '' );
 
+			// static product scratch price.
 			case 'product_scratch_price':
 				// Support ':value' filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
 				if ( isset( $filters['value'] ) ) {
@@ -225,6 +227,15 @@ class BricksDynamicDataService {
 					return esc_html( $product ? $product->scratch_amount : '' );
 				}
 
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return ( $product->scratch_display_amount ?? Currency::format( 1400 ) );
+				}
+
+				return $product->scratch_display_amount;
+
+			// the dymamically selected scratch price for the product.
+			case 'product_selected_scratch_price':
 				// preview in the admin editor.
 				if ( $this->is_admin_editor() ) {
 					return "<span class='wp-block-surecart-product-selected-price-scratch-amount sc-price__amount'>" . ( $product->scratch_display_amount ?? '$14' ) . '</span>';
@@ -257,6 +268,12 @@ class BricksDynamicDataService {
 
 			case 'product_trial':
 				if ( $this->is_admin_editor() ) {
+					return $product->trial_text ?? esc_html__( 'Starting in 15 days', 'surecart' );
+				}
+				return $product->trial_text;
+
+			case 'product_selected_trial':
+				if ( $this->is_admin_editor() ) {
 					return "<span class='wp-block-surecart-product-selected-price-trial'>" . esc_html__( 'Starting in 15 days', 'surecart' ) . '</span>';
 				}
 				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
@@ -264,12 +281,26 @@ class BricksDynamicDataService {
 
 			case 'product_billing_interval':
 				if ( $this->is_admin_editor() ) {
+					return $product->billing_interval_text ?? esc_html__( '/ day (3 payments)', 'surecart' );
+				}
+				return $product->billing_interval_text ?? '';
+
+			case 'product_selected_billing_interval':
+				if ( $this->is_admin_editor() ) {
 					return "<span class='wp-block-surecart-product-selected-price-interval sc-price__amount'>" . esc_html__( '/ day (3 payments)', 'surecart' ) . '</span>';
 				}
 				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
 				return '<!-- wp:surecart/product-selected-price-interval --><!-- /wp:surecart/product-selected-price-interval --> ';
 
 			case 'product_setup_fee':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return $product->setup_fee_text ?? esc_html( sprintf( __( '%s setup fee', 'surecart' ), Currency::format( 100 ) ) );
+				}
+					// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return $product->setup_fee_text ?? '';
+
+			case 'product_selected_setup_fee':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
 					return "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';

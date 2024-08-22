@@ -138,25 +138,45 @@ class ProductCard extends \Bricks\Element {
 				],
 			],
 			array(
-				'name'     => 'surecart-product-data',
-				'label'    => esc_html__( 'Price', 'surecart' ),
+				'name'     => 'block',
+				'label'    => esc_html__( 'Pricing', 'surecart' ),
 				'settings' => array(
-					'direction'   => 'row',
-					'_gap'        => '5px',
+					'_direction'  => 'row',
+					'_columnGap'  => '5',
 					'_typography' => array(
 						'font-size'   => '18px',
 						'font-weight' => '600',
 						'line-height' => '1',
 					),
-					'meta'        => [
-						[
-							'dynamicData' => '{sc_product_scratch_price}',
-						],
-						[
-							'dynamicData' => '{sc_product_price}',
+				),
+				'children' => [
+					[
+						'name'     => 'text-basic',
+						'label'    => esc_html__( 'Scratch Price', 'surecart' ),
+						'settings' => [
+							'text'        => '{sc_product_scratch_price}',
+							'_typography' => [
+								'text-decoration' => 'line-through',
+							],
+							'_conditions' => [
+								[
+									[
+										'key'          => 'dynamic_data',
+										'compare'      => 'empty_not',
+										'dynamic_data' => '{sc_product_scratch_price}',
+									],
+								],
+							],
 						],
 					],
-				),
+					[
+						'name'     => 'text-basic',
+						'label'    => esc_html__( 'Price', 'surecart' ),
+						'settings' => [
+							'text' => '{sc_product_price}',
+						],
+					],
+				],
 			),
 		];
 	}
