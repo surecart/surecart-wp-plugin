@@ -85,6 +85,9 @@ class Product extends \Bricks\Element {
 			array(
 				'name'     => 'block',
 				'label'    => esc_html__( 'Pricing', 'surecart' ),
+				'settings' => [
+					'_rowGap' => '0',
+				],
 				'children' => array(
 					array(
 						'name'     => 'block',
