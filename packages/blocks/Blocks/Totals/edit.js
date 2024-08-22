@@ -25,6 +25,8 @@ const ALLOWED_BLOCKS = [
 	'surecart/bump-line-item',
 	'surecart/subtotal',
 	'surecart/line-item-shipping',
+	'surecart/invoice-number',
+	'surecart/invoice-due-date',
 ];
 
 export default ({ attributes, setAttributes }) => {
@@ -44,6 +46,8 @@ export default ({ attributes, setAttributes }) => {
 		{},
 		{
 			template: [
+				['surecart/invoice-number', {}],
+				['surecart/invoice-due-date', {}],
 				['surecart/divider', {}],
 				['surecart/line-items', {}],
 				['surecart/divider', {}],

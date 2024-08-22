@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-08-19T13:02:43",
+  "timestamp": "2024-08-21T13:04:45",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4533,6 +4533,7 @@
         ],
         "sc-form-components-validator": [
           "sc-order-shipping-address",
+          "sc-order-billing-address",
           "sc-order-tax-id-input",
           "sc-order-bumps",
           "sc-line-item-tax",
@@ -4564,6 +4565,10 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
+        ],
+        "sc-order-billing-address": [
+          "sc-checkbox",
+          "sc-address"
         ],
         "sc-order-tax-id-input": [
           "sc-tax-id-input"
@@ -11853,6 +11858,7 @@
       ],
       "dependencies": [
         "sc-order-shipping-address",
+        "sc-order-billing-address",
         "sc-order-tax-id-input",
         "sc-order-bumps",
         "sc-line-item-tax",
@@ -11862,6 +11868,7 @@
       "dependencyGraph": {
         "sc-form-components-validator": [
           "sc-order-shipping-address",
+          "sc-order-billing-address",
           "sc-order-tax-id-input",
           "sc-order-bumps",
           "sc-line-item-tax",
@@ -11902,6 +11909,10 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
+        ],
+        "sc-order-billing-address": [
+          "sc-checkbox",
+          "sc-address"
         ],
         "sc-order-tax-id-input": [
           "sc-tax-id-input"
@@ -15583,6 +15594,7 @@
       "dependents": [
         "sc-coupon-form",
         "sc-line-item-bump",
+        "sc-line-item-invoice-number",
         "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
@@ -15604,6 +15616,9 @@
           "sc-line-item"
         ],
         "sc-line-item-bump": [
+          "sc-line-item"
+        ],
+        "sc-line-item-invoice-number": [
           "sc-line-item"
         ],
         "sc-line-item-shipping": [
@@ -15707,6 +15722,69 @@
         "sc-line-item-bump": [
           "sc-line-item",
           "sc-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/invoice-number/sc-line-item-invoice-number.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-line-item-invoice-number",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkout",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-line-item",
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-line-item-invoice-number": [
+          "sc-line-item",
+          "sc-skeleton"
         ]
       }
     },
@@ -17302,7 +17380,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
       "dependencies": [
         "sc-checkbox",
         "sc-address"
@@ -17336,6 +17416,9 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-form-components-validator": [
+          "sc-order-billing-address"
         ]
       }
     },
@@ -29439,6 +29522,7 @@
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
+        "sc-line-item-invoice-number",
         "sc-line-item-shipping",
         "sc-line-item-total",
         "sc-line-items",
@@ -29502,6 +29586,9 @@
           "sc-skeleton"
         ],
         "sc-licenses-list": [
+          "sc-skeleton"
+        ],
+        "sc-line-item-invoice-number": [
           "sc-skeleton"
         ],
         "sc-line-item-shipping": [
