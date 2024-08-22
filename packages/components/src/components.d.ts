@@ -1792,6 +1792,12 @@ export namespace Components {
         "label": string;
         "loading": boolean;
     }
+    interface ScLineItemInvoiceDueDate {
+        "checkout": Checkout;
+    }
+    interface ScLineItemInvoiceNumber {
+        "checkout": Checkout;
+    }
     interface ScLineItemShipping {
         /**
           * Label
@@ -5001,6 +5007,18 @@ declare global {
         prototype: HTMLScLineItemBumpElement;
         new (): HTMLScLineItemBumpElement;
     };
+    interface HTMLScLineItemInvoiceDueDateElement extends Components.ScLineItemInvoiceDueDate, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceDueDateElement: {
+        prototype: HTMLScLineItemInvoiceDueDateElement;
+        new (): HTMLScLineItemInvoiceDueDateElement;
+    };
+    interface HTMLScLineItemInvoiceNumberElement extends Components.ScLineItemInvoiceNumber, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceNumberElement: {
+        prototype: HTMLScLineItemInvoiceNumberElement;
+        new (): HTMLScLineItemInvoiceNumberElement;
+    };
     interface HTMLScLineItemShippingElement extends Components.ScLineItemShipping, HTMLStencilElement {
     }
     var HTMLScLineItemShippingElement: {
@@ -5916,6 +5934,8 @@ declare global {
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
+        "sc-line-item-invoice-due-date": HTMLScLineItemInvoiceDueDateElement;
+        "sc-line-item-invoice-number": HTMLScLineItemInvoiceNumberElement;
         "sc-line-item-shipping": HTMLScLineItemShippingElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
@@ -8019,6 +8039,12 @@ declare namespace LocalJSX {
     interface ScLineItemBump {
         "label"?: string;
         "loading"?: boolean;
+    }
+    interface ScLineItemInvoiceDueDate {
+        "checkout"?: Checkout;
+    }
+    interface ScLineItemInvoiceNumber {
+        "checkout"?: Checkout;
     }
     interface ScLineItemShipping {
         /**
@@ -10702,6 +10728,8 @@ declare namespace LocalJSX {
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
+        "sc-line-item-invoice-due-date": ScLineItemInvoiceDueDate;
+        "sc-line-item-invoice-number": ScLineItemInvoiceNumber;
         "sc-line-item-shipping": ScLineItemShipping;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
@@ -10943,6 +10971,8 @@ declare module "@stencil/core" {
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
+            "sc-line-item-invoice-due-date": LocalJSX.ScLineItemInvoiceDueDate & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceDueDateElement>;
+            "sc-line-item-invoice-number": LocalJSX.ScLineItemInvoiceNumber & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceNumberElement>;
             "sc-line-item-shipping": LocalJSX.ScLineItemShipping & JSXBase.HTMLAttributes<HTMLScLineItemShippingElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;

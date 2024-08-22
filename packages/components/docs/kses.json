@@ -945,6 +945,20 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-invoice-due-date": {
+    "checkout": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-line-item-invoice-number": {
+    "checkout": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-item-shipping": {
     "label": true,
     "style": true,
