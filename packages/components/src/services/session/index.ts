@@ -35,6 +35,8 @@ export const expand = [
   'manual_payment_method',
   'shipping_choices',
   'shipping_choice.shipping_method',
+  'order',
+  'invoice',
 ];
 
 /** Default data we send with every request. */

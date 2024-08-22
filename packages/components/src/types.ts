@@ -487,39 +487,15 @@ export type TaxStatus = 'disabled' | 'address_invalid' | 'reverse_charged' | 'ta
 export interface Invoice extends Object {
   id: string;
   object: 'invoice';
-  currency: string;
-  amount_due: number;
-  invoice_items: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<InvoiceItem>;
-  };
-  discount_amount: number;
+  automatic_collection: boolean;
+  due_date?: number;
+  issue_date?: number;
+  footer?: string;
+  memo?: string;
   live_mode: boolean;
+  status: InvoiceStatus;
+  checkout: Checkout | string;
   metadata: object;
-  number: string;
-  period_end_at: number;
-  period_start_at: number;
-  proration_amount: number;
-  processor_data: {
-    stripe: object;
-  };
-  status: OrderStatus;
-  subtotal_amount: number;
-  tax_amount: number;
-  tax_status: TaxStatus;
-  tax_label: string;
-  total_amount: number;
-  billing_address: string | BillingAddress;
-  charge: string | Charge;
-  customer: string | Customer;
-  discount: string | object;
-  payment_intent: string | PaymentIntent;
-  payment_method: string | PaymentMethod;
-  shipping_address: string | ShippingAddress;
-  subscription: string | Subscription;
-  tax_identifier: string | object;
-  url: string;
   created_at: number;
   updated_at: number;
 }
@@ -600,6 +576,7 @@ export interface Order extends Object {
   status?: OrderStatus;
   shipment_status?: OrderShipmentStatus;
   checkout?: Checkout | string;
+  invoice?: Invoice | string;
   created_at: number;
   updated_at: number;
 }
@@ -717,6 +694,7 @@ export interface Checkout extends Object {
   updated_at: number;
   variant: string;
   upsells_expire_at?: number;
+  invoice?: string | Invoice;
 }
 
 export interface ShippingMethod {
