@@ -268,13 +268,13 @@ class BricksDynamicDataService {
 
 			case 'product_trial':
 				if ( $this->is_admin_editor() ) {
-					return $product->trial_text ?? esc_html__( 'Starting in 15 days', 'surecart' );
+					return $product->trial_text ?? esc_html__( 'Starting in 15 days.', 'surecart' );
 				}
 				return $product->trial_text;
 
 			case 'product_selected_trial':
 				if ( $this->is_admin_editor() ) {
-					return "<span class='wp-block-surecart-product-selected-price-trial'>" . esc_html__( 'Starting in 15 days', 'surecart' ) . '</span>';
+					return "<span class='wp-block-surecart-product-selected-price-trial'>" . esc_html__( 'Starting in 15 days.', 'surecart' ) . '</span>';
 				}
 				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
 				return '<!-- wp:surecart/product-selected-price-trial --><!-- /wp:surecart/product-selected-price-trial --> ';
@@ -295,7 +295,7 @@ class BricksDynamicDataService {
 			case 'product_setup_fee':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
-					return $product->setup_fee_text ?? esc_html( sprintf( __( '%s setup fee', 'surecart' ), Currency::format( 100 ) ) );
+					return $product->setup_fee_text ?? esc_html( sprintf( __( '%s setup fee.', 'surecart' ), Currency::format( 100 ) ) );
 				}
 					// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
 				return $product->setup_fee_text ?? '';
@@ -303,7 +303,7 @@ class BricksDynamicDataService {
 			case 'product_selected_setup_fee':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
-					return "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';
+					return "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee.', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';
 				}
 				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
 				return '<!-- wp:surecart/product-selected-price-fees --><!-- /wp:surecart/product-selected-price-fees --> ';
