@@ -11,21 +11,23 @@ import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
  */
-import { ScButton, ScForm, ScSwitch } from '@surecart/components-react';
 import Error from '../../components/Error';
+import { ScButton, ScForm, ScSwitch } from '@surecart/components-react';
+import { checkoutExpands } from '../Invoice';
 
 export default ({
 	title,
 	invoice,
 	updateInvoice,
 	onRequestClose,
+	paymentMethod,
 	busy,
 	setBusy,
-	changeInvoiceStatus,
 	updateInvoiceEntityRecord,
 }) => {
 	const [error, setError] = useState(false);
@@ -38,8 +40,6 @@ export default ({
 			'Notify customer that the invoice has been updated.',
 			'surecart'
 		),
-		createInvoice: __('Create Invoice', 'surecart'),
-		updateInvoice: __('Update Invoice', 'surecart'),
 	};
 
 	const onSaveInvoice = async () => {
@@ -47,7 +47,7 @@ export default ({
 			setBusy(true);
 			setError(false);
 
-			// Set the notification_enabled flag.
+			// Set the notification_enabled flag by default to true.
 			invoice.notification_enabled = notificationsEnabled;
 
 			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
@@ -63,7 +63,20 @@ export default ({
 				data: invoice,
 			});
 
-			const invoiceData = await changeInvoiceStatus('open');
+			// Change the invoice status to open.
+			const invoiceData = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${invoice?.id}/open`, {
+					expand: checkoutExpands,
+					...(paymentMethod?.id && {
+						manual_payment: !!paymentMethod.manual,
+						...(paymentMethod.manual
+							? { manual_payment_method_id: paymentMethod.id }
+							: { payment_method_id: paymentMethod.id }),
+					}),
+				}),
+			});
+
 			updateInvoiceEntityRecord(invoiceData);
 
 			createSuccessNotice(__('Invoice Saved.', 'surecart'), {

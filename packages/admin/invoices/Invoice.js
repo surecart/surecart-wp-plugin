@@ -5,13 +5,11 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { useState, useEffect } from '@wordpress/element';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
-import { addQueryArgs } from '@wordpress/url';
-import { getQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -105,41 +103,6 @@ export default () => {
 		live_mode: liveMode ? 'true' : 'false',
 	});
 
-	const changeInvoiceStatus = async (status) => {
-		try {
-			setBusy(true);
-
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
-
-			const action = status === 'draft' ? 'make_draft' : 'open';
-
-			const requestData = {
-				expand: checkoutExpands,
-				// Append payment method for open status only.
-				...(status === 'open' &&
-					paymentMethod?.id && {
-						manual_payment: !!paymentMethod.manual,
-						...(paymentMethod.manual
-							? { manual_payment_method_id: paymentMethod.id }
-							: { payment_method_id: paymentMethod.id }),
-					}),
-			};
-
-			return await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}/${action}`, requestData),
-			});
-		} catch (e) {
-			console.error(e);
-			setInvoiceError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
 	const updateInvoiceEntityRecord = (updatedInvoice) => {
 		receiveEntityRecords(
 			'surecart',
@@ -198,7 +161,7 @@ export default () => {
 		if (!['draft', 'paid'].includes(invoice?.status)) {
 			menuItems.push({
 				title: __('Mark As Paid', 'surecart'),
-				modal: 'order_mark_as_paid',
+				modal: 'mark_as_paid',
 			});
 		}
 
@@ -255,9 +218,7 @@ export default () => {
 									<ScMenu>
 										<ScMenuItem
 											onClick={() =>
-												setModal(
-													'delete_invoice_confirm'
-												)
+												setModal('delete_invoice')
 											}
 										>
 											{__('Delete Invoice', 'surecart')}
@@ -278,9 +239,7 @@ export default () => {
 										busy ||
 										!scData?.entitlements?.invoices
 									}
-									onClick={() =>
-										setModal('send_confirm_invoice')
-									}
+									onClick={() => setModal('send_invoice')}
 								>
 									{getSubmitButtonTitle()}
 								</ScButton>
@@ -416,15 +375,16 @@ export default () => {
 				<DraftInvoiceConfirmModal
 					open={modal === 'change_status_to_draft'}
 					onRequestClose={() => setModal(null)}
-					changeInvoiceStatus={changeInvoiceStatus}
 					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
 					invoice={invoice}
+					busy={busy}
+					setBusy={setBusy}
 				/>
 			)}
 
-			{modal === 'order_mark_as_paid' && (
+			{modal === 'mark_as_paid' && (
 				<PaidInvoiceConfirmModal
-					open={modal === 'order_mark_as_paid'}
+					open={true}
 					onRequestClose={() => setModal(null)}
 					invoice={invoice}
 					checkout={checkout}
@@ -433,9 +393,8 @@ export default () => {
 				/>
 			)}
 
-			{modal === 'send_confirm_invoice' && (
+			{modal === 'send_invoice' && (
 				<SendNotificationConfirmModal
-					open={modal === 'send_confirm_invoice'}
 					onRequestClose={() => setModal(null)}
 					invoice={invoice}
 					updateInvoice={updateInvoice}
@@ -443,16 +402,16 @@ export default () => {
 					setBusy={setBusy}
 					error={invoiceError}
 					setError={setInvoiceError}
-					changeInvoiceStatus={changeInvoiceStatus}
 					updateInvoiceEntityRecord={updateInvoiceEntityRecord}
 					title={getSubmitButtonTitle()}
+					paymentMethod={paymentMethod}
 				/>
 			)}
 
-			{modal === 'delete_invoice_confirm' && (
+			{modal === 'delete_invoice' && (
 				<DeleteInvoiceConfirmModal
 					invoice={invoice}
-					open={modal === 'delete_invoice_confirm'}
+					open={true}
 					onRequestClose={() => setModal(null)}
 					hasLoading={loading}
 				/>
