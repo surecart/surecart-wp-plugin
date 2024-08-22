@@ -23,6 +23,7 @@ import {
 	ScDropdown,
 	ScMenuItem,
 	ScMenu,
+	ScIcon,
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -201,15 +202,6 @@ export default () => {
 			});
 		}
 
-		// For first time invoice creation, we don't need to show delete button.
-		// Once invoice is created, we can show delete button.
-		if (checkout?.order?.id) {
-			menuItems.push({
-				title: __('Delete Invoice', 'surecart'),
-				modal: 'delete_invoice_confirm',
-			});
-		}
-
 		return menuItems;
 	};
 
@@ -252,6 +244,28 @@ export default () => {
 				button={
 					invoice?.status !== 'paid' && (
 						<div>
+							<ScDropdown
+								position="bottom-right"
+								style={{ '--panel-width': '14em' }}
+							>
+								<>
+									<ScButton slot="trigger" type="text" circle>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() =>
+												setModal(
+													'delete_invoice_confirm'
+												)
+											}
+										>
+											{__('Delete Invoice', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</>
+							</ScDropdown>
+
 							{isDraftInvoice && (
 								<ScButton
 									type={
