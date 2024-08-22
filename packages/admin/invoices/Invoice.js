@@ -8,7 +8,6 @@ import { useState, useEffect } from '@wordpress/element';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
-import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import { getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
@@ -39,6 +38,8 @@ import Details from './modules/Details';
 import AdditionalOptions from './modules/AdditionalOptions';
 import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
 import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
+import SendNotificationConfirmModal from './modules/SendNotificationConfirmModal';
+import DeleteInvoiceConfirmModal from './modules/DeleteInvoiceConfirmModal';
 
 /**
  * Returns the Model Edit URL.
@@ -66,7 +67,6 @@ export default () => {
 	const defaultLiveMode = urlParams.live_mode === 'false' ? false : true;
 
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [liveMode, setLiveMode] = useState(defaultLiveMode);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
@@ -78,9 +78,7 @@ export default () => {
 		isResolving: loading,
 		editedRecord: invoice,
 		edit: updateInvoice,
-	} = useEntityRecord('surecart', 'invoice', id, {
-		enabled: true,
-	});
+	} = useEntityRecord('surecart', 'invoice', id);
 
 	const checkout = invoice?.checkout;
 	const isDraftInvoice = invoice?.status === 'draft';
@@ -152,38 +150,6 @@ export default () => {
 		);
 	};
 
-	const onSaveInvoice = async () => {
-		try {
-			setBusy(true);
-			setInvoiceError(false);
-
-			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
-			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
-
-			await apiFetch({
-				method: 'PATCH',
-				path: `${baseURL}/${id}`,
-				data: invoice,
-			});
-
-			const invoiceData = await changeInvoiceStatus('open');
-			updateInvoiceEntityRecord(invoiceData);
-
-			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			setInvoiceError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
 	const isDisabled =
 		checkout?.selected_shipping_choice_required &&
 		!checkout?.selected_shipping_choice;
@@ -235,13 +201,22 @@ export default () => {
 			});
 		}
 
+		// For first time invoice creation, we don't need to show delete button.
+		// Once invoice is created, we can show delete button.
+		if (checkout?.order?.id) {
+			menuItems.push({
+				title: __('Delete Invoice', 'surecart'),
+				modal: 'delete_invoice_confirm',
+			});
+		}
+
 		return menuItems;
 	};
 
 	return (
 		<>
 			<UpdateModel
-				onSubmit={onSaveInvoice}
+				// onSubmit={onSaveInvoice}
 				entitled={!!scData?.entitlements?.invoices}
 				title={
 					<div
@@ -282,12 +257,15 @@ export default () => {
 									type={
 										isDraftInvoice ? 'primary' : 'default'
 									}
-									submit
+									// submit
 									busy={busy}
 									disabled={
 										isDisabled ||
 										busy ||
 										!scData?.entitlements?.invoices
+									}
+									onClick={() =>
+										setModal('send_confirm_invoice')
 									}
 								>
 									{getSubmitButtonTitle()}
@@ -420,24 +398,50 @@ export default () => {
 				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 			</UpdateModel>
 
-			{!!modal && (
-				<>
-					<DraftInvoiceConfirmModal
-						open={modal === 'change_status_to_draft'}
-						onRequestClose={() => setModal(null)}
-						changeInvoiceStatus={changeInvoiceStatus}
-						onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
-						invoice={invoice}
-					/>
-					<PaidInvoiceConfirmModal
-						open={modal === 'order_mark_as_paid'}
-						onRequestClose={() => setModal(null)}
-						invoice={invoice}
-						checkout={checkout}
-						onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
-						hasLoading={loading}
-					/>
-				</>
+			{modal === 'change_status_to_draft' && (
+				<DraftInvoiceConfirmModal
+					open={modal === 'change_status_to_draft'}
+					onRequestClose={() => setModal(null)}
+					changeInvoiceStatus={changeInvoiceStatus}
+					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
+					invoice={invoice}
+				/>
+			)}
+
+			{modal === 'order_mark_as_paid' && (
+				<PaidInvoiceConfirmModal
+					open={modal === 'order_mark_as_paid'}
+					onRequestClose={() => setModal(null)}
+					invoice={invoice}
+					checkout={checkout}
+					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
+					hasLoading={loading}
+				/>
+			)}
+
+			{modal === 'send_confirm_invoice' && (
+				<SendNotificationConfirmModal
+					open={modal === 'send_confirm_invoice'}
+					onRequestClose={() => setModal(null)}
+					invoice={invoice}
+					updateInvoice={updateInvoice}
+					busy={busy}
+					setBusy={setBusy}
+					error={invoiceError}
+					setError={setInvoiceError}
+					changeInvoiceStatus={changeInvoiceStatus}
+					updateInvoiceEntityRecord={updateInvoiceEntityRecord}
+					title={getSubmitButtonTitle()}
+				/>
+			)}
+
+			{modal === 'delete_invoice_confirm' && (
+				<DeleteInvoiceConfirmModal
+					invoice={invoice}
+					open={modal === 'delete_invoice_confirm'}
+					onRequestClose={() => setModal(null)}
+					hasLoading={loading}
+				/>
 			)}
 		</>
 	);
