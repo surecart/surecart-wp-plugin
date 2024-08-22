@@ -8,6 +8,7 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
+import { select, useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -16,7 +17,6 @@ import { store as noticesStore } from '@wordpress/notices';
  */
 import { ScButton, ScForm, ScSwitch } from '@surecart/components-react';
 import Error from '../../components/Error';
-import { select, useDispatch } from '@wordpress/data';
 
 export default ({
 	title,
