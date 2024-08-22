@@ -28,7 +28,6 @@
 			data-wp-on--change="callbacks.onQuantityChange"
 			data-wp-bind--disabled="state.isQuantityDisabled"
 			data-wp-bind--aria-disabled="state.isQuantityDisabled"
-			data-wp-bind--max="state.maxQuantity"
 			min="1"
 			step="1"
 			autocomplete="off"
