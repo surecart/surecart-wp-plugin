@@ -99,17 +99,18 @@ export class ScInvoicesList {
   }
 
   renderStatusBadge(invoice: Invoice) {
-    const { status, charge } = invoice;
-    if (typeof charge === 'object') {
-      if (charge?.fully_refunded) {
-        return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
-      }
-      if (charge?.refunded_amount) {
-        return <sc-tag type="info">{__('Partially Refunded', 'surecart')}</sc-tag>;
-      }
-    }
+    console.log('invoice', invoice)
+    // const { status, charge } = invoice;
+    // if (typeof charge === 'object') {
+    //   if (charge?.fully_refunded) {
+    //     return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
+    //   }
+    //   if (charge?.refunded_amount) {
+    //     return <sc-tag type="info">{__('Partially Refunded', 'surecart')}</sc-tag>;
+    //   }
+    // }
 
-    return <sc-order-status-badge status={status}></sc-order-status-badge>;
+    // return <sc-order-status-badge status={status}></sc-order-status-badge>;
   }
 
   renderLoading() {
@@ -139,7 +140,18 @@ export class ScInvoicesList {
 
   renderList() {
     return this.invoices.map(invoice => {
-      const { invoice_items, total_amount, currency, created_at, url } = invoice;
+      // const { invoice_items, total_amount, currency, created_at, url } = invoice;
+      // Remove this later.
+      const invoice_items = {
+        pagination: {
+          count: 0,
+        },
+      }
+      const total_amount = 0;
+      const currency = 'USD';
+      const created_at = new Date();
+      const url = '#';
+
       return (
         <sc-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
           <div>
