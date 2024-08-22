@@ -578,6 +578,33 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the trial text attribute.
+	 *
+	 * @return string
+	 */
+	public function getTrialTextAttribute() {
+		return $this->initial_price ? $this->initial_price->trial_text ?? '' : '';
+	}
+
+	/**
+	 * Get the billing interval attribute.
+	 *
+	 * @return string
+	 */
+	public function getBillingIntervalTextAttribute() {
+		return $this->initial_price ? $this->initial_price->interval_text ?? '' : '';
+	}
+
+	/**
+	 * Get the setup fee attribute
+	 *
+	 * @return string
+	 */
+	public function getSetupFeeTextAttribute() {
+		return $this->initial_price ? $this->initial_price->setup_fee_text ?? '' : '';
+	}
+
+	/**
 	 * Is the product or any variants in stock.
 	 *
 	 * @return int
