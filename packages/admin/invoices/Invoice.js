@@ -78,9 +78,7 @@ export default () => {
 		isResolving: loading,
 		editedRecord: invoice,
 		edit: updateInvoice,
-	} = useEntityRecord('surecart', 'invoice', id, {
-		enabled: true,
-	});
+	} = useEntityRecord('surecart', 'invoice', id);
 
 	const checkout = invoice?.checkout;
 	const isDraftInvoice = invoice?.status === 'draft';
