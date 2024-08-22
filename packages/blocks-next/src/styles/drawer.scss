@@ -2,8 +2,8 @@
 	position: fixed;
 	box-sizing: border-box;
 	width: var(--sc-drawer-width, 31rem);
-	min-height: 100vh;
-	min-width: var(--sc-drawer-min-width, '300px');
+	min-height: 100dvh;
+	min-width: var(--sc-drawer-min-width, "300px");
 	background-color: var(--sc-panel-background-color);
 	box-shadow: var(--sc-shadow-x-large);
 	padding: 0;
@@ -27,7 +27,8 @@
 	&__wrapper {
 		display: flex;
 		flex-direction: column;
-		min-height: 100vh;
+		min-height: calc(100dvh - 2px); // fix chrome scrollbar issue
+		overflow: hidden;
 	}
 
 	&[open] {
