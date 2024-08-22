@@ -1,0 +1,77 @@
+/**
+ * External dependencies.
+ */
+import { select, useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import { store as coreStore } from '@wordpress/core-data';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
+
+/**
+ * Internal dependencies.
+ */
+import { ScBlockUi } from '@surecart/components-react';
+import Error from '../../components/Error';
+
+export default ({ invoice, open, onRequestClose, hasLoading }) => {
+	const [loading, setLoading] = useState(hasLoading);
+	const [error, setError] = useState(false);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { deleteEntityRecord } = useDispatch(coreStore);
+
+	const onDelete = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'invoice'
+			);
+
+			const invoiceId = invoice.id;
+			await deleteEntityRecord(
+				'surecart',
+				'invoice',
+				invoiceId,
+				undefined,
+				{
+					throwOnError: true,
+				}
+			);
+
+			createSuccessNotice(__('Invoice deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			onRequestClose();
+
+			window.location.assign('admin.php?page=sc-invoices');
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	return (
+		<ConfirmDialog
+			isOpen={open}
+			onConfirm={onDelete}
+			onCancel={onRequestClose}
+			confirmButtonText={__('Delete', 'surecart')}
+		>
+			<Error error={error} />
+
+			{__('Are you sure you want to delete this invoice?', 'surecart')}
+
+			{loading && (
+				<ScBlockUi
+					style={{ '--sc-block-ui-opacity': '0.75' }}
+					spinner
+				/>
+			)}
+		</ConfirmDialog>
+	);
+};

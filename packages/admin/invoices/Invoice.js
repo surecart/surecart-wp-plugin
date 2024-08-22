@@ -39,6 +39,7 @@ import AdditionalOptions from './modules/AdditionalOptions';
 import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
 import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
 import SendNotificationConfirmModal from './modules/SendNotificationConfirmModal';
+import DeleteInvoiceConfirmModal from './modules/DeleteInvoiceConfirmModal';
 
 /**
  * Returns the Model Edit URL.
@@ -197,6 +198,15 @@ export default () => {
 			menuItems.push({
 				title: __('Mark As Paid', 'surecart'),
 				modal: 'order_mark_as_paid',
+			});
+		}
+
+		// For first time invoice creation, we don't need to show delete button.
+		// Once invoice is created, we can show delete button.
+		if (checkout?.order?.id) {
+			menuItems.push({
+				title: __('Delete Invoice', 'surecart'),
+				modal: 'delete_invoice_confirm',
 			});
 		}
 
@@ -422,6 +432,15 @@ export default () => {
 					changeInvoiceStatus={changeInvoiceStatus}
 					updateInvoiceEntityRecord={updateInvoiceEntityRecord}
 					title={getSubmitButtonTitle()}
+				/>
+			)}
+
+			{modal === 'delete_invoice_confirm' && (
+				<DeleteInvoiceConfirmModal
+					invoice={invoice}
+					open={modal === 'delete_invoice_confirm'}
+					onRequestClose={() => setModal(null)}
+					hasLoading={loading}
 				/>
 			)}
 		</>
