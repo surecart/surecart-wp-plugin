@@ -3,7 +3,7 @@
 	"title": "Inovoice Due Date",
 	"description": "Displays the invoice due date line item.",
 	"category": "surecart",
-	"ancestor": ["surecart/totals"],
+	"ancestor": ["surecart/invoice-details"],
 	"keywords": ["checkout", "engine", "invoice", "due", "date"],
 	"textdomain": "surecart",
 	"supports": {

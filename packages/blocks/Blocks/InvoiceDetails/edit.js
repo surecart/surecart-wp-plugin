@@ -1,0 +1,37 @@
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import {
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
+} from '@wordpress/block-editor';
+
+const ALLOWED_BLOCKS = [
+	'surecart/invoice-number',
+	'surecart/invoice-due-date',
+	'surecart/invoice-receipt-download',
+	'surecart/divider',
+];
+
+export default () => {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
+	const innerBlocksProps = useInnerBlocksProps(
+		{},
+		{
+			template: [
+				['surecart/invoice-number', {}],
+				['surecart/invoice-due-date', {}],
+				['surecart/invoice-receipt-download', {}],
+				['surecart/divider', {}],
+			],
+			allowedBlocks: ALLOWED_BLOCKS,
+			templateLock: false,
+		}
+	);
+
+	return <div {...innerBlocksProps}></div>;
+};

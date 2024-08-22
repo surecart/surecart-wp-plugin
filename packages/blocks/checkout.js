@@ -43,6 +43,8 @@ import * as taxLineItem from '@blocks/TaxLineItem';
 import * as textarea from '@blocks/Textarea';
 import * as invoiceNumber from '@blocks/InvoiceNumber';
 import * as invoiceDueDate from '@blocks/InvoiceDueDate';
+import * as invoiceReceiptDownload from '@blocks/InvoiceReceiptDownload';
+import * as invoiceDetails from '@blocks/InvoiceDetails';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
@@ -95,6 +97,8 @@ registerBlocks([
 	switchBlock,
 	invoiceNumber,
 	invoiceDueDate,
+	invoiceReceiptDownload,
+	invoiceDetails,
 	total,
 	totals,
 	shippingChoices,

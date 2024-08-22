@@ -1,9 +1,9 @@
 {
 	"name": "surecart/invoice-number",
-	"title": "Inovoice Number",
+	"title": "Invoice Number",
 	"description": "Displays the invoice number line item.",
 	"category": "surecart",
-	"ancestor": ["surecart/totals"],
+	"ancestor": ["surecart/invoice-details"],
 	"keywords": ["checkout", "engine", "invoice", "number"],
 	"textdomain": "surecart",
 	"supports": {
