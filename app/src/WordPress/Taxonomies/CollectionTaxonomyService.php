@@ -103,7 +103,7 @@ class CollectionTaxonomyService {
 		}
 
 		// the theme has provided a taxonomy template, or we are not on the collection taxonomy.
-		if ( ! empty( $template ) || ! is_tax( $this->slug ) ) {
+		if ( ! empty( $template ) || empty( $collection->metadata->wp_template_id ) || strpos( $collection->metadata->wp_template_id, '.php' ) === false ) {
 			return $template;
 		}
 
