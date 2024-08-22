@@ -142,7 +142,9 @@ export default ({
 							min="0"
 							value={amount}
 							placeholder={defaultAmount}
-							currency={currency}
+							currencyCode={
+								currency || window?.scData?.currency_code
+							}
 							css={css`
 								min-width: 100px;
 							`}
