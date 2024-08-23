@@ -7,7 +7,11 @@
 	"category": "surecart-product-page",
 	"keywords": ["image", "media"],
 	"textdomain": "surecart",
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/upsell"
+	],
 	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,
