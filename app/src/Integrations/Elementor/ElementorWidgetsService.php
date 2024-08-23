@@ -13,6 +13,7 @@ class ElementorWidgetsService {
 	 */
 	public function bootstrap() {
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
+		add_action( 'elementor/elements/elements_registered', [ $this, 'registerElements' ] );
 	}
 
 	/**
@@ -37,6 +38,31 @@ class ElementorWidgetsService {
 			$widget_class_name    = end( $get_declared_classes );
 
 			$widget_manager->register( new $widget_class_name() );
+		}
+	}
+
+	/**
+	 * Register the elements.
+	 *
+	 * @param \Elementor\Elements_Manager $element_manager Element manager.
+	 *
+	 * @return void
+	 */
+	public function registerElements( $element_manager ) {
+		if ( ! class_exists( '\Elementor\Element_Base' ) ) {
+			return;
+		}
+
+		foreach ( glob( __DIR__ . '/Elements/**' ) as $file ) {
+			if ( ! is_readable( $file ) ) {
+				continue;
+			}
+
+			require_once $file;
+			$get_declared_classes = get_declared_classes();
+			$element_class_name   = end( $get_declared_classes );
+
+			$element_manager->register_element_type( new $element_class_name() );
 		}
 	}
 }
