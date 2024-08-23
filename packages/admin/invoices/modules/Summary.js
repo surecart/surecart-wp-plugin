@@ -5,189 +5,61 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useCopyToClipboard } from '@wordpress/compose';
-import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch } from '@wordpress/data';
 
 /**
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
-import Definition from '../../ui/Definition';
-import DatePicker from '../../components/DatePicker';
-import {
-	ScButton,
-	ScDropdown,
-	ScFormatDate,
-	ScIcon,
-	ScInvoiceStatusBadge,
-	ScMenu,
-	ScMenuItem,
-} from '@surecart/components-react';
+import CheckoutPageLink from '../components/CheckoutPageLink';
+import OrderPageLink from '../components/OrderPageLink';
+import ReceiptDownload from '../components/ReceiptDownload';
+import Status from '../components/Status';
+import InvoiceNumber from '../components/InvoiceNumber';
+import DueDate from '../components/DueDate';
+import IssueDate from '../components/IssueDate';
 
 export default ({ invoice, updateInvoice, checkout, loading }) => {
-	const { createSuccessNotice } = useDispatch(noticesStore);
-	const isDraftInvoice = invoice?.status === 'draft';
+	// const isDraftInvoice = invoice?.status === 'draft';
 
-	const checkoutPageUrl = checkout?.id
-		? `${window.scData?.checkout_page_url}?checkout_id=${checkout?.id}`
-		: null;
-
-	const checkoutPageUrlRef = useCopyToClipboard(checkoutPageUrl, () =>
-		createSuccessNotice(
-			__('Checkout Page URL Copied to clipboard.', 'surecart'),
-			{
-				type: 'snackbar',
-			}
-		)
-	);
+	const checkoutPageUrl =
+		invoice?.checkout?.id && invoice?.status !== 'paid'
+			? `${window.scData?.checkout_page_url}?checkout_id=${invoice?.checkout?.id}`
+			: null;
 
 	const orderPdfUrl = checkout?.order?.pdf_url;
-	const orderViewUrl = checkout?.order?.id
-		? `admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
+	const orderPageUrl = checkout?.order?.id
+		? `${scData?.home_url}/wp-admin/admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
 		: null;
-
-	const renderDueDate = () => {
-		if (isDraftInvoice) {
-			return (
-				<DatePicker
-					title={__('Choose a due date', 'surecart')}
-					placeholder={__('Due date', 'surecart')}
-					currentDate={
-						invoice?.due_date
-							? new Date(invoice?.due_date * 1000)
-							: null
-					}
-					onChoose={(due_date) => {
-						updateInvoice({
-							due_date: Date.parse(due_date) / 1000,
-						});
-					}}
-					onClear={() => updateInvoice({ due_date: null })}
-				/>
-			);
-		}
-
-		return invoice?.due_date ? (
-			<ScFormatDate
-				date={invoice?.due_date}
-				type="timestamp"
-				month="long"
-				day="numeric"
-				year="numeric"
-			/>
-		) : (
-			'-'
-		);
-	};
-
-	const renderIssueDate = () => {
-		if (isDraftInvoice) {
-			return (
-				<DatePicker
-					title={__('Choose an issue date', 'surecart')}
-					placeholder={__('Issue date', 'surecart')}
-					currentDate={
-						invoice?.issue_date
-							? new Date(invoice?.issue_date * 1000)
-							: null
-					}
-					onChoose={(issue_date) => {
-						updateInvoice({
-							issue_date: Date.parse(issue_date) / 1000,
-						});
-					}}
-					onClear={() => updateInvoice({ issue_date: null })}
-				/>
-			);
-		}
-
-		return invoice?.issue_date ? (
-			<ScFormatDate
-				date={invoice?.issue_date}
-				type="timestamp"
-				month="long"
-				day="numeric"
-				year="numeric"
-			/>
-		) : (
-			'-'
-		);
-	};
 
 	return (
 		<>
 			<Box title={__('Invoice Summary', 'surecart')} loading={loading}>
-				{!!checkout?.order?.number && (
-					<Definition title={__('Invoice Number', 'surecart')}>
-						#{checkout.order.number}
-					</Definition>
-				)}
+				<div>
+					{!!checkout?.order?.number && (
+						<InvoiceNumber orderNumber={checkout?.order?.number} />
+					)}
 
-				<Definition title={__('Status', 'surecart')}>
-					<ScInvoiceStatusBadge status={invoice?.status} />
-				</Definition>
+					<Status status={invoice?.status} />
 
-				<Definition title={__('Due Date', 'surecart')}>
-					{renderDueDate()}
-				</Definition>
+					<DueDate invoice={invoice} updateInvoice={updateInvoice} />
 
-				<Definition title={__('Issue Date', 'surecart')}>
-					{renderIssueDate()}
-				</Definition>
+					<IssueDate
+						invoice={invoice}
+						updateInvoice={updateInvoice}
+					/>
 
-				{!!checkoutPageUrl && invoice?.status !== 'paid' && (
-					<Definition title={__('Checkout Page', 'surecart')}>
-						<ScDropdown placement="bottom-end">
-							<ScButton
-								size="small"
-								slot="trigger"
-								caret
-								loading={loading}
-							>
-								{__('View / Copy', 'surecart')}
-							</ScButton>
-							<ScMenu>
-								<ScMenuItem
-									onClick={() => {
-										window.open(checkoutPageUrl, '_blank');
-									}}
-								>
-									{__('View Page', 'surecart')}
-								</ScMenuItem>
-								<ScMenuItem ref={checkoutPageUrlRef}>
-									{__('Copy URL', 'surecart')}
-								</ScMenuItem>
-							</ScMenu>
-						</ScDropdown>
-					</Definition>
-				)}
+					{!!checkoutPageUrl && (
+						<CheckoutPageLink checkoutPageUrl={checkoutPageUrl} />
+					)}
 
-				{!!orderViewUrl && (
-					<Definition title={__('Order Page', 'surecart')}>
-						<ScButton
-							size="small"
-							href={orderViewUrl}
-							target="_blank"
-						>
-							{__('View', 'surecart')}
-						</ScButton>
-					</Definition>
-				)}
+					{!!orderPageUrl && (
+						<OrderPageLink orderPageUrl={orderPageUrl} />
+					)}
 
-				{!!orderPdfUrl && (
-					<Definition title={__('Receipt', 'surecart')}>
-						<ScButton
-							size="small"
-							href={orderPdfUrl}
-							target="_blank"
-						>
-							{__('Download', 'surecart')}
-
-							<ScIcon name="download" slot="suffix" />
-						</ScButton>
-					</Definition>
-				)}
+					{!!orderPdfUrl && (
+						<ReceiptDownload orderPdfUrl={orderPdfUrl} />
+					)}
+				</div>
 			</Box>
 		</>
 	);
