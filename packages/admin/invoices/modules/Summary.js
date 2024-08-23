@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
@@ -19,8 +16,6 @@ import DueDate from '../components/DueDate';
 import IssueDate from '../components/IssueDate';
 
 export default ({ invoice, updateInvoice, checkout, loading }) => {
-	// const isDraftInvoice = invoice?.status === 'draft';
-
 	const checkoutPageUrl =
 		invoice?.checkout?.id && invoice?.status !== 'paid'
 			? `${window.scData?.checkout_page_url}?checkout_id=${invoice?.checkout?.id}`
@@ -36,7 +31,7 @@ export default ({ invoice, updateInvoice, checkout, loading }) => {
 			<Box title={__('Invoice Summary', 'surecart')} loading={loading}>
 				<div>
 					{!!checkout?.order?.number && (
-						<InvoiceNumber orderNumber={checkout?.order?.number} />
+						<InvoiceNumber orderNumber={checkout.order.number} />
 					)}
 
 					<Status status={invoice?.status} />
