@@ -33,7 +33,7 @@ import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
 import Tax from './modules/Tax';
-import Details from './modules/Details';
+import Summary from './modules/Summary';
 import AdditionalOptions from './modules/AdditionalOptions';
 import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
 import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
@@ -283,7 +283,7 @@ export default () => {
 				}
 				sidebar={
 					<>
-						<Details
+						<Summary
 							invoice={invoice}
 							updateInvoice={updateInvoice}
 							checkout={checkout}
