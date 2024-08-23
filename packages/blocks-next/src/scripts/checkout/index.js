@@ -521,9 +521,7 @@ const { state, actions } = store('surecart/checkout', {
 				data,
 			});
 
-			if (checkout) {
-				actions.setCheckout(checkout, mode, formId);
-			}
+			actions.setCheckout(checkout, mode, formId);
 			state.loading = false;
 		},
 
@@ -537,9 +535,8 @@ const { state, actions } = store('surecart/checkout', {
 
 			const checkout = await removeCheckoutLineItem(line_item?.id);
 
-			if (checkout) {
-				actions.setCheckout(checkout, mode, formId);
-			}
+			actions.setCheckout(checkout, mode, formId);
+
 			state.loading = false;
 		},
 		updateCheckout(e) {
