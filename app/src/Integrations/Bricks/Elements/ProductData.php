@@ -46,6 +46,16 @@ class ProductData extends \Bricks\Element {
 	}
 
 	/**
+	 * This ensures that if the element has all children that are [hidden]
+	 * the element will not display.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'surecart-product-data', plugins_url( '../scripts/product-data.css', __FILE__ ), [], \SureCart::plugin()->version() );
+	}
+
+	/**
 	 * Set controls.
 	 *
 	 * @return void
@@ -190,6 +200,7 @@ class ProductData extends \Bricks\Element {
 		}
 
 		$this->set_attribute( '_root', 'class', 'post-meta' );
+		$this->set_attribute( '_root', 'class', 'sc-product-data' );
 
 		echo "<div {$this->render_attributes( '_root' )}>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
