@@ -497,7 +497,7 @@ class BricksDynamicDataService {
 		$tags = $this->dynamicTags();
 
 		// Check if the tag exists in the registered tags.
-		$tag_exists = array_search( $tag, array_column( $tags, 'slug' ), true );
+		$tag_exists = array_search( strtok( $tag, ':' ), array_column( $tags, 'slug' ), true );
 		if ( false === $tag_exists ) {
 			return $tag;
 		}
