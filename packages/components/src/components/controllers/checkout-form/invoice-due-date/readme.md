@@ -1,0 +1,40 @@
+# sc-line-item-invoice-due-date
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+| Property   | Attribute  | Description          | Type       | Default     |
+| ---------- | ---------- | -------------------- | ---------- | ----------- |
+| `checkout` | --         |                      | `Checkout` | `undefined` |
+| `dueDate`  | `due-date` | The invoice due date | `string`   | `undefined` |
+
+
+## Dependencies
+
+### Used by
+
+ - [sc-form-components-validator](../../../providers/form-components-validator)
+
+### Depends on
+
+- [sc-line-item](../../../ui/line-item)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-format-date](../../../util/format-date)
+
+### Graph
+```mermaid
+graph TD;
+  sc-line-item-invoice-due-date --> sc-line-item
+  sc-line-item-invoice-due-date --> sc-skeleton
+  sc-line-item-invoice-due-date --> sc-format-date
+  sc-form-components-validator --> sc-line-item-invoice-due-date
+  style sc-line-item-invoice-due-date fill:#f9f,stroke:#333,stroke-width:4px
+```
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,13 +19,17 @@ import { Checkout, Invoice } from '../../../../types';
 export class ScLineItemInvoiceDueDate {
   @Prop() checkout: Checkout;
 
+  /** The invoice due date */
+  @Prop({ mutable: true }) dueDate?: string;
+
   render() {
     const checkout = this.checkout || checkoutState?.checkout;
-    // Stop if checkout has no invoice.
-    // TODO: Uncomment this when the invoice expand is implemented on checkout.
-    // if (!(checkout?.invoice as Invoice)?.id) {
-    //   return null;
-    // }
+    const dueDate = this.dueDate || (checkout?.invoice as Invoice)?.due_date || null;
+
+    // Stop if checkout has no invoice due date.
+    if (!dueDate) {
+      return null;
+    }
 
     // loading state
     if (formBusy()) {
@@ -38,18 +42,14 @@ export class ScLineItemInvoiceDueDate {
     }
 
     return (
-      <sc-line-item>
-        <span slot="title">
-          <slot name="title" />
-        </span>
-        <span slot="price">
-          {(checkout?.invoice as Invoice)?.due_date ? (
-            <sc-format-date date={(checkout?.invoice as Invoice)?.due_date} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
-          ) : (
-            '-'
-          )}
-        </span>
-      </sc-line-item>
+      <Host>
+        <sc-line-item>
+          <span slot="title">
+            <slot name="title" />
+          </span>
+          <span slot="price">{dueDate ? <sc-format-date date={dueDate} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date> : '-'}</span>
+        </sc-line-item>
+      </Host>
     );
   }
 }
