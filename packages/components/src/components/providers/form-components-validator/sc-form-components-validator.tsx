@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
-import { TaxProtocol } from '../../../types';
+import { Order, TaxProtocol } from '../../../types';
 import { shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
@@ -41,6 +41,9 @@ export class ScFormComponentsValidator {
   /** Is there a shipping amount */
   @State() hasShippingAmount: boolean;
 
+  /** Is there an invoice details */
+  @State() hasInvoiceDetails: boolean;
+
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
@@ -66,6 +69,11 @@ export class ScFormComponentsValidator {
     if (!!checkoutState.checkout?.shipping_amount) {
       this.addShippingAmount();
     }
+
+    // TODO: make this logics like checkoutState.checkout?.invoice once, we got the invoice expand on checkout.
+    if (!!(checkoutState.checkout?.order as Order)?.id) {
+      this.addInvoiceDetails();
+    }
   }
 
   @Watch('hasAddress')
@@ -81,6 +89,7 @@ export class ScFormComponentsValidator {
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
     this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
     this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
+    this.hasInvoiceDetails = !!this.el.querySelector('sc-invoice-details');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -193,6 +202,27 @@ export class ScFormComponentsValidator {
     const shippingAmount = document.createElement('sc-line-item-shipping');
     insertBeforeElement.parentNode.insertBefore(shippingAmount, insertBeforeElement);
     this.hasShippingAmount = true;
+  }
+
+  addInvoiceDetails() {
+    if (this.hasInvoiceDetails) return;
+
+    let lineItems: Element = this.el.querySelector('sc-line-items');
+    const invoiceDetails = document.createElement('sc-invoice-details');
+    lineItems.parentNode.insertBefore(invoiceDetails, lineItems);
+
+    // Add sc-line-item-invoice-number inside sc-invoice-details.
+    const invoiceNumber = document.createElement('sc-line-item-invoice-number');
+    invoiceDetails.appendChild(invoiceNumber);
+
+    // Add sc-line-item-invoice-due-date inside sc-invoice-details.
+    const invoiceDueDate = document.createElement('sc-line-item-invoice-due-date');
+    invoiceDetails.appendChild(invoiceDueDate);
+
+    // Add invoice sc-line-item-invoice-receipt-download inside sc-invoice-details.
+    const invoiceReceiptDownload = document.createElement('sc-line-item-invoice-receipt-download');
+    invoiceDetails.appendChild(invoiceReceiptDownload);
+    this.hasInvoiceDetails = true;
   }
 
   render() {
