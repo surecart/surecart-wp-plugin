@@ -21,12 +21,11 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<sc-line-item-invoice-receipt-download>
+			<sc-line-item-invoice-receipt-download
+				receipt-download-link={'https://example.com/'}
+			>
 				<span slot="title">
 					{text || __('Invoice Receipt', 'surecart')}
-				</span>
-				<span slot="price">
-					<sc-icon name="download" />
 				</span>
 			</sc-line-item-invoice-receipt-download>
 		</Fragment>

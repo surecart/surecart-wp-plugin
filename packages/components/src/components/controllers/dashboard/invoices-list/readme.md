@@ -18,8 +18,6 @@
 
 ### Depends on
 
-- [sc-tag](../../../ui/tag)
-- [sc-order-status-badge](../../../ui/order-status-badge)
 - [sc-card](../../../ui/card)
 - [sc-stacked-list](../../../ui/stacked-list)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
@@ -38,8 +36,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-invoices-list --> sc-tag
-  sc-invoices-list --> sc-order-status-badge
   sc-invoices-list --> sc-card
   sc-invoices-list --> sc-stacked-list
   sc-invoices-list --> sc-stacked-list-row
@@ -54,7 +50,6 @@ graph TD;
   sc-invoices-list --> sc-icon
   sc-invoices-list --> sc-pagination
   sc-invoices-list --> sc-block-ui
-  sc-order-status-badge --> sc-tag
   sc-empty --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon

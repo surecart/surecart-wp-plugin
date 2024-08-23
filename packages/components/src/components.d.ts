@@ -1721,6 +1721,8 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScInvoiceDetails {
+    }
     interface ScInvoiceStatusBadge {
         /**
           * Makes the tag clearable.
@@ -1794,12 +1796,24 @@ export namespace Components {
     }
     interface ScLineItemInvoiceDueDate {
         "checkout": Checkout;
+        /**
+          * The invoice due date
+         */
+        "dueDate"?: string;
     }
     interface ScLineItemInvoiceNumber {
         "checkout": Checkout;
+        /**
+          * The invoice number
+         */
+        "number"?: string;
     }
     interface ScLineItemInvoiceReceiptDownload {
         "checkout": Checkout;
+        /**
+          * The invoice receipt download link
+         */
+        "receiptDownloadLink"?: string;
     }
     interface ScLineItemShipping {
         /**
@@ -4974,6 +4988,12 @@ declare global {
         prototype: HTMLScInputElement;
         new (): HTMLScInputElement;
     };
+    interface HTMLScInvoiceDetailsElement extends Components.ScInvoiceDetails, HTMLStencilElement {
+    }
+    var HTMLScInvoiceDetailsElement: {
+        prototype: HTMLScInvoiceDetailsElement;
+        new (): HTMLScInvoiceDetailsElement;
+    };
     interface HTMLScInvoiceStatusBadgeElement extends Components.ScInvoiceStatusBadge, HTMLStencilElement {
     }
     var HTMLScInvoiceStatusBadgeElement: {
@@ -5937,6 +5957,7 @@ declare global {
         "sc-icon": HTMLScIconElement;
         "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
+        "sc-invoice-details": HTMLScInvoiceDetailsElement;
         "sc-invoice-status-badge": HTMLScInvoiceStatusBadgeElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-license": HTMLScLicenseElement;
@@ -7979,6 +8000,8 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScInvoiceDetails {
+    }
     interface ScInvoiceStatusBadge {
         /**
           * Makes the tag clearable.
@@ -8052,12 +8075,24 @@ declare namespace LocalJSX {
     }
     interface ScLineItemInvoiceDueDate {
         "checkout"?: Checkout;
+        /**
+          * The invoice due date
+         */
+        "dueDate"?: string;
     }
     interface ScLineItemInvoiceNumber {
         "checkout"?: Checkout;
+        /**
+          * The invoice number
+         */
+        "number"?: string;
     }
     interface ScLineItemInvoiceReceiptDownload {
         "checkout"?: Checkout;
+        /**
+          * The invoice receipt download link
+         */
+        "receiptDownloadLink"?: string;
     }
     interface ScLineItemShipping {
         /**
@@ -10735,6 +10770,7 @@ declare namespace LocalJSX {
         "sc-icon": ScIcon;
         "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
+        "sc-invoice-details": ScInvoiceDetails;
         "sc-invoice-status-badge": ScInvoiceStatusBadge;
         "sc-invoices-list": ScInvoicesList;
         "sc-license": ScLicense;
@@ -10979,6 +11015,7 @@ declare module "@stencil/core" {
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
+            "sc-invoice-details": LocalJSX.ScInvoiceDetails & JSXBase.HTMLAttributes<HTMLScInvoiceDetailsElement>;
             "sc-invoice-status-badge": LocalJSX.ScInvoiceStatusBadge & JSXBase.HTMLAttributes<HTMLScInvoiceStatusBadgeElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;

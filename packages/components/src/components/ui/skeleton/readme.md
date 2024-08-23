@@ -44,7 +44,9 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-line-item-invoice-due-date](../../controllers/checkout-form/invoice-due-date)
  - [sc-line-item-invoice-number](../../controllers/checkout-form/invoice-number)
+ - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
  - [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
@@ -89,7 +91,9 @@ graph TD;
   sc-invoices-list --> sc-skeleton
   sc-license --> sc-skeleton
   sc-licenses-list --> sc-skeleton
+  sc-line-item-invoice-due-date --> sc-skeleton
   sc-line-item-invoice-number --> sc-skeleton
+  sc-line-item-invoice-receipt-download --> sc-skeleton
   sc-line-item-shipping --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton

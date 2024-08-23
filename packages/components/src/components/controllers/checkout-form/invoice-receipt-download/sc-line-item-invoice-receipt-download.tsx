@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,11 +19,16 @@ import { Checkout, Order } from '../../../../types';
 export class ScLineItemInvoiceReceiptDownload {
   @Prop() checkout: Checkout;
 
+  /** The invoice receipt download link */
+  @Prop({ mutable: true }) receiptDownloadLink?: string;
+
   render() {
     const checkout = this.checkout || checkoutState?.checkout;
+    const receiptDownloadLink = this.receiptDownloadLink || (checkout?.order as Order)?.statement_url || null;
+
     // Stop if checkout has no invoice.
     // TODO: Uncomment this when the invoice expand is implemented on checkout.
-    // if (!(checkout?.invoice as Invoice)?.id && !(checkout?.order as Order)?.number) {
+    // if (!(checkout?.invoice as Invoice)?.id && !receiptDownloadLink) {
     //   return null;
     // }
 
@@ -38,20 +43,18 @@ export class ScLineItemInvoiceReceiptDownload {
     }
 
     return (
-      <sc-line-item>
-        <span slot="title">
-          <slot name="title" />
-        </span>
-        <span slot="price">
-          {(checkout?.order as Order)?.statement_url ? (
-            <a class="sc-invoice-download-link" href={(checkout?.order as Order)?.statement_url} target="_blank" rel="noopener noreferrer">
+      <Host>
+        <sc-line-item>
+          <span slot="title">
+            <slot name="title" />
+          </span>
+          <span slot="price">
+            <a class="sc-invoice-download-link" href={receiptDownloadLink} target="_blank" rel="noopener noreferrer">
               <sc-icon name="download" />
             </a>
-          ) : (
-            '-'
-          )}
-        </span>
-      </sc-line-item>
+          </span>
+        </sc-line-item>
+      </Host>
     );
   }
 }

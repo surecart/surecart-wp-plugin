@@ -19,7 +19,6 @@
 
 ### Used by
 
- - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -32,7 +31,6 @@
 ```mermaid
 graph TD;
   sc-order-status-badge --> sc-tag
-  sc-invoices-list --> sc-order-status-badge
   sc-order --> sc-order-status-badge
   sc-order-confirmation-details --> sc-order-status-badge
   sc-orders-list --> sc-order-status-badge

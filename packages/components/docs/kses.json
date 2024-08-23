@@ -892,6 +892,12 @@
     "class": true,
     "slot": true
   },
+  "sc-invoice-details": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-invoice-status-badge": {
     "clearable": true,
     "pill": true,
@@ -947,6 +953,7 @@
   },
   "sc-line-item-invoice-due-date": {
     "checkout": true,
+    "due-date": true,
     "style": true,
     "id": true,
     "class": true,
@@ -954,6 +961,7 @@
   },
   "sc-line-item-invoice-number": {
     "checkout": true,
+    "number": true,
     "style": true,
     "id": true,
     "class": true,
@@ -961,6 +969,7 @@
   },
   "sc-line-item-invoice-receipt-download": {
     "checkout": true,
+    "receipt-download-link": true,
     "style": true,
     "id": true,
     "class": true,
