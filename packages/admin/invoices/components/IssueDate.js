@@ -15,9 +15,11 @@ import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '
 import PostDropdownButton from '../../components/PostDropdownButton';
 import PostDropdownContent from '../../components/PostDropdownContent';
 import DatePicker from '../../components/DatePicker';
-import { ScFormatDate } from '@surecart/components-react';
+import { ScAlert, ScFormatDate } from '@surecart/components-react';
 
 export default ({ invoice, updateInvoice }) => {
+	const isDraftInvoice = invoice?.status === 'draft';
+
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
 	const [popoverAnchor, setPopoverAnchor] = useState(null);
@@ -40,26 +42,47 @@ export default ({ invoice, updateInvoice }) => {
 					)}
 				/>
 
-				<DatePicker
-					title={__('Choose an issue date', 'surecart')}
-					placeholder={__('Issue date', 'surecart')}
-					currentDate={
-						invoice?.issue_date
-							? new Date(invoice?.issue_date * 1000)
-							: null
-					}
-					onChoose={(issue_date) => {
-						updateInvoice({
-							issue_date: Date.parse(issue_date) / 1000,
-						});
-						onClose();
-					}}
-					onClear={() => {
-						updateInvoice({ issue_date: null });
-						onClose();
-					}}
-					onRequestClose={onClose}
-				/>
+				{isDraftInvoice ? (
+					<DatePicker
+						title={__('Choose an issue date', 'surecart')}
+						placeholder={__('Issue date', 'surecart')}
+						currentDate={
+							invoice?.issue_date
+								? new Date(invoice?.issue_date * 1000)
+								: null
+						}
+						onChoose={(issue_date) => {
+							updateInvoice({
+								issue_date: Date.parse(issue_date) / 1000,
+							});
+							onClose();
+						}}
+						onClear={() => {
+							updateInvoice({ issue_date: null });
+							onClose();
+						}}
+						onRequestClose={onClose}
+					/>
+				) : (
+					<div>
+						{invoice?.issue_date ? (
+							<ScFormatDate
+								type="timestamp"
+								month="short"
+								day="numeric"
+								year="numeric"
+								date={invoice?.issue_date}
+							/>
+						) : (
+							<ScAlert open={true} type="info">
+								{__(
+									'No issue date set. To set an issue date, Edit the invoice and set the issue date.',
+									'surecart'
+								)}
+							</ScAlert>
+						)}
+					</div>
+				)}
 			</PostDropdownContent>
 		);
 	};
@@ -101,8 +124,10 @@ export default ({ invoice, updateInvoice }) => {
 									year="numeric"
 									date={invoice?.issue_date}
 								/>
-							) : (
+							) : isDraftInvoice ? (
 								__('Set Issue Date', 'surecart')
+							) : (
+								__('No Issue Date', 'surecart')
 							)
 						}
 					/>
