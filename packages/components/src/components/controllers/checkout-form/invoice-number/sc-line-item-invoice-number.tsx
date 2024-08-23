@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, Fragment, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,8 +20,12 @@ import { Checkout, Order } from '../../../../types';
 export class ScLineItemInvoiceNumber {
   @Prop() checkout: Checkout;
 
+  /** The invoice number */
+  @Prop({ mutable: true }) number?: string;
+
   render() {
-    const checkout = this.checkout || checkoutState?.checkout;
+    const number = this.number ?? (checkoutState?.checkout?.order as Order)?.number ?? null;
+    // const checkout = this.checkout || checkoutState?.checkout;
     // Stop if checkout has no invoice or order.
     // TODO: Uncomment this when the invoice expand is implemented on checkout.
     // if (!(checkout?.invoice as Invoice)?.id && !(checkout?.order as Order)?.number) {
@@ -39,14 +43,14 @@ export class ScLineItemInvoiceNumber {
     }
 
     return (
-      <Fragment>
+      <Host>
         <sc-line-item>
           <span slot="title">
             <slot name="title" />
           </span>
-          <span slot="price">#{(checkout?.order as Order)?.number || __('N/A', 'surecart')}</span>
+          <span slot="price">#{number}</span>
         </sc-line-item>
-      </Fragment>
+      </Host>
     );
   }
 }
