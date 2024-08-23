@@ -33,5 +33,5 @@ export default () => {
 		}
 	);
 
-	return <div {...innerBlocksProps}></div>;
+	return <sc-invoice-details {...innerBlocksProps}></sc-invoice-details>;
 };

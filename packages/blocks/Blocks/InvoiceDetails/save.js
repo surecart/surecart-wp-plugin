@@ -5,8 +5,8 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 export default function save() {
 	return (
-		<div>
+		<sc-invoice-details>
 			<InnerBlocks.Content />
-		</div>
+		</sc-invoice-details>
 	);
 }
