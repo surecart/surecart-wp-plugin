@@ -179,4 +179,15 @@ trait ConvertsBlocks {
 	public function is_admin_editor() {
 		return ! bricks_is_frontend() || bricks_is_builder_call();
 	}
+
+	/**
+	 * Get raw color.
+	 *
+	 * @param string $key The key.
+	 *
+	 * @return string
+	 */
+	public function get_raw_color( $key ) {
+		return $this->settings[ $key ] ['hex'] ?? $this->settings[ $key ] ['raw'] ?? '';
+	}
 }
