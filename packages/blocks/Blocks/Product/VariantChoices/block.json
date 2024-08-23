@@ -5,12 +5,12 @@
 	"title": "Product Variants",
 	"description": "Displays possible choices for product variants.",
 	"category": "surecart",
+	"ancestor": ["surecart/upsell"],
 	"keywords": ["variant", "product", "choice"],
 	"supports": {
 		"reusable": false,
 		"html": false,
 		"multiple": false,
-		"inserter": false,
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
