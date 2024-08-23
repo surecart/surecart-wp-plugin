@@ -48,7 +48,7 @@ export default ({
 			setError(false);
 
 			// Set the notification_enabled flag by default to true.
-			invoice.notification_enabled = notificationsEnabled;
+			invoice.notifications_enabled = notificationsEnabled;
 
 			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
 			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
