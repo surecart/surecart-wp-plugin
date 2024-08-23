@@ -21,6 +21,7 @@ export default (props) => {
 		onChange,
 		onChoose,
 		onClear = () => {},
+		onRequestClose = () => {},
 		placeholder,
 		title,
 		chooseDateLabel,
@@ -94,7 +95,13 @@ export default (props) => {
 			)}
 
 			{isVisible && (
-				<Modal title={title} onRequestClose={toggleVisible}>
+				<Modal
+					title={title}
+					onRequestClose={() => {
+						onRequestClose();
+						toggleVisible();
+					}}
+				>
 					<Error error={error} />
 					<DateTimePicker
 						currentDate={date}

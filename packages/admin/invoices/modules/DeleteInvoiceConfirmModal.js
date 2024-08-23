@@ -40,7 +40,7 @@ export default ({ invoice, open, onRequestClose, hasLoading }) => {
 				}
 			);
 
-			createSuccessNotice(__('Invoice deleted.', 'surecart'), {
+			createSuccessNotice(__('Invoice Deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 

@@ -5,13 +5,11 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { useState, useEffect } from '@wordpress/element';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
-import { addQueryArgs } from '@wordpress/url';
-import { getQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -23,6 +21,7 @@ import {
 	ScDropdown,
 	ScMenuItem,
 	ScMenu,
+	ScIcon,
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -34,7 +33,7 @@ import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
 import Tax from './modules/Tax';
-import Details from './modules/Details';
+import Summary from './modules/Summary';
 import AdditionalOptions from './modules/AdditionalOptions';
 import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
 import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
@@ -104,41 +103,6 @@ export default () => {
 		live_mode: liveMode ? 'true' : 'false',
 	});
 
-	const changeInvoiceStatus = async (status) => {
-		try {
-			setBusy(true);
-
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
-
-			const action = status === 'draft' ? 'make_draft' : 'open';
-
-			const requestData = {
-				expand: checkoutExpands,
-				// Append payment method for open status only.
-				...(status === 'open' &&
-					paymentMethod?.id && {
-						manual_payment: !!paymentMethod.manual,
-						...(paymentMethod.manual
-							? { manual_payment_method_id: paymentMethod.id }
-							: { payment_method_id: paymentMethod.id }),
-					}),
-			};
-
-			return await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}/${action}`, requestData),
-			});
-		} catch (e) {
-			console.error(e);
-			setInvoiceError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
 	const updateInvoiceEntityRecord = (updatedInvoice) => {
 		receiveEntityRecords(
 			'surecart',
@@ -197,16 +161,7 @@ export default () => {
 		if (!['draft', 'paid'].includes(invoice?.status)) {
 			menuItems.push({
 				title: __('Mark As Paid', 'surecart'),
-				modal: 'order_mark_as_paid',
-			});
-		}
-
-		// For first time invoice creation, we don't need to show delete button.
-		// Once invoice is created, we can show delete button.
-		if (checkout?.order?.id) {
-			menuItems.push({
-				title: __('Delete Invoice', 'surecart'),
-				modal: 'delete_invoice_confirm',
+				modal: 'mark_as_paid',
 			});
 		}
 
@@ -252,6 +207,26 @@ export default () => {
 				button={
 					invoice?.status !== 'paid' && (
 						<div>
+							<ScDropdown
+								position="bottom-right"
+								style={{ '--panel-width': '14em' }}
+							>
+								<>
+									<ScButton slot="trigger" type="text" circle>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() =>
+												setModal('delete_invoice')
+											}
+										>
+											{__('Delete Invoice', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</>
+							</ScDropdown>
+
 							{isDraftInvoice && (
 								<ScButton
 									type={
@@ -264,9 +239,7 @@ export default () => {
 										busy ||
 										!scData?.entitlements?.invoices
 									}
-									onClick={() =>
-										setModal('send_confirm_invoice')
-									}
+									onClick={() => setModal('send_invoice')}
 								>
 									{getSubmitButtonTitle()}
 								</ScButton>
@@ -310,7 +283,7 @@ export default () => {
 				}
 				sidebar={
 					<>
-						<Details
+						<Summary
 							invoice={invoice}
 							updateInvoice={updateInvoice}
 							checkout={checkout}
@@ -402,15 +375,16 @@ export default () => {
 				<DraftInvoiceConfirmModal
 					open={modal === 'change_status_to_draft'}
 					onRequestClose={() => setModal(null)}
-					changeInvoiceStatus={changeInvoiceStatus}
 					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
 					invoice={invoice}
+					busy={busy}
+					setBusy={setBusy}
 				/>
 			)}
 
-			{modal === 'order_mark_as_paid' && (
+			{modal === 'mark_as_paid' && (
 				<PaidInvoiceConfirmModal
-					open={modal === 'order_mark_as_paid'}
+					open={true}
 					onRequestClose={() => setModal(null)}
 					invoice={invoice}
 					checkout={checkout}
@@ -419,9 +393,8 @@ export default () => {
 				/>
 			)}
 
-			{modal === 'send_confirm_invoice' && (
+			{modal === 'send_invoice' && (
 				<SendNotificationConfirmModal
-					open={modal === 'send_confirm_invoice'}
 					onRequestClose={() => setModal(null)}
 					invoice={invoice}
 					updateInvoice={updateInvoice}
@@ -429,16 +402,16 @@ export default () => {
 					setBusy={setBusy}
 					error={invoiceError}
 					setError={setInvoiceError}
-					changeInvoiceStatus={changeInvoiceStatus}
 					updateInvoiceEntityRecord={updateInvoiceEntityRecord}
 					title={getSubmitButtonTitle()}
+					paymentMethod={paymentMethod}
 				/>
 			)}
 
-			{modal === 'delete_invoice_confirm' && (
+			{modal === 'delete_invoice' && (
 				<DeleteInvoiceConfirmModal
 					invoice={invoice}
-					open={modal === 'delete_invoice_confirm'}
+					open={true}
 					onRequestClose={() => setModal(null)}
 					hasLoading={loading}
 				/>
