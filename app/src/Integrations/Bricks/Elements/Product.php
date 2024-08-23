@@ -154,7 +154,10 @@ class Product extends \Bricks\Element {
 			),
 			array(
 				'name'     => 'post-excerpt',
-				'settings' => array( 'keepHTML' => true ),
+				'settings' => array(
+					'keepHTML' => true,
+					'length'   => 999,
+				),
 			),
 			array(
 				'name'     => 'surecart-product-price-chooser',
