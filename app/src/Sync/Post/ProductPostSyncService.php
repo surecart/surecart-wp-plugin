@@ -3,8 +3,8 @@
 namespace SureCart\Sync\Post;
 
 use SureCart\Models\Concerns\Facade;
-use SureCart\Models\Product;
 use SureCart\Models\VariantOptionValue;
+use SureCart\Support\Currency;
 
 /**
  * This class syncs product records to WordPress posts.
@@ -144,8 +144,8 @@ class ProductPostSyncService {
 			'meta_input'        => array(
 				'sc_id'                        => $model->id,
 				'product'                      => $model,
-				'min_price_amount'             => ! empty( $model->metrics->min_price_amount ) ? $model->metrics->min_price_amount : $base_amount,
-				'max_price_amount'             => ! empty( $model->metrics->max_price_amount ) ? $model->metrics->max_price_amount : $base_amount,
+				'min_price_amount'             => ! empty( $model->metrics->min_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->min_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
+				'max_price_amount'             => ! empty( $model->metrics->max_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->max_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
 				'available_stock'              => $model->available_stock,
 				'stock_enabled'                => $model->stock_enabled,
 				'allow_out_of_stock_purchases' => $model->allow_out_of_stock_purchases,
