@@ -51,9 +51,6 @@ class ProductPostTypeService {
 		// product gallery migration.
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
-		// allow product meta to be exposed top-level.
-		add_action( 'get_post_metadata', array( $this, 'exposeProductMeta' ), 10, 4 );
-
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
@@ -643,32 +640,36 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Expose product meta.
+	 * Get the cached meta.
 	 *
-	 * This allows us to expose the product meta to the top level.
-	 *
-	 * @param array   $value  The value.
 	 * @param integer $object_id The object ID.
-	 * @param string  $meta_key The meta key.
-	 * @param bool    $single Whether to return a single value.
+	 * @param string  $meta_key  The meta key.
 	 *
-	 * @return array|mixed;
+	 * @return void
 	 */
-	public function exposeProductMeta( $value, $object_id, $meta_key, $single ) {
-		// only for our post type.
-		if ( get_post_type( $object_id ) !== $this->post_type ) {
-			return $value;
+	public function getCachedMeta( $object_id, $meta_key ) {
+		$meta_cache = wp_cache_get( $object_id, 'post_meta' );
+
+		if ( ! $meta_cache ) {
+			$meta_cache = update_meta_cache( 'post', array( $object_id ) );
+			if ( isset( $meta_cache[ $object_id ] ) ) {
+				$meta_cache = $meta_cache[ $object_id ];
+			} else {
+				$meta_cache = null;
+			}
 		}
 
-		// only if empty.
-		remove_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10 );
-		$product = get_post_meta( $object_id, 'product', true );
-		add_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10, 4 );
-		if ( empty( $product ) ) {
-			return $value;
+		if ( ! $meta_key ) {
+			return $meta_cache;
 		}
 
-		return $product->$meta_key ?? $value;
+		if ( isset( $meta_cache[ $meta_key ] ) ) {
+			if ( $single ) {
+				return maybe_unserialize( $meta_cache[ $meta_key ][0] );
+			} else {
+				return array_map( 'maybe_unserialize', $meta_cache[ $meta_key ] );
+			}
+		}
 	}
 
 	/**
