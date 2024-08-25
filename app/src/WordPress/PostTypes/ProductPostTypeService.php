@@ -640,39 +640,6 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Get the cached meta.
-	 *
-	 * @param integer $object_id The object ID.
-	 * @param string  $meta_key  The meta key.
-	 *
-	 * @return void
-	 */
-	public function getCachedMeta( $object_id, $meta_key ) {
-		$meta_cache = wp_cache_get( $object_id, 'post_meta' );
-
-		if ( ! $meta_cache ) {
-			$meta_cache = update_meta_cache( 'post', array( $object_id ) );
-			if ( isset( $meta_cache[ $object_id ] ) ) {
-				$meta_cache = $meta_cache[ $object_id ];
-			} else {
-				$meta_cache = null;
-			}
-		}
-
-		if ( ! $meta_key ) {
-			return $meta_cache;
-		}
-
-		if ( isset( $meta_cache[ $meta_key ] ) ) {
-			if ( $single ) {
-				return maybe_unserialize( $meta_cache[ $meta_key ][0] );
-			} else {
-				return array_map( 'maybe_unserialize', $meta_cache[ $meta_key ] );
-			}
-		}
-	}
-
-	/**
 	 * Setup the product.
 	 *
 	 * @param \WP_Post $post The post.
