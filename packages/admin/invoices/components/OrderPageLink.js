@@ -38,8 +38,12 @@ export default ({ orderPageUrl }) => {
 					rel="noopener noreferrer"
 				>
 					{__('View', 'surecart')}
-					&nbsp;&nbsp;
-					<ScIcon name="external-link" />
+					<ScIcon
+						css={css`
+							margin-left: var(--sc-spacing-small);
+						`}
+						name="external-link"
+					/>
 				</Button>
 			</div>
 		</PanelRow>
