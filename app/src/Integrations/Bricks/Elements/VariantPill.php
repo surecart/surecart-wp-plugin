@@ -90,9 +90,9 @@ class VariantPill extends \Bricks\Element {
 
 		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
-				'highlight_text'       => esc_attr( $this->settings['highlight_text']['hex'] ?? '' ),
-				'highlight_background' => esc_attr( $this->settings['highlight_background']['hex'] ?? '' ),
-				'highlight_border'     => esc_attr( $this->settings['highlight_border']['hex'] ?? '' ),
+				'highlight_text'       => esc_attr( $this->get_raw_color( 'highlight_text' ) ),
+				'highlight_background' => esc_attr( $this->get_raw_color( 'highlight_background' ) ),
+				'highlight_border'     => esc_attr( $this->get_raw_color( 'highlight_border' ) ),
 			)
 		);
 	}
