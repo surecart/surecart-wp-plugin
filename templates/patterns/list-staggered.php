@@ -20,7 +20,7 @@ return [
 <!-- /wp:group -->
 
 <!-- wp:surecart/product-collection-tags {"style":{"spacing":{"margin":{"bottom":"5px"}}},"layout":{"type":"flex","justifyContent":"center"}} -->
-<!-- wp:surecart/product-collection-tag {"style":{"color":{"background":"#ffffff00","text":"#0000009e"},"elements":{"link":{"color":{"text":"#0000009e"}}},"typography":{"fontStyle":"normal","fontWeight":"400","textTransform":"uppercase","fontSize":"12px","letterSpacing":"1.5px"}}} /-->
+<!-- wp:surecart/product-collection-tag {"isLink":false,"style":{"color":{"background":"#ffffff00","text":"#0000009e"},"elements":{"link":{"color":{"text":"#0000009e"}}},"typography":{"fontStyle":"normal","fontWeight":"400","textTransform":"uppercase","fontSize":"12px","letterSpacing":"1.5px"}}} /-->
 <!-- /wp:surecart/product-collection-tags -->
 
 <!-- wp:surecart/product-title {"level":2,"style":{"typography":{"fontSize":"16px","fontStyle":"normal","fontWeight":"900","textAlign":"center","textTransform":"uppercase","letterSpacing":"1px"},"spacing":{"margin":{"bottom":"5px","top":"0px"}}}} /-->
