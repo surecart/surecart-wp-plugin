@@ -147,4 +147,5 @@ return array(
 	'payout_group.end_date.no_applicable_affiliations'     => __( 'No affiliates have earned more than the minimum commission amount within the selected date range.', 'surecart' ),
 	'invoice.missing_automatic_collection_payment_method'  => __( 'Please add a valid payment method to enable automatic collection.', 'surecart' ),
 	'checkout.invoice.draft'                               => __( 'This invoice is draft and cannot be paid.', 'surecart' ),
+	'invoice.due_date.greater_than_or_equal_to'            => __( 'The due date must be greater than or equal to the issue date.', 'surecart' ),
 );

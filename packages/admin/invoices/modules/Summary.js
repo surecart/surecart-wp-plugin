@@ -36,12 +36,12 @@ export default ({ invoice, updateInvoice, checkout, loading }) => {
 
 					<Status status={invoice?.status} />
 
-					<DueDate invoice={invoice} updateInvoice={updateInvoice} />
-
 					<IssueDate
 						invoice={invoice}
 						updateInvoice={updateInvoice}
 					/>
+
+					<DueDate invoice={invoice} updateInvoice={updateInvoice} />
 
 					{!!checkoutPageUrl && (
 						<CheckoutPageLink checkoutPageUrl={checkoutPageUrl} />

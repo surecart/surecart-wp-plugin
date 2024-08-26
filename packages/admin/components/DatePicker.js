@@ -28,10 +28,9 @@ export default (props) => {
 		clearDateLabel,
 		required,
 		children,
-		visible = false,
 		...rest
 	} = props;
-	const [isVisible, setIsVisible] = useState(visible);
+	const [isVisible, setIsVisible] = useState(false);
 	const [date, setDate] = useState(currentDate);
 	const [error, setError] = useState();
 
