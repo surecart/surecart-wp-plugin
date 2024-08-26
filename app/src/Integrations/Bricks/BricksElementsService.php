@@ -104,6 +104,11 @@ class BricksElementsService {
 			}
 		}
 
+		$template_ids = \Bricks\Templates::get_templates_by_type( 'sc_product' );
+		if ( ! empty( $template_ids[0] ) ) {
+			$active_templates['content'] = $template_ids[0];
+		}
+
 		return $active_templates;
 	}
 
@@ -136,14 +141,9 @@ class BricksElementsService {
 			return $active_templates;
 		}
 
-		// apply a template, but only if there are no conditions.
 		$template_ids = \Bricks\Templates::get_templates_by_type( 'sc_collection' );
-		foreach ( $template_ids as $id ) {
-			$template_conditions = \Bricks\Helpers::get_template_setting( 'templateConditions', $id );
-			if ( empty( $template_conditions ) ) {
-				$active_templates['archive'] = $id;
-				return $active_templates;
-			}
+		if ( ! empty( $template_ids[0] ) ) {
+			$active_templates['archive'] = $template_ids[0];
 		}
 
 		return $active_templates;
