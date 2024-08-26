@@ -46,7 +46,7 @@ export class ScLineItemInvoiceReceiptDownload {
       <Host>
         <sc-line-item>
           <span slot="title">
-            <slot name="title" />
+            <slot name="title">{__('Invoice Receipt', 'surecart')}</slot>
           </span>
           <span slot="price">
             <a class="sc-invoice-download-link" href={receiptDownloadLink} target="_blank" rel="noopener noreferrer">

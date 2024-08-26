@@ -46,7 +46,7 @@ export class ScLineItemInvoiceNumber {
       <Host>
         <sc-line-item>
           <span slot="title">
-            <slot name="title" />
+            <slot name="title">{__('Invoice Number', 'surecart')}</slot>
           </span>
           <span slot="price">#{number}</span>
         </sc-line-item>

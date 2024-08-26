@@ -45,7 +45,7 @@ export class ScLineItemInvoiceDueDate {
       <Host>
         <sc-line-item>
           <span slot="title">
-            <slot name="title" />
+            <slot name="title">{__('Invoice Receipt', 'surecart')}</slot>
           </span>
           <span slot="price">{dueDate ? <sc-format-date date={dueDate} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date> : '-'}</span>
         </sc-line-item>
