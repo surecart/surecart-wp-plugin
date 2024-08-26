@@ -150,9 +150,9 @@ class PriceChoiceTemplate extends \Bricks\Element {
 
 		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'highlight_border' => $this->get_raw_color( 'highlight_border' ),
+				'highlight_border' => esc_html( $this->get_raw_color( 'highlight_border' ) ),
 			],
-			\Bricks\Frontend::render_children( $this )
+			\Bricks\Frontend::render_children( $this ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
 	}
 }

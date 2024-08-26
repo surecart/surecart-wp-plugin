@@ -164,6 +164,6 @@ trait ConvertsBlocks {
 	 * @return string
 	 */
 	public function get_raw_color( $key ) {
-		return $this->settings[ $key ] ['hex'] ?? $this->settings[ $key ] ['raw'] ?? '';
+		return $this->settings[ $key ]['hex'] ?? $this->settings[ $key ]['raw'] ?? '';
 	}
 }
