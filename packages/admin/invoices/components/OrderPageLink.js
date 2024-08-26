@@ -26,6 +26,12 @@ export default ({ orderPageUrl }) => {
 				`}
 			>
 				<Button
+					css={css`
+						height: auto;
+						text-align: right;
+						white-space: normal !important;
+						word-break: break-word;
+					`}
 					variant="tertiary"
 					href={orderPageUrl}
 					target="_blank"

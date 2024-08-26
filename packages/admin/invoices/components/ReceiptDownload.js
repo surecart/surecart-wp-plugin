@@ -26,6 +26,12 @@ export default ({ orderPdfUrl }) => {
 				`}
 			>
 				<Button
+					css={css`
+						height: auto;
+						text-align: right;
+						white-space: normal !important;
+						word-break: break-word;
+					`}
 					variant="tertiary"
 					href={orderPdfUrl}
 					target="_blank"
