@@ -1,4 +1,4 @@
-import { Customer, Checkout } from '../../../../types';
+import { Customer, Checkout, Invoice } from '../../../../types';
 import { Component, Prop, h, Event, EventEmitter, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as userState } from '@store/user';
@@ -102,6 +102,11 @@ export class ScCustomerLastname {
     } else {
       this.value = checkoutState?.checkout?.last_name || (checkoutState?.checkout?.customer as Customer)?.last_name;
     }
+
+    // if we have an invoice on the checkout, disable the input.
+    if ((checkoutState?.checkout?.invoice as Invoice)?.id) {
+      this.disabled = true;
+    }
   }
 
   /** Listen to checkout. */
@@ -135,6 +140,7 @@ export class ScCustomerLastname {
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
+        {...(this.disabled && { disabled: true })}
       ></sc-input>
     );
   }
