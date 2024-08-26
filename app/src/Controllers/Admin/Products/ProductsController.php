@@ -38,11 +38,9 @@ class ProductsController extends AdminController {
 		// add notices.
 		$this->withNotices(
 			array(
-				'sync_cancelled'        => __( 'The sync has been cancelled.', 'surecart' ),
-				'sync_success'          => __( 'Product synced successfully.', 'surecart' ),
-				'sync_cancel_scheduled' => __( 'The sync has been scheduled to be cancelled.', 'surecart' ),
-				'archived'              => __( 'Product archived.', 'surecart' ),
-				'unarchived'            => __( 'Product unarchived.', 'surecart' ),
+				'sync_success' => __( 'Product synced successfully.', 'surecart' ),
+				'archived'     => __( 'Product archived.', 'surecart' ),
+				'unarchived'   => __( 'Product unarchived.', 'surecart' ),
 			)
 		);
 
@@ -317,27 +315,6 @@ class ProductsController extends AdminController {
 			esc_url_raw(
 				add_query_arg(
 					[ 'sync_success' => true ],
-					\SureCart::getUrl()->index( 'products' )
-				)
-			)
-		);
-	}
-
-	/**
-	 * Cancel product sync.
-	 *
-	 * @return \SureCartCore\Responses\RedirectResponse
-	 */
-	public function cancelSync() {
-		// cancel the sync.
-		\SureCart::sync()->products()->cancel();
-
-		// redirect to products page.
-		return \SureCart::redirect()->to(
-			esc_url_raw(
-				add_query_arg(
-					// if it's still active, show that it is scheduled to be cancelled.
-					\SureCart::sync()->products()->isActive() ? [ 'sync_cancel_scheduled' => true ] : [ 'sync_cancelled' => true ],
 					\SureCart::getUrl()->index( 'products' )
 				)
 			)

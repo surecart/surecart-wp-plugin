@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Sync\Products;
+namespace SureCart\Sync;
 
 use SureCart\Background\BackgroundProcess;
 use SureCart\Models\Product;
@@ -8,7 +8,7 @@ use SureCart\Models\Product;
 /**
  * This process fetches and queues all products for syncing.
  */
-class ProductsQueueProcess extends BackgroundProcess {
+class ProductsSyncProcess extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *
@@ -22,30 +22,6 @@ class ProductsQueueProcess extends BackgroundProcess {
 	 * @var string
 	 */
 	protected $action = 'queue_products';
-
-	/**
-	 * The interval for the cron.
-	 *
-	 * @var int
-	 */
-	protected $cron_interval = 1;
-
-	/**
-	 * The process to run on complete.
-	 *
-	 * @var \SureCart\Background\BackgroundProcess
-	 */
-	protected $sync_process;
-
-	/**
-	 * Construct the process.
-	 *
-	 * @param \SureCart\Background\BackgroundProcess $sync_process The process to run on complete.
-	 */
-	public function __construct( \SureCart\Background\BackgroundProcess $sync_process ) {
-		$this->sync_process = $sync_process;
-		parent::__construct();
-	}
 
 	/**
 	 * Perform task with queued item.
@@ -63,37 +39,28 @@ class ProductsQueueProcess extends BackgroundProcess {
 		// the current page.
 		$page = $args['page'] ?? 1;
 
-		// get the items.
-		$items = Product::paginate(
+		// get the items (uncached).
+		$products = Product::where( [ 'cached' => false ] )::paginate(
 			[
 				'page'     => $page,
 				'per_page' => $args['batch_size'] ?? 25,
 			]
 		);
 
-		// TODO: Store errors in database and show admin notice.
-		if ( is_wp_error( $items ) ) {
-			error_log( $items->get_error_message() );
-			// maybe cancel all?
+		if ( is_wp_error( $products ) ) {
+			error_log( $products->get_error_message() );
 			return false;
 		}
 
 		// add each item to the queue.
-		foreach ( $items->data as $item ) {
-			$this->sync_process->push_to_queue(
-				[
-					'id' => $item->id,
-				],
-			);
+		foreach ( $products->data as $product ) {
+			$product->queueSync();
 		}
 
-		// save the queue for later processing.
-		$this->sync_process->save();
-
 		// we have more to process.
-		if ( $items->hasNextPage() ) {
+		if ( $products->hasNextPage() ) {
 			return [
-				'page'       => $items->pagination->page + 1,
+				'page'       => $products->pagination->page + 1,
 				'batch_size' => $args['batch_size'] ?? 25,
 			];
 		}
@@ -109,8 +76,8 @@ class ProductsQueueProcess extends BackgroundProcess {
 	 * performed, or, call parent::complete().
 	 */
 	protected function complete() {
-		// When everything is queued, dispatch the complete process.
-		$this->sync_process->dispatch();
+		// kick off the queue process immediately (instead of waiting for the next scheduled run).
+		\SureCart::queue()->run();
 
 		// call the parent complete method.
 		parent::complete();

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SureCart\Sync\Product;
+namespace SureCart\Sync;
 
 use SureCart\Models\Product;
 

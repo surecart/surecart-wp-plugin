@@ -2,7 +2,7 @@
 
 namespace SureCart\Tests\Services;
 
-use SureCart\Sync\Store\StoreSyncService;
+use SureCart\Sync\StoreSyncService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class StoreSyncServiceTest extends SureCartUnitTestCase

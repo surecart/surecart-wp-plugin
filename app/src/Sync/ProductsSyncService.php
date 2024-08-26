@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Sync\Products;
+namespace SureCart\Sync;
 
 /**
  * Syncs customer records to WordPress users.
@@ -27,6 +27,15 @@ class ProductsSyncService {
 	 */
 	public function __construct( $app ) {
 		$this->app = $app;
+	}
+
+	/**
+	 * Bootstrap the service.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		add_action( 'admin_notices', [ $this, 'showMigrationNotice' ] );
 	}
 
 	/**
@@ -58,8 +67,6 @@ class ProductsSyncService {
 	public function cancel() {
 		$this->queue()->cancel();
 		$this->queue()->delete_all();
-		$this->sync()->cancel();
-		$this->sync()->delete_all();
 	}
 
 	/**
@@ -71,19 +78,12 @@ class ProductsSyncService {
 		if ( $this->queue()->is_active() ) {
 			return 'queue';
 		}
-		if ( $this->sync()->is_active() ) {
+
+		if ( \SureCart::queue()->isScheduled( 'surecart/sync/product' ) ) {
 			return 'sync';
 		}
-		return false;
-	}
 
-	/**
-	 * Bootstrap the service.
-	 *
-	 * @return void
-	 */
-	public function bootstrap() {
-		add_action( 'admin_notices', [ $this, 'showMigrationNotice' ] );
+		return false;
 	}
 
 	/**
@@ -103,7 +103,7 @@ class ProductsSyncService {
 					'title' => esc_html__( 'SureCart: Getting things ready...', 'surecart' ),
 					'text'  => wp_sprintf(
 						'<p>%s</p>',
-						esc_html__( 'We are getting things ready and optimized in the background. This may take a few minutes.', 'surecart' )
+						esc_html__( 'We are getting things ready and optimized in the background. This may take a few minutes.', 'surecart' ),
 					),
 				]
 			)
@@ -126,10 +126,14 @@ class ProductsSyncService {
 			]
 		);
 
+		// cancel previous processes.
 		$this->cancel();
 
 		// reset the notice.
 		\SureCart::notices()->reset( $this->notice_id );
+
+		// clear account cache.
+		\SureCart::account()->clearCache();
 
 		// save and dispatch the process.
 		return $this->queue()->push_to_queue( $args )->save()->dispatch();
