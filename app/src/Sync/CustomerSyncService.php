@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SureCart\Sync\Customers;
+namespace SureCart\Sync;
 
 use SureCart\Models\Customer;
 use SureCart\Models\Purchase;
@@ -124,7 +124,7 @@ class CustomerSyncService {
 		if ( $run_actions ) {
 			$unrevoked_purchases = array_filter(
 				$customer->purchases->data ?? [],
-				function( $purchase ) {
+				function ( $purchase ) {
 					return ! $purchase->revoked;
 				}
 			);

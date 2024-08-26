@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Sync\Collection;
+namespace SureCart\Sync;
 
 use SureCart\Models\Concerns\Facade;
 

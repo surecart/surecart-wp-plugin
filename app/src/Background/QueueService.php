@@ -149,6 +149,26 @@ class QueueService {
 	}
 
 	/**
+	 * Check if there are any failed actions for a given hook and group.
+	 *
+	 * @param string $hook The hook that the job will trigger.
+	 * @param string $group The group the job is assigned to (if any).
+	 * @return bool True if there are any failed actions, false otherwise.
+	 */
+	public function hasFailedActions( $hook, $group = '' ) {
+		$args = [
+			'hook'     => $hook,
+			'group'    => $group,
+			'status'   => \ActionScheduler_Store::STATUS_FAILED,
+			'per_page' => 1, // We only need to know if at least one exists.
+		];
+
+		$failed_actions = $this->search( $args, 'ids' );
+
+		return ! empty( $failed_actions );
+	}
+
+	/**
 	 * Find scheduled actions
 	 *
 	 * @param array  $args Possible arguments, with their default values:
@@ -174,11 +194,30 @@ class QueueService {
 	}
 
 	/**
-	 * Run the queue immedidately.
+	 * Start running the queue immediately.
 	 *
 	 * @return void
 	 */
 	public function run() {
-		do_action( 'action_scheduler_run_queue', 'SureCart Async Request' );
+		$identifier = 'as_async_request_queue_runner';
+
+		// make an async request to run the queue.
+		wp_remote_post(
+			esc_url_raw(
+				add_query_arg(
+					[
+						'action' => $identifier,
+						'nonce'  => wp_create_nonce( $identifier ),
+					],
+					admin_url( 'admin-ajax.php' )
+				)
+			),
+			array(
+				'timeout'   => 0.01,
+				'blocking'  => false,
+				'cookies'   => $_COOKIE,
+				'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
+			)
+		);
 	}
 }

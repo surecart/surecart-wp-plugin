@@ -1,5 +1,5 @@
 <?php
-namespace SureCart\Sync\Store;
+namespace SureCart\Sync;
 
 /**
  * The store sync service.
@@ -8,7 +8,7 @@ namespace SureCart\Sync\Store;
  * data when the account id is first set or changed.
  *
  * @since 3.0.0
- * @package SureCart\Sync\Store
+ * @package SureCart\Sync
  */
 class StoreSyncService {
 	/**

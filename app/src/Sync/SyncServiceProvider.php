@@ -2,14 +2,13 @@
 
 namespace SureCart\Sync;
 
-use SureCart\Sync\Collection\CollectionSyncService;
-use SureCart\Sync\Customers\CustomerSyncService;
-use SureCart\Sync\Post\ProductPostSyncService;
-use SureCart\Sync\Product\ProductSyncService;
-use SureCart\Sync\Products\ProductsQueueProcess;
-use SureCart\Sync\Products\ProductsSyncProcess;
-use SureCart\Sync\Products\ProductsSyncService;
-use SureCart\Sync\Store\StoreSyncService;
+use SureCart\Sync\CollectionSyncService;
+use SureCart\Sync\CustomerSyncService;
+use SureCart\Sync\PostSyncService;
+use SureCart\Sync\ProductSyncService;
+use SureCart\Sync\ProductsSyncProcess;
+use SureCart\Sync\ProductsSyncService;
+use SureCart\Sync\StoreSyncService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -25,56 +24,24 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		// the sync service.
-		$container['surecart.sync'] = function ( $container ) {
-			return new SyncService( $container[ SURECART_APPLICATION_KEY ] );
-		};
+		$container['surecart.sync'] = fn ( $container ) =>
+			new SyncService( $container[ SURECART_APPLICATION_KEY ] );
 
-		// the sync service.
-		$container['surecart.sync.store'] = function ( $container ) {
-			return new StoreSyncService( $container[ SURECART_APPLICATION_KEY ] );
-		};
+		$container['surecart.sync.store'] = fn ( $container ) =>
+			new StoreSyncService( $container[ SURECART_APPLICATION_KEY ] );
 
-		// the product sync service.
-		$container['surecart.sync.product'] = function ( $container ) {
-			return new ProductSyncService( $container[ SURECART_APPLICATION_KEY ] );
-		};
+		$container['surecart.sync.product'] = fn ( $container ) =>
+			new ProductSyncService( $container[ SURECART_APPLICATION_KEY ] );
 
-		// the product sync service.
-		$container['surecart.sync.collection'] = function () {
-			return new CollectionSyncService();
-		};
+		$container['surecart.sync.collection']           = fn() => new CollectionSyncService();
+		$container['surecart.process.product_post.sync'] = fn() => new PostSyncService();
+		$container['surecart.sync.customers']            = fn() => new CustomerSyncService();
+		$container['surecart.sync.products']             = fn() => new ProductsSyncService( $container[ SURECART_APPLICATION_KEY ] );
 
-		// the products sync process.
-		$container['surecart.process.product_post.sync'] = function () {
-			return new ProductPostSyncService();
-		};
+		// Queues up the products for syncing and starts sync.
+		$products_queue_process                       = new ProductsSyncProcess();
+		$container['surecart.process.products.queue'] = fn() => $products_queue_process;
 
-		// the products sync process.
-		// this needs to be instantiated on load.
-		$products_sync_process                       = new ProductsSyncProcess();
-		$container['surecart.process.products.sync'] = function () use ( $products_sync_process ) {
-			return $products_sync_process;
-		};
-
-		// the products queue process. Needs the sync process to be injected.
-		// this needs to be instantiated on load.
-		$products_queue_process                       = new ProductsQueueProcess( $products_sync_process );
-		$container['surecart.process.products.queue'] = function () use ( $products_queue_process ) {
-			return $products_queue_process;
-		};
-
-		// the products sync service (bulk).
-		$container['surecart.sync.products'] = function ( $container ) {
-			return new ProductsSyncService( $container[ SURECART_APPLICATION_KEY ] );
-		};
-
-		// the customers sync service.
-		$container['surecart.sync.customers'] = function () {
-			return new CustomerSyncService();
-		};
-
-		// alias the services.
 		$app->alias( 'sync', 'surecart.sync' );
 	}
 

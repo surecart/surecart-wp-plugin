@@ -685,8 +685,7 @@ class ProductPostTypeService {
 			return $query;
 		}
 
-		// add to tax_query.
-		if ( \SureCart::account()->id ) {
+		if ( \SureCart::account()->id && empty( $query->query['suppress_filters'] ) ) {
 			// get existing tax_query.
 			$existing = is_array( $query->get( 'tax_query' ) ) && ! empty( $query->get( 'tax_query' ) ) ? $query->get( 'tax_query' ) : array();
 

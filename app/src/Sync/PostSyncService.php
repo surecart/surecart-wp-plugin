@@ -1,15 +1,16 @@
 <?php
 
-namespace SureCart\Sync\Post;
+namespace SureCart\Sync;
 
 use SureCart\Models\Concerns\Facade;
+
 use SureCart\Models\VariantOptionValue;
 use SureCart\Support\Currency;
 
 /**
  * This class syncs product records to WordPress posts.
  */
-class ProductPostSyncService {
+class PostSyncService {
 	use Facade;
 
 	/**
@@ -136,9 +137,9 @@ class ProductPostSyncService {
 			'post_name'         => $model->slug,
 			'menu_order'        => $model->position ?? 0,
 			'post_excerpt'      => $model->description ?? '',
-			'post_date'         => ( new \DateTime( "@$model->cataloged_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
+			'post_date'         => ( new \DateTime() )->setTimestamp( $model->cataloged_at )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->cataloged_at, true ),
-			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
+			'post_modified'     => ( new \DateTime() )->setTimestamp( $model->updated_at )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 			'post_status'       => $this->getPostStatusFromModel( $model ),
 			'meta_input'        => array(

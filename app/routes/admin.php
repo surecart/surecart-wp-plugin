@@ -156,7 +156,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'sync_all', 'action' )->middleware( 'nonce:sync_products' )->handle( 'ProductsController@syncAll' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'sync', 'action' )->middleware( 'nonce:sync_product' )->handle( 'ProductsController@sync' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'cancel_sync_products', 'action' )->middleware( 'nonce:cancel_sync_products' )->handle( 'ProductsController@cancelSync' );
 	}
 );
 

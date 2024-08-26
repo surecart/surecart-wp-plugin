@@ -2,8 +2,8 @@
 namespace SureCart\Sync;
 
 use SureCart\Background\Migration\ProductsSyncProcess;
-use SureCart\Sync\Customers\CustomerSyncService;
-use SureCart\Sync\Product\ProductSyncService;
+use SureCart\Sync\CustomerSyncService;
+use SureCart\Sync\ProductSyncService;
 
 /**
  * The sync service.
