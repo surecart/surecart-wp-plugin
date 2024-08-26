@@ -53,17 +53,31 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 	}
 
 	/**
+	 * Set controls.
+	 *
+	 * @return void
+	 */
+	public function set_controls() {
+		$this->controls['label'] = array(
+			'label' => esc_html__( 'Label', 'surecart' ),
+			'type'  => 'text',
+		);
+	}
+
+	/**
 	 * Render element.
 	 *
 	 * @return void
 	 */
 	public function render() {
+		$label = ! empty( $this->settings['label'] ) ? $this->settings['label'] : esc_html__( 'Enter an amount', 'surecart' );
+
 		if ( $this->is_admin_editor() ) {
 			ob_start();
 			?>
 			<div class="wp-block-surecart-product-selected-price-ad-hoc-amount" data-sc-block-id="custom-amount">
 				<label for="sc-product-custom-amount" class="sc-form-label">
-					<?php echo wp_kses_post( esc_html_e( 'Amount', 'surecart' ) ); ?>
+					<?php echo wp_kses_post( $label ); ?>
 				</label>
 				<div class="sc-input-group">
 					<span class="sc-input-group-text" id="basic-addon1"><?php echo esc_html( Currency::getCurrencySymbol() ); ?></span>
@@ -75,6 +89,10 @@ class SelectedPriceAdHocAmount extends \Bricks\Element {
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
-		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			[
+				'label' => wp_kses_post( $label ),
+			]
+		);
 	}
 }
