@@ -19,7 +19,7 @@ export default ({ status }) => {
 				justify-content: space-between;
 			`}
 		>
-			<div>{__('Invoice Status', 'surecart')}</div>
+			<div>{__('Status', 'surecart')}</div>
 			<div
 				css={css`
 					padding-right: var(--sc-spacing-large);
