@@ -308,6 +308,19 @@ class BricksDynamicDataService {
 				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
 				return '<!-- wp:surecart/product-selected-price-fees --><!-- /wp:surecart/product-selected-price-fees --> ';
 
+			case 'product_stock':
+				// Support ':held filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
+				if ( isset( $filters['held'] ) ) {
+					return $product->held_stock;
+				}
+
+				// Support ':on_hand' filter to get the price value as a simple string (e.g.: 1450, 250, 5 ).
+				if ( isset( $filters['on_hand'] ) ) {
+					return $product->stock;
+				}
+
+				return $product->available_stock;
+
 			case 'price_name':
 				if ( $this->is_admin_editor() ) {
 					// translators: %s: Setup Fee amount.
