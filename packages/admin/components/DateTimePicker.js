@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { DatePicker, Modal } from '@wordpress/components';
+import { DateTimePicker, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useEffect } from '@wordpress/element';
 
@@ -103,11 +103,12 @@ export default (props) => {
 					}}
 				>
 					<Error error={error} />
-					<DatePicker
+					<DateTimePicker
 						currentDate={date}
 						onChange={onChangeDate}
 						{...rest}
 					/>
+
 					<div
 						css={css`
 							margin-top: 1em;
