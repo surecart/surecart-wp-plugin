@@ -9,8 +9,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { formBusy } from '@store/form/getters';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, Order } from '../../../../types';
-// import { Invoice } from '../../../../types';
+import { Checkout, Invoice } from '../../../../types';
 
 @Component({
   tag: 'sc-line-item-invoice-number',
@@ -24,13 +23,13 @@ export class ScLineItemInvoiceNumber {
   @Prop({ mutable: true }) number?: string;
 
   render() {
-    const number = this.number ?? (checkoutState?.checkout?.order as Order)?.number ?? null;
-    // const checkout = this.checkout || checkoutState?.checkout;
-    // Stop if checkout has no invoice or order.
-    // TODO: Uncomment this when the invoice expand is implemented on checkout.
-    // if (!(checkout?.invoice as Invoice)?.id && !(checkout?.order as Order)?.number) {
-    //   return null;
-    // }
+    const checkout = this.checkout || checkoutState?.checkout;
+    const invoiceNumber = this.number || (checkout?.invoice as Invoice)?.order_number || null;
+
+    // Stop if checkout has no invoice number.
+    if (!invoiceNumber) {
+      return null;
+    }
 
     // loading state
     if (formBusy()) {
@@ -48,7 +47,7 @@ export class ScLineItemInvoiceNumber {
           <span slot="title">
             <slot name="title">{__('Invoice Number', 'surecart')}</slot>
           </span>
-          <span slot="price">#{number}</span>
+          <span slot="price">#{invoiceNumber}</span>
         </sc-line-item>
       </Host>
     );

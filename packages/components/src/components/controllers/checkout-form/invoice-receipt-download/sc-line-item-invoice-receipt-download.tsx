@@ -9,7 +9,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { formBusy } from '@store/form/getters';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, Order } from '../../../../types';
+import { Checkout, Invoice } from '../../../../types';
 
 @Component({
   tag: 'sc-line-item-invoice-receipt-download',
@@ -24,13 +24,12 @@ export class ScLineItemInvoiceReceiptDownload {
 
   render() {
     const checkout = this.checkout || checkoutState?.checkout;
-    const receiptDownloadLink = this.receiptDownloadLink || (checkout?.order as Order)?.statement_url || null;
+    const receiptDownloadLink = this.receiptDownloadLink || ((checkout?.invoice as Invoice)?.id ? checkout?.pdf_url : null);
 
-    // Stop if checkout has no invoice.
-    // TODO: Uncomment this when the invoice expand is implemented on checkout.
-    // if (!(checkout?.invoice as Invoice)?.id && !receiptDownloadLink) {
-    //   return null;
-    // }
+    // Stop if checkout has no receipt download link.
+    if (!receiptDownloadLink) {
+      return null;
+    }
 
     // loading state
     if (formBusy()) {
