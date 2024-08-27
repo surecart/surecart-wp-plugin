@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScAlert, ScFormatDate } from '@surecart/components-react';
+import { ScFormatDate } from '@surecart/components-react';
 import PostDropdownButton from '../../components/PostDropdownButton';
 import PostDropdownContent from '../../components/PostDropdownContent';
 
@@ -143,12 +143,7 @@ export default ({ invoice, updateInvoice }) => {
 							date={invoice?.due_date}
 						/>
 					) : (
-						<ScAlert open={true} type="info">
-							{__(
-								'No due date set. To set a due date, Edit the invoice and set the due date.',
-								'surecart'
-							)}
-						</ScAlert>
+						'-'
 					)}
 				</div>
 			)}
