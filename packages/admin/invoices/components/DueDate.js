@@ -4,18 +4,93 @@ import { css, jsx } from '@emotion/react';
 /**
  * External dependencies.
  */
-import { PanelRow } from '@wordpress/components';
+import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
+import { DatePicker, Dropdown, PanelRow } from '@wordpress/components';
+import { useState, useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import { ScAlert, ScFormatDate } from '@surecart/components-react';
-import DatePicker from '../../components/DatePicker';
 import PostDropdownButton from '../../components/PostDropdownButton';
+import PostDropdownContent from '../../components/PostDropdownContent';
 
 export default ({ invoice, updateInvoice }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
+
+	// Use internal state instead of a ref to make sure that the component
+	// re-renders when the popover's anchor updates.
+	const [popoverAnchor, setPopoverAnchor] = useState(null);
+
+	// Memoize popoverProps to avoid returning a new object every time.
+	const popoverProps = useMemo(
+		() => ({ anchor: popoverAnchor, placement: 'bottom-end' }),
+		[popoverAnchor]
+	);
+
+	const isInvalidDate = (date) => {
+		// disable the dates before the issue date.
+		if (invoice?.issue_date && date < invoice?.issue_date * 1000) {
+			return true;
+		}
+
+		return false;
+	};
+
+	const getTitle = () => {
+		return invoice?.due_date ? (
+			<ScFormatDate
+				type="timestamp"
+				month="short"
+				day="numeric"
+				year="numeric"
+				date={invoice?.due_date}
+			/>
+		) : isDraftInvoice ? (
+			__('Set Due Date', 'surecart')
+		) : (
+			__('No Due Date', 'surecart')
+		);
+	};
+
+	const renderContent = ({ onClose }) => {
+		return (
+			<PostDropdownContent>
+				<InspectorPopoverHeader
+					title={__('Due Date', 'surecart')}
+					actions={
+						invoice?.due_date
+							? [
+									{
+										label: __('Clear', 'surecart'),
+										onClick: () => {
+											updateInvoice({ due_date: null });
+											onClose();
+										},
+									},
+							  ]
+							: []
+					}
+					onClose={onClose}
+				/>
+				<DatePicker
+					currentDate={
+						invoice?.due_date
+							? new Date(invoice?.due_date * 1000)
+							: null
+					}
+					onChange={(due_date) => {
+						updateInvoice({
+							due_date: Date.parse(due_date) / 1000,
+						});
+						onClose();
+					}}
+					isInvalidDate={isInvalidDate}
+				/>
+			</PostDropdownContent>
+		);
+	};
 
 	return (
 		<PanelRow
@@ -24,6 +99,7 @@ export default ({ invoice, updateInvoice }) => {
 				justify-content: space-between;
 				width: 100%;
 			`}
+			ref={setPopoverAnchor}
 		>
 			<span
 				css={css`
@@ -37,48 +113,27 @@ export default ({ invoice, updateInvoice }) => {
 			</span>
 
 			{isDraftInvoice ? (
-				<DatePicker
-					title={__('Choose a due date', 'surecart')}
-					placeholder={__('Due date', 'surecart')}
-					currentDate={
-						invoice?.due_date
-							? new Date(invoice?.due_date * 1000)
-							: null
-					}
-					onChoose={(due_date) => {
-						updateInvoice({
-							due_date: Date.parse(due_date) / 1000,
-						});
-					}}
-					onClear={() => {
-						updateInvoice({ due_date: null });
-					}}
-					isInvalidDate={(date) => {
-						if (invoice?.issue_date) {
-							return date < new Date(invoice.issue_date * 1000);
-						}
-
-						return false;
-					}}
-				>
-					<PostDropdownButton>
-						{invoice?.due_date ? (
-							<ScFormatDate
-								type="timestamp"
-								month="short"
-								day="numeric"
-								year="numeric"
-								date={invoice?.due_date}
-							/>
-						) : isDraftInvoice ? (
-							__('Set Due Date', 'surecart')
-						) : (
-							__('No Due Date', 'surecart')
-						)}
-					</PostDropdownButton>
-				</DatePicker>
+				<Dropdown
+					popoverProps={popoverProps}
+					className="edit-post-post-url__dropdown"
+					contentClassName="edit-post-post-url__dialog"
+					focusOnMount
+					renderToggle={({ isOpen, onToggle }) => (
+						<PostDropdownButton
+							isOpen={isOpen}
+							onClick={onToggle}
+							title={getTitle()}
+							ariaLabel={__('Due Date', 'surecart')}
+						/>
+					)}
+					renderContent={renderContent}
+				/>
 			) : (
-				<div>
+				<div
+					css={css`
+						padding-right: var(--sc-spacing-large);
+					`}
+				>
 					{invoice?.due_date ? (
 						<ScFormatDate
 							type="timestamp"
@@ -90,7 +145,7 @@ export default ({ invoice, updateInvoice }) => {
 					) : (
 						<ScAlert open={true} type="info">
 							{__(
-								'No Due date set. To set a due date, Edit the invoice and set the due date.',
+								'No due date set. To set a due date, Edit the invoice and set the due date.',
 								'surecart'
 							)}
 						</ScAlert>

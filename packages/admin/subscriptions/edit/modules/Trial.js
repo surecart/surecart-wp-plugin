@@ -1,6 +1,6 @@
-import DatePicker from '../../../components/DatePicker';
+import DateTimePicker from '../../../components/DateTimePicker';
 import Box from '../../../ui/Box';
-import { ScButton, ScFlex, ScFormControl } from '@surecart/components-react';
+import { ScFlex, ScFormControl } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ subscription, updateSubscription, loading }) => {
@@ -19,7 +19,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 					alignItems="center"
 					justifyContent="flex-start"
 				>
-					<DatePicker
+					<DateTimePicker
 						placeholder={__('Add Trial', 'surecart')}
 						title={__('Choose a trial end date', 'surecart')}
 						currentDate={

@@ -4,47 +4,53 @@ import { css, jsx } from '@emotion/react';
 /**
  * External dependencies.
  */
-import { PanelRow, Button } from '@wordpress/components';
+import { PanelRow } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import { ScIcon } from '@surecart/components-react';
+import PostDropdownButton from '../../components/PostDropdownButton';
 
-export default ({ orderPdfUrl }) => {
+export default ({ orderPageUrl }) => {
 	return (
 		<PanelRow
 			css={css`=
 				justify-content: space-between;
 			`}
 		>
-			<div>{__('Receipt', 'surecart')}</div>
 			<div
 				css={css`
-					padding-right: var(--sc-spacing-x-small);
+					display: block;
+					flex-shrink: 0;
+					padding: 6px 0;
+					width: 45%;
 				`}
 			>
-				<Button
-					css={css`
-						height: auto;
-						text-align: right;
-						white-space: normal !important;
-						word-break: break-word;
-					`}
-					variant="tertiary"
-					href={orderPdfUrl}
+				{__('Receipt', 'surecart')}
+			</div>
+			<div
+				css={css`
+					padding-right: 4px;
+				`}
+			>
+				<PostDropdownButton
+					href={orderPageUrl}
 					target="_blank"
 					rel="noopener noreferrer"
+					icon={
+						<ScIcon
+							name="external-link"
+							css={css`
+								margin-left: var(--sc-spacing-small);
+								color: var(--sc-color-gray-300);
+							`}
+						/>
+					}
 				>
 					{__('Download', 'surecart')}
-					<ScIcon
-						css={css`
-							margin-left: var(--sc-spacing-small);
-						`}
-						name="external-link"
-					/>
-				</Button>
+				</PostDropdownButton>
 			</div>
 		</PanelRow>
 	);
