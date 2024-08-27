@@ -496,6 +496,7 @@ export interface Invoice extends Object {
   status: InvoiceStatus;
   checkout: Checkout | string;
   metadata: object;
+  order_number: string;
   created_at: number;
   updated_at: number;
 }
@@ -695,6 +696,7 @@ export interface Checkout extends Object {
   variant: string;
   upsells_expire_at?: number;
   invoice?: string | Invoice;
+  pdf_url?: string;
 }
 
 export interface ShippingMethod {
