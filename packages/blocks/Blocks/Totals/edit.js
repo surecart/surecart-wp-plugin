@@ -37,7 +37,8 @@ export default ({ attributes, setAttributes }) => {
 		collapsible,
 		collapsedOnDesktop,
 		closed_text,
-		open_text,
+		order_summary_text,
+		invoice_summary_text,
 		collapsedOnMobile,
 	} = attributes;
 
@@ -134,20 +135,32 @@ export default ({ attributes, setAttributes }) => {
 							</PanelRow>
 							<PanelRow>
 								<TextControl
-									label={__('Closed Text', 'surecart')}
-									value={closed_text}
-									onChange={(closed_text) =>
-										setAttributes({ closed_text })
+									label={__('Order Summary Text', 'surecart')}
+									value={order_summary_text}
+									onChange={(order_summary_text) =>
+										setAttributes({ order_summary_text })
 									}
+									placeholder={__('Summary', 'surecart')}
 								/>
 							</PanelRow>
 							<PanelRow>
 								<TextControl
-									label={__('Open Text', 'surecart')}
-									value={open_text}
-									onChange={(open_text) =>
-										setAttributes({ open_text })
+									label={__(
+										'Invoice Summary Text',
+										'surecart'
+									)}
+									value={invoice_summary_text}
+									onChange={(invoice_summary_text) =>
+										setAttributes({ invoice_summary_text })
 									}
+									help={__(
+										'Displayed on the summary when this is an invoice.',
+										'surecart'
+									)}
+									placeholder={__(
+										'Invoice Summary',
+										'surecart'
+									)}
 								/>
 							</PanelRow>
 						</Fragment>
@@ -158,8 +171,8 @@ export default ({ attributes, setAttributes }) => {
 			<ScOrderSummary
 				collapsible={collapsible}
 				collapsedOnDesktop={collapsedOnDesktop}
-				closedText={closed_text || null}
-				openText={open_text || null}
+				orderSummaryText={order_summary_text || null}
+				invoiceSummaryText={invoice_summary_text || null}
 				collapsedOnMobile={collapsedOnMobile}
 				{...innerBlocksProps}
 			></ScOrderSummary>

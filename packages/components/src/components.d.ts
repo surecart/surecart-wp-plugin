@@ -2289,13 +2289,13 @@ export namespace Components {
     }
     interface ScOrderSummary {
         "busy": boolean;
-        "closedText": string;
         "collapsed": boolean;
         "collapsedOnDesktop": boolean;
         "collapsedOnMobile": boolean;
         "collapsible": boolean;
-        "openText": string;
+        "invoiceSummaryText": string;
         "order": Checkout;
+        "orderSummaryText": string;
     }
     interface ScOrderTaxIdInput {
         /**
@@ -8577,11 +8577,11 @@ declare namespace LocalJSX {
     }
     interface ScOrderSummary {
         "busy"?: boolean;
-        "closedText"?: string;
         "collapsed"?: boolean;
         "collapsedOnDesktop"?: boolean;
         "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
+        "invoiceSummaryText"?: string;
         /**
           * Show the toggle
          */
@@ -8590,8 +8590,8 @@ declare namespace LocalJSX {
           * Show the toggle
          */
         "onScShow"?: (event: ScOrderSummaryCustomEvent<void>) => void;
-        "openText"?: string;
         "order"?: Checkout;
+        "orderSummaryText"?: string;
     }
     interface ScOrderTaxIdInput {
         /**
