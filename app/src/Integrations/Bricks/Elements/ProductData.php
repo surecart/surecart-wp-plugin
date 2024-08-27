@@ -20,7 +20,7 @@ class ProductData extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $category = 'surecart';
+	public $category = 'SureCart Elements';
 
 	/**
 	 * Element icon.

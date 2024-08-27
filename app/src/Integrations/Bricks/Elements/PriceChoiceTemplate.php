@@ -17,13 +17,6 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
-	 * Element category.
-	 *
-	 * @var string
-	 */
-	public $category = 'surecart';
-
-	/**
 	 * Element name.
 	 *
 	 * @var string

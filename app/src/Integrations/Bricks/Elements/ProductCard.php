@@ -19,7 +19,7 @@ class ProductCard extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $category = 'surecart';
+	public $category = 'SureCart Layout';
 
 	/**
 	 * Element name.
