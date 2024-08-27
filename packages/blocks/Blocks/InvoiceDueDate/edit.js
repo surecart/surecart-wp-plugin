@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<sc-line-item-invoice-due-date due-date={new Date().getTime() / 1000}>
-				<span slot="title">
+				<span slot="description">
 					{text || __('Invoice Due Date', 'surecart')}
 				</span>
 			</sc-line-item-invoice-due-date>

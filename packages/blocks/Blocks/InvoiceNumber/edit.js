@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<sc-line-item-invoice-number number="0001">
-				<span slot="title">
+				<span slot="description">
 					{text || __('Invoice Number', 'surecart')}
 				</span>
 			</sc-line-item-invoice-number>

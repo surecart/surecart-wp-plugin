@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<sc-line-item-invoice-receipt-download receipt-download-link={'#'}>
-				<span slot="title">
+				<span slot="description">
 					{text || __('Invoice Receipt', 'surecart')}
 				</span>
 			</sc-line-item-invoice-receipt-download>
