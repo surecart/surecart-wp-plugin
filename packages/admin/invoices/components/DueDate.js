@@ -7,6 +7,7 @@ import { css, jsx } from '@emotion/react';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { DatePicker, Dropdown, PanelRow } from '@wordpress/components';
 import { useState, useMemo } from '@wordpress/element';
+import { getDate } from '@wordpress/date';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -30,9 +31,14 @@ export default ({ invoice, updateInvoice }) => {
 	);
 
 	const isInvalidDate = (date) => {
-		// disable the dates before the issue date.
-		if (invoice?.issue_date && date < invoice?.issue_date * 1000) {
-			return true;
+		if (invoice?.issue_date) {
+			const issueDate = new Date(invoice.issue_date * 1000);
+			issueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
+
+			const selectedDate = new Date(date);
+			selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
+
+			return selectedDate < issueDate;
 		}
 
 		return false;
@@ -80,9 +86,13 @@ export default ({ invoice, updateInvoice }) => {
 							? new Date(invoice?.due_date * 1000)
 							: null
 					}
-					onChange={(due_date) => {
+					onChange={(date) => {
+						const dueDate = getDate(date);
+						// Set the time to 23:59:59 to ensure that the date is saved as the correct day.
+						dueDate.setHours(23, 59, 59, 999);
+
 						updateInvoice({
-							due_date: Date.parse(due_date) / 1000,
+							due_date: Date.parse(dueDate) / 1000,
 						});
 						onClose();
 					}}

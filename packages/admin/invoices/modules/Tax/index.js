@@ -23,10 +23,12 @@ import {
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
+	ScSwitch,
 } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import TaxIdDisplay from './TaxIdDisplay';
 import expand from '../../checkout-query';
+import Definition from '../../../ui/Definition';
 
 export default ({
 	invoice,
@@ -49,7 +51,7 @@ export default ({
 		});
 	}, [checkout?.tax_identifier]);
 
-	const onChange = async (tax_identifier) => {
+	const onChange = async ({ tax_identifier, tax_behavior }) => {
 		try {
 			setBusy(true);
 
@@ -58,12 +60,15 @@ export default ({
 				'draft-checkout'
 			);
 
+			const requestData = {
+				...(tax_identifier !== undefined && { tax_identifier }),
+				...(tax_behavior !== undefined && { tax_behavior }),
+			};
+
 			const data = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${checkout?.id}`, { expand }),
-				data: {
-					tax_identifier,
-				},
+				data: requestData,
 			});
 
 			onUpdateInvoiceEntityRecord({
@@ -108,13 +113,57 @@ export default ({
 					busy={busy}
 					type="primary"
 					onClick={() => {
-						onChange(taxId);
+						onChange({
+							tax_identifier: taxId,
+						});
 					}}
 					slot="footer"
 				>
 					{__('Update', 'surecart')}
 				</ScButton>
 			</ScDialog>
+		);
+	};
+
+	const renderTaxBehaviorSettings = () => {
+		if (isDraftInvoice) {
+			return (
+				<ScSwitch
+					checked={checkout?.tax_behavior === 'inclusive'}
+					onClick={() => {
+						onChange({
+							tax_behavior:
+								checkout?.tax_behavior === 'inclusive'
+									? 'exclusive'
+									: 'inclusive',
+						});
+					}}
+				>
+					{__('Tax Included', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If enabled, the tax amount will be included in the product price and shipping rates for all products of this order.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+			);
+		}
+
+		return (
+			<div
+				css={css`
+					display: flex;
+					justify-content: space-between;
+				`}
+			>
+				<span>{__('Tax Included', 'surecart')}</span>
+				<span>
+					{checkout?.tax_behavior === 'inclusive'
+						? __('Yes', 'surecart')
+						: __('No', 'surecart')}
+				</span>
+			</div>
 		);
 	};
 
@@ -151,7 +200,13 @@ export default ({
 									<ScMenuItem onClick={() => setOpen(true)}>
 										{__('Edit', 'surecart')}
 									</ScMenuItem>
-									<ScMenuItem onClick={() => onChange(null)}>
+									<ScMenuItem
+										onClick={() =>
+											onChange({
+												tax_identifier: null,
+											})
+										}
+									>
 										{__('Delete', 'surecart')}
 									</ScMenuItem>
 								</ScMenu>
@@ -159,6 +214,8 @@ export default ({
 						)}
 					</div>
 				)}
+
+				{renderTaxBehaviorSettings()}
 			</Box>
 
 			{renderEditTaxDialog()}
