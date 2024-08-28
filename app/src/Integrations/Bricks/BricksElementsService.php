@@ -137,10 +137,16 @@ class BricksElementsService {
 			return $active_templates;
 		}
 
-		$template_ids = \Bricks\Templates::get_templates_by_type( 'sc_collection' );
-		if ( ! empty( $template_ids[0] ) ) {
-			$active_templates['archive'] = $template_ids[0];
-		}
+		$collection_templates = \Bricks\Templates::get_templates_by_type( 'sc_collection' );
+
+		$template_ids = [
+			'body'          => $collection_templates,
+			'sc_collection' => $collection_templates,
+		];
+
+		$template_id = \Bricks\Database::find_template_id( $template_ids, 'content', 'sc_collection', get_the_ID(), 'archive' );
+
+		$active_templates['archive'] = $template_id;
 
 		return $active_templates;
 	}
