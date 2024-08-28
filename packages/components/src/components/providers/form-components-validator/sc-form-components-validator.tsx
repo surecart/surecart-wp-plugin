@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
-import { Invoice, Order, TaxProtocol } from '../../../types';
+import { Invoice, TaxProtocol } from '../../../types';
 import { shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
@@ -69,11 +69,6 @@ export class ScFormComponentsValidator {
     if (!!checkoutState.checkout?.shipping_amount) {
       this.addShippingAmount();
     }
-
-    // TODO: make this logics like checkoutState.checkout?.invoice once, we got the invoice expand on checkout.
-    if (!!(checkoutState.checkout?.order as Order)?.id) {
-      this.addInvoiceDetails();
-    }
   }
 
   @Watch('hasAddress')
@@ -99,6 +94,11 @@ export class ScFormComponentsValidator {
       if (this.taxProtocol?.eu_vat_required) {
         this.addTaxIDField();
       }
+    }
+
+    // automatically add invoice details if we have an invoice.
+    if (!!(checkoutState.checkout?.invoice as Invoice)?.id) {
+      this.addInvoiceDetails();
     }
 
     this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
@@ -205,8 +205,7 @@ export class ScFormComponentsValidator {
   }
 
   addInvoiceDetails() {
-    // bail if we already have invoice details element or no invoice id.
-    if (this.hasInvoiceDetails || !(checkoutState.checkout?.invoice as Invoice)?.id) return;
+    if (this.hasInvoiceDetails) return;
 
     let lineItems: Element = this.el.querySelector('sc-line-items');
     const invoiceDetails = document.createElement('sc-invoice-details');
