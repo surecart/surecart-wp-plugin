@@ -451,6 +451,7 @@ export interface LineItem extends Object {
   purchasable_status_display: string;
   variant_options: Array<string>;
   variant?: Variant;
+  locked: boolean;
 }
 
 export interface DeletedItem {
