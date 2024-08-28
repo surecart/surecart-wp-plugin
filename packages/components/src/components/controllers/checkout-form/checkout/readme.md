@@ -116,6 +116,7 @@ graph TD;
   sc-form-error-provider --> sc-checkout-form-errors
   sc-checkout-form-errors --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address
+  sc-form-components-validator --> sc-order-billing-address
   sc-form-components-validator --> sc-order-tax-id-input
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
@@ -139,6 +140,8 @@ graph TD;
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
   sc-compact-address --> sc-block-ui
+  sc-order-billing-address --> sc-checkbox
+  sc-order-billing-address --> sc-address
   sc-order-tax-id-input --> sc-tax-id-input
   sc-tax-id-input --> sc-icon
   sc-tax-id-input --> sc-input
