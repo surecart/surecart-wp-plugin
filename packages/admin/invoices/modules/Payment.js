@@ -2,11 +2,6 @@
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch, select } from '@wordpress/data';
-import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -14,18 +9,15 @@ import apiFetch from '@wordpress/api-fetch';
 import {
 	ScFormatNumber,
 	ScLineItem,
-	ScCouponForm,
 	ScDivider,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import expand from '../checkout-query';
 import PaymentCollection from './PaymentCollection';
 import { formatTaxDisplay } from '../../util/tax';
 
 export default ({
 	invoice,
 	updateInvoice,
-	onUpdateInvoiceEntityRecord,
 	checkout,
 	loading,
 	setBusy,
@@ -33,45 +25,12 @@ export default ({
 	setPaymentMethod,
 }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
-	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
 	)?.find(
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
-
-	const onCouponChange = async (e) => {
-		try {
-			setBusy(true);
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-				}),
-				data: {
-					discount: {
-						promotion_code: e?.detail,
-					},
-				},
-			});
-
-			onUpdateInvoiceEntityRecord({
-				...invoice,
-				checkout: data,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
-		}
-	};
 
 	const renderPaymentDetails = () => {
 		return (
@@ -148,20 +107,6 @@ export default ({
 							value={checkout?.tax_amount}
 						></ScFormatNumber>
 					</ScLineItem>
-				)}
-
-				{(isDraftInvoice || !!checkout?.discount_amount) && (
-					<ScCouponForm
-						collapsed={true}
-						placeholder={__('Enter Coupon Code', 'surecart')}
-						label={__('Add Coupon Code', 'surecart')}
-						buttonText={__('Apply', 'surecart')}
-						onScApplyCoupon={onCouponChange}
-						discount={checkout?.discount}
-						currency={checkout?.currency}
-						discountAmount={checkout?.discount_amount}
-						disabledActions={!isDraftInvoice}
-					/>
 				)}
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
