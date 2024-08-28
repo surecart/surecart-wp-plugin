@@ -94,37 +94,16 @@ class BricksElementsService {
 			return $active_templates;
 		}
 
-		// apply a template, but only if there are no conditions.
-		$template_ids               = \Bricks\Templates::get_templates_by_type( 'sc_product' );
-		$current_product_collection = get_the_terms( get_the_ID(), 'sc_collection' );
-		$term_ids                   = array_column( $current_product_collection, 'term_id' );
-		foreach ( $template_ids as $id ) {
-			$template_conditions = \Bricks\Helpers::get_template_setting( 'templateConditions', $id );
-			if ( empty( $template_conditions ) ) {
-				$active_templates['content'] = $id;
-				return $active_templates;
-			}
+		$sc_product_templates = \Bricks\Templates::get_templates_by_type( 'sc_product' );
 
-			foreach ( $template_conditions as $condition ) {
-				if ( 'terms' === $condition['main'] ) {
-					foreach ( $condition['terms'] as $term ) {
-						$term_id = (int) explode( '::', $term )[1];
-						if ( in_array( $term_id, $term_ids, true ) ) {
-							$active_templates['content'] = $id;
-							return $active_templates;
-						}
-					}
-					// if we get here, no terms matched.
-					$active_templates['content'] = 0;
-					return $active_templates;
-				}
-			}
-		}
+		$template_ids = [
+			'body'       => $sc_product_templates,
+			'sc_product' => $sc_product_templates,
+		];
 
-		$template_ids = \Bricks\Templates::get_templates_by_type( 'sc_product' );
-		if ( ! empty( $template_ids[0] ) ) {
-			$active_templates['content'] = $template_ids[0];
-		}
+		$template_id = \Bricks\Database::find_template_id( $template_ids, 'content', 'sc_product', get_the_ID(), 'single' );
+
+		$active_templates['content'] = $template_id;
 
 		return $active_templates;
 	}
