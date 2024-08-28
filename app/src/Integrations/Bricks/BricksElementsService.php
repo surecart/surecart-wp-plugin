@@ -95,12 +95,29 @@ class BricksElementsService {
 		}
 
 		// apply a template, but only if there are no conditions.
-		$template_ids = \Bricks\Templates::get_templates_by_type( 'sc_product' );
+		$template_ids               = \Bricks\Templates::get_templates_by_type( 'sc_product' );
+		$current_product_collection = get_the_terms( get_the_ID(), 'sc_collection' );
+		$term_ids                   = array_column( $current_product_collection, 'term_id' );
 		foreach ( $template_ids as $id ) {
 			$template_conditions = \Bricks\Helpers::get_template_setting( 'templateConditions', $id );
 			if ( empty( $template_conditions ) ) {
 				$active_templates['content'] = $id;
 				return $active_templates;
+			}
+
+			foreach ( $template_conditions as $condition ) {
+				if ( 'terms' === $condition['main'] ) {
+					foreach ( $condition['terms'] as $term ) {
+						$term_id = (int) explode( '::', $term )[1];
+						if ( in_array( $term_id, $term_ids, true ) ) {
+							$active_templates['content'] = $id;
+							return $active_templates;
+						}
+					}
+					// if we get here, no terms matched.
+					$active_templates['content'] = 0;
+					return $active_templates;
+				}
 			}
 		}
 
