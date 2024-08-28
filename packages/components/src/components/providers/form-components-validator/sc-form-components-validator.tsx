@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
-import { Order, TaxProtocol } from '../../../types';
+import { Invoice, Order, TaxProtocol } from '../../../types';
 import { shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
@@ -205,7 +205,8 @@ export class ScFormComponentsValidator {
   }
 
   addInvoiceDetails() {
-    if (this.hasInvoiceDetails) return;
+    // bail if we already have invoice details element or no invoice id.
+    if (this.hasInvoiceDetails || !(checkoutState.checkout?.invoice as Invoice)?.id) return;
 
     let lineItems: Element = this.el.querySelector('sc-line-items');
     const invoiceDetails = document.createElement('sc-invoice-details');
