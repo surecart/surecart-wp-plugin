@@ -7,6 +7,7 @@ import { css, jsx } from '@emotion/react';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { DatePicker, Dropdown, PanelRow } from '@wordpress/components';
 import { useState, useMemo } from '@wordpress/element';
+import { getDate } from '@wordpress/date';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -71,9 +72,13 @@ export default ({ invoice, updateInvoice }) => {
 							? new Date(invoice?.issue_date * 1000)
 							: null
 					}
-					onChange={(issue_date) => {
+					onChange={(date) => {
+						const issueDate = getDate(date);
+						// Set the time to 00:00:01 to ensure that the date is saved as the correct day.
+						issueDate.setHours(0, 0, 1, 1);
+
 						updateInvoice({
-							issue_date: Date.parse(issue_date) / 1000,
+							issue_date: Date.parse(issueDate) / 1000,
 						});
 						onClose();
 					}}
