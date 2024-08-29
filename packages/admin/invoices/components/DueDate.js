@@ -7,7 +7,6 @@ import { css, jsx } from '@emotion/react';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { DatePicker, Dropdown, PanelRow } from '@wordpress/components';
 import { useState, useMemo } from '@wordpress/element';
-import { getDate } from '@wordpress/date';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -87,10 +86,7 @@ export default ({ invoice, updateInvoice }) => {
 							: null
 					}
 					onChange={(date) => {
-						const dueDate = getDate(date);
-						// Set the time to 23:59:59 to ensure that the date is saved as the correct day.
-						dueDate.setHours(23, 59, 59, 999);
-
+						const dueDate = new Date(date).toUTCString();
 						updateInvoice({
 							due_date: Date.parse(dueDate) / 1000,
 						});
