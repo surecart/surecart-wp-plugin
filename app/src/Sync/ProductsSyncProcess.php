@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Sync\BackgroundProcessing;
+namespace SureCart\Sync;
 
 use SureCart\Background\BackgroundProcess;
 use SureCart\Models\Product;
@@ -8,7 +8,7 @@ use SureCart\Models\Product;
 /**
  * This process fetches and queues all products for syncing.
  */
-class ProductsSyncBackgroundProcess extends BackgroundProcess {
+class ProductsSyncProcess extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *

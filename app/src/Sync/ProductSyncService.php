@@ -47,7 +47,7 @@ class ProductSyncService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( $this->action_name, [ $this, 'handle' ], 10, 2 );
+		add_action( $this->action_name, [ $this, 'handleScheduledSync' ], 10, 2 );
 	}
 
 	/**
@@ -154,7 +154,7 @@ class ProductSyncService {
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function handle( $id ) {
+	public function handleScheduledSync( $id ) {
 		// if the model is bulk deleting, return.
 		if ( $this->isBulkDeleting( $id ) ) {
 			return;
