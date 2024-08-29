@@ -153,10 +153,9 @@ class Product extends \Bricks\Element {
 				),
 			),
 			array(
-				'name'     => 'post-excerpt',
+				'name'     => 'text-basic',
 				'settings' => array(
-					'keepHTML' => true,
-					'length'   => 999,
+					'text' => '{sc_product_description}',
 				),
 			),
 			array(
