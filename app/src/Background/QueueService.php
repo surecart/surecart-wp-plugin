@@ -120,6 +120,19 @@ class QueueService {
 	 * @return DateTime|null The date and time for the next occurrence, or null if there is no pending, scheduled action for the given hook.
 	 */
 	public function getNext( $hook, $args = null, $group = '' ) {
+		return as_next_scheduled_action( $hook, $args, $group );
+	}
+
+	/**
+	 * Get the date and time for the next scheduled occurrence of an action with a given hook
+	 * (an optionally that matches certain args and group), if any.
+	 *
+	 * @param string $hook The hook that the job will trigger.
+	 * @param array  $args Filter to a hook with matching args that will be passed to the job when it runs.
+	 * @param string $group Filter to only actions assigned to a specific group.
+	 * @return DateTime|null The date and time for the next occurrence, or null if there is no pending, scheduled action for the given hook.
+	 */
+	public function getNextDate( $hook, $args = null, $group = '' ) {
 		$next_timestamp = as_next_scheduled_action( $hook, $args, $group );
 
 		if ( is_numeric( $next_timestamp ) ) {
@@ -146,6 +159,47 @@ class QueueService {
 	 */
 	public function isScheduled( $hook, $args = null, $group = '' ) {
 		return \as_has_scheduled_action( $hook, $args, $group );
+	}
+
+	/**
+	 * Shold we show a migration notice?
+	 *
+	 * @param string $hook The hook that the job will trigger.
+	 * @param array  $args Args that have been passed to the action. Null will matches any args.
+	 * @param string $group The group the job is assigned to.
+	 *
+	 * @return bool
+	 */
+	public function showNotice( $hook, $args = null, $group = '' ) {
+		// no scheduled actions (this is quicker for us to check).
+		$has_action = \as_has_scheduled_action( $hook, $args, $group );
+		if ( ! $has_action ) {
+			return false;
+		}
+
+		$next_action = as_get_scheduled_actions(
+			[
+				'hook'     => $hook,
+				'status'   => \ActionScheduler_Store::STATUS_PENDING,
+				'per_page' => 1,
+			],
+		);
+
+		if ( empty( $next_action ) || ! is_array( $next_action ) ) {
+			return false;
+		}
+
+		// find out if any actions get_args() has 'show_notice' => true.
+		$show_notice = false;
+		foreach ( $next_action as $action ) {
+			$args = $action->get_args();
+			if ( isset( $args['show_notice'] ) && ! empty( $args['show_notice'] ) ) {
+				$show_notice = true;
+				break;
+			}
+		}
+
+		return $show_notice;
 	}
 
 	/**

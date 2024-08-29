@@ -54,7 +54,7 @@ class ProductsSyncProcess extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $products->data as $product ) {
-			$product->queueSync();
+			$product->queueSync( true ); // sync with notice.
 		}
 
 		// we have more to process.
