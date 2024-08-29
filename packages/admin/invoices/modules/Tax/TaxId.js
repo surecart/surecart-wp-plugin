@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/react';
 /**
  * External dependencies.
  */
-import { useMemo, useState } from '@wordpress/element';
+import { useMemo, useState, useEffect } from '@wordpress/element';
 import { Dropdown, PanelRow } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
@@ -20,6 +20,14 @@ import { ScBlockUi, ScButton, ScTaxIdInput } from '@surecart/components-react';
 export default ({ invoice, onChange, busy }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
 	const [taxId, setTaxId] = useState(invoice?.checkout?.tax_identifier);
+
+	// Local state when shipping address changes.
+	useEffect(() => {
+		setTaxId({
+			number: invoice?.checkout?.tax_identifier?.number,
+			number_type: invoice?.checkout?.tax_identifier?.number_type,
+		});
+	}, [invoice?.checkout?.tax_identifier]);
 
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.

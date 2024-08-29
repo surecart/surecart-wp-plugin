@@ -3,7 +3,6 @@
  */
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
@@ -25,17 +24,7 @@ export default ({
 	setBusy,
 	onUpdateInvoiceEntityRecord,
 }) => {
-	const [open, setOpen] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const [taxId, setTaxId] = useState(checkout?.tax_identifier);
-
-	// local state when shipping address changes.
-	useEffect(() => {
-		setTaxId({
-			number: checkout?.tax_identifier?.number,
-			number_type: checkout?.tax_identifier?.number_type,
-		});
-	}, [checkout?.tax_identifier]);
 
 	const onChange = async ({ tax_identifier, tax_behavior }) => {
 		try {
@@ -61,8 +50,6 @@ export default ({
 				...invoice,
 				checkout: data,
 			});
-
-			setOpen(false);
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e);
