@@ -62,7 +62,7 @@ class ElementorWidgetsService {
 			$get_declared_classes = get_declared_classes();
 			$element_class_name   = end( $get_declared_classes );
 
-			$element_manager->register_element_type( new $element_class_name() );
+			// $element_manager->register_element_type( $element_class_name::instance );
 		}
 	}
 }

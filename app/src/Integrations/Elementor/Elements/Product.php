@@ -6,7 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Product extends \Elementor\Modules\NestableElements\Base\Widget_Nested_Base {
+/**
+ * Product element.
+ */
+class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
 	/**
 	 * Get the name.
 	 *
@@ -108,7 +111,6 @@ class Product extends \Elementor\Modules\NestableElements\Base\Widget_Nested_Bas
 				'label' => esc_html__( 'Product', 'surecart' ),
 			]
 		);
-
 
 		$this->end_controls_section();
 	}
