@@ -100,7 +100,7 @@ class AccountService {
 			}
 
 			// store the previously working account in case we need a fallback.
-			update_option( 'sc_previous_account', $this->convertAccountToArray( $this->account ) );
+			update_option( 'sc_previous_account', $this->account->toArray() );
 
 			// set the transient.
 			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
@@ -148,21 +148,6 @@ class AccountService {
 	}
 
 	/**
-	 * Convert the Account model to an associative array.
-	 *
-	 * @param \SureCart\Models\Account $account Account model.
-	 * @return array
-	 */
-	protected function convertAccountToArray( $account ) {
-		if ( is_wp_error( $account ) || empty( $account->id ) ) {
-			return array();
-		}
-
-		// Get all public properties of the Account object.
-		return $account->getAttributes();
-	}
-
-	/**
 	 * Convert an associative array back to an Account model.
 	 *
 	 * @param array $data Associative array.
@@ -178,9 +163,6 @@ class AccountService {
 			return null;
 		}
 
-		$account = new Account();
-		$account->setAttributes( $data );
-		
-		return $account;
+		return new Account( $data );
 	}
 }
