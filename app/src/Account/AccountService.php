@@ -169,6 +169,11 @@ class AccountService {
 	 * @return \SureCart\Models\Account|null
 	 */
 	protected function convertArrayToAccount( $data ) {
+		// Handle Backward Compatibility. If it's already an account, return it.
+		if ( $data instanceof Account ) {
+			return $data;
+		}
+
 		if ( empty( $data ) || ! isset( $data['id'] ) ) {
 			return null;
 		}
