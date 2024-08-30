@@ -306,10 +306,10 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 2.30.0 - August 30th, 2024 =
-- Improvement: Allow subscription intervals up to 10 years.
+- New: Allow subscription intervals up to 10 years.
 - Fix: Issue preventing cancellation of paused subscriptions.
 - Fix: Translate url going to incorrect location.
-- Fix: Webhook change notice missing some styles.
+- Fix: Site url change notice missing some styles.
 
 = 2.29.4 - August 15th, 2024 =
 - Fix: Appending invalid coupon code to custom checkout form causes payment element not to load.
