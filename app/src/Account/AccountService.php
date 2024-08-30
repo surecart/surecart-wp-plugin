@@ -159,7 +159,7 @@ class AccountService {
 		}
 
 		// Get all public properties of the Account object.
-		return get_object_vars( $account );
+		return $account->getAttributes();
 	}
 
 	/**
@@ -179,12 +179,8 @@ class AccountService {
 		}
 
 		$account = new Account();
-
-		// Set all properties back to the Account object.
-		foreach ( $data as $key => $value ) {
-			$account->$key = $value;
-		}
-
+		$account->setAttributes( $data );
+		
 		return $account;
 	}
 }
