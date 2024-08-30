@@ -8,16 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
- * Quantity widget.
+ * Selected Price Ad Hoc Amount widget.
  */
-class Quantity extends \Elementor\Widget_Base {
+class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	/**
 	 * Get widget name.
 	 *
 	 * @return string
 	 */
 	public function get_name() {
-		return 'surecart-quantity';
+		return 'surecart-selected-price-ad-hoc-amount';
 	}
 
 	/**
@@ -26,7 +26,7 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Quantity', 'surecart' );
+		return esc_html__( 'Custom Amount', 'surecart' );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_keywords() {
-		return array( 'surecart', 'quantity', 'cart' );
+		return array( 'surecart', 'custom', 'amount' );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Quantity extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_quantity',
 			[
-				'label' => esc_html__( 'Quantity', 'elementor' ),
+				'label' => esc_html__( 'Custom Amount', 'elementor' ),
 			]
 		);
 
@@ -65,8 +65,8 @@ class Quantity extends \Elementor\Widget_Base {
 			[
 				'label'       => esc_html__( 'Label', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'Quantity', 'surecart' ),
-				'default'     => esc_html__( 'Quantity', 'surecart' ),
+				'placeholder' => esc_html__( 'Enter an amount', 'surecart' ),
+				'default'     => esc_html__( 'Enter an amount', 'surecart' ),
 			]
 		);
 
@@ -83,7 +83,7 @@ class Quantity extends \Elementor\Widget_Base {
 
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-quantity { "label" : "<?php echo esc_attr( $settings['label'] ); ?>"} /-->
+			<!-- wp:surecart/product-selected-price-ad-hoc-amount { "label" : "<?php echo esc_attr( $settings['label'] ); ?>"} /-->
 		</div>
 		<?php
 	}
@@ -94,6 +94,21 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function content_template() {
-		echo do_blocks( '<!-- wp:surecart/product-quantity { "label" : "{{{ settings.label }}}" } /-->' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		?>
+		<div>
+			<label for="" class="sc-form-label">Custom amount</label>
+			<div className="sc-input-group">
+				<span class="sc-input-group-text" id="basic-addon1">
+					$
+				</span>
+				<input
+					class="sc-form-control"
+					type="number"
+					step="0.01"
+					onwheel="this.blur()"
+				/>
+			</div>
+		</div>
+		<?php
 	}
 }
