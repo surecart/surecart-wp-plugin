@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.6
-Stable tag: 2.29.4
+Stable tag: 2.30.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,12 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.30.0 - August 30th, 2024 =
+- Improvement: Allow subscription intervals up to 10 years.
+- Fix: Issue preventing cancellation of paused subscriptions.
+- Fix: Translate url going to incorrect location.
+- Fix: Webhook change notice missing some styles.
 
 = 2.29.4 - August 15th, 2024 =
 - Fix: Appending invalid coupon code to custom checkout form causes payment element not to load.
