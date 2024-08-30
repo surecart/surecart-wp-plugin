@@ -54,7 +54,7 @@ class AsyncWebhookService extends AsyncRequest {
 	 */
 	public function handle( $id = 0 ) {
 		// get the webhook.
-		$id = $id ? $id : $_POST['id']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$id = (int) ( $id ? $id : $_POST['id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		// get the event name.
 		if ( empty( $id ) ) {
