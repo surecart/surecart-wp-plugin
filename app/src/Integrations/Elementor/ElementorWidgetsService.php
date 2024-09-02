@@ -78,6 +78,6 @@ class ElementorWidgetsService {
 	 * @return void
 	 */
 	public function enqueueScripts() {
-		wp_register_script( 'surecart-elementor-product', plugins_url( 'Widgets/Nested/assets/js/editor/index.js', __FILE__ ) );
+		wp_register_script( 'surecart-elementor-product', plugins_url( 'Widgets/Nested/assets/js/editor/index.js', __FILE__ ), [ 'nested-elements' ] );
 	}
 }
