@@ -66,7 +66,7 @@ export default ({ price, updatePrice, locked }) => {
 							flex: 1;
 						`}
 						type="number"
-						max={price?.recurring_interval === 'year' ? 1 : null}
+						max={price?.recurring_interval === 'year' ? 10 : null}
 						required
 					/>
 					<ScSelect
