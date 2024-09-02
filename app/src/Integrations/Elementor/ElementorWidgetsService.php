@@ -12,8 +12,9 @@ class ElementorWidgetsService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 10000 );
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
-		add_action( 'elementor/elements/elements_registered', [ $this, 'registerElements' ] );
+		add_action( 'elementor/widgets/register', [ $this, 'registerNestedWidgets' ] );
 	}
 
 	/**
@@ -28,7 +29,7 @@ class ElementorWidgetsService {
 			return;
 		}
 
-		foreach ( glob( __DIR__ . '/Widgets/**' ) as $file ) {
+		foreach ( glob( __DIR__ . '/Widgets/*.php' ) as $file ) {
 			if ( ! is_readable( $file ) ) {
 				continue;
 			}
@@ -42,27 +43,41 @@ class ElementorWidgetsService {
 	}
 
 	/**
-	 * Register the elements.
+	 * Register the nested widgets.
 	 *
-	 * @param \Elementor\Elements_Manager $element_manager Element manager.
+	 * @param \Elementor\Widgets_Manager $widget_manager Widget manager.
 	 *
 	 * @return void
 	 */
-	public function registerElements( $element_manager ) {
-		if ( ! class_exists( '\Elementor\Element_Base' ) ) {
+	public function registerNestedWidgets( $widget_manager ) {
+		if ( ! class_exists( '\Elementor\Widget_Base' ) ) {
 			return;
 		}
 
-		foreach ( glob( __DIR__ . '/Elements/**' ) as $file ) {
+		$experiment_name = \Elementor\Modules\NestedElements\Module::EXPERIMENT_NAME;
+		if ( ! \Elementor\Plugin::$instance->experiments->is_feature_active( $experiment_name ) ) {
+			return;
+		}
+
+		foreach ( glob( __DIR__ . '/Widgets/Nested/**.php' ) as $file ) {
 			if ( ! is_readable( $file ) ) {
 				continue;
 			}
 
 			require_once $file;
 			$get_declared_classes = get_declared_classes();
-			$element_class_name   = end( $get_declared_classes );
+			$widget_class_name    = end( $get_declared_classes );
 
-			// $element_manager->register_element_type( $element_class_name::instance );
+			$widget_manager->register( new $widget_class_name() );
 		}
+	}
+
+	/**
+	 * Enqueue the scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueueScripts() {
+		wp_register_script( 'surecart-elementor-product', plugins_url( 'Widgets/Nested/assets/js/editor/index.js', __FILE__ ) );
 	}
 }
