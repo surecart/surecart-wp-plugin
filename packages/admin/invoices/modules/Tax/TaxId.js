@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { Global, css, jsx } from '@emotion/react';
 
 /**
  * External dependencies.
@@ -14,7 +14,6 @@ import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '
  */
 import PostDropdownButton from '../../../components/PostDropdownButton';
 import PostDropdownContent from '../../../components/PostDropdownContent';
-import TaxIdDisplay from './TaxIdDisplay';
 import { ScBlockUi, ScButton, ScTaxIdInput } from '@surecart/components-react';
 
 export default ({ invoice, onChange, busy }) => {
@@ -38,6 +37,23 @@ export default ({ invoice, onChange, busy }) => {
 		() => ({ anchor: popoverAnchor, placement: 'bottom-end' }),
 		[popoverAnchor]
 	);
+
+	const getTaxIdTitleDisplay = () => {
+		if (!!invoice?.checkout?.tax_identifier?.id) {
+			return taxId?.number;
+		}
+
+		return isDraftInvoice
+			? __('Add A Tax ID', 'surecart')
+			: __('No Tax ID', 'surecart');
+	};
+
+	const taxIdLabels = {
+		ca_gst: __('GST Number', 'surecart'),
+		au_abn: __('ABN Number', 'surecart'),
+		gb_vat: __('VAT Number', 'surecart'),
+		eu_vat: __('VAT Number', 'surecart'),
+	};
 
 	const renderContent = ({ onClose }) => {
 		return (
@@ -81,14 +97,19 @@ export default ({ invoice, onChange, busy }) => {
 						css={css`
 							margin-top: var(--sc-spacing-large);
 						`}
-						isPrimary
+						type="primary"
 						onClick={async () => {
 							await onChange({ tax_identifier: taxId });
 							onClose();
 						}}
-						disabled={!taxId?.number}
+						disabled={
+							taxId?.number ===
+								invoice?.checkout?.tax_identifier?.number &&
+							taxId?.number_type ===
+								invoice?.checkout?.tax_identifier?.number_type
+						}
 					>
-						{__('Save', 'surecart')}
+						{__('Update', 'surecart')}
 					</ScButton>
 				</div>
 
@@ -114,12 +135,13 @@ export default ({ invoice, onChange, busy }) => {
 					width: 45%;
 				`}
 			>
-				{__('Tax ID', 'surecart')}
+				{taxIdLabels[taxId?.number_type] ?? __('Tax ID', 'surecart')}
 			</span>
+
 			<Dropdown
 				popoverProps={popoverProps}
-				className="edit-post-post-url__dropdown"
-				contentClassName="edit-post-post-url__dialog"
+				className="edit-tax__dropdown"
+				contentClassName="edit-tax-popover__content"
 				focusOnMount
 				renderToggle={({ isOpen, onToggle }) => (
 					<PostDropdownButton
@@ -127,17 +149,18 @@ export default ({ invoice, onChange, busy }) => {
 						onClick={() =>
 							isDraftInvoice ? onToggle() : undefined
 						}
-						title={
-							!!invoice?.checkout?.tax_identifier?.id ? (
-								<TaxIdDisplay taxId={taxId} />
-							) : (
-								__('Add A Tax ID', 'surecart')
-							)
-						}
+						title={getTaxIdTitleDisplay()}
 						ariaLabel={__('Tax ID', 'surecart')}
 					/>
 				)}
 				renderContent={renderContent}
+			/>
+			<Global
+				styles={css`
+					.edit-tax-popover__content .components-popover__content {
+						overflow: visible !important;
+					}
+				`}
 			/>
 		</PanelRow>
 	);
