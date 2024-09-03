@@ -222,6 +222,11 @@ export class ScFormComponentsValidator {
     // Add invoice sc-line-item-invoice-receipt-download inside sc-invoice-details.
     const invoiceReceiptDownload = document.createElement('sc-line-item-invoice-receipt-download');
     invoiceDetails.appendChild(invoiceReceiptDownload);
+
+    // Add sc-divider inside sc-invoice-details.
+    const divider = document.createElement('sc-divider');
+    invoiceDetails.appendChild(divider);
+
     this.hasInvoiceDetails = true;
   }
 
