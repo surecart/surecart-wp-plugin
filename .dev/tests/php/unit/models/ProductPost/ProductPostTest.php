@@ -30,6 +30,8 @@ class ProductPostTest extends SureCartUnitTestCase
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Account\AccountServiceProvider::class,
 				\SureCart\Sync\SyncServiceProvider::class,
+				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
+				\SureCart\WordPress\PostTypes\ProductPostTypeService::class,
 			]
 		], false);
 
@@ -256,6 +258,13 @@ class ProductPostTest extends SureCartUnitTestCase
 	 */
 	public function test_syncs_product_directly()
 	{
+		// mock the account id.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test',
+			];
+		});
+
 		$this->shouldSyncProduct('testid');
 
 		$product = (new Product(
@@ -403,8 +412,8 @@ class ProductPostTest extends SureCartUnitTestCase
 	/**
 	 * @group sync
 	 */
-	public function test_syncs_when_deleted() {
-
+	public function test_syncs_when_deleted()
+	{
 		$this->shouldSyncProduct('testid');
 
 		// mock the requests in the container
@@ -442,6 +451,13 @@ class ProductPostTest extends SureCartUnitTestCase
 	 */
 	public function test_creates_variant_option_values_in_database()
 	{
+		// mock the account id.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test',
+			];
+		});
+
 		$this->shouldSyncProduct('testid');
 
 		(new Product(
@@ -486,6 +502,13 @@ class ProductPostTest extends SureCartUnitTestCase
 	 */
 	public function test_multiple_syncs_does_not_create_duplicate_records()
 	{
+		// mock the account id.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test',
+			];
+		});
+
 		$this->shouldSyncProduct('testid');
 
 		$product = new Product(

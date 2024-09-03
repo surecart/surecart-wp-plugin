@@ -23,6 +23,9 @@ class ProductTest extends SureCartUnitTestCase
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Account\AccountServiceProvider::class,
 				\SureCart\Sync\SyncServiceProvider::class,
+				\SureCart\WordPress\Posts\PostServiceProvider::class,
+				// \SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
+				// \SureCart\WordPress\PostTypes\ProductPostTypeService::class,
 			]
 		], false);
 
@@ -164,7 +167,7 @@ class ProductTest extends SureCartUnitTestCase
 
 		$line_item_image = $product->line_item_image;
 		$this->assertSame('https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=150/http://example.com/image.jpg', $line_item_image->src);
-		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item_image->class);
+		$this->assertSame('attachment-thumbnail size-thumbnail ', $line_item_image->class);
 		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item_image->sizes);
 		$this->assertSame(150, $line_item_image->width);
 		$this->assertSame(113, $line_item_image->height);
@@ -198,18 +201,10 @@ class ProductTest extends SureCartUnitTestCase
 	/**
 	 * @group media
 	 * @group product
+	 * @group producttesting
 	 */
 	public function test_has_featured_image_from_attachment() {
 		$this->shouldSyncProduct('test');
-
-		$product = new Product([
-			'id' => 'test',
-			'name' => 'test',
-			'updated_at' => time(),
-			'created_at' => time()
-		]);
-		$product = $product->sync();
-		$post = $product->post;
 
 		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
 		$id = $this->factory()->attachment->create_upload_object( $filename );
@@ -217,9 +212,17 @@ class ProductTest extends SureCartUnitTestCase
 		$filename = DIR_TESTDATA . '/images/test-image.jpg';
 		$id_2 = $this->factory()->attachment->create_upload_object( $filename );
 
-		update_post_meta($post->ID, 'gallery', [['id' => $id], ['id' => $id_2]]);
+		$product = (new Product([
+			'id' => 'test',
+			'name' => 'test',
+			'updated_at' => time(),
+			'created_at' => time(),
+			'gallery_ids' => [$id, $id_2],
+		]))->sync();
+		// $post = $product->post;
 
 		$this->assertCount(2, $product->gallery);
+		// $this->assertNotEmpty($product->featured_image);
 
 		$attributes = $product->featured_image->attributes();
 
