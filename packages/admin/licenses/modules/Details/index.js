@@ -1,10 +1,15 @@
 import Box from '../../../ui/Box';
 import { formatTime } from '../../../util/time';
 import Copy from './Copy';
-import { ScTag, ScSkeleton, ScInput } from '@surecart/components-react';
+import {
+	ScTag,
+	ScSkeleton,
+	ScInput,
+	ScButton,
+} from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 
-export default ({ license, updateLicense, loading }) => {
+export default ({ license, updateLicense, loading, onEditKey }) => {
 	const renderTag = () => {
 		if (loading) {
 			return <ScSkeleton style={{ width: '75px' }}></ScSkeleton>;
@@ -43,6 +48,9 @@ export default ({ license, updateLicense, loading }) => {
 					)
 				}
 			>
+				<ScButton slot="suffix" size="small" onClick={onEditKey}>
+					{__('Edit', 'surecart')}
+				</ScButton>
 				<Copy slot="suffix" text={license?.key} />
 			</ScInput>
 			<ScInput
