@@ -260,7 +260,22 @@ class CartService {
 	 * @return \WP_Post The default form post.
 	 */
 	public function getForm() {
-		return \SureCart::forms()->getDefault();
+		$default_form = \SureCart::forms()->getDefault();
+
+		// The form post.
+		$form_post = get_post();
+		if ( empty( $form_post->post_content ) ) {
+			return $default_form;
+		}
+
+		// Get the checkout form block.
+		$checkout_form_block = wp_get_first_block( parse_blocks( $form_post->post_content ), 'surecart/checkout-form' );
+		if ( empty( $checkout_form_block ) ) {
+			return $default_form;
+		}
+		$attrs = $checkout_form_block['attrs'] ?? [];
+
+		return $attrs['id'] ? get_post( (int) $attrs['id'] ) : $default_form;
 	}
 
 	/**
