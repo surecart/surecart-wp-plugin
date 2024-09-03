@@ -161,7 +161,7 @@ class ProductListMigrationService {
 		if ( ! $search_enabled ) {
 			return;
 		}
-		
+
 		$this->block_html .= '<!-- wp:surecart/product-list-search {"style":{"layout":{"selfStretch":"fixed","flexSize":"250px"}}} /-->';
 	}
 
@@ -226,8 +226,22 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderProductTemplate(): void {
-		$columns           = $this->attributes['columns'] ?? 3;
-		$this->block_html .= '<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
+		$product_template_attrs = array_merge(
+			$this->attributes ?? array(),
+			array(
+				'style'  => array(
+					'spacing' => array(
+						'blockGap' => '30px',
+					),
+				),
+				'layout' => array(
+					'type'        => 'grid',
+					'columnCount' => $this->attributes['columns'] ?? 3,
+				),
+			)
+		);
+
+		$this->block_html .= '<!-- wp:surecart/product-template ' . wp_json_encode( $product_template_attrs ) . ' -->';
 		$group_attrs       = ! empty( $this->inner_blocks[0]['attrs'] ) ? wp_json_encode( $this->inner_blocks[0]['attrs'] ) : '{}';
 		$group_block       = parse_blocks( '<!-- wp:group ' . $group_attrs . ' -->' )[0];
 		$group_styles      = sc_get_block_styles( true, $group_block );
