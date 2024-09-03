@@ -38,6 +38,8 @@ import useSave from '../settings/UseSave';
 import BillingAddress from './modules/BillingAddress';
 import EditBillingAddressModal from './modules/BillingAddress/EditBillingAddressModal';
 import ConfirmDeleteBillingAddressModal from './modules/BillingAddress/ConfirmDeleteBillingAddressModal';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -51,6 +53,8 @@ export default () => {
 	const [currentModal, setCurrentModal] = useState(null);
 	const { save } = useSave();
 	const id = useSelect((select) => select(dataStore).selectPageId());
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
 	const {
 		customer,
 		editCustomer,
@@ -93,6 +97,10 @@ export default () => {
 		try {
 			setError(null);
 			await deleteCustomer({ throwOnError: true });
+			createSuccessNotice(__('Deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+			window.location.assign('admin.php?page=sc-customers');
 		} catch (e) {
 			console.error(e);
 			setError(e);
