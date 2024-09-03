@@ -14,8 +14,11 @@ import Status from '../components/Status';
 import InvoiceNumber from '../components/InvoiceNumber';
 import DueDate from '../components/DueDate';
 import IssueDate from '../components/IssueDate';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({ invoice, updateInvoice, checkout, loading }) => {
+export default () => {
+	const { invoice, editInvoice, checkout, loading } = useInvoice();
+
 	const checkoutPageUrl =
 		invoice?.checkout?.id && invoice?.status !== 'paid'
 			? `${window.scData?.checkout_page_url}?checkout_id=${invoice?.checkout?.id}`
@@ -36,12 +39,9 @@ export default ({ invoice, updateInvoice, checkout, loading }) => {
 
 					<Status status={invoice?.status} />
 
-					<IssueDate
-						invoice={invoice}
-						updateInvoice={updateInvoice}
-					/>
+					<IssueDate invoice={invoice} updateInvoice={editInvoice} />
 
-					<DueDate invoice={invoice} updateInvoice={updateInvoice} />
+					<DueDate invoice={invoice} updateInvoice={editInvoice} />
 
 					{!!checkoutPageUrl && (
 						<CheckoutPageLink checkoutPageUrl={checkoutPageUrl} />

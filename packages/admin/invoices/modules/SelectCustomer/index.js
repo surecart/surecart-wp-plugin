@@ -24,23 +24,16 @@ import Customer from './Customer';
 import Box from '../../../ui/Box';
 import CreateCustomer from './CreateCustomer';
 import ModelSelector from '../../../components/ModelSelector';
+import { useInvoice } from '../../hooks/useInvoice';
 
-export default ({
-	invoice,
-	onUpdateInvoiceEntityRecord,
-	checkout,
-	setBusy,
-	loading,
-	onSuccess,
-	liveMode,
-}) => {
+export default ({ onSuccess }) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
+	const { invoice, checkout, loading, live_mode, setBusy, receiveInvoice } =
+		useInvoice();
 
 	const onCustomerUpdate = async (customerID = false) => {
 		try {
-			setBusy(true);
-
 			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -68,7 +61,7 @@ export default ({
 				},
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: data,
 			});
@@ -116,7 +109,7 @@ export default ({
 					<ModelSelector
 						name="customer"
 						placeholder={__('Select a customer', 'surecart')}
-						requestQuery={{ live_mode: liveMode }}
+						requestQuery={{ live_mode }}
 						required
 						prefix={
 							<div slot="prefix">
@@ -141,7 +134,7 @@ export default ({
 				<CreateCustomer
 					onRequestClose={() => setModal(false)}
 					onCreate={onCustomerUpdate}
-					liveMode={liveMode}
+					liveMode={live_mode}
 				/>
 			)}
 		</Box>

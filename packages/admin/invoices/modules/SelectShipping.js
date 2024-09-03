@@ -7,6 +7,7 @@ import { css, jsx } from '@emotion/core';
 import apiFetch from '@wordpress/api-fetch';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
+import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { useDispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -19,9 +20,11 @@ import {
 	ScAlert,
 	ScChoices,
 	ScChoice,
+	ScButton,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import expand from '../checkout-query';
+import EditAddress from './EditAddress';
 
 export default ({
 	invoice,
@@ -31,6 +34,7 @@ export default ({
 	onUpdateInvoiceEntityRecord,
 }) => {
 	const { createErrorNotice } = useDispatch(noticesStore);
+	const [open, setOpen] = useState(false);
 
 	const onShippingChange = async (shippingId) => {
 		try {
@@ -64,7 +68,10 @@ export default ({
 		}
 	};
 
-	if (!checkout?.selected_shipping_choice_required) {
+	if (
+		!checkout?.selected_shipping_choice_required &&
+		!checkout?.shipping_address_required
+	) {
 		return null;
 	}
 
@@ -77,7 +84,17 @@ export default ({
 							'Shipping is required. Please enter a shipping address.',
 							'surecart'
 						)}
+						<br />
+						<ScButton onClick={() => setOpen(true)}>
+							{__('Add A Shipping Address', 'surecart')}
+						</ScButton>
 					</ScAlert>
+					<EditAddress
+						invoice={invoice}
+						checkout={checkout}
+						open={open}
+						onRequestClose={() => setOpen(false)}
+					/>
 				</Box>
 			);
 		}

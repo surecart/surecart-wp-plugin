@@ -5,9 +5,8 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { useState, useEffect } from '@wordpress/element';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
-import { store as dataStore } from '@surecart/data';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
@@ -39,6 +38,7 @@ import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
 import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
 import SendNotificationConfirmModal from './modules/SendNotificationConfirmModal';
 import DeleteInvoiceConfirmModal from './modules/DeleteInvoiceConfirmModal';
+import { useInvoice } from './hooks/useInvoice';
 
 /**
  * Returns the Model Edit URL.
@@ -62,32 +62,22 @@ export const checkoutExpands = [
 ];
 
 export default () => {
-	const urlParams = getQueryArgs(window.location.href);
-	const defaultLiveMode = urlParams.live_mode === 'false' ? false : true;
-
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const [liveMode, setLiveMode] = useState(defaultLiveMode);
-	const id = useSelect((select) => select(dataStore).selectPageId());
-	const [busy, setBusy] = useState(false);
 	const [invoiceError, setInvoiceError] = useState(false);
 	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
 
 	const {
-		isResolving: loading,
-		editedRecord: invoice,
-		edit: updateInvoice,
-	} = useEntityRecord('surecart', 'invoice', id);
+		loading,
+		invoice,
+		editInvoice,
+		checkout,
+		live_mode,
+		busy,
+		setBusy,
+	} = useInvoice();
 
-	const checkout = invoice?.checkout;
 	const isDraftInvoice = invoice?.status === 'draft';
-
-	// Update live mode when invoice is loaded.
-	useEffect(() => {
-		if (invoice?.id) {
-			setLiveMode(invoice?.live_mode);
-		}
-	}, [invoice]);
 
 	// Update payment methods when checkout is loaded.
 	useEffect(() => {
@@ -100,7 +90,7 @@ export default () => {
 
 	const invoiceListPageURL = addQueryArgs('admin.php', {
 		page: 'sc-invoices',
-		live_mode: liveMode ? 'true' : 'false',
+		live_mode: live_mode ? 'true' : 'false',
 	});
 
 	const updateInvoiceEntityRecord = (updatedInvoice) => {
@@ -194,7 +184,7 @@ export default () => {
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
 									{getViewButtonTitle()}{' '}
-									{!liveMode && (
+									{!live_mode && (
 										<ScTag type="warning" pill>
 											{__('Test Mode', 'surecart')}
 										</ScTag>
@@ -285,21 +275,13 @@ export default () => {
 					<>
 						<Summary
 							invoice={invoice}
-							updateInvoice={updateInvoice}
+							updateInvoice={editInvoice}
 							checkout={checkout}
 							loading={loading}
 							busy={busy}
 							setBusy={setBusy}
 						/>
 						<SelectCustomer
-							invoice={invoice}
-							onUpdateInvoiceEntityRecord={
-								updateInvoiceEntityRecord
-							}
-							checkout={checkout}
-							setBusy={setBusy}
-							loading={loading}
-							liveMode={liveMode}
 							onSuccess={() => setPaymentMethod(null)}
 						/>
 						<Address
@@ -350,7 +332,7 @@ export default () => {
 				{!!checkout?.line_items?.data?.length && (
 					<Payment
 						invoice={invoice}
-						updateInvoice={updateInvoice}
+						updateInvoice={editInvoice}
 						onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
 						checkout={checkout}
 						loading={loading}
@@ -362,7 +344,7 @@ export default () => {
 
 				<AdditionalOptions
 					invoice={invoice}
-					updateInvoice={updateInvoice}
+					updateInvoice={editInvoice}
 					loading={loading}
 					busy={busy}
 					setBusy={setBusy}
@@ -397,7 +379,7 @@ export default () => {
 				<SendNotificationConfirmModal
 					onRequestClose={() => setModal(null)}
 					invoice={invoice}
-					updateInvoice={updateInvoice}
+					updateInvoice={editInvoice}
 					busy={busy}
 					setBusy={setBusy}
 					error={invoiceError}
