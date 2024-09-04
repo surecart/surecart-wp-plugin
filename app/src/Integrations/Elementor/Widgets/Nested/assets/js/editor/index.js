@@ -1,22 +1,6 @@
-class Module {
-	constructor() {
-		elementor.elementsManager.registerElementType(new Product());
-	}
-}
-
-class Product extends elementor.modules.elements.types.NestedElementBase {
-	getType() {
-		return 'surecart-product';
-	}
-
-	getView() {
-		return View;
-	}
-}
-
 elementorCommon.elements.$window.on(
 	'elementor/nested-element-type-loaded',
 	async () => {
-		new Module().default();
+		new (await import('../editor/module.js')).default();
 	}
 );

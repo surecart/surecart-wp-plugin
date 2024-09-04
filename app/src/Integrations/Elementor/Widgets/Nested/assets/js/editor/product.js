@@ -1,6 +1,6 @@
-import View from './views/view';
+import View from './view';
 
-export class Product extends elementor.modules.elements.types
+export class NestedAccordion extends elementor.modules.elements.types
 	.NestedElementBase {
 	getType() {
 		return 'surecart-product';
@@ -10,5 +10,5 @@ export class Product extends elementor.modules.elements.types
 		return View;
 	}
 }
-alert('Product');
-export default Product;
+
+export default NestedAccordion;
