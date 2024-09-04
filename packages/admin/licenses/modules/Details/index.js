@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import Box from '../../../ui/Box';
 import { formatTime } from '../../../util/time';
 import Copy from './Copy';
@@ -6,6 +8,11 @@ import {
 	ScSkeleton,
 	ScInput,
 	ScButton,
+	ScFlex,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
+	ScIcon,
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -36,23 +43,35 @@ export default ({ license, updateLicense, loading, onEditKey }) => {
 			}
 			loading={loading}
 		>
-			<ScInput
-				label={__('License Key', 'surecart')}
-				readonly
-				value={license?.key}
-				help={
-					!!license?.created_at &&
-					sprintf(
-						__('Created on %s', 'surecart'),
-						formatTime(license?.created_at)
-					)
-				}
-			>
-				<ScButton slot="suffix" size="small" onClick={onEditKey}>
-					{__('Edit', 'surecart')}
-				</ScButton>
-				<Copy slot="suffix" text={license?.key} />
-			</ScInput>
+			<ScFlex alignItems="center">
+				<ScInput
+					label={__('License Key', 'surecart')}
+					readonly
+					value={license?.key}
+					help={
+						!!license?.created_at &&
+						sprintf(
+							__('Created on %s', 'surecart'),
+							formatTime(license?.created_at)
+						)
+					}
+					css={css`
+						width: 100%;
+					`}
+				>
+					<Copy slot="suffix" text={license?.key} />
+				</ScInput>
+				<ScDropdown placement="bottom-end">
+					<ScButton slot="trigger" type="text" circle>
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
+						<ScMenuItem onClick={onEditKey}>
+							{__('Edit', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
+			</ScFlex>
 			<ScInput
 				label={__('Activation Limit', 'surecart')}
 				type="number"
