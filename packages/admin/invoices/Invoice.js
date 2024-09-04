@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { addQueryArgs, getQueryArgs } from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -273,14 +273,7 @@ export default () => {
 				}
 				sidebar={
 					<>
-						<Summary
-							invoice={invoice}
-							updateInvoice={editInvoice}
-							checkout={checkout}
-							loading={loading}
-							busy={busy}
-							setBusy={setBusy}
-						/>
+						<Summary />
 						<SelectCustomer
 							onSuccess={() => setPaymentMethod(null)}
 						/>

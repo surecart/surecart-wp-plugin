@@ -19,43 +19,35 @@ import { useInvoice } from '../hooks/useInvoice';
 export default () => {
 	const { invoice, editInvoice, checkout, loading } = useInvoice();
 
-	const checkoutPageUrl =
-		invoice?.checkout?.id && invoice?.status !== 'paid'
-			? `${window.scData?.checkout_page_url}?checkout_id=${invoice?.checkout?.id}`
-			: null;
-
-	const orderPdfUrl = checkout?.order?.pdf_url;
 	const orderPageUrl = checkout?.order?.id
-		? `${scData?.home_url}/wp-admin/admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
+		? `${scData?.home_url}/wp-admin/admin.php?page=sc-orders&action=edit&id=${checkout.order.id}`
 		: null;
 
 	return (
-		<>
-			<Box title={__('Invoice Summary', 'surecart')} loading={loading}>
-				<div>
-					{!!checkout?.order?.number && (
-						<InvoiceNumber orderNumber={checkout.order.number} />
-					)}
+		<Box title={__('Invoice Summary', 'surecart')} loading={loading}>
+			<div>
+				{!!checkout?.order?.number && (
+					<InvoiceNumber orderNumber={checkout.order.number} />
+				)}
 
-					<Status status={invoice?.status} />
+				<Status status={invoice?.status} />
 
-					<IssueDate invoice={invoice} updateInvoice={editInvoice} />
+				<IssueDate invoice={invoice} updateInvoice={editInvoice} />
 
-					<DueDate invoice={invoice} updateInvoice={editInvoice} />
+				<DueDate invoice={invoice} updateInvoice={editInvoice} />
 
-					{!!checkoutPageUrl && (
-						<CheckoutPageLink checkoutPageUrl={checkoutPageUrl} />
-					)}
+				{invoice?.status !== 'paid' && !!invoice?.checkout_url && (
+					<CheckoutPageLink checkoutPageUrl={invoice?.checkout_url} />
+				)}
 
-					{!!orderPageUrl && (
-						<OrderPageLink orderPageUrl={orderPageUrl} />
-					)}
+				{!!orderPageUrl && (
+					<OrderPageLink orderPageUrl={orderPageUrl} />
+				)}
 
-					{!!orderPdfUrl && (
-						<ReceiptDownload orderPdfUrl={orderPdfUrl} />
-					)}
-				</div>
-			</Box>
-		</>
+				{!!checkout?.pdf_url && (
+					<ReceiptDownload pdfUrl={checkout?.pdf_url} />
+				)}
+			</div>
+		</Box>
 	);
 };

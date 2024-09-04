@@ -41,6 +41,15 @@ class Invoice extends Model {
 	}
 
 	/**
+	 * Get the checkout page URL for the invoice.
+	 *
+	 * @return string
+	 */
+	public function getCheckoutUrlAttribute(): string {
+		return \SureCart::getUrl()->checkout() . '?checkout_id=' . $this->checkout_id;
+	}
+
+	/**
 	 * Make draft invoice.
 	 *
 	 * @param string|null $id Invoice ID.
