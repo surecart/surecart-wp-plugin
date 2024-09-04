@@ -8,10 +8,6 @@ import {
 	ScSkeleton,
 	ScInput,
 	ScButton,
-	ScFlex,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
 	ScIcon,
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
@@ -43,7 +39,13 @@ export default ({ license, updateLicense, loading, onEditKey }) => {
 			}
 			loading={loading}
 		>
-			<ScFlex alignItems="center">
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+					gap: 0.5em;
+				`}
+			>
 				<ScInput
 					label={__('License Key', 'surecart')}
 					readonly
@@ -61,17 +63,11 @@ export default ({ license, updateLicense, loading, onEditKey }) => {
 				>
 					<Copy slot="suffix" text={license?.key} />
 				</ScInput>
-				<ScDropdown placement="bottom-end">
-					<ScButton slot="trigger" type="text" circle>
-						<ScIcon name="more-horizontal" />
-					</ScButton>
-					<ScMenu>
-						<ScMenuItem onClick={onEditKey}>
-							{__('Edit', 'surecart')}
-						</ScMenuItem>
-					</ScMenu>
-				</ScDropdown>
-			</ScFlex>
+
+				<ScButton onClick={onEditKey} type="default">
+					<ScIcon name="edit" />
+				</ScButton>
+			</div>
 			<ScInput
 				label={__('Activation Limit', 'surecart')}
 				type="number"

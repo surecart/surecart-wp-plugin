@@ -4,6 +4,7 @@ import {
 	ScButton,
 	ScDialog,
 	ScForm,
+	ScIcon,
 	ScInput,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
@@ -20,6 +21,19 @@ export default ({ open, onRequestClose, license }) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const [licenseKey, setLicenseKey] = useState(() => license?.key);
+
+	const onRegenerateKey = () => {
+		setLicenseKey(
+			'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(
+				/[xy]/g,
+				function (c) {
+					const r = (Math.random() * 16) | 0;
+					const v = c === 'x' ? r : (r & 0x3) | 0x8;
+					return v.toString(16);
+				}
+			)
+		);
+	};
 
 	const onSubmit = async () => {
 		try {
@@ -75,12 +89,26 @@ export default ({ open, onRequestClose, license }) => {
 			<ScForm onScSubmit={onSubmit}>
 				<ScInput
 					label={__('License Key', 'surecart')}
+					help={__(
+						'Important: Changing the license key will invalidate the current license key.',
+						'surecart'
+					)}
 					onScInput={(e) => setLicenseKey(e.target.value)}
-					value={license?.key}
+					value={licenseKey}
 					required
 					autofocus={true}
 					hasFocus={true}
-				/>
+				>
+					<ScButton
+						slot="suffix"
+						type="text"
+						onClick={onRegenerateKey}
+						circle
+						aria-label={__('Regenerate License Key', 'surecart')}
+					>
+						<ScIcon name="refresh-ccw" />
+					</ScButton>
+				</ScInput>
 				<div
 					css={css`
 						display: flex;
