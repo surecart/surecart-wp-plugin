@@ -59,6 +59,9 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
 		if ( 'surecart' === $domain ) {
+			if ( ! file_exists( $file ) && file_exists( WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json' ) ) {
+				return WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json';
+			}
 			if ( file_exists( WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json' ) ) {
 				return WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json';
 			}
@@ -74,10 +77,6 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 
 			if ( false === $file ) {
 				$file = SURECART_LANGUAGE_DIR . '/surecart-' . get_locale() . '.json';
-			}
-
-			if ( ! file_exists( $file ) && file_exists( WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json' ) ) {
-				$file = WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json';
 			}
 		}
 		return $file;
