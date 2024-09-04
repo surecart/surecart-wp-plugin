@@ -1,8 +1,15 @@
+/**
+ * External dependencies.
+ */
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { getQueryArgs } from '@wordpress/url';
-import { store as dataStore } from '@surecart/data';
 import { useState } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
+import { store as dataStore } from '@surecart/data';
 
 export const useInvoice = () => {
 	const urlParams = getQueryArgs(window.location.href);
@@ -18,7 +25,7 @@ export const useInvoice = () => {
 		edit: editInvoice,
 	} = useEntityRecord('surecart', 'invoice', id);
 
-	const receiveInvoice = (updatedInvoice, invoice) => {
+	const receiveInvoice = (updatedInvoice) => {
 		return receiveEntityRecords(
 			'surecart',
 			'invoice',

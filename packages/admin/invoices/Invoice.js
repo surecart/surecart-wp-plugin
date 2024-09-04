@@ -284,16 +284,7 @@ export default () => {
 						<SelectCustomer
 							onSuccess={() => setPaymentMethod(null)}
 						/>
-						<Address
-							invoice={invoice}
-							onUpdateInvoiceEntityRecord={
-								updateInvoiceEntityRecord
-							}
-							checkout={checkout}
-							loading={loading}
-							busy={busy}
-							setBusy={setBusy}
-						/>
+						<Address />
 						<Tax
 							invoice={invoice}
 							onUpdateInvoiceEntityRecord={

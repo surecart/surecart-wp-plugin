@@ -6,7 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -20,20 +20,17 @@ import {
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
+	ScBlockUi,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import expand from '../checkout-query';
 import AddressDisplay from '../../components/AddressDisplay';
 import EditAddress from './EditAddress';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	checkout,
-	loading,
-	busy,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
+export default () => {
+	const { invoice, checkout, loading, busy, setBusy, receiveInvoice } =
+		useInvoice();
 	const isDraftInvoice = invoice?.status === 'draft';
 	const [open, setOpen] = useState(false);
 
@@ -54,7 +51,7 @@ export default ({
 				},
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: data,
 			});
@@ -110,6 +107,8 @@ export default ({
 					</div>
 				)}
 			</Box>
+
+			{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 
 			<EditAddress open={open} onRequestClose={() => setOpen(false)} />
 		</>
