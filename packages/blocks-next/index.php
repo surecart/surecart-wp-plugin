@@ -218,6 +218,10 @@ add_action(
 					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
 				],
+				[
+					'id'     => 'wp-a11y',
+					'import' => 'dynamic',
+				],
 			],
 			$static_assets['version']
 		);
@@ -318,16 +322,20 @@ add_action(
 					'id'     => '@surecart/checkout-events',
 					'import' => 'dynamic',
 				),
-				[
+				array(
 					'id'     => '@surecart/google-events',
 					'import' => 'dynamic',
-				],
-				[
+				),
+				array(
 					'id'     => '@surecart/facebook-events',
 					'import' => 'dynamic',
-				],
+				),
 				array(
 					'id'     => '@surecart/cart',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => 'wp-a11y',
 					'import' => 'dynamic',
 				),
 			),
