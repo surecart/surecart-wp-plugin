@@ -16,15 +16,10 @@ import apiFetch from '@wordpress/api-fetch';
 import Error from '../../components/Error';
 import { ScBlockUi } from '@surecart/components-react';
 import { checkoutExpands } from '../Invoice';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	onRequestClose,
-	open,
-	invoice,
-	busy,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
+export default ({ onRequestClose, open }) => {
+	const { invoice, busy, setBusy, receiveInvoice } = useInvoice();
 	if (!invoice?.id) {
 		return null;
 	}
@@ -47,7 +42,7 @@ export default ({
 				}),
 			});
 
-			onUpdateInvoiceEntityRecord(invoiceData);
+			receiveInvoice(invoiceData);
 
 			createSuccessNotice(
 				__('Invoice marked as draft, you can now edit it.', 'surecart'),

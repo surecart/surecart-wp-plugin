@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
@@ -25,14 +22,10 @@ import {
 import Box from '../../ui/Box';
 import expand from '../checkout-query';
 import EditAddress from './EditAddress';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	checkout,
-	setBusy,
-	loading,
-	onUpdateInvoiceEntityRecord,
-}) => {
+export default () => {
+	const { invoice, checkout, setBusy, loading, receiveInvoice } = useInvoice();
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const [open, setOpen] = useState(false);
 
@@ -56,7 +49,7 @@ export default ({
 				},
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: data,
 			});

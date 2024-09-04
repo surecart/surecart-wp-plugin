@@ -1,28 +1,38 @@
 /** @jsx jsx */
-import Box from '../../ui/Box';
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
-import Price from './Price';
-import NewPrice from './NewPrice';
-import { ScEmpty, ScTable, ScTableCell } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch, select } from '@wordpress/data';
-import expand from '../checkout-query';
-import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { checkoutExpands } from '../Invoice';
+import apiFetch from '@wordpress/api-fetch';
 
-export default ({
-	invoice,
-	checkout,
-	loading,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
-	const invoiceStatus = invoice?.status;
-	const isDraftInvoice = invoiceStatus === 'draft';
+/**
+ * Internal dependencies.
+ */
+import expand from '../checkout-query';
+import Price from './Price';
+import NewPrice from './NewPrice';
+import Box from '../../ui/Box';
+import { checkoutExpands } from '../Invoice';
+import { useInvoice } from '../hooks/useInvoice';
+import { ScEmpty, ScTable, ScTableCell } from '@surecart/components-react';
+
+export default () => {
+	const {
+		invoice,
+		checkout,
+		loading,
+		isDraftInvoice,
+		setBusy,
+		receiveInvoice,
+	} = useInvoice();
+
 	const line_items = checkout?.line_items?.data || [];
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
@@ -50,7 +60,7 @@ export default ({
 				}),
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: data,
 			});
@@ -79,15 +89,13 @@ export default ({
 				data,
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: updatedCheckout,
 			});
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(e, {
-				type: 'snackbar',
-			});
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}
@@ -148,7 +156,6 @@ export default ({
 							onChange={(data) => onChange(id, data)}
 							checkout={checkout}
 							variant_options={variant_options}
-							invoiceStatus={invoiceStatus}
 						/>
 					);
 				})}
@@ -178,14 +185,8 @@ export default ({
 					!loading &&
 					isDraftInvoice && (
 						<NewPrice
-							invoice={invoice}
-							checkout={checkout}
 							open={modal}
-							setBusy={setBusy}
 							onRequestClose={() => setModal(false)}
-							onUpdateInvoiceEntityRecord={
-								onUpdateInvoiceEntityRecord
-							}
 						/>
 					)
 				}

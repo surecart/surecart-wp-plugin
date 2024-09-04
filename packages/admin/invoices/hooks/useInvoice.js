@@ -48,5 +48,6 @@ export const useInvoice = () => {
 		checkout: invoice?.checkout,
 		editInvoice,
 		receiveInvoice,
+		isDraftInvoice: invoice?.status === 'draft',
 	};
 };

@@ -8,8 +8,11 @@ import { __ } from '@wordpress/i18n';
  */
 import Box from '../../ui/Box';
 import { ScText, ScTextarea } from '@surecart/components-react';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({ invoice, updateInvoice, loading }) => {
+export default () => {
+	const { invoice, updateInvoice, loading } = useInvoice();
+
 	const renderMemoAndFooter = () => {
 		if (invoice?.status === 'draft') {
 			return (

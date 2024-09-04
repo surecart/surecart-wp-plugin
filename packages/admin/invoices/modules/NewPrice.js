@@ -12,18 +12,14 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies.
  */
+import PriceSelector from '@admin/components/PriceSelector';
 import { ScButton, ScIcon } from '@surecart/components-react';
 import { checkoutExpands } from '../Invoice';
-import PriceSelector from '@admin/components/PriceSelector';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	checkout,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
+export default () => {
+	const { invoice, checkout, setBusy, receiveInvoice } = useInvoice();
 	const [price, setPrice] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
@@ -50,18 +46,13 @@ export default ({
 				data,
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: checkoutUpdated,
 			});
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}
@@ -86,19 +77,14 @@ export default ({
 				data,
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: checkoutUpdated,
 			});
 			setPrice(false);
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
+			createErrorNotice(e);
 		} finally {
 			setBusy(false);
 		}

@@ -16,15 +16,15 @@ import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/compone
 import { ScBlockUi } from '@surecart/components-react';
 import expand from '../checkout-query';
 import Error from '../../components/Error';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	checkout,
-	open,
-	onRequestClose,
-	hasLoading,
-	onUpdateInvoiceEntityRecord,
-}) => {
+export default ({ open, onRequestClose }) => {
+	const {
+		invoice,
+		checkout,
+		loading: hasLoading,
+		receiveInvoice,
+	} = useInvoice();
 	const [loading, setLoading] = useState(hasLoading);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -45,7 +45,7 @@ export default ({
 				}),
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				status: checkoutUpdated?.status,
 				checkout: checkoutUpdated,

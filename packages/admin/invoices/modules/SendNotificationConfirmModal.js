@@ -9,9 +9,9 @@ import { __ } from '@wordpress/i18n';
 import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -19,17 +19,10 @@ import { addQueryArgs } from '@wordpress/url';
 import Error from '../../components/Error';
 import { ScButton, ScForm, ScSwitch } from '@surecart/components-react';
 import { checkoutExpands } from '../Invoice';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	title,
-	invoice,
-	updateInvoice,
-	onRequestClose,
-	paymentMethod,
-	busy,
-	setBusy,
-	updateInvoiceEntityRecord,
-}) => {
+export default ({ title, onRequestClose, paymentMethod }) => {
+	const { invoice, editInvoice, receiveInvoice } = useInvoice();
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -77,7 +70,7 @@ export default ({
 				}),
 			});
 
-			updateInvoiceEntityRecord(invoiceData);
+			receiveInvoice(invoiceData);
 
 			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
 				type: 'snackbar',
@@ -116,7 +109,7 @@ export default ({
 						checked={notificationsEnabled}
 						onScChange={(e) => {
 							setNotificationsEnabled(e.target.checked);
-							updateInvoice({
+							editInvoice({
 								notification_enabled: e.target.checked,
 							});
 						}}

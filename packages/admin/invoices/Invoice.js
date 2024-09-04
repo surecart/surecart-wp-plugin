@@ -5,8 +5,6 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { useState, useEffect } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
@@ -62,22 +60,12 @@ export const checkoutExpands = [
 ];
 
 export default () => {
-	const { receiveEntityRecords } = useDispatch(coreStore);
 	const [invoiceError, setInvoiceError] = useState(false);
 	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
 
-	const {
-		loading,
-		invoice,
-		editInvoice,
-		checkout,
-		live_mode,
-		busy,
-		setBusy,
-	} = useInvoice();
-
-	const isDraftInvoice = invoice?.status === 'draft';
+	const { loading, invoice, checkout, live_mode, busy, isDraftInvoice } =
+		useInvoice();
 
 	// Update payment methods when checkout is loaded.
 	useEffect(() => {
@@ -92,17 +80,6 @@ export default () => {
 		page: 'sc-invoices',
 		live_mode: live_mode ? 'true' : 'false',
 	});
-
-	const updateInvoiceEntityRecord = (updatedInvoice) => {
-		receiveEntityRecords(
-			'surecart',
-			'invoice',
-			updatedInvoice,
-			undefined,
-			false,
-			invoice
-		);
-	};
 
 	const isDisabled =
 		checkout?.selected_shipping_choice_required &&
@@ -288,42 +265,17 @@ export default () => {
 					margin="80px"
 				/>
 
-				<Prices
-					invoice={invoice}
-					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
-					checkout={checkout}
-					loading={loading}
-					setBusy={setBusy}
-				/>
-
-				<SelectShipping
-					invoice={invoice}
-					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
-					checkout={checkout}
-					loading={loading}
-					setBusy={setBusy}
-				/>
+				<Prices />
+				<SelectShipping />
 
 				{!!checkout?.line_items?.data?.length && (
 					<Payment
-						invoice={invoice}
-						updateInvoice={editInvoice}
-						onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
-						checkout={checkout}
-						loading={loading}
-						setBusy={setBusy}
 						paymentMethod={paymentMethod}
 						setPaymentMethod={setPaymentMethod}
 					/>
 				)}
 
-				<AdditionalOptions
-					invoice={invoice}
-					updateInvoice={editInvoice}
-					loading={loading}
-					busy={busy}
-					setBusy={setBusy}
-				/>
+				<AdditionalOptions />
 
 				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 			</UpdateModel>
@@ -332,10 +284,6 @@ export default () => {
 				<DraftInvoiceConfirmModal
 					open={modal === 'change_status_to_draft'}
 					onRequestClose={() => setModal(null)}
-					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
-					invoice={invoice}
-					busy={busy}
-					setBusy={setBusy}
 				/>
 			)}
 
@@ -343,23 +291,14 @@ export default () => {
 				<PaidInvoiceConfirmModal
 					open={true}
 					onRequestClose={() => setModal(null)}
-					invoice={invoice}
-					checkout={checkout}
-					onUpdateInvoiceEntityRecord={updateInvoiceEntityRecord}
-					hasLoading={loading}
 				/>
 			)}
 
 			{modal === 'send_invoice' && (
 				<SendNotificationConfirmModal
 					onRequestClose={() => setModal(null)}
-					invoice={invoice}
-					updateInvoice={editInvoice}
-					busy={busy}
-					setBusy={setBusy}
 					error={invoiceError}
 					setError={setInvoiceError}
-					updateInvoiceEntityRecord={updateInvoiceEntityRecord}
 					title={getSubmitButtonTitle()}
 					paymentMethod={paymentMethod}
 				/>
@@ -367,10 +306,8 @@ export default () => {
 
 			{modal === 'delete_invoice' && (
 				<DeleteInvoiceConfirmModal
-					invoice={invoice}
 					open={true}
 					onRequestClose={() => setModal(null)}
-					hasLoading={loading}
 				/>
 			)}
 		</>
