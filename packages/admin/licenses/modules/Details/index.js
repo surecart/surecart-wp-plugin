@@ -64,7 +64,11 @@ export default ({ license, updateLicense, loading, onEditKey }) => {
 					<Copy slot="suffix" text={license?.key} />
 				</ScInput>
 
-				<ScButton onClick={onEditKey} type="default">
+				<ScButton
+					onClick={onEditKey}
+					type="default"
+					aria-label={__('Edit License Key', 'surecart')}
+				>
 					<ScIcon name="edit" />
 				</ScButton>
 			</div>
