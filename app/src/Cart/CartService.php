@@ -260,22 +260,31 @@ class CartService {
 	 * @return \WP_Post The default form post.
 	 */
 	public function getForm() {
-		$default_form = \SureCart::forms()->getDefault();
-
-		// The form post.
+		// Get the current post.
 		$form_post = get_post();
+
+		// If there is no post, return the default form.
 		if ( empty( $form_post->post_content ) ) {
-			return $default_form;
+			return \SureCart::forms()->getDefault();
 		}
 
 		// Get the checkout form block.
 		$checkout_form_block = wp_get_first_block( parse_blocks( $form_post->post_content ), 'surecart/checkout-form' );
-		if ( empty( $checkout_form_block ) ) {
-			return $default_form;
-		}
-		$attrs = $checkout_form_block['attrs'] ?? [];
 
-		return $attrs['id'] ? get_post( (int) $attrs['id'] ) : $default_form;
+		// If there is no checkout form block, check for the shortcode - [sc_form id="123"].
+		if ( empty( $checkout_form_block ) ) {
+			if ( has_shortcode( $form_post->post_content, 'sc_form' ) ) {
+				$shortcode = get_shortcode_regex();
+				preg_match( "/$shortcode/", $form_post->post_content, $matches );
+				$attrs = shortcode_parse_atts( $matches[3] ?? '' );
+				return $attrs['id'] ? get_post( (int) $attrs['id'] ) : \SureCart::forms()->getDefault();
+			}
+
+			return \SureCart::forms()->getDefault();
+		}
+
+		$attrs = $checkout_form_block['attrs'] ?? [];
+		return $attrs['id'] ? get_post( (int) $attrs['id'] ) : \SureCart::forms()->getDefault();
 	}
 
 	/**
