@@ -63,8 +63,9 @@ export default () => {
 	const [invoiceError, setInvoiceError] = useState(false);
 	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
+	const [busy, setBusy] = useState(false);
 
-	const { loading, invoice, checkout, live_mode, busy, isDraftInvoice } =
+	const { loading, invoice, checkout, live_mode, isDraftInvoice } =
 		useInvoice();
 
 	// Update payment methods when checkout is loaded.
@@ -265,7 +266,7 @@ export default () => {
 					margin="80px"
 				/>
 
-				<Prices />
+				<Prices busy={busy} setBusy={setBusy} />
 				<SelectShipping />
 
 				{!!checkout?.line_items?.data?.length && (

@@ -23,15 +23,9 @@ import { checkoutExpands } from '../Invoice';
 import { useInvoice } from '../hooks/useInvoice';
 import { ScEmpty, ScTable, ScTableCell } from '@surecart/components-react';
 
-export default () => {
-	const {
-		invoice,
-		checkout,
-		loading,
-		isDraftInvoice,
-		setBusy,
-		receiveInvoice,
-	} = useInvoice();
+export default ({ setBusy }) => {
+	const { invoice, checkout, loading, isDraftInvoice, receiveInvoice } =
+		useInvoice();
 
 	const line_items = checkout?.line_items?.data || [];
 	const [modal, setModal] = useState(false);
