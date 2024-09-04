@@ -117,7 +117,7 @@ export default ({ open, onRequestClose, license }) => {
 					`}
 				>
 					<ScButton type="primary" submit loading={busy}>
-						{__('Save', 'surecart')}
+						{__('Save and Update Key', 'surecart')}
 					</ScButton>
 					<ScButton onClick={() => onRequestClose()} type="text">
 						{__('Cancel', 'surecart')}
