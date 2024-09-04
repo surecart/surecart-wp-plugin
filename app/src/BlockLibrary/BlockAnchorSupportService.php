@@ -38,6 +38,11 @@ class BlockAnchorSupportService {
 	 * @return array Block CSS classes and inline styles.
 	 */
 	public function applyAnchorSupport( $block_type, $block_attributes ) {
+		// exclude kadence blocks.
+		if ( isset( $block_attributes['kbVersion'] ) ) {
+			return $block_attributes;
+		}
+
 		$has_anchor_support = block_has_support( $block_type, 'anchor', false );
 		$attributes         = array();
 		if ( $has_anchor_support ) {
