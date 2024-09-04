@@ -17,8 +17,6 @@ class Product extends elementor.modules.elements.types.NestedElementBase {
 elementorCommon.elements.$window.on(
 	'elementor/nested-element-type-loaded',
 	async () => {
-		// new Module().default();
-		// alert('Product');
-		console.log('window', window?.elementor);
+		new Module().default();
 	}
 );
