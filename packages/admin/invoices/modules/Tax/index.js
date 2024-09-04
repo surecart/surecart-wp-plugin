@@ -15,15 +15,11 @@ import Box from '../../../ui/Box';
 import expand from '../../checkout-query';
 import TaxBehavior from './TaxBehavior';
 import TaxId from './TaxId';
+import { useInvoice } from '../../hooks/useInvoice';
 
-export default ({
-	invoice,
-	checkout,
-	loading,
-	busy,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
+export default () => {
+	const { invoice, checkout, loading, busy, setBusy, receiveInvoice } =
+		useInvoice();
 	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const onChange = async ({ tax_identifier, tax_behavior }) => {
@@ -46,7 +42,7 @@ export default ({
 				data: requestData,
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				checkout: data,
 			});

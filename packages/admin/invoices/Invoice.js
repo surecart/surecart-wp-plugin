@@ -285,16 +285,7 @@ export default () => {
 							onSuccess={() => setPaymentMethod(null)}
 						/>
 						<Address />
-						<Tax
-							invoice={invoice}
-							onUpdateInvoiceEntityRecord={
-								updateInvoiceEntityRecord
-							}
-							checkout={checkout}
-							loading={loading}
-							busy={busy}
-							setBusy={setBusy}
-						/>
+						<Tax />
 					</>
 				}
 			>
