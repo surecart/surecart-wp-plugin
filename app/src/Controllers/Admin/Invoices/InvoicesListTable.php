@@ -234,16 +234,7 @@ class InvoicesListTable extends ListTable {
 			return '-';
 		}
 
-		$url = add_query_arg( 'sc_customer', $customer->id, admin_url( 'admin.php?page=sc-invoices' ) );
-
-		if ( isset( $_GET['live_mode'] ) ) {
-			$url = add_query_arg( 'live_mode', sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ), $url );
-		}
-
-		if ( ! empty( $_GET['status'] ) ) {
-			$url = add_query_arg( 'status', sanitize_text_field( wp_unslash( $_GET['status'] ) ), $url );
-		}
-
+		$url = \SureCart::getUrl()->edit( 'customer', $customer->id );
 		return '<a href="' . esc_url( $url ) . '">' . $customer->name . '</a>';
 	}
 
