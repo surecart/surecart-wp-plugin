@@ -142,7 +142,7 @@ class FormPostTypeService {
 			return $states;
 		}
 
-		if ( $post->ID === $this->getDefaultId() ) {
+		if ( $post->ID === \SureCart::cart()->getCheckoutFormId() ) {
 			$states[] = __( 'Store Checkout', 'surecart' );
 		}
 

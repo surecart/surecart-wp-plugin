@@ -255,36 +255,45 @@ class CartService {
 	}
 
 	/**
-	 * Get the form
+	 * Get the form post.
 	 *
 	 * @return \WP_Post The default form post.
 	 */
 	public function getForm() {
-		// Get the current post.
-		$form_post = get_post();
+		$form_id =$this->getCheckoutFormId();
 
-		// If there is no post, return the default form.
-		if ( empty( $form_post->post_content ) ) {
-			return \SureCart::forms()->getDefault();
+		if ( $form_id ) {
+			return get_post( $form_id );
 		}
 
-		// Get the checkout form block.
-		$checkout_form_block = wp_get_first_block( parse_blocks( $form_post->post_content ), 'surecart/checkout-form' );
+		return \SureCart::forms()->getDefault();
+	}
 
-		// If there is no checkout form block, check for the shortcode - [sc_form id="123"].
-		if ( empty( $checkout_form_block ) ) {
-			if ( has_shortcode( $form_post->post_content, 'sc_form' ) ) {
-				$shortcode = get_shortcode_regex();
-				preg_match( "/$shortcode/", $form_post->post_content, $matches );
-				$attrs = shortcode_parse_atts( $matches[3] ?? '' );
-				return $attrs['id'] ? get_post( (int) $attrs['id'] ) : \SureCart::forms()->getDefault();
-			}
+	/**
+	 * Get the checkout form ID.
+	 *
+	 * @return int|null The form ID.
+	 */
+	public function getCheckoutFormId() {
+		$post_id = get_option( 'surecart_checkout_page_id' );
+		$post    = get_post( $post_id );
+		if ( ! $post ) {
+			return null;
+		}
 
-			return \SureCart::forms()->getDefault();
+		// Check if it's a checkout form block.
+		$checkout_form_block = wp_get_first_block( parse_blocks( $post->post_content ), 'surecart/checkout-form' );
+
+		// If it's not a checkout form block, check if it's a shortcode.
+		if ( empty( $checkout_form_block ) && has_shortcode( $post->post_content, 'sc_form' ) ) {
+			$shortcode = get_shortcode_regex();
+			preg_match( "/$shortcode/", $post->post_content, $matches );
+			$attrs = shortcode_parse_atts( $matches[3] ?? '' );
+			return $attrs['id'] ? (int) $attrs['id'] : null;
 		}
 
 		$attrs = $checkout_form_block['attrs'] ?? [];
-		return $attrs['id'] ? get_post( (int) $attrs['id'] ) : \SureCart::forms()->getDefault();
+		return $attrs['id'] ? (int) $attrs['id'] : null;
 	}
 
 	/**
