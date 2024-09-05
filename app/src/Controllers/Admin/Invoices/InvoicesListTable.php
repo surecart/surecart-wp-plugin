@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Admin\Invoices;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\Customer;
 use SureCart\Models\Invoice;
 
 /**
@@ -312,7 +311,6 @@ class InvoicesListTable extends ListTable {
 		<?php
 		if ( 'top' === $which ) {
 			ob_start();
-			$this->customers_dropdown();
 
 			/**
 			 * Fires before the Filter button on the Posts and Pages list tables.
@@ -352,43 +350,5 @@ class InvoicesListTable extends ListTable {
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
 		do_action( 'manage_invoices_extra_tablenav', $which );
-	}
-
-	/**
-	 * Displays a a dropdown to filter by customers.
-	 *
-	 * @access protected
-	 */
-	protected function customers_dropdown() {
-		/**
-		 * Filters whether to remove the 'Formats' drop-down from the product list table.
-		 *
-		 * @param bool $disable Whether to disable the drop-down. Default false.
-		 */
-		if ( apply_filters( 'surecart/disable_customers_dropdown', false ) ) {
-			return;
-		}
-
-		// Get the customers for specfic live or test mode.
-		$customers = Customer::where(
-			[
-				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			]
-		)->get();
-		$displayed_customer = isset( $_GET['sc_customer'] ) ? sanitize_text_field( wp_unslash( $_GET['sc_customer'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		?>
-
-		<label for="filter-by-customer" class="screen-reader-text">
-			<?php esc_html_e( 'Filter by Customer', 'surecart' ); ?>
-		</label>
-		<select name="sc_customer" id="filter-by-customer">
-			<option <?php selected( $displayed_customer, '' ); ?> value=""><?php esc_html_e( 'All Customers', 'surecart' ); ?></option>
-			<?php foreach ( $customers as $customer ) : ?>
-				<option <?php selected( $displayed_customer, $customer->id ); ?> value="<?php echo esc_attr( $customer->id ); ?>">
-					<?php echo esc_html( $customer->first_name . ' ' . $customer->last_name ); ?>
-				</option>
-			<?php endforeach; ?>
-		</select>
-		<?php
 	}
 }
