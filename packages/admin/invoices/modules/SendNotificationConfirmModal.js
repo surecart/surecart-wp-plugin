@@ -22,7 +22,7 @@ import { checkoutExpands } from '../Invoice';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ title, onRequestClose, paymentMethod }) => {
-	const { invoice, editInvoice, receiveInvoice } = useInvoice();
+	const { invoice, editInvoice, receiveInvoice, saveInvoice } = useInvoice();
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -35,54 +35,54 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 		),
 	};
 
-	const onSaveInvoice = async () => {
-		try {
-			setBusy(true);
-			setError(false);
+	// const onSaveInvoice = async () => {
+	// 	try {
+	// 		setBusy(true);
+	// 		setError(false);
 
-			// Set the notification_enabled flag by default to true.
-			invoice.notifications_enabled = notificationsEnabled;
+	// 		// Set the notification_enabled flag by default to true.
+	// 		invoice.notifications_enabled = notificationsEnabled;
 
-			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
-			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
+	// 		// Save the invoice, Remember, don't call saveEditedEntityRecord() here
+	// 		// as receiveEntityRecords() makes updates disallowed, or find a better approach.
+	// 		const { baseURL } = select(coreStore).getEntityConfig(
+	// 			'surecart',
+	// 			'invoice'
+	// 		);
 
-			await apiFetch({
-				method: 'PATCH',
-				path: `${baseURL}/${invoice?.id}?refresh_status=1`,
-				data: invoice,
-			});
+	// 		await apiFetch({
+	// 			method: 'PATCH',
+	// 			path: `${baseURL}/${invoice?.id}?refresh_status=1`,
+	// 			data: invoice,
+	// 		});
 
-			// Change the invoice status to open.
-			const invoiceData = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${invoice?.id}/open`, {
-					expand: checkoutExpands,
-					...(paymentMethod?.id && {
-						manual_payment: !!paymentMethod.manual,
-						...(paymentMethod.manual
-							? { manual_payment_method_id: paymentMethod.id }
-							: { payment_method_id: paymentMethod.id }),
-					}),
-				}),
-			});
+	// 		// Change the invoice status to open.
+	// 		const invoiceData = await apiFetch({
+	// 			method: 'PATCH',
+	// 			path: addQueryArgs(`${baseURL}/${invoice?.id}/open`, {
+	// 				expand: checkoutExpands,
+	// 				...(paymentMethod?.id && {
+	// 					manual_payment: !!paymentMethod.manual,
+	// 					...(paymentMethod.manual
+	// 						? { manual_payment_method_id: paymentMethod.id }
+	// 						: { payment_method_id: paymentMethod.id }),
+	// 				}),
+	// 			}),
+	// 		});
 
-			receiveInvoice(invoiceData);
+	// 		receiveInvoice(invoiceData);
 
-			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
-				type: 'snackbar',
-			});
-			onRequestClose();
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
+	// 		createSuccessNotice(__('Invoice Saved.', 'surecart'), {
+	// 			type: 'snackbar',
+	// 		});
+	// 		onRequestClose();
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 		setError(e);
+	// 	} finally {
+	// 		setBusy(false);
+	// 	}
+	// };
 
 	return (
 		<Modal
@@ -95,7 +95,7 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 			<Error error={error} />
 
 			<ScForm
-				onScFormSubmit={onSaveInvoice}
+				onScFormSubmit={saveInvoice}
 				css={css`
 					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}

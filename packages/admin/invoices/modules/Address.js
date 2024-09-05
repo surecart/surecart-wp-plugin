@@ -29,14 +29,13 @@ import EditAddress from './EditAddress';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, loading, busy, setBusy, receiveInvoice } =
-		useInvoice();
+	const { invoice, checkout, loading, busy, receiveInvoice } = useInvoice();
 	const isDraftInvoice = invoice?.status === 'draft';
 	const [open, setOpen] = useState(false);
 
 	const onChange = async (shipping_address) => {
 		try {
-			setBusy(true);
+			// setBusy(true);
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -61,7 +60,7 @@ export default () => {
 			console.error(e);
 			setError(e);
 		} finally {
-			setBusy(false);
+			// setBusy(false);
 		}
 	};
 

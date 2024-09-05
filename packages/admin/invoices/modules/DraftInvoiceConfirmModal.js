@@ -19,7 +19,7 @@ import { checkoutExpands } from '../Invoice';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ onRequestClose, open }) => {
-	const { invoice, busy, setBusy, receiveInvoice } = useInvoice();
+	const { invoice, busy, receiveInvoice, draftInvoice } = useInvoice();
 	if (!invoice?.id) {
 		return null;
 	}
@@ -27,43 +27,43 @@ export default ({ onRequestClose, open }) => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const onConfirm = async () => {
-		try {
-			setBusy(true);
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
+	// const onConfirm = async () => {
+	// 	try {
+	// 		setBusy(true);
+	// 		const { baseURL } = select(coreStore).getEntityConfig(
+	// 			'surecart',
+	// 			'invoice'
+	// 		);
 
-			const invoiceData = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${invoice?.id}/make_draft`, {
-					expand: checkoutExpands,
-				}),
-			});
+	// 		const invoiceData = await apiFetch({
+	// 			method: 'PATCH',
+	// 			path: addQueryArgs(`${baseURL}/${invoice?.id}/make_draft`, {
+	// 				expand: checkoutExpands,
+	// 			}),
+	// 		});
 
-			receiveInvoice(invoiceData);
+	// 		receiveInvoice(invoiceData);
 
-			createSuccessNotice(
-				__('Invoice marked as draft, you can now edit it.', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
+	// 		createSuccessNotice(
+	// 			__('Invoice marked as draft, you can now edit it.', 'surecart'),
+	// 			{
+	// 				type: 'snackbar',
+	// 			}
+	// 		);
 
-			onRequestClose();
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
+	// 		onRequestClose();
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 		setError(e);
+	// 	} finally {
+	// 		setBusy(false);
+	// 	}
+	// };
 
 	return (
 		<ConfirmDialog
 			isOpen={open}
-			onConfirm={onConfirm}
+			onConfirm={draftInvoice}
 			onCancel={onRequestClose}
 		>
 			<Error error={error} />

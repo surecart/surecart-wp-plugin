@@ -18,7 +18,7 @@ import { checkoutExpands } from '../Invoice';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, setBusy, receiveInvoice } = useInvoice();
+	const { invoice, checkout, receiveInvoice, addLineItem, updateLineItem } = useInvoice();
 	const [price, setPrice] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 
@@ -29,66 +29,66 @@ export default () => {
 		}
 	}, [price]);
 
-	const updateLineItem = async (id, data) => {
-		try {
-			setBusy(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'line_item'
-			);
+	// const updateLineItem = async (id, data) => {
+	// 	try {
+	// 		setBusy(true);
+	// 		// get the line items endpoint.
+	// 		const { baseURL } = select(coreStore).getEntityConfig(
+	// 			'surecart',
+	// 			'line_item'
+	// 		);
 
-			const { checkout: checkoutUpdated } = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}`, {
-					expand: checkoutExpands,
-				}),
-				data,
-			});
+	// 		const { checkout: checkoutUpdated } = await apiFetch({
+	// 			method: 'PATCH',
+	// 			path: addQueryArgs(`${baseURL}/${id}`, {
+	// 				expand: checkoutExpands,
+	// 			}),
+	// 			data,
+	// 		});
 
-			receiveInvoice({
-				...invoice,
-				checkout: checkoutUpdated,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
-		}
-	};
+	// 		receiveInvoice({
+	// 			...invoice,
+	// 			checkout: checkoutUpdated,
+	// 		});
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 		createErrorNotice(e);
+	// 	} finally {
+	// 		setBusy(false);
+	// 	}
+	// };
 
-	const addLineItem = async (data) => {
-		try {
-			setBusy(true);
+	// const addLineItem = async (data) => {
+	// 	try {
+	// 		setBusy(true);
 
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'line_item'
-			);
+	// 		// get the line items endpoint.
+	// 		const { baseURL } = select(coreStore).getEntityConfig(
+	// 			'surecart',
+	// 			'line_item'
+	// 		);
 
-			// add the line item.
-			const { checkout: checkoutUpdated } = await apiFetch({
-				method: 'POST',
-				path: addQueryArgs(baseURL, {
-					expand: checkoutExpands,
-				}),
-				data,
-			});
+	// 		// add the line item.
+	// 		const { checkout: checkoutUpdated } = await apiFetch({
+	// 			method: 'POST',
+	// 			path: addQueryArgs(baseURL, {
+	// 				expand: checkoutExpands,
+	// 			}),
+	// 			data,
+	// 		});
 
-			receiveInvoice({
-				...invoice,
-				checkout: checkoutUpdated,
-			});
-			setPrice(false);
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
-		}
-	};
+	// 		receiveInvoice({
+	// 			...invoice,
+	// 			checkout: checkoutUpdated,
+	// 		});
+	// 		setPrice(false);
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 		createErrorNotice(e);
+	// 	} finally {
+	// 		setBusy(false);
+	// 	}
+	// };
 
 	const onSubmit = async (priceId, variantId = null) => {
 		const priceExists = checkout?.line_items?.data?.find(

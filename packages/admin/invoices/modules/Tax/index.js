@@ -18,13 +18,13 @@ import TaxId from './TaxId';
 import { useInvoice } from '../../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, loading, busy, setBusy, receiveInvoice } =
+	const { invoice, checkout, loading, busy, receiveInvoice } =
 		useInvoice();
 	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const onChange = async ({ tax_identifier, tax_behavior }) => {
 		try {
-			setBusy(true);
+			// setBusy(true);
 
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -50,7 +50,7 @@ export default () => {
 			console.error(e);
 			createErrorNotice(e);
 		} finally {
-			setBusy(false);
+			// setBusy(false);
 		}
 	};
 

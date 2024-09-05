@@ -25,13 +25,13 @@ import EditAddress from './EditAddress';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, setBusy, loading, receiveInvoice } = useInvoice();
+	const { invoice, checkout, loading, receiveInvoice } = useInvoice();
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const [open, setOpen] = useState(false);
 
 	const onShippingChange = async (shippingId) => {
 		try {
-			setBusy(true);
+			// setBusy(true);
 
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -57,7 +57,7 @@ export default () => {
 			console.error(e);
 			createErrorNotice(e);
 		} finally {
-			setBusy(false);
+			// setBusy(false);
 		}
 	};
 

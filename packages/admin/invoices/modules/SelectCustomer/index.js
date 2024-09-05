@@ -29,11 +29,13 @@ import { useInvoice } from '../../hooks/useInvoice';
 export default ({ onSuccess }) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const { invoice, checkout, loading, live_mode, setBusy, receiveInvoice } =
+	const { invoice, checkout, loading, live_mode, receiveInvoice } =
 		useInvoice();
 
 	const onCustomerUpdate = async (customerID = false) => {
 		try {
+			// setBusy(true);
+
 			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -71,7 +73,7 @@ export default ({ onSuccess }) => {
 			console.error(e);
 			createErrorNotice(e);
 		} finally {
-			setBusy(false);
+			// setBusy(false);
 		}
 	};
 

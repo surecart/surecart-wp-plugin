@@ -23,77 +23,84 @@ import { checkoutExpands } from '../Invoice';
 import { useInvoice } from '../hooks/useInvoice';
 import { ScEmpty, ScTable, ScTableCell } from '@surecart/components-react';
 
-export default ({ setBusy }) => {
-	const { invoice, checkout, loading, isDraftInvoice, receiveInvoice } =
-		useInvoice();
+export default () => {
+	const {
+		invoice,
+		checkout,
+		loading,
+		isDraftInvoice,
+		receiveInvoice,
+		onRemovePrice,
+		onChangePrice,
+	} = useInvoice();
 
 	const line_items = checkout?.line_items?.data || [];
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { deleteEntityRecord } = useDispatch(coreStore);
 
-	const onRemove = async (id) => {
-		try {
-			setBusy(true);
+	// const onRemove = async (id) => {
+	// 	try {
+	// 		setBusy(true);
 
-			// delete the entity record.
-			await deleteEntityRecord('surecart', 'line_item', id, null, {
-				throwOnError: true,
-			});
+	// 		// delete the entity record.
+	// 		await deleteEntityRecord('surecart', 'line_item', id, null, {
+	// 			throwOnError: true,
+	// 		});
 
-			// get the checkouts endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
+	// 		// get the checkouts endpoint.
+	// 		const { baseURL } = select(coreStore).getEntityConfig(
+	// 			'surecart',
+	// 			'draft-checkout'
+	// 		);
 
-			// fetch the updated checkout.
-			const data = await apiFetch({
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-				}),
-			});
+	// 		// fetch the updated checkout.
+	// 		const data = await apiFetch({
+	// 			path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
+	// 				expand,
+	// 			}),
+	// 		});
 
-			receiveInvoice({
-				...invoice,
-				checkout: data,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
-		}
-	};
+	// 		receiveInvoice({
+	// 			...invoice,
+	// 			checkout: data,
+	// 		});
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 		createErrorNotice(e);
+	// 	} finally {
+	// 		setBusy(false);
+	// 	}
+	// };
 
-	const onChange = async (id, data) => {
-		try {
-			setBusy(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'line_item'
-			);
+	// const onChange = async (id, data) => {
+	// 	try {
+	// 		setBusy(true);
+	// 		// get the line items endpoint.
+	// 		const { baseURL } = select(coreStore).getEntityConfig(
+	// 			'surecart',
+	// 			'line_item'
+	// 		);
 
-			const { checkout: updatedCheckout } = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}`, {
-					expand: checkoutExpands,
-				}),
-				data,
-			});
+	// 		const { checkout: updatedCheckout } = await apiFetch({
+	// 			method: 'PATCH',
+	// 			path: addQueryArgs(`${baseURL}/${id}`, {
+	// 				expand: checkoutExpands,
+	// 			}),
+	// 			data,
+	// 		});
 
-			receiveInvoice({
-				...invoice,
-				checkout: updatedCheckout,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
-		}
-	};
+	// 		receiveInvoice({
+	// 			...invoice,
+	// 			checkout: updatedCheckout,
+	// 		});
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 		createErrorNotice(e);
+	// 	} finally {
+	// 		setBusy(false);
+	// 	}
+	// };
 
 	const renderPrices = () => {
 		if (!line_items?.length && isDraftInvoice) {
@@ -146,8 +153,8 @@ export default ({ setBusy }) => {
 							quantity={quantity}
 							subtotal_amount={subtotal_amount}
 							ad_hoc_amount={ad_hoc_amount}
-							onRemove={() => onRemove(id)}
-							onChange={(data) => onChange(id, data)}
+							onRemove={() => onRemovePrice(id)}
+							onChange={(data) => onChangePrice(id, data)}
 							checkout={checkout}
 							variant_options={variant_options}
 						/>
