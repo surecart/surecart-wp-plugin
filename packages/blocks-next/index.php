@@ -218,10 +218,7 @@ add_action(
 					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
 				],
-				[
-					'id'     => 'wp-a11y',
-					'import' => 'dynamic',
-				],
+				'wp-a11y',
 			],
 			$static_assets['version']
 		);
@@ -334,10 +331,7 @@ add_action(
 					'id'     => '@surecart/cart',
 					'import' => 'dynamic',
 				),
-				array(
-					'id'     => 'wp-a11y',
-					'import' => 'dynamic',
-				),
+				'wp-a11y',
 			),
 			$static_assets['version']
 		);
