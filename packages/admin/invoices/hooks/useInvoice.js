@@ -5,13 +5,13 @@ import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { store as noticesStore } from '@wordpress/notices';
-import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
 import { store as dataStore } from '@surecart/data';
+import { store as uiStore } from '../../store/ui';
 import expand from '../checkout-query';
 // import { checkoutExpands } from '../Invoice';
 
@@ -19,7 +19,8 @@ export const useInvoice = () => {
 	const urlParams = getQueryArgs(window.location.href);
 	const defaultLiveMode = urlParams.live_mode === 'false' ? false : true;
 	const id = useSelect((select) => select(dataStore).selectPageId());
-	const [busy, setBusy] = useState(false);
+	const { setSaving: setBusy } = useDispatch(uiStore);
+	const busy = useSelect((select) => select(uiStore).isSaving());
 	const { receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
