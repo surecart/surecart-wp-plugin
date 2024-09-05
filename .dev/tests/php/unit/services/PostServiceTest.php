@@ -82,4 +82,24 @@ class PostServiceTest extends SureCartUnitTestCase {
 		$this->assertNotNull($post);
 		$this->assertEquals($post->ID, $form_id);
 	}
+
+	/**
+	 * @group forms
+	 */
+	public function test_gets_form_post_from_page_shortcode() {
+		$form_id = $this->factory()->post->create([
+			'post_type' => 'sc_form',
+			'post_content' => '<!-- wp:surecart/form /-->',
+		]);
+
+		$checkout_page_id = $this->factory()->post->create([
+			'post_type' => 'sc_form',
+			'post_content' => '[sc_form id="' . (int) $form_id . '"]',
+		]);
+
+		$service = \SureCart::post();
+		$post = $service->getFormPostFromBlock($checkout_page_id);
+		$this->assertNotNull($post);
+		$this->assertEquals($post->ID, $form_id);
+	}
 }
