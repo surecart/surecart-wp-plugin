@@ -4,27 +4,19 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 import { Modal } from '@wordpress/components';
-import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
-import Error from '../../components/Error';
 import { ScButton, ScForm, ScSwitch } from '@surecart/components-react';
-import { checkoutExpands } from '../Invoice';
 import { useInvoice } from '../hooks/useInvoice';
+import Error from '../../components/Error';
 
 export default ({ title, onRequestClose, paymentMethod }) => {
-	const { invoice, editInvoice, receiveInvoice, saveInvoice } = useInvoice();
-	const [error, setError] = useState(false);
-	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { invoice, editInvoice, busy, error, saveInvoice } = useInvoice();
 	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
 	const messages = {
@@ -34,55 +26,6 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 			'surecart'
 		),
 	};
-
-	// const onSaveInvoice = async () => {
-	// 	try {
-	// 		setBusy(true);
-	// 		setError(false);
-
-	// 		// Set the notification_enabled flag by default to true.
-	// 		invoice.notifications_enabled = notificationsEnabled;
-
-	// 		// Save the invoice, Remember, don't call saveEditedEntityRecord() here
-	// 		// as receiveEntityRecords() makes updates disallowed, or find a better approach.
-	// 		const { baseURL } = select(coreStore).getEntityConfig(
-	// 			'surecart',
-	// 			'invoice'
-	// 		);
-
-	// 		await apiFetch({
-	// 			method: 'PATCH',
-	// 			path: `${baseURL}/${invoice?.id}?refresh_status=1`,
-	// 			data: invoice,
-	// 		});
-
-	// 		// Change the invoice status to open.
-	// 		const invoiceData = await apiFetch({
-	// 			method: 'PATCH',
-	// 			path: addQueryArgs(`${baseURL}/${invoice?.id}/open`, {
-	// 				expand: checkoutExpands,
-	// 				...(paymentMethod?.id && {
-	// 					manual_payment: !!paymentMethod.manual,
-	// 					...(paymentMethod.manual
-	// 						? { manual_payment_method_id: paymentMethod.id }
-	// 						: { payment_method_id: paymentMethod.id }),
-	// 				}),
-	// 			}),
-	// 		});
-
-	// 		receiveInvoice(invoiceData);
-
-	// 		createSuccessNotice(__('Invoice Saved.', 'surecart'), {
-	// 			type: 'snackbar',
-	// 		});
-	// 		onRequestClose();
-	// 	} catch (e) {
-	// 		console.error(e);
-	// 		setError(e);
-	// 	} finally {
-	// 		setBusy(false);
-	// 	}
-	// };
 
 	return (
 		<Modal
@@ -95,7 +38,15 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 			<Error error={error} />
 
 			<ScForm
-				onScFormSubmit={saveInvoice}
+				onScFormSubmit={async () => {
+					const data = await saveInvoice({
+						paymentMethod,
+						notificationsEnabled,
+					});
+					if (!!data) {
+						onRequestClose();
+					}
+				}}
 				css={css`
 					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}
