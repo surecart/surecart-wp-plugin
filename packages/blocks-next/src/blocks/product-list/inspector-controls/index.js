@@ -6,18 +6,68 @@ import {
 import { __ } from '@wordpress/i18n';
 import { TaxonomyControls } from './TaxonomyControls';
 import KeywordControls from './KeywordControls';
+import IncludeControls from './IncludeControls';
+import { PanelBody } from '@wordpress/components';
+import { RangeControl } from '@wordpress/components';
+import { SelectControl } from '@wordpress/components';
 
 export default function ProductListInspectorControls({
 	onUpdateQuery,
-	attributes,
-}) {
-	const {
+	setAttributes,
+	attributes: {
+		type,
 		query,
-		query: { taxQuery },
-	} = attributes;
-
+		query: { perPage, offset, taxQuery },
+	},
+}) {
 	return (
 		<InspectorControls>
+			<PanelBody title={__('Attributes', 'surecart')}>
+				<RangeControl
+					label={__('Products Per Page', 'surecart')}
+					value={perPage}
+					onChange={(perPage) => onUpdateQuery({ perPage })}
+					step={1}
+					min={1}
+					max={40}
+				/>
+
+				<RangeControl
+					label={__('Offset', 'surecart')}
+					value={offset}
+					onChange={(offset) => onUpdateQuery({ offset })}
+					step={1}
+					min={0}
+					max={100}
+				/>
+			</PanelBody>
+
+			<PanelBody title={__('Products', 'surecart')}>
+				<SelectControl
+					label={__('Products To Show', 'surecart')}
+					value={type}
+					options={[
+						{
+							value: 'all',
+							label: __('All Products', 'surecart'),
+						},
+						{
+							value: 'featured',
+							label: __('Featured Products', 'surecart'),
+						},
+						{
+							value: 'custom',
+							label: __('Hand Pick Products', 'surecart'),
+						},
+					]}
+					onChange={(type) => setAttributes({ type })}
+				/>
+
+				{type === 'custom' && (
+					<IncludeControls onChange={onUpdateQuery} query={query} />
+				)}
+			</PanelBody>
+
 			<ToolsPanel
 				className="block-library-query-toolspanel__filters" // unused but kept for backward compatibility
 				label={__('Filters', 'surecart')}
