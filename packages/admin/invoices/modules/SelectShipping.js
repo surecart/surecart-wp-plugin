@@ -1,12 +1,7 @@
 /**
  * External dependencies.
  */
-import apiFetch from '@wordpress/api-fetch';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
-import { useDispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,46 +15,13 @@ import {
 	ScButton,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import expand from '../checkout-query';
 import EditAddress from './EditAddress';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, loading, receiveInvoice } = useInvoice();
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const { invoice, checkout, loading, isDraftInvoice, updateCheckout } =
+		useInvoice();
 	const [open, setOpen] = useState(false);
-
-	const onShippingChange = async (shippingId) => {
-		try {
-			// setBusy(true);
-
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-				}),
-				data: {
-					selected_shipping_choice: shippingId, // update the shipping choice.
-					customer_id: checkout?.customer_id,
-				},
-			});
-
-			receiveInvoice({
-				...invoice,
-				checkout: data,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			// setBusy(false);
-		}
-	};
 
 	if (
 		!checkout?.selected_shipping_choice_required &&
@@ -103,13 +65,20 @@ export default () => {
 		);
 	}
 
-	if (invoice?.status !== 'draft') {
+	if (!isDraftInvoice) {
 		return null;
 	}
 
 	return (
 		<Box title={__('Shipping', 'surecart')} loading={loading}>
-			<ScChoices onScChange={(e) => onShippingChange(e.target.value)}>
+			<ScChoices
+				onScChange={(e) => {
+					updateCheckout({
+						selected_shipping_choice: e?.target?.value,
+						customer_id: checkout?.customer_id,
+					});
+				}}
+			>
 				{(checkout?.shipping_choices?.data || []).map(
 					({ id, amount, currency, shipping_method }) => {
 						return (

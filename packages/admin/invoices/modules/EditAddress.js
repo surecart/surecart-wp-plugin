@@ -4,11 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,15 +16,12 @@ import {
 	ScAddress,
 	ScForm,
 } from '@surecart/components-react';
-import expand from '../checkout-query';
 import Error from '../../components/Error';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ open, onRequestClose }) => {
-	const [busy, setBusy] = useState(false);
-	const [error, setError] = useState(false);
-	const { invoice, checkout, receiveInvoice } = useInvoice();
-	const isDraftInvoice = invoice?.status === 'draft';
+	const { checkout, busy, isDraftInvoice, error, updateCheckout } =
+		useInvoice();
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
 		checkout?.shipping_address
 	);
@@ -38,45 +31,20 @@ export default ({ open, onRequestClose }) => {
 		setCustomerShippingAddress(checkout?.shipping_address);
 	}, [checkout?.shipping_address, open]);
 
-	const onChange = async (shipping_address) => {
-		try {
-			setBusy(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, { expand }),
-				data: {
-					shipping_address,
-				},
-			});
-
-			receiveInvoice({
-				...invoice,
-				checkout: data,
-			});
-
-			onRequestClose();
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
 	if (!isDraftInvoice) return null;
 
 	return (
 		<ScForm
-			onScFormSubmit={(e) => {
+			onScFormSubmit={async (e) => {
 				e.preventDefault();
 				e.stopImmediatePropagation();
-				onChange(customerShippingAddress);
+
+				const data = await updateCheckout({
+					shipping_address: customerShippingAddress,
+				});
+				if (!!data) {
+					onRequestClose();
+				}
 			}}
 		>
 			<ScDialog
@@ -91,7 +59,7 @@ export default ({ open, onRequestClose }) => {
 						gap: var(--sc-form-row-spacing);
 					`}
 				>
-					<Error error={error} setError={setError} />
+					<Error error={error} />
 					<ScAddress
 						showName={true}
 						showLine2={true}

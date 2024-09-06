@@ -4,11 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -23,44 +19,21 @@ import {
 	ScBlockUi,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import expand from '../checkout-query';
 import AddressDisplay from '../../components/AddressDisplay';
 import EditAddress from './EditAddress';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, loading, busy, receiveInvoice } = useInvoice();
-	const isDraftInvoice = invoice?.status === 'draft';
+	const { checkout, loading, busy, isDraftInvoice, updateCheckout } =
+		useInvoice();
 	const [open, setOpen] = useState(false);
 
 	const onChange = async (shipping_address) => {
-		try {
-			// setBusy(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, { expand }),
-				data: {
-					shipping_address,
-				},
-			});
-
-			receiveInvoice({
-				...invoice,
-				checkout: data,
-			});
-
+		const data = await updateCheckout({
+			shipping_address,
+		});
+		if (!!data) {
 			setOpen(false);
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			// setBusy(false);
 		}
 	};
 
