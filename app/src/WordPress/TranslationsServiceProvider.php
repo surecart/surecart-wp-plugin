@@ -74,6 +74,10 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 					$file       = $first_part . 'plugins/surecart-' . get_locale() . '.json';
 				}
 			}
+
+			if ( false === $file ) {	
+				$file = SURECART_LANGUAGE_DIR . '/surecart-' . get_locale() . '.json';	
+			}
 		}
 		return $file;
 	}
