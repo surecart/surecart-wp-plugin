@@ -15,11 +15,6 @@ class ElementorWidgetsService {
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerNestedWidgets' ] );
 		add_action(
-			'wp_enqueue_scripts',
-			function () {
-			}
-		);
-		add_action(
 			'elementor/editor/before_enqueue_scripts',
 			function () {
 				wp_enqueue_script( 'surecart-elementor-product', plugins_url( 'Widgets/Nested/assets/js/editor/index.js', __FILE__ ), [ 'elementor-common' ], '1.0', true );

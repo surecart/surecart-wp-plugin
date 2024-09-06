@@ -1,3 +1,16 @@
+class View extends $e.components.get('nested-elements').exports.NestedView {
+	onAddChild(childView) {
+		const accordionId = childView._parent.$el
+			.find('summary')
+			?.attr('aria-controls');
+
+		// childView.$el.attr({
+		// 	role: 'region',
+		// 	'aria-labelledby': accordionId,
+		// });
+	}
+}
+
 class Product extends elementor.modules.elements.types.NestedElementBase {
 	getType() {
 		return 'surecart-product';
@@ -7,9 +20,9 @@ class Product extends elementor.modules.elements.types.NestedElementBase {
 	// 	return View;
 	// }
 }
+
 export default class Module {
 	constructor() {
-		console.log(elementor.elementsManager.registerElementType);
 		elementor.elementsManager.registerElementType(new Product());
 	}
 }
