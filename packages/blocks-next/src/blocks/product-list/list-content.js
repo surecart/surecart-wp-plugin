@@ -16,6 +16,7 @@ import {
 import { useEntityRecords } from '@wordpress/core-data';
 import { TEMPLATE } from './template';
 import ProductSelector from '../../components/ProductSelector';
+import ProductListInspectorControls from './inspector-controls';
 import Icon from '../../components/Icon';
 import ListToolbar from '../../utilities/patterns-toolbar';
 import { useEffect } from '@wordpress/element';
@@ -28,7 +29,7 @@ export default function ProductListEdit({
 		ids,
 		type,
 		query,
-		query: { perPage, include, offset },
+		query: { perPage, include, offset, taxQuery, search },
 	},
 	name,
 	clientId,
@@ -162,6 +163,10 @@ export default function ProductListEdit({
 					)}
 				</PanelBody>
 			</InspectorControls>
+			<ProductListInspectorControls
+				attributes={attributes}
+				onUpdateQuery={updateQuery}
+			/>
 			<BlockControls>
 				<ListToolbar
 					name={name}

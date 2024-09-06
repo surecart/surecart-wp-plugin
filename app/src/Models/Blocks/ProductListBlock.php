@@ -89,6 +89,25 @@ class ProductListBlock {
 			)
 		);
 
+		// handle search.
+		if ( ! empty( $query['search'] ) && empty( $this->query_vars['s'] ) ) {
+			$this->query_vars['s'] = $query['search'];
+		}
+
+		// handle tax query.
+		if ( ! empty( $query['taxQuery'] ) ) {
+			$this->query_vars['tax_query'] = array();
+			foreach ( $query['taxQuery'] as $taxonomy => $terms ) {
+				if ( is_taxonomy_viewable( $taxonomy ) && ! empty( $terms ) ) {
+					$this->query_vars['tax_query'][] = array(
+						'taxonomy'         => $taxonomy,
+						'terms'            => array_filter( array_map( 'intval', $terms ) ),
+						'include_children' => false,
+					);
+				}
+			}
+		}
+
 		// put together price query.
 		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
 			$this->query_vars['meta_key'] = 'min_price_amount';
