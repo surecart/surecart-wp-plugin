@@ -5,6 +5,7 @@ import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { store as noticesStore } from '@wordpress/notices';
+import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
@@ -13,14 +14,14 @@ import apiFetch from '@wordpress/api-fetch';
 import { store as dataStore } from '@surecart/data';
 import { store as uiStore } from '../../store/ui';
 import expand from '../checkout-query';
-// import { checkoutExpands } from '../Invoice';
 
 export const useInvoice = () => {
 	const urlParams = getQueryArgs(window.location.href);
 	const defaultLiveMode = urlParams.live_mode === 'false' ? false : true;
 	const id = useSelect((select) => select(dataStore).selectPageId());
-	const { setSaving: setBusy } = useDispatch(uiStore);
+	const { setSaving: setBusy, setError } = useDispatch(uiStore);
 	const busy = useSelect((select) => select(uiStore).isSaving());
+	const error = useSelect((select) => select(uiStore).getError());
 	const { receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
@@ -57,10 +58,10 @@ export const useInvoice = () => {
 		);
 	};
 
-	const saveInvoice = async () => {
+	const saveInvoice = async ({ paymentMethod, notificationsEnabled }) => {
 		try {
 			setBusy(true);
-			setError(false);
+			setError(null);
 
 			// Set the notification_enabled flag by default to true.
 			invoice.notifications_enabled = notificationsEnabled;
@@ -78,12 +79,12 @@ export const useInvoice = () => {
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${invoice?.id}/open`, {
 					expand: checkoutExpands,
-					// ...(paymentMethod?.id && {
-					// 	manual_payment: !!paymentMethod.manual,
-					// 	...(paymentMethod.manual
-					// 		? { manual_payment_method_id: paymentMethod.id }
-					// 		: { payment_method_id: paymentMethod.id }),
-					// }),
+					...(paymentMethod?.id && {
+						manual_payment: !!paymentMethod.manual,
+						...(paymentMethod.manual
+							? { manual_payment_method_id: paymentMethod.id }
+							: { payment_method_id: paymentMethod.id }),
+					}),
 				}),
 			});
 
@@ -92,10 +93,11 @@ export const useInvoice = () => {
 			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
 				type: 'snackbar',
 			});
-			// onRequestClose();
+
+			return invoiceData;
 		} catch (e) {
 			console.error(e);
-			// setError(e);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -104,6 +106,7 @@ export const useInvoice = () => {
 	const draftInvoice = async () => {
 		try {
 			setBusy(true);
+			setError(null);
 
 			const invoiceData = await apiFetch({
 				method: 'PATCH',
@@ -121,7 +124,7 @@ export const useInvoice = () => {
 				}
 			);
 
-			onRequestClose();
+			return invoiceData;
 		} catch (e) {
 			console.error(e);
 			setError(e);
@@ -156,9 +159,11 @@ export const useInvoice = () => {
 				...invoice,
 				checkout: data,
 			});
+
+			return data;
 		} catch (e) {
 			console.error(e);
-			// createErrorNotice(e);
+			setE(e);
 		} finally {
 			setBusy(false);
 		}
@@ -185,9 +190,11 @@ export const useInvoice = () => {
 				...invoice,
 				checkout,
 			});
+
+			return checkout;
 		} catch (e) {
 			console.error(e);
-			// createErrorNotice(e);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -216,10 +223,11 @@ export const useInvoice = () => {
 				...invoice,
 				checkout,
 			});
-			// setPrice(false);
+
+			return checkout;
 		} catch (e) {
 			console.error(e);
-			// createErrorNotice(e);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -228,7 +236,7 @@ export const useInvoice = () => {
 	const updateLineItem = async (id, data) => {
 		try {
 			setBusy(true);
-			// get the line items endpoint.
+
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'line_item'
@@ -246,9 +254,80 @@ export const useInvoice = () => {
 				...invoice,
 				checkout,
 			});
+
+			return checkout;
 		} catch (e) {
 			console.error(e);
-			// createErrorNotice(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	const updateCheckout = async (requestData = {}) => {
+		try {
+			setBusy(true);
+			setError(null);
+
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'draft-checkout'
+			);
+
+			const data = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${invoice?.checkout?.id}`, {
+					expand,
+				}),
+				data: requestData,
+			});
+
+			receiveInvoice({
+				...invoice,
+				checkout: data,
+			});
+
+			return data;
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	const markAsPaid = async () => {
+		try {
+			setBusy(true);
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'checkout'
+			);
+
+			const checkoutUpdated = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(
+					`${baseURL}/${invoice?.checkout?.id}/manually_pay`,
+					{
+						expand,
+					}
+				),
+			});
+
+			receiveInvoice({
+				...invoice,
+				status: checkoutUpdated?.status,
+				checkout: checkoutUpdated,
+			});
+
+			createSuccessNotice(__('Invoice marked as Paid.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			return checkoutUpdated;
+		} catch (e) {
+			console.error(e);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -258,6 +337,8 @@ export const useInvoice = () => {
 		loading,
 		invoice,
 		busy,
+		error,
+		setError,
 		live_mode:
 			invoice?.live_mode !== undefined
 				? invoice.live_mode
@@ -273,5 +354,7 @@ export const useInvoice = () => {
 		onChangePrice,
 		addLineItem,
 		updateLineItem,
+		updateCheckout,
+		markAsPaid,
 	};
 };
