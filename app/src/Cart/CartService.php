@@ -260,7 +260,7 @@ class CartService {
 	 * @return \WP_Post The default form post.
 	 */
 	public function getForm() {
-		return \SureCart::post()->getFormPostFromBlock( get_post() ) ?? \SureCart::forms()->getDefault();
+		return \SureCart::forms()->getDefault();
 	}
 
 	/**

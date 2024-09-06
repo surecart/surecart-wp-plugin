@@ -186,20 +186,21 @@ class FormPostTypeService {
 	/**
 	 * Get the default checkout form post.
 	 *
-	 * @return WP_Post|null
+	 * @return \WP_Post|null
 	 */
 	public function getDefault() {
-		return $this->findByOptionName( $this->default_form_name );
+		$form_post = \SureCart::post()->getFormPostFromBlock( get_option( 'surecart_checkout_page_id' ) );
+		return $form_post ?? $this->findByOptionName( $this->default_form_name );
 	}
 
 	/**
 	 * Get the default checkout form post.
 	 *
-	 * @return WP_Post|null
+	 * @return int|null
 	 */
 	public function getDefaultId() {
-		$form = $this->findByOptionName( $this->default_form_name );
-		return $form ? $form->ID : null;
+		$form = $this->getDefault();
+		return $form->ID ?? null;
 	}
 
 	/**
