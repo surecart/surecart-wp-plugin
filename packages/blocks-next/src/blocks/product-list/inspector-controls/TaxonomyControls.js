@@ -96,9 +96,6 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 	const debouncedSearch = useDebounce(setSearch, 250);
 	const { searchResults, searchHasResolved } = useSelect(
 		(select) => {
-			if (!search) {
-				return { searchResults: EMPTY_ARRAY, searchHasResolved: true };
-			}
 			const { getEntityRecords, hasFinishedResolution } =
 				select(coreStore);
 			const selectorArgs = [
@@ -122,6 +119,11 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 		},
 		[search, termIds]
 	);
+
+	const fetchSuggestions = () => {
+		debouncedSearch(search);
+	};
+
 	// `existingTerms` are the ones fetched from the API and their type is `{ id: number; name: string }`.
 	// They are used to extract the terms' names to populate the `FormTokenField` properly
 	// and to sanitize the provided `termIds`, by setting only the ones that exist.
@@ -185,12 +187,14 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 			<FormTokenField
 				label={taxonomy.name}
 				value={value}
+				onFocus={fetchSuggestions}
 				onInputChange={debouncedSearch}
 				suggestions={suggestions}
 				displayTransform={decodeEntities}
 				onChange={onTermsChange}
-				__experimentalShowHowTo={false}
+				__experimentalShowHowTo={true}
 				__nextHasNoMarginBottom
+				__experimentalExpandOnFocus={true}
 				__next40pxDefaultSize
 			/>
 		</div>

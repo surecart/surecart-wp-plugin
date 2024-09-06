@@ -2,33 +2,19 @@ import { InspectorControls } from '@wordpress/block-editor';
 import {
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
-	TextControl,
 } from '@wordpress/components';
-import { useCallback, useState, useEffect } from '@wordpress/element';
-import { debounce } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
 import { TaxonomyControls } from './TaxonomyControls';
+import KeywordControls from './KeywordControls';
 
 export default function ProductListInspectorControls({
 	onUpdateQuery,
 	attributes,
 }) {
-	const { query } = attributes;
-	const { taxQuery } = query;
-
-	const [querySearch, setQuerySearch] = useState(query.search);
-	const onChangeDebounced = useCallback(
-		debounce(() => {
-			if (query.search !== querySearch) {
-				onUpdateQuery({ search: querySearch });
-			}
-		}, 250),
-		[querySearch, query.search]
-	);
-	useEffect(() => {
-		onChangeDebounced();
-		return onChangeDebounced.cancel;
-	}, [querySearch, onChangeDebounced]);
+	const {
+		query,
+		query: { taxQuery },
+	} = attributes;
 
 	return (
 		<InspectorControls>
@@ -42,7 +28,6 @@ export default function ProductListInspectorControls({
 						search: '',
 						taxQuery: null,
 					});
-					setQuerySearch('');
 				}}
 				dropdownMenuProps={{
 					popoverProps: {
@@ -64,17 +49,11 @@ export default function ProductListInspectorControls({
 					<TaxonomyControls onChange={onUpdateQuery} query={query} />
 				</ToolsPanelItem>
 				<ToolsPanelItem
-					hasValue={() => !!querySearch}
+					hasValue={() => !!query.search}
 					label={__('Keyword', 'surecart')}
-					onDeselect={() => setQuerySearch('')}
+					onDeselect={() => onUpdateQuery({ search: null })}
 				>
-					<TextControl
-						__nextHasNoMarginBottom
-						__next40pxDefaultSize
-						label={__('Keyword', 'surecart')}
-						value={querySearch}
-						onChange={setQuerySearch}
-					/>
+					<KeywordControls onChange={onUpdateQuery} query={query} />
 				</ToolsPanelItem>
 			</ToolsPanel>
 		</InspectorControls>
