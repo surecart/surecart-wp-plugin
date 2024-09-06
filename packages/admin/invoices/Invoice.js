@@ -23,12 +23,10 @@ import {
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
-import expand from './checkout-query';
 import SelectCustomer from './modules/SelectCustomer';
 import SelectShipping from './modules/SelectShipping';
 import Address from './modules/Address';
 import Payment from './modules/Payment';
-import Error from '../components/Error';
 import Tax from './modules/Tax';
 import Summary from './modules/Summary';
 import AdditionalOptions from './modules/AdditionalOptions';
@@ -49,18 +47,7 @@ export function getEditURL(id) {
 	return addQueryArgs(window.location.href, { id });
 }
 
-/**
- * Checkout expandable fields.
- */
-export const checkoutExpands = [
-	...(expand || []).map((item) => {
-		return item.includes('.') ? item : `checkout.${item}`;
-	}),
-	'checkout',
-];
-
 export default () => {
-	const [invoiceError, setInvoiceError] = useState(false);
 	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
 
@@ -138,7 +125,6 @@ export default () => {
 	return (
 		<>
 			<UpdateModel
-				// onSubmit={onSaveInvoice}
 				entitled={!!scData?.entitlements?.invoices}
 				title={
 					<div
@@ -259,12 +245,6 @@ export default () => {
 					</>
 				}
 			>
-				<Error
-					error={invoiceError}
-					setError={setInvoiceError}
-					margin="80px"
-				/>
-
 				<Prices />
 				<SelectShipping />
 
@@ -297,8 +277,6 @@ export default () => {
 			{modal === 'send_invoice' && (
 				<SendNotificationConfirmModal
 					onRequestClose={() => setModal(null)}
-					error={invoiceError}
-					setError={setInvoiceError}
 					title={getSubmitButtonTitle()}
 					paymentMethod={paymentMethod}
 				/>
