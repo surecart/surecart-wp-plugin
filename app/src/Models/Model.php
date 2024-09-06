@@ -33,6 +33,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	protected $attributes = [];
 
 	/**
+	 * Static cache for attribute lookups.
+	 *
+	 * @var array
+	 */
+	private static $attribute_cache = [];
+
+	/**
 	 * Default attributes.
 	 *
 	 * @var array
@@ -1077,6 +1084,43 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		} elseif ( ! is_null( $attribute ) ) {
 			return $attribute;
 		}
+	}
+
+	/**
+	 * Get a in-memory cached attribute.
+	 *
+	 * @param string $key The attribute key.
+	 * @return mixed|null The cached value or null if not found.
+	 */
+	protected function getCachedAttribute( $key ) {
+		if ( ! isset( self::$attribute_cache ) ) {
+			self::$attribute_cache = [];
+		}
+
+		if ( empty( $this->id ) ) {
+			return null;
+		}
+
+		return self::$attribute_cache[ $this->id . '_' . $key ] ?? null;
+	}
+
+	/**
+	 * Set a cached attribute in memory.
+	 *
+	 * @param string $key   The attribute key.
+	 * @param mixed  $value The value to cache.
+	 * @return void
+	 */
+	protected function setCachedAttribute( $key, $value ) {
+		if ( ! isset( self::$attribute_cache ) ) {
+			self::$attribute_cache = [];
+		}
+
+		if ( empty( $this->id ) ) {
+			return;
+		}
+
+		self::$attribute_cache[ $this->id . '_' . $key ] = $value;
 	}
 
 	/**
