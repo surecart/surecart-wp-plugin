@@ -163,7 +163,7 @@ export const useInvoice = () => {
 			return data;
 		} catch (e) {
 			console.error(e);
-			setE(e);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}
