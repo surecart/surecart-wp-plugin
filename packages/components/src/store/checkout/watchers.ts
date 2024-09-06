@@ -1,9 +1,10 @@
 import state, { onChange, on } from './store';
 import { getCheckout, setCheckout } from '../checkouts/mutations';
-import { Checkout } from 'src/types';
+import { Checkout, Price, Product } from '../../types';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf } from '@wordpress/i18n';
 import { getFormattedPrice, getHumanDiscount } from '../../functions/price';
+import { trackOrderBump } from './mutations';
 
 /**
  * When the checkout changes, update the
@@ -58,4 +59,17 @@ on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
   ];
 
   speak(messages.join(' '));
+});
+
+/**
+ * Track order bump offers.
+ */
+on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
+  if (key !== 'checkout') return; // we only care about checkout
+  if (!oldCheckout || !checkout) return; // checkout was not updated.
+
+  const bumps = (checkout?.recommended_bumps?.data || []).filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0); // exclude variants for now.;
+  if (!bumps?.length) return;
+
+  bumps.forEach(bump => trackOrderBump(bump?.id));
 });
