@@ -221,22 +221,6 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 													})
 												}
 											/>
-
-											{!!invoice?.due_date && (
-												<ScButton
-													type="text"
-													onClick={() =>
-														editInvoice({
-															due_date: null,
-														})
-													}
-													css={css`
-														max-width: 25px;
-													`}
-												>
-													<ScIcon name="x"></ScIcon>
-												</ScButton>
-											)}
 										</div>
 									</ScFormControl>
 								</div>
