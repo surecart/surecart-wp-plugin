@@ -78,7 +78,7 @@ class PostServiceTest extends SureCartUnitTestCase {
 		]);
 
 		$service = \SureCart::post();
-		$post = $service->getFormPostFromBlock($checkout_page_id);
+		$post = $service->getFormPost($checkout_page_id);
 		$this->assertNotNull($post);
 		$this->assertEquals($post->ID, $form_id);
 	}
@@ -98,7 +98,7 @@ class PostServiceTest extends SureCartUnitTestCase {
 		]);
 
 		$service = \SureCart::post();
-		$post = $service->getFormPostFromBlock($checkout_page_id);
+		$post = $service->getFormPost($checkout_page_id);
 		$this->assertNotNull($post);
 		$this->assertEquals($post->ID, $form_id);
 	}

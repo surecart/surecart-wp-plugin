@@ -16,6 +16,17 @@ class PostService {
 	public $post;
 
 	/**
+	 * Get the form post.
+	 *
+	 * @param \WP_Post|int|null $post The form or post type post.
+	 *
+	 * @return WP_Post|null
+	 */
+	public function getFormPost( $post = null ) {
+		return $this->getFormPostFromBlock( $post ) ?? $this->getFormPostFromShortcode( $post );
+	}
+
+	/**
 	 * Get the form post from a page.
 	 *
 	 * @param \WP_Post|int|null $post The form or post type post.
@@ -33,16 +44,32 @@ class PostService {
 		// get the checkout form block.
 		$block = wp_get_first_block( parse_blocks( $this->post->post_content ), 'surecart/checkout-form' );
 
-		// If it's not a checkout form block, check if it's a shortcode.
-		if ( empty( $block ) && has_shortcode( $this->post->post_content, 'sc_form' ) ) {
+		// get the post.
+		return get_post( $block['attrs']['id'] ?? null );
+	}
+
+	/**
+	 * Get the form post from a shortcode.
+	 *
+	 * @param WP_Post|null $post The form or post type post.
+	 *
+	 * @return WP_Post|null
+	 */
+	public function getFormPostFromShortcode( $post = null ) {
+		$this->post = get_post( $post ?? $this->post );
+
+		if ( empty( $this->post->ID ) ) {
+			return null;
+		}
+
+		if ( has_shortcode( $this->post->post_content, 'sc_form' ) ) {
 			$shortcode = get_shortcode_regex();
 			preg_match( "/$shortcode/", $this->post->post_content, $matches );
 			$attrs = shortcode_parse_atts( $matches[3] ?? '' );
 			return get_post( $attrs['id'] ?? null );
 		}
 
-		// get the post.
-		return get_post( $block['attrs']['id'] ?? null );
+		return null;
 	}
 
 	/**

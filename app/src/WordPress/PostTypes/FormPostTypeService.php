@@ -142,7 +142,7 @@ class FormPostTypeService {
 			return $states;
 		}
 
-		$checkout_form = \SureCart::post()->getFormPostFromBlock(
+		$checkout_form = \SureCart::post()->getFormPost(
 			get_option( 'surecart_checkout_page_id' )
 		) ?? null;
 
@@ -156,11 +156,10 @@ class FormPostTypeService {
 	/**
 	 * Find a form by its option name.
 	 *
-	 * @param string $option Option name.
 	 * @return WP_Post|null
 	 */
-	public function findByOptionName( $option ) {
-		return $this->page_service->get( $option, 'sc_form' );
+	public function findByOption( ) {
+		return $this->page_service->get( $this->default_form_name, 'sc_form' );
 	}
 
 	/**
@@ -189,8 +188,8 @@ class FormPostTypeService {
 	 * @return \WP_Post|null
 	 */
 	public function getDefault() {
-		$form_post = \SureCart::post()->getFormPostFromBlock( get_option( 'surecart_checkout_page_id' ) );
-		return $form_post ?? $this->findByOptionName( $this->default_form_name );
+		$form_post = \SureCart::post()->getFormPost( get_option( 'surecart_checkout_page_id' ) );
+		return $form_post ?? $this->findByOption();
 	}
 
 	/**
