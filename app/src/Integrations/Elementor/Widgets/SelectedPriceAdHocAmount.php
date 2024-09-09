@@ -39,6 +39,13 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get style dependencies.
+	 */
+	public function get_style_depends() {
+		return [ 'surecart-form-control', 'surecart-input-group' ];
+	}
+
+	/**
 	 * Get the widget keywords.
 	 *
 	 * @return array
@@ -96,16 +103,18 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	protected function content_template() {
 		?>
 		<div>
-			<label for="" class="sc-form-label">Custom amount</label>
-			<div className="sc-input-group">
-				<span class="sc-input-group-text" id="basic-addon1">
-					$
-				</span>
+			<label for="sc-product-custom-amount" class="sc-form-label">
+				Test Label
+			</label>
+
+			<div class="sc-input-group">
+				<span class="sc-input-group-text" id="basic-addon1">$</span>
+
 				<input
 					class="sc-form-control"
+					id="sc-product-custom-amount"
 					type="number"
 					step="0.01"
-					onwheel="this.blur()"
 				/>
 			</div>
 		</div>
