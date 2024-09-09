@@ -44,6 +44,12 @@
 
 Submit the form
 
+#### Parameters
+
+| Name  | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| `__0` | `{ skip_validation: boolean; }` |             |
+
 #### Returns
 
 Type: `Promise<Checkout | Timeout | Error>`

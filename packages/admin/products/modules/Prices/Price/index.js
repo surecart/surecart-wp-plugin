@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useRef, useState } from '@wordpress/element';
+import { useRef, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -28,6 +28,11 @@ export default ({ price, product }) => {
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
 	};
+
+	// make sure current price stays up to date with changes.
+	useEffect(() => {
+		setCurrentPrice(price);
+	}, [price]);
 
 	// get any save errors.
 	const { savePriceError } = useSelect(
@@ -204,7 +209,7 @@ export default ({ price, product }) => {
 								<Subscription
 									price={currentPrice}
 									updatePrice={editPrice}
-                  product={product}
+									product={product}
 								/>
 							)}
 
@@ -212,7 +217,7 @@ export default ({ price, product }) => {
 								<Multiple
 									price={currentPrice}
 									updatePrice={editPrice}
-                  product={product}
+									product={product}
 								/>
 							)}
 
@@ -220,7 +225,7 @@ export default ({ price, product }) => {
 								<OneTime
 									price={currentPrice}
 									updatePrice={editPrice}
-                  product={product}
+									product={product}
 								/>
 							)}
 

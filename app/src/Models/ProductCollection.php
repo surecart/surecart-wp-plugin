@@ -53,7 +53,57 @@ class ProductCollection extends Model implements PageModel {
 			];
 		}
 
-		return parent::create( $attributes );
+		$created = parent::create( $attributes );
+
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		return $this;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		// update the model.
+		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		// return.
+		return $this;
+	}
+
+	/**
+	 * Sync the collection
+	 */
+	public function sync() {
+		\SureCart::sync()
+			->collection()
+			->sync( $this );
+
+		return $this;
+	}
+
+	/**
+	 * Get the attached term.
+	 *
+	 * @return int|false
+	 */
+	public function getTermAttribute() {
+		return \SureCart::sync()->collection()->findByModelId( $this->id );
 	}
 
 	/**
@@ -113,21 +163,14 @@ class ProductCollection extends Model implements PageModel {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
-		// permalinks off.
-		if ( ! get_option( 'permalink_structure' ) ) {
-			return add_query_arg( 'sc_collection_page_id', $this->slug, get_home_url() );
-		}
-		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . trailingslashit( $this->slug );
-	}
 
-	/**
-	 * Get the JSON Schema Array
-	 *
-	 * @return array
-	 */
-	public function getJsonSchemaArray(): array {
-		return [];
+		$term = $this->term;
+
+		if ( isset( $term->term_id ) ) {
+			return get_term_link( $term );
+		}
+
+		return '';
 	}
 
 	/**
@@ -182,7 +225,7 @@ class ProductCollection extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getTemplateContent() : string {
+	public function getTemplateContent(): string {
 		return wp_is_block_theme() ?
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';

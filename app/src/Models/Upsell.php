@@ -116,13 +116,4 @@ class Upsell extends Model implements PageModel {
 	public function getMetaDescriptionAttribute(): string {
 		return $this->metadata->description ?? '';
 	}
-
-	/**
-	 * Get the JSON Schema Array
-	 *
-	 * @return array
-	 */
-	public function getJsonSchemaArray(): array {
-		return [];
-	}
 }

@@ -13,21 +13,22 @@ use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
+use SureCart\Support\Currency;
 
 /**
  * Order model
  */
 class Checkout extends Model {
-	use HasCustomer,
-		HasSubscriptions,
-		HasDiscount,
-		HasShippingAddress,
-		HasPaymentIntent,
-		HasPaymentMethod,
-		HasPurchases,
-		CanFinalize,
-		HasProcessorType,
-		HasBillingAddress;
+	use HasCustomer;
+	use HasSubscriptions;
+	use HasDiscount;
+	use HasShippingAddress;
+	use HasPaymentIntent;
+	use HasPaymentMethod;
+	use HasPurchases;
+	use CanFinalize;
+	use HasProcessorType;
+	use HasBillingAddress;
 
 	/**
 	 * Rest API endpoint
@@ -52,6 +53,152 @@ class Checkout extends Model {
 	public function __construct( $attributes = [], $type = '' ) {
 		$this->processor_type = $type;
 		parent::__construct( $attributes );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalDisplayAmountAttribute() {
+		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display full amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getFullDisplayAmountAttribute() {
+		return ! empty( $this->full_amount ) ? Currency::format( $this->full_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display discount amount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountDisplayAmountAttribute() {
+		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display bump amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getBumpDisplayAmountAttribute() {
+		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the converted total amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getConvertedTotalAmountAttribute() {
+		if ( $this->is_zero_decimal || empty( $this->total_amount ) ) {
+			return $this->total_amount;
+		}
+		return $this->total_amount / 100;
+	}
+
+	/**
+	 * Is the checkout an installment.
+	 *
+	 * @return bool
+	 */
+	public function getIsInstallmentAttribute() {
+		return $this->full_amount !== $this->subtotal_amount;
+	}
+
+	/**
+	 * Get the line items count attribute.
+	 *
+	 * @return int
+	 */
+	public function getLineItemsCountAttribute() {
+		if ( empty( $this->line_items ) || empty( $this->line_items->data ) ) {
+			return 0;
+		}
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $count, $item ) {
+				return $count + ( $item->quantity ?? 0 );
+			},
+			0
+		);
+	}
+
+	/**
+	 * Get the has recurring attribute.
+	 *
+	 * Do any line items have a recurring price?
+	 *
+	 * @return bool
+	 */
+	public function getHasRecurringAttribute() {
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $carry, $item ) {
+				return $carry || isset( $item->price->recurring_interval );
+			},
+			false
+		);
+	}
+
+	/**
+	 * Get the human discount attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountAttribute() {
+		if ( empty( $this->discount->coupon ) ) {
+			return '';
+		}
+
+		if ( ! empty( $this->discount->coupon->percent_off ) ) {
+			if ( ! empty( $this->discount->coupon->amount_off ) && ! empty( $this->currency ) ) {
+				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
+			}
+
+			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get the human discount with duration attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountWithDurationAttribute() {
+		if ( ! $this->hasRecurring ) {
+			return $this->human_discount;
+		}
+
+		$duration           = $this->discount->coupon->duration ?? '';
+		$duration_in_months = $this->discount->coupon->duration_in_months ?? 0;
+
+		switch ( $duration ) {
+			case 'once':
+				return sprintf( '%s %s', $this->human_discount, __( 'once', 'surecart' ) );
+			case 'repeating':
+				$months_label = sprintf( _n( '%d month', '%d months', $duration_in_months, 'surecart' ), $duration_in_months );
+				return sprintf( '%s for %s', $this->human_discount, $months_label );
+			default:
+				return $this->human_discount;
+		}
 	}
 
 	/**
@@ -117,6 +264,7 @@ class Checkout extends Model {
 	 */
 	protected function update( $attributes = [] ) {
 		$this->setWriteAttributes();
+
 		return parent::update( $attributes );
 	}
 

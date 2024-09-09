@@ -1,12 +1,14 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { Global, css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
+import { applyFilters, doAction } from '@wordpress/hooks';
+import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -27,15 +29,18 @@ import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Variations from './modules/Variations';
-import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
+import Collection from './modules/Collection';
+import Taxonomies from './modules/Taxonomies';
+import MetaBoxes from './modules/MetaBoxes';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
+	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const {
 		product,
 		saveProduct,
@@ -47,6 +52,40 @@ export default ({ id, setBrowserURL }) => {
 		savingProduct,
 		productError,
 	} = useEntity('product', id);
+
+	const isSavingMetaBoxes = useSelect((select) =>
+		select('surecart/metaboxes').isSavingMetaBoxes()
+	);
+
+	const { post, loadingPost } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'postType',
+				'sc_product',
+				{
+					sc_id: [id],
+					per_page: 1,
+				},
+			];
+			const posts =
+				select(coreStore).getEntityRecords(...queryArgs) || [];
+
+			return {
+				post: posts?.[0]
+					? select(coreStore).getEditedEntityRecord(
+							'postType',
+							'sc_product',
+							posts?.[0]?.id
+					  )
+					: null,
+				loadingPost: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[id]
+	);
 
 	/**
 	 * Whether the product should be published.
@@ -70,27 +109,28 @@ export default ({ id, setBrowserURL }) => {
 	const onSubmit = async (e) => {
 		try {
 			setError(null);
+			setSaving(true);
 
-			// get draft prices.
-			const { prices } = select(coreStore).getEditedEntityRecord(
-				'surecart',
-				'product',
-				id
-			);
-
-			// save pending prices.
-			const pendingPrices = [];
-			(Array.isArray(prices) ? prices : []).forEach((price) => {
-				pendingPrices.push(
-					saveEntityRecord('surecart', 'price', {
-						product: id,
-						...price,
-					})
+			// if we don't have any product edits, run sync directly.
+			if (
+				!select(coreStore).hasEditsForEntityRecord(
+					'surecart',
+					'product',
+					id
+				)
+			) {
+				const { baseURL } = select(coreStore).getEntityConfig(
+					'surecart',
+					'product'
 				);
-			});
-			await Promise.all(pendingPrices);
+				// sync the item.
+				await apiFetch({
+					method: 'POST',
+					path: addQueryArgs(`${baseURL}/${id}/sync`, {}),
+				});
+			}
 
-			// build up pending records to save.
+			// build up pending records to save (like post, or product)
 			const dirtyRecords =
 				select(coreStore).__experimentalGetDirtyEntityRecords();
 			const pendingSavedRecords = [];
@@ -100,10 +140,30 @@ export default ({ id, setBrowserURL }) => {
 				);
 			});
 
+			// add metaboxes to pending records.
+			if (post) {
+				const metaboxes = applyFilters(
+					'surecart.saveProduct',
+					Promise.resolve(),
+					{}
+				);
+				pendingSavedRecords.push(metaboxes);
+			}
+
 			// check values.
 			const values = await Promise.all(pendingSavedRecords);
+
 			if (values.some((value) => typeof value === 'undefined')) {
 				throw new Error('Saving failed.');
+			}
+
+			// fire save event.
+			doAction('surecart.productSaved', product);
+
+			// unload acf if it exists.
+			// TODO: move to a separate function.
+			if (!!window?.acf?.unload?.reset) {
+				window.acf.unload.reset();
 			}
 
 			// remove all args from the url.
@@ -113,7 +173,10 @@ export default ({ id, setBrowserURL }) => {
 				type: 'snackbar',
 			});
 		} catch (e) {
+			console.error(e);
 			setError(e);
+		} finally {
+			setSaving(false);
 		}
 	};
 
@@ -189,172 +252,195 @@ export default ({ id, setBrowserURL }) => {
 	};
 
 	return (
-		<UpdateModel
-			onSubmit={onSubmit}
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					`}
-				>
-					<ScButton
-						circle
-						size="small"
-						href="admin.php?page=sc-products"
+		<>
+			<Global
+				styles={css`
+					#screen-meta-links {
+						display: none;
+					}
+				`}
+			/>
+			<UpdateModel
+				onSubmit={onSubmit}
+				title={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 1em;
+						`}
 					>
-						<sc-icon name="arrow-left"></sc-icon>
-					</ScButton>
-					<sc-breadcrumbs>
-						<sc-breadcrumb>
-							<Logo display="block" />
-						</sc-breadcrumb>
-						<sc-breadcrumb href="admin.php?page=sc-products">
-							{__('Products', 'surecart')}
-						</sc-breadcrumb>
-						<sc-breadcrumb>
-							<sc-flex style={{ gap: '1em' }}>
-								{__('Edit Product', 'surecart')}
-								{renderStatusBadge()}
-							</sc-flex>
-						</sc-breadcrumb>
-					</sc-breadcrumbs>
-				</div>
-			}
-			button={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.5em;
-					`}
-				>
-					<ActionsDropdown
-						product={product}
-						onDelete={onDeleteProduct}
-						onToggleArchive={onToggleArchiveProduct}
+						<ScButton
+							circle
+							size="small"
+							href="admin.php?page=sc-products"
+						>
+							<sc-icon name="arrow-left"></sc-icon>
+						</ScButton>
+						<sc-breadcrumbs>
+							<sc-breadcrumb>
+								<Logo display="block" />
+							</sc-breadcrumb>
+							<sc-breadcrumb href="admin.php?page=sc-products">
+								{__('Products', 'surecart')}
+							</sc-breadcrumb>
+							<sc-breadcrumb>
+								<sc-flex style={{ gap: '1em' }}>
+									{__('Edit Product', 'surecart')}
+									{renderStatusBadge()}
+								</sc-flex>
+							</sc-breadcrumb>
+						</sc-breadcrumbs>
+					</div>
+				}
+				button={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+						`}
+					>
+						<ActionsDropdown
+							product={product}
+							onDelete={onDeleteProduct}
+							onToggleArchive={onToggleArchiveProduct}
+						/>
+
+						<BuyLink
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<SaveButton
+							busy={
+								deletingProduct ||
+								savingProduct ||
+								!hasLoadedProduct ||
+								isSavingMetaBoxes ||
+								saving
+							}
+							disabled={false} // in order to save metaboxes
+						>
+							{willPublish()
+								? __('Save & Publish', 'surecart')
+								: __('Save Product', 'surecart')}
+						</SaveButton>
+					</div>
+				}
+				sidebar={
+					<>
+						<Publishing
+							id={id}
+							product={product}
+							post={post}
+							onToggleArchiveProduct={onToggleArchiveProduct}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Shipping
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Tax
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Collection
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Taxonomies post={post} loading={loadingPost} />
+
+						<Advanced
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Affiliation
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+							error={error}
+						/>
+
+						<MetaBoxes location="side" />
+					</>
+				}
+			>
+				<Fragment>
+					<Error
+						error={saveProductError || productError || error}
+						setError={setError}
+						margin="80px"
 					/>
 
-					<BuyLink
+					<Details
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
 
-					<SaveButton
-						busy={
-							deletingProduct ||
-							savingProduct ||
-							!hasLoadedProduct
-						}
-					>
-						{willPublish()
-							? __('Save & Publish', 'surecart')
-							: __('Save Product', 'surecart')}
-					</SaveButton>
-				</div>
-			}
-			sidebar={
-				<>
-					<Publishing
+					<Image
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+					/>
+
+					<Prices
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<Inventory
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<Variations
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<Integrations id={id} product={product} />
+
+					<Downloads
 						id={id}
 						product={product}
-						onToggleArchiveProduct={onToggleArchiveProduct}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Shipping
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
-					<Tax
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
-					<Collections
+
+					<Licensing
+						id={id}
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
 
-					<Advanced
+					<SearchEngine
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-
-					<Affiliation
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-						error={error}
-					/>
-				</>
-			}
-		>
-			<Fragment>
-				<Error
-					error={saveProductError || productError || error}
-					setError={setError}
-					margin="80px"
-				/>
-
-				<Details
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Image
-					productId={id}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Prices
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Inventory
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Variations
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Integrations id={id} product={product} />
-
-				<Downloads
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-
-				<Licensing
-					id={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-				<SearchEngine
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
-			</Fragment>
-		</UpdateModel>
+					<MetaBoxes location="normal" />
+					<MetaBoxes location="advanced" />
+				</Fragment>
+			</UpdateModel>
+		</>
 	);
 };

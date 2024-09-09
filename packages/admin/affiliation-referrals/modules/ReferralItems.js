@@ -42,6 +42,7 @@ export default ({ referralId, loading }) => {
 						'line_item.price',
 						'price.product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'line_item.variant',
 					],
 				},

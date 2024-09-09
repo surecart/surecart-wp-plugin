@@ -11,9 +11,8 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import PostTemplateForm from './form';
-import { getTemplateTitle } from '../../utility';
 
-export default function PostTemplate({ product, updateProduct }) {
+export default function PostTemplate({ product, updateProduct, post }) {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
 	const [popoverAnchor, setPopoverAnchor] = useState(null);
@@ -23,19 +22,39 @@ export default function PostTemplate({ product, updateProduct }) {
 		[popoverAnchor]
 	);
 
+	// get the assigned template.
 	const template = useSelect(
 		(select) => {
-			return (
-				select(coreStore).canUser('create', 'templates') &&
-				select(coreStore).getEntityRecord(
-					'postType',
-					'wp_template',
-					product?.metadata?.wp_template_id ||
-						'surecart/surecart//single-product'
-				)
+			const { type, slug, template: currentTemplate } = post || {};
+			const { getEntityRecords } = select(coreStore);
+			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const templates = getEntityRecords(...selectorArgs) || [];
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: slug ? `single-${type}-${slug}` : `single-${type}`,
+			});
+
+			// have have set a current template with a slug.
+			if (currentTemplate) {
+				const templateWithSameSlug = templates?.find(
+					(template) => template.slug === currentTemplate
+				);
+
+				if (templateWithSameSlug?.id) {
+					return select(coreStore).getEditedEntityRecord(
+						'postType',
+						'wp_template',
+						templateWithSameSlug.id
+					);
+				}
+			}
+
+			return select(coreStore).getEditedEntityRecord(
+				'postType',
+				'wp_template',
+				defaultTemplateId
 			);
 		},
-		[product?.metadata?.wp_template_id]
+		[post?.template, post?.slug]
 	);
 
 	return (
@@ -71,6 +90,7 @@ export default function PostTemplate({ product, updateProduct }) {
 								onClose={onClose}
 								template={template}
 								product={product}
+								post={post}
 								updateProduct={updateProduct}
 							/>
 						</div>
@@ -105,12 +125,6 @@ export default function PostTemplate({ product, updateProduct }) {
 }
 
 function PostTemplateToggle({ isOpen, onClick, template }) {
-	// if (!template) {
-	// 	return <Spinner />;
-	// }
-
-	let templateTitle = getTemplateTitle(template);
-
 	return (
 		<Button
 			css={css`
@@ -123,17 +137,17 @@ function PostTemplateToggle({ isOpen, onClick, template }) {
 			variant="tertiary"
 			aria-expanded={isOpen}
 			aria-label={
-				templateTitle
+				template?.title
 					? sprintf(
 							// translators: %s: Name of the currently selected template.
 							__('Select template: %s'),
-							templateTitle
+							template?.title
 					  )
 					: __('Select template')
 			}
 			onClick={onClick}
 		>
-			{templateTitle ?? __('Default template')}
+			{template?.title}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

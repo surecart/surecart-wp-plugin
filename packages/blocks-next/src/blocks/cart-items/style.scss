@@ -1,0 +1,28 @@
+.wp-block-surecart-cart-items__wrapper {
+	flex: 1 1 200px;
+	gap: 1.25em;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+
+	.sc-quantity-selector {
+		margin-top: var(--sc-spacing-small);
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.sc-product-line-item__remove-button {
+		background: none;
+		border: none;
+		box-shadow: none;
+		padding: 0;
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 var(--sc-focus-ring-width)
+				var(--sc-focus-ring-color-primary);
+		}
+	}
+}

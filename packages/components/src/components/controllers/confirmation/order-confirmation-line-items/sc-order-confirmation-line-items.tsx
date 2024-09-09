@@ -36,7 +36,7 @@ export class ScOrderConfirmationLineItems {
               <div class="line-item">
                 <sc-product-line-item
                   key={item.id}
-                  imageUrl={(item?.price?.product as Product)?.image_url}
+                  image={(item?.price?.product as Product)?.line_item_image}
                   name={`${(item?.price?.product as Product)?.name}`}
                   priceName={item?.price?.name}
                   variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
