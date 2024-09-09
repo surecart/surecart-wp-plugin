@@ -7,12 +7,11 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect } from '@wordpress/element';
 import { useDebounce } from '@wordpress/compose';
 import { decodeEntities } from '@wordpress/html-entities';
-
-/**
- * Internal dependencies
- */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Base query for the products to include in the list.
+ */
 const BASE_QUERY = {
 	order: 'asc',
 	_fields: 'id,title',
@@ -20,7 +19,7 @@ const BASE_QUERY = {
 };
 
 /**
- * Helper function to get the term id based on user input in posts `FormTokenField`.
+ * Helper function to get the post id based on user input in posts `FormTokenField`.
  */
 const getPostIdByPostValue = (posts, postValue) => {
 	/**
@@ -51,8 +50,7 @@ const getPostIdByPostValue = (posts, postValue) => {
 /**
  * Renders a `FormTokenField` for a the products to include in the list.
  */
-export default function IncludeControls({ query, onChange }) {
-	const { include } = query;
+export default function IncludeControls({ query: { include }, onChange }) {
 	const [search, setSearch] = useState('');
 	const [value, setValue] = useState([]);
 	const [suggestions, setSuggestions] = useState([]);

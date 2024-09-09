@@ -1,8 +1,14 @@
+/**
+ * WordPress dependencies
+ */
 import { TextControl } from '@wordpress/components';
 import { useCallback, useState, useEffect } from '@wordpress/element';
 import { debounce } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Keyword controls for the product list block.
+ */
 export default function KeywordControls({ onChange, query }) {
 	const [querySearch, setQuerySearch] = useState(query.search);
 	const onChangeDebounced = useCallback(
@@ -13,6 +19,7 @@ export default function KeywordControls({ onChange, query }) {
 		}, 250),
 		[querySearch, query.search]
 	);
+
 	useEffect(() => {
 		onChangeDebounced();
 		return onChangeDebounced.cancel;
@@ -20,11 +27,11 @@ export default function KeywordControls({ onChange, query }) {
 
 	return (
 		<TextControl
-			__nextHasNoMarginBottom
-			__next40pxDefaultSize
 			label={__('Keyword', 'surecart')}
 			value={querySearch}
 			onChange={setQuerySearch}
+			__nextHasNoMarginBottom
+			__next40pxDefaultSize
 		/>
 	);
 }

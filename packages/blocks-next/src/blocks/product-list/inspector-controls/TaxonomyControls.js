@@ -16,14 +16,18 @@ import { decodeEntities } from '@wordpress/html-entities';
  */
 import { useTaxonomies } from '../../utils';
 
-const EMPTY_ARRAY = [];
+/**
+ * Base query for the terms to include in the list.
+ */
 const BASE_QUERY = {
 	order: 'asc',
 	_fields: 'id,name',
 	context: 'view',
 };
 
-// Helper function to get the term id based on user input in terms `FormTokenField`.
+/**
+ * Helper function to get the term id based on user input in terms `FormTokenField`.
+ */
 const getTermIdByTermValue = (terms, termValue) => {
 	// First we check for exact match by `term.id` or case sensitive `term.name` match.
 	const termId =
@@ -47,6 +51,9 @@ const getTermIdByTermValue = (terms, termValue) => {
 	)?.id;
 };
 
+/**
+ * Taxonomy controls for the product list block.
+ */
 export function TaxonomyControls({ onChange, query }) {
 	const { postType, taxQuery } = query;
 
@@ -91,8 +98,8 @@ export function TaxonomyControls({ onChange, query }) {
  */
 function TaxonomyItem({ taxonomy, termIds, onChange }) {
 	const [search, setSearch] = useState('');
-	const [value, setValue] = useState(EMPTY_ARRAY);
-	const [suggestions, setSuggestions] = useState(EMPTY_ARRAY);
+	const [value, setValue] = useState([]);
+	const [suggestions, setSuggestions] = useState([]);
 	const debouncedSearch = useDebounce(setSearch, 250);
 	const { searchResults, searchHasResolved } = useSelect(
 		(select) => {
@@ -120,6 +127,9 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 		[search, termIds]
 	);
 
+	/**
+	 * Fetch suggestions when the input is focused.
+	 */
 	const fetchSuggestions = () => {
 		debouncedSearch(search);
 	};
@@ -130,7 +140,7 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 	const existingTerms = useSelect(
 		(select) => {
 			if (!termIds?.length) {
-				return EMPTY_ARRAY;
+				return [];
 			}
 			const { getEntityRecords } = select(coreStore);
 			return getEntityRecords('taxonomy', taxonomy.slug, {
@@ -141,17 +151,30 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 		},
 		[termIds]
 	);
-	// Update the `value` state only after the selectors are resolved
-	// to avoid emptying the input when we're changing terms.
+
+	/**
+	 * Update the `value` state only after the selectors are resolved
+	 * to avoid emptying the input when we're changing terms.
+	 */
 	useEffect(() => {
+		/**
+		 * If there are no term ids, we set the value to an empty array.
+		 */
 		if (!termIds?.length) {
-			setValue(EMPTY_ARRAY);
+			setValue([]);
 		}
+
+		/**
+		 * If there are no existing terms, we return early.
+		 */
 		if (!existingTerms?.length) {
 			return;
 		}
-		// Returns only the existing entity ids. This prevents the component
-		// from crashing in the editor, when non existing ids are provided.
+
+		/**
+		 * Returns only the existing entity ids. This prevents the component
+		 * from crashing in the editor, when non existing ids are provided.
+		 */
 		const sanitizedValue = termIds.reduce((accumulator, id) => {
 			const entity = existingTerms.find((term) => term.id === id);
 			if (entity) {
@@ -162,15 +185,23 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 			}
 			return accumulator;
 		}, []);
+
 		setValue(sanitizedValue);
 	}, [termIds, existingTerms]);
-	// Update suggestions only when the query has resolved.
+
+	/**
+	 * Update suggestions only when the query has resolved.
+	 */
 	useEffect(() => {
 		if (!searchHasResolved) {
 			return;
 		}
 		setSuggestions(searchResults.map((result) => result.name));
 	}, [searchResults, searchHasResolved]);
+
+	/**
+	 * Update the term ids based on the new term values.
+	 */
 	const onTermsChange = (newTermValues) => {
 		const newTermIds = new Set();
 		for (const termValue of newTermValues) {
@@ -179,25 +210,24 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 				newTermIds.add(termId);
 			}
 		}
-		setSuggestions(EMPTY_ARRAY);
+		setSuggestions([]);
 		onChange(Array.from(newTermIds));
 	};
+
 	return (
-		<div>
-			<FormTokenField
-				label={taxonomy.name}
-				placeholder={taxonomy?.labels?.search_items}
-				value={value}
-				onFocus={fetchSuggestions}
-				onInputChange={debouncedSearch}
-				suggestions={suggestions}
-				displayTransform={decodeEntities}
-				onChange={onTermsChange}
-				__experimentalShowHowTo={false}
-				__nextHasNoMarginBottom
-				__experimentalExpandOnFocus={true}
-				__next40pxDefaultSize
-			/>
-		</div>
+		<FormTokenField
+			label={taxonomy.name}
+			placeholder={taxonomy?.labels?.search_items}
+			value={value}
+			onFocus={fetchSuggestions}
+			onInputChange={debouncedSearch}
+			suggestions={suggestions}
+			displayTransform={decodeEntities}
+			onChange={onTermsChange}
+			__experimentalShowHowTo={false}
+			__nextHasNoMarginBottom
+			__experimentalExpandOnFocus={true}
+			__next40pxDefaultSize
+		/>
 	);
 }

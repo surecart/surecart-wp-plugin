@@ -1,16 +1,27 @@
+/**
+ * WordPress dependencies
+ */
 import { InspectorControls } from '@wordpress/block-editor';
 import {
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { TaxonomyControls } from './TaxonomyControls';
-import KeywordControls from './KeywordControls';
-import IncludeControls from './IncludeControls';
 import { PanelBody } from '@wordpress/components';
 import { RangeControl } from '@wordpress/components';
 import { SelectControl } from '@wordpress/components';
+import { useViewportMatch } from '@wordpress/compose';
 
+/**
+ * Internal dependencies
+ */
+import { TaxonomyControls } from './TaxonomyControls';
+import KeywordControls from './KeywordControls';
+import IncludeControls from './IncludeControls';
+
+/**
+ * Product List Inspector Controls
+ */
 export default function ProductListInspectorControls({
 	onUpdateQuery,
 	setAttributes,
@@ -20,6 +31,7 @@ export default function ProductListInspectorControls({
 		query: { perPage, offset, taxQuery },
 	},
 }) {
+	const isMobile = useViewportMatch('medium', '<');
 	return (
 		<InspectorControls>
 			<PanelBody title={__('Attributes', 'surecart')}>
@@ -79,13 +91,17 @@ export default function ProductListInspectorControls({
 						taxQuery: null,
 					});
 				}}
-				dropdownMenuProps={{
-					popoverProps: {
-						placement: 'left-start',
-						// For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
-						offset: 259,
-					},
-				}}
+				dropdownMenuProps={
+					isMobile
+						? {}
+						: {
+								popoverProps: {
+									placement: 'left-start',
+									// For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+									offset: 259,
+								},
+						  }
+				}
 			>
 				<ToolsPanelItem
 					label={__('Taxonomies', 'surecart')}
@@ -98,6 +114,7 @@ export default function ProductListInspectorControls({
 				>
 					<TaxonomyControls onChange={onUpdateQuery} query={query} />
 				</ToolsPanelItem>
+
 				<ToolsPanelItem
 					hasValue={() => !!query.search}
 					label={__('Keyword', 'surecart')}
