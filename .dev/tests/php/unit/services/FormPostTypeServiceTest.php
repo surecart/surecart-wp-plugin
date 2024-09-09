@@ -27,6 +27,7 @@ class FormPostTypeServiceTest extends SureCartUnitTestCase {
 	 */
 	public function tearDown() : void {
 		delete_option('surecart_checkout_page_id');
+		delete_option('surecart_checkout_sc_form_id');
 		parent::tearDown();
 	}
 
@@ -73,6 +74,13 @@ class FormPostTypeServiceTest extends SureCartUnitTestCase {
 		]);
 
 		update_option('surecart_checkout_sc_form_id', $form_id);
+
+		$checkout_page_id = $this->factory()->post->create([
+			'post_type' => 'sc_form',
+			'post_content' => '<div>test</div>',
+		]);
+
+		update_option('surecart_checkout_page_id', $checkout_page_id);
 
 		$post = \SureCart::forms()->getDefault();
 		$this->assertNotNull($post);
