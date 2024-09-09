@@ -82,16 +82,16 @@ class ProductListBlock {
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => $query['perPage'] ?? $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
 				'offset'              => ( $per_page * ( $page - 1 ) ) + $offset,
-				'paged'               => $this->url->getCurrentPage(),
-				'order'               => $this->url->getArg( 'order' ),
-				'orderby'             => $this->url->getArg( 'orderby' ),
-				's'                   => $this->url->getArg( 'search' ),
+				'paged'               => (int) $this->url->getCurrentPage(),
+				'order'               => sanitize_text_field( $this->url->getArg( 'order' ) ),
+				'orderby'             => sanitize_text_field( $this->url->getArg( 'orderby' ) ),
+				's'                   => sanitize_text_field( $this->url->getArg( 'search' ) ),
 			)
 		);
 
 		// handle search.
 		if ( ! empty( $query['search'] ) && empty( $this->query_vars['s'] ) ) {
-			$this->query_vars['s'] = $query['search'];
+			$this->query_vars['s'] = sanitize_text_field( $query['search'] );
 		}
 
 		// handle tax query.
@@ -100,8 +100,8 @@ class ProductListBlock {
 			foreach ( $query['taxQuery'] as $taxonomy => $terms ) {
 				if ( is_taxonomy_viewable( $taxonomy ) && ! empty( $terms ) ) {
 					$this->query_vars['tax_query'][] = array(
-						'taxonomy'         => $taxonomy,
-						'terms'            => array_filter( array_map( 'intval', $terms ) ),
+						'taxonomy'         => sanitize_key( $taxonomy ),
+						'terms'            => array_filter( array_map( 'absint', $terms ) ),
 						'include_children' => false,
 					);
 				}
@@ -114,13 +114,13 @@ class ProductListBlock {
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
-		$collection_id = $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? ''; // collection id from block context from "sc_product_collection" shortcode.
+		$collection_id = sanitize_text_field( $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? '' );
 
 		$collection_ids_to_filter = array();
 
 		// handle collection id send from "sc_product_collection" shortcode.
 		if ( ! empty( $collection_id ) ) {
-			$collection_ids = explode( ',', $collection_id );
+			$collection_ids = array_unique( array_map( 'sanitize_text_field', explode( ',', $collection_id ) ) );
 
 			$legacy_collection_ids = get_terms(
 				array(
@@ -147,7 +147,7 @@ class ProductListBlock {
 			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $collection_ids_to_filter );
 		} elseif ( is_tax() ) {
 				$term                     = get_queried_object();
-				$collection_ids_to_filter = [ $term->term_id ];
+				$collection_ids_to_filter = [ (int) $term->term_id ];
 		}
 
 		$new_collection_ids = $this->url->getArg( 'sc_collection' );
@@ -185,7 +185,7 @@ class ProductListBlock {
 			$ids = $query['include'] ?? $this->block->context['surecart/product-list/ids'] ?? $this->block->parsed_block['attrs']['ids'] ?? [];
 			// fallback for older strings - get the ids of legacy products.
 			$legacy_ids           = [];
-			$ids_that_are_strings = array_filter( $ids, 'is_string' );
+			$ids_that_are_strings = array_map( 'sanitize_text_field', array_filter( $ids, 'is_string' ) );
 			if ( ! empty( $ids_that_are_strings ) ) {
 				$legacy_ids = get_posts(
 					[
