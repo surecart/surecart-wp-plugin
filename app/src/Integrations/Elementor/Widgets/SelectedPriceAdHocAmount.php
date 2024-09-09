@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use SureCart\Models\Account as AccountModel;
 
 /**
  * Selected Price Ad Hoc Amount widget.
@@ -101,14 +102,15 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function content_template() {
+		$currency = strtoupper( ( AccountModel::find() )->currency ?? '$' );
 		?>
 		<div>
 			<label for="sc-product-custom-amount" class="sc-form-label">
-				Test Label
+				{{{ settings.label }}}
 			</label>
 
 			<div class="sc-input-group">
-				<span class="sc-input-group-text" id="basic-addon1">$</span>
+				<span class="sc-input-group-text" id="basic-addon1"><?php echo esc_html( $currency ); ?></span>
 
 				<input
 					class="sc-form-control"
