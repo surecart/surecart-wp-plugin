@@ -1,4 +1,12 @@
-<div class="wp-block-button <?php echo esc_attr( $width_class ); ?>"
+<div <?php
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class' => 'wp-block-button ' . esc_attr( $width_class ),
+			)
+		)
+	);
+	?>
 	<?php
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
@@ -11,20 +19,12 @@
 			)
 		)
 	);
+
 	?>
 	>
 	<?php if ( ! $attributes['add_to_cart'] ) { ?>
 		<a
-			<?php
-			echo wp_kses_data(
-				get_block_wrapper_attributes(
-					array(
-						'class' => 'wp-block-button__link wp-element-button sc-button__link ' . ( $styles['classnames'] ?? '' ),
-						'style' => $styles['css'] ?? '',
-					)
-				)
-			);
-			?>
+			class="wp-block-button__link wp-element-button sc-button__link"
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-bind--href="state.checkoutUrl"
 		>
@@ -35,16 +35,7 @@
 	} else {
 		?>
 		<button
-			<?php
-			echo wp_kses_data(
-				get_block_wrapper_attributes(
-					array(
-						'class' => 'wp-block-button__link wp-element-button sc-button__link ' . ( $styles['classnames'] ?? '' ),
-						'style' => $styles['css'] ?? '',
-					)
-				)
-			);
-			?>
+			class="wp-block-button__link wp-element-button sc-button__link"
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-class--sc-button__link--busy="context.busy"
 		>
