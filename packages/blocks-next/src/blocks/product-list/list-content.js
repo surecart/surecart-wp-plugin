@@ -2,25 +2,20 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	useInnerBlocksProps,
-	InspectorControls,
 	BlockControls,
 } from '@wordpress/block-editor';
 import {
-	PanelBody,
-	RangeControl,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
-	Spinner,
-	SelectControl,
 } from '@wordpress/components';
-import { useEntityRecords } from '@wordpress/core-data';
 import { TEMPLATE } from './template';
-import ProductSelector from '../../components/ProductSelector';
 import ProductListInspectorControls from './inspector-controls';
-import Icon from '../../components/Icon';
 import ListToolbar from '../../utilities/patterns-toolbar';
 import { useEffect } from '@wordpress/element';
 
+/**
+ * Product List Edit
+ */
 export default function ProductListEdit({
 	setAttributes,
 	attributes,
@@ -34,11 +29,18 @@ export default function ProductListEdit({
 	clientId,
 	openPatternSelectionModal,
 }) {
+	/**
+	 * Update the query attributes.
+	 *
+	 * @param {Object} newQuery - The new query object.
+	 */
 	const updateQuery = (newQuery) => {
 		setAttributes({ query: { ...query, ...newQuery } });
 	};
 
-	// migration.
+	/**
+	 * Migration from < v3.0.0
+	 */
 	useEffect(() => {
 		updateQuery({
 			perPage: limit || perPage,
@@ -46,6 +48,9 @@ export default function ProductListEdit({
 		});
 	}, [limit, ids]);
 
+	/**
+	 * Block props.
+	 */
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
@@ -58,6 +63,7 @@ export default function ProductListEdit({
 				setAttributes={setAttributes}
 				onUpdateQuery={updateQuery}
 			/>
+
 			<BlockControls>
 				<ListToolbar
 					name={name}
@@ -65,6 +71,7 @@ export default function ProductListEdit({
 					openPatternSelectionModal={openPatternSelectionModal}
 				/>
 			</BlockControls>
+
 			<div {...innerBlocksProps} />
 		</>
 	);
