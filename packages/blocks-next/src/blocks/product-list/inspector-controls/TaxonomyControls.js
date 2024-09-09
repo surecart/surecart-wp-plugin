@@ -186,13 +186,14 @@ function TaxonomyItem({ taxonomy, termIds, onChange }) {
 		<div>
 			<FormTokenField
 				label={taxonomy.name}
+				placeholder={taxonomy?.labels?.search_items}
 				value={value}
 				onFocus={fetchSuggestions}
 				onInputChange={debouncedSearch}
 				suggestions={suggestions}
 				displayTransform={decodeEntities}
 				onChange={onTermsChange}
-				__experimentalShowHowTo={true}
+				__experimentalShowHowTo={false}
 				__nextHasNoMarginBottom
 				__experimentalExpandOnFocus={true}
 				__next40pxDefaultSize
