@@ -25,12 +25,10 @@ export default ({ product, updateProduct }) => {
 	);
 
 	return (
-		<PanelRow className="edit-post-post-url" ref={setPopoverAnchor}>
+		<PanelRow ref={setPopoverAnchor}>
 			<span>{__('Cataloged at', 'surecart')}</span>
 			<Dropdown
 				popoverProps={popoverProps}
-				className="edit-post-post-url__dropdown"
-				contentClassName="edit-post-post-url__dialog"
 				focusOnMount
 				renderToggle={({ isOpen, onToggle }) => (
 					<RenderDropdownButton
@@ -61,6 +59,7 @@ export default ({ product, updateProduct }) => {
 							title={__('Cataloged at', 'surecart')}
 							onClose={onClose}
 						/>
+
 						<DatePicker
 							currentDate={
 								product?.cataloged_at
