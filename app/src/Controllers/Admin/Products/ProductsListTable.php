@@ -103,7 +103,7 @@ class ProductsListTable extends ListTable {
 		);
 
 		foreach ( $statuses as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-products' );
+			$link                    = admin_url( 'admin.php?page=sc-products' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -388,20 +388,20 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $product ) {
-		$created = sprintf(
+		$cataloged = sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $product->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->created_at ) )
+			esc_attr( $product->cataloged_at ),
+			esc_html( TimeDate::formatDateAndTime( $product->cataloged_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $product->cataloged_at ) )
 		);
-		$updated = sprintf(
+		$updated   = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
 			__( 'Updated', 'surecart' ),
 			esc_attr( $product->updated_at ),
 			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
 		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
+		return esc_attr_e( 'Cataloged', 'surecart' ) . '<br />' . $cataloged . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
 	/**
