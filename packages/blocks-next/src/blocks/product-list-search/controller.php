@@ -1,7 +1,12 @@
 <?php
 use SureCart\Models\Blocks\ProductListBlock;
-global $sc_query_id;
 
+// we have already defined a search query.
+if ( $block->context['query']['search'] ) {
+	return null;
+}
+
+// get the search query.
 $controller = new ProductListBlock( $block );
 $list_query = $controller->query();
 $value      = $list_query->s;
