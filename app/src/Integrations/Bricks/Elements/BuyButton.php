@@ -71,6 +71,98 @@ class BuyButton extends Element {
 			'type'        => 'checkbox',
 			'description' => esc_html__( 'Bypass adding to cart and go directly to the checkout.', 'surecart' ),
 		];
+
+		$this->controls['styleSeparator'] = [
+			'label' => esc_html__( 'Style', 'bricks' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['size'] = [
+			'label'       => esc_html__( 'Size', 'bricks' ),
+			'type'        => 'select',
+			'options'     => $this->control_options['buttonSizes'],
+			'inline'      => true,
+			'reset'       => true,
+			'placeholder' => esc_html__( 'Default', 'bricks' ),
+		];
+
+		$this->controls['style'] = [
+			'label'       => esc_html__( 'Style', 'bricks' ),
+			'type'        => 'select',
+			'options'     => $this->control_options['styles'],
+			'inline'      => true,
+			'reset'       => true,
+			'default'     => 'primary',
+			'placeholder' => esc_html__( 'None', 'bricks' ),
+		];
+
+		$this->controls['circle'] = [
+			'label' => esc_html__( 'Circle', 'bricks' ),
+			'type'  => 'checkbox',
+			'reset' => true,
+		];
+
+		$this->controls['outline'] = [
+			'label' => esc_html__( 'Outline', 'bricks' ),
+			'type'  => 'checkbox',
+			'reset' => true,
+		];
+
+		// Icon
+		$this->controls['iconSeparator'] = [
+			'label' => esc_html__( 'Icon', 'bricks' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['icon'] = [
+			'label' => esc_html__( 'Icon', 'bricks' ),
+			'type'  => 'icon',
+		];
+
+		$this->controls['iconTypography'] = [
+			'label'    => esc_html__( 'Typography', 'bricks' ),
+			'type'     => 'typography',
+			'css'      => [
+				[
+					'property' => 'font',
+					'selector' => 'i',
+				],
+			],
+			'required' => [ 'icon.icon', '!=', '' ],
+		];
+
+		$this->controls['iconPosition'] = [
+			'label'       => esc_html__( 'Position', 'bricks' ),
+			'type'        => 'select',
+			'options'     => $this->control_options['iconPosition'],
+			'inline'      => true,
+			'placeholder' => esc_html__( 'Right', 'bricks' ),
+			'required'    => [ 'icon', '!=', '' ],
+		];
+
+		$this->controls['iconGap'] = [
+			'label'    => esc_html__( 'Gap', 'bricks' ),
+			'type'     => 'number',
+			'units'    => true,
+			'css'      => [
+				[
+					'property' => 'gap',
+				],
+			],
+			'required' => [ 'icon', '!=', '' ],
+		];
+
+		$this->controls['iconSpace'] = [
+			'label'    => esc_html__( 'Space between', 'bricks' ),
+			'type'     => 'checkbox',
+			'css'      => [
+				[
+					'property' => 'justify-content',
+					'value'    => 'space-between',
+				],
+			],
+			'required' => [ 'icon', '!=', '' ],
+		];
 	}
 
 	/**
@@ -79,29 +171,93 @@ class BuyButton extends Element {
 	 * @return void
 	 */
 	public function render() {
-		$text = $this->settings['content'] ?? '';
+		$settings = $this->settings;
 
-		if ( empty( $text ) ) {
-			$text = ! empty( $this->settings['buy_now'] ) ? esc_html__( 'Add To Cart', 'surecart' ) : esc_html__( 'Buy Now', 'surecart' );
+		$this->set_attribute( '_root', 'class', 'bricks-button' );
+
+		if ( ! empty( $settings['size'] ) ) {
+			$this->set_attribute( '_root', 'class', $settings['size'] );
 		}
 
-		if ( $this->is_admin_editor() ) {
-			$content = '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
-
-			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$content,
-				'wp-block-button__link wp-element-button sc-button__link',
-				! empty( $this->settings['buy_now'] ) ? 'button' : 'a'
-			);
-
-			return;
+		// Outline.
+		if ( isset( $settings['outline'] ) ) {
+			$this->set_attribute( '_root', 'class', 'outline' );
 		}
 
-		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			[
-				'text'        => esc_attr( $text ),
-				'add_to_cart' => (bool) empty( $this->settings['buy_now'] ?? false ),
-			]
+		if ( ! empty( $settings['style'] ) ) {
+			// Outline (border).
+			if ( isset( $settings['outline'] ) ) {
+				$this->set_attribute( '_root', 'class', "bricks-color-{$settings['style']}" );
+			} else { // Background (= default).
+				$this->set_attribute( '_root', 'class', "bricks-background-{$settings['style']}" );
+			}
+		}
+
+		// Interactivity context.
+		$this->set_attribute(
+			'_root',
+			'data-wp-context',
+			wp_json_encode(
+				array(
+					'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
+					'text'            => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
+					'outOfStockText'  => esc_attr( __( 'Sold Out', 'surecart' ) ),
+					'unavailableText' => esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
+					'addToCart'       => $settings['buy_now'] ? false : true,
+				),
+				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+			)
 		);
+
+		// Circle.
+		if ( isset( $settings['circle'] ) ) {
+			$this->set_attribute( '_root', 'class', 'circle' );
+		}
+
+		// Block.
+		if ( isset( $settings['block'] ) ) {
+			$this->set_attribute( '_root', 'class', 'block' );
+		}
+
+		// Link class for busy state.
+		$this->set_attribute( '_root', 'class', 'sc-button__link' );
+
+		// Set tag and attributes.
+		if ( ! empty( $settings['buy_now'] ) ) {
+			$this->tag = 'a';
+			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
+			$this->set_attribute( '_root', 'data-wp-bind--href', 'state.checkoutUrl' );
+		} else {
+			$this->tag = 'button';
+			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
+			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+		}
+
+		$output = "<{$this->tag} {$this->render_attributes( '_root' )}>";
+
+		// Icon.
+		$icon          = ! empty( $settings['icon'] ) ? self::render_icon( $settings['icon'] ) : false;
+		$icon_position = ! empty( $settings['iconPosition'] ) ? $settings['iconPosition'] : 'right';
+
+		if ( 'left' === $icon_position && $icon ) {
+			$output .= $icon;
+		}
+
+		if ( isset( $settings['content'] ) ) {
+			if ( $this->is_admin_editor() ) {
+				$output .= trim( $settings['content'] );
+			} else {
+				$output .= '<span class="sc-spinner" aria-hidden="false"></span>';
+				$output .= '<span class="sc-button__link-text" data-wp-text="state.buttonText"></span>';
+			}
+		}
+
+		if ( 'right' === $icon_position && $icon ) {
+			$output .= $icon;
+		}
+
+		$output .= "</{$this->tag}>";
+
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
