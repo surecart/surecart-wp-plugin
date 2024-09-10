@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
+	ScAlert,
 	ScButton,
 	ScDialog,
 	ScForm,
@@ -86,13 +87,21 @@ export default ({ open, onRequestClose, license }) => {
 			onScRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
+			<ScAlert
+				type="warning"
+				open
+				css={css`
+					margin-bottom: var(--sc-form-row-spacing);
+				`}
+			>
+				{__(
+					'Changing the license key will invalidate the current license key.',
+					'surecart'
+				)}
+			</ScAlert>
 			<ScForm onScSubmit={onSubmit}>
 				<ScInput
 					label={__('License Key', 'surecart')}
-					help={__(
-						'Important: Changing the license key will invalidate the current license key.',
-						'surecart'
-					)}
 					onScInput={(e) => setLicenseKey(e.target.value)}
 					value={licenseKey}
 					required
