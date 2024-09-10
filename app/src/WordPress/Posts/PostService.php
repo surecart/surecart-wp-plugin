@@ -44,6 +44,10 @@ class PostService {
 		// get the checkout form block.
 		$block = wp_get_first_block( parse_blocks( $this->post->post_content ), 'surecart/checkout-form' );
 
+		if ( empty( $block ) ) {
+			return null;
+		}
+
 		// get the post.
 		return get_post( $block['attrs']['id'] ?? null );
 	}
