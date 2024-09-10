@@ -15,13 +15,8 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.bricks.elements'] = function () {
-			return new BricksElementsService();
-		};
-
-		$container['surecart.bricks.dynamic_data'] = function () {
-			return new BricksDynamicDataService();
-		};
+		$container['surecart.bricks.elements']     = fn() => new BricksElementsService();
+		$container['surecart.bricks.dynamic_data'] = fn() => new BricksDynamicDataService();
 	}
 
 	/**

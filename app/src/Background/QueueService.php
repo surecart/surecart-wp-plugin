@@ -120,6 +120,19 @@ class QueueService {
 	 * @return DateTime|null The date and time for the next occurrence, or null if there is no pending, scheduled action for the given hook.
 	 */
 	public function getNext( $hook, $args = null, $group = '' ) {
+		return as_next_scheduled_action( $hook, $args, $group );
+	}
+
+	/**
+	 * Get the date and time for the next scheduled occurrence of an action with a given hook
+	 * (an optionally that matches certain args and group), if any.
+	 *
+	 * @param string $hook The hook that the job will trigger.
+	 * @param array  $args Filter to a hook with matching args that will be passed to the job when it runs.
+	 * @param string $group Filter to only actions assigned to a specific group.
+	 * @return DateTime|null The date and time for the next occurrence, or null if there is no pending, scheduled action for the given hook.
+	 */
+	public function getNextDate( $hook, $args = null, $group = '' ) {
 		$next_timestamp = as_next_scheduled_action( $hook, $args, $group );
 
 		if ( is_numeric( $next_timestamp ) ) {
@@ -149,6 +162,67 @@ class QueueService {
 	}
 
 	/**
+	 * Shold we show a migration notice?
+	 *
+	 * @param string $hook The hook that the job will trigger.
+	 * @param array  $args Args that have been passed to the action. Null will matches any args.
+	 * @param string $group The group the job is assigned to.
+	 *
+	 * @return bool
+	 */
+	public function showNotice( $hook, $args = null, $group = '' ) {
+		// no scheduled actions (this is quicker for us to check).
+		$has_action = \as_has_scheduled_action( $hook, $args, $group );
+		if ( ! $has_action ) {
+			return false;
+		}
+
+		$next_action = as_get_scheduled_actions(
+			[
+				'hook'     => $hook,
+				'status'   => \ActionScheduler_Store::STATUS_PENDING,
+				'per_page' => 1,
+			],
+		);
+
+		if ( empty( $next_action ) || ! is_array( $next_action ) ) {
+			return false;
+		}
+
+		// find out if any actions get_args() has 'show_notice' => true.
+		$show_notice = false;
+		foreach ( $next_action as $action ) {
+			$args = $action->get_args();
+			if ( isset( $args['show_notice'] ) && ! empty( $args['show_notice'] ) ) {
+				$show_notice = true;
+				break;
+			}
+		}
+
+		return $show_notice;
+	}
+
+	/**
+	 * Check if there are any failed actions for a given hook and group.
+	 *
+	 * @param string $hook The hook that the job will trigger.
+	 * @param string $group The group the job is assigned to (if any).
+	 * @return bool True if there are any failed actions, false otherwise.
+	 */
+	public function hasFailedActions( $hook, $group = '' ) {
+		$args = [
+			'hook'     => $hook,
+			'group'    => $group,
+			'status'   => \ActionScheduler_Store::STATUS_FAILED,
+			'per_page' => 1, // We only need to know if at least one exists.
+		];
+
+		$failed_actions = $this->search( $args, 'ids' );
+
+		return ! empty( $failed_actions );
+	}
+
+	/**
 	 * Find scheduled actions
 	 *
 	 * @param array  $args Possible arguments, with their default values:
@@ -174,11 +248,30 @@ class QueueService {
 	}
 
 	/**
-	 * Run the queue immedidately.
+	 * Start running the queue immediately.
 	 *
 	 * @return void
 	 */
 	public function run() {
-		do_action( 'action_scheduler_run_queue', 'SureCart Async Request' );
+		$identifier = 'as_async_request_queue_runner';
+
+		// make an async request to run the queue.
+		wp_remote_post(
+			esc_url_raw(
+				add_query_arg(
+					[
+						'action' => $identifier,
+						'nonce'  => wp_create_nonce( $identifier ),
+					],
+					admin_url( 'admin-ajax.php' )
+				)
+			),
+			array(
+				'timeout'   => 0.01,
+				'blocking'  => false,
+				'cookies'   => $_COOKIE,
+				'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
+			)
+		);
 	}
 }

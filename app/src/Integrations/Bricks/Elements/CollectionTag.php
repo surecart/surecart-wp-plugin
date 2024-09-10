@@ -15,13 +15,6 @@ class CollectionTag extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
-	 * Element category.
-	 *
-	 * @var string
-	 */
-	public $category = 'surecart';
-
-	/**
 	 * Element name.
 	 *
 	 * @var string
@@ -60,7 +53,7 @@ class CollectionTag extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Collection Tag', 'surecart' );
+		return esc_html__( 'Collection Tag', 'surecart' );
 	}
 
 	/**

@@ -57,7 +57,6 @@ export class ScProductBuyButton {
 
     // submit the cart form.
     try {
-      console.log('submit');
       await submitCartForm(this.productId);
     } catch (e) {
       console.error(e);

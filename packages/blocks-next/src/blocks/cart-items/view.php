@@ -73,7 +73,6 @@
 									step="1"
 									autocomplete="off"
 									role="spinbutton"
-									data-wp-key="context.line_item.id"
 								/>
 								<div
 									class="sc-input-group-text sc-quantity-selector__increase"
@@ -111,7 +110,7 @@
 									data-wp-bind--hidden="!state.lineItemHasScratchAmount"
 									data-wp-text="context.line_item.price.scratchAmount"
 								></span>
-								<span data-wp-text="state.lineItemDisplayAmount"></span>
+								<span data-wp-text="context.line_item.subtotal_display_amount"></span>
 							</span>
 
 							<span

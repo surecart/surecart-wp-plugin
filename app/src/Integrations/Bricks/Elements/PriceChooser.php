@@ -20,7 +20,7 @@ class PriceChooser extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $category = 'surecart';
+	public $category = 'SureCart Elements';
 
 	/**
 	 * Element name.
@@ -74,7 +74,7 @@ class PriceChooser extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Price Chooser', 'surecart' );
+		return esc_html__( 'Price Selector', 'surecart' );
 	}
 
 	/**
@@ -96,6 +96,11 @@ class PriceChooser extends \Bricks\Element {
 	 * @return array
 	 */
 	public function get_nestable_children() {
+		$price_choice_template_settings = array(
+			'_typography' => array(
+				'text-align' => 'right',
+			),
+		);
 		return array(
 			array(
 				'name'     => 'surecart-product-price-choice-template',
@@ -107,7 +112,48 @@ class PriceChooser extends \Bricks\Element {
 					'_width'          => '100%',
 					'_gap'            => '0',
 				),
-				'children' => ( new PriceChoiceTemplate() )->get_nestable_children(),
+				'children' => array(
+					array(
+						'name'     => 'surecart-price-data',
+						'label'    => esc_html__( 'Name', 'surecart' ),
+						'settings' => array(
+							'direction'       => 'column',
+							'alignItems'      => 'flex-start',
+							'_justifyContent' => 'center',
+							'_width'          => '50%',
+							'_flexBasis'      => '50%',
+							'meta'            => [
+								[
+									'dynamicData' => '{sc_price_name}',
+								],
+							],
+						),
+					),
+					array(
+						'name'     => 'surecart-price-data',
+						'label'    => esc_html__( 'Details', 'surecart' ),
+						'settings' => array(
+							'direction'       => 'column',
+							'alignItems'      => 'flex-end',
+							'_justifyContent' => 'center',
+							'_width'          => '50%',
+							'_flexBasis'      => '50%',
+							'_gap'            => '0',
+							'_lineHeight'     => '1',
+							'meta'            => [
+								[
+									'dynamicData' => '{sc_price_amount}',
+								],
+								[
+									'dynamicData' => '{sc_price_trial}',
+								],
+								[
+									'dynamicData' => '{sc_price_setup_fee}',
+								],
+							],
+						),
+					),
+				),
 			),
 		);
 	}

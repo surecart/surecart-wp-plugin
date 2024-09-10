@@ -51,9 +51,8 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$link = admin_url( 'admin.php?page=sc-affiliate-requests' );
-
 		foreach ( $this->getStatuses() as $status => $label ) {
+			$link = admin_url( 'admin.php?page=sc-affiliate-requests' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -65,6 +64,8 @@ class AffiliationRequestsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}

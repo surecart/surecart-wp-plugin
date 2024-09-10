@@ -36,7 +36,13 @@
 		"align": false,
 		"alignWide": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"background": true,
+			"text": true
+		}
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",

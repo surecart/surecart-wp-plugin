@@ -8,20 +8,11 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import {
-	Button,
-	ButtonGroup,
-	PanelBody,
-	PanelRow,
-	TextControl,
-} from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
-	// __experimentalUseBorderProps as useBorderProps,
-	// __experimentalUseColorProps as useColorProps,
-	// __experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetElementClassName,
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
@@ -102,6 +93,7 @@ export default (props) => {
 				<RichText
 					aria-label={__('Button text', 'surecart')}
 					placeholder={__('Add text…', 'surecart')}
+					ref={richTextRef}
 					className={classnames(
 						className,
 						'wp-block-button__link',

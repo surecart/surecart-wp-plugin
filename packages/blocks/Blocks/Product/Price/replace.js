@@ -3,9 +3,10 @@ import {
 	createBlock,
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
+import edit from './edit';
 
 const newPriceTemplate = (attributes) => {
 	const defaultColor = attributes?.textColor || '#8a8a8a';
@@ -114,7 +115,36 @@ const newPriceTemplate = (attributes) => {
 	];
 };
 
-export default ({ clientId, attributes }) => {
+function checkBlockExistence(blockName, blocks = null) {
+	if (blocks === null) {
+		const { getBlocks } = select('core/block-editor');
+		blocks = getBlocks();
+	}
+
+	for (const block of blocks) {
+		if (block.name === blockName) {
+			return true;
+		}
+
+		if (block.innerBlocks && block.innerBlocks.length > 0) {
+			if (checkBlockExistence(blockName, block.innerBlocks)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+export default (props) => {
+	const { clientId, attributes } = props;
+
+	// find out if parent block is `surecart/upsell` block
+	const is_upsell = checkBlockExistence('surecart/upsell');
+	if (is_upsell) {
+		return edit(props);
+	}
+
 	const block = useSelect(
 		(select) => select(blockEditorStore).getBlock(clientId || ''),
 		[clientId]

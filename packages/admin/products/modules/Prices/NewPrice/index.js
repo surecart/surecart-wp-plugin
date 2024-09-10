@@ -70,7 +70,6 @@ export default ({ isOpen, onRequestClose, product }) => {
 					recurring_interval: 'month',
 					recurring_interval_count: 1,
 					recurring_period_count: null,
-					recurring_end_behavior: 'cancel',
 				});
 				break;
 			case 'multiple':
@@ -78,7 +77,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 					recurring_interval: 'month',
 					recurring_interval_count: 1,
 					recurring_period_count: 3,
-					recurring_end_behavior: 'complete',
+					revoke_purchases_on_completed: false,
 				});
 				break;
 			case 'once':
@@ -86,7 +85,6 @@ export default ({ isOpen, onRequestClose, product }) => {
 					recurring_interval: null,
 					recurring_interval_count: null,
 					recurring_period_count: null,
-					recurring_end_behavior: null,
 				});
 				break;
 		}

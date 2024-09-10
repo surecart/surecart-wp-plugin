@@ -280,30 +280,6 @@ const { state, actions } = store('surecart/product-page', {
 		},
 
 		/**
-		 * Get the max product quantity
-		 */
-		get maxQuantity() {
-			const { product } = getContext();
-			// check purchase limit.
-			if (product?.purchase_limit) {
-				return product.purchase_limit;
-			}
-
-			// if stock is not enabled, or out of stock purchases are allowed, return infinity.
-			if (product?.has_unlimited_stock) {
-				return Infinity;
-			}
-
-			// if no variant is selected, check against product stock.
-			if (!state.selectedVariant) {
-				return product.available_stock;
-			}
-
-			// check against variant stock.
-			return state.selectedVariant.available_stock;
-		},
-
-		/**
 		 * Is the quantity disabled?
 		 */
 		get isQuantityDisabled() {
@@ -315,9 +291,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Is quantity increase disabled?
 		 */
 		get isQuantityIncreaseDisabled() {
-			return (
-				state.isQuantityDisabled || state.quantity >= state.maxQuantity
-			);
+			return state.isQuantityDisabled;
 		},
 
 		/**
@@ -335,7 +309,7 @@ const { state, actions } = store('surecart/product-page', {
 			);
 
 			// no busy context, toggle cart right away.
-			!hasContextBusy && cartActions.toggle();
+			!hasContextBusy && cartActions.open();
 
 			const context = getContext();
 			const { mode, formId, product } = context;
@@ -346,7 +320,7 @@ const { state, actions } = store('surecart/product-page', {
 				checkoutActions.setCheckout(checkout, mode, formId);
 
 				// no busy context, wait to toggle cart
-				hasContextBusy && cartActions.toggle();
+				hasContextBusy && cartActions.open();
 
 				// speak the cart dialog state.
 				cartState.label = sprintf(
@@ -400,6 +374,10 @@ const { state, actions } = store('surecart/product-page', {
 		 * Set the option.
 		 */
 		setOption: (e) => {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
 			e.preventDefault();
 
 			const {
@@ -466,10 +444,7 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		onQuantityChange: (e) => {
 			const context = getContext();
-			context.quantity = Math.max(
-				Math.min(state.maxQuantity, parseInt(e.target.value)),
-				1
-			);
+			context.quantity = Math.max(parseInt(e.target.value), 1);
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
@@ -501,10 +476,7 @@ const { state, actions } = store('surecart/product-page', {
 			e?.preventDefault();
 
 			const context = getContext();
-			if (state.isQuantityDisabled) return;
-			context.quantity =
-				Math.min(state.maxQuantity, state.quantity + 1) || 1;
-
+			context.quantity = state.quantity + 1;
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},

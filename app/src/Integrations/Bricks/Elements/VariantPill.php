@@ -15,13 +15,6 @@ class VariantPill extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
-	 * Element category.
-	 *
-	 * @var string
-	 */
-	public $category = 'surecart';
-
-	/**
 	 * Element name.
 	 *
 	 * @var string
@@ -40,7 +33,7 @@ class VariantPill extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ion-md-pricetag';
+	public $icon = 'ion-md-radio-button-on';
 
 	/**
 	 * Get element label
@@ -90,9 +83,9 @@ class VariantPill extends \Bricks\Element {
 
 		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
-				'highlight_text'       => esc_attr( $this->settings['highlight_text']['hex'] ?? '' ),
-				'highlight_background' => esc_attr( $this->settings['highlight_background']['hex'] ?? '' ),
-				'highlight_border'     => esc_attr( $this->settings['highlight_border']['hex'] ?? '' ),
+				'highlight_text'       => esc_attr( $this->get_raw_color( 'highlight_text' ) ),
+				'highlight_background' => esc_attr( $this->get_raw_color( 'highlight_background' ) ),
+				'highlight_border'     => esc_attr( $this->get_raw_color( 'highlight_border' ) ),
 			)
 		);
 	}

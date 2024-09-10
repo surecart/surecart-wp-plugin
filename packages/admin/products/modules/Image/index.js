@@ -52,19 +52,20 @@ export default ({ productId, product, updateProduct }) => {
 			'product',
 			productId
 		);
-		// if it's in the product?.gallery_ids already, throw an error.
-		if (product?.gallery_ids.includes(newId)) {
+
+		const gallery_ids = [...(product?.gallery_ids || [])];
+		// find the index of the old id
+		const index = product?.gallery_ids.indexOf(id);
+		gallery_ids[index] = newId;
+
+		// if there is a duplicate image in the gallery, show an error
+		if (new Set(gallery_ids).size !== gallery_ids.length) {
 			createErrorNotice(
 				__('This image is already in the gallery.', 'surecart'),
 				{ type: 'snackbar' }
 			);
 			return;
 		}
-
-		const gallery_ids = [...(product?.gallery_ids || [])];
-		// find the index of the old id
-		const index = product?.gallery_ids.indexOf(id);
-		gallery_ids[index] = newId;
 
 		updateProduct({
 			gallery_ids,

@@ -19,7 +19,8 @@
 			echo wp_kses_data(
 				get_block_wrapper_attributes(
 					array(
-						'class' => 'wp-block-button__link wp-element-button sc-button__link',
+						'class' => 'wp-block-button__link wp-element-button sc-button__link ' . ( $styles['classnames'] ?? '' ),
+						'style' => $styles['css'] ?? '',
 					)
 				)
 			);
@@ -38,7 +39,8 @@
 			echo wp_kses_data(
 				get_block_wrapper_attributes(
 					array(
-						'class' => 'wp-block-button__link wp-element-button sc-button__link',
+						'class' => 'wp-block-button__link wp-element-button sc-button__link ' . ( $styles['classnames'] ?? '' ),
+						'style' => $styles['css'] ?? '',
 					)
 				)
 			);

@@ -21,7 +21,10 @@ class BricksElementsService {
 		add_filter( 'bricks/setup/control_options', [ $this, 'addTemplateTypes' ], 11 );
 
 		// handle the default active template for our post type.
-		add_filter( 'bricks/active_templates', [ $this, 'setDefaultTemplate' ], 10, 3 );
+		add_filter( 'bricks/active_templates', [ $this, 'setDefaultProductTemplate' ], 10, 3 );
+
+		// handle the default active template for our collection.
+		add_filter( 'bricks/active_templates', [ $this, 'setDefaultCollectionTemplate' ], 10, 3 );
 
 		// Handle the product page wrapper.
 		add_filter( 'bricks/frontend/render_data', [ $this, 'handleProductPageWrapper' ], 10, 2 );
@@ -36,7 +39,24 @@ class BricksElementsService {
 		if ( ! class_exists( '\Bricks\Elements' ) ) {
 			return;
 		}
-		foreach ( glob( __DIR__ . '/Elements/**' ) as $file ) {
+
+		$elements = glob( __DIR__ . '/Elements/**' );
+		foreach ( $elements as $file ) {
+			if ( basename( $file ) === 'Product.php' ) {
+				\Bricks\Elements::register_element( $file );
+			}
+		}
+
+		foreach ( $elements as $file ) {
+			if ( basename( $file ) === 'ProductCard.php' ) {
+				\Bricks\Elements::register_element( $file );
+			}
+		}
+
+		foreach ( $elements as $file ) {
+			if ( basename( $file ) === 'Product.php' ) {
+				continue;
+			}
 			\Bricks\Elements::register_element( $file );
 		}
 	}
@@ -51,7 +71,7 @@ class BricksElementsService {
 	 *
 	 * @return self
 	 */
-	public function setDefaultTemplate( $active_templates, $post_id, $content_type ) {
+	public function setDefaultProductTemplate( $active_templates, $post_id, $content_type ) {
 		// Only run my logic on the frontend.
 		if ( ! bricks_is_frontend() ) {
 			return $active_templates;
@@ -74,15 +94,59 @@ class BricksElementsService {
 			return $active_templates;
 		}
 
-		// apply a template, but only if there are no conditions.
-		$template_ids = \Bricks\Templates::get_templates_by_type( 'sc_product' );
-		foreach ( $template_ids as $id ) {
-			$template_conditions = \Bricks\Helpers::get_template_setting( 'templateConditions', $id );
-			if ( empty( $template_conditions ) ) {
-				$active_templates['content'] = $id;
-				return $active_templates;
-			}
+		$sc_product_templates = \Bricks\Templates::get_templates_by_type( 'sc_product' );
+
+		$template_ids = [
+			'body'       => $sc_product_templates,
+			'sc_product' => $sc_product_templates,
+		];
+
+		$template_id = \Bricks\Database::find_template_id( $template_ids, 'content', 'sc_product', get_the_ID(), 'single' );
+
+		$active_templates['content'] = $template_id;
+
+		return $active_templates;
+	}
+
+	/**
+	 * Set the default template for the post type.
+	 * This will only apply if the post has not been edited directly by bricks.
+	 *
+	 * @param array  $active_templates Active templates.
+	 * @param int    $post_id          Post ID.
+	 * @param string $content_type     Content type.
+	 *
+	 * @return self
+	 */
+	public function setDefaultCollectionTemplate( $active_templates, $post_id, $content_type ) {
+		// Only run my logic on the frontend.
+		if ( ! bricks_is_frontend() ) {
+			return $active_templates;
 		}
+
+		// Return if single post $content_type is not 'content'.
+		if ( 'archive' !== $content_type ) {
+			return $active_templates;
+		}
+
+		if ( ! is_tax( 'sc_collection' ) ) {
+			return $active_templates;
+		}
+
+		if ( ! empty( $active_templates['archive'] ) ) {
+			return $active_templates;
+		}
+
+		$collection_templates = \Bricks\Templates::get_templates_by_type( 'sc_collection' );
+
+		$template_ids = [
+			'body'          => $collection_templates,
+			'sc_collection' => $collection_templates,
+		];
+
+		$template_id = \Bricks\Database::find_template_id( $template_ids, 'content', 'sc_collection', get_the_ID(), 'archive' );
+
+		$active_templates['archive'] = $template_id;
 
 		return $active_templates;
 	}
@@ -95,7 +159,8 @@ class BricksElementsService {
 	 * @return array
 	 */
 	public function addTemplateTypes( $control_options ) {
-		$control_options['templateTypes']['sc_product'] = esc_html__( 'Surecart - single product', 'surecart' );
+		$control_options['templateTypes']['sc_product']    = esc_html__( 'SureCart - Single Product', 'surecart' );
+		$control_options['templateTypes']['sc_collection'] = esc_html__( 'SureCart - Collection Archive', 'surecart' );
 
 		return $control_options;
 	}

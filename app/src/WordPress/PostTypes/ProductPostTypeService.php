@@ -51,11 +51,11 @@ class ProductPostTypeService {
 		// product gallery migration.
 		add_action( 'get_post_metadata', array( $this, 'defaultGalleryFallback' ), 10, 4 );
 
-		// allow product meta to be exposed top-level.
-		add_action( 'get_post_metadata', array( $this, 'exposeProductMeta' ), 10, 4 );
-
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
+
+		// we need to disable the gutenberg editor for our post type so that blocks don't load there.
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'disableGutenberg' ], 10, 2 );
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
@@ -268,7 +268,7 @@ class ProductPostTypeService {
 			'input'    => 'text',
 			'required' => false,
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
-			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).' ) . ' <a href="https://surecart.com/docs" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
+			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
 		return $form_fields;
 	}
@@ -536,6 +536,24 @@ class ProductPostTypeService {
 	}
 
 	/**
+	 * Disables gutenburg for our post type.
+	 *
+	 * This prevents blocks from loading in the editor, and other scripts that may
+	 * expect the editor.
+	 *
+	 * @param bool   $current_status The current status.
+	 * @param string $post_type The post type.
+	 *
+	 * @return bool
+	 */
+	public function disableGutenberg( $current_status, $post_type ) {
+		if ( $post_type === $this->post_type ) {
+			return false;
+		}
+		return $current_status;
+	}
+
+	/**
 	 * For classic themes, replace the content with the product info template.
 	 *
 	 * @param string $content The content.
@@ -622,35 +640,6 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Expose product meta.
-	 *
-	 * This allows us to expose the product meta to the top level.
-	 *
-	 * @param array   $value  The value.
-	 * @param integer $object_id The object ID.
-	 * @param string  $meta_key The meta key.
-	 * @param bool    $single Whether to return a single value.
-	 *
-	 * @return array|mixed;
-	 */
-	public function exposeProductMeta( $value, $object_id, $meta_key, $single ) {
-		// only for our post type.
-		if ( get_post_type( $object_id ) !== $this->post_type ) {
-			return $value;
-		}
-
-		// only if empty.
-		remove_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10 );
-		$product = get_post_meta( $object_id, 'product', true );
-		add_filter( 'get_post_metadata', array( $this, __FUNCTION__ ), 10, 4 );
-		if ( empty( $product ) ) {
-			return $value;
-		}
-
-		return $product->$meta_key ?? $value;
-	}
-
-	/**
 	 * Setup the product.
 	 *
 	 * @param \WP_Post $post The post.
@@ -696,8 +685,7 @@ class ProductPostTypeService {
 			return $query;
 		}
 
-		// add to tax_query.
-		if ( \SureCart::account()->id ) {
+		if ( \SureCart::account()->id && empty( $query->query['suppress_filters'] ) ) {
 			// get existing tax_query.
 			$existing = is_array( $query->get( 'tax_query' ) ) && ! empty( $query->get( 'tax_query' ) ) ? $query->get( 'tax_query' ) : array();
 

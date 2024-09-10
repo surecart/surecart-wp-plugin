@@ -20,7 +20,7 @@ class BuyButton extends Element {
 	 *
 	 * @var string
 	 */
-	public $category = 'surecart';
+	public $category = 'SureCart Elements';
 
 	/**
 	 * Element name.
@@ -49,7 +49,7 @@ class BuyButton extends Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Buy Button', 'surecart' );
+		return esc_html__( 'Add To Cart', 'surecart' );
 	}
 
 	/**
@@ -82,16 +82,17 @@ class BuyButton extends Element {
 		$text = $this->settings['content'] ?? '';
 
 		if ( empty( $text ) ) {
-			$text = $this->settings['add_to_cart'] ? esc_html__( 'Add To Cart', 'surecart' ) : esc_html__( 'Buy Now', 'surecart' );
+			$text = ! empty( $this->settings['buy_now'] ) ? esc_html__( 'Add To Cart', 'surecart' ) : esc_html__( 'Buy Now', 'surecart' );
 		}
 
 		if ( $this->is_admin_editor() ) {
 			$content = '<span class="sc-button__link-text">' . esc_html( $text ) . '</span>';
 
-			echo $this->preview(
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$content,
-				'wp-block-button__link wp-element-button sc-button__link'
-			); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				'wp-block-button__link wp-element-button sc-button__link',
+				! empty( $this->settings['buy_now'] ) ? 'button' : 'a'
+			);
 
 			return;
 		}

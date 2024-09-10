@@ -83,7 +83,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			);
 		}
 
-		$controller = new ProductPageBlock( $this->block );
+		$controller = new ProductPageBlock();
 
 		$price_attributes = [
 			'id',

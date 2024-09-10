@@ -400,10 +400,8 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			// set attribute.
 			if ( ! $is_guarded ) {
 				$this->setAttribute( $key, maybe_unserialize( maybe_unserialize( $value ) ) );
-			} else {
-				if ( $this->isFillable( $key ) ) {
+			} elseif ( $this->isFillable( $key ) ) {
 					$this->setAttribute( $key, maybe_unserialize( maybe_unserialize( $value ) ) );
-				}
 			}
 		}
 
@@ -718,7 +716,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			array_merge(
 				[ 'created_at' => current_time( 'mysql' ) ],
 				array_map(
-					function( $item ) {
+					function ( $item ) {
 						return maybe_serialize( $item );
 					},
 					$this->attributes
@@ -774,7 +772,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			array_merge(
 				[ 'updated_at' => current_time( 'mysql' ) ],
 				array_map(
-					function( $item ) {
+					function ( $item ) {
 						return maybe_serialize( $item );
 					},
 					$attributes

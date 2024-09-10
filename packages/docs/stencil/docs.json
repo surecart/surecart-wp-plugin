@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-08-06T14:15:55",
+  "timestamp": "2024-08-27T17:58:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -5538,6 +5538,7 @@
         ],
         "sc-form-components-validator": [
           "sc-order-shipping-address",
+          "sc-order-billing-address",
           "sc-order-tax-id-input",
           "sc-order-bumps",
           "sc-line-item-tax",
@@ -5569,6 +5570,10 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
+        ],
+        "sc-order-billing-address": [
+          "sc-checkbox",
+          "sc-address"
         ],
         "sc-order-tax-id-input": [
           "sc-tax-id-input"
@@ -14632,6 +14637,7 @@
       ],
       "dependencies": [
         "sc-order-shipping-address",
+        "sc-order-billing-address",
         "sc-order-tax-id-input",
         "sc-order-bumps",
         "sc-line-item-tax",
@@ -14641,6 +14647,7 @@
       "dependencyGraph": {
         "sc-form-components-validator": [
           "sc-order-shipping-address",
+          "sc-order-billing-address",
           "sc-order-tax-id-input",
           "sc-order-bumps",
           "sc-line-item-tax",
@@ -14681,6 +14688,10 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
+        ],
+        "sc-order-billing-address": [
+          "sc-checkbox",
+          "sc-address"
         ],
         "sc-order-tax-id-input": [
           "sc-tax-id-input"
@@ -20939,7 +20950,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
       "dependencies": [
         "sc-checkbox",
         "sc-address"
@@ -20973,6 +20986,9 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-form-components-validator": [
+          "sc-order-billing-address"
         ]
       }
     },

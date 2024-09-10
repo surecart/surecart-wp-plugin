@@ -13,9 +13,15 @@ export const store = createStore<any>(
   },
 );
 
-const { state } = store;
-
-export const toggleCart = (open = null) => store.set('cart', { ...state.cart, ...{ open: open !== null ? open : !state.cart.open } });
+export const toggleCart = (open = null) => {
+  if (!open) {
+    return;
+  }
+  const event = new CustomEvent('scToggleCart', {
+    bubbles: true,
+  });
+  document.dispatchEvent(event);
+};
 
 const { on } = store;
 on('set', (key, newState) => {

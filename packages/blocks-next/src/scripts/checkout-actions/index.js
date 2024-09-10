@@ -153,6 +153,10 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 	} catch (e) {
 		console.error(e);
 		checkoutState.error = e;
+		// nullify checkout.
+		if (e.code === 'line_item.invalid') {
+			return null;
+		}
 	} finally {
 		checkoutState.loading = false;
 	}
@@ -171,6 +175,11 @@ export const removeCheckoutLineItem = async (id) => {
 	} catch (e) {
 		console.error(e);
 		checkoutState.error = e;
+		// nullify checkout.
+		console.log(e.code);
+		if (e.code === 'line_item.invalid') {
+			return null;
+		}
 	} finally {
 		checkoutState.loading = false;
 	}

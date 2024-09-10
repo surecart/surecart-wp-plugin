@@ -38,12 +38,11 @@ export default ({ price, updatePrice, product }) => {
 					</ScInput>
 					{!!price?.recurring_period_count && (
 						<ScSwitch
-							checked={price?.recurring_end_behavior === 'cancel'}
+							checked={price?.revoke_purchases_on_completed}
 							onScChange={(e) =>
 								updatePrice({
-									recurring_end_behavior: e?.target?.checked
-										? 'cancel'
-										: 'complete',
+									revoke_purchases_on_completed:
+										e?.target?.checked,
 								})
 							}
 						>

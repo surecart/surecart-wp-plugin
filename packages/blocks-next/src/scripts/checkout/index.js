@@ -107,18 +107,6 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Get the line item display amount.
-		 */
-		get lineItemDisplayAmount() {
-			const { line_item } = getContext();
-			if (!!line_item?.ad_hoc_amount) {
-				return line_item.ad_hoc_display_amount;
-			}
-
-			return line_item.subtotal_display_amount;
-		},
-
-		/**
 		 * Check if the current line item has a scratch amount.
 		 */
 		get lineItemHasScratchAmount() {
@@ -533,9 +521,7 @@ const { state, actions } = store('surecart/checkout', {
 				data,
 			});
 
-			if (checkout) {
-				actions.setCheckout(checkout, mode, formId);
-			}
+			actions.setCheckout(checkout, mode, formId);
 			state.loading = false;
 		},
 
@@ -549,10 +535,15 @@ const { state, actions } = store('surecart/checkout', {
 
 			const checkout = await removeCheckoutLineItem(line_item?.id);
 
-			if (checkout) {
-				actions.setCheckout(checkout, mode, formId);
-			}
+			actions.setCheckout(checkout, mode, formId);
+
 			state.loading = false;
+		},
+		updateCheckout(e) {
+			const { checkout, mode, formId } = e.detail;
+			actions.setCheckout(checkout, mode, formId);
 		},
 	},
 });
+
+addEventListener('scCheckoutUpdated', actions.updateCheckout); // Listen for checkout update on product page.

@@ -17,13 +17,6 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
-	 * Element category.
-	 *
-	 * @var string
-	 */
-	public $category = 'surecart';
-
-	/**
 	 * Element name.
 	 *
 	 * @var string
@@ -69,7 +62,7 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Price', 'surecart' );
+		return esc_html__( 'Price Choice', 'surecart' );
 	}
 
 	/**
@@ -90,40 +83,45 @@ class PriceChoiceTemplate extends \Bricks\Element {
 	 * @return array
 	 */
 	public function get_nestable_children() {
-		$settings = array(
-			'_typography' => array(
-				'text-align' => 'right',
-			),
-		);
-
 		return array(
 			array(
-				'name'     => 'surecart-product-price-name',
+				'name'     => 'surecart-price-data',
+				'label'    => esc_html__( 'Name', 'surecart' ),
 				'settings' => array(
-					'_width' => '50%',
+					'direction'       => 'column',
+					'alignItems'      => 'flex-start',
+					'_justifyContent' => 'center',
+					'_width'          => '50%',
+					'_flexBasis'      => '50%',
+					'meta'            => [
+						[
+							'dynamicData' => '{sc_price_name}',
+						],
+					],
 				),
 			),
 			array(
-				'name'     => 'block',
+				'name'     => 'surecart-price-data',
+				'label'    => esc_html__( 'Details', 'surecart' ),
 				'settings' => array(
-					'display'     => 'flex',
-					'_direction'  => 'column',
-					'_alignItems' => 'flex-end',
-					'_width'      => '50%',
-				),
-				'children' => array(
-					array(
-						'name'     => 'surecart-product-price-amount',
-						'settings' => $settings,
-					),
-					array(
-						'name'     => 'surecart-product-price-trial',
-						'settings' => $settings,
-					),
-					array(
-						'name'     => 'surecart-product-price-setup-fee',
-						'settings' => $settings,
-					),
+					'direction'       => 'column',
+					'alignItems'      => 'flex-end',
+					'_justifyContent' => 'center',
+					'_width'          => '50%',
+					'_flexBasis'      => '50%',
+					'_gap'            => '0',
+					'_lineHeight'     => '1',
+					'meta'            => [
+						[
+							'dynamicData' => '{sc_price_amount}',
+						],
+						[
+							'dynamicData' => '{sc_price_trial}',
+						],
+						[
+							'dynamicData' => '{sc_price_setup_fee}',
+						],
+					],
 				),
 			),
 		);
@@ -145,9 +143,9 @@ class PriceChoiceTemplate extends \Bricks\Element {
 
 		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'highlight_border' => $this->settings['highlight_border']['hex'] ?? '',
+				'highlight_border' => esc_html( $this->get_raw_color( 'highlight_border' ) ),
 			],
-			\Bricks\Frontend::render_children( $this )
+			\Bricks\Frontend::render_children( $this ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
 	}
 }

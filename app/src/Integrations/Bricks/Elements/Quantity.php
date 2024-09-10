@@ -19,7 +19,7 @@ class Quantity extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $category = 'surecart';
+	public $category = 'SureCart Elements';
 
 	/**
 	 * Element name.
@@ -71,7 +71,7 @@ class Quantity extends \Bricks\Element {
 	public function render() {
 		$label = ! empty( $this->settings['label'] ) ? $this->settings['label'] : esc_html__( 'Quantity', 'surecart' );
 
-		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
 				'label' => esc_attr( $label ),
 			)

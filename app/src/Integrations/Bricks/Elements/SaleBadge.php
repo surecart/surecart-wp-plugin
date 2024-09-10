@@ -20,7 +20,7 @@ class SaleBadge extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $category = 'surecart';
+	public $category = 'SureCart Elements';
 
 	/**
 	 * Element name.
@@ -41,7 +41,7 @@ class SaleBadge extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ion-md-pricetag';
+	public $icon = 'ion-md-ribbon';
 
 	/**
 	 * Get element label
@@ -49,7 +49,7 @@ class SaleBadge extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Sale Badge', 'surecart' );
+		return esc_html__( 'Sale Badge', 'surecart' );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class SaleBadge extends \Bricks\Element {
 			return;
 		}
 
-		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			array(
 				'text' => esc_attr( $text ),
 			)

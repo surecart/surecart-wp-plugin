@@ -1,15 +1,19 @@
 <div
 	class="sc-cart-submit__wrapper wp-block-buttons"
-	<?php echo wp_kses_data(
-		get_block_wrapper_attributes(
-			array(
-				'style' => $style,
-			)
-		)
-	); ?>
+	style="<?php echo esc_attr( $wrapper_style ); ?>"
 >
 	<div class="wp-block-button">
 		<a
+		<?php
+			echo wp_kses_data(
+				get_block_wrapper_attributes(
+					array(
+						'class' => 'wp-block-button__link wp-element-button sc-button__link ' . ( $styles['classnames'] ?? '' ),
+						'style' => $styles['css'] ?? '',
+					)
+				)
+			);
+			?>
 			href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
 			class="wp-block-button__link wp-element-button sc-button__link"
 			data-wp-bind--disabled="state.loading"

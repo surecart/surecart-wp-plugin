@@ -8,6 +8,11 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 	 * @return \SureCart\Models\Product|null
 	 */
 	function sc_get_product( $post = false ) {
+		// backwards compatibility.
+		if ( get_query_var( 'surecart_current_product' ) ) {
+			return get_query_var( 'surecart_current_product' );
+		}
+
 		// make sure to get the post.
 		$post = get_post( $post );
 

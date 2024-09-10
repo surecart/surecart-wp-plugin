@@ -92,13 +92,11 @@ export class ScCheckoutStockAlert {
     // stock errors.
     const stockErrors = (this.getOutOfStockLineItems() || []).map(lineItem => {
       const product = lineItem.price?.product as Product;
-      const variantImage = typeof lineItem?.variant?.image !== 'string' ? lineItem?.variant?.image?.url : null;
-
       const available_stock = lineItem?.variant?.id ? lineItem?.variant?.available_stock : product?.available_stock;
 
       return {
         name: product?.name,
-        image_url: variantImage || product?.image_url,
+        image: lineItem?.image,
         quantity: lineItem.quantity,
         available_stock,
       };
@@ -139,7 +137,7 @@ export class ScCheckoutStockAlert {
                     >
                       <sc-table-cell>
                         <sc-flex justifyContent="flex-start" alignItems="center">
-                          <img class="stock-alert__image" src={`https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=100/${item?.image_url}`} />
+                          {item?.image && <img {...(item.image as any)} class="stock-alert__image" />}
                           <h4>{item.name}</h4>
                         </sc-flex>
                       </sc-table-cell>

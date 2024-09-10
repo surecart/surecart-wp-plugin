@@ -5,6 +5,7 @@ import * as ProductItemImage from '@blocks/ProductItemImage';
 import * as ProductItemList from '@blocks/ProductItemList';
 import * as ProductItemPrice from '@blocks/ProductItemPrice';
 import * as ProductItemTitle from '@blocks/ProductItemTitle';
+import * as ProductPrice from '@blocks/Product/Price';
 
 registerBlocks([
 	ProductItem,
@@ -12,4 +13,5 @@ registerBlocks([
 	ProductItemPrice,
 	ProductItemTitle,
 	ProductItemList,
+	ProductPrice,
 ]);

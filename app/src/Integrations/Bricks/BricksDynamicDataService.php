@@ -21,10 +21,24 @@ class BricksDynamicDataService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'bricks/dynamic_tags_list', [ $this, 'dynamic_tags' ] );
-		add_filter( 'bricks/dynamic_data/render_tag', [ $this, 'get_the_tag_value' ], 10, 2 );
+		add_action( 'bricks/dynamic_tags_list', [ $this, 'dynamicTags' ] );
+		add_filter( 'bricks/dynamic_data/render_tag', [ $this, 'getTheTagValue' ], 10, 2 );
 		add_filter( 'bricks/frontend/render_data', [ $this, 'render' ], 10, 3 );
 		add_filter( 'bricks/dynamic_data/render_content', [ $this, 'render' ], 10, 3 );
+
+		// make sure scripts load in footer.
+		if ( ! defined( 'ACSS_FLAG_LOAD_DASHBOARD_SCRIPTS_IN_FOOTER' ) ) {
+			define( 'ACSS_FLAG_LOAD_DASHBOARD_SCRIPTS_IN_FOOTER', true );
+		}
+	}
+
+	/**
+	 * Check if we are in the admin editor.
+	 *
+	 * @return bool
+	 */
+	public function is_admin_editor() {
+		return ! bricks_is_frontend() || bricks_is_builder_call();
 	}
 
 	/**
@@ -34,7 +48,7 @@ class BricksDynamicDataService {
 	 *
 	 * @return array
 	 */
-	public function dynamic_tags( $tags = [] ) {
+	public function dynamicTags( $tags = [] ) {
 		return array_merge(
 			$tags,
 			[
@@ -45,9 +59,21 @@ class BricksDynamicDataService {
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
+					'slug'  => 'sc_product_selected_price',
+					'name'  => '{sc_product_selected_price}',
+					'label' => esc_html__( 'Product selected price', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
 					'slug'  => 'sc_product_scratch_price',
 					'name'  => '{sc_product_scratch_price}',
 					'label' => esc_html__( 'Product scratch price', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_selected_scratch_price',
+					'name'  => '{sc_product_selected_scratch_price}',
+					'label' => esc_html__( 'Product selected scratch price', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
 				[
@@ -80,6 +106,66 @@ class BricksDynamicDataService {
 					'label' => esc_html__( 'Product on sale', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
+				[
+					'slug'  => 'sc_product_trial',
+					'name'  => '{sc_product_trial}',
+					'label' => esc_html__( 'Product trial', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_selected_trial',
+					'name'  => '{sc_product_selected_trial}',
+					'label' => esc_html__( 'Product selected price trial', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_billing_interval',
+					'name'  => '{sc_product_billing_interval}',
+					'label' => esc_html__( 'Product billing interval', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_selected_billing_interval',
+					'name'  => '{sc_product_selected_billing_interval}',
+					'label' => esc_html__( 'Product selected price billing interval', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_setup_fee',
+					'name'  => '{sc_product_setup_fee}',
+					'label' => esc_html__( 'Product setup fee', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_selected_setup_fee',
+					'name'  => '{sc_product_selected_setup_fee}',
+					'label' => esc_html__( 'Product selected price setup fee', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_name',
+					'name'  => '{sc_price_name}',
+					'label' => esc_html__( 'Price name', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_amount',
+					'name'  => '{sc_price_amount}',
+					'label' => esc_html__( 'Price amount', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_trial',
+					'name'  => '{sc_price_trial}',
+					'label' => esc_html__( 'Price trial', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_price_setup_fee',
+					'name'  => '{sc_price_setup_fee}',
+					'label' => esc_html__( 'Price setup fee', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
 			]
 		);
 	}
@@ -96,31 +182,70 @@ class BricksDynamicDataService {
 		$product = $post_id ? sc_get_product( $post_id ) : false;
 
 		switch ( $name ) {
+			// static product price.
 			case 'product_price':
 				// Support ':value' filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
 				if ( isset( $filters['value'] ) ) {
 					return esc_html( $product ? Currency::maybeConvertAmount( $product->initial_amount ) : '' );
 				}
+
+				// Support ':raw' filter to get the price value as a simple string (e.g.: 1250, 250, 5 ).
 				if ( isset( $filters['raw'] ) ) {
 					return esc_html( $product ? $product->initial_amount : '' );
 				}
-				return esc_html( $product ? $product->display_amount : '' );
 
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return ( $product->display_amount ?? Currency::format( 1200 ) );
+				}
+
+				return $product->display_amount;
+
+			// the dymamically selected price for the product.
+			case 'product_selected_price':
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-amount'>" . ( $product->display_amount ?? Currency::format( 1200 ) ) . '</span>';
+				}
+
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
+
+			// the static price range.
 			case 'product_price_range':
 				return esc_html( $product ? $product->range_display_amount : '' );
 
-			case 'product_scratch_amount':
+			// static product scratch price.
+			case 'product_scratch_price':
 				// Support ':value' filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
 				if ( isset( $filters['value'] ) ) {
 					return esc_html( $product ? Currency::maybeConvertAmount( $product->scratch_amount ) : '' );
 				}
+
+				// Support ':raw' filter to get the price value as a simple string (e.g.: 1450, 250, 5 ).
 				if ( isset( $filters['raw'] ) ) {
 					return esc_html( $product ? $product->scratch_amount : '' );
 				}
-				return esc_html( $product ? $product->scratch_display_amount : '' );
+
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return ( $product->scratch_display_amount ?? Currency::format( 1400 ) );
+				}
+
+				return $product->scratch_display_amount;
+
+			// the dymamically selected scratch price for the product.
+			case 'product_selected_scratch_price':
+				// preview in the admin editor.
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-scratch-amount sc-price__amount'>" . ( $product->scratch_display_amount ?? '$14' ) . '</span>';
+				}
+
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount --> ';
 
 			case 'product_description':
-				return wp_kses_post( \Bricks\Helpers::get_the_excerpt( $post, ! empty( $filters['num_words'] ) ? $filters['num_words'] : 55, null, true ) );
+				return '<span class="sc-prose">' . wp_kses_post( ! empty( $filters['num_words'] ) ? \Bricks\Helpers::get_the_excerpt( $post, ! $filters['num_words'], null, true ) : $post->post_excerpt ) . '</span>';
 
 			case 'product_stock':
 				// unlimited stock, don't display stock.
@@ -140,7 +265,96 @@ class BricksDynamicDataService {
 
 			case 'product_on_sale':
 				return esc_html( $product ? $product->is_on_sale : '' );
+
+			case 'product_trial':
+				if ( $this->is_admin_editor() ) {
+					return $product->trial_text ?? esc_html__( 'Starting in 15 days.', 'surecart' );
+				}
+				return $product->trial_text;
+
+			case 'product_selected_trial':
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-trial'>" . esc_html__( 'Starting in 15 days.', 'surecart' ) . '</span>';
+				}
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-trial --><!-- /wp:surecart/product-selected-price-trial --> ';
+
+			case 'product_billing_interval':
+				if ( $this->is_admin_editor() ) {
+					return $product->billing_interval_text ?? esc_html__( '/ day (3 payments)', 'surecart' );
+				}
+				return $product->billing_interval_text ?? '';
+
+			case 'product_selected_billing_interval':
+				if ( $this->is_admin_editor() ) {
+					return "<span class='wp-block-surecart-product-selected-price-interval sc-price__amount'>" . esc_html__( '/ day (3 payments)', 'surecart' ) . '</span>';
+				}
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-interval --><!-- /wp:surecart/product-selected-price-interval --> ';
+
+			case 'product_setup_fee':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return $product->setup_fee_text ?? esc_html( sprintf( __( '%s setup fee.', 'surecart' ), Currency::format( 100 ) ) );
+				}
+					// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return $product->setup_fee_text ?? '';
+
+			case 'product_selected_setup_fee':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee.', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';
+				}
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/product-selected-price-fees --><!-- /wp:surecart/product-selected-price-fees --> ';
+
+			case 'product_stock':
+				// Support ':held filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
+				if ( isset( $filters['held'] ) ) {
+					return $product->held_stock;
+				}
+
+				// Support ':on_hand' filter to get the price value as a simple string (e.g.: 1450, 250, 5 ).
+				if ( isset( $filters['on_hand'] ) ) {
+					return $product->stock;
+				}
+
+				return $product->available_stock;
+
+			case 'price_name':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-price-name'>" . esc_html__( 'Price name', 'surecart' ) . '</span>';
+				}
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-name --><!-- /wp:surecart/price-name --> ';
+
+			case 'price_amount':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-price-amount'>" . sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), Currency::format( 200 ), '/mo' ) . '</span>';
+				}
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-amount --><!-- /wp:surecart/price-amount --> ';
+
+			case 'price_trial':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-product-price-trial'>" . esc_html__( 'Starting in 15 days', 'surecart' ) . '</span>';
+				}
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-trial --><!-- /wp:surecart/price-trial --> ';
+
+			case 'price_setup_fee':
+				if ( $this->is_admin_editor() ) {
+					// translators: %s: Setup Fee amount.
+					return "<span class='wp-block-surecart-product-price-setup-fee'>" . esc_html__( '$12 Signup Fee', 'surecart' ) . '</span>';
+				}
+				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
+				return '<!-- wp:surecart/price-setup-fee --><!-- /wp:surecart/price-setup-fee --> ';
 		}
+
+		return $name;
 	}
 
 	/**
@@ -192,7 +406,7 @@ class BricksDynamicDataService {
 		// Get all registered tags except the excluded ones.
 		// Example: [0 => "post_title", 1 => "woo_product_price", 2 => "echo"].
 		$registered_tags = array_filter(
-			array_column( $this->dynamic_tags(), 'slug' ),
+			array_column( $this->dynamicTags(), 'slug' ),
 			function ( $tag ) use ( $exclude_tags ) {
 				return ! in_array( $tag, $exclude_tags, true );
 			}
@@ -266,7 +480,7 @@ class BricksDynamicDataService {
 					continue;
 				}
 
-				$value = $this->get_the_tag_value( $match, $post, $context );
+				$value = $this->getTheTagValue( $match, $post, $context );
 
 				// Value is a WP_Error: Set value to false to avoid error in builder.
 				if ( is_a( $value, 'WP_Error' ) ) {
@@ -289,11 +503,18 @@ class BricksDynamicDataService {
 	 *
 	 * @param string $tag    Tag name.
 	 * @param object $post   Post object.
-	 * @param array  $context Context.
 	 *
 	 * @return string
 	 */
-	public function get_the_tag_value( $tag, $post ) {
+	public function getTheTagValue( $tag, $post ) {
+		$tags = $this->dynamicTags();
+
+		// Check if the tag exists in the registered tags.
+		$tag_exists = array_search( strtok( $tag, ':' ), array_column( $tags, 'slug' ), true );
+		if ( false === $tag_exists ) {
+			return $tag;
+		}
+
 		// parse tag and args.
 		$parsed = is_string( $tag ) ? $this->parse_tag_and_args( $tag ) : [
 			'tag'  => $tag,
@@ -304,12 +525,10 @@ class BricksDynamicDataService {
 
 		// Check for filter args.
 		$filters = $this->get_filters_from_args( $args );
-		$tags    = $this->dynamic_tags();
 
 		// Get the tag name.
 		$name = isset( $tags[ $tag ]['render'] ) ? $tags[ $tag ]['render'] : str_replace( 'sc_', '', $tag );
 
-		// Parse the tag.
 		return $this->parseTag( $name, $post, $filters );
 	}
 
@@ -323,7 +542,7 @@ class BricksDynamicDataService {
 		$original_tag = $tag;
 		$args         = [];
 
-		// Special case to allow using "@" as "echo:" tag parameter
+		// Special case to allow using "@" as "echo:" tag parameter.
 		// TODO NEXT: More rebust DD argument parser (@see #86bzunbgf)
 		if ( strpos( $tag, 'echo:' ) === 0 ) {
 			return [

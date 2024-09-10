@@ -42,13 +42,7 @@ trait ConvertsBlocks {
 		$key        = '_root';
 		$attributes = apply_filters( 'bricks/element/render_attributes', $this->attributes, $key, $this );
 
-		// This is because we need to render blocks out of order.
-		add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
-
-		$block = do_blocks( '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->' );
-
-		// This is because we need to render blocks out of order.
-		remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
+		$block = sc_pre_render_blocks( '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->' );
 
 		// start the processor and select the first tag.
 		$processor = new \WP_HTML_Tag_Processor( $block );
@@ -154,29 +148,22 @@ trait ConvertsBlocks {
 	}
 
 	/**
-	 * Remove interactivity doing it wrong.
-	 *
-	 * This is because we need to render blocks out of order in order to
-	 * add the attributes from bricks to the block.
-	 *
-	 * @param string $trigger Trigger.
-	 * @param string $function_name Function name.
-	 *
-	 * @return string|false
-	 */
-	public function removeInteractivityDoingItWrong( $trigger, $function_name ) {
-		if ( 'WP_Interactivity_API::evaluate' !== $function_name ) {
-			return $trigger;
-		}
-		return false;
-	}
-
-	/**
 	 * Whether it is editor or not.
 	 *
 	 * @return bool
 	 */
 	public function is_admin_editor() {
 		return ! bricks_is_frontend() || bricks_is_builder_call();
+	}
+
+	/**
+	 * Get raw color.
+	 *
+	 * @param string $key The key.
+	 *
+	 * @return string
+	 */
+	public function get_raw_color( $key ) {
+		return $this->settings[ $key ]['hex'] ?? $this->settings[ $key ]['raw'] ?? '';
 	}
 }

@@ -40,7 +40,7 @@ class CollectionTaxonomyService {
 			return $args;
 		}
 
-		if ( in_array( $this->slug, $taxonomies, true ) ) {
+		if ( ! empty( \SureCart::account()->id ) && in_array( $this->slug, $taxonomies, true ) && empty( $args['suppress_filters'] ) ) {
 			$args['meta_query'] = array(
 				array(
 					'key'   => 'sc_account',
@@ -103,7 +103,7 @@ class CollectionTaxonomyService {
 		}
 
 		// the theme has provided a taxonomy template, or we are not on the collection taxonomy.
-		if ( ! empty( $template ) || ! is_tax( $this->slug ) ) {
+		if ( ! empty( $template ) || empty( $collection->metadata->wp_template_id ) || strpos( $collection->metadata->wp_template_id, '.php' ) === false ) {
 			return $template;
 		}
 

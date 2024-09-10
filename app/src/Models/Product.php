@@ -119,10 +119,8 @@ class Product extends Model implements PageModel {
 		$synced = \SureCart::sync()->product()->sync( $this );
 
 		// on success, cancel any queued syncs.
-		if ( ! is_wp_error( $synced ) ) {
-			\SureCart::sync()
-			->product()
-			->cancel( $this );
+		if ( is_wp_error( $synced ) ) {
+			return $synced;
 		}
 
 		return $this;
@@ -146,11 +144,14 @@ class Product extends Model implements PageModel {
 	/**
 	 * Queue a sync process with a post.
 	 *
+	 * @param boolean $show_notice Whether to show a notice.
+	 *
 	 * @return \SureCart\Background\QueueService
 	 */
-	protected function queueSync() {
+	protected function queueSync( $show_notice = false ) {
 		\SureCart::sync()
 			->product()
+			->withNotice( $show_notice )
 			->queue( $this );
 
 		return $this;
@@ -578,6 +579,33 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the trial text attribute.
+	 *
+	 * @return string
+	 */
+	public function getTrialTextAttribute() {
+		return $this->initial_price ? $this->initial_price->trial_text ?? '' : '';
+	}
+
+	/**
+	 * Get the billing interval attribute.
+	 *
+	 * @return string
+	 */
+	public function getBillingIntervalTextAttribute() {
+		return $this->initial_price ? $this->initial_price->interval_text ?? '' : '';
+	}
+
+	/**
+	 * Get the setup fee attribute
+	 *
+	 * @return string
+	 */
+	public function getSetupFeeTextAttribute() {
+		return $this->initial_price ? $this->initial_price->setup_fee_text ?? '' : '';
+	}
+
+	/**
 	 * Is the product or any variants in stock.
 	 *
 	 * @return int
@@ -880,5 +908,32 @@ class Product extends Model implements PageModel {
 	 */
 	public function getPreviewImageAttribute() {
 		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'medium_large' ) : (object) [];
+	}
+
+	/**
+	 * Get the product page initial state
+	 *
+	 * @param array $args Array of arguments.
+	 *
+	 * @return array
+	 */
+	public function getInitialPageState( $args = [] ) {
+		$form = \SureCart::forms()->getDefault();
+
+		return wp_parse_args(
+			$args,
+			[
+				'formId'          => $form->ID,
+				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
+				'product'         => $this,
+				'prices'          => $this->active_prices,
+				'selectedPrice'   => ( $this->active_prices ?? [] )[0] ?? null,
+				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
+				'variant_options' => $this->variant_options->data ?? [],
+				'variants'        => $this->variants->data ?? [],
+				'selectedVariant' => $this->first_variant_with_stock ?? null,
+				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
+			]
+		);
 	}
 }

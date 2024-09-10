@@ -7,11 +7,11 @@ import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
+	__experimentalGetElementClassName,
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
-	__experimentalGetElementClassName,
-	PanelColorSettings,
+	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -21,43 +21,42 @@ import {
 	__experimentalBoxControl as BoxControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import ColorInspectorControl from '../../components/ColorInspectorControl';
 
-export default ({ className, attributes, setAttributes }) => {
-	const { text, textAlign, style, padding, border, sectionBackgroundColor } =
-		attributes;
+export default ({ className, attributes, setAttributes, clientId }) => {
+	const { text, style, padding, border, sectionBackgroundColor } = attributes;
 
-	const blockProps = useBlockProps({
-		style: {
-			width: '100%',
-			'box-sizing': 'border-box',
-			...(padding?.top ? { paddingTop: padding?.top } : {}),
-			...(padding?.bottom ? { paddingBottom: padding?.bottom } : {}),
-			...(padding?.left ? { paddingLeft: padding?.left } : {}),
-			...(padding?.right ? { paddingRight: padding?.right } : {}),
-			...(sectionBackgroundColor
-				? { backgroundColor: sectionBackgroundColor }
-				: {}),
-		},
-	});
-
+	// Use internal state instead of a ref to make sure that the component
+	// re-renders when the popover's anchor updates.
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
+	const shadowProps = useShadowProps(attributes);
+
+	const blockProps = useBlockProps({
+		className: 'sc-cart-submit__wrapper wp-block-buttons',
+	});
 
 	return (
 		<>
+			{/* Additional color inspector control. */}
+			<ColorInspectorControl
+				settings={[
+					{
+						colorValue: sectionBackgroundColor,
+						label: __('Section Color', 'surecart'),
+						onColorChange: (sectionBackgroundColor) =>
+							setAttributes({ sectionBackgroundColor }),
+						resetAllFilter: () =>
+							setAttributes({
+								sectionBackgroundColor: undefined,
+							}),
+					},
+				]}
+				panelId={clientId}
+			/>
+
 			<InspectorControls>
-				<PanelColorSettings
-					title={__('Section Color', 'surecart')}
-					colorSettings={[
-						{
-							value: sectionBackgroundColor,
-							onChange: (sectionBackgroundColor) =>
-								setAttributes({ sectionBackgroundColor }),
-							label: __('Background Color', 'surecart'),
-						},
-					]}
-				/>
 				<PanelBody title={__('Spacing', 'surecart')}>
 					<BoxControl
 						label={__('Padding', 'surecart')}
@@ -91,24 +90,41 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div class="wp-block-buttons">
+			<div
+				{...blockProps}
+				style={{
+					width: '100%',
+					'box-sizing': 'border-box',
+					...(padding?.top ? { paddingTop: padding?.top } : {}),
+					...(padding?.bottom
+						? { paddingBottom: padding?.bottom }
+						: {}),
+					...(padding?.left ? { paddingLeft: padding?.left } : {}),
+					...(padding?.right ? { paddingRight: padding?.right } : {}),
+					...(sectionBackgroundColor
+						? { backgroundColor: sectionBackgroundColor }
+						: {}),
+				}}
+			>
 				<div
-					{...blockProps}
-					className={classnames(blockProps.className, {
+					className={{
 						'wp-block-button': true,
+						'sc-block-button': true,
 						[`has-custom-font-size`]: blockProps.style.fontSize,
-					})}
+					}}
 				>
 					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
 						className={classnames(
 							className,
 							'wp-block-button__link',
+							'sc-block-button__link',
 							colorProps.className,
 							borderProps.className,
+							spacingProps.className,
+							shadowProps.className,
 							{
-								[`has-text-align-${textAlign}`]: textAlign,
 								// For backwards compatibility add style that isn't
 								// provided via block support.
 								'no-border-radius': style?.border?.radius === 0,
@@ -117,12 +133,9 @@ export default ({ className, attributes, setAttributes }) => {
 						)}
 						style={{
 							...borderProps.style,
-							...colorProps.style,
 							...spacingProps.style,
-							width: '100%',
-							...(blockProps?.style?.fontSize
-								? { fontSize: blockProps?.style?.fontSize }
-								: {}),
+							...shadowProps.style,
+							...colorProps.style,
 						}}
 						value={text}
 						onChange={(value) => setAttributes({ text: value })}

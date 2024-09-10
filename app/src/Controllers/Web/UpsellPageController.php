@@ -2,8 +2,6 @@
 
 namespace SureCart\Controllers\Web;
 
-use SureCart\Models\Form;
-
 /**
  * Handles Upsell Page requests for frontend.
  */

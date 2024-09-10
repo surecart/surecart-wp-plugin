@@ -118,6 +118,22 @@ export class ScFormComponentsValidator {
       return;
     }
 
+    // if we have a customer first name field, require that.
+    const customerFirstName = this.el.querySelector('sc-customer-firstname');
+    const customerLastName = this.el.querySelector('sc-customer-lastname');
+
+    // if we have a customer first name field, require that.
+    if (!!customerFirstName) {
+      customerFirstName.required = true;
+
+      // if we have a customer last name field, require that.
+      if (!!customerLastName) {
+        customerLastName.required = true;
+      }
+
+      return; // we're done here.
+    }
+
     // require the name and show the name input.
     address.requireName = true;
     address.showName = true;
@@ -129,9 +145,12 @@ export class ScFormComponentsValidator {
     }
 
     const payment = this.el.querySelector('sc-payment');
-    const address = document.createElement('sc-order-shipping-address');
-    address.label = __('Address', 'surecart');
-    payment.parentNode.insertBefore(address, payment);
+    const shippingAddress = document.createElement('sc-order-shipping-address');
+    shippingAddress.label = __('Shipping Address', 'surecart');
+    const billingAddress = document.createElement('sc-order-billing-address');
+    billingAddress.label = __('Billing Address', 'surecart');
+    payment.parentNode.insertBefore(shippingAddress, payment);
+    payment.parentNode.insertBefore(billingAddress, payment);
     this.hasAddress = true;
   }
 

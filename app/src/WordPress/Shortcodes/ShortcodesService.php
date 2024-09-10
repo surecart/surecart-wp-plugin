@@ -2,32 +2,87 @@
 
 namespace SureCart\WordPress\Shortcodes;
 
+use SureCart\WordPress\Assets\BlockAssetsLoadService;
 /**
  * The shortcodes service.
  */
 class ShortcodesService {
+
+	/**
+	 * Old Shortcode block names which we want to not render through interactivity.
+	 *
+	 * @var array
+	 */
+	protected $old_shortcode_block_names = [
+		'surecart/product-buy-button-old',
+		'surecart/product-price-choices',
+		'surecart/product-title-old',
+		'surecart/product-price',
+		'surecart/product-description-old',
+		'surecart/product-variant-choices',
+		'surecart/product-quantity-old',
+		'surecart/product-media-old',
+	];
+
 	/**
 	 * Convert the block
 	 *
 	 * @param string $name Block name.
-	 * @param string $block Block class.
+	 * @param string $block Block block.
 	 * @param array  $defaults Default attributes.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function registerBlockShortcode( $name, $class, $defaults = array() ) {
+	public function registerBlockShortcode( $name, $block, $defaults = array() ) {
 		add_shortcode(
 			$name,
-			function ( $attributes, $content ) use ( $name, $class, $defaults ) {
+			function ( $attributes, $content ) use ( $name, $block, $defaults ) {
 				return ( new ShortcodesBlockConversionService( $attributes, $content ) )->convert(
 					$name,
-					$class,
+					$block,
 					$defaults
 				);
 			},
 			10,
 			2
 		);
+	}
+
+	/**
+	 * Render shortcode notice
+	 *
+	 * @param string $name Name.
+	 *
+	 * @return string
+	 */
+	public function renderShortcodeNotice( $name ) {
+		return sprintf(
+			'<h5 style="%s">%s</h5>',
+			'background: #F1F1F1; color: #434242; padding: 2em; border-radius: 0.5em;',
+			esc_html(
+				sprintf(
+				/* translators: %s: shortcode name */
+					__( 'Please visit the frontend of your page builder to view the %s shortcode contents.', 'surecart' ),
+					esc_html( $name )
+				)
+			)
+		);
+	}
+
+	/**
+	 * Check if shortcode should render itself
+	 *
+	 * @param string $name Name of the shortcode.
+	 * @return boolean
+	 */
+	public function cannotRenderShortcode( $name ) {
+		if ( 'sc_product_list' !== $name ) { // If the shortcode is not Product List, return false.
+			return false;
+		}
+
+		$assets_service = new BlockAssetsLoadService();
+
+		return $assets_service->isUsingPageBuilder();
 	}
 
 	/**
@@ -46,6 +101,12 @@ class ShortcodesService {
 				if ( empty( $block_name ) ) {
 					return '';
 				}
+				if ( $this->cannotRenderShortcode( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
+					return $this->renderShortcodeNotice( $name );
+				}
+
+				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 ); // Disable loading separate core block assets.
+				wp_enqueue_global_styles(); // Enqueue global styles.
 
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
@@ -62,6 +123,19 @@ class ShortcodesService {
 				);
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
+
+				if ( in_array( $block_name, $this->old_shortcode_block_names, true ) && ! empty( $shortcode_attrs['id'] ) ) {
+					// translators: %s is the shortcode name.
+					wp_trigger_error( '', sprintf( esc_html__( 'Passing an id to the [%s] shortcode is deprecated. Please use these shortcodes on product pages directly.', 'surecart' ), $name ) );
+						$block = new \WP_Block(
+							[
+								'blockName'    => $block_name,
+								'attrs'        => $shortcode_attrs,
+								'innerContent' => do_shortcode( $content ),
+							]
+						);
+						return $block->render();
+				}
 
 				// we need to remove this since this is processed twice for some blocks.
 				add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
