@@ -19,7 +19,6 @@
 			)
 		)
 	);
-
 	?>
 	>
 	<?php if ( ! $attributes['add_to_cart'] ) { ?>
