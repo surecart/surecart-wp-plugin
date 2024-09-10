@@ -214,11 +214,6 @@ add_action(
 					'id'     => '@surecart/facebook-events',
 					'import' => 'dynamic',
 				],
-				[
-					'id'     => '@wordpress/interactivity-router',
-					'import' => 'dynamic',
-				],
-				'wp-a11y',
 			],
 			$static_assets['version']
 		);
@@ -297,10 +292,6 @@ add_action(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
 				),
-				array(
-					'id'     => 'wp-i18n',
-					'import' => 'dynamic',
-				),
 			),
 			$static_assets['version']
 		);
@@ -331,7 +322,6 @@ add_action(
 					'id'     => '@surecart/cart',
 					'import' => 'dynamic',
 				),
-				'wp-a11y',
 			),
 			$static_assets['version']
 		);
