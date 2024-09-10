@@ -144,7 +144,8 @@ class ProductListMigrationService {
 		}
 
 		if ( $collection_enabled ) {
-			$this->block_html .= '<!-- wp:surecart/product-list-filter /-->';
+			$collection_id     = $this->attributes['collection_id'] ?? null;
+			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $collection_id ) . '"} /-->';
 		}
 
 		$this->block_html .= '</div><!-- /wp:group -->';
