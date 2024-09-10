@@ -18,7 +18,7 @@ class PostService {
 	/**
 	 * Get the form post.
 	 *
-	 * @param \WP_Post|int|null $post The form or post type post.
+	 * @param WP_Post|int|null $post The form or post type post.
 	 *
 	 * @return WP_Post|null
 	 */
@@ -29,7 +29,7 @@ class PostService {
 	/**
 	 * Get the form post from a page.
 	 *
-	 * @param \WP_Post|int|null $post The form or post type post.
+	 * @param WP_Post|int|null $post The form or post type post.
 	 *
 	 * @return WP_Post|null
 	 */
