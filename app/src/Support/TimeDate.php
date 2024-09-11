@@ -49,7 +49,7 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function formatTime( $timestamp ) {
-		return date_i18n( self::getTimeFormat(), $timestamp );
+		return wp_date( self::getTimeFormat(), $timestamp );
 	}
 
 	/**
