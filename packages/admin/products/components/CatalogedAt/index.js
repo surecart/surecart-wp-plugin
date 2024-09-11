@@ -71,6 +71,9 @@ export default ({ product, updateProduct }) => {
 									? new Date(product?.cataloged_at * 1000)
 									: null
 							}
+							isInvalidDate={(date) => {
+								return date > new Date();
+							}}
 							onChange={(date) => {
 								const cataloged_at = new Date(
 									date

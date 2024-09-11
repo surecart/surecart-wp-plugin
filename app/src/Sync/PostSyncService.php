@@ -51,7 +51,7 @@ class PostSyncService {
 		$query = new \WP_Query(
 			array(
 				'post_type'        => $this->post_type,
-				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
+				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived', 'future' ),
 				'posts_per_page'   => 1,
 				'no_found_rows'    => true,
 				'suppress_filters' => true,
