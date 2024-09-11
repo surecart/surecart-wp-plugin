@@ -10,9 +10,8 @@ $collections = get_terms(
 );
 
 // we are on a collection page.
-$current_term  = get_queried_object();
-$collection_id = $attributes['collection_id'] ?? null; // collection id from the shortcode.
-if ( is_a( $current_term, \WP_Term::class ) || ! empty( $collection_id ) ) {
+$current_term = get_queried_object();
+if ( is_a( $current_term, \WP_Term::class ) ) {
 	return '';
 }
 

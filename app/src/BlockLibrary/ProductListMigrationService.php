@@ -143,8 +143,7 @@ class ProductListMigrationService {
 			$this->block_html .= '<!-- wp:surecart/product-list-sort /-->';
 		}
 
-		if ( $collection_enabled ) {
-			$collection_id     = $this->attributes['collection_id'] ?? null;
+		if ( $collection_enabled && empty( $this->attributes['collection_id'] ) ) {
 			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $collection_id ) . '"} /-->';
 		}
 
