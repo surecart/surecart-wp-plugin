@@ -107,6 +107,7 @@ function RenderDropdownButton({ isOpen, onClick, product }) {
 				year="numeric"
 				hour="numeric"
 				minute="numeric"
+				hourFormat="12"
 			/>
 
 			<svg
