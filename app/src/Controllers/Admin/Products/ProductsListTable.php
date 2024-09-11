@@ -388,13 +388,12 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $product ) {
-		$cataloged = sprintf(
+		return sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
 			esc_attr( $product->cataloged_at ),
 			esc_html( TimeDate::formatDateAndTime( $product->cataloged_at ) ),
 			esc_html( TimeDate::formatDateAndTime( $product->cataloged_at ) )
 		);
-		return esc_attr_e( 'Cataloged', 'surecart' ) . '<br />' . $cataloged;
 	}
 
 	/**
