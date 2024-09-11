@@ -153,7 +153,7 @@ class AccountService {
 	 * @param array $data Associative array.
 	 * @return \SureCart\Models\Account|null
 	 */
-	protected function convertArrayToAccount( $data ) {
+	public function convertArrayToAccount( $data ) {
 		// Handle Backward Compatibility. If it's already an account, return it.
 		if ( $data instanceof Account ) {
 			return $data;
