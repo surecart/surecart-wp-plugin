@@ -79,7 +79,6 @@ export default ({ product, updateProduct }) => {
 									cataloged_at:
 										Date.parse(cataloged_at) / 1000,
 								});
-								onClose();
 							}}
 							is12Hour
 						/>
