@@ -5,7 +5,12 @@ import { css, jsx } from '@emotion/react';
  * WordPress dependencies.
  */
 import { useMemo, useState } from '@wordpress/element';
-import { PanelRow, Dropdown, Button, DatePicker } from '@wordpress/components';
+import {
+	PanelRow,
+	Dropdown,
+	Button,
+	DateTimePicker,
+} from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
@@ -60,7 +65,7 @@ export default ({ product, updateProduct }) => {
 							onClose={onClose}
 						/>
 
-						<DatePicker
+						<DateTimePicker
 							currentDate={
 								product?.cataloged_at
 									? new Date(product?.cataloged_at * 1000)
@@ -76,6 +81,7 @@ export default ({ product, updateProduct }) => {
 								});
 								onClose();
 							}}
+							is12Hour
 						/>
 					</div>
 				)}
@@ -95,10 +101,12 @@ function RenderDropdownButton({ isOpen, onClick, product }) {
 		>
 			<ScFormatDate
 				type="timestamp"
+				date={product?.cataloged_at}
 				month="short"
 				day="numeric"
 				year="numeric"
-				date={product?.cataloged_at}
+				hour="numeric"
+				minute="numeric"
 			/>
 
 			<svg
