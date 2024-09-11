@@ -20,7 +20,7 @@ class AdminPluginCacheService {
 	 *
 	 * @return array
 	 */
-	public function getCachePlugins() {
+	public function getCachePlugins(): array {
 		return apply_filters(
 			'surecart_cache_plugins',
 			[
@@ -49,32 +49,18 @@ class AdminPluginCacheService {
 	}
 
 	/**
-	 * Get active cache plugins.
-	 *
-	 * @return array
-	 */
-	public function getActiveCachePlugins() {
-		$active_plugins = get_option( 'active_plugins', [] );
-
-		$cache_plugins = $this->getCachePlugins();
-
-		$active_cache_plugins = array_intersect( $active_plugins, $cache_plugins );
-
-		return $active_cache_plugins;
-	}
-
-	/**
 	 * Show the plugin cache notice.
 	 *
 	 * @return void
 	 */
-	public function showNotice() {
-		$active_cache_plugins = $this->getActiveCachePlugins();
-		if ( empty( $active_cache_plugins ) ) {
-			return;
-		}
+	public function showNotice(): void {
+		$cache_plugins = $this->getCachePlugins();
 
-		foreach ( $active_cache_plugins as $plugin ) {
+		foreach ( $cache_plugins as $plugin ) {
+			if ( ! is_plugin_active( $plugin ) ) {
+				continue;
+			}
+
 			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
 
 			echo wp_kses_post(
