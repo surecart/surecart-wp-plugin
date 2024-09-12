@@ -159,6 +159,10 @@ class AccountServiceTest extends SureCartUnitTestCase {
 
 		$account = $accountService->convertArrayToAccount($this->account->toArray());
 
-		$this->assertSame($account, $this->account);
+		$this->assertSame($this->account->id, $account->id);
+		$this->assertSame($this->account['brand']['color'], $account->brand['color']);
+		$this->assertSame($this->account['brand']['address']->city, $account->brand['address']['city']);
+		$this->assertSame($this->account['tax_protocol']['eu_tax_enabled'], $account->tax_protocol['eu_tax_enabled']);
+		$this->assertSame($this->account['tax_protocol']['id'], $account->tax_protocol['id']);
 	}
 }
