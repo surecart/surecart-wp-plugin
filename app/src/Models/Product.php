@@ -81,6 +81,11 @@ class Product extends Model implements PageModel {
 	 * @return $this|false
 	 */
 	protected function update( $attributes = array() ) {
+		// If cataloged_at added and in the future, set to now.
+		if ( ! empty( $attributes['cataloged_at'] ) && $attributes['cataloged_at'] > time() ) {
+			$attributes['cataloged_at'] = current_datetime()->getTimestamp();
+		}
+
 		// update the model.
 		$updated = parent::update( $attributes );
 		if ( is_wp_error( $updated ) ) {
