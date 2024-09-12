@@ -8,5 +8,10 @@ if ( ! empty( $attributes['width'] ) ) {
 
 $styles = sc_get_block_styles();
 
+$add_to_cart = $attributes['add_to_cart'] ?? true;
+if ( ! \SureCart::cart()->isCartEnabled() ) {
+	$add_to_cart = false;
+}
+
 // return the view.
 return 'file:./view.php';
