@@ -305,6 +305,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.31.0 - September 12th, 2024 =
+- Improvement: Prevent misconfiguring store checkout. Any form on the checkout page is now the store checkout.
+- Improvement: Add UI to update a license key.
+- Improvement: Change order type badge on checkout page to be more accurate.
+- Fix: Issue where Loco translations were getting overwritten if in the "System" location. ("Custom" location is still recommended).
+- Fix: Issue with Spectra blocks not rendering styles on upsell pages.
+- Fix: Issue with iDEAL sometimes not showing for subscriptions.
+
 = 2.30.0 - August 30th, 2024 =
 - New: Allow subscription intervals up to 10 years.
 - Fix: Issue preventing cancellation of paused subscriptions.
