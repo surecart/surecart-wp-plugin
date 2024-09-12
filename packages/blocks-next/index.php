@@ -207,6 +207,10 @@ add_action(
 					'import' => 'dynamic',
 				],
 				[
+					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				],
+				[
 					'id'     => '@surecart/google-events',
 					'import' => 'dynamic',
 				],
