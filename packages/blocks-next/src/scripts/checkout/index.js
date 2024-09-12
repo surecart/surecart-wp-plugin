@@ -433,6 +433,16 @@ const { state, actions } = store('surecart/checkout', {
 				};
 			}
 
+			// we don't have a mode, so we can't store the checkout
+			if (!mode) {
+				return;
+			}
+
+			// we don't want to store the checkout if the mode is different
+			if (data?.live_mode !== (mode === 'live')) {
+				return;
+			}
+
 			// Update the checkout data in the storage.
 			checkoutStorage = {
 				...checkoutStorage,
