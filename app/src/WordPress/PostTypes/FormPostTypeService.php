@@ -4,6 +4,7 @@ namespace SureCart\WordPress\PostTypes;
 
 use SureCart\Models\Form;
 use SureCart\WordPress\Pages\PageService;
+use WP_Post;
 
 /**
  * Form post type service class.
@@ -106,7 +107,7 @@ class FormPostTypeService {
 	 * Force gutenberg in case of classic editor
 	 *
 	 * @param boolean  $use Whether to use Gutenberg.
-	 * @param \WP_Post $post Post object.
+	 * @param WP_Post $post Post object.
 	 *
 	 * @return boolean;
 	 */
@@ -142,7 +143,11 @@ class FormPostTypeService {
 			return $states;
 		}
 
-		if ( $post->ID === $this->getDefaultId() ) {
+		$checkout_form = \SureCart::post()->getFormPost(
+			get_option( 'surecart_checkout_page_id' )
+		) ?? null;
+
+		if ( $post->ID === $checkout_form->ID ?? null ) {
 			$states[] = __( 'Store Checkout', 'surecart' );
 		}
 
@@ -152,11 +157,10 @@ class FormPostTypeService {
 	/**
 	 * Find a form by its option name.
 	 *
-	 * @param string $option Option name.
 	 * @return WP_Post|null
 	 */
-	public function findByOptionName( $option ) {
-		return $this->page_service->get( $option, 'sc_form' );
+	public function findByOption() {
+		return $this->page_service->get( $this->default_form_name, 'sc_form' );
 	}
 
 	/**
@@ -185,17 +189,18 @@ class FormPostTypeService {
 	 * @return WP_Post|null
 	 */
 	public function getDefault() {
-		return $this->findByOptionName( $this->default_form_name );
+		$form_post = \SureCart::post()->getFormPost( get_option( 'surecart_checkout_page_id' ) );
+		return $form_post ?? $this->findByOption();
 	}
 
 	/**
 	 * Get the default checkout form post.
 	 *
-	 * @return WP_Post|null
+	 * @return int|null
 	 */
 	public function getDefaultId() {
-		$form = $this->findByOptionName( $this->default_form_name );
-		return $form ? $form->ID : null;
+		$form = $this->getDefault();
+		return $form->ID ?? null;
 	}
 
 	/**

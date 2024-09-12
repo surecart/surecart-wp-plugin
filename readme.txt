@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.6
-Stable tag: 2.30.0
+Stable tag: 2.31.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,14 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.31.0 - September 12th, 2024 =
+- Improvement: Prevent misconfiguring store checkout. Any form on the checkout page is now the store checkout.
+- Improvement: Add UI to update a license key.
+- Improvement: Change order type badge on checkout page to be more accurate.
+- Fix: Issue where Loco translations were getting overwritten if in the "System" location. ("Custom" location is still recommended).
+- Fix: Issue with Spectra blocks not rendering styles on upsell pages.
+- Fix: Issue with iDEAL sometimes not showing for subscriptions.
 
 = 2.30.0 - August 30th, 2024 =
 - New: Allow subscription intervals up to 10 years.

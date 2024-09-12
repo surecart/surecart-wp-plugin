@@ -255,7 +255,7 @@ class CartService {
 	}
 
 	/**
-	 * Get the form
+	 * Get the form post.
 	 *
 	 * @return \WP_Post The default form post.
 	 */
