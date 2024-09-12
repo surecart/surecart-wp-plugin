@@ -29,6 +29,18 @@ export default ({ product, updateProduct }) => {
 		[popoverAnchor]
 	);
 
+	const onChangeDate = (date) => {
+		// Ensure the date is not in the future.
+		if (Date.parse(date) > Date.parse(new Date())) {
+			date = new Date();
+		}
+
+		// Update product with the new cataloged_at value.
+		updateProduct({
+			cataloged_at: Date.parse(new Date(date).toUTCString()) / 1000,
+		});
+	};
+
 	return (
 		<PanelRow ref={setPopoverAnchor}>
 			<span>{__('Cataloged at', 'surecart')}</span>
@@ -62,7 +74,19 @@ export default ({ product, updateProduct }) => {
 					>
 						<InspectorPopoverHeader
 							title={__('Cataloged at', 'surecart')}
-							onClose={onClose}
+							onClose={() => onClosePopover(onClose)}
+							actions={[
+								{
+									label: __('Now', 'surecart'),
+									onClick: () => {
+										updateProduct({
+											cataloged_at: Math.floor(
+												Date.now() / 1000
+											),
+										});
+									},
+								},
+							]}
 						/>
 
 						<DateTimePicker
@@ -74,15 +98,7 @@ export default ({ product, updateProduct }) => {
 							isInvalidDate={(date) => {
 								return date > new Date();
 							}}
-							onChange={(date) => {
-								const cataloged_at = new Date(
-									date
-								).toUTCString();
-								updateProduct({
-									cataloged_at:
-										Date.parse(cataloged_at) / 1000,
-								});
-							}}
+							onChange={onChangeDate}
 							is12Hour
 						/>
 					</div>
