@@ -56,13 +56,22 @@ class AdminPluginCacheService {
 	public function showNotice(): void {
 		$cache_plugins = $this->getCachePlugins();
 
+		// Loop through each cache plugin.
 		foreach ( $cache_plugins as $plugin ) {
+			// If the plugin is not active, skip it.
 			if ( ! is_plugin_active( $plugin ) ) {
 				continue;
 			}
 
+			// Get the plugin data.
 			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
 
+			// If the plugin data is not found, skip it.
+			if ( empty( $plugin_data['Name'] ) ) {
+				continue;
+			}
+
+			// Render the notice.
 			echo wp_kses_post(
 				\SureCart::notices()->render(
 					[
@@ -71,12 +80,12 @@ class AdminPluginCacheService {
 						'title' => 'SureCart - ' . esc_html( $plugin_data['Name'] ) . ' ' . esc_html__( ' Detected', 'surecart' ),
 						'text'  => sprintf(
 							/* translators: 1: plugin name, 2: plugin version */
-							esc_html__( 'The plugin %1$s (%2$s) has been detected. Please check our documentation to ensure that the plugin is properly configured to work with SureCart.', 'surecart' ),
+							'<p>' . esc_html__( 'The plugin %1$s (%2$s) has been detected. Please ensure the plugin is properly configured to work with SureCart.', 'surecart' ) . '</p>',
 							$plugin_data['Name'],
 							$plugin_data['Version']
 						)
 						.
-						' <a href="https://surecart.com/docs/caching/" target="_blank">' . esc_html__( 'Learn More', 'surecart' ) . '</a>',
+						'<p><a href="https://surecart.com/docs/caching/" target="_blank">' . esc_html__( 'Learn More', 'surecart' ) . '</a></p>',
 					]
 				)
 			);
