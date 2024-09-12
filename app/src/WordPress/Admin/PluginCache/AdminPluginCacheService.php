@@ -76,8 +76,7 @@ class AdminPluginCacheService {
 							$plugin_data['Version']
 						)
 						.
-						// TODO: Need to change the link to the correct one.
-						' <a href="https://surecart.com/docs/plugins-cache-conflicts/" target="_blank">' . esc_html__( 'Learn More', 'surecart' ) . '</a>',
+						' <a href="https://surecart.com/docs/caching/" target="_blank">' . esc_html__( 'Learn More', 'surecart' ) . '</a>',
 					]
 				)
 			);
