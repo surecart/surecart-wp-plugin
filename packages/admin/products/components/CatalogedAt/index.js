@@ -74,7 +74,7 @@ export default ({ product, updateProduct }) => {
 					>
 						<InspectorPopoverHeader
 							title={__('Cataloged at', 'surecart')}
-							onClose={() => onClosePopover(onClose)}
+							onClose={onClose}
 							actions={[
 								{
 									label: __('Now', 'surecart'),
