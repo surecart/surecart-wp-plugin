@@ -71,7 +71,7 @@ class ProductListBlock {
 		$query = $this->getQueryContext();
 
 		$offset   = absint( $query['offset'] ?? 0 );
-		$per_page = $query['perPage'] ?? $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15;
+		$per_page = $this->block->parsed_block['attrs']['limit'] ?? $this->block->context['surecart/product-list/limit'] ?? $query['perPage'] ?? 15;
 		$page     = $this->url->getCurrentPage();
 
 		// build up the query.
@@ -80,7 +80,7 @@ class ProductListBlock {
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
-				'posts_per_page'      => $query['perPage'] ?? $this->block->context['surecart/product-list/limit'] ?? $this->block->parsed_block['attrs']['limit'] ?? 15,
+				'posts_per_page'      => $per_page,
 				'offset'              => ( $per_page * ( $page - 1 ) ) + $offset,
 				'paged'               => $this->url->getCurrentPage(),
 				'order'               => $this->url->getArg( 'order' ),
