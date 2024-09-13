@@ -150,7 +150,7 @@ class ProductPageBlock {
 				'mode'            => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'urlPrefix'       => $this->urlParams()->getKey(),
-				'product'         => ! empty( $product ) ? $product->only( [ 'id', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink' ] ) : null,
+				'product'         => ! empty( $product ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink' ] ) : null,
 				'selectedPrice'   => ! empty( $product->initial_price ) ? $product->initial_price->only(
 					[
 						'id',
