@@ -58,6 +58,6 @@
 		"surecart-form-group",
 		"surecart-text"
 	],
-	"viewScript": ["wp-url", "wp-api-fetch"],
+	"viewScript": ["wp-url", "wp-api-fetch", "wp-i18n", "wp-a11y"],
 	"viewScriptModule": ["@surecart/product-page", "@surecart/cart"]
 }

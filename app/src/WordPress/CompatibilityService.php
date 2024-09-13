@@ -1,5 +1,7 @@
 <?php
 /**
+ * Compatibility service.
+ *
  * @package   SureCartAppCore
  * @author    SureCart <support@surecart.com>
  * @copyright  SureCart
@@ -100,17 +102,21 @@ class CompatibilityService {
 		}
 
 		// must be our checkout form block.
-		if ( 'surecart/checkout-form' !== $parsed_block['blockName'] ) {
+		if ( 'surecart/checkout-form' !== $parsed_block['blockName'] && 'surecart/upsell' !== $parsed_block['blockName'] ) {
 			return $parsed_block;
 		}
 
-		// must have an ID.
-		if ( empty( $parsed_block['attrs']['id'] ) ) {
+		$post      = get_post();
+		$upsell_id = isset( $post->upsell->id ) ? $post->upsell->id : null;
+
+		$id = $parsed_block['attrs']['id'] ?? $upsell_id;
+
+		if ( empty( $id ) ) {
 			return $parsed_block;
 		}
 
 		// If Spectra Blocks are present in the form, enqueue the assets.
-		$post_assets_instance = new \UAGB_Post_Assets( $parsed_block['attrs']['id'] );
+		$post_assets_instance = new \UAGB_Post_Assets( $id );
 		$post_assets_instance->enqueue_scripts(); // This will enqueue the JS and CSS files.
 
 		if ( ! empty( $post_assets_instance->file_generation ) && 'disabled' === $post_assets_instance->file_generation ) {

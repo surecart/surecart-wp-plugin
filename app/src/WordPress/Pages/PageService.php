@@ -24,8 +24,8 @@ class PageService {
 	/**
 	 * Restrict default page deletion
 	 *
-	 * @param boolean $delete Delete status.
-	 * @param boject  $post Post object.
+	 * @param boolean  $delete Delete status.
+	 * @param \WP_Post $post Post object.
 	 *
 	 * @return null;
 	 */

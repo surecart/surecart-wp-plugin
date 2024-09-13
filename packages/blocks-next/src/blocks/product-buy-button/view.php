@@ -12,16 +12,16 @@
 		wp_interactivity_data_wp_context(
 			array(
 				'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
-				'text'            => $attributes['text'] ?? ( $attributes['add_to_cart'] ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
+				'text'            => $attributes['text'] ?? ( $add_to_cart ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
 				'outOfStockText'  => esc_attr( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ),
 				'unavailableText' => esc_attr( $attributes['unavailable_text'] ?? __( 'Unavailable For Purchase', 'surecart' ) ),
-				'addToCart'       => $attributes['add_to_cart'] ?? true,
+				'addToCart'       => $add_to_cart ?? true,
 			)
 		)
 	);
 	?>
 	>
-	<?php if ( ! $attributes['add_to_cart'] ) { ?>
+	<?php if ( ! $add_to_cart ) { ?>
 		<a
 			class="wp-block-button__link wp-element-button sc-button__link"
 			data-wp-bind--disabled="state.isUnavailable"

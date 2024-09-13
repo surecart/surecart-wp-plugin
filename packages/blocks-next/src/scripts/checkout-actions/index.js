@@ -189,12 +189,13 @@ export const removeCheckoutLineItem = async (id) => {
  * Add the checkout line item.
  */
 export const addCheckoutLineItem = async (data) => {
+	const context = getContext();
 	try {
 		checkoutState.loading = true;
 		return await addLineItem({
 			checkout: checkoutState.checkout,
 			data,
-			live_mode: checkoutState?.mode === 'live',
+			live_mode: context.mode !== 'test',
 		});
 	} catch (e) {
 		console.error(e);
