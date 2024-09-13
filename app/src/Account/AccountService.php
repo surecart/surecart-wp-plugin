@@ -163,6 +163,8 @@ class AccountService {
 			return null;
 		}
 
+		$data = json_decode( wp_json_encode( $data ) );
+
 		return new Account( $data );
 	}
 }
