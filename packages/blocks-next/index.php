@@ -207,15 +207,15 @@ add_action(
 					'import' => 'dynamic',
 				],
 				[
+					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				],
+				[
 					'id'     => '@surecart/google-events',
 					'import' => 'dynamic',
 				],
 				[
 					'id'     => '@surecart/facebook-events',
-					'import' => 'dynamic',
-				],
-				[
-					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
 				],
 			],
@@ -296,10 +296,6 @@ add_action(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
 				),
-				array(
-					'id'     => 'wp-i18n',
-					'import' => 'dynamic',
-				),
 			),
 			$static_assets['version']
 		);
@@ -318,14 +314,14 @@ add_action(
 					'id'     => '@surecart/checkout-events',
 					'import' => 'dynamic',
 				),
-				[
+				array(
 					'id'     => '@surecart/google-events',
 					'import' => 'dynamic',
-				],
-				[
+				),
+				array(
 					'id'     => '@surecart/facebook-events',
 					'import' => 'dynamic',
-				],
+				),
 				array(
 					'id'     => '@surecart/cart',
 					'import' => 'dynamic',

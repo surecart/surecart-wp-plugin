@@ -40,6 +40,6 @@
 		"surecart-theme-base"
 	],
 	"editorStyle": ["file:./index.css"],
-	"viewScript": ["wp-url", "wp-api-fetch"],
+	"viewScript": ["wp-url", "wp-api-fetch", "wp-i18n", "wp-a11y"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
 }
