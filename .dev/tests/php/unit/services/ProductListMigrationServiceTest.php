@@ -123,7 +123,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_image()
 	{
 		$this->service->renderImage();
-		$this->assertStringContainsString('<!-- wp:surecart/product-image {"key1":"value1"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:cover {"useFeaturedImage":true,"dimRatio":0,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"contentPosition":"top right","isDark":false,"style":{"dimensions":{"aspectRatio":"3\/4"},"layout":{"selfStretch":"fit","flexSize":null},"spacing":{"margin":{"bottom":"15px"}},"border":{"radius":"10px"}},"key1":"value1"} -->', $this->service->block_html);
 	}
 
 	/**
@@ -142,7 +142,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	{
 		$this->service->renderProductTemplate();
 		$this->assertStringContainsString('<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"grid","columnCount":3}} -->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-image {"key1":"value1"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:cover {"useFeaturedImage":true,"dimRatio":0,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"contentPosition":"top right","isDark":false,"style":{"dimensions":{"aspectRatio":"3\/4"},"layout":{"selfStretch":"fit","flexSize":null},"spacing":{"margin":{"bottom":"15px"}},"border":{"radius":"10px"}},"key1":"value1"} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-title {"key2":"value2","level":0} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-list-price {"key3":"value3"} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- /wp:surecart/product-template -->', $this->service->block_html);
@@ -173,7 +173,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_search()
 	{
 		$this->service->renderSearch();
-		$this->assertStringContainsString('<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} --><div class="wp-block-group"><!-- wp:surecart/product-list-search /--></div><!-- /wp:group -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-list-search {"style":{"layout":{"selfStretch":"fixed","flexSize":"250px"}}} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -315,7 +315,6 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 							array(
 								'blockName' => 'surecart/product-item-image',
 								'attrs' => array(
-									'src' => 'https://images.unsplash.com/photo-1617360547704-3da8b5363369?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=420&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZHVjdHx8fHx8fDE2NzU3OTY4NjM&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=360',
 									'sizing' => 'cover',
 									'ratio' => '1/1.33',
 									'borderColor' => 'base-2',
@@ -406,8 +405,8 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 		);
 
 		$this->service->renderProductTemplate();
-		$this->assertStringContainsString('<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"grid","columnCount":3}} --><!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"constrained"}} --><div class="wp-block-group has-background has-accent-3-background-color has-border-color has-accent-4-border-color" style="background-color:var(--wp--preset--color--accent-3);border-radius:20px;border-width:12px;padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--10);margin-top:var(--wp--preset--spacing--10);margin-bottom:var(--wp--preset--spacing--10);margin-left:var(--wp--preset--spacing--10);margin-right:var(--wp--preset--spacing--10);">', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/product-image {"src":"https:\/\/images.unsplash.com\/photo-1617360547704-3da8b5363369?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=420&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZHVjdHx8fHx8fDE2NzU3OTY4NjM&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=360","sizing":"cover","ratio":"1\/1.33","borderColor":"base-2","style":{"border":{"radius":"6px","width":"6px"},"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|10","right":"var:preset|spacing|10"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|10","right":"var:preset|spacing|10"}}}} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"grid","columnCount":3}} --><!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} --><div class="wp-block-group has-background has-accent-3-background-color has-border-color has-accent-4-border-color" style="background-color:var(--wp--preset--color--accent-3);border-radius:20px;border-width:12px;padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--10);margin-top:var(--wp--preset--spacing--10);margin-bottom:var(--wp--preset--spacing--10);margin-left:var(--wp--preset--spacing--10);margin-right:var(--wp--preset--spacing--10);">', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:cover {"useFeaturedImage":true,"dimRatio":0,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"contentPosition":"top right","isDark":false,"style":{"border":{"radius":"6px","width":"6px"},"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|10","right":"var:preset|spacing|10"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|10","right":"var:preset|spacing|10"}}},"sizing":"cover","ratio":"1\/1.33","borderColor":"base-2"} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-list-price {"style":{"spacing":{"padding":{"top":"6px"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}},"color":{"text":"#ffea00"},"typography":{"fontSize":"20px"}}} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/product-title {"title":"Product Title","textColor":"base","fontSize":"x-small","style":{"typography":{"fontWeight":"500"},"spacing":{"padding":{"top":"10px"},"margin":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}}},"level":0} /-->', $this->service->block_html);
 		$this->assertStringContainsString('</div><!-- /wp:group --><!-- /wp:surecart/product-template -->', $this->service->block_html);
@@ -483,7 +482,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 		);
 
 		$this->service->renderProductTemplate();
-		$this->assertStringNotContainsString('<!-- wp:surecart/product-image', $this->service->block_html);
+		$this->assertStringNotContainsString('<!-- wp:cover {"useFeaturedImage":true,"dimRatio":0,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"contentPosition":"top right","isDark":false', $this->service->block_html);
 		$this->assertStringNotContainsString('<!-- wp:surecart/product-list-price', $this->service->block_html);
 		$this->assertStringNotContainsString('<!-- wp:surecart/product-title', $this->service->block_html);
 	}
