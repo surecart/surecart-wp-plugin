@@ -4,6 +4,7 @@
 	width: var(--sc-drawer-width, 31rem);
 	min-height: 100dvh;
 	min-width: var(--sc-drawer-min-width, "300px");
+	max-width: 100%;
 	background-color: var(--sc-panel-background-color);
 	box-shadow: var(--sc-shadow-x-large);
 	padding: 0;
