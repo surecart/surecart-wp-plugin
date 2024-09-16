@@ -44,7 +44,7 @@ class PostService {
 		// get the checkout form block.
 		$block = wp_get_first_block( parse_blocks( $this->post->post_content ), 'surecart/checkout-form' );
 
-		if ( empty( $block ) ) {
+		if ( empty( $block['attrs']['id'] ) ) {
 			return null;
 		}
 
@@ -70,7 +70,24 @@ class PostService {
 			$shortcode = get_shortcode_regex();
 			preg_match( "/$shortcode/", $this->post->post_content, $matches );
 			$attrs = shortcode_parse_atts( $matches[3] ?? '' );
-			return get_post( $attrs['id'] ?? null );
+
+			// If no id, try to get it from the inner shortcode content.
+			if ( empty( $attrs['id'] ) ) {
+				foreach ( $matches as $match ) {
+					preg_match('/sc_form id=(\d+)/', $match, $inner_matches);
+					if ( ! empty( $inner_matches[1] ) && is_numeric( $inner_matches[1] ) ) {
+						$attrs['id'] = (int) $inner_matches[1];
+						break;
+					}
+				}
+			}
+
+			// If still no id, return null.
+			if ( empty( $attrs['id'] ) ) {
+				return null;
+			}
+
+			return get_post( $attrs['id'] );
 		}
 
 		return null;
