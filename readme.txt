@@ -307,6 +307,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 = 2.31.1 - September 16th, 2024 =
 - Improvement: Record order bump offers for analytics.
+- Fix: Sometime order bumps not appearing due to race condition if checkout loads too fast.
+- Fix: Don't show checkout form mode switcher if checkout page is not block-based.
 - Fix: Issue with checkout not working with Divi theme due to store checkout refactor.
 - Fix: Issue where using the test processor with Stripe enabled would cause a checkout error during finalize.
 
