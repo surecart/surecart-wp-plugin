@@ -224,7 +224,29 @@ class Product extends \Bricks\Element {
 				),
 			),
 			array( 'name' => 'surecart-product-quantity' ),
-			array( 'name' => 'surecart-product-buy-button' ),
+			array(
+				'name'     => 'surecart-product-buy-button',
+				'settings' => array(
+					'buy_now' => false,
+					'_width'  => '100%',
+					'size'    => 'lg',
+					'circle'  => true,
+					'style'   => 'primary',
+					'content' => esc_html__( 'Add to Cart', 'surecart' ),
+				),
+			),
+			array(
+				'name'     => 'surecart-product-buy-button',
+				'settings' => array(
+					'buy_now' => true,
+					'size'    => 'lg',
+					'style'   => 'primary',
+					'circle'  => true,
+					'outline' => true,
+					'_width'  => '100%',
+					'content' => esc_html__( 'Buy Now', 'surecart' ),
+				),
+			),
 		);
 
 		return array(
