@@ -75,7 +75,7 @@ class FormPostTypeServiceTest extends SureCartUnitTestCase {
 
 		$checkout_page_id = $this->factory()->post->create([
 			'post_type' => 'sc_form',
-			'post_content' => '<!-- divi:shortcode -->[sc_form id="' . (int) $form_id . '"]<!-- /divi:shortcode -->',
+			'post_content' => '<!-- divi:shortcode -->[test id=123][sc_form id="' . (int) $form_id . '"]<!-- /divi:shortcode -->',
 		]);
 
 		update_option('surecart_checkout_page_id', $checkout_page_id);

@@ -67,27 +67,10 @@ class PostService {
 		}
 
 		if ( has_shortcode( $this->post->post_content, 'sc_form' ) ) {
-			$shortcode = get_shortcode_regex();
+			$shortcode = get_shortcode_regex( ['sc_form'] );
 			preg_match( "/$shortcode/", $this->post->post_content, $matches );
 			$attrs = shortcode_parse_atts( $matches[3] ?? '' );
-
-			// If no id, try to get it from the inner shortcode content.
-			if ( empty( $attrs['id'] ) ) {
-				foreach ( $matches as $match ) {
-					preg_match('/sc_form id=(\d+)/', $match, $inner_matches);
-					if ( ! empty( $inner_matches[1] ) && is_numeric( $inner_matches[1] ) ) {
-						$attrs['id'] = (int) $inner_matches[1];
-						break;
-					}
-				}
-			}
-
-			// If still no id, return null.
-			if ( empty( $attrs['id'] ) ) {
-				return null;
-			}
-
-			return get_post( $attrs['id'] );
+			return ! empty( $attrs['id'] ) ? get_post( $attrs['id'] ) : null;
 		}
 
 		return null;
