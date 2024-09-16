@@ -10,6 +10,9 @@ use SureCart\Account\AccountService;
 use SureCart\Account\AccountServiceProvider;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Support\Server;
+use SureCart\Models\AffiliationProtocol;
+use SureCart\Models\ShippingProtocol;
+use SureCart\Models\PortalProtocol;
 
 class AccountServiceTest extends SureCartUnitTestCase {
 	/**
@@ -87,6 +90,19 @@ class AccountServiceTest extends SureCartUnitTestCase {
 			'updated_at' => 1724652194
 		]);
 
+		$affiliationProtocol = new AffiliationProtocol([
+			'wordpress_plugin_tracking_enabled' => true
+		]);
+
+		$shippingProtocol = new ShippingProtocol([
+			'shipping_enabled' => true,
+		]);
+
+		$portalProtocol = new PortalProtocol([
+			'privacy_url' => 'http://bsfdev.test/privacy',
+			'terms_url' => 'http://bsfdev.test/terms'
+		]);
+
 		$account = new Account([
 			'id' => '81784ba6-072b-48b4-a460-ec9405b2b540',
 			'object' => 'account',
@@ -94,25 +110,31 @@ class AccountServiceTest extends SureCartUnitTestCase {
 			'claim_url' => null,
 			'currency' => 'usd',
 			'currency_locked' => true,
-			'entitlements' => (object)[],
+			'entitlements' => (object)[
+				'abandoned_checkouts' => true,
+				'affiliates' => true,
+				'subscription_preservation' => true
+			],
 			'locale' => 'en',
 			'medias_total_byte_size' => 16371923,
 			'name' => "Raj's Store",
 			'slug' => 'rajstore',
 			'time_zone' => 'Asia/Kolkata',
 			'url' => 'http://bsfdev.test',
-			'plan' => (object)[],
+			'plan' => (object)[
+				'name' => 'free'
+			],
 			'public_token' => 'pt_bz4UNuZzVfxXD8fPsR5sc8Lq',
 			'seeded_at' => null,
 			'abandoned_checkout_protocol' => '0df63946-f392-4796-aec9-e3a5b316808a',
-			'affiliation_protocol' => (object)[],
+			'affiliation_protocol' => $affiliationProtocol,
 			'brand' => $brand,
 			'customer_notification_protocol' => 'dc4a5c1a-693a-4290-b3d9-85db7f3d7fdc',
 			'owner' => '8161b42b-aa35-4a83-a1ae-9467b4a96561',
 			'order_protocol' => '91bca178-6bbc-4e40-8ccf-d7060653c0a2',
-			'portal_protocol' => (object)[],
+			'portal_protocol' => $portalProtocol,
 			'subscription_protocol' => (object)[],
-			'shipping_protocol' => (object)[],
+			'shipping_protocol' => $shippingProtocol,
 			'tax_protocol' => $taxProtocol,
 			'test_data_purged_at' => 1690534189,
 			'processors' => [(object)[]],
@@ -160,6 +182,17 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$account = $accountService->convertArrayToAccount($this->account->toArray());
 
 		$this->assertSame($this->account->id, $account->id);
+		$this->assertSame($this->account->name, $account->name);
+		$this->assertSame($this->account->currency, $account->currency);
+		$this->assertSame($this->account->claimed, $account->claimed);
+		$this->assertSame($this->account->affiliation_protocol->wordpress_plugin_tracking_enabled, $account->affiliation_protocol->wordpress_plugin_tracking_enabled);
+		$this->assertSame($this->account->entitlements->affiliates, $account->entitlements->affiliates);
+		$this->assertSame($this->account->entitlements->abandoned_checkouts, $account->entitlements->abandoned_checkouts);
+		$this->assertSame($this->account->entitlements->subscription_preservation, $account->entitlements->subscription_preservation);
+		$this->assertSame($this->account->plan->name, $account->plan->name);
+		$this->assertSame($this->account->shipping_protocol->shipping_enabled, $account->shipping_protocol->shipping_enabled);
+		$this->assertSame($this->account->portal_protocol->privacy_url, $account->portal_protocol->privacy_url);
+		$this->assertSame($this->account->portal_protocol->terms_url, $account->portal_protocol->terms_url);
 		$this->assertSame($this->account->brand->color, $account->brand->color);
 		$this->assertSame($this->account->brand->address->city, $account->brand->address->city);
 		$this->assertSame($this->account->tax_protocol->eu_tax_enabled, $account->tax_protocol->eu_tax_enabled);
