@@ -18,9 +18,11 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		// nothing to register.
-		$container['surecart.elementor.widgets'] = function () {
+		$container['surecart.elementor.widgets']      = function () {
 			return new ElementorWidgetsService();
+		};
+		$container['surecart.elementor.dynamic_tags'] = function () {
+			return new ElementorDynamicTagsService();
 		};
 	}
 
@@ -50,6 +52,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 
 		// Bootstrap the widgets.
 		$container['surecart.elementor.widgets']->bootstrap();
+
+		// Bootstrap the dynamic tags.
+		$container['surecart.elementor.dynamic_tags']->bootstrap();
 	}
 
 	/**
