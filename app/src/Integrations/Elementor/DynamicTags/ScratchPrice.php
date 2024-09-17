@@ -77,8 +77,6 @@ class ScratchPrice extends \Elementor\Core\DynamicTags\Tag {
 	 * @return void
 	 */
 	public function render() {
-		$this->settings['typography_text_decoration'] = 'line-through';
-
 		$product    = sc_get_product();
 		$price_type = $this->get_settings( 'price_type' );
 
