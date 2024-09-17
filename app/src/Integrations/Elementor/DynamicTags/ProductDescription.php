@@ -28,7 +28,7 @@ class ProductDescription extends \Elementor\Core\DynamicTags\Tag {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Product Description', 'surecart' );
+		return esc_html__( 'Product description', 'surecart' );
 	}
 
 	/**

@@ -27,7 +27,7 @@ class Price extends \Elementor\Core\DynamicTags\Tag {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Price', 'surecart' );
+		return esc_html__( 'Product price', 'surecart' );
 	}
 
 	/**

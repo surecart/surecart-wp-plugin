@@ -27,7 +27,7 @@ class ScratchPrice extends \Elementor\Core\DynamicTags\Tag {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Scratch Price', 'surecart' );
+		return esc_html__( 'Product scratch price', 'surecart' );
 	}
 
 	/**
