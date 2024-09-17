@@ -276,12 +276,17 @@ class ProductPostTypeService {
 	/**
 	 * Sync the product.
 	 *
-	 * @param \SureCart\Models\Product $product The model.
+	 * @param \SureCart\Models\Model $model The model.
 	 *
 	 * @return void
 	 */
-	public function sync( \SureCart\Models\Product $product ) {
-		$product->sync();
+	public function sync( \SureCart\Models\Model $model ) {
+		// check if has method first.
+		if ( ! method_exists( $model, 'sync' ) ) {
+			return;
+		}
+
+		$model->sync();
 	}
 
 	/**
