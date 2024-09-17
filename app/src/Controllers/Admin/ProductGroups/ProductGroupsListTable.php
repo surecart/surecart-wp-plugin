@@ -193,7 +193,7 @@ class ProductGroupsListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			[
-				'view' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr( 'View Product Group', 'surecart' ) . '">' . __( 'View', 'surecart' ) . '</a>',
+				'view' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr__( 'View Product Group', 'surecart' ) . '">' . __( 'View', 'surecart' ) . '</a>',
 			],
 		);
 		return ob_get_clean();

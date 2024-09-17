@@ -233,14 +233,14 @@ class AbandonedCheckoutListTable extends ListTable {
 	public function column_placed_by( $abandoned ) {
 		ob_start();
 		?>
-		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
+		<a  class="row-title" aria-label="<?php esc_attr_e( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php
 			// translators: Customer name.
 			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
 			?>
 		</a>
 		<br />
-		<a aria-label="<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
+		<a aria-label="<?php esc_attr_e( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>
 		</a>
 		<?php

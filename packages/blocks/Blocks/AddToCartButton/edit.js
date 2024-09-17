@@ -222,8 +222,8 @@ export default ({ className, attributes, setAttributes }) => {
 
 				<ScButton type={type} size={size}>
 					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
 						value={button_text}
 						onChange={(button_text) =>
 							setAttributes({ button_text })

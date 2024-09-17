@@ -267,7 +267,7 @@ class UpsellsListTable extends ListTable {
 			<?php
 			echo $this->row_actions(
 				[
-					'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr__( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 				],
 			);
 			?>
