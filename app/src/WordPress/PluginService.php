@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin service.
- * 
+ *
  * @package   SureCartAppCore
  * @author    SureCart <support@surecart.com>
  * @copyright  SureCart
@@ -40,22 +40,25 @@ class PluginService {
 	 */
 	public function __construct( $app ) {
 		$this->app = $app;
-		add_action( 'in_plugin_update_message-' . SURECART_PLUGIN_BASE, array( $this, 'updateMessage' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 	}
 
 	/**
-	 * Enqueue scripts.
+	 * Bootstrap the plugin.
 	 *
 	 * @return void
 	 */
-	public function enqueueScripts() {
-		$screen = get_current_screen();
-		if ( ! $screen || 'plugins' !== $screen->base ) {
-			return;
-		}
+	public function bootstrap() {
+		add_action( 'in_plugin_update_message-' . SURECART_PLUGIN_BASE, array( $this, 'updateMessage' ) );
+	}
 
-		wp_enqueue_style( 'surecart-plugin-upgrade-notice', plugins_url( 'styles/plugin-upgrade-notice.css', SURECART_PLUGIN_FILE ), '', $this->version(), 'all' );
+	/**
+	 * Should show update notice?
+	 *
+	 * @return boolean
+	 */
+	public function shouldShowUpdateNotice() {
+		$highest_version = max( $this->show_update_notice_versions );
+		return version_compare( $this->version(), $highest_version, '>=' );
 	}
 
 	/**
@@ -66,14 +69,13 @@ class PluginService {
 	 * @return void
 	 */
 	public function updateMessage( $plugin_data ) {
-		 // Get the highest version in the list to compare with.
-		 $highest_version = max( $this->show_update_notice_versions );
-    
-		 // Early return if the new version is not greater than or equal to the highest version.
-		 if ( version_compare( $plugin_data['new_version'], $highest_version, '<' ) ) {
+		if ( ! $this->shouldShowUpdateNotice() ) {
 			return;
 		}
-	
+
+		// Enqueue the plugin upgrade notice styles.
+		wp_enqueue_style( 'surecart-plugin-upgrade-notice', plugins_url( 'styles/plugin-upgrade-notice.css', SURECART_PLUGIN_FILE ), '', $this->version(), 'all' );
+
 		// Display the update warning if the condition is met.
 		$this->versionUpdateWarning();
 	}
@@ -96,20 +98,21 @@ class PluginService {
 				</div>
 				<div class="sc-major-update-warning__message">
 					<?php
-					printf(
-						/* translators: %1$s Link open tag, %2$s: Link close tag. */
-						esc_html__( 'We’re excited to announce that the latest update brings significant improvements to your plugin experience! To ensure a smooth transition, we strongly recommend you %1$sbackup your site %2$s before proceeding with the update and perform the upgrade in a staging environment first.', 'surecart' ),
-						'<a href="https://surecart.com">',
-						'</a>'
+					echo wpautop(
+						sprintf(
+							/* translators: %1$s Link open tag, %2$s: Link close tag. */
+							esc_html__( 'We’re excited to announce that the latest update brings significant improvements to your plugin experience! To ensure a smooth transition, we strongly recommend you %1$sbackup your site%2$s before proceeding with the update and perform the upgrade in a staging environment first.', 'surecart' ),
+							'<a href="https://surecart.com" target="_blank">',
+							'</a>'
+						)
 					);
-
 					?>
 				</div>
 			</div>
 		</div>
 		<?php
 	}
-	
+
 	/**
 	 * Get the plugin version
 	 *

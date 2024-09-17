@@ -62,6 +62,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$container['surecart.health']->bootstrap();
 		$container['surecart.compatibility']->bootstrap();
 		$container['surecart.initialstate']->bootstrap();
+		$container['surecart.plugin']->bootstrap();
 	}
 
 	/**
