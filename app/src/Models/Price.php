@@ -104,8 +104,7 @@ class Price extends Model {
 	protected function sync() {
 		$product = Product::sync( $this->product_id );
 
-		// if the product is already attached, and syncable, use that. Otherwise, find it.
-		$product = ! empty( $this->product->id ) ? $this->product : Product::withSyncableExpands()->where( array( 'cached' => $args['cached'] ) )->find( $this->product_id );
+		// if the product is an error, return it.
 		if ( is_wp_error( $product ) ) {
 			return $product;
 		}
