@@ -39,6 +39,7 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"inserter": false,
 		"spacing": {
 			"padding": true,
 			"margin": true,
