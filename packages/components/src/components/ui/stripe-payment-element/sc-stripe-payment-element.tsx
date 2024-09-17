@@ -121,7 +121,7 @@ export class ScStripePaymentElement {
     const styles = getComputedStyle(this.el);
     return {
       mode: checkoutState.checkout?.remaining_amount_due > 0 ? 'payment' : 'setup',
-      amount: checkoutState.checkout?.amount_due,
+      amount: checkoutState.checkout?.remaining_amount_due,
       currency: checkoutState.checkout?.currency,
       setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : null,
       appearance: {
