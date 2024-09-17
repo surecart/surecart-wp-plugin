@@ -77,15 +77,19 @@ class AdminPluginCacheService {
 					[
 						'name'  => 'sc_plugin_cache_notice_' . sanitize_title( $plugin ),
 						'type'  => 'warning',
-						'title' => 'SureCart - ' . esc_html( $plugin_data['Name'] ) . ' ' . esc_html__( ' Detected', 'surecart' ),
+						'title' => sprintf(
+							/* translators: 1: plugin name, 2: plugin version */
+							esc_html__( 'Action Required: Configure %s for SureCart', 'surecart' ),
+							$plugin_data['Name']
+						),
 						'text'  => sprintf(
 							/* translators: 1: plugin name, 2: plugin version */
-							'<p>' . esc_html__( 'The plugin %1$s (%2$s) has been detected. Please ensure the plugin is properly configured to work with SureCart.', 'surecart' ) . '</p>',
+							'<p>' . esc_html__( '%1$s (%2$s) detected. To ensure optimal performance with SureCart, configure the plugin properly.', 'surecart' ) . '</p>',
 							$plugin_data['Name'],
 							$plugin_data['Version']
 						)
 						.
-						'<p><a href="https://surecart.com/docs/caching/" target="_blank">' . esc_html__( 'Learn More', 'surecart' ) . '</a></p>',
+						'<p><a href="https://surecart.com/docs/caching/" target="_blank">' . esc_html__( 'Review Configuration Guide', 'surecart' ) . '</a></p>',
 					]
 				)
 			);
