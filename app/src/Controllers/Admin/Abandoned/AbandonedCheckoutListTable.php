@@ -241,7 +241,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		</a>
 		<br />
 		<a aria-label="<?php esc_attr_e( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
-			<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>
+			<?php esc_attr_e( 'View Checkout', 'surecart' ); ?>
 		</a>
 		<?php
 
