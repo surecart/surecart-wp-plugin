@@ -28,6 +28,7 @@ class SubscriptionsController extends AdminController {
 						'title' => __( 'Subscriptions', 'surecart' ),
 					],
 				],
+				'report_url'       => SURECART_REPORTS_URL . 'subscriptions',
 			)
 		);
 		return \SureCart::view( 'admin/subscriptions/index' )->with(

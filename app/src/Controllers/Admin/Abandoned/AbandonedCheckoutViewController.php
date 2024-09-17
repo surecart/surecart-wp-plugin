@@ -21,6 +21,7 @@ class AbandonedCheckoutViewController extends AdminController {
 					],
 				],
 				'test_mode_toggle' => true,
+				'report_url'       => SURECART_REPORTS_URL . 'abandoned_checkouts',
 			)
 		);
 

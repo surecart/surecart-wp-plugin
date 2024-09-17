@@ -34,6 +34,9 @@ define( 'SURECART_VENDOR_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'vendor' );
 if ( ! defined( 'SURECART_APP_URL' ) ) {
 	define( 'SURECART_APP_URL', 'https://app.surecart.com' );
 }
+if ( ! defined( 'SURECART_REPORTS_URL' ) ) {
+	define( 'SURECART_REPORTS_URL', 'https://app.surecart.com/reports/' );
+}
 if ( ! defined( 'SURECART_API_URL' ) ) {
 	define( 'SURECART_API_URL', 'https://api.surecart.com' );
 }

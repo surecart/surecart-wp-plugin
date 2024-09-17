@@ -52,6 +52,7 @@ abstract class AdminController {
 						'suffix'           => $args['suffix'] ?? '',
 						'test_mode_toggle' => $args['test_mode_toggle'] ?? false,
 						'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'report_url'       => $args['report_url'] ?? '',
 					]
 				);
 			}
