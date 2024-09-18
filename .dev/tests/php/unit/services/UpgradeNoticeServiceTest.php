@@ -3,11 +3,15 @@
 namespace SureCart\Tests\Services;
 
 use SureCart\Tests\SureCartUnitTestCase;
-use SureCart\WordPress\UpgradeNoticeService;
 
 class UpgradeNoticeServiceTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
+	/**
+	 * @var UpgradeNoticeService
+	 */
+	protected $service;
 
 	/**
 	 * Set up a new app instance to use for tests.
