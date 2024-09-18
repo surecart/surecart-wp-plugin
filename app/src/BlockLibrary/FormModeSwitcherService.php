@@ -92,7 +92,7 @@ class FormModeSwitcherService {
 		}
 
 		// The form post.
-		$form_post = \SureCart::post()->getFormPostFromBlock( get_post() );
+		$form_post = \SureCart::post()->getFormPost( get_post() );
 		if ( empty( $form_post->post_content ) ) {
 			return;
 		}

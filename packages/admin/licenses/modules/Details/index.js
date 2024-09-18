@@ -1,10 +1,18 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import Box from '../../../ui/Box';
 import { formatTime } from '../../../util/time';
 import Copy from './Copy';
-import { ScTag, ScSkeleton, ScInput } from '@surecart/components-react';
+import {
+	ScTag,
+	ScSkeleton,
+	ScInput,
+	ScButton,
+	ScIcon,
+} from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 
-export default ({ license, updateLicense, loading }) => {
+export default ({ license, updateLicense, loading, onEditKey }) => {
 	const renderTag = () => {
 		if (loading) {
 			return <ScSkeleton style={{ width: '75px' }}></ScSkeleton>;
@@ -31,20 +39,39 @@ export default ({ license, updateLicense, loading }) => {
 			}
 			loading={loading}
 		>
-			<ScInput
-				label={__('License Key', 'surecart')}
-				readonly
-				value={license?.key}
-				help={
-					!!license?.created_at &&
-					sprintf(
-						__('Created on %s', 'surecart'),
-						formatTime(license?.created_at)
-					)
-				}
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+					gap: 0.5em;
+				`}
 			>
-				<Copy slot="suffix" text={license?.key} />
-			</ScInput>
+				<ScInput
+					label={__('License Key', 'surecart')}
+					readonly
+					value={license?.key}
+					help={
+						!!license?.created_at &&
+						sprintf(
+							__('Created on %s', 'surecart'),
+							formatTime(license?.created_at)
+						)
+					}
+					css={css`
+						width: 100%;
+					`}
+				>
+					<Copy slot="suffix" text={license?.key} />
+				</ScInput>
+
+				<ScButton
+					onClick={onEditKey}
+					type="default"
+					aria-label={__('Edit License Key', 'surecart')}
+				>
+					<ScIcon name="edit" />
+				</ScButton>
+			</div>
 			<ScInput
 				label={__('Activation Limit', 'surecart')}
 				type="number"

@@ -27,9 +27,6 @@ class CartService {
 					// Enqueue the cart drawer script modules.
 					wp_enqueue_script_module( '@surecart/cart' );
 					wp_enqueue_script_module( '@surecart/checkout' );
-
-					// TODO: Remove this once we can add the module via interactivity dependency.
-					wp_enqueue_script( 'wp-a11y' );
 				}
 			);
 
@@ -214,7 +211,7 @@ class CartService {
 	}
 
 	/**
-	 * Get the form
+	 * Get the form post.
 	 *
 	 * @return \WP_Post The default form post.
 	 */

@@ -210,7 +210,7 @@ class Currency {
 			return $fmt->formatCurrency( $converted_amount, strtoupper( $currency_code ) );
 		}
 
-		return self::getCurrencySymbol( $currency_code ) . self::formatCurrencyNumber( $amount );
+		return html_entity_decode( self::getCurrencySymbol( $currency_code ) ) . self::formatCurrencyNumber( $amount );
 	}
 
 	/**

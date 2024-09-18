@@ -103,7 +103,7 @@ class ProductsListTable extends ListTable {
 		);
 
 		foreach ( $statuses as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-products' );
+			$link                    = admin_url( 'admin.php?page=sc-products' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -668,7 +668,8 @@ class ProductsListTable extends ListTable {
 		<select name="sc_collection" id="filter-by-collection">
 			<option <?php selected( $displayed_collection, '' ); ?> value=""><?php esc_html_e( 'All Product Collections', 'surecart' ); ?></option>
 			<?php foreach ( $product_collections as $term ) : ?>
-				<option <?php selected( $displayed_collection, $term->term_id ); ?> value="<?php echo esc_attr( $term->term_id ); ?>"><?php echo esc_html( $term->name ); ?></option>
+				<?php $value = get_term_meta( $term->term_id, 'sc_id', true ); ?>
+				<option <?php selected( $displayed_collection, $value ); ?> value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $term->name ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php
