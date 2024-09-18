@@ -33,14 +33,14 @@ class UpgradeNoticeService {
 		'3.0.0',
 	];
 
-    /**
-     * Constructor.
-     *
-     * @param Application $app Application instance.
-     */
-    public function __construct( $app ) {
-        $this->app = $app;
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param Application $app Application instance.
+	 */
+	public function __construct( $app ) {
+		$this->app = $app;
+	}
 
 	/**
 	 * Bootstrap the plugin.
@@ -54,8 +54,8 @@ class UpgradeNoticeService {
 	/**
 	 * Should show update notice?
 	 *
-     * @param array $new_version Plugin new version.
-     * 
+	 * @param string $new_version Plugin new version.
+	 *
 	 * @return boolean
 	 */
 	public function shouldShowUpdateNotice( $new_version ) {
@@ -115,7 +115,7 @@ class UpgradeNoticeService {
 		<?php
 	}
 
-   /**
+	/**
 	 * Shortcut to \SureCart\WordPress\PluginService
 	 *
 	 * @return \SureCart\WordPress\PluginService
