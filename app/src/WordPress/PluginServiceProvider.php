@@ -53,6 +53,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'plugin', 'surecart.plugin' );
+		$app->alias( 'upgradeNotice', 'surecart.upgrade.notice' );
 		$app->alias( 'actions', 'surecart.actions' );
 		$app->alias( 'config', 'surecart.config.setting' );
 		$app->alias( 'healthCheck', 'surecart.health' );

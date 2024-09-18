@@ -29,7 +29,7 @@ class UpgradeNoticeService {
 	 *
 	 * @var array
 	 */
-	protected $show_update_notice_versions = [
+	public $show_update_notice_versions = [
 		'3.0.0',
 	];
 
