@@ -80,9 +80,10 @@ export default ({ product, updateProduct }) => {
 									label: __('Now', 'surecart'),
 									onClick: () => {
 										updateProduct({
-											cataloged_at: Math.floor(
-												Date.now() / 1000
-											),
+											cataloged_at:
+												Date.parse(
+													new Date().toUTCString()
+												) / 1000,
 										});
 									},
 								},
