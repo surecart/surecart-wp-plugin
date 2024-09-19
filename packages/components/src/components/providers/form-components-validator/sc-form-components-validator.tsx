@@ -92,6 +92,8 @@ export class ScFormComponentsValidator {
       }
     }
 
+    this.handleOrderChange();
+
     this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
     this.removePaymentRequiresShippingListener = onCheckoutChange('paymentMethodRequiresShipping', () => this.handleOrderChange());
   }
