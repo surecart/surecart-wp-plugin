@@ -252,10 +252,10 @@ class BricksDynamicDataService {
 				if ( $product ? $product->has_unlimited_stock : '' ) {
 					return '';
 				}
-				if ( isset( $filters['on_hand'] ) ) {
+				if ( isset( $filters['meta_key'] ) && 'on_hand' === $filters['meta_key'] ) {
 					return esc_html( $product ? $product->stock : '' );
 				}
-				if ( isset( $filters['held_stock'] ) ) {
+				if ( isset( $filters['meta_key'] ) && 'held' === $filters['meta_key'] ) {
 					return esc_html( $product ? $product->held_stock : '' );
 				}
 				return esc_html( $product ? $product->available_stock : '' );
