@@ -15,34 +15,75 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 3.15.0
  */
 class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
+	/**
+	 * Get the widget name.
+	 *
+	 * @return string
+	 */
 	public function get_name() {
 		return 'surecart-product';
 	}
 
+	/**
+	 * Get the widget title.
+	 *
+	 * @return string
+	 */
 	public function get_title() {
 		return esc_html__( 'Product', 'elementor' );
 	}
 
+	/**
+	 * Get the widget icon.
+	 *
+	 * @return string
+	 */
 	public function get_icon() {
-		return 'eicon-accordion';
+		return 'eicon-product-pages';
 	}
 
+	/**
+	 * Get the widget keywords.
+	 *
+	 * @return array
+	 */
 	public function get_keywords() {
 		return [ 'nested', 'tabs', 'accordion', 'toggle' ];
 	}
 
+	/**
+	 * Get the widget style dependencies.
+	 *
+	 * @return array
+	 */
 	public function get_style_depends(): array {
 		return [ 'widget-nested-accordion' ];
 	}
 
+	/**
+	 * Show the widget in the panel.
+	 *
+	 * @return bool
+	 */
 	public function show_in_panel(): bool {
 		return \Elementor\Plugin::$instance->experiments->is_feature_active( 'nested-elements' );
 	}
 
+	/**
+	 * Get the widget script dependencies.
+	 *
+	 * @return array
+	 */
 	public function get_script_depends() {
 		return [ 'surecart-elementor-product' ];
 	}
 
+	/**
+	 * Get the item content container.
+	 *
+	 * @param int $index The index of the item.
+	 * @return array
+	 */
 	protected function item_content_container( int $index ) {
 		return [
 			'elType'   => 'container',
@@ -53,6 +94,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		];
 	}
 
+	/**
+	 * Get the default children elements.
+	 *
+	 * @return array
+	 */
 	protected function get_default_children_elements() {
 		return [
 			$this->item_content_container( 1 ),
@@ -61,26 +107,56 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		];
 	}
 
+	/**
+	 * Get the default repeater title setting key.
+	 *
+	 * @return string
+	 */
 	protected function get_default_repeater_title_setting_key() {
 		return 'item_title';
 	}
 
+	/**
+	 * Get the default children title.
+	 *
+	 * @return string
+	 */
 	protected function get_default_children_title() {
 		return esc_html__( 'Item #%d', 'elementor' );
 	}
 
+	/**
+	 * Get the default children placeholder selector.
+	 *
+	 * @return string
+	 */
 	protected function get_default_children_placeholder_selector() {
 		return '.e-n-accordion';
 	}
 
+	/**
+	 * Get the default children container placeholder selector.
+	 *
+	 * @return string
+	 */
 	protected function get_default_children_container_placeholder_selector() {
 		return '.e-n-accordion-item';
 	}
 
+	/**
+	 * Get the html wrapper class.
+	 *
+	 * @return string
+	 */
 	protected function get_html_wrapper_class() {
 		return 'elementor-widget-n-accordion';
 	}
 
+	/**
+	 * Register the widget controls.
+	 *
+	 * @return void
+	 */
 	protected function register_controls() {
 		$this->start_controls_section(
 			'section_items',
@@ -363,12 +439,22 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		$this->add_style_tab();
 	}
 
+	/**
+	 * Add the style tab.
+	 *
+	 * @return void
+	 */
 	private function add_style_tab() {
 		$this->add_accordion_style_section();
 		$this->add_header_style_section();
 		$this->add_content_style_section();
 	}
 
+	/**
+	 * Add the accordion style section.
+	 *
+	 * @return void
+	 */
 	private function add_accordion_style_section() {
 		$this->start_controls_section(
 			'section_accordion_style',
@@ -466,6 +552,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Add the content style section.
+	 *
+	 * @return void
+	 */
 	private function add_content_style_section() {
 
 		$low_specificity_accordion_item_selector = ':where( {{WRAPPER}} > .elementor-widget-container > .e-n-accordion > .e-n-accordion-item ) > .e-con';
@@ -531,6 +622,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Add the header style section.
+	 *
+	 * @return void
+	 */
 	private function add_header_style_section() {
 		$this->start_controls_section(
 			'section_header_style',
@@ -639,6 +735,13 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Add the header style.
+	 *
+	 * @param string $state The state of the header.
+	 * @param string $context The context of the header.
+	 * @return void
+	 */
 	private function add_header_style( $state, $context ) {
 		$variable = '--n-accordion-' . $context . '-' . $state . '-color';
 
@@ -702,7 +805,10 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	}
 
 	/**
-	 * @string $state
+	 * Add the border and radius style.
+	 *
+	 * @param string $state The state of the border and radius.
+	 * @return void
 	 */
 	private function add_border_and_radius_style( $state ) {
 		$selector            = '{{WRAPPER}} > .elementor-widget-container > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title';
@@ -752,10 +858,22 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		$this->end_controls_tab();
 	}
 
+	/**
+	 * Check if the active icon exists.
+	 *
+	 * @param array $settings The settings of the widget.
+	 * @return bool
+	 */
 	private function is_active_icon_exist( $settings ): bool {
 		return array_key_exists( 'accordion_item_title_icon_active', $settings ) && ! empty( $settings['accordion_item_title_icon_active'] ) && ! empty( $settings['accordion_item_title_icon_active']['value'] );
 	}
 
+	/**
+	 * Render the accordion icons.
+	 *
+	 * @param array $settings The settings of the widget.
+	 * @return string
+	 */
 	private function render_accordion_icons( $settings ) {
 		$icon_html        = \Elementor\Icons_Manager::try_get_icon_html( $settings['accordion_item_title_icon'], [ 'aria-hidden' => 'true' ] );
 		$icon_active_html = $this->is_active_icon_exist( $settings )
@@ -773,6 +891,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		return ob_get_clean();
 	}
 
+	/**
+	 * Render the widget.
+	 *
+	 * @return void
+	 */
 	protected function render() {
 		$settings         = $this->get_settings_for_display();
 		$items            = $settings['items'];
@@ -872,6 +995,13 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 			}
 	}
 
+	/**
+	 * Print the child.
+	 *
+	 * @param int    $index The index of the child.
+	 * @param string $item_id The id of the item.
+	 * @return void
+	 */
 	public function print_child( $index, $item_id = null ) {
 		$children = $this->get_children();
 
@@ -889,6 +1019,13 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		}
 	}
 
+	/**
+	 * Add attributes to the container.
+	 *
+	 * @param object $container The container object.
+	 * @param string $item_id The id of the item.
+	 * @return void
+	 */
 	protected function add_attributes_to_container( $container, $item_id ) {
 		$container->add_render_attribute(
 			'_wrapper',
@@ -899,6 +1036,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		);
 	}
 
+	/**
+	 * Get the initial config.
+	 *
+	 * @return array
+	 */
 	protected function get_initial_config(): array {
 		if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_nested_atomic_repeaters' ) ) {
 			return array_merge(
@@ -915,6 +1057,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		return parent::get_initial_config();
 	}
 
+	/**
+	 * Render the content template for a single repeater item.
+	 *
+	 * @return void
+	 */
 	protected function content_template_single_repeater_item() {
 		?>
 		<#
@@ -961,6 +1108,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		<?php
 	}
 
+	/**
+	 * Render the content template.
+	 *
+	 * @return void
+	 */
 	protected function content_template() {
 		?>
 		<div class="e-n-accordion" aria-label="Accordion. Open links with Enter or Space, close with Escape, and navigate with Arrow Keys">
