@@ -245,6 +245,10 @@ class BricksDynamicDataService {
 				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount --> ';
 
 			case 'product_description':
+				if ( empty( $post->post_excerpt ) ) {
+					return '';
+				}
+
 				return '<span class="sc-prose">' . wp_kses_post( ! empty( $filters['num_words'] ) ? \Bricks\Helpers::get_the_excerpt( $post, ! $filters['num_words'], null, true ) : $post->post_excerpt ) . '</span>';
 
 			case 'product_stock':
