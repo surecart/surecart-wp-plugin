@@ -260,7 +260,6 @@ class ProductListMigrationService {
 	 */
 	public function renderProductTemplate(): void {
 		$product_template_attrs = array_merge(
-			$this->attributes ?? array(),
 			array(
 				'style'  => array(
 					'spacing' => array(
@@ -271,7 +270,8 @@ class ProductListMigrationService {
 					'type'        => 'grid',
 					'columnCount' => $this->attributes['columns'] ?? 3,
 				),
-			)
+			),
+			$this->attributes ?? array(),
 		);
 
 		$this->block_html .= '<!-- wp:surecart/product-template ' . wp_json_encode( $product_template_attrs ) . ' -->';

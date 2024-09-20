@@ -132,6 +132,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					type: 'grid',
 					columnCount: columns,
 				},
+				...attributes,
 			},
 			[
 				[
