@@ -45,6 +45,9 @@ export default ({ open, onRequestClose }) => {
 				'shipping-profile',
 				{
 					name: profileName,
+				},
+				{
+					throwOnError: true,
 				}
 			);
 
