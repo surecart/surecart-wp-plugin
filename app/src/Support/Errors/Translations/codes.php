@@ -61,7 +61,7 @@ return array(
 	'checkout.discount.coupon.blank'                       => __( 'This coupon code is invalid.', 'surecart' ),
 	'customer_notification_protocol.abandoned_checkout_enabled.invalid_address' => __( 'You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding.' ),
 	'checkout.shipping_address.postal_code.invalid'        => __( 'Your postal code is not valid.', 'surecart' ),
-	'checkout.shipping_address.inaccurate'                 => __( 'Shipping address is inaccurate.', 'surecart' ),
+	'checkout.shipping_address.inaccurate'                 => __( 'Please enter additional shipping address information.', 'surecart' ),
 	'checkout.discount.coupon.expired'                     => __( 'This coupon has expired.', 'surecart' ),
 	'checkout.discount.coupon.currency_mismatch'           => __( 'This discount code does not apply to this currency.', 'surecart' ),
 	'checkout.discount.coupon.invalid'                     => __( 'This is not a valid coupon code', 'surecart' ),
