@@ -54,16 +54,56 @@ const newPriceChoicesTemplate = (attributes) => {
 					},
 					[
 						[
-							'surecart/price-amount',
+							'core/group',
 							{
 								style: {
-									typography: {
-										fontStyle: 'normal',
-										fontWeight: '700',
-									},
+									spacing: { blockGap: '0.5rem' },
+								},
+								layout: {
+									type: 'flex',
+									flexWrap: 'nowrap',
+									justifyContent: 'left',
 								},
 							},
-							[],
+							[
+								[
+									'surecart/price-amount',
+									{
+										style: {
+											typography: {
+												fontStyle: 'normal',
+												fontWeight: '700',
+											},
+										},
+									},
+									[],
+								],
+								[
+									'surecart/price-scratch-amount',
+									{
+										style: {
+											typography: {
+												fontStyle: 'normal',
+												fontWeight: '700',
+												textDecoration: 'line-through',
+											},
+										},
+									},
+									[],
+								],
+								[
+									'surecart/price-interval',
+									{
+										style: {
+											typography: {
+												fontStyle: 'normal',
+												fontWeight: '700',
+											},
+										},
+									},
+									[],
+								],
+							],
 						],
 						[
 							'surecart/price-trial',
