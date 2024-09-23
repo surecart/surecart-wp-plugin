@@ -51,6 +51,7 @@ class InvoicesListTable extends ListTable {
 			'customer'   => __( 'Customer', 'surecart' ),
 			'method'     => __( 'Method', 'surecart' ),
 			'total'      => __( 'Total', 'surecart' ),
+			'date'       => __( 'Created', 'surecart' ),
 			'mode'       => '',
 		];
 	}
@@ -86,18 +87,9 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Define the sortable columns.
-	 *
-	 * @return array
-	 */
-	public function get_sortable_columns() {
-		return array( 'title' => array( 'title', false ) );
-	}
-
-	/**
 	 * Get the table data.
 	 *
-	 * @return array
+	 * @return object
 	 */
 	protected function table_data() {
 		$status = $this->getStatus();
@@ -197,7 +189,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $invoice ) {
-		return '<sc-format-date date="' . (int) $invoice->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+		return '<sc-format-date date="' . (int) $invoice->created_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
 	}
 
 	/**
@@ -266,6 +258,17 @@ class InvoicesListTable extends ListTable {
 			<?php echo ! empty( $invoice->checkout->order->number ) ? '#' . esc_html( $invoice->checkout->order->number ) : esc_html_e( '(draft)', 'surecart' ); ?>
 		</a>
 		<?php
+
+		echo wp_kses_post(
+			$this->row_actions(
+				array_filter(
+					[
+						'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ) . '" aria-label="' . esc_attr( 'Edit Invoice', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+						'view' => ! empty( $invoice->checkout_url ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
+					]
+				),
+			)
+		);
 
 		return ob_get_clean();
 	}
