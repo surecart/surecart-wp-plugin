@@ -287,7 +287,7 @@ export class ScSessionProvider {
       checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
-          refresh_status: true,
+          refresh_line_items: true,
         },
       })) as Checkout;
 
