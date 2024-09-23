@@ -44,5 +44,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
+	"style": ["surecart-prose"],
 	"editorScript": "file:./index.js"
 }

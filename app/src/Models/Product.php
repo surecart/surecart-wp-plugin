@@ -119,10 +119,8 @@ class Product extends Model implements PageModel {
 		$synced = \SureCart::sync()->product()->sync( $this );
 
 		// on success, cancel any queued syncs.
-		if ( ! is_wp_error( $synced ) ) {
-			\SureCart::sync()
-			->product()
-			->cancel( $this );
+		if ( is_wp_error( $synced ) ) {
+			return $synced;
 		}
 
 		return $this;
@@ -146,11 +144,14 @@ class Product extends Model implements PageModel {
 	/**
 	 * Queue a sync process with a post.
 	 *
+	 * @param boolean $show_notice Whether to show a notice.
+	 *
 	 * @return \SureCart\Background\QueueService
 	 */
-	protected function queueSync() {
+	protected function queueSync( $show_notice = false ) {
 		\SureCart::sync()
 			->product()
+			->withNotice( $show_notice )
 			->queue( $this );
 
 		return $this;

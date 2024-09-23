@@ -79,7 +79,7 @@ class ProductsSyncService {
 			return 'queue';
 		}
 
-		if ( \SureCart::queue()->isScheduled( 'surecart/sync/product' ) ) {
+		if ( \SureCart::queue()->showNotice( 'surecart/sync/product' ) ) {
 			return 'sync';
 		}
 

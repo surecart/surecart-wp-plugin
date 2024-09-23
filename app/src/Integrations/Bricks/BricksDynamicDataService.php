@@ -245,7 +245,7 @@ class BricksDynamicDataService {
 				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount --> ';
 
 			case 'product_description':
-				return wp_kses_post( \Bricks\Helpers::get_the_excerpt( $post, ! empty( $filters['num_words'] ) ? $filters['num_words'] : 55, null, true ) );
+				return '<span class="sc-prose">' . wp_kses_post( ! empty( $filters['num_words'] ) ? \Bricks\Helpers::get_the_excerpt( $post, ! $filters['num_words'], null, true ) : $post->post_excerpt ) . '</span>';
 
 			case 'product_stock':
 				// unlimited stock, don't display stock.

@@ -107,12 +107,13 @@ class UpsellTemplatesService {
 
 		$product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $upsell->price->product ?? '' );
 		set_query_var( 'surecart_current_product', $product );
+		$content = wp_is_block_theme() ? $upsell->template->content : $upsell->template_part->content;
 
 		// create a fake post for the upsell.
 		$post                    = new \stdClass();
 		$post->post_title        = $product->name;
 		$post->post_name         = $upsell->id;
-		$post->post_content      = '<div>' . ( $upsell->template_part->content ?? '' ) . '</div>';
+		$post->post_content      = '<div>' . ( $content ?? '' ) . '</div>';
 		$post->post_status       = 'publish';
 		$post->post_type         = $this->post_type;
 		$post->sc_id             = $upsell->id;

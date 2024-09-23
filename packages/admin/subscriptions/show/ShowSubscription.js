@@ -179,19 +179,10 @@ export default () => {
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
-		if (
-			subscription?.status === 'canceled' ||
-			subscription?.status === 'completed'
-		)
+		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
-			return (
-				<ScMenuItem onClick={() => setModal('dont_cancel')}>
-					{__("Don't Pause", 'surecart')}
-				</ScMenuItem>
-			);
-		}
-		if (subscription?.cancel_at_period_end) {
+
+		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
 			return (
 				<>
 					<ScMenuItem onClick={() => setModal('dont_cancel')}>
@@ -203,6 +194,7 @@ export default () => {
 				</>
 			);
 		}
+
 		return (
 			<ScMenuItem onClick={() => setModal('cancel')}>
 				{__('Cancel Subscription', 'surecart')}
@@ -259,17 +251,24 @@ export default () => {
 	const renderPauseButton = () => {
 		if (subscription?.finite) return null;
 
-		if (
-			subscription?.cancel_at_period_end &&
-			subscription.current_period_end_at &&
-			subscription.restore_at
-		)
-			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
 
+		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
+			return null;
+		}
+
+		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
+			return (
+				<ScMenuItem onClick={() => setModal('dont_cancel')}>
+					{__("Don't Pause", 'surecart')}
+				</ScMenuItem>
+			);
+		}
+
 		const upgradeRequired =
 			!window.scData?.entitlements?.subscription_restore_at;
+
 		return (
 			<ScMenuItem
 				onClick={() =>

@@ -137,7 +137,7 @@ class ScriptsService {
 		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 
 		// core-data.
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
+		$asset_file                   = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
 		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'sc-core-data',
@@ -148,7 +148,7 @@ class ScriptsService {
 		);
 
 		// ui.
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
+		$asset_file                   = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
 		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'sc-ui-data',
@@ -169,7 +169,7 @@ class ScriptsService {
 		}
 
 		// templates.
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/admin.asset.php';
+		$asset_file                   = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/admin.asset.php';
 		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'surecart-templates-admin',
@@ -181,7 +181,6 @@ class ScriptsService {
 
 		// admin notices.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/webhook-notice.asset.php';
-		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_style(
 			'surecart-webhook-admin-notices',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/webhook-notice.css',
@@ -223,7 +222,7 @@ class ScriptsService {
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'wp_head',
-			function() {
+			function () {
 				wp_dequeue_script( 'wpcom-notes-common' );
 				wp_dequeue_script( 'wpcom-notes-admin-bar' );
 				wp_dequeue_style( 'wpcom-notes-admin-bar' );
@@ -291,7 +290,7 @@ class ScriptsService {
 		$enabled_payment_processors = array_values(
 			array_filter(
 				(array) Processor::get() ?? [],
-				function( $payment_method ) {
+				function ( $payment_method ) {
 					return $payment_method->enabled ?? false;
 				}
 			)

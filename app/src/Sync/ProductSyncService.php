@@ -24,6 +24,13 @@ class ProductSyncService {
 	protected $app = null;
 
 	/**
+	 * Whether to show a notice.
+	 *
+	 * @var boolean
+	 */
+	protected $with_notice = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \SureCart\Application $app The application.
@@ -51,6 +58,18 @@ class ProductSyncService {
 	}
 
 	/**
+	 * Whether to show a notice.
+	 *
+	 * @param boolean $with_notice Whether to show a notice.
+	 *
+	 * @return self
+	 */
+	public function withNotice( $with_notice = true ) {
+		$this->with_notice = $with_notice;
+		return $this;
+	}
+
+	/**
 	 * Post sync service
 	 *
 	 * @return ProductsQueueProcess
@@ -70,7 +89,8 @@ class ProductSyncService {
 		return \SureCart::queue()->async(
 			$this->action_name,
 			[
-				'id' => $model->id,
+				'id'          => $model->id,
+				'show_notice' => $this->with_notice,
 			],
 			'product-' . $model->id, // unique id for the product.
 			true // force unique. This will replace any existing jobs.
@@ -88,7 +108,8 @@ class ProductSyncService {
 		return \SureCart::queue()->isScheduled(
 			$this->action_name,
 			[
-				'id' => $model->id,
+				'id'          => $model->id,
+				'show_notice' => $this->with_notice,
 			],
 			'product-' . $model->id
 		);
@@ -116,7 +137,8 @@ class ProductSyncService {
 		return \SureCart::queue()->cancel(
 			$this->action_name,
 			[
-				'id' => $model->id,
+				'id'          => $model->id,
+				'show_notice' => $this->with_notice,
 			],
 			'product-' . $model->id, // unique id for the product.
 			true // force unique. This will replace any existing jobs.
