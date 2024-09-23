@@ -46,7 +46,7 @@ class Invoice extends Model {
 	 * @return string
 	 */
 	public function getCheckoutUrlAttribute(): string {
-		return \SureCart::getUrl()->checkout() . '?checkout_id=' . $this->checkout_id;
+		return add_query_arg( 'checkout_id', $this->checkout_id, \SureCart::pages()->url( 'checkout' ) );
 	}
 
 	/**
