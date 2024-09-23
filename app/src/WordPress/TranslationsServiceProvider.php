@@ -3,7 +3,6 @@
 namespace SureCart\WordPress;
 
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
-use function SureCartVendors\Required\Traduttore_Registry\add_project;
 
 /**
  * Register translations.
@@ -59,6 +58,9 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
 		if ( 'surecart' === $domain ) {
+			if ( ! file_exists( $file ) && file_exists( WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json' ) ) {
+				return WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json';
+			}
 			if ( file_exists( WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json' ) ) {
 				return WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json';
 			}
@@ -74,10 +76,6 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 
 			if ( false === $file ) {
 				$file = SURECART_LANGUAGE_DIR . '/surecart-' . get_locale() . '.json';
-			}
-
-			if ( ! file_exists( $file ) && file_exists( WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json' ) ) {
-				$file = WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json';
 			}
 		}
 		return $file;
@@ -129,14 +127,6 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 		} else {
 			// Load the default language files.
 			load_plugin_textdomain( 'surecart', false, $lang_dir );
-		}
-		// add translations from translate.surecart.com.
-		if ( defined( 'SURECART_TRANSLATIONS_URL' ) ) {
-			add_project(
-				'plugin',
-				'surecart-wp',
-				SURECART_TRANSLATIONS_URL
-			);
 		}
 	}
 }

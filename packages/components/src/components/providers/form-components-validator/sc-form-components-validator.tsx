@@ -95,11 +95,13 @@ export class ScFormComponentsValidator {
         this.addTaxIDField();
       }
     }
-
+    
     // automatically add invoice details if we have an invoice.
     if (!!(checkoutState.checkout?.invoice as Invoice)?.id) {
       this.addInvoiceDetails();
     }
+
+    this.handleOrderChange();
 
     this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
     this.removePaymentRequiresShippingListener = onCheckoutChange('paymentMethodRequiresShipping', () => this.handleOrderChange());

@@ -59,7 +59,7 @@ export default ({
 
 			await apiFetch({
 				method: 'PATCH',
-				path: `${baseURL}/${invoice?.id}`,
+				path: `${baseURL}/${invoice?.id}?refresh_status=1`,
 				data: invoice,
 			});
 

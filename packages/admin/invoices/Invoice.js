@@ -168,10 +168,93 @@ export default () => {
 		return menuItems;
 	};
 
+	const renderActionButton = () => {
+		if (invoice?.status === 'paid' && checkout?.order?.id) {
+			return (
+				<ScButton
+					type="primary"
+					busy={busy}
+					href={addQueryArgs('admin.php', {
+						page: 'sc-orders',
+						action: 'edit',
+						id: checkout?.order?.id,
+					})}
+					target="_blank"
+				>
+					{__('View Order', 'surecart')}
+				</ScButton>
+			);
+		}
+
+		return (
+			<div>
+				<ScDropdown
+					position="bottom-right"
+					style={{ '--panel-width': '14em' }}
+				>
+					<>
+						<ScButton slot="trigger" type="text" circle>
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem
+								onClick={() => setModal('delete_invoice')}
+							>
+								{__('Delete Invoice', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</>
+				</ScDropdown>
+
+				{isDraftInvoice && (
+					<ScButton
+						type={isDraftInvoice ? 'primary' : 'default'}
+						busy={busy}
+						disabled={
+							isDisabled ||
+							busy ||
+							!scData?.entitlements?.invoices
+						}
+						onClick={() => setModal('send_invoice')}
+					>
+						{getSubmitButtonTitle()}
+					</ScButton>
+				)}
+
+				<ScDropdown
+					position="bottom-right"
+					style={{ '--panel-width': '14em' }}
+				>
+					{getMenuItems().length > 0 && (
+						<>
+							<ScButton
+								type="primary"
+								slot="trigger"
+								caret
+								loading={loading}
+							>
+								{__('Actions', 'surecart')}
+							</ScButton>
+							<ScMenu>
+								{getMenuItems().map((menuItem, key) => (
+									<ScMenuItem
+										onClick={() => setModal(menuItem.modal)}
+										key={key}
+									>
+										{menuItem.title}
+									</ScMenuItem>
+								))}
+							</ScMenu>
+						</>
+					)}
+				</ScDropdown>
+			</div>
+		);
+	};
+
 	return (
 		<>
 			<UpdateModel
-				// onSubmit={onSaveInvoice}
 				entitled={!!scData?.entitlements?.invoices}
 				title={
 					<div
@@ -204,83 +287,7 @@ export default () => {
 						</sc-breadcrumbs>
 					</div>
 				}
-				button={
-					invoice?.status !== 'paid' && (
-						<div>
-							<ScDropdown
-								position="bottom-right"
-								style={{ '--panel-width': '14em' }}
-							>
-								<>
-									<ScButton slot="trigger" type="text" circle>
-										<ScIcon name="more-horizontal" />
-									</ScButton>
-									<ScMenu>
-										<ScMenuItem
-											onClick={() =>
-												setModal('delete_invoice')
-											}
-										>
-											{__('Delete Invoice', 'surecart')}
-										</ScMenuItem>
-									</ScMenu>
-								</>
-							</ScDropdown>
-
-							{isDraftInvoice && (
-								<ScButton
-									type={
-										isDraftInvoice ? 'primary' : 'default'
-									}
-									// submit
-									busy={busy}
-									disabled={
-										isDisabled ||
-										busy ||
-										!scData?.entitlements?.invoices
-									}
-									onClick={() => setModal('send_invoice')}
-								>
-									{getSubmitButtonTitle()}
-								</ScButton>
-							)}
-
-							<ScDropdown
-								position="bottom-right"
-								style={{ '--panel-width': '14em' }}
-							>
-								{getMenuItems().length > 0 && (
-									<>
-										<ScButton
-											type="primary"
-											slot="trigger"
-											caret
-											loading={loading}
-										>
-											{__('Actions', 'surecart')}
-										</ScButton>
-										<ScMenu>
-											{getMenuItems().map(
-												(menuItem, key) => (
-													<ScMenuItem
-														onClick={() =>
-															setModal(
-																menuItem.modal
-															)
-														}
-														key={key}
-													>
-														{menuItem.title}
-													</ScMenuItem>
-												)
-											)}
-										</ScMenu>
-									</>
-								)}
-							</ScDropdown>
-						</div>
-					)
-				}
+				button={renderActionButton()}
 				sidebar={
 					<>
 						<Summary
