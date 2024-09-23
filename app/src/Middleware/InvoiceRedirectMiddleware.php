@@ -22,22 +22,27 @@ class InvoiceRedirectMiddleware {
 	public function handle( RequestInterface $request, Closure $next ) {
 		$id = $request->query( 'invoice_id' );
 
-		if ( $id ) {
-			// Find the invoice and redirect to the checkout with checkout_id.
-			$invoice = Invoice::find($id);
-
-			if ( $invoice ) {
-				return ( new RedirectResponse( $request ) )->to(
-					add_query_arg(
-						[
-							'checkout_id' => $invoice->checkout_id,
-						],
-						\SureCart::getUrl()->checkout()
-					)
-				);
-			}
+		// no checkout id, next request.
+		if ( empty( $id ) ) {
+			return $next( $request );
 		}
 
-		return $next( $request );
+		// Find the invoice and redirect to the checkout with checkout_id.
+		$invoice = Invoice::find($id);
+
+		if ( ! $invoice ) {
+			return $next( $request );
+		}
+
+		if ( $invoice ) {
+			return ( new RedirectResponse( $request ) )->to(
+				add_query_arg(
+					[
+						'checkout_id' => $invoice->checkout_id,
+					],
+					\SureCart::getUrl()->checkout()
+				)
+			);
+		}
 	}
 }
