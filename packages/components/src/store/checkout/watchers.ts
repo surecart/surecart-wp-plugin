@@ -12,6 +12,13 @@ import { getFormattedPrice, getHumanDiscount } from '../../functions/price';
 onChange('checkout', val => setCheckout(val, state.formId));
 
 /**
+ * When the checkout changes, update the mode to match the checkout.
+ */
+onChange('checkout', val => {
+  state.mode = !val.live_mode ? 'test' : 'live';
+});
+
+/**
  * When checkout is get, get the checkout from the checkouts state.
  */
 on('get', prop => {
