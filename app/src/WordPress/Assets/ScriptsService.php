@@ -179,7 +179,6 @@ class ScriptsService {
 
 		// admin notices.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/webhook-notice.asset.php';
-		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_style(
 			'surecart-webhook-admin-notices',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/webhook-notice.css',

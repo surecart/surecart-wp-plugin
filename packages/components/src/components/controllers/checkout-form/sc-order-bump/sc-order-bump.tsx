@@ -7,6 +7,7 @@ import { getFeaturedProductMediaAttributes, sizeImage } from '../../../../functi
 import { state as checkoutState } from '@store/checkout';
 
 import { Bump, LineItemData, Price, Product } from '../../../../types';
+import { trackOrderBump } from '@store/checkout/mutations';
 
 @Component({
   tag: 'sc-order-bump',
@@ -45,6 +46,10 @@ export class ScOrderBump {
       });
       speak(__('Order bump Removed.', 'surecart'));
     }
+  }
+
+  componentDidLoad() {
+    trackOrderBump(this.bump?.id);
   }
 
   newPrice() {
