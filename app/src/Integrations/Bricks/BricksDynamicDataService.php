@@ -245,7 +245,8 @@ class BricksDynamicDataService {
 				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount --> ';
 
 			case 'product_description':
-				if ( empty( $post->post_excerpt ) ) {
+				$clean_excerpt = trim( wp_strip_all_tags( $post->post_excerpt ) );
+				if ( empty( $clean_excerpt ) ) {
 					return '';
 				}
 
