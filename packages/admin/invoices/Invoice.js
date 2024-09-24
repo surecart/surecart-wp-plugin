@@ -29,6 +29,7 @@ import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Tax from './modules/Tax';
 import Summary from './modules/Summary';
+import Error from '../components/Error';
 import AdditionalOptions from './modules/AdditionalOptions';
 import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
 import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
@@ -51,8 +52,15 @@ export default () => {
 	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
 
-	const { loading, invoice, checkout, live_mode, isDraftInvoice, busy } =
-		useInvoice();
+	const {
+		loading,
+		invoice,
+		error,
+		checkout,
+		live_mode,
+		isDraftInvoice,
+		busy,
+	} = useInvoice();
 
 	// Update payment methods when checkout is loaded.
 	useEffect(() => {
@@ -253,6 +261,7 @@ export default () => {
 					</>
 				}
 			>
+				<Error error={error} />
 				<Prices />
 				<SelectShipping />
 
