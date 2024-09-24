@@ -21,6 +21,7 @@ import {
 	ScDialog,
 	ScPriceInput,
 	ScForm,
+	ScVisuallyHidden,
 } from '@surecart/components-react';
 import {
 	getFeaturedProductMediaAttributes,
@@ -90,14 +91,25 @@ export default ({
 					) : (
 						<div
 							css={css`
-								width: 40px;
-								height: 40px;
+								width: var(
+									--sc-product-line-item-image-size,
+									4em
+								);
+								height: var(
+									--sc-product-line-item-image-size,
+									4em
+								);
 								object-fit: cover;
 								background: var(--sc-color-gray-100);
 								display: flex;
 								align-items: center;
 								justify-content: center;
-								border-radius: var(--sc-border-radius-small);
+								border-radius: 4px;
+								border: solid 1px
+									var(
+										--sc-input-border-color,
+										var(--sc-input-border)
+									);
 							`}
 						>
 							<ScIcon
@@ -150,17 +162,18 @@ export default ({
 							quantity
 						)}
 
-						<div
-							css={css`
-								margin-top: var(--sc-spacing-small);
-							`}
-						>
-							{maxStockQuantity &&
-								sprintf(
+						{maxStockQuantity && (
+							<div
+								css={css`
+									margin-top: var(--sc-spacing-small);
+								`}
+							>
+								{sprintf(
 									__('Available: %d', 'surecart'),
 									maxStockQuantity
 								)}
-						</div>
+							</div>
+						)}
 					</>
 				)}
 			</ScTableCell>
@@ -247,8 +260,11 @@ export default ({
 						text-align: right;
 					`}
 				>
-					<ScButton size="small" onClick={onRemove}>
-						{__('Remove', 'surecart')}
+					<ScButton onClick={onRemove} type="text" circle>
+						<ScIcon name="trash" />
+						<ScVisuallyHidden>
+							{__('Remove', 'surecart')}
+						</ScVisuallyHidden>
 					</ScButton>
 				</ScTableCell>
 			)}
