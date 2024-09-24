@@ -5,7 +5,11 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { useState, useEffect } from '@wordpress/element';
+import { select } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -21,8 +25,16 @@ import Error from '../../components/Error';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ open, onRequestClose }) => {
-	const { checkout, busy, isDraftInvoice, error, updateCheckout } =
-		useInvoice();
+	const {
+		invoice,
+		receiveInvoice,
+		checkout,
+		busy: checkoutBusy,
+		isDraftInvoice,
+		checkoutExpands,
+	} = useInvoice();
+	const [error, setError] = useState(null);
+	const [busy, setBusy] = useState(checkoutBusy);
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
 		checkout?.shipping_address
 	);
@@ -50,24 +62,49 @@ export default ({ open, onRequestClose }) => {
 
 	if (!isDraftInvoice) return null;
 
-	return (
-		<ScForm
-			onScFormSubmit={async (e) => {
-				e.preventDefault();
-				e.stopImmediatePropagation();
+	const saveAddress = async (e) => {
+		e.preventDefault();
+		e.stopImmediatePropagation();
 
-				const data = await updateCheckout({
+		try {
+			setBusy(true);
+			setError(null);
+
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'draft-checkout'
+			);
+
+			const data = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
+					expand: checkoutExpands,
+				}),
+				data: {
 					shipping_address: customerShippingAddress,
 					...(billingMatchesShipping
 						? {}
 						: { billing_address: customerBillingAddress }),
 					billing_matches_shipping: billingMatchesShipping,
-				});
-				if (!!data) {
-					onRequestClose();
-				}
-			}}
-		>
+				},
+			});
+
+			receiveInvoice({
+				...invoice,
+				checkout: data,
+			});
+
+			onRequestClose();
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	return (
+		<ScForm onScFormSubmit={saveAddress}>
 			<ScDialog
 				label={__('Edit Shipping & Tax Address', 'surecart')}
 				open={open}
