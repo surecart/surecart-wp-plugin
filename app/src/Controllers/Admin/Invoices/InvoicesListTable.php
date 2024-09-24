@@ -45,8 +45,8 @@ class InvoicesListTable extends ListTable {
 	public function get_columns() {
 		return [
 			'invoice'    => __( 'Invoice', 'surecart' ),
-			'due_date'   => __( 'Due Date', 'surecart' ),
-			'issue_date' => __( 'Issue Date', 'surecart' ),
+			'due_date'   => __( 'Due', 'surecart' ),
+			'issue_date' => __( 'Issued', 'surecart' ),
 			'status'     => __( 'Status', 'surecart' ),
 			'customer'   => __( 'Customer', 'surecart' ),
 			'method'     => __( 'Method', 'surecart' ),
@@ -200,7 +200,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_due_date( $invoice ) {
-		return $invoice->due_date ? '<sc-format-date date="' . (int) $invoice->due_date . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '-';
+		return $invoice->due_date ? '<sc-format-date date="' . (int) $invoice->due_date . '" type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>' : '-';
 	}
 
 	/**
@@ -211,7 +211,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_issue_date( $invoice ) {
-		return $invoice->issue_date ? '<sc-format-date date="' . (int) $invoice->issue_date . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '-';
+		return $invoice->issue_date ? '<sc-format-date date="' . (int) $invoice->issue_date . '" type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>' : '-';
 	}
 
 	/**
@@ -264,7 +264,7 @@ class InvoicesListTable extends ListTable {
 				array_filter(
 					[
 						'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ) . '" aria-label="' . esc_attr__( 'Edit Invoice', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-						'view' => ( ! empty( $invoice->checkout_url ) && 'paid' !== $invoice->status && $invoice->checkout->order->id ?? null ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
+						'view' => ( ! empty( $invoice->checkout_url ) && 'paid' !== $invoice->status && ($invoice->checkout->order->id ?? null) ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
 					]
 				),
 			)
