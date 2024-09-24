@@ -45,8 +45,8 @@ class InvoicesListTable extends ListTable {
 	public function get_columns() {
 		return [
 			'invoice'    => __( 'Invoice', 'surecart' ),
-			'due_date'   => __( 'Due', 'surecart' ),
 			'issue_date' => __( 'Issued', 'surecart' ),
+			'due_date'   => __( 'Due', 'surecart' ),
 			'status'     => __( 'Status', 'surecart' ),
 			'customer'   => __( 'Customer', 'surecart' ),
 			'method'     => __( 'Method', 'surecart' ),
