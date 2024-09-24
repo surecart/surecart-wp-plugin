@@ -227,7 +227,7 @@ class InvoicesListTable extends ListTable {
 		}
 
 		$url = \SureCart::getUrl()->edit( 'customer', $customer->id );
-		return '<a href="' . esc_url( $url ) . '">' . $customer->name . '</a>';
+		return '<a href="' . esc_url( $url ) . '">' . ( ! empty( $customer->name ) ? $customer->name : $customer->email ) . '</a>';
 	}
 
 	/**
@@ -257,14 +257,14 @@ class InvoicesListTable extends ListTable {
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Invoice', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
 			<?php echo ! empty( $invoice->checkout->order->number ) ? '#' . esc_html( $invoice->checkout->order->number ) : esc_html_e( '(draft)', 'surecart' ); ?>
 		</a>
-		<?php
 
+		<?php
 		echo wp_kses_post(
 			$this->row_actions(
 				array_filter(
 					[
 						'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ) . '" aria-label="' . esc_attr__( 'Edit Invoice', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-						'view' => ( ! empty( $invoice->checkout_url ) && 'paid' !== $invoice->status && ($invoice->checkout->order->id ?? null) ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
+						'view' => 'open' === $invoice->status && ! empty( $invoice->checkout_url ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
 					]
 				),
 			)
