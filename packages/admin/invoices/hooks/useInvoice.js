@@ -58,51 +58,6 @@ export const useInvoice = () => {
 		);
 	};
 
-	const saveInvoice = async ({ paymentMethod, notificationsEnabled }) => {
-		try {
-			setBusy(true);
-			setError(null);
-
-			// Set the notification_enabled flag by default to true.
-			invoice.notifications_enabled = notificationsEnabled;
-
-			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
-			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
-			await apiFetch({
-				method: 'PATCH',
-				path: `${baseURL}/${invoice?.id}?refresh_status=1`,
-				data: invoice,
-			});
-
-			// Change the invoice status to open.
-			const invoiceData = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${invoice?.id}/open`, {
-					expand: checkoutExpands,
-					...(paymentMethod?.id && {
-						manual_payment: !!paymentMethod.manual,
-						...(paymentMethod.manual
-							? { manual_payment_method_id: paymentMethod.id }
-							: { payment_method_id: paymentMethod.id }),
-					}),
-				}),
-			});
-
-			receiveInvoice(invoiceData);
-
-			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
-				type: 'snackbar',
-			});
-
-			return invoiceData;
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
 	const draftInvoice = async () => {
 		try {
 			setBusy(true);
@@ -346,7 +301,6 @@ export const useInvoice = () => {
 		checkout: invoice?.checkout,
 		editInvoice,
 		receiveInvoice,
-		saveInvoice,
 		draftInvoice,
 		isDraftInvoice: invoice?.status === 'draft',
 		checkoutExpands,
