@@ -203,6 +203,7 @@ export class ScProductLineItem {
                 quantity={this.quantity}
                 size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+                // translators: Change Quantity - Product Name Product Price Name
                 aria-label={sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)}
               ></sc-quantity-select>
             )}
@@ -220,6 +221,7 @@ export class ScProductLineItem {
                   }
                 }}
                 tabindex="0"
+                // translators: Remove Item - Product Name Product Price Name
                 aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
               ></sc-icon>
             ) : (
