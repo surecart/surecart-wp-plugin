@@ -15,6 +15,7 @@ import {
 	ScDialog,
 	ScAddress,
 	ScForm,
+	ScCheckbox,
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 import { useInvoice } from '../hooks/useInvoice';
@@ -26,10 +27,26 @@ export default ({ open, onRequestClose }) => {
 		checkout?.shipping_address
 	);
 
+	const [customerBillingAddress, setCustomerBillingAddress] = useState(
+		checkout?.billing_address
+	);
+
+	const [billingMatchesShipping, setBillingMatchesShipping] = useState(
+		checkout?.billing_matches_shipping
+	);
+
 	// local state when shipping address changes.
 	useEffect(() => {
 		setCustomerShippingAddress(checkout?.shipping_address);
 	}, [checkout?.shipping_address, open]);
+
+	useEffect(() => {
+		setCustomerBillingAddress(checkout?.billing_address);
+	}, [checkout?.billing_address, open]);
+
+	useEffect(() => {
+		setBillingMatchesShipping(checkout?.billing_matches_shipping);
+	}, [checkout?.billing_matches_shipping, open]);
 
 	if (!isDraftInvoice) return null;
 
@@ -41,6 +58,10 @@ export default ({ open, onRequestClose }) => {
 
 				const data = await updateCheckout({
 					shipping_address: customerShippingAddress,
+					...(billingMatchesShipping
+						? {}
+						: { billing_address: customerBillingAddress }),
+					billing_matches_shipping: billingMatchesShipping,
 				});
 				if (!!data) {
 					onRequestClose();
@@ -69,6 +90,33 @@ export default ({ open, onRequestClose }) => {
 							setCustomerShippingAddress(e?.detail)
 						}
 					/>
+
+					<ScCheckbox
+						css={css`
+							padding: 0.5em 0;
+						`}
+						checked={billingMatchesShipping}
+						onScChange={(e) => {
+							setBillingMatchesShipping(e.target.checked);
+						}}
+					>
+						{__(
+							'Billing address is same as shipping address',
+							'surecart'
+						)}
+					</ScCheckbox>
+
+					{!billingMatchesShipping && (
+						<ScAddress
+							showName={true}
+							showLine2={true}
+							required={open}
+							address={customerBillingAddress}
+							onScInputAddress={(e) =>
+								setCustomerBillingAddress(e?.detail)
+							}
+						/>
+					)}
 				</div>
 
 				<ScButton type="text" onClick={onRequestClose} slot="footer">
