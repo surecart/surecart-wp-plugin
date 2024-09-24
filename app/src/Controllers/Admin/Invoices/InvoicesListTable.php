@@ -263,8 +263,8 @@ class InvoicesListTable extends ListTable {
 			$this->row_actions(
 				array_filter(
 					[
-						'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ) . '" aria-label="' . esc_attr( 'Edit Invoice', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-						'view' => ! empty( $invoice->checkout_url ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
+						'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ) . '" aria-label="' . esc_attr__( 'Edit Invoice', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+						'view' => ( ! empty( $invoice->checkout_url ) && 'paid' !== $invoice->status && $invoice->checkout->order->id ?? null ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
 					]
 				),
 			)
