@@ -138,6 +138,7 @@ return array(
 	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 	'line_item.upsell.already_applied'                     => __( 'This upsell has already been applied.', 'surecart' ),
 	'line_item.upsell.expired'                             => __( 'This upsell has expired.', 'surecart' ),
+	'line_item.update_not_allowed'                         => __( 'This product cannot be updated as it is locked and not allowed to be changed.', 'surecart' ),
 	'upsell_funnel.enabled.initial_upsell_blank'           => __( 'Please select an initial upsell offer.', 'surecart' ),
 	'affiliation_request.name.blank'                       => __( 'The affiliate request\'s name cannot be blank.', 'surecart' ),
 	'affiliation_request.email.blank'                      => __( 'The affiliate request\'s email cannot be blank.', 'surecart' ),
