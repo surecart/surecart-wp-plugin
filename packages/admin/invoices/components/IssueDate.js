@@ -53,7 +53,7 @@ export default ({ invoice, updateInvoice }) => {
 				date={invoice?.issue_date}
 			/>
 		) : isDraftInvoice ? (
-			__('Set Issue Date', 'surecart')
+			__('Today', 'surecart')
 		) : (
 			__('No Issue Date', 'surecart')
 		);
