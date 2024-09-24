@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/react';
  * External dependencies.
  */
 import { useMemo, useState } from '@wordpress/element';
-import { Dropdown, PanelRow } from '@wordpress/components';
+import { Button, Dropdown, PanelRow } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useCopyToClipboard } from '@wordpress/compose';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
@@ -18,7 +18,7 @@ import { useDispatch } from '@wordpress/data';
  */
 import PostDropdownButton from '../../components/PostDropdownButton';
 import PostDropdownContent from '../../components/PostDropdownContent';
-import { ScButton, ScIcon } from '@surecart/components-react';
+import { ScIcon } from '@surecart/components-react';
 
 export default ({ checkoutPageUrl }) => {
 	// Use internal state instead of a ref to make sure that the component
@@ -34,12 +34,9 @@ export default ({ checkoutPageUrl }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const checkoutPageUrlRef = useCopyToClipboard(checkoutPageUrl, () =>
-		createSuccessNotice(
-			__('Checkout Page URL Copied to clipboard.', 'surecart'),
-			{
-				type: 'snackbar',
-			}
-		)
+		createSuccessNotice(__('URL copied to clipboard.', 'surecart'), {
+			type: 'snackbar',
+		})
 	);
 
 	const renderContent = ({ onClose }) => (
@@ -49,15 +46,14 @@ export default ({ checkoutPageUrl }) => {
 				onClose={onClose}
 			/>
 
-			<ScButton
+			<Button
+				variant="secondary"
 				ref={checkoutPageUrlRef}
-				css={css`
-					margin-bottom: 16px;
-				`}
+				onClick={onClose}
 			>
 				{__('Copy URL')} &nbsp;
 				<ScIcon slot="prefix" name="copy" />
-			</ScButton>
+			</Button>
 
 			<h3
 				css={css`
