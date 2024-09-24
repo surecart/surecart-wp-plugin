@@ -48,15 +48,15 @@ class Quantity extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Register the widget controls.
+	 * Register the widget content settings.
 	 *
 	 * @return void
 	 */
-	protected function register_controls() {
+	private function register_content_settings() {
 		$this->start_controls_section(
-			'section_quantity',
+			'section_content',
 			[
-				'label' => esc_html__( 'Quantity', 'elementor' ),
+				'label' => esc_html__( 'Content', 'surecart' ),
 			]
 		);
 
@@ -71,6 +71,65 @@ class Quantity extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
+
+	/**
+	 * Register the widget style settings.
+	 *
+	 * @return void
+	 */
+	private function register_style_settings() {
+		$this->start_controls_section(
+			'section_quantity_style',
+			array(
+				'label' => esc_html__( 'Quantity', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'quantity_text_color',
+			array(
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'.wp-block-surecart-product-quantity' => 'color: {{VALUE}}',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'quantity_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '.wp-block-surecart-product-quantity',
+			)
+		);
+
+		$this->add_control(
+			'quantity_border_radius',
+			array(
+				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => array(
+					'.wp-block-surecart-product-quantity .sc-quantity-selector' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Register the widget controls.
+	 *
+	 * @return void
+	 */
+	protected function register_controls() {
+		$this->register_content_settings();
+		$this->register_style_settings();
 	}
 
 	/**
