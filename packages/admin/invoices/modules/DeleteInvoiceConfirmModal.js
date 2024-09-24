@@ -60,7 +60,7 @@ export default ({ open, onRequestClose }) => {
 			onCancel={onRequestClose}
 			confirmButtonText={__('Delete', 'surecart')}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 
 			{__('Are you sure you want to delete this invoice?', 'surecart')}
 

@@ -67,7 +67,7 @@ export default ({ onRequestClose, open }) => {
 			onConfirm={draftInvoice}
 			onCancel={onRequestClose}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 
 			{__(
 				'Are you sure you want to change the status of this invoice to draft?',

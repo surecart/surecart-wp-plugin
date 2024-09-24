@@ -117,7 +117,7 @@ export default ({ open, onRequestClose }) => {
 						gap: var(--sc-form-row-spacing);
 					`}
 				>
-					<Error error={error} />
+					<Error error={error} setError={setError} />
 					<ScAddress
 						showName={true}
 						showLine2={true}

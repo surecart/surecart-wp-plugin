@@ -56,6 +56,7 @@ export default () => {
 		loading,
 		invoice,
 		error,
+		setError,
 		checkout,
 		live_mode,
 		isDraftInvoice,
@@ -261,7 +262,7 @@ export default () => {
 					</>
 				}
 			>
-				<Error error={error} />
+				<Error error={error} setError={setError} />
 				<Prices />
 				<SelectShipping />
 

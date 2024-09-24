@@ -94,7 +94,7 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 			`}
 			onRequestClose={onRequestClose}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 
 			<ScForm
 				onScFormSubmit={saveInvoice}

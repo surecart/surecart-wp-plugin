@@ -67,7 +67,7 @@ export default ({ open, onRequestClose }) => {
 			onCancel={onRequestClose}
 			confirmButtonText={__('Mark Paid', 'surecart')}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 
 			{__(
 				'Are you sure you wish to mark the invoice as paid?',
