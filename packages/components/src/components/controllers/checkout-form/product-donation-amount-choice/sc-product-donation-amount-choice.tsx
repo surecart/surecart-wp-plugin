@@ -34,7 +34,7 @@ export class ScProductDonationAmountChoice {
         checked={this.state().ad_hoc_amount === this.value}
         onScChange={() => update(this.productId, { ad_hoc_amount: this.value, custom_amount: null })}
         // translators: Amount Choice - Amount Number Amount Total
-        aria-label={sprintf(__('%1$d of %2$d', 'surecart'), order + 1, amounts.length)}
+        aria-label={sprintf(__('%d of %d', 'surecart'), order + 1, amounts.length)}
         role="button"
       >
         {this.label ? (

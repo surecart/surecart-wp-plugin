@@ -203,8 +203,10 @@ export class ScProductLineItem {
                 quantity={this.quantity}
                 size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-                // translators: Change Quantity - Product Name Product Price Name
-                aria-label={sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)}
+                aria-label={
+                  /** translators: %1$s: product name, %2$s: product price name */
+                  sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)
+                }
               ></sc-quantity-select>
             )}
           </div>
