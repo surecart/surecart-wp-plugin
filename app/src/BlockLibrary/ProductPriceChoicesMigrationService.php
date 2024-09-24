@@ -95,7 +95,7 @@ class ProductPriceChoicesMigrationService {
 		$this->block_html .= '<!-- wp:surecart/product-price-choice-template ' . wp_json_encode( $template_attributes ) . ' -->';
 		$this->renderPriceName();
 		if ( $this->attributes['show_price'] ) {
-			$this->renderPriceAmountTrialAndSetupFee();
+			$this->renderPriceAmountScratchAmountTrialAndSetupFee();
 		}
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-chooser -->';
