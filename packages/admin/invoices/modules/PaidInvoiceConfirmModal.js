@@ -3,6 +3,12 @@
  */
 import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
+import { select, useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -12,17 +18,52 @@ import { useInvoice } from '../hooks/useInvoice';
 import Error from '../../components/Error';
 
 export default ({ open, onRequestClose }) => {
-	const { loading, busy, error, markAsPaid } = useInvoice();
+	const { loading, invoice, receiveInvoice, checkoutExpands } = useInvoice();
+	const [error, setError] = useState(null);
+	const [busy, setBusy] = useState(false);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
+	const markAsPaid = async () => {
+		try {
+			setBusy(true);
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'checkout'
+			);
+
+			const checkoutUpdated = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(
+					`${baseURL}/${invoice?.checkout?.id}/manually_pay`,
+					{
+						expand: checkoutExpands,
+					}
+				),
+			});
+
+			receiveInvoice({
+				...invoice,
+				status: checkoutUpdated?.status,
+				checkout: checkoutUpdated,
+			});
+
+			createSuccessNotice(__('Invoice marked as Paid.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			onRequestClose();
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
 
 	return (
 		<ConfirmDialog
 			isOpen={open}
-			onConfirm={async () => {
-				const paid = await markAsPaid();
-				if (!!paid) {
-					onRequestClose();
-				}
-			}}
+			onConfirm={markAsPaid}
 			onCancel={onRequestClose}
 			confirmButtonText={__('Mark Paid', 'surecart')}
 		>

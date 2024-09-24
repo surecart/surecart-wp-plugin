@@ -25,11 +25,6 @@ export const useInvoice = () => {
 	const { receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const { baseURL } = select(coreStore).getEntityConfig(
-		'surecart',
-		'invoice'
-	);
-
 	/**
 	 * Checkout expandable fields.
 	 */
@@ -56,36 +51,6 @@ export const useInvoice = () => {
 			false,
 			invoice
 		);
-	};
-
-	const draftInvoice = async () => {
-		try {
-			setBusy(true);
-			setError(null);
-
-			const invoiceData = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${invoice?.id}/make_draft`, {
-					expand: checkoutExpands,
-				}),
-			});
-
-			receiveInvoice(invoiceData);
-
-			createSuccessNotice(
-				__('Invoice marked as draft, you can now edit it.', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-
-			return invoiceData;
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
-		}
 	};
 
 	const onRemovePrice = async (id) => {
@@ -251,43 +216,6 @@ export const useInvoice = () => {
 		}
 	};
 
-	const markAsPaid = async () => {
-		try {
-			setBusy(true);
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'checkout'
-			);
-
-			const checkoutUpdated = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(
-					`${baseURL}/${invoice?.checkout?.id}/manually_pay`,
-					{
-						expand,
-					}
-				),
-			});
-
-			receiveInvoice({
-				...invoice,
-				status: checkoutUpdated?.status,
-				checkout: checkoutUpdated,
-			});
-
-			createSuccessNotice(__('Invoice marked as Paid.', 'surecart'), {
-				type: 'snackbar',
-			});
-
-			return checkoutUpdated;
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
 	return {
 		loading,
 		invoice,
@@ -301,7 +229,6 @@ export const useInvoice = () => {
 		checkout: invoice?.checkout,
 		editInvoice,
 		receiveInvoice,
-		draftInvoice,
 		isDraftInvoice: invoice?.status === 'draft',
 		checkoutExpands,
 		onRemovePrice,
@@ -309,6 +236,5 @@ export const useInvoice = () => {
 		addLineItem,
 		updateLineItem,
 		updateCheckout,
-		markAsPaid,
 	};
 };
