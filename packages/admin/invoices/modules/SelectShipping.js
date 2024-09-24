@@ -23,10 +23,7 @@ export default () => {
 		useInvoice();
 	const [open, setOpen] = useState(false);
 
-	if (
-		!checkout?.selected_shipping_choice_required &&
-		!checkout?.shipping_address_required
-	) {
+	if (!checkout?.selected_shipping_choice_required) {
 		return null;
 	}
 
