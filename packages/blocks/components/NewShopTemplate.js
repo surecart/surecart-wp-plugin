@@ -52,7 +52,6 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							style: {
 								dimensions: { aspectRatio: '3/4' },
 								layout: { selfStretch: 'fit', flexSize: null },
-								spacing: { margin: { bottom: '15px' } },
 								border: { radius: '10px' },
 							},
 							layout: { type: 'default' },
@@ -142,6 +141,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							type: 'flex',
 							orientation: 'vertical',
 							justifyContent: 'stretch',
+							blockGap: '0px',
 						},
 						...childBlocks[0]?.attributes,
 					}, // Product Item

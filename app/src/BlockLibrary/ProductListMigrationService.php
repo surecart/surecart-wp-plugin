@@ -228,7 +228,7 @@ class ProductListMigrationService {
 				$this->getChildBlocksAttributes( 'surecart/product-item-image' ),
 			)
 		) . ' -->';
-		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;margin-bottom:15px">';
+		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;">';
 		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
 		$image .= '<div class="wp-block-cover__inner-container">';
 		$image .= '</div>';
@@ -281,7 +281,7 @@ class ProductListMigrationService {
 		$group_classnames  = ! empty( $group_styles['classnames'] ) ? $group_styles['classnames'] : '';
 		$group_css         = ! empty( $group_styles['css'] ) ? $group_styles['css'] : '';
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->';
-		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="' . $group_css . '">';
+		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="gap:0px;' . $group_css . '">';
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
 			foreach ( $this->inner_blocks[0]['innerBlocks'] as $inner_block ) {
