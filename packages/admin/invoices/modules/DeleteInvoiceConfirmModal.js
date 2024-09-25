@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { select, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -11,10 +11,12 @@ import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/compone
 /**
  * Internal dependencies.
  */
-import { ScBlockUi } from '@surecart/components-react';
 import Error from '../../components/Error';
+import { ScBlockUi } from '@surecart/components-react';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({ invoice, open, onRequestClose, hasLoading }) => {
+export default ({ open, onRequestClose }) => {
+	const { invoice, loading: hasLoading } = useInvoice();
 	const [loading, setLoading] = useState(hasLoading);
 	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -24,10 +26,6 @@ export default ({ invoice, open, onRequestClose, hasLoading }) => {
 		try {
 			setLoading(true);
 			setError(null);
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
 
 			const invoiceId = invoice.id;
 			await deleteEntityRecord(
@@ -62,7 +60,7 @@ export default ({ invoice, open, onRequestClose, hasLoading }) => {
 			onCancel={onRequestClose}
 			confirmButtonText={__('Delete', 'surecart')}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 
 			{__('Are you sure you want to delete this invoice?', 'surecart')}
 

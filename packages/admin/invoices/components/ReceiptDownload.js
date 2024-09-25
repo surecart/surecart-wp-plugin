@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 import { ScIcon } from '@surecart/components-react';
 import PostDropdownButton from '../../components/PostDropdownButton';
 
-export default ({ orderPageUrl }) => {
+export default ({ pdfUrl }) => {
 	return (
 		<PanelRow
 			css={css`=
@@ -36,7 +36,7 @@ export default ({ orderPageUrl }) => {
 				`}
 			>
 				<PostDropdownButton
-					href={orderPageUrl}
+					href={pdfUrl}
 					target="_blank"
 					rel="noopener noreferrer"
 					icon={

@@ -287,19 +287,9 @@ export class ScSessionProvider {
       checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
-          refresh_status: true,
+          refresh_line_items: true,
         },
       })) as Checkout;
-
-      const isModeMismatch = checkoutState.mode !== (checkoutState.checkout?.live_mode ? 'live' : 'test');
-
-      if (isModeMismatch) {
-        console.info('Mode mismatch, creating new checkout.');
-        clearCheckout();
-        checkoutState.checkout = null;
-        await this.handleNewCheckout(promotion_code);
-        return;
-      }
 
       updateFormState('RESOLVE');
     } catch (e) {

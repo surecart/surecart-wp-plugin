@@ -8,33 +8,36 @@ import { __ } from '@wordpress/i18n';
  */
 import Box from '../../ui/Box';
 import { ScText, ScTextarea } from '@surecart/components-react';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({ invoice, updateInvoice, loading }) => {
+export default () => {
+	const { invoice, editInvoice, isDraftInvoice, loading } = useInvoice();
+
 	const renderMemoAndFooter = () => {
-		if (invoice?.status === 'draft') {
+		if (isDraftInvoice) {
 			return (
 				<>
 					<ScTextarea
 						label={__('Memo', 'surecart')}
 						value={invoice?.memo}
-						onScInput={(e) =>
-							updateInvoice({ memo: e.target.value })
-						}
+						onScInput={(e) => editInvoice({ memo: e.target.value })}
 						help={__(
 							'This appears in the memo area of your invoices and receipts.',
 							'surecart'
 						)}
+						maxLength={1000}
 					></ScTextarea>
 					<ScTextarea
 						label={__('Footer', 'surecart')}
 						value={invoice?.footer}
 						onScInput={(e) =>
-							updateInvoice({ footer: e.target.value })
+							editInvoice({ footer: e.target.value })
 						}
 						help={__(
 							'The footer appears at the bottom of your invoices and receipts.',
 							'surecart'
 						)}
+						maxLength={1000}
 					></ScTextarea>
 				</>
 			);
@@ -68,10 +71,8 @@ export default ({ invoice, updateInvoice, loading }) => {
 	};
 
 	return (
-		<>
-			<Box title={__('Additional Options', 'surecart')} loading={loading}>
-				{renderMemoAndFooter()}
-			</Box>
-		</>
+		<Box title={__('Additional Options', 'surecart')} loading={loading}>
+			{renderMemoAndFooter()}
+		</Box>
 	);
 };

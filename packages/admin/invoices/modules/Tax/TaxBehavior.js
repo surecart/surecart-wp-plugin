@@ -15,9 +15,10 @@ import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '
 import PostDropdownButton from '../../../components/PostDropdownButton';
 import PostDropdownContent from '../../../components/PostDropdownContent';
 import { ScBlockUi, ScRadio, ScRadioGroup } from '@surecart/components-react';
+import { useInvoice } from '../../hooks/useInvoice';
 
-export default ({ invoice, onChange, busy }) => {
-	const isDraftInvoice = invoice?.status === 'draft';
+export default () => {
+	const { checkout, isDraftInvoice, busy, updateCheckout } = useInvoice();
 
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
@@ -39,9 +40,9 @@ export default ({ invoice, onChange, busy }) => {
 
 				<ScRadioGroup
 					onScChange={async () => {
-						await onChange({
+						await updateCheckout({
 							tax_behavior:
-								invoice?.checkout?.tax_behavior === 'inclusive'
+								checkout?.tax_behavior === 'inclusive'
 									? 'exclusive'
 									: 'inclusive',
 						});
@@ -51,8 +52,7 @@ export default ({ invoice, onChange, busy }) => {
 					<ScRadio
 						value="inclusive"
 						checked={
-							invoice?.checkout?.tax_behavior === 'inclusive' ||
-							false
+							checkout?.tax_behavior === 'inclusive' || false
 						}
 					>
 						{__('Inclusive', 'surecart')}
@@ -60,8 +60,7 @@ export default ({ invoice, onChange, busy }) => {
 					<ScRadio
 						value="exclusive"
 						checked={
-							invoice?.checkout?.tax_behavior === 'exclusive' ||
-							false
+							checkout?.tax_behavior === 'exclusive' || false
 						}
 					>
 						{__('Exclusive', 'surecart')}
@@ -104,7 +103,7 @@ export default ({ invoice, onChange, busy }) => {
 							isDraftInvoice ? onToggle() : undefined
 						}
 						title={
-							invoice?.checkout?.tax_behavior === 'inclusive'
+							checkout?.tax_behavior === 'inclusive'
 								? __('Inclusive', 'surecart')
 								: __('Exclusive', 'surecart')
 						}

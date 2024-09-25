@@ -1,13 +1,11 @@
 /**
  * External dependencies.
  */
-import { useDispatch, select } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
-import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -19,67 +17,48 @@ import {
 	ScMenuDivider,
 	ScButton,
 } from '@surecart/components-react';
-import expand from '../../checkout-query';
 import Customer from './Customer';
 import Box from '../../../ui/Box';
 import CreateCustomer from './CreateCustomer';
 import ModelSelector from '../../../components/ModelSelector';
+import { useInvoice } from '../../hooks/useInvoice';
 
-export default ({
-	invoice,
-	onUpdateInvoiceEntityRecord,
-	checkout,
-	setBusy,
-	loading,
-	onSuccess,
-	liveMode,
-}) => {
+export default ({ onSuccess }) => {
 	const [modal, setModal] = useState(false);
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { invoice, checkout, loading, live_mode, updateCheckout } =
+		useInvoice();
 
 	const onCustomerUpdate = async (customerID = false) => {
-		try {
-			setBusy(true);
+		let data = await updateCheckout({
+			customer_id: customerID,
+			...(!customerID
+				? {
+						// remove the customer data also if no customer is selected.
+						customer: null,
+						email: null,
+				  }
+				: {}),
+		});
 
-			// get the checkout endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			// Update the customer.
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-				}),
-				data: {
-					customer_id: customerID, // update the customer.
-					...(!customerID
-						? {
-								// remove the customer data also if no customer is selected.
-								customer: null,
-								email: null,
-						  }
-						: {}),
-					...(data?.customer?.shipping_address
-						? { shipping_address: data.customer.shipping_address }
-						: {}),
-				},
+		if (data?.customer?.shipping_address) {
+			data = await updateCheckout({
+				customer_id: customerID,
+				shipping_address: data?.customer?.shipping_address,
 			});
-
-			onUpdateInvoiceEntityRecord({
-				...invoice,
-				checkout: data,
-			});
-
-			onSuccess();
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
 		}
+
+		if (!data.customer?.id) {
+			createSuccessNotice(__('Customer removed.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} else {
+			createSuccessNotice(__('Customer updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+		}
+
+		onSuccess();
 	};
 
 	return (
@@ -116,7 +95,7 @@ export default ({
 					<ModelSelector
 						name="customer"
 						placeholder={__('Select a customer', 'surecart')}
-						requestQuery={{ live_mode: liveMode }}
+						requestQuery={{ live_mode }}
 						required
 						prefix={
 							<div slot="prefix">
@@ -141,7 +120,7 @@ export default ({
 				<CreateCustomer
 					onRequestClose={() => setModal(false)}
 					onCreate={onCustomerUpdate}
-					liveMode={liveMode}
+					liveMode={live_mode}
 				/>
 			)}
 		</Box>

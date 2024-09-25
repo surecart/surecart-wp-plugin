@@ -1,11 +1,11 @@
 /**
  * WordPress dependencies.
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { select, useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
+import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
@@ -15,26 +15,22 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import Error from '../../components/Error';
 import { ScBlockUi } from '@surecart/components-react';
-import { checkoutExpands } from '../Invoice';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	onRequestClose,
-	open,
-	invoice,
-	busy,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
+export default ({ onRequestClose, open }) => {
+	const { invoice, receiveInvoice, checkoutExpands } = useInvoice();
+	const [error, setError] = useState(null);
+	const [busy, setBusy] = useState(busy);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	if (!invoice?.id) {
 		return null;
 	}
 
-	const [error, setError] = useState(null);
-	const { createSuccessNotice } = useDispatch(noticesStore);
-
-	const onConfirm = async () => {
+	const draftInvoice = async () => {
 		try {
 			setBusy(true);
+			setError(null);
+
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'invoice'
@@ -47,7 +43,7 @@ export default ({
 				}),
 			});
 
-			onUpdateInvoiceEntityRecord(invoiceData);
+			receiveInvoice(invoiceData);
 
 			createSuccessNotice(
 				__('Invoice marked as draft, you can now edit it.', 'surecart'),
@@ -68,10 +64,11 @@ export default ({
 	return (
 		<ConfirmDialog
 			isOpen={open}
-			onConfirm={onConfirm}
+			onConfirm={draftInvoice}
 			onCancel={onRequestClose}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
+
 			{__(
 				'Are you sure you want to change the status of this invoice to draft?',
 				'surecart'

@@ -138,6 +138,7 @@ return array(
 	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 	'line_item.upsell.already_applied'                     => __( 'This upsell has already been applied.', 'surecart' ),
 	'line_item.upsell.expired'                             => __( 'This upsell has expired.', 'surecart' ),
+	'line_item.update_not_allowed'                         => __( 'This product cannot be updated as it is locked and not allowed to be changed.', 'surecart' ),
 	'upsell_funnel.enabled.initial_upsell_blank'           => __( 'Please select an initial upsell offer.', 'surecart' ),
 	'affiliation_request.name.blank'                       => __( 'The affiliate request\'s name cannot be blank.', 'surecart' ),
 	'affiliation_request.email.blank'                      => __( 'The affiliate request\'s email cannot be blank.', 'surecart' ),
@@ -148,4 +149,6 @@ return array(
 	'invoice.missing_automatic_collection_payment_method'  => __( 'Please add a valid payment method to enable automatic collection.', 'surecart' ),
 	'checkout.invoice.draft'                               => __( 'This invoice is draft and cannot be paid.', 'surecart' ),
 	'invoice.due_date.greater_than_or_equal_to'            => __( 'The due date must be greater than or equal to the issue date.', 'surecart' ),
+	'invoice.memo.too_long'                                => __( 'The memo is too long. Please enter a shorter memo. Maximum allowed length is 1000 characters.', 'surecart' ),
+	'invoice.footer.too_long'                              => __( 'The footer is too long. Please enter a shorter footer. Maximum allowed length is 1000 characters.', 'surecart' ),
 );

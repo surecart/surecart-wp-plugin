@@ -26,6 +26,7 @@ class InvoiceRestServiceProviderTest extends SureCartUnitTestCase
 				\SureCart\WordPress\PluginServiceProvider::class,
 				AccountServiceProvider::class,
 				InvoicesRestServiceProvider::class,
+				\SureCart\WordPress\Pages\PageServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class,
 			],

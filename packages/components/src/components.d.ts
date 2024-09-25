@@ -766,10 +766,6 @@ export namespace Components {
          */
         "currency": string;
         /**
-          * Disable the action buttons or not
-         */
-        "disabledActions": boolean;
-        /**
           * The discount
          */
         "discount": DiscountResponse;
@@ -6892,10 +6888,6 @@ declare namespace LocalJSX {
           * Currency
          */
         "currency"?: string;
-        /**
-          * Disable the action buttons or not
-         */
-        "disabledActions"?: boolean;
         /**
           * The discount
          */
