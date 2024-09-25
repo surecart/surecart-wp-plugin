@@ -80,9 +80,9 @@ class Quantity extends \Elementor\Widget_Base {
 	 */
 	private function register_style_settings() {
 		$this->start_controls_section(
-			'section_quantity_style',
+			'section_quantity_label_style',
 			array(
-				'label' => esc_html__( 'Quantity', 'surecart' ),
+				'label' => esc_html__( 'Label', 'surecart' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -104,6 +104,28 @@ class Quantity extends \Elementor\Widget_Base {
 				'name'     => 'quantity_typography',
 				'label'    => esc_html__( 'Typography', 'surecart' ),
 				'selector' => '.wp-block-surecart-product-quantity',
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_quantity_input_style',
+			array(
+				'label' => esc_html__( 'Input', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_responsive_control(
+			'quantity_width',
+			array(
+				'label'      => esc_html__( 'Width', 'elementor' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => array(
+					'.wp-block-surecart-product-quantity .sc-quantity-selector' => 'width: {{SIZE}}{{UNIT}};',
+				),
 			)
 		);
 
@@ -139,6 +161,13 @@ class Quantity extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+			$attributes = array( 'label' => esc_attr( $settings['label'] ) );
+
+			echo do_blocks( '<!-- wp:surecart/product-quantity ' . wp_json_encode( $attributes ) . '  /-->' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return;
+		}
 
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
