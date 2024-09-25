@@ -82,7 +82,7 @@ export default () => {
 							{__('Test Mode', 'surecart')}
 						</ScSwitch>
 						<ScButton
-							href={scData?.surecart_app_url}
+							href={`${scData?.surecart_app_url}?switch_account_id=${scData?.account_id}`}
 							target="_blank"
 							rel="noopener noreferrer"
 						>

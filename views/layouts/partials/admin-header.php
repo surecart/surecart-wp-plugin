@@ -58,6 +58,7 @@
 			?>
 			<?php
 			if ( ! empty( $report_url ) ) {
+				$report_url = add_query_arg( 'switch_account_id', \SureCart::account()->id, $report_url );
 				?>
 				<sc-button type="default" size="medium" href="<?php echo esc_url( $report_url ); ?>" target="_blank" class="hydrated">
 					<?php esc_html_e( 'View Reports', 'surecart' ); ?>				
