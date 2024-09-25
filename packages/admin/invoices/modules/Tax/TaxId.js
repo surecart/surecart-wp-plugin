@@ -14,19 +14,20 @@ import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '
  */
 import PostDropdownButton from '../../../components/PostDropdownButton';
 import PostDropdownContent from '../../../components/PostDropdownContent';
+import { useInvoice } from '../../hooks/useInvoice';
 import { ScBlockUi, ScButton, ScTaxIdInput } from '@surecart/components-react';
 
-export default ({ invoice, onChange, busy }) => {
-	const isDraftInvoice = invoice?.status === 'draft';
-	const [taxId, setTaxId] = useState(invoice?.checkout?.tax_identifier);
+export default () => {
+	const { checkout, isDraftInvoice, busy, updateCheckout } = useInvoice();
+	const [taxId, setTaxId] = useState(checkout?.tax_identifier);
 
 	// Local state when shipping address changes.
 	useEffect(() => {
 		setTaxId({
-			number: invoice?.checkout?.tax_identifier?.number,
-			number_type: invoice?.checkout?.tax_identifier?.number_type,
+			number: checkout?.tax_identifier?.number,
+			number_type: checkout?.tax_identifier?.number_type,
 		});
-	}, [invoice?.checkout?.tax_identifier]);
+	}, [checkout?.tax_identifier]);
 
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
@@ -39,7 +40,7 @@ export default ({ invoice, onChange, busy }) => {
 	);
 
 	const getTaxIdTitleDisplay = () => {
-		if (!!invoice?.checkout?.tax_identifier?.id) {
+		if (!!checkout?.tax_identifier?.id) {
 			return taxId?.number;
 		}
 
@@ -60,18 +61,18 @@ export default ({ invoice, onChange, busy }) => {
 			<PostDropdownContent>
 				<InspectorPopoverHeader
 					title={
-						!!invoice?.checkout?.tax_identifier?.id
+						!!checkout?.tax_identifier?.id
 							? __('Edit Tax ID', 'surecart')
 							: __('Add Tax ID', 'surecart')
 					}
 					onClose={onClose}
 					actions={
-						!!invoice?.checkout?.tax_identifier?.id
+						!!checkout?.tax_identifier?.id
 							? [
 									{
 										label: __('Remove', 'surecart'),
 										onClick: async () => {
-											await onChange({
+											await updateCheckout({
 												tax_identifier: null,
 											});
 											onClose();
@@ -99,14 +100,14 @@ export default ({ invoice, onChange, busy }) => {
 						`}
 						type="primary"
 						onClick={async () => {
-							await onChange({ tax_identifier: taxId });
+							await updateCheckout({ tax_identifier: taxId });
 							onClose();
 						}}
 						disabled={
 							taxId?.number ===
-								invoice?.checkout?.tax_identifier?.number &&
+								checkout?.tax_identifier?.number &&
 							taxId?.number_type ===
-								invoice?.checkout?.tax_identifier?.number_type
+								checkout?.tax_identifier?.number_type
 						}
 					>
 						{__('Update', 'surecart')}

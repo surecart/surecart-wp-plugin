@@ -27,17 +27,12 @@ import {
 import Box from '../../ui/Box';
 import PaymentMethods from './PaymentMethods';
 import DatePicker from '../../components/DatePicker';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	updateInvoice,
-	checkout,
-	loading,
-	paymentMethod,
-	setPaymentMethod,
-}) => {
+export default ({ paymentMethod, setPaymentMethod }) => {
+	const { invoice, checkout, loading, editInvoice, isDraftInvoice } =
+		useInvoice();
 	const [modal, setModal] = useState(false);
-	const isDraftInvoice = invoice?.status === 'draft';
 
 	const renderCollectedPayment = () => {
 		if (invoice?.status !== 'paid') return null;
@@ -142,7 +137,7 @@ export default ({
 			<>
 				<ScRadioGroup
 					onScChange={(e) =>
-						updateInvoice({
+						editInvoice({
 							automatic_collection:
 								!invoice?.automatic_collection,
 						})
@@ -213,7 +208,7 @@ export default ({
 														: null
 												}
 												onChoose={(due_date) => {
-													updateInvoice({
+													editInvoice({
 														due_date:
 															Date.parse(
 																due_date
@@ -221,27 +216,11 @@ export default ({
 													});
 												}}
 												onClear={() =>
-													updateInvoice({
+													editInvoice({
 														due_date: null,
 													})
 												}
 											/>
-
-											{!!invoice?.due_date && (
-												<ScButton
-													type="text"
-													onClick={() =>
-														updateInvoice({
-															due_date: null,
-														})
-													}
-													css={css`
-														max-width: 25px;
-													`}
-												>
-													<ScIcon name="x"></ScIcon>
-												</ScButton>
-											)}
 										</div>
 									</ScFormControl>
 								</div>

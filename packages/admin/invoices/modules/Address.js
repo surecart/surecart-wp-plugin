@@ -4,11 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { select } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -17,118 +13,28 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScIcon,
-	ScDialog,
-	ScAddress,
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
-	ScForm,
+	ScBlockUi,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import expand from '../checkout-query';
-import Error from '../../components/Error';
 import AddressDisplay from '../../components/AddressDisplay';
+import EditAddress from './EditAddress';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	checkout,
-	loading,
-	busy,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
-	const isDraftInvoice = invoice?.status === 'draft';
+export default () => {
+	const { checkout, loading, busy, isDraftInvoice, updateCheckout } =
+		useInvoice();
 	const [open, setOpen] = useState(false);
-	const [error, setError] = useState(false);
-	const [customerShippingAddress, setCustomerShippingAddress] = useState(
-		checkout?.shipping_address
-	);
-
-	// local state when shipping address changes.
-	useEffect(() => {
-		setCustomerShippingAddress(checkout?.shipping_address);
-	}, [checkout?.shipping_address]);
 
 	const onChange = async (shipping_address) => {
-		try {
-			setBusy(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, { expand }),
-				data: {
-					shipping_address,
-				},
-			});
-
-			onUpdateInvoiceEntityRecord({
-				...invoice,
-				checkout: data,
-			});
-
+		const data = await updateCheckout({
+			shipping_address,
+		});
+		if (!!data) {
 			setOpen(false);
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
 		}
-	};
-
-	const renderModal = () => {
-		if (!isDraftInvoice) return null;
-
-		return (
-			<ScForm
-				onScFormSubmit={(e) => {
-					e.preventDefault();
-					e.stopImmediatePropagation();
-					onChange(customerShippingAddress);
-				}}
-			>
-				<ScDialog
-					label={__('Edit Shipping & Tax Address', 'surecart')}
-					open={open}
-					style={{ '--dialog-body-overflow': 'visible' }}
-					onScRequestClose={() => setOpen(false)}
-				>
-					<div
-						css={css`
-							display: grid;
-							gap: var(--sc-form-row-spacing);
-						`}
-					>
-						<Error error={error} setError={setError} />
-						<ScAddress
-							showName={true}
-							showLine2={true}
-							required={open}
-							address={customerShippingAddress}
-							onScInputAddress={(e) =>
-								setCustomerShippingAddress(e?.detail)
-							}
-						/>
-					</div>
-
-					<ScButton
-						type="text"
-						onClick={() => setOpen(false)}
-						slot="footer"
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>
-
-					<ScButton busy={busy} type="primary" submit slot="footer">
-						{__('Update', 'surecart')}
-					</ScButton>
-				</ScDialog>
-			</ScForm>
-		);
 	};
 
 	return (
@@ -174,7 +80,9 @@ export default ({
 				)}
 			</Box>
 
-			{renderModal()}
+			{busy && <ScBlockUi style={{ zIndex: 9 }} />}
+
+			<EditAddress open={open} onRequestClose={() => setOpen(false)} />
 		</>
 	);
 };

@@ -71,9 +71,6 @@ export class ScCouponForm {
 
   @Prop() collapsed: boolean;
 
-  /** Disable the action buttons or not */
-  @Prop() disabledActions: boolean = false;
-
   /** The value of the input */
   @State() value: string;
 
@@ -166,14 +163,12 @@ export class ScCouponForm {
               exportparts="base:coupon-tag"
               type={'redeemable' === this.discount?.redeemable_status ? 'success' : 'warning'}
               class="coupon-tag"
-              clearable={this.disabledActions ? false : true}
+              clearable
               onScClear={() => {
-                if (this.disabledActions) return;
                 this.scApplyCoupon.emit(null);
                 this.open = false;
               }}
               onKeyDown={e => {
-                if (this.disabledActions) return;
                 if (e.key === 'Enter' || e.key === 'Escape') {
                   speak(__('Coupon was removed.', 'surecart'), 'assertive');
                   this.scApplyCoupon.emit(null);
@@ -209,9 +204,6 @@ export class ScCouponForm {
         </sc-line-item>
       );
     }
-
-    // Don't process the form if the actions are disabled.
-    if (this.disabledActions) return null;
 
     return this.collapsed ? (
       <div

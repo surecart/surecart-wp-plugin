@@ -14,17 +14,10 @@ import {
 import Box from '../../ui/Box';
 import PaymentCollection from './PaymentCollection';
 import { formatTaxDisplay } from '../../util/tax';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	updateInvoice,
-	checkout,
-	loading,
-	setBusy,
-	paymentMethod,
-	setPaymentMethod,
-}) => {
-	const isDraftInvoice = invoice?.status === 'draft';
+export default ({ paymentMethod, setPaymentMethod }) => {
+	const { checkout, loading } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
@@ -169,14 +162,8 @@ export default ({
 			</Box>
 
 			<PaymentCollection
-				invoice={invoice}
-				updateInvoice={updateInvoice}
-				checkout={checkout}
-				loading={loading}
-				setBusy={setBusy}
 				paymentMethod={paymentMethod}
 				setPaymentMethod={setPaymentMethod}
-				isDraftInvoice={isDraftInvoice}
 			/>
 		</>
 	);

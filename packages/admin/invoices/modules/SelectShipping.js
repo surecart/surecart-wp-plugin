@@ -1,14 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
-import apiFetch from '@wordpress/api-fetch';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
-import { useDispatch, select } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,50 +12,16 @@ import {
 	ScAlert,
 	ScChoices,
 	ScChoice,
+	ScButton,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import expand from '../checkout-query';
+import EditAddress from './EditAddress';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({
-	invoice,
-	checkout,
-	setBusy,
-	loading,
-	onUpdateInvoiceEntityRecord,
-}) => {
-	const { createErrorNotice } = useDispatch(noticesStore);
-
-	const onShippingChange = async (shippingId) => {
-		try {
-			setBusy(true);
-
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-				}),
-				data: {
-					selected_shipping_choice: shippingId, // update the shipping choice.
-					customer_id: checkout?.customer_id,
-				},
-			});
-
-			onUpdateInvoiceEntityRecord({
-				...invoice,
-				checkout: data,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
-		}
-	};
+export default () => {
+	const { invoice, checkout, loading, isDraftInvoice, updateCheckout } =
+		useInvoice();
+	const [open, setOpen] = useState(false);
 
 	if (!checkout?.selected_shipping_choice_required) {
 		return null;
@@ -77,7 +36,17 @@ export default ({
 							'Shipping is required. Please enter a shipping address.',
 							'surecart'
 						)}
+						<br />
+						<ScButton onClick={() => setOpen(true)}>
+							{__('Add A Shipping Address', 'surecart')}
+						</ScButton>
 					</ScAlert>
+					<EditAddress
+						invoice={invoice}
+						checkout={checkout}
+						open={open}
+						onRequestClose={() => setOpen(false)}
+					/>
 				</Box>
 			);
 		}
@@ -93,13 +62,20 @@ export default ({
 		);
 	}
 
-	if (invoice?.status !== 'draft') {
+	if (!isDraftInvoice) {
 		return null;
 	}
 
 	return (
 		<Box title={__('Shipping', 'surecart')} loading={loading}>
-			<ScChoices onScChange={(e) => onShippingChange(e.target.value)}>
+			<ScChoices
+				onScChange={(e) => {
+					updateCheckout({
+						selected_shipping_choice: e?.target?.value,
+						customer_id: checkout?.customer_id,
+					});
+				}}
+			>
 				{(checkout?.shipping_choices?.data || []).map(
 					({ id, amount, currency, shipping_method }) => {
 						return (

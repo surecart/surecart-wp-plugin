@@ -1,38 +1,31 @@
 /**
  * External dependencies.
  */
-import apiFetch from '@wordpress/api-fetch';
+import { __ } from '@wordpress/i18n';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { select, useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
-import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
 import { ScBlockUi } from '@surecart/components-react';
-import expand from '../checkout-query';
+import { useInvoice } from '../hooks/useInvoice';
 import Error from '../../components/Error';
 
-export default ({
-	invoice,
-	checkout,
-	open,
-	onRequestClose,
-	hasLoading,
-	onUpdateInvoiceEntityRecord,
-}) => {
-	const [loading, setLoading] = useState(hasLoading);
-	const [error, setError] = useState(false);
+export default ({ open, onRequestClose }) => {
+	const { loading, invoice, receiveInvoice, checkoutExpands } = useInvoice();
+	const [error, setError] = useState(null);
+	const [busy, setBusy] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const markAsPaid = async () => {
 		try {
-			setLoading(true);
-			setError(null);
+			setBusy(true);
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'checkout'
@@ -40,12 +33,15 @@ export default ({
 
 			const checkoutUpdated = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}/manually_pay`, {
-					expand,
-				}),
+				path: addQueryArgs(
+					`${baseURL}/${invoice?.checkout?.id}/manually_pay`,
+					{
+						expand: checkoutExpands,
+					}
+				),
 			});
 
-			onUpdateInvoiceEntityRecord({
+			receiveInvoice({
 				...invoice,
 				status: checkoutUpdated?.status,
 				checkout: checkoutUpdated,
@@ -60,7 +56,7 @@ export default ({
 			console.error(e);
 			setError(e);
 		} finally {
-			setLoading(false);
+			setBusy(false);
 		}
 	};
 
@@ -71,19 +67,20 @@ export default ({
 			onCancel={onRequestClose}
 			confirmButtonText={__('Mark Paid', 'surecart')}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 
 			{__(
 				'Are you sure you wish to mark the invoice as paid?',
 				'surecart'
 			)}
 
-			{loading && (
-				<ScBlockUi
-					style={{ '--sc-block-ui-opacity': '0.75' }}
-					spinner
-				/>
-			)}
+			{loading ||
+				(busy && (
+					<ScBlockUi
+						style={{ '--sc-block-ui-opacity': '0.75' }}
+						spinner
+					/>
+				))}
 		</ConfirmDialog>
 	);
 };

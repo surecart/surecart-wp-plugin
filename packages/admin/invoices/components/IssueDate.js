@@ -29,6 +29,20 @@ export default ({ invoice, updateInvoice }) => {
 		[popoverAnchor]
 	);
 
+	const isInvalidDate = (date) => {
+		if (invoice?.due_date) {
+			const dueDate = new Date(invoice.due_date * 1000);
+			dueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
+
+			const selectedDate = new Date(date);
+			selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
+
+			return selectedDate > dueDate;
+		}
+
+		return false;
+	};
+
 	const getTitle = () => {
 		return invoice?.issue_date ? (
 			<ScFormatDate
@@ -39,7 +53,7 @@ export default ({ invoice, updateInvoice }) => {
 				date={invoice?.issue_date}
 			/>
 		) : isDraftInvoice ? (
-			__('Set Issue Date', 'surecart')
+			__('Today', 'surecart')
 		) : (
 			__('No Issue Date', 'surecart')
 		);
@@ -78,6 +92,7 @@ export default ({ invoice, updateInvoice }) => {
 						});
 						onClose();
 					}}
+					isInvalidDate={isInvalidDate}
 				/>
 			</PostDropdownContent>
 		);

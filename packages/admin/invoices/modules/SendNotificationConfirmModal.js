@@ -4,35 +4,29 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
+import { select, useDispatch } from '@wordpress/data';
 import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
-import Error from '../../components/Error';
 import { ScButton, ScForm, ScSwitch } from '@surecart/components-react';
-import { checkoutExpands } from '../Invoice';
+import { useInvoice } from '../hooks/useInvoice';
+import Error from '../../components/Error';
 
-export default ({
-	title,
-	invoice,
-	updateInvoice,
-	onRequestClose,
-	paymentMethod,
-	busy,
-	setBusy,
-	updateInvoiceEntityRecord,
-}) => {
-	const [error, setError] = useState(false);
-	const { createSuccessNotice } = useDispatch(noticesStore);
+export default ({ title, onRequestClose, paymentMethod }) => {
+	const { invoice, editInvoice, receiveInvoice, checkoutExpands } =
+		useInvoice();
+	const [error, setError] = useState(null);
+	const [busy, setBusy] = useState(false);
 	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const messages = {
 		notifyCustomer: __('Notify customer the invoice.', 'surecart'),
@@ -42,21 +36,21 @@ export default ({
 		),
 	};
 
-	const onSaveInvoice = async () => {
+	const saveInvoice = async () => {
 		try {
 			setBusy(true);
-			setError(false);
+			setError(null);
 
 			// Set the notification_enabled flag by default to true.
 			invoice.notifications_enabled = notificationsEnabled;
 
-			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
-			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'invoice'
 			);
 
+			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
+			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
 			await apiFetch({
 				method: 'PATCH',
 				path: `${baseURL}/${invoice?.id}?refresh_status=1`,
@@ -77,11 +71,12 @@ export default ({
 				}),
 			});
 
-			updateInvoiceEntityRecord(invoiceData);
+			receiveInvoice(invoiceData);
 
 			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
 				type: 'snackbar',
 			});
+
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
@@ -99,10 +94,10 @@ export default ({
 			`}
 			onRequestClose={onRequestClose}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 
 			<ScForm
-				onScFormSubmit={onSaveInvoice}
+				onScFormSubmit={saveInvoice}
 				css={css`
 					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}
@@ -116,7 +111,7 @@ export default ({
 						checked={notificationsEnabled}
 						onScChange={(e) => {
 							setNotificationsEnabled(e.target.checked);
-							updateInvoice({
+							editInvoice({
 								notification_enabled: e.target.checked,
 							});
 						}}

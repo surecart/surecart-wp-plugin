@@ -14,48 +14,44 @@ import Status from '../components/Status';
 import InvoiceNumber from '../components/InvoiceNumber';
 import DueDate from '../components/DueDate';
 import IssueDate from '../components/IssueDate';
+import { useInvoice } from '../hooks/useInvoice';
 
-export default ({ invoice, updateInvoice, checkout, loading }) => {
-	const checkoutPageUrl =
-		invoice?.checkout?.id && invoice?.status !== 'paid'
-			? `${window.scData?.checkout_page_url}?checkout_id=${invoice?.checkout?.id}`
-			: null;
+export default () => {
+	const { invoice, editInvoice, checkout, loading } = useInvoice();
 
-	const orderPdfUrl = checkout?.order?.pdf_url;
 	const orderPageUrl = checkout?.order?.id
-		? `${scData?.home_url}/wp-admin/admin.php?page=sc-orders&action=edit&id=${checkout?.order?.id}`
+		? `${scData?.home_url}/wp-admin/admin.php?page=sc-orders&action=edit&id=${checkout.order.id}`
 		: null;
 
 	return (
-		<>
-			<Box title={__('Invoice Summary', 'surecart')} loading={loading}>
-				<div>
-					{!!checkout?.order?.number && (
-						<InvoiceNumber orderNumber={checkout.order.number} />
+		<Box title={__('Invoice Summary', 'surecart')} loading={loading}>
+			<div>
+				{!!checkout?.order?.number && (
+					<InvoiceNumber orderNumber={checkout.order.number} />
+				)}
+
+				<Status status={invoice?.status} />
+
+				<IssueDate invoice={invoice} updateInvoice={editInvoice} />
+
+				<DueDate invoice={invoice} updateInvoice={editInvoice} />
+
+				{invoice?.status !== 'paid' &&
+					!!invoice?.checkout_url &&
+					!!checkout?.order?.id && (
+						<CheckoutPageLink
+							checkoutPageUrl={invoice?.checkout_url}
+						/>
 					)}
 
-					<Status status={invoice?.status} />
+				{!!orderPageUrl && (
+					<OrderPageLink orderPageUrl={orderPageUrl} />
+				)}
 
-					<IssueDate
-						invoice={invoice}
-						updateInvoice={updateInvoice}
-					/>
-
-					<DueDate invoice={invoice} updateInvoice={updateInvoice} />
-
-					{!!checkoutPageUrl && (
-						<CheckoutPageLink checkoutPageUrl={checkoutPageUrl} />
-					)}
-
-					{!!orderPageUrl && (
-						<OrderPageLink orderPageUrl={orderPageUrl} />
-					)}
-
-					{!!orderPdfUrl && (
-						<ReceiptDownload orderPdfUrl={orderPdfUrl} />
-					)}
-				</div>
-			</Box>
-		</>
+				{!!checkout?.pdf_url && (
+					<ReceiptDownload pdfUrl={checkout?.pdf_url} />
+				)}
+			</div>
+		</Box>
 	);
 };

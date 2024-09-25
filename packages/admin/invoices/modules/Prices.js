@@ -1,97 +1,26 @@
 /** @jsx jsx */
-import Box from '../../ui/Box';
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
 import Price from './Price';
 import NewPrice from './NewPrice';
+import Box from '../../ui/Box';
+import { useInvoice } from '../hooks/useInvoice';
 import { ScEmpty, ScTable, ScTableCell } from '@surecart/components-react';
-import { useState } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch, select } from '@wordpress/data';
-import expand from '../checkout-query';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { checkoutExpands } from '../Invoice';
 
-export default ({
-	invoice,
-	checkout,
-	loading,
-	setBusy,
-	onUpdateInvoiceEntityRecord,
-}) => {
-	const invoiceStatus = invoice?.status;
-	const isDraftInvoice = invoiceStatus === 'draft';
+export default () => {
+	const { checkout, loading, isDraftInvoice, onRemovePrice, onChangePrice } =
+		useInvoice();
 	const line_items = checkout?.line_items?.data || [];
 	const [modal, setModal] = useState(false);
-	const { createErrorNotice } = useDispatch(noticesStore);
-	const { deleteEntityRecord } = useDispatch(coreStore);
-
-	const onRemove = async (id) => {
-		try {
-			setBusy(true);
-
-			// delete the entity record.
-			await deleteEntityRecord('surecart', 'line_item', id, null, {
-				throwOnError: true,
-			});
-
-			// get the checkouts endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			// fetch the updated checkout.
-			const data = await apiFetch({
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-				}),
-			});
-
-			onUpdateInvoiceEntityRecord({
-				...invoice,
-				checkout: data,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
-	const onChange = async (id, data) => {
-		try {
-			setBusy(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'line_item'
-			);
-
-			const { checkout: updatedCheckout } = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}`, {
-					expand: checkoutExpands,
-				}),
-				data,
-			});
-
-			onUpdateInvoiceEntityRecord({
-				...invoice,
-				checkout: updatedCheckout,
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e, {
-				type: 'snackbar',
-			});
-		} finally {
-			setBusy(false);
-		}
-	};
 
 	const renderPrices = () => {
 		if (!line_items?.length && isDraftInvoice) {
@@ -144,11 +73,10 @@ export default ({
 							quantity={quantity}
 							subtotal_amount={subtotal_amount}
 							ad_hoc_amount={ad_hoc_amount}
-							onRemove={() => onRemove(id)}
-							onChange={(data) => onChange(id, data)}
+							onRemove={() => onRemovePrice(id)}
+							onChange={(data) => onChangePrice(id, data)}
 							checkout={checkout}
 							variant_options={variant_options}
-							invoiceStatus={invoiceStatus}
 						/>
 					);
 				})}
@@ -178,14 +106,8 @@ export default ({
 					!loading &&
 					isDraftInvoice && (
 						<NewPrice
-							invoice={invoice}
-							checkout={checkout}
 							open={modal}
-							setBusy={setBusy}
 							onRequestClose={() => setModal(false)}
-							onUpdateInvoiceEntityRecord={
-								onUpdateInvoiceEntityRecord
-							}
 						/>
 					)
 				}

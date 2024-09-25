@@ -119,7 +119,6 @@ abstract class ModelPermissionsController {
 	 * @return boolean
 	 */
 	protected function requestHasKeys( $request, $keys ) {
-		$keys = array_merge( $keys, [ 'context', '_locale', 'rest_route', 'id', 'expand', 't' ] );
 		foreach ( (array) $request as $key => $value ) {
 			if ( in_array( $key, $keys, true ) ) {
 				return true;
