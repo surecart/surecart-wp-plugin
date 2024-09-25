@@ -104,8 +104,8 @@ class UpgradeNoticeService {
 						sprintf(
 							/* translators: %1$s Link open tag, %2$s: Link close tag. */
 							esc_html__( 'To ensure a smooth update, please %1$sbackup your site%2$s before proceeding. For the safest experience, perform the update in a staging environment first. This helps prevent any unexpected issues and ensures your site remains up and running smoothly.', 'surecart' ),
-							'<a href="https://surecart.com" target="_blank">',
-							'</a>'
+							'<strong>',
+							'</strong>'
 						)
 					);
 					?>
