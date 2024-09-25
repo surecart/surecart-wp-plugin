@@ -263,6 +263,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 				],
 			]
 		);
+
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
@@ -298,70 +299,21 @@ class CollectionTags extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'collection_tag_border_type',
-			array(
-				'label'     => esc_html__( 'Border Type', 'elementor' ),
-				'type'      => \Elementor\Controls_Manager::SELECT,
-				'options'   => array(
-					''       => esc_html__( 'Default', 'elementor' ),
-					'none'   => esc_html__( 'None', 'elementor' ),
-					'solid'  => esc_html__( 'Solid', 'elementor' ),
-					'double' => esc_html__( 'Double', 'elementor' ),
-					'dotted' => esc_html__( 'Dotted', 'elementor' ),
-					'dashed' => esc_html__( 'Dashed', 'elementor' ),
-					'groove' => esc_html__( 'Groove', 'elementor' ),
-				),
-				'selectors' => array(
-					'.sc-collection-item .sc-tag' => 'border-style: {{VALUE}};',
-				),
-				'default'   => '',
-			)
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'      => 'border',
+				'selector'  => '{{WRAPPER}} .sc-collection-item .sc-tag',
+				'separator' => 'before',
+			]
 		);
 
-		$this->add_control(
-			'collection_tag_border_width',
-			array(
-				'label'      => esc_html__( 'Border Width', 'elementor' ),
-				'type'       => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
-				'range'      => array(
-					'px' => [
-						'max' => 20,
-					],
-					'em' => [
-						'max' => 2,
-					],
-				),
-				'selectors'  => array(
-					'.sc-collection-item .sc-tag' => 'border-width: {{SIZE}}{{UNIT}};',
-				),
-				'condition'  => array(
-					'collection_tag_border_type!' => [ '', 'none' ],
-				),
-			)
-		);
-
-		$this->add_control(
-			'collection_tag_border_color',
-			array(
-				'label'     => esc_html__( 'Border Color', 'elementor' ),
-				'type'      => \Elementor\Controls_Manager::COLOR,
-				'selectors' => array(
-					'.sc-collection-item .sc-tag' => 'border-color: {{VALUE}};',
-				),
-				'condition' => array(
-					'collection_tag_border_type!' => [ '', 'none' ],
-				),
-			)
-		);
-
-		$this->add_control(
+		$this->add_responsive_control(
 			'collection_tag_border_radius',
 			array(
 				'label'      => esc_html__( 'Border Radius', 'elementor' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => array(
 					'.sc-collection-item .sc-tag' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
