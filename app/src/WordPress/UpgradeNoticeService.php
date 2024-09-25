@@ -96,14 +96,14 @@ class UpgradeNoticeService {
 			</div>
 			<div>
 				<div class="sc-major-update-warning__title">
-					<?php echo esc_html__( 'Heads up, Please backup before upgrade!', 'surecart' ); ?>
+					<?php echo esc_html__( 'Important: Backup Your Site Before Updating!', 'surecart' ); ?>
 				</div>
 				<div class="sc-major-update-warning__message">
 					<?php
 					echo wpautop(
 						sprintf(
 							/* translators: %1$s Link open tag, %2$s: Link close tag. */
-							esc_html__( 'We’re excited to announce that the latest update brings significant improvements to your plugin experience! To ensure a smooth transition, we strongly recommend you %1$sbackup your site%2$s before proceeding with the update and perform the upgrade in a staging environment first.', 'surecart' ),
+							esc_html__( 'To ensure a smooth update, please %1$sbackup your site%2$s before proceeding. For the safest experience, perform the update in a staging environment first. This helps prevent any unexpected issues and ensures your site remains up and running smoothly.', 'surecart' ),
 							'<a href="https://surecart.com" target="_blank">',
 							'</a>'
 						)
