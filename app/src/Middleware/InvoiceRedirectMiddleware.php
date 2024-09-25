@@ -16,7 +16,7 @@ class InvoiceRedirectMiddleware {
 	 * @param RequestInterface $request Request.
 	 * @param Closure          $next Next middleware.
 	 *
-	 * @return function|RedirectResponse|\SureCartVendors\Psr\Http\Message\ResponseInterface
+	 * @return RedirectResponse|\SureCartVendors\Psr\Http\Message\ResponseInterface
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
 		$id = $request->query( 'invoice_id' );
@@ -29,8 +29,9 @@ class InvoiceRedirectMiddleware {
 		// Find the invoice and redirect to the invoice's checkout
 		$invoice = Invoice::find($id);
 
-		if ( ! $invoice ) {
-			return $next( $request );
+		if ( is_wp_error( $invoice ) || empty( $invoice->checkout_id ) ) {
+			wp_die( esc_html__( 'Invoice not found.', 'surecart' ) );
+			exit;
 		}
 
 		return ( new RedirectResponse( $request ) )->to(
