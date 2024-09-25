@@ -36,7 +36,7 @@ class ErrorsTranslationService {
 	 *
 	 * @return string|false
 	 */
-	public function attributeTranslation( $attribute, $type, $options = [], $code = '' ) {
+	public function attributeTranslation( $attribute, $type, $options = [] ) {
 		// if both are empty, return.
 		if ( empty( $attribute ) && empty( $type ) ) {
 			return false;
