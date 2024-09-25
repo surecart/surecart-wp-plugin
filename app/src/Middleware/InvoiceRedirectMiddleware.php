@@ -21,7 +21,7 @@ class InvoiceRedirectMiddleware {
 	public function handle( RequestInterface $request, Closure $next ) {
 		$id = $request->query( 'invoice_id' );
 
-		// no checkout id, next request.
+		// no invoice id, next request.
 		if ( empty( $id ) ) {
 			return $next( $request );
 		}
@@ -29,11 +29,22 @@ class InvoiceRedirectMiddleware {
 		// Find the invoice and redirect to the invoice's checkout
 		$invoice = Invoice::find($id);
 
-		if ( is_wp_error( $invoice ) || empty( $invoice->checkout_id ) ) {
-			wp_die( esc_html__( 'Invoice not found.', 'surecart' ) );
-			exit;
+		// show error if the invoice is not found.
+		if ( is_wp_error( $invoice ) ) {
+			return wp_die( $invoice->get_error_message() );
 		}
 
+		// show error if the invoice does not have a checkout id.
+		if ( empty( $invoice->id ) ) {
+			return wp_die( esc_html__( 'Invoice not found.', 'surecart' ) );
+		}
+
+		// show error if the invoice checkout is not found.
+		if ( empty( $invoice->checkout_id ) ) {
+			return wp_die( esc_html__( 'Invoice checkout not found.', 'surecart' ) );
+		}
+
+		// redirect to the invoice's checkout.
 		return ( new RedirectResponse( $request ) )->to(
 			add_query_arg(
 				[
