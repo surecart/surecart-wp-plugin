@@ -10,13 +10,6 @@
 	\SureCart::render( 'layouts/partials/admin-index-styles' );
 	?>
 
-	<?php
-	\SureCart::render(
-		'layouts/partials/admin-index-header',
-		[ 'title' => __( 'Subscription Insights', 'surecart' ) ]
-	);
-	?>
-
 	<div id="app"></div>
 
 	<?php

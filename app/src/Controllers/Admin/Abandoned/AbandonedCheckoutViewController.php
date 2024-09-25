@@ -25,9 +25,6 @@ class AbandonedCheckoutViewController extends AdminController {
 			)
 		);
 
-		// enqueue stats.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( AbandonedCheckoutStatsScriptsController::class, 'enqueue' ) );
-
 		$table = new AbandonedCheckoutListTable();
 		$table->prepare_items();
 		return \SureCart::view( 'admin/abandoned-orders/index' )->with(
