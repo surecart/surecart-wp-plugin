@@ -1,19 +1,22 @@
 <?php
 namespace SureCart\Middleware;
+
 use Closure;
 use SureCart\Models\Invoice;
 use SureCartCore\Requests\RequestInterface;
 use SureCartCore\Responses\RedirectResponse;
+
 /**
  * Middleware for handling invoice redirects.
  */
 class InvoiceRedirectMiddleware {
 	/**
-	 * Enqueue component assets.
+	 * Handle the invoice redirect.
 	 *
 	 * @param RequestInterface $request Request.
-	 * @param Closure          $next Next.
-	 * @return function
+	 * @param Closure          $next Next middleware.
+	 *
+	 * @return function|RedirectResponse|\SureCartVendors\Psr\Http\Message\ResponseInterface
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
 		$id = $request->query( 'invoice_id' );
@@ -30,15 +33,13 @@ class InvoiceRedirectMiddleware {
 			return $next( $request );
 		}
 
-		if ( $invoice ) {
-			return ( new RedirectResponse( $request ) )->to(
-				add_query_arg(
-					[
-						'checkout_id' => $invoice->checkout_id,
-					],
-					\SureCart::getUrl()->checkout()
-				)
-			);
-		}
+		return ( new RedirectResponse( $request ) )->to(
+			add_query_arg(
+				[
+					'checkout_id' => $invoice->checkout_id,
+				],
+				\SureCart::getUrl()->checkout()
+			)
+		);
 	}
 }
