@@ -36,7 +36,7 @@ class ErrorsTranslationService {
 	 *
 	 * @return string|false
 	 */
-	public function attributeTranslation( $attribute, $type, $options = [] ) {
+	public function attributeTranslation( $attribute, $type, $options = [], $code = '' ) {
 		// if both are empty, return.
 		if ( empty( $attribute ) && empty( $type ) ) {
 			return false;
@@ -107,6 +107,14 @@ class ErrorsTranslationService {
 			if ( $line_item_translated_error ) {
 				return $line_item_translated_error;
 			}
+		}
+
+		// Unique name translation.
+		if ( 'name' === $attribute && 'taken' === $type ) {
+			return sprintf(
+				__( 'The name "%s" is already taken. Please choose a different name.', 'surecart' ),
+				$options['value'],
+			);
 		}
 
 		return false;

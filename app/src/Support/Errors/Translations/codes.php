@@ -95,7 +95,6 @@ return array(
 	'product_collection.slug.taken'                        => __( 'This URL part is already taken. Please choose another URL part.', 'surecart' ),
 	'checkout.selected_shipping_choice.blank'              => __( "We don't currently ship to your address.", 'surecart' ),
 	'shipping_method.name.taken'                           => __( 'The shipping method name is already in use .', 'surecart' ),
-	'shipping_profile.name.taken'                          => __( 'The shipping profile name is already in use.', 'surecart' ),
 	'shipping_profile.name.blank'                          => __( 'The shipping profile name cannot be blank.', 'surecart' ),
 	'shipping_profile.name.too_long'                       => __( 'The shipping profile name is too long. Please enter a shorter name.', 'surecart' ),
 	'shipping_zone.name.blank'                             => __( 'The shipping zone name cannot be blank.', 'surecart' ),
