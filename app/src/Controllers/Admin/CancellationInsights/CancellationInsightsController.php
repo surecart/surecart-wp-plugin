@@ -23,6 +23,7 @@ class CancellationInsightsController extends AdminController {
 						'title' => __( 'Subscription Saver & Insights', 'surecart' ),
 					],
 				],
+				'report_url'       => SURECART_REPORTS_URL . 'cancellation_acts',
 			)
 		);
 
