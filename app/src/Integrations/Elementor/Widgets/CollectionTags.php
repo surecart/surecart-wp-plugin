@@ -417,6 +417,20 @@ class CollectionTags extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+			?>
+				<ul style="display: flex;width: 100%;list-style: none;margin: 0;max-width: 100%;padding: 0;" class="wp-block-surecart-product-collection-tags">
+					<?php for ( $i = 0; $i < $settings['count']; $i++ ) : ?>
+						<li class="sc-collection-item">
+							<a href="#" class="sc-tag sc-tag--default sc-tag--medium">Collection <?php echo esc_html( $i + 1 ); ?></a>
+						</li>
+					<?php endfor; ?>
+				</ul>
+			<?php
+			return;
+		}
+
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-collection-tags {"count" : <?php echo esc_attr( $settings['count'] ?? 1 ); ?> } -->
