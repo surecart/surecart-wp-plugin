@@ -2,6 +2,7 @@
 import { Global, css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
+import { setEditedPost } from '@wordpress/core/editor';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -86,6 +87,12 @@ export default ({ id, setBrowserURL }) => {
 		},
 		[id]
 	);
+
+	useEffect(() => {
+		// set global post.
+		const result = setEditedPost(post?.postType, post?.id);
+		console.log('result', result);
+	}, [post]);
 
 	/**
 	 * Whether the product should be published.
