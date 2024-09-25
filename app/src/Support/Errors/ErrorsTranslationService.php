@@ -112,6 +112,7 @@ class ErrorsTranslationService {
 		// Unique name translation.
 		if ( 'name' === $attribute && 'taken' === $type ) {
 			return sprintf(
+				// translators: %s is the name.
 				__( 'The name "%s" is already taken. Please choose a different name.', 'surecart' ),
 				$options['value'],
 			);
