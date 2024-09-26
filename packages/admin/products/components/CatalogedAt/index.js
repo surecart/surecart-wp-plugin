@@ -13,12 +13,7 @@ import {
 } from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { getDate, getSettings } from '@wordpress/date';
-
-/**
- * Internal dependencies.
- */
-import { ScFormatDate } from '@surecart/components-react';
+import { dateI18n, getDate, getSettings } from '@wordpress/date';
 
 export default ({ product, updateProduct }) => {
 	// Use internal state instead of a ref to make sure that the component
@@ -113,8 +108,7 @@ export default ({ product, updateProduct }) => {
 };
 
 function RenderDropdownButton({ isOpen, onClick, product }) {
-	const dateSettings = getSettings();
-
+	const { formats, timezone } = getSettings();
 	return (
 		<Button
 			className="edit-post-post-url__toggle"
@@ -123,18 +117,7 @@ function RenderDropdownButton({ isOpen, onClick, product }) {
 			aria-label={__('Cataloged at', 'surecart')}
 			onClick={onClick}
 		>
-			<ScFormatDate
-				type="timestamp"
-				date={product?.cataloged_at}
-				month="short"
-				day="numeric"
-				year="numeric"
-				hour="numeric"
-				minute="numeric"
-				hourFormat="12"
-				timeZone={dateSettings?.timezone?.string}
-			/>
-
+			{dateI18n(`${formats.date} ${formats.time}`, product?.cataloged_at * 1000, timezone.string)}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
