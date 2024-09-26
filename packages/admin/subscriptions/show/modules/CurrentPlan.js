@@ -73,7 +73,7 @@ export default ({ lineItem, loading, subscription }) => {
 			setSaving(false);
 		}
 	};
-	console.log(lineItem);
+
 	return (
 		<div
 			css={css`
