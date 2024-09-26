@@ -836,7 +836,7 @@ class ProductPostTypeService {
 			'gallery',
 			array(
 				'get_callback'    => function ( $post ) {
-					$product = get_post_meta( $post['id'], 'product', true );
+					$product = sc_get_product( $post['id'] );
 					return $product->gallery ?? [];
 				},
 				'update_callback' => function ( $value, $post ) {
