@@ -472,6 +472,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 	/**
 	 * Get the metadata attribute.
+	 * This makes sure the metadata is always an object.
 	 *
 	 * @return object
 	 */
