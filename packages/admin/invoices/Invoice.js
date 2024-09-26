@@ -178,7 +178,7 @@ export default () => {
 							busy ||
 							!scData?.entitlements?.invoices
 						}
-						onClick={() => setModal('send_invoice')}
+						submit
 					>
 						{getSubmitButtonTitle()}
 					</ScButton>
@@ -261,6 +261,7 @@ export default () => {
 						<Tax />
 					</>
 				}
+				onSubmit={() => setModal('send_invoice')}
 			>
 				<Error error={error} setError={setError} />
 				<Prices />
