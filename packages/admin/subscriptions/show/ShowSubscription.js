@@ -177,7 +177,8 @@ export default () => {
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
-		if (['completed', 'canceled'].includes(subscription?.status))
+		if ('completed' === subscription?.status) return null;
+		if ('canceled' === subscription?.status && !subscription?.restore_at)
 			return null;
 
 		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
