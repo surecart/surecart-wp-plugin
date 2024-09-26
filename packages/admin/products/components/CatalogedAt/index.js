@@ -116,8 +116,16 @@ function RenderDropdownButton({ isOpen, onClick, product }) {
 			aria-expanded={isOpen}
 			aria-label={__('Cataloged at', 'surecart')}
 			onClick={onClick}
+			css={css`
+				white-space: break-spaces !important;
+				text-align: right;
+			`}
 		>
-			{dateI18n(`${formats.date} ${formats.time}`, product?.cataloged_at * 1000, timezone.string)}
+			{dateI18n(
+				`${formats.date} ${formats.time}`,
+				product?.cataloged_at * 1000,
+				timezone.string
+			)}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
