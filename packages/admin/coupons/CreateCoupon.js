@@ -47,7 +47,9 @@ export default ({ id, setId }) => {
 				'coupon',
 				{
 					...coupon,
-					promotions: [promotion],
+					...(promotion
+						? { promotions: [promotion] }
+						: { promotions: [{}] }),
 				},
 				{ throwOnError: true }
 			);
