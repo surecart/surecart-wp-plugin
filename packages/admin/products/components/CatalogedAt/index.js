@@ -13,6 +13,7 @@ import {
 } from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { getDate, getSettings } from '@wordpress/date';
 
 /**
  * Internal dependencies.
@@ -35,9 +36,11 @@ export default ({ product, updateProduct }) => {
 			date = new Date();
 		}
 
+		date = getDate(date);
+
 		// Update product with the new cataloged_at value.
 		updateProduct({
-			cataloged_at: Date.parse(new Date(date).toUTCString()) / 1000,
+			cataloged_at: Date.parse(date?.toUTCString()) / 1000,
 		});
 	};
 
@@ -82,7 +85,7 @@ export default ({ product, updateProduct }) => {
 										updateProduct({
 											cataloged_at:
 												Date.parse(
-													new Date().toUTCString()
+													getDate(new Date())
 												) / 1000,
 										});
 									},
@@ -93,7 +96,7 @@ export default ({ product, updateProduct }) => {
 						<DateTimePicker
 							currentDate={
 								product?.cataloged_at
-									? new Date(product?.cataloged_at * 1000)
+									? getDate(product?.cataloged_at * 1000)
 									: null
 							}
 							isInvalidDate={(date) => {
@@ -110,6 +113,8 @@ export default ({ product, updateProduct }) => {
 };
 
 function RenderDropdownButton({ isOpen, onClick, product }) {
+	const dateSettings = getSettings();
+
 	return (
 		<Button
 			className="edit-post-post-url__toggle"
@@ -127,6 +132,7 @@ function RenderDropdownButton({ isOpen, onClick, product }) {
 				hour="numeric"
 				minute="numeric"
 				hourFormat="12"
+				timeZone={dateSettings?.timezone?.string}
 			/>
 
 			<svg
