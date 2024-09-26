@@ -728,8 +728,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		$item = ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
 
-		$item->sync();
-
 		return $item;
 	}
 
