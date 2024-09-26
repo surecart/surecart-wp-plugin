@@ -65,7 +65,12 @@ export default ({ product, updateProduct, post, loading }) => {
 				)
 			}
 		>
-			<div>
+			<div
+				css={css`
+					margin-right: -15px;
+					width: auto;
+				`}
+			>
 				<Availability product={product} updateProduct={updateProduct} />
 				<Status product={product} updateProduct={updateProduct} />
 				{scData?.is_block_theme ? (
