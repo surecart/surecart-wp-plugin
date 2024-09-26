@@ -165,6 +165,7 @@ class OrdersListTable extends ListTable {
 				'fulfillment_status' => ! empty( $_GET['fulfillment_status'] ) ? [ $_GET['fulfillment_status'] ] : [],
 				'shipment_status'    => ! empty( $_GET['shipment_status'] ) ? [ $_GET['shipment_status'] ] : [],
 				'query'              => $this->get_search_query(),
+				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			]
 		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'checkout.selected_shipping_choice', 'shipping_choice.shipping_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(

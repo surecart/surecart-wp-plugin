@@ -163,6 +163,7 @@ class SubscriptionsListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 				'query'  => $this->get_search_query(),
+				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			]
 		)->with( [ 'customer', 'price', 'price.product', 'current_period', 'purchase' ] )
 		->paginate(

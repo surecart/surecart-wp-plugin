@@ -22,6 +22,7 @@ class OrdersViewController extends AdminController {
 						'title' => __( 'Orders', 'surecart' ),
 					],
 				],
+				'test_mode_toggle' => true,
 				'report_url'       => SURECART_REPORTS_URL . 'orders',
 			)
 		);

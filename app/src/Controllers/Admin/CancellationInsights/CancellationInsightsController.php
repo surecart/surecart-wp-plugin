@@ -21,6 +21,7 @@ class CancellationInsightsController extends AdminController {
 					],
 				],
 				'report_url'       => SURECART_REPORTS_URL . 'cancellation_acts',
+				'test_mode_toggle' => true,
 			)
 		);
 
