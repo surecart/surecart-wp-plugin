@@ -14,7 +14,7 @@ class ProductGroupsListTable extends ListTable {
 	/**
 	 * Prepare the items for the table to process
 	 *
-	 * @return Void
+	 * @return void
 	 */
 	public function prepare_items() {
 		$columns  = $this->get_columns();

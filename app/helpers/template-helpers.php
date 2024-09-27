@@ -15,7 +15,7 @@ function surecart_get_the_block_template_html( $template_content ) {
 
 	if ( ! $template_content ) {
 		if ( is_user_logged_in() ) {
-			return '<h1>' . esc_html__( 'No matching template found' ) . '</h1>';
+			return '<h1>' . esc_html__( 'No matching template found', 'surecart' ) . '</h1>';
 		}
 		return;
 	}

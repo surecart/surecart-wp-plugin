@@ -42,7 +42,7 @@ class LicensesListTable extends ListTable {
 	public function search() { ?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Licenses' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Licenses', 'surecart' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
