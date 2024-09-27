@@ -90,7 +90,7 @@ class BuyButton extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'button_out_of_stock_label',
+			'button_out_of_stock_text',
 			[
 				'label'   => esc_html__( 'Out of stock label', 'surecart' ),
 				'type'    => \Elementor\Controls_Manager::TEXT,
@@ -99,7 +99,7 @@ class BuyButton extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'button_unavailable_label',
+			'button_unavailable_text',
 			[
 				'label'   => esc_html__( 'Unavailable label', 'surecart' ),
 				'type'    => \Elementor\Controls_Manager::TEXT,
@@ -154,7 +154,8 @@ class BuyButton extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+		$settings      = $this->get_settings_for_display();
+		$is_buy_button = 'yes' === $settings['buy_button_type'];
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
@@ -164,14 +165,23 @@ class BuyButton extends \Elementor\Widget_Base {
 					data-wp-bind--disabled="state.isUnavailable"
 					data-wp-class--sc-button__link--busy="context.busy"
 				>
-					<span class="sc-spinner" aria-hidden="false"></span>
 					<span class="sc-button__link-text" data-wp-text="state.buttonText">
+						<?php echo esc_html( $settings['button_text'] ); ?>
 					</span>
 				</button>
 			</div>
 			<?php
 			return;
 		}
+
+		$attributes = array(
+			'add_to_cart'       => ! $is_buy_button,
+			'text'              => esc_attr( $settings['button_text'] ),
+			'out_of_stock_text' => esc_attr( $settings['button_out_of_stock_text'] ),
+			'unavailable_text'  => esc_attr( $settings['button_unavailable_text'] ),
+		);
+
+		echo do_blocks( '<!-- wp:surecart/buy-button ' . wp_json_encode( $attributes ) . '  /-->' );
 	}
 
 	/**
@@ -180,6 +190,16 @@ class BuyButton extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function content_template() {
-		echo do_blocks( '<!-- wp:surecart/product-buy-button {"add_to_cart":true,"text":"Add To Cart"} /-->' );
+		?>
+		<div>
+			<button
+				class="wp-block-button__link wp-element-button sc-button__link"
+			>
+				<span class="sc-button__link-text" data-wp-text="state.buttonText">
+					{{{ settings.button_text }}}
+				</span>
+			</button>
+		</div>
+		<?php
 	}
 }
