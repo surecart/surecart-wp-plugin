@@ -119,7 +119,7 @@ class BuyButton extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => esc_html__( 'Style', 'surecart' ),
+				'label' => esc_html__( 'Button', 'surecart' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -131,8 +131,77 @@ class BuyButton extends \Elementor\Widget_Base {
 				'global'   => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
-				'selector' => '{{WRAPPER}} .sc-button',
+				'selector' => '{{WRAPPER}} .wp-block-button__link',
 			]
+		);
+
+		$this->add_control(
+			'button_text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-button__link' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_background_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-button__link' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_responsive_control(
+			'button_width',
+			array(
+				'label'      => esc_html__( 'Width', 'elementor' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => array(
+					'{{WRAPPER}} .wp-block-button__link' => 'width: {{SIZE}}{{UNIT}};',
+				),
+				'default'    => [
+					'size' => 100,
+					'unit' => '%',
+				],
+			)
+		);
+
+		$this->add_responsive_control(
+			'button_padding',
+			[
+				'label'      => esc_html__( 'Padding', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .wp-block-button__link' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'button_border',
+				'selector' => '{{WRAPPER}} .wp-block_button__link',
+			]
+		);
+
+		$this->add_control(
+			'button_border_radius',
+			array(
+				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => array(
+					'{{WRAPPER}} .wp-block_button__link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
 		);
 
 		$this->end_controls_section();
@@ -195,7 +264,7 @@ class BuyButton extends \Elementor\Widget_Base {
 			<button
 				class="wp-block-button__link wp-element-button sc-button__link"
 			>
-				<span class="sc-button__link-text" data-wp-text="state.buttonText">
+				<span class="sc-button__link-text">
 					{{{ settings.button_text }}}
 				</span>
 			</button>
