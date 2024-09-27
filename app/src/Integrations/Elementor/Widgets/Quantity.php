@@ -93,7 +93,7 @@ class Quantity extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'.wp-block-surecart-product-quantity' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wp-block-surecart-product-quantity' => 'color: {{VALUE}}',
 				),
 			)
 		);
@@ -103,7 +103,7 @@ class Quantity extends \Elementor\Widget_Base {
 			array(
 				'name'     => 'quantity_typography',
 				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => '.wp-block-surecart-product-quantity',
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-quantity label',
 			)
 		);
 
@@ -124,9 +124,17 @@ class Quantity extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
-					'.wp-block-surecart-product-quantity .sc-quantity-selector' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-quantity .sc-quantity-selector' => 'width: {{SIZE}}{{UNIT}};',
 				),
 			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'selected_amount_border',
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-quantity .sc-quantity-selector',
+			]
 		);
 
 		$this->add_control(
@@ -136,7 +144,7 @@ class Quantity extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
-					'.wp-block-surecart-product-quantity .sc-quantity-selector' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-quantity .sc-quantity-selector' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
