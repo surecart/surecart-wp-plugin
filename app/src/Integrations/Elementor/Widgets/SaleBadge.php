@@ -93,7 +93,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'default'   => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .sc-tag' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'color: {{VALUE}}',
 				],
 			)
 		);
@@ -105,7 +105,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'default'   => '#000000',
 				'selectors' => [
-					'{{WRAPPER}} .sc-tag' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'background-color: {{VALUE}}',
 				],
 			)
 		);
@@ -117,7 +117,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				'global'   => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
-				'selector' => '{{WRAPPER}} .sc-tag',
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-sale-badge',
 			]
 		);
 
@@ -142,7 +142,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				],
 				'default'   => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .sc-tag' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'justify-content: {{VALUE}};',
 				],
 			]
 		);
@@ -154,7 +154,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-tag' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -166,7 +166,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-tag' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -183,7 +183,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				],
 				'default'   => 'fit-content',
 				'selectors' => [
-					'{{WRAPPER}} .sc-tag' => 'width: {{VALUE}};',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'width: {{VALUE}};',
 				],
 			]
 		);
@@ -198,7 +198,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 					'badge_width' => 'fixed',
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-tag' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'default'    => [
 					'size' => 100,
@@ -211,7 +211,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Border::get_type(),
 			[
 				'name'      => 'border',
-				'selector'  => '{{WRAPPER}} .sc-tag',
+				'selector'  => '{{WRAPPER}} .wp-block-surecart-product-sale-badge',
 				'separator' => 'before',
 			]
 		);
@@ -223,7 +223,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-tag' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -251,7 +251,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
-			<div class="sc-tag sc-tag--primary">
+			<div class="sc-tag sc-tag--primary wp-block-surecart-product-sale-badge">
 				<?php echo esc_html( $settings['text'] ); ?>
 			</div>
 			<?php
@@ -271,7 +271,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 	 */
 	protected function content_template() {
 		?>
-		<div class="sc-tag sc-tag--primary">
+		<div class="sc-tag sc-tag--primary wp-block-surecart-product-sale-badge">
 			{{{ settings.text }}}
 		</div>
 		<?php
