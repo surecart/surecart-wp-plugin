@@ -82,11 +82,48 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Register the widget style settings.
+	 * Register the widget label style settings.
 	 *
 	 * @return void
 	 */
-	protected function register_style_settings() {
+	protected function register_label_style_settings() {
+		$this->start_controls_section(
+			'section_label_style',
+			array(
+				'label' => esc_html__( 'Label', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'label_text_color',
+			array(
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-ad-hoc-amount' => 'color: {{VALUE}}',
+				],
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'label_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-ad-hoc-amount label',
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Register the widget input style settings.
+	 *
+	 * @return void
+	 */
+	protected function register_input_style_settings() {
 		$this->start_controls_section(
 			'section_amount_style',
 			array(
@@ -95,37 +132,23 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 			)
 		);
 
-		$this->add_control(
-			'amount_text_color',
-			array(
-				'label'     => esc_html__( 'Text Color', 'surecart' ),
-				'type'      => \Elementor\Controls_Manager::COLOR,
-				'selectors' => array(
-					'.wp-block-surecart-product-selected-price-ad-hoc-amount' => 'color: {{VALUE}}',
-				),
-			)
-		);
-
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
-				'name'      => 'amount_typography',
-				'label'     => esc_html__( 'Typography', 'surecart' ),
-				'selectors' => array(
-					'.wp-block-surecart-product-selected-price-ad-hoc-amount' => 'font-size: {{SIZE}}{{UNIT}}; font-family: {{FAMILY}}; font-weight: {{WEIGHT}}; font-style: {{STYLE}}; text-transform: {{TEXT_TRANSFORM}}; line-height: {{LINE_HEIGHT}};',
-					'.wp-block-surecart-product-selected-price-ad-hoc-amount .sc-form-label' => 'font-size: {{SIZE}}{{UNIT}}; font-family: {{FAMILY}}; font-weight: {{WEIGHT}}; font-style: {{STYLE}}; text-transform: {{TEXT_TRANSFORM}}; line-height: {{LINE_HEIGHT}};',
-				),
+				'name'     => 'selected_amount_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-ad-hoc-amount .sc-input-group>*',
 			)
 		);
 
 		$this->add_responsive_control(
-			'amount_width',
+			'selected_amount_width',
 			array(
 				'label'      => esc_html__( 'Width', 'elementor' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
-					'.wp-block-surecart-product-selected-price-ad-hoc-amount' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-ad-hoc-amount .sc-input-group' => 'width: {{SIZE}}{{UNIT}};',
 				),
 				'default'    => [
 					'size' => 100,
@@ -134,16 +157,24 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 			)
 		);
 
-		$this->add_control(
-			'amount_border_radius',
-			array(
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'selected_amount_border',
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-ad-hoc-amount .sc-input-group',
+			]
+		);
+
+		$this->add_responsive_control(
+			'selected_amount_border_radius',
+			[
 				'label'      => esc_html__( 'Border Radius', 'elementor' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => array(
-					'.wp-block-surecart-product-selected-price-ad-hoc-amount .sc-form-control' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors'  => [
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-ad-hoc-amount .sc-input-group' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
 		);
 
 		$this->end_controls_section();
@@ -156,7 +187,8 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	 */
 	protected function register_controls() {
 		$this->register_content_settings();
-		$this->register_style_settings();
+		$this->register_label_style_settings();
+		$this->register_input_style_settings();
 	}
 
 	/**
