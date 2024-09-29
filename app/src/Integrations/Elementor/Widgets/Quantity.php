@@ -102,7 +102,7 @@ class Quantity extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'quantity_typography',
-				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'label'    => esc_html__( 'Typography', 'elementor' ),
 				'selector' => '{{WRAPPER}} .wp-block-surecart-product-quantity label',
 			)
 		);
