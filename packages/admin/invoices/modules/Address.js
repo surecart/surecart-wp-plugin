@@ -52,8 +52,6 @@ export default ({ checkout }) => {
 
 	const saveAddress = async () => {
 		if (!isDraftInvoice && !checkout?.id) return;
-		console.log(billingMatchesShipping, 'billingMatchesShipping');
-		console.log('called saveAddress');
 
 		await updateCheckout({
 			shipping_address: customerShippingAddress,
