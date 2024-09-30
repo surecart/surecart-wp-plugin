@@ -2,14 +2,13 @@
 	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
 	<style>.column-invoice { width: 150px}</style>
 	<?php
-	$live_mode    = isset( $_GET['live_mode'] ) ? sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ) : 'true';
-	$new_link_url = \SureCart::getUrl()->create( 'invoices' ) . '&live_mode=' . $live_mode;
+	$live_mode = isset( $_GET['live_mode'] ) ? sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ) : 'true';
 
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
 			'title' => __( 'Invoices', 'surecart' ),
-			'new_link' => $new_link_url,
+			'new_link' => \SureCart::getUrl()->create( 'invoices' ) . '&live_mode=' . $live_mode,
 		]
 	);
 	?>
