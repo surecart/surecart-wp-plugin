@@ -99,12 +99,11 @@ class InvoicesViewController extends AdminController {
 		$live_mode = isset( $_GET['live_mode'] ) ? rest_sanitize_boolean( $_GET['live_mode'] ) : true;
 		$live_mode = $live_mode ? 'true' : 'false';
 
-		$invoice   = ( new Invoice() )
-			->create(
-				[
-					'live_mode' => $live_mode,
-				]
-			)->save();
+		$invoice = Invoice::create(
+			[
+				'live_mode' => $live_mode,
+			]
+		);
 
 		if ( is_wp_error( $invoice ) ) {
 			wp_die( $invoice->get_error_message() );
