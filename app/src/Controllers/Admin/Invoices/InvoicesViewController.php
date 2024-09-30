@@ -87,4 +87,31 @@ class InvoicesViewController extends AdminController {
 		// return view.
 		return '<div id="app"></div>';
 	}
+
+	/**
+	 * Create invoice and redirect to edit page.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return void
+	 */
+	public function create( $request ): void {
+		$live_mode = isset( $_GET['live_mode'] ) ? rest_sanitize_boolean( $_GET['live_mode'] ) : true;
+		$live_mode = $live_mode ? 'true' : 'false';
+
+		$invoice = Invoice::create(
+			[
+				'live_mode' => $live_mode,
+			]
+		);
+
+		if ( is_wp_error( $invoice ) ) {
+			wp_die( $invoice->get_error_message() );
+		}
+
+		wp_safe_redirect(
+			admin_url( 'admin.php?page=sc-invoices&action=edit&id=' . $invoice->id . '&live_mode=' . $live_mode )
+		);
+		exit;
+	}
 }

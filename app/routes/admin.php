@@ -114,6 +114,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'InvoicesViewController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'InvoicesViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'create', 'action' )->middleware( 'nonce:create_invoices' )->handle( 'InvoicesViewController@create' );
 	}
 );
 

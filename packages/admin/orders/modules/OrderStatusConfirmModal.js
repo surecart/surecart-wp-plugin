@@ -61,7 +61,7 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 			open={open}
 			onScRequestClose={onRequestClose}
 		>
-			<Error error={error} />
+			<Error error={error} setError={setError} />
 			{__('Are you sure you wish to mark the order as paid?', 'surecart')}
 			<div slot="footer">
 				<ScButton

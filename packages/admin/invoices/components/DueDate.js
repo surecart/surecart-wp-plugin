@@ -30,17 +30,14 @@ export default ({ invoice, updateInvoice }) => {
 	);
 
 	const isInvalidDate = (date) => {
-		if (invoice?.issue_date) {
-			const issueDate = new Date(invoice.issue_date * 1000);
-			issueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
+		const issueDate = invoice?.issue_date
+			? new Date(invoice.issue_date * 1000)
+			: new Date();
 
-			const selectedDate = new Date(date);
-			selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
-
-			return selectedDate < issueDate;
-		}
-
-		return false;
+		issueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
+		const selectedDate = new Date(date);
+		selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
+		return selectedDate < issueDate;
 	};
 
 	const getTitle = () => {
