@@ -30,7 +30,7 @@ class CartService {
 				}
 			);
 
-			add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
+			add_action( 'template_include', array( $this, 'includeCartTemplate' ) );
 		}
 	}
 
@@ -61,7 +61,6 @@ class CartService {
 		 */
 		return apply_filters( 'sc_cart_menu_icon', $icon, $type );
 	}
-
 
 	/**
 	 * Get selected ids.
@@ -147,6 +146,11 @@ class CartService {
 		return $items;
 	}
 
+	/**
+	 * Get the menu item template.
+	 *
+	 * @return string
+	 */
 	public function menuItemTemplate() {
 		$cart_menu_icon_attributes    = [
 			'cart_menu_always_shown' => $this->isAlwaysShown(),
@@ -194,20 +198,6 @@ class CartService {
 
 		<?php
 		return trim( preg_replace( '/\s+/', ' ', ob_get_clean() ) );
-	}
-
-	/**
-	 * Render the cart components.
-	 *
-	 * @return void
-	 */
-	public function renderCartComponent() {
-		$form = $this->getForm();
-		if ( empty( $form->ID ) ) {
-			return;
-		}
-
-		echo $this->cartTemplate();
 	}
 
 	/**
@@ -270,5 +260,31 @@ class CartService {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Include cart template.
+	 * This needs to run before <head> so that blocks can add scripts and styles in wp_head().
+	 *
+	 * @param string $template The template path.
+	 * @return string
+	 */
+	public function includeCartTemplate( $template ) {
+		$form = $this->getForm();
+		if ( empty( $form->ID ) ) {
+			return $template;
+		}
+
+		$cart_template = $this->cartTemplate();
+
+		// add cart template to footer.
+		add_action(
+			'wp_footer',
+			function () use ( $cart_template ) {
+				echo $cart_template; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		);
+
+		return $template;
 	}
 }
