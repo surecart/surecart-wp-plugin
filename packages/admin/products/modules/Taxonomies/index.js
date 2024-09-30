@@ -1,6 +1,11 @@
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import FlatTermSelector from './FlatTermSelector';
+
+import {
+	PostTaxonomiesFlatTermSelector,
+	PostTaxonomiesHierarchicalTermSelector,
+} from '@wordpress/editor';
+import Box from '../../../ui/Box';
 
 export default ({ post, loading }) => {
 	// get all taxonomies.
@@ -19,15 +24,12 @@ export default ({ post, loading }) => {
 	// render all taxonomies.
 	return visibleTaxonomies.map((taxonomy) => {
 		const TaxonomyComponent = taxonomy.hierarchical
-			? FlatTermSelector
-			: FlatTermSelector;
+			? PostTaxonomiesHierarchicalTermSelector
+			: PostTaxonomiesFlatTermSelector;
 		return (
-			<TaxonomyComponent
-				key={taxonomy.slug}
-				slug={taxonomy.slug}
-				post={post}
-				loading={loading}
-			/>
+			<Box key={taxonomy.slug} title={taxonomy?.name}>
+				<TaxonomyComponent key={taxonomy.slug} slug={taxonomy.slug} />
+			</Box>
 		);
 	});
 };
