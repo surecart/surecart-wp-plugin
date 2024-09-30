@@ -34,6 +34,20 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 		useInvoice();
 	const [modal, setModal] = useState(false);
 
+	const isInvalidDate = (date) => {
+		if (invoice?.issue_date) {
+			const issueDate = new Date(invoice.issue_date * 1000);
+			issueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
+
+			const selectedDate = new Date(date);
+			selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
+
+			return selectedDate < issueDate;
+		}
+
+		return false;
+	};
+
 	const renderCollectedPayment = () => {
 		if (invoice?.status !== 'paid') return null;
 
@@ -220,6 +234,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 														due_date: null,
 													})
 												}
+												isInvalidDate={isInvalidDate}
 											/>
 										</div>
 									</ScFormControl>
