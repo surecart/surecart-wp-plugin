@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
@@ -13,7 +13,6 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	ScButton,
-	ScBlockUi,
 	ScTag,
 	ScDropdown,
 	ScMenuItem,
@@ -49,7 +48,6 @@ export function getEditURL(id) {
 }
 
 export default () => {
-	const [paymentMethod, setPaymentMethod] = useState(false);
 	const [modal, setModal] = useState(null);
 
 	const {
@@ -63,37 +61,36 @@ export default () => {
 		busy,
 	} = useInvoice();
 
-	// Update payment methods when checkout is loaded.
-	useEffect(() => {
-		if (checkout?.payment_method?.id && !checkout?.manual_payment) {
-			setPaymentMethod(checkout?.payment_method);
-		} else if (checkout?.manual_payment_method?.id) {
-			setPaymentMethod(checkout?.manual_payment_method);
-		}
-	}, [checkout]);
+	const paymentMethod = checkout?.manual_payment
+		? checkout?.manual_payment_method
+		: checkout?.payment_method;
 
 	const invoiceListPageURL = addQueryArgs('admin.php', {
 		page: 'sc-invoices',
 		live_mode: live_mode ? 'true' : 'false',
 	});
 
-	const isDisabled =
+	const canSave =
 		checkout?.selected_shipping_choice_required &&
 		!checkout?.selected_shipping_choice;
 
 	const getViewButtonTitle = () => {
-		if (checkout?.order?.id && isDraftInvoice) {
+		if (!checkout?.order?.id) {
+			return __('Create Invoice', 'surecart');
+		}
+
+		if (isDraftInvoice) {
 			return __('Edit Invoice', 'surecart');
 		}
 
-		if (checkout?.order?.id && !isDraftInvoice) {
-			return __('View Invoice', 'surecart');
-		}
-
-		return __('Create Invoice', 'surecart');
+		return __('View Invoice', 'surecart');
 	};
 
 	const getSubmitButtonTitle = () => {
+		if (!checkout?.order?.id) {
+			return __('Create Invoice', 'surecart');
+		}
+
 		if (
 			invoice?.automatic_collection &&
 			isDraftInvoice &&
@@ -102,34 +99,29 @@ export default () => {
 			return __('Charge Customer', 'surecart');
 		}
 
-		if (checkout?.order?.id) {
-			return isDraftInvoice
-				? __('Update Invoice', 'surecart')
-				: __('Edit Invoice', 'surecart');
-		}
-
-		return __('Create Invoice', 'surecart');
+		return isDraftInvoice
+			? __('Update Invoice', 'surecart')
+			: __('Edit Invoice', 'surecart');
 	};
 
-	const getMenuItems = () => {
-		const menuItems = [];
-
-		if (invoice?.status === 'open') {
-			menuItems.push({
-				title: __('Edit Invoice', 'surecart'),
-				modal: 'change_status_to_draft',
-			});
-		}
-
-		if (!['draft', 'paid'].includes(invoice?.status)) {
-			menuItems.push({
-				title: __('Mark As Paid', 'surecart'),
-				modal: 'mark_as_paid',
-			});
-		}
-
-		return menuItems;
-	};
+	const menuItems = [
+		...(invoice?.status === 'open'
+			? [
+					{
+						title: __('Edit Invoice', 'surecart'),
+						modal: 'change_status_to_draft',
+					},
+			  ]
+			: []),
+		...(!['draft', 'paid'].includes(invoice?.status)
+			? [
+					{
+						title: __('Mark As Paid', 'surecart'),
+						modal: 'mark_as_paid',
+					},
+			  ]
+			: []),
+	];
 
 	const renderActionButton = () => {
 		if (invoice?.status === 'paid' && checkout?.order?.id) {
@@ -174,9 +166,7 @@ export default () => {
 						type={isDraftInvoice ? 'primary' : 'default'}
 						busy={busy}
 						disabled={
-							isDisabled ||
-							busy ||
-							!scData?.entitlements?.invoices
+							canSave || busy || !scData?.entitlements?.invoices
 						}
 						submit
 					>
@@ -188,7 +178,7 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>
-					{getMenuItems().length > 0 && (
+					{menuItems.length > 0 && (
 						<>
 							<ScButton
 								type="primary"
@@ -199,7 +189,7 @@ export default () => {
 								{__('Actions', 'surecart')}
 							</ScButton>
 							<ScMenu>
-								{getMenuItems().map((menuItem, key) => (
+								{menuItems.map((menuItem, key) => (
 									<ScMenuItem
 										onClick={() => setModal(menuItem.modal)}
 										key={key}
@@ -254,10 +244,8 @@ export default () => {
 				sidebar={
 					<>
 						<Summary />
-						<SelectCustomer
-							onSuccess={() => setPaymentMethod(null)}
-						/>
-						<Address />
+						<SelectCustomer />
+						<Address checkout={checkout} />
 						<Tax />
 					</>
 				}
@@ -268,15 +256,10 @@ export default () => {
 				<SelectShipping />
 
 				{!!checkout?.line_items?.data?.length && (
-					<Payment
-						paymentMethod={paymentMethod}
-						setPaymentMethod={setPaymentMethod}
-					/>
+					<Payment paymentMethod={paymentMethod} />
 				)}
 
 				<AdditionalOptions />
-
-				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 			</UpdateModel>
 
 			{modal === 'change_status_to_draft' && (
