@@ -43,11 +43,17 @@ export default ({ checkout }) => {
 	);
 
 	const clearAddress = async () => {
-		await updateCheckout({
+		const data = await updateCheckout({
 			shipping_address: null,
 			billing_address: null,
 			billing_matches_shipping: true,
 		});
+
+		if (data) {
+			setCustomerShippingAddress(data.shipping_address);
+			setCustomerBillingAddress(data.billing_address);
+			setBillingMatchesShipping(data.billing_matches_shipping);
+		}
 	};
 
 	const saveAddress = async () => {
