@@ -137,7 +137,7 @@ export class ScAddress {
 
   /** Set the regions based on the country. */
   setRegions() {
-    if (hasState(this.address.country)) {
+    if (hasState(this.address?.country)) {
       import('./countries.json').then(module => {
         const countryRegions = module?.[this.address.country] as Array<{ value: string; label: string }>;
 
@@ -153,7 +153,7 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || null;
+    const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
     this.updateAddress({ country });
     this.handleNameChange();
   }
