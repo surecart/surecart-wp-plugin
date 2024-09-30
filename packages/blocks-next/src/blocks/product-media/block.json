@@ -29,7 +29,7 @@
 			"default": "310px"
 		},
 		"width": {
-			"type": "number"
+			"type": "string"
 		},
 		"show_thumbs": {
 			"type": "boolean",
