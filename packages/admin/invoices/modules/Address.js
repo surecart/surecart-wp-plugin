@@ -39,7 +39,7 @@ export default ({ checkout }) => {
 	);
 
 	const [billingMatchesShipping, setBillingMatchesShipping] = useState(
-		checkout?.billing_matches_shipping || true
+		checkout?.billing_matches_shipping
 	);
 
 	const clearAddress = async () => {
@@ -52,6 +52,8 @@ export default ({ checkout }) => {
 
 	const saveAddress = async () => {
 		if (!isDraftInvoice && !checkout?.id) return;
+		console.log(billingMatchesShipping, 'billingMatchesShipping');
+		console.log('called saveAddress');
 
 		await updateCheckout({
 			shipping_address: customerShippingAddress,
