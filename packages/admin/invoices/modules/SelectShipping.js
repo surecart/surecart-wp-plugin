@@ -40,16 +40,17 @@ export default () => {
 							'surecart'
 						)}
 						<br />
-						<ScButton onClick={() => setOpen(true)}>
+						{/* TODO: Remove this code once finalize this UI */}
+						{/* <ScButton onClick={() => setOpen(true)}>
 							{__('Add A Shipping Address', 'surecart')}
-						</ScButton>
+						</ScButton> */}
 					</ScAlert>
-					<EditAddress
+					{/* <EditAddress
 						invoice={invoice}
 						checkout={checkout}
 						open={open}
 						onRequestClose={() => setOpen(false)}
-					/>
+					/> */}
 				</Box>
 			);
 		}
