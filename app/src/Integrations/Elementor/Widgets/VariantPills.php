@@ -66,7 +66,37 @@ class VariantPills extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .sc-variant-pills' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wp-block-surecart-product-variant-pills' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pill_gap',
+			[
+				'label'       => esc_html__( 'Gap', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SLIDER,
+				'size_units'  => [ 'px', 'em', '%' ],
+				'description' => esc_html__( 'Space between each pill.', 'surecart' ),
+				'range'       => [
+					'px' => [
+						'min'  => 0,
+						'step' => 1,
+						'max'  => 100,
+					],
+					'em' => [
+						'min'  => 0,
+						'step' => 0.1,
+						'max'  => 10,
+					],
+					'%'  => [
+						'min'  => 0,
+						'step' => 1,
+						'max'  => 100,
+					],
+				],
+				'selectors'   => [
+					'{{WRAPPER}} .sc-pill-option__wrapper' => 'gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
