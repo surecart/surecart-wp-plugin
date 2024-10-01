@@ -19,6 +19,7 @@ import {
 	ScAddress,
 	ScCheckbox,
 	ScText,
+	ScDivider,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
@@ -106,6 +107,9 @@ export default ({ checkout }) => {
 						__('Shipping & Tax Address', 'surecart')
 					)}
 					<AddressDisplay address={checkout?.shipping_address} />
+
+					<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
+
 					{renderAddressHeader(__('Billing Address', 'surecart'))}
 
 					{checkout?.billing_matches_shipping ? (
