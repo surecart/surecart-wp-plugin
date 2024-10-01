@@ -4,7 +4,7 @@ global $sc_query_id;
 // get non-empty collections.
 $collections = get_terms(
 	array(
-		'taxonomy'   => 'sc_collection',
+		'taxonomy'   => $attributes['taxonomy'] ?? 'sc_collection',
 		'hide_empty' => true,
 	)
 );
