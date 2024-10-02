@@ -26,27 +26,13 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import PaymentMethods from './PaymentMethods';
-import DatePicker from '../../components/DatePicker';
+import PaymentCollectionDueDate from '../components/PaymentCollectionDueDate';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
 	const { invoice, checkout, loading, editInvoice, isDraftInvoice } =
 		useInvoice();
 	const [modal, setModal] = useState(false);
-
-	const isInvalidDate = (date) => {
-		if (invoice?.issue_date) {
-			const issueDate = new Date(invoice.issue_date * 1000);
-			issueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
-
-			const selectedDate = new Date(date);
-			selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
-
-			return selectedDate < issueDate;
-		}
-
-		return false;
-	};
 
 	const renderCollectedPayment = () => {
 		if (invoice?.status !== 'paid') return null;
@@ -183,65 +169,33 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 									'surecart'
 								)}
 							</ScText>
-
-							{!invoice?.automatic_collection && (
-								<div
-									css={css`
-										margin-top: var(--sc-spacing-medium);
-									`}
-								>
-									<ScFormControl
-										label={__(
-											'Payment Due Date',
-											'surecart'
-										)}
-									>
-										<div
-											css={css`
-												display: flex;
-												margin-top: var(
-													--sc-spacing-small
-												);
-											`}
-										>
-											<DatePicker
-												title={__(
-													'Choose a due date',
-													'surecart'
-												)}
-												placeholder={__(
-													'Due date',
-													'surecart'
-												)}
-												currentDate={
-													invoice?.due_date
-														? new Date(
-																invoice?.due_date *
-																	1000
-														  )
-														: null
-												}
-												onChoose={(due_date) => {
-													editInvoice({
-														due_date:
-															Date.parse(
-																due_date
-															) / 1000,
-													});
-												}}
-												onClear={() =>
-													editInvoice({
-														due_date: null,
-													})
-												}
-												isInvalidDate={isInvalidDate}
-											/>
-										</div>
-									</ScFormControl>
-								</div>
-							)}
 						</div>
 					</ScRadio>
+
+					{!invoice?.automatic_collection && (
+						<div
+							css={css`
+								margin-left: var(--sc-spacing-x-large);
+							`}
+						>
+							<ScFormControl
+								label={__('Payment Due Date', 'surecart')}
+							>
+								<div
+									css={css`
+										display: flex;
+										margin-top: var(--sc-spacing-small);
+										margin-bottom: var(--sc-spacing-large);
+									`}
+								>
+									<PaymentCollectionDueDate
+										invoice={invoice}
+										updateInvoice={editInvoice}
+									/>
+								</div>
+							</ScFormControl>
+						</div>
+					)}
 
 					<ScRadio
 						value="true"
