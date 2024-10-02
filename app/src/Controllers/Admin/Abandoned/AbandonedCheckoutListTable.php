@@ -63,10 +63,6 @@ class AbandonedCheckoutListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 
-			if ( isset( $_GET['live_mode'] ) ) {
-				$link = add_query_arg( 'live_mode', sanitize_text_field($_GET['live_mode']), $link );
-			}
-
 			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
