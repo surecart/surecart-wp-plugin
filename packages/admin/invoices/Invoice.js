@@ -245,7 +245,6 @@ export default () => {
 					<>
 						<Summary />
 						<SelectCustomer />
-						<Address checkout={checkout} />
 						<Tax />
 					</>
 				}
@@ -253,6 +252,7 @@ export default () => {
 			>
 				<Error error={error} setError={setError} />
 				<Prices />
+				<Address checkout={checkout} />
 				<SelectShipping />
 
 				{!!checkout?.line_items?.data?.length && (

@@ -136,7 +136,8 @@ export default ({ checkout }) => {
 
 				<ScCheckbox
 					css={css`
-						padding: 1em 0;
+						padding-top: var(--sc-spacing-large);
+						padding-bottom: var(--sc-spacing-small);
 					`}
 					checked={billingMatchesShipping}
 					onScChange={(e) =>
