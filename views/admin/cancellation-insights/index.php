@@ -17,5 +17,9 @@
 			[ 'title' => __( 'Cancellation Attempts', 'surecart' ) ]
 		);
 		?>
-	<?php $table->display(); ?>
+	<form id="posts-filter" method="get">
+		<?php $table->display(); ?>
+
+		<div id="ajax-response"></div>
+	</form>
 </div>
