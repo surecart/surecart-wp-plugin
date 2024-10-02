@@ -3,8 +3,6 @@
  */
 import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -25,7 +23,6 @@ import { useInvoice } from '../../hooks/useInvoice';
 
 export default ({ onSuccess }) => {
 	const [modal, setModal] = useState(false);
-	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { invoice, checkout, loading, live_mode, updateCheckout } =
 		useInvoice();
 
@@ -45,16 +42,6 @@ export default ({ onSuccess }) => {
 			data = await updateCheckout({
 				customer_id: customerID,
 				shipping_address: data?.customer?.shipping_address,
-			});
-		}
-
-		if (!data.customer?.id) {
-			createSuccessNotice(__('Customer removed.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} else {
-			createSuccessNotice(__('Customer updated.', 'surecart'), {
-				type: 'snackbar',
 			});
 		}
 

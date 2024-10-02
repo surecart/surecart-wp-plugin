@@ -99,19 +99,11 @@ export default ({ invoice, updateInvoice }) => {
 	};
 
 	return (
-		<PanelRow
-			css={css`
-				align-items: flex-start;
-				justify-content: space-between;
-				width: 100%;
-			`}
-			ref={setPopoverAnchor}
-		>
+		<PanelRow ref={setPopoverAnchor}>
 			<span
 				css={css`
 					display: block;
 					flex-shrink: 0;
-					padding: 6px 0;
 					width: 45%;
 				`}
 			>
@@ -130,16 +122,15 @@ export default ({ invoice, updateInvoice }) => {
 							onClick={onToggle}
 							title={getTitle()}
 							ariaLabel={__('Issue Date', 'surecart')}
+							css={css`
+								margin-right: -18px;
+							`}
 						/>
 					)}
 					renderContent={renderContent}
 				/>
 			) : (
-				<div
-					css={css`
-						padding-right: var(--sc-spacing-large);
-					`}
-				>
+				<div>
 					{invoice?.issue_date ? (
 						<ScFormatDate
 							type="timestamp"

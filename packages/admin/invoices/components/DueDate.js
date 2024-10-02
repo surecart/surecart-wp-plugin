@@ -96,24 +96,8 @@ export default ({ invoice, updateInvoice }) => {
 	};
 
 	return (
-		<PanelRow
-			css={css`
-				align-items: flex-start;
-				justify-content: space-between;
-				width: 100%;
-			`}
-			ref={setPopoverAnchor}
-		>
-			<span
-				css={css`
-					display: block;
-					flex-shrink: 0;
-					padding: 6px 0;
-					width: 45%;
-				`}
-			>
-				{__('Due Date', 'surecart')}
-			</span>
+		<PanelRow ref={setPopoverAnchor}>
+			<span>{__('Due Date', 'surecart')}</span>
 
 			{isDraftInvoice ? (
 				<Dropdown
@@ -127,16 +111,15 @@ export default ({ invoice, updateInvoice }) => {
 							onClick={onToggle}
 							title={getTitle()}
 							ariaLabel={__('Due Date', 'surecart')}
+							css={css`
+								margin-right: -18px;
+							`}
 						/>
 					)}
 					renderContent={renderContent}
 				/>
 			) : (
-				<div
-					css={css`
-						padding-right: var(--sc-spacing-large);
-					`}
-				>
+				<div>
 					{invoice?.due_date ? (
 						<ScFormatDate
 							type="timestamp"

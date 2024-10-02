@@ -14,17 +14,9 @@ import { ScInvoiceStatusBadge } from '@surecart/components-react';
 
 export default ({ status }) => {
 	return (
-		<PanelRow
-			css={css`=
-				justify-content: space-between;
-			`}
-		>
+		<PanelRow>
 			<div>{__('Status', 'surecart')}</div>
-			<div
-				css={css`
-					padding-right: var(--sc-spacing-large);
-				`}
-			>
+			<div>
 				<ScInvoiceStatusBadge status={status} />
 			</div>
 		</PanelRow>

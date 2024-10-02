@@ -19,7 +19,8 @@ import {
 	ScAddress,
 	ScCheckbox,
 	ScText,
-	ScDivider,
+	ScFormControl,
+	ScCard,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
@@ -102,21 +103,45 @@ export default ({ checkout }) => {
 
 		if (!isDraftInvoice) {
 			return (
-				<div>
-					{renderAddressHeader(
-						__('Shipping & Tax Address', 'surecart')
-					)}
-					<AddressDisplay address={checkout?.shipping_address} />
+				<div
+					css={css`
+						display: flex;
+						flex-wrap: wrap;
+						gap: var(--sc-spacing-large);
+						justify-content: space-between;
+						align-items: stretch;
+						--sc-input-label-font-weight: var(
+							--sc-font-weight-bold
+						);
+					`}
+				>
+					<ScCard
+						css={css`
+							flex: 1 1 200px;
+						`}
+					>
+						<ScFormControl label={__('Ship to', 'surecart')}>
+							<AddressDisplay
+								address={checkout?.shipping_address}
+							/>
+						</ScFormControl>
+					</ScCard>
 
-					<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
-
-					{renderAddressHeader(__('Billing Address', 'surecart'))}
-
-					{checkout?.billing_matches_shipping ? (
-						<AddressDisplay address={checkout?.shipping_address} />
-					) : (
-						<AddressDisplay address={checkout?.billing_address} />
-					)}
+					<ScCard
+						css={css`
+							flex: 1 1 200px;
+						`}
+					>
+						<ScFormControl label={__('Bill to', 'surecart')}>
+							<AddressDisplay
+								address={
+									checkout?.billing_matches_shipping
+										? checkout?.shipping_address
+										: checkout?.billing_address
+								}
+							/>
+						</ScFormControl>
+					</ScCard>
 				</div>
 			);
 		}

@@ -73,7 +73,7 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 
 			receiveInvoice(invoiceData);
 
-			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
+			createSuccessNotice(__('Invoice saved.', 'surecart'), {
 				type: 'snackbar',
 			});
 

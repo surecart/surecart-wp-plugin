@@ -40,7 +40,7 @@ export default () => {
 	);
 
 	const getTaxIdTitleDisplay = () => {
-		if (!!checkout?.tax_identifier?.id) {
+		if (!!checkout?.tax_identifier?.id && !!taxId?.number) {
 			return taxId?.number;
 		}
 
@@ -54,69 +54,6 @@ export default () => {
 		au_abn: __('ABN Number', 'surecart'),
 		gb_vat: __('VAT Number', 'surecart'),
 		eu_vat: __('VAT Number', 'surecart'),
-	};
-
-	const renderContent = ({ onClose }) => {
-		return (
-			<PostDropdownContent>
-				<InspectorPopoverHeader
-					title={
-						!!checkout?.tax_identifier?.id
-							? __('Edit Tax ID', 'surecart')
-							: __('Add Tax ID', 'surecart')
-					}
-					onClose={onClose}
-					actions={
-						!!checkout?.tax_identifier?.id
-							? [
-									{
-										label: __('Remove', 'surecart'),
-										onClick: async () => {
-											await updateCheckout({
-												tax_identifier: null,
-											});
-											onClose();
-										},
-									},
-							  ]
-							: []
-					}
-				/>
-
-				<div
-					css={css`
-						margin-top: 10px;
-					`}
-				>
-					<ScTaxIdInput
-						number={taxId?.number}
-						type={taxId?.number_type}
-						onScInput={(e) => setTaxId(e?.detail)}
-					/>
-
-					<ScButton
-						css={css`
-							margin-top: var(--sc-spacing-large);
-						`}
-						type="primary"
-						onClick={async () => {
-							await updateCheckout({ tax_identifier: taxId });
-							onClose();
-						}}
-						disabled={
-							taxId?.number ===
-								checkout?.tax_identifier?.number &&
-							taxId?.number_type ===
-								checkout?.tax_identifier?.number_type
-						}
-					>
-						{__('Update', 'surecart')}
-					</ScButton>
-				</div>
-
-				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
-			</PostDropdownContent>
-		);
 	};
 
 	return (
@@ -139,23 +76,82 @@ export default () => {
 				{taxIdLabels[taxId?.number_type] ?? __('Tax ID', 'surecart')}
 			</span>
 
-			<Dropdown
-				popoverProps={popoverProps}
-				className="edit-tax__dropdown"
-				contentClassName="edit-tax-popover__content"
-				focusOnMount
-				renderToggle={({ isOpen, onToggle }) => (
-					<PostDropdownButton
-						isOpen={isOpen}
-						onClick={() =>
-							isDraftInvoice ? onToggle() : undefined
-						}
-						title={getTaxIdTitleDisplay()}
-						ariaLabel={__('Tax ID', 'surecart')}
-					/>
-				)}
-				renderContent={renderContent}
-			/>
+			{isDraftInvoice ? (
+				<Dropdown
+					popoverProps={popoverProps}
+					className="edit-tax__dropdown"
+					contentClassName="edit-tax-popover__content"
+					focusOnMount
+					renderToggle={({ isOpen, onToggle }) => (
+						<PostDropdownButton
+							isOpen={isOpen}
+							onClick={onToggle}
+							title={getTaxIdTitleDisplay()}
+							ariaLabel={__('Tax ID', 'surecart')}
+							css={css`
+								margin-right: -18px;
+							`}
+						/>
+					)}
+					renderContent={({ onClose }) => (
+						<PostDropdownContent>
+							<InspectorPopoverHeader
+								title={
+									!!checkout?.tax_identifier?.id
+										? __('Edit Tax ID', 'surecart')
+										: __('Add Tax ID', 'surecart')
+								}
+								onClose={onClose}
+								actions={
+									!!checkout?.tax_identifier?.id &&
+									!!taxId?.number
+										? [
+												{
+													label: __(
+														'Clear',
+														'surecart'
+													),
+													onClick: async () => {
+														await updateCheckout({
+															tax_identifier:
+																null,
+														});
+														onClose();
+													},
+												},
+										  ]
+										: []
+								}
+							/>
+
+							<div
+								css={css`
+									margin-top: 10px;
+								`}
+							>
+								<ScTaxIdInput
+									number={taxId?.number}
+									type={taxId?.number_type}
+									onScChange={(e) =>
+										updateCheckout({
+											tax_identifier: e.detail,
+										})
+									}
+								/>
+							</div>
+						</PostDropdownContent>
+					)}
+				/>
+			) : (
+				<span
+					css={css`
+						padding: 6px 0;
+					`}
+				>
+					{taxId?.number || '-'}
+				</span>
+			)}
+
 			<Global
 				styles={css`
 					.edit-tax-popover__content .components-popover__content {

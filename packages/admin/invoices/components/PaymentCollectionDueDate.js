@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/react';
  * External dependencies.
  */
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
-import { DatePicker, Dropdown, PanelRow } from '@wordpress/components';
+import { DatePicker, Dropdown } from '@wordpress/components';
 import { useState, useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -24,7 +24,7 @@ export default ({ invoice, updateInvoice }) => {
 
 	// Memoize popoverProps to avoid returning a new object every time.
 	const popoverProps = useMemo(
-		() => ({ anchor: popoverAnchor, placement: 'bottom-end' }),
+		() => ({ anchor: popoverAnchor, placement: 'bottom-start' }),
 		[popoverAnchor]
 	);
 

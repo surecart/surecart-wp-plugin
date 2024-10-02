@@ -47,7 +47,7 @@ export default ({ open, onRequestClose }) => {
 				checkout: checkoutUpdated,
 			});
 
-			createSuccessNotice(__('Invoice marked as Paid.', 'surecart'), {
+			createSuccessNotice(__('Invoice marked as paid.', 'surecart'), {
 				type: 'snackbar',
 			});
 

@@ -16,6 +16,7 @@ import {
 	ScFormatDate,
 	ScFormControl,
 	ScIcon,
+	ScInput,
 	ScManualPaymentMethod,
 	ScMenu,
 	ScMenuItem,
@@ -116,17 +117,19 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 
 		return (
 			<ScText tag="span">
-				{__('Request by payment due by ', 'surecart')}{' '}
 				{invoice?.due_date ? (
-					<ScFormatDate
-						date={invoice?.due_date}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					/>
+					<>
+						{__('Request by payment due by ', 'surecart')}{' '}
+						<ScFormatDate
+							date={invoice?.due_date}
+							type="timestamp"
+							month="long"
+							day="numeric"
+							year="numeric"
+						/>
+					</>
 				) : (
-					'-'
+					__('No due date.', 'surecart')
 				)}
 			</ScText>
 		);
@@ -287,12 +290,23 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 								</div>
 							</div>
 						) : (
-							<ScButton
-								type="primary"
-								onClick={() => setModal('payment')}
-							>
-								{__('Add Payment Method', 'surecart')}
-							</ScButton>
+							<>
+								<ScInput
+									required
+									css={css`
+										width: 0;
+										height: 0;
+										opacity: 0;
+										overflow: hidden;
+									`}
+								/>
+								<ScButton
+									type="default"
+									onClick={() => setModal('payment')}
+								>
+									{__('Add Payment Method', 'surecart')}
+								</ScButton>
+							</>
 						)}
 					</div>
 				)}
