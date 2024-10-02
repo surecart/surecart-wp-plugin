@@ -302,7 +302,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Border::get_type(),
 			[
-				'name'      => 'border',
+				'name'      => 'collection_tag_border',
 				'selector'  => '{{WRAPPER}} .sc-collection-item .sc-tag',
 				'separator' => 'before',
 			]
