@@ -109,10 +109,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
 		),
-		['admin/test-mode-toggle']: path.resolve(
-			__dirname,
-			'packages/admin/test-mode-toggle/index.js'
-		),
 		['admin/cancellation-insights']: path.resolve(
 			__dirname,
 			'packages/admin/cancellation-insights/index.js'

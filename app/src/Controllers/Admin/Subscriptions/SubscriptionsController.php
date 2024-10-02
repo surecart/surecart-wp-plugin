@@ -24,7 +24,6 @@ class SubscriptionsController extends AdminController {
 						'title' => __( 'Subscriptions', 'surecart' ),
 					],
 				],
-				'test_mode_toggle' => true,
 				'report_url'       => SURECART_REPORTS_URL . 'subscriptions',
 			)
 		);

@@ -20,7 +20,6 @@ class AbandonedCheckoutViewController extends AdminController {
 						'title' => __( 'Abandoned Checkouts', 'surecart' ),
 					],
 				],
-				'test_mode_toggle' => true,
 				'report_url'       => SURECART_REPORTS_URL . 'abandoned_checkouts',
 			)
 		);

@@ -42,18 +42,11 @@
 				<?php endforeach; ?>
 			</sc-breadcrumbs>
 		<?php endif; ?>
-		<?php if ( ! empty( $suffix ) || ! empty( $test_mode_toggle ) || ! empty( $report_url ) ) : ?>
+		<?php if ( ! empty( $suffix ) || ! empty( $report_url ) ) : ?>
 		<div class="sc-admin-suffix">
 			<?php
 			if ( ! empty( $suffix ) ) {
 				echo wp_kses_post( $suffix );
-			}
-			?>
-			<?php
-			if ( ! empty( $test_mode_toggle ) ) {
-				?>
-				<div id="sc-test-mode-toggle"></div>
-				<?php
 			}
 			?>
 			<?php
