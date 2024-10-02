@@ -453,7 +453,6 @@ class AffiliationReferralsListTable extends ListTable {
 						'action'    => $action,
 						'nonce'     => wp_create_nonce( $action . '_affiliation' ),
 						'id'        => $id,
-						'live_mode' => $_GET['live_mode'] ?? '',
 					]
 				),
 				esc_url_raw( admin_url( 'admin.php?page=sc-affiliate-referrals' ) )
