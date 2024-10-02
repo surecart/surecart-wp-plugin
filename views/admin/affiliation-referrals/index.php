@@ -30,8 +30,12 @@ if ( ! empty( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
 	);
 	?>
 
-	<?php $table->views(); ?>
-	<?php $table->display(); ?>
+	<form id="posts-filter" method="get">
+		<?php $table->views(); ?>
+		<?php $table->display(); ?>
+
+		<div id="ajax-response"></div>
+	</form>
 </div>
 
 <script>
