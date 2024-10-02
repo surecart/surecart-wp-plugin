@@ -9,6 +9,10 @@
 	"example": {},
 	"textdomain": "surecart",
 	"ancestor": ["surecart/slide-out-cart"],
+	"providesContext": {
+		"editable": "editable",
+		"removable": "removable"
+	},
 	"attributes": {
 		"removable": {
 			"type": "boolean",
@@ -41,7 +45,27 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
+		}
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",

@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-line-item-image",
+	"title": "Line Item Image",
+	"description": "Display the product line item image.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"example": {},
+	"ancestor": ["surecart/slide-out-cart-items"],
+	"attributes": {
+		"sizing": {
+			"type": "string",
+			"default": "cover"
+		},
+		"aspectRatio": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"inserter": false,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"color": {
+			"text": false,
+			"background": false
+		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"radius": true,
+			"__experimentalDefaultControls": {
+				"width": true,
+				"color": true,
+				"radius": true
+			}
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

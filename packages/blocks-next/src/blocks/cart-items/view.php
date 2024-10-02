@@ -1,12 +1,14 @@
 <div
 	class="wp-block-surecart-cart-items__wrapper"
-	<?php echo wp_kses_data(
+	<?php
+	echo wp_kses_data(
 		get_block_wrapper_attributes(
 			array(
 				'style' => $style,
 			)
 		)
-	); ?>
+	);
+	?>
 	role="list"
 >
 	<template
@@ -14,7 +16,8 @@
 		data-wp-each-key="context.line_item.id"
 	>
 		<div class="sc-product-line-item" role="listitem">
-			<div class="sc-product-line-item__item">
+			<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<!-- <div class="sc-product-line-item__item">
 				<img
 					class="sc-product-line-item__image"
 					data-wp-bind--hidden="!context.line_item.image.src"
@@ -145,7 +148,7 @@
 						></div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</template>
 </div>

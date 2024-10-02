@@ -1,14 +1,13 @@
 /**
- * External dependencies.
+ * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { formatListBullets as icon } from '@wordpress/icons';
+import { postContent as icon } from '@wordpress/icons';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
 import edit from './edit';
-import save from './save';
 import metadata from './block.json';
 import './style.scss';
 
@@ -16,7 +15,6 @@ import './style.scss';
  * Every block starts by registering a new block type definition.
  */
 registerBlockType(metadata.name, {
-	icon,
 	edit,
-	save,
+	icon,
 });

@@ -11,22 +11,329 @@ import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 import ScIcon from '../../components/ScIcon';
 import useCartStyles from '../../hooks/useCartStyles';
 import CartInspectorControls from '../../components/CartInspectorControls';
+import TemplateListEdit from '../../components/TemplateListEdit';
 
-export default ({ attributes, setAttributes }) => {
-	const { removable, editable } = attributes;
-
-	const blockProps = useBlockProps({
-		style: {
-			minHeight: '400px',
-			...useCartStyles({ attributes }),
+const TEMPLATE = [
+	[
+		'core/group',
+		{
+			style: {
+				layout: { selfStretch: 'fill', flexSize: null },
+				dimensions: { minHeight: '200px' },
+			},
+			layout: { type: 'default' },
 		},
-	});
+		[
+			[
+				'core/group',
+				{
+					style: {
+						layout: { selfStretch: 'fit', flexSize: null },
+					},
+					layout: {
+						type: 'flex',
+						flexWrap: 'nowrap',
+						verticalAlignment: 'stretch',
+					},
+				},
+				[
+					[
+						'surecart/cart-line-item-image',
+						{
+							id: 3546,
+							width: '114px',
+							height: '114px',
+							scale: 'cover',
+							sizeSlug: 'large',
+							linkDestination: 'none',
+							style: {
+								layout: {
+									selfStretch: 'fixed',
+									flexSize: '114px',
+								},
+								border: {
+									radius: '4px',
+									color: '#dce0e6',
+									width: '1px',
+								},
+								shadow: 'none',
+							},
+						},
+					],
+					[
+						'core/group',
+						{
+							style: {
+								layout: {
+									selfStretch: 'fill',
+									flexSize: null,
+								},
+							},
+							layout: {
+								type: 'flex',
+								orientation: 'vertical',
+								justifyContent: 'stretch',
+								flexWrap: 'nowrap',
+								verticalAlignment: 'top',
+							},
+						},
+						[
+							[
+								'core/group',
+								{
+									style: {
+										layout: {
+											selfStretch: 'fill',
+											flexSize: null,
+										},
+									},
+									layout: { type: 'default' },
+								},
+								[
+									[
+										'core/group',
+										{
+											style: {
+												layout: {
+													selfStretch: 'fill',
+													flexSize: null,
+												},
+											},
+											layout: {
+												type: 'flex',
+												flexWrap: 'nowrap',
+												verticalAlignment: 'stretch',
+												justifyContent: 'space-between',
+											},
+										},
+										[
+											[
+												'core/group',
+												{
+													style: {
+														layout: {
+															selfStretch:
+																'fixed',
+															flexSize: '50%',
+														},
+														spacing: {
+															blockGap: '10px',
+														},
+													},
+													layout: {
+														type: 'default',
+													},
+												},
+												[
+													[
+														'core/paragraph',
+														{
+															style: {
+																color: {
+																	text: '#4b5563',
+																},
+																elements: {
+																	link: {
+																		color: {
+																			text: '#4b5563',
+																		},
+																	},
+																},
+															},
+															content:
+																'<strong>Cloudnova</strong>',
+														},
+													],
+													[
+														'core/paragraph',
+														{
+															style: {
+																typography: {
+																	fontSize:
+																		'14px',
+																	lineHeight:
+																		'1.4',
+																},
+																color: {
+																	text: '#828c99',
+																},
+																elements: {
+																	link: {
+																		color: {
+																			text: '#828c99',
+																		},
+																	},
+																},
+															},
+															content:
+																'Black / S<br>One Time',
+														},
+													],
+												],
+											],
+											[
+												'core/group',
+												{
+													style: {
+														layout: {
+															selfStretch: 'fit',
+															flexSize: null,
+														},
+														spacing: {
+															blockGap: '10px',
+														},
+													},
+													layout: {
+														type: 'default',
+													},
+												},
+												[
+													[
+														'core/paragraph',
+														{
+															align: 'right',
+															style: {
+																layout: {
+																	selfStretch:
+																		'fill',
+																	flexSize:
+																		null,
+																},
+																color: {
+																	text: '#4b5563',
+																},
+																elements: {
+																	link: {
+																		color: {
+																			text: '#4b5563',
+																		},
+																	},
+																},
+															},
+															content:
+																'<strong>$10</strong> / mo',
+														},
+													],
+													[
+														'core/paragraph',
+														{
+															align: 'right',
+															style: {
+																layout: {
+																	selfStretch:
+																		'fill',
+																	flexSize:
+																		null,
+																},
+																typography: {
+																	fontSize:
+																		'14px',
+																	lineHeight:
+																		'1.4',
+																},
+																color: {
+																	text: '#828c99',
+																},
+																elements: {
+																	link: {
+																		color: {
+																			text: '#828c99',
+																		},
+																	},
+																},
+															},
+															content:
+																'$99 Setup Fee<br>14 Day Free Trial',
+														},
+													],
+												],
+											],
+										],
+									],
+								],
+							],
+							[
+								'core/group',
+								{
+									layout: {
+										type: 'flex',
+										flexWrap: 'nowrap',
+										justifyContent: 'space-between',
+										verticalAlignment: 'center',
+									},
+								},
+								[
+									[
+										'core/group',
+										{
+											style: {
+												layout: {
+													selfStretch: 'fill',
+													flexSize: null,
+												},
+											},
+											layout: { type: 'default' },
+										},
+										[
+											[
+												'core/paragraph',
+												{
+													style: {
+														layout: {
+															selfStretch: 'fill',
+															flexSize: null,
+														},
+													},
+													content: 'Qty',
+												},
+											],
+										],
+									],
+									[
+										'core/group',
+										{
+											style: {
+												layout: {
+													selfStretch: 'fit',
+													flexSize: null,
+												},
+											},
+											layout: { type: 'default' },
+										},
+										[
+											[
+												'core/paragraph',
+												{
+													style: {
+														layout: {
+															selfStretch: 'fit',
+															flexSize: null,
+														},
+													},
+													content: 'Remove',
+												},
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			],
+		],
+	],
+];
+
+export default ({ attributes, setAttributes, clientId }) => {
+	const { removable, editable } = attributes;
 
 	const placeholderImageUrl =
 		scBlockData?.plugin_url + '/images/placeholder-thumbnail.jpg';
 
 	const lineItems = [
 		{
+			id: 1,
 			quantity: 2,
 			price: {
 				name: 'Basic',
@@ -38,6 +345,7 @@ export default ({ attributes, setAttributes }) => {
 			},
 		},
 		{
+			id: 2,
 			quantity: 4,
 			price: {
 				name: 'Monthly',
@@ -53,10 +361,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-				<CartInspectorControls
+				{/* <CartInspectorControls
 					attributes={attributes}
 					setAttributes={setAttributes}
-				/>
+				/> */}
 
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -86,83 +394,11 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				{lineItems.map((lineItem) => {
-					return (
-						<div
-							className="sc-product-line-item"
-							style={{ marginBottom: 20 }}
-						>
-							<div className="sc-product-line-item__item">
-								<img
-									src={lineItem.price.product.image_url}
-									className="sc-product-line-item__image"
-								/>
-								<div className="sc-product-line-item__text">
-									<div className="sc-product-line-item__text-details">
-										<div className="sc-product-line-item__title">
-											{lineItem.price.product.name}
-										</div>
-										<div className="sc-product-line-item__description sc-product-line-item__price-variant">
-											<div>{lineItem?.price?.name}</div>
-										</div>
-										{!editable && lineItem.quantity > 1 && (
-											<span className="sc-product-line-item__description">
-												{__('Qty:', 'surecart')}{' '}
-												{lineItem.quantity}
-											</span>
-										)}
-									</div>
-									{editable && (
-										<div className="sc-input-group sc-quantity-selector">
-											<div
-												className="sc-input-group-text sc-quantity-selector__decrease"
-												role="button"
-												tabindex="0"
-												aria-label="<?php echo esc_html__( 'Decrease quantity by one.', 'surecart' ); ?>"
-											>
-												<ScIcon name="minus" />
-											</div>
-											<input
-												type="number"
-												className="sc-form-control sc-quantity-selector__control"
-												value={lineItem.quantity}
-												step="1"
-												autocomplete="off"
-												role="spinbutton"
-											/>
-											<div
-												className="sc-input-group-text sc-quantity-selector__increase"
-												role="button"
-												tabindex="0"
-												aria-label="<?php echo esc_html__( 'Increase quantity by one.', 'surecart' ); ?>"
-											>
-												<ScIcon name="plus" />
-											</div>
-										</div>
-									)}
-								</div>
-								<div className="sc-product-line-item__suffix">
-									{!!removable ? (
-										<ScIcon
-											className="sc-product-line-item__remove"
-											name="x"
-										></ScIcon>
-									) : (
-										<div></div>
-									)}
-
-									<div className="sc-product-line-item__price">
-										<div className="price">
-											{lineItem.price.display_amount}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					);
-				})}
-			</div>
+			<TemplateListEdit
+				template={TEMPLATE}
+				blockContexts={lineItems}
+				clientId={clientId}
+			/>
 		</>
 	);
 };
