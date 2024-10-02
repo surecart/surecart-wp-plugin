@@ -250,7 +250,11 @@ class BuyButton extends \Elementor\Widget_Base {
 			'unavailable_text'  => esc_attr( $settings['button_unavailable_text'] ),
 		);
 
-		echo do_blocks( '<!-- wp:surecart/buy-button ' . wp_json_encode( $attributes ) . '  /-->' );
+		?>
+		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+		<!-- wp:surecart/product-buy-button <?php echo wp_json_encode( $attributes ); ?> /-->
+		</div>
+		<?php
 	}
 
 	/**
