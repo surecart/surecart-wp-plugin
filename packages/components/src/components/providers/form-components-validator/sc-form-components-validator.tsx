@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
-import { Invoice, TaxProtocol } from '../../../types';
+import { TaxProtocol } from '../../../types';
 import { shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
@@ -69,6 +69,11 @@ export class ScFormComponentsValidator {
     if (!!checkoutState.checkout?.shipping_amount) {
       this.addShippingAmount();
     }
+
+    // automatically add invoice details if we have an invoice.
+    if (!!checkoutState.checkout?.invoice) {
+      this.addInvoiceDetails();
+    }
   }
 
   @Watch('hasAddress')
@@ -94,11 +99,6 @@ export class ScFormComponentsValidator {
       if (this.taxProtocol?.eu_vat_required) {
         this.addTaxIDField();
       }
-    }
-    
-    // automatically add invoice details if we have an invoice.
-    if (!!(checkoutState.checkout?.invoice as Invoice)?.id) {
-      this.addInvoiceDetails();
     }
 
     this.handleOrderChange();
