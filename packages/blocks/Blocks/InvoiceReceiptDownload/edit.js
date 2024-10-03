@@ -1,31 +1,33 @@
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
+import { RichText } from '@wordpress/block-editor';
+import { ScLineItem } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { text } = attributes;
 
 	return (
-		<Fragment>
-			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Invoice Receipt Label', 'surecart')}
-							value={text}
-							onChange={(text) => setAttributes({ text })}
-							placeholder={__('Invoice Receipt', 'surecart')}
-						/>
-					</PanelRow>
-				</PanelBody>
-			</InspectorControls>
-
-			<sc-line-item-invoice-receipt-download receipt-download-link={'#'}>
-				<span slot="description">
-					{text || __('Invoice Receipt', 'surecart')}
-				</span>
-			</sc-line-item-invoice-receipt-download>
-		</Fragment>
+		<ScLineItem>
+			<RichText
+				tagName="span"
+				slot="description"
+				placeholder={__('Receipt / Invoice', 'surecart')}
+				value={text}
+				onChange={(text) => setAttributes({ text })}
+				allowedFormats={[]}
+			/>
+			<div
+				slot="price-description"
+				class="sc-invoice-download-link"
+				style={{
+					display: 'inline-flex',
+					gap: 'var(--sc-spacing-x-small)',
+					textDecoration: 'none',
+					color: 'inherit',
+				}}
+			>
+				<sc-icon name="download" />
+				{__('Download', 'surecart')}
+			</div>
+		</ScLineItem>
 	);
 };
