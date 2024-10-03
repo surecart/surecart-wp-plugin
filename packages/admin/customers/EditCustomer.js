@@ -80,7 +80,7 @@ export default () => {
 		const r = confirm(
 			sprintf(
 				__(
-					'Permanently delete %s? You cannot undo this action.',
+					'Warning: Deleting customer "%s" will permanently remove all associated data, including orders and subscriptions. This action cannot be undone. Are you sure you want to continue?',
 					'surecart'
 				),
 				customer?.name ||
