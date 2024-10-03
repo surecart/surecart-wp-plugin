@@ -18,7 +18,7 @@ import { formatTaxDisplay } from '../../util/tax';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
-	const { checkout, updateCheckout, loading } = useInvoice();
+	const { checkout, updateCheckout, loading, busy } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
@@ -120,6 +120,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 					discount={checkout?.discount}
 					currency={checkout?.currency}
 					discountAmount={checkout?.discount_amount}
+					busy={busy}
 				/>
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
