@@ -21,7 +21,7 @@ import CreateCustomer from './CreateCustomer';
 import ModelSelector from '../../../components/ModelSelector';
 import { useInvoice } from '../../hooks/useInvoice';
 
-export default ({ onSuccess }) => {
+export default () => {
 	const [modal, setModal] = useState(false);
 	const { invoice, checkout, loading, live_mode, updateCheckout } =
 		useInvoice();
@@ -44,8 +44,6 @@ export default ({ onSuccess }) => {
 				shipping_address: data?.customer?.shipping_address,
 			});
 		}
-
-		onSuccess();
 	};
 
 	return (
