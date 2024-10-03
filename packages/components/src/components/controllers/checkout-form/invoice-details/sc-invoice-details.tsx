@@ -1,5 +1,13 @@
-import { Component, h } from '@stencil/core';
+/**
+ * External dependencies.
+ */
+import { Component, Host, h } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import { state as checkoutState } from '@store/checkout';
 
 @Component({
   tag: 'sc-invoice-details',
@@ -9,9 +17,11 @@ import { __ } from '@wordpress/i18n';
 export class ScInvoiceDetails {
   render() {
     return (
-      <div class='invoice-details'>
+      <Host style={{ ...(!checkoutState?.checkout?.invoice ? { display: 'none' } : {}) }}>
+        <div class="invoice-details">
           <slot />
-      </div>
+        </div>
+      </Host>
     );
   }
 }
