@@ -70,7 +70,7 @@ export default ({ open, onRequestClose }) => {
 			<Error error={error} setError={setError} />
 
 			{__(
-				'Are you sure you wish to mark the invoice as paid?',
+				'Are you sure you wish to mark the invoice as paid? This cannot be undone.',
 				'surecart'
 			)}
 
