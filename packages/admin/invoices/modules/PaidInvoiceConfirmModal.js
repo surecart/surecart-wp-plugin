@@ -47,7 +47,7 @@ export default ({ open, onRequestClose }) => {
 				checkout: checkoutUpdated,
 			});
 
-			createSuccessNotice(__('Invoice marked as Paid.', 'surecart'), {
+			createSuccessNotice(__('Invoice marked as paid.', 'surecart'), {
 				type: 'snackbar',
 			});
 
@@ -70,7 +70,7 @@ export default ({ open, onRequestClose }) => {
 			<Error error={error} setError={setError} />
 
 			{__(
-				'Are you sure you wish to mark the invoice as paid?',
+				'Are you sure you wish to mark the invoice as paid? This cannot be undone.',
 				'surecart'
 			)}
 

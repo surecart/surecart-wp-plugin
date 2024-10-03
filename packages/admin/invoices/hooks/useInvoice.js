@@ -4,7 +4,6 @@
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
-import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
@@ -23,7 +22,6 @@ export const useInvoice = () => {
 	const busy = useSelect((select) => select(uiStore).isSaving());
 	const error = useSelect((select) => select(uiStore).getError());
 	const { receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
-	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	/**
 	 * Checkout expandable fields.
@@ -71,7 +69,8 @@ export const useInvoice = () => {
 			// fetch the updated checkout.
 			const data = await apiFetch({
 				path: addQueryArgs(`${baseURL}/${invoice?.checkout?.id}`, {
-					expand: checkoutExpands,
+					expand,
+					context: 'edit',
 				}),
 			});
 
@@ -102,6 +101,7 @@ export const useInvoice = () => {
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${id}`, {
 					expand: checkoutExpands,
+					context: 'edit',
 				}),
 				data,
 			});
@@ -135,6 +135,7 @@ export const useInvoice = () => {
 				method: 'POST',
 				path: addQueryArgs(baseURL, {
 					expand: checkoutExpands,
+					context: 'edit',
 				}),
 				data,
 			});
@@ -166,6 +167,7 @@ export const useInvoice = () => {
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${id}`, {
 					expand: checkoutExpands,
+					context: 'edit',
 				}),
 				data,
 			});
@@ -198,6 +200,7 @@ export const useInvoice = () => {
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${invoice?.checkout?.id}`, {
 					expand,
+					context: 'edit',
 				}),
 				data: requestData,
 			});

@@ -5,15 +5,14 @@ import { css, jsx } from '@emotion/react';
  * External dependencies.
  */
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
-import { DatePicker, Dropdown, PanelRow } from '@wordpress/components';
+import { DatePicker, Dropdown } from '@wordpress/components';
 import { useState, useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import { ScFormatDate } from '@surecart/components-react';
-import PostDropdownButton from '../../components/PostDropdownButton';
+import { ScButton, ScIcon, ScFormatDate } from '@surecart/components-react';
 import PostDropdownContent from '../../components/PostDropdownContent';
 
 export default ({ invoice, updateInvoice }) => {
@@ -25,37 +24,34 @@ export default ({ invoice, updateInvoice }) => {
 
 	// Memoize popoverProps to avoid returning a new object every time.
 	const popoverProps = useMemo(
-		() => ({ anchor: popoverAnchor, placement: 'bottom-end' }),
+		() => ({ anchor: popoverAnchor, placement: 'bottom-start' }),
 		[popoverAnchor]
 	);
 
 	const isInvalidDate = (date) => {
-		if (invoice?.due_date) {
-			const dueDate = new Date(invoice.due_date * 1000);
-			dueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
+		const issueDate = invoice?.issue_date
+			? new Date(invoice.issue_date * 1000)
+			: new Date();
 
-			const selectedDate = new Date(date);
-			selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
-
-			return selectedDate > dueDate;
-		}
-
-		return false;
+		issueDate.setHours(0, 0, 0, 0); // Normalize issue date to midnight
+		const selectedDate = new Date(date);
+		selectedDate.setHours(0, 0, 0, 0); // Normalize selected date to midnight
+		return selectedDate < issueDate;
 	};
 
 	const getTitle = () => {
-		return invoice?.issue_date ? (
+		return invoice?.due_date ? (
 			<ScFormatDate
 				type="timestamp"
 				month="short"
 				day="numeric"
 				year="numeric"
-				date={invoice?.issue_date}
+				date={invoice?.due_date}
 			/>
 		) : isDraftInvoice ? (
-			__('Today', 'surecart')
+			__('Set Due Date', 'surecart')
 		) : (
-			__('No Issue Date', 'surecart')
+			__('No Due Date', 'surecart')
 		);
 	};
 
@@ -63,14 +59,14 @@ export default ({ invoice, updateInvoice }) => {
 		return (
 			<PostDropdownContent>
 				<InspectorPopoverHeader
-					title={__('Issue Date', 'surecart')}
+					title={__('Due Date', 'surecart')}
 					actions={
-						invoice?.issue_date
+						invoice?.due_date
 							? [
 									{
 										label: __('Clear', 'surecart'),
 										onClick: () => {
-											updateInvoice({ issue_date: null });
+											updateInvoice({ due_date: null });
 											onClose();
 										},
 									},
@@ -81,14 +77,14 @@ export default ({ invoice, updateInvoice }) => {
 				/>
 				<DatePicker
 					currentDate={
-						invoice?.issue_date
-							? new Date(invoice?.issue_date * 1000)
+						invoice?.due_date
+							? new Date(invoice?.due_date * 1000)
 							: null
 					}
 					onChange={(date) => {
-						const issueDate = new Date(date).toUTCString();
+						const dueDate = new Date(date).toUTCString();
 						updateInvoice({
-							issue_date: Date.parse(issueDate) / 1000,
+							due_date: Date.parse(dueDate) / 1000,
 						});
 						onClose();
 					}}
@@ -99,51 +95,40 @@ export default ({ invoice, updateInvoice }) => {
 	};
 
 	return (
-		<PanelRow ref={setPopoverAnchor}>
-			<span
-				css={css`
-					display: block;
-					flex-shrink: 0;
-					width: 45%;
-				`}
-			>
-				{__('Issue Date', 'surecart')}
-			</span>
-
+		<div ref={setPopoverAnchor}>
 			{isDraftInvoice ? (
 				<Dropdown
 					popoverProps={popoverProps}
 					className="edit-post-post-url__dropdown"
 					contentClassName="edit-post-post-url__dialog"
 					focusOnMount
-					renderToggle={({ isOpen, onToggle }) => (
-						<PostDropdownButton
-							isOpen={isOpen}
-							onClick={onToggle}
-							title={getTitle()}
-							ariaLabel={__('Issue Date', 'surecart')}
-							css={css`
-								margin-right: -18px;
-							`}
-						/>
+					renderToggle={({ onToggle }) => (
+						<ScButton onClick={onToggle}>
+							{getTitle()}
+							<ScIcon name="plus" slot="suffix" />
+						</ScButton>
 					)}
 					renderContent={renderContent}
 				/>
 			) : (
-				<div>
-					{invoice?.issue_date ? (
+				<div
+					css={css`
+						padding-right: var(--sc-spacing-large);
+					`}
+				>
+					{invoice?.due_date ? (
 						<ScFormatDate
 							type="timestamp"
 							month="short"
 							day="numeric"
 							year="numeric"
-							date={invoice?.issue_date}
+							date={invoice?.due_date}
 						/>
 					) : (
 						'-'
 					)}
 				</div>
 			)}
-		</PanelRow>
+		</div>
 	);
 };

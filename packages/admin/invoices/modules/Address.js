@@ -19,6 +19,8 @@ import {
 	ScAddress,
 	ScCheckbox,
 	ScText,
+	ScFormControl,
+	ScCard,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
@@ -43,11 +45,17 @@ export default ({ checkout }) => {
 	);
 
 	const clearAddress = async () => {
-		await updateCheckout({
+		const data = await updateCheckout({
 			shipping_address: null,
 			billing_address: null,
 			billing_matches_shipping: true,
 		});
+
+		if (data) {
+			setCustomerShippingAddress(data.shipping_address);
+			setCustomerBillingAddress(data.billing_address);
+			setBillingMatchesShipping(data.billing_matches_shipping);
+		}
 	};
 
 	const saveAddress = async () => {
@@ -70,6 +78,24 @@ export default ({ checkout }) => {
 		billingMatchesShipping,
 	]);
 
+	const renderAddressHeader = (title) => {
+		return (
+			<ScText
+				tag="h3"
+				css={css`
+					margin-bottom: var(--sc-spacing-small);
+					padding: var(--sc-spacing-small) 0;
+				`}
+				style={{
+					'--font-weight': 'var(--sc-font-weight-bold)',
+					'--font-size': 'var(--sc-font-size-small)',
+				}}
+			>
+				{title}
+			</ScText>
+		);
+	};
+
 	const renderForm = () => {
 		if (!checkout?.id) {
 			return null;
@@ -77,35 +103,52 @@ export default ({ checkout }) => {
 
 		if (!isDraftInvoice) {
 			return (
-				<div>
-					<AddressDisplay address={checkout?.shipping_address} />
-
-					<ScText
-						tag="h3"
+				<div
+					css={css`
+						display: flex;
+						flex-wrap: wrap;
+						gap: var(--sc-spacing-large);
+						justify-content: space-between;
+						align-items: stretch;
+						--sc-input-label-font-weight: var(
+							--sc-font-weight-bold
+						);
+					`}
+				>
+					<ScCard
 						css={css`
-							margin: var(--sc-spacing-medium) 0;
-							padding: var(--sc-spacing-medium) 0;
-							border-bottom: 1px solid var(--sc-color-gray-300);
+							flex: 1 1 200px;
 						`}
-						style={{
-							'--font-weight': 'var(--sc-font-weight-bold)',
-							'--font-size': 'var(--sc-font-size-medium)',
-						}}
 					>
-						{__('Billing Address', 'surecart')}
-					</ScText>
+						<ScFormControl label={__('Ship to', 'surecart')}>
+							<AddressDisplay
+								address={checkout?.shipping_address}
+							/>
+						</ScFormControl>
+					</ScCard>
 
-					{checkout?.billing_matches_shipping ? (
-						<AddressDisplay address={checkout?.shipping_address} />
-					) : (
-						<AddressDisplay address={checkout?.billing_address} />
-					)}
+					<ScCard
+						css={css`
+							flex: 1 1 200px;
+						`}
+					>
+						<ScFormControl label={__('Bill to', 'surecart')}>
+							<AddressDisplay
+								address={
+									checkout?.billing_matches_shipping
+										? checkout?.shipping_address
+										: checkout?.billing_address
+								}
+							/>
+						</ScFormControl>
+					</ScCard>
 				</div>
 			);
 		}
 
 		return (
 			<>
+				{renderAddressHeader(__('Shipping & Tax Address', 'surecart'))}
 				<ScAddress
 					showName={true}
 					showLine2={true}
@@ -118,7 +161,8 @@ export default ({ checkout }) => {
 
 				<ScCheckbox
 					css={css`
-						padding: 1em 0;
+						padding-top: var(--sc-spacing-large);
+						padding-bottom: var(--sc-spacing-small);
 					`}
 					checked={billingMatchesShipping}
 					onScChange={(e) =>
@@ -132,15 +176,20 @@ export default ({ checkout }) => {
 				</ScCheckbox>
 
 				{!billingMatchesShipping && (
-					<ScAddress
-						showName={true}
-						showLine2={true}
-						required={checkout?.shipping_address_required || false}
-						address={customerBillingAddress}
-						onScChangeAddress={(e) =>
-							setCustomerBillingAddress(e?.detail)
-						}
-					/>
+					<>
+						{renderAddressHeader(__('Billing Address', 'surecart'))}
+						<ScAddress
+							showName={true}
+							showLine2={true}
+							required={
+								checkout?.shipping_address_required || false
+							}
+							address={customerBillingAddress}
+							onScChangeAddress={(e) =>
+								setCustomerBillingAddress(e?.detail)
+							}
+						/>
+					</>
 				)}
 			</>
 		);
@@ -148,17 +197,18 @@ export default ({ checkout }) => {
 
 	return (
 		<Box
-			title={__('Shipping & Tax Address', 'surecart')}
+			title={__('Address', 'surecart')}
 			loading={loading}
 			header_action={
-				isDraftInvoice && (
+				isDraftInvoice &&
+				checkout?.shipping_address?.id && (
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							slot="trigger"
 							type="text"
 							circle
 							style={{
-								margin: '-10px',
+								margin: '-12px',
 							}}
 						>
 							<ScIcon name="more-horizontal" />

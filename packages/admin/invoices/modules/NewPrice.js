@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -8,7 +11,7 @@ import { useEffect, useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import PriceSelector from '@admin/components/PriceSelector';
-import { ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
@@ -64,6 +67,18 @@ export default () => {
 				archived: false,
 			}}
 		>
+			{!checkout?.line_items?.data?.length && (
+				<ScInput
+					slot="trigger"
+					required
+					css={css`
+						width: 0;
+						height: 0;
+						opacity: 0;
+						overflow: hidden;
+					`}
+				/>
+			)}
 			<ScButton
 				slot="trigger"
 				type={

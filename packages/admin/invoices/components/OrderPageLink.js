@@ -15,24 +15,11 @@ import PostDropdownButton from '../../components/PostDropdownButton';
 
 export default ({ orderPageUrl }) => {
 	return (
-		<PanelRow
-			css={css`=
-				justify-content: space-between;
-			`}
-		>
+		<PanelRow>
+			<div>{__('Order Page', 'surecart')}</div>
 			<div
 				css={css`
-					display: block;
-					flex-shrink: 0;
-					padding: 6px 0;
-					width: 45%;
-				`}
-			>
-				{__('Order Page', 'surecart')}
-			</div>
-			<div
-				css={css`
-					padding-right: 4px;
+					margin-right: -14px;
 				`}
 			>
 				<PostDropdownButton

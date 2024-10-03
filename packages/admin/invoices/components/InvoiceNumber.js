@@ -9,19 +9,9 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ orderNumber }) => {
 	return (
-		<PanelRow
-			css={css`=
-				justify-content: space-between;
-			`}
-		>
+		<PanelRow>
 			<div>{__('Invoice Number', 'surecart')}</div>
-			<div
-				css={css`
-					padding-right: var(--sc-spacing-large);
-				`}
-			>
-				#{orderNumber}
-			</div>
+			<div>#{orderNumber}</div>
 		</PanelRow>
 	);
 };

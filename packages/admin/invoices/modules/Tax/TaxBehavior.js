@@ -30,47 +30,20 @@ export default () => {
 		[popoverAnchor]
 	);
 
-	const renderContent = ({ onClose }) => {
-		return (
-			<PostDropdownContent>
-				<InspectorPopoverHeader
-					title={__('Tax Behavior', 'surecart')}
-					onClose={onClose}
-				/>
-
-				<ScRadioGroup
-					onScChange={async () => {
-						await updateCheckout({
-							tax_behavior:
-								checkout?.tax_behavior === 'inclusive'
-									? 'exclusive'
-									: 'inclusive',
-						});
-						onClose();
-					}}
-				>
-					<ScRadio
-						value="inclusive"
-						checked={
-							checkout?.tax_behavior === 'inclusive' || false
-						}
-					>
-						{__('Inclusive', 'surecart')}
-					</ScRadio>
-					<ScRadio
-						value="exclusive"
-						checked={
-							checkout?.tax_behavior === 'exclusive' || false
-						}
-					>
-						{__('Exclusive', 'surecart')}
-					</ScRadio>
-				</ScRadioGroup>
-
-				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
-			</PostDropdownContent>
-		);
+	const onChange = async (value) => {
+		await updateCheckout({
+			tax_behavior:
+				checkout?.tax_behavior === 'inclusive'
+					? 'exclusive'
+					: 'inclusive',
+		});
+		onClose();
 	};
+
+	const label =
+		checkout?.tax_behavior === 'inclusive'
+			? __('Included', 'surecart')
+			: __('Not Included', 'surecart');
 
 	return (
 		<PanelRow
@@ -89,29 +62,68 @@ export default () => {
 					width: 45%;
 				`}
 			>
-				{__('Tax Behavior', 'surecart')}
+				{__('Tax Inclusion', 'surecart')}
 			</span>
-			<Dropdown
-				popoverProps={popoverProps}
-				className="edit-post-post-url__dropdown"
-				contentClassName="edit-post-post-url__dialog"
-				focusOnMount
-				renderToggle={({ isOpen, onToggle }) => (
-					<PostDropdownButton
-						isOpen={isOpen}
-						onClick={() =>
-							isDraftInvoice ? onToggle() : undefined
-						}
-						title={
-							checkout?.tax_behavior === 'inclusive'
-								? __('Inclusive', 'surecart')
-								: __('Exclusive', 'surecart')
-						}
-						ariaLabel={__('Tax Behavior', 'surecart')}
-					/>
-				)}
-				renderContent={renderContent}
-			/>
+
+			{isDraftInvoice ? (
+				<Dropdown
+					popoverProps={popoverProps}
+					className="edit-post-post-url__dropdown"
+					contentClassName="edit-post-post-url__dialog"
+					focusOnMount
+					renderToggle={({ isOpen, onToggle }) => (
+						<PostDropdownButton
+							isOpen={isOpen}
+							onClick={onToggle}
+							title={label}
+							ariaLabel={__('Tax Inclusion', 'surecart')}
+							css={css`
+								margin-right: -18px;
+							`}
+						/>
+					)}
+					renderContent={({ onClose }) => (
+						<PostDropdownContent>
+							<InspectorPopoverHeader
+								title={__('Tax Inclusion', 'surecart')}
+								onClose={onClose}
+							/>
+
+							<ScRadioGroup onScChange={onChange}>
+								<ScRadio
+									value="inclusive"
+									checked={
+										checkout?.tax_behavior ===
+											'inclusive' || false
+									}
+								>
+									{__('Included', 'surecart')}
+								</ScRadio>
+								<ScRadio
+									value="exclusive"
+									checked={
+										checkout?.tax_behavior ===
+											'exclusive' || false
+									}
+								>
+									{__('Not Included', 'surecart')}
+								</ScRadio>
+							</ScRadioGroup>
+
+							{busy && <ScBlockUi style={{ zIndex: 9 }} />}
+						</PostDropdownContent>
+					)}
+				/>
+			) : (
+				<span
+					css={css`
+						display: inline-block;
+						padding: 6px 0;
+					`}
+				>
+					{label}
+				</span>
+			)}
 		</PanelRow>
 	);
 };

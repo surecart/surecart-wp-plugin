@@ -10,6 +10,7 @@ import {
 	ScFormatNumber,
 	ScLineItem,
 	ScDivider,
+	ScCouponForm,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import PaymentCollection from './PaymentCollection';
@@ -17,13 +18,21 @@ import { formatTaxDisplay } from '../../util/tax';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
-	const { checkout, loading } = useInvoice();
+	const { checkout, updateCheckout, loading, busy } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
 	)?.find(
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
+
+	const onCouponChange = async (e) => {
+		await updateCheckout({
+			discount: {
+				promotion_code: e?.detail,
+			},
+		});
+	};
 
 	const renderPaymentDetails = () => {
 		return (
@@ -102,6 +111,18 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 					</ScLineItem>
 				)}
 
+				<ScCouponForm
+					collapsed={true}
+					placeholder={__('Enter Coupon Code', 'surecart')}
+					label={__('Add Coupon Code', 'surecart')}
+					buttonText={__('Apply', 'surecart')}
+					onScApplyCoupon={onCouponChange}
+					discount={checkout?.discount}
+					currency={checkout?.currency}
+					discountAmount={checkout?.discount_amount}
+					busy={busy}
+				/>
+
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
 				<ScLineItem>
@@ -136,7 +157,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 					</ScLineItem>
 				)}
 
-				{checkout?.total_amount !== checkout?.amount_due && (
+				{checkout?.total_amount !== checkout?.remaining_amount_due && (
 					<ScLineItem>
 						<span slot="title">{__('Amount Due', 'surecart')}</span>
 						<ScFormatNumber
@@ -147,7 +168,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							}}
 							type="currency"
 							currency={checkout?.currency}
-							value={checkout?.amount_due}
+							value={checkout?.remaining_amount_due}
 						></ScFormatNumber>
 					</ScLineItem>
 				)}

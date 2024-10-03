@@ -20,7 +20,7 @@ import { ScButton, ScForm, ScSwitch } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import Error from '../../components/Error';
 
-export default ({ title, onRequestClose, paymentMethod }) => {
+export default ({ title, onRequestClose, paymentMethod, children }) => {
 	const { invoice, editInvoice, receiveInvoice, checkoutExpands } =
 		useInvoice();
 	const [error, setError] = useState(null);
@@ -29,11 +29,8 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const messages = {
-		notifyCustomer: __('Notify customer the invoice.', 'surecart'),
-		notifyCustomerUpdate: __(
-			'Notify customer that the invoice has been updated.',
-			'surecart'
-		),
+		notifyCustomer: __('Send an email to the customer.', 'surecart'),
+		notifyCustomerUpdate: __('Send an email to the customer.', 'surecart'),
 	};
 
 	const saveInvoice = async () => {
@@ -73,7 +70,7 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 
 			receiveInvoice(invoiceData);
 
-			createSuccessNotice(__('Invoice Saved.', 'surecart'), {
+			createSuccessNotice(__('Invoice saved.', 'surecart'), {
 				type: 'snackbar',
 			});
 
@@ -95,6 +92,8 @@ export default ({ title, onRequestClose, paymentMethod }) => {
 			onRequestClose={onRequestClose}
 		>
 			<Error error={error} setError={setError} />
+
+			{children}
 
 			<ScForm
 				onScFormSubmit={saveInvoice}

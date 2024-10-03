@@ -127,14 +127,13 @@ export default () => {
 		if (invoice?.status === 'paid' && checkout?.order?.id) {
 			return (
 				<ScButton
-					type="primary"
+					type="default"
 					busy={busy}
 					href={addQueryArgs('admin.php', {
 						page: 'sc-orders',
 						action: 'edit',
 						id: checkout?.order?.id,
 					})}
-					target="_blank"
 				>
 					{__('View Order', 'surecart')}
 				</ScButton>
@@ -245,7 +244,6 @@ export default () => {
 					<>
 						<Summary />
 						<SelectCustomer />
-						<Address checkout={checkout} />
 						<Tax />
 					</>
 				}
@@ -253,6 +251,7 @@ export default () => {
 			>
 				<Error error={error} setError={setError} />
 				<Prices />
+				<Address checkout={checkout} />
 				<SelectShipping />
 
 				{!!checkout?.line_items?.data?.length && (
@@ -281,7 +280,12 @@ export default () => {
 					onRequestClose={() => setModal(null)}
 					title={getSubmitButtonTitle()}
 					paymentMethod={paymentMethod}
-				/>
+				>
+					{__(
+						'This will lock the invoice and prepare it for payment.',
+						'surecart'
+					)}
+				</SendNotificationConfirmModal>
 			)}
 
 			{modal === 'delete_invoice' && (

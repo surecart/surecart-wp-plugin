@@ -80,24 +80,8 @@ export default ({ checkoutPageUrl }) => {
 	);
 
 	return (
-		<PanelRow
-			css={css`
-				align-items: flex-start;
-				justify-content: space-between;
-				width: 100%;
-			`}
-			ref={setPopoverAnchor}
-		>
-			<span
-				css={css`
-					display: block;
-					flex-shrink: 0;
-					padding: 6px 0;
-					width: 45%;
-				`}
-			>
-				{__('Checkout Page', 'surecart')}
-			</span>
+		<PanelRow ref={setPopoverAnchor}>
+			<span>{__('Checkout Page', 'surecart')}</span>
 			<Dropdown
 				popoverProps={popoverProps}
 				className="edit-post-post-url__dropdown"
@@ -112,6 +96,9 @@ export default ({ checkoutPageUrl }) => {
 							'View / Copy Checkout Page URL',
 							'surecart'
 						)}
+						css={css`
+							margin-right: -18px;
+						`}
 					/>
 				)}
 				renderContent={renderContent}
