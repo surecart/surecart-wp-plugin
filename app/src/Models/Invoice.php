@@ -1,19 +1,14 @@
 <?php
+
 namespace SureCart\Models;
 
-use SureCart\Models\Traits\CanFinalize;
 use SureCart\Models\Traits\HasCheckout;
-use SureCart\Models\Traits\HasCustomer;
-use SureCart\Models\Traits\HasSubscription;
-use SureCart\Models\Traits\HasPaymentIntent;
-use SureCart\Models\Traits\HasPaymentMethod;
-use SureCart\Models\Traits\HasProcessorType;
 
 /**
  * Invoice model
  */
 class Invoice extends Model {
-	use HasCheckout, HasCustomer, HasSubscription, HasPaymentIntent, HasPaymentMethod, CanFinalize, HasProcessorType;
+	use HasCheckout;
 
 	/**
 	 * Rest API endpoint
