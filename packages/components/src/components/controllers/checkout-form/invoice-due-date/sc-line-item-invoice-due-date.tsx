@@ -17,6 +17,7 @@ import { Checkout, Invoice } from '../../../../types';
   shadow: true,
 })
 export class ScLineItemInvoiceDueDate {
+  /** The checkout */
   @Prop() checkout: Checkout;
 
   /** The invoice due date */
@@ -45,7 +46,7 @@ export class ScLineItemInvoiceDueDate {
       <Host>
         <sc-line-item>
           <span slot="description">
-            <slot name="description">{__('Invoice Due Date', 'surecart')}</slot>
+            <slot name="description">{__('Due Date', 'surecart')}</slot>
           </span>
           <span slot="price-description">
             <sc-format-date date={dueDate} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
