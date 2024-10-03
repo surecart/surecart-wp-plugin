@@ -136,7 +136,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 					</ScLineItem>
 				)}
 
-				{checkout?.total_amount !== checkout?.amount_due && (
+				{checkout?.total_amount !== checkout?.remaining_amount_due && (
 					<ScLineItem>
 						<span slot="title">{__('Amount Due', 'surecart')}</span>
 						<ScFormatNumber
@@ -147,7 +147,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							}}
 							type="currency"
 							currency={checkout?.currency}
-							value={checkout?.amount_due}
+							value={checkout?.remaining_amount_due}
 						></ScFormatNumber>
 					</ScLineItem>
 				)}
