@@ -47,6 +47,15 @@ class VariantPills extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the widget categories.
+	 *
+	 * @return array
+	 */
+	public function get_categories() {
+		return [ 'surecart-elementor' ];
+	}
+
+	/**
 	 * Register the widget style settings.
 	 *
 	 * @return void

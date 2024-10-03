@@ -47,6 +47,15 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	}
 
 	/**
+	 * Get the widget categories.
+	 *
+	 * @return array
+	 */
+	public function get_categories() {
+		return [ 'surecart-elementor' ];
+	}
+
+	/**
 	 * Show the widget in the panel.
 	 *
 	 * @return bool

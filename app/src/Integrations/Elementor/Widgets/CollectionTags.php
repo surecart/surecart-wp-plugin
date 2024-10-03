@@ -47,6 +47,15 @@ class CollectionTags extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the widget categories.
+	 *
+	 * @return array
+	 */
+	public function get_categories() {
+		return [ 'surecart-elementor' ];
+	}
+
+	/**
 	 * Get the style dependencies.
 	 *
 	 * @return array

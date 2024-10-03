@@ -48,6 +48,15 @@ class Quantity extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the widget categories.
+	 *
+	 * @return array
+	 */
+	public function get_categories() {
+		return [ 'surecart-elementor' ];
+	}
+
+	/**
 	 * Register the widget content settings.
 	 *
 	 * @return void

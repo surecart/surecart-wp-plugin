@@ -48,6 +48,15 @@ class Media extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the widget categories.
+	 *
+	 * @return array
+	 */
+	public function get_categories() {
+		return [ 'surecart-elementor' ];
+	}
+
+	/**
 	 * Get style dependencies.
 	 *
 	 * @return array
