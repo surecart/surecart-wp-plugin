@@ -70,10 +70,7 @@ export const useInvoice = () => {
 			const data = await apiFetch({
 				path: addQueryArgs(`${baseURL}/${invoice?.checkout?.id}`, {
 					expand,
-<<<<<<< HEAD
 					context: 'edit',
-=======
->>>>>>> 9a3af449eaf02047ab2aefb27b534cae78bd9db6
 				}),
 			});
 
