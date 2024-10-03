@@ -242,7 +242,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 		$this->add_control(
 			'collection_tag_color',
 			[
-				'label'     => esc_html__( 'Text Color', 'elementor' ),
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'global'    => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -256,7 +256,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 		$this->add_control(
 			'collection_tag_background_color',
 			[
-				'label'     => esc_html__( 'Background Color', 'elementor' ),
+				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'.sc-collection-item .sc-tag' => 'background-color: {{VALUE}};',
@@ -278,7 +278,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 		$this->add_control(
 			'collection_tag_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'elementor' ),
+				'label'      => esc_html__( 'Padding', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -290,7 +290,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 		$this->add_control(
 			'collection_tag_margin',
 			[
-				'label'      => esc_html__( 'Margin', 'elementor' ),
+				'label'      => esc_html__( 'Margin', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -311,7 +311,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'collection_tag_border_radius',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => array(
