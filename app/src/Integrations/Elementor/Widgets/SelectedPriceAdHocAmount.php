@@ -144,7 +144,7 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'selected_amount_width',
 			array(
-				'label'      => esc_html__( 'Width', 'elementor' ),
+				'label'      => esc_html__( 'Width', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
@@ -168,7 +168,7 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'selected_amount_border_radius',
 			[
-				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => [

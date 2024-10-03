@@ -55,7 +55,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_sale_badge',
 			[
-				'label' => esc_html__( 'Sale Badge', 'elementor' ),
+				'label' => esc_html__( 'Sale Badge', 'surecart' ),
 			]
 		);
 
@@ -219,7 +219,7 @@ class SaleBadge extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'border_radius',
 			[
-				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => [

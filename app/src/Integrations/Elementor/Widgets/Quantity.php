@@ -102,7 +102,7 @@ class Quantity extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'quantity_typography',
-				'label'    => esc_html__( 'Typography', 'elementor' ),
+				'label'    => esc_html__( 'Typography', 'surecart' ),
 				'selector' => '{{WRAPPER}} .wp-block-surecart-product-quantity label',
 			)
 		);
@@ -120,7 +120,7 @@ class Quantity extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'quantity_width',
 			array(
-				'label'      => esc_html__( 'Width', 'elementor' ),
+				'label'      => esc_html__( 'Width', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
@@ -140,7 +140,7 @@ class Quantity extends \Elementor\Widget_Base {
 		$this->add_control(
 			'quantity_border_radius',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
