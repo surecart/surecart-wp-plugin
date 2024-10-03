@@ -188,8 +188,8 @@ export default ({ lineItem, loading, subscription }) => {
 															'Setup Fee',
 															'surecart'
 													  ))}
-										</span>{' '}
-										{' - '}
+										</span>
+										{': '}
 										<ScFormatNumber
 											type="currency"
 											value={
