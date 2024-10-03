@@ -143,8 +143,8 @@ class ProductListMigrationService {
 			$this->block_html .= '<!-- wp:surecart/product-list-sort /-->';
 		}
 
-		if ( $collection_enabled ) {
-			$this->block_html .= '<!-- wp:surecart/product-list-filter /-->';
+		if ( $collection_enabled && empty( $this->attributes['collection_id'] ) ) {
+			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $collection_id ) . '"} /-->';
 		}
 
 		$this->block_html .= '</div><!-- /wp:group -->';
@@ -161,7 +161,7 @@ class ProductListMigrationService {
 		if ( ! $search_enabled ) {
 			return;
 		}
-		
+
 		$this->block_html .= '<!-- wp:surecart/product-list-search {"style":{"layout":{"selfStretch":"fixed","flexSize":"250px"}}} /-->';
 	}
 
@@ -201,8 +201,41 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderImage(): void {
-		$product_image_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-image' ), JSON_FORCE_OBJECT );
-		$this->block_html   .= '<!-- wp:surecart/product-image ' . $product_image_attrs . ' /-->';
+		$product_image_attrs = array(
+			'useFeaturedImage'   => true,
+			'dimRatio'           => 0,
+			'isUserOverlayColor' => true,
+			'focalPoint'         => array(
+				'x' => 0.5,
+				'y' => 0.5,
+			),
+			'contentPosition'    => 'top right',
+			'isDark'             => false,
+			'style'              => array(
+				'dimensions' => array( 'aspectRatio' => '3/4' ),
+				'layout'     => array(
+					'selfStretch' => 'fit',
+					'flexSize'    => null,
+				),
+				'spacing'    => array( 'margin' => array( 'bottom' => '15px' ) ),
+				'border'     => array( 'radius' => '10px' ),
+			),
+		);
+
+		$image  = '<!-- wp:cover ' . wp_json_encode(
+			array_merge(
+				$product_image_attrs,
+				$this->getChildBlocksAttributes( 'surecart/product-item-image' ),
+			)
+		) . ' -->';
+		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;margin-bottom:15px">';
+		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
+		$image .= '<div class="wp-block-cover__inner-container">';
+		$image .= '</div>';
+		$image .= '</div>';
+		$image .= '<!-- /wp:cover -->';
+
+		$this->block_html .= $image;
 	}
 
 	/**
@@ -226,14 +259,28 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderProductTemplate(): void {
-		$columns           = $this->attributes['columns'] ?? 3;
-		$this->block_html .= '<!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"grid","columnCount":' . $columns . '}} -->';
+		$product_template_attrs = array_merge(
+			$this->attributes ?? array(),
+			array(
+				'style'  => array(
+					'spacing' => array(
+						'blockGap' => '30px',
+					),
+				),
+				'layout' => array(
+					'type'        => 'grid',
+					'columnCount' => $this->attributes['columns'] ?? 3,
+				),
+			)
+		);
+
+		$this->block_html .= '<!-- wp:surecart/product-template ' . wp_json_encode( $product_template_attrs ) . ' -->';
 		$group_attrs       = ! empty( $this->inner_blocks[0]['attrs'] ) ? wp_json_encode( $this->inner_blocks[0]['attrs'] ) : '{}';
 		$group_block       = parse_blocks( '<!-- wp:group ' . $group_attrs . ' -->' )[0];
 		$group_styles      = sc_get_block_styles( true, $group_block );
 		$group_classnames  = ! empty( $group_styles['classnames'] ) ? $group_styles['classnames'] : '';
 		$group_css         = ! empty( $group_styles['css'] ) ? $group_styles['css'] : '';
-		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"flex","orientation":"vertical"}} -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->';
 		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="' . $group_css . '">';
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {

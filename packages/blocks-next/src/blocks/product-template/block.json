@@ -55,6 +55,7 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"viewScriptModule": ["@surecart/product-list", "@surecart/product-page"],
+	"viewScript": ["wp-url", "wp-api-fetch", "wp-i18n", "wp-a11y"],
 	"style": "file:./style-index.css",
 	"render": "file:./view.php"
 }

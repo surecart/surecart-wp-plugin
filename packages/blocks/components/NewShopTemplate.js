@@ -40,7 +40,26 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					acc.push(price);
 					break;
 				case 'surecart/product-item-image':
-					acc.push(['surecart/product-image', block.attributes]);
+					acc.push([
+						'core/cover',
+						{
+							useFeaturedImage: true,
+							dimRatio: 0,
+							isUserOverlayColor: true,
+							focalPoint: { x: 0.5, y: 0.5 },
+							contentPosition: 'top right',
+							isDark: false,
+							style: {
+								dimensions: { aspectRatio: '3/4' },
+								layout: { selfStretch: 'fit', flexSize: null },
+								spacing: { margin: { bottom: '15px' } },
+								border: { radius: '10px' },
+							},
+							layout: { type: 'default' },
+							...(block.attributes || {}),
+						},
+						[],
+					]);
 					break;
 			}
 			return acc;
@@ -118,7 +137,11 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				[
 					'core/group',
 					{
-						layout: { type: 'flex', orientation: 'vertical' },
+						layout: {
+							type: 'flex',
+							orientation: 'vertical',
+							justifyContent: 'stretch',
+						},
 						...childBlocks[0]?.attributes,
 					}, // Product Item
 					templateChildBlocks,

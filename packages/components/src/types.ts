@@ -662,6 +662,7 @@ export interface Checkout extends Object {
   reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
+  remaining_amount_due?: number;
   trial_amount?: number;
   charge?: string | Charge;
   name?: string;
