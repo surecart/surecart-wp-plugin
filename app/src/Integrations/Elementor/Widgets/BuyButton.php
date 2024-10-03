@@ -25,7 +25,7 @@ class BuyButton extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Buy Button', 'surecart' );
+		return esc_html__( 'Add To Cart', 'surecart' );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class BuyButton extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_keywords() {
-		return array( 'surecart', 'buy', 'button' );
+		return array( 'surecart', 'buy', 'cart', 'button' );
 	}
 
 	/**
@@ -159,7 +159,7 @@ class BuyButton extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'button_width',
 			array(
-				'label'      => esc_html__( 'Width', 'elementor' ),
+				'label'      => esc_html__( 'Width', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
@@ -195,7 +195,7 @@ class BuyButton extends \Elementor\Widget_Base {
 		$this->add_control(
 			'button_border_radius',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
@@ -229,14 +229,8 @@ class BuyButton extends \Elementor\Widget_Base {
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
 			<div>
-				<button
-					class="wp-block-button__link wp-element-button sc-button__link"
-					data-wp-bind--disabled="state.isUnavailable"
-					data-wp-class--sc-button__link--busy="context.busy"
-				>
-					<span class="sc-button__link-text" data-wp-text="state.buttonText">
-						<?php echo esc_html( $settings['button_text'] ); ?>
-					</span>
+				<button class="wp-block-button__link wp-element-button sc-button__link">
+					<span class="sc-button__link-text"><?php echo esc_html( $settings['button_text'] ); ?></span>
 				</button>
 			</div>
 			<?php
@@ -265,12 +259,8 @@ class BuyButton extends \Elementor\Widget_Base {
 	protected function content_template() {
 		?>
 		<div>
-			<button
-				class="wp-block-button__link wp-element-button sc-button__link"
-			>
-				<span class="sc-button__link-text">
-					{{{ settings.button_text }}}
-				</span>
+			<button class="wp-block-button__link wp-element-button sc-button__link">
+				<span class="sc-button__link-text">{{{ settings.button_text }}}</span>
 			</button>
 		</div>
 		<?php
