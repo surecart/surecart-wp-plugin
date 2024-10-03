@@ -324,13 +324,6 @@ export class ScSessionProvider {
         });
         updateFormState('REJECT');
         return;
-
-      case 'finalized':
-        createErrorNotice({
-          message: __('Payment unsuccessful. Please try again.', 'surecart'),
-        });
-        updateFormState('REJECT');
-        return;
     }
   }
 
