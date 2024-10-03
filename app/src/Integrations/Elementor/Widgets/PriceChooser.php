@@ -150,14 +150,6 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'condition' => [
 					'container_type' => [ 'grid' ],
 				],
-				'default'   => [
-					'columns' => [
-						'desktop' => 2,
-						'tablet'  => 2,
-						'mobile'  => 1,
-						'units'   => 'fr',
-					],
-				],
 			]
 		);
 
