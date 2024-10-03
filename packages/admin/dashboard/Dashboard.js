@@ -12,7 +12,6 @@ import {
 	ScDivider,
 	ScBreadcrumbs,
 	ScBreadcrumb,
-	ScSwitch,
 	ScProvisionalBanner,
 	ScAlert,
 	ScButton,
@@ -72,21 +71,13 @@ export default () => {
 						justifyContent="flex-end"
 						gap="1em"
 					>
-						<ScSwitch
-							checked={!liveMode}
-							onScChange={(e) => {
-								setLiveMode(!e.target.checked);
-							}}
-							reversed
-						>
-							{__('Test Mode', 'surecart')}
-						</ScSwitch>
 						<ScButton
 							href={`${scData?.surecart_app_url}?switch_account_id=${scData?.account_id}`}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							{__('Pulse', 'surecart')}
+							<ScIcon name="bar-chart-2" slot="prefix" />
+							{__('View Reports', 'surecart')}
 							<ScIcon name="external-link" slot="suffix" />
 						</ScButton>
 					</ScFlex>
