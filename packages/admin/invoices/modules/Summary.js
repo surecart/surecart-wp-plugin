@@ -36,7 +36,7 @@ export default () => {
 
 				<DueDate invoice={invoice} updateInvoice={editInvoice} />
 
-				{invoice?.status !== 'paid' &&
+				{invoice?.status === 'open' &&
 					!!invoice?.checkout_url &&
 					!!checkout?.order?.id && (
 						<CheckoutPageLink
