@@ -45,7 +45,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_keywords() {
-		return array( 'surecart', 'price', 'chooser' );
+		return array( 'surecart', 'price', 'chooser', 'choices' );
 	}
 
 	/**
@@ -111,12 +111,12 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_control(
 			'container_type',
 			[
-				'label'            => esc_html__( 'Container Layout', 'elementor' ),
+				'label'            => esc_html__( 'Container Layout', 'surecart' ),
 				'type'             => \Elementor\Controls_Manager::SELECT,
 				'default'          => 'grid',
 				'options'          => [
-					'flex' => esc_html__( 'Flexbox', 'elementor' ),
-					'grid' => esc_html__( 'Grid', 'elementor' ),
+					'flex' => esc_html__( 'Flexbox', 'surecart' ),
+					'grid' => esc_html__( 'Grid', 'surecart' ),
 				],
 				'selectors'        => [
 					'{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices' => '--display: {{VALUE}}',
@@ -133,7 +133,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'selector'       => '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices',
 				'fields_options' => [
 					'gap' => [
-						'label' => esc_html__( 'Gaps', 'elementor' ),
+						'label' => esc_html__( 'Gaps', 'surecart' ),
 					],
 				],
 				'condition'      => [
@@ -173,7 +173,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_control(
 			'price_choice_color',
 			[
-				'label'     => esc_html__( 'Text Color', 'elementor' ),
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'global'    => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -187,7 +187,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_control(
 			'price_choice_background_color',
 			[
-				'label'     => esc_html__( 'Background Color', 'elementor' ),
+				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .sc-choices .sc-choice' => 'background-color: {{VALUE}};',
@@ -220,7 +220,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_control(
 			'price_choice_padding',
 			[
-				'label'      => esc_html__( 'Padding', 'elementor' ),
+				'label'      => esc_html__( 'Padding', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -232,7 +232,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_control(
 			'price_choice_margin',
 			[
-				'label'      => esc_html__( 'Margin', 'elementor' ),
+				'label'      => esc_html__( 'Margin', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
@@ -253,7 +253,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'price_choice_border_radius',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'elementor' ),
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => array(
