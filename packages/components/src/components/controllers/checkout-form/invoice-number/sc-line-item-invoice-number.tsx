@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -9,7 +9,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { formBusy } from '@store/form/getters';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, Invoice } from '../../../../types';
+import { Invoice } from '../../../../types';
 
 @Component({
   tag: 'sc-line-item-invoice-number',
@@ -17,14 +17,9 @@ import { Checkout, Invoice } from '../../../../types';
   shadow: true,
 })
 export class ScLineItemInvoiceNumber {
-  @Prop() checkout: Checkout;
-
-  /** The invoice number */
-  @Prop({ mutable: true }) number?: string;
-
   render() {
-    const checkout = this.checkout || checkoutState?.checkout;
-    const invoiceNumber = this.number || (checkout?.invoice as Invoice)?.order_number || null;
+    const checkout = checkoutState?.checkout;
+    const invoiceNumber = (checkout?.invoice as Invoice)?.order_number || null;
 
     // Stop if checkout has no invoice number.
     if (!invoiceNumber) {
@@ -32,7 +27,7 @@ export class ScLineItemInvoiceNumber {
     }
 
     // loading state
-    if (formBusy()) {
+    if (formBusy() && !checkout?.invoice) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -42,14 +37,12 @@ export class ScLineItemInvoiceNumber {
     }
 
     return (
-      <Host>
-        <sc-line-item>
-          <span slot="description">
-            <slot name="description">{__('Invoice Number', 'surecart')}</slot>
-          </span>
-          <span slot="price-description">#{invoiceNumber}</span>
-        </sc-line-item>
-      </Host>
+      <sc-line-item>
+        <span slot="description">
+          <slot name="title">{__('Invoice Number', 'surecart')}</slot>
+        </span>
+        <span slot="price-description">#{invoiceNumber}</span>
+      </sc-line-item>
     );
   }
 }

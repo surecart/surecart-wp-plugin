@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Host, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,12 +19,9 @@ import { Checkout, Invoice } from '../../../../types';
 export class ScLineItemInvoiceReceiptDownload {
   @Prop() checkout: Checkout;
 
-  /** The invoice receipt download link */
-  @Prop({ mutable: true }) receiptDownloadLink?: string;
-
   render() {
-    const checkout = this.checkout || checkoutState?.checkout;
-    const receiptDownloadLink = this.receiptDownloadLink || ((checkout?.invoice as Invoice)?.id ? checkout?.pdf_url : null);
+    const checkout = checkoutState?.checkout;
+    const receiptDownloadLink = (checkout?.invoice as Invoice)?.id ? checkout?.pdf_url : null;
 
     // Stop if checkout has no receipt download link.
     if (!receiptDownloadLink) {
@@ -32,7 +29,7 @@ export class ScLineItemInvoiceReceiptDownload {
     }
 
     // loading state
-    if (formBusy()) {
+    if (formBusy() && !checkout?.invoice) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -42,19 +39,17 @@ export class ScLineItemInvoiceReceiptDownload {
     }
 
     return (
-      <Host>
-        <sc-line-item>
-          <span slot="description">
-            <slot name="description">{__('Receipt / Invoice', 'surecart')}</slot>
-          </span>
-          <span slot="price-description">
-            <a class="sc-invoice-download-link" href={receiptDownloadLink} target="_blank" rel="noopener noreferrer">
-              <sc-icon name="download" />
-              {__('Download', 'surecart')}
-            </a>
-          </span>
-        </sc-line-item>
-      </Host>
+      <sc-line-item>
+        <span slot="description">
+          <slot name="title">{__('Receipt / Invoice', 'surecart')}</slot>
+        </span>
+        <span slot="price-description">
+          <a class="sc-invoice-download-link" href={receiptDownloadLink} target="_blank" rel="noopener noreferrer">
+            <sc-icon name="download" />
+            {__('Download', 'surecart')}
+          </a>
+        </span>
+      </sc-line-item>
     );
   }
 }

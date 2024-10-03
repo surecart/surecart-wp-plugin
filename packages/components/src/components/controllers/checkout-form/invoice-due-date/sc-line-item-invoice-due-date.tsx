@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Prop, Host } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -9,7 +9,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { formBusy } from '@store/form/getters';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, Invoice } from '../../../../types';
+import { Invoice } from '../../../../types';
 
 @Component({
   tag: 'sc-line-item-invoice-due-date',
@@ -17,15 +17,9 @@ import { Checkout, Invoice } from '../../../../types';
   shadow: true,
 })
 export class ScLineItemInvoiceDueDate {
-  /** The checkout */
-  @Prop() checkout: Checkout;
-
-  /** The invoice due date */
-  @Prop({ mutable: true }) dueDate?: string;
-
   render() {
-    const checkout = this.checkout || checkoutState?.checkout;
-    const dueDate = this.dueDate || (checkout?.invoice as Invoice)?.due_date || null;
+    const checkout = checkoutState?.checkout;
+    const dueDate = (checkout?.invoice as Invoice)?.due_date || null;
 
     // Stop if checkout has no invoice due date.
     if (!dueDate) {
@@ -33,7 +27,7 @@ export class ScLineItemInvoiceDueDate {
     }
 
     // loading state
-    if (formBusy()) {
+    if (formBusy() && !checkout?.invoice) {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -43,16 +37,12 @@ export class ScLineItemInvoiceDueDate {
     }
 
     return (
-      <Host>
-        <sc-line-item>
-          <span slot="description">
-            <slot name="description">{__('Due Date', 'surecart')}</slot>
-          </span>
-          <span slot="price-description">
-            <sc-format-date date={dueDate} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
-          </span>
-        </sc-line-item>
-      </Host>
+      <sc-line-item>
+        <span slot="description">
+          <slot name="title">{__('Due Date', 'surecart')}</slot>
+        </span>
+        <sc-format-date slot="price-description" date={dueDate} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
+      </sc-line-item>
     );
   }
 }
