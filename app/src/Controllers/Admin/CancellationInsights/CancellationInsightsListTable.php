@@ -54,6 +54,7 @@ class CancellationInsightsListTable extends ListTable {
 			'comment'             => __( 'Comment', 'surecart' ),
 			'status'              => __( 'Plan Status', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
+			'mode'                => '',
 		];
 	}
 
@@ -178,6 +179,17 @@ class CancellationInsightsListTable extends ListTable {
 	}
 
 	/**
+	 * The mode for the model.
+	 *
+	 * @param SureCart\Model $model Model.
+	 *
+	 * @return string
+	 */
+	public function column_mode( $act ) {
+		return empty( $act->subscription->live_mode ) ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
+	}
+
+	/**
 	 * The status
 	 *
 	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
@@ -185,7 +197,6 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $act ) {
-
 		if ( $act->preserved ) {
 			ob_start();
 			?>
