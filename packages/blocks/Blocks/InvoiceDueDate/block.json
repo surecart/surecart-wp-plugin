@@ -13,7 +13,7 @@
 	"attributes": {
 		"text": {
 			"type": "string",
-			"default": "Inovoice Due Date"
+			"default": "Due Date"
 		}
 	}
 }

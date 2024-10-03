@@ -13,7 +13,7 @@
 	"attributes": {
 		"text": {
 			"type": "string",
-			"default": "Inovoice Receipt"
+			"default": "Receipt / Invoice"
 		}
 	}
 }
