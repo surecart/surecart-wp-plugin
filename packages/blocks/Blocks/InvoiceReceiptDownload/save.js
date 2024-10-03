@@ -8,7 +8,9 @@ export default ({ attributes }) => {
 
 	return (
 		<sc-line-item-invoice-receipt-download class={className}>
-			<span slot="title">{text || __('Invoice Receipt', 'surecart')}</span>
+			<span slot="title">
+				{text || __('Invoice Receipt', 'surecart')}
+			</span>
 		</sc-line-item-invoice-receipt-download>
 	);
 };
