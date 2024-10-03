@@ -10,6 +10,7 @@ import {
 	ScFormatNumber,
 	ScLineItem,
 	ScDivider,
+	ScCouponForm,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import PaymentCollection from './PaymentCollection';
@@ -17,13 +18,21 @@ import { formatTaxDisplay } from '../../util/tax';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
-	const { checkout, loading } = useInvoice();
+	const { checkout, updateCheckout, loading } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
 	)?.find(
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
+
+	const onCouponChange = async (e) => {
+		await updateCheckout({
+			discount: {
+				promotion_code: e?.detail,
+			},
+		});
+	};
 
 	const renderPaymentDetails = () => {
 		return (
@@ -101,6 +110,17 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 						></ScFormatNumber>
 					</ScLineItem>
 				)}
+
+				<ScCouponForm
+					collapsed={true}
+					placeholder={__('Enter Coupon Code', 'surecart')}
+					label={__('Add Coupon Code', 'surecart')}
+					buttonText={__('Apply', 'surecart')}
+					onScApplyCoupon={onCouponChange}
+					discount={checkout?.discount}
+					currency={checkout?.currency}
+					discountAmount={checkout?.discount_amount}
+				/>
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
