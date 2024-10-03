@@ -54,7 +54,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_style_depends() {
-		return array( 'surecart-choice' );
+		return array( 'surecart-choice', 'surecart-elementor-container-style' );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 			[
 				'label'            => esc_html__( 'Container Layout', 'elementor' ),
 				'type'             => \Elementor\Controls_Manager::SELECT,
-				'default'          => 'flex',
+				'default'          => 'grid',
 				'options'          => [
 					'flex' => esc_html__( 'Flexbox', 'elementor' ),
 					'grid' => esc_html__( 'Grid', 'elementor' ),
@@ -149,6 +149,14 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'selector'  => '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices',
 				'condition' => [
 					'container_type' => [ 'grid' ],
+				],
+				'default'   => [
+					'columns' => [
+						'desktop' => 2,
+						'tablet'  => 2,
+						'mobile'  => 1,
+						'units'   => 'fr',
+					],
 				],
 			]
 		);

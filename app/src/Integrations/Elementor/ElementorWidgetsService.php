@@ -15,6 +15,7 @@ class ElementorWidgetsService {
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerNestedWidgets' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueueEditorScripts' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ] );
 	}
 
 	/**
@@ -79,6 +80,14 @@ class ElementorWidgetsService {
 	 */
 	public function enqueueEditorScripts() {
 		wp_enqueue_script( 'surecart-elementor-product', plugins_url( 'Widgets/Nested/assets/js/product/index.js', __FILE__ ), [ 'elementor-common' ], '1.0', true );
-		// wp_enqueue_script( 'surecart-elementor-collection-tags', plugins_url( 'Widgets/Nested/assets/js/collection-tags/index.js', __FILE__ ), [ 'elementor-common' ], '1.0', true );
+	}
+
+	/**
+	 * Enqueue the scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueueScripts() {
+		wp_register_style( 'surecart-elementor-container-style', plugins_url( 'assets/container.css', __FILE__ ), '', '1.0', 'all' );
 	}
 }
