@@ -34,7 +34,7 @@ class VariantPills extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_icon() {
-		return 'eicon-tabs';
+		return 'eicon-product-categories';
 	}
 
 	/**
@@ -43,7 +43,7 @@ class VariantPills extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_keywords() {
-		return array( 'surecart', 'variant', 'pills' );
+		return array( 'surecart', 'variants', 'variant', 'pills' );
 	}
 
 	/**
@@ -170,7 +170,7 @@ class VariantPills extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name'     => 'pill_typography',
-				'label'    => esc_html__( 'Typography', 'elementor' ),
+				'label'    => esc_html__( 'Typography', 'surecart' ),
 				'selector' => '{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill',
 			]
 		);
@@ -267,11 +267,11 @@ class VariantPills extends \Elementor\Widget_Base {
 	protected function content_template() {
 		?>
 		<div class="wp-block-surecart-product-variant-pills">
-			<label for="" class="sc-form-label">Color</label>
+			<label for="" class="sc-form-label"><?php echo esc_html__( 'Color', 'surecart' ); ?></label>
 			<div class="sc-pill-option__wrapper">
-				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill sc-pill-option__button--selected">Red</div>
-				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill">Blue</div>
-				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill">Green</div>
+				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Red', 'surecart' ); ?></div>
+				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Blue', 'surecart' ); ?></div>
+				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Green', 'surecart' ); ?></div>
 			</div>
 		</div>
 		<?php
