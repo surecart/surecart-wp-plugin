@@ -11,7 +11,6 @@ const ALLOWED_BLOCKS = [
 	'surecart/invoice-number',
 	'surecart/invoice-due-date',
 	'surecart/invoice-receipt-download',
-	'surecart/divider',
 ];
 
 export default () => {
@@ -26,7 +25,6 @@ export default () => {
 				['surecart/invoice-number', {}],
 				['surecart/invoice-due-date', {}],
 				['surecart/invoice-receipt-download', {}],
-				['surecart/divider', {}],
 			],
 			allowedBlocks: ALLOWED_BLOCKS,
 			templateLock: false,
