@@ -4,7 +4,6 @@
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
-import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
@@ -71,7 +70,10 @@ export const useInvoice = () => {
 			const data = await apiFetch({
 				path: addQueryArgs(`${baseURL}/${invoice?.checkout?.id}`, {
 					expand,
+<<<<<<< HEAD
 					context: 'edit',
+=======
+>>>>>>> 9a3af449eaf02047ab2aefb27b534cae78bd9db6
 				}),
 			});
 
