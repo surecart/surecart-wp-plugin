@@ -7,10 +7,9 @@
 
 ## Properties
 
-| Property              | Attribute               | Description                       | Type       | Default     |
-| --------------------- | ----------------------- | --------------------------------- | ---------- | ----------- |
-| `checkout`            | --                      |                                   | `Checkout` | `undefined` |
-| `receiptDownloadLink` | `receipt-download-link` | The invoice receipt download link | `string`   | `undefined` |
+| Property   | Attribute | Description | Type       | Default     |
+| ---------- | --------- | ----------- | ---------- | ----------- |
+| `checkout` | --        |             | `Checkout` | `undefined` |
 
 
 ## Dependencies

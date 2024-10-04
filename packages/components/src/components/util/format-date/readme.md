@@ -30,6 +30,7 @@
 ### Used by
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-line-item-invoice-due-date](../../controllers/checkout-form/invoice-due-date)
@@ -46,6 +47,7 @@
 ```mermaid
 graph TD;
   sc-charges-list --> sc-format-date
+  sc-invoice --> sc-format-date
   sc-invoices-list --> sc-format-date
   sc-license --> sc-format-date
   sc-line-item-invoice-due-date --> sc-format-date

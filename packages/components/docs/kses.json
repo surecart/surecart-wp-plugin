@@ -910,6 +910,7 @@
   "sc-invoices-list": {
     "all-link": true,
     "heading": true,
+    "is-customer": true,
     "query": true,
     "style": true,
     "id": true,
@@ -951,16 +952,12 @@
     "slot": true
   },
   "sc-line-item-invoice-due-date": {
-    "checkout": true,
-    "due-date": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
   "sc-line-item-invoice-number": {
-    "checkout": true,
-    "number": true,
     "style": true,
     "id": true,
     "class": true,
@@ -968,7 +965,6 @@
   },
   "sc-line-item-invoice-receipt-download": {
     "checkout": true,
-    "receipt-download-link": true,
     "style": true,
     "id": true,
     "class": true,

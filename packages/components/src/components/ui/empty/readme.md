@@ -25,6 +25,7 @@
 ### Used by
 
  - [sc-customer-details](../customer-details)
+ - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -46,6 +47,7 @@
 graph TD;
   sc-empty --> sc-icon
   sc-customer-details --> sc-empty
+  sc-invoice --> sc-empty
   sc-invoices-list --> sc-empty
   sc-license --> sc-empty
   sc-licenses-list --> sc-empty

@@ -5,14 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property   | Attribute | Description        | Type       | Default     |
-| ---------- | --------- | ------------------ | ---------- | ----------- |
-| `checkout` | --        |                    | `Checkout` | `undefined` |
-| `number`   | `number`  | The invoice number | `string`   | `undefined` |
-
-
 ## Dependencies
 
 ### Used by

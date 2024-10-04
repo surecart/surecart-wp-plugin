@@ -19,6 +19,7 @@ import * as customerDashboard from '@blocks/Dashboard/CustomerDashboard';
 
 import * as customerDownloads from '@blocks/Dashboard/CustomerDownloads';
 import * as customerOrders from '@blocks/Dashboard/CustomerOrders';
+import * as customerInvoices from '@blocks/Dashboard/CustomerInvoices';
 import * as customerSubscriptions from '@blocks/Dashboard/CustomerSubscriptions';
 import * as customerPaymentMethods from '@blocks/Dashboard/CustomerPaymentMethods';
 import * as customerBillingDetails from '@blocks/Dashboard/CustomerBillingDetails';
@@ -34,7 +35,6 @@ import * as collectionPage from '@blocks/CollectionPage';
 
 // deprecated
 import * as customerCharges from '@blocks/Dashboard/Deprecated/CustomerCharges';
-import * as customerInvoices from '@blocks/Dashboard/Deprecated/CustomerInvoices';
 import * as customerShippingAddress from '@blocks/Dashboard/Deprecated/CustomerShippingAddress';
 import { registerBlocksForTemplates } from './conditional-block-registration';
 

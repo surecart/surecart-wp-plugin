@@ -68,6 +68,7 @@
 
 ### Used by
 
+ - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-line-items](../../controllers/checkout-form/line-items)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
@@ -89,6 +90,7 @@ graph TD;
   sc-product-line-item --> sc-icon
   sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
+  sc-invoice --> sc-product-line-item
   sc-line-items --> sc-product-line-item
   sc-order --> sc-product-line-item
   sc-order-confirmation-line-items --> sc-product-line-item

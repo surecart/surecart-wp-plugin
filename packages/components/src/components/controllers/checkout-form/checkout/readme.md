@@ -126,6 +126,7 @@ graph TD;
   sc-form-components-validator --> sc-line-item-invoice-number
   sc-form-components-validator --> sc-line-item-invoice-due-date
   sc-form-components-validator --> sc-line-item-invoice-receipt-download
+  sc-form-components-validator --> sc-divider
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control

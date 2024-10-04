@@ -17,6 +17,11 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-invoice](../../controllers/dashboard/invoice)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+
 ### Depends on
 
 - [sc-tag](../tag)
@@ -25,6 +30,8 @@
 ```mermaid
 graph TD;
   sc-invoice-status-badge --> sc-tag
+  sc-invoice --> sc-invoice-status-badge
+  sc-invoices-list --> sc-invoice-status-badge
   style sc-invoice-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

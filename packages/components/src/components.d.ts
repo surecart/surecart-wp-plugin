@@ -1740,6 +1740,7 @@ export namespace Components {
     interface ScInvoicesList {
         "allLink": string;
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Query to fetch invoices
          */
@@ -1791,25 +1792,11 @@ export namespace Components {
         "loading": boolean;
     }
     interface ScLineItemInvoiceDueDate {
-        "checkout": Checkout;
-        /**
-          * The invoice due date
-         */
-        "dueDate"?: string;
     }
     interface ScLineItemInvoiceNumber {
-        "checkout": Checkout;
-        /**
-          * The invoice number
-         */
-        "number"?: string;
     }
     interface ScLineItemInvoiceReceiptDownload {
         "checkout": Checkout;
-        /**
-          * The invoice receipt download link
-         */
-        "receiptDownloadLink"?: string;
     }
     interface ScLineItemShipping {
         /**
@@ -8015,6 +8002,7 @@ declare namespace LocalJSX {
     interface ScInvoicesList {
         "allLink"?: string;
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Query to fetch invoices
          */
@@ -8066,25 +8054,11 @@ declare namespace LocalJSX {
         "loading"?: boolean;
     }
     interface ScLineItemInvoiceDueDate {
-        "checkout"?: Checkout;
-        /**
-          * The invoice due date
-         */
-        "dueDate"?: string;
     }
     interface ScLineItemInvoiceNumber {
-        "checkout"?: Checkout;
-        /**
-          * The invoice number
-         */
-        "number"?: string;
     }
     interface ScLineItemInvoiceReceiptDownload {
         "checkout"?: Checkout;
-        /**
-          * The invoice receipt download link
-         */
-        "receiptDownloadLink"?: string;
     }
     interface ScLineItemShipping {
         /**

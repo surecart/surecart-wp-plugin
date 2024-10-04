@@ -1,4 +1,4 @@
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 import {
 	InspectorControls,
 	RichText,
@@ -50,6 +50,7 @@ export default ({ attributes, setAttributes }) => {
 							style={{ '--columns': '4' }}
 							mobile-size={500}
 						>
+							<div>#0001</div>
 							<div>
 								<sc-format-date
 									date={Date.now() / 1000}
@@ -58,25 +59,6 @@ export default ({ attributes, setAttributes }) => {
 									day="numeric"
 									year="numeric"
 								></sc-format-date>
-							</div>
-
-							<div>
-								<sc-text
-									truncate
-									style={{
-										'--color': 'var(--sc-color-gray-500)',
-									}}
-								>
-									{sprintf(
-										_n(
-											'%s item',
-											'%s items',
-											1,
-											'surecart'
-										),
-										1
-									)}
-								</sc-text>
 							</div>
 							<div>
 								<sc-tag type="success">
@@ -99,6 +81,7 @@ export default ({ attributes, setAttributes }) => {
 							style={{ '--columns': '4' }}
 							mobile-size={500}
 						>
+							<div>#0002</div>
 							<div>
 								<sc-format-date
 									date={Date.now() / 1000}
@@ -108,28 +91,9 @@ export default ({ attributes, setAttributes }) => {
 									year="numeric"
 								></sc-format-date>
 							</div>
-
 							<div>
-								<sc-text
-									truncate
-									style={{
-										'--color': 'var(--sc-color-gray-500)',
-									}}
-								>
-									{sprintf(
-										_n(
-											'%s item',
-											'%s items',
-											1,
-											'surecart'
-										),
-										1
-									)}
-								</sc-text>
-							</div>
-							<div>
-								<sc-tag type="danger">
-									{__('Refunded', 'surecart')}
+								<sc-tag type="info">
+									{__('Open', 'surecart')}
 								</sc-tag>
 							</div>
 							<div>

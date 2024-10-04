@@ -34,6 +34,7 @@
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
+ - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
@@ -59,6 +60,7 @@ graph TD;
   sc-customer-edit --> sc-flex
   sc-downloads-list --> sc-flex
   sc-fulfillments --> sc-flex
+  sc-invoice --> sc-flex
   sc-license --> sc-flex
   sc-login-form --> sc-flex
   sc-order --> sc-flex

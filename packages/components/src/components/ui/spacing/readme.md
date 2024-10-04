@@ -10,6 +10,7 @@
 ### Used by
 
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
+ - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -18,6 +19,7 @@
 ```mermaid
 graph TD;
   sc-fulfillments --> sc-spacing
+  sc-invoice --> sc-spacing
   sc-license --> sc-spacing
   sc-order --> sc-spacing
   sc-purchase-downloads-list --> sc-spacing

@@ -62,6 +62,7 @@
  - [sc-dialog](../sc-dialog)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -121,6 +122,7 @@ graph TD;
   sc-dialog --> sc-button
   sc-donation-choices --> sc-button
   sc-downloads-list --> sc-button
+  sc-invoice --> sc-button
   sc-invoices-list --> sc-button
   sc-license --> sc-button
   sc-licenses-list --> sc-button

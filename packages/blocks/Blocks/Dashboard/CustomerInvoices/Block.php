@@ -1,8 +1,9 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerInvoices;
 
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\InvoiceController;
 
 /**
  * Checkout block
@@ -17,6 +18,9 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
-		return null;
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+		return ( new InvoiceController() )->preview( $attributes );
 	}
 }

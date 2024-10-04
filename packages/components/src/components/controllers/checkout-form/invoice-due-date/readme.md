@@ -5,14 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property   | Attribute  | Description          | Type       | Default     |
-| ---------- | ---------- | -------------------- | ---------- | ----------- |
-| `checkout` | --         |                      | `Checkout` | `undefined` |
-| `dueDate`  | `due-date` | The invoice due date | `string`   | `undefined` |
-
-
 ## Dependencies
 
 ### Used by

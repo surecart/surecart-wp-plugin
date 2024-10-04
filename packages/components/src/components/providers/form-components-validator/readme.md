@@ -32,6 +32,7 @@
 - [sc-line-item-invoice-number](../../controllers/checkout-form/invoice-number)
 - [sc-line-item-invoice-due-date](../../controllers/checkout-form/invoice-due-date)
 - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
+- [sc-divider](../../ui/divider)
 
 ### Graph
 ```mermaid
@@ -47,6 +48,7 @@ graph TD;
   sc-form-components-validator --> sc-line-item-invoice-number
   sc-form-components-validator --> sc-line-item-invoice-due-date
   sc-form-components-validator --> sc-line-item-invoice-receipt-download
+  sc-form-components-validator --> sc-divider
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control

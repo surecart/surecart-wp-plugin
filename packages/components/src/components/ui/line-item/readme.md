@@ -45,6 +45,7 @@
 ### Used by
 
  - [sc-coupon-form](../coupon-form)
+ - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-line-item-bump](../../controllers/checkout-form/sc-line-item-bump)
  - [sc-line-item-invoice-due-date](../../controllers/checkout-form/invoice-due-date)
  - [sc-line-item-invoice-number](../../controllers/checkout-form/invoice-number)
@@ -68,6 +69,7 @@
 ```mermaid
 graph TD;
   sc-coupon-form --> sc-line-item
+  sc-invoice --> sc-line-item
   sc-line-item-bump --> sc-line-item
   sc-line-item-invoice-due-date --> sc-line-item
   sc-line-item-invoice-number --> sc-line-item
