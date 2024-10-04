@@ -50,6 +50,10 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 			/>
 		}
 
+		if (!checkout?.discount?.promotion?.code) {
+			return null;
+		}
+
 		return (
 			<ScLineItem exportparts="description:info, price-description:discount, price:amount">
 				<span slot="description">
