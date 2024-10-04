@@ -1,7 +1,6 @@
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -12,17 +11,13 @@ import {
 	ScAlert,
 	ScChoices,
 	ScChoice,
-	ScButton,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import EditAddress from './EditAddress';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, loading, isDraftInvoice, updateCheckout } =
+	const { checkout, loading, isDraftInvoice, updateCheckout } =
 		useInvoice();
-	const [open, setOpen] = useState(false);
-
 	if (
 		!checkout?.selected_shipping_choice_required &&
 		!checkout?.shipping_address_required
@@ -39,18 +34,7 @@ export default () => {
 							'Shipping is required. Please enter a shipping address.',
 							'surecart'
 						)}
-						<br />
-						{/* TODO: Remove this code once finalize this UI */}
-						{/* <ScButton onClick={() => setOpen(true)}>
-							{__('Add A Shipping Address', 'surecart')}
-						</ScButton> */}
 					</ScAlert>
-					{/* <EditAddress
-						invoice={invoice}
-						checkout={checkout}
-						open={open}
-						onRequestClose={() => setOpen(false)}
-					/> */}
 				</Box>
 			);
 		}
