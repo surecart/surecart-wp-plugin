@@ -37,17 +37,19 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 
 	const renderCouponForm = () => {
 		if (isDraftInvoice) {
-			<ScCouponForm
-				collapsed={true}
-				placeholder={__('Enter Coupon Code', 'surecart')}
-				label={__('Add Coupon Code', 'surecart')}
-				buttonText={__('Apply', 'surecart')}
-				onScApplyCoupon={onCouponChange}
-				discount={checkout?.discount}
-				currency={checkout?.currency}
-				discountAmount={checkout?.discount_amount}
-				busy={busy}
-			/>
+			return (
+				<ScCouponForm
+					collapsed={true}
+					placeholder={__('Enter Coupon Code', 'surecart')}
+					label={__('Add Coupon Code', 'surecart')}
+					buttonText={__('Apply', 'surecart')}
+					onScApplyCoupon={onCouponChange}
+					discount={checkout?.discount}
+					currency={checkout?.currency}
+					discountAmount={checkout?.discount_amount}
+					busy={busy}
+				/>
+			)
 		}
 
 		if (!checkout?.discount?.promotion?.code) {
