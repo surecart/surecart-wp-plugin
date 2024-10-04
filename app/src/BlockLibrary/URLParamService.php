@@ -100,18 +100,18 @@ class URLParamService {
 	public function getName( $key = '', $instance_id = '' ) {
 		$instance_id = $instance_id ? $instance_id : $this->instance_id;
 		$prefix      = ! empty( $this->prefix ) ? ( $this->prefix . '-' ) : '';
-	
-		// Strip the prefix if it exists
+
+		// Strip the prefix if it exists.
 		if ( ! empty( $prefix ) && strpos( $key, $prefix ) === 0 ) {
 			$key = substr( $key, strlen( $prefix ) );
 		}
-	
-		// Strip the instance ID if it exists
+
+		// Strip the instance ID if it exists.
 		if ( ! empty( $instance_id ) && strpos( $key, $instance_id . '-' ) === 0 ) {
 			$key = substr( $key, strlen( $instance_id . '-' ) );
 		}
-	
-		// Return the original name (convert to uppercase or other original case)
+
+		// Return the original name.
 		return $key;
 	}
 
@@ -155,8 +155,8 @@ class URLParamService {
 	 * @return array
 	 */
 	public function getAllTaxonomyArgs( $instance_id = '' ) {
-		$instance_id = $instance_id ? $instance_id : $this->instance_id;
-		$args        = $this->getArgs( $instance_id ); // Use getArgs to get filtered arguments
+		$instance_id   = $instance_id ? $instance_id : $this->instance_id;
+		$args          = $this->getArgs( $instance_id ); // Use getArgs to get filtered arguments.
 		$taxonomy_args = [];
 
 		foreach ( $args as $key => $value ) {
@@ -187,6 +187,7 @@ class URLParamService {
 	 *
 	 * @param  string       $key Key.
 	 * @param  string|array $value Value.
+	 * @param  string       $instance_id Unique instance ID.
 	 * @return string
 	 */
 	public function addArg( $key, $value, $instance_id = '' ) {

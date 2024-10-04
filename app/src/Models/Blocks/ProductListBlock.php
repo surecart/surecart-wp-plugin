@@ -103,7 +103,7 @@ class ProductListBlock {
 		$tax_query = array(
 			'relation' => 'OR',
 		);
-		
+
 		// handle tax query.
 		if ( ! empty( $query['taxQuery'] ) ) {
 			foreach ( $query['taxQuery'] as $taxonomy => $terms ) {
@@ -152,7 +152,7 @@ class ProductListBlock {
 					'terms'    => array_unique( array_map( 'intval', $legacy_collection_ids ?? array() ) ),
 				);
 		} elseif ( is_tax() ) {
-				$term                     = get_queried_object();
+				$term        = get_queried_object();
 				$tax_query[] =
 				array(
 					'taxonomy' => 'sc_collection',
@@ -170,7 +170,7 @@ class ProductListBlock {
 					'taxonomy' => $taxonomy,
 					'field'    => 'term_id',
 					'terms'    => array_unique( array_map( 'intval', $terms ?? array() ) ),
-					''
+					'',
 				);
 		}
 
