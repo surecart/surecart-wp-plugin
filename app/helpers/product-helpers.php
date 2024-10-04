@@ -31,7 +31,7 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 		if ( is_string( $product ) ) {
 			$decoded = json_decode( $product );
 			if ( json_last_error() !== JSON_ERROR_NONE ) {
-				var_dump( 'JSON decode error: ' . json_last_error_msg() );
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
 			}
 			$product = new \SureCart\Models\Product( $decoded );
 			return $product;
