@@ -32,7 +32,7 @@ export default ({
 			setCommisionType(type);
 		}
 	}, [type]);
-	console.log(scData);
+
 	return (
 		<>
 			<ScRadioGroup
