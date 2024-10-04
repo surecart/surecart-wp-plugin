@@ -94,12 +94,21 @@ class ProductListBlock {
 			$this->query_vars['s'] = sanitize_text_field( $query['search'] );
 		}
 
+		// put together price query.
+		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
+			$this->query_vars['meta_key'] = 'min_price_amount';
+			$this->query_vars['orderby']  = 'meta_value_num';
+		}
+
+		$tax_query = array(
+			'relation' => 'OR',
+		);
+		
 		// handle tax query.
 		if ( ! empty( $query['taxQuery'] ) ) {
-			$this->query_vars['tax_query'] = array();
 			foreach ( $query['taxQuery'] as $taxonomy => $terms ) {
 				if ( is_taxonomy_viewable( $taxonomy ) && ! empty( $terms ) ) {
-					$this->query_vars['tax_query'][] = array(
+					$tax_query[] = array(
 						'taxonomy'         => sanitize_key( $taxonomy ),
 						'terms'            => array_filter( array_map( 'absint', $terms ) ),
 						'include_children' => false,
@@ -108,15 +117,7 @@ class ProductListBlock {
 			}
 		}
 
-		// put together price query.
-		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
-			$this->query_vars['meta_key'] = 'min_price_amount';
-			$this->query_vars['orderby']  = 'meta_value_num';
-		}
-
 		$collection_id = sanitize_text_field( $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? '' );
-
-		$collection_ids_to_filter = array();
 
 		// handle collection id send from "sc_product_collection" shortcode.
 		if ( ! empty( $collection_id ) ) {
@@ -144,29 +145,36 @@ class ProductListBlock {
 				$legacy_collection_ids
 			);
 
-			$collection_ids_to_filter = array_merge( $legacy_collection_ids, $collection_ids_to_filter );
+			$tax_query[] =
+				array(
+					'taxonomy' => 'sc_collection',
+					'field'    => 'term_id',
+					'terms'    => array_unique( array_map( 'intval', $legacy_collection_ids ?? array() ) ),
+				);
 		} elseif ( is_tax() ) {
 				$term                     = get_queried_object();
-				$collection_ids_to_filter = [ (int) $term->term_id ];
-		}
-
-		$new_collection_ids = $this->url->getArg( 'sc_collection' );
-
-		// handle collections query.
-		if ( ! empty( $new_collection_ids ) ) {
-			$collection_ids_to_filter = array_merge( $new_collection_ids, $collection_ids_to_filter );
-		}
-
-		if ( ! empty( $collection_ids_to_filter ) ) {
-			$this->query_vars['tax_query'] =
+				$tax_query[] =
 				array(
-					array(
-						'taxonomy' => 'sc_collection',
-						'field'    => 'term_id',
-						'terms'    => array_unique( array_map( 'intval', $collection_ids_to_filter ?? array() ) ),
-					),
+					'taxonomy' => 'sc_collection',
+					'field'    => 'term_id',
+					'terms'    => array_unique( array_map( 'intval', [ (int) $term->term_id ] ) ),
 				);
 		}
+
+		$all_taxonnomies = $this->url->getAllTaxonomyArgs();
+
+		// handle taxonomies query.
+		foreach ( $all_taxonnomies as $taxonomy => $terms ) {
+			$tax_query[] =
+				array(
+					'taxonomy' => $taxonomy,
+					'field'    => 'term_id',
+					'terms'    => array_unique( array_map( 'intval', $terms ?? array() ) ),
+					''
+				);
+		}
+
+		$this->query_vars['tax_query'][] = $tax_query;
 
 		// handle featured.
 		if ( 'featured' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
