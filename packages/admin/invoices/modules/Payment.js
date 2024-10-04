@@ -57,7 +57,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 		}
 
 		return (
-			<ScLineItem exportparts="description:info, price-description:discount, price:amount">
+			<ScLineItem>
 				<span slot="description">
 					<div part="discount-label">{__('Discount', 'surecart')}</div>
 					<ScTag
@@ -69,9 +69,23 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 					</ScTag>
 				</span>
 
-				<span slot="price">
-					<sc-format-number type="currency" currency={checkout?.currency} value={checkout?.discount_amount}></sc-format-number>
-				</span>
+				{'redeemable' === checkout.discount?.redeemable_status ? (
+					<Fragment>
+						{!!checkout.human_discount && (
+							<span class="coupon-human-discount" slot="price-description">
+								{checkout.human_discount_with_duration}
+							</span>
+						)}
+						<span slot="price">
+							<sc-format-number type="currency" currency={checkout?.currency} value={checkout?.discount_amount}></sc-format-number>
+						</span>
+					</Fragment>
+				) : (
+					<div class="coupon__status" slot="price-description">
+						<sc-icon name="alert-triangle" />
+						{checkout?.discount?.redeemable_display_status}
+					</div>
+				)}
 			</ScLineItem>
 		)
 	}

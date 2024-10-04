@@ -2,15 +2,22 @@
 
 namespace SureCart\Models\Traits;
 
+use SureCart\Models\Discount;
+
 trait HasDiscount {
 	/**
-	 * Always set discount as object.
+	 * Set the discount attribute.
 	 *
-	 * @param array|object $value Value to set.
-	 * @return $this
+	 * @param object $value Discount object.
+	 *
+	 * @return void
 	 */
-	protected function setDiscountAttribute( $value ) {
-		$this->attributes['discount'] = is_string( $value ) ? $value : (object) $value;
-		return $this;
+	public function setDiscountAttribute( $value ) {
+		if ( is_string( $value ) || empty( $value ) ) {
+			$this->attributes['discount'] = $value;
+			return $this;
+		}
+
+		$this->setRelation( 'discount', $value, Discount::class );
 	}
 }
