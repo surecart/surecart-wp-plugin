@@ -69,10 +69,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/orders/index.js'
 		),
-		['admin/abandoned-checkouts-stats']: path.resolve(
-			__dirname,
-			'packages/admin/abandoned-checkouts-stats/index.js'
-		),
 		['admin/abandoned-checkouts']: path.resolve(
 			__dirname,
 			'packages/admin/abandoned-checkouts/index.js'
@@ -108,14 +104,6 @@ module.exports = {
 		['admin/subscriptions/edit']: path.resolve(
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
-		),
-		['admin/cancellation-insights']: path.resolve(
-			__dirname,
-			'packages/admin/cancellation-insights/index.js'
-		),
-		['admin/subscription-insights']: path.resolve(
-			__dirname,
-			'packages/admin/subscription-insights/index.js'
 		),
 
 		/**
