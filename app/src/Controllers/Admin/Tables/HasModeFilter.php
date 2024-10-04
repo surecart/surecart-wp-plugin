@@ -5,7 +5,7 @@ namespace SureCart\Controllers\Admin\Tables;
 /**
  * Mode dropdown trait.
  */
-trait ModeFilterDropdownTrait {
+trait HasModeFilter {
     /**
 	 * Displays a mode drop-down for filtering items.
 	 *
@@ -32,7 +32,7 @@ trait ModeFilterDropdownTrait {
 			?>
 		</label>
 		<select name="mode" id="filter-by-mode">
-			<option<?php selected( $mode, '' ); ?> value=""><?php esc_html_e( 'Both Modes', 'surecart' ); ?></option>
+			<option<?php selected( $mode, '' ); ?> value=""><?php esc_html_e( 'Live & Test Mode', 'surecart' ); ?></option>
 			<option<?php selected( $mode, 'live' ); ?> value="live"><?php echo esc_html_e( 'Live Mode', 'surecart' ); ?></option>
 			<option<?php selected( $mode, 'test' ); ?> value="test"><?php echo esc_html_e( 'Test Mode', 'surecart' ); ?></option>
 		</select>

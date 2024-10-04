@@ -4,13 +4,13 @@ namespace SureCart\Controllers\Admin\Abandoned;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\AbandonedCheckout;
-use SureCart\Controllers\Admin\Tables\ModeFilterDropdownTrait;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class AbandonedCheckoutListTable extends ListTable {
-	use ModeFilterDropdownTrait;
+	use HasModeFilter;
 
 	/**
 	 * Prepare the items for the table to process

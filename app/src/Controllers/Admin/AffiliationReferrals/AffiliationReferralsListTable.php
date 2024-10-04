@@ -5,13 +5,13 @@ namespace SureCart\Controllers\Admin\AffiliationReferrals;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Referral;
 use SureCart\Support\Currency;
-use SureCart\Controllers\Admin\Tables\ModeFilterDropdownTrait;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class AffiliationReferralsListTable extends ListTable {
-	use ModeFilterDropdownTrait;
+	use HasModeFilter;
 
 	/**
 	 * Checkbox
@@ -358,7 +358,7 @@ class AffiliationReferralsListTable extends ListTable {
 		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
 		<?php endif; ?>
-		
+
 		<div class="alignleft actions">
 		<?php
 		if ( 'top' === $which ) {

@@ -4,16 +4,14 @@ namespace SureCart\Controllers\Admin\Customers;
 
 use SureCart\Models\Product;
 use SureCart\Models\Customer;
-use SureCart\Support\Currency;
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Controllers\Admin\Tables\ModeFilterDropdownTrait;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class CustomersListTable extends ListTable {
-	use ModeFilterDropdownTrait;
+	use HasModeFilter;
 
 	/**
 	 * Prepare the items for the table to process

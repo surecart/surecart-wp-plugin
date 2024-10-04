@@ -5,13 +5,13 @@ namespace SureCart\Controllers\Admin\Subscriptions;
 use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Subscription;
-use SureCart\Controllers\Admin\Tables\ModeFilterDropdownTrait;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class SubscriptionsListTable extends ListTable {
-	use ModeFilterDropdownTrait;
+	use HasModeFilter;
 
 	/**
 	 * Prepare the items for the table to process
