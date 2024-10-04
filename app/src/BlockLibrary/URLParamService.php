@@ -160,8 +160,9 @@ class URLParamService {
 		$taxonomy_args = [];
 
 		foreach ( $args as $key => $value ) {
-			if ( taxonomy_exists( $this->getName( $key, $instance_id ) ) ) {
-				$taxonomy_args[ $key ] = $value;
+			$taxonomy_name = $this->getName( $key, $instance_id );
+			if ( taxonomy_exists( $taxonomy_name ) ) {
+				$taxonomy_args[ $taxonomy_name ] = $value;
 			}
 		}
 
