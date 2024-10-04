@@ -31,7 +31,7 @@ class InvoiceRedirectMiddleware {
 
 		// show error if the invoice is not found.
 		if ( is_wp_error( $invoice ) ) {
-			return wp_die( $invoice->get_error_message() );
+			return wp_die( wp_kses_post( $invoice->get_error_message() ) );
 		}
 
 		// show error if the invoice does not have a checkout id.
