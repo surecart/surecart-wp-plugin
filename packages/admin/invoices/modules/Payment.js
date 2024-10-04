@@ -11,6 +11,7 @@ import {
 	ScLineItem,
 	ScDivider,
 	ScCouponForm,
+	ScTag,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import PaymentCollection from './PaymentCollection';
@@ -18,7 +19,7 @@ import { formatTaxDisplay } from '../../util/tax';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
-	const { checkout, updateCheckout, loading, busy } = useInvoice();
+	const { checkout, updateCheckout, loading, busy, isDraftInvoice } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
@@ -33,6 +34,41 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 			},
 		});
 	};
+
+	const renderCouponForm = () => {
+		if (isDraftInvoice) {
+			<ScCouponForm
+				collapsed={true}
+				placeholder={__('Enter Coupon Code', 'surecart')}
+				label={__('Add Coupon Code', 'surecart')}
+				buttonText={__('Apply', 'surecart')}
+				onScApplyCoupon={onCouponChange}
+				discount={checkout?.discount}
+				currency={checkout?.currency}
+				discountAmount={checkout?.discount_amount}
+				busy={busy}
+			/>
+		}
+
+		return (
+			<ScLineItem exportparts="description:info, price-description:discount, price:amount">
+				<span slot="description">
+					<div part="discount-label">{__('Discount', 'surecart')}</div>
+					<ScTag
+						exportparts="base:coupon-tag"
+						type={'redeemable' === checkout.discount?.redeemable_status ? 'success' : 'warning'}
+						class="coupon-tag"
+					>
+						{checkout?.discount?.promotion?.code}
+					</ScTag>
+				</span>
+
+				<span slot="price">
+					<sc-format-number type="currency" currency={checkout?.currency} value={checkout?.discount_amount}></sc-format-number>
+				</span>
+			</ScLineItem>
+		)
+	}
 
 	const renderPaymentDetails = () => {
 		return (
@@ -111,17 +147,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 					</ScLineItem>
 				)}
 
-				<ScCouponForm
-					collapsed={true}
-					placeholder={__('Enter Coupon Code', 'surecart')}
-					label={__('Add Coupon Code', 'surecart')}
-					buttonText={__('Apply', 'surecart')}
-					onScApplyCoupon={onCouponChange}
-					discount={checkout?.discount}
-					currency={checkout?.currency}
-					discountAmount={checkout?.discount_amount}
-					busy={busy}
-				/>
+				{renderCouponForm()}
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
