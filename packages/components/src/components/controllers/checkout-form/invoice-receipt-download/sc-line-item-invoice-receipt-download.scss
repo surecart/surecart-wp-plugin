@@ -9,17 +9,9 @@ sc-line-item {
   margin-bottom: var(--sc-spacing-small);
 }
 
-sc-icon {
-  color: var(--sc-color-gray-400);
-}
-
 .sc-invoice-download-link {
   display: inline-flex;
   gap: var(--sc-spacing-x-small);
   text-decoration: none;
   color: inherit;
-
-  svg {
-    color: var(--sc-color-gray-400);
-  }
 }

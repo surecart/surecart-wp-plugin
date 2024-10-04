@@ -36,7 +36,6 @@ export default ({ attributes, setAttributes }) => {
 	const {
 		collapsible,
 		collapsedOnDesktop,
-		closed_text,
 		order_summary_text,
 		invoice_summary_text,
 		collapsedOnMobile,
