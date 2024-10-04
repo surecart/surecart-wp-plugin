@@ -1,10 +1,12 @@
 <?php
 global $sc_query_id;
 
+$taxonomy = $attributes['taxonomy'] ?? 'sc_collection';
+
 // get non-empty collections.
 $collections = get_terms(
 	array(
-		'taxonomy'   => $attributes['taxonomy'] ?? 'sc_collection',
+		'taxonomy'   => $taxonomy,
 		'hide_empty' => true,
 	)
 );
@@ -19,12 +21,12 @@ $url        = \SureCart::block()->urlParams( 'products' );
 $filter_key = $url->getKey( 'filter' );
 
 $options = array_map(
-	function ( $collection ) use ( $url ) {
+	function ( $collection ) use ( $url, $taxonomy ) {
 		return [
 			'value'   => $collection->term_id,
 			'label'   => $collection->name,
-			'href'    => $url->hasFilterArg( 'sc_collection', $collection->term_id ) ? $url->removeFilterArg( 'sc_collection', $collection->term_id ) : $url->addFilterArg( 'sc_collection', $collection->term_id ),
-			'checked' => $url->hasFilterArg( 'sc_collection', $collection->term_id ),
+			'href'    => $url->hasFilterArg( $taxonomy, $collection->term_id ) ? $url->removeFilterArg( $taxonomy, $collection->term_id ) : $url->addFilterArg( $taxonomy, $collection->term_id ),
+			'checked' => $url->hasFilterArg( $taxonomy, $collection->term_id ),
 		];
 	},
 	$collections ?? []
