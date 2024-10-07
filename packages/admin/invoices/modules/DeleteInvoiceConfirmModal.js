@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+
 /**
  * External dependencies.
  */
@@ -60,7 +63,13 @@ export default ({ open, onRequestClose }) => {
 			onCancel={onRequestClose}
 			confirmButtonText={__('Delete', 'surecart')}
 		>
-			<Error error={error} setError={setError} />
+			<Error
+				error={error}
+				setError={setError}
+				css={css`
+					margin-bottom: var(--sc-spacing-medium);
+				`}
+			/>
 
 			{__('Are you sure you want to delete this invoice?', 'surecart')}
 

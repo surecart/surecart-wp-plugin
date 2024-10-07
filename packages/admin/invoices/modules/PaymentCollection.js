@@ -249,7 +249,11 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 								<ScPaymentMethod
 									paymentMethod={paymentMethod}
 								/>
-								<div>
+								<div
+									css={css`
+										margin-right: var(--sc-spacing-small);
+									`}
+								>
 									{!!paymentMethod?.card?.exp_month && (
 										<span>
 											{__('Exp.', 'surecart')}

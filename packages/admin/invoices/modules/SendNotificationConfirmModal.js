@@ -91,7 +91,13 @@ export default ({ title, onRequestClose, paymentMethod, children }) => {
 			`}
 			onRequestClose={onRequestClose}
 		>
-			<Error error={error} setError={setError} />
+			<Error
+				error={error}
+				setError={setError}
+				css={css`
+					margin-bottom: var(--sc-spacing-medium);
+				`}
+			/>
 
 			{children}
 

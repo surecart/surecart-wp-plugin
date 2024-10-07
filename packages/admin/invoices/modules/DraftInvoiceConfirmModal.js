@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+
 /**
  * WordPress dependencies.
  */
@@ -67,7 +70,13 @@ export default ({ onRequestClose, open }) => {
 			onConfirm={draftInvoice}
 			onCancel={onRequestClose}
 		>
-			<Error error={error} setError={setError} />
+			<Error
+				error={error}
+				setError={setError}
+				css={css`
+					margin-bottom: var(--sc-spacing-medium);
+				`}
+			/>
 
 			{__(
 				'Are you sure you want to change the status of this invoice to draft?',
