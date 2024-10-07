@@ -119,7 +119,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 			<ScText tag="span">
 				{invoice?.due_date ? (
 					<>
-						{__('Request by payment due by ', 'surecart')}{' '}
+						{__('Payment is requested by ', 'surecart')}{' '}
 						<ScFormatDate
 							date={invoice?.due_date}
 							type="timestamp"
