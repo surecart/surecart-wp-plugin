@@ -36,18 +36,6 @@ const TEMPLATE = [
 				},
 				[
 					[
-						'surecart/price-amount',
-						{
-							style: {
-								typography: {
-									fontStyle: 'normal',
-									fontWeight: '700',
-								},
-							},
-						},
-						[],
-					],
-					[
 						'surecart/price-scratch-amount',
 						{
 							style: {
@@ -55,6 +43,19 @@ const TEMPLATE = [
 									fontStyle: 'normal',
 									fontWeight: '700',
 									textDecoration: 'line-through',
+								},
+								color: { text: '#686868' },
+							},
+						},
+						[],
+					],
+					[
+						'surecart/price-amount',
+						{
+							style: {
+								typography: {
+									fontStyle: 'normal',
+									fontWeight: '700',
 								},
 							},
 						},

@@ -189,6 +189,31 @@ export default [
 												},
 												[
 													[
+														'surecart/price-scratch-amount',
+														{
+															style: {
+																elements: {
+																	link: {
+																		color: {
+																			text: '#686868',
+																		},
+																	},
+																},
+																typography: {
+																	fontStyle:
+																		'normal',
+																	fontWeight:
+																		'700',
+																	textDecoration:
+																		'line-through',
+																},
+															},
+															textColor:
+																'#686868',
+														},
+														[],
+													],
+													[
 														'surecart/price-amount',
 														{
 															style: {
@@ -204,31 +229,6 @@ export default [
 																		'normal',
 																	fontWeight:
 																		'700',
-																},
-															},
-															textColor:
-																'accent-3',
-														},
-														[],
-													],
-													[
-														'surecart/price-scratch-amount',
-														{
-															style: {
-																elements: {
-																	link: {
-																		color: {
-																			text: 'var:preset|color|accent-3',
-																		},
-																	},
-																},
-																typography: {
-																	fontStyle:
-																		'normal',
-																	fontWeight:
-																		'700',
-																	textDecoration:
-																		'line-through',
 																},
 															},
 															textColor:
