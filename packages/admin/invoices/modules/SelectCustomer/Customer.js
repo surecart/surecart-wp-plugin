@@ -50,11 +50,7 @@ export default ({ id, onChange, isDraftInvoice }) => {
 	}
 
 	return (
-		<ScCard
-			css={css`
-				overflow: hidden;
-			`}
-		>
+		<ScCard>
 			<ScFlex alignItems="center" justifyContent="space-between">
 				<ScFlex alignItems="center" justifyContent="flex-start">
 					<div>
@@ -70,6 +66,7 @@ export default ({ id, onChange, isDraftInvoice }) => {
 					<div
 						css={css`
 							word-break: break-word;
+							max-width: 200px;
 						`}
 					>
 
