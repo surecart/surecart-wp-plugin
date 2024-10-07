@@ -1,8 +1,9 @@
 <?php
 global $sc_query_id;
 $params         = \SureCart::block()->urlParams( 'products' );
-$query_order    = $params->getArg( 'order' ) ?? 'desc';
-$query_order_by = $params->getArg( 'orderby' ) ?? 'date';
+$sort_default   = explode( ':', $attributes['sort_default'] ?? 'date:desc' );
+$query_order_by = $params->getArg( 'orderby' ) ?? $sort_default[0];
+$query_order    = $params->getArg( 'order' ) ?? $sort_default[1];
 
 $options = [
 	[

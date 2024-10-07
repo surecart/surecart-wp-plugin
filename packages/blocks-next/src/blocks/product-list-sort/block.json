@@ -12,6 +12,10 @@
 	"attributes": {
 		"label": {
 			"type": "string"
+		},
+		"sort_default": {
+			"type": "string",
+			"default": "date:desc"
 		}
 	},
 	"supports": {
