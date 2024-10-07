@@ -67,18 +67,6 @@ const newPriceChoicesTemplate = (attributes) => {
 							},
 							[
 								[
-									'surecart/price-amount',
-									{
-										style: {
-											typography: {
-												fontStyle: 'normal',
-												fontWeight: '700',
-											},
-										},
-									},
-									[],
-								],
-								[
 									'surecart/price-scratch-amount',
 									{
 										style: {
@@ -86,6 +74,19 @@ const newPriceChoicesTemplate = (attributes) => {
 												fontStyle: 'normal',
 												fontWeight: '700',
 												textDecoration: 'line-through',
+											},
+											color: { text: '#686868' },
+										},
+									},
+									[],
+								],
+								[
+									'surecart/price-amount',
+									{
+										style: {
+											typography: {
+												fontStyle: 'normal',
+												fontWeight: '700',
 											},
 										},
 									},
