@@ -1,9 +1,16 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	RichText,
+} from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
 import { useEntityRecords } from '@wordpress/core-data';
 
-export default ({ attributes: { taxonomy: taxonomySlug }, setAttributes }) => {
+export default ({
+	attributes: { taxonomy: taxonomySlug, label },
+	setAttributes,
+}) => {
 	const blockProps = useBlockProps({
 		className: 'sc-dropdown',
 	});
@@ -32,6 +39,10 @@ export default ({ attributes: { taxonomy: taxonomySlug }, setAttributes }) => {
 							onChange={(selectedTaxonomy) =>
 								setAttributes({
 									taxonomy: selectedTaxonomy,
+									label:
+										taxonomies.find(
+											(t) => t.slug === selectedTaxonomy
+										)?.name ?? __('Filter', 'surecart'),
 								})
 							}
 						/>
@@ -40,7 +51,16 @@ export default ({ attributes: { taxonomy: taxonomySlug }, setAttributes }) => {
 			</InspectorControls>
 			<button className="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text">
 				<span className="sc-button__label">
-					{__('Filter', 'surecart')}
+					<RichText
+						value={label ?? __('Filter', 'surecart')}
+						withoutInteractiveFormatting
+						allowedFormats={[]}
+						onChange={(label) =>
+							setAttributes({
+								label,
+							})
+						}
+					/>
 				</span>
 				<span className="sc-button__caret">
 					<svg
