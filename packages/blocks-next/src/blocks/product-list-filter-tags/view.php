@@ -25,11 +25,11 @@ foreach ( $all_taxonomies as $taxonomy_name => $terms_ids ) {
 
 // map the collections to the view.
 $product_terms = array_map(
-	function ( $collection ) use ( $params ) {
+	function ( $term ) use ( $params ) {
 		return [
-			'href' => $params->removeFilterArg( 'sc_collection', $collection->term_id ),
-			'name' => $collection->name,
-			'id'   => $collection->term_id,
+			'href' => $params->removeFilterArg( $term->taxonomy, $term->term_id ),
+			'name' => $term->name,
+			'id'   => $term->term_id,
 		];
 	},
 	$product_terms ?? []
