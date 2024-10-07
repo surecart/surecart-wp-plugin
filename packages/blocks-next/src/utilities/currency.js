@@ -32,12 +32,20 @@ export const maybeConvertAmount = (amount, currency) => {
 		: amount / 100;
 };
 
-export const getFormattedPrice = ({ amount, currency = 'usd' }) => {
+export const getFormattedPrice = ({
+	amount,
+	currency = 'usd',
+	options = {},
+}) => {
 	const converted = maybeConvertAmount(parseFloat(amount), currency);
+
+	const minimumFractionDigits = amount % 1 == 0 ? 0 : 2;
 
 	return `${new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency,
+		minimumFractionDigits,
+		...options,
 	}).format(parseFloat(converted.toFixed(2)))}`;
 };
 
