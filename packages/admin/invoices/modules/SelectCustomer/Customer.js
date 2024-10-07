@@ -50,7 +50,11 @@ export default ({ id, onChange, isDraftInvoice }) => {
 	}
 
 	return (
-		<ScCard>
+		<ScCard
+			css={css`
+				overflow: hidden;
+			`}
+		>
 			<ScFlex alignItems="center" justifyContent="space-between">
 				<ScFlex alignItems="center" justifyContent="flex-start">
 					<div>
@@ -63,7 +67,12 @@ export default ({ id, onChange, isDraftInvoice }) => {
 							`}
 						/>
 					</div>
-					<div>
+					<div
+						css={css`
+							word-break: break-word;
+						`}
+					>
+
 						<div>{customer?.name}</div>
 						<div>{customer?.email}</div>
 					</div>
