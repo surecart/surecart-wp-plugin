@@ -168,12 +168,12 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				'customer_id' => [
 					'description' => esc_html__( 'The customer id for the order.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					// 'context'     => [ 'edit' ],
 				],
 				'customer'    => [
 					'description' => esc_html__( 'The customer for the session.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'edit' ],
+					// 'context'     => [ 'edit' ],
 				],
 				'line_items'  => [
 					'description' => esc_html__( 'The line items for the session.', 'surecart' ),
