@@ -161,10 +161,10 @@ class ProductListBlock {
 				);
 		}
 
-		$all_taxonnomies = $this->url->getAllTaxonomyArgs();
+		$all_taxonomies = $this->url->getAllTaxonomyArgs();
 
 		// handle taxonomies query.
-		foreach ( $all_taxonnomies as $taxonomy => $terms ) {
+		foreach ( $all_taxonomies as $taxonomy => $terms ) {
 			$tax_query[] =
 				array(
 					'taxonomy' => $taxonomy,
