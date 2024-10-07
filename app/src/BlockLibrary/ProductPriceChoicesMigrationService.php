@@ -58,8 +58,8 @@ class ProductPriceChoicesMigrationService {
 		$this->block_html .= '<div class="wp-block-group">';
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5rem"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
+		$this->block_html .= '<!-- wp:surecart/price-scratch-amount {"style":{"typography":{"textDecoration":"line-through"}},"color":{"text":"#686868"}} /-->';
 		$this->block_html .= '<!-- wp:surecart/price-amount {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->';
-		$this->block_html .= '<!-- wp:surecart/price-scratch-amount {"style":{"typography":{"textDecoration":"line-through"}}} /-->';
 		$this->block_html .= '<!-- wp:surecart/price-interval {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->';
 		$this->block_html .= '</div>';
 		$this->block_html .= '<!-- /wp:group -->';
