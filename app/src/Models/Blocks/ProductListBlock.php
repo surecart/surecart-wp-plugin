@@ -149,7 +149,7 @@ class ProductListBlock {
 				array(
 					'taxonomy' => 'sc_collection',
 					'field'    => 'term_id',
-					'terms'    => array_unique( array_map( 'intval', $legacy_collection_ids ?? array() ) ),
+					'terms'    => array_unique( array_map( 'absint', $legacy_collection_ids ?? array() ) ),
 				);
 		} elseif ( is_tax() ) {
 				$term        = get_queried_object();
@@ -157,7 +157,7 @@ class ProductListBlock {
 				array(
 					'taxonomy' => 'sc_collection',
 					'field'    => 'term_id',
-					'terms'    => array_unique( array_map( 'intval', [ (int) $term->term_id ] ) ),
+					'terms'    => array_unique( array_map( 'absint', [ (int) $term->term_id ] ) ),
 				);
 		}
 
@@ -168,9 +168,9 @@ class ProductListBlock {
 			$tax_query[] =
 				array(
 					'taxonomy' => $taxonomy,
-					'field'    => 'term_id',
-					'terms'    => array_unique( array_map( 'intval', $terms ?? array() ) ),
-					'',
+					'field'    => 'slug',
+					'terms'    => array_unique( array_map( 'strval', $terms ?? array() ) ),
+					'operator' => 'IN',
 				);
 		}
 

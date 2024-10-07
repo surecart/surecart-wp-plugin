@@ -9,12 +9,12 @@ if ( empty( $all_taxonomies ) ) {
 }
 
 $product_terms = array();
-foreach ( $all_taxonomies as $taxonomy_name => $terms_ids ) {
+foreach ( $all_taxonomies as $taxonomy_name => $term_slugs ) {
 	$terms = get_terms(
 		[
 			'taxonomy'   => $taxonomy_name,
 			'hide_empty' => false,
-			'include'    => $terms_ids,
+			'slug'       => $term_slugs,
 		]
 	);
 
@@ -27,9 +27,9 @@ foreach ( $all_taxonomies as $taxonomy_name => $terms_ids ) {
 $product_terms = array_map(
 	function ( $term ) use ( $params ) {
 		return [
-			'href' => $params->removeFilterArg( $term->taxonomy, $term->term_id ),
+			'href' => $params->removeFilterArg( $term->taxonomy, $term->slug ),
 			'name' => $term->name,
-			'id'   => $term->term_id,
+			'id'   => $term->slug,
 		];
 	},
 	$product_terms ?? []
