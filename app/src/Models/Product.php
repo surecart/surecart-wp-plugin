@@ -795,7 +795,12 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		return array_values(
+		$cached = $this->getCachedAttribute( 'gallery' );
+		if ( null !== $cached ) {
+			return $cached;
+		}
+
+		$gallery = array_values(
 			array_filter(
 				array_map(
 					function ( $id ) {
@@ -826,8 +831,12 @@ class Product extends Model implements PageModel {
 					// it must have a src at least.
 					return ! empty( $item ) && ! empty( $item->attributes()->src );
 				}
-			),
+			)
 		);
+
+		$this->setCachedAttribute( 'gallery', $gallery );
+
+		return $gallery;
 	}
 
 	/**
