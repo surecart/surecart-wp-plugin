@@ -996,7 +996,7 @@ class ProductPostTypeService {
 	 *
 	 * @param string $title The title.
 	 */
-	public function disallowPreTitle( $title ): string {
+	public function disallowPreTitle( $title ) {
 		if ( is_singular( 'sc_product' ) ) {
 			return '';
 		}

@@ -55,7 +55,7 @@ class Product extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product', 'surecart' );
+		return esc_html__( 'Product Form', 'surecart' );
 	}
 
 	/**
