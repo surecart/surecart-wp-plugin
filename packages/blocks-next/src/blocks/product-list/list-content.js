@@ -12,7 +12,6 @@ import { TEMPLATE } from './template';
 import ProductListInspectorControls from './inspector-controls';
 import ListToolbar from '../../utilities/patterns-toolbar';
 import { useEffect } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
 
 /**
  * Product List Edit

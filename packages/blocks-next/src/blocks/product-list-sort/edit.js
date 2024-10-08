@@ -5,7 +5,6 @@ export default () => {
 	const blockProps = useBlockProps({
 		className: 'sc-dropdown',
 	});
-
 	return (
 		<div {...blockProps} role="menu" tabIndex="-1">
 			<button className="sc-dropdown__trigger sc-button sc-button--standard sc-button--medium sc-button--caret sc-button--has-label sc-button--text">
