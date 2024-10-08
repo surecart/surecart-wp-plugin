@@ -12,12 +12,9 @@
 	"attributes": {
 		"label": {
 			"type": "string"
-		},
-		"sort_default": {
-			"type": "string",
-			"default": "date:desc"
 		}
 	},
+	"usesContext": ["query"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {
