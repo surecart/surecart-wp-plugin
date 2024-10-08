@@ -132,7 +132,7 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function column_integrations( $subscription ) {
 		$product = $subscription->purchase->product ?? null;
-		$output = $product ? $this->productIntegrationsList( [ 'product_id' => $product ] ) : false;
+		$output  = $product ? $this->productIntegrationsList( [ 'product_id' => $product ] ) : false;
 		return $output ? $output : '-';
 	}
 	/**
