@@ -108,7 +108,6 @@
 	"style": [
 		"surecart-wp-button",
 		"surecart-spinner",
-		"surecart-dialog",
 		"file:./style-index.css"
 	],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
