@@ -31,7 +31,7 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 
 	let total = (fulfillment?.fulfillment_items?.data || []).reduce(
 		(accumulator, item) => {
-			return accumulator + item?.line_item?.quantity;
+			return accumulator + item?.line_item?.fulfilled_quantity;
 		},
 		0
 	);
