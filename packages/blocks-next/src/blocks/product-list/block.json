@@ -388,9 +388,9 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:./style-index.css",
-		"file:../../styles/block-ui.css",
-		"file:../../styles/tag.css",
+		"file:./style-index",
+		"surecart-block-ui",
+		"surecart-tag",
 		"surecart-theme-base"
 	]
 }

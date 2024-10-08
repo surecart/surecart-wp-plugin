@@ -104,11 +104,11 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["file:../../styles/wp-button.css"],
+	"editorStyle": ["surecart-wp-button"],
 	"style": [
-		"file:../../styles/wp-button.css",
-		"file:../../styles/spinner.css",
-		"file:../../styles/dialog.css",
+		"surecart-wp-button",
+		"surecart-spinner",
+		"surecart-dialog",
 		"file:./style-index.css"
 	],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
