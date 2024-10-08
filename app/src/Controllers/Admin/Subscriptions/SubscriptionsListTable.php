@@ -65,7 +65,7 @@ class SubscriptionsListTable extends ListTable {
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link                    = \SureCart::getUrl()->index( 'subscriptions' );
+			$link = \SureCart::getUrl()->index( 'subscriptions' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -132,14 +132,7 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function column_integrations( $subscription ) {
 		$product = $subscription->purchase->product ?? null;
-		$output  = $product ? $this->productIntegrationsList(
-			[
-				'product_id' => $product,
-				'price_id'   => $subscription->purchase->price->id ?? $subscription->purchase->price ?? null,
-				'variant_id' => $subscription->purchase->variant->id ?? $subscription->purchase->variant ?? null,
-			]
-		) : false;
-
+		$output = $product ? $this->productIntegrationsList( [ 'product_id' => $product ] ) : false;
 		return $output ? $output : '-';
 	}
 	/**
