@@ -123,7 +123,7 @@ class ProductData extends \Bricks\Element {
 		];
 
 		$this->controls['justifyContent'] = [
-			'label'   => esc_html__( 'Align main axis', 'bricks' ),
+			'label'   => esc_html__( 'Align main axis', 'surecart' ),
 			'tooltip' => [
 				'content'  => 'justify-content',
 				'position' => 'top-left',
@@ -137,7 +137,7 @@ class ProductData extends \Bricks\Element {
 		];
 
 		$this->controls['alignItems'] = [
-			'label'   => esc_html__( 'Align cross axis', 'bricks' ),
+			'label'   => esc_html__( 'Align cross axis', 'surecart' ),
 			'tooltip' => [
 				'content'  => 'align-items',
 				'position' => 'top-left',

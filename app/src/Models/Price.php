@@ -231,7 +231,7 @@ class Price extends Model {
 				'%d payment',
 				'%d payments',
 				$this->recurring_period_count,
-				'your_text_domain'
+				'surecart'
 			),
 			$this->recurring_period_count
 		) : '';
