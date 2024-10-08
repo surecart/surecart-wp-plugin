@@ -72,8 +72,12 @@ class ProductListBlock {
 
 		$offset   = absint( $query['offset'] ?? 0 );
 		$per_page = $this->block->parsed_block['attrs']['limit'] ?? $this->block->context['surecart/product-list/limit'] ?? $query['perPage'] ?? 15;
-		$order    = ! empty( $this->url->getArg( 'order' ) ) ? sanitize_text_field( $this->url->getArg( 'order' ) ) : $query['order'];
-		$orderby  = ! empty( $this->url->getArg( 'orderby' ) ) ? sanitize_text_field( $this->url->getArg( 'orderby' ) ) : $query['orderBy'];
+		$order    = ! empty( $this->url->getArg( 'order' ) )
+			? sanitize_text_field( $this->url->getArg( 'order' ) )
+			: ( ! empty( $query['order'] ) ? $query['order'] : 'desc' );
+		$orderby  = ! empty( $this->url->getArg( 'orderby' ) )
+			? sanitize_text_field( $this->url->getArg( 'orderby' ) )
+			: ( ! empty( $query['orderBy'] ) ? $query['orderBy'] : 'date' );
 		$page     = $this->url->getCurrentPage();
 
 		// build up the query.
