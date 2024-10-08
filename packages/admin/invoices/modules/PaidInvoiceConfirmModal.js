@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+
 /**
  * External dependencies.
  */
@@ -67,7 +70,13 @@ export default ({ open, onRequestClose }) => {
 			onCancel={onRequestClose}
 			confirmButtonText={__('Mark Paid', 'surecart')}
 		>
-			<Error error={error} setError={setError} />
+			<Error
+				error={error}
+				setError={setError}
+				css={css`
+					margin-bottom: var(--sc-spacing-medium);
+				`}
+			/>
 
 			{__(
 				'Are you sure you wish to mark the invoice as paid? This cannot be undone.',

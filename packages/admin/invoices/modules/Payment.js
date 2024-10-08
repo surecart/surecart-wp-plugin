@@ -11,6 +11,7 @@ import {
 	ScLineItem,
 	ScDivider,
 	ScCouponForm,
+	ScTag,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import PaymentCollection from './PaymentCollection';
@@ -18,7 +19,7 @@ import { formatTaxDisplay } from '../../util/tax';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
-	const { checkout, updateCheckout, loading, busy } = useInvoice();
+	const { checkout, updateCheckout, loading, busy, isDraftInvoice } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
@@ -33,6 +34,61 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 			},
 		});
 	};
+
+	const renderCouponForm = () => {
+		if (isDraftInvoice) {
+			return (
+				<ScCouponForm
+					collapsed={true}
+					placeholder={__('Enter Coupon Code', 'surecart')}
+					label={__('Add Coupon Code', 'surecart')}
+					buttonText={__('Apply', 'surecart')}
+					onScApplyCoupon={onCouponChange}
+					discount={checkout?.discount}
+					currency={checkout?.currency}
+					discountAmount={checkout?.discount_amount}
+					busy={busy}
+				/>
+			)
+		}
+
+		if (!checkout?.discount?.promotion?.code) {
+			return null;
+		}
+
+		return (
+			<ScLineItem>
+				<span slot="description">
+					<div part="discount-label">{__('Discount', 'surecart')}</div>
+					<ScTag
+						exportparts="base:coupon-tag"
+						type={'redeemable' === checkout.discount?.redeemable_status ? 'success' : 'warning'}
+						class="coupon-tag"
+					>
+						{checkout?.discount?.promotion?.code}
+					</ScTag>
+				</span>
+
+				{'redeemable' === checkout.discount?.redeemable_status ? (
+					<Fragment>
+						{!!checkout.human_discount && (
+							<span class="coupon-human-discount" slot="price-description">
+								{checkout.human_discount_with_duration}
+							</span>
+						)}
+						<span slot="price">
+							<sc-format-number type="currency" currency={checkout?.currency} value={checkout?.discount_amount}></sc-format-number>
+						</span>
+					</Fragment>
+				) : (
+					<div class="coupon__status" slot="price-description">
+						<sc-icon name="alert-triangle" />
+						{checkout?.discount?.redeemable_display_status}
+					</div>
+				)}
+			</ScLineItem>
+		)
+	}
 
 	const renderPaymentDetails = () => {
 		return (
@@ -111,17 +167,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 					</ScLineItem>
 				)}
 
-				<ScCouponForm
-					collapsed={true}
-					placeholder={__('Enter Coupon Code', 'surecart')}
-					label={__('Add Coupon Code', 'surecart')}
-					buttonText={__('Apply', 'surecart')}
-					onScApplyCoupon={onCouponChange}
-					discount={checkout?.discount}
-					currency={checkout?.currency}
-					discountAmount={checkout?.discount_amount}
-					busy={busy}
-				/>
+				{renderCouponForm()}
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 

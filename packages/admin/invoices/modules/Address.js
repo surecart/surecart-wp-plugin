@@ -102,6 +102,10 @@ export default ({ checkout }) => {
 		}
 
 		if (!isDraftInvoice) {
+			const billingAddress = checkout?.billing_matches_shipping
+				? checkout?.shipping_address
+				: checkout?.billing_address;
+
 			return (
 				<div
 					css={css`
@@ -121,9 +125,15 @@ export default ({ checkout }) => {
 						`}
 					>
 						<ScFormControl label={__('Ship to', 'surecart')}>
-							<AddressDisplay
-								address={checkout?.shipping_address}
-							/>
+							{
+								!!checkout?.shipping_address?.country ?
+									<AddressDisplay
+										address={checkout?.shipping_address}
+									/> :
+									<ScText style={{ marginTop: 'var(--sc-spacing-small)' }}>
+										{__('No shipping address has been set.', 'surecart')}
+									</ScText>
+							}
 						</ScFormControl>
 					</ScCard>
 
@@ -133,13 +143,15 @@ export default ({ checkout }) => {
 						`}
 					>
 						<ScFormControl label={__('Bill to', 'surecart')}>
-							<AddressDisplay
-								address={
-									checkout?.billing_matches_shipping
-										? checkout?.shipping_address
-										: checkout?.billing_address
-								}
-							/>
+							{
+								!!billingAddress?.country ?
+									<AddressDisplay
+										address={billingAddress}
+									/> :
+									<ScText style={{ marginTop: 'var(--sc-spacing-small)' }}>
+										{__('No billing address has been set.', 'surecart')}
+									</ScText>
+							}
 						</ScFormControl>
 					</ScCard>
 				</div>

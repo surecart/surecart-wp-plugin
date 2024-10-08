@@ -22,6 +22,7 @@ import {
 	ScPriceInput,
 	ScForm,
 	ScVisuallyHidden,
+	ScText,
 } from '@surecart/components-react';
 import {
 	getFeaturedProductMediaAttributes,
@@ -163,21 +164,28 @@ export default ({
 						)}
 
 						{maxStockQuantity && (
-							<div
+							<ScText
 								css={css`
 									margin-top: var(--sc-spacing-small);
+									color: var(--sc-price-label-color, var(--sc-input-help-text-color));
+									font-size: var(--sc-price-label-font-size, var(--sc-input-help-text-font-size-medium));
 								`}
 							>
 								{sprintf(
 									__('Available: %d', 'surecart'),
 									maxStockQuantity
 								)}
-							</div>
+							</ScText>
 						)}
 					</>
 				)}
 			</ScTableCell>
-			<ScTableCell>
+			<ScTableCell
+				css={css`
+					display: flex;
+					flex-direction: column;
+				`}
+			>
 				<div
 					css={css`
 						display: grid;
