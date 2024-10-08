@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "surecart/product-buy-button",
+	"apiVersion": 3,
+	"name": "surecart/product-buy-button-old",
 	"title": "Product Cart Button",
 	"category": "surecart",
 	"description": "Add a buy now or add to cart button.",
@@ -50,6 +50,7 @@
 		}
 	},
 	"supports": {
+		"interactivity": true,
 		"anchor": true,
 		"align": false,
 		"alignWide": false,
@@ -123,5 +124,10 @@
 	],
 	"script": "surecart-components",
 	"editorStyle": "wp-block-button-editor",
-	"style": ["file:./style.css", "surecart-themes-default", "wp-block-button"]
+	"style": ["file:./style.css", "surecart-themes-default", "wp-block-button"],
+	"viewScriptModule": [
+		"@surecart/checkout",
+		"@surecart/cart",
+		"@surecart/product-page"
+	]
 }

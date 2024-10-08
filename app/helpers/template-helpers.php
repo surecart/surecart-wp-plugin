@@ -34,3 +34,33 @@ function surecart_get_the_block_template_html( $template_content ) {
 	// (e.g. `.wp-site-blocks > *`).
 	return '<div class="wp-site-blocks">' . $content . '</div>';
 }
+
+/**
+ * Prints a block template part.
+ *
+ * @since 5.9.0
+ *
+ * @param string $part The block template part to print.
+ */
+function sc_block_template_part( $part ) {
+	$template_part = get_block_template( 'surecart/surecart//' . $part, 'wp_template_part' );
+	if ( ! $template_part || empty( $template_part->content ) ) {
+		return;
+	}
+	echo do_blocks( $template_part->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+/**
+ * Prints a block template part.
+ *
+ * @since 5.9.0
+ *
+ * @param string $part The block template part to print.
+ */
+function sc_block_template( $part ) {
+	$template_part = get_block_template( 'surecart/surecart//' . $part );
+	if ( ! $template_part || empty( $template_part->content ) ) {
+		return;
+	}
+	echo do_blocks( $template_part->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}

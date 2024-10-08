@@ -29,6 +29,11 @@ class CheckoutTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
+	/**
+	 * @group checkout
+	 *
+	 * @return void
+	 */
 	public function test_checkoutHasPurchases() {
 		$checkout = new Checkout([
 			'id' => 'test',
@@ -44,7 +49,7 @@ class CheckoutTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group session
+	 * @group checkout
 	 * @group models
 	 */
 	public function test_can_create_draft_checkout()

@@ -9,7 +9,7 @@ use SureCart\WordPress\Pages\PageService;
 use SureCart\WordPress\Pages\PageServiceProvider;
 use SureCart\WordPress\PluginServiceProvider;
 use SureCart\WordPress\Posts\PostServiceProvider;
-use SureCart\WordPress\PostTypes\FormPostTypeServiceProvider;
+use SureCart\WordPress\PostTypes\PostTypeServiceProvider;
 
 class InstallTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -26,7 +26,7 @@ class InstallTest extends SureCartUnitTestCase {
 			'providers' => [
 				PageServiceProvider::class,
 				RolesServiceProvider::class,
-				FormPostTypeServiceProvider::class,
+				PostTypeServiceProvider::class,
 				ActivationServiceProvider::class,
 				PluginServiceProvider::class,
 				PostServiceProvider::class

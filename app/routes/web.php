@@ -24,16 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Product Page
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-	->get()
-	->where( 'query_var', 'sc_product_page_id' )
-	->handle( 'ProductPageController@show' );
-
-/*
-|--------------------------------------------------------------------------
 | Buy Page
 |--------------------------------------------------------------------------
 */
@@ -64,16 +54,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->where( 'query_var', 'sc_checkout_post' )
 	->middleware( CheckoutFormModeMiddleware::class )
 	->handle( 'CheckoutFormsController@changeMode' );
-
-/*
-|--------------------------------------------------------------------------
-| Collection Page
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-	->get()
-	->where( 'query_var', 'sc_collection_page_id' )
-	->handle( 'CollectionPageController@show' );
 
 /*
 |--------------------------------------------------------------------------

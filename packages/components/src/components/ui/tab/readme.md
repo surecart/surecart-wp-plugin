@@ -39,6 +39,12 @@ Type: `Promise<void>`
 
 Sets focus to the tab.
 
+#### Parameters
+
+| Name      | Type           | Description |
+| --------- | -------------- | ----------- |
+| `options` | `FocusOptions` |             |
+
 #### Returns
 
 Type: `Promise<void>`

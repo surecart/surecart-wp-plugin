@@ -70,6 +70,7 @@ export default () => {
 							'price.product',
 							'period.subscription',
 							'product.featured_product_media',
+							'product.product_medias',
 							'product_media.media',
 						],
 					}
@@ -134,6 +135,7 @@ export default () => {
 						'price',
 						'price.product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 						'customer',
 						'customer.balances',

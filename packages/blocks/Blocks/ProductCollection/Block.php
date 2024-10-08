@@ -17,6 +17,12 @@ class Block extends ProductItemListBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		$term                        = get_queried_object();
+		$collection                  = get_term_meta( $term->term_id, 'collection', true );
+		$attributes['collection_id'] = $collection->id;
+
+		return \SureCart::block()->productListMigration( $attributes, $this->block )->render();
+
 		self::$instance = wp_unique_id( 'sc-product-item-list-' );
 
 		// check for inner blocks.
@@ -26,7 +32,7 @@ class Block extends ProductItemListBlock {
 		$product_item_attributes   = $product_inner_blocks[0]['attrs'] ?? $attributes;
 
 		$layout_config = array_map(
-			function( $inner_block ) {
+			function ( $inner_block ) {
 				return (object) [
 					'blockName'  => $inner_block['blockName'],
 					'attributes' => $inner_block['attrs'],
@@ -61,7 +67,21 @@ class Block extends ProductItemListBlock {
 			)
 		);
 
-		$products = $this->getProducts( $attributes );
+		// query posts.
+		$product_query = new \WP_Query(
+			array(
+				'post_type'      => 'sc_product',
+				'posts_per_page' => 10,
+			)
+		);
+
+		// get the product for each post.
+		$products = array_map(
+			function ( $post ) {
+				return sc_get_product( $post );
+			},
+			$product_query->posts ?? []
+		);
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
@@ -71,8 +91,8 @@ class Block extends ProductItemListBlock {
 				'paginationAlignment'  => $attributes['pagination_alignment'],
 				'limit'                => (int) $attributes['limit'],
 				'pagination'           => [
-					'total'       => $products->total(),
-					'total_pages' => $products->totalPages(),
+					'total'       => $product_query->found_posts,
+					'total_pages' => $product_query->max_num_pages,
 				],
 				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
 				'paginationEnabled'    => wp_validate_boolean( $attributes['pagination_enabled'] ),

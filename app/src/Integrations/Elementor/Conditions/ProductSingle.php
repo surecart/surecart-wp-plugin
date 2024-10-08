@@ -64,17 +64,18 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 	 * @return boolean
 	 */
 	public function check( $args ) {
-		if ( isset( $args['id'] ) ) {
-			$id = $args['id'];
-			if ( $id ) {
-				if ( ! empty( get_query_var( 'surecart_current_upsell' ) ) ) {
-					return false;
-				}
-				$product = get_query_var( 'surecart_current_product' );
+		if ( isset( $args['id'] ) && $args['id'] ) {
+
+			if ( ! empty( get_query_var( 'surecart_current_upsell' ) ) ) {
+				return false;
+			}
+
+			if ( is_singular( 'sc_product' ) ) {
+				$product = sc_get_product();
 				if ( is_wp_error( $product ) || empty( $product->id ) ) {
 					return false;
 				}
-				return $product->id === $id;
+				return $product->id === $args['id'];
 			}
 		}
 		return false;

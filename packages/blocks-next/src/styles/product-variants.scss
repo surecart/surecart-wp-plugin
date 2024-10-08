@@ -1,0 +1,16 @@
+.sc-product-variants__wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sc-form-row-spacing);
+	border: none;
+	display: block;
+	margin-bottom: var(--sc-form-row-spacing, 0.75em);
+
+	> div {
+		flex: 1;
+	}
+
+	.sc-form-label {
+		color: inherit !important;
+	}
+}

@@ -107,7 +107,7 @@ class Block extends BaseBlock {
 			);
 		}
 
-		return \SureCart::blocks()->render(
+		return \SureCart::block()->render(
 			'blocks/form',
 			[
 				'align'            => $attributes['align'] ?? '',

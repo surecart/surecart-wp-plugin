@@ -21,15 +21,96 @@ class ProductTest extends SureCartUnitTestCase
 				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
-				\SureCart\Account\AccountServiceProvider::class
+				\SureCart\Account\AccountServiceProvider::class,
+				\SureCart\Sync\SyncServiceProvider::class,
 			]
 		], false);
 
 		parent::setUp();
 	}
 
+	public function test_can_create()
+	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$instance = new Product($request['product']);
+		$created = $instance->create();
+
+		$this->assertNotEmpty($created->post);
+	}
+
+	public function test_can_update()
+	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$created = Product::update($request['product']);
+
+		$this->assertNotEmpty($created->post);
+	}
+
+	public function test_can_delete() {
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+
+		// mock requests
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// then make the request.
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products')
+			->andReturn($response);
+
+		$requests->shouldReceive('makeRequest')
+			->withSomeOfArgs('products/' . $response->id)
+			->andReturn($response);
+
+		$created = Product::update($request['product']);
+
+		$id = $created->post->ID;
+		$this->assertNotEmpty(get_post($id));
+
+		Product::delete($created->id);
+
+		$this->assertEmpty(get_post($id));
+	}
+
 	public function test_can_create_price()
 	{
+		$this->shouldSyncProduct('9f86c425-bed7-45a8-841f-ba5ef5efdfef');
+
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
 
@@ -51,5 +132,130 @@ class ProductTest extends SureCartUnitTestCase
 		foreach($created->prices->data as $price) {
 			$this->assertInstanceOf(Price::class, $price);
 		}
+	}
+
+	/**
+	 * @group media
+	 * @group product
+	 */
+	public function test_has_images_from_featured_product_media() {
+		$this->shouldSyncProduct('test');
+
+		$product = new Product([
+			'id' => 'test',
+			'featured_product_media' => [
+				'media' => [
+					'url' => 'http://example.com/image.jpg',
+					'width' => 800,
+					'height' => 600,
+				]
+			],
+		]);
+		// this should work for both.
+		$featured = $product->featured_image->attributes();
+		$this->assertSame('https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=800/http://example.com/image.jpg', $featured->src);
+		$this->assertSame('attachment-full size-full', $featured->class);
+		$this->assertSame('(max-width: 800px) 100vw, 800px', $featured->sizes);
+		$this->assertSame(800, $featured->width);
+		$this->assertSame(600, $featured->height);
+		$this->assertSame('lazy', $featured->loading);
+		$this->assertSame('async', $featured->decoding);
+		$this->assertStringContainsString('http://example.com/image.jpg', $featured->srcset);
+
+		$line_item_image = $product->line_item_image;
+		$this->assertSame('https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=150/http://example.com/image.jpg', $line_item_image->src);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item_image->class);
+		$this->assertSame('(max-width: 150px) 100vw, 150px', $line_item_image->sizes);
+		$this->assertSame(150, $line_item_image->width);
+		$this->assertSame(113, $line_item_image->height);
+		$this->assertSame('lazy', $line_item_image->loading);
+		$this->assertSame('async', $line_item_image->decoding);
+		$this->assertStringContainsString('http://example.com/image.jpg', $line_item_image->srcset);
+	}
+
+	/**
+	 * @group media
+	 * @group product
+	 */
+	public function test_has_images_from_product_media_url() {
+		$this->shouldSyncProduct('test');
+
+		$product = new Product([
+			'id' => 'test',
+			'featured_product_media' => [
+				'url' => 'http://example.com/image.jpg',
+				'media' => null
+			],
+		]);
+		// this should work for both.
+		$attributes = $product->featured_image->attributes();
+		$this->assertSame('http://example.com/image.jpg', $attributes->src);
+
+		$line_item_image = $product->line_item_image;
+		$this->assertSame('http://example.com/image.jpg', $line_item_image->src);
+	}
+
+	/**
+	 * @group media
+	 * @group product
+	 */
+	public function test_has_featured_image_from_attachment() {
+		$this->shouldSyncProduct('test');
+
+		$product = new Product([
+			'id' => 'test',
+			'name' => 'test',
+			'updated_at' => time(),
+			'created_at' => time()
+		]);
+		$product = $product->sync();
+		$post = $product->post;
+
+		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
+		$id = $this->factory()->attachment->create_upload_object( $filename );
+
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$id_2 = $this->factory()->attachment->create_upload_object( $filename );
+
+		update_post_meta($post->ID, 'gallery', [['id' => $id], ['id' => $id_2]]);
+
+		$this->assertCount(2, $product->gallery);
+
+		$attributes = $product->featured_image->attributes();
+
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-full size-full', $attributes->class);
+		$this->assertSame('(max-width: 2560px) 100vw, 2560px', $attributes->sizes);
+		$this->assertSame(2560, $attributes->width);
+		$this->assertSame(1920, $attributes->height);
+		$this->assertSame('lazy', $attributes->loading);
+		$this->assertSame('async', $attributes->decoding);
+		$this->assertStringContainsString('test-image-large',$attributes->srcset);
+
+		$attributes = $product->featured_image->attributes('large');
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-large size-large', $attributes->class);
+		$this->assertSame('(max-width: 1024px) 100vw, 1024px', $attributes->sizes);
+		$this->assertSame(1024, $attributes->width);
+		$this->assertSame(768, $attributes->height);
+		$this->assertSame('lazy', $attributes->loading);
+		$this->assertSame('async', $attributes->decoding);
+		$this->assertStringContainsString('test-image-large',$attributes->srcset);
+
+		$attributes = $product->featured_image->attributes('thumbnail');
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $attributes->class);
+		$this->assertSame(150, $attributes->width);
+		$this->assertSame(150, $attributes->height);
+		$this->assertSame('lazy', $attributes->loading);
+		$this->assertSame('async', $attributes->decoding);
+
+		$line_item_image = $product->line_item_image;
+		$this->assertStringContainsString('test-image', $attributes->src);
+		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item_image->class);
+		$this->assertSame(150, $line_item_image->width);
+		$this->assertSame(150, $line_item_image->height);
+		$this->assertSame('lazy', $line_item_image->loading);
+		$this->assertSame('async', $line_item_image->decoding);
 	}
 }

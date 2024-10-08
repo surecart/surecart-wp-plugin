@@ -5,6 +5,7 @@
 	"description": "Displays the product price or price range.",
 	"category": "surecart",
 	"keywords": ["price", "product"],
+	"ancestor": ["surecart/upsell"],
 	"attributes": {
 		"sale_text": {
 			"type": "string",

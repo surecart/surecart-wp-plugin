@@ -16,46 +16,53 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import PostTemplateCreateModal from './create-modal';
-import { getTemplateTitle } from '../../utility';
+import { useDispatch } from '@wordpress/data';
 
 export default function PostTemplateForm({
 	onClose,
 	product,
+	post,
 	updateProduct,
 	template,
 }) {
+	const { editEntityRecord } = useDispatch(coreStore);
+
 	const { templates, defaultTemplate, canCreate, canEdit } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
-			const templates = (getEntityRecords(...selectorArgs) || []).filter(
-				(template) => {
-					return (
-						template.id === 'surecart/surecart//single-product' ||
-						template.slug.includes('sc-products')
-					);
-				}
-			);
+			const templates = getEntityRecords(...selectorArgs) || [];
+			const { type, slug } = post;
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: post?.slug ? `single-${type}-${slug}` : `single-${type}`,
+			});
 			return {
-				templates,
-				defaultTemplate: templates.find(
-					(template) => template.theme === 'surecart/surecart'
+				templates: templates.filter((template) => {
+					const slug = template?.slug || '';
+					return slug.includes('sc-products');
+				}),
+				defaultTemplate: select(coreStore).getEditedEntityRecord(
+					'postType',
+					'wp_template',
+					defaultTemplateId
 				),
 				canCreate: canUser('create', 'templates'),
 				canEdit: canUser('create', 'templates'),
 			};
 		},
-		[]
+		[post?.slug, post?.type]
 	);
 
-	const options = (templates ?? []).map((template) => ({
-		value: template?.id,
-		label: getTemplateTitle(template),
-	}));
-
-	const selected = templates.find(
-		(template) => template.id === product?.metadata?.wp_template_id
-	);
+	const options = (templates ?? [])
+		.map((template) => ({
+			value: template?.slug,
+			label:
+				template?.title?.rendered || template?.title || template?.slug,
+		}))
+		.filter(
+			(option, index, self) =>
+				index === self.findIndex((t) => t.value === option.value)
+		);
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -98,9 +105,26 @@ export default function PostTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}
-				value={selected?.id || 'surecart/surecart//single-product'}
-				options={options}
+				value={template?.slug}
+				options={[
+					{
+						value: '',
+						label:
+							defaultTemplate?.title?.rendered ||
+							defaultTemplate?.title ||
+							defaultTemplate?.slug,
+					},
+					...options,
+				]}
 				onChange={(slug) => {
+					editEntityRecord(
+						'postType',
+						'sc_product',
+						post?.id,
+						{ template: slug },
+						{ undoIgnore: true }
+					);
+					// needed to make sure sync does not overwrite the template
 					updateProduct({
 						metadata: {
 							...product.metadata,
@@ -117,8 +141,8 @@ export default function PostTemplateForm({
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template',
 							postId:
-								selected?.id ||
-								'surecart/surecart//single-product',
+								template?.id ||
+								'surecart/surecart//single-sc_product',
 							canvas: 'edit',
 						})}
 					>
@@ -131,6 +155,7 @@ export default function PostTemplateForm({
 				<PostTemplateCreateModal
 					template={defaultTemplate}
 					product={product}
+					post={post}
 					updateProduct={updateProduct}
 					onClose={() => setIsCreateModalOpen(false)}
 				/>

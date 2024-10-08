@@ -35,7 +35,7 @@ class Block extends DashboardPage {
 	 */
 	public function render( $attributes, $content ) {
 		if ( ! is_user_logged_in() ) {
-			return \SureCart::blocks()->render( 'web/login' );
+			return \SureCart::block()->render( 'web/login' );
 		}
 
 		// get the current page tab and possible id.
