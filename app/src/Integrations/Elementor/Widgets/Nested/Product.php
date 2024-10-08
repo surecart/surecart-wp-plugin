@@ -146,17 +146,52 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	}
 
 	/**
+	 * Register the widget controls.
+	 *
+	 * @return void
+	 */
+	protected function register_controls() {
+		$this->start_controls_section(
+			'section_product',
+			[
+				'label' => esc_html__( 'Product', 'elementor' ),
+			]
+		);
+
+		$this->add_control(
+			'link_to_product',
+			[
+				'label'        => esc_html__( 'Link to product', 'elementor' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'default'      => 'yes',
+				'return_value' => 'yes',
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
 	 * Render the widget.
 	 *
 	 * @return void
 	 */
 	protected function render() {
+		$settings = $this->get_settings_for_display();
 		// items content.
 		ob_start();
-		$this->print_child( 0 );
+		?>
+		<!-- wp:surecart/product-page -->
+		<?php $this->print_child( 0 ); ?>
+		<!-- /wp:surecart/product-page -->
+		<?php
 		$item_content = ob_get_clean();
 
-		echo $item_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		if ( 'yes' === $settings['link_to_product'] ) {
+			$item_content = sprintf( '<a href="%s">%s</a>', get_permalink(), $item_content );
+		}
+
+		echo do_blocks( $item_content );
 	}
 
 	/**
