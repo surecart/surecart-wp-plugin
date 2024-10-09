@@ -93,6 +93,7 @@ export default () => {
 		try {
 			setError(null);
 			await deleteCustomer({ throwOnError: true });
+			window.location.assign('admin.php?page=sc-customers');
 		} catch (e) {
 			console.error(e);
 			setError(e);
