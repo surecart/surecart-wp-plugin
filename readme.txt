@@ -317,6 +317,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Confusing pricing on admin subscription view page when there is a setup fee.
 - Fix: Abandoned at created_at incorrectly getting date from updated_at.
 - Fix: Order Bump price sometimes has a negative (-) sign.
+- Fix: Remove duplicate styles from certain blocks on shop and product pages.
 
 = 2.31.2 - September 17th, 2024 =
 - Fix: Issue with Mollie ApplePay not showing in some cases.
