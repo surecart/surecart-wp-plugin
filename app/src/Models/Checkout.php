@@ -401,4 +401,13 @@ class Checkout extends Model {
 				return $this->human_discount;
 		}
 	}
+
+	/**
+	 * If the shipping address is required.
+	 *
+	 * @return bool
+	 */
+	public function getShippingAddressRequiredAttribute(): bool {
+		return in_array( $this->shipping_address_accuracy_requirement, [ 'tax', 'full' ], true );
+	}
 }

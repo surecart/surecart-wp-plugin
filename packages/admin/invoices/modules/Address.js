@@ -21,16 +21,19 @@ import {
 	ScText,
 	ScFormControl,
 	ScCard,
+	ScTooltip,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
+import AddressConfirmModal from './AddressConfirmModal';
 
 export default ({ checkout }) => {
 	if (!checkout?.id) {
 		return null;
 	}
 
+	const [modal, setModal] = useState(false);
 	const { loading, isDraftInvoice, updateCheckout } = useInvoice();
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
 		checkout?.shipping_address
@@ -44,18 +47,11 @@ export default ({ checkout }) => {
 		checkout?.billing_matches_shipping
 	);
 
-	const clearAddress = async () => {
-		const data = await updateCheckout({
-			shipping_address: null,
-			billing_address: null,
-			billing_matches_shipping: true,
-		});
-
-		if (data) {
-			setCustomerShippingAddress(data.shipping_address);
-			setCustomerBillingAddress(data.billing_address);
-			setBillingMatchesShipping(data.billing_matches_shipping);
-		}
+	const clearAddress = () => {
+		setCustomerShippingAddress(null);
+		setCustomerBillingAddress(null);
+		setBillingMatchesShipping(true);
+		setModal(null);
 	};
 
 	const saveAddress = async () => {
@@ -77,6 +73,20 @@ export default ({ checkout }) => {
 		customerBillingAddress,
 		billingMatchesShipping,
 	]);
+
+	const fillAddressFromCustomer = () => {
+		if (!!checkout?.customer?.shipping_address?.id) {
+			setCustomerShippingAddress(checkout?.customer?.shipping_address);
+		}
+
+		if (checkout?.customer?.billing_matches_shipping) {
+			setBillingMatchesShipping(true);
+		} else if (!!checkout?.customer?.billing_address?.id) {
+			setBillingMatchesShipping(false);
+			setCustomerBillingAddress(checkout?.customer?.billing_address);
+		}
+		setModal(null);
+	};
 
 	const renderAddressHeader = (title) => {
 		return (
@@ -125,15 +135,22 @@ export default ({ checkout }) => {
 						`}
 					>
 						<ScFormControl label={__('Ship to', 'surecart')}>
-							{
-								!!checkout?.shipping_address?.country ?
-									<AddressDisplay
-										address={checkout?.shipping_address}
-									/> :
-									<ScText style={{ marginTop: 'var(--sc-spacing-small)' }}>
-										{__('No shipping address has been set.', 'surecart')}
-									</ScText>
-							}
+							{!!checkout?.shipping_address?.country ? (
+								<AddressDisplay
+									address={checkout?.shipping_address}
+								/>
+							) : (
+								<ScText
+									style={{
+										marginTop: 'var(--sc-spacing-small)',
+									}}
+								>
+									{__(
+										'No shipping address has been set.',
+										'surecart'
+									)}
+								</ScText>
+							)}
 						</ScFormControl>
 					</ScCard>
 
@@ -143,15 +160,20 @@ export default ({ checkout }) => {
 						`}
 					>
 						<ScFormControl label={__('Bill to', 'surecart')}>
-							{
-								!!billingAddress?.country ?
-									<AddressDisplay
-										address={billingAddress}
-									/> :
-									<ScText style={{ marginTop: 'var(--sc-spacing-small)' }}>
-										{__('No billing address has been set.', 'surecart')}
-									</ScText>
-							}
+							{!!billingAddress?.country ? (
+								<AddressDisplay address={billingAddress} />
+							) : (
+								<ScText
+									style={{
+										marginTop: 'var(--sc-spacing-small)',
+									}}
+								>
+									{__(
+										'No billing address has been set.',
+										'surecart'
+									)}
+								</ScText>
+							)}
 						</ScFormControl>
 					</ScCard>
 				</div>
@@ -208,33 +230,102 @@ export default ({ checkout }) => {
 	};
 
 	return (
-		<Box
-			title={__('Address', 'surecart')}
-			loading={loading}
-			header_action={
-				isDraftInvoice &&
-				checkout?.shipping_address?.id && (
-					<ScDropdown placement="bottom-end">
-						<ScButton
-							slot="trigger"
-							type="text"
-							circle
-							style={{
-								margin: '-12px',
-							}}
-						>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							<ScMenuItem onClick={clearAddress}>
-								{__('Clear', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
-				)
-			}
-		>
-			<div>{renderForm()}</div>
-		</Box>
+		<>
+			<Box
+				title={__('Address', 'surecart')}
+				loading={loading}
+				header_action={
+					isDraftInvoice && (
+						<>
+							{checkout?.customer?.id && (
+								<ScTooltip
+									type="text"
+									text={__(
+										'Fill Address from Customer',
+										'surecart'
+									)}
+									css={css`
+										margin-top: -12px;
+										margin-bottom: -12px;
+									`}
+								>
+									<ScButton
+										type="default"
+										title={__('Fill Address', 'surecart')}
+										onclick={() => setModal('fill')}
+									>
+										{__('Fill Address', 'surecart')}
+									</ScButton>
+								</ScTooltip>
+							)}
+
+							{checkout?.shipping_address?.id && (
+								<ScDropdown
+									placement="bottom-end"
+									css={css`
+										margin-left: var(--sc-spacing-x-large);
+									`}
+								>
+									<ScButton
+										slot="trigger"
+										type="text"
+										circle
+										style={{
+											margin: '-12px',
+										}}
+									>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() => setModal('clear')}
+										>
+											{__('Clear', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
+							)}
+						</>
+					)
+				}
+			>
+				<div>{renderForm()}</div>
+			</Box>
+
+			<AddressConfirmModal
+				open={modal === 'fill'}
+				onRequestClose={() => setModal(null)}
+				onConfirm={fillAddressFromCustomer}
+				request={{
+					shipping_address: checkout?.customer?.shipping_address,
+					billing_address: checkout?.customer?.billing_address,
+					billing_matches_shipping:
+						checkout?.customer?.billing_matches_shipping,
+				}}
+				confirmText={__('Confirm', 'surecart')}
+			>
+				{__(
+					"This will set the shipping and billing addresses to the customer's default addresses.",
+					'surecart'
+				)}
+			</AddressConfirmModal>
+
+			<AddressConfirmModal
+				open={modal === 'clear'}
+				onRequestClose={() => setModal(null)}
+				onConfirm={clearAddress}
+				request={{
+					shipping_address: null,
+					billing_address: null,
+					billing_matches_shipping: true,
+				}}
+				confirmText={__('Clear', 'surecart')}
+			>
+				{__(
+					'This will remove the shipping and billing addresses from the invoice. Are you sure you want to continue?',
+					'surecart'
+				)}
+			</AddressConfirmModal>
+		</>
 	);
 };

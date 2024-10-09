@@ -40,7 +40,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 
 		return (
 			<ScText tag="span">
-				{__('Charged from customer on ', 'surecart')}{' '}
+				{__('Charged on ', 'surecart')}{' '}
 				{checkout?.paid_at ? (
 					<>
 						<ScFormatDate
