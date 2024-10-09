@@ -1,7 +1,8 @@
 /**
  * Container layout flex
  */
-.e-con--column {
+.e-con--column,
+.e-flex {
 	.wp-block-surecart-product-price-chooser .sc-choices {
 		display: var(--display);
 		flex-wrap: var(--flex-wrap);
@@ -20,7 +21,8 @@
 /**
  * Container layout grid
  */
-.e-con--row {
+.e-con--row,
+.e-flex {
 	.wp-block-surecart-product-price-chooser .sc-choices {
 		display: var(--display);
 		justify-items: var(--justify-items);

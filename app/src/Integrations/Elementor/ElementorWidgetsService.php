@@ -15,7 +15,7 @@ class ElementorWidgetsService {
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerNestedWidgets' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueueEditorScripts' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueueStyles' ] );
 	}
 
 	/**
@@ -83,11 +83,12 @@ class ElementorWidgetsService {
 	}
 
 	/**
-	 * Enqueue the scripts.
+	 * Enqueue the styles.
 	 *
 	 * @return void
 	 */
-	public function enqueueScripts() {
+	public function enqueueStyles() {
 		wp_register_style( 'surecart-elementor-container-style', plugins_url( 'assets/container.css', __FILE__ ), '', '1.0', 'all' );
+		wp_enqueue_style( 'surecart-elementor-container-style' );
 	}
 }
