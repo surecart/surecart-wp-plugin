@@ -180,12 +180,7 @@ export default ({
 					</>
 				)}
 			</ScTableCell>
-			<ScTableCell
-				css={css`
-					display: flex;
-					flex-direction: column;
-				`}
-			>
+			<ScTableCell>
 				<div
 					css={css`
 						display: grid;
