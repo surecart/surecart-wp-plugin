@@ -20,12 +20,19 @@ import { ScBlockUi } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import expand from '../checkout-query';
 
-export default ({ open, onRequestClose, onConfirm }) => {
+export default ({
+	open,
+	onRequestClose,
+	onConfirm,
+	request,
+	confirmText,
+	children,
+}) => {
 	const { invoice, checkout, receiveInvoice } = useInvoice();
 	const [error, setError] = useState(false);
 	const [busy, setBusy] = useState(false);
 
-	const fillCustomerAddress = async () => {
+	const confirmAddress = async () => {
 		try {
 			setBusy(true);
 			setError(null);
@@ -35,23 +42,18 @@ export default ({ open, onRequestClose, onConfirm }) => {
 				'draft-checkout'
 			);
 
-			const data = await apiFetch({
+			const checkoutData = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
 					expand,
 					context: 'edit',
 				}),
-				data: {
-					shipping_address: checkout?.customer?.shipping_address,
-					billing_address: checkout?.customer?.billing_address,
-					billing_matches_shipping:
-						checkout?.customer?.billing_matches_shipping,
-				},
+				data: request,
 			});
 
 			receiveInvoice({
 				...invoice,
-				checkout: data,
+				checkout: checkoutData,
 			});
 
 			onConfirm();
@@ -66,9 +68,9 @@ export default ({ open, onRequestClose, onConfirm }) => {
 	return (
 		<ConfirmDialog
 			isOpen={open}
-			onConfirm={fillCustomerAddress}
+			onConfirm={confirmAddress}
 			onCancel={onRequestClose}
-			confirmButtonText={__('Confirm', 'surecart')}
+			confirmButtonText={confirmText || __('Confirm', 'surecart')}
 		>
 			<Error
 				error={error}
@@ -78,10 +80,7 @@ export default ({ open, onRequestClose, onConfirm }) => {
 				`}
 			/>
 
-			{__(
-				"This will set the shipping and billing addresses to the customer's default addresses.",
-				'surecart'
-			)}
+			{children}
 
 			{busy && (
 				<ScBlockUi

@@ -26,7 +26,7 @@ import {
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
-import AddressFillConfirmModal from './AddressFillConfirmModal';
+import AddressConfirmModal from './AddressConfirmModal';
 
 export default ({ checkout }) => {
 	if (!checkout?.id) {
@@ -47,18 +47,11 @@ export default ({ checkout }) => {
 		checkout?.billing_matches_shipping
 	);
 
-	const clearAddress = async () => {
-		const data = await updateCheckout({
-			shipping_address: null,
-			billing_address: null,
-			billing_matches_shipping: true,
-		});
-
-		if (data) {
-			setCustomerShippingAddress(data.shipping_address);
-			setCustomerBillingAddress(data.billing_address);
-			setBillingMatchesShipping(data.billing_matches_shipping);
-		}
+	const clearAddress = () => {
+		setCustomerShippingAddress(null);
+		setCustomerBillingAddress(null);
+		setBillingMatchesShipping(true);
+		setModal(null);
 	};
 
 	const saveAddress = async () => {
@@ -92,6 +85,7 @@ export default ({ checkout }) => {
 			setBillingMatchesShipping(false);
 			setCustomerBillingAddress(checkout?.customer?.billing_address);
 		}
+		setModal(null);
 	};
 
 	const renderAddressHeader = (title) => {
@@ -258,7 +252,7 @@ export default ({ checkout }) => {
 									<ScButton
 										type="default"
 										title={__('Fill Address', 'surecart')}
-										onclick={() => setModal(true)}
+										onclick={() => setModal('fill')}
 									>
 										{__('Fill Address', 'surecart')}
 									</ScButton>
@@ -283,7 +277,9 @@ export default ({ checkout }) => {
 										<ScIcon name="more-horizontal" />
 									</ScButton>
 									<ScMenu>
-										<ScMenuItem onClick={clearAddress}>
+										<ScMenuItem
+											onClick={() => setModal('clear')}
+										>
 											{__('Clear', 'surecart')}
 										</ScMenuItem>
 									</ScMenu>
@@ -296,14 +292,40 @@ export default ({ checkout }) => {
 				<div>{renderForm()}</div>
 			</Box>
 
-			<AddressFillConfirmModal
-				open={modal}
+			<AddressConfirmModal
+				open={modal === 'fill'}
 				onRequestClose={() => setModal(null)}
-				onConfirm={() => {
-					fillAddressFromCustomer();
-					setModal(null);
+				onConfirm={fillAddressFromCustomer}
+				request={{
+					shipping_address: checkout?.customer?.shipping_address,
+					billing_address: checkout?.customer?.billing_address,
+					billing_matches_shipping:
+						checkout?.customer?.billing_matches_shipping,
 				}}
-			/>
+				confirmText={__('Confirm', 'surecart')}
+			>
+				{__(
+					"This will set the shipping and billing addresses to the customer's default addresses.",
+					'surecart'
+				)}
+			</AddressConfirmModal>
+
+			<AddressConfirmModal
+				open={modal === 'clear'}
+				onRequestClose={() => setModal(null)}
+				onConfirm={clearAddress}
+				request={{
+					shipping_address: null,
+					billing_address: null,
+					billing_matches_shipping: true,
+				}}
+				confirmText={__('Clear', 'surecart')}
+			>
+				{__(
+					'This will remove the shipping and billing addresses from the invoice. Are you sure you want to continue?',
+					'surecart'
+				)}
+			</AddressConfirmModal>
 		</>
 	);
 };
