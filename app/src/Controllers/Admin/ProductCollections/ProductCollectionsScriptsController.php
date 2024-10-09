@@ -39,7 +39,7 @@ class ProductCollectionsScriptsController extends AdminModelEditController {
 		$available_templates              = array_merge(
 			$available_templates,
 			[
-				apply_filters( 'default_page_template_title', __( 'Theme Layout' ), 'rest-api' ),
+				apply_filters( 'default_page_template_title', __( 'Theme Layout', 'surecart' ), 'rest-api' ),
 			]
 		);
 		$this->data['availableTemplates'] = $available_templates;

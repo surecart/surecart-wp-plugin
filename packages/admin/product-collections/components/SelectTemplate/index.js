@@ -145,8 +145,8 @@ function PostTemplateToggle({ isOpen, onClick, template }) {
 				template?.title
 					? sprintf(
 							// translators: %s: Name of the currently selected template.
-							__('Select template: %s'),
-							template?.title
+							__('Select template: %s', 'surecart'),
+							templateTitle
 					  )
 					: __('Select template')
 			}

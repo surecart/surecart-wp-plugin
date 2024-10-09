@@ -493,6 +493,7 @@ class ProductsListTable extends ListTable {
 	 * Get row actions.
 	 *
 	 * @param \SureCart\Models\Product $product Product model.
+	 * @param string                   $bulk_status Bulk status.
 	 *
 	 * @return array
 	 */

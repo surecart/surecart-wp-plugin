@@ -317,11 +317,11 @@ class OrdersListTable extends ListTable {
 	public function column_order( $order ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
 			#<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
 		</a>
 		<br />
-		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>" style="word-break: break-word">
+		<a  aria-label="<?php esc_attr_e( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>" style="word-break: break-word">
 			<?php
 			// translators: Customer name.
 			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->checkout->customer->name ?? $order->checkout->customer->email ) );
@@ -446,7 +446,7 @@ class OrdersListTable extends ListTable {
 
 			if ( ! empty( $output ) ) {
 				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				submit_button( __( 'Filter' ), '', 'filter_action', false, array( 'id' => 'filter-by-fulfillment-submit' ) );
+				submit_button( __( 'Filter', 'surecart' ), '', 'filter_action', false, array( 'id' => 'filter-by-fulfillment-submit' ) );
 			}
 		}
 

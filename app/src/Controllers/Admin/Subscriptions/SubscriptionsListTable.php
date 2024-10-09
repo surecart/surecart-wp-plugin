@@ -390,14 +390,14 @@ class SubscriptionsListTable extends ListTable {
 			$name = $subscription->customer->email ?? __( 'No name provided', 'surecart' );
 		}
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
 			<?php echo esc_html( $name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr__( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>

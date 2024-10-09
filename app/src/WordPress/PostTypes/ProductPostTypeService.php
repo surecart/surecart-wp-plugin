@@ -268,7 +268,7 @@ class ProductPostTypeService {
 			'input'    => 'text',
 			'required' => false,
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
-			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
+			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).', 'surecart' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
 		return $form_fields;
 	}
