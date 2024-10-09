@@ -34,6 +34,6 @@
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/dropdown.css", "file:../../styles/button.css"],
+	"style": ["surecart-dropdown", "surecart-button"],
 	"viewScriptModule": "@surecart/dropdown"
 }

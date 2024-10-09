@@ -58,9 +58,9 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/line-item.css",
-		"file:../../styles/coupon-form.css",
-		"file:../../styles/form-control.css",
+		"surecart-line-item",
+		"surecart-coupon-form",
+		"surecart-form-control",
 		"file:./style-index.css"
 	]
 }
