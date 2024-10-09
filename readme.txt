@@ -330,6 +330,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue preventing cancellation of paused subscriptions.
 - Fix: Translate url going to incorrect location.
 - Fix: Site url change notice missing some styles.
+- Fix: Security issue (props to Tenable for the report).
 
 = 2.29.4 - August 15th, 2024 =
 - Fix: Appending invalid coupon code to custom checkout form causes payment element not to load.
