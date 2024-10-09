@@ -75,7 +75,7 @@ export class ScProductLineItem {
   @Prop() editable: boolean = true;
 
   /** The max allowed. */
-  @Prop() max: number = 100;
+  @Prop() max: number;
 
   /** The SKU. */
   @Prop() sku: string = '';
