@@ -21,6 +21,7 @@ import {
 	ScText,
 	ScFormControl,
 	ScCard,
+	ScTooltip,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
@@ -78,6 +79,19 @@ export default ({ checkout }) => {
 		billingMatchesShipping,
 	]);
 
+	const fillAddressFromCustomer = () => {
+		if (!!checkout?.customer?.shipping_address?.id) {
+			setCustomerShippingAddress(checkout?.customer?.shipping_address);
+		}
+
+		if (checkout?.customer?.billing_matches_shipping) {
+			setBillingMatchesShipping(true);
+		} else if (!!checkout?.customer?.billing_address?.id) {
+			setBillingMatchesShipping(false);
+			setCustomerBillingAddress(checkout?.customer?.billing_address);
+		}
+	};
+
 	const renderAddressHeader = (title) => {
 		return (
 			<ScText
@@ -125,15 +139,22 @@ export default ({ checkout }) => {
 						`}
 					>
 						<ScFormControl label={__('Ship to', 'surecart')}>
-							{
-								!!checkout?.shipping_address?.country ?
-									<AddressDisplay
-										address={checkout?.shipping_address}
-									/> :
-									<ScText style={{ marginTop: 'var(--sc-spacing-small)' }}>
-										{__('No shipping address has been set.', 'surecart')}
-									</ScText>
-							}
+							{!!checkout?.shipping_address?.country ? (
+								<AddressDisplay
+									address={checkout?.shipping_address}
+								/>
+							) : (
+								<ScText
+									style={{
+										marginTop: 'var(--sc-spacing-small)',
+									}}
+								>
+									{__(
+										'No shipping address has been set.',
+										'surecart'
+									)}
+								</ScText>
+							)}
 						</ScFormControl>
 					</ScCard>
 
@@ -143,15 +164,20 @@ export default ({ checkout }) => {
 						`}
 					>
 						<ScFormControl label={__('Bill to', 'surecart')}>
-							{
-								!!billingAddress?.country ?
-									<AddressDisplay
-										address={billingAddress}
-									/> :
-									<ScText style={{ marginTop: 'var(--sc-spacing-small)' }}>
-										{__('No billing address has been set.', 'surecart')}
-									</ScText>
-							}
+							{!!billingAddress?.country ? (
+								<AddressDisplay address={billingAddress} />
+							) : (
+								<ScText
+									style={{
+										marginTop: 'var(--sc-spacing-small)',
+									}}
+								>
+									{__(
+										'No billing address has been set.',
+										'surecart'
+									)}
+								</ScText>
+							)}
 						</ScFormControl>
 					</ScCard>
 				</div>
@@ -212,25 +238,50 @@ export default ({ checkout }) => {
 			title={__('Address', 'surecart')}
 			loading={loading}
 			header_action={
-				isDraftInvoice &&
-				checkout?.shipping_address?.id && (
-					<ScDropdown placement="bottom-end">
-						<ScButton
-							slot="trigger"
+				isDraftInvoice && (
+					<>
+						<ScTooltip
 							type="text"
-							circle
-							style={{
-								margin: '-12px',
-							}}
+							text={__('Fill Address from Customer', 'surecart')}
+							css={css`
+								margin-top: -12px;
+								margin-bottom: -12px;
+							`}
 						>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							<ScMenuItem onClick={clearAddress}>
-								{__('Clear', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
+							<ScButton
+								type="default"
+								title={__('Fill Address', 'surecart')}
+								onclick={fillAddressFromCustomer}
+							>
+								{__('Fill Address', 'surecart')}
+							</ScButton>
+						</ScTooltip>
+
+						{checkout?.shipping_address?.id && (
+							<ScDropdown
+								placement="bottom-end"
+								css={css`
+									margin-left: var(--sc-spacing-x-large);
+								`}
+							>
+								<ScButton
+									slot="trigger"
+									type="text"
+									circle
+									style={{
+										margin: '-12px',
+									}}
+								>
+									<ScIcon name="more-horizontal" />
+								</ScButton>
+								<ScMenu>
+									<ScMenuItem onClick={clearAddress}>
+										{__('Clear', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
+						)}
+					</>
 				)
 			}
 		>
