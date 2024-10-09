@@ -305,6 +305,19 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.31.3 - October 8th, 2024 =
+- Improvement: Add plugin update notice for major versions.
+- Improvement: Fallback tax rate now supports up to 3 decimal places.
+- Improvement: Increase maximum quantity limit from 100 on checkout page.
+- Fix: Integrations listing on orders admin page not accurate when using variants.
+- Fix: Handle error when bulk deleting products without selecting any products.
+- Fix: Store account model as array instead of serialized object to prevent issues with wp-cli.
+- Fix: Show better error message if same shipping profile name is given.
+- Fix: Deprecation warning with PHP version 8.3.
+- Fix: Confusing pricing on admin subscription view page when there is a setup fee.
+- Fix: Abandoned at created_at incorrectly getting date from updated_at.
+- Fix: Order Bump price sometimes has a negative (-) sign.
+
 = 2.31.2 - September 17th, 2024 =
 - Fix: Issue with Mollie ApplePay not showing in some cases.
 - Fix: iDEAL redirect not creating WordPress customer accounts right away if checkout does not use cart.
@@ -350,7 +363,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Don't use hardcoded prefix when deleting expired incoming webhook rows.
 - Fix: Cart menu icon not visible in Elementor menu when it was added via Theme Builder.
 - Fix: Issue with user subscription upgrade not always running integrations.
-- Fix: Allow customers to cancel subscriptions without a payment method on customer dashboard.
+- Fix: Issue with affiliate signup link not correct on admin settings page.
 
 = 2.29.1 - July 15th, 2024 =
 - Fix: Compatibility with WordPress 6.6.
