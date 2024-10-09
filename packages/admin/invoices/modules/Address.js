@@ -26,12 +26,14 @@ import {
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
+import AddressFillConfirmModal from './AddressFillConfirmModal';
 
 export default ({ checkout }) => {
 	if (!checkout?.id) {
 		return null;
 	}
 
+	const [modal, setModal] = useState(false);
 	const { loading, isDraftInvoice, updateCheckout } = useInvoice();
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
 		checkout?.shipping_address
@@ -234,58 +236,74 @@ export default ({ checkout }) => {
 	};
 
 	return (
-		<Box
-			title={__('Address', 'surecart')}
-			loading={loading}
-			header_action={
-				isDraftInvoice && (
-					<>
-						<ScTooltip
-							type="text"
-							text={__('Fill Address from Customer', 'surecart')}
-							css={css`
-								margin-top: -12px;
-								margin-bottom: -12px;
-							`}
-						>
-							<ScButton
-								type="default"
-								title={__('Fill Address', 'surecart')}
-								onclick={fillAddressFromCustomer}
-							>
-								{__('Fill Address', 'surecart')}
-							</ScButton>
-						</ScTooltip>
-
-						{checkout?.shipping_address?.id && (
-							<ScDropdown
-								placement="bottom-end"
-								css={css`
-									margin-left: var(--sc-spacing-x-large);
-								`}
-							>
-								<ScButton
-									slot="trigger"
+		<>
+			<Box
+				title={__('Address', 'surecart')}
+				loading={loading}
+				header_action={
+					isDraftInvoice && (
+						<>
+							{checkout?.customer?.id && (
+								<ScTooltip
 									type="text"
-									circle
-									style={{
-										margin: '-12px',
-									}}
+									text={__(
+										'Fill Address from Customer',
+										'surecart'
+									)}
+									css={css`
+										margin-top: -12px;
+										margin-bottom: -12px;
+									`}
 								>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem onClick={clearAddress}>
-										{__('Clear', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
-						)}
-					</>
-				)
-			}
-		>
-			<div>{renderForm()}</div>
-		</Box>
+									<ScButton
+										type="default"
+										title={__('Fill Address', 'surecart')}
+										onclick={() => setModal(true)}
+									>
+										{__('Fill Address', 'surecart')}
+									</ScButton>
+								</ScTooltip>
+							)}
+
+							{checkout?.shipping_address?.id && (
+								<ScDropdown
+									placement="bottom-end"
+									css={css`
+										margin-left: var(--sc-spacing-x-large);
+									`}
+								>
+									<ScButton
+										slot="trigger"
+										type="text"
+										circle
+										style={{
+											margin: '-12px',
+										}}
+									>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem onClick={clearAddress}>
+											{__('Clear', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
+							)}
+						</>
+					)
+				}
+			>
+				<div>{renderForm()}</div>
+			</Box>
+
+			<AddressFillConfirmModal
+				open={modal}
+				onRequestClose={() => setModal(null)}
+				onConfirm={() => {
+					fillAddressFromCustomer();
+					setModal(null);
+				}}
+			/>
+		</>
 	);
 };
