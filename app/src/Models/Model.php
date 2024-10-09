@@ -445,11 +445,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @return int|false
 	 */
 	public function getCreatedByAttribute() {
-		if ( empty( $this->attributes['metadata']['wp_created_by'] ) ) {
+		if ( empty( $this->metadata->wp_created_by ) ) {
 			return false;
 		}
 
-		return (int) $this->attributes['metadata']['wp_created_by'];
+		return (int) $this->metadata->wp_created_by;
 	}
 
 	/**
@@ -475,6 +475,16 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		} else {
 			$this->attributes[ $key ] = apply_filters( "surecart/$this->object_name/attributes/$key", $value, $this );
 		}
+	}
+
+	/**
+	 * Get the metadata attribute.
+	 * This makes sure the metadata is always an object.
+	 *
+	 * @return object
+	 */
+	public function getMetadataAttribute() {
+		return (object) $this->attributes['metadata'];
 	}
 
 	/**

@@ -133,7 +133,7 @@ class CollectionSyncService {
 
 		update_term_meta( $this->term->term_id, 'sc_account', \SureCart::account()->id );
 		update_term_meta( $this->term->term_id, 'sc_id', $collection->id );
-		update_term_meta( $this->term->term_id, 'collection', $collection );
+		update_term_meta( $this->term->term_id, 'collection', wp_json_encode( $collection->toArray(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP ) );
 
 		return $this->term;
 	}
