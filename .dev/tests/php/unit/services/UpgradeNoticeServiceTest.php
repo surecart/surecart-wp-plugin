@@ -3,6 +3,7 @@
 namespace SureCart\Tests\Services;
 
 use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\WordPress\UpgradeNoticeService;
 
 class UpgradeNoticeServiceTest extends SureCartUnitTestCase
 {
@@ -27,7 +28,7 @@ class UpgradeNoticeServiceTest extends SureCartUnitTestCase
 
 		parent::setUp();
 
-        $this->service = \SureCart::upgradeNotice();
+        $this->service = new UpgradeNoticeService(\SureCart::app());
 
         $this->service->show_update_notice_versions = [
             '3.0.0',
