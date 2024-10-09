@@ -119,7 +119,7 @@ export class ScOrderBump {
           }
         >
           <span aria-hidden="true">
-            {__('Save', 'surecart')} <sc-format-number type="currency" value={-this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
+            {__('Save', 'surecart')} <sc-format-number type="currency" value={this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
           </span>
         </div>
       );
