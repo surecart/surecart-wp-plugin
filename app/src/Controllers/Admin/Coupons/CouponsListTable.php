@@ -2,11 +2,9 @@
 
 namespace SureCart\Controllers\Admin\Coupons;
 
-use NumberFormatter;
 use SureCart\Models\Coupon;
 use SureCart\Models\Product;
 use SureCart\Models\Promotion;
-use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
