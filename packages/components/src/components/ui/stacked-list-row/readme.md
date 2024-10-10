@@ -29,7 +29,6 @@
  - [sc-customer-details](../customer-details)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
- - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -50,7 +49,6 @@ graph TD;
   sc-customer-details --> sc-stacked-list-row
   sc-downloads-list --> sc-stacked-list-row
   sc-fulfillments --> sc-stacked-list-row
-  sc-invoice --> sc-stacked-list-row
   sc-invoices-list --> sc-stacked-list-row
   sc-license --> sc-stacked-list-row
   sc-licenses-list --> sc-stacked-list-row

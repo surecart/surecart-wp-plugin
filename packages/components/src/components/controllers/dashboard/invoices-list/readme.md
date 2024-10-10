@@ -19,7 +19,6 @@
 
 ### Depends on
 
-- [sc-invoice-status-badge](../../../ui/invoice-status-badge)
 - [sc-card](../../../ui/card)
 - [sc-stacked-list](../../../ui/stacked-list)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
@@ -27,6 +26,7 @@
 - [sc-divider](../../../ui/divider)
 - [sc-empty](../../../ui/empty)
 - [sc-format-date](../../../util/format-date)
+- [sc-invoice-status-badge](../../../ui/invoice-status-badge)
 - [sc-format-number](../../../util/format-number)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
@@ -37,7 +37,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-invoices-list --> sc-invoice-status-badge
   sc-invoices-list --> sc-card
   sc-invoices-list --> sc-stacked-list
   sc-invoices-list --> sc-stacked-list-row
@@ -45,14 +44,15 @@ graph TD;
   sc-invoices-list --> sc-divider
   sc-invoices-list --> sc-empty
   sc-invoices-list --> sc-format-date
+  sc-invoices-list --> sc-invoice-status-badge
   sc-invoices-list --> sc-format-number
   sc-invoices-list --> sc-dashboard-module
   sc-invoices-list --> sc-button
   sc-invoices-list --> sc-icon
   sc-invoices-list --> sc-pagination
   sc-invoices-list --> sc-block-ui
-  sc-invoice-status-badge --> sc-tag
   sc-empty --> sc-icon
+  sc-invoice-status-badge --> sc-tag
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-button --> sc-spinner

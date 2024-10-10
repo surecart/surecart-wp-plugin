@@ -54,7 +54,6 @@
  - [sc-feature-demo-banner](../sc-feature-demo-banner)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-image-slider](../sc-image-slider)
- - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -119,7 +118,6 @@ graph TD;
   sc-feature-demo-banner --> sc-icon
   sc-fulfillments --> sc-icon
   sc-image-slider --> sc-icon
-  sc-invoice --> sc-icon
   sc-invoices-list --> sc-icon
   sc-license --> sc-icon
   sc-licenses-list --> sc-icon
