@@ -238,25 +238,19 @@ export default ({ checkout }) => {
 					isDraftInvoice && (
 						<>
 							{checkout?.customer?.id && (
-								<ScTooltip
-									type="text"
-									text={__(
-										'Fill Address from Customer',
+								<ScButton
+									css={css`
+										margin: -12px 0;
+									`}
+									type="link"
+									title={__(
+										'Fill Customer Address',
 										'surecart'
 									)}
-									css={css`
-										margin-top: -12px;
-										margin-bottom: -12px;
-									`}
+									onclick={() => setModal('fill')}
 								>
-									<ScButton
-										type="default"
-										title={__('Fill Address', 'surecart')}
-										onclick={() => setModal('fill')}
-									>
-										{__('Fill Address', 'surecart')}
-									</ScButton>
-								</ScTooltip>
+									{__('Fill Customer Address', 'surecart')}
+								</ScButton>
 							)}
 
 							{checkout?.shipping_address?.id && (
