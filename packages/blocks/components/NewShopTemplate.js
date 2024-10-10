@@ -143,6 +143,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							justifyContent: 'stretch',
 							blockGap: '0px',
 						},
+						style: { spacing: { blockGap: '0' } },
 						...childBlocks[0]?.attributes,
 					}, // Product Item
 					templateChildBlocks,
