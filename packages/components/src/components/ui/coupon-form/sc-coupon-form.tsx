@@ -35,6 +35,7 @@ export class ScCouponForm {
   private input: HTMLScInputElement;
   private couponTag: HTMLScTagElement;
   private addCouponTrigger: HTMLElement;
+  private isInitialLoad: boolean = true;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -90,15 +91,27 @@ export class ScCouponForm {
   // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
   @Watch('discount')
   handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
-    if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
+    // Skip the focusing on the initial load.
+    if (this.isInitialLoad) {
+      this.isInitialLoad = false;
+      return;
+    }
 
-    setTimeout(() => {
-      if (this?.discount?.promotion?.code) {
-        (this.couponTag.shadowRoot.querySelector('*') as any).focus();
-      } else {
-        this.addCouponTrigger.focus();
-      }
-    }, 50);
+    if (newValue?.promotion?.code !== oldValue?.promotion?.code) {
+      this.updateFocus();
+    }
+  }
+
+  /** Focus the coupon button when visible. */
+  private async updateFocus() {
+    // Wait for the next render cycle.
+    await new Promise(resolve => requestAnimationFrame(resolve));
+
+    if (this?.discount?.promotion?.code) {
+      (this.couponTag.shadowRoot.querySelector('*') as HTMLElement)?.focus();
+    } else if (this.addCouponTrigger) {
+      this.addCouponTrigger.focus();
+    }
   }
 
   /** Close it when blurred and no value. */
