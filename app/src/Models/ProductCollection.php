@@ -130,8 +130,8 @@ class ProductCollection extends Model implements PageModel {
 	 * @return string|false
 	 */
 	public function getTemplatePartIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
-			return $this->attributes['metadata']->wp_template_part_id;
+		if ( ! empty( $this->metadata->wp_template_part_id ) ) {
+			return $this->metadata->wp_template_part_id;
 		}
 		return 'surecart/surecart//product-collection-part';
 	}
@@ -142,14 +142,14 @@ class ProductCollection extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+		if ( ! empty( $this->metadata->wp_template_id ) ) {
 			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+			if ( wp_is_block_theme() && false !== strpos( $this->metadata->wp_template_id, '.php' ) ) {
 				return 'surecart/surecart//product-collection';
 			}
 
 			// this is acceptable.
-			return $this->attributes['metadata']->wp_template_id;
+			return $this->metadata->wp_template_id;
 		}
 		return 'surecart/surecart//product-collection';
 	}

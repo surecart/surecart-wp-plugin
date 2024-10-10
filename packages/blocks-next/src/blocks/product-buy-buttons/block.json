@@ -49,7 +49,7 @@
 			}
 		}
 	},
-	"style": ["file:../../styles/wp-buttons.css"],
+	"style": ["surecart-wp-buttons"],
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js"
 }

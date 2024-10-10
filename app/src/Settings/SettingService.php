@@ -267,7 +267,7 @@ class SettingService {
 	 * @return mixed
 	 */
 	public function get( $name, $default = false ) {
-		return get_option( "surecart_${name}", $default );
+		return get_option( 'surecart_' . $name, $default );
 	}
 
 	/**

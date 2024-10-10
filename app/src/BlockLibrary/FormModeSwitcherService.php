@@ -91,6 +91,11 @@ class FormModeSwitcherService {
 			return;
 		}
 
+		// The post must have a checkout form block.
+		if( ! has_block( 'surecart/checkout-form', get_post() ) ) {
+			return;
+		}
+
 		// The form post.
 		$form_post = \SureCart::post()->getFormPost( get_post() );
 		if ( empty( $form_post->post_content ) ) {

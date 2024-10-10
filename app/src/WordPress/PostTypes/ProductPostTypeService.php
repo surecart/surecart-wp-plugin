@@ -268,7 +268,7 @@ class ProductPostTypeService {
 			'input'    => 'text',
 			'required' => false,
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
-			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
+			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).', 'surecart' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
 		return $form_fields;
 	}
@@ -276,12 +276,17 @@ class ProductPostTypeService {
 	/**
 	 * Sync the product.
 	 *
-	 * @param \SureCart\Models\Product $product The model.
+	 * @param \SureCart\Models\Model $model The model.
 	 *
 	 * @return void
 	 */
-	public function sync( \SureCart\Models\Product $product ) {
-		$product->sync();
+	public function sync( \SureCart\Models\Model $model ) {
+		// check if has method first.
+		if ( ! method_exists( $model, 'sync' ) ) {
+			return;
+		}
+
+		$model->sync();
 	}
 
 	/**
@@ -836,7 +841,7 @@ class ProductPostTypeService {
 			'gallery',
 			array(
 				'get_callback'    => function ( $post ) {
-					$product = get_post_meta( $post['id'], 'product', true );
+					$product = sc_get_product( $post['id'] );
 					return $product->gallery ?? [];
 				},
 				'update_callback' => function ( $value, $post ) {
@@ -996,7 +1001,7 @@ class ProductPostTypeService {
 	 *
 	 * @param string $title The title.
 	 */
-	public function disallowPreTitle( $title ): string {
+	public function disallowPreTitle( $title ) {
 		if ( is_singular( 'sc_product' ) ) {
 			return '';
 		}

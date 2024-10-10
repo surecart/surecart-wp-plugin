@@ -41,6 +41,11 @@ class ProductsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
+		// if cataloged_at is set for future date, return error.
+		if ( ! empty( $request['cataloged_at'] ) && $request['cataloged_at'] > time() ) {
+			return new \WP_Error( 'invalid_cataloged_at', __( 'The Cataloged at date cannot be in the future. Please provide a valid date.', 'surecart' ), [ 'status' => 400 ] );
+		}
+
 		// Stop if we are not editing a variable product.
 		if ( empty( $request['variants'] ) ) {
 			return parent::edit( $request );
