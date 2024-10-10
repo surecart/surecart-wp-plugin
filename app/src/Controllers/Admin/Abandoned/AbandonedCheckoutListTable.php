@@ -167,7 +167,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $abandoned ) {
-		return isset( $abandoned->created_at ) ? '<sc-format-date date="' . (int) $abandoned->created_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '--';
+		return isset( $abandoned->created_at ) ? $abandoned->created_at_date : '--';
 	}
 
 	/**
