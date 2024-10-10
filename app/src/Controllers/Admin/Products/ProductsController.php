@@ -35,6 +35,17 @@ class ProductsController extends AdminController {
 	 * Confirm Bulk Delete.
 	 */
 	public function confirmBulkDelete() {
+		if ( empty( $_REQUEST['bulk_action_product_ids'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_die(
+				sprintf(
+					'%s <a href="%s">%s</a>',
+					esc_html__( 'No products selected. Please choose at least one product to delete.', 'surecart' ),
+					esc_url( admin_url( 'admin.php?page=sc-products' ) ),
+					esc_html__( 'Go Back', 'surecart' )
+				)
+			);
+		}
+
 		$products = Product::where(
 			[
 				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ),
