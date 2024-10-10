@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
 Tested up to: 6.6
-Stable tag: 2.31.2
+Stable tag: 2.31.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.31.3 - October 8th, 2024 =
+= 2.31.3 - October 10th, 2024 =
 - Improvement: Add plugin update notice for major versions.
 - Improvement: Fallback tax rate now supports up to 3 decimal places.
 - Improvement: Increase maximum quantity limit from 100 on checkout page.
