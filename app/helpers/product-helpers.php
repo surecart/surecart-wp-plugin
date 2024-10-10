@@ -27,6 +27,15 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 			return null;
 		}
 
+		if ( is_array( $product ) ) {
+			$decoded = json_decode( wp_json_encode( $product ) );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
 		// decode the product.
 		if ( is_string( $product ) ) {
 			$decoded = json_decode( $product );

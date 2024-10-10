@@ -28,6 +28,15 @@ if ( ! function_exists( 'sc_get_collection' ) ) {
 			return null;
 		}
 
+		if ( is_array( $collection ) ) {
+			$decoded = json_decode( wp_json_encode( $collection ) );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$collection = new \SureCart\Models\Collection( $decoded );
+			return $collection;
+		}
+
 		// decode the product.
 		if ( is_string( $collection ) ) {
 			$decoded = json_decode( $collection );
