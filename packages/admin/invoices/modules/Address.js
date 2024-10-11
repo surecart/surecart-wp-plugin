@@ -87,24 +87,6 @@ export default ({ checkout }) => {
 		setModal(null);
 	};
 
-	const renderAddressHeader = (title) => {
-		return (
-			<ScText
-				tag="h3"
-				css={css`
-					margin-bottom: var(--sc-spacing-small);
-					padding: var(--sc-spacing-small) 0;
-				`}
-				style={{
-					'--font-weight': 'var(--sc-font-weight-bold)',
-					'--font-size': 'var(--sc-font-size-small)',
-				}}
-			>
-				{title}
-			</ScText>
-		);
-	};
-
 	const renderForm = () => {
 		if (!checkout?.id) {
 			return null;
@@ -181,8 +163,8 @@ export default ({ checkout }) => {
 
 		return (
 			<>
-				{renderAddressHeader(__('Shipping & Tax Address', 'surecart'))}
 				<ScAddress
+					label={__('Shipping & Tax Address', 'surecart')}
 					showName={true}
 					showLine2={true}
 					required={checkout?.shipping_address_required || false}
@@ -210,8 +192,8 @@ export default ({ checkout }) => {
 
 				{!billingMatchesShipping && (
 					<>
-						{renderAddressHeader(__('Billing Address', 'surecart'))}
 						<ScAddress
+							label={__('Billing Address', 'surecart')}
 							showName={true}
 							showLine2={true}
 							required={
