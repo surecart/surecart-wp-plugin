@@ -28,6 +28,21 @@ abstract class AdminController {
 			),
 			'after'
 		);
+
+		wp_add_inline_script(
+			'wp-api-fetch',
+			'wp.apiFetch.use((options, next) => {
+				const result = next(options);
+				result.catch((response) => {
+					if("invalid_json" === response.code) {
+						response.message = wp.i18n.__("Error: The response received is not valid JSON. If you\'re using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the WordPress debug settings or contact support.", "surecart");
+					}
+					return Promise.reject(response);
+				});
+				return result;
+			});',
+			'after'
+		);
 	}
 
 	/**
