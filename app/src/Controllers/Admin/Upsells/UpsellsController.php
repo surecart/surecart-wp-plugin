@@ -24,6 +24,7 @@ class UpsellsController extends AdminController {
 						'title' => __( 'Upsell Funnels', 'surecart' ),
 					],
 				],
+				'report_url' => SURECART_REPORTS_URL . 'upsells',
 			)
 		);
 		return \SureCart::view( 'admin/upsell-funnels/index' )->with( [ 'table' => $table ] );

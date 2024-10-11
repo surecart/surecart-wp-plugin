@@ -22,6 +22,7 @@
 		"core/",
 		"vendor/",
 		"views/",
+		"styles/",
 		"!node_modules",
 		"LICENSE",
 		"README.md",
