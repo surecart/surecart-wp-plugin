@@ -41,7 +41,6 @@
  - [sc-customer-details](../customer-details)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
- - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -89,7 +88,6 @@ graph TD;
   sc-customer-details --> sc-skeleton
   sc-donation-choices --> sc-skeleton
   sc-fulfillments --> sc-skeleton
-  sc-invoice --> sc-skeleton
   sc-invoices-list --> sc-skeleton
   sc-license --> sc-skeleton
   sc-licenses-list --> sc-skeleton

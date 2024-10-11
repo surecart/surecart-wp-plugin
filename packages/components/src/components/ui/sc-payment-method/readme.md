@@ -29,7 +29,6 @@
 
 ### Used by
 
- - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-payment-method-details](../sc-payment-method-details)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -58,7 +57,6 @@ graph TD;
   sc-payment-method --> sc-text
   sc-button --> sc-spinner
   sc-cc-logo --> sc-icon
-  sc-invoice --> sc-payment-method
   sc-order --> sc-payment-method
   sc-payment-method-details --> sc-payment-method
   sc-payment-methods-list --> sc-payment-method

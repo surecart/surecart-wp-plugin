@@ -23,7 +23,6 @@
 ### Used by
 
  - [sc-dashboard-downloads-list](../../controllers/dashboard/dashboard-downloads-list)
- - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-order](../../controllers/dashboard/order)
 
 ### Depends on
@@ -62,7 +61,6 @@ graph TD;
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-dashboard-downloads-list --> sc-purchase-downloads-list
-  sc-invoice --> sc-purchase-downloads-list
   sc-order --> sc-purchase-downloads-list
   style sc-purchase-downloads-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

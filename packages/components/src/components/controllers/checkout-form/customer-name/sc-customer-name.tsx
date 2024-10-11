@@ -1,4 +1,4 @@
-import { Customer, Checkout, Invoice } from '../../../../types';
+import { Customer, Checkout } from '../../../../types';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Method } from '@stencil/core';
 import { state as userState } from '@store/user';
@@ -100,11 +100,6 @@ export class ScCustomerName {
       // otherwise we use the checkout name first.
     } else {
       this.value = checkoutState?.checkout?.name || (checkoutState?.checkout?.customer as Customer)?.name;
-    }
-
-    // if we have an invoice on the checkout, disable the input.
-    if ((checkoutState?.checkout?.invoice as Invoice)?.id) {
-      this.disabled = true;
     }
   }
 

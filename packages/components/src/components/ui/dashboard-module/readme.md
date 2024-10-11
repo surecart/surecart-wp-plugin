@@ -42,7 +42,6 @@
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
- - [sc-invoice](../../controllers/dashboard/invoice)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -85,7 +84,6 @@ graph TD;
   sc-customer-edit --> sc-dashboard-module
   sc-downloads-list --> sc-dashboard-module
   sc-fulfillments --> sc-dashboard-module
-  sc-invoice --> sc-dashboard-module
   sc-invoices-list --> sc-dashboard-module
   sc-license --> sc-dashboard-module
   sc-licenses-list --> sc-dashboard-module
