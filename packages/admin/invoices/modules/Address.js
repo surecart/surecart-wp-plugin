@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { useState, useEffect } from '@wordpress/element';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -21,12 +22,10 @@ import {
 	ScText,
 	ScFormControl,
 	ScCard,
-	ScTooltip,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
-import AddressConfirmModal from './AddressConfirmModal';
 
 export default ({ checkout }) => {
 	if (!checkout?.id) {
@@ -286,40 +285,29 @@ export default ({ checkout }) => {
 				<div>{renderForm()}</div>
 			</Box>
 
-			<AddressConfirmModal
-				open={modal === 'fill'}
-				onRequestClose={() => setModal(null)}
+			<ConfirmDialog
+				isOpen={modal === 'fill'}
 				onConfirm={fillAddressFromCustomer}
-				request={{
-					shipping_address: checkout?.customer?.shipping_address,
-					billing_address: checkout?.customer?.billing_address,
-					billing_matches_shipping:
-						checkout?.customer?.billing_matches_shipping,
-				}}
-				confirmText={__('Confirm', 'surecart')}
+				onCancel={() => setModal(null)}
+				confirmButtonText={__('Confirm', 'surecart')}
 			>
 				{__(
 					"This will set the shipping and billing addresses to the customer's default addresses.",
 					'surecart'
 				)}
-			</AddressConfirmModal>
+			</ConfirmDialog>
 
-			<AddressConfirmModal
-				open={modal === 'clear'}
-				onRequestClose={() => setModal(null)}
+			<ConfirmDialog
+				isOpen={modal === 'clear'}
 				onConfirm={clearAddress}
-				request={{
-					shipping_address: null,
-					billing_address: null,
-					billing_matches_shipping: true,
-				}}
-				confirmText={__('Clear', 'surecart')}
+				onCancel={() => setModal(null)}
+				confirmButtonText={__('Clear', 'surecart')}
 			>
 				{__(
 					'This will remove the shipping and billing addresses from the invoice. Are you sure you want to continue?',
 					'surecart'
 				)}
-			</AddressConfirmModal>
+			</ConfirmDialog>
 		</>
 	);
 };
