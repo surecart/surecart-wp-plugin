@@ -10,16 +10,15 @@ import {
 	ScFormatNumber,
 	ScLineItem,
 	ScDivider,
-	ScCouponForm,
-	ScTag,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import PaymentCollection from './PaymentCollection';
 import { formatTaxDisplay } from '../../util/tax';
 import { useInvoice } from '../hooks/useInvoice';
+import Coupon from './Coupon';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
-	const { checkout, updateCheckout, loading, busy, isDraftInvoice } = useInvoice();
+	const { checkout, loading } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
@@ -27,72 +26,9 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
 
-	const onCouponChange = async (e) => {
-		await updateCheckout({
-			discount: {
-				promotion_code: e?.detail,
-			},
-		});
-	};
-
-	const renderCouponForm = () => {
-		if (isDraftInvoice) {
-			return (
-				<ScCouponForm
-					collapsed={true}
-					placeholder={__('Enter Coupon Code', 'surecart')}
-					label={__('Add Coupon Code', 'surecart')}
-					buttonText={__('Apply', 'surecart')}
-					onScApplyCoupon={onCouponChange}
-					discount={checkout?.discount}
-					currency={checkout?.currency}
-					discountAmount={checkout?.discount_amount}
-					busy={busy}
-				/>
-			)
-		}
-
-		if (!checkout?.discount?.promotion?.code) {
-			return null;
-		}
-
-		return (
-			<ScLineItem>
-				<span slot="description">
-					<div part="discount-label">{__('Discount', 'surecart')}</div>
-					<ScTag
-						exportparts="base:coupon-tag"
-						type={'redeemable' === checkout.discount?.redeemable_status ? 'success' : 'warning'}
-						class="coupon-tag"
-					>
-						{checkout?.discount?.promotion?.code}
-					</ScTag>
-				</span>
-
-				{'redeemable' === checkout.discount?.redeemable_status ? (
-					<Fragment>
-						{!!checkout.human_discount && (
-							<span class="coupon-human-discount" slot="price-description">
-								{checkout.human_discount_with_duration}
-							</span>
-						)}
-						<span slot="price">
-							<sc-format-number type="currency" currency={checkout?.currency} value={checkout?.discount_amount}></sc-format-number>
-						</span>
-					</Fragment>
-				) : (
-					<div class="coupon__status" slot="price-description">
-						<sc-icon name="alert-triangle" />
-						{checkout?.discount?.redeemable_display_status}
-					</div>
-				)}
-			</ScLineItem>
-		)
-	}
-
-	const renderPaymentDetails = () => {
-		return (
-			<>
+	return (
+		<>
+			<Box title={__('Payment', 'surecart')} loading={loading}>
 				<ScLineItem>
 					<span slot="description">{__('Subtotal', 'surecart')}</span>
 					<ScFormatNumber
@@ -152,7 +88,8 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 				{!!checkout?.tax_amount && (
 					<ScLineItem>
 						<span slot="description">{`${formatTaxDisplay(
-							__('Order Tax', 'surecart')
+							checkout?.tax_label,
+							checkout?.tax_status === 'estimated'
 						)} (${checkout?.tax_percent}%)`}</span>
 						<ScFormatNumber
 							slot="price"
@@ -162,12 +99,20 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							}}
 							type="currency"
 							currency={checkout?.currency}
-							value={checkout?.tax_amount}
-						></ScFormatNumber>
+							value={
+								checkout?.tax_exclusive_amount ||
+								checkout?.tax_inclusive_amount
+							}
+						/>
+						{!!checkout?.tax_inclusive_amount && (
+							<span slot="price-description">
+								{`(${__('included', 'surecart')})`}
+							</span>
+						)}
 					</ScLineItem>
 				)}
 
-				{renderCouponForm()}
+				<Coupon />
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
@@ -218,14 +163,6 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 						></ScFormatNumber>
 					</ScLineItem>
 				)}
-			</>
-		);
-	};
-
-	return (
-		<>
-			<Box title={__('Payment', 'surecart')} loading={loading}>
-				{renderPaymentDetails()}
 			</Box>
 
 			<PaymentCollection

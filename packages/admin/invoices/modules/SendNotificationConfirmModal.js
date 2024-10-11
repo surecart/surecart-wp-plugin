@@ -6,12 +6,9 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { select, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { Modal } from '@wordpress/components';
-import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -21,8 +18,7 @@ import { useInvoice } from '../hooks/useInvoice';
 import Error from '../../components/Error';
 
 export default ({ title, onRequestClose, paymentMethod, children }) => {
-	const { invoice, editInvoice, receiveInvoice, checkoutExpands } =
-		useInvoice();
+	const { invoice, editInvoice, invoiceOpenRequest } = useInvoice();
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -38,37 +34,10 @@ export default ({ title, onRequestClose, paymentMethod, children }) => {
 			setBusy(true);
 			setError(null);
 
-			// Set the notification_enabled flag by default to true.
-			invoice.notifications_enabled = notificationsEnabled;
-
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
-
-			// Save the invoice, Remember, don't call saveEditedEntityRecord() here
-			// as receiveEntityRecords() makes updates disallowed, or find a better approach.
-			await apiFetch({
-				method: 'PATCH',
-				path: `${baseURL}/${invoice?.id}?refresh_status=1`,
-				data: invoice,
+			await invoiceOpenRequest({
+				notifications_enabled: notificationsEnabled,
+				payment_method: paymentMethod,
 			});
-
-			// Change the invoice status to open.
-			const invoiceData = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${invoice?.id}/open`, {
-					expand: checkoutExpands,
-					...(paymentMethod?.id && {
-						manual_payment: !!paymentMethod.manual,
-						...(paymentMethod.manual
-							? { manual_payment_method_id: paymentMethod.id }
-							: { payment_method_id: paymentMethod.id }),
-					}),
-				}),
-			});
-
-			receiveInvoice(invoiceData);
 
 			createSuccessNotice(__('Invoice saved.', 'surecart'), {
 				type: 'snackbar',

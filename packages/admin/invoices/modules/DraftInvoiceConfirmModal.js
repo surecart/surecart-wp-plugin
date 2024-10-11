@@ -5,13 +5,10 @@ import { css, jsx } from '@emotion/react';
  * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { select, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -21,7 +18,7 @@ import { ScBlockUi } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default ({ onRequestClose, open }) => {
-	const { invoice, receiveInvoice, checkoutExpands } = useInvoice();
+	const { invoice, makeDraftRequest } = useInvoice();
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(busy);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -34,19 +31,7 @@ export default ({ onRequestClose, open }) => {
 			setBusy(true);
 			setError(null);
 
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'invoice'
-			);
-
-			const invoiceData = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${invoice?.id}/make_draft`, {
-					expand: checkoutExpands,
-				}),
-			});
-
-			receiveInvoice(invoiceData);
+			await makeDraftRequest();
 
 			createSuccessNotice(
 				__('Invoice marked as draft, you can now edit it.', 'surecart'),
