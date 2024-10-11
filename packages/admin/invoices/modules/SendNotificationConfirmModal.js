@@ -21,7 +21,7 @@ export default ({ title, onRequestClose, paymentMethod, children }) => {
 	const { invoice, editInvoice, invoiceOpenRequest } = useInvoice();
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
-	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+	const [notificationsEnabled, setNotificationsEnabled] = useState();
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const messages = {

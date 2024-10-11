@@ -1,6 +1,8 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
+import { css, jsx } from '@emotion/react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -28,7 +30,34 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 
 	return (
 		<>
-			<Box title={__('Payment', 'surecart')} loading={loading}>
+			<Box
+				title={__('Payment', 'surecart')}
+				loading={loading}
+				footer={
+					<div
+						css={css`
+							width: 100%;
+						`}
+					>
+						<ScLineItem>
+							<span slot="title">
+								{__('Amount Due', 'surecart')}
+							</span>
+							<ScFormatNumber
+								slot="price"
+								style={{
+									fontWeight:
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
+								}}
+								type="currency"
+								currency={checkout?.currency}
+								value={checkout?.remaining_amount_due}
+							></ScFormatNumber>
+						</ScLineItem>
+					</div>
+				}
+			>
 				<ScLineItem>
 					<span slot="description">{__('Subtotal', 'surecart')}</span>
 					<ScFormatNumber
@@ -144,22 +173,6 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							type="currency"
 							currency={checkout?.currency}
 							value={checkout?.trial_amount}
-						></ScFormatNumber>
-					</ScLineItem>
-				)}
-
-				{checkout?.total_amount !== checkout?.remaining_amount_due && (
-					<ScLineItem>
-						<span slot="title">{__('Amount Due', 'surecart')}</span>
-						<ScFormatNumber
-							slot="price"
-							style={{
-								fontWeight: 'var(--sc-font-weight-semibold)',
-								color: 'var(--sc-color-gray-800)',
-							}}
-							type="currency"
-							currency={checkout?.currency}
-							value={checkout?.remaining_amount_due}
 						></ScFormatNumber>
 					</ScLineItem>
 				)}

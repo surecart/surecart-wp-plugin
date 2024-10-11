@@ -23,7 +23,7 @@ export default () => {
 			setError(null);
 			await checkoutRequest({
 				method: 'PATCH',
-				requestData: {
+				data: {
 					discount: {
 						promotion_code: e?.detail,
 					},

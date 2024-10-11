@@ -241,13 +241,13 @@ export const useInvoice = () => {
 			'invoice'
 		);
 
-		// // Save the invoice, Remember, don't call saveEditedEntityRecord() here
-		// // as receiveEntityRecords() makes updates disallowed, or find a better approach.
-		// await apiFetch({
-		// 	method: 'PATCH',
-		// 	path: `${baseURL}/${invoice?.id}?refresh_status=1`,
-		// 	data: invoice,
-		// });
+		// Save the invoice, Remember, don't call saveEditedEntityRecord() here
+		// as receiveEntityRecords() makes updates disallowed, or find a better approach.
+		await apiFetch({
+			method: 'PATCH',
+			path: `${baseURL}/${invoice?.id}?refresh_status=1`,
+			data: invoice,
+		});
 
 		// Change the invoice status to open.
 		const invoiceData = await apiFetch({

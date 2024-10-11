@@ -20,10 +20,12 @@ import {
 	ScForm,
 	ScInput,
 } from '@surecart/components-react';
+import Error from '../../../components/Error';
 
 export default ({ onRequestClose, onCreate, liveMode }) => {
 	const name = useRef();
 	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState(null);
 	const [customer, setCustomer] = useState({
 		live_mode: liveMode,
 	});
@@ -60,7 +62,8 @@ export default ({ onRequestClose, onCreate, liveMode }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(e);
+			setError(e);
+		} finally {
 			setBusy(false);
 		}
 	};
@@ -80,6 +83,7 @@ export default ({ onRequestClose, onCreate, liveMode }) => {
 					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}
 			>
+				<Error error={error} setError={setError} />
 				<ScInput
 					ref={name}
 					label={__('First Name', 'surecart')}
