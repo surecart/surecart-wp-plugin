@@ -17,8 +17,13 @@ import { useInvoice } from '../hooks/useInvoice';
 import { ScEmpty, ScTable, ScTableCell } from '@surecart/components-react';
 
 export default () => {
-	const { checkout, loading, isDraftInvoice, onRemovePrice, onChangePrice } =
-		useInvoice();
+	const {
+		checkout,
+		loading,
+		isDraftInvoice,
+		removeLineItem,
+		updateLineItem,
+	} = useInvoice();
 	const line_items = checkout?.line_items?.data || [];
 	const [modal, setModal] = useState(false);
 
@@ -73,8 +78,8 @@ export default () => {
 							quantity={quantity}
 							subtotal_amount={subtotal_amount}
 							ad_hoc_amount={ad_hoc_amount}
-							onRemove={() => onRemovePrice(id)}
-							onChange={(data) => onChangePrice(id, data)}
+							onRemove={() => removeLineItem(id)}
+							onChange={(data) => updateLineItem(id, data)}
 							checkout={checkout}
 							variant_options={variant_options}
 						/>

@@ -26,36 +26,29 @@ export default () => {
 	}, [price]);
 
 	const onSubmit = async (priceId, variantId = null) => {
-		const priceExists = checkout?.line_items?.data?.find(
-			(item) => item?.price?.id === priceId
+		const matchedLineItem = checkout?.line_items?.data?.find(
+			(item) =>
+				item?.price?.id === priceId && item?.variant?.id === variantId
 		);
-		const variantExists = checkout?.line_items?.data?.find(
-			(item) => item?.variant === variantId && item?.price?.id === priceId
-		);
-		if (variantExists) {
-			updateLineItem(variantExists?.id, {
-				quantity: variantExists?.quantity + 1,
+
+		if (matchedLineItem) {
+			updateLineItem(matchedLineItem.id, {
+				quantity: matchedLineItem.quantity + 1,
 			});
-			return;
-		}
-		if (priceExists) {
-			updateLineItem(priceExists?.id, {
-				quantity: priceExists?.quantity + 1,
+		} else {
+			addLineItem({
+				checkout: checkout?.id,
+				price: priceId,
+				quantity: 1,
+				variant: variantId,
 			});
-			return;
 		}
-		addLineItem({
-			checkout: checkout?.id,
-			price: priceId,
-			quantity: 1,
-			variant: variantId,
-		});
+
 		setPrice(false);
 	};
 
 	return (
 		<PriceSelector
-			value={price?.priceId}
 			ad_hoc={true}
 			onSelect={({ price_id, variant_id }) => {
 				setPrice({

@@ -1,7 +1,6 @@
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -12,53 +11,39 @@ import {
 	ScAlert,
 	ScChoices,
 	ScChoice,
-	ScButton,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import EditAddress from './EditAddress';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { invoice, checkout, loading, isDraftInvoice, updateCheckout } =
-		useInvoice();
-	const [open, setOpen] = useState(false);
+	const { checkout, loading, isDraftInvoice, updateCheckout } = useInvoice();
 
-	if (
-		!checkout?.selected_shipping_choice_required &&
-		!checkout?.shipping_address_required
-	) {
+	// shipping choice is not required.
+	if (!checkout?.selected_shipping_choice_required) {
 		return null;
 	}
 
+	// shipping choice is required, but no shipping choices are available
 	if (!checkout?.shipping_choices?.data?.length) {
-		if (!checkout?.shipping_address?.country) {
-			return (
-				<Box title={__('Shipping', 'surecart')} loading={loading}>
-					<ScAlert type="warning" open>
-						{__(
-							'Shipping is required. Please enter a shipping address.',
-							'surecart'
-						)}
-						<br />
-						{/* TODO: Remove this code once finalize this UI */}
-						{/* <ScButton onClick={() => setOpen(true)}>
-							{__('Add A Shipping Address', 'surecart')}
-						</ScButton> */}
-					</ScAlert>
-					{/* <EditAddress
-						invoice={invoice}
-						checkout={checkout}
-						open={open}
-						onRequestClose={() => setOpen(false)}
-					/> */}
-				</Box>
-			);
-		}
 		return (
 			<Box title={__('Shipping', 'surecart')} loading={loading}>
 				<ScAlert type="warning" open>
 					{__(
 						'The products in this invoice cannot be shipped to the provided address.',
+						'surecart'
+					)}
+				</ScAlert>
+			</Box>
+		);
+	}
+
+	// shipping address is required.
+	if (!checkout?.shipping_address?.country) {
+		return (
+			<Box title={__('Shipping', 'surecart')} loading={loading}>
+				<ScAlert type="warning" open>
+					{__(
+						'A shipping address is required. Please enter a shipping address.',
 						'surecart'
 					)}
 				</ScAlert>

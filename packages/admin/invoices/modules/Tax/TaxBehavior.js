@@ -30,14 +30,13 @@ export default () => {
 		[popoverAnchor]
 	);
 
-	const onChange = async (value) => {
+	const onChange = async () => {
 		await updateCheckout({
 			tax_behavior:
 				checkout?.tax_behavior === 'inclusive'
 					? 'exclusive'
 					: 'inclusive',
 		});
-		onClose();
 	};
 
 	const label =
@@ -97,7 +96,10 @@ export default () => {
 											'inclusive' || false
 									}
 								>
-									{__('Included', 'surecart')}
+									{__(
+										'Included in product price',
+										'surecart'
+									)}
 								</ScRadio>
 								<ScRadio
 									value="exclusive"
@@ -106,7 +108,10 @@ export default () => {
 											'exclusive' || false
 									}
 								>
-									{__('Not Included', 'surecart')}
+									{__(
+										'Not included in product price',
+										'surecart'
+									)}
 								</ScRadio>
 							</ScRadioGroup>
 

@@ -1,14 +1,14 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+
 /**
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
-import { select, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -18,7 +18,7 @@ import { useInvoice } from '../hooks/useInvoice';
 import Error from '../../components/Error';
 
 export default ({ open, onRequestClose }) => {
-	const { loading, invoice, receiveInvoice, checkoutExpands } = useInvoice();
+	const { loading, markAsPaidRequest } = useInvoice();
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -26,26 +26,8 @@ export default ({ open, onRequestClose }) => {
 	const markAsPaid = async () => {
 		try {
 			setBusy(true);
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'checkout'
-			);
 
-			const checkoutUpdated = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(
-					`${baseURL}/${invoice?.checkout?.id}/manually_pay`,
-					{
-						expand: checkoutExpands,
-					}
-				),
-			});
-
-			receiveInvoice({
-				...invoice,
-				status: checkoutUpdated?.status,
-				checkout: checkoutUpdated,
-			});
+			await markAsPaidRequest();
 
 			createSuccessNotice(__('Invoice marked as paid.', 'surecart'), {
 				type: 'snackbar',
@@ -67,7 +49,13 @@ export default ({ open, onRequestClose }) => {
 			onCancel={onRequestClose}
 			confirmButtonText={__('Mark Paid', 'surecart')}
 		>
-			<Error error={error} setError={setError} />
+			<Error
+				error={error}
+				setError={setError}
+				css={css`
+					margin-bottom: var(--sc-spacing-medium);
+				`}
+			/>
 
 			{__(
 				'Are you sure you wish to mark the invoice as paid? This cannot be undone.',

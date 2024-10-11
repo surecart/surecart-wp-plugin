@@ -63,7 +63,13 @@ export default ({ id, onChange, isDraftInvoice }) => {
 							`}
 						/>
 					</div>
-					<div>
+					<div
+						css={css`
+							word-break: break-word;
+							max-width: 200px;
+						`}
+					>
+
 						<div>{customer?.name}</div>
 						<div>{customer?.email}</div>
 					</div>

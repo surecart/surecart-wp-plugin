@@ -61,9 +61,11 @@ export default () => {
 		busy,
 	} = useInvoice();
 
-	const paymentMethod = checkout?.manual_payment
-		? checkout?.manual_payment_method
-		: checkout?.payment_method;
+	const [paymentMethod, setPaymentMethod] = useState(
+		checkout?.manual_payment
+			? checkout?.manual_payment_method
+			: checkout?.payment_method
+	);
 
 	const invoiceListPageURL = addQueryArgs('admin.php', {
 		page: 'sc-invoices',
@@ -87,16 +89,16 @@ export default () => {
 	};
 
 	const getSubmitButtonTitle = () => {
-		if (!checkout?.order?.id) {
-			return __('Create Invoice', 'surecart');
-		}
-
 		if (
 			invoice?.automatic_collection &&
 			isDraftInvoice &&
 			!!paymentMethod?.id
 		) {
 			return __('Charge Customer', 'surecart');
+		}
+
+		if (!checkout?.order?.id) {
+			return __('Create Invoice', 'surecart');
 		}
 
 		return isDraftInvoice
@@ -107,19 +109,19 @@ export default () => {
 	const menuItems = [
 		...(invoice?.status === 'open'
 			? [
-					{
-						title: __('Edit Invoice', 'surecart'),
-						modal: 'change_status_to_draft',
-					},
-			  ]
+				{
+					title: __('Edit Invoice', 'surecart'),
+					modal: 'change_status_to_draft',
+				},
+			]
 			: []),
 		...(!['draft', 'paid'].includes(invoice?.status)
 			? [
-					{
-						title: __('Mark As Paid', 'surecart'),
-						modal: 'mark_as_paid',
-					},
-			  ]
+				{
+					title: __('Mark As Paid', 'surecart'),
+					modal: 'mark_as_paid',
+				},
+			]
 			: []),
 	];
 
@@ -255,7 +257,10 @@ export default () => {
 				<SelectShipping />
 
 				{!!checkout?.line_items?.data?.length && (
-					<Payment paymentMethod={paymentMethod} />
+					<Payment
+						paymentMethod={paymentMethod}
+						setPaymentMethod={setPaymentMethod}
+					/>
 				)}
 
 				<AdditionalOptions />

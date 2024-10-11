@@ -774,6 +774,10 @@ export namespace Components {
          */
         "discountAmount": number;
         /**
+          * Is the form editable
+         */
+        "editable": boolean;
+        /**
           * The error message
          */
         "error": string;
@@ -6883,6 +6887,10 @@ declare namespace LocalJSX {
           * The discount amount
          */
         "discountAmount"?: number;
+        /**
+          * Is the form editable
+         */
+        "editable"?: boolean;
         /**
           * The error message
          */
