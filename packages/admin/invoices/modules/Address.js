@@ -218,7 +218,7 @@ export default ({ checkout }) => {
 				header_action={
 					isDraftInvoice && (
 						<>
-							{checkout?.customer?.id && (
+							{checkout?.customer?.shipping_address?.id && (
 								<ScButton
 									css={css`
 										margin: -12px 0;
