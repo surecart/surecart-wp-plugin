@@ -80,6 +80,9 @@ export class ScCouponForm {
   /** The text for apply button */
   @Prop({ reflect: true }) buttonText: string;
 
+  /** Is the form editable */
+  @Prop() editable: boolean = true;
+
   /** Auto focus the input when opened. */
   @Watch('open')
   handleOpenChange(val) {
@@ -163,12 +166,14 @@ export class ScCouponForm {
               exportparts="base:coupon-tag"
               type={'redeemable' === this.discount?.redeemable_status ? 'success' : 'warning'}
               class="coupon-tag"
-              clearable
+              clearable={this.editable}
               onScClear={() => {
+                if (!this.editable) return;
                 this.scApplyCoupon.emit(null);
                 this.open = false;
               }}
               onKeyDown={e => {
+                if (!this.editable) return;
                 if (e.key === 'Enter' || e.key === 'Escape') {
                   speak(__('Coupon was removed.', 'surecart'), 'assertive');
                   this.scApplyCoupon.emit(null);
