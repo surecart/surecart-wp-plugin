@@ -53,7 +53,10 @@ export default ({ onRequestClose, onCreate, liveMode }) => {
 			const created = await saveEntityRecord(
 				'surecart',
 				'customer',
-				customer,
+				{
+					...customer,
+					live_mode: liveMode,
+				},
 				{
 					throwOnError: true,
 				}
