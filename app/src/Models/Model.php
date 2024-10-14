@@ -431,11 +431,24 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return int|false
 	 */
 	public function getCreatedByAttribute() {
-		if ( empty( $this->attributes['metadata']['wp_created_by'] ) ) {
+		$metadata = $this->attributes['metadata'] ?? null;
+
+		// If metadata is empty, return false.
+		if ( empty( $metadata ) ) {
 			return false;
 		}
 
-		return (int) $this->attributes['metadata']['wp_created_by'];
+		// If metadata is an object, access it as an object.
+		if ( is_object( $metadata ) ) {
+			return ! empty( $metadata->wp_created_by ) ? (int) $metadata->wp_created_by : false;
+		}
+
+		// If metadata is an array, access it as an array.
+		if ( is_array( $metadata ) ) {
+			return ! empty( $metadata['wp_created_by'] ) ? (int) $metadata['wp_created_by'] : false;
+		}
+
+		return false;
 	}
 
 	/**
@@ -1050,17 +1063,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Calls accessors during toArray.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		$attributes = $this->getAttributes();
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( method_exists( get_class(), $method ) ) {
-				continue;
-			}
-
 			if ( 'get' === substr( $method, 0, 3 ) && 'Attribute' === substr( $method, -9 ) ) {
 				$key = str_replace( [ 'get', 'Attribute' ], '', $method );
 				if ( $key ) {
@@ -1070,6 +1079,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 					$value              = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
 					$attributes[ $key ] = $this->{$method}( $value );
 				}
+			}
+
+			if ( method_exists( get_class(), $method ) ) {
+				continue;
 			}
 		}
 
