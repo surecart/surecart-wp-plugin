@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { Modal } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
@@ -21,8 +21,14 @@ export default ({ title, onRequestClose, paymentMethod, children }) => {
 	const { invoice, editInvoice, invoiceOpenRequest } = useInvoice();
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
-	const [notificationsEnabled, setNotificationsEnabled] = useState();
+	const [notificationsEnabled, setNotificationsEnabled] = useState(
+		invoice?.notifications_enabled
+	);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+
+	useEffect(() => {
+		setNotificationsEnabled(invoice?.notifications_enabled);
+	}, [invoice?.notifications_enabled]);
 
 	const messages = {
 		notifyCustomer: __('Send an email to the customer.', 'surecart'),
@@ -86,7 +92,7 @@ export default ({ title, onRequestClose, paymentMethod, children }) => {
 						onScChange={(e) => {
 							setNotificationsEnabled(e.target.checked);
 							editInvoice({
-								notification_enabled: e.target.checked,
+								notifications_enabled: e.target.checked,
 							});
 						}}
 					>
