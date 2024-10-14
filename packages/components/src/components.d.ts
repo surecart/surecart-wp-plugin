@@ -4355,10 +4355,6 @@ export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderConfirmProviderElement;
 }
-export interface ScOrderCouponFormCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderCouponFormElement;
-}
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderSummaryElement;
@@ -8297,7 +8293,6 @@ declare namespace LocalJSX {
         "collapsed"?: boolean;
         "label"?: string;
         "loading"?: boolean;
-        "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
         "placeholder"?: string;
     }
     interface ScOrderDetail {

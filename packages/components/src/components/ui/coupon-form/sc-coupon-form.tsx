@@ -33,9 +33,9 @@ import { DiscountResponse } from '../../../types';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
-  private couponTag: HTMLScTagElement;
-  private addCouponTrigger: HTMLElement;
-  private isInitialLoad: boolean = true;
+  // private couponTag: HTMLScTagElement;
+  // private addCouponTrigger: HTMLElement;
+  // private isInitialLoad: boolean = true;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -92,30 +92,30 @@ export class ScCouponForm {
     }
   }
   // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
-  @Watch('discount')
-  handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
-    // Skip the focusing on the initial load.
-    if (this.isInitialLoad) {
-      this.isInitialLoad = false;
-      return;
-    }
+  // @Watch('discount')
+  // handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
+  //   // Skip the focusing on the initial load.
+  //   if (this.isInitialLoad) {
+  //     this.isInitialLoad = false;
+  //     return;
+  //   }
 
-    if (newValue?.promotion?.code !== oldValue?.promotion?.code) {
-      this.updateFocus();
-    }
-  }
+  //   // if (newValue?.promotion?.code !== oldValue?.promotion?.code) {
+  //   //   this.updateFocus();
+  //   // }
+  // }
 
   /** Focus the coupon button when visible. */
-  private async updateFocus() {
-    // Wait for the next render cycle.
-    await new Promise(resolve => requestAnimationFrame(resolve));
+  // private async updateFocus() {
+  //   // Wait for the next render cycle.
+  //   await new Promise(resolve => requestAnimationFrame(resolve));
 
-    if (this?.discount?.promotion?.code) {
-      (this.couponTag.shadowRoot.querySelector('*') as HTMLElement)?.focus();
-    } else if (this.addCouponTrigger) {
-      this.addCouponTrigger.focus();
-    }
-  }
+  //   if (this?.discount?.promotion?.code) {
+  //     (this.couponTag.shadowRoot.querySelector('*') as HTMLElement)?.focus();
+  //   } else if (this.addCouponTrigger) {
+  //     this.addCouponTrigger.focus();
+  //   }
+  // }
 
   /** Close it when blurred and no value. */
   handleBlur() {
@@ -193,7 +193,7 @@ export class ScCouponForm {
                   this.open = false;
                 }
               }}
-              ref={el => (this.couponTag = el as HTMLScTagElement)}
+              // ref={el => (this.couponTag = el as HTMLScTagElement)}
               role="button"
               // translators: %s is the coupon code.
               aria-label={sprintf(__('Press enter to remove coupon code %s.', 'surecart'), this?.discount?.promotion?.code || this.input.value || '')}
@@ -253,7 +253,7 @@ export class ScCouponForm {
             speak(__('Coupon code field opened. Press Escape button to close it.', 'surecart'), 'assertive');
           }}
           tabindex="0"
-          ref={el => (this.addCouponTrigger = el as HTMLElement)}
+          // ref={el => (this.addCouponTrigger = el as HTMLElement)}
           role="button"
         >
           <slot name="label">{this.label}</slot>
