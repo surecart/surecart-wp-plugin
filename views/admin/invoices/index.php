@@ -8,7 +8,7 @@
 		'layouts/partials/admin-index-header',
 		[
 			'title' => __( 'Invoices', 'surecart' ),
-			'new_link' => \SureCart::getUrl()->create( 'invoices' ) . '&live_mode=' . $live_mode,
+			'after_title' => \SureCart::view( 'admin/invoices/new-invoice-button' )->toString(),
 		]
 	);
 	?>
