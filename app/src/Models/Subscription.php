@@ -5,6 +5,7 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasPurchase;
+use SureCart\Support\TimeDate;
 
 /**
  * Subscription model
@@ -505,6 +506,24 @@ class Subscription extends Model {
 	protected function stats( $args = [] ) {
 		$stat = new Statistic();
 		return $stat->where( $args )->find( 'subscriptions' );
+	}
+
+	/**
+	 * Get the current period start at date.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriorStartAtDateAttribute() {
+		return TimeDate::formatDateAndTime( $this->current_period_start_at );
+	}
+
+	/**
+	 * Get the current period end at date.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriorEndAtDateAttribute() {
+		return TimeDate::formatDateAndTime( $this->current_period_end_at );
 	}
 }
 
