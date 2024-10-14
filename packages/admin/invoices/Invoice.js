@@ -35,6 +35,8 @@ import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
 import SendNotificationConfirmModal from './modules/SendNotificationConfirmModal';
 import DeleteInvoiceConfirmModal from './modules/DeleteInvoiceConfirmModal';
 import { useInvoice } from './hooks/useInvoice';
+import { Button } from '@wordpress/components';
+import { external, moreHorizontal } from '@wordpress/icons';
 
 /**
  * Returns the Model Edit URL.
@@ -109,19 +111,19 @@ export default () => {
 	const menuItems = [
 		...(invoice?.status === 'open'
 			? [
-				{
-					title: __('Edit Invoice', 'surecart'),
-					modal: 'change_status_to_draft',
-				},
-			]
+					{
+						title: __('Edit Invoice', 'surecart'),
+						modal: 'change_status_to_draft',
+					},
+			  ]
 			: []),
 		...(!['draft', 'paid'].includes(invoice?.status)
 			? [
-				{
-					title: __('Mark As Paid', 'surecart'),
-					modal: 'mark_as_paid',
-				},
-			]
+					{
+						title: __('Mark As Paid', 'surecart'),
+						modal: 'mark_as_paid',
+					},
+			  ]
 			: []),
 	];
 
@@ -143,15 +145,26 @@ export default () => {
 		}
 
 		return (
-			<div>
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+					gap: 1em;
+				`}
+			>
 				<ScDropdown
-					position="bottom-right"
+					placement="bottom-end"
 					style={{ '--panel-width': '14em' }}
 				>
 					<>
-						<ScButton slot="trigger" type="text" circle>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
+						<Button
+							slot="trigger"
+							icon={moreHorizontal}
+							label={__('More', 'surecart')}
+							showTooltip={true}
+							size="compact"
+						/>
+
 						<ScMenu>
 							<ScMenuItem
 								onClick={() => setModal('delete_invoice')}
@@ -161,6 +174,19 @@ export default () => {
 						</ScMenu>
 					</>
 				</ScDropdown>
+
+				{invoice?.status === 'open' &&
+					!!invoice?.checkout_url &&
+					!!checkout?.order?.id && (
+						<Button
+							icon={external}
+							label={__('View Invoice Payment Page', 'surecart')}
+							href={invoice?.checkout_url}
+							showTooltip={true}
+							size="compact"
+							target="_blank"
+						/>
+					)}
 
 				{isDraftInvoice && (
 					<ScButton
