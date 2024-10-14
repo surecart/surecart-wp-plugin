@@ -35,11 +35,11 @@ abstract class AdminController {
 				const result = next(options);
 				result.catch((response) => {
 					if("invalid_json" === response.code) {
-						response.message = wp.i18n.__("The response is not a valid JSON response.", "surecart");
+						response.message = ' . wp_json_encode( esc_attr__( "The response is not a valid JSON response.", "surecart" ) ) . ';
 						response.additional_errors = [
 							{
 								code: "invalid_json",
-								message: wp.i18n.__("If you\'re using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the WordPress debug settings or contact support.", "surecart")
+								message: ' . wp_json_encode( esc_attr__( "If you are using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the WordPress debug settings or contact support.", "surecart" ) ) . '
 							}
 						];
 					}
