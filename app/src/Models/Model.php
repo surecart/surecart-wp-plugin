@@ -1070,6 +1070,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
+			if ( ! method_exists( get_parent_class( $this ) , $method ) ) {
+				continue;
+			}
+
 			if ( 'get' === substr( $method, 0, 3 ) && 'Attribute' === substr( $method, -9 ) ) {
 				$key = str_replace( [ 'get', 'Attribute' ], '', $method );
 				if ( $key ) {
@@ -1079,10 +1083,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 					$value              = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
 					$attributes[ $key ] = $this->{$method}( $value );
 				}
-			}
-
-			if ( method_exists( get_class(), $method ) ) {
-				continue;
 			}
 		}
 
