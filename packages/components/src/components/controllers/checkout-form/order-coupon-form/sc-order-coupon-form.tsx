@@ -21,7 +21,7 @@ export class ScOrderCouponForm {
 
   @State() open: boolean;
   @State() value: string;
-  @State() error: object | null;
+  @State() error: string;
 
   async handleCouponApply(e) {
     const promotion_code = e.detail;
@@ -37,8 +37,8 @@ export class ScOrderCouponForm {
         },
       })) as Checkout;
 
+      // Focus on the button.
       requestAnimationFrame(() => {
-        // Focus on the sc-tag element.
         (
           document
             ?.querySelector('sc-order-coupon-form')
@@ -49,8 +49,8 @@ export class ScOrderCouponForm {
         )?.focus();
       });
     } catch (error) {
-      this.error = error;
       console.error(error);
+      this.error = error?.additional_errors?.[0]?.message || error?.message || __('Something went wrong', 'surecart');
     }
   }
 
@@ -74,6 +74,7 @@ export class ScOrderCouponForm {
         button-text={this.buttonText || __('Apply', 'surecart')}
         show-interval={hasRecurring}
         onScApplyCoupon={this.handleCouponApply}
+        error={this.error}
       ></sc-coupon-form>
     );
   }
