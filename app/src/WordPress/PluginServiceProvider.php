@@ -3,6 +3,7 @@
 namespace SureCart\WordPress;
 
 use SureCart\WordPress\PluginService;
+use SureCart\WordPress\UpgradeNoticeService;
 use SureCart\WordPress\Sitemap\SitemapsService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
@@ -19,6 +20,10 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$container['surecart.plugin'] = function( $c ) {
 			return new PluginService( $c[ SURECART_APPLICATION_KEY ] );
+		};
+
+		$container['surecart.upgrade.notice'] = function( $c ) {
+			return new UpgradeNoticeService( $c[ SURECART_APPLICATION_KEY ] );
 		};
 
 		$container['surecart.actions'] = function() {
@@ -62,6 +67,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$container['surecart.health']->bootstrap();
 		$container['surecart.compatibility']->bootstrap();
 		$container['surecart.initialstate']->bootstrap();
+		$container['surecart.upgrade.notice']->bootstrap();
 	}
 
 	/**

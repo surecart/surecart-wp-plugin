@@ -45,7 +45,13 @@ export const availableManualPaymentMethods = () =>
 /**
  * Get a sorted array of mollie payment method types.
  */
-export const availableMethodTypes = () => sortByArray(state.methods, 'id', state.sortOrder.paymentMethods.mollie);
+export const availableMethodTypes = () =>
+  sortByArray(state.methods, 'id', state.sortOrder.paymentMethods.mollie).filter(method => {
+    if (method.id === 'applepay') {
+      return (window as any)?.ApplePaySession && (window as any)?.ApplePaySession?.canMakePayments?.();
+    }
+    return true;
+  });
 
 /**
  * Get a combined available processor choices (processors + manual payment methods)

@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Admin\Invoices;
 
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Invoice;
 
@@ -9,6 +10,8 @@ use SureCart\Models\Invoice;
  * Create a new table class that will extend the WP_List_Table
  */
 class InvoicesListTable extends ListTable {
+	use HasModeFilter;
+
 	/**
 	 * Prepare the items for the table to process.
 	 *
@@ -93,10 +96,14 @@ class InvoicesListTable extends ListTable {
 	 */
 	protected function table_data() {
 		$status = $this->getStatus();
+		$mode   = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$where  = array(
-			'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			'query'     => $this->get_search_query(),
+			'query' => $this->get_search_query(),
 		);
+
+		if ( ! empty( $mode ) ) {
+			$where['live_mode'] = 'live' === $mode;
+		}
 
 		if ( $status ) {
 			$where['status'] = [ $status ];
@@ -305,6 +312,7 @@ class InvoicesListTable extends ListTable {
 		<?php
 		if ( 'top' === $which ) {
 			ob_start();
+			$this->mode_dropdown();
 
 			/**
 			 * Fires before the Filter button on the Posts and Pages list tables.

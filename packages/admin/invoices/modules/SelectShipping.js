@@ -16,33 +16,34 @@ import Box from '../../ui/Box';
 import { useInvoice } from '../hooks/useInvoice';
 
 export default () => {
-	const { checkout, loading, isDraftInvoice, updateCheckout } =
-		useInvoice();
-	if (
-		!checkout?.selected_shipping_choice_required &&
-		!checkout?.shipping_address_required
-	) {
+	const { checkout, loading, isDraftInvoice, updateCheckout } = useInvoice();
+
+	// shipping choice is not required.
+	if (!checkout?.selected_shipping_choice_required) {
 		return null;
 	}
 
+	// shipping choice is required, but no shipping choices are available
 	if (!checkout?.shipping_choices?.data?.length) {
-		if (!checkout?.shipping_address?.country) {
-			return (
-				<Box title={__('Shipping', 'surecart')} loading={loading}>
-					<ScAlert type="warning" open>
-						{__(
-							'Shipping is required. Please enter a shipping address.',
-							'surecart'
-						)}
-					</ScAlert>
-				</Box>
-			);
-		}
 		return (
 			<Box title={__('Shipping', 'surecart')} loading={loading}>
 				<ScAlert type="warning" open>
 					{__(
 						'The products in this invoice cannot be shipped to the provided address.',
+						'surecart'
+					)}
+				</ScAlert>
+			</Box>
+		);
+	}
+
+	// shipping address is required.
+	if (!checkout?.shipping_address?.country) {
+		return (
+			<Box title={__('Shipping', 'surecart')} loading={loading}>
+				<ScAlert type="warning" open>
+					{__(
+						'A shipping address is required. Please enter a shipping address.',
 						'surecart'
 					)}
 				</ScAlert>

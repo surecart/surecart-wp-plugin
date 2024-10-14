@@ -1,6 +1,8 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
+import { css, jsx } from '@emotion/react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -10,16 +12,16 @@ import {
 	ScFormatNumber,
 	ScLineItem,
 	ScDivider,
-	ScCouponForm,
-	ScTag,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import PaymentCollection from './PaymentCollection';
 import { formatTaxDisplay } from '../../util/tax';
 import { useInvoice } from '../hooks/useInvoice';
+import LineItem from './LineItem';
+import Coupon from './Coupon';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
-	const { checkout, updateCheckout, loading, busy, isDraftInvoice } = useInvoice();
+	const { checkout, loading } = useInvoice();
 
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
@@ -27,132 +29,86 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
 
-	const onCouponChange = async (e) => {
-		await updateCheckout({
-			discount: {
-				promotion_code: e?.detail,
-			},
-		});
-	};
-
-	const renderCouponForm = () => {
-		if (isDraftInvoice) {
-			return (
-				<ScCouponForm
-					collapsed={true}
-					placeholder={__('Enter Coupon Code', 'surecart')}
-					label={__('Add Coupon Code', 'surecart')}
-					buttonText={__('Apply', 'surecart')}
-					onScApplyCoupon={onCouponChange}
-					discount={checkout?.discount}
-					currency={checkout?.currency}
-					discountAmount={checkout?.discount_amount}
-					busy={busy}
-				/>
-			)
-		}
-
-		if (!checkout?.discount?.promotion?.code) {
-			return null;
-		}
-
-		return (
-			<ScLineItem>
-				<span slot="description">
-					<div part="discount-label">{__('Discount', 'surecart')}</div>
-					<ScTag
-						exportparts="base:coupon-tag"
-						type={'redeemable' === checkout.discount?.redeemable_status ? 'success' : 'warning'}
-						class="coupon-tag"
+	return (
+		<>
+			<Box
+				title={__('Payment', 'surecart')}
+				loading={loading}
+				footer={
+					<div
+						css={css`
+							width: 100%;
+							display: grid;
+							gap: var(--sc-spacing-small);
+						`}
 					>
-						{checkout?.discount?.promotion?.code}
-					</ScTag>
-				</span>
-
-				{'redeemable' === checkout.discount?.redeemable_status ? (
-					<Fragment>
-						{!!checkout.human_discount && (
-							<span class="coupon-human-discount" slot="price-description">
-								{checkout.human_discount_with_duration}
-							</span>
+						{checkout?.full_amount > checkout?.total_amount && (
+							<LineItem
+								label={__('Total Amount', 'surecart')}
+								currency={checkout?.currency}
+								value={checkout?.full_amount}
+							/>
 						)}
-						<span slot="price">
-							<sc-format-number type="currency" currency={checkout?.currency} value={checkout?.discount_amount}></sc-format-number>
-						</span>
-					</Fragment>
-				) : (
-					<div class="coupon__status" slot="price-description">
-						<sc-icon name="alert-triangle" />
-						{checkout?.discount?.redeemable_display_status}
+						<ScLineItem>
+							<span slot="title">
+								{__('Amount Due', 'surecart')}
+							</span>
+							<ScFormatNumber
+								slot="price"
+								style={{
+									fontWeight:
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
+								}}
+								type="currency"
+								currency={checkout?.currency}
+								value={checkout?.remaining_amount_due}
+							></ScFormatNumber>
+						</ScLineItem>
 					</div>
-				)}
-			</ScLineItem>
-		)
-	}
+				}
+			>
+				<LineItem
+					label={__('Subtotal', 'surecart')}
+					currency={checkout?.currency}
+					value={checkout?.subtotal_amount}
+				/>
 
-	const renderPaymentDetails = () => {
-		return (
-			<>
-				<ScLineItem>
-					<span slot="description">{__('Subtotal', 'surecart')}</span>
-					<ScFormatNumber
-						slot="price"
-						style={{
-							fontWeight: 'var(--sc-font-weight-semibold)',
-							color: 'var(--sc-color-gray-800)',
-						}}
-						type="currency"
+				{!!checkout?.proration_amount && (
+					<LineItem
+						label={__('Proration', 'surecart')}
 						currency={checkout?.currency}
-						value={checkout?.subtotal_amount}
-					></ScFormatNumber>
-				</ScLineItem>
+						value={checkout?.proration_amount}
+					/>
+				)}
+
+				{!!checkout?.applied_balance_amount && (
+					<LineItem
+						label={__('Applied Balance', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.applied_balance_amount}
+					/>
+				)}
+
+				<Coupon />
 
 				{!!checkout?.shipping_amount && (
-					<ScLineItem>
-						<span slot="description">
-							{__('Shipping', 'surecart')}
-
-							{!!selectedShippingMethod?.name && (
-								<div>
-									<span
-										style={{
-											color: 'var(--sc-color-gray-600)',
-										}}
-									>
-										{`${selectedShippingMethod?.name}`}
-									</span>
-
-									{!!selectedShippingMethod?.description && (
-										<span
-											style={{
-												fontSize:
-													'var(--sc-font-size-small)',
-												color: 'var(--sc-color-gray-600)',
-											}}
-										>
-											{` - ${selectedShippingMethod?.description}`}
-										</span>
-									)}
-								</div>
-							)}
-						</span>
-						<ScFormatNumber
-							slot="price"
-							style={{
-								fontWeight: 'var(--sc-font-weight-semibold)',
-								color: 'var(--sc-color-gray-800)',
-							}}
-							type="currency"
-							currency={checkout?.currency}
-							value={checkout?.shipping_amount}
-						></ScFormatNumber>
-					</ScLineItem>
+					<LineItem
+						label={`${__('Shipping', 'surecart')} ${
+							selectedShippingMethod?.name
+								? `(${selectedShippingMethod?.name})`
+								: ''
+						}`}
+						currency={checkout?.currency}
+						value={checkout?.shipping_amount}
+					/>
 				)}
 
 				{!!checkout?.tax_amount && (
 					<ScLineItem>
 						<span slot="description">{`${formatTaxDisplay(
-							__('Order Tax', 'surecart')
+							checkout?.tax_label,
+							checkout?.tax_status === 'estimated'
 						)} (${checkout?.tax_percent}%)`}</span>
 						<ScFormatNumber
 							slot="price"
@@ -162,12 +118,18 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							}}
 							type="currency"
 							currency={checkout?.currency}
-							value={checkout?.tax_amount}
-						></ScFormatNumber>
+							value={
+								checkout?.tax_exclusive_amount ||
+								checkout?.tax_inclusive_amount
+							}
+						/>
+						{!!checkout?.tax_inclusive_amount && (
+							<span slot="price-description">
+								{`(${__('included', 'surecart')})`}
+							</span>
+						)}
 					</ScLineItem>
 				)}
-
-				{renderCouponForm()}
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
@@ -202,30 +164,6 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 						></ScFormatNumber>
 					</ScLineItem>
 				)}
-
-				{checkout?.total_amount !== checkout?.remaining_amount_due && (
-					<ScLineItem>
-						<span slot="title">{__('Amount Due', 'surecart')}</span>
-						<ScFormatNumber
-							slot="price"
-							style={{
-								fontWeight: 'var(--sc-font-weight-semibold)',
-								color: 'var(--sc-color-gray-800)',
-							}}
-							type="currency"
-							currency={checkout?.currency}
-							value={checkout?.remaining_amount_due}
-						></ScFormatNumber>
-					</ScLineItem>
-				)}
-			</>
-		);
-	};
-
-	return (
-		<>
-			<Box title={__('Payment', 'surecart')} loading={loading}>
-				{renderPaymentDetails()}
 			</Box>
 
 			<PaymentCollection

@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { useState, useEffect } from '@wordpress/element';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -21,12 +22,10 @@ import {
 	ScText,
 	ScFormControl,
 	ScCard,
-	ScTooltip,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
-import AddressConfirmModal from './AddressConfirmModal';
 
 export default ({ checkout }) => {
 	if (!checkout?.id) {
@@ -86,24 +85,6 @@ export default ({ checkout }) => {
 			setCustomerBillingAddress(checkout?.customer?.billing_address);
 		}
 		setModal(null);
-	};
-
-	const renderAddressHeader = (title) => {
-		return (
-			<ScText
-				tag="h3"
-				css={css`
-					margin-bottom: var(--sc-spacing-small);
-					padding: var(--sc-spacing-small) 0;
-				`}
-				style={{
-					'--font-weight': 'var(--sc-font-weight-bold)',
-					'--font-size': 'var(--sc-font-size-small)',
-				}}
-			>
-				{title}
-			</ScText>
-		);
 	};
 
 	const renderForm = () => {
@@ -182,8 +163,8 @@ export default ({ checkout }) => {
 
 		return (
 			<>
-				{renderAddressHeader(__('Shipping & Tax Address', 'surecart'))}
 				<ScAddress
+					label={__('Shipping & Tax Address', 'surecart')}
 					showName={true}
 					showLine2={true}
 					required={checkout?.shipping_address_required || false}
@@ -211,8 +192,8 @@ export default ({ checkout }) => {
 
 				{!billingMatchesShipping && (
 					<>
-						{renderAddressHeader(__('Billing Address', 'surecart'))}
 						<ScAddress
+							label={__('Billing Address', 'surecart')}
 							showName={true}
 							showLine2={true}
 							required={
@@ -237,26 +218,20 @@ export default ({ checkout }) => {
 				header_action={
 					isDraftInvoice && (
 						<>
-							{checkout?.customer?.id && (
-								<ScTooltip
-									type="text"
-									text={__(
-										'Fill Address from Customer',
+							{checkout?.customer?.shipping_address?.id && (
+								<ScButton
+									css={css`
+										margin: -12px 0;
+									`}
+									type="link"
+									title={__(
+										'Fill Customer Address',
 										'surecart'
 									)}
-									css={css`
-										margin-top: -12px;
-										margin-bottom: -12px;
-									`}
+									onclick={() => setModal('fill')}
 								>
-									<ScButton
-										type="default"
-										title={__('Fill Address', 'surecart')}
-										onclick={() => setModal('fill')}
-									>
-										{__('Fill Address', 'surecart')}
-									</ScButton>
-								</ScTooltip>
+									{__('Fill Customer Address', 'surecart')}
+								</ScButton>
 							)}
 
 							{checkout?.shipping_address?.id && (
@@ -292,40 +267,29 @@ export default ({ checkout }) => {
 				<div>{renderForm()}</div>
 			</Box>
 
-			<AddressConfirmModal
-				open={modal === 'fill'}
-				onRequestClose={() => setModal(null)}
+			<ConfirmDialog
+				isOpen={modal === 'fill'}
 				onConfirm={fillAddressFromCustomer}
-				request={{
-					shipping_address: checkout?.customer?.shipping_address,
-					billing_address: checkout?.customer?.billing_address,
-					billing_matches_shipping:
-						checkout?.customer?.billing_matches_shipping,
-				}}
-				confirmText={__('Confirm', 'surecart')}
+				onCancel={() => setModal(null)}
+				confirmButtonText={__('Confirm', 'surecart')}
 			>
 				{__(
 					"This will set the shipping and billing addresses to the customer's default addresses.",
 					'surecart'
 				)}
-			</AddressConfirmModal>
+			</ConfirmDialog>
 
-			<AddressConfirmModal
-				open={modal === 'clear'}
-				onRequestClose={() => setModal(null)}
+			<ConfirmDialog
+				isOpen={modal === 'clear'}
 				onConfirm={clearAddress}
-				request={{
-					shipping_address: null,
-					billing_address: null,
-					billing_matches_shipping: true,
-				}}
-				confirmText={__('Clear', 'surecart')}
+				onCancel={() => setModal(null)}
+				confirmButtonText={__('Clear', 'surecart')}
 			>
 				{__(
 					'This will remove the shipping and billing addresses from the invoice. Are you sure you want to continue?',
 					'surecart'
 				)}
-			</AddressConfirmModal>
+			</ConfirmDialog>
 		</>
 	);
 };

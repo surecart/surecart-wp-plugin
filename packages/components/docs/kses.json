@@ -415,6 +415,7 @@
     "currency": true,
     "discount": true,
     "discount-amount": true,
+    "editable": true,
     "error": true,
     "force-open": true,
     "label": true,

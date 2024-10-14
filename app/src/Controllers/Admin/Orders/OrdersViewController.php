@@ -22,6 +22,7 @@ class OrdersViewController extends AdminController {
 						'title' => __( 'Orders', 'surecart' ),
 					],
 				],
+				'report_url'       => SURECART_REPORTS_URL . 'orders',
 			)
 		);
 		return \SureCart::view( 'admin/orders/index' )->with(

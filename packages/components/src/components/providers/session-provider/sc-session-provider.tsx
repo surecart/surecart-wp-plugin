@@ -250,7 +250,6 @@ export class ScSessionProvider {
     // success, refetch the checkout
     try {
       updateFormState('FINALIZE');
-      updateFormState('PAID');
       checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
@@ -261,6 +260,7 @@ export class ScSessionProvider {
       // TODO: should we even check this?
       if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) {
         setTimeout(() => {
+          updateFormState('PAID');
           this.scPaid.emit();
         }, 100);
       }
