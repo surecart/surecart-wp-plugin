@@ -119,7 +119,7 @@ class ErrorsTranslationService {
 		}
 
 		if ( 'end_at' === $attribute && 'greater_than_or_equal_to' === $type ) {
-			return __( 'End date must be greater than or equal to start date.', 'surecart' );
+			return __( 'The renewal date should be greater than or equal to the subscription end date.', 'surecart' );
 		}
 
 		return false;
