@@ -24,6 +24,27 @@ apiFetch.use((options, next) => {
   return next(options);
 });
 
+apiFetch.use((options, next) => {
+  const result = next(options);
+  result.catch(response => {
+    if (response.code === 'invalid_json') {
+      response.message = __('The response is not a valid JSON response.', 'surecart');
+      response.additional_errors = [
+        {
+          code: 'invalid_json',
+          message: __(
+            'If you are using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the WordPress debug settings or contact support.',
+            'surecart',
+          ),
+        },
+      ];
+    }
+    return Promise.reject(response);
+  });
+
+  return result;
+});
+
 export default apiFetch;
 
 /**
