@@ -89,7 +89,7 @@ class CollectionSyncService {
 		}
 
 		// force delete post.
-		return wp_delete_term( $this->term, $this->taxonomy );
+		return wp_delete_term( $this->term->term_id, $this->taxonomy );
 	}
 
 	/**

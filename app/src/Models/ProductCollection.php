@@ -86,6 +86,43 @@ class ProductCollection extends Model implements PageModel {
 		return $this;
 	}
 
+		/**
+		 * Update a model
+		 *
+		 * @param string $id The id of the model to delete.
+		 * @return $this|false
+		 */
+	protected function delete( $id = '' ) {
+		// delete the model.
+		$deleted = parent::delete( $id );
+
+		// check for errors.
+		if ( is_wp_error( $deleted ) ) {
+			return $deleted;
+		}
+
+		// delete the post.
+		$this->deleteSynced( $id );
+
+		// return.
+		return $this;
+	}
+
+	/**
+	 * Delete the synced post.
+	 *
+	 * @param string $id The id of the model to delete.
+	 * @return \SureCart\Models\Product
+	 */
+	protected function deleteSynced( $id = '' ) {
+		$id = ! empty( $id ) ? $id : $this->id;
+		\SureCart::sync()
+			->collection()
+			->delete( $id );
+
+		return $this;
+	}
+
 	/**
 	 * Sync the collection
 	 */
@@ -103,6 +140,9 @@ class ProductCollection extends Model implements PageModel {
 	 * @return int|false
 	 */
 	public function getTermAttribute() {
+		if ( empty( $this->id ) ) {
+			return false;
+		}
 		return \SureCart::sync()->collection()->findByModelId( $this->id );
 	}
 
