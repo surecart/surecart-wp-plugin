@@ -173,18 +173,6 @@ export class ScSessionProvider {
     });
   }
 
-  /** Handles coupon updates. */
-  @Listen('scApplyCoupon')
-  async handleCouponApply(e) {
-    const promotion_code = e.detail;
-    removeNotice();
-    this.loadUpdate({
-      discount: {
-        ...(promotion_code ? { promotion_code } : {}),
-      },
-    });
-  }
-
   /** Find or create session on load. */
   componentDidLoad() {
     this.findOrCreateOrder();
@@ -466,6 +454,12 @@ export class ScSessionProvider {
       window.location.assign(removeQueryArgs(window.location.href, 'order'));
       return;
     }
+
+    // don't show error for coupon in here, as that would be handled separately on the coupon form.
+    // if (e?.code === 'checkout.discount.coupon.blank') {
+    //   updateFormState('REJECT');
+    //   return;
+    // }
 
     createErrorNotice(e);
     updateFormState('REJECT');
