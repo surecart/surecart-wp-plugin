@@ -6,6 +6,7 @@ import { formBusy } from '@store/form/getters';
 import { removeNotice } from '@store/notices/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { Checkout } from 'src/types';
+import { updateFormState } from '@store/form/mutations';
 
 @Component({
   tag: 'sc-order-coupon-form',
@@ -23,15 +24,14 @@ export class ScOrderCouponForm {
   @State() open: boolean;
   @State() value: string;
   @State() error: string;
-  @State() busy: boolean = false;
 
   async handleCouponApply(e) {
     const promotion_code = e?.detail || null;
     removeNotice();
 
     try {
-      this.busy = true;
-      this.error = '';
+      this.error = null;
+      updateFormState('FETCH');
 
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
@@ -42,12 +42,12 @@ export class ScOrderCouponForm {
         },
       })) as Checkout;
 
+      updateFormState('RESOLVE');
       await this.couponForm?.triggerFocus();
     } catch (error) {
       console.error(error);
       this.error = error?.additional_errors?.[0]?.message || error?.message || __('Something went wrong', 'surecart');
-    } finally {
-      this.busy = false;
+      updateFormState('REJECT');
     }
   }
 
@@ -62,7 +62,7 @@ export class ScOrderCouponForm {
         collapsed={this.collapsed}
         placeholder={this.placeholder}
         loading={formBusy() && !checkoutState.checkout?.line_items?.data?.length}
-        busy={formBusy() || this.busy}
+        busy={formBusy()}
         discount={checkoutState.checkout?.discount}
         currency={checkoutState.checkout?.currency}
         discount-amount={checkoutState.checkout?.discount_amount}
