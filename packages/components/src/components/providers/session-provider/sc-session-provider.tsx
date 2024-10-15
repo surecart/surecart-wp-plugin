@@ -455,12 +455,6 @@ export class ScSessionProvider {
       return;
     }
 
-    // don't show error for coupon in here, as that would be handled separately on the coupon form.
-    // if (e?.code === 'checkout.discount.coupon.blank') {
-    //   updateFormState('REJECT');
-    //   return;
-    // }
-
     createErrorNotice(e);
     updateFormState('REJECT');
   }
