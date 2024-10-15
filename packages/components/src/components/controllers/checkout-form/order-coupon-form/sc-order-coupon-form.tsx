@@ -13,6 +13,7 @@ import { Checkout } from 'src/types';
   shadow: true,
 })
 export class ScOrderCouponForm {
+  private couponForm: HTMLScCouponFormElement;
   @Prop() label: string;
   @Prop() loading: boolean;
   @Prop() collapsed: boolean;
@@ -22,12 +23,16 @@ export class ScOrderCouponForm {
   @State() open: boolean;
   @State() value: string;
   @State() error: string;
+  @State() busy: boolean = false;
 
   async handleCouponApply(e) {
-    const promotion_code = e.detail;
+    const promotion_code = e?.detail || null;
     removeNotice();
 
     try {
+      this.busy = true;
+      this.error = '';
+
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
         data: {
@@ -37,20 +42,12 @@ export class ScOrderCouponForm {
         },
       })) as Checkout;
 
-      // Focus on the button.
-      requestAnimationFrame(() => {
-        (
-          document
-            ?.querySelector('sc-order-coupon-form')
-            ?.shadowRoot?.querySelector('sc-coupon-form')
-            ?.shadowRoot?.querySelector('sc-line-item')
-            ?.querySelector('sc-tag')
-            ?.shadowRoot.querySelector('*') as HTMLElement
-        )?.focus();
-      });
+      await this.couponForm?.triggerFocus();
     } catch (error) {
       console.error(error);
       this.error = error?.additional_errors?.[0]?.message || error?.message || __('Something went wrong', 'surecart');
+    } finally {
+      this.busy = false;
     }
   }
 
@@ -60,11 +57,12 @@ export class ScOrderCouponForm {
 
     return (
       <sc-coupon-form
+        ref={el => (this.couponForm = el as HTMLScCouponFormElement)}
         label={this.label || __('Add Coupon Code', 'surecart')}
         collapsed={this.collapsed}
         placeholder={this.placeholder}
         loading={formBusy() && !checkoutState.checkout?.line_items?.data?.length}
-        busy={formBusy()}
+        busy={formBusy() || this.busy}
         discount={checkoutState.checkout?.discount}
         currency={checkoutState.checkout?.currency}
         discount-amount={checkoutState.checkout?.discount_amount}
@@ -73,7 +71,7 @@ export class ScOrderCouponForm {
         }}
         button-text={this.buttonText || __('Apply', 'surecart')}
         show-interval={hasRecurring}
-        onScApplyCoupon={this.handleCouponApply}
+        onScApplyCoupon={e => this.handleCouponApply(e)}
         error={this.error}
       ></sc-coupon-form>
     );

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-04T11:55:14",
+  "timestamp": "2024-10-15T11:35:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1906,7 +1906,6 @@
         "sc-dialog",
         "sc-donation-choices",
         "sc-downloads-list",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -1987,9 +1986,6 @@
           "sc-button"
         ],
         "sc-downloads-list": [
-          "sc-button"
-        ],
-        "sc-invoice": [
           "sc-button"
         ],
         "sc-invoices-list": [
@@ -2687,7 +2683,6 @@
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-fulfillments",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -2736,9 +2731,6 @@
           "sc-card"
         ],
         "sc-fulfillments": [
-          "sc-card"
-        ],
-        "sc-invoice": [
           "sc-card"
         ],
         "sc-invoices-list": [
@@ -3544,11 +3536,6 @@
       "listeners": [
         {
           "event": "scUpdateOrder",
-          "capture": false,
-          "passive": false
-        },
-        {
-          "event": "scApplyCoupon",
           "capture": false,
           "passive": false
         }
@@ -6726,6 +6713,23 @@
           "required": false
         },
         {
+          "name": "editable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "editable",
+          "reflectToAttr": false,
+          "docs": "Is the form editable",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "error",
           "type": "string",
           "mutable": true,
@@ -6790,6 +6794,21 @@
           "required": false
         },
         {
+          "name": "onScApplyCoupon",
+          "type": "(e: string) => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "When the coupon is applied",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "(e: string) => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "open",
           "type": "boolean",
           "mutable": true,
@@ -6838,18 +6857,20 @@
           "required": false
         }
       ],
-      "methods": [],
-      "events": [
+      "methods": [
         {
-          "event": "scApplyCoupon",
-          "detail": "string",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "When the coupon is applied",
+          "name": "triggerFocus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerFocus() => Promise<void>",
+          "parameters": [],
+          "docs": "Focus the input.",
           "docsTags": []
         }
       ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -9654,7 +9675,6 @@
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-fulfillments",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -9712,9 +9732,6 @@
           "sc-dashboard-module"
         ],
         "sc-fulfillments": [
-          "sc-dashboard-module"
-        ],
-        "sc-invoice": [
           "sc-dashboard-module"
         ],
         "sc-invoices-list": [
@@ -10067,7 +10084,6 @@
         "sc-customer-details",
         "sc-express-payment",
         "sc-form-components-validator",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-login-form",
@@ -10093,9 +10109,6 @@
           "sc-divider"
         ],
         "sc-form-components-validator": [
-          "sc-divider"
-        ],
-        "sc-invoice": [
           "sc-divider"
         ],
         "sc-invoices-list": [
@@ -11078,7 +11091,6 @@
       ],
       "dependents": [
         "sc-customer-details",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -11099,9 +11111,6 @@
           "sc-icon"
         ],
         "sc-customer-details": [
-          "sc-empty"
-        ],
-        "sc-invoice": [
           "sc-empty"
         ],
         "sc-invoices-list": [
@@ -11550,7 +11559,6 @@
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-fulfillments",
-        "sc-invoice",
         "sc-license",
         "sc-login-form",
         "sc-order",
@@ -11585,9 +11593,6 @@
           "sc-flex"
         ],
         "sc-fulfillments": [
-          "sc-flex"
-        ],
-        "sc-invoice": [
           "sc-flex"
         ],
         "sc-license": [
@@ -12865,7 +12870,6 @@
       "parts": [],
       "dependents": [
         "sc-charges-list",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-line-item-invoice-due-date",
@@ -12881,9 +12885,6 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-charges-list": [
-          "sc-format-date"
-        ],
-        "sc-invoice": [
           "sc-format-date"
         ],
         "sc-invoices-list": [
@@ -13270,7 +13271,6 @@
         "sc-charges-list",
         "sc-coupon-form",
         "sc-fulfillments",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-line-item-bump",
         "sc-line-item-shipping",
@@ -13310,9 +13310,6 @@
           "sc-format-number"
         ],
         "sc-fulfillments": [
-          "sc-format-number"
-        ],
-        "sc-invoice": [
           "sc-format-number"
         ],
         "sc-invoices-list": [
@@ -13792,7 +13789,6 @@
         "sc-feature-demo-banner",
         "sc-fulfillments",
         "sc-image-slider",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -13896,9 +13892,6 @@
           "sc-icon"
         ],
         "sc-image-slider": [
-          "sc-icon"
-        ],
-        "sc-invoice": [
           "sc-icon"
         ],
         "sc-invoices-list": [
@@ -15019,171 +15012,6 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/invoice/sc-invoice.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-invoice",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "customerIds",
-          "type": "string[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "heading",
-          "type": "string",
-          "mutable": false,
-          "attr": "heading",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "invoiceId",
-          "type": "string",
-          "mutable": false,
-          "attr": "invoice-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "sc-flex",
-        "sc-skeleton",
-        "sc-empty",
-        "sc-product-line-item",
-        "sc-divider",
-        "sc-line-item",
-        "sc-format-number",
-        "sc-tag",
-        "sc-spacing",
-        "sc-dashboard-module",
-        "sc-order-manual-instructions",
-        "sc-card",
-        "sc-stacked-list",
-        "sc-stacked-list-row",
-        "sc-invoice-status-badge",
-        "sc-format-date",
-        "sc-payment-method",
-        "sc-button",
-        "sc-icon",
-        "sc-purchase-downloads-list"
-      ],
-      "dependencyGraph": {
-        "sc-invoice": [
-          "sc-flex",
-          "sc-skeleton",
-          "sc-empty",
-          "sc-product-line-item",
-          "sc-divider",
-          "sc-line-item",
-          "sc-format-number",
-          "sc-tag",
-          "sc-spacing",
-          "sc-dashboard-module",
-          "sc-order-manual-instructions",
-          "sc-card",
-          "sc-stacked-list",
-          "sc-stacked-list-row",
-          "sc-invoice-status-badge",
-          "sc-format-date",
-          "sc-payment-method",
-          "sc-button",
-          "sc-icon",
-          "sc-purchase-downloads-list"
-        ],
-        "sc-empty": [
-          "sc-icon"
-        ],
-        "sc-product-line-item": [
-          "sc-format-number",
-          "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
-        ],
-        "sc-quantity-select": [
-          "sc-icon"
-        ],
-        "sc-dashboard-module": [
-          "sc-alert"
-        ],
-        "sc-alert": [
-          "sc-icon"
-        ],
-        "sc-order-manual-instructions": [
-          "sc-alert"
-        ],
-        "sc-invoice-status-badge": [
-          "sc-tag"
-        ],
-        "sc-payment-method": [
-          "sc-tooltip",
-          "sc-button",
-          "sc-icon",
-          "sc-tag",
-          "sc-cc-logo",
-          "sc-text"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-cc-logo": [
-          "sc-icon"
-        ],
-        "sc-purchase-downloads-list": [
-          "sc-divider",
-          "sc-empty",
-          "sc-card",
-          "sc-stacked-list",
-          "sc-stacked-list-row",
-          "sc-skeleton",
-          "sc-spacing",
-          "sc-format-bytes",
-          "sc-icon",
-          "sc-dashboard-module",
-          "sc-button",
-          "sc-block-ui"
-        ],
-        "sc-block-ui": [
-          "sc-spinner"
-        ]
-      }
-    },
-    {
       "filePath": "./src/components/controllers/checkout-form/invoice-details/sc-invoice-details.tsx",
       "encapsulation": "shadow",
       "tag": "sc-invoice-details",
@@ -15310,7 +15138,6 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "sc-invoice",
         "sc-invoices-list"
       ],
       "dependencies": [
@@ -15319,9 +15146,6 @@
       "dependencyGraph": {
         "sc-invoice-status-badge": [
           "sc-tag"
-        ],
-        "sc-invoice": [
-          "sc-invoice-status-badge"
         ],
         "sc-invoices-list": [
           "sc-invoice-status-badge"
@@ -15410,7 +15234,6 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-invoice-status-badge",
         "sc-card",
         "sc-stacked-list",
         "sc-stacked-list-row",
@@ -15418,6 +15241,7 @@
         "sc-divider",
         "sc-empty",
         "sc-format-date",
+        "sc-invoice-status-badge",
         "sc-format-number",
         "sc-dashboard-module",
         "sc-button",
@@ -15427,7 +15251,6 @@
       ],
       "dependencyGraph": {
         "sc-invoices-list": [
-          "sc-invoice-status-badge",
           "sc-card",
           "sc-stacked-list",
           "sc-stacked-list-row",
@@ -15435,6 +15258,7 @@
           "sc-divider",
           "sc-empty",
           "sc-format-date",
+          "sc-invoice-status-badge",
           "sc-format-number",
           "sc-dashboard-module",
           "sc-button",
@@ -15442,11 +15266,11 @@
           "sc-pagination",
           "sc-block-ui"
         ],
-        "sc-invoice-status-badge": [
-          "sc-tag"
-        ],
         "sc-empty": [
           "sc-icon"
+        ],
+        "sc-invoice-status-badge": [
+          "sc-tag"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -15878,7 +15702,6 @@
       ],
       "dependents": [
         "sc-coupon-form",
-        "sc-invoice",
         "sc-line-item-bump",
         "sc-line-item-invoice-due-date",
         "sc-line-item-invoice-number",
@@ -15901,9 +15724,6 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-coupon-form": [
-          "sc-line-item"
-        ],
-        "sc-invoice": [
           "sc-line-item"
         ],
         "sc-line-item-bump": [
@@ -18655,17 +18475,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scApplyCoupon",
-          "detail": "string",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -19010,7 +18820,6 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "sc-invoice",
         "sc-order",
         "sc-order-confirm-components-validator"
       ],
@@ -19023,9 +18832,6 @@
         ],
         "sc-alert": [
           "sc-icon"
-        ],
-        "sc-invoice": [
-          "sc-order-manual-instructions"
         ],
         "sc-order": [
           "sc-order-manual-instructions"
@@ -21861,7 +21667,6 @@
         }
       ],
       "dependents": [
-        "sc-invoice",
         "sc-order",
         "sc-payment-method-details",
         "sc-payment-methods-list",
@@ -21892,9 +21697,6 @@
         ],
         "sc-cc-logo": [
           "sc-icon"
-        ],
-        "sc-invoice": [
-          "sc-payment-method"
         ],
         "sc-order": [
           "sc-payment-method"
@@ -26374,7 +26176,6 @@
           "reflectToAttr": false,
           "docs": "The max allowed.",
           "docsTags": [],
-          "default": "100",
           "values": [
             {
               "type": "number"
@@ -26654,7 +26455,6 @@
         }
       ],
       "dependents": [
-        "sc-invoice",
         "sc-line-items",
         "sc-order",
         "sc-order-confirmation-line-items",
@@ -26676,9 +26476,6 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
-        ],
-        "sc-invoice": [
-          "sc-product-line-item"
         ],
         "sc-line-items": [
           "sc-product-line-item"
@@ -27621,7 +27418,6 @@
       "parts": [],
       "dependents": [
         "sc-dashboard-downloads-list",
-        "sc-invoice",
         "sc-order"
       ],
       "dependencies": [
@@ -27669,9 +27465,6 @@
           "sc-spinner"
         ],
         "sc-dashboard-downloads-list": [
-          "sc-purchase-downloads-list"
-        ],
-        "sc-invoice": [
           "sc-purchase-downloads-list"
         ],
         "sc-order": [
@@ -29644,11 +29437,6 @@
           "event": "scUpdateAbandonedCart",
           "capture": false,
           "passive": false
-        },
-        {
-          "event": "scApplyCoupon",
-          "capture": false,
-          "passive": false
         }
       ],
       "styles": [],
@@ -29881,7 +29669,6 @@
         "sc-customer-details",
         "sc-donation-choices",
         "sc-fulfillments",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -29942,9 +29729,6 @@
           "sc-skeleton"
         ],
         "sc-fulfillments": [
-          "sc-skeleton"
-        ],
-        "sc-invoice": [
           "sc-skeleton"
         ],
         "sc-invoices-list": [
@@ -30071,7 +29855,6 @@
       "parts": [],
       "dependents": [
         "sc-fulfillments",
-        "sc-invoice",
         "sc-license",
         "sc-order",
         "sc-purchase-downloads-list"
@@ -30079,9 +29862,6 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-fulfillments": [
-          "sc-spacing"
-        ],
-        "sc-invoice": [
           "sc-spacing"
         ],
         "sc-license": [
@@ -30173,7 +29953,6 @@
         "sc-customer-details",
         "sc-downloads-list",
         "sc-fulfillments",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -30198,9 +29977,6 @@
           "sc-stacked-list"
         ],
         "sc-fulfillments": [
-          "sc-stacked-list"
-        ],
-        "sc-invoice": [
           "sc-stacked-list"
         ],
         "sc-invoices-list": [
@@ -30314,7 +30090,6 @@
         "sc-customer-details",
         "sc-downloads-list",
         "sc-fulfillments",
-        "sc-invoice",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -30340,9 +30115,6 @@
           "sc-stacked-list-row"
         ],
         "sc-fulfillments": [
-          "sc-stacked-list-row"
-        ],
-        "sc-invoice": [
           "sc-stacked-list-row"
         ],
         "sc-invoices-list": [
@@ -33913,7 +33685,6 @@
         "sc-customer-edit",
         "sc-downloads-list",
         "sc-fulfillment-shipping-status-badge",
-        "sc-invoice",
         "sc-invoice-status-badge",
         "sc-license",
         "sc-licenses-list",
@@ -33960,9 +33731,6 @@
           "sc-tag"
         ],
         "sc-fulfillment-shipping-status-badge": [
-          "sc-tag"
-        ],
-        "sc-invoice": [
           "sc-tag"
         ],
         "sc-invoice-status-badge": [

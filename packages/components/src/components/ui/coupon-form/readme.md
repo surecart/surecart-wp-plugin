@@ -7,29 +7,36 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                   | Type               | Default     |
-| ---------------- | ----------------- | ----------------------------- | ------------------ | ----------- |
-| `busy`           | `busy`            | Is the form calculating       | `boolean`          | `undefined` |
-| `buttonText`     | `button-text`     | The text for apply button     | `string`           | `undefined` |
-| `collapsed`      | `collapsed`       |                               | `boolean`          | `undefined` |
-| `currency`       | `currency`        | Currency                      | `string`           | `undefined` |
-| `discount`       | --                | The discount                  | `DiscountResponse` | `undefined` |
-| `discountAmount` | `discount-amount` | The discount amount           | `number`           | `undefined` |
-| `editable`       | `editable`        | Is the form editable          | `boolean`          | `true`      |
-| `error`          | `error`           | The error message             | `string`           | `undefined` |
-| `forceOpen`      | `force-open`      | Force the form to show        | `boolean`          | `undefined` |
-| `label`          | `label`           | The label for the coupon form | `string`           | `undefined` |
-| `loading`        | `loading`         | Is the form loading           | `boolean`          | `undefined` |
-| `open`           | `open`            | Is it open                    | `boolean`          | `undefined` |
-| `placeholder`    | `placeholder`     | The placeholder for the input | `string`           | `undefined` |
-| `showInterval`   | `show-interval`   | Has recurring                 | `boolean`          | `undefined` |
+| Property          | Attribute         | Description                   | Type                  | Default     |
+| ----------------- | ----------------- | ----------------------------- | --------------------- | ----------- |
+| `busy`            | `busy`            | Is the form calculating       | `boolean`             | `undefined` |
+| `buttonText`      | `button-text`     | The text for apply button     | `string`              | `undefined` |
+| `collapsed`       | `collapsed`       |                               | `boolean`             | `undefined` |
+| `currency`        | `currency`        | Currency                      | `string`              | `undefined` |
+| `discount`        | --                | The discount                  | `DiscountResponse`    | `undefined` |
+| `discountAmount`  | `discount-amount` | The discount amount           | `number`              | `undefined` |
+| `editable`        | `editable`        | Is the form editable          | `boolean`             | `true`      |
+| `error`           | `error`           | The error message             | `string`              | `undefined` |
+| `forceOpen`       | `force-open`      | Force the form to show        | `boolean`             | `undefined` |
+| `label`           | `label`           | The label for the coupon form | `string`              | `undefined` |
+| `loading`         | `loading`         | Is the form loading           | `boolean`             | `undefined` |
+| `onScApplyCoupon` | --                | When the coupon is applied    | `(e: string) => void` | `undefined` |
+| `open`            | `open`            | Is it open                    | `boolean`             | `undefined` |
+| `placeholder`     | `placeholder`     | The placeholder for the input | `string`              | `undefined` |
+| `showInterval`    | `show-interval`   | Has recurring                 | `boolean`             | `undefined` |
 
 
-## Events
+## Methods
 
-| Event           | Description                | Type                  |
-| --------------- | -------------------------- | --------------------- |
-| `scApplyCoupon` | When the coupon is applied | `CustomEvent<string>` |
+### `triggerFocus() => Promise<void>`
+
+Focus the input.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Shadow Parts

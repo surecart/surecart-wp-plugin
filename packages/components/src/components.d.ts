@@ -805,6 +805,10 @@ export namespace Components {
           * Has recurring
          */
         "showInterval": boolean;
+        /**
+          * Focus the input.
+         */
+        "triggerFocus": () => Promise<void>;
     }
     interface ScCustomOrderPriceInput {
         /**
