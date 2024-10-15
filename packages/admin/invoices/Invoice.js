@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
@@ -17,7 +17,6 @@ import {
 	ScDropdown,
 	ScMenuItem,
 	ScMenu,
-	ScIcon,
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -51,6 +50,7 @@ export function getEditURL(id) {
 
 export default () => {
 	const [modal, setModal] = useState(null);
+	const [paymentMethod, setPaymentMethod] = useState();
 
 	const {
 		loading,
@@ -63,11 +63,14 @@ export default () => {
 		busy,
 	} = useInvoice();
 
-	const [paymentMethod, setPaymentMethod] = useState(
-		checkout?.manual_payment
-			? checkout?.manual_payment_method
-			: checkout?.payment_method
-	);
+	// listen for changes in payment method.
+	useEffect(() => {
+		if (checkout?.manual_payment) {
+			setPaymentMethod(checkout?.manual_payment_method);
+		} else {
+			setPaymentMethod(checkout?.payment_method);
+		}
+	}, [checkout?.manual_payment, checkout?.payment_method]);
 
 	const invoiceListPageURL = addQueryArgs('admin.php', {
 		page: 'sc-invoices',
