@@ -46,9 +46,18 @@
 		"interactivity": true,
 		"html": false,
 		"multiple": false,
+		"layout": {
+			"__experimentalDefault": "grid",
+			"__experimentalDefaultControls": {
+				"layout": true
+			}
+		},
 		"spacing": {
 			"padding": true,
-			"margin": true
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "1.25em"
+			}
 		},
 		"typography": {
 			"fontSize": true,

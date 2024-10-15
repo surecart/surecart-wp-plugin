@@ -20,7 +20,12 @@
 	},
 	"supports": {
 		"interactivity": true,
-		"layout": true,
+		"layout": {
+			"__experimentalDefault": "grid",
+			"__experimentalDefaultControls": {
+				"layout": true
+			}
+		},
 		"html": false,
 		"multiple": false,
 		"spacing": {

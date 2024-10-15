@@ -19,15 +19,23 @@ import {
  * Internal dependencies.
  */
 import { TEMPLATE } from './template';
+import classNames from 'classnames';
 
-export default ({ attributes: { width }, setAttributes }) => {
+export default ({
+	attributes: { width },
+	setAttributes,
+	__unstableLayoutClassNames,
+}) => {
 	const blockProps = useBlockProps({
 		style: {
 			fontSize: '16px',
 			fontFamily: 'var(--sc-font-sans)',
 			maxWidth: `max(400px, ${width})`,
 		},
-		className: 'sc-cart__editor-container',
+		className: classNames(
+			'sc-cart__editor-container',
+			__unstableLayoutClassNames
+		),
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(

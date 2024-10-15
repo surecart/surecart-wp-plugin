@@ -325,7 +325,12 @@ const TEMPLATE = [
 	],
 ];
 
-export default ({ attributes, setAttributes, clientId }) => {
+export default ({
+	attributes,
+	setAttributes,
+	__unstableLayoutClassNames,
+	clientId,
+}) => {
 	const { removable, editable } = attributes;
 
 	const placeholderImageUrl =
@@ -398,6 +403,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				template={TEMPLATE}
 				blockContexts={lineItems}
 				clientId={clientId}
+				className={__unstableLayoutClassNames}
 			/>
 		</>
 	);
