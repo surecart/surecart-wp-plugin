@@ -218,7 +218,7 @@ export class ScAddress {
             aria-label={this.placeholders.line_1 || __('Address', 'surecart')}
           />
 
-          {this.showLine2 && (
+          {(this.showLine2 || !!this?.address?.line_2?.length) && (
             <sc-input
               exportparts="base:input__base, input, form-control, label, help-text"
               value={this?.address?.line_2}
