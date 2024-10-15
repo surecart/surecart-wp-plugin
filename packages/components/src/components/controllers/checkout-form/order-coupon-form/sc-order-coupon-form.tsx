@@ -3,7 +3,6 @@ import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 import { isRtl } from '../../../../functions/page-align';
 import { formBusy } from '@store/form/getters';
-import { removeNotice } from '@store/notices/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { Checkout } from 'src/types';
 import { updateFormState } from '@store/form/mutations';
@@ -27,7 +26,6 @@ export class ScOrderCouponForm {
 
   async handleCouponApply(e) {
     const promotion_code = e?.detail || null;
-    removeNotice();
 
     try {
       this.error = null;
