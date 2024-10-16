@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Host, Method, Prop } from '@stencil/
 import { __ } from '@wordpress/i18n';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { Checkout, Customer, Invoice } from '../../../../types';
+import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
 import { state as userState } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
@@ -118,11 +118,6 @@ export class ScCustomerEmail {
     if (!userState.loggedIn && !!fromUrl) {
       this.value = fromUrl;
       return;
-    }
-
-    // if we have an invoice on the checkout, disable the input.
-    if ((checkoutState?.checkout?.invoice as Invoice)?.id) {
-      this.disabled = true;
     }
 
     this.value = checkoutState?.checkout?.email || (checkoutState?.checkout?.customer as Customer)?.email;
