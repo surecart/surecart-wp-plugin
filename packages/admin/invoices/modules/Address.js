@@ -283,31 +283,23 @@ export default ({ checkout }) => {
 				onCancel={() => setModal(null)}
 				confirmButtonText={__('Confirm', 'surecart')}
 			>
-				<ScText
-					tag="h3"
-					style={{
-						'--font-weight': 'var(--sc-font-weight-bold)',
-						'--font-size': 'var(--sc-font-size-medium)',
-						paddingBottom: 'var(--sc-spacing-large)',
-						borderBottom: '1px solid var(--sc-color-gray-100)',
-					}}
-				>
-					{__('Set Default Addresses', 'surecart')}
-				</ScText>
-
 				<p
-					dangerouslySetInnerHTML={{
-						__html: sprintf(
-							/* translators: %1$s: shipping (bold), %2$s: billing (bold) */
-							__(
-								"📍 This will set the %1$s and %2$s to the customer's default.",
-								'surecart'
-							),
-							`<strong>${__('shipping', 'surecart')}</strong>`,
-							`<strong>${__('billing', 'surecart')}</strong>`
-						),
-					}}
-				/>
+					css={css`
+						font-weight: var(--sc-font-weight-bold);
+					`}
+				>
+					{__('Are you sure?', 'surecart')}
+				</p>
+				<p
+					css={css`
+						max-width: 300px;
+					`}
+				>
+					{__(
+						"This will set the shipping and billing addresses to the customer's default.",
+						'surecart'
+					)}
+				</p>
 			</ConfirmDialog>
 
 			<ConfirmDialog
@@ -316,10 +308,23 @@ export default ({ checkout }) => {
 				onCancel={() => setModal(null)}
 				confirmButtonText={__('Clear', 'surecart')}
 			>
-				{__(
-					'This will remove the shipping and billing addresses from the invoice. Are you sure you want to continue?',
-					'surecart'
-				)}
+				<p
+					css={css`
+						font-weight: var(--sc-font-weight-bold);
+					`}
+				>
+					{__('Are you sure?', 'surecart')}
+				</p>
+				<p
+					css={css`
+						max-width: 300px;
+					`}
+				>
+					{__(
+						'This will remove the shipping and billing addresses from the invoice.',
+						'surecart'
+					)}
+				</p>
 			</ConfirmDialog>
 		</>
 	);
