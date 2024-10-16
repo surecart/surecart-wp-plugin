@@ -1285,6 +1285,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return string
 	 */
 	public function getCreatedAtDateAttribute() {
+		return TimeDate::formatDate( $this->created_at );
+	}
+
+	/**
+	 * Get the created at date time.
+	 *
+	 * @return string
+	 */
+	public function getCreatedAtDateTimeAttribute() {
 		return TimeDate::formatDateAndTime( $this->created_at );
 	}
 
@@ -1294,6 +1303,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return string
 	 */
 	public function getUpdatedAtDateAttribute() {
+		return TimeDate::formatDate( $this->updated_at );
+	}
+
+	/**
+	 * Get the updated at date time.
+	 *
+	 * @return string
+	 */
+	public function getUpdatedAtDateTimeAttribute() {
 		return TimeDate::formatDateAndTime( $this->updated_at );
 	}
 }
