@@ -5,11 +5,13 @@ namespace SureCart\Controllers\Admin\AffiliationReferrals;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Referral;
 use SureCart\Support\Currency;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class AffiliationReferralsListTable extends ListTable {
+	use HasModeFilter;
 
 	/**
 	 * Checkbox
@@ -86,9 +88,6 @@ class AffiliationReferralsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
-			if ( isset( $_GET['live_mode'] ) ) {
-				$link = add_query_arg( 'live_mode', sanitize_text_field($_GET['live_mode']), $link );
-			}
 
 			$link = esc_url( $link );
 
@@ -286,7 +285,7 @@ class AffiliationReferralsListTable extends ListTable {
 		}
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr__( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order->id ) ); ?>">
+		<a aria-label="<?php esc_attr_e( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order->id ) ); ?>">
 			#<?php echo esc_html( $checkout->order->number ?? $checkout->order->id ); ?>
 		</a>
 		<?php
@@ -310,19 +309,23 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return \SureCart\Models\Collection;
 	 */
 	private function table_data() {
-		return Referral::where(
-			array(
-				'query'     => $this->get_search_query(),
-				'status'    => [ $this->getFilteredStatus() ],
-				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				'expand'    => [
-					'affiliation',
-					'checkout',
-					'checkout.order',
-					'payout',
-				],
-			)
-		)->paginate(
+		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+		$conditions = array(
+			'query'     => $this->get_search_query(),
+			'status'    => [ $this->getFilteredStatus() ],
+			'expand'    => [
+				'affiliation',
+				'checkout',
+				'checkout.order',
+				'payout',
+			],
+		);
+
+		if ( ! empty( $mode ) ) {
+			$conditions['live_mode'] = 'live' === $mode;
+		}
+
+		return Referral::where($conditions)->paginate(
 			array(
 				'per_page' => $this->get_items_per_page( 'affiliate_referrals' ),
 				'page'     => $this->get_pagenum(),
@@ -350,11 +353,45 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	protected function extra_tablenav( $which ) {
 		?>
-		<input type="hidden" name="page" value="sc-affiliate-requests" />
+		<input type="hidden" name="page" value="sc-affiliate-referrals" />
 
 		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
 		<?php endif; ?>
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->mode_dropdown();
+
+			/**
+			 * Fires before the Filter button on the Posts and Pages list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @since 2.1.0
+			 * @since 4.4.0 The `$post_type` parameter was added.
+			 * @since 4.6.0 The `$which` parameter was added.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_affiliate_referrals', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter' ), '', 'filter_action', false, array( 'id' => 'filter-by-mode-submit' ) );
+			}
+		}
+
+		?>
+		</div>
 
 		<?php
 		/**
@@ -416,7 +453,6 @@ class AffiliationReferralsListTable extends ListTable {
 						'action'    => $action,
 						'nonce'     => wp_create_nonce( $action . '_affiliation' ),
 						'id'        => $id,
-						'live_mode' => $_GET['live_mode'] ?? '',
 					]
 				),
 				esc_url_raw( admin_url( 'admin.php?page=sc-affiliate-referrals' ) )

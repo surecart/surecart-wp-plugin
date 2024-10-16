@@ -115,10 +115,17 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 		setBusy(true);
 
 		try {
-			await saveEntityRecord('surecart', 'product', {
-				id,
-				shipping_profile: shippingProfileId,
-			});
+			await saveEntityRecord(
+				'surecart',
+				'product',
+				{
+					id,
+					shipping_profile: shippingProfileId,
+				},
+				{
+					throwOnError: true,
+				}
+			);
 			setDraftProducts(0);
 			createSuccessNotice(__('Product added', 'surecart'), {
 				type: 'snackbar',

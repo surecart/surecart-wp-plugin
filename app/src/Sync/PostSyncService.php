@@ -51,7 +51,7 @@ class PostSyncService {
 		$query = new \WP_Query(
 			array(
 				'post_type'        => $this->post_type,
-				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
+				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived', 'future' ),
 				'posts_per_page'   => 1,
 				'no_found_rows'    => true,
 				'suppress_filters' => true,
@@ -144,7 +144,7 @@ class PostSyncService {
 			'post_status'       => $this->getPostStatusFromModel( $model ),
 			'meta_input'        => array(
 				'sc_id'                        => $model->id,
-				'product'                      => $model,
+				'product'                      => $model->toArray(),
 				'min_price_amount'             => ! empty( $model->metrics->min_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->min_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
 				'max_price_amount'             => ! empty( $model->metrics->max_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->max_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
 				'available_stock'              => $model->available_stock,

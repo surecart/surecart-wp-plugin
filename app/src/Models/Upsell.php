@@ -28,7 +28,7 @@ class Upsell extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		$template_id = $this->attributes['metadata']->wp_template_id ?? '';
+		$template_id = $this->metadata->wp_template_id ?? '';
 		// use a fallback for FSE.
 		if ( wp_is_block_theme() ) {
 			// if one is not set, or it's a php file, use the fallback.
@@ -55,7 +55,7 @@ class Upsell extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplatePartIdAttribute(): string {
-		return $this->attributes['metadata']->wp_template_part_id ?? 'surecart/surecart//upsell-info';
+		return $this->metadata->wp_template_part_id ?? 'surecart/surecart//upsell-info';
 	}
 
 	/**
@@ -76,7 +76,7 @@ class Upsell extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getTemplateContent() : string {
+	public function getTemplateContent(): string {
 		return wp_is_block_theme() ?
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';

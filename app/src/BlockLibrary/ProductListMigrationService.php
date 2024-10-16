@@ -143,8 +143,8 @@ class ProductListMigrationService {
 			$this->block_html .= '<!-- wp:surecart/product-list-sort /-->';
 		}
 
-		if ( $collection_enabled && empty( $this->attributes['collection_id'] ) ) {
-			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $collection_id ) . '"} /-->';
+		if ( $collection_enabled && ! empty( $this->attributes['collection_id'] ) ) {
+			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $this->attributes['collection_id'] ) . '"} /-->';
 		}
 
 		$this->block_html .= '</div><!-- /wp:group -->';
