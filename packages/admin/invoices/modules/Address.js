@@ -110,9 +110,23 @@ export default ({ checkout }) => {
 						);
 					`}
 				>
-					<ScCard
+					<div
 						css={css`
 							flex: 1 1 200px;
+							padding: var(
+								--sc-card-padding,
+								var(--sc-spacing-large)
+							);
+							background: var(
+								--sc-card-background-color,
+								var(--sc-color-white)
+							);
+							border: 1px solid
+								var(
+									--sc-card-border-color,
+									var(--sc-color-gray-300)
+								);
+							border-radius: var(--sc-input-border-radius-medium);
 						`}
 					>
 						<ScFormControl
@@ -120,7 +134,6 @@ export default ({ checkout }) => {
 							css={css`
 								height: 100%;
 								display: flex;
-								min-height: 120px;
 							`}
 						>
 							{!!checkout?.shipping_address?.country ? (
@@ -140,11 +153,25 @@ export default ({ checkout }) => {
 								</ScText>
 							)}
 						</ScFormControl>
-					</ScCard>
+					</div>
 
-					<ScCard
+					<div
 						css={css`
 							flex: 1 1 200px;
+							padding: var(
+								--sc-card-padding,
+								var(--sc-spacing-large)
+							);
+							background: var(
+								--sc-card-background-color,
+								var(--sc-color-white)
+							);
+							border: 1px solid
+								var(
+									--sc-card-border-color,
+									var(--sc-color-gray-300)
+								);
+							border-radius: var(--sc-input-border-radius-medium);
 						`}
 					>
 						<ScFormControl
@@ -152,7 +179,6 @@ export default ({ checkout }) => {
 							css={css`
 								height: 100%;
 								display: flex;
-								min-height: 120px;
 							`}
 						>
 							{!!billingAddress?.country ? (
@@ -170,7 +196,7 @@ export default ({ checkout }) => {
 								</ScText>
 							)}
 						</ScFormControl>
-					</ScCard>
+					</div>
 				</div>
 			);
 		}
