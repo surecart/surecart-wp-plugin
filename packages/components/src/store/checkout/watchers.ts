@@ -15,7 +15,7 @@ onChange('checkout', val => setCheckout(val, state.formId));
  * When the checkout changes, update the mode to match the checkout.
  */
 onChange('checkout', val => {
-  state.mode = !val.live_mode ? 'test' : 'live';
+  state.mode = !val?.live_mode ? 'test' : 'live';
 });
 
 /**

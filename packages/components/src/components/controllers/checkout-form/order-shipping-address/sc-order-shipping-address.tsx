@@ -95,6 +95,7 @@ export class ScOrderShippingAddress {
 
   @Method()
   async reportValidity() {
+    if (!this.input) return true;
     return this.input?.reportValidity?.();
   }
 
@@ -117,6 +118,7 @@ export class ScOrderShippingAddress {
   }
 
   render() {
+    console.log('this.input from sc-order-shipping-address', this.input);
     // use full if checkout requires it, it's set, or we're showing/requiring name field.
     if (fullShippingAddressRequired() || this.full || this.requireName || this.showName) {
       return (
