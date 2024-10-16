@@ -276,6 +276,7 @@ export function HierarchicalTermSelector({ slug }) {
 
 	const onAddTerm = async (event) => {
 		event.preventDefault();
+		event.stopPropagation();
 		if (formName === '' || adding) {
 			return;
 		}
@@ -443,7 +444,13 @@ export function HierarchicalTermSelector({ slug }) {
 				</FlexItem>
 			)}
 			{showForm && (
-				<ScForm onScSubmit={onAddTerm}>
+				<ScForm
+					onScSubmit={onAddTerm}
+					onScFormSubmit={(event) => {
+						event.preventDefault();
+						event.stopPropagation();
+					}}
+				>
 					<Flex direction="column" gap="4">
 						<TextControl
 							__next40pxDefaultSize
