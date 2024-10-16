@@ -104,8 +104,8 @@ class AffiliationClicksListTable extends ListTable {
 	public function column_date( $click ) {
 		$created = sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $click->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $click->created_at ) ),
+			esc_attr( $click->created_at_date_time ),
+			esc_html( $click->created_at_date_time ),
 			esc_html( TimeDate::humanTimeDiff( $click->created_at ) )
 		);
 

@@ -71,7 +71,7 @@ export default ({ abandoned, checkout, loading }) => {
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
-					abandoned.created_at_date
+					abandoned.created_at_date_time
 				)}
 			</div>
 			<div>{renderNotificationStatus()}</div>
