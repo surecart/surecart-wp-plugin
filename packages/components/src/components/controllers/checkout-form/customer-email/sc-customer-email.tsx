@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Host, Method, Prop } from '@stencil/
 import { __ } from '@wordpress/i18n';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { Checkout, Customer } from '../../../../types';
+import { Checkout, Customer, Invoice } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
 import { state as userState } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
@@ -120,6 +120,11 @@ export class ScCustomerEmail {
       return;
     }
 
+    // if we have an invoice on the checkout, disable the input.
+    if ((checkoutState?.checkout?.invoice as Invoice)?.id) {
+      this.disabled = true;
+    }
+
     this.value = checkoutState?.checkout?.email || (checkoutState?.checkout?.customer as Customer)?.email;
   }
 
@@ -174,7 +179,7 @@ export class ScCustomerEmail {
           label={this.label}
           autocomplete={'email'}
           placeholder={this.placeholder}
-          disabled={!!userState.loggedIn && !!this.value?.length && !this.invalid}
+          disabled={this.disabled || (!!userState.loggedIn && !!this.value?.length && !this.invalid)}
           readonly={this.readonly}
           required={true}
           invalid={this.invalid}
