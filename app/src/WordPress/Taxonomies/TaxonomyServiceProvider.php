@@ -21,6 +21,10 @@ class TaxonomyServiceProvider implements ServiceProviderInterface {
 		$container['surecart.taxonommies.store'] = function ( $container ) {
 			return new StoreTaxonomyService();
 		};
+
+		$container['surecart.taxonommies'] = function ( $container ) {
+			return new TaxonomyService();
+		};
 	}
 
 	/**
@@ -31,5 +35,6 @@ class TaxonomyServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.taxonommies.collection']->bootstrap();
 		$container['surecart.taxonommies.store']->bootstrap();
+		$container['surecart.taxonommies']->bootstrap();
 	}
 }
