@@ -315,10 +315,17 @@ export default () => {
 					title={getSubmitButtonTitle()}
 					paymentMethod={paymentMethod}
 				>
-					{__(
-						'This will lock the invoice and prepare it for payment.',
-						'surecart'
-					)}
+					{invoice?.automatic_collection &&
+					isDraftInvoice &&
+					!!paymentMethod?.id
+						? __(
+								'This will charge the customer immediately and create a new order.',
+								'surecart'
+						  )
+						: __(
+								'This will lock the invoice and prepare it for payment.',
+								'surecart'
+						  )}
 				</SendNotificationConfirmModal>
 			)}
 
