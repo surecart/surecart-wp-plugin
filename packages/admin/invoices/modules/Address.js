@@ -295,13 +295,19 @@ export default ({ checkout }) => {
 					{__('Set Default Addresses', 'surecart')}
 				</ScText>
 
-				<p>
-					{__('📍 This will set the ', 'surecart')}
-					<strong>{__('shipping', 'surecart')}</strong>
-					{__(' and ', 'surecart')}
-					<strong>{__('billing', 'surecart')}</strong>
-					{__(" to the customer's default.", 'surecart')}
-				</p>
+				<p
+					dangerouslySetInnerHTML={{
+						__html: sprintf(
+							/* translators: %1$s: shipping (bold), %2$s: billing (bold) */
+							__(
+								"📍 This will set the %1$s and %2$s to the customer's default.",
+								'surecart'
+							),
+							`<strong>${__('shipping', 'surecart')}</strong>`,
+							`<strong>${__('billing', 'surecart')}</strong>`
+						),
+					}}
+				/>
 			</ConfirmDialog>
 
 			<ConfirmDialog
