@@ -4,11 +4,14 @@ namespace SureCart\Controllers\Admin\Orders;
 
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class OrdersListTable extends ListTable {
+	use HasModeFilter;
+
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -159,20 +162,27 @@ class OrdersListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return Order::where(
-			[
-				'status'             => $this->getStatus(),
-				'fulfillment_status' => ! empty( $_GET['fulfillment_status'] ) ? [ $_GET['fulfillment_status'] ] : [],
-				'shipment_status'    => ! empty( $_GET['shipment_status'] ) ? [ $_GET['shipment_status'] ] : [],
-				'query'              => $this->get_search_query(),
-			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'checkout.selected_shipping_choice', 'shipping_choice.shipping_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
-		->paginate(
-			[
-				'per_page' => $this->get_items_per_page( 'orders' ),
-				'page'     => $this->get_pagenum(),
-			]
-		);
+		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+
+		$conditions = [
+			'status'             => $this->getStatus(),
+			'fulfillment_status' => ! empty( $_GET['fulfillment_status'] ) ? [ $_GET['fulfillment_status'] ] : [],
+			'shipment_status'    => ! empty( $_GET['shipment_status'] ) ? [ $_GET['shipment_status'] ] : [],
+			'query'              => $this->get_search_query(),
+		];
+
+		if ( ! empty( $mode ) ) {
+			$conditions['live_mode'] = 'live' === $mode;
+		}
+
+		return Order::where( $conditions )
+			->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'checkout.selected_shipping_choice', 'shipping_choice.shipping_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
+			->paginate(
+				[
+					'per_page' => $this->get_items_per_page( 'orders' ),
+					'page'     => $this->get_pagenum(),
+				]
+			);
 	}
 
 	/**
@@ -241,7 +251,7 @@ class OrdersListTable extends ListTable {
 	 */
 	public function column_type( $order ) {
 		if ( ! empty( $order->order_type ) && 'subscription' === $order->order_type ) {
-			return '<sc-tag type="success">' . esc_html__( 'Plan Renewal', 'surecart' ) . '</sc-tag>';
+			return '<sc-tag type="success">' . esc_html__( 'Subscription', 'surecart' ) . '</sc-tag>';
 		}
 
 		return '<sc-tag type="info">' . esc_html__( 'Checkout', 'surecart' ) . '</sc-tag>';
@@ -424,6 +434,7 @@ class OrdersListTable extends ListTable {
 			ob_start();
 			$this->fulfillment_dropdown();
 			$this->shipment_dropdown();
+			$this->mode_dropdown();
 
 			/**
 			 * Fires before the Filter button on the Posts and Pages list tables.

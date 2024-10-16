@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-08T17:47:28+00:00\n"
+"POT-Creation-Date: 2024-10-09T18:37:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -54,7 +54,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:170
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
-#: src/WordPress/CompatibilityService.php:151
+#: src/WordPress/CompatibilityService.php:157
 #: src/WordPress/HealthService.php:32
 #: src/WordPress/HealthService.php:73
 #: src/WordPress/HealthService.php:82
@@ -75,21 +75,21 @@ msgstr ""
 
 #: src/BlockLibrary/FormModeSwitcherService.php:49
 #: src/BlockLibrary/FormModeSwitcherService.php:70
+#: src/Controllers/Admin/Tables/HasModeFilter.php:36
 msgid "Live Mode"
 msgstr ""
 
 #: src/BlockLibrary/FormModeSwitcherService.php:49
 #: src/BlockLibrary/FormModeSwitcherService.php:70
+#: src/Controllers/Admin/Tables/HasModeFilter.php:37
 #: abandoned-checkouts/modules/Details.js:69
-#: cancellation-insights/LiveModeToggle.js:30
 #: customers/CreateCustomer.js:97
 #: customers/modules/Details.js:22
-#: dashboard/Dashboard.js:75
+#: dashboard/components/overview/Overview.js:136
 #: invoices/modules/Details.js:77
 #: orders/modules/Details.js:80
 #: products/modules/BuyLink.js:138
 #: subscriptions/show/modules/Details.js:194
-#: test-mode-toggle/TestModeToggle.js:47
 #: Controllers/PaymentMethodController.php:182
 #: Blocks/Payment/edit.js:33
 #: sc-license.js:129
@@ -98,16 +98,16 @@ msgstr ""
 msgid "Test Mode"
 msgstr ""
 
-#: src/BlockLibrary/FormModeSwitcherService.php:161
+#: src/BlockLibrary/FormModeSwitcherService.php:166
 msgid "live mode"
 msgstr ""
 
-#: src/BlockLibrary/FormModeSwitcherService.php:161
+#: src/BlockLibrary/FormModeSwitcherService.php:166
 msgid "test mode"
 msgstr ""
 
 #. translators: %s: live mode or test mode.
-#: src/BlockLibrary/FormModeSwitcherService.php:164
+#: src/BlockLibrary/FormModeSwitcherService.php:169
 msgid ""
 "Are you sure you want to change this form to %1$s? \n"
 "\n"
@@ -122,60 +122,60 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:42
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:286
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:315
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:392
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:220
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:340
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:45
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:287
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:316
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:431
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:221
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:341
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:54
-#: src/Controllers/Admin/Orders/OrdersListTable.php:72
+#: src/Controllers/Admin/Orders/OrdersListTable.php:75
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
 #: src/Controllers/Admin/Products/ProductsListTable.php:103
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:63
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:54
 #: settings/connection/IncomingWebhooks.js:29
 msgid "All"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:43
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:185
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:46
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:189
 #: subscriptions/show/modules/PendingUpdate.js:70
 #: subscriptions/show/modules/PendingUpdate.js:110
 #: sc-order-fulfillment-badge.js:10
 msgid "Scheduled"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:47
 msgid "Sent"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:45
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:187
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:48
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:191
 msgid "Not Scheduled"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:86
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:87
 msgid "Search Abanonded Orders"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:101
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:102
 msgid "Placed By"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:102
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:88
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:108
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:114
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:95
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:98
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:100
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:53
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:103
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:89
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:109
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:115
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:96
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:99
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:101
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:56
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:79
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:64
-#: src/Controllers/Admin/Orders/OrdersListTable.php:118
-#: src/Controllers/Admin/Products/ProductsListTable.php:152
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:94
+#: src/Controllers/Admin/Orders/OrdersListTable.php:122
+#: src/Controllers/Admin/Products/ProductsListTable.php:153
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:95
 #: affiliations/modules/Clicks.js:63
 #: affiliations/modules/Payouts.js:72
 #: affiliations/modules/Referrals.js:70
@@ -192,17 +192,17 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:103
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:104
 msgid "Email Status"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:104
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:105
 msgid "Recovery Status"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:105
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:106
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
-#: src/Controllers/Admin/Orders/OrdersListTable.php:116
+#: src/Controllers/Admin/Orders/OrdersListTable.php:120
 #: web/buy-template.php:97
 #: web/buy-template.php:117
 #: abandoned-checkouts/modules/LineItems/index.js:146
@@ -213,7 +213,7 @@ msgstr ""
 #: orders/modules/LineItems/index.js:312
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:286
 #: subscriptions/edit/modules/Price.js:70
-#: subscriptions/show/modules/CurrentPlan.js:101
+#: subscriptions/show/modules/CurrentPlan.js:102
 #: subscriptions/show/modules/SubscriptionItems.js:109
 #: Blocks/CartSubtotal/Block.php:29
 #: Blocks/CheckoutForm/components/PriceChoices.js:65
@@ -235,29 +235,30 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:189
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:193
 msgid "Email Sent"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:204
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:208
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:190
 #: abandoned-checkouts/modules/Details.js:12
 msgid "Abandoned"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:206
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:210
 #: abandoned-checkouts/modules/Details.js:16
 msgid "Recovered"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:208
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:212
 #: abandoned-checkouts/modules/Details.js:21
 msgid "Recovered Before Email Was Sent"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:221
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:225
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:189
 #: src/Controllers/Admin/Tables/ListTable.php:110
-#: src/WordPress/PostTypes/FormPostTypeService.php:334
+#: src/WordPress/PostTypes/FormPostTypeService.php:339
 #: admin/user-profile.php:10
 #: admin/user-profile.php:18
 #: dashboard/components/RecentOrders.js:184
@@ -270,24 +271,35 @@ msgstr ""
 msgid "Test"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:234
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:238
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:218
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:222
-#: src/Controllers/Admin/Orders/OrdersListTable.php:319
-#: src/Controllers/Admin/Orders/OrdersListTable.php:323
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
+#: src/Controllers/Admin/Orders/OrdersListTable.php:330
+#: src/Controllers/Admin/Orders/OrdersListTable.php:334
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:190
 msgid "Edit Order"
 msgstr ""
 
 #. translators: Customer name.
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:237
-#: src/Controllers/Admin/Orders/OrdersListTable.php:326
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:241
+#: src/Controllers/Admin/Orders/OrdersListTable.php:337
 msgid "By %s"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:241
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:242
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:245
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:246
 msgid "View Checkout"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:289
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:389
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:262
+#: src/Controllers/Admin/Customers/CustomersListTable.php:224
+#: src/Controllers/Admin/Orders/OrdersListTable.php:460
+#: src/Controllers/Admin/Products/ProductsListTable.php:570
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:461
+#: sc-product-item-list.js:257
+msgid "Filter"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutViewController.php:20
@@ -297,7 +309,7 @@ msgid "Abandoned Checkouts"
 msgstr ""
 
 #: src/Controllers/Admin/AffiliationClicks/AffiliationClicksController.php:21
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:94
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:95
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:202
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
@@ -306,49 +318,49 @@ msgstr ""
 msgid "Clicks"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:89
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:90
 #: affiliation-referrals/modules/Click.js:56
 #: affiliations/modules/Clicks.js:57
 msgid "Landing URL"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:90
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:91
 #: affiliation-referrals/modules/Click.js:53
 #: affiliations/modules/Clicks.js:60
 msgid "Referring URL"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:91
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:110
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:118
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:92
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:111
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:119
 #: affiliation-payouts/CreateAffiliationPayout.js:103
 #: affiliation-referrals/CreateAffiliationReferral.js:89
 #: affiliation-referrals/modules/Affiliation.js:36
 msgid "Affiliate"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:92
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:287
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:93
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:288
 #: affiliation-referrals/modules/Click.js:62
 msgid "Converted"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:114
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:115
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:236
 #: price.js:101
 msgid "Expired"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:114
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:115
 #: affiliation-referrals/modules/Click.js:82
 msgid "Expires on"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:222
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:223
 msgid "No affiliate clicks found."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:288
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:289
 #: affiliation-referrals/modules/Click.js:66
 msgid "Not Converted"
 msgstr ""
@@ -375,16 +387,16 @@ msgstr ""
 msgid "Affiliate payout deleted."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:109
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:115
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:94
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:93
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:110
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:116
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:95
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:94
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:65
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:63
-#: src/Controllers/Admin/Orders/OrdersListTable.php:111
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:105
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:93
+#: src/Controllers/Admin/Orders/OrdersListTable.php:115
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:94
 #: abandoned-checkouts/modules/Coupon.js:43
 #: affiliation-referrals/modules/Click.js:59
 #: affiliation-referrals/modules/Order.js:65
@@ -410,15 +422,15 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:111
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:93
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:112
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:94
 #: affiliation-requests/modules/Details.js:102
 #: affiliations/modules/Details.js:79
 #: affiliations/modules/Payouts.js:57
 msgid "Payout Email"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:112
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:113
 #: affiliation-payouts-groups/CreateAffiliationPayoutGroup.js:126
 #: affiliation-payouts/CreateAffiliationPayout.js:125
 #: affiliation-referrals/modules/Payout.js:55
@@ -426,8 +438,8 @@ msgstr ""
 msgid "Period End"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:113
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:95
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:114
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:96
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:203
 #: affiliation-referrals/EditAffiliationReferral.js:223
 #: affiliations/modules/Referrals.js:55
@@ -435,7 +447,7 @@ msgstr ""
 msgid "Referrals"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:114
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:115
 #: src/Support/Errors/Translations/attributes.php:14
 #: checkouts/modules/Price.js:258
 #: coupons/modules/Types.js:42
@@ -456,16 +468,16 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:132
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:133
 msgid "Complete"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:133
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:134
 msgid "Make Processing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:134
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:147
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:135
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:148
 #: admin/products/confirm-bulk-delete.php:67
 #: affiliation-referrals/EditAffiliationReferral.js:277
 #: affiliation-requests/EditAffiliationRequest.js:274
@@ -511,12 +523,12 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:269
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:270
 msgid "No affiliate payouts found."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:316
-#: src/Controllers/Admin/Orders/OrdersListTable.php:74
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:317
+#: src/Controllers/Admin/Orders/OrdersListTable.php:77
 #: src/Models/Payout.php:124
 #: orders/modules/LineItems/index.js:27
 #: util.js:94
@@ -525,44 +537,44 @@ msgstr ""
 msgid "Processing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:317
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:318
 #: src/Models/Payout.php:124
 #: sc-subscription-status-badge2.js:63
 msgid "Completed"
 msgstr ""
 
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:24
-#: admin/affiliation-referrals/index.php:27
+#: admin/affiliation-referrals/index.php:28
 msgid "Affiliate Referrals"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:33
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:32
 #: affiliation-referrals/EditAffiliationReferral.js:104
 msgid "Affiliate referral approved."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:34
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:33
 #: affiliation-referrals/EditAffiliationReferral.js:181
 msgid "Affiliate referral denied."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:35
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:34
 msgid "Affiliate referral deleted."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:36
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsController.php:35
 msgid "Affiliate referral is now in review."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:116
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:117
 msgid "Payout Status"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:117
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:118
 msgid "Payout Date"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:119
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:120
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:49
 #: affiliation-referrals/CreateAffiliationReferral.js:120
 #: affiliation-referrals/modules/Details.js:46
@@ -583,8 +595,8 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:120
-#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:121
+#: src/Controllers/Admin/Orders/OrdersListTable.php:114
 #: affiliations/modules/Referrals.js:64
 #: store/add-entities.js:173
 #: subscriptions/show/modules/Orders.js:15
@@ -592,7 +604,7 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:121
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:122
 #: affiliation-referrals/modules/Payout.js:48
 #: affiliation-referrals/modules/ReferralItems.js:87
 #: affiliations/modules/Payouts.js:64
@@ -601,10 +613,10 @@ msgstr ""
 msgid "Commission"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:142
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:143
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:125
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:195
-#: src/Controllers/Admin/Products/ProductsListTable.php:490
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:196
+#: src/Controllers/Admin/Products/ProductsListTable.php:491
 #: affiliation-referrals/modules/Payout.js:77
 #: components/data-tables/affiliates/ReferralsDataTable.js:109
 #: components/data-tables/licenses-data-table/license-item.js:74
@@ -615,15 +627,15 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:143
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:279
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:144
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:280
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:262
-#: src/Controllers/Admin/Customers/CustomersListTable.php:150
+#: src/Controllers/Admin/Customers/CustomersListTable.php:161
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:110
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:124
-#: src/Controllers/Admin/Products/ProductsListTable.php:488
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:399
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:269
+#: src/Controllers/Admin/Products/ProductsListTable.php:489
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:417
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:270
 #: src/Integrations/Beaver/BeaverFormModule.php:95
 #: src/Integrations/Elementor/ReusableFormWidget.php:122
 #: checkouts/modules/Address.js:101
@@ -651,25 +663,25 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:144
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:145
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:351
 #: affiliation-referrals/EditAffiliationReferral.js:253
 #: affiliation-requests/EditAffiliationRequest.js:252
 msgid "Approve"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:145
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:146
 #: affiliation-referrals/EditAffiliationReferral.js:269
 #: affiliation-requests/EditAffiliationRequest.js:264
 msgid "Deny"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:146
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:147
 #: affiliation-referrals/EditAffiliationReferral.js:262
 msgid "Make Reviewing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:287
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:288
 #: abandoned-checkouts/modules/LineItems/index.js:45
 #: components/data-tables/charges-data-table/index.js:157
 #: orders/Order.js:249
@@ -678,19 +690,19 @@ msgstr ""
 msgid "View Order"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:341
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:346
 msgid "No affiliate referrals found . "
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:393
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:432
 #: src/Models/Referral.php:165
 #: affiliation-referrals/EditAffiliationReferral.js:48
 #: util.js:93
 msgid "Reviewing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:394
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:221
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:433
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:222
 #: src/Models/AffiliationRequest.php:118
 #: src/Models/Referral.php:169
 #: affiliation-referrals/EditAffiliationReferral.js:46
@@ -698,8 +710,8 @@ msgstr ""
 msgid "Approved"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:395
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:222
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:434
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:223
 #: src/Models/AffiliationRequest.php:120
 #: src/Models/Referral.php:167
 #: affiliation-referrals/EditAffiliationReferral.js:47
@@ -707,9 +719,9 @@ msgstr ""
 msgid "Denied"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:396
-#: src/Controllers/Admin/Orders/OrdersListTable.php:76
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:64
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:435
+#: src/Controllers/Admin/Orders/OrdersListTable.php:79
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:67
 #: orders/modules/LineItems/index.js:30
 #: orders/modules/LineItems/index.js:31
 #: orders/modules/Refunds.js:56
@@ -719,7 +731,7 @@ msgstr ""
 msgid "Canceled"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:397
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:436
 #: src/Models/Referral.php:166
 msgid "In Payout"
 msgstr ""
@@ -730,15 +742,15 @@ msgstr ""
 msgid "Affiliate Requests"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:91
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:91
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:95
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:92
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:92
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:96
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:75
-#: src/Controllers/Admin/Customers/CustomersListTable.php:49
+#: src/Controllers/Admin/Customers/CustomersListTable.php:51
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:47
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
-#: src/Controllers/Admin/Products/ProductsListTable.php:144
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:91
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
+#: src/Controllers/Admin/Products/ProductsListTable.php:145
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:92
 #: src/Support/Errors/Translations/attributes.php:11
 #: web/buy-template.php:86
 #: bumps/modules/Name.js:7
@@ -751,7 +763,7 @@ msgstr ""
 #: products/components/SelectTemplatePart/create-modal.js:79
 #: products/modules/Details.js:18
 #: settings/shipping/method/ShippingMethodForm.js:115
-#: settings/shipping/profile/AddShippingProfile.js:78
+#: settings/shipping/profile/AddShippingProfile.js:88
 #: settings/shipping/profile/ShippingProfile.js:187
 #: settings/shipping/rate/ShippingRateForm.js:307
 #: settings/shipping/zone/ShippingZone.js:94
@@ -771,9 +783,9 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:92
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:92
-#: src/Controllers/Admin/Customers/CustomersListTable.php:50
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:93
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:93
+#: src/Controllers/Admin/Customers/CustomersListTable.php:52
 #: web/buy-template.php:83
 #: affiliation-payouts/ExportAffiliationPayout.js:84
 #: affiliation-requests/modules/Details.js:84
@@ -785,11 +797,11 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:140
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:141
 msgid "No affiliate requests found."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:223
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:224
 #: src/Models/AffiliationRequest.php:119
 #: orders/modules/Refunds.js:46
 #: util.js:90
@@ -812,62 +824,62 @@ msgstr ""
 msgid "Affiliation deactivated successfully."
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:96
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:97
 msgid "Total Earnings"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:97
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:98
 msgid "Unpaid Earnings"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:146
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:147
 msgid "No affiliates found."
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:226
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:227
 #: affiliations/ViewAffiliation.js:187
 msgid "View Affiliate"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:226
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:227
 #: settings/connection/IncomingWebhooks.js:215
 msgid "View Details"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:282
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:283
 #: affiliations/ViewAffiliation.js:236
 msgid "Deactivate"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:282
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:283
 #: affiliations/ViewAffiliation.js:225
 #: components/data-tables/subscriptions-data-table/StartPlan.js:73
 msgid "Activate"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:283
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:284
 msgid "Are you sure you want to deactivate this affilate?"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:283
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:284
 msgid "Are you sure you want to activate this affiliate?"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:291
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:292
 msgid "Toggle Affiliate active status"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:341
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:342
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:52
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:236
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:123
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
 #: src/Controllers/Admin/Products/ProductsListTable.php:101
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:64
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:52
 #: src/Models/Affiliation.php:136
 #: affiliations/ViewAffiliation.js:212
-#: licenses/modules/Details/index.js:14
+#: licenses/modules/Details/index.js:22
 #: util.js:88
 #: Blocks/Dashboard/CustomerLicenses/edit.js:75
 #: sc-license.js:108
@@ -876,11 +888,11 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:342
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:343
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: src/Models/Affiliation.php:136
 #: affiliations/ViewAffiliation.js:213
-#: licenses/modules/Details/index.js:20
+#: licenses/modules/Details/index.js:28
 #: util.js:89
 #: sc-license.js:114
 msgid "Inactive"
@@ -893,7 +905,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:53
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:184
 #: src/Controllers/Admin/Products/ProductsListTable.php:102
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:53
 #: coupons/modules/Code.js:118
@@ -906,9 +918,9 @@ msgstr ""
 msgid "Archived"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:97
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:98
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:77
-#: src/Controllers/Admin/Products/ProductsListTable.php:145
+#: src/Controllers/Admin/Products/ProductsListTable.php:146
 #: bumps/modules/Price.js:33
 #: coupons/modules/NewRestriction.js:83
 #: products/components/price/parts/SingleAmount.js:11
@@ -918,30 +930,31 @@ msgstr ""
 #: settings/shipping/zone/ShippingZone.js:98
 #: store/add-entities.js:257
 #: subscriptions/edit/modules/Price.js:57
-#: subscriptions/show/modules/CurrentPlan.js:87
+#: subscriptions/show/modules/CurrentPlan.js:88
 #: upsell-funnels/modules/Price.js:33
 #: Blocks/CheckoutForm/entities.js:19
 msgid "Price"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:111
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:112
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:90
-#: src/Controllers/Admin/Customers/CustomersListTable.php:63
+#: src/Controllers/Admin/Customers/CustomersListTable.php:65
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:79
-#: src/Controllers/Admin/Orders/OrdersListTable.php:132
-#: src/Controllers/Admin/Products/ProductsListTable.php:163
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:121
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:105
+#: src/Controllers/Admin/Orders/OrdersListTable.php:136
+#: src/Controllers/Admin/Products/ProductsListTable.php:164
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:125
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:106
 msgid "Select comment"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:173
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:174
 msgid "No order bumps found."
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:193
-#: src/Controllers/Admin/Products/ProductsListTable.php:306
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:188
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:194
+#: src/Controllers/Admin/Orders/OrdersListTable.php:254
+#: src/Controllers/Admin/Products/ProductsListTable.php:307
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:189
 #: invoices/store/entities.js:70
 #: products/modules/Prices/NewPrice/index.js:142
 #: products/modules/Prices/Price/Header.js:85
@@ -953,40 +966,40 @@ msgstr ""
 msgid "Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:206
-#: src/Controllers/Admin/Products/ProductsListTable.php:319
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:201
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:207
+#: src/Controllers/Admin/Products/ProductsListTable.php:320
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:202
 msgid "One-Time"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:227
-#: src/Controllers/Admin/Products/ProductsListTable.php:379
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:228
+#: src/Controllers/Admin/Products/ProductsListTable.php:380
 #: src/Controllers/Admin/Tables/ListTable.php:74
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:222
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:223
 #: settings/shipping/profile/ShippingProfile.js:114
 #: settings/tax-region/TaxRegionSettings.js:227
 msgid "Updated"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:272
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:273
 #: bumps/EditBump.js:163
 msgid "Edit Bump"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsController.php:23
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsController.php:20
 msgid "Subscription Saver & Insights"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:48
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:51
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:61
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:104
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:108
 #: admin/user-profile.php:5
 #: abandoned-checkouts/modules/Customer.js:14
 #: checkouts/modules/SelectCustomer/index.js:94
 #: coupons/modules/NewRestriction.js:91
 #: invoices/modules/Customer.js:17
 #: invoices/store/entities.js:94
-#: licenses/modules/Customer.js:41
+#: licenses/modules/Customer.js:42
 #: orders/modules/Customer.js:16
 #: store/add-entities.js:88
 #: subscriptions/edit/modules/Customer.js:12
@@ -994,8 +1007,8 @@ msgstr ""
 msgid "Customer"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:49
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:110
 #: invoices/modules/Subscriptions.js:16
 #: orders/modules/Subscriptions.js:52
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
@@ -1010,48 +1023,48 @@ msgstr ""
 msgid "Plan"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:50
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:53
 #: store/add-entities.js:60
 msgid "Cancellation Reason"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:51
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:54
 msgid "Comment"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:55
 msgid "Plan Status"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:66
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:70
 msgid "No product"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:86
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:90
 msgid "All Cancellation Attempts"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:123
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:130
 msgid "No cancellation acts."
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:147
-#: src/Controllers/Admin/Customers/CustomersListTable.php:143
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:154
+#: src/Controllers/Admin/Customers/CustomersListTable.php:154
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:134
 #: customers/EditCustomer.js:123
 msgid "Edit Customer"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:148
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:389
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:155
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:407
 msgid "No name provided"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:154
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:161
 #: abandoned-checkouts/modules/Customer.js:26
 #: checkouts/modules/SelectCustomer/index.js:107
 #: invoices/modules/Customer.js:27
-#: licenses/modules/Customer.js:53
+#: licenses/modules/Customer.js:54
 #: orders/modules/Customer.js:28
 #: subscriptions/edit/modules/Customer.js:24
 #: subscriptions/show/modules/Customer.js:28
@@ -1059,11 +1072,11 @@ msgid "View Customer"
 msgstr ""
 
 #. translators: Subscription saver feature. This is displayed if the subscription has been "Saved" from cancellation.
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:188
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:205
 msgid "Saved"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:190
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:207
 msgid "Coupon Applied"
 msgstr ""
 
@@ -1095,7 +1108,7 @@ msgstr ""
 #. translators: coupon expiration date.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:179
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:191
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:318
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:336
 msgid "Valid until %s"
 msgstr ""
 
@@ -1106,12 +1119,12 @@ msgid "%d%% off"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:202
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:335
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:353
 msgid "No discount."
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:217
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:350
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:368
 #: components/affiliates/AffiliateFooter.js:50
 #: coupons/modules/Types.js:33
 #: coupons/modules/Types.js:120
@@ -1125,12 +1138,12 @@ msgstr ""
 
 #. translators: number of months.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:221
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:354
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:372
 msgid "For %d months"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:224
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:357
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:375
 #: coupons/modules/Types.js:37
 #: coupons/modules/Types.js:127
 #: coupons/Sidebar.js:30
@@ -1152,7 +1165,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:295
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:165
-#: src/Controllers/Admin/Products/ProductsListTable.php:502
+#: src/Controllers/Admin/Products/ProductsListTable.php:503
 #: bumps/EditBump.js:127
 #: coupons/components/coupon/ActionsDropdown.js:29
 #: coupons/components/CouponActionsDropdown.js:96
@@ -1167,7 +1180,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:295
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:165
-#: src/Controllers/Admin/Products/ProductsListTable.php:502
+#: src/Controllers/Admin/Products/ProductsListTable.php:503
 #: bumps/EditBump.js:128
 #: coupons/components/coupon/ActionsDropdown.js:30
 #: coupons/components/CouponActionsDropdown.js:97
@@ -1217,7 +1230,7 @@ msgid "Not spam"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:364
-#: src/Controllers/Admin/Products/ProductsListTable.php:590
+#: src/Controllers/Admin/Products/ProductsListTable.php:591
 msgid "Delete permanently"
 msgstr ""
 
@@ -1237,11 +1250,11 @@ msgstr ""
 msgid "Customers"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:51
+#: src/Controllers/Admin/Customers/CustomersListTable.php:53
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:64
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:50
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:106
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
 #: affiliation-referrals/modules/Click.js:73
 #: affiliation-referrals/modules/Summary.js:37
 #: affiliations/modules/Details.js:98
@@ -1254,12 +1267,12 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:108
+#: src/Controllers/Admin/Customers/CustomersListTable.php:119
 msgid "No customers found."
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:119
-#: src/Controllers/Admin/Products/ProductsListTable.php:336
+#: src/Controllers/Admin/Customers/CustomersListTable.php:130
+#: src/Controllers/Admin/Products/ProductsListTable.php:337
 #: src/Integrations/TutorLMS/TutorLMSService.php:167
 msgid "No price"
 msgstr ""
@@ -1276,7 +1289,7 @@ msgid "Invoice"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
-#: src/Controllers/Admin/Orders/OrdersListTable.php:114
+#: src/Controllers/Admin/Orders/OrdersListTable.php:118
 #: customers/modules/Charges.js:69
 #: customers/modules/PaymentMethods/index.js:52
 #: invoices/modules/Charges.js:22
@@ -1286,7 +1299,7 @@ msgid "Method"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:203
-#: src/Controllers/Admin/Orders/OrdersListTable.php:258
+#: src/Controllers/Admin/Orders/OrdersListTable.php:269
 #: components/data-tables/charges-data-table/index.js:24
 #: components/data-tables/charges-data-table/index.js:119
 #: invoices/modules/LineItems.js:205
@@ -1309,7 +1322,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:197
 #: admin/licenses/index.php:7
 #: components/data-tables/licenses-data-table/index.js:26
-#: licenses/License.js:78
+#: licenses/License.js:85
 #: Controllers/LicenseController.php:69
 #: Controllers/LicenseController.php:79
 #: Controllers/LicenseController.php:131
@@ -1349,7 +1362,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:125
 #: components/data-tables/purchases-data-table/purchase-item.js:37
-#: licenses/modules/Details/index.js:17
+#: licenses/modules/Details/index.js:25
 #: licenses/modules/Purchase.js:78
 #: sc-license.js:111
 #: sc-licenses-list.js:83
@@ -1357,7 +1370,7 @@ msgid "Revoked"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:151
-#: src/Controllers/Admin/Products/ProductsListTable.php:458
+#: src/Controllers/Admin/Products/ProductsListTable.php:459
 #: src/Controllers/Web/BuyPageController.php:52
 #: src/Controllers/Web/ProductPageController.php:82
 #: products/EditProduct.js:218
@@ -1366,17 +1379,17 @@ msgid "Edit Product"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:503
+#: src/Controllers/Admin/Products/ProductsListTable.php:504
 msgid "Are you sure you want to restore this product? This will be be available to purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:503
+#: src/Controllers/Admin/Products/ProductsListTable.php:504
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:173
-#: src/Controllers/Admin/Products/ProductsListTable.php:510
+#: src/Controllers/Admin/Products/ProductsListTable.php:511
 msgid "Toggle Product Archive"
 msgstr ""
 
@@ -1384,7 +1397,7 @@ msgstr ""
 msgid "Invalid API Token"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:73
+#: src/Controllers/Admin/Orders/OrdersListTable.php:76
 #: components/data-tables/charges-data-table/index.js:35
 #: orders/modules/LineItems/index.js:29
 #: orders/modules/LineItems/index.js:188
@@ -1395,18 +1408,18 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:75
+#: src/Controllers/Admin/Orders/OrdersListTable.php:78
 #: orders/modules/Refunds.js:53
 #: settings/connection/IncomingWebhooks.js:27
 msgid "Failed"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:112
+#: src/Controllers/Admin/Orders/OrdersListTable.php:116
 #: store/add-entities.js:116
 msgid "Fulfillment"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:113
+#: src/Controllers/Admin/Orders/OrdersListTable.php:117
 #: layouts/partials/admin-settings-sidebar.php:48
 #: abandoned-checkouts/modules/LineItems/index.js:122
 #: checkouts/modules/Payment.js:106
@@ -1429,14 +1442,14 @@ msgstr ""
 msgid "Shipping"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:115
-#: src/Controllers/Admin/Products/ProductsListTable.php:148
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:108
+#: src/Controllers/Admin/Orders/OrdersListTable.php:119
+#: src/Controllers/Admin/Products/ProductsListTable.php:149
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:112
 #: products/modules/integrations/Integrations.js:76
 msgid "Integrations"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:117
+#: src/Controllers/Admin/Orders/OrdersListTable.php:121
 #: customers/modules/Balance/ViewTransactions.js:101
 #: Blocks/BuyButton/edit.js:122
 #: Blocks/CustomerDashboardButton/edit.js:85
@@ -1444,87 +1457,77 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:243
-msgid "Plan Renewal"
-msgstr ""
-
-#: src/Controllers/Admin/Orders/OrdersListTable.php:246
+#: src/Controllers/Admin/Orders/OrdersListTable.php:257
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:209
 #: forms/checkout.php:6
 #: store/add-entities.js:74
 msgid "Checkout"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:263
+#: src/Controllers/Admin/Orders/OrdersListTable.php:274
 #: sc-order-confirmation.js:95
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr ""
 
 #. translators: Hidden accessibility text.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:358
+#: src/Controllers/Admin/Orders/OrdersListTable.php:369
 msgid "Filter by fulfillment"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:362
+#: src/Controllers/Admin/Orders/OrdersListTable.php:373
 msgid "All Fulfillments"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:363
+#: src/Controllers/Admin/Orders/OrdersListTable.php:374
 #: orders/modules/Fulfillment/Unfulfilled.js:38
 #: sc-order-fulfillment-badge.js:7
 msgid "Unfulfilled"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:364
+#: src/Controllers/Admin/Orders/OrdersListTable.php:375
 #: orders/modules/Fulfillment/Fulfilled.js:89
 #: sc-order-fulfillment-badge.js:8
 msgid "Fulfilled"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:365
+#: src/Controllers/Admin/Orders/OrdersListTable.php:376
 #: sc-order-fulfillment-badge.js:11
 msgid "Partially Fulfilled"
 msgstr ""
 
 #. translators: Hidden accessibility text.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:394
+#: src/Controllers/Admin/Orders/OrdersListTable.php:405
 msgid "Filter by shipment"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:398
+#: src/Controllers/Admin/Orders/OrdersListTable.php:409
 msgid "All Shipment Statuses"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:399
+#: src/Controllers/Admin/Orders/OrdersListTable.php:410
 #: orders/modules/Fulfillment/components/StatusDropdown.js:21
 #: sc-fulfillment-shipping-status-badge2.js:7
 #: sc-order-shipment-badge2.js:7
 msgid "Not Shipped"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:400
+#: src/Controllers/Admin/Orders/OrdersListTable.php:411
 #: orders/modules/Fulfillment/components/StatusDropdown.js:22
 #: sc-fulfillment-shipping-status-badge2.js:8
 #: sc-order-shipment-badge2.js:8
 msgid "Shipped"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:401
+#: src/Controllers/Admin/Orders/OrdersListTable.php:412
 #: sc-order-shipment-badge2.js:9
 msgid "Partially Shipped"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:402
+#: src/Controllers/Admin/Orders/OrdersListTable.php:413
 #: orders/modules/Fulfillment/components/StatusDropdown.js:23
 #: sc-fulfillment-shipping-status-badge2.js:9
 #: sc-order-shipment-badge2.js:10
 msgid "Delivered"
-msgstr ""
-
-#: src/Controllers/Admin/Orders/OrdersListTable.php:448
-#: src/Controllers/Admin/Products/ProductsListTable.php:569
-#: sc-product-item-list.js:257
-msgid "Filter"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:22
@@ -1557,7 +1560,7 @@ msgstr ""
 #: product-collections/components/Products.js:28
 #: product-groups/modules/Products.js:45
 #: products/EditProduct.js:214
-#: settings/shipping/profile/Products.js:217
+#: settings/shipping/profile/Products.js:224
 #: upsell-funnels/modules/Conditions.js:132
 #: Blocks/Form/components/SelectPrices.js:111
 #: Blocks/ProductItemList/edit.js:358
@@ -1583,47 +1586,59 @@ msgstr ""
 msgid "Search Orders"
 msgstr ""
 
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/WordPress/PostTypes/FormPostTypeService.php:338
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:184
+#: src/WordPress/PostTypes/FormPostTypeService.php:343
 #: Blocks/Form/components/Mode.js:19
 #: Blocks/Form/components/Mode.js:38
 msgid "Live"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:45
+#: src/Controllers/Admin/Products/ProductsController.php:42
+msgid "No products selected. Please choose at least one product to delete."
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsController.php:44
+#: orders/modules/OrderCancelConfirmModal.js:68
+#: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:63
+#: sc-subscription-payment.js:127
+#: sc-subscription-payment.js:136
+msgid "Go Back"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsController.php:56
 msgid "This product has already been deleted."
 msgid_plural "These products have already been deleted."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:51
+#: src/Controllers/Admin/Products/ProductsController.php:62
 msgid "Delete Product"
 msgid_plural "Delete Products."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:123
+#: src/Controllers/Admin/Products/ProductsController.php:134
 #: licenses/modules/Purchase.js:58
 #: products/components/Url/form.js:68
 msgid "View Product"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:163
+#: src/Controllers/Admin/Products/ProductsController.php:174
 msgid "Product archived."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:163
+#: src/Controllers/Admin/Products/ProductsController.php:174
 msgid "Product restored."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:146
+#: src/Controllers/Admin/Products/ProductsListTable.php:147
 #: affiliation-referrals/CreateAffiliationReferral.js:107
 #: affiliation-referrals/modules/Details.js:32
 #: affiliations/modules/affiliation-products/index.js:221
 msgid "Commission Amount"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:147
+#: src/Controllers/Admin/Products/ProductsListTable.php:148
 #: affiliation-referrals/modules/ReferralItems.js:76
 #: checkouts/modules/Prices.js:135
 #: orders/modules/Fulfillment/CreateFulfillment.js:207
@@ -1635,44 +1650,44 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:149
+#: src/Controllers/Admin/Products/ProductsListTable.php:150
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:192
 #: product-collections/EditProductCollection.js:144
 #: products/modules/Collections/index.js:55
 msgid "Collections"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:150
+#: src/Controllers/Admin/Products/ProductsListTable.php:151
 #: products/components/Status/index.js:25
 #: products/components/Status/index.js:64
 msgid "Product Page"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:151
+#: src/Controllers/Admin/Products/ProductsListTable.php:152
 #: products/modules/Image/ImageDisplay.js:43
 #: products/modules/Publishing.js:62
 msgid "Featured"
 msgstr ""
 
 #. translators: %d is the number of available stock.
-#: src/Controllers/Admin/Products/ProductsListTable.php:175
+#: src/Controllers/Admin/Products/ProductsListTable.php:176
 #: products/modules/Variations/VariantItem.js:164
 msgid "%d Available"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:286
+#: src/Controllers/Admin/Products/ProductsListTable.php:287
 #: sc-product-item-list.js:275
 msgid "No products found."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:343
+#: src/Controllers/Admin/Products/ProductsListTable.php:344
 msgid "Name your own price"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:346
+#: src/Controllers/Admin/Products/ProductsListTable.php:347
 #: checkouts/modules/SelectShipping.js:130
 #: sc-line-item-shipping2.js:26
-#: sc-order-bump2.js:72
+#: sc-order-bump2.js:77
 #: sc-price2.js:30
 #: sc-shipping-choices2.js:68
 #: sc-upsell-totals.js:20
@@ -1680,39 +1695,39 @@ msgid "Free"
 msgstr ""
 
 #. translators: %d is the number of other prices.
-#: src/Controllers/Admin/Products/ProductsListTable.php:357
+#: src/Controllers/Admin/Products/ProductsListTable.php:358
 msgid " and %d other price."
 msgid_plural " and %d other prices."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:415
+#: src/Controllers/Admin/Products/ProductsListTable.php:416
 #: products/components/Status/index.js:81
 #: products/components/Status/index.js:94
 #: products/modules/BuyLink.js:114
 msgid "Published"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:417
+#: src/Controllers/Admin/Products/ProductsListTable.php:418
 #: products/components/Status/index.js:74
 #: products/components/Status/index.js:95
 #: util.js:87
 msgid "Draft"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:479
+#: src/Controllers/Admin/Products/ProductsListTable.php:480
 msgid "Successfully deleted."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:483
+#: src/Controllers/Admin/Products/ProductsListTable.php:484
 msgid "Queued for deletion."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:627
+#: src/Controllers/Admin/Products/ProductsListTable.php:628
 msgid "Filter by Product Collection"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:630
+#: src/Controllers/Admin/Products/ProductsListTable.php:631
 msgid "All Product Collections"
 msgstr ""
 
@@ -1755,22 +1770,21 @@ msgid "Notifications"
 msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:50
-#: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:28
+#: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:24
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:198
-#: admin/subscriptions/index.php:26
+#: admin/subscriptions/index.php:19
 #: layouts/partials/admin-settings-sidebar.php:30
 #: web/dashboard/orders/show.php:58
 #: components/data-tables/subscriptions-data-table/index.js:21
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:64
-#: subscriptions/show/ShowSubscription.js:370
+#: subscriptions/show/ShowSubscription.js:369
 #: sc-subscriptions-list.js:140
 msgid "Subscriptions"
 msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:51
-#: admin/cancellation-insights/index.php:5
 #: layouts/partials/admin-settings-sidebar.php:35
 msgid "Subscription Saver"
 msgstr ""
@@ -1804,38 +1818,38 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
-#: admin/subscriptions/index.php:31
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:48
+#: admin/subscriptions/index.php:24
 msgid "Search Subscriptions"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:65
 #: sc-subscription-status-badge2.js:52
 msgid "Trialing"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:63
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:66
 #: sc-subscription-status-badge2.js:56
 msgid "Past Due"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:107
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:111
 msgid "Remaining Payments"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:202
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:220
 #: coupons/modules/SelectAffiliate.js:131
 #: sc-product-item-list.js:257
 msgid "None"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:237
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:255
 msgid "(one time)"
 msgstr ""
 
 #. translators: used as in time period: "for 3 months"
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:239
-#: sc-order-bump2.js:60
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
+#: sc-order-bump2.js:65
 #: sc-price-choice-container2.js:42
 #: sc-price-choice-container2.js:58
 #: sc-price-choice-container2.js:67
@@ -1851,12 +1865,12 @@ msgstr ""
 msgid "for"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:252
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:270
 msgid "No Product"
 msgstr ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:265
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:283
 #: util/translations.js:14
 #: price.js:35
 #: price.js:49
@@ -1866,7 +1880,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:265
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:283
 #: util/translations.js:15
 #: price.js:35
 #: price.js:49
@@ -1876,7 +1890,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:271
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:289
 #: util/translations.js:21
 #: price.js:37
 msgid "%d week"
@@ -1885,7 +1899,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:271
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:289
 #: util/translations.js:22
 #: price.js:37
 msgid "week"
@@ -1894,7 +1908,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:277
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:295
 #: util/translations.js:28
 #: price.js:39
 #: sc-coupon-form2.js:99
@@ -1904,7 +1918,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:277
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:295
 #: util/translations.js:29
 #: price.js:39
 msgid "month"
@@ -1913,7 +1927,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:283
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
 #: util/translations.js:35
 #: price.js:41
 msgid "%d year"
@@ -1922,7 +1936,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:283
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
 #: util/translations.js:36
 #: price.js:41
 msgid "year"
@@ -1932,15 +1946,24 @@ msgstr[1] ""
 
 #. translators: Coupon % off.
 #. Translators: Percent off.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:327
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:345
 #: util.js:49
 #: price.js:12
 msgid "%1d%% off"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:392
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:410
 #: subscriptions/edit/EditSubscription.js:244
 msgid "Edit Subscription"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Tables/HasModeFilter.php:31
+msgid "Filter by mode"
+msgstr ""
+
+#: src/Controllers/Admin/Tables/HasModeFilter.php:35
+msgid "Live & Test Mode"
 msgstr ""
 
 #: src/Controllers/Admin/Upsells/UpsellsController.php:24
@@ -1949,19 +1972,19 @@ msgstr ""
 msgid "Upsell Funnels"
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsController.php:65
+#: src/Controllers/Admin/Upsells/UpsellsController.php:66
 msgid "View Upsell"
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsController.php:107
+#: src/Controllers/Admin/Upsells/UpsellsController.php:108
 msgid "Funnel enabled."
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsController.php:107
+#: src/Controllers/Admin/Upsells/UpsellsController.php:108
 msgid "Funnel disabled."
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:92
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:93
 #: affiliations/modules/affiliation-products/index.js:324
 #: affiliations/modules/Commission.js:153
 #: bumps/modules/Priority.js:9
@@ -1972,11 +1995,11 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:168
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:169
 msgid "No upsell funnels found."
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:263
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:264
 msgid "Edit Upsell"
 msgstr ""
 
@@ -2059,7 +2082,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:170
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:185
 #: web/buy.php:54
-#: dashboard/Dashboard.js:62
+#: dashboard/Dashboard.js:63
 #: Blocks/CustomerDashboardButton/Block.php:33
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:76
 #: Controllers/ChargeController.php:19
@@ -3961,8 +3984,13 @@ msgstr ""
 msgid "One or more items in your cart exceed the purchase limit. Please adjust the quantity or remove the item to proceed with the checkout."
 msgstr ""
 
-#: src/Support/Errors/ErrorsTranslationService.php:162
-#: src/Support/Errors/ErrorsTranslationService.php:177
+#. translators: %s is the name.
+#: src/Support/Errors/ErrorsTranslationService.php:116
+msgid "The name \"%s\" is already taken. Please choose a different name."
+msgstr ""
+
+#: src/Support/Errors/ErrorsTranslationService.php:171
+#: src/Support/Errors/ErrorsTranslationService.php:186
 msgid "Error."
 msgstr ""
 
@@ -5322,7 +5350,7 @@ msgstr ""
 #: products/modules/Collections/index.js:73
 #: settings/processors/ManualPaymentMethods.js:80
 #: settings/shipping/method/ShippingMethods.js:114
-#: settings/shipping/profile/AddShippingProfile.js:89
+#: settings/shipping/profile/AddShippingProfile.js:102
 #: settings/shipping/rate/ShippingRateForm.js:368
 #: settings/subscription-preservation/Reasons.js:97
 #: upsell-funnels/components/SelectTemplate/index.js:97
@@ -5382,7 +5410,7 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:212
 #: src/WordPress/PostTypes/CartPostTypeService.php:153
-#: src/WordPress/PostTypes/FormPostTypeService.php:97
+#: src/WordPress/PostTypes/FormPostTypeService.php:98
 msgid "Forms"
 msgstr ""
 
@@ -5418,7 +5446,7 @@ msgstr ""
 msgid "Account seeded successfully."
 msgstr ""
 
-#: src/WordPress/CompatibilityService.php:152
+#: src/WordPress/CompatibilityService.php:158
 msgid "<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, consider disabling the Gutenberg plugin.<p>"
 msgstr ""
 
@@ -5567,7 +5595,7 @@ msgid "Deleting This is Restricted"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:120
-#: src/WordPress/PostTypes/FormPostTypeService.php:146
+#: src/WordPress/PostTypes/FormPostTypeService.php:151
 msgid "Store Checkout"
 msgstr ""
 
@@ -5628,7 +5656,7 @@ msgid "Search Carts"
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:251
-#: src/WordPress/PostTypes/FormPostTypeService.php:230
+#: src/WordPress/PostTypes/FormPostTypeService.php:235
 #: src/WordPress/PostTypes/ProductCollectionsPagePostTypeService.php:44
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:44
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:44
@@ -5636,7 +5664,7 @@ msgid "No checkout forms found."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:252
-#: src/WordPress/PostTypes/FormPostTypeService.php:231
+#: src/WordPress/PostTypes/FormPostTypeService.php:236
 #: src/WordPress/PostTypes/ProductCollectionsPagePostTypeService.php:45
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:45
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:45
@@ -5644,7 +5672,7 @@ msgid "No checkout forms found in Trash."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:253
-#: src/WordPress/PostTypes/FormPostTypeService.php:232
+#: src/WordPress/PostTypes/FormPostTypeService.php:237
 #: src/WordPress/PostTypes/ProductCollectionsPagePostTypeService.php:46
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:46
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:46
@@ -5679,86 +5707,86 @@ msgstr ""
 msgid "Cart updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:221
+#: src/WordPress/PostTypes/FormPostTypeService.php:226
 msgctxt "post type general name"
 msgid "Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:222
+#: src/WordPress/PostTypes/FormPostTypeService.php:227
 msgctxt "post type singular name"
 msgid "Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:223
+#: src/WordPress/PostTypes/FormPostTypeService.php:228
 msgctxt "Checkout Form"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:224
+#: src/WordPress/PostTypes/FormPostTypeService.php:229
 msgid "Add new Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:225
+#: src/WordPress/PostTypes/FormPostTypeService.php:230
 msgid "New Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:226
+#: src/WordPress/PostTypes/FormPostTypeService.php:231
 msgid "Edit Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:227
+#: src/WordPress/PostTypes/FormPostTypeService.php:232
 msgid "View Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:228
+#: src/WordPress/PostTypes/FormPostTypeService.php:233
 msgid "All Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:229
+#: src/WordPress/PostTypes/FormPostTypeService.php:234
 msgid "Search Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:233
+#: src/WordPress/PostTypes/FormPostTypeService.php:238
 msgid "Checkout Forms list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:234
+#: src/WordPress/PostTypes/FormPostTypeService.php:239
 msgid "Checkout Forms list"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:235
+#: src/WordPress/PostTypes/FormPostTypeService.php:240
 msgid "Checkout Form published."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:236
+#: src/WordPress/PostTypes/FormPostTypeService.php:241
 msgid "Checkout Form published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:237
+#: src/WordPress/PostTypes/FormPostTypeService.php:242
 msgid "Checkout Form reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:238
+#: src/WordPress/PostTypes/FormPostTypeService.php:243
 msgid "Checkout Form scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:239
+#: src/WordPress/PostTypes/FormPostTypeService.php:244
 msgid "Checkout Form updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:291
+#: src/WordPress/PostTypes/FormPostTypeService.php:296
 msgid "Published In"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:292
+#: src/WordPress/PostTypes/FormPostTypeService.php:297
 msgid "Mode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:293
+#: src/WordPress/PostTypes/FormPostTypeService.php:298
 msgid "Shortcode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:362
+#: src/WordPress/PostTypes/FormPostTypeService.php:367
 msgid "(no title)"
 msgstr ""
 
@@ -5975,7 +6003,7 @@ msgstr ""
 #: web/buy-template.php:62
 #: products/modules/Prices/index.js:59
 #: subscriptions/edit/modules/Price.js:54
-#: subscriptions/show/modules/CurrentPlan.js:84
+#: subscriptions/show/modules/CurrentPlan.js:85
 msgid "Pricing"
 msgstr ""
 
@@ -6027,6 +6055,15 @@ msgstr ""
 msgid "SureCart Layout"
 msgstr ""
 
+#: src/WordPress/UpgradeNoticeService.php:99
+msgid "Important: Backup Your Site Before Updating!"
+msgstr ""
+
+#. translators: %1$s Link open tag, %2$s: Link close tag.
+#: src/WordPress/UpgradeNoticeService.php:106
+msgid "To ensure a smooth update, please %1$sbackup your site%2$s before proceeding. For the safest experience, perform the update in a staging environment first. This helps prevent any unexpected issues and ensures your site remains up and running smoothly."
+msgstr ""
+
 #: src/WordPress/Users/UsersService.php:109
 msgid "Limit result set to users with a customer."
 msgstr ""
@@ -6066,7 +6103,7 @@ msgstr ""
 #: settings/shipping/zone/ShippingZoneForm.js:237
 #: settings/tax-override/TaxOverrideModal.js:272
 #: sc-customer-edit.js:123
-#: sc-order-bump2.js:79
+#: sc-order-bump2.js:84
 #: sc-wordpress-user-edit.js:61
 msgid "Save"
 msgstr ""
@@ -6147,15 +6184,15 @@ msgstr ""
 msgid "Payout Batch"
 msgstr ""
 
-#: admin/affiliation-referrals/index.php:14
+#: admin/affiliation-referrals/index.php:15
 msgid "What are test mode referrals?"
 msgstr ""
 
-#: admin/affiliation-referrals/index.php:16
+#: admin/affiliation-referrals/index.php:17
 msgid "Test mode referrals are created when an order is placed in test mode and an affiliate is associated with the order. These referrals do not impact stats, are not included in payouts, and are not visible to affiliates. They are solely for testing your affiliate setup and can be deleted or ignored."
 msgstr ""
 
-#: admin/affiliation-referrals/index.php:42
+#: admin/affiliation-referrals/index.php:47
 msgid "Are you sure you want to delete this referral? This action cannot be undone."
 msgstr ""
 
@@ -6180,8 +6217,7 @@ msgstr ""
 msgid "Get Subscription Saver"
 msgstr ""
 
-#: admin/cancellation-insights/index.php:24
-#: cancellation-insights/CancellationInsights.js:119
+#: admin/cancellation-insights/index.php:20
 msgid "Cancellation Attempts"
 msgstr ""
 
@@ -6399,7 +6435,7 @@ msgstr[1] ""
 #: components/subscriptions/Cancel.js:54
 #: components/subscriptions/CancelPendingUpdate.js:150
 #: coupons/components/DisableModal.js:30
-#: coupons/CreateCoupon.js:142
+#: coupons/CreateCoupon.js:144
 #: coupons/EditCoupon.js:246
 #: coupons/modules/Code.js:207
 #: coupons/modules/CustomerSelector.js:155
@@ -6414,6 +6450,7 @@ msgstr[1] ""
 #: customers/modules/ShippingAddress/EditAddressModal.js:86
 #: dashboard/DatePicker.js:25
 #: hocs/withConfirm.js:54
+#: licenses/modules/modals/EditKeyModal.js:132
 #: orders/modules/Fulfillment/components/AddTracking.js:117
 #: orders/modules/Fulfillment/CreateFulfillment.js:352
 #: orders/modules/OrderStatusConfirmModal.js:78
@@ -6440,7 +6477,7 @@ msgstr[1] ""
 #: settings/advanced/components/CustomerSyncModal.js:106
 #: settings/processors/CreateEditPaymentMethod.js:152
 #: settings/shipping/method/ShippingMethodForm.js:153
-#: settings/shipping/profile/AddShippingProfile.js:97
+#: settings/shipping/profile/AddShippingProfile.js:110
 #: settings/shipping/profile/DeleteShippingProfile.js:76
 #: settings/shipping/rate/ShippingRateForm.js:511
 #: settings/shipping/zone/ConfirmDeleteZone.js:49
@@ -6489,12 +6526,13 @@ msgstr ""
 msgid "This page is important for certain SureCart eCommerce features. Bringing back this page will make sure SureCart works as expected."
 msgstr ""
 
-#: admin/subscriptions/index.php:16
-msgid "Subscription Insights"
-msgstr ""
-
 #: admin/user-profile.php:38
 msgid "This user is not a customer."
+msgstr ""
+
+#: layouts/partials/admin-header.php:58
+#: dashboard/Dashboard.js:80
+msgid "View Reports"
 msgstr ""
 
 #: layouts/partials/admin-settings-header.php:71
@@ -6703,105 +6741,6 @@ msgstr ""
 msgid "Open or close account menu"
 msgstr ""
 
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:156
-#: ui/InsightsPeriodFilter.js:18
-msgid "Last 30 Days"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:162
-#: ui/InsightsPeriodFilter.js:24
-msgid "Today"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:168
-#: ui/InsightsPeriodFilter.js:30
-msgid "Yesterday"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:174
-#: ui/InsightsPeriodFilter.js:36
-msgid "This Week"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:180
-#: ui/InsightsPeriodFilter.js:42
-msgid "Last Week"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:186
-#: ui/InsightsPeriodFilter.js:48
-msgid "This Month"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:192
-#: ui/InsightsPeriodFilter.js:54
-msgid "Last Month"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:214
-msgid "Recoverable Checkouts"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:215
-msgid "Total Recoverable Checkouts"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:228
-msgid "Recovered Checkouts"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:229
-msgid "Potential Recovered Checkouts"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:231
-msgid "Total recovered checkouts"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:248
-msgid "Checkout Recovery Rate"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:249
-msgid "Potential Checkout Recovery Rate"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:251
-msgid "Percentage of checkouts recovered"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:269
-msgid "Recoverable Revenue"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:270
-msgid "Total recoverable revenue"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:288
-msgid "Recovered Revenue"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:289
-msgid "Potential Recovered Revenue"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:291
-msgid "Total recovered revenue"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:317
-msgid "Revenue Recovery Rate"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:318
-msgid "Potential Revenue Recovery Rate"
-msgstr ""
-
-#: abandoned-checkouts-stats/AbandonedCheckoutStats.js:320
-msgid "Percentage of revenue recovered"
-msgstr ""
-
 #: abandoned-checkouts/AbandonedCheckout.js:97
 #: affiliations/modules/affiliation-products/Product.js:69
 #: checkouts/modules/NewPrice.js:61
@@ -6835,8 +6774,8 @@ msgstr ""
 #: settings/processors/ManualPaymentMethod.js:83
 #: settings/subscription-preservation/Reason.js:45
 #: subscriptions/edit/EditSubscription.js:198
-#: subscriptions/show/modules/CurrentPlan.js:62
-#: subscriptions/show/modules/CurrentPlan.js:67
+#: subscriptions/show/modules/CurrentPlan.js:63
+#: subscriptions/show/modules/CurrentPlan.js:68
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:70
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:75
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:60
@@ -6930,7 +6869,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:71
 #: sc-customer-details2.js:43
 #: sc-customer-edit.js:113
-#: sc-form-components-validator2.js:131
+#: sc-form-components-validator2.js:132
 #: sc-order-billing-address2.js:104
 msgid "Billing Address"
 msgstr ""
@@ -6956,7 +6895,7 @@ msgstr ""
 #: affiliations/modules/Url.js:37
 #: licenses/modules/Details/Copy.js:21
 #: products/modules/Prices/Price/CopyInput.js:32
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:283
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:289
 #: sc-license.js:139
 msgid "Copy"
 msgstr ""
@@ -6990,6 +6929,7 @@ msgstr ""
 #: products/components/price/parts/SetupFee.js:141
 #: products/modules/Prices/Price/Header.js:59
 #: settings/subscription-preservation/Reason.js:69
+#: subscriptions/show/modules/CurrentPlan.js:186
 #: upsell-funnels/modules/Upsell/Discount.js:35
 #: sc-coupon-form2.js:113
 #: sc-order-confirmation-totals2.js:31
@@ -7016,7 +6956,7 @@ msgstr ""
 
 #: abandoned-checkouts/modules/Details.js:74
 #: invoices/modules/Details.js:70
-#: licenses/modules/Details/index.js:41
+#: licenses/modules/Details/index.js:56
 #: orders/modules/Details.js:74
 #: subscriptions/show/modules/Details.js:186
 msgid "Created on %s"
@@ -7153,7 +7093,7 @@ msgstr ""
 #: affiliation-referrals/EditAffiliationReferral.js:248
 #: affiliation-requests/EditAffiliationRequest.js:240
 #: orders/Order.js:267
-#: subscriptions/show/ShowSubscription.js:418
+#: subscriptions/show/ShowSubscription.js:417
 msgid "Actions"
 msgstr ""
 
@@ -7186,7 +7126,7 @@ msgstr ""
 #: affiliation-referrals/modules/Affiliation.js:104
 #: affiliations/modules/affiliation-products/Product.js:104
 #: bumps/modules/Price.js:54
-#: subscriptions/show/modules/CurrentPlan.js:154
+#: subscriptions/show/modules/CurrentPlan.js:155
 #: upsell-funnels/modules/Price.js:54
 #: upsell-funnels/modules/Upsell/Product.js:90
 msgid "Change"
@@ -7534,7 +7474,7 @@ msgstr ""
 #: orders/modules/Fulfillment/CreateFulfillment.js:53
 #: products/modules/BuyLink.js:60
 #: products/modules/Prices/Price/CopyInput.js:12
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:39
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:45
 msgid "Copied to clipboard."
 msgstr ""
 
@@ -7565,7 +7505,7 @@ msgstr ""
 #: bumps/CreateBump.js:43
 #: checkouts/CreateCheckout.js:117
 #: components/Error.js:31
-#: coupons/CreateCoupon.js:60
+#: coupons/CreateCoupon.js:62
 #: hooks/useDataApi/index.js:53
 #: licenses/modules/Activations/Activation.js:107
 #: product-groups/CreateProductGroup.js:35
@@ -7793,62 +7733,6 @@ msgstr ""
 msgid "High"
 msgstr ""
 
-#: cancellation-insights/CancellationInsights.js:120
-msgid "Total Cancellation Attempts"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:135
-msgid "Saved Count"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:136
-msgid "Total Saved Count"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:150
-msgid "Saved By Coupon"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:151
-msgid "Total Saved By Coupon"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:168
-msgid "Total Lost"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:169
-msgid "Total Lost Cancellations"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:186
-msgid "Saved Rate"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:187
-msgid "Percentage Of Subscriptions Saved"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:203
-msgid "Saved Rate By Coupon"
-msgstr ""
-
-#: cancellation-insights/CancellationInsights.js:204
-msgid "Percentage Of Subscriptions Saved By Coupon"
-msgstr ""
-
-#: cancellation-insights/CancellationReasonStats.js:139
-msgid "No Reason Provided"
-msgstr ""
-
-#: cancellation-insights/CancellationReasonStats.js:170
-msgid "Cancellation Reasons"
-msgstr ""
-
-#: cancellation-insights/CancellationReasonStats.js:181
-msgid "There are no cancellation reasons for this period."
-msgstr ""
-
 #: checkouts/CreateCheckout.js:170
 msgid "Order Created."
 msgstr ""
@@ -7903,8 +7787,8 @@ msgstr ""
 #: checkouts/modules/NewPrice.js:169
 #: product-groups/modules/NewProduct.js:59
 #: product-groups/modules/NewProduct.js:75
-#: settings/shipping/profile/Products.js:353
-#: settings/shipping/profile/Products.js:375
+#: settings/shipping/profile/Products.js:360
+#: settings/shipping/profile/Products.js:382
 #: upsell-funnels/modules/Upsell/index.js:52
 #: Blocks/CheckoutForm/components/Options.js:39
 #: Blocks/CheckoutForm/components/PriceChoices.js:128
@@ -7986,8 +7870,8 @@ msgstr ""
 #: products/modules/Image/ConfirmDeleteImage.js:61
 #: products/modules/SingleDownload.js:322
 #: settings/brand/Logo.js:81
-#: settings/shipping/profile/Products.js:283
-#: settings/shipping/profile/Products.js:336
+#: settings/shipping/profile/Products.js:290
+#: settings/shipping/profile/Products.js:343
 #: settings/shipping/zone/ShippingZone.js:154
 #: subscriptions/edit/modules/Trial.js:43
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
@@ -8334,7 +8218,7 @@ msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:228
 #: subscriptions/edit/modules/Price.js:60
-#: subscriptions/show/modules/CurrentPlan.js:90
+#: subscriptions/show/modules/CurrentPlan.js:91
 #: subscriptions/show/modules/PendingUpdate.js:59
 msgid "Qty"
 msgstr ""
@@ -8386,7 +8270,7 @@ msgstr ""
 #: components/subscriptions/Cancel.js:86
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:115
 #: subscriptions/show/modules/modals/ForceCancelModal.js:93
-#: subscriptions/show/ShowSubscription.js:206
+#: subscriptions/show/ShowSubscription.js:198
 msgid "Cancel Subscription"
 msgstr ""
 
@@ -8407,7 +8291,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
 #: components/data-tables/subscriptions-data-table/UnCancel.js:58
 #: components/subscriptions/Cancel.js:92
-#: subscriptions/show/ShowSubscription.js:196
+#: subscriptions/show/ShowSubscription.js:187
 msgid "Don't Cancel"
 msgstr ""
 
@@ -8758,33 +8642,33 @@ msgstr ""
 msgid "Disable"
 msgstr ""
 
-#: coupons/CreateCoupon.js:55
+#: coupons/CreateCoupon.js:57
 msgid "Coupon created."
 msgstr ""
 
-#: coupons/CreateCoupon.js:75
+#: coupons/CreateCoupon.js:77
 msgid "Create New Coupon"
 msgstr ""
 
-#: coupons/CreateCoupon.js:83
+#: coupons/CreateCoupon.js:85
 #: coupons/modules/Name.js:8
 msgid "Coupon Name"
 msgstr ""
 
-#: coupons/CreateCoupon.js:84
+#: coupons/CreateCoupon.js:86
 #: coupons/modules/Name.js:11
 msgid "This is an internal name for your coupon. This is not visible to customers."
 msgstr ""
 
-#: coupons/CreateCoupon.js:98
+#: coupons/CreateCoupon.js:100
 msgid "Promotion Code"
 msgstr ""
 
-#: coupons/CreateCoupon.js:103
+#: coupons/CreateCoupon.js:105
 msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
 msgstr ""
 
-#: coupons/CreateCoupon.js:139
+#: coupons/CreateCoupon.js:141
 msgid "Create Coupon"
 msgstr ""
 
@@ -8974,7 +8858,7 @@ msgid "Add Product Restriction"
 msgstr ""
 
 #: coupons/modules/ProductRestrictions.js:84
-#: settings/shipping/profile/Products.js:302
+#: settings/shipping/profile/Products.js:309
 msgid "Find a product..."
 msgstr ""
 
@@ -9455,11 +9339,11 @@ msgstr ""
 msgid "View All"
 msgstr ""
 
-#: dashboard/Dashboard.js:82
+#: dashboard/Dashboard.js:89
 msgid "Setup Complete!"
 msgstr ""
 
-#: dashboard/Dashboard.js:88
+#: dashboard/Dashboard.js:95
 msgid "Your store is now connected to SureCart."
 msgstr ""
 
@@ -9532,20 +9416,20 @@ msgstr ""
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:60
 #: sc-customer-details2.js:43
 #: sc-customer-edit.js:98
-#: sc-form-components-validator2.js:129
+#: sc-form-components-validator2.js:130
 #: sc-order-shipping-address2.js:113
 msgid "Shipping Address"
 msgstr ""
 
-#: licenses/License.js:45
+#: licenses/License.js:51
 msgid "License updated."
 msgstr ""
 
-#: licenses/License.js:55
+#: licenses/License.js:62
 msgid "Save License"
 msgstr ""
 
-#: licenses/License.js:81
+#: licenses/License.js:88
 msgid "View License"
 msgstr ""
 
@@ -9597,25 +9481,47 @@ msgstr ""
 msgid "%1s of %2s Activations Used"
 msgstr ""
 
-#: licenses/modules/Details/index.js:28
+#: licenses/modules/Details/index.js:36
 #: store/add-entities.js:152
 #: Controllers/LicenseController.php:134
 msgid "License"
 msgstr ""
 
-#: licenses/modules/Details/index.js:35
+#: licenses/modules/Details/index.js:50
+#: licenses/modules/modals/EditKeyModal.js:104
 #: settings/upgrade/UpgradeSettings.js:65
 #: sc-license.js:139
 msgid "License Key"
 msgstr ""
 
-#: licenses/modules/Details/index.js:49
+#: licenses/modules/Details/index.js:70
+#: licenses/modules/modals/EditKeyModal.js:85
+msgid "Edit License Key"
+msgstr ""
+
+#: licenses/modules/Details/index.js:76
 #: products/modules/Licensing.js:63
 msgid "Activation Limit"
 msgstr ""
 
-#: licenses/modules/Details/index.js:58
+#: licenses/modules/Details/index.js:85
 msgid "Enter the number of unique activations for this key. Leave blank for infinite."
+msgstr ""
+
+#: licenses/modules/modals/EditKeyModal.js:71
+msgid "License Key updated."
+msgstr ""
+
+#: licenses/modules/modals/EditKeyModal.js:97
+msgid "Changing the license key will invalidate the current license key."
+msgstr ""
+
+#: licenses/modules/modals/EditKeyModal.js:116
+msgid "Regenerate License Key"
+msgstr ""
+
+#: licenses/modules/modals/EditKeyModal.js:129
+msgid "Save and Update Key"
 msgstr ""
 
 #: onboarding/components/ConfirmExit.js:9
@@ -9897,13 +9803,6 @@ msgstr ""
 
 #: orders/modules/OrderCancelConfirmModal.js:61
 msgid "Are you sure you wish to cancel the order?"
-msgstr ""
-
-#: orders/modules/OrderCancelConfirmModal.js:68
-#: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:63
-#: sc-subscription-payment.js:127
-#: sc-subscription-payment.js:136
-msgid "Go Back"
 msgstr ""
 
 #: orders/modules/OrderCancelConfirmModal.js:75
@@ -10532,7 +10431,7 @@ msgid "Expiring access will revoke integrations and licenses."
 msgstr ""
 
 #: products/components/price/parts/RevokeAfterDays.js:58
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:333
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:339
 msgid "days"
 msgstr ""
 
@@ -11106,6 +11005,7 @@ msgid "Done"
 msgstr ""
 
 #: products/modules/Prices/Price/Header.js:60
+#: subscriptions/show/modules/CurrentPlan.js:187
 #: sc-price-choice-container2.js:69
 #: sc-price-choice.js:813
 #: sc-price2.js:56
@@ -11434,7 +11334,7 @@ msgstr ""
 #: settings/abandoned/AbandonedSettings.js:62
 #: settings/account/AccountSettings.js:98
 #: settings/advanced/AdvancedSettings.js:96
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:57
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:63
 #: settings/brand/BrandSettings.js:71
 #: settings/connection/ConnectionSettings.js:38
 #: settings/customer/CustomerSettings.js:36
@@ -11920,159 +11820,159 @@ msgstr ""
 msgid "Start Sync"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:67
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:73
 msgid "Affiliates Settings"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:77
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:83
 msgid "Affiliate Signups"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:78
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:84
 msgid "Configure how affiliates signup and get approved to promote products in your store."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:93
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:99
 msgid "Allow New Affiliate Signups"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:95
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:101
 msgid "Do you want to allow new affiliates to sign up?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:102
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:108
 msgid "Program Description"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:103
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:109
 msgid "Let affiliates know any specifics about your program and what to expect from being an affiliate. This is shown to affiliates when they sign up for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:117
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:123
 msgid "Signup Question"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:118
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:124
 msgid "What question do you want to ask affiliates on the signup form? If blank, the default question \"How will you promote this store?\" will be used."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:122
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:128
 msgid "How will you promote this store?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:137
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:143
 msgid "Affiliate Terms URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:138
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:144
 msgid "Where can affiliates find the terms and conditions for your affiliate program? If provided, this URL will be shown to affiliates when they sign up for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:163
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:169
 msgid "Payout Email Field on Signup"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:165
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:171
 msgid "Do you want to include the payout email field on the signup form?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:181
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:187
 msgid "Auto Approve New Affiliates"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:183
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:189
 msgid "Do you want to automatically approve new affiliate signups? If disabled, you will need to manually approve each affiliate signup."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:190
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:196
 msgid "Signup URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:191
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:197
 msgid "This is where you will send affiliates to signup for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:211
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:217
 msgid "Referral Tracking"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:212
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:218
 msgid "Configure how clicks are tracked and how referrals are credited to affiliates."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:230
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:236
 msgid "Tracking"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:240
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:246
 msgid "Track affiliate referrals on this site."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:255
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:261
 msgid "Want to add tracking to a different site?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:265
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:271
 msgid "Tracking Script"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:268
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:274
 msgid "Copy and paste the tracking code into the <head> section or just before the closing </body> tag of your website. Ensure this is only added to sites that don't already have the script included via the WordPress plugin."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:304
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:310
 msgid "First"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:308
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:314
 msgid "Last"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:311
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:317
 msgid "Referrer Type"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:312
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:318
 msgid "Should the first or last referrer be credited?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:319
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:325
 msgid "Tracking Length"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:320
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:326
 msgid "How many days should the tracking code last for?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:346
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:352
 msgid "Auto Approve New Referrals"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:348
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:354
 msgid "Do you want to automatically approve new referrals? If disabled, you will need to manually approve each referral."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:355
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:361
 msgid "Affiliate Referral URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:356
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:362
 msgid "Where should affiliates send their traffic? This URL will be used to generate the affiliate referral link for each affiliate with their unique affiliate code."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:371
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:377
 msgid "Commissions & Payouts"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:372
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:378
 msgid "Configure how affiliates earn commissions and how they get paid."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:397
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:403
 msgid "Payout Instructions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:398
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:404
 msgid "Let affiliates know how they will be paid, how often, and any terms or conditions for payment. These details will be shown to affiliates so they know what to expect."
 msgstr ""
 
@@ -12776,12 +12676,12 @@ msgstr ""
 msgid "The profile name is required."
 msgstr ""
 
-#: settings/shipping/profile/AddShippingProfile.js:72
+#: settings/shipping/profile/AddShippingProfile.js:75
 msgid "Add Shipping Profile"
 msgstr ""
 
-#: settings/shipping/profile/AddShippingProfile.js:79
-msgid "Customers won’t see this."
+#: settings/shipping/profile/AddShippingProfile.js:89
+msgid "Add a unique name. Customers won’t see this."
 msgstr ""
 
 #: settings/shipping/profile/DeleteShippingProfile.js:36
@@ -12800,38 +12700,38 @@ msgstr ""
 msgid "Product removed"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:127
+#: settings/shipping/profile/Products.js:134
 msgid "Product added"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:192
+#: settings/shipping/profile/Products.js:199
 msgid "%d price"
 msgid_plural "%d prices"
 msgstr[0] ""
 msgstr[1] ""
 
-#: settings/shipping/profile/Products.js:220
+#: settings/shipping/profile/Products.js:227
 #: settings/shipping/ShippingSettings.js:185
 msgid "All products not in other profiles"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:221
+#: settings/shipping/profile/Products.js:228
 msgid "Add products to this shipping profile."
 msgstr ""
 
-#: settings/shipping/profile/Products.js:246
+#: settings/shipping/profile/Products.js:253
 msgid "New products are added to this profile."
 msgstr ""
 
-#: settings/shipping/profile/Products.js:365
+#: settings/shipping/profile/Products.js:372
 msgid "No products in this profile."
 msgstr ""
 
-#: settings/shipping/profile/Products.js:405
+#: settings/shipping/profile/Products.js:412
 msgid "To charge different rates for only certain products, create a new profile in"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:415
+#: settings/shipping/profile/Products.js:422
 msgid "shipping settings"
 msgstr ""
 
@@ -13976,54 +13876,6 @@ msgstr ""
 msgid "Integration Providers"
 msgstr ""
 
-#: subscription-insights/SubscriptionInsights.js:103
-msgid "Total Subscriptions"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:104
-msgid "Total Number Of Subscriptions"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:119
-msgid "New Subscriptions"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:120
-msgid "Number Of New Subscriptions"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:157
-msgid "New Trials"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:158
-msgid "Number Of New Trials"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:169
-msgid "MRR"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:170
-msgid "Total Monthly Recurring Revenue"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:211
-msgid "MRR Lost"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:212
-msgid "Lost Monthly Recurring Revenue"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:231
-msgid "Outstanding Installments"
-msgstr ""
-
-#: subscription-insights/SubscriptionInsights.js:232
-msgid "Total Of Installment Payments Remaining"
-msgstr ""
-
 #: subscriptions/edit/EditSubscription.js:124
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:52
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:61
@@ -14032,7 +13884,7 @@ msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:240
 #: subscriptions/show/modules/SubscriptionItems.js:50
-#: subscriptions/show/ShowSubscription.js:374
+#: subscriptions/show/ShowSubscription.js:373
 msgid "Subscription Details"
 msgstr ""
 
@@ -14045,7 +13897,7 @@ msgstr ""
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:331
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:120
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:164
-#: subscriptions/show/ShowSubscription.js:251
+#: subscriptions/show/ShowSubscription.js:243
 msgid "Update Subscription"
 msgstr ""
 
@@ -14190,15 +14042,15 @@ msgstr ""
 msgid "Renews on"
 msgstr ""
 
-#: subscriptions/show/modules/CurrentPlan.js:55
+#: subscriptions/show/modules/CurrentPlan.js:56
 msgid "Coupon Added"
 msgstr ""
 
-#: subscriptions/show/modules/CurrentPlan.js:56
+#: subscriptions/show/modules/CurrentPlan.js:57
 msgid "Coupon Removed"
 msgstr ""
 
-#: subscriptions/show/modules/CurrentPlan.js:220
+#: subscriptions/show/modules/CurrentPlan.js:245
 msgid "Add Coupon"
 msgstr ""
 
@@ -14250,7 +14102,7 @@ msgid "Are you sure you want to complete this payment plan? This will eliminate 
 msgstr ""
 
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:63
-#: subscriptions/show/ShowSubscription.js:222
+#: subscriptions/show/ShowSubscription.js:214
 msgid "Complete Subscription"
 msgstr ""
 
@@ -14313,7 +14165,7 @@ msgid "Subscription paused."
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:101
-#: subscriptions/show/ShowSubscription.js:279
+#: subscriptions/show/ShowSubscription.js:278
 msgid "Pause Subscription"
 msgstr ""
 
@@ -14322,12 +14174,12 @@ msgid "This will automatically pause the subscription on %s. Please choose a res
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:146
-#: subscriptions/show/ShowSubscription.js:188
+#: subscriptions/show/ShowSubscription.js:262
 msgid "Don't Pause"
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:155
-#: subscriptions/show/ShowSubscription.js:278
+#: subscriptions/show/ShowSubscription.js:277
 msgid "Pause"
 msgstr ""
 
@@ -14428,39 +14280,39 @@ msgstr ""
 msgid "Payment method updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:199
+#: subscriptions/show/ShowSubscription.js:190
 msgid "Cancel Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:231
+#: subscriptions/show/ShowSubscription.js:223
 msgid "Restore Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:300
+#: subscriptions/show/ShowSubscription.js:299
 msgid "Pay Off"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:301
+#: subscriptions/show/ShowSubscription.js:300
 msgid "Pay Off Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:319
+#: subscriptions/show/ShowSubscription.js:318
 msgid "Restore At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:337
+#: subscriptions/show/ShowSubscription.js:336
 msgid "Change Renewal Date"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:396
+#: subscriptions/show/ShowSubscription.js:395
 msgid "Affiliate commissions updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:400
+#: subscriptions/show/ShowSubscription.js:399
 msgid "Commission On This Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:426
+#: subscriptions/show/ShowSubscription.js:425
 msgid "Cancel Pending Update"
 msgstr ""
 
@@ -14475,10 +14327,6 @@ msgstr ""
 
 #: templates/UpdateModel/index.js:49
 msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
-msgstr ""
-
-#: ui/InsightsPeriodFilter.js:60
-msgid "Last 365 Days"
 msgstr ""
 
 #: ui/PrevNextButtons.js:28
@@ -20219,40 +20067,40 @@ msgstr ""
 msgid "Another step will appear after submitting your order to add this payment method."
 msgstr ""
 
-#: sc-order-bump2.js:35
+#: sc-order-bump2.js:36
 msgid "Order bump applied."
 msgstr ""
 
-#: sc-order-bump2.js:42
+#: sc-order-bump2.js:43
 msgid "Order bump Removed."
 msgstr ""
 
 #. translators: %s: old price
-#: sc-order-bump2.js:69
+#: sc-order-bump2.js:74
 msgid "Originally priced at %s."
 msgstr ""
 
 #. translators: %1$s: amount off, %2$s: currency
-#: sc-order-bump2.js:79
+#: sc-order-bump2.js:84
 msgid "You save %1$s%2$s."
 msgstr ""
 
 #. translators: %s: amount percent off
-#: sc-order-bump2.js:84
+#: sc-order-bump2.js:89
 msgid "You save %s%%."
 msgstr ""
 
-#: sc-order-bump2.js:84
+#: sc-order-bump2.js:89
 msgid "Save %s%%"
 msgstr ""
 
 #. translators: %s: order bump name
-#: sc-order-bump2.js:99
+#: sc-order-bump2.js:104
 msgid "Product: %s."
 msgstr ""
 
 #. translators: %s: Product description
-#: sc-order-bump2.js:101
+#: sc-order-bump2.js:106
 msgid "Product description: %s."
 msgstr ""
 
@@ -20759,7 +20607,7 @@ msgstr ""
 msgid "Payment canceled. Please try again."
 msgstr ""
 
-#: sc-session-provider2.js:387
+#: sc-session-provider2.js:397
 msgid "Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment."
 msgstr ""
 
