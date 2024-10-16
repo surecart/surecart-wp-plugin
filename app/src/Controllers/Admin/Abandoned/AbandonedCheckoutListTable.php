@@ -101,7 +101,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	public function get_columns() {
 		return [
 			'placed_by'           => __( 'Placed By', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
+			'created'             => __( 'Date', 'surecart' ),
 			'notification_status' => __( 'Email Status', 'surecart' ),
 			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
 			'total'               => __( 'Total', 'surecart' ),
@@ -157,17 +157,6 @@ class AbandonedCheckoutListTable extends ListTable {
 	 */
 	public function column_total( $abandoned ) {
 		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->checkout->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->checkout->total_amount . '"></sc-format-number>';
-	}
-
-	/**
-	 * Handle the total column
-	 *
-	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $abandoned ) {
-		return isset( $abandoned->created_at ) ? $abandoned->created_at_date : '--';
 	}
 
 	/**
