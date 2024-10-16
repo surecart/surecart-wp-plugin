@@ -115,7 +115,14 @@ export default ({ checkout }) => {
 							flex: 1 1 200px;
 						`}
 					>
-						<ScFormControl label={__('Ship to', 'surecart')}>
+						<ScFormControl
+							label={__('Ship to', 'surecart')}
+							css={css`
+								height: 100%;
+								display: flex;
+								min-height: 120px;
+							`}
+						>
 							{!!checkout?.shipping_address?.country ? (
 								<AddressDisplay
 									address={checkout?.shipping_address}
@@ -140,7 +147,14 @@ export default ({ checkout }) => {
 							flex: 1 1 200px;
 						`}
 					>
-						<ScFormControl label={__('Bill to', 'surecart')}>
+						<ScFormControl
+							label={__('Bill to', 'surecart')}
+							css={css`
+								height: 100%;
+								display: flex;
+								min-height: 120px;
+							`}
+						>
 							{!!billingAddress?.country ? (
 								<AddressDisplay address={billingAddress} />
 							) : (
@@ -191,20 +205,16 @@ export default ({ checkout }) => {
 				</ScCheckbox>
 
 				{!billingMatchesShipping && (
-					<>
-						<ScAddress
-							label={__('Billing Address', 'surecart')}
-							showName={true}
-							showLine2={true}
-							required={
-								checkout?.shipping_address_required || false
-							}
-							address={customerBillingAddress}
-							onScChangeAddress={(e) =>
-								setCustomerBillingAddress(e?.detail)
-							}
-						/>
-					</>
+					<ScAddress
+						label={__('Billing Address', 'surecart')}
+						showName={true}
+						showLine2={true}
+						required={checkout?.shipping_address_required || false}
+						address={customerBillingAddress}
+						onScChangeAddress={(e) =>
+							setCustomerBillingAddress(e?.detail)
+						}
+					/>
 				)}
 			</>
 		);
@@ -273,10 +283,25 @@ export default ({ checkout }) => {
 				onCancel={() => setModal(null)}
 				confirmButtonText={__('Confirm', 'surecart')}
 			>
-				{__(
-					"This will set the shipping and billing addresses to the customer's default addresses.",
-					'surecart'
-				)}
+				<ScText
+					tag="h3"
+					style={{
+						'--font-weight': 'var(--sc-font-weight-bold)',
+						'--font-size': 'var(--sc-font-size-medium)',
+						paddingBottom: 'var(--sc-spacing-large)',
+						borderBottom: '1px solid var(--sc-color-gray-100)',
+					}}
+				>
+					{__('Set Default Addresses', 'surecart')}
+				</ScText>
+
+				<p>
+					{__('📍 This will set the ', 'surecart')}
+					<strong>{__('shipping', 'surecart')}</strong>
+					{__(' and ', 'surecart')}
+					<strong>{__('billing', 'surecart')}</strong>
+					{__(" to the customer's default.", 'surecart')}
+				</p>
 			</ConfirmDialog>
 
 			<ConfirmDialog
