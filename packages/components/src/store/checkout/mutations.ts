@@ -3,6 +3,7 @@ import { clearCheckout as clearSavedCheckout } from '../checkouts/mutations';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
 import { addLineItem, removeLineItem, updateLineItem } from '../../services/session';
+import apiFetch from '../../functions/fetch';
 
 /**
  * Clear the current checkout.
@@ -74,6 +75,21 @@ export const addCheckoutLineItem = async data => {
     createErrorNotice(e);
     updateFormState('REJECT');
   }
+};
+
+/**
+ * Track order bump offers.
+ */
+export const trackOrderBump = (bumpId: string) => {
+  if (!state.checkout?.id) {
+    return;
+  }
+
+  apiFetch({
+    path: `surecart/v1/checkouts/${state.checkout.id}/offer_bump/${bumpId}`,
+    method: 'POST',
+    keepalive: true, // Important: allow the request to outlive the page.
+  });
 };
 
 window.sc = {

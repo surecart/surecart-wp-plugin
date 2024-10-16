@@ -33,6 +33,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	protected $attributes = [];
 
 	/**
+	 * Static cache for attribute lookups.
+	 *
+	 * @var array
+	 */
+	private static $attribute_cache = [];
+
+	/**
 	 * Default attributes.
 	 *
 	 * @var array
@@ -438,11 +445,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @return int|false
 	 */
 	public function getCreatedByAttribute() {
-		if ( empty( $this->attributes['metadata']['wp_created_by'] ) ) {
+		if ( empty( $this->metadata->wp_created_by ) ) {
 			return false;
 		}
 
-		return (int) $this->attributes['metadata']['wp_created_by'];
+		return (int) $this->metadata->wp_created_by;
 	}
 
 	/**
@@ -471,6 +478,16 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	}
 
 	/**
+	 * Get the metadata attribute.
+	 * This makes sure the metadata is always an object.
+	 *
+	 * @return object
+	 */
+	public function getMetadataAttribute() {
+		return (object) $this->attributes['metadata'];
+	}
+
+	/**
 	 * Calls a mutator based on set{Attribute}Attribute
 	 *
 	 * @param string $key Attribute key.
@@ -495,7 +512,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 *
 	 * @param array $meta_data Model meta data.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function setMetadataAttributes( $meta_data ) {
 		$this->attributes['metadata'] = apply_filters( "surecart/$this->object_name/set_meta_data", $meta_data );
@@ -507,7 +524,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 *
 	 * @param string $key Meta data key.
 	 * @param string $data Meta data value.
-	 * @return this
+	 * @return self
 	 */
 	public function addToMetaData( $key, $data ) {
 		$this->setMetaDataAttributes( array_merge( $this->attributes['metadata'] ?? [], [ $key => $data ] ) );
@@ -728,8 +745,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		$item = ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
 
-		$item->sync();
-
 		return $item;
 	}
 
@@ -761,7 +776,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	/**
 	 * Is the response an Error?
 	 *
-	 * @param Array|\WP_Error|\WP_REST_Response $response Response from request.
+	 * @param array|\WP_Error|\WP_REST_Response $response Response from request.
 	 *
 	 * @return boolean
 	 */
@@ -772,7 +787,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	/**
 	 * Get fresh instance from DB.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	protected function fresh() {
 		if ( ! $this->attributes['id'] ) {
@@ -789,7 +804,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	/**
 	 * Get fresh instance from DB.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	protected function refresh() {
 		if ( ! $this->attributes['id'] ) {
@@ -1080,9 +1095,46 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	}
 
 	/**
+	 * Get a in-memory cached attribute.
+	 *
+	 * @param string $key The attribute key.
+	 * @return mixed|null The cached value or null if not found.
+	 */
+	protected function getCachedAttribute( $key ) {
+		if ( ! isset( self::$attribute_cache ) ) {
+			self::$attribute_cache = [];
+		}
+
+		if ( empty( $this->id ) ) {
+			return null;
+		}
+
+		return self::$attribute_cache[ $this->id . '_' . $key ] ?? null;
+	}
+
+	/**
+	 * Set a cached attribute in memory.
+	 *
+	 * @param string $key   The attribute key.
+	 * @param mixed  $value The value to cache.
+	 * @return void
+	 */
+	protected function setCachedAttribute( $key, $value ) {
+		if ( ! isset( self::$attribute_cache ) ) {
+			self::$attribute_cache = [];
+		}
+
+		if ( empty( $this->id ) ) {
+			return;
+		}
+
+		self::$attribute_cache[ $this->id . '_' . $key ] = $value;
+	}
+
+	/**
 	 * Serialize to json.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
@@ -1131,14 +1183,14 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	/**
 	 * Calls accessors during toArray.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		$attributes = $this->getAttributes();
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( method_exists( get_class(), $method ) ) {
+			if ( method_exists( get_parent_class($this), $method ) ) {
 				continue;
 			}
 

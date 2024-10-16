@@ -58,5 +58,5 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
-	"style": ["file:../../styles/pill.css","file:./style-index.css"]
+	"style": ["surecart-pill", "file:./style-index.css"]
 }

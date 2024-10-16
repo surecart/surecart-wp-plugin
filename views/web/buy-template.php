@@ -8,7 +8,7 @@
 			<!-- /wp:surecart/product-page -->
 		<?php endif; ?>
 
-		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold); --line-height: 1" aria-label="<?php echo esc_attr_e( 'Product name', 'surecart' ); ?>">
+		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold); --line-height: 1" aria-label="<?php esc_attr_e( 'Product name', 'surecart' ); ?>">
 			<?php echo wp_kses_post( $product->name ); ?>
 		</sc-text>
 
@@ -16,7 +16,7 @@
 
 		<?php if ( $show_description ) : ?>
 			<sc-prose>
-				<span class="screen-reader-text"><?php echo esc_attr_e( 'Product description', 'surecart' ); ?></span>
+				<span class="screen-reader-text"><?php esc_attr_e( 'Product description', 'surecart' ); ?></span>
 				<?php echo wp_kses_post( $product->description ?? '' ); ?>
 			</sc-prose>
 		<?php endif; ?>

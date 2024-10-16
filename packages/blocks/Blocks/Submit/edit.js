@@ -159,8 +159,8 @@ export default ({ className, attributes, setAttributes }) => {
 						</svg>
 					)}
 					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
 						value={text}
 						onChange={(value) => setAttributes({ text: value })}
 						withoutInteractiveFormatting
