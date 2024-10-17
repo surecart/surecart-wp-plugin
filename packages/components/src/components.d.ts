@@ -805,6 +805,10 @@ export namespace Components {
           * Has recurring
          */
         "showInterval": boolean;
+        /**
+          * Focus the input.
+         */
+        "triggerFocus": () => Promise<void>;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -4354,10 +4358,6 @@ export interface ScOrderBumpCustomEvent<T> extends CustomEvent<T> {
 export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderConfirmProviderElement;
-}
-export interface ScOrderCouponFormCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderCouponFormElement;
 }
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -8297,7 +8297,6 @@ declare namespace LocalJSX {
         "collapsed"?: boolean;
         "label"?: string;
         "loading"?: boolean;
-        "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
         "placeholder"?: string;
     }
     interface ScOrderDetail {

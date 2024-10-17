@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch, Fragment } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch, Fragment, Method, Event, EventEmitter } from '@stencil/core';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
@@ -32,6 +32,7 @@ import { DiscountResponse } from '../../../types';
   shadow: true,
 })
 export class ScCouponForm {
+  @Element() el: HTMLScCouponFormElement;
   private input: HTMLScInputElement;
   private couponTag: HTMLScTagElement;
   private addCouponTrigger: HTMLElement;
@@ -90,19 +91,6 @@ export class ScCouponForm {
       setTimeout(() => this.input.triggerFocus(), 50);
     }
   }
-  // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
-  @Watch('discount')
-  handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
-    if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
-
-    setTimeout(() => {
-      if (this?.discount?.promotion?.code) {
-        (this.couponTag.shadowRoot.querySelector('*') as any).focus();
-      } else {
-        this.addCouponTrigger.focus();
-      }
-    }, 50);
-  }
 
   /** Close it when blurred and no value. */
   handleBlur() {
@@ -121,7 +109,7 @@ export class ScCouponForm {
 
   /** Apply the coupon. */
   applyCoupon() {
-    this.scApplyCoupon.emit(this.input.value.toUpperCase());
+    this.scApplyCoupon.emit(this.value);
   }
 
   handleKeyDown(e) {
@@ -147,6 +135,18 @@ export class ScCouponForm {
         return sprintf(__('%s for %s', 'surecart'), humanDiscount, monthsLabel);
       default:
         return humanDiscount;
+    }
+  }
+
+  /** Focus the input. */
+  @Method()
+  async triggerFocus() {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+
+    if (this?.discount?.promotion?.code) {
+      (this.couponTag.shadowRoot.querySelector('*') as HTMLElement)?.focus();
+    } else if (this.addCouponTrigger) {
+      this.addCouponTrigger.focus();
     }
   }
 

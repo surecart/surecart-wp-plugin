@@ -173,18 +173,6 @@ export class ScSessionProvider {
     });
   }
 
-  /** Handles coupon updates. */
-  @Listen('scApplyCoupon')
-  async handleCouponApply(e) {
-    const promotion_code = e.detail;
-    removeNotice();
-    this.loadUpdate({
-      discount: {
-        ...(promotion_code ? { promotion_code } : {}),
-      },
-    });
-  }
-
   /** Find or create session on load. */
   componentDidLoad() {
     this.findOrCreateOrder();
