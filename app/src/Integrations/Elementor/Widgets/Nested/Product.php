@@ -163,7 +163,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 			[
 				'label'        => esc_html__( 'Link to product', 'elementor' ),
 				'type'         => \Elementor\Controls_Manager::SWITCHER,
-				'default'      => 'yes',
+				'default'      => 'no',
 				'return_value' => 'yes',
 			]
 		);
