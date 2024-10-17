@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -108,23 +111,42 @@ export default ({
 								payment_method?.id === selectedPaymentMethod?.id
 							}
 						>
-							<ScPaymentMethod paymentMethod={payment_method} />
-							<div slot="description">
-								{!!payment_method?.card?.exp_month && (
-									<span>
-										{__('Exp.', 'surecart')}
-										{payment_method?.card?.exp_month}/
-										{payment_method?.card?.exp_year}
-									</span>
-								)}
-								{!!payment_method?.paypal_account?.email &&
-									payment_method?.paypal_account?.email}
+							<div
+								css={css`
+									display: flex;
+									justify-content: space-between;
+								`}
+							>
+								<ScPaymentMethod
+									paymentMethod={payment_method}
+								/>
+								<div slot="description">
+									{!!payment_method?.card?.exp_month && (
+										<span>
+											{__('Exp.', 'surecart')}
+											{payment_method?.card?.exp_month}/
+											{payment_method?.card?.exp_year}
+										</span>
+									)}
+									{!!payment_method?.paypal_account?.email &&
+										payment_method?.paypal_account?.email}
+
+									{payment_method?.id ===
+										paymentMethod?.id && (
+										<ScTag
+											type="info"
+											slot="price"
+											css={css`
+												margin-left: var(
+													--sc-spacing-small
+												);
+											`}
+										>
+											{__('Current', 'surecart')}
+										</ScTag>
+									)}
+								</div>
 							</div>
-							{payment_method?.id === paymentMethod?.id && (
-								<ScTag type="info" slot="price">
-									{__('Current', 'surecart')}
-								</ScTag>
-							)}
 						</ScChoice>
 					);
 				})}
