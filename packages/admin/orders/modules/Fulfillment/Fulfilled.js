@@ -29,7 +29,14 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
-	let total = (fulfillment?.fulfillment_items?.data || [])?.length;
+	let total = (fulfillment?.fulfillment_items?.data || []).reduce(
+		(accumulator, item) => {
+			return accumulator + item?.quantity;
+		},
+		0
+	);
+
+	console.log('fulfillment items', fulfillment?.fulfillment_items?.data);
 
 	const cancelFulfillment = async () => {
 		try {
