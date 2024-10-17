@@ -209,7 +209,7 @@ class AdminMenuPageService {
 						return null;
 					}
 					$taxonomy_obj = get_taxonomy( $taxonomy );
-					return \add_submenu_page( $this->slug, $taxonomy_obj->label, '↳ ' . $taxonomy_obj->label, 'edit_sc_products', \SureCart::taxonomies()->editLink( $taxonomy_obj->name, 'sc_product' ), '' );
+					return \add_submenu_page( $this->slug, $taxonomy_obj->label, '↳ ' . $taxonomy_obj->labels->menu_name ?? $taxonomy_obj->label, 'edit_sc_products', \SureCart::taxonomies()->editLink( $taxonomy_obj->name, 'sc_product' ), '' );
 				},
 				$taxonomies,
 				[ $is_product_menu_opened, $this->slug ]
