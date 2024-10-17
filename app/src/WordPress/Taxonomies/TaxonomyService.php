@@ -47,8 +47,14 @@ class TaxonomyService {
 			return '';
 		}
 
-		$post_type_query = ! empty( $post_type ) ? '&post_type=' . $post_type : '';
-
-		return 'edit-tags.php?taxonomy=' . $taxonomy_name . $post_type_query;
+		return add_query_arg(
+			array_filter(
+				array(
+					'taxonomy'  => $taxonomy_name,
+					'post_type' => $post_type,
+				)
+			),
+			'edit-tags.php'
+		);
 	}
 }
