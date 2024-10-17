@@ -25,6 +25,9 @@ class TaxonomyServiceProvider implements ServiceProviderInterface {
 		$container['surecart.taxonommies'] = function ( $container ) {
 			return new TaxonomyService();
 		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'taxonomies', 'surecart.taxonommies' );
 	}
 
 	/**
