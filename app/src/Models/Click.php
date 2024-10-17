@@ -3,6 +3,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasAffiliation;
+use SureCart\Support\TimeDate;
 
 /**
  * Click model
@@ -33,5 +34,23 @@ class Click extends Model {
 	 */
 	public function setPreviousClickAttribute( $value ) {
 		$this->setRelation( 'previous_click', $value, self::class );
+	}
+
+	/**
+	 * Get the performed at date.
+	 *
+	 * @return string
+	 */
+	public function getExpiresAtDateAttribute() {
+		return TimeDate::formatDate( $this->expires_at );
+	}
+
+	/**
+	 * Get the performed at date time.
+	 *
+	 * @return string
+	 */
+	public function getExpiresAtDateTimeAttribute() {
+		return TimeDate::formatDateAndTime( $this->expires_at );
 	}
 }

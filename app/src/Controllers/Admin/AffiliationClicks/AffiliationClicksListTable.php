@@ -104,7 +104,7 @@ class AffiliationClicksListTable extends ListTable {
 	public function column_date( $click ) {
 		$created = sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $click->created_at_date_time ),
+			esc_attr( $click->created_at ),
 			esc_html( $click->created_at_date_time ),
 			esc_html( TimeDate::humanTimeDiff( $click->created_at ) )
 		);
@@ -114,8 +114,8 @@ class AffiliationClicksListTable extends ListTable {
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
 			$is_expired ? __( 'Expired' ) : __( 'Expires on' ),
 			esc_attr( $click->expires_at ),
-			esc_html( TimeDate::formatDateAndTime( $click->expires_at ) ),
-			esc_html( $is_expired ? TimeDate::humanTimeDiff( $click->expires_at ) : TimeDate::formatDate( $click->expires_at ) )
+			esc_html( $click->expires_at_date_time ),
+			esc_html( $is_expired ? TimeDate::humanTimeDiff( $click->expires_at ) : $click->expires_at_date_time )
 		);
 
 		return $created . '<br /><small style="opacity: 0.75">' . $expires . '</small>';
