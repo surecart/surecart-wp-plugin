@@ -115,10 +115,11 @@ class AdminMenuPageService {
 		}
 
 		// Check if we're editing a taxonomy that applies to sc_product post types.
-		$screen = get_current_screen();
-		if ( \SureCart::taxonomies()->isProductTaxonomyScreen() ) {
+		$screen   = get_current_screen();
+		$taxonomy = get_taxonomy( $screen->taxonomy );
+		if ( $screen && 'edit-tags' === $screen->base && in_array( 'sc_product', (array) $taxonomy->object_type, true ) ) {
 			$file         = 'sc-dashboard';
-			$submenu_file = \SureCart::taxonomies()->generateProductTaxonomyEditLink( $screen->taxonomy ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$submenu_file = \SureCart::taxonomies()->editLink( $screen->taxonomy, 'sc_product' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 
 		return $file;
@@ -208,7 +209,7 @@ class AdminMenuPageService {
 						return null;
 					}
 					$taxonomy_obj = get_taxonomy( $taxonomy );
-					return \add_submenu_page( $this->slug, $taxonomy_obj->label, '↳ ' . $taxonomy_obj->label, 'edit_sc_products', \SureCart::taxonomies()->generateProductTaxonomyEditLink( $taxonomy_obj->name ), '' );
+					return \add_submenu_page( $this->slug, $taxonomy_obj->label, '↳ ' . $taxonomy_obj->label, 'edit_sc_products', \SureCart::taxonomies()->editLink( $taxonomy_obj->name, 'sc_product' ), '' );
 				},
 				$taxonomies,
 				[ $is_product_menu_opened, $this->slug ]
