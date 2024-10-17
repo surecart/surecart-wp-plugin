@@ -180,9 +180,51 @@ class Quantity extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$attributes = array( 'label' => esc_attr( $settings['label'] ) );
-
-			echo do_blocks( '<!-- wp:surecart/product-quantity ' . wp_json_encode( $attributes ) . '  /-->' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+			<div class="wp-block-surecart-product-quantity">
+				<label className="sc-form-label"><?php echo esc_html( $settings['label'] ); ?></label>
+				<div
+					className="sc-input-group sc-quantity-selector"
+				>
+					<div className="sc-input-group-text sc-quantity-selector__decrease">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<line x1="5" y1="12" x2="19" y2="12" />
+						</svg>
+					</div>
+					<input
+						className="sc-form-control sc-quantity-selector__control"
+						value={0}
+						type="number"
+					/>
+					<div className="sc-input-group-text sc-quantity-selector__increase">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<line x1="12" y1="5" x2="12" y2="19" />
+							<line x1="5" y1="12" x2="19" y2="12" />
+						</svg>
+					</div>
+				</div>
+			</div>
+			<?php
 			return;
 		}
 
@@ -199,6 +241,50 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function content_template() {
-		echo do_blocks( '<!-- wp:surecart/product-quantity { "label" : "{{{ settings.label }}}" } /-->' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		?>
+		<div class="wp-block-surecart-product-quantity">
+			<label className="sc-form-label">{{{ settings.label }}}</label>
+			<div
+				className="sc-input-group sc-quantity-selector"
+			>
+				<div className="sc-input-group-text sc-quantity-selector__decrease">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<line x1="5" y1="12" x2="19" y2="12" />
+					</svg>
+				</div>
+				<input
+					className="sc-form-control sc-quantity-selector__control"
+					value={0}
+					type="number"
+				/>
+				<div className="sc-input-group-text sc-quantity-selector__increase">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<line x1="12" y1="5" x2="12" y2="19" />
+						<line x1="5" y1="12" x2="19" y2="12" />
+					</svg>
+				</div>
+			</div>
+		</div>
+		<?php
 	}
 }
