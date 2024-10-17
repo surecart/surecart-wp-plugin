@@ -259,6 +259,7 @@ class VariantPills extends \Elementor\Widget_Base {
 			'highlight_border'     => $settings['pill_highlight_border_color'] ?? '',
 		);
 
+		ob_start();
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 		<!-- wp:surecart/product-variant-pills -->
@@ -266,6 +267,9 @@ class VariantPills extends \Elementor\Widget_Base {
 		<!-- /wp:surecart/product-variant-pills -->
 		</div>
 		<?php
+		$content = ob_get_clean();
+
+		echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

@@ -222,11 +222,15 @@ class Media extends \Elementor\Widget_Base {
 			'width'               => ! empty( $settings['slider_max_image_width']['size'] ) ? $settings['slider_max_image_width']['size'] . $settings['slider_max_image_width']['unit'] : '',
 		);
 
+		ob_start();
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-media <?php echo wp_json_encode( $attributes ); ?> /-->
 		</div>
 		<?php
+		$content = ob_get_clean();
+
+		echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

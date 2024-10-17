@@ -253,11 +253,15 @@ class BuyButton extends \Elementor\Widget_Base {
 			'unavailable_text'  => esc_attr( $settings['button_unavailable_text'] ),
 		);
 
+		ob_start();
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 		<!-- wp:surecart/product-buy-button <?php echo wp_json_encode( $attributes ); ?> /-->
 		</div>
 		<?php
+		$item_content = ob_get_clean();
+
+		echo do_blocks( $item_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

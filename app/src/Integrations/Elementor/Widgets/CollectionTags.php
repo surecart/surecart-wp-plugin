@@ -392,6 +392,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 			return;
 		}
 
+		ob_start();
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-collection-tags {"count" : <?php echo esc_attr( $settings['count'] ?? 1 ); ?> } -->
@@ -399,6 +400,9 @@ class CollectionTags extends \Elementor\Widget_Base {
 			<!-- /wp:surecart/product-collection-tags -->
 		</div>
 		<?php
+		$content = ob_get_clean();
+
+		echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
