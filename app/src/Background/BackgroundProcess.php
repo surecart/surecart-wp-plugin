@@ -678,9 +678,9 @@ abstract class BackgroundProcess extends AsyncRequest {
 		$interval = $this->get_cron_interval();
 
 		if ( 1 === $interval ) {
-			$display = __( 'Every Minute' );
+			$display = __( 'Every Minute', 'surecart' );
 		} else {
-			$display = sprintf( __( 'Every %d Minutes' ), $interval );
+			$display = sprintf( __( 'Every %d Minutes', 'surecart' ), $interval );
 		}
 
 		// Adds an "Every NNN Minute(s)" schedule to the existing cron schedules.

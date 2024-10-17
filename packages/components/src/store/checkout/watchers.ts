@@ -1,6 +1,6 @@
 import state, { onChange, on } from './store';
 import { getCheckout, setCheckout } from '../checkouts/mutations';
-import { Checkout } from 'src/types';
+import { Checkout } from '../../types';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf } from '@wordpress/i18n';
 import { getFormattedPrice, getHumanDiscount } from '../../functions/price';
