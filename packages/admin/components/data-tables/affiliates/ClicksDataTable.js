@@ -13,12 +13,7 @@ import { store as noticesStore } from '@wordpress/notices';
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import {
-	ScFormatDate,
-	ScIcon,
-	ScText,
-	ScButton,
-} from '@surecart/components-react';
+import { ScIcon, ScText, ScButton } from '@surecart/components-react';
 
 export default ({
 	data,
@@ -43,7 +38,7 @@ export default ({
 			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
-				.map(({ created_at, url, referrer }) => {
+				.map(({ created_at_date, url, referrer }) => {
 					const urlRef = useCopyToClipboard(url, () => {
 						createSuccessNotice(
 							__('Copied to clipboard.', 'surecart'),
@@ -135,15 +130,7 @@ export default ({
 								</ScText>
 							</div>
 						),
-						date: (
-							<ScFormatDate
-								type="timestamp"
-								month="short"
-								day="numeric"
-								year="numeric"
-								date={created_at}
-							></ScFormatDate>
-						),
+						date: created_at_date,
 					};
 				})}
 			loading={isLoading}

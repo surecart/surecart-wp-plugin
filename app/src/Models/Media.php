@@ -2,11 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
+use SureCart\Models\Traits\HasImageSizes;
+
 /**
  * Price model
  */
 class Media extends Model {
-	use Traits\HasImageSizes;
+	use HasImageSizes, HasDates;
 
 	/**
 	 * Rest API endpoint

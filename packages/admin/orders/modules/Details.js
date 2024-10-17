@@ -3,7 +3,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 
 import { css, jsx } from '@emotion/core';
-import { formatTime } from '../../util/time';
 import {
 	ScOrderStatusBadge,
 	ScSkeleton,
@@ -13,6 +12,7 @@ import {
 } from '@surecart/components-react';
 
 export default ({ order, checkout, loading, returnRequests }) => {
+	console.log('order', order);
 	if (loading) {
 		return (
 			<div
@@ -31,8 +31,10 @@ export default ({ order, checkout, loading, returnRequests }) => {
 
 	// if any return request with status 'open' then make the status as 'open'
 	const returnRequestStatus = returnRequests?.some(
-		(returnRequest) => returnRequest?.status === 'open')
-		? 'open' : 'completed';
+		(returnRequest) => returnRequest?.status === 'open'
+	)
+		? 'open'
+		: 'completed';
 
 	if (!order?.id) {
 		return null;
@@ -64,15 +66,12 @@ export default ({ order, checkout, loading, returnRequests }) => {
 					/>
 
 					{!!returnRequests?.length && (
-						<ScOrderReturnBadge
-							status={returnRequestStatus}
-							pill
-						/>
+						<ScOrderReturnBadge status={returnRequestStatus} pill />
 					)}
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
-					formatTime(order.updated_at)
+					order?.created_at_date_time
 				)}
 			</div>
 

@@ -2,11 +2,14 @@
 namespace SureCart\Models;
 
 use SureCart\Models\DatabaseModel;
+use SureCart\Models\Traits\HasDates;
 
 /**
  * The integration model.
  */
 class IncomingWebhook extends DatabaseModel {
+	use HasDates;
+
 	/**
 	 * The integrations table name.
 	 *

@@ -14,7 +14,6 @@ import {
 	ScButton,
 	ScDropdown,
 	ScFlex,
-	ScFormatDate,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
@@ -56,13 +55,7 @@ export default ({ item, updateItem, commissionText }) => {
 							`}
 						>
 							{__('Until', 'surecart')}{' '}
-							<ScFormatDate
-								type="timestamp"
-								date={item?.affiliation_expires_at}
-								month="short"
-								day="numeric"
-								year="numeric"
-							/>
+							{item?.affiliation_expires_at_date}
 						</span>
 					)}
 				</div>

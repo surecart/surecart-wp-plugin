@@ -39,20 +39,20 @@ class Click extends Model {
 	}
 
 	/**
-	 * Get the performed at date.
+	 * Get the expires at date.
 	 *
 	 * @return string
 	 */
 	public function getExpiresAtDateAttribute() {
-		return TimeDate::formatDate( $this->expires_at );
+		return ! empty( $this->expires_at ) ? TimeDate::formatDate( $this->expires_at ) : '';
 	}
 
 	/**
-	 * Get the performed at date time.
+	 * Get the expires at date and time.
 	 *
 	 * @return string
 	 */
 	public function getExpiresAtDateTimeAttribute() {
-		return TimeDate::formatDateAndTime( $this->expires_at );
+		return ! empty( $this->expires_at ) ? TimeDate::formatDateAndTime( $this->expires_at ) : '';
 	}
 }

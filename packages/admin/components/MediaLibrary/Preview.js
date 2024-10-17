@@ -10,7 +10,6 @@ import { Button } from '@wordpress/components';
 import {
 	ScBlockUi,
 	ScFormatBytes,
-	ScFormatDate,
 	ScInput,
 	ScLineItem,
 	ScSkeleton,
@@ -156,15 +155,7 @@ export default ({ media: initialMedia, onDeleted }) => {
 							white-space: nowrap;
 						`}
 					>
-						<ScFormatDate
-							date={media?.created_at}
-							month="short"
-							day="numeric"
-							year="numeric"
-							hour="numeric"
-							minute="numeric"
-							type="timestamp"
-						></ScFormatDate>
+						{media?.created_at_date_time}
 					</span>
 				</ScLineItem>
 

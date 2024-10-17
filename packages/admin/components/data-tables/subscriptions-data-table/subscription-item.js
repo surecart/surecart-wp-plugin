@@ -3,7 +3,6 @@ import { addQueryArgs } from '@wordpress/url';
 import {
 	ScButton,
 	ScDropdown,
-	ScFormatDate,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
@@ -57,13 +56,7 @@ export default (subscription) => {
 			return (
 				<span>
 					{__('Renews', 'surecart')}{' '}
-					<sc-format-date
-						type="timestamp"
-						date={subscription?.current_period_end_at}
-						month="short"
-						day="numeric"
-						year="numeric"
-					></sc-format-date>
+					{subscription?.current_period_end_at_date}
 				</span>
 			);
 		}
@@ -146,15 +139,7 @@ export default (subscription) => {
 				{product?.name}
 			</a>
 		),
-		created: (
-			<ScFormatDate
-				date={subscription?.created_at}
-				month="short"
-				day="numeric"
-				year="numeric"
-				type="timestamp"
-			></ScFormatDate>
-		),
+		created: subscription?.created_at_date,
 		plan: renderPlan(subscription),
 		cancel: renderCancelButton(subscription),
 		actions:

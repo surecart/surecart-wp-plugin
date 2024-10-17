@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-12T19:24:45",
+  "timestamp": "2024-10-17T10:52:49",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -25821,7 +25821,6 @@
           "reflectToAttr": false,
           "docs": "The max allowed.",
           "docsTags": [],
-          "default": "100",
           "values": [
             {
               "type": "number"

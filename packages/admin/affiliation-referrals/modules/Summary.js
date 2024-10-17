@@ -1,4 +1,4 @@
-import { ScTag, ScFormatDate } from '@surecart/components-react';
+import { ScTag } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 
@@ -23,25 +23,13 @@ export default ({ referral, loading }) => {
 
 			{!!referral?.updated_at && (
 				<Definition title={__('Last Updated', 'surecart')}>
-					<ScFormatDate
-						type="timestamp"
-						month="short"
-						day="numeric"
-						year="numeric"
-						date={referral.created_at}
-					/>
+					{referral.updated_at_date_time}
 				</Definition>
 			)}
 
 			{!!referral?.created_at && (
 				<Definition title={__('Created', 'surecart')}>
-					<ScFormatDate
-						type="timestamp"
-						month="short"
-						day="numeric"
-						year="numeric"
-						date={referral.created_at}
-					/>
+					{referral.created_at_date_time}
 				</Definition>
 			)}
 		</Box>

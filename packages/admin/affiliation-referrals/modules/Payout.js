@@ -10,7 +10,6 @@ import { jsx } from '@emotion/core';
 import {
 	ScButton,
 	ScFlex,
-	ScFormatDate,
 	ScFormatNumber,
 	ScOrderStatusBadge,
 } from '@surecart/components-react';
@@ -53,13 +52,7 @@ export default ({ referral, loading }) => {
 					/>
 				</Definition>
 				<Definition title={__('Period End', 'surecart')}>
-					<ScFormatDate
-						type="timestamp"
-						month="short"
-						day="numeric"
-						year="numeric"
-						date={payout?.end_date}
-					/>
+					{payout?.end_at_date}
 				</Definition>
 				<Definition title={__('Status', 'surecart')}>
 					<ScOrderStatusBadge status={payout?.status} />

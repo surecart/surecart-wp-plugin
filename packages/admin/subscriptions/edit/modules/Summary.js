@@ -1,4 +1,3 @@
-import { ScFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import EndDate from '../../shared/EndDate';
@@ -10,13 +9,7 @@ export default ({ loading, subscription }) => {
 				<div>
 					<strong>{__('Started', 'surecart')}</strong>
 				</div>
-				<ScFormatDate
-					date={subscription?.current_period_start_at}
-					type="timestamp"
-					month="long"
-					day="numeric"
-					year="numeric"
-				></ScFormatDate>
+				{subscription?.current_period_start_at_date}
 			</div>
 			<EndDate subscription={subscription} />
 		</Box>

@@ -6,6 +6,7 @@ use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
+use SureCart\Support\TimeDate;
 
 /**
  * Price model
@@ -210,5 +211,23 @@ class Customer extends Model {
 		}
 
 		return $this->attributes['billing_address'] ?? null;
+	}
+
+	/**
+	 * Get the affiliation expires at date.
+	 *
+	 * @return string
+	 */
+	public function getAffiliationExpiresAtDateAttribute() {
+		return ! empty( $this->affiliation_expires_at ) ? TimeDate::formatDate( $this->affiliation_expires_at ) : '';
+	}
+
+	/**
+	 * Get the affiliation expires at date and time.
+	 *
+	 * @return string
+	 */
+	public function getAffiliationExpiresAtDateTimeAttribute() {
+		return ! empty( $this->affiliation_expires_at ) ? TimeDate::formatDateAndTime( $this->affiliation_expires_at ) : '';
 	}
 }

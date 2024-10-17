@@ -174,7 +174,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $invoice ) {
-		return '<sc-format-date date="' . (int) $invoice->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+		return $invoice->updated_at_date_time;
 	}
 
 	/**

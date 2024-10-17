@@ -2,8 +2,8 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Coupon;
 use SureCart\Models\Traits\HasCoupon;
+use SureCart\Support\TimeDate;
 
 /**
  * Price model
@@ -38,4 +38,13 @@ class Promotion extends Model {
 	 * @var string
 	 */
 	protected $cache_key = 'coupons_updated_at';
+
+	/**
+	 * Get the Redeem By Date attribute.
+	 *
+	 * @return string
+	 */
+	public function getRedeemByDateAttribute() {
+		return ! empty( $this->redeem_by ) ? TimeDate::formatDate( $this->redeem_by ) : '';
+	}
 }

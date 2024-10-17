@@ -1,9 +1,4 @@
-import {
-	ScFormatDate,
-	ScFormatNumber,
-	ScTag,
-	ScTooltip,
-} from '@surecart/components-react';
+import { ScFormatNumber, ScTag, ScTooltip } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
@@ -98,17 +93,7 @@ export default ({ chargeId }) => {
 								/>
 							</sc-text>
 						),
-						date: (
-							<ScFormatDate
-								date={refund?.updated_at}
-								month="long"
-								day="numeric"
-								year="numeric"
-								hour="numeric"
-								minute="numeric"
-								type="timestamp"
-							/>
-						),
+						date: refund?.updated_at_date_time,
 						status: (
 							<>
 								<ScTooltip

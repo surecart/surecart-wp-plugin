@@ -4,6 +4,7 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasDates;
 use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Price model
@@ -67,5 +68,23 @@ class Coupon extends Model {
 				$this->attributes['promotions'] = $models;
 			}
 		}
+	}
+
+	/**
+	 * Get the Redeem By Date attribute.
+	 *
+	 * @return string
+	 */
+	public function getRedeemByDateAttribute() {
+		return ! empty( $this->redeem_by ) ? TimeDate::formatDate( $this->redeem_by ) : '';
+	}
+
+	/**
+	 * Get the Redeem By Date Time attribute.
+	 *
+	 * @return string
+	 */
+	public function getRedeemByDateTimeAttribute() {
+		return ! empty( $this->redeem_by ) ? TimeDate::formatDateAndTime( $this->redeem_by ) : '';
 	}
 }

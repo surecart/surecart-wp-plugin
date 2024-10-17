@@ -1,7 +1,6 @@
 import DataTable from '../DataTable';
 import {
 	ScButton,
-	ScFormatDate,
 	ScFormatNumber,
 	ScOrderStatusBadge,
 	ScText,
@@ -30,7 +29,7 @@ export default ({
 			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
-				.map(({ checkout, number, id, created_at, status }) => {
+				.map(({ checkout, number, id, created_at_date, status }) => {
 					const { line_items, amount_due, currency } = checkout;
 					return {
 						number: (
@@ -70,15 +69,7 @@ export default ({
 							></ScFormatNumber>
 						),
 						status: <ScOrderStatusBadge status={status} />,
-						date: (
-							<ScFormatDate
-								type="timestamp"
-								month="short"
-								day="numeric"
-								year="numeric"
-								date={created_at}
-							></ScFormatDate>
-						),
+						date: created_at_date,
 						actions: (
 							<ScButton
 								href={addQueryArgs('admin.php', {
