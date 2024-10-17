@@ -1069,7 +1069,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( ! method_exists( get_parent_class( $this ) , $method ) ) {
+			if ( ! method_exists( get_class( $this ) , $method ) ) {
 				continue;
 			}
 
