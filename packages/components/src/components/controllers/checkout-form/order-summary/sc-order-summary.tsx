@@ -19,7 +19,7 @@ export class ScOrderSummary {
   @Prop() order: Checkout;
   @Prop() busy: boolean;
   @Prop() orderSummaryText: string = __('Summary', 'surecart');
-  @Prop() invoiceSummaryText: string = __('Inovice Summary', 'surecart');
+  @Prop() invoiceSummaryText: string = __('Invoice Summary', 'surecart');
   @Prop() collapsible: boolean = false;
   @Prop() collapsedOnMobile: boolean = false;
   @Prop() collapsedOnDesktop: boolean;
