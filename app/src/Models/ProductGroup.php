@@ -1,11 +1,14 @@
 <?php
 
 namespace SureCart\Models;
+use SureCart\Models\Traits\HasDates;
 
 /**
  * Price model
  */
 class ProductGroup extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *

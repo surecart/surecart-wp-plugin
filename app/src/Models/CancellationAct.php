@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasSubscription;
 use SureCart\Support\TimeDate;
 
@@ -9,7 +10,7 @@ use SureCart\Support\TimeDate;
  * Cancellation Reason Model
  */
 class CancellationAct extends Model {
-	use HasSubscription;
+	use HasSubscription, HasDates;
 
 	/**
 	 * Rest API endpoint

@@ -3,13 +3,15 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasAffiliation;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Support\TimeDate;
 
 /**
  * Click model
  */
 class Click extends Model {
-	use HasAffiliation;
+	use HasAffiliation, HasDates;
+
 
 	/**
 	 * Rest API endpoint

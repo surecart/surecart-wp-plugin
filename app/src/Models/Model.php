@@ -5,7 +5,6 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Concerns\Arrayable;
-use SureCart\Support\TimeDate;
 
 /**
  * Model class
@@ -1277,41 +1276,5 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	public static function __callStatic( $method, $params ) {
 		return call_user_func_array( [ new static(), $method ], $params );
-	}
-
-	/**
-	 * Get the created at date.
-	 *
-	 * @return string
-	 */
-	public function getCreatedAtDateAttribute() {
-		return TimeDate::formatDate( $this->created_at );
-	}
-
-	/**
-	 * Get the created at date time.
-	 *
-	 * @return string
-	 */
-	public function getCreatedAtDateTimeAttribute() {
-		return TimeDate::formatDateAndTime( $this->created_at );
-	}
-
-	/**
-	 * Get the updated at date.
-	 *
-	 * @return string
-	 */
-	public function getUpdatedAtDateAttribute() {
-		return TimeDate::formatDate( $this->updated_at );
-	}
-
-	/**
-	 * Get the updated at date time.
-	 *
-	 * @return string
-	 */
-	public function getUpdatedAtDateTimeAttribute() {
-		return TimeDate::formatDateAndTime( $this->updated_at );
 	}
 }

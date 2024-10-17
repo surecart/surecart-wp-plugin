@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
+
 /**
  * Holds the data of the order bump.
  */
 class Bump extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *

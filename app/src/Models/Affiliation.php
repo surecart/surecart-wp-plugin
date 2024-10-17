@@ -3,6 +3,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCommissionStructure;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPayouts;
 use SureCart\Models\Traits\HasReferrals;
 
@@ -10,7 +11,7 @@ use SureCart\Models\Traits\HasReferrals;
  * Holds the data of the current Affiliation.
  */
 class Affiliation extends Model {
-	use HasReferrals, HasPayouts, HasCommissionStructure;
+	use HasReferrals, HasPayouts, HasCommissionStructure, HasDates;
 
 	/**
 	 * Rest API endpoint

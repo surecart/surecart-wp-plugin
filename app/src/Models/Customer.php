@@ -3,6 +3,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasBillingAddress;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
 
@@ -10,9 +11,7 @@ use SureCart\Models\Traits\HasShippingAddress;
  * Price model
  */
 class Customer extends Model {
-	use HasPurchases;
-	use HasShippingAddress;
-	use HasBillingAddress;
+	use HasPurchases, HasShippingAddress, HasBillingAddress, HasDates;
 
 	/**
 	 * Rest API endpoint

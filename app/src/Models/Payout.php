@@ -3,14 +3,15 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasAffiliation;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasReferrals;
 
 /**
  * Payout model
  */
 class Payout extends Model {
-	use HasReferrals;
-	use HasAffiliation;
+	use HasReferrals, HasAffiliation, HasDates;
+
 
 	/**
 	 * Rest API endpoint

@@ -4,13 +4,13 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasDates;
 
 /**
  * Order model
  */
 class AbandonedCheckout extends Model {
-	use HasCustomer;
-	use HasCheckout;
+	use HasCustomer, HasCheckout, HasDates;
 
 	/**
 	 * Rest API endpoint

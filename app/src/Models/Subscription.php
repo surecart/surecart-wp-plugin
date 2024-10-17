@@ -3,6 +3,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasPurchase;
 use SureCart\Support\TimeDate;
@@ -11,7 +12,7 @@ use SureCart\Support\TimeDate;
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasPrice, HasPurchase;
+	use HasCustomer, HasPrice, HasPurchase, HasDates;
 
 	/**
 	 * Rest API endpoint

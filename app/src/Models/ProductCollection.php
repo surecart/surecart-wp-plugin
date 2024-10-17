@@ -2,13 +2,15 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
+use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Support\Contracts\PageModel;
 
 /**
  * Holds Product Collection data.
  */
 class ProductCollection extends Model implements PageModel {
-	use Traits\HasImageSizes;
+	use HasImageSizes, HasDates;
 
 	/**
 	 * Rest API endpoint

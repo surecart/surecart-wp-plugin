@@ -2,12 +2,15 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
 class Coupon extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *
