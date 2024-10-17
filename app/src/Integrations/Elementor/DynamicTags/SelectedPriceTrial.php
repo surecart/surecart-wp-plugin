@@ -7,16 +7,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Product Trial Dynamic Tag.
+ * Selected price trial dynamic tag.
  */
-class ProductTrial extends \Elementor\Core\DynamicTags\Tag {
+class SelectedPriceTrial extends \Elementor\Core\DynamicTags\Tag {
 	/**
 	 * Get the tag name.
 	 *
 	 * @return string
 	 */
 	public function get_name() {
-		return 'surecart-product-trial';
+		return 'surecart-selected-price-trial';
 	}
 
 	/**
@@ -25,7 +25,7 @@ class ProductTrial extends \Elementor\Core\DynamicTags\Tag {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Product trial', 'surecart' );
+		return esc_html__( 'Product selected price trial', 'surecart' );
 	}
 
 	/**
