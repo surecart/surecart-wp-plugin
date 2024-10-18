@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { ScAlert } from '@surecart/components-react';
+import { createInterpolateElement } from '@wordpress/element';
 
 export default ({
 	error,
@@ -16,6 +17,21 @@ export default ({
 	if (typeof error === 'string') {
 		error = { message: error };
 	}
+
+	const invalidJSONErrorMessage = createInterpolateElement(
+		__(
+			'If you are using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the <a>Debug Settings</a> or contact support.'
+		),
+		{
+			a: (
+				<a
+					href="https://wordpress.org/support/article/debugging-in-wordpress/"
+					target="_blank"
+					rel="noopener noreferrer"
+				/>
+			),
+		}
+	);
 
 	return (
 		<ScAlert
@@ -37,22 +53,7 @@ export default ({
 					))}
 				</ul>
 			)}
-			{error?.code === 'invalid_json' && (
-				<>
-					{__(
-						'If you are using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the ',
-						'surecart'
-					)}
-					<a
-						href="https://wordpress.org/support/article/debugging-in-wordpress/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{__('Debug Settings', 'surecart')}
-					</a>
-					{__(' or contact support.', 'surecart')}
-				</>
-			)}
+			{error?.code === 'invalid_json' && invalidJSONErrorMessage}
 			{children}
 		</ScAlert>
 	);
