@@ -248,7 +248,7 @@ class ProductListMigrationService {
 		$this->block_html   .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em","margin":{"top":"0px","bottom":"0px"}},"margin":{"top":"0px","bottom":"0px"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 		$this->block_html   .= '<div class="wp-block-group">';
 		$this->block_html   .= '<!-- wp:surecart/product-list-price ' . $product_price_attrs . ' /-->';
-		$this->block_html   .= '<!-- wp:surecart/product-list-price-sale ' . $product_price_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-scratch-price ' . $product_price_attrs . ' /-->';
 		$this->block_html   .= '</div>';
 		$this->block_html   .= '<!-- /wp:group -->';
 	}
