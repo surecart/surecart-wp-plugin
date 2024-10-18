@@ -53,13 +53,13 @@ export default ({
 
 				{!!product?.updated_at && (
 					<Definition title={__('Last Updated', 'surecart')}>
-						{format('F j, Y', new Date(product.updated_at * 1000))}
+						{product?.updated_at_date}
 					</Definition>
 				)}
 
 				{!!product?.created_at && (
 					<Definition title={__('Created On', 'surecart')}>
-						{format('F j, Y', new Date(product.created_at * 1000))}
+						{product?.created_at_date}
 					</Definition>
 				)}
 			</Fragment>

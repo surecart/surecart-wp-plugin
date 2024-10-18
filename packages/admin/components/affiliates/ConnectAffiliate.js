@@ -6,7 +6,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScFormControl } from '@surecart/components-react';
 import ModelSelector from '../ModelSelector';
 
 export default ({ item, updateItem }) => {

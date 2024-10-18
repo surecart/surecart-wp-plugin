@@ -3,7 +3,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 
 import { css, jsx } from '@emotion/core';
-import { formatTime } from '../../util/time';
 
 export default ({ invoice, loading }) => {
 	if (loading) {
@@ -68,7 +67,7 @@ export default ({ invoice, loading }) => {
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
-					formatTime(invoice.updated_at)
+					invoice.updated_at_date_time
 				)}
 			</div>
 			<div>

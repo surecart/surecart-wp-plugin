@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import Box from '../../../ui/Box';
-import { formatTime } from '../../../util/time';
 import Copy from './Copy';
 import {
 	ScTag,
@@ -54,7 +53,7 @@ export default ({ license, updateLicense, loading, onEditKey }) => {
 						!!license?.created_at &&
 						sprintf(
 							__('Created on %s', 'surecart'),
-							formatTime(license?.created_at)
+							license?.created_at_date_time
 						)
 					}
 					css={css`

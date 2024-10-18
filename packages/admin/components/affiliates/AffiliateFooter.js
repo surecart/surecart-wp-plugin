@@ -55,7 +55,7 @@ export default ({ item, updateItem, commissionText }) => {
 							`}
 						>
 							{__('Until', 'surecart')}{' '}
-							{item?.affiliation_expires_at_date}
+							{item?.affiliation_expires_at_date_time}
 						</span>
 					)}
 				</div>

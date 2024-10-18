@@ -6,7 +6,6 @@ import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
 import { License, Price, Product, Purchase, Subscription } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
-import { formatTime } from '../../../../../../admin/util/time';
 import { formatNumber } from '../../../../../../admin/util';
 @Component({
   tag: 'sc-subscription-details',
@@ -62,7 +61,7 @@ export class ScSubscriptionDetails {
 
     if (this?.subscription?.cancel_at_period_end && this?.subscription?.current_period_end_at) {
       return (
-        <span aria-label={sprintf(__('Renewal Update - Your plan will be canceled on %s', 'surecart'), formatTime(this.subscription.current_period_end_at))}>
+        <span aria-label={sprintf(__('Renewal Update - Your plan will be canceled on %s', 'surecart'), this.subscription.current_period_end_at_date)}>
           {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))} {this.subscription.current_period_end_at_date}
         </span>
       );
@@ -79,7 +78,7 @@ export class ScSubscriptionDetails {
             aria-label={sprintf(
               __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
               formatNumber(this.subscription?.pending_update?.ad_hoc_amount, this.pendingPrice?.currency || this.subscription?.price?.currency),
-              formatTime(this.subscription.current_period_end_at),
+              this.subscription.current_period_end_at_date,
             )}
           >
             {__('Your plan switches to', 'surecart')}{' '}
@@ -100,7 +99,7 @@ export class ScSubscriptionDetails {
           aria-label={sprintf(
             __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
             (this.pendingPrice.product as Product).name,
-            formatTime(this.subscription.current_period_end_at),
+            this.subscription.current_period_end_at_date,
           )}
         >
           {__('Your plan switches to', 'surecart')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'surecart')}{' '}
@@ -111,14 +110,14 @@ export class ScSubscriptionDetails {
 
     if (this?.subscription?.status === 'trialing' && this?.subscription?.trial_end_at) {
       return (
-        <span aria-label={sprintf(__('Renewal Update - Your plan begins on %s.', 'surecart'), formatTime(this.subscription.trial_end_at))}>
+        <span aria-label={sprintf(__('Renewal Update - Your plan begins on %s.', 'surecart'), this.subscription.trial_end_at_date)}>
           {tag} {sprintf(__('Your plan begins on', 'surecart'))} {this?.subscription?.trial_end_at_date}
         </span>
       );
     }
     if (this.subscription?.status === 'active' && this.subscription?.current_period_end_at) {
       return (
-        <span aria-label={sprintf(__('Renewal Update - Your next payment is on %s', 'surecart'), formatTime(this.subscription.current_period_end_at))}>
+        <span aria-label={sprintf(__('Renewal Update - Your next payment is on %s', 'surecart'), this.subscription.current_period_end_at_date)}>
           {tag} {this.subscription?.remaining_period_count === null ? __('Your plan renews on', 'surecart') : __('Your next payment is on', 'surecart')}{' '}
           {this?.subscription?.current_period_end_at_date}
         </span>

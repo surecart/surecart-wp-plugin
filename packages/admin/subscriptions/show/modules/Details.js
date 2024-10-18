@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import { formatTime } from '../../../util/time';
 import { css, jsx } from '@emotion/core';
 import {
 	ScFlex,
@@ -153,7 +152,7 @@ export default ({ subscription, customer, product, loading }) => {
 					</div>
 					{sprintf(
 						__('Created on %s', 'surecart'),
-						formatTime(subscription.created_at)
+						subscription?.created_at_date_time
 					)}
 				</div>
 				<div>
