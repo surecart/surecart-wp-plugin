@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { ScFormatDate, ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 import { DateTimePicker, Modal } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { dateI18n, getSettings } from '@wordpress/date';
 import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
 import Error from './Error';
@@ -22,6 +23,7 @@ export default (props) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const [date, setDate] = useState(currentDate);
 	const [error, setError] = useState();
+	const { formats, timezone } = getSettings();
 
 	useEffect(() => {
 		if (!isVisible) {
@@ -61,16 +63,13 @@ export default (props) => {
 			) : (
 				<>
 					<ScButton onClick={toggleVisible}>
-						{currentDate ? (
-							<ScFormatDate
-								date={currentDate}
-								month="long"
-								day="numeric"
-								year="numeric"
-							/>
-						) : (
-							placeholder || __('Select date', 'surecart')
-						)}
+						{currentDate
+							? dateI18n(
+									`${formats.date}`,
+									currentDate,
+									timezone.string
+							  )
+							: placeholder || __('Select date', 'surecart')}
 						{currentDate ? (
 							<ScIcon name="edit" slot="suffix" />
 						) : (

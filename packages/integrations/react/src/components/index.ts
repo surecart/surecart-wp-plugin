@@ -125,14 +125,6 @@ export const ScFormRow = /*@__PURE__*/ createReactComponent<
 	JSX.ScFormRow,
 	HTMLScFormRowElement
 >('sc-form-row');
-export const ScFormSection = /*@__PURE__*/ createReactComponent<
-	JSX.ScFormSection,
-	HTMLScFormSectionElement
->('sc-form-section');
-export const ScFormatDate = /*@__PURE__*/ createReactComponent<
-	JSX.ScFormatDate,
-	HTMLScFormatDateElement
->('sc-format-date');
 export const ScFormatInterval = /*@__PURE__*/ createReactComponent<
 	JSX.ScFormatInterval,
 	HTMLScFormatIntervalElement

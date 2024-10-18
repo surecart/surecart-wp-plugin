@@ -26,7 +26,6 @@
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
 - [sc-input](../../../ui/input)
 - [sc-button](../../../ui/button)
-- [sc-format-date](../../../util/format-date)
 - [sc-block-ui](../../../ui/block-ui)
 - [sc-dialog](../../../ui/sc-dialog)
 - [sc-icon](../../../ui/icon)
@@ -45,7 +44,6 @@ graph TD;
   sc-license --> sc-stacked-list-row
   sc-license --> sc-input
   sc-license --> sc-button
-  sc-license --> sc-format-date
   sc-license --> sc-block-ui
   sc-license --> sc-dialog
   sc-license --> sc-icon

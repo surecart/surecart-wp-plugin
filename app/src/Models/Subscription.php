@@ -562,5 +562,14 @@ class Subscription extends Model {
 	public function getRestoreAtDateAttribute() {
 		return ! empty( $this->restore_at ) ? TimeDate::formatDate( $this->restore_at ) : '';
 	}
+
+	/**
+	 * Get the trial end at date.
+	 *
+	 * @return string
+	 */
+	public function getTrialEndAtDateAttribute() {
+		return ! empty( $this->trial_end_at ) ? TimeDate::formatDate( $this->trial_end_at ) : '';
+	}
 }
 

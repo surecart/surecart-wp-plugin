@@ -23,7 +23,6 @@
 ### Depends on
 
 - [sc-subscription-status-badge](../../../ui/subscription-status-badge)
-- [sc-format-date](../../../util/format-date)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-subscription-next-payment](../subscription-details)
@@ -41,7 +40,6 @@
 ```mermaid
 graph TD;
   sc-subscription --> sc-subscription-status-badge
-  sc-subscription --> sc-format-date
   sc-subscription --> sc-stacked-list-row
   sc-subscription --> sc-skeleton
   sc-subscription --> sc-subscription-next-payment
@@ -54,7 +52,6 @@ graph TD;
   sc-subscription --> sc-block-ui
   sc-subscription --> sc-cancel-dialog
   sc-subscription --> sc-subscription-reactivate
-  sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-subscription-next-payment --> sc-toggle
   sc-subscription-next-payment --> sc-flex
@@ -70,7 +67,6 @@ graph TD;
   sc-subscription-next-payment --> sc-icon
   sc-toggle --> sc-icon
   sc-subscription-details --> sc-subscription-status-badge
-  sc-subscription-details --> sc-format-date
   sc-subscription-details --> sc-skeleton
   sc-subscription-details --> sc-format-number
   sc-subscription-details --> sc-flex
@@ -106,7 +102,6 @@ graph TD;
   sc-cancel-dialog --> sc-subscription-cancel
   sc-cancel-dialog --> sc-cancel-survey
   sc-cancel-dialog --> sc-cancel-discount
-  sc-subscription-cancel --> sc-format-date
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-cancel --> sc-flex
@@ -135,7 +130,6 @@ graph TD;
   sc-subscription-reactivate --> sc-alert
   sc-subscription-reactivate --> sc-format-number
   sc-subscription-reactivate --> sc-text
-  sc-subscription-reactivate --> sc-format-date
   sc-subscription-reactivate --> sc-button
   sc-subscription-reactivate --> sc-block-ui
   style sc-subscription fill:#f9f,stroke:#333,stroke-width:4px

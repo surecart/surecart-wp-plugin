@@ -8,6 +8,7 @@ use SureCart\Models\LineItem;
 use SureCart\Models\Traits\CanFinalize;
 use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDiscount;
+use SureCart\Models\Traits\HasPaymentFailures;
 use SureCart\Models\Traits\HasPaymentIntent;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
@@ -27,7 +28,8 @@ class Checkout extends Model {
 		HasPurchases,
 		CanFinalize,
 		HasProcessorType,
-		HasBillingAddress;
+		HasBillingAddress,
+		HasPaymentFailures;
 
 	/**
 	 * Rest API endpoint

@@ -139,12 +139,10 @@ export class ScInvoicesList {
 
   renderList() {
     return this.invoices.map(invoice => {
-      const { invoice_items, total_amount, currency, created_at, url } = invoice;
+      const { invoice_items, total_amount, currency, created_at_date, url } = invoice;
       return (
         <sc-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
-          <div>
-            <sc-format-date class="order__date" date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
-          </div>
+          <div class="order__date">{created_at_date}</div>
           <div>
             <sc-text
               truncate

@@ -49,7 +49,6 @@ graph TD;
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
-  sc-subscription-cancel --> sc-format-date
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-cancel --> sc-flex

@@ -27,7 +27,6 @@
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-divider](../../../ui/divider)
 - [sc-empty](../../../ui/empty)
-- [sc-format-date](../../../util/format-date)
 - [sc-text](../../../ui/text)
 - [sc-order-shipment-badge](../../../ui/order-shipment-badge)
 - [sc-format-number](../../../util/format-number)
@@ -48,7 +47,6 @@ graph TD;
   sc-orders-list --> sc-skeleton
   sc-orders-list --> sc-divider
   sc-orders-list --> sc-empty
-  sc-orders-list --> sc-format-date
   sc-orders-list --> sc-text
   sc-orders-list --> sc-order-shipment-badge
   sc-orders-list --> sc-format-number

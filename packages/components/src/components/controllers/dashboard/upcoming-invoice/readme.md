@@ -25,7 +25,6 @@
 
 ### Depends on
 
-- [sc-format-date](../../../util/format-date)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-format-number](../../../util/format-number)
 - [sc-product-line-item](../../../ui/product-line-item)
@@ -47,7 +46,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-upcoming-invoice --> sc-format-date
   sc-upcoming-invoice --> sc-skeleton
   sc-upcoming-invoice --> sc-format-number
   sc-upcoming-invoice --> sc-product-line-item

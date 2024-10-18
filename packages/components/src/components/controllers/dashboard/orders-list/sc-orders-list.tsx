@@ -145,7 +145,7 @@ export class ScOrdersList {
 
   renderList() {
     return this.orders.map(order => {
-      const { checkout, created_at, id } = order;
+      const { checkout, created_at_date, id } = order;
       if (!checkout) return null;
       const { line_items, amount_due, currency, charge } = checkout as Checkout;
       return (
@@ -158,11 +158,7 @@ export class ScOrdersList {
           style={{ '--columns': '4' }}
           mobile-size={500}
         >
-          <div>
-            {typeof charge !== 'string' && (
-              <sc-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></sc-format-date>
-            )}
-          </div>
+          <div class="order__date">{typeof charge !== 'string' && (charge?.created_at_date || created_at_date)}</div>
           <div>
             <sc-text
               truncate

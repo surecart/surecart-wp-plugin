@@ -86,15 +86,7 @@ export default ({ subscriptionId }) => {
 									status={invoice?.status}
 								></ScOrderStatusBadge>
 							),
-							created: (
-								<sc-format-date
-									type="timestamp"
-									date={invoice?.created_at}
-									month="short"
-									day="numeric"
-									year="numeric"
-								></sc-format-date>
-							),
+							created: invoice?.created_at_date,
 							number: invoice.number,
 							actions: (
 								<sc-button

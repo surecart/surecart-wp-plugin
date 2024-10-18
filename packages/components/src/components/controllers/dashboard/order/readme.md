@@ -33,7 +33,6 @@
 - [sc-stacked-list](../../../ui/stacked-list)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
 - [sc-order-status-badge](../../../ui/order-status-badge)
-- [sc-format-date](../../../util/format-date)
 - [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
@@ -57,7 +56,6 @@ graph TD;
   sc-order --> sc-stacked-list
   sc-order --> sc-stacked-list-row
   sc-order --> sc-order-status-badge
-  sc-order --> sc-format-date
   sc-order --> sc-payment-method
   sc-order --> sc-button
   sc-order --> sc-icon

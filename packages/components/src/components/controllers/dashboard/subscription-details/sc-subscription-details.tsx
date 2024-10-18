@@ -63,8 +63,7 @@ export class ScSubscriptionDetails {
     if (this?.subscription?.cancel_at_period_end && this?.subscription?.current_period_end_at) {
       return (
         <span aria-label={sprintf(__('Renewal Update - Your plan will be canceled on %s', 'surecart'), formatTime(this.subscription.current_period_end_at))}>
-          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))}{' '}
-          <sc-format-date date={this.subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))} {this.subscription.current_period_end_at_date}
         </span>
       );
     }
@@ -92,8 +91,7 @@ export class ScSubscriptionDetails {
               ></sc-format-number>{' '}
               {intervalString(this.pendingPrice || this.subscription?.price)}
             </strong>{' '}
-            {__('on', 'surecart')}{' '}
-            <sc-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
+            {__('on', 'surecart')} {this.subscription.current_period_end_at_date}
           </span>
         );
       }
@@ -106,7 +104,7 @@ export class ScSubscriptionDetails {
           )}
         >
           {__('Your plan switches to', 'surecart')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'surecart')}{' '}
-          <sc-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
+          {this.subscription.current_period_end_at_date}
         </span>
       );
     }
@@ -114,8 +112,7 @@ export class ScSubscriptionDetails {
     if (this?.subscription?.status === 'trialing' && this?.subscription?.trial_end_at) {
       return (
         <span aria-label={sprintf(__('Renewal Update - Your plan begins on %s.', 'surecart'), formatTime(this.subscription.trial_end_at))}>
-          {tag} {sprintf(__('Your plan begins on', 'surecart'))}{' '}
-          <sc-format-date date={this?.subscription?.trial_end_at} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag} {sprintf(__('Your plan begins on', 'surecart'))} {this?.subscription?.trial_end_at_date}
         </span>
       );
     }
@@ -123,7 +120,7 @@ export class ScSubscriptionDetails {
       return (
         <span aria-label={sprintf(__('Renewal Update - Your next payment is on %s', 'surecart'), formatTime(this.subscription.current_period_end_at))}>
           {tag} {this.subscription?.remaining_period_count === null ? __('Your plan renews on', 'surecart') : __('Your next payment is on', 'surecart')}{' '}
-          <sc-format-date date={this?.subscription?.current_period_end_at} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
+          {this?.subscription?.current_period_end_at_date}
         </span>
       );
     }
@@ -210,9 +207,7 @@ export class ScSubscriptionDetails {
                         <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>{activation?.fingerprint}</sc-text>
                       </div>
                     </sc-text>
-                    <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>
-                      <sc-format-date type="timestamp" month="short" day="numeric" year="numeric" date={activation?.created_at}></sc-format-date>
-                    </sc-text>
+                    <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>{activation?.created_at_date}</sc-text>
                   </sc-stacked-list-row>
                 );
               })}

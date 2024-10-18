@@ -1,4 +1,5 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
+import { dateI18n, getSettings } from '@wordpress/date';
 import {
 	InspectorControls,
 	RichText,
@@ -10,8 +11,9 @@ import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
-	const { per_page, paginate, title } = attributes;
+	const { title } = attributes;
 	const blockProps = useBlockProps();
+	const { formats, timezone } = getSettings();
 
 	return (
 		<Fragment>
@@ -51,13 +53,11 @@ export default ({ attributes, setAttributes }) => {
 							mobile-size={500}
 						>
 							<div>
-								<sc-format-date
-									date={Date.now() / 1000}
-									type="timestamp"
-									month="short"
-									day="numeric"
-									year="numeric"
-								></sc-format-date>
+								{dateI18n(
+									`${formats.date}`,
+									Date.now(),
+									timezone.string
+								)}
 							</div>
 
 							<div>
@@ -100,13 +100,11 @@ export default ({ attributes, setAttributes }) => {
 							mobile-size={500}
 						>
 							<div>
-								<sc-format-date
-									date={Date.now() / 1000}
-									type="timestamp"
-									month="short"
-									day="numeric"
-									year="numeric"
-								></sc-format-date>
+								{dateI18n(
+									`${formats.date}`,
+									Date.now(),
+									timezone.string
+								)}
 							</div>
 
 							<div>

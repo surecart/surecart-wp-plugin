@@ -108,10 +108,7 @@ export class ScSubscriptionReactivate {
                     'margin-top': 'var(--sc-spacing-medium)',
                   }}
                 >
-                  {__('Your subscription will be reactivated and will renew automatically on', 'surecart')}{' '}
-                  <strong>
-                    <sc-format-date type="timestamp" date={this.upcomingPeriod?.end_at} month="long" day="numeric" year="numeric"></sc-format-date>
-                  </strong>
+                  {__('Your subscription will be reactivated and will renew automatically on', 'surecart')} <strong>{this.upcomingPeriod?.end_at_date}</strong>
                 </sc-text>
               </div>
               <sc-flex justifyContent="flex-start">

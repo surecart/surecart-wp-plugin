@@ -171,8 +171,7 @@ export class ScUpcomingInvoice {
         <div>
           {__("You'll be switched to this plan", 'surecart')}{' '}
           <strong>
-            {__('at the end of your billing cycle on', 'surecart')}{' '}
-            <sc-format-date type="timestamp" date={this.invoice?.start_at} month="short" day="numeric" year="numeric"></sc-format-date>
+            {__('at the end of your billing cycle on', 'surecart')} {this.invoice?.start_at_date}
           </strong>
         </div>
       );

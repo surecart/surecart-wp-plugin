@@ -135,23 +135,21 @@ export class ScSubscription {
     if (subscription?.cancel_at_period_end && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))}{' '}
-          <sc-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))} {subscription.current_period_end_at_date}
         </span>
       );
     }
     if (subscription.status === 'trialing' && subscription.trial_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan begins on', 'surecart'))} <sc-format-date date={subscription.trial_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag} {sprintf(__('Your plan begins on', 'surecart'))} {subscription.trial_end_at_date}
         </span>
       );
     }
     if (subscription.status === 'active' && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan renews on', 'surecart'))}{' '}
-          <sc-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag} {sprintf(__('Your plan renews on', 'surecart'))} {subscription.current_period_end_at_date}
         </span>
       );
     }

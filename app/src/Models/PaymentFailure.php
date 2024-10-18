@@ -5,9 +5,9 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasDates;
 
 /**
- * TaxRegistration model
+ * PaymentFailure model.
  */
-class TaxRegistration extends Model {
+class PaymentFailure extends Model {
 	use HasDates;
 
 	/**
@@ -15,12 +15,12 @@ class TaxRegistration extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'tax_registrations';
+	protected $endpoint = 'payment_failures';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'tax_registration';
+	protected $object_name = 'payment_failure';
 }

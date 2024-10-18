@@ -44,15 +44,7 @@ export default ({ order, loading }) => {
 								status={order?.status}
 							></ScOrderStatusBadge>
 						),
-						created: (
-							<sc-format-date
-								type="timestamp"
-								date={order?.created_at}
-								month="short"
-								day="numeric"
-								year="numeric"
-							></sc-format-date>
-						),
+						created: order?.created_at_date,
 						number: order.number,
 						actions: (
 							<sc-button
