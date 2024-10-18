@@ -57,7 +57,17 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							layout: { type: 'default' },
 							...(block.attributes || {}),
 						},
-						[],
+						[
+							[
+								'surecart/product-sale-badge',
+								{
+									style: {
+										typography: { fontSize: '12px' },
+										border: { radius: '100px' },
+									},
+								},
+							],
+						],
 					]);
 					break;
 			}

@@ -231,6 +231,7 @@ class ProductListMigrationService {
 		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;">';
 		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
 		$image .= '<div class="wp-block-cover__inner-container">';
+		$image .= '<!-- wp:surecart/product-sale-badge {"style":{"typography":{"fontSize":"12px"},"border":{"radius":"100px"}}} /-->';
 		$image .= '</div>';
 		$image .= '</div>';
 		$image .= '<!-- /wp:cover -->';
