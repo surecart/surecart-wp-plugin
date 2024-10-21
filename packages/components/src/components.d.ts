@@ -1725,8 +1725,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface ScInvoiceAdditional {
-    }
     interface ScInvoiceDetails {
     }
     interface ScInvoiceStatusBadge {
@@ -4983,12 +4981,6 @@ declare global {
         prototype: HTMLScInputElement;
         new (): HTMLScInputElement;
     };
-    interface HTMLScInvoiceAdditionalElement extends Components.ScInvoiceAdditional, HTMLStencilElement {
-    }
-    var HTMLScInvoiceAdditionalElement: {
-        prototype: HTMLScInvoiceAdditionalElement;
-        new (): HTMLScInvoiceAdditionalElement;
-    };
     interface HTMLScInvoiceDetailsElement extends Components.ScInvoiceDetails, HTMLStencilElement {
     }
     var HTMLScInvoiceDetailsElement: {
@@ -5964,7 +5956,6 @@ declare global {
         "sc-icon": HTMLScIconElement;
         "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
-        "sc-invoice-additional": HTMLScInvoiceAdditionalElement;
         "sc-invoice-details": HTMLScInvoiceDetailsElement;
         "sc-invoice-status-badge": HTMLScInvoiceStatusBadgeElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
@@ -8008,8 +7999,6 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
-    }
-    interface ScInvoiceAdditional {
     }
     interface ScInvoiceDetails {
     }
@@ -10773,7 +10762,6 @@ declare namespace LocalJSX {
         "sc-icon": ScIcon;
         "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
-        "sc-invoice-additional": ScInvoiceAdditional;
         "sc-invoice-details": ScInvoiceDetails;
         "sc-invoice-status-badge": ScInvoiceStatusBadge;
         "sc-invoices-list": ScInvoicesList;
@@ -11020,7 +11008,6 @@ declare module "@stencil/core" {
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
-            "sc-invoice-additional": LocalJSX.ScInvoiceAdditional & JSXBase.HTMLAttributes<HTMLScInvoiceAdditionalElement>;
             "sc-invoice-details": LocalJSX.ScInvoiceDetails & JSXBase.HTMLAttributes<HTMLScInvoiceDetailsElement>;
             "sc-invoice-status-badge": LocalJSX.ScInvoiceStatusBadge & JSXBase.HTMLAttributes<HTMLScInvoiceStatusBadgeElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;

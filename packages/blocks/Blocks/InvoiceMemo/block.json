@@ -3,7 +3,7 @@
 	"title": "Invoice Memo",
 	"description": "Displays the invoice memo line item.",
 	"category": "surecart",
-	"ancestor": ["surecart/invoice-additional"],
+	"ancestor": ["surecart/invoice-details"],
 	"keywords": ["checkout", "engine", "invoice", "memo"],
 	"textdomain": "surecart",
 	"supports": {
