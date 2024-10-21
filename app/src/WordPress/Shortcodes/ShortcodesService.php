@@ -14,14 +14,14 @@ class ShortcodesService {
 	 * @var array
 	 */
 	protected $old_shortcode_block_names = [
-		'surecart/product-buy-button-old',
+		'surecart/product-buy-button',
 		'surecart/product-price-choices',
-		'surecart/product-title-old',
+		'surecart/product-title',
 		'surecart/product-price',
-		'surecart/product-description-old',
+		'surecart/product-description',
 		'surecart/product-variant-choices',
-		'surecart/product-quantity-old',
-		'surecart/product-media-old',
+		'surecart/product-quantity',
+		'surecart/product-media',
 	];
 
 	/**
