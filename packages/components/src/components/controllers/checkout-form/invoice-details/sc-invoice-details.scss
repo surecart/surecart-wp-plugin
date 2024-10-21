@@ -2,6 +2,9 @@
   display: block;
 }
 
-.invoice-details {
-  margin-bottom: var(--sc-spacing-medium);
+::slotted(*) {
+  margin: 4px 0 !important;
+}
+::slotted(sc-divider) {
+  margin: 16px 0 !important;
 }

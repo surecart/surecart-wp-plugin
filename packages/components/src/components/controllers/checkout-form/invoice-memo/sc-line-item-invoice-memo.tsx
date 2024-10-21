@@ -34,7 +34,7 @@ export class ScLineItemInvoiceMemo {
       return (
         <div>
           <sc-skeleton style={{ width: '100px' }}></sc-skeleton>
-          <sc-skeleton style={{ 'width': '200px' }}></sc-skeleton>
+          <sc-skeleton style={{ width: '200px' }}></sc-skeleton>
         </div>
       );
     }

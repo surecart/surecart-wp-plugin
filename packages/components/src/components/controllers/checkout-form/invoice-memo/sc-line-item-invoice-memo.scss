@@ -3,15 +3,14 @@
 }
 
 .invoice-memo {
-  &__title {
-    display: block;
-    font-weight: var(--sc-font-weight-semibold);
-    color: var(--sc-input-label-color);
-  }
+  font-size: var(--sc-font-size-small);
+  line-height: var(--sc-line-height-dense);
+  color: var(--sc-input-label-color);
+  display: grid;
+  gap: 5px;
 
   &__content {
     text-align: left;
-    line-height: var(--sc-line-height-dense);
-    color: var(--sc-input-label-color);
+    color: var(--sc-input-help-text-color);
   }
 }
