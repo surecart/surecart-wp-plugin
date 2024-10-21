@@ -33,8 +33,8 @@ export class ScLineItemInvoiceMemo {
     if (formBusy() && !checkout?.invoice) {
       return (
         <div>
-          <sc-skeleton slot="title" style={{ width: '100px' }}></sc-skeleton>
-          <sc-skeleton slot="price" style={{ 'width': '200px', '--border-radius': '6px' }}></sc-skeleton>
+          <sc-skeleton style={{ width: '100px' }}></sc-skeleton>
+          <sc-skeleton style={{ 'width': '200px' }}></sc-skeleton>
         </div>
       );
     }
