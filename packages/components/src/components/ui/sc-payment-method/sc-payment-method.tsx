@@ -1,6 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { startCase } from 'lodash';
 
 import { BankAccount, PaymentInstrument, PaymentMethod } from '../../../types';
 
@@ -76,7 +75,7 @@ export class ScPaymentMethod {
         return (
           <div class="payment-method" part="instrument">
             <sc-icon style={{ fontSize: '36px' }} name={type} />
-            <span style={{ textTransform: 'capitalize' }}>{startCase(type)}</span>
+            <span style={{ textTransform: 'capitalize' }}>{this?.paymentMethod?.payment_method_name}</span>
             {this.renderExternalLink()}
           </div>
         );

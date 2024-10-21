@@ -927,6 +927,7 @@ export interface PaymentMethod extends Object {
   type: string;
   bank_account: BankAccount | string;
   payment_instrument: PaymentInstrument | string;
+  payment_method_name: string;
   payment_intent: PaymentIntent | string;
   billing_agreement?: BillingAgreement | string;
   card: any;

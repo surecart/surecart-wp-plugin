@@ -61,4 +61,46 @@ class PaymentMethod extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Get the translated payment method name.
+	 *
+	 * @return string
+	 */
+	public function getPaymentMethodNameAttribute()
+	{
+		$type = $this->payment_instrument->instrument_type ?? '';
+
+		$payment_type_names = [
+			'card'         => __('Card', 'surecart'),
+			'bank_account' => __('Bank Account', 'surecart'),
+			'applepay'     => __('Apple Pay', 'surecart'),
+			'bancontact'   => __('Bancontact', 'surecart'),
+			'banktransfer' => __('Bank Transfer', 'surecart'),
+			'belfius'      => __('Belfius', 'surecart'),
+			'creditcard'   => __('Credit Card', 'surecart'),
+			'directdebit'  => __('Direct Debit', 'surecart'),
+			'eps'          => __('EPS', 'surecart'),
+			'giftcard'     => __('Gift Card', 'surecart'),
+			'giropay'      => __('Giropay', 'surecart'),
+			'ideal'        => __('iDEAL', 'surecart'),
+			'sepa_debit'   => __('SEPA Debit', 'surecart'),
+			'in3'          => __('In3', 'surecart'),
+			'kbc'          => __('KBC', 'surecart'),
+			'klarna'       => __('Klarna', 'surecart'),
+			'mybank'       => __('MyBank', 'surecart'),
+			'paysafecard'  => __('Paysafecard', 'surecart'),
+			'przelewy24'   => __('Przelewy24', 'surecart'),
+			'sofort'       => __('Sofort', 'surecart'),
+			'voucher'      => __('Voucher', 'surecart'),
+		];
+
+		// Check if the type exists in our map.
+		if ( isset( $payment_type_names[ $type ] ) ) {
+			return $payment_type_names[ $type ];
+		}
+
+		// Return the type with the first letter capitalized.
+		return ucfirst( $type );
+	}
 }
