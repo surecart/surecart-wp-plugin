@@ -1,6 +1,6 @@
-/**
- * WordPress dependencies
- */
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+
 import { __ } from '@wordpress/i18n';
 import {
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
@@ -13,7 +13,17 @@ export default () => {
 		: __experimentalUseInnerBlocksProps;
 
 	const innerBlocksProps = useInnerBlocksProps(
-		{},
+		{
+			className: 'sc-invoice-details',
+			css: css`
+				> * {
+					margin: 4px 0 !important;
+				}
+				> sc-divider {
+					margin: 16px 0 !important;
+				}
+			`,
+		},
 		{
 			template: [
 				['surecart/invoice-number', {}],
@@ -25,5 +35,5 @@ export default () => {
 		}
 	);
 
-	return <sc-invoice-details {...innerBlocksProps}></sc-invoice-details>;
+	return <div {...innerBlocksProps}></div>;
 };
