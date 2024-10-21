@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-15T11:35:56",
+  "timestamp": "2024-10-21T11:58:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4538,7 +4538,9 @@
           "sc-line-item-invoice-number",
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
-          "sc-divider"
+          "sc-divider",
+          "sc-invoice-additional",
+          "sc-line-item-invoice-memo"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -4620,6 +4622,9 @@
           "sc-line-item",
           "sc-skeleton",
           "sc-icon"
+        ],
+        "sc-line-item-invoice-memo": [
+          "sc-skeleton"
         ],
         "sc-order-confirm-provider": [
           "sc-dialog",
@@ -6794,21 +6799,6 @@
           "required": false
         },
         {
-          "name": "onScApplyCoupon",
-          "type": "(e: string) => void",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "When the coupon is applied",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "(e: string) => void"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "open",
           "type": "boolean",
           "mutable": true,
@@ -6870,7 +6860,17 @@
           "docsTags": []
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "event": "scApplyCoupon",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "When the coupon is applied",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -11903,7 +11903,9 @@
         "sc-line-item-invoice-number",
         "sc-line-item-invoice-due-date",
         "sc-line-item-invoice-receipt-download",
-        "sc-divider"
+        "sc-divider",
+        "sc-invoice-additional",
+        "sc-line-item-invoice-memo"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
@@ -11918,7 +11920,9 @@
           "sc-line-item-invoice-number",
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
-          "sc-divider"
+          "sc-divider",
+          "sc-invoice-additional",
+          "sc-line-item-invoice-memo"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -12012,6 +12016,9 @@
           "sc-line-item",
           "sc-skeleton",
           "sc-icon"
+        ],
+        "sc-line-item-invoice-memo": [
+          "sc-skeleton"
         ],
         "sc-checkout": [
           "sc-form-components-validator"
@@ -15012,6 +15019,31 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/checkout-form/invoice-additional/sc-invoice-additional.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-invoice-additional",
+      "readme": "# sc-invoice-footer\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-form-components-validator": [
+          "sc-invoice-additional"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/checkout-form/invoice-details/sc-invoice-details.tsx",
       "encapsulation": "shadow",
       "tag": "sc-invoice-details",
@@ -15873,6 +15905,36 @@
         ],
         "sc-form-components-validator": [
           "sc-line-item-invoice-due-date"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/invoice-memo/sc-line-item-invoice-memo.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-line-item-invoice-memo",
+      "readme": "# sc-line-item-invoice-number\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-line-item-invoice-memo": [
+          "sc-skeleton"
+        ],
+        "sc-form-components-validator": [
+          "sc-line-item-invoice-memo"
         ]
       }
     },
@@ -29673,6 +29735,7 @@
         "sc-license",
         "sc-licenses-list",
         "sc-line-item-invoice-due-date",
+        "sc-line-item-invoice-memo",
         "sc-line-item-invoice-number",
         "sc-line-item-invoice-receipt-download",
         "sc-line-item-shipping",
@@ -29741,6 +29804,9 @@
           "sc-skeleton"
         ],
         "sc-line-item-invoice-due-date": [
+          "sc-skeleton"
+        ],
+        "sc-line-item-invoice-memo": [
           "sc-skeleton"
         ],
         "sc-line-item-invoice-number": [

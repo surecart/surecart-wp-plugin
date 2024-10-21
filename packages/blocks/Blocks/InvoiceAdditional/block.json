@@ -1,0 +1,13 @@
+{
+	"name": "surecart/invoice-additional",
+	"title": "Invoice Additional Details",
+	"description": "Display the additional details of the invoice",
+	"category": "surecart",
+	"keywords": ["surecart", "invoice", "details", "memo"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/form"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	}
+}
