@@ -44,6 +44,9 @@ export class ScFormComponentsValidator {
   /** Is there an invoice details */
   @State() hasInvoiceDetails: boolean;
 
+  /** Is there an invoice additional contents */
+  @State() hasInvoiceAdditional: boolean;
+
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
@@ -73,6 +76,7 @@ export class ScFormComponentsValidator {
     // automatically add invoice details if we have an invoice.
     if (!!checkoutState.checkout?.invoice) {
       this.addInvoiceDetails();
+      this.addInvoiceAdditional();
     }
   }
 
@@ -90,6 +94,7 @@ export class ScFormComponentsValidator {
     this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
     this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
     this.hasInvoiceDetails = !!this.el.querySelector('sc-invoice-details');
+    this.hasInvoiceAdditional = !!this.el.querySelector('sc-invoice-footer');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -230,6 +235,27 @@ export class ScFormComponentsValidator {
     invoiceDetails.appendChild(divider);
 
     this.hasInvoiceDetails = true;
+  }
+
+  addInvoiceAdditional() {
+    if (this.hasInvoiceAdditional) return;
+
+    const orderSummary = this.el.querySelector('sc-order-summary');
+
+    // Add sc-divider inside sc-invoice-additional.
+    const divider = document.createElement('sc-divider');
+    orderSummary.parentNode.insertBefore(divider, orderSummary.nextSibling);
+
+    const invoiceAdditional = document.createElement('sc-invoice-additional');
+
+    // Add sc-invoice-additional after divider.
+    divider.parentNode.insertBefore(invoiceAdditional, divider.nextSibling);
+
+    // Add sc-line-item-invoice-memo inside sc-invoice-additional.
+    const invoiceMemo = document.createElement('sc-line-item-invoice-memo');
+    invoiceAdditional.appendChild(invoiceMemo);
+
+    this.hasInvoiceAdditional = true;
   }
 
   render() {

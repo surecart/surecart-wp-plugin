@@ -892,6 +892,12 @@
     "class": true,
     "slot": true
   },
+  "sc-invoice-additional": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-invoice-details": {
     "style": true,
     "id": true,
@@ -953,6 +959,13 @@
     "slot": true
   },
   "sc-line-item-invoice-due-date": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-line-item-invoice-memo": {
+    "text": true,
     "style": true,
     "id": true,
     "class": true,
