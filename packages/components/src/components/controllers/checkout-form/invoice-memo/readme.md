@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description | Type     | Default     |
+| -------- | --------- | ----------- | -------- | ----------- |
+| `text`   | `text`    | Memo Label  | `string` | `undefined` |
+
+
 ## Dependencies
 
 ### Used by

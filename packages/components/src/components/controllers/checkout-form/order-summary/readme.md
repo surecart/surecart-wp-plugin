@@ -14,7 +14,7 @@
 | `collapsedOnDesktop` | `collapsed-on-desktop` |             | `boolean`  | `undefined`                         |
 | `collapsedOnMobile`  | `collapsed-on-mobile`  |             | `boolean`  | `false`                             |
 | `collapsible`        | `collapsible`          |             | `boolean`  | `false`                             |
-| `invoiceSummaryText` | `invoice-summary-text` |             | `string`   | `__('Inovice Summary', 'surecart')` |
+| `invoiceSummaryText` | `invoice-summary-text` |             | `string`   | `__('Invoice Summary', 'surecart')` |
 | `order`              | --                     |             | `Checkout` | `undefined`                         |
 | `orderSummaryText`   | `order-summary-text`   |             | `string`   | `__('Summary', 'surecart')`         |
 

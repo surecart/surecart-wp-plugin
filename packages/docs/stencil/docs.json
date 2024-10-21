@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-21T11:58:12",
+  "timestamp": "2024-10-21T16:35:22",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4538,9 +4538,9 @@
           "sc-line-item-invoice-number",
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
+          "sc-line-item-invoice-memo",
           "sc-divider",
-          "sc-invoice-additional",
-          "sc-line-item-invoice-memo"
+          "sc-invoice-additional"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -11903,9 +11903,9 @@
         "sc-line-item-invoice-number",
         "sc-line-item-invoice-due-date",
         "sc-line-item-invoice-receipt-download",
+        "sc-line-item-invoice-memo",
         "sc-divider",
-        "sc-invoice-additional",
-        "sc-line-item-invoice-memo"
+        "sc-invoice-additional"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
@@ -11920,9 +11920,9 @@
           "sc-line-item-invoice-number",
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
+          "sc-line-item-invoice-memo",
           "sc-divider",
-          "sc-invoice-additional",
-          "sc-line-item-invoice-memo"
+          "sc-invoice-additional"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -15916,7 +15916,24 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "text",
+          "type": "string",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "Memo Label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -20336,7 +20353,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "__('Inovice Summary', 'surecart')",
+          "default": "__('Invoice Summary', 'surecart')",
           "values": [
             {
               "type": "string"
