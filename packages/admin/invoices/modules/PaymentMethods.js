@@ -21,7 +21,6 @@ import {
 	ScDialog,
 	ScForm,
 	ScPaymentMethod,
-	ScTag,
 } from '@surecart/components-react';
 
 export default ({
@@ -115,6 +114,7 @@ export default ({
 								css={css`
 									display: flex;
 									justify-content: space-between;
+									align-items: center;
 								`}
 							>
 								<ScPaymentMethod
@@ -130,21 +130,6 @@ export default ({
 									)}
 									{!!payment_method?.paypal_account?.email &&
 										payment_method?.paypal_account?.email}
-
-									{payment_method?.id ===
-										paymentMethod?.id && (
-										<ScTag
-											type="info"
-											slot="price"
-											css={css`
-												margin-left: var(
-													--sc-spacing-small
-												);
-											`}
-										>
-											{__('Current', 'surecart')}
-										</ScTag>
-									)}
 								</div>
 							</div>
 						</ScChoice>
