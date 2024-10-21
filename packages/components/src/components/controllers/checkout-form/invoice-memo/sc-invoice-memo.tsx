@@ -12,8 +12,8 @@ import { state as checkoutState } from '@store/checkout';
 import { Invoice } from '../../../../types';
 
 @Component({
-  tag: 'sc-line-item-invoice-memo',
-  styleUrl: 'sc-line-item-invoice-memo.scss',
+  tag: 'sc-invoice-memo',
+  styleUrl: 'sc-invoice-memo.scss',
   shadow: true,
 })
 export class ScLineItemInvoiceMemo {

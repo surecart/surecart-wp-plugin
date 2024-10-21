@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-21T16:35:22",
+  "timestamp": "2024-10-21T17:43:21",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4538,9 +4538,8 @@
           "sc-line-item-invoice-number",
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
-          "sc-line-item-invoice-memo",
           "sc-divider",
-          "sc-invoice-additional"
+          "sc-invoice-memo"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -4623,7 +4622,7 @@
           "sc-skeleton",
           "sc-icon"
         ],
-        "sc-line-item-invoice-memo": [
+        "sc-invoice-memo": [
           "sc-skeleton"
         ],
         "sc-order-confirm-provider": [
@@ -11903,9 +11902,8 @@
         "sc-line-item-invoice-number",
         "sc-line-item-invoice-due-date",
         "sc-line-item-invoice-receipt-download",
-        "sc-line-item-invoice-memo",
         "sc-divider",
-        "sc-invoice-additional"
+        "sc-invoice-memo"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
@@ -11920,9 +11918,8 @@
           "sc-line-item-invoice-number",
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
-          "sc-line-item-invoice-memo",
           "sc-divider",
-          "sc-invoice-additional"
+          "sc-invoice-memo"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -12017,7 +12014,7 @@
           "sc-skeleton",
           "sc-icon"
         ],
-        "sc-line-item-invoice-memo": [
+        "sc-invoice-memo": [
           "sc-skeleton"
         ],
         "sc-checkout": [
@@ -15019,31 +15016,6 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/checkout-form/invoice-additional/sc-invoice-additional.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-invoice-additional",
-      "readme": "# sc-invoice-footer\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-form-components-validator"
-      ],
-      "dependencies": [],
-      "dependencyGraph": {
-        "sc-form-components-validator": [
-          "sc-invoice-additional"
-        ]
-      }
-    },
-    {
       "filePath": "./src/components/controllers/checkout-form/invoice-details/sc-invoice-details.tsx",
       "encapsulation": "shadow",
       "tag": "sc-invoice-details",
@@ -15065,6 +15037,53 @@
       "dependencyGraph": {
         "sc-form-components-validator": [
           "sc-invoice-details"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/invoice-memo/sc-invoice-memo.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-invoice-memo",
+      "readme": "# sc-line-item-invoice-number\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "text",
+          "type": "string",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "Memo Label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-invoice-memo": [
+          "sc-skeleton"
+        ],
+        "sc-form-components-validator": [
+          "sc-invoice-memo"
         ]
       }
     },
@@ -15905,53 +15924,6 @@
         ],
         "sc-form-components-validator": [
           "sc-line-item-invoice-due-date"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/checkout-form/invoice-memo/sc-line-item-invoice-memo.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-line-item-invoice-memo",
-      "readme": "# sc-line-item-invoice-number\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "text",
-          "type": "string",
-          "mutable": false,
-          "attr": "text",
-          "reflectToAttr": false,
-          "docs": "Memo Label",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-form-components-validator"
-      ],
-      "dependencies": [
-        "sc-skeleton"
-      ],
-      "dependencyGraph": {
-        "sc-line-item-invoice-memo": [
-          "sc-skeleton"
-        ],
-        "sc-form-components-validator": [
-          "sc-line-item-invoice-memo"
         ]
       }
     },
@@ -29748,11 +29720,11 @@
         "sc-customer-details",
         "sc-donation-choices",
         "sc-fulfillments",
+        "sc-invoice-memo",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
         "sc-line-item-invoice-due-date",
-        "sc-line-item-invoice-memo",
         "sc-line-item-invoice-number",
         "sc-line-item-invoice-receipt-download",
         "sc-line-item-shipping",
@@ -29811,6 +29783,9 @@
         "sc-fulfillments": [
           "sc-skeleton"
         ],
+        "sc-invoice-memo": [
+          "sc-skeleton"
+        ],
         "sc-invoices-list": [
           "sc-skeleton"
         ],
@@ -29821,9 +29796,6 @@
           "sc-skeleton"
         ],
         "sc-line-item-invoice-due-date": [
-          "sc-skeleton"
-        ],
-        "sc-line-item-invoice-memo": [
           "sc-skeleton"
         ],
         "sc-line-item-invoice-number": [

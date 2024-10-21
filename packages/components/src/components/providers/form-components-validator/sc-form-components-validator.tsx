@@ -94,7 +94,7 @@ export class ScFormComponentsValidator {
     this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
     this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
     this.hasInvoiceDetails = !!this.el.querySelector('sc-invoice-details');
-    this.hasInvoiceMemo = !!this.el.querySelector('sc-line-item-invoice-memo');
+    this.hasInvoiceMemo = !!this.el.querySelector('sc-invoice-memo');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -247,8 +247,8 @@ export class ScFormComponentsValidator {
     // Add sc-divider inside sc-invoice-additional.
     orderSummary.parentNode.insertBefore(invoiceDetails, orderSummary.nextSibling);
 
-    // Add sc-line-item-invoice-memo inside sc-invoice-details.
-    const invoiceMemo = document.createElement('sc-line-item-invoice-memo');
+    // Add sc-invoice-memo inside sc-invoice-details.
+    const invoiceMemo = document.createElement('sc-invoice-memo');
     invoiceDetails.appendChild(invoiceMemo);
 
     this.hasInvoiceMemo = true;

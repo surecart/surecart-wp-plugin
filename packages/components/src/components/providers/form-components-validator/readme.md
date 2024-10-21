@@ -32,9 +32,8 @@
 - [sc-line-item-invoice-number](../../controllers/checkout-form/invoice-number)
 - [sc-line-item-invoice-due-date](../../controllers/checkout-form/invoice-due-date)
 - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
-- [sc-line-item-invoice-memo](../../controllers/checkout-form/invoice-memo)
 - [sc-divider](../../ui/divider)
-- [sc-invoice-additional](../../controllers/checkout-form/invoice-additional)
+- [sc-invoice-memo](../../controllers/checkout-form/invoice-memo)
 
 ### Graph
 ```mermaid
@@ -50,9 +49,8 @@ graph TD;
   sc-form-components-validator --> sc-line-item-invoice-number
   sc-form-components-validator --> sc-line-item-invoice-due-date
   sc-form-components-validator --> sc-line-item-invoice-receipt-download
-  sc-form-components-validator --> sc-line-item-invoice-memo
   sc-form-components-validator --> sc-divider
-  sc-form-components-validator --> sc-invoice-additional
+  sc-form-components-validator --> sc-invoice-memo
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -108,7 +106,7 @@ graph TD;
   sc-line-item-invoice-receipt-download --> sc-line-item
   sc-line-item-invoice-receipt-download --> sc-skeleton
   sc-line-item-invoice-receipt-download --> sc-icon
-  sc-line-item-invoice-memo --> sc-skeleton
+  sc-invoice-memo --> sc-skeleton
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```

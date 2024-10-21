@@ -126,9 +126,8 @@ graph TD;
   sc-form-components-validator --> sc-line-item-invoice-number
   sc-form-components-validator --> sc-line-item-invoice-due-date
   sc-form-components-validator --> sc-line-item-invoice-receipt-download
-  sc-form-components-validator --> sc-line-item-invoice-memo
   sc-form-components-validator --> sc-divider
-  sc-form-components-validator --> sc-invoice-additional
+  sc-form-components-validator --> sc-invoice-memo
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -180,7 +179,7 @@ graph TD;
   sc-line-item-invoice-receipt-download --> sc-line-item
   sc-line-item-invoice-receipt-download --> sc-skeleton
   sc-line-item-invoice-receipt-download --> sc-icon
-  sc-line-item-invoice-memo --> sc-skeleton
+  sc-invoice-memo --> sc-skeleton
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module

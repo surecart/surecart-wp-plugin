@@ -898,6 +898,13 @@
     "class": true,
     "slot": true
   },
+  "sc-invoice-memo": {
+    "text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-invoice-status-badge": {
     "clearable": true,
     "pill": true,
@@ -953,13 +960,6 @@
     "slot": true
   },
   "sc-line-item-invoice-due-date": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-line-item-invoice-memo": {
-    "text": true,
     "style": true,
     "id": true,
     "class": true,

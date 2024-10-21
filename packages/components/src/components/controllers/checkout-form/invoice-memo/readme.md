@@ -25,9 +25,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-line-item-invoice-memo --> sc-skeleton
-  sc-form-components-validator --> sc-line-item-invoice-memo
-  style sc-line-item-invoice-memo fill:#f9f,stroke:#333,stroke-width:4px
+  sc-invoice-memo --> sc-skeleton
+  sc-form-components-validator --> sc-invoice-memo
+  style sc-invoice-memo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
