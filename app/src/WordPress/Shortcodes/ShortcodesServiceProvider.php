@@ -234,6 +234,13 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_custom_amount',
+			'surecart/product-selected-price-ad-hoc-amount',
+			[
+				'label' => __( 'Enter an amount', 'surecart' ),
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_page',
 			'surecart/product-page',
 			[
