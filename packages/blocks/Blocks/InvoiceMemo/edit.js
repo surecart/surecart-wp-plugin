@@ -18,7 +18,7 @@ export default ({ attributes, setAttributes }) => {
 				allowedFormats={[]}
 			/>
 
-			<div>{__('Sample Invoice Memo text', 'surecart')}</div>
+			<div>{__('Thank you for your business!', 'surecart')}</div>
 		</div>
 	);
 };

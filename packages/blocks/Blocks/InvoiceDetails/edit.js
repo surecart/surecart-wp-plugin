@@ -7,12 +7,6 @@ import {
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 
-const ALLOWED_BLOCKS = [
-	'surecart/invoice-number',
-	'surecart/invoice-due-date',
-	'surecart/invoice-receipt-download',
-];
-
 export default () => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
@@ -25,8 +19,8 @@ export default () => {
 				['surecart/invoice-number', {}],
 				['surecart/invoice-due-date', {}],
 				['surecart/invoice-receipt-download', {}],
+				['surecart/invoice-memo', {}],
 			],
-			allowedBlocks: ALLOWED_BLOCKS,
 			templateLock: false,
 		}
 	);

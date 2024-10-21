@@ -44,6 +44,7 @@ import * as textarea from '@blocks/Textarea';
 import * as invoiceNumber from '@blocks/InvoiceNumber';
 import * as invoiceDueDate from '@blocks/InvoiceDueDate';
 import * as invoiceReceiptDownload from '@blocks/InvoiceReceiptDownload';
+import * as invoiceMemo from '@blocks/InvoiceMemo';
 import * as invoiceDetails from '@blocks/InvoiceDetails';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
@@ -99,6 +100,7 @@ registerBlocks([
 	invoiceDueDate,
 	invoiceReceiptDownload,
 	invoiceDetails,
+	invoiceMemo,
 	total,
 	totals,
 	shippingChoices,
