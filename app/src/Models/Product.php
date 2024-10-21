@@ -518,14 +518,14 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->netadata->wp_template_id ) ) {
+		if ( ! empty( $this->metadata->wp_template_id ) ) {
 			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->netadata->wp_template_id, '.php' ) ) {
+			if ( wp_is_block_theme() && false !== strpos( $this->metadata->wp_template_id, '.php' ) ) {
 				return 'single-sc_product';
 			}
 
 			// this is acceptable.
-			return $this->netadata->wp_template_id;
+			return $this->metadata->wp_template_id;
 		}
 
 		return '';
