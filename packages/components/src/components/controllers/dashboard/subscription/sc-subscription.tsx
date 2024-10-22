@@ -135,21 +135,33 @@ export class ScSubscription {
     if (subscription?.cancel_at_period_end && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))} {subscription.current_period_end_at_date}
+          {tag} {' '}
+          {
+            /* translators: %s: current period end date */
+            sprintf(__('Your plan will be canceled on %s', 'surecart'), subscription.current_period_end_at_date)
+          }
         </span>
       );
     }
     if (subscription.status === 'trialing' && subscription.trial_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan begins on', 'surecart'))} {subscription.trial_end_at_date}
+          {tag} {' '}
+          {
+            /* translators: %s: trial end date */
+            sprintf(__('Your plan begins on %s', 'surecart'), subscription.trial_end_at_date)
+          }
         </span>
       );
     }
     if (subscription.status === 'active' && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan renews on', 'surecart'))} {subscription.current_period_end_at_date}
+          {tag} {' '}
+          {
+            /* translators: %s: current period end date */
+            sprintf(__('Your plan renews on %s', 'surecart'), subscription.current_period_end_at_date)
+          }
         </span>
       );
     }
@@ -244,11 +256,11 @@ export class ScSubscription {
                 type="link"
                 {...(!!this.subscription?.payment_method
                   ? {
-                      onClick: () => (this.resubscribeModal = true),
-                    }
+                    onClick: () => (this.resubscribeModal = true),
+                  }
                   : {
-                      href: this?.updatePaymentMethodUrl,
-                    })}
+                    href: this?.updatePaymentMethodUrl,
+                  })}
               >
                 <sc-icon name="repeat" slot="prefix"></sc-icon>
                 {__('Resubscribe', 'surecart')}
