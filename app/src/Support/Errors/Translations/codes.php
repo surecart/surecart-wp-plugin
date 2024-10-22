@@ -147,7 +147,7 @@ return array(
 	'affiliation_product.product_id.taken'                 => __( 'Affiliate commission already exists for this product. Please choose a different product.', 'surecart' ),
 	'payout_group.end_date.no_applicable_affiliations'     => __( 'No affiliates have earned more than the minimum commission amount within the selected date range.', 'surecart' ),
 	'invoice.missing_automatic_collection_payment_method'  => __( 'Please add a valid payment method to enable automatic collection.', 'surecart' ),
-	'checkout.invoice.draft'                               => __( 'This invoice is draft and cannot be paid.', 'surecart' ),
+	'checkout.invoice.draft'                               => __( 'This invoice is in draft status and cannot be paid yet. Please contact support or wait for it to be finalized.', 'surecart' ),
 	'invoice.due_date.greater_than_or_equal_to'            => __( 'The due date must be greater than or equal to the issue date.', 'surecart' ),
 	'invoice.memo.too_long'                                => __( 'The memo is too long. Please enter a shorter memo. Maximum allowed length is 1000 characters.', 'surecart' ),
 	'invoice.footer.too_long'                              => __( 'The footer is too long. Please enter a shorter footer. Maximum allowed length is 1000 characters.', 'surecart' ),
