@@ -857,6 +857,7 @@ export interface Subscription extends Object {
   current_cancellation_act: string | CancellationAct;
   trial_end_at: number;
   trial_end_at_date: string;
+  trial_end_at_date_time: string;
   processor_type: 'stripe' | 'paypal';
   order: Order;
   customer: Customer;
@@ -873,6 +874,7 @@ export interface Subscription extends Object {
   current_period: string | Period;
   current_period_end_at: number | false;
   current_period_end_at_date: string;
+  current_period_end_at_date_time: string;
   current_period_start_at: number | false;
   current_period_start_at_date: string;
   remaining_period_count: number | null;

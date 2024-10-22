@@ -99,7 +99,7 @@ export class ScSubscriptionDetails {
           aria-label={sprintf(
             __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
             (this.pendingPrice.product as Product).name,
-            this.subscription.current_period_end_at_date,
+            this.subscription.current_period_end_at_date_time,
           )}
         >
           {__('Your plan switches to', 'surecart')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'surecart')}{' '}
@@ -110,14 +110,14 @@ export class ScSubscriptionDetails {
 
     if (this?.subscription?.status === 'trialing' && this?.subscription?.trial_end_at) {
       return (
-        <span aria-label={sprintf(__('Renewal Update - Your plan begins on %s.', 'surecart'), this.subscription.trial_end_at_date)}>
+        <span aria-label={sprintf(__('Renewal Update - Your plan begins on %s.', 'surecart'), this.subscription.trial_end_at_date_time)}>
           {tag} {sprintf(__('Your plan begins on', 'surecart'))} {this?.subscription?.trial_end_at_date}
         </span>
       );
     }
     if (this.subscription?.status === 'active' && this.subscription?.current_period_end_at) {
       return (
-        <span aria-label={sprintf(__('Renewal Update - Your next payment is on %s', 'surecart'), this.subscription.current_period_end_at_date)}>
+        <span aria-label={sprintf(__('Renewal Update - Your next payment is on %s', 'surecart'), this.subscription.current_period_end_at_date_time)}>
           {tag} {this.subscription?.remaining_period_count === null ? __('Your plan renews on', 'surecart') : __('Your next payment is on', 'surecart')}{' '}
           {this?.subscription?.current_period_end_at_date}
         </span>

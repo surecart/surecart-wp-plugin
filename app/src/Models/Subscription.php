@@ -528,6 +528,15 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Get the current period end at date time.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriodEndAtDateTimeAttribute() {
+		return ! empty ( $this->current_period_end_at ) ? TimeDate::formatDateAndTime( $this->current_period_end_at ) : '';
+	}
+
+	/**
 	 * Get the start at date.
 	 *
 	 * @return string
@@ -570,6 +579,15 @@ class Subscription extends Model {
 	 */
 	public function getTrialEndAtDateAttribute() {
 		return ! empty( $this->trial_end_at ) ? TimeDate::formatDate( $this->trial_end_at ) : '';
+	}
+
+	/**
+	 * Get the trial end at date time.
+	 *
+	 * @return string
+	 */
+	public function getTrialEndAtAtDateTimeAttribute() {
+		return ! empty( $this->trial_end_at ) ? TimeDate::formatDateAndTime( $this->trial_end_at ) : '';
 	}
 
 	/**
