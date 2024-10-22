@@ -44,7 +44,7 @@ export class ScFormComponentsValidator {
   /** Is there an invoice details */
   @State() hasInvoiceDetails: boolean;
 
-  /** Is there an invoice additional contents */
+  /** Is there an invoice memo */
   @State() hasInvoiceMemo: boolean;
 
   handleOrderChange() {
@@ -244,7 +244,7 @@ export class ScFormComponentsValidator {
 
     const invoiceDetails = document.createElement('sc-invoice-details');
 
-    // Add sc-divider inside sc-invoice-additional.
+    // Add sc-divider inside sc-invoice-details.
     orderSummary.parentNode.insertBefore(invoiceDetails, orderSummary.nextSibling);
 
     // Add sc-invoice-memo inside sc-invoice-details.
