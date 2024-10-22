@@ -253,7 +253,7 @@ export default () => {
 											</ScTableCell>
 										)}
 										<ScTableCell>
-											{registration?.updated_at_date}
+											{registration?.updated_at_date_time}
 										</ScTableCell>
 									</ScTableRow>
 								);

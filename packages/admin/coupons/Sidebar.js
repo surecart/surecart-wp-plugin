@@ -77,7 +77,7 @@ export default ({ coupon, loading }) => {
 
 					{!!coupon?.redeem_by && (
 						<Definition title={__('Redeem By', 'surecart')}>
-							{coupon.redeem_by_date}
+							{coupon.redeem_by_date_time}
 						</Definition>
 					)}
 
@@ -85,13 +85,13 @@ export default ({ coupon, loading }) => {
 
 					{!!coupon?.updated_at && (
 						<Definition title={__('Last Updated', 'surecart')}>
-							{coupon.updated_at_date}
+							{coupon.updated_at_date_time}
 						</Definition>
 					)}
 
 					{!!coupon?.created_at && (
 						<Definition title={__('Created', 'surecart')}>
-							{coupon.created_at_date}
+							{coupon.created_at_date_time}
 						</Definition>
 					)}
 					{!!coupon?.archived_at && (
@@ -101,7 +101,7 @@ export default ({ coupon, loading }) => {
 							`}
 							title={__('Archived On', 'surecart')}
 						>
-							{coupon?.archived_at_date}
+							{coupon?.archived_at_date_time}
 						</Definition>
 					)}
 				</Fragment>

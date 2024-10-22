@@ -515,7 +515,7 @@ class Subscription extends Model {
 	 * @return string
 	 */
 	public function getCurrentPeriodStartAtDateAttribute() {
-		return TimeDate::formatDate( $this->current_period_start_at );
+		return ! empty ( $this->current_period_start_at ) ? TimeDate::formatDate( $this->current_period_start_at ) : '';
 	}
 
 	/**
@@ -524,7 +524,7 @@ class Subscription extends Model {
 	 * @return string
 	 */
 	public function getCurrentPeriodEndAtDateAttribute() {
-		return TimeDate::formatDate( $this->current_period_end_at );
+		return ! empty ( $this->current_period_end_at ) ? TimeDate::formatDate( $this->current_period_end_at ) : '';
 	}
 
 	/**

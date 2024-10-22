@@ -12,7 +12,6 @@ import {
 } from '@surecart/components-react';
 
 export default ({ order, checkout, loading, returnRequests }) => {
-	console.log('order', order);
 	if (loading) {
 		return (
 			<div

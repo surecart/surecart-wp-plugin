@@ -87,4 +87,22 @@ class Coupon extends Model {
 	public function getRedeemByDateTimeAttribute() {
 		return ! empty( $this->redeem_by ) ? TimeDate::formatDateAndTime( $this->redeem_by ) : '';
 	}
+
+	/**
+	 * Get the archived at date attribute.
+	 *
+	 * @return string
+	 */
+	public function getArchivedAtDateAttribute() {
+		return ! empty( $this->archived_at ) ? TimeDate::formatDate( $this->archived_at ) : '';
+	}
+
+	/**
+	 * Get the archived at date time attribute.
+	 *
+	 * @return string
+	 */
+	public function getArchivedAtDateTimeAttribute() {
+		return ! empty( $this->archived_at ) ? TimeDate::formatDateAndTime( $this->archived_at ) : '';
+	}
 }

@@ -23,8 +23,8 @@ export default ({ affiliation, loading }) => {
 		email,
 		code,
 		payout_email,
-		created_at_date,
-		updated_at_date,
+		created_at_date_time,
+		updated_at_date_time,
 	} = affiliation;
 
 	const avatarUrl = useAvatar({ email: affiliation?.email });
@@ -82,15 +82,15 @@ export default ({ affiliation, loading }) => {
 
 				<hr />
 
-				{updated_at_date && (
+				{!!updated_at_date_time && (
 					<Definition title={__('Last Updated', 'surecart')}>
-						{updated_at_date}
+						{updated_at_date_time}
 					</Definition>
 				)}
 
-				{created_at_date && (
+				{!!created_at_date_time && (
 					<Definition title={__('Created', 'surecart')}>
-						{created_at_date}
+						{created_at_date_time}
 					</Definition>
 				)}
 			</Fragment>
