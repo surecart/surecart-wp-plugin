@@ -1,7 +1,7 @@
 {
 	"name": "surecart/invoice-memo",
 	"title": "Invoice Memo",
-	"description": "Displays the invoice memo line item.",
+	"description": "Displays the invoice memo.",
 	"category": "surecart",
 	"ancestor": ["surecart/invoice-details"],
 	"keywords": ["checkout", "engine", "invoice", "memo"],
