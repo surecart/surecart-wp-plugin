@@ -86,7 +86,7 @@ class Period extends Model {
 	}
 
 	/**
-	 * Get the next payment retry at date.
+	 * Get the next payment retry at date time.
 	 *
 	 * @return string
 	 */

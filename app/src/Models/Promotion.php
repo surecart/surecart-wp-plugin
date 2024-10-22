@@ -47,4 +47,13 @@ class Promotion extends Model {
 	public function getRedeemByDateAttribute() {
 		return ! empty( $this->redeem_by ) ? TimeDate::formatDate( $this->redeem_by ) : '';
 	}
+
+	/**
+	 * Get the Redeem By Date Time attribute.
+	 *
+	 * @return string
+	 */
+	public function getRedeemByDateTimeAttribute() {
+		return ! empty( $this->redeem_by ) ? TimeDate::formatDateAndTime( $this->redeem_by ) : '';
+	}
 }
