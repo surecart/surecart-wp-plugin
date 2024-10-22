@@ -52,7 +52,7 @@ export default ({ onCreateReferral }) => {
 			}
 			onCreateReferral(savedReferral.id);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			setError(e);
 		} finally {
 			setIsSaving(false);
