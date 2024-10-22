@@ -1,5 +1,4 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { dateI18n, getSettings } from '@wordpress/date';
 import {
 	InspectorControls,
 	RichText,
@@ -9,11 +8,11 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
+import { formatDate } from '../../../../admin/util/time';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
 	const blockProps = useBlockProps();
-	const { formats, timezone } = getSettings();
 
 	return (
 		<Fragment>
@@ -53,11 +52,7 @@ export default ({ attributes, setAttributes }) => {
 							mobile-size={500}
 						>
 							<div>
-								{dateI18n(
-									`${formats.date}`,
-									Date.now(),
-									timezone.string
-								)}
+								{formatDate(Date.now())}
 							</div>
 
 							<div>
@@ -100,11 +95,7 @@ export default ({ attributes, setAttributes }) => {
 							mobile-size={500}
 						>
 							<div>
-								{dateI18n(
-									`${formats.date}`,
-									Date.now(),
-									timezone.string
-								)}
+								{formatDate(Date.now())}
 							</div>
 
 							<div>
