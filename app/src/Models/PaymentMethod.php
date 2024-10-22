@@ -2,13 +2,14 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasPaymentInstrument;
 use SureCart\Models\Traits\HasPaymentIntent;
 
 /**
- * Payment intent model.
+ * Payment method model.
  */
 class PaymentMethod extends Model {
-	use HasCustomer, HasPaymentIntent;
+	use HasCustomer, HasPaymentIntent, HasPaymentInstrument;
 
 	/**
 	 * Rest API endpoint
@@ -67,40 +68,16 @@ class PaymentMethod extends Model {
 	 *
 	 * @return string
 	 */
-	public function getPaymentMethodNameAttribute()
-	{
-		$type = $this->payment_instrument->instrument_type ?? '';
+	public function getPaymentMethodNameAttribute(): string {
+		$type               = $this->payment_instrument->instrument_type ?? '';
+		$payment_type_names = $this->getPaymentInstrumentTypes();
 
-		$payment_type_names = [
-			'card'         => __('Card', 'surecart'),
-			'bank_account' => __('Bank Account', 'surecart'),
-			'applepay'     => __('Apple Pay', 'surecart'),
-			'bancontact'   => __('Bancontact', 'surecart'),
-			'banktransfer' => __('Bank Transfer', 'surecart'),
-			'belfius'      => __('Belfius', 'surecart'),
-			'creditcard'   => __('Credit Card', 'surecart'),
-			'directdebit'  => __('Direct Debit', 'surecart'),
-			'eps'          => __('EPS', 'surecart'),
-			'giftcard'     => __('Gift Card', 'surecart'),
-			'giropay'      => __('Giropay', 'surecart'),
-			'ideal'        => __('iDEAL', 'surecart'),
-			'sepa_debit'   => __('SEPA Debit', 'surecart'),
-			'in3'          => __('In3', 'surecart'),
-			'kbc'          => __('KBC', 'surecart'),
-			'klarna'       => __('Klarna', 'surecart'),
-			'mybank'       => __('MyBank', 'surecart'),
-			'paysafecard'  => __('Paysafecard', 'surecart'),
-			'przelewy24'   => __('Przelewy24', 'surecart'),
-			'sofort'       => __('Sofort', 'surecart'),
-			'voucher'      => __('Voucher', 'surecart'),
-		];
-
-		// Check if the type exists in our map.
+		// Check if the type exists in the payment type names array.
 		if ( isset( $payment_type_names[ $type ] ) ) {
 			return $payment_type_names[ $type ];
 		}
 
 		// Return the type with the first letter capitalized.
-		return ucfirst( $type );
+		return ! empty( $type ) ? ucfirst( $type ) : '';
 	}
 }

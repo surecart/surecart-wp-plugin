@@ -49,33 +49,11 @@ export class ScPaymentMethod {
 
     if ((this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type) {
       const type = (this?.paymentMethod?.payment_instrument as PaymentInstrument)?.instrument_type;
-      if (
-        [
-          'applepay',
-          'bancontact',
-          'banktransfer',
-          'belfius',
-          'creditcard',
-          'directdebit',
-          'eps',
-          'giftcard',
-          'giropay',
-          'ideal',
-          'sepa_debit',
-          'in3',
-          'kbc',
-          'klarna',
-          'mybank',
-          'paysafecard',
-          'przelewy24',
-          'sofort',
-          'Voucher',
-        ].includes(type)
-      ) {
+      if (!!this?.paymentMethod?.payment_method_name) {
         return (
           <div class="payment-method" part="instrument">
             <sc-icon style={{ fontSize: '36px' }} name={type} />
-            <span style={{ textTransform: 'capitalize' }}>{this?.paymentMethod?.payment_method_name}</span>
+            <span>{this?.paymentMethod?.payment_method_name}</span>
             {this.renderExternalLink()}
           </div>
         );
