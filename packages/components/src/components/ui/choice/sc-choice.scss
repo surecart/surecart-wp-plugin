@@ -35,6 +35,9 @@
   color: var(--sc-input-color);
   height: 100%; // TODO: test this.
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   &--is-rtl {
     text-align: right;
@@ -45,6 +48,7 @@
     display: flex;
     gap: 0.75em;
     align-items: center;
+    width: 100%;
   }
 
   &--checked {

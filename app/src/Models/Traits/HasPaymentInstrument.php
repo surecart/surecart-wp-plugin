@@ -9,7 +9,7 @@ use SureCart\Models\PaymentInstrument;
  */
 trait HasPaymentInstrument {
 	/**
-	 * Set the product attribute.
+	 * Set the payment instrument attribute.
 	 *
 	 * @param  string $value Product properties.
 	 * @return void
