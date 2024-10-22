@@ -3,7 +3,6 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCommissionStructure;
-use SureCart\Support\TimeDate;
 
 /**
  * AffiliationProduct Model
