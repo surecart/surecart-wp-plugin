@@ -5,7 +5,7 @@ namespace SureCart\Models\Traits;
 use SureCart\Models\PaymentFailure;
 
 /**
- * If the model
+ * If the model has payment failures.
  */
 trait HasPaymentFailures {
 	/**
@@ -15,7 +15,7 @@ trait HasPaymentFailures {
 	 *
 	 * @return void
 	 */
-	public function setPamentFailuresAttribute( $value ) {
+	public function setPaymentFailuresAttribute( $value ) {
 		$this->setCollection( 'payment_failures', $value, PaymentFailure::class );
 	}
 }
