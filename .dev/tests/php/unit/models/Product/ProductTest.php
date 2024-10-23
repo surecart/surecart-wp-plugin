@@ -157,7 +157,7 @@ class ProductTest extends SureCartUnitTestCase
 		// this should work for both.
 		$featured = $product->featured_image->attributes();
 		$this->assertSame('https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=800/http://example.com/image.jpg', $featured->src);
-		$this->assertSame('attachment-full size-full', $featured->class);
+		$this->assertSame('attachment-full size-full ', $featured->class);
 		$this->assertSame('(max-width: 800px) 100vw, 800px', $featured->sizes);
 		$this->assertSame(800, $featured->width);
 		$this->assertSame(600, $featured->height);

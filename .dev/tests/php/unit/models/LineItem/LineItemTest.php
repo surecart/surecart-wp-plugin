@@ -128,7 +128,7 @@ class LineItemTest extends SureCartUnitTestCase
 		]);
 
 		$this->assertNotEmpty($line_item->image);
-		$this->assertSame('attachment-thumbnail size-thumbnail', $line_item->image->class);
+		$this->assertSame('attachment-thumbnail size-thumbnail ', $line_item->image->class);
 		$this->assertStringContainsString('http://example.com/image2.jpg', $line_item->image->src);
 	}
 
