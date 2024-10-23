@@ -80,7 +80,11 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 			<ViewAddress
 				title={__('Billing Address', 'surecart')}
 				loading={loading}
-				address={checkout?.billing_address}
+				address={
+					checkout?.billing_matches_shipping
+						? checkout?.shipping_address
+						: checkout?.billing_address
+				}
 				onEditAddress={() => setModal(modals.EDIT_BILLING_ADDRESS)}
 				onDeleteAddress={() =>
 					setModal(modals.CONFIRM_DELETE_BILLING_ADDRESS)
@@ -122,7 +126,11 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 
 			<EditBillingAddressModal
 				open={modal === modals.EDIT_BILLING_ADDRESS}
-				billingAddress={checkout?.billing_address}
+				billingAddress={
+					checkout?.billing_matches_shipping
+						? checkout?.shipping_address
+						: checkout?.billing_address
+				}
 				onRequestClose={() => setModal('')}
 				checkoutId={checkout?.id}
 			/>
