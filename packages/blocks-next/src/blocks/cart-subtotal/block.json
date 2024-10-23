@@ -10,40 +10,24 @@
 	"version": "1.0.0",
 	"example": {},
 	"ancestor": ["surecart/slide-out-cart"],
-	"attributes": {
-		"label": {
-			"type": "string",
-			"default": "Subtotal"
-		},
-		"border": {
-			"type": "boolean",
-			"default": true
-		},
-		"padding": {
-			"type": "object",
-			"default": {
-				"top": "1.25em",
-				"left": "1.25em",
-				"bottom": "1.25em",
-				"right": "1.25em"
-			}
-		},
-		"backgroundColor": {
-			"type": "string"
-		},
-		"textColor": {
-			"type": "string"
-		}
-	},
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"allowSizingOnChildren": true,
+			"default": {
+				"type": "flex",
+				"justifyContent": "space-between"
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
 	},
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js",
-	"style": [
-		"file:../../styles/line-item.css",
-		"file:../../styles/product-line-item.css"
-	]
+	"editorScript": "file:./index.js"
 }

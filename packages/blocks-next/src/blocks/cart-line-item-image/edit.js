@@ -2,6 +2,8 @@ import {
 	useBlockProps,
 	InspectorControls,
 	useSettings,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalGetShadowClassesAndStyles as getShadowClassesAndStyles,
 } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
@@ -12,10 +14,12 @@ import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalUseCustomUnits as useCustomUnits,
+	Placeholder,
 } from '@wordpress/components';
 
 export default ({
-	attributes: { sizing, aspectRatio, height, width },
+	attributes: { sizing, aspectRatio, height, width, scale },
+	attributes,
 	setAttributes,
 	clientId,
 }) => {
@@ -33,6 +37,9 @@ export default ({
 		className: classes,
 		style: { width, height, aspectRatio },
 	});
+
+	const borderProps = useBorderProps(attributes);
+	const shadowProps = getShadowClassesAndStyles(attributes);
 
 	const onDimensionChange = (dimension, nextValue) => {
 		const parsedValue = parseFloat(nextValue);
@@ -132,6 +139,7 @@ export default ({
 				<UnitControl
 					label={__('Height', 'surecart')}
 					labelPosition="top"
+					placeholder={__('Auto', 'surecart')}
 					value={height || ''}
 					min={0}
 					onChange={(nextHeight) =>
@@ -142,6 +150,7 @@ export default ({
 				<UnitControl
 					label={__('Width', 'surecart')}
 					labelPosition="top"
+					placeholder={__('Auto', 'surecart')}
 					value={width || ''}
 					min={0}
 					onChange={(nextWidth) =>
@@ -151,13 +160,20 @@ export default ({
 				/>
 			</InspectorControls>
 			<figure {...blockProps}>
-				<img
-					src={
-						window.scData.plugin_url +
-						'/images/placeholder-thumbnail.jpg'
-					}
-					width="115"
-					height="115"
+				<Placeholder
+					withIllustration={true}
+					label={__('Line Item Image', 'surecart')}
+					style={{
+						aspectRatio:
+							!(width && height) && aspectRatio
+								? aspectRatio
+								: undefined,
+						width: height && aspectRatio ? '100%' : width,
+						height: width && aspectRatio ? '100%' : height,
+						objectFit: scale,
+						...borderProps.style,
+						...shadowProps.style,
+					}}
 				/>
 			</figure>
 		</>

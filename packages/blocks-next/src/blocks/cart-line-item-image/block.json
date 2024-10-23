@@ -25,27 +25,26 @@
 	},
 	"supports": {
 		"interactivity": true,
-		"inserter": false,
-		"spacing": {
-			"padding": true,
-			"margin": true,
-			"__experimentalDefaultControls": {
-				"padding": true,
-				"margin": true
-			}
-		},
+		"align": ["left", "center", "right", "wide", "full"],
 		"color": {
 			"text": false,
 			"background": false
 		},
+		"filter": {
+			"duotone": true
+		},
+		"spacing": {
+			"margin": true
+		},
 		"__experimentalBorder": {
-			"width": true,
 			"color": true,
 			"radius": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
-				"width": true,
 				"color": true,
-				"radius": true
+				"radius": true,
+				"width": true
 			}
 		}
 	},

@@ -1,5 +1,4 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import { ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ context: { removable = true } }) => {
@@ -11,7 +10,7 @@ export default ({ context: { removable = true } }) => {
 
 	return (
 		<div {...blockProps}>
-			<ScIcon name="x" />
+			<sc-icon name="x" />
 			{__('Remove', 'surecart')}
 		</div>
 	);

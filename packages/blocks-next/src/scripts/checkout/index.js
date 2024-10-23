@@ -133,6 +133,14 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Get the line item fees.
+		 */
+		get lineItemFees() {
+			const { line_item } = getContext();
+			return line_item?.fees?.data || [];
+		},
+
+		/**
 		 * Check if the line item is editable.
 		 */
 		get isEditable() {

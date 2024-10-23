@@ -1,6 +1,5 @@
 .wp-block-surecart-cart-line-item-status {
-	cursor: pointer;
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	gap: 0.25em;
 	color: var(--sc-color-danger-500);
