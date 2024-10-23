@@ -39,7 +39,7 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 				},
 			});
 			receiveEntityRecords('surecart', 'order', checkout.order);
-			createSuccessNotice(__('Shipping address updated.', 'surecart'), {
+			createSuccessNotice(__('Address updated.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();

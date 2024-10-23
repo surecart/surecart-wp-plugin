@@ -32,7 +32,7 @@ export default ({ customerId, billingAddress, open, onRequestClose }) => {
 				},
 			});
 			receiveEntityRecords('surecart', 'customer', customer);
-			createSuccessNotice(__('Address Updated', 'surecart'), {
+			createSuccessNotice(__('Address updated.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
