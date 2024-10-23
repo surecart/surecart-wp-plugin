@@ -25,13 +25,14 @@ class ProductPostTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Database\MigrationsServiceProvider::class,
+				\SureCart\Background\BackgroundServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\WordPress\Taxonomies\TaxonomyServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Account\AccountServiceProvider::class,
 				\SureCart\Sync\SyncServiceProvider::class,
 				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
-				\SureCart\WordPress\PostTypes\ProductPostTypeService::class,
+				\SureCart\WordPress\Pages\PageServiceProvider::class,
 			]
 		], false);
 
