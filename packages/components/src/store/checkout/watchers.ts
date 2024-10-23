@@ -1,6 +1,8 @@
 import state, { onChange, on } from './store';
 import { getCheckout, setCheckout } from '../checkouts/mutations';
-import { Checkout } from '../../types';
+import { onChange as onChangeFormState } from '../form';
+import { updateFormState } from '../form/mutations';
+import { Checkout, Invoice } from '../../types';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf } from '@wordpress/i18n';
 import { getFormattedPrice, getHumanDiscount } from '../../functions/price';
@@ -16,6 +18,16 @@ onChange('checkout', val => setCheckout(val, state.formId));
  */
 onChange('checkout', val => {
   state.mode = !val?.live_mode ? 'test' : 'live';
+});
+
+// When the form state changes, update the form state based on the invoice status.
+onChangeFormState('formState', ({ value }) => {
+  if (value !== 'draft') return;
+
+  // if there is an invoice and it is not open, lock the form.
+  if ((state.checkout?.invoice as Invoice)?.status && (state.checkout?.invoice as Invoice)?.status !== 'open') {
+    updateFormState('LOCK');
+  }
 });
 
 /**

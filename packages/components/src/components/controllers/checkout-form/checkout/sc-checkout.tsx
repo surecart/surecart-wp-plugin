@@ -288,6 +288,12 @@ export class ScCheckout {
               {formState.text.loading[formState.formState.value] || __('Processing payment...', 'surecart')}
             </sc-block-ui>
           )}
+
+          {['locked'].includes(formState.formState.value) && (
+            <sc-block-ui style={{ '--sc-block-ui-opacity': '1', 'z-index': '30', '--sc-block-ui-position': 'fixed', '--sc-block-ui-cursor': 'normal' }}>
+              {__('This invoice is available for payment. Please check back later.', 'surecart')}
+            </sc-block-ui>
+          )}
         </Universe.Provider>
       </div>
     );
