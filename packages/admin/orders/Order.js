@@ -286,6 +286,7 @@ export default () => {
 					checkout={order?.checkout}
 					customer={order?.checkout?.customer}
 					loading={!hasLoadedOrder}
+					onManuallyRefetchOrder={manuallyRefetchOrder}
 				/>
 			}
 		>

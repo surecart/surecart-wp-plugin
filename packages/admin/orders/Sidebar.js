@@ -1,23 +1,19 @@
 import Address from './modules/Address';
-import Customer from './modules/Customer';
-import Phone from './modules/Phone';
+import ContactInfo from './modules/ContactInfo';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-export default ({ order, checkout, customer, loading }) => {
+export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 	return (
 		<Fragment>
-			<Customer customer={customer} loading={loading} />
-			{checkout?.phone && (
-				<Phone
-					phone={checkout?.phone}
-					label={__('Phone', 'surecart')}
-					loading={loading}
-				/>
-			)}
+			<ContactInfo
+				checkout={checkout}
+				loading={loading}
+				onManuallyRefetchOrder={onManuallyRefetchOrder}
+			/>
 			{!!checkout?.shipping_address && (
 				<Address
 					address={checkout?.shipping_address}
