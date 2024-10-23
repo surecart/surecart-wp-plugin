@@ -5,8 +5,7 @@ import {
 	ScButton,
 	ScDrawer,
 	ScForm,
-	ScInput,
-	ScPhoneInput,
+	ScTaxIdInput,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
@@ -29,18 +28,14 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 	}, [name]);
 
 	const [info, setInfo] = useState({
-		first_name: checkout?.first_name || '',
-		last_name: checkout?.last_name || '',
-		phone: checkout?.phone || '',
-		email: checkout?.email || '',
+		number: checkout?.tax_identifier?.number || '',
+		number_type: checkout?.tax_identifier?.number_type || 'other',
 	});
 
 	useEffect(() => {
 		setInfo({
-			first_name: checkout?.first_name || '',
-			last_name: checkout?.last_name || '',
-			phone: checkout?.phone || '',
-			email: checkout?.email || '',
+			number: checkout?.tax_identifier?.number || '',
+			number_type: checkout?.tax_identifier?.number_type || 'other',
 		});
 	}, [checkout]);
 
@@ -54,7 +49,7 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 				'checkout',
 				{
 					id: checkout?.id,
-					...(info || {}),
+					tax_identifier: info,
 				},
 				{
 					throwOnError: true,
@@ -78,7 +73,7 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 			`}
 		>
 			<ScDrawer
-				label={__('Update Contact Information', 'surecart')}
+				label={__('Update Tax Information', 'surecart')}
 				open={open}
 				css={css`
 					max-width: 500px !important;
@@ -104,56 +99,10 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 						)}
 					</p>
 					<Error error={error} setError={setError} />
-					<ScInput
-						autofo
-						label={__('First Name', 'surecart')}
-						value={info.first_name}
-						onScInput={(e) =>
-							setInfo({
-								...info,
-								first_name: e.target.value,
-							})
-						}
-						tabIndex="0"
-						autofocus
-					/>
-
-					<ScInput
-						label={__('Last Name', 'surecart')}
-						value={info.last_name}
-						onScInput={(e) =>
-							setInfo({
-								...info,
-								last_name: e.target.value,
-							})
-						}
-						tabIndex="0"
-					/>
-
-					<ScPhoneInput
-						label={__('Phone', 'surecart')}
-						value={info.phone}
-						onScInput={(e) =>
-							setInfo({
-								...info,
-								phone: e.target.value,
-							})
-						}
-						tabIndex="0"
-					/>
-
-					<ScInput
-						label={__('Email', 'surecart')}
-						type="email"
-						value={info.email}
-						onScInput={(e) =>
-							setInfo({
-								...info,
-								email: e.target.value,
-							})
-						}
-						tabIndex="0"
-						required
+					<ScTaxIdInput
+						number={info?.number}
+						type={info?.number_type}
+						onScChange={(e) => setInfo(e.detail)}
 					/>
 				</div>
 

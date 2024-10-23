@@ -88,8 +88,9 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 			/>
 			{!!checkout?.tax_identifier && (
 				<TaxInfo
-					taxIdentifier={checkout?.tax_identifier}
+					checkout={checkout}
 					loading={loading}
+					onManuallyRefetchOrder={onManuallyRefetchOrder}
 				/>
 			)}
 			<Purchases checkoutId={checkout?.id} />
