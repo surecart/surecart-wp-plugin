@@ -16,7 +16,7 @@ import {
 } from '@surecart/components-react';
 import Error from '../Error';
 
-export default function ({
+export default ({
 	isEdit,
 	open,
 	address,
@@ -27,7 +27,7 @@ export default function ({
 	onRequestClose,
 	busy,
 	title,
-}) {
+}) => {
 	if (!open) return null;
 
 	return (
@@ -76,4 +76,4 @@ export default function ({
 			)}
 		</ScDialog>
 	);
-}
+};

@@ -17,13 +17,13 @@ import {
 import Box from '../../ui/Box';
 import AddressDisplay from '../AddressDisplay';
 
-export default function ({
+export default ({
 	title,
 	onEditAddress,
 	onDeleteAddress,
 	address,
 	loading,
-}) {
+}) => {
 	return (
 		<Box
 			title={title}
@@ -84,4 +84,4 @@ export default function ({
 			) : null}
 		</Box>
 	);
-}
+};
