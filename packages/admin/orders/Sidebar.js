@@ -90,13 +90,13 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 					setModal(modals.CONFIRM_DELETE_BILLING_ADDRESS)
 				}
 			/>
-			{!!checkout?.tax_identifier && (
-				<TaxInfo
-					checkout={checkout}
-					loading={loading}
-					onManuallyRefetchOrder={onManuallyRefetchOrder}
-				/>
-			)}
+
+			<TaxInfo
+				checkout={checkout}
+				loading={loading}
+				onManuallyRefetchOrder={onManuallyRefetchOrder}
+			/>
+
 			<Purchases checkoutId={checkout?.id} />
 			<MetaData order={order} loading={loading} />
 

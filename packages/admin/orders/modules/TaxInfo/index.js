@@ -56,13 +56,14 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 			>
 				<ScLineItem>
 					<span slot="title">{__('Tax Number', 'surecart')}</span>
-					<span slot="price">{checkout?.tax_identifier?.number}</span>
+					<span slot="price">
+						{checkout?.tax_identifier?.number || '-'}
+					</span>
 				</ScLineItem>
 				<ScLineItem>
 					<span slot="title">{__('Number Type', 'surecart')}</span>
 					<span slot="price">
-						{zones?.[checkout?.tax_identifier?.number_type] ||
-							__('Other', 'surecart')}
+						{zones?.[checkout?.tax_identifier?.number_type] || '-'}
 					</span>
 				</ScLineItem>
 				{checkout?.tax_identifier?.number_type === 'eu_vat' && (
