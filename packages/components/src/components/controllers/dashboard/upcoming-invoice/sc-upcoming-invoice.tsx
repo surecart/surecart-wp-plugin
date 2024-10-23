@@ -242,6 +242,7 @@ export class ScUpcomingInvoice {
             priceName={item?.price?.name}
             variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
             editable={this.quantityUpdatesEnabled}
+            purchasableStatusDisplay={item?.purchasable_status_display}
             removable={false}
             quantity={item?.quantity}
             amount={item?.total_amount}
@@ -272,7 +273,7 @@ export class ScUpcomingInvoice {
 
         {!!checkout.trial_amount && (
           <sc-line-item>
-            <span slot="description">{__('Free Trial', 'surecart')}</span>
+            <span slot="description">{__('Trial', 'surecart')}</span>
             <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
           </sc-line-item>
         )}

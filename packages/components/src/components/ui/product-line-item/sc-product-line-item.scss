@@ -107,6 +107,11 @@
   align-self: flex-start;
 }
 
+.product-line-item__purchasable-status {
+  font-size: var(--sc-font-size-x-small);
+  color: var(--sc-input-error-text-color);
+}
+
 .item__price {
   text-align: right;
   max-width: 100%;

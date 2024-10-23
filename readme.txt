@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.3
-Tested up to: 6.5
-Stable tag: 2.27.1
+Tested up to: 6.6
+Stable tag: 2.31.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,92 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.31.3 - October 10th, 2024 =
+- Improvement: Add plugin update notice for major versions.
+- Improvement: Fallback tax rate now supports up to 3 decimal places.
+- Improvement: Increase maximum quantity limit from 100 on checkout page.
+- Fix: Integrations listing on orders admin page not accurate when using variants.
+- Fix: Handle error when bulk deleting products without selecting any products.
+- Fix: Store account model as array instead of serialized object to prevent issues with wp-cli.
+- Fix: Show better error message if same shipping profile name is given.
+- Fix: Deprecation warning with PHP version 8.3.
+- Fix: Confusing pricing on admin subscription view page when there is a setup fee.
+- Fix: Abandoned at created_at incorrectly getting date from updated_at.
+- Fix: Order Bump price sometimes has a negative (-) sign.
+- Fix: Remove duplicate styles from certain blocks on shop and product pages.
+
+= 2.31.2 - September 17th, 2024 =
+- Fix: Issue with Mollie ApplePay not showing in some cases.
+- Fix: iDEAL redirect not creating WordPress customer accounts right away if checkout does not use cart.
+- Fix: Promotion codes not automatically generating when left blank on coupon creation.
+
+= 2.31.1 - September 16th, 2024 =
+- Improvement: Record order bump offers for analytics.
+- Fix: Sometime order bumps not appearing due to race condition if checkout loads too fast.
+- Fix: Don't show checkout form mode switcher if checkout page is not block-based.
+- Fix: Issue with checkout not working with Divi theme due to store checkout refactor.
+- Fix: Issue where using the test processor with Stripe enabled would cause a checkout error during finalize.
+
+= 2.31.0 - September 12th, 2024 =
+- Improvement: Prevent misconfiguring store checkout. Any form on the checkout page is now the store checkout.
+- Improvement: Add UI to update a license key.
+- Improvement: Change order type badge on checkout page to be more accurate.
+- Fix: Issue where Loco translations were getting overwritten if in the "System" location. ("Custom" location is still recommended).
+- Fix: Issue with Spectra blocks not rendering styles on upsell pages.
+- Fix: Issue with iDEAL sometimes not showing for subscriptions.
+
+= 2.30.0 - August 30th, 2024 =
+- New: Allow subscription intervals up to 10 years.
+- Fix: Issue preventing cancellation of paused subscriptions.
+- Fix: Translate url going to incorrect location.
+- Fix: Site url change notice missing some styles.
+- Fix: Security issue (props to Tenable for the report).
+
+= 2.29.4 - August 15th, 2024 =
+- Fix: Appending invalid coupon code to custom checkout form causes payment element not to load.
+- Fix: Incorrect public key in manual affiliate script display.
+- Fix: Addressed a security bug (props to Patchstack for the report).
+
+= 2.29.3 - August 8th, 2024 =
+- Improvement: Add billing address same as shipping checkbox to Instant Checkout.
+- Fix: Incorrect "every month then cancels" text on price edit.
+- Fix: Cart stuck in loading state if checkout was deleted.
+- Fix: Issue where Stripe Elements could not load if there was a version conflict from another plugin.
+- Fix: Add to cart shortcode sometimes adding a variant would replace the first item incorrectly.
+
+= 2.29.2 - July 22nd, 2024 =
+- Improvement: Add link to card expiration email edit on settings page.
+- Improvement: Inline error handling for line items that have exceeded purchase limit.
+- Fix: Don't use hardcoded prefix when deleting expired incoming webhook rows.
+- Fix: Cart menu icon not visible in Elementor menu when it was added via Theme Builder.
+- Fix: Issue with user subscription upgrade not always running integrations.
+- Fix: Issue with affiliate signup link not correct on admin settings page.
+
+= 2.29.1 - July 15th, 2024 =
+- Fix: Compatibility with WordPress 6.6.
+
+= 2.29.0 - June 25th, 2024 =
+- New: Subscription setting to prevent customers from purchasing multiple free trials.
+- Fix: Instructions sometimes not showing in popup for manual payment methods.
+- Fix: "Not Found" error when adding a cart icon to a menu and showing it even when there are no items in the cart.
+- Fix: Auto-fulfill not working for test processor.
+- Fix: Products, product collection, and upsells missing trailing slash causing canonical url issues in some cases.
+- Fix: SureCart form shortcode not saving in Thrive Architect for some users.
+- Fix: Aria-label strings are not translated properly.
+- Fix: Remove product caching on admin product list page to prevent stale inventory data.
+- Fix: Ensure product sku or id is present in product microdata for better facebook support.
+
+= 2.28.0 - June 18th, 2024 =
+- New: Added a setting that allows customers to remove their default payment method.
+- New: Added the ability to collect both billing and shipping addresses at checkout.
+- Improvement: Users can now manually update a subscription to the latest price version in the event of a pricing change.
+- Improvement: Change Free Trial default text throughout plugin to "Trial" to account for paid trials.
+- Fix: Update processor setting url.
+- Fix: Resolved an issue where creating new prices did not clear the form when the drawer was closed.
+- Fix: Fixed placeholder images for slide-out cart line items in the admin interface.
+- Fix: Fixed an issue where a modal was incorrectly triggered when an item quantity was out of stock on the checkout page in certain instances.
+- Fix: Fixed an issue where some shortcodes did not work with 0 instead of false for some attributes.
 
 = 2.27.1 - May 23rd, 2024 =
 - Improvement: Handle potential platform conflict statuses with retry mechanism.

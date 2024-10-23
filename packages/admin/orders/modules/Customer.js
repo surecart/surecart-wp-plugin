@@ -12,24 +12,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
 	return (
-		<Box
-			title={__('Customer', 'surecart')}
-			loading={loading}
-			footer={
-				<div>
-					<ScButton
-						size="small"
-						href={addQueryArgs('admin.php', {
-							page: 'sc-customers',
-							action: 'edit',
-							id: customer?.id,
-						})}
-					>
-						{__('View Customer', 'surecart')}
-					</ScButton>
-				</div>
-			}
-		>
+		<Box title={__('Customer', 'surecart')} loading={loading}>
 			<div
 				css={css`
 					display: grid;
@@ -37,8 +20,16 @@ export default ({ customer, loading }) => {
 				`}
 			>
 				<ScLineItem>
-					<span slot="title">{customer?.name}</span>
-					<span slot="description">{customer?.email}</span>
+					<a
+						href={addQueryArgs('admin.php', {
+							page: 'sc-customers',
+							action: 'edit',
+							id: customer?.id,
+						})}
+						slot="title"
+					>
+						{customer?.name || customer?.email}
+					</a>
 				</ScLineItem>
 
 				{!!customer?.balances?.data?.length && (

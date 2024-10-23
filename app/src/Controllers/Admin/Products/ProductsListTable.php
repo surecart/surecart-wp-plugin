@@ -103,9 +103,8 @@ class ProductsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		);
 
-		$link = admin_url( 'admin.php?page=sc-products' );
-
 		foreach ( $statuses as $status => $label ) {
+			$link = admin_url( 'admin.php?page=sc-products' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -117,6 +116,8 @@ class ProductsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -244,6 +245,7 @@ class ProductsListTable extends ListTable {
 			array(
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
+				'cached'   => false
 			)
 		)->with(
 			array(
@@ -454,7 +456,7 @@ class ProductsListTable extends ListTable {
 		<?php } ?>
 
 		<div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html( $product->name ); ?>
 		</a>
 

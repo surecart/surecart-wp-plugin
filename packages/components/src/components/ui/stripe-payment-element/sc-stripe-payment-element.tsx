@@ -120,8 +120,8 @@ export class ScStripePaymentElement {
   getElementsConfig() {
     const styles = getComputedStyle(this.el);
     return {
-      mode: checkoutState.checkout?.reusable_payment_method_required ? 'subscription' : 'payment',
-      amount: checkoutState.checkout?.amount_due,
+      mode: checkoutState.checkout?.remaining_amount_due > 0 ? 'payment' : 'setup',
+      amount: checkoutState.checkout?.remaining_amount_due,
       currency: checkoutState.checkout?.currency,
       setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : null,
       appearance: {
@@ -150,6 +150,7 @@ export class ScStripePaymentElement {
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
     if (!processorsState.instances.stripe) return;
+    if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) return;
 
     // create the elements if they have not yet been created.
     if (!processorsState.instances.stripeElements) {

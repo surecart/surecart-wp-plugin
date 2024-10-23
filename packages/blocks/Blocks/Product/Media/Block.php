@@ -65,8 +65,8 @@ class Block extends ProductBlock {
 				wp_json_encode( $images ),
 				wp_json_encode( $thumbnails ),
 				esc_attr( $attributes['thumbnails_per_page'] ?? 5 ),
-				esc_attr( ! empty( $attributes['auto_height'] ) ? 'true' : 'false' ),
-				esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) )
+				esc_attr( wp_validate_boolean( $attributes['auto_height'] ) ? 'true' : 'false' ),
+				esc_attr( wp_validate_boolean( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) )
 			);
 		}
 

@@ -287,6 +287,7 @@ class AdminMenuPageService {
 				[
 					'postId'   => rawurlencode( $template_slug ),
 					'postType' => 'wp_template_part',
+					'canvas'   => 'edit'
 				],
 				'site-editor.php'
 			),

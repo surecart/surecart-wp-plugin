@@ -7,8 +7,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
-import Customer from './modules/Customer';
-import Phone from './modules/Phone';
+import ContactInfo from './modules/ContactInfo';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
@@ -25,7 +24,7 @@ const modals = {
 	CONFIRM_DELETE_BILLING_ADDRESS: 'CONFIRM_DELETE_BILLING_ADDRESS',
 };
 
-export default ({ order, checkout, customer, loading }) => {
+export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 	const [modal, setModal] = useState('');
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState(null);
@@ -65,33 +64,23 @@ export default ({ order, checkout, customer, loading }) => {
 
 	return (
 		<Fragment>
-			<Customer customer={customer} loading={loading} />
-			{checkout?.phone && (
-				<Phone
-					phone={checkout?.phone}
-					label={__('Phone', 'surecart')}
-					loading={loading}
+			<ContactInfo
+				checkout={checkout}
+				loading={loading}
+				onManuallyRefetchOrder={onManuallyRefetchOrder}
+			/>
+			{!!checkout?.shipping_address && (
+				<Address
+					address={checkout?.shipping_address}
+					label={__('Shipping & Tax Address', 'surecart')}
 				/>
 			)}
-
-			<ViewAddress
-				title={__('Shipping & Tax Address', 'surecart')}
-				loading={loading}
-				address={checkout?.shipping_address}
-				onEditAddress={() => setModal(modals.EDIT_SHIPPING_ADDRESS)}
-				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
-			/>
-
-			<ViewAddress
-				title={__('Billing Address', 'surecart')}
-				loading={loading}
-				address={checkout?.billing_address}
-				onEditAddress={() => setModal(modals.EDIT_BILLING_ADDRESS)}
-				onDeleteAddress={() =>
-					setModal(modals.CONFIRM_DELETE_BILLING_ADDRESS)
-				}
-			/>
-
+			{!!checkout?.billing_address_display && (
+				<Address
+					address={checkout?.billing_address_display}
+					label={__('Billing Address', 'surecart')}
+				/>
+			)}
 			{!!checkout?.tax_identifier && (
 				<TaxInfo
 					taxIdentifier={checkout?.tax_identifier}

@@ -82,10 +82,13 @@ export class ScProductLineItem {
   @Prop() editable: boolean = true;
 
   /** The max allowed. */
-  @Prop() max: number = 100;
+  @Prop() max: number;
 
   /** The SKU. */
   @Prop() sku: string = '';
+
+  /** The purchasable status display */
+  @Prop() purchasableStatusDisplay: string;
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
@@ -139,6 +142,18 @@ export class ScProductLineItem {
             {this.interval}
           </div>
         )}
+      </div>
+    );
+  }
+
+  renderPurchasableStatus() {
+    if (!this.purchasableStatusDisplay) return null;
+
+    return (
+      <div class="item__price" part="price">
+        <div class="product-line-item__purchasable-status" part="price__amount">
+          {this.purchasableStatusDisplay}
+        </div>
       </div>
     );
   }
@@ -211,6 +226,7 @@ export class ScProductLineItem {
               <div></div>
             )}
             {this.renderPriceAndInterval()}
+            {this.renderPurchasableStatus()}
           </div>
         </div>
         {(this.fees || []).map(fee => {

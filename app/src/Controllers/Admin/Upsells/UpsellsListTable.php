@@ -54,9 +54,8 @@ class UpsellsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=sc-upsell-funnels' );
-
 		foreach ( $stati as $status => $label ) {
+			$link = admin_url( 'admin.php?page=sc-upsell-funnels' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -68,6 +67,8 @@ class UpsellsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -260,7 +261,7 @@ class UpsellsListTable extends ListTable {
 		ob_start();
 		?>
 		<div>
-			<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
+			<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
 				<?php echo esc_html( $upsell_funnel->name ); ?>
 			</a>
 			<?php

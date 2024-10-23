@@ -1,0 +1,159 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import {
+	ScBlockUi,
+	ScButton,
+	ScForm,
+	ScInput,
+	ScPhoneInput,
+} from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { Modal } from '@wordpress/components';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import Error from '../../../components/Error';
+import { useEffect, useRef, useState } from '@wordpress/element';
+
+export default ({ checkout, onRequestClose, onManuallyRefetchOrder }) => {
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const [error, setError] = useState(false);
+	const [busy, setBusy] = useState(false);
+	const name = useRef();
+
+	useEffect(() => {
+		if (name.current) {
+			setTimeout(() => {
+				name.current.triggerFocus();
+			}, 50);
+		}
+	}, [name]);
+
+	const [info, setInfo] = useState({
+		first_name: checkout?.first_name || '',
+		last_name: checkout?.last_name || '',
+		phone: checkout?.phone || '',
+		email: checkout?.email || '',
+	});
+
+	useEffect(() => {
+		setInfo({
+			first_name: checkout?.first_name || '',
+			last_name: checkout?.last_name || '',
+			phone: checkout?.phone || '',
+			email: checkout?.email || '',
+		});
+	}, [checkout]);
+
+	const onSubmit = async () => {
+		try {
+			setError(false);
+			setBusy(true);
+			// update the checkout
+			await saveEntityRecord(
+				'surecart',
+				'checkout',
+				{
+					id: checkout?.id,
+					...(info || {}),
+				},
+				{
+					throwOnError: true,
+				}
+			);
+			await onManuallyRefetchOrder();
+			onRequestClose();
+		} catch (e) {
+			console.error(e);
+			setError(e.message);
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	return (
+		<Modal
+			title={__('Update Contact Information', 'surecart')}
+			css={css`
+				max-width: 500px !important;
+			`}
+			onRequestClose={onRequestClose}
+			shouldCloseOnClickOutside={false}
+		>
+			<ScForm
+				onScFormSubmit={onSubmit}
+				css={css`
+					--sc-form-row-spacing: var(--sc-spacing-large);
+				`}
+			>
+				<Error error={error} setError={setError} />
+				<ScInput
+					autofo
+					label={__('First Name', 'surecart')}
+					value={info.first_name}
+					onScInput={(e) =>
+						setInfo({
+							...info,
+							first_name: e.target.value,
+						})
+					}
+					tabIndex="0"
+					autofocus
+				/>
+
+				<ScInput
+					label={__('Last Name', 'surecart')}
+					value={info.last_name}
+					onScInput={(e) =>
+						setInfo({
+							...info,
+							last_name: e.target.value,
+						})
+					}
+					tabIndex="0"
+				/>
+
+				<ScPhoneInput
+					label={__('Phone', 'surecart')}
+					value={info.phone}
+					onScInput={(e) =>
+						setInfo({
+							...info,
+							phone: e.target.value,
+						})
+					}
+					tabIndex="0"
+				/>
+
+				<ScInput
+					label={__('Email', 'surecart')}
+					type="email"
+					value={info.email}
+					onScInput={(e) =>
+						setInfo({
+							...info,
+							email: e.target.value,
+						})
+					}
+					tabIndex="0"
+					required
+				/>
+
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					<ScButton type="primary" busy={busy} submit>
+						{__('Update', 'surecart')}
+					</ScButton>
+					<ScButton type="text" onClick={onRequestClose}>
+						{__('Cancel', 'surecart')}
+					</ScButton>
+				</div>
+			</ScForm>
+			{busy && <ScBlockUi spinner />}
+		</Modal>
+	);
+};

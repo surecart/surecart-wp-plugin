@@ -92,6 +92,7 @@ export class ScFormComponentsValidator {
       }
     }
 
+    this.handleOrderChange();
     this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
     this.removePaymentRequiresShippingListener = onCheckoutChange('paymentMethodRequiresShipping', () => this.handleOrderChange());
   }
@@ -129,9 +130,12 @@ export class ScFormComponentsValidator {
     }
 
     const payment = this.el.querySelector('sc-payment');
-    const address = document.createElement('sc-order-shipping-address');
-    address.label = __('Address', 'surecart');
-    payment.parentNode.insertBefore(address, payment);
+    const shippingAddress = document.createElement('sc-order-shipping-address');
+    shippingAddress.label = __('Shipping Address', 'surecart');
+    const billingAddress = document.createElement('sc-order-billing-address');
+    billingAddress.label = __('Billing Address', 'surecart');
+    payment.parentNode.insertBefore(shippingAddress, payment);
+    payment.parentNode.insertBefore(billingAddress, payment);
     this.hasAddress = true;
   }
 

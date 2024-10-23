@@ -37,6 +37,10 @@ Type: `Promise<boolean>`
 
 ## Dependencies
 
+### Used by
+
+ - [sc-form-components-validator](../../../providers/form-components-validator)
+
 ### Depends on
 
 - [sc-checkbox](../../../ui/checkbox)
@@ -62,6 +66,7 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-block-ui --> sc-spinner
+  sc-form-components-validator --> sc-order-billing-address
   style sc-order-billing-address fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

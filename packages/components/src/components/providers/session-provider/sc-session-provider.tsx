@@ -79,7 +79,7 @@ export class ScSessionProvider {
 
     if (checkoutState?.checkout?.payment_method_required && selectedProcessor?.id === 'stripe' && processorsState.config.stripe.paymentElement) {
       // not initialized.
-      if (typeof processorsState?.instances?.stripeElements === undefined) {
+      if (!processorsState?.instances?.stripeElements) {
         updateFormState('REJECT');
         this.handleErrorResponse({ message: 'Stripe Elements not found.', code: 'stripe_elements_not_found' });
         return new Error('Stripe Elements not found.');
@@ -250,7 +250,6 @@ export class ScSessionProvider {
     // success, refetch the checkout
     try {
       updateFormState('FINALIZE');
-      updateFormState('PAID');
       checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
@@ -261,6 +260,7 @@ export class ScSessionProvider {
       // TODO: should we even check this?
       if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) {
         setTimeout(() => {
+          updateFormState('PAID');
           this.scPaid.emit();
         }, 100);
       }
@@ -392,6 +392,12 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+
+      // Handle any invalid coupon set on checkout URL.
+      if (e?.additional_errors?.[0]?.code === 'checkout.discount.coupon.blank') {
+        await this.handleNewCheckout(false);
+        createErrorNotice(e);
+      }
     }
   }
 
@@ -413,6 +419,12 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+
+      // Handle any invalid coupon set on checkout URL.
+      if (e?.additional_errors?.[0]?.code === 'checkout.discount.coupon.blank') {
+        await this.handleExistingCheckout(id, false);
+        createErrorNotice(e);
+      }
     }
   }
 
