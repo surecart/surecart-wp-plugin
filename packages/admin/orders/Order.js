@@ -45,8 +45,7 @@ export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	/** This is a workaround until we can sort out why store invalidation is not working for order. */
 	const manuallyRefetchOrder = async () => {
