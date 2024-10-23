@@ -94,7 +94,7 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 						`}
 					>
 						{__(
-							'Update the contact information for this order.',
+							'Update the tax information for this order.',
 							'surecart'
 						)}
 					</p>
