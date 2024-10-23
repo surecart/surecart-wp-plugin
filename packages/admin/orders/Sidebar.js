@@ -69,18 +69,23 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 				loading={loading}
 				onManuallyRefetchOrder={onManuallyRefetchOrder}
 			/>
-			{!!checkout?.shipping_address && (
-				<Address
-					address={checkout?.shipping_address}
-					label={__('Shipping & Tax Address', 'surecart')}
-				/>
-			)}
-			{!!checkout?.billing_address_display && (
-				<Address
-					address={checkout?.billing_address_display}
-					label={__('Billing Address', 'surecart')}
-				/>
-			)}
+			<ViewAddress
+				title={__('Shipping & Tax Address', 'surecart')}
+				loading={loading}
+				address={checkout?.shipping_address}
+				onEditAddress={() => setModal(modals.EDIT_SHIPPING_ADDRESS)}
+				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
+			/>
+
+			<ViewAddress
+				title={__('Billing Address', 'surecart')}
+				loading={loading}
+				address={checkout?.billing_address}
+				onEditAddress={() => setModal(modals.EDIT_BILLING_ADDRESS)}
+				onDeleteAddress={() =>
+					setModal(modals.CONFIRM_DELETE_BILLING_ADDRESS)
+				}
+			/>
 			{!!checkout?.tax_identifier && (
 				<TaxInfo
 					taxIdentifier={checkout?.tax_identifier}

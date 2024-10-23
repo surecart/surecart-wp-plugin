@@ -12,7 +12,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies.
  */
-import AddressModal from '../../components/address/AddressModal';
+import EditAddress from '../../components/address/EditAddress';
 import { checkoutOrderExpands } from '../../util/orders';
 
 export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
@@ -51,7 +51,7 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 	};
 
 	return (
-		<AddressModal
+		<EditAddress
 			isEdit={!!shippingAddress?.id}
 			title={
 				!!shippingAddress?.id
