@@ -52,7 +52,9 @@ export class ScPaymentMethod {
       if (!!this?.paymentMethod?.payment_method_name) {
         return (
           <div class="payment-method" part="instrument">
-            <sc-icon style={{ fontSize: '36px' }} name={type} />
+            <div class="payment-method-icon">
+              <sc-icon style={{ fontSize: '36px', '--height': '0.63em' }} name={type} />
+            </div>
             <span>{this?.paymentMethod?.payment_method_name}</span>
             {this.renderExternalLink()}
           </div>
