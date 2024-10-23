@@ -54,7 +54,6 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 		<EditAddress
 			open={open}
 			onRequestClose={onRequestClose}
-			isEdit={!!shippingAddress?.id}
 			title={
 				!!shippingAddress?.id
 					? __('Update Shipping Address', 'surecart')
@@ -69,8 +68,7 @@ export default ({ checkoutId, shippingAddress, open, onRequestClose }) => {
 			setAddress={setAddress}
 			error={error}
 			setError={setError}
-			onEditAddress={onEditAddress}
-			onRequestClose={onRequestClose}
+			onSubmit={onEditAddress}
 			busy={busy}
 		/>
 	);

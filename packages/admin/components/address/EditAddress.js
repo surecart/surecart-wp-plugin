@@ -23,7 +23,7 @@ export default ({
 	setAddress,
 	error,
 	setError,
-	onEditAddress,
+	onSubmit,
 	open,
 	onRequestClose,
 	busy,
@@ -31,7 +31,7 @@ export default ({
 }) => {
 	return (
 		<ScForm
-			onScSubmit={onEditAddress}
+			onScSubmit={onSubmit}
 			onScFormSubmit={(e) => {
 				e.stopImmediatePropagation();
 			}}
@@ -39,7 +39,7 @@ export default ({
 			<ScDrawer
 				label={title}
 				open={open}
-				onAfterHide={onRequestClose}
+				onScAfterHide={onRequestClose}
 				css={css`
 					width: 500px !important;
 					.components-modal__content {
