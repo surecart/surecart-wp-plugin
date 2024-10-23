@@ -53,13 +53,19 @@ export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 
 	return (
 		<EditAddress
+			open={open}
+			onRequestClose={onRequestClose}
 			isEdit={!!billingAddress?.id}
 			title={
 				!!billingAddress?.id
 					? __('Update Billing Address', 'surecart')
 					: __('Add Billing Address', 'surecart')
 			}
-			open={open}
+			buttonText={
+				!!billingAddress?.id
+					? __('Update', 'surecart')
+					: __('Save', 'surecart')
+			}
 			address={address}
 			setAddress={setAddress}
 			error={error}

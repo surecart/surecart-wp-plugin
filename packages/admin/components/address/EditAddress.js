@@ -1,6 +1,8 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
+import { css, jsx } from '@emotion/react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -10,70 +12,84 @@ import {
 	ScAddress,
 	ScBlockUi,
 	ScButton,
-	ScDialog,
-	ScFlex,
+	ScDrawer,
 	ScForm,
 } from '@surecart/components-react';
 import Error from '../Error';
 
 export default ({
-	isEdit,
-	open,
+	buttonText,
 	address,
 	setAddress,
 	error,
 	setError,
 	onEditAddress,
+	open,
 	onRequestClose,
 	busy,
 	title,
 }) => {
-	if (!open) return null;
-
 	return (
-		<ScDialog
-			label={title}
-			open={open}
-			onScAfterHide={onRequestClose}
-			style={{
-				'--dialog-body-overflow': 'visible',
+		<ScForm
+			onScSubmit={onEditAddress}
+			onScFormSubmit={(e) => {
+				e.stopImmediatePropagation();
 			}}
 		>
-			<Error error={error} setError={setError} />
-			<ScForm
-				onScSubmit={onEditAddress}
-				onScFormSubmit={(e) => {
-					e.stopImmediatePropagation();
-				}}
-			>
-				<ScAddress
-					address={address}
-					onScChangeAddress={(e) => setAddress(e.detail)}
-					required
-				/>
-				<ScFlex justifyContent="flex-end">
-					<ScButton
-						type="text"
-						onClick={onRequestClose}
-						disabled={busy}
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>{' '}
-					<ScButton type="primary" disabled={busy} submit>
-						{isEdit
-							? __('Update Address', 'surecart')
-							: __('Save Address', 'surecart')}
-					</ScButton>
-				</ScFlex>
-			</ScForm>
+			<ScDrawer
+				label={title}
+				open={open}
+				onAfterHide={onRequestClose}
+				css={css`
+					width: 500px !important;
+					.components-modal__content {
+						overflow: visible !important;
+					}
 
-			{busy && (
-				<ScBlockUi
-					style={{ '--sc-block-ui-opacity': '0.75' }}
-					zIndex="9"
-					spinner
-				/>
-			)}
-		</ScDialog>
+					@media (max-width: 782px) {
+						width: 100% !important;
+
+						.components-modal__content {
+							overflow: visible !important;
+						}
+					}
+				`}
+			>
+				<div
+					css={css`
+						display: grid;
+						gap: var(--sc-spacing-medium);
+						padding: var(--sc-spacing-x-large);
+					`}
+				>
+					<Error error={error} setError={setError} />
+
+					<ScAddress
+						label={__('Address', 'surecart')}
+						address={address}
+						onScChangeAddress={(e) => setAddress(e.detail)}
+						required
+					/>
+				</div>
+				<ScButton type="primary" disabled={busy} submit slot="footer">
+					{buttonText || __('Save Address', 'surecart')}
+				</ScButton>
+				<ScButton
+					type="text"
+					onClick={onRequestClose}
+					disabled={busy}
+					slot="footer"
+				>
+					{__('Cancel', 'surecart')}
+				</ScButton>
+				{busy && (
+					<ScBlockUi
+						style={{ '--sc-block-ui-opacity': '0.75' }}
+						zIndex="9"
+						spinner
+					/>
+				)}
+			</ScDrawer>
+		</ScForm>
 	);
 };

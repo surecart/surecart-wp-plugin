@@ -1,7 +1,14 @@
 /** @jsx jsx */
 import Box from '../../../ui/Box';
 import { css, jsx } from '@emotion/core';
-import { ScButton, ScIcon, ScLineItem } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScLineItem,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
@@ -17,16 +24,31 @@ export default ({ checkout, loading, onManuallyRefetchOrder }) => {
 				title={__('Contact Information', 'surecart')}
 				loading={loading}
 				header_action={
-					<ScButton
-						circle
-						type="text"
-						css={css`
-							margin: -12px 0px;
-						`}
-						onClick={() => setIsEditing(true)}
-					>
-						<ScIcon name="edit-2" />
-					</ScButton>
+					<ScDropdown placement="bottom-end">
+						<ScButton
+							circle
+							type="text"
+							style={{
+								'--button-color': 'var(--sc-color-gray-600)',
+								margin: '-10px',
+							}}
+							slot="trigger"
+						>
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={() => setIsEditing(true)}>
+								<ScIcon
+									slot="prefix"
+									name="edit"
+									style={{
+										opacity: 0.5,
+									}}
+								/>
+								{__('Edit', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
 				}
 			>
 				<div
@@ -56,13 +78,13 @@ export default ({ checkout, loading, onManuallyRefetchOrder }) => {
 					</ScLineItem>
 				</div>
 			</Box>
-			{isEditing && (
-				<EditContactInfo
-					checkout={checkout}
-					onRequestClose={() => setIsEditing(false)}
-					onManuallyRefetchOrder={onManuallyRefetchOrder}
-				/>
-			)}
+
+			<EditContactInfo
+				open={isEditing}
+				onRequestClose={() => setIsEditing(false)}
+				checkout={checkout}
+				onManuallyRefetchOrder={onManuallyRefetchOrder}
+			/>
 		</>
 	);
 };
