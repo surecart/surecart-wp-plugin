@@ -26,7 +26,7 @@
 	"render": "file:./view.php",
 	"style": [
 		"file:./style-index.css",
-		"file:../../styles/label.css",
-		"file:../../styles/product-variants.css"
+		"surecart-label",
+		"surecart-product-variants"
 	]
 }

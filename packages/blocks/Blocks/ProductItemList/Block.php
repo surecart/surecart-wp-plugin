@@ -317,7 +317,7 @@ class Block extends BaseBlock {
 			'expand'   => [ 'prices', 'featured_product_media', 'product_medias', 'product_media.media', 'variants' ],
 			'archived' => false,
 			'status'   => [ 'published' ],
-			'sort'     => 'created_at:desc',
+			'sort'     => 'cataloged_at:desc',
 		];
 
 		if ( 'featured' === ( $attributes['type'] ?? '' ) ) {

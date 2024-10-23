@@ -1,11 +1,7 @@
 <div class="wrap">
 	<?php
-	\SureCart::render(
-		'layouts/partials/admin-index-header',
-		[ 'title' => __( 'Subscription Saver', 'surecart' ) ]
-	);
+		\SureCart::render( 'layouts/partials/admin-index-styles' );
 	?>
-
 	<?php
 	if ( ! $enabled ) :
 		\SureCart::render(
@@ -24,5 +20,9 @@
 			[ 'title' => __( 'Cancellation Attempts', 'surecart' ) ]
 		);
 		?>
-	<?php $table->display(); ?>
+	<form id="posts-filter" method="get">
+		<?php $table->display(); ?>
+
+		<div id="ajax-response"></div>
+	</form>
 </div>
