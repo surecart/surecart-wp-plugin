@@ -8,7 +8,7 @@ use SureCart\Support\TimeDate;
  * Format dates for the model.
  */
 trait HasDates {
-    /**
+	/**
 	 * Get the created at date.
 	 *
 	 * @return string
