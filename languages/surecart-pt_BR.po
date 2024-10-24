@@ -2029,7 +2029,7 @@ msgid "Pending"
 msgstr "Pendente"
 
 #: packages/blocks/Controllers/LicenseController.php:134
-#: packages/admin/licenses/modules/Details/index.js:28
+#: packages/admin/licenses/modules/Details/index.js:36
 #: packages/admin/store/add-entities.js:152
 msgid "License"
 msgstr "Licença"
@@ -2641,6 +2641,7 @@ msgstr "Forma de pagamento"
 #: packages/admin/customers/modules/ShippingAddress/EditAddressModal.js:86
 #: packages/admin/dashboard/DatePicker.js:25
 #: packages/admin/hocs/withConfirm.js:54
+#: packages/admin/licenses/modules/modals/EditKeyModal.js:132
 #: packages/admin/orders/modules/Fulfillment/components/AddTracking.js:117
 #: packages/admin/orders/modules/Fulfillment/CreateFulfillment.js:352
 #: packages/admin/orders/modules/OrderStatusConfirmModal.js:78
@@ -3047,85 +3048,85 @@ msgctxt "post type general name"
 msgid "SureCart Products"
 msgstr "Produtos SureCart"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:362
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:367
 msgid "(no title)"
 msgstr "(sem título)"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:293
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:298
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:292
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:297
 msgid "Mode"
 msgstr "Modo"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:291
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:296
 msgid "Published In"
 msgstr "Publicado em"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:239
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:244
 msgid "Checkout Form updated."
 msgstr "Formulário de checkout atualizado."
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:238
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:243
 msgid "Checkout Form scheduled."
 msgstr "Formulário de checkout agendado."
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:237
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:242
 msgid "Checkout Form reverted to draft."
 msgstr "Formulário de checkout revertido para rascunho."
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:236
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:241
 msgid "Checkout Form published privately."
 msgstr "Formulário de checkout publicado em particular."
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:235
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:240
 msgid "Checkout Form published."
 msgstr "Formulário de checkout publicado."
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:234
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:239
 msgid "Checkout Forms list"
 msgstr "Lista de formulários de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:233
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:238
 msgid "Checkout Forms list navigation"
 msgstr "Navegação na lista de formulários de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:229
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:234
 msgid "Search Checkout Forms"
 msgstr "Pesquisar formulários de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:228
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:233
 msgid "All Checkout Forms"
 msgstr "Todos os formulários de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:227
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:232
 msgid "View Checkout Form"
 msgstr "Ver formulário de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:226
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:231
 msgid "Edit Checkout Form"
 msgstr "Editar formulário de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:225
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:230
 msgid "New Checkout Form"
 msgstr "Novo formulário de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:224
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:229
 msgid "Add new Checkout Form"
 msgstr "Adicionar novo formulário de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:223
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:228
 msgctxt "Checkout Form"
 msgid "Add New"
 msgstr "Adicionar novo"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:222
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:227
 msgctxt "post type singular name"
 msgid "Checkout Form"
 msgstr "Formulário de checkout"
 
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:221
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:226
 msgctxt "post type general name"
 msgid "Checkout Forms"
 msgstr "Formulários de checkout"
@@ -3159,7 +3160,7 @@ msgid "Carts list navigation"
 msgstr "Navegação na lista de carrinhos"
 
 #: app/src/WordPress/PostTypes/CartPostTypeService.php:253
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:232
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:237
 #: app/src/WordPress/PostTypes/ProductCollectionsPagePostTypeService.php:46
 #: app/src/WordPress/PostTypes/ProductPagePostTypeService.php:46
 #: app/src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:46
@@ -3167,7 +3168,7 @@ msgid "Filter checkout forms list"
 msgstr "Filtrar lista de formulários de checkout"
 
 #: app/src/WordPress/PostTypes/CartPostTypeService.php:252
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:231
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:236
 #: app/src/WordPress/PostTypes/ProductCollectionsPagePostTypeService.php:45
 #: app/src/WordPress/PostTypes/ProductPagePostTypeService.php:45
 #: app/src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:45
@@ -3175,7 +3176,7 @@ msgid "No checkout forms found in Trash."
 msgstr "Nenhum formulário de pagamento foi encontrado na Lixeira."
 
 #: app/src/WordPress/PostTypes/CartPostTypeService.php:251
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:230
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:235
 #: app/src/WordPress/PostTypes/ProductCollectionsPagePostTypeService.php:44
 #: app/src/WordPress/PostTypes/ProductPagePostTypeService.php:44
 #: app/src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:44
@@ -3239,7 +3240,7 @@ msgid "Customer Dashboard"
 msgstr "Painel do cliente"
 
 #: app/src/WordPress/Pages/PageService.php:120
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:146
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:151
 msgid "Store Checkout"
 msgstr "Checkout da loja"
 
@@ -3375,7 +3376,7 @@ msgstr "Conectado"
 msgid "API Connectivity"
 msgstr "Conectividade API"
 
-#: app/src/WordPress/CompatibilityService.php:152
+#: app/src/WordPress/CompatibilityService.php:158
 msgid "<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, consider disabling the Gutenberg plugin.<p>"
 msgstr "<p>O plugin Gutenberg está atualmente ativo. Os blocos SureCart podem não funcionar como esperado dentro do editor de blocos. Se você encontrar algum problema, considere desativar o plugin Gutenberg.<p>"
 
@@ -3405,7 +3406,7 @@ msgstr "Formulários personalizados"
 
 #: app/src/WordPress/Admin/Menus/AdminMenuPageService.php:212
 #: app/src/WordPress/PostTypes/CartPostTypeService.php:153
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:97
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:98
 msgid "Forms"
 msgstr "Formulários"
 
@@ -5792,7 +5793,7 @@ msgstr "Não há nenhuma conta com esse usuário ou e-mail."
 
 #: app/src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:223
 #: app/src/Controllers/Admin/Tables/ListTable.php:110
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:334
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:339
 #: views/admin/user-profile.php:10 views/admin/user-profile.php:18
 #: packages/admin/dashboard/components/RecentOrders.js:184
 #: packages/blocks/Blocks/Form/components/Mode.js:12
@@ -6071,7 +6072,7 @@ msgid "View Product"
 msgstr "Ver produto"
 
 #: app/src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:184
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:338
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:343
 #: packages/blocks/Blocks/Form/components/Mode.js:19
 #: packages/blocks/Blocks/Form/components/Mode.js:38
 msgid "Live"
@@ -6221,10 +6222,6 @@ msgstr "O Paypal está analisando mais de perto esse pagamento. É necessário p
 msgid "Checkout"
 msgstr "Checkout"
 
-#: app/src/Controllers/Admin/Orders/OrdersListTable.php:244
-msgid "Plan Renewal"
-msgstr "Renovação do plano"
-
 #: app/src/Controllers/Admin/Orders/OrdersListTable.php:118
 #: packages/admin/customers/modules/Balance/ViewTransactions.js:101
 #: packages/blocks/Blocks/BuyButton/edit.js:122
@@ -6310,14 +6307,14 @@ msgstr "Token de API inválido"
 #: app/src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: app/src/Models/Affiliation.php:136
 #: packages/admin/affiliations/ViewAffiliation.js:213
-#: packages/admin/licenses/modules/Details/index.js:20
+#: packages/admin/licenses/modules/Details/index.js:28
 #: packages/admin/util.js:89
 msgid "Inactive"
 msgstr "Inativo"
 
 #: app/src/Controllers/Admin/Licenses/LicensesListTable.php:125
 #: packages/admin/components/data-tables/purchases-data-table/purchase-item.js:37
-#: packages/admin/licenses/modules/Details/index.js:17
+#: packages/admin/licenses/modules/Details/index.js:25
 #: packages/admin/licenses/modules/Purchase.js:78
 msgid "Revoked"
 msgstr "Cancelado"
@@ -6347,7 +6344,7 @@ msgstr "Chave"
 #: packages/blocks/Controllers/LicenseController.php:131
 #: views/admin/licenses/index.php:7
 #: packages/admin/components/data-tables/licenses-data-table/index.js:26
-#: packages/admin/licenses/License.js:78
+#: packages/admin/licenses/License.js:85
 msgid "Licenses"
 msgstr "Licenças"
 
@@ -6670,7 +6667,7 @@ msgstr "Economizado"
 #: packages/admin/abandoned-checkouts/modules/Customer.js:26
 #: packages/admin/checkouts/modules/SelectCustomer/index.js:107
 #: packages/admin/invoices/modules/Customer.js:27
-#: packages/admin/licenses/modules/Customer.js:53
+#: packages/admin/licenses/modules/Customer.js:54
 #: packages/admin/orders/modules/Customer.js:28
 #: packages/admin/subscriptions/edit/modules/Customer.js:24
 #: packages/admin/subscriptions/show/modules/Customer.js:28
@@ -6731,7 +6728,7 @@ msgstr "Plano"
 #: packages/admin/coupons/modules/NewRestriction.js:91
 #: packages/admin/invoices/modules/Customer.js:17
 #: packages/admin/invoices/store/entities.js:94
-#: packages/admin/licenses/modules/Customer.js:41
+#: packages/admin/licenses/modules/Customer.js:42
 #: packages/admin/orders/modules/Customer.js:16
 #: packages/admin/store/add-entities.js:88
 #: packages/admin/subscriptions/edit/modules/Customer.js:12
@@ -6795,6 +6792,7 @@ msgid "One-Time"
 msgstr "Uma vez"
 
 #: app/src/Controllers/Admin/Bumps/BumpsListTable.php:194
+#: app/src/Controllers/Admin/Orders/OrdersListTable.php:244
 #: app/src/Controllers/Admin/Products/ProductsListTable.php:307
 #: app/src/Controllers/Admin/Upsells/UpsellsListTable.php:189
 #: packages/admin/invoices/store/entities.js:70
@@ -6898,7 +6896,7 @@ msgstr "Arquivado"
 #: app/src/Controllers/Admin/Upsells/UpsellsListTable.php:52
 #: app/src/Models/Affiliation.php:136
 #: packages/admin/affiliations/ViewAffiliation.js:212
-#: packages/admin/licenses/modules/Details/index.js:14
+#: packages/admin/licenses/modules/Details/index.js:22
 #: packages/admin/util.js:88
 #: packages/blocks/Blocks/Dashboard/CustomerLicenses/edit.js:75
 msgid "Active"
@@ -7114,7 +7112,7 @@ msgstr "Erro de registro de Webhook do SureCart"
 #: app/src/WordPress/Admin/Menus/AdminMenuPageService.php:170
 #: app/src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: app/src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
-#: app/src/WordPress/CompatibilityService.php:151
+#: app/src/WordPress/CompatibilityService.php:157
 #: app/src/WordPress/HealthService.php:32
 #: app/src/WordPress/HealthService.php:73
 #: app/src/WordPress/HealthService.php:86
