@@ -1,4 +1,16 @@
 import { __, _n } from '@wordpress/i18n';
+
+/**
+ * External dependencies.
+ */
+import { store as coreStore } from '@wordpress/core-data';
+import { useState } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScButton,
 	ScDropdown,
@@ -9,11 +21,16 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 import Box from '../../../ui/Box';
-import { useState } from '@wordpress/element';
 import EditTaxInfo from './EditTaxInfo';
+import Confirm from '../../../components/confirm';
 
 export default ({ loading, checkout, onManuallyRefetchOrder }) => {
-	const [isEditing, setIsEditing] = useState(false);
+	const [modal, setModal] = useState(false);
+	const [error, setError] = useState(false);
+	const [busy, setBusy] = useState(false);
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
 	const zones = {
 		ca_gst: __('CA GST', 'surecart'),
 		au_abn: __('AU ABN', 'surecart'),
@@ -21,6 +38,43 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 		eu_vat: __('EU VAT', 'surecart'),
 		other: __('Other', 'surecart'),
 	};
+
+	const onSubmit = async (taxIdentifier) => {
+		try {
+			setError(false);
+			setBusy(true);
+
+			// Update the tax on the checkout.
+			await saveEntityRecord(
+				'surecart',
+				'checkout',
+				{
+					id: checkout?.id,
+					tax_identifier: taxIdentifier,
+				},
+				{
+					throwOnError: true,
+				}
+			);
+
+			const message =
+				taxIdentifier === null
+					? __('Tax information deleted.', 'surecart')
+					: __('Tax information updated.', 'surecart');
+
+			createSuccessNotice(message, {
+				type: 'snackbar',
+			});
+			await onManuallyRefetchOrder();
+			setModal(false);
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	return (
 		<>
 			<Box
@@ -40,7 +94,7 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 							<ScIcon name="more-horizontal" />
 						</ScButton>
 						<ScMenu>
-							<ScMenuItem onClick={() => setIsEditing(true)}>
+							<ScMenuItem onClick={() => setModal('edit')}>
 								<ScIcon
 									slot="prefix"
 									name="edit"
@@ -49,6 +103,16 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 									}}
 								/>
 								{__('Edit', 'surecart')}
+							</ScMenuItem>
+							<ScMenuItem onClick={() => setModal('delete')}>
+								<ScIcon
+									slot="prefix"
+									name="trash"
+									style={{
+										opacity: 0.5,
+									}}
+								/>
+								{__('Delete', 'surecart')}
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
@@ -86,11 +150,23 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 				)}
 			</Box>
 			<EditTaxInfo
-				open={isEditing}
-				onRequestClose={() => setIsEditing(false)}
+				open={modal === 'edit'}
+				onRequestClose={() => setModal(false)}
 				checkout={checkout}
-				onManuallyRefetchOrder={onManuallyRefetchOrder}
+				onSubmit={onSubmit}
+				busy={busy}
+				error={error}
+				setError={setError}
 			/>
+			<Confirm
+				open={modal === 'delete'}
+				onRequestClose={() => setModal(false)}
+				onConfirm={() => onSubmit(null)}
+				loading={loading || busy}
+				error={error}
+			>
+				{__('Are you sure? This cannot be undone.', 'surecart')}
+			</Confirm>
 		</>
 	);
 };

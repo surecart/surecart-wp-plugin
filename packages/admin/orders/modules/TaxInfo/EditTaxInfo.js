@@ -6,8 +6,6 @@ import { css, jsx } from '@emotion/core';
  */
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch } from '@wordpress/data';
 
 /**
  * Internal dependencies.
@@ -21,10 +19,15 @@ import {
 } from '@surecart/components-react';
 import Error from '../../../components/Error';
 
-export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
-	const { saveEntityRecord } = useDispatch(coreStore);
-	const [error, setError] = useState(false);
-	const [busy, setBusy] = useState(false);
+export default ({
+	open,
+	checkout,
+	busy,
+	error,
+	setError,
+	onRequestClose,
+	onSubmit,
+}) => {
 	const name = useRef();
 
 	useEffect(() => {
@@ -47,35 +50,9 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 		});
 	}, [checkout]);
 
-	const onSubmit = async () => {
-		try {
-			setError(false);
-			setBusy(true);
-			// update the checkout
-			await saveEntityRecord(
-				'surecart',
-				'checkout',
-				{
-					id: checkout?.id,
-					tax_identifier: info,
-				},
-				{
-					throwOnError: true,
-				}
-			);
-			await onManuallyRefetchOrder();
-			onRequestClose();
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setBusy(false);
-		}
-	};
-
 	return (
 		<ScForm
-			onScFormSubmit={onSubmit}
+			onScFormSubmit={() => onSubmit(info)}
 			css={css`
 				--sc-form-row-spacing: var(--sc-spacing-large);
 			`}
