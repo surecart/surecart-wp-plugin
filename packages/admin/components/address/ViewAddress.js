@@ -30,48 +30,14 @@ export default ({
 	billingMatchesShipping,
 	loading,
 }) => {
-	const renderShippingAddress = () => {
-		if (!shippingAddress?.country) {
-			return (
-				<ScText
-					style={{
-						marginTop: 'var(--sc-spacing-small)',
-					}}
-				>
-					{__('No shipping address has been set.', 'surecart')}
-				</ScText>
-			);
-		}
-
-		return <AddressDisplay address={shippingAddress} />;
-	};
-
-	const renderBillingAddress = () => {
-		if (billingMatchesShipping) {
-			return <AddressDisplay address={shippingAddress} />;
-		}
-
-		if (!billingAddress?.country) {
-			return (
-				<ScText
-					style={{
-						marginTop: 'var(--sc-spacing-small)',
-					}}
-				>
-					{__('No billing address has been set.', 'surecart')}
-				</ScText>
-			);
-		}
-
-		return <AddressDisplay address={billingAddress} />;
-	};
+	const hasAddress = !!shippingAddress?.id || !!billingAddress?.id;
 
 	return (
 		<Box
 			title={title}
 			loading={loading}
 			header_action={
-				(!!shippingAddress?.id || !!billingAddress?.id) && (
+				hasAddress && (
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							circle
@@ -103,7 +69,7 @@ export default ({
 										opacity: 0.5,
 									}}
 								/>
-								{__('Delete', 'surecart')}
+								{__('Clear', 'surecart')}
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
@@ -111,8 +77,7 @@ export default ({
 			}
 			footer={
 				!loading &&
-				!shippingAddress?.id &&
-				!billingAddress?.id && (
+				!hasAddress && (
 					<ScButton onClick={onEditAddress}>
 						<ScIcon name="plus" slot="prefix" />
 						{__('Add Address', 'surecart')}
@@ -120,36 +85,80 @@ export default ({
 				)
 			}
 		>
-			{(shippingAddress?.country || billingAddress?.country) && (
+			{hasAddress && (
 				<div
 					css={css`
 						display: flex;
 						flex-direction: column;
 						gap: var(--sc-spacing-medium);
+						--sc-input-label-font-weight: var(
+							--sc-font-weight-bold
+						);
 					`}
 				>
-					<ScFormControl
-						label={__('Shipping Address', 'surecart')}
-						css={css`
-							height: 100%;
-							display: flex;
-							padding-bottom: var(--sc-spacing-medium);
-							border-bottom: 1px solid var(--sc-color-gray-200);
-						`}
-					>
-						{renderShippingAddress()}
-					</ScFormControl>
+					{shippingAddress?.country && (
+						<div
+							css={css`
+								padding: var(
+									--sc-card-padding,
+									var(--sc-spacing-large)
+								);
+								background: var(
+									--sc-card-background-color,
+									var(--sc-color-white)
+								);
+								border: 1px solid
+									var(
+										--sc-card-border-color,
+										var(--sc-color-gray-300)
+									);
+								border-radius: var(
+									--sc-input-border-radius-medium
+								);
+							`}
+						>
+							<ScFormControl
+								label={__('Shipping Address', 'surecart')}
+							>
+								<AddressDisplay address={shippingAddress} />
+							</ScFormControl>
+						</div>
+					)}
 
-					<ScFormControl
-						label={__('Billing Address', 'surecart')}
-						css={css`
-							height: 100%;
-							display: flex;
-							padding-bottom: var(--sc-spacing-medium);
-						`}
-					>
-						{renderBillingAddress()}
-					</ScFormControl>
+					{(billingAddress?.country || billingMatchesShipping) && (
+						<div
+							css={css`
+								padding: var(
+									--sc-card-padding,
+									var(--sc-spacing-large)
+								);
+								background: var(
+									--sc-card-background-color,
+									var(--sc-color-white)
+								);
+								border: 1px solid
+									var(
+										--sc-card-border-color,
+										var(--sc-color-gray-300)
+									);
+								border-radius: var(
+									--sc-input-border-radius-medium
+								);
+							`}
+						>
+							<ScFormControl
+								label={__('Billing Address', 'surecart')}
+							>
+								<AddressDisplay
+									address={
+										billingMatchesShipping
+											? shippingAddress
+											: billingAddress
+									}
+								/>
+							</ScFormControl>
+						</div>
+					)}
 				</div>
 			)}
 		</Box>
