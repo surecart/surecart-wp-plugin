@@ -76,6 +76,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							/>
 						)}
 
+						{/* Amount Due */}
 						{checkout?.amount_due !== checkout?.total_amount && (
 							<LineItem
 								title={__('Amount Due', 'surecart')}
@@ -84,7 +85,9 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							/>
 						)}
 
-						<ScDivider />
+						<ScDivider
+							style={{ '--spacing': 'var(--sc-spacing-small)' }}
+						/>
 
 						{checkout?.paid_amount > 0 && (
 							<LineItem
@@ -132,21 +135,11 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 
 				{/* Trial */}
 				{!!checkout?.trial_amount && (
-					<ScLineItem>
-						<span slot="description">
-							{__('Trial', 'surecart')}
-						</span>
-						<ScFormatNumber
-							slot="price"
-							style={{
-								fontWeight: 'var(--sc-font-weight-semibold)',
-								color: 'var(--sc-color-gray-800)',
-							}}
-							type="currency"
-							currency={checkout?.currency}
-							value={checkout?.trial_amount}
-						></ScFormatNumber>
-					</ScLineItem>
+					<LineItem
+						label={__('Trial', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.trial_amount}
+					/>
 				)}
 
 				{/* Coupon */}
