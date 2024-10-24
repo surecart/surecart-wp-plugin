@@ -5,6 +5,7 @@ namespace SureCart\Tests\Feature\Rest;
 use SureCart\Account\AccountService;
 use SureCart\Account\AccountServiceProvider;
 use SureCart\Models\User;
+use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\CheckoutRestServiceProvider;
 use SureCart\Settings\SettingsServiceProvider;
@@ -396,5 +397,34 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/cancel');
 		$response = rest_do_request($request);
 		$this->assertSame($response->get_status(), 200);
+	}
+
+	public function test_must_have_edit_permissions_to_change_tax_behavior()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->andReturn(['email' => 'test@test.com']);
+
+		// missing permission
+		$user = self::factory()->user->create_and_get();
+		wp_set_current_user($user->ID);
+
+		// not authenticated.
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/test');
+		$request->set_body_params(['tax_behavior' => 'taxable']);
+		$response = rest_do_request($request);
+		$this->assertSame(403, $response->get_status());
+
+		// should succeed with the cap.
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap('edit_sc_checkouts');
+		wp_set_current_user($user->ID);
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/test');
+		$request->set_body_params(['tax_behavior' => 'taxable']);
+		$response = rest_do_request($request);
+		$this->assertSame(200, $response->get_status());
 	}
 }

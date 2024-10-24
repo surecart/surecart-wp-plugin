@@ -137,7 +137,7 @@ export class ScAddress {
 
   /** Set the regions based on the country. */
   setRegions() {
-    if (hasState(this.address.country)) {
+    if (hasState(this.address?.country)) {
       import('./countries.json').then(module => {
         const countryRegions = module?.[this.address.country] as Array<{ value: string; label: string }>;
 
@@ -218,7 +218,7 @@ export class ScAddress {
             aria-label={this.placeholders.line_1 || __('Address', 'surecart')}
           />
 
-          {this.showLine2 && (
+          {(this.showLine2 || !!this?.address?.line_2?.length) && (
             <sc-input
               exportparts="base:input__base, input, form-control, label, help-text"
               value={this?.address?.line_2}

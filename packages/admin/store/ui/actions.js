@@ -19,6 +19,13 @@ export function setInvalid(value) {
 	};
 }
 
+export function setError(value) {
+	return {
+		type: 'SET_ERROR',
+		value,
+	};
+}
+
 export function setFlash(value) {
 	return {
 		type: 'SET_FLASH',

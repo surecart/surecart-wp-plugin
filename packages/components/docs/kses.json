@@ -415,6 +415,7 @@
     "currency": true,
     "discount": true,
     "discount-amount": true,
+    "editable": true,
     "error": true,
     "force-open": true,
     "label": true,
@@ -891,9 +892,33 @@
     "class": true,
     "slot": true
   },
+  "sc-invoice-details": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-invoice-memo": {
+    "text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-invoice-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-invoices-list": {
     "all-link": true,
     "heading": true,
+    "is-customer": true,
     "query": true,
     "style": true,
     "id": true,
@@ -929,6 +954,25 @@
   "sc-line-item-bump": {
     "label": true,
     "loading": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-line-item-invoice-due-date": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-line-item-invoice-number": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-line-item-invoice-receipt-download": {
+    "checkout": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1273,13 +1317,13 @@
   },
   "sc-order-summary": {
     "busy": true,
-    "closed-text": true,
     "collapsed": true,
     "collapsed-on-desktop": true,
     "collapsed-on-mobile": true,
     "collapsible": true,
-    "open-text": true,
+    "invoice-summary-text": true,
     "order": true,
+    "order-summary-text": true,
     "style": true,
     "id": true,
     "class": true,

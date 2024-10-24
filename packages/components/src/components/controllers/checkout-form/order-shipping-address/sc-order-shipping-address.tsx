@@ -95,6 +95,7 @@ export class ScOrderShippingAddress {
 
   @Method()
   async reportValidity() {
+    if (!this.input) return true;
     return this.input?.reportValidity?.();
   }
 

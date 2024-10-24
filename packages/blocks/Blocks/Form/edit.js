@@ -686,6 +686,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 									*
 										> *
 										> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(sc-choices
+											> *):not(.sc-invoice-details
 											> *):not(:last-child) {
 										margin-bottom: ${gap} !important;
 									}
