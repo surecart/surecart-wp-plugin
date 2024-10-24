@@ -13,8 +13,7 @@ import { useEffect } from 'react';
 export default ({ open, onRequestClose, subscription }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const [renewAt, setRenewAt] = useState(new Date());
 
@@ -55,11 +54,8 @@ export default ({ open, onRequestClose, subscription }) => {
 
 			onRequestClose();
 		} catch (e) {
+			setError(e);
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{ type: 'snackbar' }
-			);
 		} finally {
 			setLoading(false);
 		}
