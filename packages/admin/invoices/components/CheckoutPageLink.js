@@ -42,7 +42,7 @@ export default ({ checkoutPageUrl }) => {
 	const renderContent = ({ onClose }) => (
 		<PostDropdownContent>
 			<InspectorPopoverHeader
-				title={__('Checkout Page', 'surecart')}
+				title={__('Payment Page', 'surecart')}
 				onClose={onClose}
 			/>
 
@@ -64,7 +64,7 @@ export default ({ checkoutPageUrl }) => {
 					display: block;
 				`}
 			>
-				{__('View Checkout Page')}
+				{__('View Payment Page')}
 			</h3>
 
 			<p>
@@ -81,7 +81,7 @@ export default ({ checkoutPageUrl }) => {
 
 	return (
 		<PanelRow ref={setPopoverAnchor}>
-			<span>{__('Checkout Page', 'surecart')}</span>
+			<span>{__('Payment Page', 'surecart')}</span>
 			<Dropdown
 				popoverProps={popoverProps}
 				className="edit-post-post-url__dropdown"
@@ -93,7 +93,7 @@ export default ({ checkoutPageUrl }) => {
 						onClick={onToggle}
 						title={__('View / Copy URL', 'surecart')}
 						ariaLabel={__(
-							'View / Copy Checkout Page URL',
+							'View / Copy Payment Page URL',
 							'surecart'
 						)}
 						css={css`
