@@ -22,7 +22,7 @@ export default () => {
 						value={invoice?.memo}
 						onScInput={(e) => editInvoice({ memo: e.target.value })}
 						help={__(
-							'This appears in the memo area of your invoices and receipts.',
+							'This appears in the memo area of your payment page, invoices and receipts.',
 							'surecart'
 						)}
 						maxLength={1000}
