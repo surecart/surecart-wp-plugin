@@ -170,10 +170,12 @@ export default () => {
 	);
 
 	useEffect(() => {
-		if (id) {
+		if (id && 'canceled' !== subscription?.status) {
 			fetchUpcomingPeriod();
+		} else {
+			setUpcoming(null);
 		}
-	}, [id, subscription?.discount?.id]);
+	}, [id, subscription?.discount?.id, subscription?.status]);
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
