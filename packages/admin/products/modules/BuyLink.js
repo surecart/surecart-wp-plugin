@@ -13,12 +13,15 @@ import {
 import { ScFormControl } from '@surecart/components-react';
 import { useSetting } from '@wordpress/block-editor';
 import {
+	Button,
+	Dropdown,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { chevronDownSmall } from '@wordpress/icons';
 import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ product, updateProduct, loading }) => {
@@ -45,6 +48,8 @@ export default ({ product, updateProduct, loading }) => {
 	});
 
 	const menuCss = css`
+		width: 100vw;
+		max-width: 350px;
 		position: relative;
 		display: grid;
 		gap: var(--sc-spacing-large);
@@ -80,23 +85,37 @@ export default ({ product, updateProduct, loading }) => {
 
 	return (
 		<>
-			<ScDropdown
-				placement="bottom-end"
-				style={{ '--panel-width': '380px' }}
-			>
-				<ScButton slot="trigger" busy={loading} caret>
-					<div
-						slot="prefix"
-						css={css`
-							width: 6px;
-							height: 6px;
-							background-color: ${backgroundColor()};
-							border-radius: 999px;
-						`}
-					></div>
-					{__('Instant Checkout', 'surecart')}
-				</ScButton>
-				<ScMenu>
+			<Dropdown
+				popoverProps={{ placement: 'bottom-start' }}
+				renderToggle={({ isOpen, onToggle }) => (
+					<Button
+						variant="tertiary"
+						isBusy={loading}
+						iconPosition="right"
+						icon={chevronDownSmall}
+						onClick={onToggle}
+						aria-expanded={isOpen}
+					>
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 8px;
+							`}
+						>
+							<div
+								css={css`
+									width: 6px;
+									height: 6px;
+									background-color: ${backgroundColor()};
+									border-radius: 999px;
+								`}
+							></div>
+							{__('Instant Checkout', 'surecart')}
+						</div>
+					</Button>
+				)}
+				renderContent={() => (
 					<div css={menuCss}>
 						<ScSwitch
 							checked={
@@ -319,8 +338,8 @@ export default ({ product, updateProduct, loading }) => {
 								: __('Preview', 'surecart')}
 						</ScButton>
 					</div>
-				</ScMenu>
-			</ScDropdown>
+				)}
+			/>
 		</>
 	);
 };

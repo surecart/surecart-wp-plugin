@@ -7,6 +7,8 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
+import { Button } from '@wordpress/components';
+import { external } from '@wordpress/icons';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -235,6 +237,17 @@ export default ({ id, setBrowserURL }) => {
 						onDelete={onDeleteProduct}
 						onToggleArchive={onToggleArchiveProduct}
 					/>
+
+					{!!product?.permalink && (
+						<Button
+							icon={external}
+							label={__('View Product Page', 'surecart')}
+							href={product?.permalink}
+							showTooltip={true}
+							size="compact"
+							target="_blank"
+						/>
+					)}
 
 					<BuyLink
 						product={product}

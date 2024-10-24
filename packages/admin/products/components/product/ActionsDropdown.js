@@ -1,11 +1,6 @@
 import { __ } from '@wordpress/i18n';
-
-import {
-	ScButton,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
-} from '@surecart/components-react';
+import { DropdownMenu } from '@wordpress/components';
+import { moreHorizontal, inbox, trash } from '@wordpress/icons';
 
 export default ({ product, onDelete, onToggleArchive }) => {
 	if (!product?.id) {
@@ -13,34 +8,39 @@ export default ({ product, onDelete, onToggleArchive }) => {
 	}
 
 	return (
-		<ScDropdown slot="suffix" placement="bottom-end">
-			<ScButton type="text" slot="trigger">
-				<sc-icon name="more-horizontal" />
-			</ScButton>
-			<ScMenu>
-				{!!onToggleArchive && (
-					<ScMenuItem onClick={onToggleArchive}>
-						<sc-icon
-							slot="prefix"
-							style={{ opacity: 0.5 }}
-							name="archive"
-						></sc-icon>
-						{product?.archived
-							? __('Un-Archive', 'surecart')
-							: __('Archive', 'surecart')}
-					</ScMenuItem>
-				)}
-				{!!onDelete && (
-					<ScMenuItem onClick={onDelete}>
-						<sc-icon
-							slot="prefix"
-							style={{ opacity: 0.5 }}
-							name="trash"
-						></sc-icon>
-						{__('Delete', 'surecart')}
-					</ScMenuItem>
-				)}
-			</ScMenu>
-		</ScDropdown>
+		<DropdownMenu
+			controls={[
+				...[
+					!!onToggleArchive
+						? {
+								icon: inbox,
+								onClick: onToggleArchive,
+								title: product?.archived
+									? __('Un-Archive Product', 'surecart')
+									: __('Archive Product', 'surecart'),
+						  }
+						: {},
+				],
+				...[
+					!!onDelete
+						? {
+								icon: trash,
+								onClick: onDelete,
+								title: __('Delete Product', 'surecart'),
+						  }
+						: {},
+				],
+			]}
+			icon={moreHorizontal}
+			label={__('More Actions', 'surecart')}
+			popoverProps={{
+				placement: 'bottom-end',
+			}}
+			menuProps={{
+				style: {
+					minWidth: '150px',
+				},
+			}}
+		/>
 	);
 };
