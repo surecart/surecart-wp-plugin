@@ -11,6 +11,7 @@ use SureCart\Models\Variant;
 use SureCart\Models\VariantOption;
 use SureCart\Models\VariantOptionValue;
 use SureCart\Request\RequestService;
+use SureCart\Sync\SyncService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class ProductPostTest extends SureCartUnitTestCase
@@ -44,6 +45,17 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group sync
 	 */
 	public function test_syncs_taxonomies() {
+		$sync_service =  \Mockery::mock(SyncService::class)->makePartial();
+		\SureCart::alias('sync', function () use ($sync_service) {
+			return $sync_service;
+		});
+
+		$queue_service =  \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service->shouldReceive('async')->andReturn(true);
+
 		$this->shouldSyncProduct(['testid_2','testid']);
 		$product = (new Product(
 			[
@@ -148,6 +160,12 @@ class ProductPostTest extends SureCartUnitTestCase
 				'id' => 'test',
 			];
 		});
+
+		$queue_service =  \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service->shouldReceive('async')->andReturn(true);
 
 		$product = (new Product(
 			[
@@ -714,6 +732,14 @@ class ProductPostTest extends SureCartUnitTestCase
 	public function test_has_nested_variants() {
 		$this->shouldSyncProduct('testid2');
 
+		// $queue_service =  \Mockery::mock(QueueService::class)->makePartial();
+		// \SureCart::alias('queue', function () use ($queue_service) {
+		// 	return $queue_service;
+		// });
+		// $queue_service
+		// 	->shouldReceive('async')
+		// 	->andReturn(true);
+
 		$product = new Product(
 			[
 				"id" => "testid2",
@@ -807,18 +833,15 @@ class ProductPostTest extends SureCartUnitTestCase
 	public function test_queues_sync_if_post_type_is_old() {
 		$this->shouldSyncProduct('testid');
 
-		(new Product([
-			'id' => 'testid',
-			'object' => 'product',
-			'name' => 'Test',
-			'created_at' => 1111111111,
-			'updated_at' => 1111111110
-		]))->sync();
-
 		// mock the requests in the container
 		$queue_service =  \Mockery::mock(QueueService::class)->makePartial();
 		\SureCart::alias('queue', function () use ($queue_service) {
 			return $queue_service;
+		});
+
+		$sync_service =  \Mockery::mock(SyncService::class)->makePartial();
+		\SureCart::alias('sync', function () use ($sync_service) {
+			return $sync_service;
 		});
 
 		// it should queue the an async request since the post has not yet been created.
@@ -828,12 +851,19 @@ class ProductPostTest extends SureCartUnitTestCase
 			->with(
 				'surecart/sync/product',
 				[
-					'id'               => 'testid',
+					'id' => 'testid',
 				],
 				'product-testid', // unique id for the product.
 				true // force unique. This will replace any existing jobs.
 			)->andReturn(true);
 
+		(new Product([
+			'id' => 'testid',
+			'object' => 'product',
+			'name' => 'Test',
+			'created_at' => 1111111111,
+			'updated_at' => 1111111110
+		]))->sync();
 
 		// this should trigger it.
 		new Product([
