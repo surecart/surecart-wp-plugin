@@ -1,6 +1,6 @@
 <div class="wrap">
 	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
-	<style>.column-invoice { width: 150px}</style>
+	<style>.column-invoice { width: 175px}</style>
 	<?php
 	$live_mode = isset( $_GET['live_mode'] ) ? sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ) : 'true';
 
