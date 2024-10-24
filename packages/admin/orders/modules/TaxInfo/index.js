@@ -155,7 +155,7 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 											opacity: 0.5,
 										}}
 									/>
-									{__('Delete', 'surecart')}
+									{__('Clear', 'surecart')}
 								</ScMenuItem>
 							</ScMenu>
 						</ScDropdown>
