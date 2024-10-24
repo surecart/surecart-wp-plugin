@@ -88,7 +88,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Object
+	 * @return object|\WP_Error
 	 */
 	private function table_data() {
 		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
@@ -100,8 +100,7 @@ class CustomersListTable extends ListTable {
 			$conditions['live_mode'] = 'live' === $mode;
 		}
 
-		return Customer::with( [ 'orders' ] )
-		->where( $conditions )
+		return Customer::where( $conditions )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'customers' ),
@@ -117,17 +116,6 @@ class CustomersListTable extends ListTable {
 	 */
 	public function no_items() {
 		echo esc_html_e( 'No customers found.', 'surecart' );
-	}
-
-	/**
-	 * Handle the orders column.
-	 *
-	 * @param \SureCart\Models\Customer $customer Customer model.
-	 *
-	 * @return string
-	 */
-	public function column_orders( $customer ) {
-		return __( 'No price', 'surecart' );
 	}
 
 	/**
