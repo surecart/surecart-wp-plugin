@@ -1,5 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { store as coreStore } from '@wordpress/core-data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import { useEffect, useState } from 'react';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
@@ -10,14 +25,6 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
-import { useEffect, useState } from 'react';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
@@ -286,6 +293,7 @@ export default () => {
 					checkout={order?.checkout}
 					customer={order?.checkout?.customer}
 					loading={!hasLoadedOrder}
+					onManuallyRefetchOrder={manuallyRefetchOrder}
 				/>
 			}
 		>
