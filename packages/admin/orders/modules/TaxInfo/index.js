@@ -75,49 +75,13 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 		}
 	};
 
-	return (
-		<>
-			<Box
-				title={__('Tax Information', 'surecart')}
-				loading={loading}
-				header_action={
-					<ScDropdown placement="bottom-end">
-						<ScButton
-							circle
-							type="text"
-							style={{
-								'--button-color': 'var(--sc-color-gray-600)',
-								margin: '-10px',
-							}}
-							slot="trigger"
-						>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							<ScMenuItem onClick={() => setModal('edit')}>
-								<ScIcon
-									slot="prefix"
-									name="edit"
-									style={{
-										opacity: 0.5,
-									}}
-								/>
-								{__('Edit', 'surecart')}
-							</ScMenuItem>
-							<ScMenuItem onClick={() => setModal('delete')}>
-								<ScIcon
-									slot="prefix"
-									name="trash"
-									style={{
-										opacity: 0.5,
-									}}
-								/>
-								{__('Delete', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
-				}
-			>
+	const renderTaxInfo = () => {
+		if (!checkout?.tax_identifier) {
+			return null;
+		}
+
+		return (
+			<>
 				<ScLineItem>
 					<span slot="title">{__('Tax Number', 'surecart')}</span>
 					<span slot="price">
@@ -148,6 +112,66 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 						)}
 					</ScLineItem>
 				)}
+			</>
+		);
+	};
+
+	return (
+		<>
+			<Box
+				title={__('Tax Information', 'surecart')}
+				loading={loading}
+				header_action={
+					!!checkout?.tax_identifier && (
+						<ScDropdown placement="bottom-end">
+							<ScButton
+								circle
+								type="text"
+								style={{
+									'--button-color':
+										'var(--sc-color-gray-600)',
+									margin: '-10px',
+								}}
+								slot="trigger"
+							>
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem onClick={() => setModal('edit')}>
+									<ScIcon
+										slot="prefix"
+										name="edit"
+										style={{
+											opacity: 0.5,
+										}}
+									/>
+									{__('Edit', 'surecart')}
+								</ScMenuItem>
+								<ScMenuItem onClick={() => setModal('delete')}>
+									<ScIcon
+										slot="prefix"
+										name="trash"
+										style={{
+											opacity: 0.5,
+										}}
+									/>
+									{__('Delete', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+					)
+				}
+				footer={
+					!loading &&
+					!checkout?.tax_identifier && (
+						<ScButton onClick={() => setModal('edit')}>
+							<ScIcon name="plus" slot="prefix" />
+							{__('Add Tax Information', 'surecart')}
+						</ScButton>
+					)
+				}
+			>
+				{renderTaxInfo()}
 			</Box>
 			<EditTaxInfo
 				open={modal === 'edit'}

@@ -50,6 +50,10 @@ export default ({
 		});
 	}, [checkout]);
 
+	const label = !!checkout?.tax_identifier
+		? __('Update Tax Information', 'surecart')
+		: __('Add Tax Information', 'surecart');
+
 	return (
 		<ScForm
 			onScFormSubmit={() => onSubmit(info)}
@@ -58,7 +62,7 @@ export default ({
 			`}
 		>
 			<ScDrawer
-				label={__('Update Tax Information', 'surecart')}
+				label={label}
 				open={open}
 				css={css`
 					max-width: 500px !important;
@@ -78,10 +82,15 @@ export default ({
 							color: var(--sc-input-help-text-color);
 						`}
 					>
-						{__(
-							'Update the tax information for this order.',
-							'surecart'
-						)}
+						{!!checkout?.tax_identifier
+							? __(
+									'Update the tax information for this order.',
+									'surecart'
+							  )
+							: __(
+									'Add tax information for this order.',
+									'surecart'
+							  )}
 					</p>
 					<Error error={error} setError={setError} />
 					<ScTaxIdInput
@@ -92,7 +101,9 @@ export default ({
 				</div>
 
 				<ScButton type="primary" busy={busy} submit slot="footer">
-					{__('Update', 'surecart')}
+					{!!checkout?.tax_identifier
+						? __('Update', 'surecart')
+						: __('Save', 'surecart')}
 				</ScButton>
 				<ScButton type="text" onClick={onRequestClose} slot="footer">
 					{__('Cancel', 'surecart')}
