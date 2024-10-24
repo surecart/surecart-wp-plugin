@@ -61,6 +61,6 @@ class PriceTrial extends \Elementor\Core\DynamicTags\Tag {
 			return;
 		}
 
-		echo do_blocks( '<!-- wp:surecart/price-trial /-->' );
+		echo '<!-- wp:surecart/price-trial /-->';
 	}
 }

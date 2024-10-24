@@ -59,6 +59,6 @@ class SelectedBillingInterval extends \Elementor\Core\DynamicTags\Tag {
 			return;
 		}
 
-		echo do_blocks( '<!-- wp:surecart/product-selected-price-interval /-->' );
+		echo '<!-- wp:surecart/product-selected-price-interval /-->';
 	}
 }

@@ -62,6 +62,6 @@ class SelectedSetupFee extends \Elementor\Core\DynamicTags\Tag {
 			echo "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee.', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';
 		}
 
-		echo do_blocks( '<!-- wp:surecart/product-selected-price-fees /-->' );
+		echo '<!-- wp:surecart/product-selected-price-fees /-->';
 	}
 }

@@ -57,6 +57,16 @@ class Quantity extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get style dependencies.
+	 *
+	 * @return array
+	 */
+	public function get_style_depends() {
+		return [ 'surecart-quantity-selector', 'surecart-input-group' ];
+	}
+
+
+	/**
 	 * Register the widget content settings.
 	 *
 	 * @return void
@@ -182,11 +192,11 @@ class Quantity extends \Elementor\Widget_Base {
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
 			<div class="wp-block-surecart-product-quantity">
-				<label className="sc-form-label"><?php echo esc_html( $settings['label'] ); ?></label>
+				<label class="sc-form-label"><?php echo esc_html( $settings['label'] ); ?></label>
 				<div
-					className="sc-input-group sc-quantity-selector"
+					class="sc-input-group sc-quantity-selector"
 				>
-					<div className="sc-input-group-text sc-quantity-selector__decrease">
+					<div class="sc-input-group-text sc-quantity-selector__decrease">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -202,11 +212,11 @@ class Quantity extends \Elementor\Widget_Base {
 						</svg>
 					</div>
 					<input
-						className="sc-form-control sc-quantity-selector__control"
+						class="sc-form-control sc-quantity-selector__control"
 						value={0}
 						type="number"
 					/>
-					<div className="sc-input-group-text sc-quantity-selector__increase">
+					<div class="sc-input-group-text sc-quantity-selector__increase">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -243,11 +253,11 @@ class Quantity extends \Elementor\Widget_Base {
 	protected function content_template() {
 		?>
 		<div class="wp-block-surecart-product-quantity">
-			<label className="sc-form-label">{{{ settings.label }}}</label>
+			<label class="sc-form-label">{{{ settings.label }}}</label>
 			<div
-				className="sc-input-group sc-quantity-selector"
+				class="sc-input-group sc-quantity-selector"
 			>
-				<div className="sc-input-group-text sc-quantity-selector__decrease">
+				<div class="sc-input-group-text sc-quantity-selector__decrease">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -263,11 +273,11 @@ class Quantity extends \Elementor\Widget_Base {
 					</svg>
 				</div>
 				<input
-					className="sc-form-control sc-quantity-selector__control"
+					class="sc-form-control sc-quantity-selector__control"
 					value={0}
 					type="number"
 				/>
-				<div className="sc-input-group-text sc-quantity-selector__increase">
+				<div class="sc-input-group-text sc-quantity-selector__increase">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

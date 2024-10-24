@@ -60,6 +60,6 @@ class SelectedPrice extends \Elementor\Core\DynamicTags\Tag {
 			return;
 		}
 
-		echo do_blocks( '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ' );
+		echo '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
 	}
 }

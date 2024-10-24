@@ -62,6 +62,6 @@ class PriceName extends \Elementor\Core\DynamicTags\Tag {
 			return;
 		}
 
-		echo do_blocks( '<!-- wp:surecart/price-name /-->' );
+		echo '<!-- wp:surecart/price-name /-->';
 	}
 }

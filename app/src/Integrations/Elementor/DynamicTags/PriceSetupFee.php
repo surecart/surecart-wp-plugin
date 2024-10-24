@@ -61,6 +61,6 @@ class PriceSetupFee extends \Elementor\Core\DynamicTags\Tag {
 			return;
 		}
 
-		echo do_blocks( '<!-- wp:surecart/price-setup-fee /-->' );
+		echo '<!-- wp:surecart/price-setup-fee /-->';
 	}
 }

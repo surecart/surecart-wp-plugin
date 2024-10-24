@@ -229,15 +229,11 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 			return;
 		}
 
-		ob_start();
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-selected-price-ad-hoc-amount { "label" : "<?php echo esc_attr( $settings['label'] ); ?>"} /-->
 		</div>
 		<?php
-		$content = ob_get_clean();
-
-		echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

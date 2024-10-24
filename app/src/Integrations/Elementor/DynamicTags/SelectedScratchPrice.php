@@ -61,6 +61,6 @@ class SelectedScratchPrice extends \Elementor\Core\DynamicTags\Tag {
 			return;
 		}
 
-		echo do_blocks( '<!-- wp:surecart/product-selected-price-scratch-amount /-->' );
+		echo '<!-- wp:surecart/product-selected-price-scratch-amount /-->';
 	}
 }

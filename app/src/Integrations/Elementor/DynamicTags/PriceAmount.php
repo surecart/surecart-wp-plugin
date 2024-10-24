@@ -61,6 +61,6 @@ class PriceAmount extends \Elementor\Core\DynamicTags\Tag {
 			echo "<span class='wp-block-surecart-price-amount'>" . sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), Currency::format( 200 ), '/mo' ) . '</span>';
 		}
 
-		echo do_blocks( '<!-- wp:surecart/price-amount /-->' );
+		echo '<!-- wp:surecart/price-amount /-->';
 	}
 }
