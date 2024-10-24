@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -9,10 +12,11 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScDropdown,
-	ScFlex,
+	ScFormControl,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScText,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import AddressDisplay from '../AddressDisplay';
@@ -21,15 +25,53 @@ export default ({
 	title,
 	onEditAddress,
 	onDeleteAddress,
-	address,
+	billingAddress,
+	shippingAddress,
+	billingMatchesShipping,
 	loading,
 }) => {
+	const renderShippingAddress = () => {
+		if (!shippingAddress?.country) {
+			return (
+				<ScText
+					style={{
+						marginTop: 'var(--sc-spacing-small)',
+					}}
+				>
+					{__('No shipping address has been set.', 'surecart')}
+				</ScText>
+			);
+		}
+
+		return <AddressDisplay address={shippingAddress} />;
+	};
+
+	const renderBillingAddress = () => {
+		if (billingMatchesShipping) {
+			return <AddressDisplay address={shippingAddress} />;
+		}
+
+		if (!billingAddress?.country) {
+			return (
+				<ScText
+					style={{
+						marginTop: 'var(--sc-spacing-small)',
+					}}
+				>
+					{__('No billing address has been set.', 'surecart')}
+				</ScText>
+			);
+		}
+
+		return <AddressDisplay address={billingAddress} />;
+	};
+
 	return (
 		<Box
 			title={title}
 			loading={loading}
 			header_action={
-				!!address?.id && (
+				(!!shippingAddress?.id || !!billingAddress?.id) && (
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							circle
@@ -69,7 +111,8 @@ export default ({
 			}
 			footer={
 				!loading &&
-				!address?.id && (
+				!shippingAddress?.id &&
+				!billingAddress?.id && (
 					<ScButton onClick={onEditAddress}>
 						<ScIcon name="plus" slot="prefix" />
 						{__('Add Address', 'surecart')}
@@ -77,11 +120,38 @@ export default ({
 				)
 			}
 		>
-			{!!address?.id ? (
-				<ScFlex>
-					<AddressDisplay address={address} />
-				</ScFlex>
-			) : null}
+			{(shippingAddress?.country || billingAddress?.country) && (
+				<div
+					css={css`
+						display: flex;
+						flex-direction: column;
+						gap: var(--sc-spacing-medium);
+					`}
+				>
+					<ScFormControl
+						label={__('Shipping Address', 'surecart')}
+						css={css`
+							height: 100%;
+							display: flex;
+							padding-bottom: var(--sc-spacing-medium);
+							border-bottom: 1px solid var(--sc-color-gray-200);
+						`}
+					>
+						{renderShippingAddress()}
+					</ScFormControl>
+
+					<ScFormControl
+						label={__('Billing Address', 'surecart')}
+						css={css`
+							height: 100%;
+							display: flex;
+							padding-bottom: var(--sc-spacing-medium);
+						`}
+					>
+						{renderBillingAddress()}
+					</ScFormControl>
+				</div>
+			)}
 		</Box>
 	);
 };

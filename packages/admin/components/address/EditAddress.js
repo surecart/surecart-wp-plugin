@@ -12,6 +12,7 @@ import {
 	ScAddress,
 	ScBlockUi,
 	ScButton,
+	ScCheckbox,
 	ScDrawer,
 	ScForm,
 } from '@surecart/components-react';
@@ -19,8 +20,12 @@ import Error from '../Error';
 
 export default ({
 	buttonText,
-	address,
-	setAddress,
+	shippingAddress,
+	setShippingAddress,
+	billingAddress,
+	setBillingAddress,
+	billingMatchesShipping,
+	setBillingMatchesShipping,
 	error,
 	setError,
 	onSubmit,
@@ -65,11 +70,40 @@ export default ({
 					<Error error={error} setError={setError} />
 
 					<ScAddress
-						label={__('Address', 'surecart')}
-						address={address}
-						onScChangeAddress={(e) => setAddress(e.detail)}
+						label={__('Shipping Address', 'surecart')}
+						address={shippingAddress}
+						onScChangeAddress={(e) => setShippingAddress(e.detail)}
+						showLine2
 						required
 					/>
+
+					<ScCheckbox
+						css={css`
+							padding-top: var(--sc-spacing-large);
+							padding-bottom: var(--sc-spacing-small);
+						`}
+						checked={billingMatchesShipping}
+						onScChange={(e) =>
+							setBillingMatchesShipping(e.target.checked)
+						}
+					>
+						{__(
+							'Billing address is same as shipping address',
+							'surecart'
+						)}
+					</ScCheckbox>
+
+					{!billingMatchesShipping && (
+						<ScAddress
+							label={__('Billing Address', 'surecart')}
+							address={billingAddress}
+							onScChangeAddress={(e) =>
+								setBillingAddress(e.detail)
+							}
+							showLine2
+							required
+						/>
+					)}
 				</div>
 				<ScButton type="primary" disabled={busy} submit slot="footer">
 					{buttonText || __('Save Address', 'surecart')}

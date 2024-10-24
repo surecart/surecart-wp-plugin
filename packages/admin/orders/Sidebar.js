@@ -9,21 +9,21 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
 
+/**
+ * Internal dependencies.
+ */
 import ContactInfo from './modules/ContactInfo';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
 import ViewAddress from '../components/address/ViewAddress';
-import EditShippingAddressModal from './modules/EditShippingAddressModal';
-import EditBillingAddressModal from './modules/EditBillingAddressModal';
+import EditAddressModal from './modules/EditAddressModal';
 import Confirm from '../components/confirm';
 import { checkoutOrderExpands } from '../util/orders';
 
 const modals = {
-	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
+	EDIT_ADDRESS: 'EDIT_ADDRESS',
 	CONFIRM_DELETE_ADDRESS: 'CONFIRM_DELETE_ADDRESS',
-	EDIT_BILLING_ADDRESS: 'EDIT_BILLING_ADDRESS',
-	CONFIRM_DELETE_BILLING_ADDRESS: 'CONFIRM_DELETE_BILLING_ADDRESS',
 };
 
 export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
@@ -39,7 +39,7 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 		'surecart'
 	);
 
-	const onDeleteAddress = async (data, successMessage) => {
+	const onDeleteAddress = async () => {
 		try {
 			setSaving(true);
 			const checkout = await apiFetch({
@@ -50,10 +50,14 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 					}
 				),
 				method: 'PATCH',
-				data,
+				data: {
+					shipping_address: {},
+					billing_matches_shipping: true,
+					billing_address: {},
+				},
 			});
 			receiveEntityRecords('surecart', 'order', checkout.order);
-			createSuccessNotice(successMessage, {
+			createSuccessNotice(__('Address deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 			setModal('');
@@ -71,26 +75,15 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 				loading={loading}
 				onManuallyRefetchOrder={onManuallyRefetchOrder}
 			/>
-			<ViewAddress
-				title={__('Shipping & Tax Address', 'surecart')}
-				loading={loading}
-				address={checkout?.shipping_address}
-				onEditAddress={() => setModal(modals.EDIT_SHIPPING_ADDRESS)}
-				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
-			/>
 
 			<ViewAddress
-				title={__('Billing Address', 'surecart')}
+				title={__('Address', 'surecart')}
 				loading={loading}
-				address={
-					checkout?.billing_matches_shipping
-						? checkout?.shipping_address
-						: checkout?.billing_address
-				}
-				onEditAddress={() => setModal(modals.EDIT_BILLING_ADDRESS)}
-				onDeleteAddress={() =>
-					setModal(modals.CONFIRM_DELETE_BILLING_ADDRESS)
-				}
+				shippingAddress={checkout?.shipping_address}
+				billingAddress={checkout?.billing_address}
+				billingMatchesShipping={checkout?.billing_matches_shipping}
+				onEditAddress={() => setModal(modals.EDIT_ADDRESS)}
+				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
 			/>
 
 			<TaxInfo
@@ -102,9 +95,13 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 			<Purchases checkoutId={checkout?.id} />
 			<MetaData order={order} loading={loading} />
 
-			<EditShippingAddressModal
-				open={modal === modals.EDIT_SHIPPING_ADDRESS}
-				shippingAddress={checkout?.shipping_address}
+			<EditAddressModal
+				open={modal === modals.EDIT_ADDRESS}
+				checkoutShippingAddress={checkout?.shipping_address}
+				checkoutBillingAddress={checkout?.billing_address}
+				checkoutBillingMatchesShipping={
+					checkout?.billing_matches_shipping
+				}
 				onRequestClose={() => setModal('')}
 				checkoutId={checkout?.id}
 			/>
@@ -112,43 +109,7 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 			<Confirm
 				open={modal === modals.CONFIRM_DELETE_ADDRESS}
 				onRequestClose={() => setModal('')}
-				onConfirm={() =>
-					onDeleteAddress(
-						{
-							shipping_address: {},
-						},
-						__('Shipping address deleted.', 'surecart')
-					)
-				}
-				loading={saving}
-				error={error}
-			>
-				{deleteConfirmMessage}
-			</Confirm>
-
-			<EditBillingAddressModal
-				open={modal === modals.EDIT_BILLING_ADDRESS}
-				billingAddress={
-					checkout?.billing_matches_shipping
-						? checkout?.shipping_address
-						: checkout?.billing_address
-				}
-				onRequestClose={() => setModal('')}
-				checkoutId={checkout?.id}
-			/>
-
-			<Confirm
-				open={modal === modals.CONFIRM_DELETE_BILLING_ADDRESS}
-				onRequestClose={() => setModal('')}
-				onConfirm={() =>
-					onDeleteAddress(
-						{
-							billing_matches_shipping: false,
-							billing_address: {},
-						},
-						__('Billing address deleted.', 'surecart')
-					)
-				}
+				onConfirm={onDeleteAddress}
 				loading={saving}
 				error={error}
 			>

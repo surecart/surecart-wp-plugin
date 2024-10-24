@@ -15,16 +15,39 @@ import apiFetch from '@wordpress/api-fetch';
 import EditAddress from '../../components/address/EditAddress';
 import { checkoutOrderExpands } from '../../util/orders';
 
-export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
+export default ({
+	checkoutId,
+	checkoutShippingAddress,
+	checkoutBillingAddress,
+	checkoutBillingMatchesShipping,
+	open,
+	onRequestClose,
+}) => {
 	const [error, setError] = useState(false);
 	const [busy, setBusy] = useState(false);
-	const [address, setAddress] = useState(billingAddress);
+	const [shippingAddress, setShippingAddress] = useState(
+		checkoutShippingAddress
+	);
+	const [billingAddress, setBillingAddress] = useState(
+		checkoutBillingAddress
+	);
+	const [billingMatchesShipping, setBillingMatchesShipping] = useState(
+		checkoutBillingMatchesShipping
+	);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
-		setAddress(billingAddress);
-	}, [billingAddress]);
+		setShippingAddress(checkoutShippingAddress);
+	}, [checkoutShippingAddress]);
+
+	useEffect(() => {
+		setBillingAddress(checkoutBillingAddress);
+	}, [checkoutBillingAddress]);
+
+	useEffect(() => {
+		setBillingMatchesShipping(checkoutBillingMatchesShipping);
+	}, [checkoutBillingMatchesShipping]);
 
 	const onEditAddress = async () => {
 		try {
@@ -35,8 +58,11 @@ export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 				}),
 				method: 'PATCH',
 				data: {
-					billing_matches_shipping: false,
-					billing_address: address,
+					shipping_address: shippingAddress,
+					...(billingMatchesShipping
+						? {}
+						: { billing_address: billingAddress }),
+					billing_matches_shipping: billingMatchesShipping,
 				},
 			});
 			receiveEntityRecords('surecart', 'order', checkout.order);
@@ -51,22 +77,28 @@ export default ({ checkoutId, billingAddress, open, onRequestClose }) => {
 		}
 	};
 
+	const hasAnyAddress = !!shippingAddress?.id || !!billingAddress?.id;
+
 	return (
 		<EditAddress
 			open={open}
 			onRequestClose={onRequestClose}
 			title={
-				!!billingAddress?.id
-					? __('Update Billing Address', 'surecart')
-					: __('Add Billing Address', 'surecart')
+				hasAnyAddress
+					? __('Update Address', 'surecart')
+					: __('Add Address', 'surecart')
 			}
 			buttonText={
-				!!billingAddress?.id
+				hasAnyAddress
 					? __('Update', 'surecart')
-					: __('Save', 'surecart')
+					: __('Save Address', 'surecart')
 			}
-			address={address}
-			setAddress={setAddress}
+			shippingAddress={shippingAddress}
+			setShippingAddress={setShippingAddress}
+			billingAddress={billingAddress}
+			setBillingAddress={setBillingAddress}
+			billingMatchesShipping={billingMatchesShipping}
+			setBillingMatchesShipping={setBillingMatchesShipping}
 			error={error}
 			setError={setError}
 			onSubmit={onEditAddress}
