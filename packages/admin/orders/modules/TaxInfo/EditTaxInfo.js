@@ -1,5 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { useEffect, useRef, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScBlockUi,
 	ScButton,
@@ -7,11 +19,7 @@ import {
 	ScForm,
 	ScTaxIdInput,
 } from '@surecart/components-react';
-import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch } from '@wordpress/data';
 import Error from '../../../components/Error';
-import { useEffect, useRef, useState } from '@wordpress/element';
 
 export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -59,7 +67,7 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e.message);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}

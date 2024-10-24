@@ -64,7 +64,7 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e.message);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}
