@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * WordPress dependencies.
  */
@@ -24,7 +27,12 @@ export default ({
 			onConfirm={onConfirm}
 			onCancel={onRequestClose}
 		>
-			<Error error={error} />
+			<Error
+				error={error}
+				css={css`
+					margin-bottom: var(--sc-spacing-small);
+				`}
+			/>
 			{children}
 			{!!loading && (
 				<ScBlockUi
