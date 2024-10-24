@@ -26,6 +26,8 @@ export default ({
 	setBillingAddress,
 	billingMatchesShipping,
 	setBillingMatchesShipping,
+	billingAddressRequired,
+	shippingAddressRequired,
 	error,
 	setError,
 	onSubmit,
@@ -74,7 +76,8 @@ export default ({
 						address={shippingAddress}
 						onScChangeAddress={(e) => setShippingAddress(e.detail)}
 						showLine2
-						required
+						showName
+						required={shippingAddressRequired}
 					/>
 
 					<ScCheckbox
@@ -101,7 +104,8 @@ export default ({
 								setBillingAddress(e.detail)
 							}
 							showLine2
-							required
+							showName
+							required={billingAddressRequired}
 						/>
 					)}
 				</div>
