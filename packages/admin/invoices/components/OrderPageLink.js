@@ -16,7 +16,7 @@ import PostDropdownButton from '../../components/PostDropdownButton';
 export default ({ orderPageUrl }) => {
 	return (
 		<PanelRow>
-			<div>{__('Order Page', 'surecart')}</div>
+			<div>{__('Order', 'surecart')}</div>
 			<div
 				css={css`
 					margin-right: -14px;
