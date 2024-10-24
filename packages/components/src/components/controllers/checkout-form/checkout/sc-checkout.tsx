@@ -291,7 +291,9 @@ export class ScCheckout {
 
           {['locked'].includes(formState.formState.value) && (
             <sc-block-ui style={{ '--sc-block-ui-opacity': '1', 'z-index': '30', '--sc-block-ui-position': 'fixed', '--sc-block-ui-cursor': 'normal' }}>
-              {__('This invoice is not currently available for payment. If you have any questions, please contact us.', 'surecart')}
+              <div style={{ 'text-align': 'center', 'padding': '2rem', 'max-width': '600px' }}>
+                {__('This invoice is not currently available for payment. If you have any questions, please contact us.', 'surecart')}
+              </div>
             </sc-block-ui>
           )}
         </Universe.Provider>
