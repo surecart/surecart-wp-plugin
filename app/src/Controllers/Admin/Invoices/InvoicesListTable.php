@@ -271,7 +271,7 @@ class InvoicesListTable extends ListTable {
 				array_filter(
 					[
 						'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ) . '" aria-label="' . esc_attr__( 'Edit Invoice', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-						'view' => 'open' === $invoice->status && ! empty( $invoice->checkout_url ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Checkout', 'surecart' ) . '">' . __( 'View Checkout', 'surecart' ) . '</a>' : null,
+						'view' => 'open' === $invoice->status && ! empty( $invoice->checkout_url ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Payment Page', 'surecart' ) . '">' . __( 'View Payment Page', 'surecart' ) . '</a>' : null,
 					]
 				),
 			)
