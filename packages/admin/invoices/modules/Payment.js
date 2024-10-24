@@ -85,10 +85,6 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 							/>
 						)}
 
-						<ScDivider
-							style={{ '--spacing': 'var(--sc-spacing-small)' }}
-						/>
-
 						{checkout?.paid_amount > 0 && (
 							<LineItem
 								title={__('Paid', 'surecart')}
