@@ -7,12 +7,7 @@ import { jsx } from '@emotion/core';
 /**
  * Internal dependencies
  */
-import {
-	ScButton,
-	ScFlex,
-	ScFormatNumber,
-	ScOrderStatusBadge,
-} from '@surecart/components-react';
+import { ScButton, ScFormatNumber, ScTag } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 
@@ -42,8 +37,8 @@ export default ({ referral, loading }) => {
 	});
 
 	const renderPayoutDisplay = () => {
-		<ScFlex alignItems="center" justifyContent="space-between">
-			<div>
+		return (
+			<>
 				<Definition title={__('Commission', 'surecart')}>
 					<ScFormatNumber
 						value={payout?.total_commission_amount}
@@ -55,21 +50,18 @@ export default ({ referral, loading }) => {
 					{payout?.end_at_date}
 				</Definition>
 				<Definition title={__('Status', 'surecart')}>
-					<ScOrderStatusBadge status={payout?.status} />
+					<ScTag
+						type={
+							'completed' === payout?.status
+								? 'success'
+								: 'warning'
+						}
+					>
+						{payout?.status_display_text}
+					</ScTag>
 				</Definition>
-			</div>
-
-			<ScButton
-				href={addQueryArgs('admin.php', {
-					page: 'sc-affiliate-payouts',
-					action: 'edit',
-					id: payout?.id,
-				})}
-				size="small"
-			>
-				{__('View', 'surecart')}
-			</ScButton>
-		</ScFlex>;
+			</>
+		);
 	};
 
 	const renderEmpty = () => {
@@ -80,8 +72,21 @@ export default ({ referral, loading }) => {
 		<Box
 			title={__('Payout', 'surecart')}
 			loading={loading || loadingPayout}
+			footer={
+				!!payout?.id && (
+					<ScButton
+						href={addQueryArgs('admin.php', {
+							page: 'sc-affiliate-payouts',
+							action: 'edit',
+							id: payout?.id,
+						})}
+					>
+						{__('View Payout', 'surecart')}
+					</ScButton>
+				)
+			}
 		>
-			{referral?.payout?.id ? renderPayoutDisplay() : renderEmpty()}
+			{payout ? renderPayoutDisplay() : renderEmpty()}
 		</Box>
 	);
 };
