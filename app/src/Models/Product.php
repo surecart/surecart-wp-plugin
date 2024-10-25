@@ -783,10 +783,13 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setGalleryIdsAttribute( $value ) {
-		$this->attributes['metadata'] = wp_parse_args(
-			(object) [ 'gallery_ids' => is_string( $value ) ? $value : wp_json_encode( $value ) ],
-			$this->attributes['metadata'] ?? (object) [],
-		);
+		$gallery_ids = is_string( $value ) ? $value : wp_json_encode( $value );
+
+		if ( isset( $this->attributes['metadata'] ) ) {
+			$this->attributes['metadata']->gallery_ids = $gallery_ids;
+		} else {
+			$this->attributes['metadata'] = (object) [ 'gallery_ids' => $gallery_ids ];
+		}
 	}
 
 	/**
