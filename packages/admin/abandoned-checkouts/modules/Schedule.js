@@ -20,9 +20,7 @@ export default ({
 				>
 					{(notifications_scheduled_at_date_time || []).map(
 						(time, index) => {
-							const isBefore = dayjs(time * 1000).isBefore(
-								dayjs()
-							);
+							const isBefore = dayjs(time).isBefore(dayjs());
 							return (
 								<ScFlex
 									alignItems="center"
