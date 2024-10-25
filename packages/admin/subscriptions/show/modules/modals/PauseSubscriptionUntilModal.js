@@ -127,7 +127,7 @@ export default ({
 								'This will automatically pause the subscription on %s. Please choose a restoration date.',
 								'surecart '
 							),
-							{ currentPeriodEndAtDate }
+							currentPeriodEndAtDate
 						)}
 					</ScAlert>
 				)}
