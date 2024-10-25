@@ -50,7 +50,7 @@ export default ({ promotion, coupon, loading }) => {
 					<span slot="description">
 						{__('Redeem By', 'surecart')}
 					</span>
-					{promotion?.redeem_by_date_time}
+					<span slot="price">{promotion?.redeem_by_date_time}</span>
 				</ScLineItem>
 			)}
 		</Box>
