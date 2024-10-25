@@ -73,7 +73,7 @@ export default ({ referral, loading }) => {
 				<Definition title={__('Created', 'surecart')}>
 					{click?.created_at_date_time}
 				</Definition>
-				<Definition title={__('Expires on', 'surecart')}>
+				<Definition title={__('Expires', 'surecart')}>
 					{click?.expires_at_date_time}
 				</Definition>
 			</Fragment>
