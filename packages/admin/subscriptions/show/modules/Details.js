@@ -7,7 +7,7 @@ import {
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 
-export default ({ subscription, customer, product, loading }) => {
+export default ({ subscription, customer, loading }) => {
 	const renderStartDate = () => {
 		if (subscription?.current_period_end_at == null) {
 			return (
