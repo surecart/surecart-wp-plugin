@@ -46,13 +46,6 @@ class ProductCollection extends Model implements PageModel {
 	 * @return $this|false
 	 */
 	protected function create( $attributes = [] ) {
-		if ( ! wp_is_block_theme() ) {
-			$attributes['metadata'] = [
-				...$attributes['metadata'] ?? [],
-				'wp_template_id' => apply_filters( 'surecart/templates/collections/default', 'pages/template-surecart-collection.php' ),
-			];
-		}
-
 		$created = parent::create( $attributes );
 
 		if ( is_wp_error( $created ) ) {
