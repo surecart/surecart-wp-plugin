@@ -170,7 +170,7 @@ export class ScLicense {
               </sc-stacked-list-row>
               <sc-stacked-list-row style={{ '--columns': '2' }}>
                 <div>{__('Date', 'surecart')}</div>
-                {this.license?.created_at_date}
+                <span>{this.license?.created_at_date}</span>
               </sc-stacked-list-row>
               <sc-stacked-list-row style={{ '--columns': '2' }}>
                 <div>{__('Activations Count', 'surecart')}</div>
