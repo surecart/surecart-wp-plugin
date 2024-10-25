@@ -55,6 +55,8 @@ export default (subscription) => {
 				</span>
 			);
 		}
+
+		return '-';
 	};
 
 	const renderCancelButton = () => {
