@@ -172,8 +172,6 @@ export default () => {
 	useEffect(() => {
 		if (id && 'canceled' !== subscription?.status) {
 			fetchUpcomingPeriod();
-		} else {
-			setUpcoming(null);
 		}
 	}, [id, subscription?.discount?.id, subscription?.status]);
 
@@ -460,7 +458,7 @@ export default () => {
 					<PendingUpdate subscription={subscription} />
 				)}
 
-				{!!upcoming && (
+				{!!upcoming && 'canceled' !== subscription?.status && (
 					<LineItems period={upcoming} loading={loadingUpcoming} />
 				)}
 
