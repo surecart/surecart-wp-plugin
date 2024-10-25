@@ -848,8 +848,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		// add created by WordPress param.
 		$user_id = get_current_user_id();
-		if ( $user_id ) {
-			$this->attributes['metadata']->wp_created_by = $user_id;
+		if ( $user_id && isset( $this->metadata ) ) {
+			$this->metadata->wp_created_by = $user_id;
 		}
 
 		$created = $this->makeRequest(
