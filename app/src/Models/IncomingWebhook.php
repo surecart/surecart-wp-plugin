@@ -2,14 +2,12 @@
 namespace SureCart\Models;
 
 use SureCart\Models\DatabaseModel;
-use SureCart\Models\Traits\HasDates;
+use SureCart\Support\TimeDate;
 
 /**
  * The integration model.
  */
 class IncomingWebhook extends DatabaseModel {
-	use HasDates;
-
 	/**
 	 * The integrations table name.
 	 *
@@ -74,5 +72,41 @@ class IncomingWebhook extends DatabaseModel {
 		$table_name     = $wpdb->prefix . 'surecart_incoming_webhooks';
 		$formatted_date = $date->modify( '-' . $time_ago )->format( 'Y-m-d H:i:s' );
 		return $wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE created_at < %s", $formatted_date ) );
+	}
+
+	/**
+	 * Get the created at date.
+	 *
+	 * @return string
+	 */
+	public function getCreatedAtDateAttribute() {
+		return TimeDate::formatDate( strtotime( $this->created_at ) );
+	}
+
+	/**
+	 * Get the created at date time.
+	 *
+	 * @return string
+	 */
+	public function getCreatedAtDateTimeAttribute() {
+		return TimeDate::formatDateAndTime( strtotime( $this->created_at ) );
+	}
+
+	/**
+	 * Get the updated at date.
+	 *
+	 * @return string
+	 */
+	public function getUpdatedAtDateAttribute() {
+		return TimeDate::formatDate( strtotime( $this->updated_at ) );
+	}
+
+	/**
+	 * Get the updated at date time.
+	 *
+	 * @return string
+	 */
+	public function getUpdatedAtDateTimeAttribute() {
+		return TimeDate::formatDateAndTime( strtotime( $this->updated_at ) );
 	}
 }
