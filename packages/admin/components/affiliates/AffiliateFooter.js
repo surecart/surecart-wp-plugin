@@ -20,6 +20,7 @@ import {
 	ScText,
 } from '@surecart/components-react';
 import UpdateExpireAtModal from './UpdateExpireAtModal';
+import { formatDate } from '../../util/time';
 
 export default ({ item, updateItem, commissionText }) => {
 	const [modal, setModal] = useState(false);
@@ -55,7 +56,7 @@ export default ({ item, updateItem, commissionText }) => {
 							`}
 						>
 							{__('Until', 'surecart')}{' '}
-							{item?.affiliation_expires_at_date_time}
+							{formatDate(item?.affiliation_expires_at * 1000)}
 						</span>
 					)}
 				</div>
