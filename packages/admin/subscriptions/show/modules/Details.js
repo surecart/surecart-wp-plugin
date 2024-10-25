@@ -39,6 +39,17 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 
+		if (subscription?.ended_at) {
+			return (
+				<div>
+					<div>
+						<strong>{sprintf(__('Ended', 'surecart'))}</strong>
+					</div>
+					{subscription.ended_at_date}
+				</div>
+			);
+		}
+
 		if (subscription?.status === 'canceled') return null;
 
 		if (
@@ -52,17 +63,6 @@ export default ({ subscription, customer, product, loading }) => {
 						<strong>{sprintf(__('Cancels on', 'surecart'))}</strong>
 					</div>
 					{subscription.current_period_end_at_date}
-				</div>
-			);
-		}
-
-		if (subscription?.ended_at) {
-			return (
-				<div>
-					<div>
-						<strong>{sprintf(__('Ended', 'surecart'))}</strong>
-					</div>
-					{subscription.ended_at_date}
 				</div>
 			);
 		}
