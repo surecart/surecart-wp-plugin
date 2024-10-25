@@ -69,15 +69,6 @@ class PaymentMethod extends Model {
 	 * @return string
 	 */
 	public function getPaymentMethodNameAttribute(): string {
-		$type               = $this->payment_instrument->instrument_type ?? '';
-		$payment_type_names = $this->getPaymentInstrumentTypes();
-
-		// Check if the type exists in the payment type names array.
-		if ( isset( $payment_type_names[ $type ] ) ) {
-			return $payment_type_names[ $type ];
-		}
-
-		// Return the type with the first letter capitalized.
-		return ! empty( $type ) ? ucfirst( $type ) : '';
+		return $this->payment_instrument->display_name ?? '';
 	}
 }
