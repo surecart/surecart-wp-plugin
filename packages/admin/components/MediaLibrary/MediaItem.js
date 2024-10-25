@@ -96,7 +96,7 @@ export default ({ media, onClick, selected, disabled }) => {
 					<ScTag type="warning">{__('Private', 'surecart')}</ScTag>
 				)}
 			</ScTableCell>
-			<ScTableCell>{media?.created_at_date}</ScTableCell>
+			<ScTableCell>{media?.created_at_date_time}</ScTableCell>
 		</ScTableRow>
 	);
 };
