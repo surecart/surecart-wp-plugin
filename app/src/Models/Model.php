@@ -431,7 +431,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return object
 	 */
 	public function getMetadataAttribute() {
-		return (object) $this->attributes['metadata'];
+		return (object) ( $this->attributes['metadata'] ?? [] );
 	}
 
 	/**
