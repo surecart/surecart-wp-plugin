@@ -29,7 +29,7 @@ apiFetch.use((options, next) => {
   result.catch(response => {
     if (response.code === 'invalid_json') {
       response.message = __('The response is not a valid JSON response.', 'surecart');
-      const debugSettingsUrl = 'https://wordpress.org/support/article/debugging-in-wordpress/';
+      const debugSettingsUrl = 'https://surecart.com/docs/is-not-a-valid-json-response/';
       response.additional_errors = [
         {
           code: 'invalid_json',
