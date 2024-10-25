@@ -35,11 +35,8 @@ apiFetch.use((options, next) => {
           code: 'invalid_json',
           message: sprintf(
             /* translators: %s: URL to debug settings page */
-            __(
-              'If you are using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the %s or contact support.',
-              'surecart',
-            ),
-            `<a href="${debugSettingsUrl}" target="_blank" rel="noopener noreferrer">${__('Debug Settings', 'surecart')}</a>`,
+            __('Please ensure that your site is not in debug mode as this may interfere with API responses. %s', 'surecart'),
+            `<a href="${debugSettingsUrl}" target="_blank" rel="noopener noreferrer">${__('More Information', 'surecart')}</a>`,
           ),
         },
       ];

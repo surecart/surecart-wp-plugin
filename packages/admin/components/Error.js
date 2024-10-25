@@ -20,7 +20,7 @@ export default ({
 
 	const invalidJSONErrorMessage = createInterpolateElement(
 		__(
-			'If you are using debug logging, please ensure that WP_DEBUG_LOG, WP_DEBUG_DISPLAY, or other debug settings are disabled from the wp-config.php file. This may interfere with API responses. For more details, please check the <a>Debug Settings</a> or contact support.'
+			'Please ensure that your site is not in debug mode as this may interfere with API responses. <a>More Information</a>'
 		),
 		{
 			a: (
