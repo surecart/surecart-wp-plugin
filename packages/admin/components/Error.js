@@ -25,7 +25,7 @@ export default ({
 		{
 			a: (
 				<a
-					href="https://wordpress.org/support/article/debugging-in-wordpress/"
+					href="https://surecart.com/docs/is-not-a-valid-json-response/"
 					target="_blank"
 					rel="noopener noreferrer"
 				/>
