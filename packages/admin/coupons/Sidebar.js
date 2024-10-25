@@ -6,6 +6,7 @@ import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
+import { formatDateTime } from '../util/time';
 
 export default ({ coupon, loading }) => {
 	const formattedDiscount = () => {
@@ -77,7 +78,7 @@ export default ({ coupon, loading }) => {
 
 					{!!coupon?.redeem_by && (
 						<Definition title={__('Redeem By', 'surecart')}>
-							{coupon.redeem_by_date_time}
+							{formatDateTime(coupon.redeem_by * 1000)}
 						</Definition>
 					)}
 
