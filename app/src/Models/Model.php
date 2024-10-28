@@ -497,7 +497,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 *
 	 * @param array $meta_data Model meta data.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function setMetadataAttributes( $meta_data ) {
 		$this->attributes['metadata'] = apply_filters( "surecart/$this->object_name/set_meta_data", $meta_data );
@@ -509,7 +509,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 *
 	 * @param string $key Meta data key.
 	 * @param string $data Meta data value.
-	 * @return this
+	 * @return self
 	 */
 	public function addToMetaData( $key, $data ) {
 		$this->setMetaDataAttributes( array_merge( $this->attributes['metadata'] ?? [], [ $key => $data ] ) );
@@ -759,7 +759,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Is the response an Error?
 	 *
-	 * @param Array|\WP_Error|\WP_REST_Response $response Response from request.
+	 * @param array|\WP_Error|\WP_REST_Response $response Response from request.
 	 *
 	 * @return boolean
 	 */
@@ -770,7 +770,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Get fresh instance from DB.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	protected function fresh() {
 		if ( ! $this->attributes['id'] ) {
@@ -787,7 +787,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Get fresh instance from DB.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	protected function refresh() {
 		if ( ! $this->attributes['id'] ) {
@@ -1049,7 +1049,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Serialize to json.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
@@ -1059,7 +1059,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Calls accessors during toArray.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		$attributes = $this->getAttributes();
