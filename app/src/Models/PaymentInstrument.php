@@ -24,7 +24,7 @@ class PaymentInstrument extends Model {
 	 *
 	 * @var string[]
 	 */
-	public function getTypes () {
+	public function getTypes(): array {
 		return [
 			'card'         => __('Card', 'surecart'),
 			'bank_account' => __('Bank Account', 'surecart'),
