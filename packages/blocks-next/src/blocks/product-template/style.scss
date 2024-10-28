@@ -67,3 +67,15 @@ a.sc-product-item-link,
 		grid-template-columns: 1fr !important;
 	}
 }
+
+@media (max-width: 576px) {
+	.sc-product-list-migrated.wp-block-surecart-product-template {
+		grid-template-columns: 1fr !important;
+	}
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+	.sc-product-list-migrated.wp-block-surecart-product-template {
+		grid-template-columns: repeat(3, 1fr);;
+	}
+}

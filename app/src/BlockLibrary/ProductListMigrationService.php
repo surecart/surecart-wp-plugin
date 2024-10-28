@@ -271,6 +271,7 @@ class ProductListMigrationService {
 					'type'        => 'grid',
 					'columnCount' => $this->attributes['columns'] ?? 3,
 				),
+				'className' => 'sc-product-list-migrated',
 			),
 			$this->attributes ?? array(),
 		);
