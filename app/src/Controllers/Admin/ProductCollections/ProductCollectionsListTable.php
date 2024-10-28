@@ -114,7 +114,7 @@ class ProductCollectionsListTable extends ListTable {
 	public function column_name( $collection ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Product Collection', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Product Collection', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ); ?>">
 			<?php echo esc_html( $collection->name ); ?>
 		</a>
 		<?php

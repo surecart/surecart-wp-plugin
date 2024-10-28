@@ -67,6 +67,24 @@ class FormPostTypeServiceTest extends SureCartUnitTestCase {
 		$this->assertEquals($post->ID, $form_id);
 	}
 
+	public function test_finds_form_post_from_inner_shortcode() {
+		$form_id = $this->factory()->post->create([
+			'post_type' => 'sc_form',
+			'post_content' => '<!-- wp:surecart/form /-->',
+		]);
+
+		$checkout_page_id = $this->factory()->post->create([
+			'post_type' => 'sc_form',
+			'post_content' => '<!-- divi:shortcode -->[test id=123][sc_form id="' . (int) $form_id . '"]<!-- /divi:shortcode -->',
+		]);
+
+		update_option('surecart_checkout_page_id', $checkout_page_id);
+
+		$post = \SureCart::forms()->getDefault();
+		$this->assertNotNull($post);
+		$this->assertEquals($post->ID, $form_id);
+	}
+
 	public function test_finds_form_post_by_option_as_fallback() {
 		$form_id = $this->factory()->post->create([
 			'post_type' => 'sc_form',

@@ -16,8 +16,38 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 		// make sure to get the post.
 		$post = get_post( $post );
 
-		// return the post object.
-		return ! empty( $post ) ? get_post_meta( $post->ID, 'product', true ) : null;
+		// no post.
+		if ( ! $post ) {
+			return null;
+		}
+
+		// get the product.
+		$product = get_post_meta( $post->ID, 'product', true );
+		if ( empty( $product ) ) {
+			return null;
+		}
+
+		if ( is_array( $product ) ) {
+			$decoded = json_decode( wp_json_encode( $product ) );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// decode the product.
+		if ( is_string( $product ) ) {
+			$decoded = json_decode( $product );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// return the product.
+		return $product;
 	}
 }
 

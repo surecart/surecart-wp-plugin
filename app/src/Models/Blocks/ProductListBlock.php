@@ -185,10 +185,12 @@ class ProductListBlock {
 			];
 		}
 
-		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
+		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? $this->block->parsed_block['attrs']['type'] ?? 'all' ) ) {
 			$query = $this->getQueryContext();
 			// backward compatibility.
-			$ids = $query['include'] ?? $this->block->context['surecart/product-list/ids'] ?? $this->block->parsed_block['attrs']['ids'] ?? [];
+
+			$ids = ! empty( $query['include'] ) ? $query['include'] : ( ! empty( $this->block->context['surecart/product-list/ids'] ) ? $this->block->context['surecart/product-list/ids'] : ( ! empty( $this->block->parsed_block['attrs']['ids'] ) ? $this->block->parsed_block['attrs']['ids'] : [] ) );
+
 			// fallback for older strings - get the ids of legacy products.
 			$legacy_ids           = [];
 			$ids_that_are_strings = array_map( 'sanitize_text_field', array_filter( $ids, 'is_string' ) );

@@ -1,4 +1,4 @@
-export const maybeConvertAmount = (amount, currency) => {
+export const maybeConvertAmount = (amount, currency = scData?.currency) => {
 	return [
 		'BIF',
 		'BYR',
@@ -27,12 +27,12 @@ export const maybeConvertAmount = (amount, currency) => {
 		'XPF',
 		'XPT',
 		'XTS',
-	].includes(currency.toUpperCase())
+	].includes(currency?.toUpperCase())
 		? amount
 		: amount / 100;
 };
 
-export const getFormattedPrice = ({ amount, currency = 'usd' }) => {
+export const getFormattedPrice = ({ amount, currency = scData?.currency }) => {
 	const converted = maybeConvertAmount(parseFloat(amount), currency);
 
 	return `${new Intl.NumberFormat(undefined, {

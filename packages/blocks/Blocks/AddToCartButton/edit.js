@@ -106,8 +106,11 @@ export default ({ className, attributes, setAttributes }) => {
 					{price?.ad_hoc && (
 						<div class="sc-form-group">
 							<RichText
-								aria-label={__('Custom amount label')}
-								placeholder={__('Enter a label...')}
+								aria-label={__(
+									'Custom amount label',
+									'surecart'
+								)}
+								placeholder={__('Enter a label...', 'surecart')}
 								value={ad_hoc_label}
 								onChange={(ad_hoc_label) =>
 									setAttributes({ ad_hoc_label })
