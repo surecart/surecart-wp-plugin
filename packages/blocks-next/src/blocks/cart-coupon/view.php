@@ -95,7 +95,7 @@
 							type="text"
 							id="coupon"
 							class="sc-form-control sc-coupon-form__input"
-							aria-label="quantity"
+							aria-label=<?php esc_attr_e( 'Coupon code', 'surecart' ); ?>
 							aria-describedby="coupon-input-addon"
 							placeholder="<?php echo isset( $attributes['placeholder'] ) ? esc_attr( $attributes['placeholder'] ) : esc_html__( 'Enter coupon code', 'surecart' ); ?>"
 							data-wp-bind--value="state.promotionCode"
@@ -126,7 +126,7 @@
 						type="text"
 						id="sc-coupon-input"
 						class="sc-form-control sc-coupon-form__input"
-						aria-label="quantity"
+						aria-label=<?php esc_attr_e( 'Coupon code', 'surecart' ); ?>
 						aria-describedby="basic-addon1"
 						placeholder="<?php echo isset( $attributes['placeholder'] ) ? esc_attr( $attributes['placeholder'] ) : esc_html__( 'Enter coupon code', 'surecart' ); ?>"
 						data-wp-bind="state.discountCode"
