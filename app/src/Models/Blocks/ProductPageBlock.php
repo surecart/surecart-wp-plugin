@@ -18,22 +18,6 @@ class ProductPageBlock {
 	 */
 	public function __construct() {
 		$this->url = \SureCart::block()->urlParams();
-		add_filter( 'render_block_context', [ $this, 'passContextToChildBlocks' ], 10, 2 );
-	}
-
-	/**
-	 * Pass context to child blocks.
-	 *
-	 * @param array $context Context.
-	 *
-	 * @return array Context.
-	 */
-	public function passContextToChildBlocks( $context, $parsed_block ) {
-		if ( empty( $context['is_product_page'] ) ) {
-			$context['is_product_page'] = true;
-		}
-
-		return $context;
 	}
 
 	/**
