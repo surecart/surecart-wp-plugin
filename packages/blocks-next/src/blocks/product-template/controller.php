@@ -9,5 +9,6 @@ $query      = $controller->query();
 $has_button = ( new \WP_HTML_Tag_Processor( $content ?? '' ) )->next_tag( 'button' );
 $has_link   = ( new \WP_HTML_Tag_Processor( $content ?? '' ) )->next_tag( 'a' );
 $html_tag   = $has_link || $has_button ? 'form' : 'a';
+$columns    = ( ! empty( $attributes['layout'] ) && ! empty( $attributes['layout']['columnCount'] ) ) ? $attributes['layout']['columnCount'] : 3;
 
 return 'file:./view.php';
