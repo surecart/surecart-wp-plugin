@@ -9,6 +9,7 @@
 .sc-product-item {
 	height: 100%;
 	box-sizing: border-box;
+	margin: 0 !important;
 
 	&.sc-has-animation-fade-up {
 		opacity: 0;
