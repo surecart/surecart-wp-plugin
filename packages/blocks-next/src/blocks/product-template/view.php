@@ -10,13 +10,7 @@ if ( ! $query->have_posts() ) {
 
 <ul 
 <?php
-echo wp_kses_data(
-	get_block_wrapper_attributes(
-		array(
-			'class' => 'sc-product-template-columns-' . $columns,
-		)
-	)
-);
+echo wp_kses_data( get_block_wrapper_attributes( $wrapper_attributes ) );
 ?>
 							>
 	<?php
