@@ -123,17 +123,6 @@ export default ({ id, setBrowserURL }) => {
 	 * Toggle product delete.
 	 */
 	const onDeleteProduct = async () => {
-		const r = confirm(
-			sprintf(
-				__(
-					'Permanently delete %s? You cannot undo this action.',
-					'surecart'
-				),
-				product?.name || 'Product'
-			)
-		);
-		if (!r) return;
-
 		try {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
@@ -155,25 +144,6 @@ export default ({ id, setBrowserURL }) => {
 	 * Toggle Product Archive
 	 */
 	const onToggleArchiveProduct = async () => {
-		const r = confirm(
-			product?.archived
-				? sprintf(
-						__(
-							'Un-Archive %s? This will make the product purchaseable again.',
-							'surecart'
-						),
-						product?.name || 'Product'
-				  )
-				: sprintf(
-						__(
-							'Archive %s? This product will not be purchaseable and all unsaved changes will be lost.',
-							'surecart'
-						),
-						product?.name || 'Product'
-				  )
-		);
-		if (!r) return;
-
 		try {
 			setError(null);
 			await saveProduct({ archived: !product?.archived });
@@ -273,7 +243,6 @@ export default ({ id, setBrowserURL }) => {
 					<Publishing
 						id={id}
 						product={product}
-						onToggleArchiveProduct={onToggleArchiveProduct}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
