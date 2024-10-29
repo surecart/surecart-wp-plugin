@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.40.0 - October 24th, 2024 =
+= 2.40.0 - October 29th, 2024 =
 - New: Invoicing - Create and send invoices to customers!
 - Improvement: Allow editing of order name, address, and tax information in the admin.
 - Improvement: Rework caching architecture for cached resources.
