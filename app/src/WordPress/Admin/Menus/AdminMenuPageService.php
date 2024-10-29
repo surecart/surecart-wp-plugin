@@ -166,8 +166,9 @@ class AdminMenuPageService {
 			$this->slug = 'sc-getting-started';
 		}
 
+		$priority   = apply_filters( 'surecart_menu_priority', 2.0001 );
 		$logo = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/icon.svg' );
-		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( $logo ), 30.6001 );
+		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( $logo ), $priority );
 
 		// not yet installed.
 		if ( ! ApiToken::get() ) {
