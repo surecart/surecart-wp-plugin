@@ -17,7 +17,9 @@ onChange('checkout', val => setCheckout(val, state.formId));
  * When the checkout changes, update the mode to match the checkout.
  */
 onChange('checkout', val => {
-  state.mode = !val?.live_mode ? 'test' : 'live';
+  if (val?.id) {
+    state.mode = !val?.live_mode ? 'test' : 'live';
+  }
 });
 
 // When the form state changes, update the form state based on the invoice status.
