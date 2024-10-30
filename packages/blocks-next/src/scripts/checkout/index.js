@@ -243,12 +243,12 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Get the line item variant.
 		 */
-		get linePriceName() {
+		get lineItemPriceName() {
 			const { line_item } = getContext();
 			if (!line_item?.price?.name) {
 				return `${line_item?.price?.display_amount} ${line_item?.price?.short_interval_text}`;
 			}
-			return line_item.price.name;
+			return line_item.price.name ?? '';
 		},
 	},
 
