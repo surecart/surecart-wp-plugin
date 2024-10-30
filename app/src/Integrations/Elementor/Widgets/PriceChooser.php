@@ -154,10 +154,27 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Grid_Container::get_type(),
 			[
-				'name'      => 'price_chooser_grid',
-				'selector'  => '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices',
-				'condition' => [
+				'name'           => 'price_chooser_grid',
+				'selector'       => '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices',
+				'condition'      => [
 					'container_type' => [ 'grid' ],
+				],
+				'fields_options' => [
+					'columns_grid' => [
+						'default' => [
+							'unit'  => 'fr',
+							'size'  => 1,
+							'sizes' => []
+						],
+					],
+					'gaps'         => [
+						'default' => [
+							'column'   => '15',
+							'row'      => '15',
+							'isLinked' => true,
+							'unit'     => 'px'
+						],
+					],
 				],
 			]
 		);
