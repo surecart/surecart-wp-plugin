@@ -305,7 +305,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 2.40.0 - October 29th, 2024 =
+= 2.40.0 - October 30th, 2024 =
 - New: Invoicing - Create and send invoices to customers!
 - Improvement: Allow editing of order name, address, and tax information in the admin.
 - Improvement: Rework caching architecture for cached resources.
@@ -314,6 +314,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Improvement: Better error message for when the subscription period end is earlier than the start date.
 - Fix: Change "Setup" to "Set Up" on the onboarding page.
 - Fix: Issue where currency was sometimes wrong on affiliate commission, adding variants, and upsell discounts.
+- Fix: Missing WordPress php filter for surecart/request/model.
 
 = 2.31.3 - October 10th, 2024 =
 - Improvement: Add plugin update notice for major versions.
