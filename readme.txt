@@ -306,7 +306,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 2.40.1 - October 30th, 2024 =
-- Fix: Issue where checkout mode was being honored when using direct checkout links.
+- Fix: Issue where checkout mode was not being honored when using direct checkout links.
 
 = 2.40.0 - October 30th, 2024 =
 - New: Invoicing - Create and send invoices to customers!
