@@ -34,11 +34,14 @@ class CheckoutsController extends RestController {
 
 		// if this is an open invoice, we don't set the user.
 		if ( 'open_invoice' === $request->get_param( 'type' ) ) {
-			return $class;
+			return apply_filters( 'surecart/request/model', $class, $request );
 		}
 
 		// set the user.
-		return $this->maybeSetUser( $class, $request );
+		$class = $this->maybeSetUser( $class, $request );
+
+		// return the class.
+		return apply_filters( 'surecart/request/model', $class, $request );
 	}
 
 	/**
