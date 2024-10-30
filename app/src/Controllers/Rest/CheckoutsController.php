@@ -32,6 +32,12 @@ class CheckoutsController extends RestController {
 		// Set the return url.
 		$request->set_param( 'return_url', esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) );
 
+		// if this is an open invoice, we don't set the user.
+		if ( 'open_invoice' === $request->get_param( 'type' ) ) {
+			return $class;
+		}
+
+		// set the user.
 		return $this->maybeSetUser( $class, $request );
 	}
 
