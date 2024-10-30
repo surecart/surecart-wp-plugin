@@ -116,7 +116,8 @@ class LineItem extends Model {
 	 * @return string
 	 */
 	public function getScratchDisplayAmountAttribute() {
-		return ! empty( $this->scratch_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
+		// TODO: Maybe remove this conditional check once scratch_amount is null as it should be in line items.
+		return ! empty( $this->scratch_amount ) && ( $this->scratch_amount > $this->subtotal_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
 	}
 
 	/**
