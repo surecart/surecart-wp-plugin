@@ -1,4 +1,4 @@
-.wp-block-surecart-cart-items__wrapper {
+.wp-block-surecart-slide-out-cart-items {
 	flex: 1 1 200px;
 	overflow: auto;
 	display: flex;
@@ -8,6 +8,17 @@
 		&[hidden] {
 			display: none;
 		}
+	}
+
+	hr.sc-cart-items-divider {
+		border: none;
+		background: none;
+		border-top: 1px solid var(--sc-input-border-color);
+		width: 100%;
+	}
+
+	hr.sc-cart-items-divider:last-of-type {
+		display: none;
 	}
 
 	.sc-product-line-item:last-child .wp-block-separator {

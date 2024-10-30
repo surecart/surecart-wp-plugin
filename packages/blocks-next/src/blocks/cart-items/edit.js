@@ -2,15 +2,12 @@
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
-import ScIcon from '../../components/ScIcon';
-import useCartStyles from '../../hooks/useCartStyles';
-import CartInspectorControls from '../../components/CartInspectorControls';
 import TemplateListEdit from '../../components/TemplateListEdit';
 
 const TEMPLATE = [
@@ -331,7 +328,7 @@ export default ({
 	__unstableLayoutClassNames,
 	clientId,
 }) => {
-	const { removable, editable } = attributes;
+	const { removable, editable, divider_enabled } = attributes;
 
 	const placeholderImageUrl =
 		scBlockData?.plugin_url + '/images/placeholder-thumbnail.jpg';
@@ -396,6 +393,19 @@ export default ({
 							onChange={(editable) => setAttributes({ editable })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Show divider', 'surecart')}
+							help={__(
+								'Show a divider between line items.',
+								'surecart'
+							)}
+							checked={divider_enabled}
+							onChange={(divider_enabled) =>
+								setAttributes({ divider_enabled })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
@@ -404,6 +414,9 @@ export default ({
 				blockContexts={lineItems}
 				clientId={clientId}
 				className={__unstableLayoutClassNames}
+				after={
+					divider_enabled && <hr className="sc-cart-items-divider" />
+				}
 			/>
 		</>
 	);
