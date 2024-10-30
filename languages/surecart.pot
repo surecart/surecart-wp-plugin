@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-24T18:00:22+00:00\n"
+"POT-Creation-Date: 2024-10-30T16:50:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -208,9 +208,9 @@ msgstr ""
 #: checkouts/modules/Prices.js:138
 #: customers/modules/Orders.js:58
 #: dashboard/components/overview/charts/ChartSummary.js:144
-#: invoices/modules/Payment.js:137
+#: invoices/modules/Payment.js:47
 #: invoices/modules/Prices.js:57
-#: orders/modules/LineItems/index.js:313
+#: orders/modules/LineItems/index.js:143
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:286
 #: subscriptions/edit/modules/Price.js:70
 #: subscriptions/show/modules/CurrentPlan.js:102
@@ -524,7 +524,7 @@ msgstr ""
 #: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:317
 #: src/Controllers/Admin/Orders/OrdersListTable.php:77
 #: src/Models/Payout.php:124
-#: orders/modules/LineItems/index.js:27
+#: orders/modules/LineItems/index.js:24
 #: util.js:94
 #: Blocks/Form/edit.js:393
 #: sc-order-status-badge2.js:35
@@ -721,8 +721,8 @@ msgstr ""
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:435
 #: src/Controllers/Admin/Orders/OrdersListTable.php:80
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:67
-#: orders/modules/LineItems/index.js:30
-#: orders/modules/LineItems/index.js:31
+#: orders/modules/LineItems/index.js:27
+#: orders/modules/LineItems/index.js:28
 #: orders/modules/Refunds.js:56
 #: sc-order-status-badge2.js:41
 #: sc-order-status-badge2.js:43
@@ -1292,8 +1292,9 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:135
 #: src/Controllers/Admin/Orders/OrdersListTable.php:76
 #: components/data-tables/charges-data-table/index.js:35
-#: orders/modules/LineItems/index.js:29
-#: orders/modules/LineItems/index.js:189
+#: invoices/modules/Payment.js:90
+#: orders/modules/LineItems/index.js:26
+#: orders/modules/LineItems/index.js:190
 #: util.js:95
 #: Blocks/Dashboard/CustomerInvoices/edit.js:65
 #: Blocks/Dashboard/CustomerOrders/edit.js:83
@@ -1306,7 +1307,7 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:136
 #: src/Controllers/Admin/Orders/OrdersListTable.php:78
 #: src/Controllers/Admin/Products/ProductsListTable.php:418
-#: orders/modules/LineItems/index.js:32
+#: orders/modules/LineItems/index.js:29
 #: products/components/Status/index.js:74
 #: products/components/Status/index.js:95
 #: util.js:87
@@ -1326,7 +1327,8 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:273
 #: components/data-tables/charges-data-table/index.js:24
 #: components/data-tables/charges-data-table/index.js:119
-#: orders/modules/LineItems/index.js:331
+#: invoices/modules/Payment.js:99
+#: orders/modules/LineItems/index.js:199
 #: Blocks/Dashboard/CustomerOrders/edit.js:132
 #: sc-charges-list.js:85
 #: sc-orders-list.js:114
@@ -1459,12 +1461,12 @@ msgstr ""
 #: checkouts/modules/SelectShipping.js:89
 #: checkouts/modules/SelectShipping.js:101
 #: checkouts/modules/SelectShipping.js:114
-#: invoices/modules/Payment.js:97
+#: invoices/modules/Payment.js:147
 #: invoices/modules/SelectShipping.js:29
 #: invoices/modules/SelectShipping.js:43
 #: invoices/modules/SelectShipping.js:59
 #: invoices/modules/SelectShipping.js:79
-#: orders/modules/LineItems/index.js:287
+#: orders/modules/LineItems/index.js:294
 #: products/modules/Shipping.js:25
 #: settings/shipping/ShippingSettings.js:120
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:257
@@ -2053,7 +2055,7 @@ msgstr ""
 msgid "The username <strong>%s</strong> is not registered on this site. If you are unsure of your username, try your email address instead."
 msgstr ""
 
-#: src/Controllers/Rest/CheckoutsController.php:265
+#: src/Controllers/Rest/CheckoutsController.php:274
 msgid "Spam check failed. Please try again."
 msgstr ""
 
@@ -6775,8 +6777,8 @@ msgstr ""
 #: web/buy-template.php:107
 #: abandoned-checkouts/modules/LineItems/index.js:75
 #: checkouts/modules/Payment.js:90
-#: invoices/modules/Payment.js:72
-#: orders/modules/LineItems/index.js:240
+#: invoices/modules/Payment.js:126
+#: orders/modules/LineItems/index.js:252
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:215
 #: subscriptions/show/modules/LineItems/index.js:82
 #: subscriptions/show/modules/SubscriptionItems.js:84
@@ -7101,8 +7103,8 @@ msgid "Checkout Details"
 msgstr ""
 
 #: abandoned-checkouts/modules/LineItems/index.js:82
-#: invoices/modules/Payment.js:79
-#: orders/modules/LineItems/index.js:247
+#: invoices/modules/Payment.js:55
+#: orders/modules/LineItems/index.js:151
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:222
 #: subscriptions/show/modules/LineItems/index.js:89
 #: sc-order.js:144
@@ -7110,8 +7112,8 @@ msgid "Proration"
 msgstr ""
 
 #: abandoned-checkouts/modules/LineItems/index.js:90
-#: invoices/modules/Payment.js:87
-#: orders/modules/LineItems/index.js:255
+#: invoices/modules/Payment.js:64
+#: orders/modules/LineItems/index.js:160
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:230
 #: subscriptions/show/modules/LineItems/index.js:97
 #: sc-order.js:147
@@ -7121,7 +7123,7 @@ msgid "Applied Balance"
 msgstr ""
 
 #: abandoned-checkouts/modules/LineItems/index.js:100
-#: orders/modules/LineItems/index.js:265
+#: orders/modules/LineItems/index.js:271
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:249
 #: subscriptions/show/modules/LineItems/index.js:113
 #: subscriptions/show/modules/SubscriptionItems.js:95
@@ -7130,7 +7132,7 @@ msgid "Discounts"
 msgstr ""
 
 #: abandoned-checkouts/modules/LineItems/index.js:105
-#: orders/modules/LineItems/index.js:270
+#: orders/modules/LineItems/index.js:276
 #: sc-order.js:153
 msgid "Coupon:"
 msgstr ""
@@ -7972,7 +7974,8 @@ msgid "Add Coupon Code"
 msgstr ""
 
 #: checkouts/modules/Payment.js:169
-#: invoices/modules/Payment.js:153
+#: invoices/modules/Payment.js:135
+#: orders/modules/LineItems/index.js:261
 #: products/components/price/parts/Trial.js:23
 #: products/modules/Prices/Price/Header.js:44
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:241
@@ -7991,7 +7994,8 @@ msgid "Trial"
 msgstr ""
 
 #: checkouts/modules/Payment.js:186
-#: invoices/modules/Payment.js:54
+#: invoices/modules/Payment.js:82
+#: orders/modules/LineItems/index.js:178
 #: subscriptions/show/modules/LineItems/index.js:145
 #: Blocks/Total/deprecated.js:142
 #: Blocks/Total/edit.js:54
@@ -9660,8 +9664,7 @@ msgid "Memo"
 msgstr ""
 
 #: invoices/modules/AdditionalOptions.js:24
-#: settings/order/OrderProtocol.js:128
-msgid "This appears in the memo area of your invoices and receipts."
+msgid "This appears in the memo area of your payment page, invoices and receipts."
 msgstr ""
 
 #: invoices/modules/AdditionalOptions.js:31
@@ -9742,11 +9745,23 @@ msgstr ""
 msgid "Are you sure you wish to mark the invoice as paid? This cannot be undone."
 msgstr ""
 
-#: invoices/modules/Payment.js:47
-msgid "Total Amount"
+#: invoices/modules/Payment.js:73
+#: orders/modules/LineItems/index.js:169
+msgid "Credited Balance"
 msgstr ""
 
-#: invoices/modules/Payment.js:128
+#: invoices/modules/Payment.js:105
+#: orders/modules/LineItems/index.js:205
+msgid "Net Payment"
+msgstr ""
+
+#: invoices/modules/Payment.js:114
+#: orders/modules/LineItems/index.js:214
+msgid "*Tax to be paid on reverse charge basis"
+msgstr ""
+
+#: invoices/modules/Payment.js:179
+#: orders/modules/LineItems/index.js:326
 #: sc-line-item-tax2.js:37
 msgid "included"
 msgstr ""
@@ -10244,17 +10259,13 @@ msgstr ""
 msgid "Qty: %d"
 msgstr ""
 
-#: orders/modules/LineItems/index.js:28
+#: orders/modules/LineItems/index.js:25
 #: sc-order-status-badge2.js:37
 msgid "Payment Failed"
 msgstr ""
 
-#: orders/modules/LineItems/index.js:162
+#: orders/modules/LineItems/index.js:127
 msgid "Download Receipt / Invoice"
-msgstr ""
-
-#: orders/modules/LineItems/index.js:188
-msgid "Net Payment"
 msgstr ""
 
 #: orders/modules/MetaData.js:21
@@ -12959,6 +12970,10 @@ msgstr ""
 
 #: settings/order/OrderProtocol.js:118
 msgid "Add additional information to receipts and invoices."
+msgstr ""
+
+#: settings/order/OrderProtocol.js:128
+msgid "This appears in the memo area of your invoices and receipts."
 msgstr ""
 
 #: settings/order/OrderProtocol.js:146
@@ -20128,7 +20143,7 @@ msgstr ""
 msgid "You are probably offline."
 msgstr ""
 
-#: index4.js:183
+#: index4.js:184
 msgid "Failed to delete"
 msgstr ""
 
