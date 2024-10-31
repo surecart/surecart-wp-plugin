@@ -74,29 +74,157 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	}
 
 	/**
-	 * Get the item content container.
-	 *
-	 * @param int $index The index of the item.
-	 * @return array
-	 */
-	protected function item_content_container( int $index ) {
-		return [
-			'elType'   => 'container',
-			'settings' => [
-				'_title'        => sprintf( __( 'Container', 'surecart' ), $index ),
-				'content_width' => 'full',
-			],
-		];
-	}
-
-	/**
 	 * Get the default children elements.
 	 *
 	 * @return array
 	 */
 	protected function get_default_children_elements() {
 		return [
-			$this->item_content_container( 1 ),
+			[
+				'elType' => 'container',
+				'settings' => [
+					'flex_direction' => 'row',
+					'flex_gap' => [
+						'unit' => 'px',
+						'size' => 0,
+						'column' => '0',
+						'row' => '0',
+					],
+				],
+				'elements' => [
+					[
+						'elType' => 'container',
+						'settings' => [
+							'flex_direction' => 'column',
+							'content_width' => 'full',
+							'width' => [
+								'unit' => '%',
+								'size' => '50',
+							],
+						],
+						'elements' => [
+							[
+								'elType' => 'widget',
+								'settings' => [
+									'content_width' => 'full',
+								],
+								'elements' => [],
+								'widgetType' => 'surecart-media',
+							],
+						],
+						'isInner' => true,
+					],
+					[
+						'elType' => 'container',
+						'settings' => [
+							'flex_direction' => 'column',
+							'content_width' => 'full',
+							'width' => [
+								'unit' => '%',
+								'size' => '50',
+							],
+						],
+						'elements' => [
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'settings' => [
+									'content_width' => 'full',
+								],
+								'widgetType' => 'surecart-collection-tags',
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'settings' => [
+									'content_width' => 'full',
+								],
+								'widgetType' => 'theme-post-title',
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'settings' => [
+									'content_width' => 'full',
+								],
+								'widgetType' => 'surecart-selected-price',
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'widgetType' => 'surecart-price-chooser',
+								'settings' => [
+									'content_width' => 'full',
+									'label' => esc_html__('Pricing', 'surecart'),
+									'price_chooser_flex_direction' => 'column',
+									'price_chooser_flex_gap' => [
+										'column' => '12',
+										'row' => '12',
+										'isLinked' => true,
+										'unit' => 'px',
+										'size' => 12,
+									],
+									'price_chooser_flex_wrap' => 'wrap',
+								],
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'widgetType' => 'surecart-selected-price-ad-hoc-amount',
+								'settings' => [
+									'content_width' => 'full',
+									'label' => esc_html__('Enter an amount', 'surecart'),
+								],
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'widgetType' => 'surecart-variant-pills',
+								'settings' => [
+									'content_width' => 'full',
+								],
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'widgetType' => 'surecart-quantity',
+								'settings' => [
+									'content_width' => 'full',
+									'label' => esc_html__('Quantity', 'surecart'),
+								],
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'widgetType' => 'surecart-buy-button',
+								'settings' => [
+									'content_width' => 'full',
+									'width' => [
+										'unit' => '%',
+										'size' => '100',
+									],
+									'button_text' => esc_html__('Add To Cart', 'surecart'),
+								],
+							],
+							[
+								'elType' => 'widget',
+								'elements' => [],
+								'widgetType' => 'surecart-buy-button',
+								'settings' => [
+									'content_width' => 'full',
+									'width' => [
+										'unit' => '%',
+										'size' => '100',
+									],
+									'button_text' => esc_html__('Buy Now', 'surecart'),
+								],
+							],
+						],
+						'isInner' => true,
+					],
+				],
+				'isInner' => false,
+			],
 		];
 	}
 
