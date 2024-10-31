@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-08T10:25:25+00:00\n"
+"POT-Creation-Date: 2024-10-08T11:07:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -12145,6 +12145,13 @@ msgstr ""
 msgid "Stock Qty"
 msgstr ""
 
+#: products/modules/Variations/VariantImage.js:35
+#: products/modules/Variations/VariantImage.js:36
+#: products/modules/Variations/WordPressMedia.js:39
+#: products/modules/Variations/WordPressMedia.js:40
+msgid "Delete image"
+msgstr ""
+
 #: products/modules/Variations/VariantImage.js:64
 msgid "Image of %s"
 msgstr ""
@@ -20419,7 +20426,7 @@ msgid "Close Cart"
 msgstr ""
 
 #: sc-cart-icon.js:42
-msgid "Open Cart Floating Icon with %s items"
+msgid "Open Cart Floating Icon with %d items"
 msgstr ""
 
 #: sc-cart-icon.js:42
@@ -20818,7 +20825,7 @@ msgstr ""
 
 #: sc-order-summary.js:62
 #: sc-order-summary.js:65
-msgid "Order Summary %1$s"
+msgid "Order Summary %s"
 msgstr ""
 
 #: sc-order-summary.js:62
@@ -21049,7 +21056,7 @@ msgid "This product has"
 msgstr ""
 
 #: sc-product-donation-amount-choice.js:28
-msgid "%s of %s"
+msgid "%d of %d"
 msgstr ""
 
 #: sc-product-donation-choices.js:48
@@ -21177,12 +21184,13 @@ msgid_plural "starting in %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sc-product-line-item2.js:60
-msgid "Change Quantity - %s %s"
+#. translators: %1$s: product name, %2$s: product price name
+#: sc-product-line-item2.js:62
+msgid "Change Quantity - %1$s %2$s"
 msgstr ""
 
-#: sc-product-line-item2.js:64
-msgid "Remove Item - %s %s"
+#: sc-product-line-item2.js:66
+msgid "Remove Item - %1$s %2$s"
 msgstr ""
 
 #: sc-product-pills-variant-option.js:27
@@ -21349,7 +21357,7 @@ msgstr ""
 
 #: sc-subscription-details2.js:134
 #: sc-subscription-details2.js:136
-msgid "Renewal Update - Your plan switches to %1s on %2s"
+msgid "Renewal Update - Your plan switches to %1$s on %2$s"
 msgstr ""
 
 #: sc-subscription-details2.js:134
@@ -21493,7 +21501,7 @@ msgstr ""
 
 #: sc-summary2.js:50
 #: sc-summary2.js:53
-msgid "Summary %1$s"
+msgid "Summary %s"
 msgstr ""
 
 #: sc-tax-id-input2.js:89

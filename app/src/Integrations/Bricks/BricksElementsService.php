@@ -143,6 +143,9 @@ class BricksElementsService {
 
 		$active_templates['archive'] = $template_id;
 
+		// Set the post content with the template's content.
+		$active_templates['content'] = $template_id;
+
 		return $active_templates;
 	}
 
