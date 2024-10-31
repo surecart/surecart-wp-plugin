@@ -36,7 +36,7 @@ class ProductCollection extends Model implements PageModel {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'product_collections_updated_at';
+	protected $cache_key = 'product_collections';
 
 	/**
 	 * Create a new model
