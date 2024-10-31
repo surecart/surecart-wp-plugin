@@ -4,7 +4,6 @@
 import classnames from 'classnames';
 
 import {
-	InspectorControls,
 	RichText,
 	useBlockProps,
 	__experimentalGetElementClassName,
@@ -14,17 +13,9 @@ import {
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
 import { useRef } from '@wordpress/element';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	ToggleControl,
-	__experimentalBoxControl as BoxControl,
-} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import ColorInspectorControl from '../../components/ColorInspectorControl';
 
-export default ({ className, attributes, setAttributes, clientId }) => {
+export default ({ className, attributes, setAttributes }) => {
 	const { text, style, width } = attributes;
 
 	function onKeyDown(event) {

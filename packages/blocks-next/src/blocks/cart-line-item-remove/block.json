@@ -9,6 +9,20 @@
 	"ancestor": ["surecart/slide-out-cart-items"],
 	"usesContext": ["editable"],
 	"example": {},
+	"attributes": {
+		"show_label": {
+			"type": "boolean",
+			"default": true
+		},
+		"label": {
+			"type": "string",
+			"default": "Remove"
+		},
+		"icon": {
+			"type": "string",
+			"default": "x"
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
