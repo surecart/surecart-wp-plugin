@@ -301,7 +301,7 @@ export default ({ product, updateProduct, loading }) => {
 									truncate
 									variant="muted"
 								>
-									{`${scData?.home_url}/${scData?.buy_page_slug}/${product?.slug}asdfasdfasdfasdfasdfasdfasdfasdf`}
+									{`${scData?.home_url}/${scData?.buy_page_slug}/${product?.slug}`}
 								</Text>
 								<FlexItem>
 									<Button
