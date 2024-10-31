@@ -20,7 +20,7 @@ import {
 import Box from '../../../ui/Box';
 import Definition from '../../../ui/Definition';
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
-import ConfirmDelete from './ConfirmDelete';
+import Confirm from '../../confirm';
 
 export default function ({
 	headerTitle,
@@ -128,13 +128,15 @@ export default function ({
 				loading={loading}
 			/>
 
-			<ConfirmDelete
+			<Confirm
 				open={modal === 'delete'}
 				onRequestClose={() => setModal(false)}
-				onDelete={onDelete}
-				deleting={loading}
+				onConfirm={onDelete}
+				loading={loading}
 				error={error}
-			/>
+			>
+				{__('Are you sure? This cannot be undone.', 'surecart')}
+			</Confirm>
 		</>
 	);
 }

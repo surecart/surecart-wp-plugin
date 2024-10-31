@@ -15,6 +15,7 @@
 | `currency`       | `currency`        | Currency                      | `string`           | `undefined` |
 | `discount`       | --                | The discount                  | `DiscountResponse` | `undefined` |
 | `discountAmount` | `discount-amount` | The discount amount           | `number`           | `undefined` |
+| `editable`       | `editable`        | Is the form editable          | `boolean`          | `true`      |
 | `error`          | `error`           | The error message             | `string`           | `undefined` |
 | `forceOpen`      | `force-open`      | Force the form to show        | `boolean`          | `undefined` |
 | `label`          | `label`           | The label for the coupon form | `string`           | `undefined` |
@@ -29,6 +30,19 @@
 | Event           | Description                | Type                  |
 | --------------- | -------------------------- | --------------------- |
 | `scApplyCoupon` | When the coupon is applied | `CustomEvent<string>` |
+
+
+## Methods
+
+### `triggerFocus() => Promise<void>`
+
+Focus the input.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Shadow Parts

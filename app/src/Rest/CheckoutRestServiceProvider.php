@@ -168,12 +168,12 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				'customer_id' => [
 					'description' => esc_html__( 'The customer id for the order.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					// 'context'     => [ 'edit' ],
 				],
 				'customer'    => [
 					'description' => esc_html__( 'The customer for the session.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'edit' ],
+					// 'context'     => [ 'edit' ],
 				],
 				'line_items'  => [
 					'description' => esc_html__( 'The line items for the session.', 'surecart' ),
@@ -287,6 +287,9 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
+		if ( ! empty( $request['tax_behavior'] ) ) {
+			return current_user_can( 'edit_sc_checkouts' );
+		}
 		return true;
 	}
 
@@ -297,6 +300,9 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
+		if ( ! empty( $request['tax_behavior'] ) ) {
+			return current_user_can( 'edit_sc_checkouts' );
+		}
 		return true;
 	}
 

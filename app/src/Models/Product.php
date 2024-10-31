@@ -50,7 +50,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'products_updated_at';
+	protected $cache_key = 'products';
 
 	/**
 	 * Create a new model
