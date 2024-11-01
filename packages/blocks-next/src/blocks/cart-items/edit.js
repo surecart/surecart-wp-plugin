@@ -337,6 +337,8 @@ export default ({
 		{
 			id: 1,
 			quantity: 2,
+			removable,
+			editable,
 			price: {
 				name: 'Basic',
 				product: {
@@ -349,6 +351,8 @@ export default ({
 		{
 			id: 2,
 			quantity: 4,
+			removable,
+			editable,
 			price: {
 				name: 'Monthly',
 				product: {
@@ -363,11 +367,6 @@ export default ({
 	return (
 		<>
 			<InspectorControls>
-				{/* <CartInspectorControls
-					attributes={attributes}
-					setAttributes={setAttributes}
-				/> */}
-
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
