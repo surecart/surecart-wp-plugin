@@ -149,25 +149,6 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 /**
  * Remove the checkout line item.
  */
-// export const removeCheckoutLineItem = async (id) => {
-// 	try {
-// 		checkoutState.loading = true;
-// 		return await removeLineItem({
-// 			checkoutId: checkoutState?.checkout?.id,
-// 			itemId: id,
-// 		});
-// 	} catch (e) {
-// 		console.error(e);
-// 		checkoutState.error = e;
-// 		// nullify checkout.
-// 		console.log(e.code);
-// 		if (e.code === 'line_item.invalid') {
-// 			return null;
-// 		}
-// 	} finally {
-// 		checkoutState.loading = false;
-// 	}
-// };
 export function* removeCheckoutLineItem(id) {
 	try {
 		checkoutState.loading = true;
