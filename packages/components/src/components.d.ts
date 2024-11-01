@@ -1959,7 +1959,6 @@ export namespace Components {
           * The bump
          */
         "bump": Bump;
-        "cdnRoot": string;
         /**
           * Should we show the controls
          */
@@ -4349,10 +4348,6 @@ export interface ScMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScMenuElement;
 }
-export interface ScOrderBumpCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderBumpElement;
-}
 export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderConfirmProviderElement;
@@ -5559,19 +5554,7 @@ declare global {
         prototype: HTMLScOrderBillingAddressElement;
         new (): HTMLScOrderBillingAddressElement;
     };
-    interface HTMLScOrderBumpElementEventMap {
-        "scAddLineItem": LineItemData1;
-        "scRemoveLineItem": LineItemData1;
-    }
     interface HTMLScOrderBumpElement extends Components.ScOrderBump, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLScOrderBumpElementEventMap>(type: K, listener: (this: HTMLScOrderBumpElement, ev: ScOrderBumpCustomEvent<HTMLScOrderBumpElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLScOrderBumpElementEventMap>(type: K, listener: (this: HTMLScOrderBumpElement, ev: ScOrderBumpCustomEvent<HTMLScOrderBumpElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScOrderBumpElement: {
         prototype: HTMLScOrderBumpElement;
@@ -9083,15 +9066,6 @@ declare namespace LocalJSX {
           * The bump
          */
         "bump"?: Bump;
-        "cdnRoot"?: string;
-        /**
-          * Add line item event
-         */
-        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
-        /**
-          * Remove line item event
-         */
-        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
         /**
           * Should we show the controls
          */
