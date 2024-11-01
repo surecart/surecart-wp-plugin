@@ -783,7 +783,8 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setGalleryIdsAttribute( $value ) {
-		$this->metadata->gallery_ids = is_string( $value ) ? $value : wp_json_encode( $value );
+		$this->attributes['metadata']              = (object) ( $this->attributes['metadata'] ?? [] );
+		$this->attributes['metadata']->gallery_ids = is_string( $value ) ? $value : wp_json_encode( $value );
 	}
 
 	/**
