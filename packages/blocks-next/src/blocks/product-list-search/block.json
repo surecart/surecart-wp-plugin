@@ -25,10 +25,10 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/input-group.css",
-		"file:../../styles/form-label.css",
-		"file:../../styles/form-control.css",
-		"file:../../styles/spinner.css",
+		"surecart-input-group",
+		"surecart-form-label",
+		"surecart-form-control",
+		"surecart-spinner",
 		"file:./index.css"
 	]
 }

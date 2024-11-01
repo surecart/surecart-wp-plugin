@@ -42,6 +42,11 @@ import * as switchBlock from '@blocks/Switch';
 import * as taxIdInput from '@blocks/TaxIdInput';
 import * as taxLineItem from '@blocks/TaxLineItem';
 import * as textarea from '@blocks/Textarea';
+import * as invoiceNumber from '@blocks/InvoiceNumber';
+import * as invoiceDueDate from '@blocks/InvoiceDueDate';
+import * as invoiceReceiptDownload from '@blocks/InvoiceReceiptDownload';
+import * as invoiceMemo from '@blocks/InvoiceMemo';
+import * as invoiceDetails from '@blocks/InvoiceDetails';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
@@ -90,6 +95,11 @@ registerBlocks([
 	submit,
 	subtotal,
 	switchBlock,
+	invoiceNumber,
+	invoiceDueDate,
+	invoiceReceiptDownload,
+	invoiceDetails,
+	invoiceMemo,
 	total,
 	totals,
 	shippingChoices,

@@ -44,7 +44,7 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 	 * @return string
 	 */
 	public function get_label() {
-		return __( 'Product', 'elementor-pro' );
+		return __( 'Product', 'surecart' );
 	}
 
 	/**
@@ -53,7 +53,7 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 	 * @return string
 	 */
 	public function get_all_label() {
-		return __( 'Products', 'elementor-pro' );
+		return __( 'Products', 'surecart' );
 	}
 
 	/**

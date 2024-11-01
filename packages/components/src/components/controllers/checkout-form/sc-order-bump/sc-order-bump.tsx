@@ -6,6 +6,7 @@ import { getFormattedPrice, intervalString } from '../../../../functions/price';
 import { state as checkoutState } from '@store/checkout';
 
 import { Bump, LineItemData, Price, Product } from '../../../../types';
+import { trackOrderBump } from '@store/checkout/mutations';
 
 @Component({
   tag: 'sc-order-bump',
@@ -44,6 +45,10 @@ export class ScOrderBump {
       });
       speak(__('Order bump Removed.', 'surecart'));
     }
+  }
+
+  componentDidLoad() {
+    trackOrderBump(this.bump?.id);
   }
 
   newPrice() {
@@ -113,7 +118,7 @@ export class ScOrderBump {
           }
         >
           <span aria-hidden="true">
-            {__('Save', 'surecart')} <sc-format-number type="currency" value={-this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
+            {__('Save', 'surecart')} <sc-format-number type="currency" value={this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
           </span>
         </div>
       );

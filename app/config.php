@@ -178,6 +178,7 @@ return array(
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
@@ -201,7 +202,6 @@ return array(
 		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
-		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 
 		\SureCartBlocks\Blocks\Product\Price\Block::class,

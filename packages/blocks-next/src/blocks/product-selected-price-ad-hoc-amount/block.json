@@ -59,8 +59,8 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/form-control.css",
-		"file:../../styles/input-group.css",
+		"surecart-form-control",
+		"surecart-input-group",
 		"file:./style-index.css"
 	]
 }

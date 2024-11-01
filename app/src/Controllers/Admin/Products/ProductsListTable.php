@@ -388,20 +388,12 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $product ) {
-		$created = sprintf(
+		return sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $product->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->created_at ) )
+			esc_attr( $product->cataloged_at ),
+			esc_html( TimeDate::formatDateAndTime( $product->cataloged_at ) ),
+			esc_html( TimeDate::formatDateAndTime( $product->cataloged_at ) )
 		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $product->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
 	/**
@@ -501,6 +493,7 @@ class ProductsListTable extends ListTable {
 	 * Get row actions.
 	 *
 	 * @param \SureCart\Models\Product $product Product model.
+	 * @param string                   $bulk_status Bulk status.
 	 *
 	 * @return array
 	 */

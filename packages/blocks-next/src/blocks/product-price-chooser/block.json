@@ -38,9 +38,5 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
-	"style": [
-		"file:../../styles/choice.css",
-		"file:../../styles/label.css",
-		"file:./style-index.css"
-	]
+	"style": ["surecart-choice", "surecart-label", "file:./style-index.css"]
 }

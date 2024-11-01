@@ -78,7 +78,7 @@ export class ScSubscriptionDetails {
         return (
           <span
             aria-label={sprintf(
-              __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
+              __('Renewal Update - Your plan switches to %1$s on %2$s', 'surecart'),
               formatNumber(this.subscription?.pending_update?.ad_hoc_amount, this.pendingPrice?.currency || this.subscription?.price?.currency),
               formatTime(this.subscription.current_period_end_at),
             )}
@@ -100,7 +100,7 @@ export class ScSubscriptionDetails {
       return (
         <span
           aria-label={sprintf(
-            __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
+            __('Renewal Update - Your plan switches to %1$s on %2$s', 'surecart'),
             (this.pendingPrice.product as Product).name,
             formatTime(this.subscription.current_period_end_at),
           )}

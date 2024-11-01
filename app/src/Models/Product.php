@@ -50,7 +50,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'products_updated_at';
+	protected $cache_key = 'products';
 
 	/**
 	 * Create a new model
@@ -224,8 +224,9 @@ class Product extends Model implements PageModel {
 			return false;
 		}
 
-		// get the product.
+		// get the product and decode it.
 		$product = get_post_meta( $this->post->ID, 'product', true );
+		$product = is_string( $product ) ? json_decode( get_post_meta( $this->post->ID, 'product', true ) ) : $product;
 		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
 			return false;
 		}
@@ -517,14 +518,14 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+		if ( ! empty( $this->netadata->wp_template_id ) ) {
 			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+			if ( wp_is_block_theme() && false !== strpos( $this->netadata->wp_template_id, '.php' ) ) {
 				return 'single-sc_product';
 			}
 
 			// this is acceptable.
-			return $this->attributes['metadata']->wp_template_id;
+			return $this->netadata->wp_template_id;
 		}
 
 		return '';
@@ -724,8 +725,8 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplatePartIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
-			return $this->attributes['metadata']->wp_template_part_id;
+		if ( ! empty( $this->metadata->wp_template_part_id ) ) {
+			return $this->metadata->wp_template_part_id;
 		}
 		return 'surecart/surecart//product-info';
 	}
@@ -757,7 +758,7 @@ class Product extends Model implements PageModel {
 	 */
 	public function getGalleryIdsAttribute() {
 		// fallback.
-		if ( empty( $this->attributes['metadata']->gallery_ids ) ) {
+		if ( empty( $this->metadata->gallery_ids ) ) {
 			return array_values(
 				array_filter(
 					array_map(
@@ -771,19 +772,20 @@ class Product extends Model implements PageModel {
 		}
 
 		// gallery.
-		return json_decode( $this->attributes['metadata']->gallery_ids ?? '' );
+		return json_decode( $this->metadata->gallery_ids ?? '' );
 	}
 
 	/**
 	 * Set the gallery ids attribute.
+	 * This needs to be converted to JSON for the platform.
 	 *
 	 * @param array $value The gallery array.
 	 * @return void
 	 */
 	public function setGalleryIdsAttribute( $value ) {
 		$this->attributes['metadata'] = wp_parse_args(
-			[ 'gallery_ids' => wp_json_encode( $value ) ],
-			$this->attributes['metadata'] ?? array(),
+			(object) [ 'gallery_ids' => is_string( $value ) ? $value : wp_json_encode( $value ) ],
+			$this->attributes['metadata'] ?? (object) [],
 		);
 	}
 
@@ -795,7 +797,12 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		return array_values(
+		$cached = $this->getCachedAttribute( 'gallery' );
+		if ( null !== $cached ) {
+			return $cached;
+		}
+
+		$gallery = array_values(
 			array_filter(
 				array_map(
 					function ( $id ) {
@@ -826,8 +833,12 @@ class Product extends Model implements PageModel {
 					// it must have a src at least.
 					return ! empty( $item ) && ! empty( $item->attributes()->src );
 				}
-			),
+			)
 		);
+
+		$this->setCachedAttribute( 'gallery', $gallery );
+
+		return $gallery;
 	}
 
 	/**

@@ -135,6 +135,7 @@ export class ScCustomerLastname {
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
+        {...(this.disabled && { disabled: true })}
       ></sc-input>
     );
   }

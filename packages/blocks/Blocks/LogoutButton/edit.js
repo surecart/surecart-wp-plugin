@@ -67,8 +67,8 @@ export default ({ className, attributes, setAttributes }) => {
 					)}
 
 					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
 						value={label}
 						onChange={(label) => setAttributes({ label })}
 						withoutInteractiveFormatting

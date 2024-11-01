@@ -2,7 +2,7 @@ import { state as checkoutState } from '@store/checkout';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
-import { Checkout, DeletedItem, LineItem } from '../../types';
+import { Checkout, DeletedItem, Invoice, LineItem } from '../../types';
 import { __ } from '@wordpress/i18n';
 
 /** The base url for this service. */
@@ -36,6 +36,7 @@ export const expand = [
   'manual_payment_method',
   'shipping_choices',
   'shipping_choice.shipping_method',
+  'invoice',
 ];
 
 /** Default data we send with every request. */
@@ -58,6 +59,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
 export const withDefaultQuery = (query = {}) => ({
   ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
   ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
+  ...(!!(checkoutState?.checkout?.invoice as Invoice)?.id && { type: 'open_invoice' }),
   ...query,
 });
 
