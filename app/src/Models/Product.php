@@ -833,7 +833,7 @@ class Product extends Model implements PageModel {
 			)
 		);
 
-		$this->setCachedAttribute( 'gallery', $gallery );
+		$this->setAttributeCache( 'gallery', $gallery );
 
 		return $gallery;
 	}
