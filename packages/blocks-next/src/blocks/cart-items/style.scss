@@ -13,16 +13,23 @@
 		}
 	}
 
-	.sc-product-line-item__remove-button {
-		background: none;
-		border: none;
-		box-shadow: none;
-		padding: 0;
+	.sc-product-line-item {
+		&__remove-button {
+			background: none;
+			border: none;
+			box-shadow: none;
+			padding: 0;
 
-		&:focus {
-			outline: none;
-			box-shadow: 0 0 0 var(--sc-focus-ring-width)
-				var(--sc-focus-ring-color-primary);
+			&:focus {
+				outline: none;
+				box-shadow: 0 0 0 var(--sc-focus-ring-width)
+					var(--sc-focus-ring-color-primary);
+			}
+		}
+
+		&__purchasable-status {
+			font-size: var(--sc-font-size-x-small);
+			color: var(--sc-input-error-text-color);
 		}
 	}
 }

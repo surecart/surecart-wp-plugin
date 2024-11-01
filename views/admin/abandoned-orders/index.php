@@ -22,6 +22,10 @@
 	<div id="stats"></div>
 
 	<?php if ( $enabled ) : ?>
-		<?php $table->display(); ?>
+		<form id="posts-filter" method="get">
+			<?php $table->views(); ?>
+			<?php $table->display(); ?>
+			<div id="ajax-response"></div>
+		</form>
 	<?php endif; ?>
 </div>

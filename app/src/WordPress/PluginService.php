@@ -1,5 +1,7 @@
 <?php
 /**
+ * Plugin service.
+ *
  * @package   SureCartAppCore
  * @author    SureCart <support@surecart.com>
  * @copyright  SureCart
@@ -25,7 +27,7 @@ class PluginService {
 	/**
 	 * Constructor.
 	 *
-	 * @param Application $app
+	 * @param Application $app Application instance.
 	 */
 	public function __construct( $app ) {
 		$this->app = $app;
@@ -60,7 +62,7 @@ class PluginService {
 	 * @return \SureCart\Account\AccountService
 	 */
 	public function account() {
-		return $this->app->reolve( 'surecart.account' );
+		return $this->app->resolve( 'surecart.account' );
 	}
 
 	/**

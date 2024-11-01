@@ -36,7 +36,7 @@ class ProductCollection extends Model implements PageModel {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'product_collections_updated_at';
+	protected $cache_key = 'product_collections';
 
 	/**
 	 * Create a new model
@@ -86,6 +86,43 @@ class ProductCollection extends Model implements PageModel {
 		return $this;
 	}
 
+		/**
+		 * Update a model
+		 *
+		 * @param string $id The id of the model to delete.
+		 * @return $this|false
+		 */
+	protected function delete( $id = '' ) {
+		// delete the model.
+		$deleted = parent::delete( $id );
+
+		// check for errors.
+		if ( is_wp_error( $deleted ) ) {
+			return $deleted;
+		}
+
+		// delete the post.
+		$this->deleteSynced( $id );
+
+		// return.
+		return $this;
+	}
+
+	/**
+	 * Delete the synced post.
+	 *
+	 * @param string $id The id of the model to delete.
+	 * @return \SureCart\Models\Product
+	 */
+	protected function deleteSynced( $id = '' ) {
+		$id = ! empty( $id ) ? $id : $this->id;
+		\SureCart::sync()
+			->collection()
+			->delete( $id );
+
+		return $this;
+	}
+
 	/**
 	 * Sync the collection
 	 */
@@ -103,6 +140,9 @@ class ProductCollection extends Model implements PageModel {
 	 * @return int|false
 	 */
 	public function getTermAttribute() {
+		if ( empty( $this->id ) ) {
+			return false;
+		}
 		return \SureCart::sync()->collection()->findByModelId( $this->id );
 	}
 
@@ -130,8 +170,8 @@ class ProductCollection extends Model implements PageModel {
 	 * @return string|false
 	 */
 	public function getTemplatePartIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
-			return $this->attributes['metadata']->wp_template_part_id;
+		if ( ! empty( $this->metadata->wp_template_part_id ) ) {
+			return $this->metadata->wp_template_part_id;
 		}
 		return 'surecart/surecart//product-collection-part';
 	}
@@ -142,14 +182,14 @@ class ProductCollection extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+		if ( ! empty( $this->metadata->wp_template_id ) ) {
 			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+			if ( wp_is_block_theme() && false !== strpos( $this->metadata->wp_template_id, '.php' ) ) {
 				return 'surecart/surecart//product-collection';
 			}
 
 			// this is acceptable.
-			return $this->attributes['metadata']->wp_template_id;
+			return $this->metadata->wp_template_id;
 		}
 		return 'surecart/surecart//product-collection';
 	}

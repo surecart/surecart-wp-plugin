@@ -96,7 +96,7 @@ export class ScAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
-    if (!this.address.country) return;
+    if (!this.address?.country) return;
     this.setRegions();
     this.showPostal = hasPostal(this.address.country);
     this.showCity = hasCity(this.address.country);
@@ -137,7 +137,7 @@ export class ScAddress {
 
   /** Set the regions based on the country. */
   setRegions() {
-    if (hasState(this.address.country)) {
+    if (hasState(this.address?.country)) {
       import('./countries.json').then(module => {
         const countryRegions = module?.[this.address.country] as Array<{ value: string; label: string }>;
 
@@ -153,7 +153,7 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || null;
+    const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
     this.updateAddress({ country });
     this.handleNameChange();
   }
@@ -218,7 +218,7 @@ export class ScAddress {
             aria-label={this.placeholders.line_1 || __('Address', 'surecart')}
           />
 
-          {this.showLine2 && (
+          {(this.showLine2 || !!this?.address?.line_2?.length) && (
             <sc-input
               exportparts="base:input__base, input, form-control, label, help-text"
               value={this?.address?.line_2}

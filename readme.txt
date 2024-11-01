@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.6
-Stable tag: 2.31.0
+Stable tag: 2.40.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,6 +305,46 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 2.40.1 - October 30th, 2024 =
+- Fix: Issue where checkout mode was not being honored when using direct checkout links.
+
+= 2.40.0 - October 30th, 2024 =
+- New: Invoicing - Create and send invoices to customers!
+- Improvement: Allow editing of order name, address, and tax information in the admin.
+- Improvement: Rework caching architecture for cached resources.
+- Improvement: Improve warning message when deleting a customer record.
+- Improvement: Remove unnecessary order expansions on the customer list page to improve performance.
+- Improvement: Better error message for when the subscription period end is earlier than the start date.
+- Fix: Change "Setup" to "Set Up" on the onboarding page.
+- Fix: Issue where currency was sometimes wrong on affiliate commission, adding variants, and upsell discounts.
+- Fix: Missing WordPress php filter for surecart/request/model.
+
+= 2.31.3 - October 10th, 2024 =
+- Improvement: Add plugin update notice for major versions.
+- Improvement: Fallback tax rate now supports up to 3 decimal places.
+- Improvement: Increase maximum quantity limit from 100 on checkout page.
+- Fix: Integrations listing on orders admin page not accurate when using variants.
+- Fix: Handle error when bulk deleting products without selecting any products.
+- Fix: Store account model as array instead of serialized object to prevent issues with wp-cli.
+- Fix: Show better error message if same shipping profile name is given.
+- Fix: Deprecation warning with PHP version 8.3.
+- Fix: Confusing pricing on admin subscription view page when there is a setup fee.
+- Fix: Abandoned at created_at incorrectly getting date from updated_at.
+- Fix: Order Bump price sometimes has a negative (-) sign.
+- Fix: Remove duplicate styles from certain blocks on shop and product pages.
+
+= 2.31.2 - September 17th, 2024 =
+- Fix: Issue with Mollie ApplePay not showing in some cases.
+- Fix: iDEAL redirect not creating WordPress customer accounts right away if checkout does not use cart.
+- Fix: Promotion codes not automatically generating when left blank on coupon creation.
+
+= 2.31.1 - September 16th, 2024 =
+- Improvement: Record order bump offers for analytics.
+- Fix: Sometime order bumps not appearing due to race condition if checkout loads too fast.
+- Fix: Don't show checkout form mode switcher if checkout page is not block-based.
+- Fix: Issue with checkout not working with Divi theme due to store checkout refactor.
+- Fix: Issue where using the test processor with Stripe enabled would cause a checkout error during finalize.
+
 = 2.31.0 - September 12th, 2024 =
 - Improvement: Prevent misconfiguring store checkout. Any form on the checkout page is now the store checkout.
 - Improvement: Add UI to update a license key.
@@ -318,6 +358,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue preventing cancellation of paused subscriptions.
 - Fix: Translate url going to incorrect location.
 - Fix: Site url change notice missing some styles.
+- Fix: Security issue (props to Tenable for the report).
 
 = 2.29.4 - August 15th, 2024 =
 - Fix: Appending invalid coupon code to custom checkout form causes payment element not to load.
@@ -337,7 +378,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Don't use hardcoded prefix when deleting expired incoming webhook rows.
 - Fix: Cart menu icon not visible in Elementor menu when it was added via Theme Builder.
 - Fix: Issue with user subscription upgrade not always running integrations.
-- Fix: Allow customers to cancel subscriptions without a payment method on customer dashboard.
+- Fix: Issue with affiliate signup link not correct on admin settings page.
 
 = 2.29.1 - July 15th, 2024 =
 - Fix: Compatibility with WordPress 6.6.
@@ -674,3 +715,4 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 * Update: Remove unnecessary express pay blocks from new form templates.
 
 Full changelog can be found here – [SureCart changelog](https://surecart.com/whats-new/)
+

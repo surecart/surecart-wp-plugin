@@ -67,7 +67,7 @@ class ErrorsTranslationService {
 
 	public function attributeOptionsTranslation( $attribute, $type, $options ) {
 		if ( 'line_items.ad_hoc_amount' === $attribute && 'outside_range' === $type ) {
-			// translators: 1. minimum amount, 2. maximum amount
+			// translators: 1. minimum amount, 2. maximum amount.
 			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $options['min'] / 100, $options['max'] / 100 );
 		}
 
@@ -107,6 +107,15 @@ class ErrorsTranslationService {
 			if ( $line_item_translated_error ) {
 				return $line_item_translated_error;
 			}
+		}
+
+		// Unique name translation.
+		if ( 'name' === $attribute && 'taken' === $type ) {
+			return sprintf(
+				// translators: %s is the name.
+				__( 'The name "%s" is already taken. Please choose a different name.', 'surecart' ),
+				$options['value'],
+			);
 		}
 
 		return false;

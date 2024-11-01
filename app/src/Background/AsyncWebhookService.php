@@ -32,6 +32,15 @@ class AsyncWebhookService extends AsyncRequest {
 	];
 
 	/**
+	 * Bootstrap the service.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		// nothing to bootstrap.
+	}
+
+	/**
 	 * Enqueue an action to run one time, as soon as possible
 	 *
 	 * @var string

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-invoice-status-badge renders 1`] = `
+<sc-invoice-status-badge size="medium">
+  <mock:shadow-root>
+    <sc-tag></sc-tag>
+  </mock:shadow-root>
+</sc-invoice-status-badge>
+`;
