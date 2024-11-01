@@ -37,6 +37,11 @@
 			"fontSize": true,
 			"lineHeight": false,
 			"textAlign": false
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
 		}
 	},
 	"render": "file:./view.php",
