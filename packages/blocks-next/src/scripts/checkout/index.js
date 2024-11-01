@@ -538,12 +538,12 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the line item.
 		 */
-		removeLineItem: async () => {
+		removeLineItem: function* () {
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
 			speak(__('Removing line item.', 'surecart'), 'assertive');
 
-			const checkout = await removeCheckoutLineItem(line_item?.id);
+			const checkout = yield* removeCheckoutLineItem(line_item?.id);
 
 			actions.setCheckout(checkout, mode, formId);
 

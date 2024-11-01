@@ -125,22 +125,6 @@ export const updateLineItem = async ({ id, data }) => {
 };
 
 /**
- * Remove a line item.
- */
-export const removeLineItem = async ({ checkoutId, itemId }) => {
-	const { deleted } = await apiFetch({
-		path: `surecart/v1/line_items/${itemId}`,
-		method: 'DELETE',
-	});
-
-	if (!deleted) {
-		throw { code: 'error', message: __('Failed to delete', 'surecart') };
-	}
-
-	return await fetchCheckout({ id: checkoutId });
-};
-
-/**
  * Update the checkout line item
  */
 export const updateCheckoutLineItem = async ({ id, data }) => {
@@ -165,13 +149,41 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 /**
  * Remove the checkout line item.
  */
-export const removeCheckoutLineItem = async (id) => {
+// export const removeCheckoutLineItem = async (id) => {
+// 	try {
+// 		checkoutState.loading = true;
+// 		return await removeLineItem({
+// 			checkoutId: checkoutState?.checkout?.id,
+// 			itemId: id,
+// 		});
+// 	} catch (e) {
+// 		console.error(e);
+// 		checkoutState.error = e;
+// 		// nullify checkout.
+// 		console.log(e.code);
+// 		if (e.code === 'line_item.invalid') {
+// 			return null;
+// 		}
+// 	} finally {
+// 		checkoutState.loading = false;
+// 	}
+// };
+export function* removeCheckoutLineItem(id) {
 	try {
 		checkoutState.loading = true;
-		return await removeLineItem({
+		const { deleted } = yield removeLineItem({
 			checkoutId: checkoutState?.checkout?.id,
 			itemId: id,
 		});
+
+		if (!deleted) {
+			throw {
+				code: 'error',
+				message: __('Failed to delete', 'surecart'),
+			};
+		}
+
+		return yield fetchCheckout({ id: checkoutState?.checkout?.id });
 	} catch (e) {
 		console.error(e);
 		checkoutState.error = e;
@@ -183,6 +195,18 @@ export const removeCheckoutLineItem = async (id) => {
 	} finally {
 		checkoutState.loading = false;
 	}
+}
+
+/**
+ * Remove a line item.
+ */
+export const removeLineItem = async ({ checkoutId, itemId }) => {
+	const { deleted } = await apiFetch({
+		path: `surecart/v1/line_items/${itemId}`,
+		method: 'DELETE',
+	});
+
+	return { deleted };
 };
 
 /**
