@@ -456,7 +456,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 */
 	public function getCreatedByAttribute() {
 		if ( empty( $this->metadata->wp_created_by ) ) {
-		if ( empty( $this->metadata->wp_created_by ) ) {
 			return false;
 		}
 
@@ -1108,7 +1107,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @param mixed  $value The value to cache.
 	 * @return void
 	 */
-	protected function setCachedAttribute( $key, $value ) {
+	protected function setAttributeCache( $key, $value ) {
 		if ( ! isset( self::$attribute_cache ) ) {
 			self::$attribute_cache = [];
 		}
