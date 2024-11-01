@@ -170,10 +170,10 @@ export default () => {
 	);
 
 	useEffect(() => {
-		if (id) {
+		if (id && 'canceled' !== subscription?.status) {
 			fetchUpcomingPeriod();
 		}
-	}, [id, subscription?.discount?.id]);
+	}, [id, subscription?.discount?.id, subscription?.status]);
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
@@ -458,7 +458,7 @@ export default () => {
 					<PendingUpdate subscription={subscription} />
 				)}
 
-				{!!upcoming && (
+				{!!upcoming && 'canceled' !== subscription?.status && (
 					<LineItems period={upcoming} loading={loadingUpcoming} />
 				)}
 
