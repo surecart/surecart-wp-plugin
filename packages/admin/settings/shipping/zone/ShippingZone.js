@@ -19,7 +19,7 @@ import {
 } from '@surecart/components-react';
 import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
