@@ -51,6 +51,11 @@ sc-form {
 	// }
 }
 
+sc-invoice-details:not(.hydrated),
+sc-invoice-details:not(:defined) {
+	display: none;
+}
+
 // inputs
 sc-input,
 sc-customer-name,

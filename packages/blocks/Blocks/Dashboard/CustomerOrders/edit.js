@@ -10,7 +10,7 @@ import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
-	const { per_page, paginate, title } = attributes;
+	const { title } = attributes;
 	const blockProps = useBlockProps();
 
 	return (

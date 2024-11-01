@@ -211,6 +211,7 @@ class TemplatesService {
 		foreach ( [
 			'show_logo',
 			'navigation_orders',
+			'navigation_invoices',
 			'navigation_subscriptions',
 			'navigation_downloads',
 			'navigation_billing',

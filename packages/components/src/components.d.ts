@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -774,6 +774,10 @@ export namespace Components {
          */
         "discountAmount": number;
         /**
+          * Is the form editable
+         */
+        "editable": boolean;
+        /**
           * The error message
          */
         "error": string;
@@ -801,6 +805,10 @@ export namespace Components {
           * Has recurring
          */
         "showInterval": boolean;
+        /**
+          * Focus the input.
+         */
+        "triggerFocus": () => Promise<void>;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -1717,9 +1725,36 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScInvoiceDetails {
+    }
+    interface ScInvoiceMemo {
+        /**
+          * Memo Label
+         */
+        "text": string;
+    }
+    interface ScInvoiceStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": InvoiceStatus;
+    }
     interface ScInvoicesList {
         "allLink": string;
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Query to fetch invoices
          */
@@ -1769,6 +1804,13 @@ export namespace Components {
     interface ScLineItemBump {
         "label": string;
         "loading": boolean;
+    }
+    interface ScLineItemInvoiceDueDate {
+    }
+    interface ScLineItemInvoiceNumber {
+    }
+    interface ScLineItemInvoiceReceiptDownload {
+        "checkout": Checkout;
     }
     interface ScLineItemShipping {
         /**
@@ -2244,13 +2286,13 @@ export namespace Components {
     }
     interface ScOrderSummary {
         "busy": boolean;
-        "closedText": string;
         "collapsed": boolean;
         "collapsedOnDesktop": boolean;
         "collapsedOnMobile": boolean;
         "collapsible": boolean;
-        "openText": string;
+        "invoiceSummaryText": string;
         "order": Checkout;
+        "orderSummaryText": string;
     }
     interface ScOrderTaxIdInput {
         /**
@@ -4323,10 +4365,6 @@ export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderConfirmProviderElement;
 }
-export interface ScOrderCouponFormCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderCouponFormElement;
-}
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderSummaryElement;
@@ -4943,6 +4981,24 @@ declare global {
         prototype: HTMLScInputElement;
         new (): HTMLScInputElement;
     };
+    interface HTMLScInvoiceDetailsElement extends Components.ScInvoiceDetails, HTMLStencilElement {
+    }
+    var HTMLScInvoiceDetailsElement: {
+        prototype: HTMLScInvoiceDetailsElement;
+        new (): HTMLScInvoiceDetailsElement;
+    };
+    interface HTMLScInvoiceMemoElement extends Components.ScInvoiceMemo, HTMLStencilElement {
+    }
+    var HTMLScInvoiceMemoElement: {
+        prototype: HTMLScInvoiceMemoElement;
+        new (): HTMLScInvoiceMemoElement;
+    };
+    interface HTMLScInvoiceStatusBadgeElement extends Components.ScInvoiceStatusBadge, HTMLStencilElement {
+    }
+    var HTMLScInvoiceStatusBadgeElement: {
+        prototype: HTMLScInvoiceStatusBadgeElement;
+        new (): HTMLScInvoiceStatusBadgeElement;
+    };
     interface HTMLScInvoicesListElement extends Components.ScInvoicesList, HTMLStencilElement {
     }
     var HTMLScInvoicesListElement: {
@@ -4972,6 +5028,24 @@ declare global {
     var HTMLScLineItemBumpElement: {
         prototype: HTMLScLineItemBumpElement;
         new (): HTMLScLineItemBumpElement;
+    };
+    interface HTMLScLineItemInvoiceDueDateElement extends Components.ScLineItemInvoiceDueDate, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceDueDateElement: {
+        prototype: HTMLScLineItemInvoiceDueDateElement;
+        new (): HTMLScLineItemInvoiceDueDateElement;
+    };
+    interface HTMLScLineItemInvoiceNumberElement extends Components.ScLineItemInvoiceNumber, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceNumberElement: {
+        prototype: HTMLScLineItemInvoiceNumberElement;
+        new (): HTMLScLineItemInvoiceNumberElement;
+    };
+    interface HTMLScLineItemInvoiceReceiptDownloadElement extends Components.ScLineItemInvoiceReceiptDownload, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceReceiptDownloadElement: {
+        prototype: HTMLScLineItemInvoiceReceiptDownloadElement;
+        new (): HTMLScLineItemInvoiceReceiptDownloadElement;
     };
     interface HTMLScLineItemShippingElement extends Components.ScLineItemShipping, HTMLStencilElement {
     }
@@ -5882,11 +5956,17 @@ declare global {
         "sc-icon": HTMLScIconElement;
         "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
+        "sc-invoice-details": HTMLScInvoiceDetailsElement;
+        "sc-invoice-memo": HTMLScInvoiceMemoElement;
+        "sc-invoice-status-badge": HTMLScInvoiceStatusBadgeElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-license": HTMLScLicenseElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
+        "sc-line-item-invoice-due-date": HTMLScLineItemInvoiceDueDateElement;
+        "sc-line-item-invoice-number": HTMLScLineItemInvoiceNumberElement;
+        "sc-line-item-invoice-receipt-download": HTMLScLineItemInvoiceReceiptDownloadElement;
         "sc-line-item-shipping": HTMLScLineItemShippingElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
@@ -6820,6 +6900,10 @@ declare namespace LocalJSX {
           * The discount amount
          */
         "discountAmount"?: number;
+        /**
+          * Is the form editable
+         */
+        "editable"?: boolean;
         /**
           * The error message
          */
@@ -7916,9 +8000,36 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScInvoiceDetails {
+    }
+    interface ScInvoiceMemo {
+        /**
+          * Memo Label
+         */
+        "text"?: string;
+    }
+    interface ScInvoiceStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: InvoiceStatus;
+    }
     interface ScInvoicesList {
         "allLink"?: string;
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Query to fetch invoices
          */
@@ -7968,6 +8079,13 @@ declare namespace LocalJSX {
     interface ScLineItemBump {
         "label"?: string;
         "loading"?: boolean;
+    }
+    interface ScLineItemInvoiceDueDate {
+    }
+    interface ScLineItemInvoiceNumber {
+    }
+    interface ScLineItemInvoiceReceiptDownload {
+        "checkout"?: Checkout;
     }
     interface ScLineItemShipping {
         /**
@@ -8198,7 +8316,6 @@ declare namespace LocalJSX {
         "collapsed"?: boolean;
         "label"?: string;
         "loading"?: boolean;
-        "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
         "placeholder"?: string;
     }
     interface ScOrderDetail {
@@ -8452,11 +8569,11 @@ declare namespace LocalJSX {
     }
     interface ScOrderSummary {
         "busy"?: boolean;
-        "closedText"?: string;
         "collapsed"?: boolean;
         "collapsedOnDesktop"?: boolean;
         "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
+        "invoiceSummaryText"?: string;
         /**
           * Show the toggle
          */
@@ -8465,8 +8582,8 @@ declare namespace LocalJSX {
           * Show the toggle
          */
         "onScShow"?: (event: ScOrderSummaryCustomEvent<void>) => void;
-        "openText"?: string;
         "order"?: Checkout;
+        "orderSummaryText"?: string;
     }
     interface ScOrderTaxIdInput {
         /**
@@ -10645,11 +10762,17 @@ declare namespace LocalJSX {
         "sc-icon": ScIcon;
         "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
+        "sc-invoice-details": ScInvoiceDetails;
+        "sc-invoice-memo": ScInvoiceMemo;
+        "sc-invoice-status-badge": ScInvoiceStatusBadge;
         "sc-invoices-list": ScInvoicesList;
         "sc-license": ScLicense;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
+        "sc-line-item-invoice-due-date": ScLineItemInvoiceDueDate;
+        "sc-line-item-invoice-number": ScLineItemInvoiceNumber;
+        "sc-line-item-invoice-receipt-download": ScLineItemInvoiceReceiptDownload;
         "sc-line-item-shipping": ScLineItemShipping;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
@@ -10885,11 +11008,17 @@ declare module "@stencil/core" {
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
+            "sc-invoice-details": LocalJSX.ScInvoiceDetails & JSXBase.HTMLAttributes<HTMLScInvoiceDetailsElement>;
+            "sc-invoice-memo": LocalJSX.ScInvoiceMemo & JSXBase.HTMLAttributes<HTMLScInvoiceMemoElement>;
+            "sc-invoice-status-badge": LocalJSX.ScInvoiceStatusBadge & JSXBase.HTMLAttributes<HTMLScInvoiceStatusBadgeElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
+            "sc-line-item-invoice-due-date": LocalJSX.ScLineItemInvoiceDueDate & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceDueDateElement>;
+            "sc-line-item-invoice-number": LocalJSX.ScLineItemInvoiceNumber & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceNumberElement>;
+            "sc-line-item-invoice-receipt-download": LocalJSX.ScLineItemInvoiceReceiptDownload & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceReceiptDownloadElement>;
             "sc-line-item-shipping": LocalJSX.ScLineItemShipping & JSXBase.HTMLAttributes<HTMLScLineItemShippingElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;

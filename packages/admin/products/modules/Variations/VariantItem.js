@@ -136,7 +136,7 @@ export default ({
 							min="0"
 							value={amount}
 							placeholder={defaultAmount}
-							currency={currency}
+							currencyCode={currency}
 							css={css`
 								min-width: 100px;
 							`}
