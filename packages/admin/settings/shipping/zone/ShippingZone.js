@@ -20,7 +20,7 @@ import {
 import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import AddShippingRate from '../rate/AddShippingRate';
@@ -44,32 +44,20 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
 
-	const { shippingRates, loadingShippingRates, fetchingShippingRates } =
-		useSelect((select) => {
-			const queryArgs = [
-				'surecart',
-				'shipping-rate',
-				{
-					shipping_zone_ids: [shippingZone?.id],
-					per_page: 100,
-					expand: ['shipping_method'],
-				},
-			];
-
-			const loading = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			);
-
-			const shippingRates =
-				select(coreStore).getEntityRecords(...queryArgs) || [];
-
-			return {
-				shippingRates,
-				loadingShippingRates: loading && !shippingRates?.length,
-				fetchingShippingRates: loading && !!shippingRates?.length,
-			};
-		});
+	const { records: shippingRates, isResolving: loadingShippingRates } =
+		useEntityRecords(
+			'surecart',
+			'shipping-rate',
+			{
+				context: 'edit',
+				shipping_zone_ids: [shippingZone?.id],
+				per_page: 100,
+				expand: ['shipping_method'],
+			},
+			{
+				enabled: true,
+			}
+		);
 
 	const onRemoveShippingRate = async (shippingRateId) => {
 		try {
@@ -96,11 +84,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 	};
 
 	const renderShippingRates = () => {
-		if (
-			!shippingRates?.length &&
-			!fetchingShippingRates &&
-			!loadingShippingRates
-		) {
+		if (!shippingRates?.length && !loadingShippingRates) {
 			return (
 				<ScAlert
 					type="warning"
@@ -259,7 +243,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 					<ScIcon name="plus" slot="prefix" />
 					{__('Add Rate', 'surecart')}
 				</ScButton>
-				{(busy || fetchingShippingRates) && (
+				{busy && (
 					<ScBlockUi
 						style={{ '--sc-block-ui-opacity': '0.75' }}
 						spinner
