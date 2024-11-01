@@ -1,6 +1,6 @@
 <?php
 
-$removable = $context['removable'] ?? true;
+$removable = $block->context['removable'] ?? true;
 
 if ( empty( $removable ) ) {
 	return null;

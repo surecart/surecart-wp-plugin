@@ -1,6 +1,6 @@
 <?php
 
-$editable = $context['editable'] ?? true;
+$editable = $block->context['editable'] ?? true;
 
 if ( empty( $editable ) ) {
 	return 'file:./static.php';
