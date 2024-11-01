@@ -1109,7 +1109,6 @@
   },
   "sc-order-bump": {
     "bump": true,
-    "cdn-root": true,
     "show-control": true,
     "style": true,
     "id": true,
