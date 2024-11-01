@@ -33,7 +33,6 @@ import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
-import Taxonomies from './modules/Taxonomies';
 import MetaBoxes from './modules/MetaBoxes';
 
 export default ({ id, setBrowserURL }) => {
@@ -287,7 +286,9 @@ export default ({ id, setBrowserURL }) => {
 							busy={
 								deletingProduct ||
 								savingProduct ||
-								!hasLoadedProduct
+								!hasLoadedProduct ||
+								isSavingMetaBoxes ||
+								saving
 							}
 						>
 							{willPublish()
@@ -315,7 +316,7 @@ export default ({ id, setBrowserURL }) => {
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
-						<Collections
+						<Collection
 							product={product}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
