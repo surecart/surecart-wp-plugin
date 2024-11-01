@@ -34,7 +34,7 @@ export const maybeConvertAmount = (amount, currency = scData?.currency) => {
 
 export const getFormattedPrice = ({
 	amount,
-	currency = scData?.currency,
+	currency = scData?.currency || 'usd',
 	options = {},
 }) => {
 	const converted = maybeConvertAmount(parseFloat(amount), currency);
