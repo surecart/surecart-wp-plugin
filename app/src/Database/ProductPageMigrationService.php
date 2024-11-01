@@ -52,7 +52,7 @@ class ProductPageMigrationService extends VersionMigration {
 		// update each template if it doesn't have the wp:surecart/product-page block.
 		foreach ( $product_templates as $product_template ) {
 
-			if ( ! has_block( 'surecart/product-page', $product_template ) ) {
+			if ( ! has_block( 'surecart/product-page', $product_template->post_content ) ) {
 				wp_update_post(
 					array(
 						'ID'           => $product_template->ID,
@@ -61,7 +61,7 @@ class ProductPageMigrationService extends VersionMigration {
 				);
 			}
 
-			if ( ! has_block( 'surecart/product-selected-price-ad-hoc-amount', $product_template ) ) {
+			if ( ! has_block( 'surecart/product-selected-price-ad-hoc-amount', $product_template->post_content ) ) {
 				$insert_before_block = has_block( 'surecart/product-buy-buttons', $product_template ) ? 'surecart/product-buy-buttons' : 'surecart/product-buy-button';
 
 				$new_content = str_replace(
