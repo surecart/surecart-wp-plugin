@@ -53,9 +53,6 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 				shipping_zone_ids: [shippingZone?.id],
 				per_page: 100,
 				expand: ['shipping_method'],
-			},
-			{
-				enabled: true,
 			}
 		);
 
