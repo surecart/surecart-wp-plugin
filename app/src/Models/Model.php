@@ -425,16 +425,26 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Get the metadata attribute.
+	 * This makes sure the metadata is always an object.
+	 *
+	 * @return object
+	 */
+	public function getMetadataAttribute() {
+		return (object) ( $this->attributes['metadata'] ?? [] );
+	}
+
+	/**
 	 * Get the person who created it.
 	 *
 	 * @return int|false
 	 */
 	public function getCreatedByAttribute() {
-		if ( empty( $this->attributes['metadata']['wp_created_by'] ) ) {
+		if ( empty( $this->metadata->wp_created_by ) ) {
 			return false;
 		}
 
-		return (int) $this->attributes['metadata']['wp_created_by'];
+		return (int) $this->metadata->wp_created_by;
 	}
 
 	/**
@@ -1056,7 +1066,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( method_exists( get_parent_class($this), $method ) ) {
+			if ( ! method_exists( get_class( $this ), $method ) ) {
 				continue;
 			}
 
