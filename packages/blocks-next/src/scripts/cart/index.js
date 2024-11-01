@@ -20,13 +20,7 @@ const { state, actions } = store('surecart/cart', {
 		 * This gets cached so we can call this many times without querying the DOM.
 		 */
 		get dialog() {
-			let dialog = null;
-			const target = getContext()?.target || '.sc-cart-drawer' || null;
-
-			// Get passed target or <dialog>.
-			if (typeof target === 'string') {
-				dialog = document?.querySelector(target) || null;
-			}
+			let dialog = document?.querySelector('.sc-cart-drawer') || null;
 
 			if (!dialog) {
 				const { ref } = getElement();
