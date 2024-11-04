@@ -75,7 +75,7 @@ export default ({ collection, updateCollection, loading }) => {
 						{__('Not displaying right?', 'surecart')}
 					</span>
 					{__(
-						'Some themes may not have custom support for displaying SureCart collections. Try selecting the "SureCart Layout" template.',
+						'Some themes may need custom support for displaying SureCart collections. Try selecting the "SureCart Layout" template.',
 						'surecart'
 					)}
 				</ScAlert>
