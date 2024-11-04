@@ -49,7 +49,7 @@ class ProductPageWrapperService {
 	 * @return string
 	 */
 	public function addProductPageWrapper() {
-		return '<!-- wp:surecart/product-page -->' . $this->content . '<!-- /wp:surecart/product-page -->';
+		return '<!-- wp:surecart/product-page {"align":"wide"} -->' . $this->content . '<!-- /wp:surecart/product-page -->';
 	}
 
 	/**
