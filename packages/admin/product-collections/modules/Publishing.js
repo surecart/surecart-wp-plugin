@@ -72,10 +72,10 @@ export default ({ collection, updateCollection, loading }) => {
 			{!scData?.is_block_theme && !wp_template_id && (
 				<ScAlert open type="info">
 					<span slot="title">
-						{__('Having template issues?', 'surecart')}
+						{__('Not displaying right?', 'surecart')}
 					</span>
 					{__(
-						'Some themes may not have explict support for the SureCart collections. If you are having display issues, try the	"SureCart Layout" template.',
+						'Some themes may not have custom support for displaying SureCart collections. Try selecting the "SureCart Layout" template.',
 						'surecart'
 					)}
 				</ScAlert>
