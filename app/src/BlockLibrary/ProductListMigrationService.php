@@ -222,18 +222,22 @@ class ProductListMigrationService {
 			),
 		);
 
-		$image  = '<!-- wp:cover ' . wp_json_encode(
+		$image  = '<!-- wp:group {"style":{"color":{"background":"#0000000d"},"border":{"radius":"10px"},"spacing":{"padding":{"top":"0px","bottom":"0px","left":"0px","right":"0px"},"margin":{"top":"0px","bottom":"0px"}}},"layout":{"type":"constrained"}} -->';
+		$image .= '<div class="wp-block-group has-background" style="border-radius:10px;background-color:#0000000d;margin-top:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px">';
+		$image .= '<!-- wp:cover ' . wp_json_encode(
 			array_merge(
 				$product_image_attrs,
 				$this->getChildBlocksAttributes( 'surecart/product-item-image' ),
 			)
 		) . ' -->';
-		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;margin-bottom:15px">';
+		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;">';
 		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
 		$image .= '<div class="wp-block-cover__inner-container">';
 		$image .= '</div>';
 		$image .= '</div>';
 		$image .= '<!-- /wp:cover -->';
+		$image .= '</div>';
+		$image .= '<!-- /wp:group -->';
 
 		$this->block_html .= $image;
 	}

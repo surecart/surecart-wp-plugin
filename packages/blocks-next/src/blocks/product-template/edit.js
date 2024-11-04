@@ -23,31 +23,52 @@ const TEMPLATE = [
 		},
 		[
 			[
-				'core/cover',
+				'core/group',
 				{
-					useFeaturedImage: true,
-					dimRatio: 0,
-					isUserOverlayColor: true,
-					focalPoint: { x: 0.5, y: 0.5 },
-					contentPosition: 'top right',
-					isDark: false,
 					style: {
-						dimensions: { aspectRatio: '3/4' },
-						layout: { selfStretch: 'fit', flexSize: null },
-						spacing: { margin: { bottom: '15px' } },
+						color: { background: '#0000000d' },
 						border: { radius: '10px' },
+						spacing: {
+							padding: {
+								top: '0px',
+								bottom: '0px',
+								left: '0px',
+								right: '0px',
+							},
+							margin: { top: '0px', bottom: '0px' },
+						},
 					},
-					layout: { type: 'default' },
+					layout: { type: 'constrained' },
 				},
 				[
 					[
-						'surecart/product-sale-badge',
+						'core/cover',
 						{
+							useFeaturedImage: true,
+							dimRatio: 0,
+							isUserOverlayColor: true,
+							focalPoint: { x: 0.5, y: 0.5 },
+							contentPosition: 'top right',
+							isDark: false,
 							style: {
-								typography: { fontSize: '12px' },
-								border: { radius: '100px' },
+								dimensions: { aspectRatio: '3/4' },
+								layout: { selfStretch: 'fit', flexSize: null },
+								spacing: { margin: { bottom: '15px' } },
+								border: { radius: '10px' },
 							},
+							layout: { type: 'default' },
 						},
+						[
+							[
+								'surecart/product-sale-badge',
+								{
+									style: {
+										typography: { fontSize: '12px' },
+										border: { radius: '100px' },
+									},
+								},
+							],
+						],
 					],
 				],
 			],
