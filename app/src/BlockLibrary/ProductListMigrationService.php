@@ -317,7 +317,15 @@ class ProductListMigrationService {
 			return;
 		}
 
-		$this->block_html .= '<!-- wp:surecart/product-pagination -->';
+		$attributes = $this->attributes['pagination_size'] ? [
+			'style' => [
+				'typography' => [
+					'fontSize' => $this->attributes['pagination_size'],
+				],
+			],
+		] : null;
+
+		$this->block_html .= '<!-- wp:surecart/product-pagination ' . ( ! empty( $attributes ) ? wp_json_encode( $attributes ) : '' ) . ' -->';
 		$this->block_html .= '<!-- wp:surecart/product-pagination-previous /-->';
 		$this->block_html .= '<!-- wp:surecart/product-pagination-numbers /-->';
 		$this->block_html .= '<!-- wp:surecart/product-pagination-next /-->';
