@@ -7,7 +7,7 @@ return [
 	'categories' => [ 'surecart_product_page' ],
 	'blockTypes' => [ 'surecart/product-page' ],
 	'priority'   => 1,
-	'content'    => '<!-- wp:surecart/product-page {"metadata":{"categories":["surecart_product_page"],"patternName":"surecart-product-standard","name":"Classic Product"}} -->
+	'content'    => '<!-- wp:surecart/product-page {"metadata":{"categories":["surecart_product_page"],"patternName":"surecart-product-standard","name":"Classic Product"},"align":"wide"} -->
 <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"30px","left":"60px"}}}} -->
 <div class="wp-block-columns"><!-- wp:column {"width":""} -->
 <div class="wp-block-column"><!-- wp:surecart/product-media /--></div>
