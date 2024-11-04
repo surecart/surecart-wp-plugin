@@ -37,7 +37,7 @@ class Promotion extends Model {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'coupons_updated_at';
+	protected $cache_key = 'coupons';
 
 	/**
 	 * Get the Redeem By Date attribute.

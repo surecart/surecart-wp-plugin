@@ -37,7 +37,7 @@ class Webhook extends Model {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'webhook_endpoints_updated_at';
+	protected $cache_key = 'webhook_endpoints';
 
 	/**
 	 * Get the erroring grace period ends at date time attribute.

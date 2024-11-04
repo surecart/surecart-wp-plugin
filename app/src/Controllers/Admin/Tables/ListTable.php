@@ -184,6 +184,9 @@ abstract class ListTable extends \WP_List_Table {
 			<?php if ( isset( $_GET['status'] ) ) : ?>
 				<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
 			<?php endif; ?>
+			<?php if ( isset( $_GET['live_mode'] ) ) : ?>
+				<input type="hidden" name="live_mode" value="<?php echo esc_attr( $_GET['live_mode'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
+			<?php endif; ?>
 			<?php $this->search_box( $text, $input_id ); ?>
 		</form>
 		<?php

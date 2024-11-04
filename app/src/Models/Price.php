@@ -34,7 +34,7 @@ class Price extends Model {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'products_updated_at';
+	protected $cache_key = 'products';
 
 	/**
 	 * Set the WP Attachment based on the saved id

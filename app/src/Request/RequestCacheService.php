@@ -77,7 +77,7 @@ class RequestCacheService {
 	 * @return string
 	 */
 	public function getTransientCacheKey() {
-		$timestamp = \SureCart::account()->{$this->account_cache_key} ?? 0;
+		$timestamp = \SureCart::account()->cache_keys->{$this->account_cache_key} ?? 0;
 		if ( ! $timestamp ) {
 			return false;
 		}

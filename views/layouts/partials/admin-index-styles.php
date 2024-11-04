@@ -26,4 +26,11 @@
 			width: 96px;
 		}
 	}
+
+	.sc-button-group {
+		display: inline-flex;
+	}
+	.sc-button-group > :not(:first-child) {
+		margin-left: -1px;
+	}
 </style>
