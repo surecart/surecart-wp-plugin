@@ -41,7 +41,7 @@ export default ({ invoice, updateInvoice }) => {
 	};
 
 	const getTitle = () => {
-		return invoice?.due_date ? formatDate(invoice?.due_date_display * 1000) : isDraftInvoice ? (
+		return invoice?.due_date ? formatDate(invoice?.due_date * 1000) : isDraftInvoice ? (
 			__('Set Due Date', 'surecart')
 		) : (
 			__('No Due Date', 'surecart')
