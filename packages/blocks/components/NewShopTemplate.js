@@ -40,26 +40,51 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					acc.push(price);
 					break;
 				case 'surecart/product-item-image':
-					acc.push([
-						'core/cover',
+					const image = [
+						'core/group',
 						{
-							useFeaturedImage: true,
-							dimRatio: 0,
-							isUserOverlayColor: true,
-							focalPoint: { x: 0.5, y: 0.5 },
-							contentPosition: 'top right',
-							isDark: false,
 							style: {
-								dimensions: { aspectRatio: '3/4' },
-								layout: { selfStretch: 'fit', flexSize: null },
-								spacing: { margin: { bottom: '15px' } },
+								color: { background: '#0000000d' },
 								border: { radius: '10px' },
+								spacing: {
+									padding: {
+										top: '0px',
+										bottom: '0px',
+										left: '0px',
+										right: '0px',
+									},
+									margin: { top: '0px', bottom: '0px' },
+								},
 							},
-							layout: { type: 'default' },
-							...(block.attributes || {}),
+							layout: { type: 'constrained' },
 						},
-						[],
-					]);
+						[
+							[
+								'core/cover',
+								{
+									useFeaturedImage: true,
+									dimRatio: 0,
+									isUserOverlayColor: true,
+									focalPoint: { x: 0.5, y: 0.5 },
+									contentPosition: 'top right',
+									isDark: false,
+									style: {
+										dimensions: { aspectRatio: '3/4' },
+										layout: {
+											selfStretch: 'fit',
+											flexSize: null,
+										},
+										spacing: { margin: { bottom: '15px' } },
+										border: { radius: '10px' },
+									},
+									layout: { type: 'default' },
+									...(block.attributes || {}),
+								},
+								[],
+							],
+						],
+					];
+					acc.push(image);
 					break;
 			}
 			return acc;
