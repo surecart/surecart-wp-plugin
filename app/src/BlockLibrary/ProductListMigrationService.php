@@ -206,6 +206,7 @@ class ProductListMigrationService {
 	public function renderImage(): void {
 		$product_image_attrs = array(
 			'useFeaturedImage'   => true,
+			'minHeight'          => 0,
 			'dimRatio'           => 0,
 			'isUserOverlayColor' => true,
 			'focalPoint'         => array(
@@ -215,7 +216,7 @@ class ProductListMigrationService {
 			'contentPosition'    => 'top right',
 			'isDark'             => false,
 			'style'              => array(
-				'dimensions' => array( 'aspectRatio' => '3/4' ),
+				'dimensions' => array( 'aspectRatio' => '1/1.33' ),
 				'layout'     => array(
 					'selfStretch' => 'fit',
 					'flexSize'    => null,
@@ -226,7 +227,7 @@ class ProductListMigrationService {
 		);
 
 		$image  = '<!-- wp:cover ' . wp_json_encode(
-			array_merge(
+			array_replace_recursive(
 				$product_image_attrs,
 				$this->getChildBlocksAttributes( 'surecart/product-item-image' ),
 			)

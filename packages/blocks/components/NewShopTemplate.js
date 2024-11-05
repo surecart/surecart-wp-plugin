@@ -44,13 +44,14 @@ export const newShopTemplate = (attributes, childBlocks) => {
 						'core/cover',
 						{
 							useFeaturedImage: true,
+							minHeight: 0,
 							dimRatio: 0,
 							isUserOverlayColor: true,
 							focalPoint: { x: 0.5, y: 0.5 },
 							contentPosition: 'top right',
 							isDark: false,
 							style: {
-								dimensions: { aspectRatio: '3/4' },
+								dimensions: { aspectRatio: '1/1.33' },
 								layout: { selfStretch: 'fit', flexSize: null },
 								border: { radius: '10px' },
 							},
