@@ -82,7 +82,7 @@ class ProductListMigrationService {
 				if ( 'surecart/product-item-title' === $block_name ) {
 					$block['attrs']['level'] = 0;
 				}
-				if ( 'surecart/product-item-price' === $block_name ) {
+				if ( 'surecart/product-item-price' === $block_name && isset( $block['attrs']['range'] ) ) {
 					$block['attrs']['show_range'] = $block['attrs']['range'];
 				}
 				return $block['attrs'];
@@ -290,7 +290,7 @@ class ProductListMigrationService {
 		$group_classnames  = ! empty( $group_styles['classnames'] ) ? $group_styles['classnames'] : '';
 		$group_css         = ! empty( $group_styles['css'] ) ? $group_styles['css'] : '';
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}} -->';
-		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="gap:0px;' . $group_css . '">';
+		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="' . $group_css . '">';
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
 			foreach ( $this->inner_blocks[0]['innerBlocks'] as $inner_block ) {
