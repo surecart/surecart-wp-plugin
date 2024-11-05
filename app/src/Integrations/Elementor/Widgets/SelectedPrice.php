@@ -2,6 +2,8 @@
 
 namespace SureCart\Integrations\Elementor\Widgets;
 
+use SureCart\Support\Currency;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -65,25 +67,151 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Add the selected price style controls.
+	 * Add custom controls for the widget.
 	 *
 	 * @return void
 	 */
-	private function add_collection_tags_style_controls() {
-		//
-	}
-
-	/**
-	 * Add content controls.
-	 *
-	 * @return void
-	 */
-	protected function add_content_controls() {
+	protected function register_style_settings() {
 		$this->start_controls_section(
-			'section_content',
-			array(
-				'label' => esc_html__( 'Selected Price', 'surecart' ),
-			)
+			'section_scratch_amount',
+			[
+				'label' => esc_html__( 'Scratch Amount', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-scratch-amount' => 'color: {{VALUE}}',
+				],
+				'default'   => '#686868',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_amount_style',
+			[
+				'label' => esc_html__( 'Price Amount', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'amount_text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-amount' => 'color: {{VALUE}}',
+				],
+				'default'   => '#686868',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_interval_style',
+			[
+				'label' => esc_html__( 'Price Interval', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'interval_text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-interval' => 'color: {{VALUE}}',
+				],
+				'default'   => '#686868',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_sale_badge_style',
+			[
+				'label' => esc_html__( 'Sale Badge', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'badge_text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'color: {{VALUE}}',
+				],
+				'default'   => '#ffffff',
+			]
+		);
+
+		$this->add_control(
+			'badge_background_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'background-color: {{VALUE}}',
+				],
+				'default'   => '#000000',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_trial_style',
+			[
+				'label' => esc_html__( 'Price Trial', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'trial_text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-trial' => 'color: {{VALUE}}',
+				],
+				'default'   => '#686868',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_fees_style',
+			[
+				'label' => esc_html__( 'Price Fees', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'fees_text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-selected-price-fees' => 'color: {{VALUE}}',
+				],
+				'default'   => '#686868',
+			]
 		);
 
 		$this->end_controls_section();
@@ -95,8 +223,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function register_controls() {
-		$this->add_content_controls();
-		$this->add_collection_tags_style_controls();
+		$this->register_style_settings();
 	}
 
 	/**
@@ -108,14 +235,16 @@ class SelectedPrice extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			//
+			$this->content_template();
+			return;
 		}
 
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 			<div class="wp-block-group">
 				<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"bottom"}} -->
-				<div class="wp-block-group"><!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","fontSize":"24px","lineHeight":"1.5"},"color":{"text":"#686868"},"elements":{"link":{"color":{"text":"#686868"}}}}} /-->
+				<div class="wp-block-group">
+					<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","fontSize":"24px","lineHeight":"1.5"},"color":{"text":"#686868"},"elements":{"link":{"color":{"text":"#686868"}}}}} /-->
 
 					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px","lineHeight":"1.5"}}} /-->
 
@@ -126,5 +255,37 @@ class SelectedPrice extends \Elementor\Widget_Base {
 			</div>
 		</div>
 	<?php
+	}
+
+	/**
+	 * Render the widget output in the editor.
+	 *
+	 * @return void
+	 */
+	protected function content_template() {
+		?>
+		<div class="wp-block-surecart-selected-price">
+			<div style="display: flex; justify-content:flex-start; gap: 5px;">
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-scratch-amount" style="font-size: 24px; line-height: 1.5; text-decoration: line-through;">
+					<?php echo esc_html( Currency::format( 20 ) ); ?>
+				</span>
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-amount" style="font-size: 24px; line-height: 1.5;">
+					<?php echo esc_html( Currency::format( 15 ) ); ?>
+				</span>
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-interval" style="line-height: 2;">/ <?php echo esc_html__( 'mo', 'surecart' ); ?></span>
+				<span tabindex="0" class="wp-block-surecart-product-sale-badge" style="white-space: pre-wrap; min-width: 1px; border-radius: 15px; font-size: 12px; max-width: 50px; align-self: center">
+					<?php echo esc_html__( 'Sale', 'surecart' ); ?>
+				</span>
+			</div>
+			<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-trial">
+					<?php echo esc_html__( 'Starting in 7 days.', 'surecart' ); ?>
+				</span>
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-fees">
+					<?php echo esc_html( Currency::format( 10 ) . ' ' . __( 'Setup Fee', 'surecart' ) ); ?>
+				</span>
+			</div>
+		</div>
+		<?php
 	}
 }
