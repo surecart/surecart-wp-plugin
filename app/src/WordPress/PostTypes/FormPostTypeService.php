@@ -147,7 +147,7 @@ class FormPostTypeService {
 			get_option( 'surecart_checkout_page_id' )
 		) ?? null;
 
-		if ( $post->ID === $checkout_form->ID ?? null ) {
+		if ( ( $checkout_form->ID ?? null ) === $post->ID ) {
 			$states[] = __( 'Store Checkout', 'surecart' );
 		}
 

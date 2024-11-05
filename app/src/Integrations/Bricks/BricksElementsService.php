@@ -2,8 +2,6 @@
 
 namespace SureCart\Integrations\Bricks;
 
-use SureCart\Migration\ProductPageWrapperService;
-
 /**
  * This class handles bricks elements functionality.
  */
@@ -25,9 +23,6 @@ class BricksElementsService {
 
 		// handle the default active template for our collection.
 		add_filter( 'bricks/active_templates', [ $this, 'setDefaultCollectionTemplate' ], 10, 3 );
-
-		// Handle the product page wrapper.
-		add_filter( 'bricks/frontend/render_data', [ $this, 'handleProductPageWrapper' ], 10, 2 );
 	}
 
 	/**
@@ -148,6 +143,9 @@ class BricksElementsService {
 
 		$active_templates['archive'] = $template_id;
 
+		// Set the post content with the template's content.
+		$active_templates['content'] = $template_id;
+
 		return $active_templates;
 	}
 
@@ -163,16 +161,5 @@ class BricksElementsService {
 		$control_options['templateTypes']['sc_collection'] = esc_html__( 'SureCart - Collection Archive', 'surecart' );
 
 		return $control_options;
-	}
-
-	/**
-	 * Handle the product page wrapper
-	 *
-	 * @param string $content Content of Shortcode.
-	 *
-	 * @return string $content Content of the product page.
-	 */
-	public function handleProductPageWrapper( string $content ): string {
-		return ( new ProductPageWrapperService( $content ) )->wrap();
 	}
 }

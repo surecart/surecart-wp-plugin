@@ -56,5 +56,5 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/text.css", "file:./style-index.css"]
+	"style": ["surecart-text", "file:./style-index.css"]
 }

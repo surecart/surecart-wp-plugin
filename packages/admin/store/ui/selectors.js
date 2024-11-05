@@ -13,6 +13,9 @@ export function flash(state) {
 export function isInvalid(state) {
 	return state.errors.isInvalid;
 }
+export function getError(state) {
+	return state.error;
+}
 export function selectModelErrors(state, name) {
 	return state.modelErrors[name] || [];
 }

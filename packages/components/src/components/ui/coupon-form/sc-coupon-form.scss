@@ -6,6 +6,10 @@ sc-button {
   color: var(--sc-color-primary-500);
 }
 
+sc-alert {
+  margin-top: var(--sc-spacing-small);
+}
+
 .coupon-form {
   position: relative;
   container-type: inline-size;

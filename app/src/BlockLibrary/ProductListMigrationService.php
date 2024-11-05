@@ -82,6 +82,9 @@ class ProductListMigrationService {
 				if ( 'surecart/product-item-title' === $block_name ) {
 					$block['attrs']['level'] = 0;
 				}
+				if ( 'surecart/product-item-price' === $block_name ) {
+					$block['attrs']['show_range'] = $block['attrs']['range'];
+				}
 				return $block['attrs'];
 			}
 		}
@@ -143,8 +146,8 @@ class ProductListMigrationService {
 			$this->block_html .= '<!-- wp:surecart/product-list-sort /-->';
 		}
 
-		if ( $collection_enabled && empty( $this->attributes['collection_id'] ) ) {
-			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $collection_id ) . '"} /-->';
+		if ( $collection_enabled && ! empty( $this->attributes['collection_id'] ) ) {
+			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $this->attributes['collection_id'] ) . '"} /-->';
 		}
 
 		$this->block_html .= '</div><!-- /wp:group -->';

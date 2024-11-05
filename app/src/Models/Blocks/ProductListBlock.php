@@ -72,6 +72,12 @@ class ProductListBlock {
 
 		$offset   = absint( $query['offset'] ?? 0 );
 		$per_page = $this->block->parsed_block['attrs']['limit'] ?? $this->block->context['surecart/product-list/limit'] ?? $query['perPage'] ?? 15;
+		$order    = ! empty( $this->url->getArg( 'order' ) )
+			? sanitize_text_field( $this->url->getArg( 'order' ) )
+			: ( ! empty( $query['order'] ) ? $query['order'] : 'desc' );
+		$orderby  = ! empty( $this->url->getArg( 'orderby' ) )
+			? sanitize_text_field( $this->url->getArg( 'orderby' ) )
+			: ( ! empty( $query['orderBy'] ) ? $query['orderBy'] : 'date' );
 		$page     = $this->url->getCurrentPage();
 
 		// build up the query.
@@ -83,8 +89,8 @@ class ProductListBlock {
 				'posts_per_page'      => $per_page,
 				'offset'              => ( $per_page * ( $page - 1 ) ) + $offset,
 				'paged'               => (int) $this->url->getCurrentPage(),
-				'order'               => sanitize_text_field( $this->url->getArg( 'order' ) ),
-				'orderby'             => sanitize_text_field( $this->url->getArg( 'orderby' ) ),
+				'order'               => $order,
+				'orderby'             => $orderby,
 				's'                   => sanitize_text_field( $this->url->getArg( 'search' ) ),
 			)
 		);
@@ -109,7 +115,7 @@ class ProductListBlock {
 		}
 
 		// put together price query.
-		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
+		if ( 'price' === $orderby ) {
 			$this->query_vars['meta_key'] = 'min_price_amount';
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}
@@ -179,10 +185,12 @@ class ProductListBlock {
 			];
 		}
 
-		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
+		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? $this->block->parsed_block['attrs']['type'] ?? 'all' ) ) {
 			$query = $this->getQueryContext();
 			// backward compatibility.
-			$ids = $query['include'] ?? $this->block->context['surecart/product-list/ids'] ?? $this->block->parsed_block['attrs']['ids'] ?? [];
+
+			$ids = ! empty( $query['include'] ) ? $query['include'] : ( ! empty( $this->block->context['surecart/product-list/ids'] ) ? $this->block->context['surecart/product-list/ids'] : ( ! empty( $this->block->parsed_block['attrs']['ids'] ) ? $this->block->parsed_block['attrs']['ids'] : [] ) );
+
 			// fallback for older strings - get the ids of legacy products.
 			$legacy_ids           = [];
 			$ids_that_are_strings = array_map( 'sanitize_text_field', array_filter( $ids, 'is_string' ) );
