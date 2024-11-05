@@ -311,11 +311,7 @@ export class ScOrder {
           >
             <span slot="title">{__('Amount Paid', 'surecart')}</span>
             <span slot="price">
-              <sc-format-number
-                type="currency"
-                currency={(checkout?.charge as Charge)?.currency}
-                value={(checkout?.charge as Charge)?.amount ? (checkout?.charge as Charge)?.amount - (checkout?.charge as Charge)?.refunded_amount : 0}
-              ></sc-format-number>
+              <sc-format-number type="currency" currency={(checkout?.charge as Charge)?.currency} value={checkout?.paid_amount}></sc-format-number>
             </span>
             <span slot="currency">{(checkout?.charge as Charge)?.currency}</span>
           </sc-line-item>
