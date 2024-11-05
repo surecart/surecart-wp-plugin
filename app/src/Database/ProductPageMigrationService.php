@@ -56,7 +56,7 @@ class ProductPageMigrationService extends VersionMigration {
 				wp_update_post(
 					array(
 						'ID'           => $product_template->ID,
-						'post_content' => '<!-- wp:surecart/product-page -->' . $product_template->post_content . '<!-- /wp:surecart/product-page -->',
+						'post_content' => '<!-- wp:surecart/product-page {"align":"wide"} -->' . $product_template->post_content . '<!-- /wp:surecart/product-page -->',
 					)
 				);
 			}

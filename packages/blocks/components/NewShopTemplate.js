@@ -58,44 +58,68 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					acc.push(price);
 					break;
 				case 'surecart/product-item-image':
-					acc.push([
-						'core/cover',
+					const image = [
+						'core/group',
 						{
-							useFeaturedImage: true,
-							dimRatio: 0,
-							isUserOverlayColor: true,
-							focalPoint: { x: 0.5, y: 0.5 },
-							contentPosition: 'top right',
-							isDark: false,
-							layout: { type: 'default' },
-							...(block.attributes || {}),
 							style: {
-								dimensions: {
-									aspectRatio: '1',
-								},
-								layout: {
-									selfStretch: 'fit',
-									flexSize: null,
-									...block?.attributes?.layout,
-								},
-								border: {
-									radius: '10px',
-									...block?.attributes?.style?.border,
+								color: { background: '#0000000d' },
+								border: { radius: '10px' },
+								spacing: {
+									padding: {
+										top: '0px',
+										bottom: '0px',
+										left: '0px',
+										right: '0px',
+									},
+									margin: { top: '0px', bottom: '0px' },
 								},
 							},
+							layout: { type: 'constrained' },
 						},
 						[
 							[
-								'surecart/product-sale-badge',
+								'core/cover',
 								{
+									useFeaturedImage: true,
+									dimRatio: 0,
+									isUserOverlayColor: true,
+									focalPoint: { x: 0.5, y: 0.5 },
+									contentPosition: 'top right',
+									isDark: false,
+									layout: { type: 'default' },
+									...(block.attributes || {}),
 									style: {
-										typography: { fontSize: '12px' },
-										border: { radius: '100px' },
+										dimensions: {
+											aspectRatio: '1',
+										},
+										layout: {
+											selfStretch: 'fit',
+											flexSize: null,
+											...block?.attributes?.layout,
+										},
+										border: {
+											radius: '10px',
+											...block?.attributes?.style?.border,
+										},
 									},
 								},
+								[
+									[
+										'surecart/product-sale-badge',
+										{
+											style: {
+												typography: {
+													fontSize: '12px',
+												},
+												border: { radius: '100px' },
+											},
+										},
+									],
+								],
 							],
 						],
-					]);
+					];
+					acc.push(image);
 					break;
 			}
 			return acc;

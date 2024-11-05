@@ -15,6 +15,7 @@ import Url from '../components/Url';
 import SelectTemplate from '../components/SelectTemplate';
 import SelectTemplatePart from '../components/SelectTemplatePart';
 import Products from '../components/Products';
+import { ScAlert } from '@surecart/components-react';
 
 export default ({ collection, updateCollection, loading }) => {
 	const tag = document.querySelector(
@@ -37,26 +38,48 @@ export default ({ collection, updateCollection, loading }) => {
 		}
 	}, [collection]);
 
+	// possibly convert "0" to false
+	const wp_template_id =
+		collection?.metadata?.wp_template_id &&
+		collection?.metadata?.wp_template_id !== '0'
+			? collection?.metadata?.wp_template_id
+			: false;
+
 	return (
-		<Box
-			loading={loading}
-			title={<div>{__('Publishing', 'surecart')}</div>}
-		>
-			<Url collection={collection} updateCollection={updateCollection} />
+		<>
+			<Box
+				loading={loading}
+				title={<div>{__('Publishing', 'surecart')}</div>}
+			>
+				<Url
+					collection={collection}
+					updateCollection={updateCollection}
+				/>
+				<Products collection={collection} />
 
-			{scData?.is_block_theme ? (
-				<SelectTemplate
-					collection={collection}
-					updateCollection={updateCollection}
-				/>
-			) : (
-				<SelectTemplatePart
-					collection={collection}
-					updateCollection={updateCollection}
-				/>
+				{scData?.is_block_theme ? (
+					<SelectTemplate
+						collection={collection}
+						updateCollection={updateCollection}
+					/>
+				) : (
+					<SelectTemplatePart
+						collection={collection}
+						updateCollection={updateCollection}
+					/>
+				)}
+			</Box>
+			{!scData?.is_block_theme && !wp_template_id && (
+				<ScAlert open type="info">
+					<span slot="title">
+						{__('Not displaying right?', 'surecart')}
+					</span>
+					{__(
+						'Some themes may need custom support for displaying SureCart collections. Try selecting the "SureCart Layout" template.',
+						'surecart'
+					)}
+				</ScAlert>
 			)}
-
-			<Products collection={collection} />
-		</Box>
+		</>
 	);
 };
