@@ -315,7 +315,7 @@ class Media extends \Elementor\Widget_Base {
 		<div class="swiper-wrapper sc-has-{{settings.thumbnails_per_page}}-thumbs">
 			<# for ( var i = 0; i < settings.thumbnails_per_page; i++ ) { #>
 				<div class="swiper-slide">
-					<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="Placeholder image" />
+					<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" />
 				</div>
 			<# } #>
 		</div>
