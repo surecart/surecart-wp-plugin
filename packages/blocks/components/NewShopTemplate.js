@@ -90,7 +90,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 									...(block.attributes || {}),
 									style: {
 										dimensions: {
-											aspectRatio: '1',
+											aspectRatio: '3/4',
 										},
 										layout: {
 											selfStretch: 'fit',

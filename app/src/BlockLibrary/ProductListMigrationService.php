@@ -216,7 +216,7 @@ class ProductListMigrationService {
 			'contentPosition'    => 'top right',
 			'isDark'             => false,
 			'style'              => array(
-				'dimensions' => array( 'aspectRatio' => '1/1.33' ),
+				'dimensions' => array( 'aspectRatio' => '3/4' ),
 				'layout'     => array(
 					'selfStretch' => 'fit',
 					'flexSize'    => null,
