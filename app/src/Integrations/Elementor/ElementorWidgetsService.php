@@ -12,10 +12,20 @@ class ElementorWidgetsService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		add_action( 'init', [ $this, 'registerStyles' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerNestedWidgets' ] );
-		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueueEditorScripts' ] );
-		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueueStyles' ] );
+		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueueEditorScripts' ], 1 );
+		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueueStyles' ], 1 );
+	}
+
+	/**
+	 * Register the styles.
+	 *
+	 * @return void
+	 */
+	public function registerStyles() {
+		wp_register_style( 'surecart-elementor-container-style', plugins_url( 'assets/container.css', __FILE__ ), [], '1.0', 'all' );
 	}
 
 	/**
@@ -88,7 +98,6 @@ class ElementorWidgetsService {
 	 * @return void
 	 */
 	public function enqueueStyles() {
-		wp_register_style( 'surecart-elementor-container-style', plugins_url( 'assets/container.css', __FILE__ ), '', '1.0', 'all' );
 		wp_enqueue_style( 'surecart-elementor-container-style' );
 	}
 }

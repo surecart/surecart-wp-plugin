@@ -20,6 +20,15 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	}
 
 	/**
+	 * Get the style dependencies.
+	 *
+	 * @return array
+	 */
+	public function get_style_depends() {
+		return array( 'surecart-elementor-container-style' );
+	}
+
+	/**
 	 * Get the widget title.
 	 *
 	 * @return string
@@ -143,6 +152,16 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 							],
 							[
 								'elType' => 'widget',
+								'settings' => [
+									'__dynamic__' => [
+										'excerpt' => '[elementor-tag id="" name="post-excerpt" settings="%7B%22max_length%22%3A%22%22%2C%22apply_to_post_content%22%3A%22yes%22%2C%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]',
+									],
+								],
+								'elements' => [],
+								'widgetType' => 'theme-post-excerpt',
+							],
+							[
+								'elType' => 'widget',
 								'elements' => [],
 								'settings' => [
 									'content_width' => 'full',
@@ -163,6 +182,11 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 										'isLinked' => true,
 										'unit' => 'px',
 										'size' => 12,
+									],
+									'price_chooser_columns_grid' => [
+										'unit' => 'fr',
+										'size' => 1,
+										'sizes' => [],
 									],
 									'price_chooser_flex_wrap' => 'wrap',
 								],
@@ -212,6 +236,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 								'widgetType' => 'surecart-buy-button',
 								'settings' => [
 									'content_width' => 'full',
+									'buy_button_type' => 'yes',
 									'width' => [
 										'unit' => '%',
 										'size' => '100',
