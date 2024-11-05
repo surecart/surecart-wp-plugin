@@ -281,7 +281,7 @@ class ProductListMigrationService {
 		$group_styles      = sc_get_block_styles( true, $group_block );
 		$group_classnames  = ! empty( $group_styles['classnames'] ) ? $group_styles['classnames'] : '';
 		$group_css         = ! empty( $group_styles['css'] ) ? $group_styles['css'] : '';
-		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}} -->';
 		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="gap:0px;' . $group_css . '">';
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
