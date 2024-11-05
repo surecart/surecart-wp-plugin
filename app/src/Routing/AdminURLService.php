@@ -203,4 +203,23 @@ class AdminURLService {
 			$line_items ?? []
 		);
 	}
+
+	/**
+	 * Create Url.
+	 *
+	 * @param string $name Model lowercase name.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function create( $name ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'create',
+					'nonce'  => wp_create_nonce( "create_$name" ),
+				],
+				admin_url( 'admin.php?page=' . $this->page_names[ $name ] ?? '' )
+			)
+		);
+	}
 }

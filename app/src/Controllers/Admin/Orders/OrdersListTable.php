@@ -75,12 +75,13 @@ class OrdersListTable extends ListTable {
 			'all'            => __( 'All', 'surecart' ),
 			'paid'           => __( 'Paid', 'surecart' ),
 			'processing'     => __( 'Processing', 'surecart' ),
+			'draft'          => __( 'Draft', 'surecart' ),
 			'payment_failed' => __( 'Failed', 'surecart' ),
 			'canceled'       => __( 'Canceled', 'surecart' ),
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link = \SureCart::getUrl()->index( 'orders' );
+			$link                    = \SureCart::getUrl()->index( 'orders' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -203,6 +204,9 @@ class OrdersListTable extends ListTable {
 		}
 		if ( 'canceled' === $status ) {
 			return [ 'void' ];
+		}
+		if ( 'draft' === $status ) {
+			return [ 'draft' ];
 		}
 		if ( 'all' === $status ) {
 			return [];
@@ -331,10 +335,10 @@ class OrdersListTable extends ListTable {
 			#<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
 		</a>
 		<br />
-		<a  aria-label="<?php esc_attr_e( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>" style="word-break: break-word">
+		<a aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>" style="word-break: break-word">
 			<?php
 			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->checkout->customer->name ?? $order->checkout->customer->email ) );
+			printf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->checkout->name ?? $order->checkout->email ?? $order->checkout->customer->name ?? $order->checkout->customer->email ) );
 			?>
 		</a>
 		<?php

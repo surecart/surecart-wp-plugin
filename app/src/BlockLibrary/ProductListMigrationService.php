@@ -82,6 +82,9 @@ class ProductListMigrationService {
 				if ( 'surecart/product-item-title' === $block_name ) {
 					$block['attrs']['level'] = 0;
 				}
+				if ( 'surecart/product-item-price' === $block_name ) {
+					$block['attrs']['show_range'] = $block['attrs']['range'];
+				}
 				return $block['attrs'];
 			}
 		}

@@ -48,6 +48,7 @@
 	"editorScript": "file:./index.js",
 	"style": [
 		"surecart-wp-buttons",
+		"surecart-wp-button",
 		"file:./style-index.css",
 		"wp-block-button"
 	]

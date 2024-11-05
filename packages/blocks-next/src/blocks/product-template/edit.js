@@ -121,7 +121,16 @@ export default ({
 	__unstableLayoutClassNames,
 	setAttributes,
 	context: {
-		query: { perPage, include, taxQuery, postType, offset = 0, search },
+		query: {
+			perPage,
+			include,
+			taxQuery,
+			postType,
+			offset = 0,
+			search,
+			order,
+			orderBy,
+		},
 		'surecart/product-list/type': type,
 	},
 }) => {
@@ -166,6 +175,8 @@ export default ({
 		{
 			page: 1,
 			per_page: perPage || 15,
+			orderBy: orderBy || 'date',
+			order: order || 'desc',
 			post_status: ['publish'],
 			offset: offset || 0,
 			...(!!Object.keys(builtTaxQuery).length ? builtTaxQuery : {}),

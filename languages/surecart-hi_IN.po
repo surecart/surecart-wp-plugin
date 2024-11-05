@@ -169,7 +169,7 @@ msgstr "परित्यक्त चेकआउट"
 #: app/src/Controllers/Admin/Upsells/UpsellsListTable.php:52
 #: app/src/Models/Affiliation.php:136
 #: packages/admin/affiliations/ViewAffiliation.js:212
-#: packages/admin/licenses/modules/Details/index.js:14
+#: packages/admin/licenses/modules/Details/index.js:22
 #: packages/admin/util.js:88
 #: packages/blocks/Blocks/Dashboard/CustomerLicenses/edit.js:75
 msgid "Active"
@@ -288,7 +288,7 @@ msgstr "कस्टम राशि"
 #: packages/admin/coupons/modules/NewRestriction.js:91
 #: packages/admin/invoices/modules/Customer.js:17
 #: packages/admin/invoices/store/entities.js:94
-#: packages/admin/licenses/modules/Customer.js:41
+#: packages/admin/licenses/modules/Customer.js:42
 #: packages/admin/orders/modules/Customer.js:16
 #: packages/admin/store/add-entities.js:88
 #: packages/admin/subscriptions/edit/modules/Customer.js:12
@@ -441,7 +441,7 @@ msgstr "चालान"
 #: packages/blocks/Controllers/LicenseController.php:131
 #: views/admin/licenses/index.php:7
 #: packages/admin/components/data-tables/licenses-data-table/index.js:26
-#: packages/admin/licenses/License.js:78
+#: packages/admin/licenses/License.js:85
 msgid "Licenses"
 msgstr "लाइसेंस"
 
@@ -653,7 +653,7 @@ msgstr "पुनर्स्थापित करना"
 
 #: app/src/Controllers/Admin/Licenses/LicensesListTable.php:125
 #: packages/admin/components/data-tables/purchases-data-table/purchase-item.js:37
-#: packages/admin/licenses/modules/Details/index.js:17
+#: packages/admin/licenses/modules/Details/index.js:25
 #: packages/admin/licenses/modules/Purchase.js:78
 msgid "Revoked"
 msgstr "निरस्त किया गया"
@@ -732,6 +732,7 @@ msgid "Status"
 msgstr "स्थति"
 
 #: app/src/Controllers/Admin/Bumps/BumpsListTable.php:194
+#: app/src/Controllers/Admin/Orders/OrdersListTable.php:244
 #: app/src/Controllers/Admin/Products/ProductsListTable.php:307
 #: app/src/Controllers/Admin/Upsells/UpsellsListTable.php:189
 #: packages/admin/invoices/store/entities.js:70
@@ -801,7 +802,7 @@ msgstr "कीमत का UUID।"
 #: app/src/WordPress/Admin/Menus/AdminMenuPageService.php:170
 #: app/src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: app/src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
-#: app/src/WordPress/CompatibilityService.php:151
+#: app/src/WordPress/CompatibilityService.php:157
 #: app/src/WordPress/HealthService.php:32
 #: app/src/WordPress/HealthService.php:73
 #: app/src/WordPress/HealthService.php:86

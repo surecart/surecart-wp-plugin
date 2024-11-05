@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.6
-Stable tag: 2.31.3
+Stable tag: 2.40.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,20 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 2.40.1 - October 30th, 2024 =
+- Fix: Issue where checkout mode was not being honored when using direct checkout links.
+
+= 2.40.0 - October 30th, 2024 =
+- New: Invoicing - Create and send invoices to customers!
+- Improvement: Allow editing of order name, address, and tax information in the admin.
+- Improvement: Rework caching architecture for cached resources.
+- Improvement: Improve warning message when deleting a customer record.
+- Improvement: Remove unnecessary order expansions on the customer list page to improve performance.
+- Improvement: Better error message for when the subscription period end is earlier than the start date.
+- Fix: Change "Setup" to "Set Up" on the onboarding page.
+- Fix: Issue where currency was sometimes wrong on affiliate commission, adding variants, and upsell discounts.
+- Fix: Missing WordPress php filter for surecart/request/model.
 
 = 2.31.3 - October 10th, 2024 =
 - Improvement: Add plugin update notice for major versions.
@@ -701,3 +715,4 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 * Update: Remove unnecessary express pay blocks from new form templates.
 
 Full changelog can be found here – [SureCart changelog](https://surecart.com/whats-new/)
+
