@@ -1,4 +1,4 @@
-<?php $html_tag = 'h' . (int) ( $attributes['level'] ?? 1 ); ?>
+<?php $html_tag = 'h' . (int) ( ! empty( $attributes['level'] ) ? $attributes['level'] : 3 ); ?>
 <<?php echo esc_html( $html_tag ); ?> <?php echo wp_kses_data( get_block_wrapper_attributes( [ 'aria-label' => get_the_title() ] ) ); ?>>
 	<?php if ( $is_link ) : ?>
 		<a

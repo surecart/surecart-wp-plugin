@@ -82,7 +82,7 @@ class ProductListMigrationService {
 				if ( 'surecart/product-item-title' === $block_name ) {
 					$block['attrs']['level'] = 0;
 				}
-				if ( 'surecart/product-item-price' === $block_name ) {
+				if ( 'surecart/product-item-price' === $block_name && isset( $block['attrs']['range'] ) ) {
 					$block['attrs']['show_range'] = $block['attrs']['range'];
 				}
 				return $block['attrs'];
@@ -146,8 +146,8 @@ class ProductListMigrationService {
 			$this->block_html .= '<!-- wp:surecart/product-list-sort /-->';
 		}
 
-		if ( $collection_enabled && ! empty( $this->attributes['collection_id'] ) ) {
-			$this->block_html .= '<!-- wp:surecart/product-list-filter {"collection_id":"' . esc_attr( $this->attributes['collection_id'] ) . '"} /-->';
+		if ( $collection_enabled ) {
+			$this->block_html .= '<!-- wp:surecart/product-list-filter /-->';
 		}
 
 		$this->block_html .= '</div><!-- /wp:group -->';
@@ -206,6 +206,7 @@ class ProductListMigrationService {
 	public function renderImage(): void {
 		$product_image_attrs = array(
 			'useFeaturedImage'   => true,
+			'minHeight'          => 0,
 			'dimRatio'           => 0,
 			'isUserOverlayColor' => true,
 			'focalPoint'         => array(
@@ -228,7 +229,7 @@ class ProductListMigrationService {
 		$image  = '<!-- wp:group {"style":{"color":{"background":"#0000000d"},"border":{"radius":"10px"},"spacing":{"padding":{"top":"0px","bottom":"0px","left":"0px","right":"0px"},"margin":{"top":"0px","bottom":"0px"}}},"layout":{"type":"constrained"}} -->';
 		$image .= '<div class="wp-block-group has-background" style="border-radius:10px;background-color:#0000000d;margin-top:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px">';
 		$image .= '<!-- wp:cover ' . wp_json_encode(
-			array_merge(
+			array_replace_recursive(
 				$product_image_attrs,
 				$this->getChildBlocksAttributes( 'surecart/product-item-image' ),
 			)
@@ -236,6 +237,7 @@ class ProductListMigrationService {
 		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;">';
 		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
 		$image .= '<div class="wp-block-cover__inner-container">';
+		$image .= '<!-- wp:surecart/product-sale-badge {"style":{"typography":{"fontSize":"12px"},"border":{"radius":"100px"}}} /-->';
 		$image .= '</div>';
 		$image .= '</div>';
 		$image .= '<!-- /wp:cover -->';
@@ -253,9 +255,9 @@ class ProductListMigrationService {
 	public function renderPrice(): void {
 		$product_price_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-price' ), JSON_FORCE_OBJECT );
 		$this->block_html   .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em","margin":{"top":"0px","bottom":"0px"}},"margin":{"top":"0px","bottom":"0px"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
-		$this->block_html   .= '<div class="wp-block-group">';
+		$this->block_html   .= '<div class="wp-block-group" style="margin-top:0;">';
 		$this->block_html   .= '<!-- wp:surecart/product-list-price ' . $product_price_attrs . ' /-->';
-		$this->block_html   .= '<!-- wp:surecart/product-list-price-sale ' . $product_price_attrs . ' /-->';
+		$this->block_html   .= '<!-- wp:surecart/product-scratch-price ' . $product_price_attrs . ' /-->';
 		$this->block_html   .= '</div>';
 		$this->block_html   .= '<!-- /wp:group -->';
 	}
@@ -267,7 +269,6 @@ class ProductListMigrationService {
 	 */
 	public function renderProductTemplate(): void {
 		$product_template_attrs = array_merge(
-			$this->attributes ?? array(),
 			array(
 				'style'  => array(
 					'spacing' => array(
@@ -278,7 +279,8 @@ class ProductListMigrationService {
 					'type'        => 'grid',
 					'columnCount' => $this->attributes['columns'] ?? 3,
 				),
-			)
+			),
+			$this->attributes ?? array(),
 		);
 
 		$this->block_html .= '<!-- wp:surecart/product-template ' . wp_json_encode( $product_template_attrs ) . ' -->';

@@ -13,7 +13,28 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				case 'surecart/product-item-title':
 					acc.push([
 						'surecart/product-title',
-						{ ...block.attributes, level: 0 },
+						{
+							level: 3,
+							...block?.attributes,
+							style: {
+								typography: {
+									fontSize: '15px',
+								},
+								spacing: {
+									padding: {
+										top: '0px',
+										...block?.attributes?.style?.spacing
+											?.padding,
+									},
+									margin: {
+										top: '0px',
+										...block?.attributes?.style?.spacing
+											?.margin,
+										bottom: '5px',
+									},
+								},
+							},
+						},
 					]);
 					break;
 				case 'surecart/product-item-price':
@@ -56,7 +77,6 @@ export const newShopTemplate = (attributes, childBlocks) => {
 									margin: { top: '0px', bottom: '0px' },
 								},
 							},
-							layout: { type: 'constrained' },
 						},
 						[
 							[
@@ -68,19 +88,42 @@ export const newShopTemplate = (attributes, childBlocks) => {
 									focalPoint: { x: 0.5, y: 0.5 },
 									contentPosition: 'top right',
 									isDark: false,
+									layout: { type: 'default' },
+									...(block.attributes || {}),
 									style: {
-										dimensions: { aspectRatio: '3/4' },
+										dimensions: {
+											aspectRatio: '3/4',
+										},
+										spacing: {
+											margin: {
+												top: '0px',
+												bottom: '15px',
+											},
+										},
 										layout: {
 											selfStretch: 'fit',
 											flexSize: null,
+											...block?.attributes?.layout,
 										},
-										spacing: { margin: { bottom: '15px' } },
-										border: { radius: '10px' },
+										border: {
+											radius: '10px',
+											...block?.attributes?.style?.border,
+										},
 									},
-									layout: { type: 'default' },
-									...(block.attributes || {}),
 								},
-								[],
+								[
+									[
+										'surecart/product-sale-badge',
+										{
+											style: {
+												typography: {
+													fontSize: '12px',
+												},
+												border: { radius: '100px' },
+											},
+										},
+									],
+								],
 							],
 						],
 					];
@@ -157,16 +200,13 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					type: 'grid',
 					columnCount: columns,
 				},
+				...attributes,
 			},
 			[
 				[
 					'core/group',
 					{
-						layout: {
-							type: 'flex',
-							orientation: 'vertical',
-							justifyContent: 'stretch',
-						},
+						style: { spacing: { blockGap: '0' } },
 						...childBlocks[0]?.attributes,
 					}, // Product Item
 					templateChildBlocks,
