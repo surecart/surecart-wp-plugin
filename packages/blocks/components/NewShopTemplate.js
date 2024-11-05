@@ -13,7 +13,25 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				case 'surecart/product-item-title':
 					acc.push([
 						'surecart/product-title',
-						{ ...block.attributes, level: 0 },
+						{
+							level: 0,
+							...block?.attributes,
+							style: {
+								spacing: {
+									padding: {
+										top: '10px',
+										...block?.attributes?.style?.spacing
+											?.padding,
+									},
+									margin: {
+										top: '0px',
+										bottom: '0px',
+										...block?.attributes?.style?.spacing
+											?.margin,
+									},
+								},
+							},
+						},
 					]);
 					break;
 				case 'surecart/product-item-price':
@@ -44,19 +62,27 @@ export const newShopTemplate = (attributes, childBlocks) => {
 						'core/cover',
 						{
 							useFeaturedImage: true,
-							minHeight: 0,
 							dimRatio: 0,
 							isUserOverlayColor: true,
 							focalPoint: { x: 0.5, y: 0.5 },
 							contentPosition: 'top right',
 							isDark: false,
-							style: {
-								dimensions: { aspectRatio: '1/1.33' },
-								layout: { selfStretch: 'fit', flexSize: null },
-								border: { radius: '10px' },
-							},
 							layout: { type: 'default' },
 							...(block.attributes || {}),
+							style: {
+								dimensions: {
+									aspectRatio: '1',
+								},
+								layout: {
+									selfStretch: 'fit',
+									flexSize: null,
+									...block?.attributes?.layout,
+								},
+								border: {
+									radius: '10px',
+									...block?.attributes?.style?.border,
+								},
+							},
 						},
 						[
 							[
@@ -148,12 +174,6 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				[
 					'core/group',
 					{
-						layout: {
-							type: 'flex',
-							orientation: 'vertical',
-							justifyContent: 'stretch',
-							blockGap: '0px',
-						},
 						style: { spacing: { blockGap: '0' } },
 						...childBlocks[0]?.attributes,
 					}, // Product Item
