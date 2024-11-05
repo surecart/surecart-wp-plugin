@@ -273,7 +273,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 					<?php echo esc_html( Currency::format( 15 ) ); ?>
 				</span>
 				<span tabindex="0" class="wp-block-surecart-product-selected-price-interval" style="line-height: 2;">/ <?php echo esc_html__( 'mo', 'surecart' ); ?></span>
-				<span tabindex="0" class="wp-block-surecart-product-sale-badge" style="white-space: pre-wrap; min-width: 1px; border-radius: 15px; font-size: 12px; max-width: 50px; align-self: center">
+				<span tabindex="0" class="wp-block-surecart-product-sale-badge" style="min-width: 1px; padding: 2px 10px; border-radius: 15px; font-size: 12px; max-width: 50px; align-self: center">
 					<?php echo esc_html__( 'Sale', 'surecart' ); ?>
 				</span>
 			</div>
