@@ -14,20 +14,23 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					acc.push([
 						'surecart/product-title',
 						{
-							level: 0,
+							level: 3,
 							...block?.attributes,
 							style: {
+								typography: {
+									fontSize: '15px',
+								},
 								spacing: {
 									padding: {
-										top: '10px',
+										top: '0px',
 										...block?.attributes?.style?.spacing
 											?.padding,
 									},
 									margin: {
 										top: '0px',
-										bottom: '0px',
 										...block?.attributes?.style?.spacing
 											?.margin,
+										bottom: '5px',
 									},
 								},
 							},
@@ -74,7 +77,6 @@ export const newShopTemplate = (attributes, childBlocks) => {
 									margin: { top: '0px', bottom: '0px' },
 								},
 							},
-							layout: { type: 'constrained' },
 						},
 						[
 							[
@@ -91,6 +93,12 @@ export const newShopTemplate = (attributes, childBlocks) => {
 									style: {
 										dimensions: {
 											aspectRatio: '3/4',
+										},
+										spacing: {
+											margin: {
+												top: '0px',
+												bottom: '15px',
+											},
 										},
 										layout: {
 											selfStretch: 'fit',
