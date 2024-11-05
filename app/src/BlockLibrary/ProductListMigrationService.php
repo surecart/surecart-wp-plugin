@@ -203,7 +203,6 @@ class ProductListMigrationService {
 	public function renderImage(): void {
 		$product_image_attrs = array(
 			'useFeaturedImage'   => true,
-			'minHeight'			=> '0px',
 			'dimRatio'           => 0,
 			'isUserOverlayColor' => true,
 			'focalPoint'         => array(
@@ -213,7 +212,7 @@ class ProductListMigrationService {
 			'contentPosition'    => 'top right',
 			'isDark'             => false,
 			'style'              => array(
-				'dimensions' => array( 'aspectRatio' => '1/1.33' ),
+				'dimensions' => array( 'aspectRatio' => '3/4' ),
 				'layout'     => array(
 					'selfStretch' => 'fit',
 					'flexSize'    => null,
@@ -223,7 +222,12 @@ class ProductListMigrationService {
 			),
 		);
 
-		$image  = '<!-- wp:cover ' . wp_json_encode( $product_image_attrs ) . ' -->';
+		$image  = '<!-- wp:cover ' . wp_json_encode(
+			array_merge(
+				$product_image_attrs,
+				$this->getChildBlocksAttributes( 'surecart/product-item-image' ),
+			)
+		) . ' -->';
 		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;">';
 		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
 		$image .= '<div class="wp-block-cover__inner-container">';
@@ -277,7 +281,7 @@ class ProductListMigrationService {
 		$group_styles      = sc_get_block_styles( true, $group_block );
 		$group_classnames  = ! empty( $group_styles['classnames'] ) ? $group_styles['classnames'] : '';
 		$group_css         = ! empty( $group_styles['css'] ) ? $group_styles['css'] : '';
-		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"grid"}} -->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"5px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->';
 		$this->block_html .= '<div class="wp-block-group ' . $group_classnames . '" style="gap:0px;' . $group_css . '">';
 		// Render according to the inner blocks order in old block.
 		if ( ! empty( $this->inner_blocks[0]['innerBlocks'] ) ) {
