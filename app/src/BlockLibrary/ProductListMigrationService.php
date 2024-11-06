@@ -204,6 +204,7 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderImage(): void {
+		$attributes          = $this->getChildBlocksAttributes( 'surecart/product-item-image' );
 		$product_image_attrs = array(
 			'useFeaturedImage'   => true,
 			'minHeight'          => 0,
@@ -216,7 +217,7 @@ class ProductListMigrationService {
 			'contentPosition'    => 'top right',
 			'isDark'             => false,
 			'style'              => array(
-				'dimensions' => array( 'aspectRatio' => '3/4' ),
+				'dimensions' => array( 'aspectRatio' => ! empty( $attributes['ratio'] ) ? $attributes['ratio'] : '3/4' ),
 				'layout'     => array(
 					'selfStretch' => 'fit',
 					'flexSize'    => null,
@@ -228,12 +229,7 @@ class ProductListMigrationService {
 
 		$image  = '<!-- wp:group {"style":{"color":{"background":"#0000000d"},"border":{"radius":"10px"},"spacing":{"padding":{"top":"0px","bottom":"0px","left":"0px","right":"0px"},"margin":{"top":"0px","bottom":"0px"}}},"layout":{"type":"constrained"}} -->';
 		$image .= '<div class="wp-block-group has-background" style="border-radius:10px;background-color:#0000000d;margin-top:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px">';
-		$image .= '<!-- wp:cover ' . wp_json_encode(
-			array_replace_recursive(
-				$product_image_attrs,
-				$this->getChildBlocksAttributes( 'surecart/product-item-image' ),
-			)
-		) . ' -->';
+		$image .= '<!-- wp:cover ' . wp_json_encode( array_replace_recursive( $product_image_attrs, $attributes ) ) . ' -->';
 		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;">';
 		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
 		$image .= '<div class="wp-block-cover__inner-container">';

@@ -36,6 +36,11 @@ export default ({ clientId, blockType, attributes }) => {
 					ids: ids,
 					type: attributes?.type,
 					align: attributes?.align,
+					metadata: {
+						categories: ['surecart_shop'],
+						patternName: 'surecart-list-standard',
+						name: 'Standard',
+					},
 				},
 				createBlocksFromInnerBlocksTemplate(newShop)
 			),

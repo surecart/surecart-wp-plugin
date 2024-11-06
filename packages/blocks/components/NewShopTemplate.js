@@ -19,18 +19,22 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							style: {
 								typography: {
 									fontSize: '15px',
+									...(block?.attributes?.style?.typography ||
+										{}),
 								},
 								spacing: {
+									...(block?.attributes?.style?.spacing ||
+										{}),
 									padding: {
 										top: '0px',
-										...block?.attributes?.style?.spacing
-											?.padding,
+										...(block?.attributes?.style?.spacing
+											?.padding || {}),
 									},
 									margin: {
 										top: '0px',
-										...block?.attributes?.style?.spacing
-											?.margin,
 										bottom: '5px',
+										...(block?.attributes?.style?.spacing
+											?.margin || {}),
 									},
 								},
 							},
@@ -89,10 +93,13 @@ export const newShopTemplate = (attributes, childBlocks) => {
 									contentPosition: 'top right',
 									isDark: false,
 									layout: { type: 'default' },
-									...(block.attributes || {}),
+									...(block?.attributes || {}),
 									style: {
+										...(block?.attributes?.style || {}),
 										dimensions: {
-											aspectRatio: '3/4',
+											aspectRatio:
+												block.attributes?.ratio ||
+												'3/4',
 										},
 										spacing: {
 											margin: {
@@ -103,11 +110,13 @@ export const newShopTemplate = (attributes, childBlocks) => {
 										layout: {
 											selfStretch: 'fit',
 											flexSize: null,
-											...block?.attributes?.layout,
+											...(block?.attributes?.layout ||
+												{}),
 										},
 										border: {
 											radius: '10px',
-											...block?.attributes?.style?.border,
+											...(block?.attributes?.style
+												?.border || {}),
 										},
 									},
 								},
@@ -206,7 +215,6 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				[
 					'core/group',
 					{
-						style: { spacing: { blockGap: '0' } },
 						...childBlocks[0]?.attributes,
 					}, // Product Item
 					templateChildBlocks,
