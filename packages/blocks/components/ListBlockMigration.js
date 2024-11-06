@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { select } from '@wordpress/data';
 import {
@@ -39,7 +40,7 @@ export default ({ clientId, blockType, attributes }) => {
 					metadata: {
 						categories: ['surecart_shop'],
 						patternName: 'surecart-list-standard',
-						name: 'Standard',
+						name: __('Product List (Migrated)', 'surecart'),
 					},
 				},
 				createBlocksFromInnerBlocksTemplate(newShop)
