@@ -40,6 +40,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					acc.push(price);
 					break;
 				case 'surecart/product-item-image':
+					const { style, ...attributes } = block.attributes;
 					acc.push([
 						'core/cover',
 						{
@@ -54,9 +55,10 @@ export const newShopTemplate = (attributes, childBlocks) => {
 								layout: { selfStretch: 'fit', flexSize: null },
 								spacing: { margin: { bottom: '15px' } },
 								border: { radius: '10px' },
+								...(style ? style : {}),
 							},
 							layout: { type: 'default' },
-							...(block.attributes || {}),
+							...(attributes || {}),
 						},
 						[],
 					]);
@@ -137,11 +139,6 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				[
 					'core/group',
 					{
-						layout: {
-							type: 'flex',
-							orientation: 'vertical',
-							justifyContent: 'stretch',
-						},
 						...childBlocks[0]?.attributes,
 					}, // Product Item
 					templateChildBlocks,
