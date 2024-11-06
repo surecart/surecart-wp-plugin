@@ -36,6 +36,7 @@ import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
 import MetaBoxes from './modules/MetaBoxes';
+import Taxonomies from './modules/Taxonomies';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -342,7 +343,11 @@ export default ({ id, setBrowserURL }) => {
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
-
+						<Taxonomies
+							post={post}
+							loading={loadingPost}
+							product={product}
+						/>
 						<Advanced
 							product={product}
 							updateProduct={editProduct}
