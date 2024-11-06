@@ -51,7 +51,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							contentPosition: 'top right',
 							isDark: false,
 							style: {
-								dimensions: { aspectRatio: '3/4' },
+								dimensions: { aspectRatio: '1/1.33' },
 								layout: { selfStretch: 'fit', flexSize: null },
 								spacing: { margin: { bottom: '15px' } },
 								border: { radius: '10px' },
