@@ -222,6 +222,15 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				],
 			],
 		],
-		pagination_enabled && ['surecart/product-pagination'],
+		pagination_enabled && [
+			'surecart/product-pagination',
+			attributes?.pagination_size && {
+				style: {
+					typography: {
+						fontSize: attributes?.pagination_size,
+					},
+				},
+			},
+		],
 	].filter(Boolean);
 };

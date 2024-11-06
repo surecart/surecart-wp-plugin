@@ -97,6 +97,11 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderProductList(): void {
+		if ( ! isset( $this->attributes['query'] ) ) {
+			$this->attributes['query'] = [];
+		}
+		$this->attributes['query']['perPage'] = $this->attributes['limit'] ?? 8;
+
 		$this->block_html .= '<!-- wp:surecart/product-list' . ( ! empty( $this->attributes ) ? ' ' . wp_json_encode( $this->attributes ) : '' ) . ' -->';
 
 		$this->renderSortFilterAndSearch();
