@@ -121,6 +121,14 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderSortFilterAndSearch(): void {
+		// we don't have any of these items enabled, so we don't need to render anything.
+		$sort_enabled       = wp_validate_boolean( $this->attributes['sort_enabled'] ?? true );
+		$collection_enabled = wp_validate_boolean( $this->attributes['collection_enabled'] ?? true );
+		$search_enabled     = wp_validate_boolean( $this->attributes['search_enabled'] ?? true );
+		if ( ! $sort_enabled && ! $collection_enabled && ! $search_enabled ) {
+			return;
+		}
+
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->';
 		$this->block_html .= '<div class="wp-block-group" style="margin-bottom:10px">';
 
