@@ -13,7 +13,32 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				case 'surecart/product-item-title':
 					acc.push([
 						'surecart/product-title',
-						{ ...block.attributes, level: 0 },
+						{
+							level: 3,
+							...block?.attributes,
+							style: {
+								typography: {
+									fontSize: '15px',
+									...(block?.attributes?.style?.typography ||
+										{}),
+								},
+								spacing: {
+									...(block?.attributes?.style?.spacing ||
+										{}),
+									padding: {
+										top: '0px',
+										...(block?.attributes?.style?.spacing
+											?.padding || {}),
+									},
+									margin: {
+										top: '0px',
+										bottom: '5px',
+										...(block?.attributes?.style?.spacing
+											?.margin || {}),
+									},
+								},
+							},
+						},
 					]);
 					break;
 				case 'surecart/product-item-price':
@@ -40,26 +65,78 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					acc.push(price);
 					break;
 				case 'surecart/product-item-image':
-					acc.push([
-						'core/cover',
+					const image = [
+						'core/group',
 						{
-							useFeaturedImage: true,
-							dimRatio: 0,
-							isUserOverlayColor: true,
-							focalPoint: { x: 0.5, y: 0.5 },
-							contentPosition: 'top right',
-							isDark: false,
 							style: {
-								dimensions: { aspectRatio: '3/4' },
-								layout: { selfStretch: 'fit', flexSize: null },
-								spacing: { margin: { bottom: '15px' } },
+								color: { background: '#0000000d' },
 								border: { radius: '10px' },
+								spacing: {
+									padding: {
+										top: '0px',
+										bottom: '0px',
+										left: '0px',
+										right: '0px',
+									},
+									margin: { top: '0px', bottom: '0px' },
+								},
 							},
-							layout: { type: 'default' },
-							...(block.attributes || {}),
 						},
-						[],
-					]);
+						[
+							[
+								'core/cover',
+								{
+									useFeaturedImage: true,
+									dimRatio: 0,
+									isUserOverlayColor: true,
+									focalPoint: { x: 0.5, y: 0.5 },
+									contentPosition: 'top right',
+									isDark: false,
+									layout: { type: 'default' },
+									...(block?.attributes || {}),
+									style: {
+										...(block?.attributes?.style || {}),
+										dimensions: {
+											aspectRatio:
+												block.attributes?.ratio ||
+												'3/4',
+										},
+										spacing: {
+											margin: {
+												top: '0px',
+												bottom: '15px',
+											},
+										},
+										layout: {
+											selfStretch: 'fit',
+											flexSize: null,
+											...(block?.attributes?.layout ||
+												{}),
+										},
+										border: {
+											radius: '10px',
+											...(block?.attributes?.style
+												?.border || {}),
+										},
+									},
+								},
+								[
+									[
+										'surecart/product-sale-badge',
+										{
+											style: {
+												typography: {
+													fontSize: '12px',
+												},
+												border: { radius: '100px' },
+											},
+										},
+									],
+								],
+							],
+						],
+					];
+					acc.push(image);
 					break;
 			}
 			return acc;
@@ -132,16 +209,13 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					type: 'grid',
 					columnCount: columns,
 				},
+				...attributes,
 			},
 			[
 				[
 					'core/group',
 					{
-						layout: {
-							type: 'flex',
-							orientation: 'vertical',
-							justifyContent: 'stretch',
-						},
+						style: { spacing: { blockGap: '0' } },
 						...childBlocks[0]?.attributes,
 					}, // Product Item
 					templateChildBlocks,
