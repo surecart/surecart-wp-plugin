@@ -207,8 +207,26 @@ class ProductListMigrationService {
 	 * @return void
 	 */
 	public function renderTitle(): void {
-		$product_title_attrs = wp_json_encode( $this->getChildBlocksAttributes( 'surecart/product-item-title' ), JSON_FORCE_OBJECT );
-		$this->block_html   .= '<!-- wp:surecart/product-title ' . $product_title_attrs . ' /-->';
+		$product_title_attrs = $this->getChildBlocksAttributes( 'surecart/product-item-title' );
+		if ( ! isset( $product_title_attrs['style'] ) ) {
+			$product_title_attrs['style'] = array();
+		}
+		if ( ! isset( $product_title_attrs['style']['spacing'] ) ) {
+			$product_title_attrs['style']['spacing'] = array();
+		}
+
+		// this is the default.
+		if ( isset( $product_title_attrs['style']['spacing']['padding']['top'] ) && $product_title_attrs['style']['spacing']['padding']['top'] === '10px' ) {
+			$product_title_attrs['style']['spacing']['margin'] = array_merge(
+				$product_title_attrs['style']['spacing']['margin'] ?? array(),
+				array(
+					'bottom' => $product_title_attrs['style']['spacing']['margin']['bottom'] ?? '0px',
+					'top'    => '0px',
+				),
+			);
+		}
+
+		$this->block_html .= '<!-- wp:surecart/product-title ' . wp_json_encode( $product_title_attrs, JSON_FORCE_OBJECT ) . ' /-->';
 	}
 
 	/**
@@ -242,7 +260,7 @@ class ProductListMigrationService {
 
 		$image  = '<!-- wp:group {"style":{"color":{"background":"#0000000d"},"border":{"radius":"10px"},"spacing":{"padding":{"top":"0px","bottom":"0px","left":"0px","right":"0px"},"margin":{"top":"0px","bottom":"0px"}}},"layout":{"type":"constrained"}} -->';
 		$image .= '<div class="wp-block-group has-background" style="border-radius:10px;background-color:#0000000d;margin-top:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px">';
-		$image .= '<!-- wp:cover ' . wp_json_encode( array_replace_recursive( $product_image_attrs, $attributes ) ) . ' -->';
+		$image .= '<!-- wp:cover ' . wp_json_encode( array_replace_recursive( $product_image_attrs, [] ) ) . ' -->';
 		$image .= '<div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;">';
 		$image .= '<span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>';
 		$image .= '<div class="wp-block-cover__inner-container">';
