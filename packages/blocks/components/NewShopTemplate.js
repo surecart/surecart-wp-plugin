@@ -145,45 +145,49 @@ export const newShopTemplate = (attributes, childBlocks) => {
 	);
 
 	return [
-		[
-			'core/group',
-			{
-				layout: {
-					type: 'flex',
-					justifyContent: 'space-between',
-				},
-				style: {
-					spacing: {
-						margin: {
-							bottom: '10px',
-						},
-					},
-				},
-			},
+		(!!sort_enabled || !!collection_enabled || !!search_enabled) &&
 			[
-				[
-					'core/group',
-					{
-						layout: { type: 'flex', flexWrap: 'nowrap' },
+				'core/group',
+				{
+					layout: {
+						type: 'flex',
+						justifyContent: 'space-between',
 					},
-					[
-						sort_enabled && ['surecart/product-list-sort', {}],
-						collection_enabled && [
-							'surecart/product-list-filter',
-							{},
-						],
-					].filter(Boolean),
-				],
-				search_enabled && [
-					'surecart/product-list-search',
-					{
-						style: {
-							layout: { selfStretch: 'fixed', flexSize: '250px' },
+					style: {
+						spacing: {
+							margin: {
+								bottom: '10px',
+							},
 						},
 					},
-				],
+				},
+				[
+					[
+						'core/group',
+						{
+							layout: { type: 'flex', flexWrap: 'nowrap' },
+						},
+						[
+							sort_enabled && ['surecart/product-list-sort', {}],
+							collection_enabled && [
+								'surecart/product-list-filter',
+								{},
+							],
+						].filter(Boolean),
+					],
+					search_enabled && [
+						'surecart/product-list-search',
+						{
+							style: {
+								layout: {
+									selfStretch: 'fixed',
+									flexSize: '250px',
+								},
+							},
+						},
+					],
+				].filter(Boolean),
 			].filter(Boolean),
-		],
 		collection_enabled &&
 			[
 				'core/group',
