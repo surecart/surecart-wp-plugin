@@ -215,6 +215,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				[
 					'core/group',
 					{
+						style: { spacing: { blockGap: '0' } },
 						...childBlocks[0]?.attributes,
 					}, // Product Item
 					templateChildBlocks,
