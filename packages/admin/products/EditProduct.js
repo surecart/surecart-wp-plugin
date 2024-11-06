@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { Global, css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
+import { external } from '@wordpress/icons';
+import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useState } from '@wordpress/element';
@@ -282,6 +284,17 @@ export default ({ id, setBrowserURL }) => {
 							onDelete={onDeleteProduct}
 							onToggleArchive={onToggleArchiveProduct}
 						/>
+
+						{!!product?.permalink && (
+							<Button
+								icon={external}
+								label={__('View Product Page', 'surecart')}
+								href={product?.permalink}
+								showTooltip={true}
+								size="compact"
+								target="_blank"
+							/>
+						)}
 
 						<BuyLink
 							product={product}

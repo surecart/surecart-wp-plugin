@@ -2,7 +2,6 @@
 
 namespace SureCart\WordPress\Shortcodes;
 
-use SureCart;
 use SureCart\WordPress\Assets\BlockAssetsLoadService;
 /**
  * The shortcodes service.
@@ -136,9 +135,12 @@ class ShortcodesService {
 
 				// we need to remove this since this is processed twice for some blocks.
 				add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
-				$old_block = \SureCart::block()
-				->productPageBlocksMigration( $block, $this->old_blocks_by_name[ $block_name ] )
-				->maybeRenderOldBlockFromShortcode( $name );
+
+				if ( ! empty( $this->old_blocks_by_name[ $block_name ] ) ) {
+					$old_block = \SureCart::block()
+						->productPageBlocksMigration( $block, $this->old_blocks_by_name[ $block_name ] )
+						->maybeRenderOldBlockFromShortcode( $name );
+				}
 
 				if ( ! empty( $old_block ) ) {
 					remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
