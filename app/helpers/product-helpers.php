@@ -3,7 +3,7 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
 	 * Get the product.
 	 *
-	 * @param \WP_Post|int $post The product post.
+	 * @param \WP_Post|int|string $post The product post.
 	 *
 	 * @return \SureCart\Models\Product|null
 	 */
@@ -13,8 +13,21 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 			return get_query_var( 'surecart_current_product' );
 		}
 
-		// make sure to get the post.
-		$post = get_post( $post );
+		// allow getting the product by sc_id.
+		if ( is_string( $post ) ) {
+			$posts = get_posts(
+				[
+					'post_type'  => 'sc_product',
+					'meta_query' => [
+						'key'   => 'sc_id',
+						'value' => $post,
+					],
+				]
+			);
+			$post  = count( $posts ) > 0 ? $posts[0] : get_post( $post );
+		} else {
+			$post = get_post( $post );
+		}
 
 		// no post.
 		if ( ! $post ) {
