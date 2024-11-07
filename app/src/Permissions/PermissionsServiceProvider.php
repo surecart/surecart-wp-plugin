@@ -2,9 +2,6 @@
 
 namespace SureCart\Permissions;
 
-use SureCart\Models\Charge;
-use SureCart\Models\Subscription;
-use SureCart\Models\User;
 use SureCart\Permissions\RolesService;
 use SureCart\Permissions\AdminAccessService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
@@ -12,8 +9,7 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
 /**
  * Handles the request service
  */
-class RolesServiceProvider implements ServiceProviderInterface {
-
+class PermissionsServiceProvider implements ServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 *
@@ -30,6 +26,10 @@ class RolesServiceProvider implements ServiceProviderInterface {
 
 		$container['surecart.permissions.prevent'] = function () {
 			return new AdminAccessService();
+		};
+
+		$container['surecart.permissions.salts'] = function () {
+			return new SureCartSaltService();
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
