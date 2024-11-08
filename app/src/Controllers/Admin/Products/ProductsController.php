@@ -199,6 +199,7 @@ class ProductsController extends AdminController {
 				$taxonomy_paths = [];
 				foreach ( $taxonomies as $taxonomy ) {
 					$taxonomy_paths[] = '/wp/v2/taxonomies/' . $taxonomy . '?context=edit';
+					$taxonomy_paths[] = '/wp/v2/' . $taxonomy;
 				}
 			}
 
@@ -218,6 +219,7 @@ class ProductsController extends AdminController {
 						'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
 						'/wp/v2/taxonomies?context=view',
 						'/wp/v2/taxonomies?context=edit&per_page=100',
+						'/wp/v2/sc_product?context=edit&sc_id[0]=' . $product->id . '&per_page=1&_locale=user',
 						'/surecart/v1/products/' . $product->id . '?context=edit',
 						'/surecart/v1/integrations?context=edit&model_ids[0]=' . $product->id . '&per_page=50',
 						'/surecart/v1/integration_providers?context=edit',

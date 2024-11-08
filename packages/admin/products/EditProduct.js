@@ -61,6 +61,10 @@ export default ({ id, setBrowserURL }) => {
 		select('surecart/metaboxes').isSavingMetaBoxes()
 	);
 
+	const currentPost = useSelect((select) =>
+		select('core/editor').getCurrentPost()
+	);
+
 	const { post, loadingPost } = useSelect(
 		(select) => {
 			const queryArgs = [
@@ -344,8 +348,7 @@ export default ({ id, setBrowserURL }) => {
 							loading={!hasLoadedProduct}
 						/>
 						<Taxonomies
-							post={post}
-							loading={loadingPost}
+							currentPost={currentPost}
 							product={product}
 						/>
 						<Advanced

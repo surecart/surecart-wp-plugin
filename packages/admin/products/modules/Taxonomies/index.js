@@ -5,7 +5,10 @@ import { PostTaxonomiesFlatTermSelector } from '@wordpress/editor';
 import { HierarchicalTermSelector } from './hierarchical-term-selector';
 import Box from '../../../ui/Box';
 
-export default ({ post, loading }) => {
+export default ({ currentPost }) => {
+	if (!currentPost) {
+		return null;
+	}
 	// get all taxonomies.
 	const taxonomies = useSelect(
 		(select) => select(coreStore).getTaxonomies({ per_page: -1 }),
@@ -16,7 +19,7 @@ export default ({ post, loading }) => {
 	const visibleTaxonomies = (taxonomies ?? [])
 		.filter(
 			(taxonomy) =>
-				taxonomy.types.includes(post?.type) &&
+				taxonomy.types.includes(currentPost?.type) &&
 				taxonomy?.slug !== 'sc_collection'
 		)
 		?.sort((a, b) => a?.name?.localeCompare(b?.name));
