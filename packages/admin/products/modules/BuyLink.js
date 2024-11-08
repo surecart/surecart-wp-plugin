@@ -11,7 +11,7 @@ import {
 	ScSwitch,
 } from '@surecart/components-react';
 import { ScFormControl } from '@surecart/components-react';
-import { useSetting } from '@wordpress/block-editor';
+import { useSettings } from '@wordpress/block-editor';
 import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
@@ -35,7 +35,7 @@ export default ({ product, updateProduct, loading }) => {
 	);
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',
