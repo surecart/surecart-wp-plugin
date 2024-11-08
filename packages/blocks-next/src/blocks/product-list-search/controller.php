@@ -2,7 +2,7 @@
 use SureCart\Models\Blocks\ProductListBlock;
 
 // we have already defined a search query.
-if ( empty( $block->context['query']['search'] ) ) {
+if ( ! empty( $block->context['query']['search'] ) ) {
 	return null;
 }
 
