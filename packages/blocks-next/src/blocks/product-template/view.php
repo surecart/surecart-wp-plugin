@@ -34,7 +34,7 @@ echo wp_kses_data( get_block_wrapper_attributes( $wrapper_attributes ) );
 
 		$change_thumbnail_size = static function ( $size, $post_id ) use ( $product_post_id ) {
 			if ( $post_id === $product_post_id ) {
-				return apply_filters( 'surecart/product-list/thumbnail-size', 'large', $post_id );
+				return apply_filters( 'surecart/product-list/thumbnail-cover-size', 'large', $post_id );
 			}
 			return $size;
 		};
