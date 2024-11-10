@@ -227,6 +227,7 @@ class Product extends Model implements PageModel {
 		// get the product and decode it.
 		$product = get_post_meta( $this->post->ID, 'product', true );
 		$product = is_string( $product ) ? json_decode( get_post_meta( $this->post->ID, 'product', true ) ) : $product;
+		$product = (object) $product;
 		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
 			return false;
 		}
