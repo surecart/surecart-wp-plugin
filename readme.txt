@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.6
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,10 +305,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.0.0 - November 11th, 2024 =
+= 3.0.1 - November 11th, 2024 =
 
 SureCart 3.0 is here! [Read The Upgrade Guide](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
+- Improvement: Update Interactivity API search and cart functions to work with upcoming WordPress 6.7 release.
+- Fix: Issue with invoices not clearing cart once purchased.
+
+= 3.0.0 - November 11th, 2024 =
 - New: Completely rebuilt Shop, Product, and Cart systems using the Interactivity API for better performance and customization.
 - New: Variant images - automatically show/hide images based on the selected variation.
 - New: Bricks Builder integration.
