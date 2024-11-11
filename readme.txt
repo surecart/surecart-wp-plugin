@@ -306,6 +306,9 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.0.0 - November 11th, 2024 =
+
+SureCart 3.0 is here! [Read The Upgrade Guide](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
 - New: Completely rebuilt Shop, Product, and Cart systems using the Interactivity API for better performance and customization.
 - New: Variant images - automatically show/hide images based on the selected variation.
 - New: Bricks Builder integration.
@@ -320,7 +323,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Improvement: Realtime search of products on shop page.
 - Improvement: Slide out cart traps focus for better accessibility.
 - Improvement: Quick view icon to view product from edit product page.
-- Improvement: Upsells are not out of beta.
+- Improvement: Upsells are now out of beta.
 - Improvement: Move SureCart admin menu to further up to help with navigation, due to the number of submenu items.
 
 = 2.40.1 - October 30th, 2024 =

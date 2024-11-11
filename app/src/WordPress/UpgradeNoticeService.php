@@ -109,6 +109,12 @@ class UpgradeNoticeService {
 						)
 					);
 					?>
+					<p>
+						<?php echo esc_html__( 'If you are updating from a version prior to 3.0.0, please read the upgrade guide for important information about the changes in this version.', 'surecart' ); ?>
+					</p>
+					<p>
+						<a href="https://surecart.com/docs/upgrading-to-surecart-v3/" class="button button-primary" target="_blank"><?php echo esc_html__( 'Read the Upgrade Guide', 'surecart' ); ?></a>
+					</p>
 				</div>
 			</div>
 		</div>
