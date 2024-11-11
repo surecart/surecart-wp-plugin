@@ -43,6 +43,27 @@ class CompatibilityService {
 		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
 			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 		}
+
+		add_action( 'render_block', [ $this, 'fixKadenceAccordionPaneButtonType' ], 10, 2 );
+	}
+
+	/**
+	 * Adds type="button" to the button in the Kadence Accordion Pane.
+	 * This prevents the button from submitting the form.
+	 *
+	 * @param string $content Block content.
+	 * @param array  $block Block data.
+	 *
+	 * @return string
+	 */
+	public function fixKadenceAccordionPaneButtonType( $content, $block ) {
+		if ( 'kadence/pane' === $block['blockName'] ) {
+			$processor = new \WP_HTML_Tag_Processor( $content );
+			$processor->next_tag( 'button' );
+			$processor->set_attribute( 'type', 'button' );
+			return $processor->get_updated_html();
+		}
+		return $content;
 	}
 
 	/**
