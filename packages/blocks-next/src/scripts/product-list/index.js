@@ -24,39 +24,7 @@ const isValidEvent = (event) =>
 	!event.shiftKey &&
 	!event.defaultPrevented;
 
-/** Debounce function that returns a promise when callback is complete. */
-function debounce(func, delay) {
-	let timeoutId;
-	return function () {
-		return new Promise((resolve) => {
-			clearTimeout(timeoutId);
-			timeoutId = setTimeout(async () => {
-				await func.apply(this, arguments);
-				resolve();
-			}, delay);
-		});
-	};
-}
-
-// Define a debounced version of the search function
-const debouncedSearch = debounce(
-	async (term, routerState, actions, urlPrefix) => {
-		// Get the current URL.
-		const url = new URL(routerState?.url);
-
-		// reset to page 1.
-		url.searchParams.delete(`${urlPrefix}-page`);
-
-		// set param or delete it if term is empty
-		term
-			? url.searchParams.set(`${urlPrefix}-search`, term)
-			: url.searchParams.delete(`${urlPrefix}-search`);
-
-		// Navigate to the new URL.
-		return actions.navigate(url.toString(), { replace: true });
-	},
-	500
-);
+let supersedePreviousSearch = null;
 
 const { state } = store('surecart/product-list', {
 	state: {
@@ -102,28 +70,69 @@ const { state } = store('surecart/product-list', {
 			}
 		},
 		/** Handle search input. */
-		*onSearchInput(event) {
-			event.preventDefault();
-			const { actions, state: routerState } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			const { ref } = getElement();
-			const { urlPrefix } = getContext();
+		*onSearchInput(e) {
+			e.preventDefault();
+
+			const { value } = e.target;
+
+			const ctx = getContext();
+
+			// Don't navigate if the search didn't really change.
+			if (value === ctx.search) {
+				return;
+			}
+
+			// immediately update the UI.
+			ctx.search = value;
+
+			state.searching = true;
+
+			// Debounce the search by 500ms to prevent multiple navigations.
+			supersedePreviousSearch?.();
+			const { promise, resolve, reject } = Promise.withResolvers();
+			const timeout = setTimeout(resolve, 500);
+			supersedePreviousSearch = () => {
+				clearTimeout(timeout);
+				reject();
+			};
+			try {
+				yield promise;
+			} catch {
+				return;
+			}
+
+			// Get the current URL.
+			const url = new URL(window.location.href);
+
+			// reset to page 1.
+			url.searchParams.delete(`${ctx.urlPrefix}-page`);
+
+			// set param or delete it if value is empty
+			value
+				? url.searchParams.set(`${ctx.urlPrefix}-search`, value)
+				: url.searchParams.delete(`${ctx.urlPrefix}-search`);
 
 			state.loading = true;
 			state.searching = true;
-			yield debouncedSearch(ref?.value, routerState, actions, urlPrefix);
+
+			const { actions: routerActions } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+
+			routerActions.navigate(url.href);
+
 			const { products } = getContext();
 			const scSearchedEvent = new CustomEvent('scSearched', {
 				detail: {
-					searchString: ref?.value,
+					searchString: value,
 					searchResultCount: products?.length,
 					searchResultIds: products?.map((product) => product.id),
 				},
 				bubbles: true,
 			});
 			document.dispatchEvent(scSearchedEvent);
+
 			state.loading = false;
 			state.searching = false;
 		},
@@ -139,15 +148,28 @@ const { state } = store('surecart/product-list', {
 
 			event.preventDefault();
 
-			const { actions, state: routerState } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			const { urlPrefix } = getContext();
+			const ctx = getContext();
+
+			// immediately update the UI.
+			ctx.search = '';
 
 			state.loading = true;
 			state.searching = true;
-			yield debouncedSearch('', routerState, actions, urlPrefix);
+
+			// Get the current URL.
+			const url = new URL(window.location.href);
+
+			// reset to page 1.
+			url.searchParams.delete(`${ctx.urlPrefix}-page`);
+			url.searchParams.delete(`${ctx.urlPrefix}-search`);
+
+			const { actions: routerActions } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+
+			routerActions.navigate(url.href);
+
 			state.loading = false;
 			state.searching = false;
 		},
