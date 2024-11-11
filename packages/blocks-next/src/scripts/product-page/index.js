@@ -185,10 +185,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the checkout url based on the built line item.
 		 */
 		get checkoutUrl() {
-			const { checkoutUrl, addToCart } = getContext();
-			if (addToCart) {
-				return '';
-			}
+			const { checkoutUrl } = getContext();
 			return addQueryArgs(checkoutUrl, {
 				line_items: [state.lineItem],
 				no_cart: true,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-31T17:01:30",
+  "timestamp": "2024-11-01T20:21:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -21511,28 +21511,6 @@
           "required": false
         },
         {
-          "name": "cdnRoot",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "cdn-root",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "window.scData?.cdn_root",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "showControl",
           "type": "boolean",
           "complexType": {
@@ -21555,48 +21533,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scAddLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "complexType": {
-            "original": "LineItemData",
-            "resolved": "LineItemData",
-            "references": {
-              "LineItemData": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::LineItemData"
-              }
-            }
-          },
-          "cancelable": true,
-          "composed": true,
-          "docs": "Add line item event",
-          "docsTags": []
-        },
-        {
-          "event": "scRemoveLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "complexType": {
-            "original": "LineItemData",
-            "resolved": "LineItemData",
-            "references": {
-              "LineItemData": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::LineItemData"
-              }
-            }
-          },
-          "cancelable": true,
-          "composed": true,
-          "docs": "Remove line item event",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -44961,7 +44898,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::PaymentMethod": {
-      "declaration": "export interface PaymentMethod extends Object {\n  id: string;\n  object: 'payment_method';\n  live_mode: boolean;\n  external_payment_method_id: string;\n  processor_type: 'stripe' | 'paypal';\n  paypal_account: any;\n  type: string;\n  bank_account: BankAccount | string;\n  payment_instrument: PaymentInstrument | string;\n  payment_intent: PaymentIntent | string;\n  billing_agreement?: BillingAgreement | string;\n  card: any;\n  customer: Customer | string;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface PaymentMethod extends Object {\n  id: string;\n  object: 'payment_method';\n  live_mode: boolean;\n  external_payment_method_id: string;\n  processor_type: 'stripe' | 'paypal';\n  paypal_account: any;\n  type: string;\n  bank_account: BankAccount | string;\n  payment_instrument: PaymentInstrument | string;\n  payment_method_name: string;\n  payment_intent: PaymentIntent | string;\n  billing_agreement?: BillingAgreement | string;\n  card: any;\n  customer: Customer | string;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

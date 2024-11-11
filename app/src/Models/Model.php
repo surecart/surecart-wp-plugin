@@ -440,6 +440,16 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	}
 
 	/**
+	 * Get the metadata attribute.
+	 * This makes sure the metadata is always an object.
+	 *
+	 * @return object
+	 */
+	public function getMetadataAttribute() {
+		return (object) ( $this->attributes['metadata'] ?? [] );
+	}
+
+	/**
 	 * Get the person who created it.
 	 *
 	 * @return int|false
@@ -478,16 +488,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	}
 
 	/**
-	 * Get the metadata attribute.
-	 * This makes sure the metadata is always an object.
-	 *
-	 * @return object
-	 */
-	public function getMetadataAttribute() {
-		return (object) $this->attributes['metadata'];
-	}
-
-	/**
 	 * Calls a mutator based on set{Attribute}Attribute
 	 *
 	 * @param string $key Attribute key.
@@ -514,20 +514,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 *
 	 * @return self
 	 */
-	public function setMetadataAttributes( $meta_data ) {
-		$this->attributes['metadata'] = apply_filters( "surecart/$this->object_name/set_meta_data", $meta_data );
-		return $this;
-	}
-
-	/**
-	 * Set a single meta data attribute
-	 *
-	 * @param string $key Meta data key.
-	 * @param string $data Meta data value.
-	 * @return self
-	 */
-	public function addToMetaData( $key, $data ) {
-		$this->setMetaDataAttributes( array_merge( $this->attributes['metadata'] ?? [], [ $key => $data ] ) );
+	public function setMetadataAttribute( $meta_data ) {
+		$this->attributes['metadata'] = (object) apply_filters( "surecart/$this->object_name/set_meta_data", $meta_data );
 		return $this;
 	}
 
@@ -870,8 +858,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		// add created by WordPress param.
 		$user_id = get_current_user_id();
-		if ( $user_id ) {
-			$this->addToMetaData( 'wp_created_by', $user_id );
+		if ( $user_id && isset( $this->metadata ) ) {
+			$this->metadata->wp_created_by = $user_id;
 		}
 
 		$created = $this->makeRequest(
@@ -1119,7 +1107,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @param mixed  $value The value to cache.
 	 * @return void
 	 */
-	protected function setCachedAttribute( $key, $value ) {
+	protected function setAttributeCache( $key, $value ) {
 		if ( ! isset( self::$attribute_cache ) ) {
 			self::$attribute_cache = [];
 		}
@@ -1190,7 +1178,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( method_exists( get_parent_class($this), $method ) ) {
+			if ( ! method_exists( get_class( $this ), $method ) ) {
 				continue;
 			}
 

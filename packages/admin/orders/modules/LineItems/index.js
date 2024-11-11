@@ -71,41 +71,6 @@ export default ({ order, checkout, loading }) => {
 		);
 	};
 
-	const { charge, loadedCharge } = useSelect(
-		(select) => {
-			if (!checkout?.id) {
-				return {
-					charge: {},
-					loading: true,
-				};
-			}
-			const entityData = [
-				'surecart',
-				'charge',
-				{
-					checkout_ids: checkout?.id ? [checkout?.id] : null,
-					expand: [
-						'payment_method',
-						'payment_method.card',
-						'payment_method.payment_instrument',
-						'payment_method.paypal_account',
-						'payment_method.bank_account',
-					],
-				},
-			];
-			return {
-				charge: select(coreStore)?.getEntityRecords?.(
-					...entityData
-				)?.[0],
-				loadedCharge: select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
-			};
-		},
-		[checkout?.id]
-	);
-
 	const selectedShippingMethod = (
 		checkout?.shipping_choices?.data || []
 	)?.find(

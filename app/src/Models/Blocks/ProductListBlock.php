@@ -71,7 +71,13 @@ class ProductListBlock {
 		$query = $this->getQueryContext();
 
 		$offset   = absint( $query['offset'] ?? 0 );
-		$per_page = $this->block->parsed_block['attrs']['limit'] ?? $this->block->context['surecart/product-list/limit'] ?? $query['perPage'] ?? 15;
+		$per_page = $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $query['perPage'] ?? 15;
+		$order    = ! empty( $this->url->getArg( 'order' ) )
+			? sanitize_text_field( $this->url->getArg( 'order' ) )
+			: ( ! empty( $query['order'] ) ? $query['order'] : 'desc' );
+		$orderby  = ! empty( $this->url->getArg( 'orderby' ) )
+			? sanitize_text_field( $this->url->getArg( 'orderby' ) )
+			: ( ! empty( $query['orderBy'] ) ? $query['orderBy'] : 'date' );
 		$page     = $this->url->getCurrentPage();
 
 		// build up the query.
@@ -83,8 +89,8 @@ class ProductListBlock {
 				'posts_per_page'      => $per_page,
 				'offset'              => ( $per_page * ( $page - 1 ) ) + $offset,
 				'paged'               => (int) $this->url->getCurrentPage(),
-				'order'               => sanitize_text_field( $this->url->getArg( 'order' ) ),
-				'orderby'             => sanitize_text_field( $this->url->getArg( 'orderby' ) ),
+				'order'               => $order,
+				'orderby'             => $orderby,
 				's'                   => sanitize_text_field( $this->url->getArg( 'search' ) ),
 			)
 		);
@@ -109,7 +115,7 @@ class ProductListBlock {
 		}
 
 		// put together price query.
-		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
+		if ( 'price' === $orderby ) {
 			$this->query_vars['meta_key'] = 'min_price_amount';
 			$this->query_vars['orderby']  = 'meta_value_num';
 		}

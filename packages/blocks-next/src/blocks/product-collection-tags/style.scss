@@ -1,4 +1,5 @@
-ul.wp-block-surecart-product-collection-tags {
+ul.wp-block-surecart-product-collection-tags,
+.wp-block-surecart-product-page ul.wp-block-surecart-product-collection-tags {
 	display: flex;
 	gap: 3px;
 	width: 100%; // prevent collapsing during loading.

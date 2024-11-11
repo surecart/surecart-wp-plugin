@@ -64,6 +64,7 @@ export default ({
 
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
+		ref: priceContainerRef,
 	});
 	const colorProps = useColorProps(attributes);
 
@@ -115,7 +116,7 @@ export default ({
 			</InspectorControls>
 
 			{blockContexts?.length > 1 ? (
-				<div {...blockProps} ref={priceContainerRef}>
+				<div {...blockProps}>
 					<RichText
 						tagName="label"
 						className={classnames(

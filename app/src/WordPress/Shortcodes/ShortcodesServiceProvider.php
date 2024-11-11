@@ -158,14 +158,14 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_description',
-			'surecart/product-description-old',
+			'surecart/product-description',
 			[
 				'id' => null,
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_title',
-			'surecart/product-title-old',
+			'surecart/product-title',
 			[
 				'level' => 1,
 			]
@@ -189,7 +189,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_media',
-			'surecart/product-media-old',
+			'surecart/product-media',
 			[
 				'auto_height' => true,
 				'id'          => null,
@@ -197,14 +197,14 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_quantity',
-			'surecart/product-quantity-old',
+			'surecart/product-quantity',
 			[
 				'id' => null,
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_cart_button',
-			'surecart/product-buy-button-old',
+			'surecart/product-buy-button',
 			[
 				'add_to_cart' => true,
 				'text'        => __( 'Add To Cart', 'surecart' ),
@@ -239,6 +239,13 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_custom_amount',
+			'surecart/product-selected-price-ad-hoc-amount',
+			[
+				'label' => __( 'Enter an amount', 'surecart' ),
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_page',
 			'surecart/product-page',
 			[
@@ -262,7 +269,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			if ( in_array( $name, $old_shortcode_names, true ) ) {
 				$name = $name . '_new';
 			}
-			
+
 			$container['surecart.shortcodes']->registerBlockShortcodeByName(
 				'sc_' . $name,
 				$metadata['name'],
