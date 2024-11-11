@@ -51,7 +51,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 					amount,
 					reason,
 					charge: charge?.id,
-					revoked_purchases: revokedPurchaseIds,
+					refund_items: revokedPurchaseIds,
 				},
 				{ throwOnError: true }
 			);
