@@ -96,3 +96,11 @@ export const trackOrderBump = (bumpId: string) => {
     keepalive: true, // Important: allow the request to outlive the page.
   });
 };
+
+window.sc = {
+  ...(window?.sc || {}),
+  checkout: {
+    ...(window?.sc?.checkout || {}),
+    addLineItem: addCheckoutLineItem,
+  },
+};

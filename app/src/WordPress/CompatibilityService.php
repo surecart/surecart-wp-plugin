@@ -36,10 +36,48 @@ class CompatibilityService {
 		// Show gutenberg active notice.
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 
+		// Load Divi Compatibility CSS.
+		add_action( 'wp_enqueue_scripts', [ $this, 'diviCompatibility' ] );
+
 		// Load Blocks Global Styles if enabled by Merchant in the setting.
 		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
 			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 		}
+
+		add_action( 'render_block', [ $this, 'fixKadenceAccordionPaneButtonType' ], 10, 2 );
+	}
+
+	/**
+	 * Adds type="button" to the button in the Kadence Accordion Pane.
+	 * This prevents the button from submitting the form.
+	 *
+	 * @param string $content Block content.
+	 * @param array  $block Block data.
+	 *
+	 * @return string
+	 */
+	public function fixKadenceAccordionPaneButtonType( $content, $block ) {
+		if ( 'kadence/pane' === $block['blockName'] ) {
+			$processor = new \WP_HTML_Tag_Processor( $content );
+			$has_tag   = $processor->next_tag( 'button' );
+			if ( $has_tag ) {
+				$processor->set_attribute( 'type', 'button' );
+			}
+			return $processor->get_updated_html();
+		}
+		return $content;
+	}
+
+	/**
+	 * Load Divi Compatibility CSS.
+	 *
+	 * @return void
+	 */
+	public function diviCompatibility() {
+		if ( ! is_plugin_active( 'divi-builder/divi-builder.php' ) ) {
+			return;
+		}
+		wp_enqueue_style( 'surecart-divi-compatibility', plugins_url( 'styles/divi-compatibility.css', SURECART_PLUGIN_FILE ), '', \SureCart::plugin()->version(), 'all' );
 	}
 
 	/** Prevent Yoast SEO from outputing SEO meta tags on our custom pages.

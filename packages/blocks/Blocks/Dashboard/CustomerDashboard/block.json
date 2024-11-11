@@ -2,7 +2,7 @@
 	"name": "surecart/customer-dashboard",
 	"title": "Tabbed Customer Dashboard",
 	"description": "Displays the users customer dashboard.",
-	"category": "surecart",
+	"category": "surecart-customer-dashboard",
 	"keywords": ["name", "customer", "dashboard"],
 	"textdomain": "surecart",
 	"parent": null,

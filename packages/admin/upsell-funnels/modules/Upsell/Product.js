@@ -15,7 +15,6 @@ import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, select } from '@wordpress/data';
 import ModelRow from '../../components/ModelRow';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { intervalString } from '../../../util/translations';
 import LineItemLabel from '../../../ui/LineItemLabel';
 
@@ -43,6 +42,7 @@ export default ({ priceId, onSelect, ...props }) => {
 					expand: [
 						'product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 				}),
@@ -76,9 +76,7 @@ export default ({ priceId, onSelect, ...props }) => {
 				<ScCard slot="trigger" noPadding>
 					<ModelRow
 						icon={'image'}
-						media={getFeaturedProductMediaAttributes(
-							price?.product
-						)}
+						image={price?.product?.line_item_image}
 						loading={loading}
 						suffix={
 							<div

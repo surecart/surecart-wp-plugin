@@ -18,6 +18,16 @@ export const setCheckout = (data: Checkout, formId: number | string) => {
   if (checkoutState.persist === 'url' && data?.id) {
     window.history.replaceState({}, document.title, addQueryArgs(window.location.href, { checkout_id: data?.id }));
   }
+
+  const event = new CustomEvent('scCheckoutUpdated', {
+    detail: {
+      checkout: checkoutState.checkout,
+      formId: checkoutState.formId,
+      mode: checkoutState.mode,
+    },
+    bubbles: true,
+  });
+  document.dispatchEvent(event);
 };
 
 /** Clear the order from the store. */

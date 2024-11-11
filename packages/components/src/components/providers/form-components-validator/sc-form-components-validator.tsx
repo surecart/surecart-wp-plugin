@@ -134,6 +134,22 @@ export class ScFormComponentsValidator {
       return;
     }
 
+    // if we have a customer first name field, require that.
+    const customerFirstName = this.el.querySelector('sc-customer-firstname');
+    const customerLastName = this.el.querySelector('sc-customer-lastname');
+
+    // if we have a customer first name field, require that.
+    if (!!customerFirstName) {
+      customerFirstName.required = true;
+
+      // if we have a customer last name field, require that.
+      if (!!customerLastName) {
+        customerLastName.required = true;
+      }
+
+      return; // we're done here.
+    }
+
     // require the name and show the name input.
     address.requireName = true;
     address.showName = true;

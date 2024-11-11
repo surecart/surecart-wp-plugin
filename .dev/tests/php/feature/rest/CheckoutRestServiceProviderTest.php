@@ -10,8 +10,12 @@ use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\CheckoutRestServiceProvider;
 use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
+use SureCart\Sync\SyncServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\PluginServiceProvider;
+use SureCartAppCore\AppCore\AppCoreServiceProvider;
+use SureCartAppCore\Assets\AssetsServiceProvider;
+use SureCartAppCore\Config\ConfigServiceProvider;
 use WP_REST_Request;
 
 class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
@@ -33,11 +37,18 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 				AccountServiceProvider::class,
 				CheckoutRestServiceProvider::class,
 				RequestServiceProvider::class,
-				ErrorsServiceProvider::class
+				ErrorsServiceProvider::class,
+				SyncServiceProvider::class,
+				ConfigServiceProvider::class,
+				AppCoreServiceProvider::class,
+				AssetsServiceProvider::class,
 			]
 		], false);
 	}
 
+	/**
+	 * @group checkout
+	 */
 	public function test_can_finalize()
 	{
 		$test_form = self::factory()->post->create_and_get(array(
@@ -72,6 +83,9 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame($response->get_status(), 200);
 	}
 
+	/**
+	 * @group checkout
+	 */
 	public function test_form_id_required()
 	{
 		// mock the requests in the container
@@ -213,6 +227,9 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame($response->get_status(), 200);
 	}
 
+	/**
+	 * @group checkout
+	 */
 	public function test_live_payments_are_always_allowed()
 	{
 		// mock the requests in the container
@@ -242,6 +259,9 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame($response->get_status(), 200);
 	}
 
+	/**
+	 * @group checkout
+	 */
 	public function test_has_user_in_response()
 	{
 		// mock the requests in the container
@@ -264,6 +284,9 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame($data['email_exists'], true);
 	}
 
+	/**
+	 * @group checkout
+	 */
 	public function test_must_have_edit_permissions_to_manually_pay()
 	{
 		// mock the requests in the container
@@ -294,6 +317,9 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame(200, $response->get_status());
 	}
 
+	/**
+	 * @group checkout
+	 */
 	public function test_confirm_creates_live_user()
 	{
 		// mock the requests in the container
@@ -329,6 +355,11 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame($user->customerId('live'), 'live_id');
 	}
 
+	/**
+	 * @group checkout
+	 * @group customer
+	 * @group user
+	 */
 	public function test_confirm_creates_test_user()
 	{
 		// mock the requests in the container
@@ -364,6 +395,9 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame($user->customerId('test'), 'test_id');
 	}
 
+	/**
+	 * @group checkout
+	 */
 	public function test_can_cancel()
 	{
 		// mock the requests in the container

@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
-Requires at least: 6.3
+Requires at least: 6.6
 Tested up to: 6.6
-Stable tag: 2.40.1
+Stable tag: 3.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,24 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.0.0 - November 11th, 2024 =
+- New: Completely rebuilt Shop, Product, and Cart systems using the Interactivity API for better performance and customization.
+- New: Variant images - automatically show/hide images based on the selected variation.
+- New: Bricks Builder integration.
+- New: Advanced Custom Fields integration.
+- New: Meta Box integration.
+- New: Product now sync with custom post types for better compatibility with other plugins.
+- New: Products now use the WP Media Library for images.
+- New: 1-click shop page patterns/templates for easy styles.
+- Improvement: More customizable product, shop and cart templates.
+- Improvement: Preload pagination and filter links on shop page.
+- Improvement: More performant loading of shop and product pages due to server side rendering of state.
+- Improvement: Realtime search of products on shop page.
+- Improvement: Slide out cart traps focus for better accessibility.
+- Improvement: Quick view icon to view product from edit product page.
+- Improvement: Upsells are not out of beta.
+- Improvement: Move SureCart admin menu to further up to help with navigation, due to the number of submenu items.
 
 = 2.40.1 - October 30th, 2024 =
 - Fix: Issue where checkout mode was not being honored when using direct checkout links.

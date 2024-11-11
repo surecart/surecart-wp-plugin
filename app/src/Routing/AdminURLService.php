@@ -111,6 +111,46 @@ class AdminURLService {
 	}
 
 	/**
+	 * Sync a specific model
+	 *
+	 * @param string $name Model lowercase name.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function syncAll( $name ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'sync_all',
+					'nonce'  => wp_create_nonce( "sync_$name" ),
+				],
+				$this->index( $name )
+			)
+		);
+	}
+
+	/**
+	 * Sync a specific model
+	 *
+	 * @param string $name Model lowercase name.
+	 * @param string $id Model id.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function sync( $name, $id ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'sync',
+					'nonce'  => wp_create_nonce( "sync_$name" ),
+					'id'     => $id,
+				],
+				$this->index( $name )
+			)
+		);
+	}
+
+	/**
 	 * Edit model action
 	 */
 	public function editModel( $action, $id, $redirect_url = '' ) {
@@ -154,7 +194,7 @@ class AdminURLService {
 	 */
 	public function lineItems( $line_items ) {
 		return array_map(
-			function( $item ) {
+			function ( $item ) {
 				return [
 					'price_id' => $item['id'],
 					'quantity' => $item['quantity'],

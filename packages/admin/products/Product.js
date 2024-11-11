@@ -54,7 +54,7 @@ export default () => {
 	) : (
 		<CreateProduct
 			onCreateProduct={(id) => {
-				setBrowserURL({ id, status: 'publish' });
+				window.location.assign(getEditURL({ id, status: 'publish' }));
 			}}
 		/>
 	);
