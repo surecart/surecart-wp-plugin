@@ -59,8 +59,10 @@ class CompatibilityService {
 	public function fixKadenceAccordionPaneButtonType( $content, $block ) {
 		if ( 'kadence/pane' === $block['blockName'] ) {
 			$processor = new \WP_HTML_Tag_Processor( $content );
-			$processor->next_tag( 'button' );
-			$processor->set_attribute( 'type', 'button' );
+			$has_tag   = $processor->next_tag( 'button' );
+			if ( $has_tag ) {
+				$processor->set_attribute( 'type', 'button' );
+			}
 			return $processor->get_updated_html();
 		}
 		return $content;
