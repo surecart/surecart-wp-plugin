@@ -556,4 +556,10 @@ const { state, actions } = store('surecart/checkout', {
 	},
 });
 
-addEventListener('scCheckoutUpdated', actions.updateCheckout); // Listen for checkout update on product page.
+addEventListener('scCheckoutUpdated', (e) => {
+	// if document has sc-checkout, bail.
+	if (document.querySelector('sc-checkout')) {
+		return;
+	}
+	actions.updateCheckout(e);
+}); // Listen for checkout update on product page only.
