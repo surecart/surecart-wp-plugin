@@ -96,7 +96,9 @@ export default ({ id, setBrowserURL }) => {
 	);
 
 	useEffect(() => {
-		// set global post.
+		if (!post?.id) {
+			return;
+		}
 		setEditedPost('sc_product', post?.id);
 	}, [post]);
 
