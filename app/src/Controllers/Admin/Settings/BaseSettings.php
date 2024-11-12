@@ -53,6 +53,7 @@ abstract class BaseSettings {
 			'processors'                     => __( 'Payment Processors', 'surecart' ),
 			'export'                         => __( 'Data Export', 'surecart' ),
 			'connection'                     => __( 'Connection', 'surecart' ),
+			'integrations'                   => __( 'Integrations', 'surecart' ),
 			'advanced'                       => __( 'Advanced', 'surecart' ),
 		];
 	}
@@ -126,6 +127,8 @@ abstract class BaseSettings {
 			$asset_file['version'],
 			true
 		);
+
+		wp_enqueue_script( 'suretriggers-sdk', 'https://app.suretriggers.com/js/v2/embed.js', array(), '1.0.0', false );
 
 		wp_set_script_translations( $handle, 'surecart' );
 

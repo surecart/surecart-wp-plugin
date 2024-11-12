@@ -177,6 +177,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/shipping/profile/index.js'
 		),
+		['admin/settings/integrations']: path.resolve(
+			__dirname,
+			'packages/admin/settings/integrations/index.js'
+		),
 
 		/**
 		 * Data.

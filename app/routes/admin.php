@@ -510,6 +510,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Cache.
 		\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
+
+		// Integrations.
+		\SureCart::route()->get()->where( 'sc_url_var', 'integrations', 'tab' )->name( 'settings.integrations' )->handle( 'Integrations@show' );
 	}
 );
 
