@@ -538,12 +538,12 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the line item.
 		 */
-		removeLineItem: async () => {
+		removeLineItem: function* () {
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
 			speak(__('Removing line item.', 'surecart'), 'assertive');
 
-			const checkout = await removeCheckoutLineItem(line_item?.id);
+			const checkout = yield* removeCheckoutLineItem(line_item?.id);
 
 			actions.setCheckout(checkout, mode, formId);
 
@@ -556,4 +556,10 @@ const { state, actions } = store('surecart/checkout', {
 	},
 });
 
-addEventListener('scCheckoutUpdated', actions.updateCheckout); // Listen for checkout update on product page.
+addEventListener('scCheckoutUpdated', (e) => {
+	// if document has sc-checkout, bail.
+	if (document.querySelector('sc-checkout')) {
+		return;
+	}
+	actions.updateCheckout(e);
+}); // Listen for checkout update on product page only.
