@@ -308,6 +308,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
 = 3.0.2 - November 13th, 2024 =
+- Improvement: WordPress 6.7 compatibility.
 - Improvement: Rename "Orders & Receipts" to "Orders & Invoices" on settings page.
 - Improvement: Add minimum height to quantity selector to prevent conflicts with some themes.
 - Fix: Rare race condition in WordPress 6.7 that could cause cart not to load on some pages.
