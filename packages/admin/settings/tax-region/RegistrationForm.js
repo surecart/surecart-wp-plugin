@@ -282,7 +282,6 @@ export default ({
 				)}
 				placeholder={
 					defaultTaxLabel ||
-					data?.tax_zone?.default_label ||
 					tax_zone?.default_label ||
 					__('Tax', 'surecart')
 				}
