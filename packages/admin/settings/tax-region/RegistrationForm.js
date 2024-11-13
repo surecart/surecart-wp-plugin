@@ -160,6 +160,10 @@ export default ({
 
 	const selectedZone = availableZones.find((z) => z.id === data?.tax_zone);
 
+	const defaultTaxLabel = (availableZones || []).find(
+		(z) => z.id === data?.tax_zone
+	)?.default_label;
+
 	const requiresManualTaxOverride =
 		selectedZone?.default_rate === 0 ||
 		(region === 'ca' &&
@@ -276,12 +280,12 @@ export default ({
 					'The name of the tax that is displayed to customers during checkout and on invoices and receipts.',
 					'surecart'
 				)}
-				placeholder={sprintf(
-					__('E.g %s', 'surecart'),
+				placeholder={
+					defaultTaxLabel ||
 					data?.tax_zone?.default_label ||
-						tax_zone?.default_label ||
-						__('EU VAT', 'surecart')
-				)}
+					tax_zone?.default_label ||
+					__('Tax', 'surecart')
+				}
 				onScInput={(e) => updateData({ label: e.target.value })}
 			></ScInput>
 
