@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getElement } from '@wordpress/interactivity';
 import { processCartViewEvent } from '@surecart/checkout-events';
 const { state: checkoutState } = store('surecart/checkout');
 const { __ } = wp.i18n;
