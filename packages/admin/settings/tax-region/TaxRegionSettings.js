@@ -256,7 +256,9 @@ export default () => {
 											</ScTableCell>
 										)}
 										<ScTableCell>
-											{registration?.label || '_'}
+											{registration?.label ||
+												tax_zone?.default_label ||
+												'_'}
 										</ScTableCell>
 										<ScTableCell>
 											<sc-format-date
