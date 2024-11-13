@@ -60,7 +60,7 @@ class UpgradeNoticeService {
 	 */
 	public function shouldShowUpdateNotice( $new_version ) {
 		$highest_version = max( $this->show_update_notice_versions );
-		return version_compare( $new_version, $highest_version, '>=' );
+		return version_compare( \SureCart::plugin()->version(), $highest_version, '<' );
 	}
 
 	/**
