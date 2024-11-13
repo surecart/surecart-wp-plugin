@@ -41,6 +41,10 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new CompatibilityService();
 		};
 
+		$container['surecart.integrations'] = function () {
+			return new IntegrationsService();
+		};
+
 		$singleton                          = new StateService( [] );
 		$container['surecart.initialstate'] = function () use ( $singleton ) {
 			return $singleton;
@@ -52,6 +56,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$app->alias( 'config', 'surecart.config.setting' );
 		$app->alias( 'healthCheck', 'surecart.health' );
 		$app->alias( 'state', 'surecart.initialstate' );
+		$app->alias( 'integrations', 'surecart.integrations' );
 	}
 
 	/**
@@ -62,6 +67,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$container['surecart.compatibility']->bootstrap();
 		$container['surecart.initialstate']->bootstrap();
 		$container['surecart.upgrade.notice']->bootstrap();
+		$container['surecart.integrations']->bootstrap();
 	}
 
 	/**

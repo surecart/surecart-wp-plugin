@@ -149,6 +149,7 @@ abstract class BaseSettings {
 				'processors'           => Processor::get(),
 				'is_block_theme'       => (bool) wp_is_block_theme(),
 				'claim_url'            => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'integrations'         => \SureCart::integrations()->getAllIntegrations(),
 			]
 		);
 	}
