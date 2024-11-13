@@ -54,11 +54,9 @@ class UpgradeNoticeService {
 	/**
 	 * Should show update notice?
 	 *
-	 * @param string $new_version Plugin new version.
-	 *
 	 * @return boolean
 	 */
-	public function shouldShowUpdateNotice( $new_version ) {
+	public function shouldShowUpdateNotice() {
 		$highest_version = max( $this->show_update_notice_versions );
 		return version_compare( \SureCart::plugin()->version(), $highest_version, '<' );
 	}
