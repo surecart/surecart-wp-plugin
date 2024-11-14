@@ -72,6 +72,7 @@
 		font-size: var(--sc-font-size-small);
 		height: 100%;
 		text-align: center;
+		min-height: 0;
 	}
 
 	&.quantity--small {

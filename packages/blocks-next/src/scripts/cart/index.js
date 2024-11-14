@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getElement } from '@wordpress/interactivity';
 import { processCartViewEvent } from '@surecart/checkout-events';
 const { state: checkoutState } = store('surecart/checkout');
 const { __ } = wp.i18n;
@@ -20,13 +20,7 @@ const { state, actions } = store('surecart/cart', {
 		 * This gets cached so we can call this many times without querying the DOM.
 		 */
 		get dialog() {
-			let dialog = null;
-			const target = getContext()?.target || '.sc-cart-drawer' || null;
-
-			// Get passed target or <dialog>.
-			if (typeof target === 'string') {
-				dialog = document?.querySelector(target) || null;
-			}
+			let dialog = document?.querySelector('.sc-cart-drawer') || null;
 
 			if (!dialog) {
 				const { ref } = getElement();
