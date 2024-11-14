@@ -37,19 +37,10 @@ export default ({ subscription, open, onRequestClose }) => {
 				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
 					cancel_behavior,
 				}),
+				data: {
+					restore_at: null,
+				},
 			});
-
-			if (!!subscription?.restore_at) {
-				await apiFetch({
-					method: 'PATCH',
-					path: addQueryArgs(`surecart/v1/subscriptions/${id}/`, {
-						update_behavior: cancel_behavior,
-					}),
-					data: {
-						restore_at: null,
-					},
-				});
-			}
 
 			await invalidateResolutionForStore();
 
