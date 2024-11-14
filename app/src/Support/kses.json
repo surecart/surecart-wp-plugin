@@ -1002,6 +1002,13 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-trial": {
+    "label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-items": {
     "editable": true,
     "removable": true,
