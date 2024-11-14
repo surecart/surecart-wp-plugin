@@ -92,163 +92,127 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 			[
 				'elType' => 'container',
 				'settings' => [
-					'flex_direction' => 'row',
-					'flex_gap' => [
-						'unit' => 'px',
-						'size' => 0,
-						'column' => '0',
-						'row' => '0',
-					],
+					'_title' => __( 'Product Container #1', 'surecart' ),
 				],
 				'elements' => [
 					[
-						'elType' => 'container',
+						'elType' => 'widget',
 						'settings' => [
-							'flex_direction' => 'column',
 							'content_width' => 'full',
-							'width' => [
-								'unit' => '%',
-								'size' => '50',
-							],
+							'_title' => __( 'SureCart Media', 'surecart' ),
 						],
-						'elements' => [
-							[
-								'elType' => 'widget',
-								'settings' => [
-									'content_width' => 'full',
-								],
-								'elements' => [],
-								'widgetType' => 'surecart-media',
-							],
-						],
-						'isInner' => true,
-					],
-					[
-						'elType' => 'container',
-						'settings' => [
-							'flex_direction' => 'column',
-							'content_width' => 'full',
-							'width' => [
-								'unit' => '%',
-								'size' => '50',
-							],
-						],
-						'elements' => [
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'settings' => [
-									'content_width' => 'full',
-								],
-								'widgetType' => 'surecart-collection-tags',
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'settings' => [
-									'content_width' => 'full',
-								],
-								'widgetType' => 'theme-post-title',
-							],
-							[
-								'elType' => 'widget',
-								'settings' => [
-									'__dynamic__' => [
-										'excerpt' => '[elementor-tag id="" name="post-excerpt" settings="%7B%22max_length%22%3A%22%22%2C%22apply_to_post_content%22%3A%22yes%22%2C%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]',
-									],
-								],
-								'elements' => [],
-								'widgetType' => 'theme-post-excerpt',
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'settings' => [
-									'content_width' => 'full',
-								],
-								'widgetType' => 'surecart-selected-price',
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'widgetType' => 'surecart-price-chooser',
-								'settings' => [
-									'content_width' => 'full',
-									'label' => esc_html__('Pricing', 'surecart'),
-									'price_chooser_flex_direction' => 'column',
-									'price_chooser_flex_gap' => [
-										'column' => '12',
-										'row' => '12',
-										'isLinked' => true,
-										'unit' => 'px',
-										'size' => 12,
-									],
-									'price_chooser_columns_grid' => [
-										'unit' => 'fr',
-										'size' => 1,
-										'sizes' => [],
-									],
-									'price_chooser_flex_wrap' => 'wrap',
-								],
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'widgetType' => 'surecart-selected-price-ad-hoc-amount',
-								'settings' => [
-									'content_width' => 'full',
-									'label' => esc_html__('Enter an amount', 'surecart'),
-								],
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'widgetType' => 'surecart-variant-pills',
-								'settings' => [
-									'content_width' => 'full',
-								],
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'widgetType' => 'surecart-quantity',
-								'settings' => [
-									'content_width' => 'full',
-									'label' => esc_html__('Quantity', 'surecart'),
-								],
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'widgetType' => 'surecart-buy-button',
-								'settings' => [
-									'content_width' => 'full',
-									'width' => [
-										'unit' => '%',
-										'size' => '100',
-									],
-									'button_text' => esc_html__('Add To Cart', 'surecart'),
-								],
-							],
-							[
-								'elType' => 'widget',
-								'elements' => [],
-								'widgetType' => 'surecart-buy-button',
-								'settings' => [
-									'content_width' => 'full',
-									'buy_button_type' => 'yes',
-									'width' => [
-										'unit' => '%',
-										'size' => '100',
-									],
-									'button_text' => esc_html__('Buy Now', 'surecart'),
-								],
-							],
-						],
-						'isInner' => true,
+						'widgetType' => 'surecart-media',
 					],
 				],
-				'isInner' => false,
+			],
+			[
+				'elType' => 'container',
+				'settings' => [
+					'_title' => __( 'Product Container #2', 'surecart' ),
+				],
+				'elements' => [
+					[
+						'elType' => 'widget',
+						'settings' => [
+							'content_width' => 'full',
+							'_title' => __( 'SureCart Collection Tags', 'surecart' ),
+						],
+						'widgetType' => 'surecart-collection-tags',
+					],
+					[
+						'elType' => 'widget',
+						'settings' => [
+							'content_width' => 'full',
+						],
+						'widgetType' => 'theme-post-title',
+					],
+					[
+						'elType' => 'widget',
+						'settings' => [
+							'__dynamic__' => [
+								'excerpt' => '[elementor-tag id="" name="post-excerpt" settings="%7B%22max_length%22%3A%22%22%2C%22apply_to_post_content%22%3A%22yes%22%2C%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]',
+							],
+						],
+						'widgetType' => 'theme-post-excerpt',
+					],
+					[
+						'elType' => 'widget',
+						'settings' => [
+							'content_width' => 'full',
+						],
+						'widgetType' => 'surecart-selected-price',
+					],
+					[
+						'elType' => 'widget',
+						'widgetType' => 'surecart-price-chooser',
+						'settings' => [
+							'content_width' => 'full',
+							'label' => esc_html__('Pricing', 'surecart'),
+							'price_chooser_flex_direction' => 'column',
+							'price_chooser_flex_gap' => [
+								'column' => '12',
+								'row' => '12',
+								'isLinked' => true,
+								'unit' => 'px',
+								'size' => 12,
+							],
+							'price_chooser_columns_grid' => [
+								'unit' => 'fr',
+								'size' => 1,
+								'sizes' => [],
+							],
+							'price_chooser_flex_wrap' => 'wrap',
+						],
+					],
+					[
+						'elType' => 'widget',
+						'widgetType' => 'surecart-selected-price-ad-hoc-amount',
+						'settings' => [
+							'content_width' => 'full',
+							'label' => esc_html__('Enter an amount', 'surecart'),
+						],
+					],
+					[
+						'elType' => 'widget',
+						'widgetType' => 'surecart-variant-pills',
+						'settings' => [
+							'content_width' => 'full',
+						],
+					],
+					[
+						'elType' => 'widget',
+						'widgetType' => 'surecart-quantity',
+						'settings' => [
+							'content_width' => 'full',
+							'label' => esc_html__('Quantity', 'surecart'),
+						],
+					],
+					[
+						'elType' => 'widget',
+						'widgetType' => 'surecart-buy-button',
+						'settings' => [
+							'content_width' => 'full',
+							'width' => [
+								'unit' => '%',
+								'size' => '100',
+							],
+							'button_text' => esc_html__('Add To Cart', 'surecart'),
+						],
+					],
+					[
+						'elType' => 'widget',
+						'widgetType' => 'surecart-buy-button',
+						'settings' => [
+							'content_width' => 'full',
+							'buy_button_type' => 'yes',
+							'width' => [
+								'unit' => '%',
+								'size' => '100',
+							],
+							'button_text' => esc_html__('Buy Now', 'surecart'),
+						],
+					],
+				]
 			],
 		];
 	}
@@ -259,16 +223,20 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return string
 	 */
 	protected function get_default_repeater_title_setting_key() {
-		return 'item_title';
+		return 'surecart_item_title';
 	}
 
-	/**
-	 * Get the default children title.
-	 *
-	 * @return string
-	 */
+	// /**
+	//  * Get the default children title.
+	//  *
+	//  * @return string
+	//  */
+	// protected function get_default_children_title() {
+	// 	return esc_html__( 'Product Container', 'surecart' );
+	// }
+
 	protected function get_default_children_title() {
-		return esc_html__( 'Container', 'surecart' );
+		return esc_html__( 'Product Container #%d', 'surecart' );
 	}
 
 	/**
@@ -334,9 +302,16 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		// items content.
 		ob_start();
 		?>
+
 		<!-- wp:surecart/product-page -->
-		<?php $this->print_child( 0 ); ?>
+		<?php
+		$children = $this->get_children();
+		foreach ( $children as $index => $child ) {
+			$this->print_child($index );
+		}
+		?>
 		<!-- /wp:surecart/product-page -->
+
 		<?php
 		$item_content = ob_get_clean();
 
@@ -358,6 +333,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		$children = $this->get_children();
 
 		if ( ! empty( $children[ $index ] ) ) {
+			$child_item = $children[ $index ];
 			// Add data-tab-index attribute to the content area.
 			$add_attribute_to_container = function ( $should_render, $container ) use ( $item_id ) {
 				$this->add_attributes_to_container( $container, $item_id );
@@ -366,7 +342,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 			};
 
 			add_filter( 'elementor/frontend/container/should_render', $add_attribute_to_container, 10, 3 );
-			$children[ $index ]->print_element();
+			$child_item->print_element();
 			remove_filter( 'elementor/frontend/container/should_render', $add_attribute_to_container );
 		}
 	}

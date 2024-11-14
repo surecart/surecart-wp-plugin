@@ -35,5 +35,14 @@
 		justify-items: var(--justify-items);
 		align-items: var(--align-items);
 		gap: var(--gap);
+		flex-direction: column;
 	}
+}
+
+.e-n-product {
+	display: flex;
+}
+
+.wp-block-surecart-product-page {
+	display: flex;
 }
