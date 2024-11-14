@@ -1,0 +1,22 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/trial-line-item",
+	"title": "Trial",
+	"description": "Display a trial amount.",
+	"category": "surecart",
+	"keywords": ["trial"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/form", "surecart/totals"],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"order-summary": true
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Trial"
+		}
+	}
+}
