@@ -2,6 +2,9 @@
 
 namespace SureCart\Integrations\Elementor\Widgets\Nested;
 
+use Elementor\Core\Base\Document;
+use ElementorPro\Modules\LoopBuilder\Documents\Loop as LoopDocument;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -133,20 +136,11 @@ class ProductList extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 	 * @return int|\WP_Error
 	 */
 	private function create_product_list_loop_item()	 {
-		// Create the template
-		$post_id = wp_insert_post([
-			'post_title' => __( 'SureCart Product List Loop Item', 'surecart' ),
-			'post_name' => 'surecart_product_list_loop_item',
-			'post_type' => 'elementor_library',
-			'post_status' => 'publish',
-		]);
-
-		// Create the content
 		$content = [
 			[
 				'id' => uniqid(),
 				'elType' => 'container',
-				'settings' => ['flex_direction' => 'column'],
+				'settings' => [],
 				'elements' => [
 					[
 						'id' => uniqid(),
@@ -158,78 +152,104 @@ class ProductList extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 								'id' => uniqid(),
 								'elType' => 'container',
 								'settings' => [
-									'flex_direction' => 'column',
-									'align_items' => 'center'
+									'flex_direction' => 'row',
+									'flex_gap' => [
+										'unit' => 'px',
+										'size' => 0,
+										'column' => '0',
+										'row' => '0',
+									],
 								],
 								'elements' => [
 									[
 										'id' => uniqid(),
-										'elType' => 'widget',
+										'elType' => 'container',
 										'settings' => [
-											'__dynamic__' => [
-												'image' => '[elementor-tag id="" name="post-featured-image" settings="%7B%22fallback%22%3A%7B%22url%22%3A%22%22%2C%22id%22%3A%22%22%2C%22size%22%3A%22%22%7D%7D"]'
+											'flex_direction' => 'column',
+											'content_width' => 'full',
+											'width' => [
+												'unit' => '%',
+												'size' => '50',
 											],
 										],
-										'elements' => [],
-										'widgetType' => 'theme-post-featured-image'
-									],
-									[
-										'id' => uniqid(),
-										'elType' => 'widget',
-										'settings' => [
-											'__dynamic__' => [
-												'title' => '[elementor-tag id="" name="post-title" settings="%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]'
+										'elements' => [
+											[
+												'id' => uniqid(),
+												'elType' => 'widget',
+												'settings' => [
+													'__dynamic__' => [
+														'image' => '[elementor-tag id="" name="post-featured-image" settings="%7B%22fallback%22%3A%7B%22url%22%3A%22%22%2C%22id%22%3A%22%22%2C%22size%22%3A%22%22%7D%7D"]',
+													],
+													'height' => [
+														'unit' => 'px',
+														'size' => 400,
+														'sizes' => [],
+													],
+												],
+												'elements' => [],
+												'widgetType' => 'theme-post-featured-image',
 											],
-											'title' => 'Add Your Heading Text Here'
-										],
-										'elements' => [],
-										'widgetType' => 'theme-post-title'
-									],
-									[
-										'id' => uniqid(),
-										'elType' => 'widget',
-										'settings' => [
-											'title' => 'Add Your Heading Text Here',
-											'header_size' => 'h5',
-											'__dynamic__' => [
-												'title' => '[elementor-tag id="" name="sc_product_price" settings="%7B%7D"]'
+											[
+												'id' => uniqid(),
+												'elType' => 'widget',
+												'settings' => [
+													'__dynamic__' => [
+														'title' => '[elementor-tag id="" name="post-title" settings="%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]',
+													],
+													'title' => 'Add Your Heading Text Here',
+												],
+												'elements' => [],
+												'widgetType' => 'theme-post-title',
+											],
+											[
+												'id' => uniqid(),
+												'elType' => 'widget',
+												'settings' => [
+													'title' => 'Add Your Heading Text Here',
+													'header_size' => 'h6',
+													'__dynamic__' => [
+														'title' => '[elementor-tag id="44343d5" name="sc_product_price" settings="%7B%7D"]',
+													],
+												],
+												'elements' => [],
+												'widgetType' => 'heading',
+											],
+											[
+												'id' => uniqid(),
+												'elType' => 'widget',
+												'settings' => [
+													'button_text' => 'Add To Cart',
+													'button_out_of_stock_text' => 'Sold Out',
+													'button_unavailable_text' => 'Unavailable',
+												],
+												'elements' => [],
+												'widgetType' => 'surecart-buy-button',
 											],
 										],
-										'elements' => [],
-										'widgetType' => 'heading'
+										'isInner' => true,
 									],
-									[
-										'id' => uniqid(),
-										'elType' => 'widget',
-										'settings' => [
-											'button_text' => 'Add To Cart',
-											'button_out_of_stock_text' => 'Sold Out',
-											'button_unavailable_text' => 'Unavailable'
-										],
-										'elements' => [],
-										'widgetType' => 'surecart-buy-button'
-									]
 								],
-								'isInner' => true
-							]
+								'isInner' => true,
+								'isLocked' => false,
+							],
 						],
-						'isInner' => true
-					]
+					],
 				],
-				'isInner' => false
-			]
+				'isInner' => false,
+			],
 		];
+
+		$post_id = \Elementor\Plugin::$instance->kits_manager->create_new_kit(
+			__( 'SureCart Product List Loop Item', 'surecart' ),
+			[],
+			false,
+		);
 
 		// Update the post content
 		update_post_meta( $post_id, '_elementor_data', wp_json_encode( $content ) );
-		update_post_meta( $post_id, '_wp_page_template', 'elementor_canvas' );
-		update_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
-		update_post_meta( $post_id, '_elementor_template_type', 'wp-page' );
-		update_post_meta( $post_id, '_elementor_version', ELEMENTOR_VERSION ?? '' );
-		update_post_meta( $post_id, '_elementor_pro_version', ELEMENTOR_PRO_VERSION ?? '' );
-		update_post_meta( $post_id, '_elementor_css', '' );
+		update_post_meta( $post_id, Document::TYPE_META_KEY, LoopDocument::get_type() );
 
-		return $post_id;
+		return (int) $post_id;
 	}
 
 	/**
@@ -401,7 +421,7 @@ class ProductList extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 	 */
 	protected function content_template_single_repeater_item() {
 		?>
-		<details {{{ view.getRenderAttributeString( 'details-container' ) }}}>
+		<details {{{ view.getRenderAttributeString( 'list-container' ) }}}>
 		</details>
 		<?php
 	}
