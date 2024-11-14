@@ -4,6 +4,7 @@ import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { getHumanDiscount, getHumanDiscountRedeemableStatus } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
+import { state as checkoutState } from '../../../store/checkout';
 
 /**
  * @part base - The elements base wrapper.
@@ -159,7 +160,13 @@ export class ScCouponForm {
       let humanDiscount = this.getHumanReadableDiscount();
 
       return (
-        <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+        <sc-line-item
+          exportparts="description:info, price-description:discount, price:amount"
+          class={{
+            'coupon-display': true,
+            'coupon-display--price-trial': !!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due,
+          }}
+        >
           <span slot="description">
             <div part="discount-label">{__('Discount', 'surecart')}</div>
             <sc-tag
@@ -197,7 +204,11 @@ export class ScCouponForm {
                 </span>
               )}
               <span slot="price">
-                <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
+                {!!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due ? (
+                  __('Applied on first payment', 'surecart')
+                ) : (
+                  <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
+                )}
               </span>
             </Fragment>
           ) : (

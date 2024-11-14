@@ -35,6 +35,11 @@ sc-alert {
     }
   }
 }
+.coupon-display {
+  &--price-trial {
+    --price-size: var(--sc-font-size-small);
+  }
+}
 
 @container (max-width: 320px) {
   .coupon-form {
