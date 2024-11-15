@@ -34,6 +34,7 @@ class IntegrationsService {
 	 */
 	public function bootstrap() {
 		add_action( 'wp_ajax_surecart_plugin_install', 'wp_ajax_install_plugin' );
+		add_action( 'wp_ajax_surecart_plugin_activate', 'wp_ajax_activate_plugin' );
 	}
 
 	/**

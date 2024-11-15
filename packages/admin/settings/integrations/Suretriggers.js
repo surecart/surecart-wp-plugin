@@ -57,8 +57,10 @@ export default () => {
 	const activateSureTriggers = async () => {
 		const formData = new window.FormData();
 		formData.append('action', 'surecart_plugin_activate');
-		formData.append('security', scData?.plugin_installer_nonce);
-		formData.append('init', 'suretriggers/suretriggers.php');
+		formData.append('_ajax_nonce', scData?.plugin_installer_nonce);
+		formData.append('plugin', 'suretriggers/suretriggers.php');
+		formData.append('name', 'suretriggers');
+		formData.append('slug', 'suretriggers');
 
 		try {
 			const response = await apiFetch({
@@ -72,6 +74,35 @@ export default () => {
 		}
 	};
 
+	const buttonText = () => {
+		if (scData?.integrations?.suretriggers?.status === 'install') {
+			return __('Install', 'surecart');
+		}
+		if (scData?.integrations?.suretriggers?.status === 'installed') {
+			return __('Activate', 'surecart');
+		}
+		if (scData?.integrations?.suretriggers?.status === 'configure') {
+			return __('Configure', 'surecart');
+		}
+		if (scData?.integrations?.suretriggers?.status === 'activated') {
+			return __('View Integrations', 'surecart');
+		}
+	};
+
+	const onClick = async () => {
+		if (scData?.integrations?.suretriggers?.status === 'install') {
+			await installSureTriggers();
+		}
+		if (scData?.integrations?.suretriggers?.status === 'installed') {
+			await activateSureTriggers();
+		}
+		if (scData?.integrations?.suretriggers?.status === 'configure') {
+			window.location.assign('admin.php?page=suretriggers');
+		}
+		if (scData?.integrations?.suretriggers?.status === 'activated') {
+			setOpen(true);
+		}
+	};
 	return (
 		<SettingsBox
 			title={__('Integrations via SureTriggers', 'surecart')}
@@ -81,49 +112,19 @@ export default () => {
 			)}
 			noButton
 		>
-			{scData?.integrations?.suretriggers?.status === 'install' && (
-				<ScButton
-					onClick={() => {
-						if (
-							scData?.integrations?.suretriggers?.status ===
-							'install'
-						) {
-							installSureTriggers();
-						}
-						if (
-							scData?.integrations?.suretriggers?.status ===
-							'installed'
-						) {
-							window.location.assign(
-								'admin.php?page=suretriggers'
-							);
-						}
-						if (
-							scData?.integrations?.suretriggers?.status ===
-							'configure'
-						) {
-							window.location.assign(
-								'admin.php?page=suretriggers'
-							);
-						}
-						if (
-							scData?.integrations?.suretriggers?.status ===
-							'activated'
-						) {
-							setOpen(true);
-						}
-					}}
-				>
-					{__('Install', 'surecart')}
-				</ScButton>
-			)}
+			<ScButton onClick={() => onClick()}>{buttonText()}</ScButton>
+
 			<ScDialog
 				open={open}
-				style={{ '--dialog-body-overflow': 'visible' }}
+				style={{
+					'--dialog-body-overflow': 'visible',
+					'--width': '65rem',
+					'--height': '40rem',
+				}}
 				onScRequestClose={() => setOpen(false)}
-			>
-				<div id="suretriggers-iframe-wrapper"></div>
-			</ScDialog>
+				noHeader
+				id="suretriggers-iframe-wrapper"
+			/>
 		</SettingsBox>
 	);
 };
