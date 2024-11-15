@@ -71,6 +71,10 @@ class ProductPageWrapperService {
 	 * @return string
 	 */
 	public function wrap(): string {
+		if ( ! has_block( 'surecart/product-buy-button', $this->content ) || ! has_shortcode( $this->content, '[sc_product_buy_button]' ) ) {
+			return $this->content;
+		}
+
 		if ( ! is_singular( 'sc_product' ) ) {
 			return $this->content;
 		}
