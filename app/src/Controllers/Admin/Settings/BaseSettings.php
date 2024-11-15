@@ -141,6 +141,8 @@ abstract class BaseSettings {
 				'account_id'           => \SureCart::account()->id,
 				'account_slug'         => \SureCart::account()->slug,
 				'api_url'              => \SureCart::requests()->getBaseUrl(),
+				'ajax_url'             => admin_url( 'admin-ajax.php' ),
+				'plugin_installer_nonce'                => wp_create_nonce( 'updates' ),
 				'currency'             => \SureCart::account()->currency,
 				'time_zones'           => TimeDate::timezoneOptions(),
 				'entitlements'         => \SureCart::account()->entitlements,

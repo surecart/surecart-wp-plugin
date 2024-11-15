@@ -2,6 +2,7 @@ import SettingsBox from '../SettingsBox';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { ScButton, ScDialog } from '@surecart/components-react';
+import apiFetch from '@wordpress/api-fetch';
 
 export default () => {
 	const [open, setOpen] = useState(false);
@@ -34,6 +35,43 @@ export default () => {
 		}
 	}, []);
 
+	const installSureTriggers = async () => {
+		const formData = new window.FormData();
+		formData.append('action', 'surecart_plugin_install');
+		formData.append('_ajax_nonce', scData?.plugin_installer_nonce);
+		formData.append('slug', 'suretriggers');
+		formData.append('init', 'suretriggers/suretriggers.php');
+
+		try {
+			const response = await apiFetch({
+				url: scData?.ajax_url,
+				method: 'POST',
+				body: formData,
+			});
+			console.log('response', response);
+		} catch (error) {
+			console.error('Error installing plugin:', error);
+		}
+	};
+
+	const activateSureTriggers = async () => {
+		const formData = new window.FormData();
+		formData.append('action', 'surecart_plugin_activate');
+		formData.append('security', scData?.plugin_installer_nonce);
+		formData.append('init', 'suretriggers/suretriggers.php');
+
+		try {
+			const response = await apiFetch({
+				url: scData?.ajax_url,
+				method: 'POST',
+				body: formData,
+			});
+			console.log('response', response);
+		} catch (error) {
+			console.error('Error activating plugin:', error);
+		}
+	};
+
 	return (
 		<SettingsBox
 			title={__('Integrations via SureTriggers', 'surecart')}
@@ -43,13 +81,42 @@ export default () => {
 			)}
 			noButton
 		>
-			<ScButton
-				onClick={() => {
-					setOpen(true);
-				}}
-			>
-				{__('View Integrations', 'surecart')}
-			</ScButton>
+			{scData?.integrations?.suretriggers?.status === 'install' && (
+				<ScButton
+					onClick={() => {
+						if (
+							scData?.integrations?.suretriggers?.status ===
+							'install'
+						) {
+							installSureTriggers();
+						}
+						if (
+							scData?.integrations?.suretriggers?.status ===
+							'installed'
+						) {
+							window.location.assign(
+								'admin.php?page=suretriggers'
+							);
+						}
+						if (
+							scData?.integrations?.suretriggers?.status ===
+							'configure'
+						) {
+							window.location.assign(
+								'admin.php?page=suretriggers'
+							);
+						}
+						if (
+							scData?.integrations?.suretriggers?.status ===
+							'activated'
+						) {
+							setOpen(true);
+						}
+					}}
+				>
+					{__('Install', 'surecart')}
+				</ScButton>
+			)}
 			<ScDialog
 				open={open}
 				style={{ '--dialog-body-overflow': 'visible' }}
