@@ -136,11 +136,11 @@ add_action(
 			array(
 				array(
 					'id'     => 'wp-url',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 				array(
 					'id'     => 'wp-api-fetch',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 			),
 			$static_assets['version']
@@ -154,7 +154,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 			),
 			$static_assets['version']
@@ -167,12 +167,8 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dropdown/index.js',
 			array(
 				array(
-					'id'     => '@surecart/dialog',
-					'import' => 'dynamic',
-				),
-				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 			),
 			$static_assets['version']
@@ -203,12 +199,12 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
 			[
 				[
-					'id'     => '@surecart/dialog',
-					'import' => 'dynamic',
+					'id'     => '@wordpress/interactivity',
+					'import' => 'static',
 				],
 				[
 					'id'     => '@surecart/checkout-service',
-					'import' => 'dynamic',
+					'import' => 'static',
 				],
 				[
 					'id'     => '@surecart/google-events',
@@ -228,6 +224,10 @@ add_action(
 			'@surecart/product-list',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-list/index.js',
 			[
+				[
+					'id'     => '@wordpress/interactivity',
+					'import' => 'static',
+				],
 				[
 					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
@@ -252,7 +252,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 			),
 			$static_assets['version']
@@ -266,7 +266,11 @@ add_action(
 			array(
 				array(
 					'id'     => '@surecart/api-fetch',
-					'import' => 'dynamic',
+					'import' => 'static',
+				),
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'static',
 				),
 			),
 			$static_assets['version']
@@ -277,12 +281,7 @@ add_action(
 		wp_register_script_module(
 			'@surecart/checkout-events',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout-events/index.js',
-			array(
-				array(
-					'id'     => '@surecart/api-fetch',
-					'import' => 'dynamic',
-				),
-			),
+			[],
 			$static_assets['version']
 		);
 
@@ -293,8 +292,16 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart/index.js',
 			array(
 				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'static',
+				),
+				array(
+					'id'     => '@surecart/checkout-events',
+					'import' => 'static',
+				),
+				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 			),
 			$static_assets['version']
@@ -307,12 +314,16 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout/index.js',
 			array(
 				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'static',
+				),
+				array(
 					'id'     => '@surecart/checkout-service',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 				array(
 					'id'     => '@surecart/checkout-events',
-					'import' => 'dynamic',
+					'import' => 'static',
 				),
 				array(
 					'id'     => '@surecart/google-events',
@@ -320,10 +331,6 @@ add_action(
 				),
 				array(
 					'id'     => '@surecart/facebook-events',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => '@surecart/cart',
 					'import' => 'dynamic',
 				),
 			),
