@@ -240,7 +240,6 @@ const { state, actions } = store('surecart/checkout', {
 		 * This is called when the store is initialized.
 		 */
 		init() {
-			console.log('init');
 			const { mode, formId } = getContext();
 			const checkout = getCheckoutData(mode, formId);
 			actions.setCheckout(checkout, mode, formId);
