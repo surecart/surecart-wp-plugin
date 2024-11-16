@@ -359,7 +359,7 @@ const { state, actions } = store('surecart/checkout', {
 				'@surecart/checkout-service'
 			);
 
-			const checkout = yield handleCouponApply(state.promotionCode);
+			const checkout = yield* handleCouponApply(state.promotionCode);
 
 			if (checkout) {
 				speak(
@@ -390,7 +390,7 @@ const { state, actions } = store('surecart/checkout', {
 				'@surecart/checkout-service'
 			);
 
-			const checkout = yield handleCouponApply(null);
+			const checkout = yield* handleCouponApply(null);
 
 			if (checkout) {
 				state.promotionCode = '';
@@ -546,7 +546,7 @@ const { state, actions } = store('surecart/checkout', {
 				'@surecart/checkout-service'
 			);
 
-			const checkout = yield updateCheckoutLineItem({
+			const checkout = yield* updateCheckoutLineItem({
 				id: line_item?.id,
 				data,
 			});
@@ -568,7 +568,7 @@ const { state, actions } = store('surecart/checkout', {
 				'@surecart/checkout-service'
 			);
 
-			const checkout = yield removeCheckoutLineItem(line_item?.id);
+			const checkout = yield* removeCheckoutLineItem(line_item?.id);
 
 			actions.setCheckout(checkout, mode, formId);
 

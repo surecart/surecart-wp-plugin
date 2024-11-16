@@ -300,7 +300,7 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	actions: {
-		addToCart: async (e) => {
+		*addToCart(e) {
 			const hasContextBusy = Object.values(e.submitter.dataset).includes(
 				'context.busy'
 			);
@@ -313,7 +313,12 @@ const { state, actions } = store('surecart/product-page', {
 			try {
 				context.busy = true;
 
-				const checkout = await addCheckoutLineItem(state.lineItem);
+				const { addCheckoutLineItem } = yield import(
+					/* webpackIgnore: true */
+					'@surecart/checkout-service'
+				);
+
+				const checkout = yield* addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
 
 				// no busy context, wait to toggle cart
@@ -357,11 +362,13 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Handle submit callback.
 		 */
-		handleSubmit(e) {
+		*handleSubmit(e) {
 			e.preventDefault(); // prevent the form from submitting.
+			e.stopPropagation(); // prevent the event from bubbling up.
+
 			// if the button hdoes not have a value, add to cart.
 			if (!e?.submitter?.value) {
-				return actions.addToCart(e);
+				return yield actions.addToCart(e);
 			}
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);

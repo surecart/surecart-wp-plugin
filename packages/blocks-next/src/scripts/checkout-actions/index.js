@@ -46,12 +46,12 @@ export const parsePath = (id, endpoint = '') => {
 	});
 };
 
-/** Fethc a checkout by id */
-export const fetchCheckout = async ({ id, query = {} }) => {
-	return await apiFetch({
+/** Fetch a checkout by id */
+export function* fetchCheckout({ id, query = {} }) {
+	return yield apiFetch({
 		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
 	});
-};
+}
 
 export const withDefaultData = (data) => {
 	const context = getContext();
@@ -107,8 +107,8 @@ export const getSessionId = () => {
 /**
  * Update a line item.
  */
-export const updateLineItem = async ({ id, data }) => {
-	const item = await apiFetch({
+export function* updateLineItem({ id, data }) {
+	const item = yield apiFetch({
 		path: addQueryArgs(`surecart/v1/line_items/${id}`, {
 			expand: [
 				...(expand || []).map((item) => {
@@ -122,15 +122,15 @@ export const updateLineItem = async ({ id, data }) => {
 	});
 
 	return item?.checkout;
-};
+}
 
 /**
  * Update the checkout line item
  */
-export const updateCheckoutLineItem = async ({ id, data }) => {
+export function* updateCheckoutLineItem({ id, data }) {
 	try {
 		checkoutState.loading = true;
-		return await updateLineItem({
+		return yield* updateLineItem({
 			id,
 			data,
 		});
@@ -144,7 +144,19 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 	} finally {
 		checkoutState.loading = false;
 	}
-};
+}
+
+/**
+ * Remove a line item.
+ */
+export function* removeLineItem({ checkoutId, itemId }) {
+	const { deleted } = yield apiFetch({
+		path: `surecart/v1/line_items/${itemId}`,
+		method: 'DELETE',
+	});
+
+	return { deleted };
+}
 
 /**
  * Remove the checkout line item.
@@ -152,7 +164,7 @@ export const updateCheckoutLineItem = async ({ id, data }) => {
 export function* removeCheckoutLineItem(id) {
 	try {
 		checkoutState.loading = true;
-		const { deleted } = yield removeLineItem({
+		const { deleted } = yield* removeLineItem({
 			checkoutId: checkoutState?.checkout?.id,
 			itemId: id,
 		});
@@ -164,7 +176,7 @@ export function* removeCheckoutLineItem(id) {
 			};
 		}
 
-		return yield fetchCheckout({ id: checkoutState?.checkout?.id });
+		return yield* fetchCheckout({ id: checkoutState?.checkout?.id });
 	} catch (e) {
 		console.error(e);
 		checkoutState.error = e;
@@ -179,90 +191,9 @@ export function* removeCheckoutLineItem(id) {
 }
 
 /**
- * Remove a line item.
- */
-export const removeLineItem = async ({ checkoutId, itemId }) => {
-	const { deleted } = await apiFetch({
-		path: `surecart/v1/line_items/${itemId}`,
-		method: 'DELETE',
-	});
-
-	return { deleted };
-};
-
-/**
- * Add the checkout line item.
- */
-export const addCheckoutLineItem = async (data) => {
-	const context = getContext();
-	try {
-		checkoutState.loading = true;
-		return await addLineItem({
-			checkout: checkoutState.checkout,
-			data,
-			live_mode: context.mode !== 'test',
-		});
-	} catch (e) {
-		console.error(e);
-		checkoutState.error = e;
-	} finally {
-		checkoutState.loading = false;
-	}
-};
-
-/** Create or update the checkout. */
-export const createOrUpdateCheckout = async ({
-	id = null,
-	data = {},
-	query = {},
-}) => {
-	id = id ?? getSessionId();
-	return await apiFetch({
-		method: id ? 'PATCH' : 'POST', // create or update
-		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
-		data: withDefaultData(data),
-	});
-};
-
-/** Update the checkout. */
-export const updateCheckout = async ({ data = {}, query = {} }) => {
-	const id = data?.id ?? getSessionId();
-	return await apiFetch({
-		method: 'PATCH',
-		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
-		data: withDefaultData(data),
-	});
-};
-
-/** Finalize a checkout */
-export const finalizeCheckout = async ({
-	id,
-	data = {},
-	query = {},
-	processor,
-}) => {
-	return await apiFetch({
-		method: 'POST',
-		path: addQueryArgs(
-			parsePath(id, '/finalize'),
-			withDefaultQuery({
-				...(processor?.manual
-					? {
-							manual_payment: true,
-							manual_payment_method_id: processor?.id,
-					  }
-					: { processor_type: processor?.id }),
-				...query,
-			})
-		),
-		data: withDefaultData(data),
-	});
-};
-
-/**
  * Add a line item.
  */
-export const addLineItem = async ({ checkout, data, live_mode = false }) => {
+export function* addLineItem({ checkout, data, live_mode = false }) {
 	const existingLineItem = (checkout?.line_items?.data || []).find((item) => {
 		if (!item?.variant?.id) {
 			return item.price.id === data.price;
@@ -272,7 +203,7 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 
 	// create the checkout with the line item.
 	if (!checkout?.id) {
-		return await apiFetch({
+		return yield apiFetch({
 			method: 'POST', // create
 			path: addQueryArgs(parsePath(null)),
 			data: {
@@ -284,7 +215,7 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 
 	// handle existing line item.
 	if (!!existingLineItem) {
-		return await updateLineItem({
+		return yield* updateLineItem({
 			id: existingLineItem?.id,
 			data: {
 				...data,
@@ -293,7 +224,7 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 		});
 	}
 
-	const item = await apiFetch({
+	const item = yield apiFetch({
 		path: addQueryArgs(
 			`surecart/v1/line_items/${
 				existingLineItem?.id ? existingLineItem?.id : ''
@@ -316,15 +247,75 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
 	});
 
 	return item?.checkout;
-};
+}
+
+/**
+ * Add the checkout line item.
+ */
+export function* addCheckoutLineItem(data) {
+	const context = getContext();
+	try {
+		checkoutState.loading = true;
+		return yield* addLineItem({
+			checkout: checkoutState.checkout,
+			data,
+			live_mode: context.mode !== 'test',
+		});
+	} catch (e) {
+		console.error(e);
+		checkoutState.error = e;
+	} finally {
+		checkoutState.loading = false;
+	}
+}
+
+/** Create or update the checkout. */
+export function* createOrUpdateCheckout({ id = null, data = {}, query = {} }) {
+	id = id ?? getSessionId();
+	return yield apiFetch({
+		method: id ? 'PATCH' : 'POST', // create or update
+		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
+		data: withDefaultData(data),
+	});
+}
+
+/** Update the checkout. */
+export function* updateCheckout({ data = {}, query = {} }) {
+	const id = data?.id ?? getSessionId();
+	return yield apiFetch({
+		method: 'PATCH',
+		path: addQueryArgs(parsePath(id), withDefaultQuery(query)),
+		data: withDefaultData(data),
+	});
+}
+
+/** Finalize a checkout */
+export function* finalizeCheckout({ id, data = {}, query = {}, processor }) {
+	return yield apiFetch({
+		method: 'POST',
+		path: addQueryArgs(
+			parsePath(id, '/finalize'),
+			withDefaultQuery({
+				...(processor?.manual
+					? {
+							manual_payment: true,
+							manual_payment_method_id: processor?.id,
+					  }
+					: { processor_type: processor?.id }),
+				...query,
+			})
+		),
+		data: withDefaultData(data),
+	});
+}
 
 /**
  * Handle the coupon apply. Applies for both add/remove coupon.
  */
-export const handleCouponApply = async (promotionCode) => {
+export function* handleCouponApply(promotionCode) {
 	try {
 		checkoutState.loading = true;
-		return await updateCheckout({
+		return yield* updateCheckout({
 			data: {
 				discount: {
 					...(promotionCode
@@ -341,4 +332,4 @@ export const handleCouponApply = async (promotionCode) => {
 	} finally {
 		checkoutState.loading = false;
 	}
-};
+}
