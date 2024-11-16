@@ -136,11 +136,11 @@ add_action(
 			array(
 				array(
 					'id'     => 'wp-url',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => 'wp-api-fetch',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -154,7 +154,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -168,7 +168,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -200,11 +200,11 @@ add_action(
 			[
 				[
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				],
 				[
 					'id'     => '@surecart/checkout-service',
-					'import' => 'static',
+					'import' => 'dynamic',
 				],
 				[
 					'id'     => '@surecart/google-events',
@@ -226,7 +226,7 @@ add_action(
 			[
 				[
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				],
 				[
 					'id'     => '@wordpress/interactivity-router',
@@ -252,7 +252,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -266,11 +266,11 @@ add_action(
 			array(
 				array(
 					'id'     => '@surecart/api-fetch',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -293,15 +293,15 @@ add_action(
 			array(
 				array(
 					'id'     => '@surecart/checkout',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/checkout-events',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -315,15 +315,15 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/checkout-service',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/checkout-events',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/google-events',
