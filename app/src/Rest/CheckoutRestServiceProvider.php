@@ -196,6 +196,17 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function finalize_permissions_check( \WP_REST_Request $request ) {
+		if ( empty( $request['live_mode'] ) ) {
+			if ( current_user_can( 'edit_sc_checkouts' ) ) {
+				return true;
+			}
+			if ( empty( \SureCart::settings()->get( 'unrestricted_test_mode' ) ) ) {
+				$errors = new \WP_Error( 'test_mode_restricted', esc_html__( 'Test order successful, but not processed.', 'surecart' ), [ 'status' => 403 ] );
+				$errors->add( 'test_mode_restricted', esc_html__( 'This is a test checkout. No orders were processed. Please contact the store administrator for more information.', 'surecart' ), [ 'status' => 403 ] );
+				return $errors;
+			}
+		}
+
 		// form id or a product id is required.
 		if ( empty( $request['form_id'] ) && empty( $request['product_id'] ) ) {
 			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'surecart' ), [ 'status' => 400 ] );

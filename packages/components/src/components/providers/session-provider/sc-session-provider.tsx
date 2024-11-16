@@ -407,6 +407,13 @@ export class ScSessionProvider {
       return this.handleNewCheckout(false);
     }
 
+    if (['test_mode_restricted'].includes(e?.code)) {
+      createErrorNotice(e);
+      clearCheckout();
+      updateFormState('REJECT');
+      return;
+    }
+
     const hasPriceVersionChangeError = (e?.additional_errors || []).some(error => {
       const purchasableStatuses = error?.data?.options?.purchasable_statuses || [];
       return ['price_old_version', 'variant_old_version'].some(status => purchasableStatuses.includes(status));
