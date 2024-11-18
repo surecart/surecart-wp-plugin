@@ -194,7 +194,7 @@ export default () => {
 					{__('Test Mode Restricted', 'surecart')}
 					<span slot="description">
 						{__(
-							'Only allow administrators to complete test orders. Turn this off to let anyone complete test orders.',
+							'Restrict test orders to store administrators only. Disable this setting to allow anyone to complete test orders.',
 							'surecart'
 						)}
 					</span>
