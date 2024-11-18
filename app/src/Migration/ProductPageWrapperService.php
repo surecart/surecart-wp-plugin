@@ -35,6 +35,15 @@ class ProductPageWrapperService {
 	}
 
 	/**
+	 * Has product buy button
+	 *
+	 * @return boolean
+	 */
+	public function hasProductBuyButton() {
+		return preg_match( '/data-sc-block-id=(?:"product-buy-button"|\'product-buy-button\'|\\"product-buy-button\\"|\\\'product-buy-button\\\')/', $this->content );
+	}
+
+	/**
 	 * Has custom amount block
 	 *
 	 * @return boolean
@@ -71,11 +80,13 @@ class ProductPageWrapperService {
 	 * @return string
 	 */
 	public function wrap(): string {
-		if ( ! has_block( 'surecart/product-buy-button', $this->content ) || ! has_shortcode( $this->content, '[sc_product_buy_button]' ) ) {
+		// need to be a product page.
+		if ( ! is_singular( 'sc_product' ) ) {
 			return $this->content;
 		}
 
-		if ( ! is_singular( 'sc_product' ) ) {
+		// need to have a product buy button.
+		if ( ! $this->hasProductBuyButton() ) {
 			return $this->content;
 		}
 
