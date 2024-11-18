@@ -1,4 +1,6 @@
+/** @jsx jsx */
 import SettingsBox from '../SettingsBox';
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import {
@@ -10,6 +12,7 @@ import {
 import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
+import { Modal } from '@wordpress/components';
 
 export default () => {
 	const sureTriggers = scData?.integrations?.suretriggers || {};
@@ -47,7 +50,7 @@ export default () => {
 				},
 			});
 		}
-	}, []);
+	}, [open]);
 
 	const installSureTriggers = async () => {
 		const formData = new window.FormData();
@@ -104,9 +107,15 @@ export default () => {
 
 	const buttonText = () => {
 		if (status === 'install') {
-			return __('Install', 'surecart');
+			if (loading) {
+				return __('Installing...', 'surecart');
+			}
+			return __('Install & Activate', 'surecart');
 		}
 		if (status === 'installed') {
+			if (loading) {
+				return __('Activating...', 'surecart');
+			}
 			return __('Activate', 'surecart');
 		}
 		if (status === 'configure') {
@@ -120,6 +129,7 @@ export default () => {
 	const onClick = async () => {
 		if (status === 'install') {
 			await installSureTriggers();
+			await activateSureTriggers();
 		}
 		if (status === 'installed') {
 			await activateSureTriggers();
@@ -164,17 +174,29 @@ export default () => {
 					/>
 				</div>
 			</ScFlex>
-			<ScDialog
-				open={open}
-				style={{
-					'--dialog-body-overflow': 'visible',
-					'--width': '65rem',
-					'--height': '40rem',
-				}}
-				onScRequestClose={() => setOpen(false)}
-				noHeader
-				id="suretriggers-iframe-wrapper"
-			/>
+			{open && (
+				<Modal
+					isFullScreen
+					onRequestClose={() => setOpen(false)}
+					css={css`
+						.components-modal__content {
+							> div:not([class]) {
+								display: flex;
+								flex-direction: column;
+								height: 100%;
+							}
+						}
+					`}
+				>
+					<div
+						style={{
+							width: '100%',
+							height: '100%',
+						}}
+						id="suretriggers-iframe-wrapper"
+					></div>
+				</Modal>
+			)}
 			{loading && <ScBlockUi spinner />}
 		</SettingsBox>
 	);
