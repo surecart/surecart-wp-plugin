@@ -12,11 +12,10 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 
 export default () => {
+	const sureTriggers = scData?.integrations?.suretriggers || {};
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [status, setStatus] = useState(
-		scData?.integrations?.suretriggers?.status
-	);
+	const [status, setStatus] = useState(sureTriggers?.status);
 
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
@@ -144,14 +143,8 @@ export default () => {
 			<ScFlex justifyContent="space-between">
 				<div style={{ width: '60%' }}>
 					<ScFlex justifyContent="flex-start">
-						<img
-							src={scData?.integrations?.suretriggers?.logo}
-							alt="SureTriggers"
-						/>
-						<img
-							src={scData?.integrations?.suretriggers?.logoText}
-							alt="SureTriggers"
-						/>
+						<img src={sureTriggers?.logo} alt="SureTriggers" />
+						<img src={sureTriggers?.logoText} alt="SureTriggers" />
 					</ScFlex>
 					<p>
 						{__(
@@ -165,7 +158,7 @@ export default () => {
 				</div>
 				<div style={{ width: '40%' }}>
 					<img
-						src={scData?.integrations?.suretriggers?.banner}
+						src={sureTriggers?.banner}
 						alt="SureTriggers"
 						width="100%"
 					/>
