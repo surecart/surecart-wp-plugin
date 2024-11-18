@@ -3,12 +3,10 @@ import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { useEntityProp } from '@wordpress/core-data';
 import {
 	ScFlex,
 	ScInput,
 	ScSelect,
-	ScSwitch,
 	ScTextarea,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
@@ -20,12 +18,6 @@ export default () => {
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'order_protocol'
-	);
-
-	const [unrestrictedTestMode, setUnrestrictedTestMode] = useEntityProp(
-		'root',
-		'site',
-		'surecart_unrestricted_test_mode'
 	);
 
 	/**
@@ -54,31 +46,6 @@ export default () => {
 				setError={setError}
 				margin="80px"
 			/>
-
-			<SettingsBox
-				title={__('Test Mode', 'surecart')}
-				description={__('Configure test mode settings.', 'surecart')}
-				loading={!hasLoadedItem}
-			>
-				<ScSwitch
-					help={__(
-						'Allow non-administrators to make test payments.',
-						'surecart'
-					)}
-					value={unrestrictedTestMode}
-					onScChange={(e) =>
-						setUnrestrictedTestMode(e.target.checked)
-					}
-				>
-					{__('Unrestricted Test Mode', 'surecart')}
-					<span slot="description">
-						{__(
-							'Allow non-administrators to complete test checkouts.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-			</SettingsBox>
 
 			<SettingsBox
 				title={__('Order Numbering', 'surecart')}
