@@ -1,11 +1,26 @@
 import SettingsBox from '../SettingsBox';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
-import { ScButton, ScDialog } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDialog,
+	ScFlex,
+	ScBlockUi,
+} from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
 
 export default () => {
 	const [open, setOpen] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [status, setStatus] = useState(
+		scData?.integrations?.suretriggers?.status
+	);
+
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+
 	useEffect(() => {
 		if (window?.SureTriggers) {
 			window.SureTriggers.init({
@@ -43,6 +58,7 @@ export default () => {
 		formData.append('init', 'suretriggers/suretriggers.php');
 
 		try {
+			setLoading(true);
 			const response = await apiFetch({
 				url: scData?.ajax_url,
 				method: 'POST',
@@ -50,7 +66,13 @@ export default () => {
 			});
 			console.log('response', response);
 		} catch (error) {
-			console.error('Error installing plugin:', error);
+			createErrorNotice(
+				error?.message || __('Something went wrong', 'surecart')
+			);
+		} finally {
+			setLoading(false);
+			setStatus('installed');
+			createSuccessNotice(__('Plugin installed.', 'surecart'));
 		}
 	};
 
@@ -63,6 +85,7 @@ export default () => {
 		formData.append('slug', 'suretriggers');
 
 		try {
+			setLoading(true);
 			const response = await apiFetch({
 				url: scData?.ajax_url,
 				method: 'POST',
@@ -70,36 +93,42 @@ export default () => {
 			});
 			console.log('response', response);
 		} catch (error) {
-			console.error('Error activating plugin:', error);
+			createErrorNotice(
+				error?.message || __('Something went wrong', 'surecart')
+			);
+		} finally {
+			setLoading(false);
+			setStatus('activated');
+			createSuccessNotice(__('Plugin activated.', 'surecart'));
 		}
 	};
 
 	const buttonText = () => {
-		if (scData?.integrations?.suretriggers?.status === 'install') {
+		if (status === 'install') {
 			return __('Install', 'surecart');
 		}
-		if (scData?.integrations?.suretriggers?.status === 'installed') {
+		if (status === 'installed') {
 			return __('Activate', 'surecart');
 		}
-		if (scData?.integrations?.suretriggers?.status === 'configure') {
+		if (status === 'configure') {
 			return __('Configure', 'surecart');
 		}
-		if (scData?.integrations?.suretriggers?.status === 'activated') {
+		if (status === 'activated') {
 			return __('View Integrations', 'surecart');
 		}
 	};
 
 	const onClick = async () => {
-		if (scData?.integrations?.suretriggers?.status === 'install') {
+		if (status === 'install') {
 			await installSureTriggers();
 		}
-		if (scData?.integrations?.suretriggers?.status === 'installed') {
+		if (status === 'installed') {
 			await activateSureTriggers();
 		}
-		if (scData?.integrations?.suretriggers?.status === 'configure') {
+		if (status === 'configure') {
 			window.location.assign('admin.php?page=suretriggers');
 		}
-		if (scData?.integrations?.suretriggers?.status === 'activated') {
+		if (status === 'activated') {
 			setOpen(true);
 		}
 	};
@@ -112,8 +141,36 @@ export default () => {
 			)}
 			noButton
 		>
-			<ScButton onClick={() => onClick()}>{buttonText()}</ScButton>
-
+			<ScFlex justifyContent="space-between">
+				<div style={{ width: '60%' }}>
+					<ScFlex justifyContent="flex-start">
+						<img
+							src={scData?.integrations?.suretriggers?.logo}
+							alt="SureTriggers"
+						/>
+						<img
+							src={scData?.integrations?.suretriggers?.logoText}
+							alt="SureTriggers"
+						/>
+					</ScFlex>
+					<p>
+						{__(
+							'SureTriggers lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & SureTriggers has got you covered.',
+							'surecart'
+						)}
+					</p>
+					<ScButton type="primary" onClick={() => onClick()}>
+						{buttonText()}
+					</ScButton>
+				</div>
+				<div style={{ width: '40%' }}>
+					<img
+						src={scData?.integrations?.suretriggers?.banner}
+						alt="SureTriggers"
+						width="100%"
+					/>
+				</div>
+			</ScFlex>
 			<ScDialog
 				open={open}
 				style={{
@@ -125,6 +182,7 @@ export default () => {
 				noHeader
 				id="suretriggers-iframe-wrapper"
 			/>
+			{loading && <ScBlockUi spinner />}
 		</SettingsBox>
 	);
 };
