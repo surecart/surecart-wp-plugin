@@ -92,12 +92,12 @@ class IntegrationsService {
 		$all_integrations = [];
 		foreach ( $this->integrations as $slug => $plugin_file ) {
 			$all_integrations[ $slug ] = [
-				'slug'   => $slug,
-				'status' => $this->getPluginStatus( $plugin_file ),
-				'file'   => $plugin_file,
-				'logo'   => esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/suretriggers-logo.svg' ),
+				'slug'     => $slug,
+				'status'   => $this->getPluginStatus( $plugin_file ),
+				'file'     => $plugin_file,
+				'logo'     => esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/suretriggers-logo.svg' ),
 				'logoText' => esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/suretriggers-logo-text.svg' ),
-				'banner' => esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/suretriggers-banner.svg' ),
+				'banner'   => esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/suretriggers-banner.svg' ),
 
 			];
 		}
