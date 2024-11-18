@@ -188,7 +188,7 @@ export default () => {
 				<ScSwitch
 					checked={!unrestrictedTestMode}
 					onScChange={(e) =>
-						setUnrestrictedTestMode(e.target.checked)
+						setUnrestrictedTestMode(!e.target.checked)
 					}
 				>
 					{__('Test Mode Restricted', 'surecart')}
