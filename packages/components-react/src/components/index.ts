@@ -39,6 +39,7 @@ export const ScCheckoutMolliePayment = /*@__PURE__*/createReactComponent<JSX.ScC
 export const ScCheckoutPaystackPaymentProvider = /*@__PURE__*/createReactComponent<JSX.ScCheckoutPaystackPaymentProvider, HTMLScCheckoutPaystackPaymentProviderElement>('sc-checkout-paystack-payment-provider');
 export const ScCheckoutProductPriceVariantSelector = /*@__PURE__*/createReactComponent<JSX.ScCheckoutProductPriceVariantSelector, HTMLScCheckoutProductPriceVariantSelectorElement>('sc-checkout-product-price-variant-selector');
 export const ScCheckoutStockAlert = /*@__PURE__*/createReactComponent<JSX.ScCheckoutStockAlert, HTMLScCheckoutStockAlertElement>('sc-checkout-stock-alert');
+export const ScCheckoutTestComplete = /*@__PURE__*/createReactComponent<JSX.ScCheckoutTestComplete, HTMLScCheckoutTestCompleteElement>('sc-checkout-test-complete');
 export const ScCheckoutUnsavedChangesWarning = /*@__PURE__*/createReactComponent<JSX.ScCheckoutUnsavedChangesWarning, HTMLScCheckoutUnsavedChangesWarningElement>('sc-checkout-unsaved-changes-warning');
 export const ScChoice = /*@__PURE__*/createReactComponent<JSX.ScChoice, HTMLScChoiceElement>('sc-choice');
 export const ScChoiceContainer = /*@__PURE__*/createReactComponent<JSX.ScChoiceContainer, HTMLScChoiceContainerElement>('sc-choice-container');

@@ -408,9 +408,7 @@ export class ScSessionProvider {
     }
 
     if (['test_mode_restricted'].includes(e?.code)) {
-      createErrorNotice(e);
-      clearCheckout();
-      updateFormState('REJECT');
+      updateFormState('TEST_MODE_RESTRICTED');
       return;
     }
 
