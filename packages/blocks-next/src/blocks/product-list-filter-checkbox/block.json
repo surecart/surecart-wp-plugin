@@ -1,14 +1,14 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-list-filter-tag",
-	"title": "Tag",
-	"description": "Display the filter tag.",
+	"name": "surecart/product-list-filter-checkbox",
+	"title": "Filter Checkbox",
+	"description": "Display the filter checkbox.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
-	"usesContext": ["surecart/filterTag/name"],
-	"ancestor": ["surecart/product-list-filter-tags"],
+	"usesContext": ["surecart/checkbox/name"],
+	"ancestor": ["surecart/product-list-filter-checkboxes"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {
@@ -28,6 +28,5 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["surecart-checkbox"],
 	"render": "file:./view.php"
 }
