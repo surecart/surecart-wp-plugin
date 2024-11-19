@@ -317,6 +317,7 @@ IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading
 - Fix: Potential race condition in cart due to module imports under certain caching conditions.
 - Fix: Upgrade staging site warning should no longer show if you have alread upgraded to 3.0.
 - Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
+- Fix: Issue with non-cached items sometimes loading on front-end if there is a server timeout.
 - Fix: Minor security issue.
 
 = 3.0.2 - November 13th, 2024 =
