@@ -111,6 +111,7 @@ class ScriptsService {
 					'cdn_root'             => SURECART_CDN_IMAGE_BASE,
 					'root_url'             => esc_url_raw( get_rest_url() ),
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
+					'home_url'             => esc_url_raw( home_url() ),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
 					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),

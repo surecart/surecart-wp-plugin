@@ -1,10 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Watch, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import { state as processorsState } from '@store/processors';
 import { state as selectedProcessorState } from '@store/selected-processor';
-import { state as checkoutState } from '@store/checkout';
-import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
 /**
@@ -16,10 +13,10 @@ import { clearCheckout } from '@store/checkout/mutations';
   styleUrl: 'checkout-test-complete.scss',
   shadow: true,
 })
-export class ScOrderConfirmProvider {
+export class ScCheckoutTestComplete {
   private continueButton: HTMLScButtonElement;
   /** The order confirm provider element */
-  @Element() el: HTMLScOrderConfirmProviderElement;
+  @Element() el: HTMLScCheckoutTestCompleteElement;
 
   /** Whether to show success modal */
   @State() showSuccessModal: boolean = false;
@@ -52,24 +49,8 @@ export class ScOrderConfirmProvider {
   /** Confirm the order. */
   async confirmOrder() {
     this.manualPaymentMethod = (processorsState.manualPaymentMethods || [])?.find(p => p.id === selectedProcessorState.id);
-    const checkout = checkoutState.checkout;
-
-    // get success url.
-    const successUrl = checkout?.metadata?.success_url || this.successUrl;
-    if (successUrl) {
-      // set state to redirecting.
-      this.scSetState.emit('REDIRECT');
-      const redirectUrl = addQueryArgs(successUrl, { sc_order: checkout?.id });
-      setTimeout(() => window.location.assign(redirectUrl), 50);
-    } else {
-      this.showSuccessModal = true;
-    }
+    this.showSuccessModal = true;
     clearCheckout();
-  }
-
-  getSuccessUrl() {
-    const url = checkoutState.checkout?.metadata?.success_url || this.successUrl;
-    return url ? addQueryArgs(url, { sc_order: checkoutState.checkout?.id }) : window?.scData?.pages?.dashboard;
   }
 
   @Watch('showSuccessModal')
@@ -85,7 +66,12 @@ export class ScOrderConfirmProvider {
     return (
       <Host>
         <slot />
-        <sc-dialog open={!!this.showSuccessModal} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
+        <sc-dialog
+          open={!!this.showSuccessModal}
+          style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)', '--width': '400px' }}
+          noHeader
+          onScRequestClose={e => e.preventDefault()}
+        >
           <div class="confirm__icon">
             <div class="confirm__icon-container">
               <sc-icon name="check" />
@@ -96,10 +82,7 @@ export class ScOrderConfirmProvider {
             style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
           >
             <span slot="description">
-              {__(
-                'This is a simulated test checkout, so no orders were processed. If you would like to process an real test order, please contact the store administrator.',
-                'surecart',
-              )}
+              {__('This is a simulated test checkout, and no orders were processed. To perform a test order, please contact your store administrator. ', 'surecart')}
             </span>
             {!!this.manualPaymentMethod?.name && !!this.manualPaymentMethod?.instructions && (
               <sc-alert type="info" open style={{ 'text-align': 'left' }}>
@@ -107,8 +90,8 @@ export class ScOrderConfirmProvider {
                 <div innerHTML={this.manualPaymentMethod?.instructions}></div>
               </sc-alert>
             )}
-            <sc-button href={this.getSuccessUrl()} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>
-              {formState?.text?.success?.button || __('Continue', 'surecart')}
+            <sc-button href={window?.scData?.home_url} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>
+              {__('Back to Homepage', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
           </sc-dashboard-module>
