@@ -36,12 +36,15 @@ import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
 import MetaBoxes from './modules/MetaBoxes';
+import Taxonomies from './modules/Taxonomies';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
 	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { setEditedPost } = useDispatch('core/editor');
+
 	const {
 		product,
 		saveProduct,
@@ -56,6 +59,10 @@ export default ({ id, setBrowserURL }) => {
 
 	const isSavingMetaBoxes = useSelect((select) =>
 		select('surecart/metaboxes').isSavingMetaBoxes()
+	);
+
+	const currentPost = useSelect((select) =>
+		select('core/editor').getCurrentPost()
 	);
 
 	const { post, loadingPost } = useSelect(
@@ -87,6 +94,13 @@ export default ({ id, setBrowserURL }) => {
 		},
 		[id]
 	);
+
+	useEffect(() => {
+		if (!post?.id) {
+			return;
+		}
+		setEditedPost('sc_product', post?.id);
+	}, [post]);
 
 	/**
 	 * Whether the product should be published.
@@ -335,7 +349,10 @@ export default ({ id, setBrowserURL }) => {
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
-
+						<Taxonomies
+							currentPost={currentPost}
+							product={product}
+						/>
 						<Advanced
 							product={product}
 							updateProduct={editProduct}
