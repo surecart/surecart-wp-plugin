@@ -39,6 +39,7 @@ import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
 import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
 import ReturnItems from './modules/ReturnRequest/ReturnItems';
+import Refund from '../components/data-tables/charges-data-table/Refund';
 
 export default () => {
 	const [modal, setModal] = useState();
@@ -224,10 +225,32 @@ export default () => {
 			});
 		}
 
+		// Add refund option if only one charge is present.
+		// For multiple charges, refund should be done from the charges table individually.
+		if (order?.checkout?.charges?.data?.length === 1) {
+			menuItems.push({
+				title: __('Refund', 'surecart'),
+				modal: 'refund',
+			});
+		}
+
 		return menuItems;
 	};
 
 	const menuItems = getMenuItems(order?.status);
+
+	const [refundCharge, setRefundCharge] = useState(
+		order?.checkout?.charges?.data?.[0]
+	);
+	useEffect(() => {
+		setRefundCharge(order?.checkout?.charges?.data?.[0]);
+	}, [order?.checkout?.charges?.data]);
+
+	const onRefunded = () => {
+		// invalidateCharges();
+		setRefundCharge(false);
+		setModal(false);
+	};
 
 	return (
 		<UpdateModel
@@ -358,6 +381,15 @@ export default () => {
 					onRequestClose={() => setModal(false)}
 					onCreateSuccess={manuallyRefetchOrder}
 				/>
+
+				{modal === 'refund' && (
+					<Refund
+						charge={refundCharge}
+						purchases={[]}
+						onRefunded={onRefunded}
+						onRequestClose={() => setRefundCharge(false)}
+					/>
+				)}
 			</>
 		</UpdateModel>
 	);

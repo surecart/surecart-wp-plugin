@@ -57,7 +57,7 @@ export default ({ checkoutId }) => {
 				'purchase',
 				{
 					checkout_ids: checkoutId ? [checkoutId] : null,
-					expand: ['product'],
+					expand: ['product', 'line_item'],
 				},
 			];
 			return {
