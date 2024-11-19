@@ -15,7 +15,7 @@ function surecart_get_the_block_template_html( $template_content ) {
 
 	if ( ! $template_content ) {
 		if ( is_user_logged_in() ) {
-			return '<h1>' . esc_html__( 'No matching template found' ) . '</h1>';
+			return '<h1>' . esc_html__( 'No matching template found', 'surecart' ) . '</h1>';
 		}
 		return;
 	}
@@ -43,7 +43,8 @@ function surecart_get_the_block_template_html( $template_content ) {
  * @param string $part The block template part to print.
  */
 function sc_block_template_part( $part ) {
-	$template_part = get_block_template( 'surecart/surecart//' . $part, 'wp_template_part' );
+	// add surecart/surecart prefix.
+	$template_part = get_block_template( $part, 'wp_template_part' );
 	if ( ! $template_part || empty( $template_part->content ) ) {
 		return;
 	}

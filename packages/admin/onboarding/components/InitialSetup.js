@@ -19,7 +19,7 @@ export default ({ handleStepChange }) => {
 						text-align: left;
 					`}
 				>
-					{__('Welcome, Let’s Setup Your Online Store', 'surecart')}
+					{__('Welcome, Let’s Set Up Your Online Store', 'surecart')}
 				</h2>
 				<p
 					css={css`

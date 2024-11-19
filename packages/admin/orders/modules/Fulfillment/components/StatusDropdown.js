@@ -18,12 +18,14 @@ import { __, _n } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
 
 const status = {
+	unshippable: __('Unshippable', 'surecart'),
 	unshipped: __('Not Shipped', 'surecart'),
 	shipped: __('Shipped', 'surecart'),
 	delivered: __('Delivered', 'surecart'),
 };
 
 const types = {
+	unshippable: 'default',
 	unshipped: 'warning',
 	shipped: 'info',
 	delivered: 'success',

@@ -3,7 +3,7 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
 	 * Get the product.
 	 *
-	 * @param \WP_Post|int $post The product post.
+	 * @param \WP_Post|int|string $post The product post.
 	 *
 	 * @return \SureCart\Models\Product|null
 	 */
@@ -13,11 +13,54 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 			return get_query_var( 'surecart_current_product' );
 		}
 
-		// make sure to get the post.
-		$post = get_post( $post );
+		// allow getting the product by sc_id.
+		if ( is_string( $post ) ) {
+			$posts = get_posts(
+				[
+					'post_type'  => 'sc_product',
+					'meta_query' => [
+						'key'   => 'sc_id',
+						'value' => $post,
+					],
+				]
+			);
+			$post  = count( $posts ) > 0 ? $posts[0] : get_post( $post );
+		} else {
+			$post = get_post( $post );
+		}
 
-		// return the post object.
-		return ! empty( $post ) ? get_post_meta( $post->ID, 'product', true ) : null;
+		// no post.
+		if ( ! $post ) {
+			return null;
+		}
+
+		// get the product.
+		$product = get_post_meta( $post->ID, 'product', true );
+		if ( empty( $product ) ) {
+			return null;
+		}
+
+		if ( is_array( $product ) ) {
+			$decoded = json_decode( wp_json_encode( $product ) );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// decode the product.
+		if ( is_string( $product ) ) {
+			$decoded = json_decode( $product );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// return the product.
+		return $product;
 	}
 }
 

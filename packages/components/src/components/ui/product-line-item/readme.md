@@ -15,7 +15,7 @@
 | `fees`                     | --                           | Product line item fees.                          | `Fee[]`           | `undefined` |
 | `image`                    | --                           | Image attributes.                                | `ImageAttributes` | `undefined` |
 | `interval`                 | `interval`                   | Recurring interval (i.e. monthly, once, etc.)    | `string`          | `undefined` |
-| `max`                      | `max`                        | The max allowed.                                 | `number`          | `100`       |
+| `max`                      | `max`                        | The max allowed.                                 | `number`          | `undefined` |
 | `name`                     | `name`                       | Product name                                     | `string`          | `undefined` |
 | `priceName`                | `price-name`                 | Price name                                       | `string`          | `undefined` |
 | `purchasableStatusDisplay` | `purchasable-status-display` | The purchasable status display                   | `string`          | `undefined` |

@@ -20,6 +20,14 @@ export const modal = (state, action) => {
 	return state;
 };
 
+export const error = (state, action) => {
+	switch (action.type) {
+		case 'SET_ERROR':
+			return action.value;
+	}
+	return state;
+};
+
 export const errors = (
 	state = {
 		flash: {},
@@ -137,6 +145,7 @@ export const snackbar = (state = [], action) => {
 // export reducers.
 export default combineReducers({
 	saving,
+	error, // single error
 	errors,
 	modelErrors,
 	modal,

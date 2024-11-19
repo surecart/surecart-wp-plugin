@@ -42,7 +42,7 @@ class LicensesListTable extends ListTable {
 	public function search() { ?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Licenses' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Licenses', 'surecart' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -107,7 +107,7 @@ class LicensesListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ) . '" aria-label="' . esc_attr( 'Edit License', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ) . '" aria-label="' . esc_attr__( 'Edit License', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>

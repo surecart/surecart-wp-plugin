@@ -13,9 +13,6 @@ class CancellationInsightsController extends AdminController {
 	 * Index.
 	 */
 	public function index() {
-		// enqueue stats.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( CancellationInsightsScriptsController::class, 'enqueue' ) );
-
 		$this->withHeader(
 			array(
 				'breadcrumbs' => [
@@ -23,6 +20,7 @@ class CancellationInsightsController extends AdminController {
 						'title' => __( 'Subscription Saver & Insights', 'surecart' ),
 					],
 				],
+				'report_url'       => SURECART_REPORTS_URL . 'cancellation_acts',
 			)
 		);
 

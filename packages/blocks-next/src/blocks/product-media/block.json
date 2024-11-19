@@ -49,11 +49,11 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["file:../../styles/image-slider.css"],
+	"editorStyle": ["surecart-image-slider"],
 	"viewScriptModule": "@surecart/image-slider",
 	"style": [
 		"file:./style-index.css",
-		"file:../../styles/image-slider.css",
-		"file:../../styles/product-media.css"
+		"surecart-image-slider",
+		"surecart-product-media"
 	]
 }

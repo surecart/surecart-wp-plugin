@@ -42,8 +42,5 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": [
-		"file:../../styles/line-item.css",
-		"file:../../styles/product-line-item.css"
-	]
+	"style": ["surecart-line-item", "surecart-product-line-item"]
 }

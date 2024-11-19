@@ -104,7 +104,7 @@ export default ({ attributes, setAttributes }) => {
 					type="text"
 					id="coupon"
 					class="sc-form-control sc-coupon-form__input"
-					aria-label="quantity"
+					aria-label={__('Coupon code', 'surecart')}
 					aria-describedby="basic-addon1"
 					placeholder={
 						placeholder || __('Enter coupon code', 'surecart')
