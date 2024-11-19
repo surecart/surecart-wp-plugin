@@ -288,14 +288,14 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function registerBlocks() {
-		$enabled_payment_processors = array_values(
+		$enabled_payment_processors = is_admin() ? array_values(
 			array_filter(
 				(array) Processor::get() ?? [],
 				function ( $payment_method ) {
 					return $payment_method->enabled ?? false;
 				}
 			)
-		);
+		) : [];
 		// blocks.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 		$deps       = $asset_file['dependencies'] ?? [];
@@ -375,7 +375,7 @@ class ScriptsService {
 				'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 				'processors'           => $enabled_payment_processors,
-				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
+				'manualPaymentMethods' => is_admin() ? ( (array) ManualPaymentMethod::get() ?? [] ) : [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,
 				'theme'                => get_option( 'surecart_theme', 'light' ),
