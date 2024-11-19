@@ -35,5 +35,14 @@ export const clearCheckout = (formId: number | string, mode: 'live' | 'test') =>
   const { [formId]: remove, ...checkouts } = store.state[mode];
   window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
   store.set(mode, checkouts);
+
+  // manually clear out any cart that has this checkout, just in case the store for this form is
+  // not set to persist.
+  const localCheckouts = JSON.parse(localStorage.getItem('surecart-local-storage') || '{}');
+  if (localCheckouts[mode]?.[formId]) {
+    delete localCheckouts[mode][formId];
+    localStorage.setItem('surecart-local-storage', JSON.stringify(localCheckouts));
+  }
+
   resetCheckoutState();
 };

@@ -186,7 +186,7 @@ export class ScSessionProvider {
     window.history.replaceState(
       {},
       document.title,
-      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart'),
+      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart', 'is_surecart_payment_redirect'),
     );
 
     // handle abandoned checkout.
@@ -299,7 +299,6 @@ export class ScSessionProvider {
         }, 100);
 
       case 'payment_failed':
-        clearCheckout();
         createErrorNotice({
           message: __('Payment unsuccessful.', 'surecart'),
         });
