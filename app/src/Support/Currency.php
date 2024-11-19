@@ -282,6 +282,10 @@ class Currency {
 					$money = number_format_i18n( round( (float) $number, 2 ), ( 0 === $cents ? 0 : 2 ) ); // format.
 				} // integer or decimal.
 			} // value.
+
+			// Remove any comma separators.
+			$money = str_replace( ',', '', $money );
+
 			return number_format_i18n( (float) $money, 2 );
 		} // numeric.
 	}
