@@ -307,6 +307,18 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
+= 3.0.3 - November 19th, 2024 =
+- New: Add Taxonomy Support to Products
+- New: Add ability to filter by any taxonomy on product list front-end.
+- New: Extra security setting to prevent non-admin users from making test payments.
+- Improvement: Lazy load javascript modules on front-end for improved performance.
+- Fix: Customer dashbaord template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
+- Fix: Issue where product form was wrapping some non-content elementor templates.
+- Fix: Potential race condition in cart due to module imports under certain caching conditions.
+- Fix: Upgrade staging site warning should no longer show if you have alread upgraded to 3.0.
+- Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
+- Fix: Minor security issue.
+
 = 3.0.2 - November 13th, 2024 =
 - Improvement: WordPress 6.7 compatibility.
 - Improvement: Rename "Orders & Receipts" to "Orders & Invoices" on settings page.
