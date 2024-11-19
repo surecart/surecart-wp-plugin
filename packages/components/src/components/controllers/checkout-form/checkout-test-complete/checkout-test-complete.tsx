@@ -91,7 +91,7 @@ export class ScCheckoutTestComplete {
               </sc-alert>
             )}
             <sc-button href={window?.scData?.home_url} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>
-              {__('Back to Homepage', 'surecart')}
+              {__('Go to Homepage', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
           </sc-dashboard-module>
