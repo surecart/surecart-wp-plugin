@@ -226,6 +226,15 @@ class SettingService {
 				'default'           => true,
 			]
 		);
+		$this->register(
+			'surecart',
+			'unrestricted_test_mode',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
 	}
 
 	/**

@@ -296,6 +296,8 @@ export class ScCheckout {
               </div>
             </sc-block-ui>
           )}
+
+          <sc-checkout-test-complete checkout-status={formState.formState.value} success-url={this.successUrl} />
         </Universe.Provider>
       </div>
     );
