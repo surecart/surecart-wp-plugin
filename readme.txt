@@ -314,6 +314,7 @@ IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading
 - Improvement: Lazy load javascript modules on front-end for improved performance.
 - Fix: Customer dashbaord template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
 - Fix: Issue where product form was wrapping some non-content elementor templates.
+- Fix: Issue with Mollie and Paystack payment redirects sometimes not creating WordPress user accounts.
 - Fix: Potential race condition in cart due to module imports under certain caching conditions.
 - Fix: Upgrade staging site warning should no longer show if you have alread upgraded to 3.0.
 - Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
