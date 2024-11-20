@@ -307,7 +307,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
-= 3.0.3 - November 19th, 2024 =
+= 3.0.3 - November 20th, 2024 =
 - New: Add Taxonomy Support to Products
 - New: Add ability to filter by any taxonomy on product list front-end.
 - New: Extra security setting to prevent non-admin users from making test payments.
