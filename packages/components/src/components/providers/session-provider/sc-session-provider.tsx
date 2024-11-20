@@ -186,14 +186,16 @@ export class ScSessionProvider {
     window.history.replaceState(
       {},
       document.title,
-      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart'),
+      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart', 'is_surecart_payment_redirect'),
     );
 
     // handle abandoned checkout.
     if (!!is_surecart_payment_redirect && !!checkout_id) {
       updateFormState('FINALIZE');
       updateFormState('PAYING');
-      return this.handleCheckoutIdFromUrl(checkout_id, coupon as string);
+      return this.handleCheckoutIdFromUrl(checkout_id, coupon as string, {
+        refresh_status: true,
+      });
     }
 
     // handle redirect status.
@@ -258,7 +260,7 @@ export class ScSessionProvider {
   }
 
   /** Handle abandoned checkout from URL */
-  async handleCheckoutIdFromUrl(id, promotion_code = '') {
+  async handleCheckoutIdFromUrl(id, promotion_code = '', query = {}) {
     console.info('Handling existing checkout from url.', promotion_code, id);
 
     // if coupon code, load the checkout with the code.
@@ -267,6 +269,7 @@ export class ScSessionProvider {
         id,
         discount: { promotion_code },
         refresh_line_items: true,
+        ...query,
       });
     }
 
@@ -276,6 +279,7 @@ export class ScSessionProvider {
         id,
         query: {
           refresh_line_items: true,
+          ...query,
         },
       })) as Checkout;
 
@@ -295,7 +299,6 @@ export class ScSessionProvider {
         }, 100);
 
       case 'payment_failed':
-        clearCheckout();
         createErrorNotice({
           message: __('Payment unsuccessful.', 'surecart'),
         });
@@ -405,6 +408,11 @@ export class ScSessionProvider {
     if (['checkout.not_found'].includes(e?.code)) {
       clearCheckout();
       return this.handleNewCheckout(false);
+    }
+
+    if (['test_mode_restricted'].includes(e?.code)) {
+      updateFormState('TEST_MODE_RESTRICTED');
+      return;
     }
 
     const hasPriceVersionChangeError = (e?.additional_errors || []).some(error => {
