@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-19T20:41:02+00:00\n"
+"POT-Creation-Date: 2024-11-20T16:47:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -21938,23 +21938,23 @@ msgstr ""
 msgid "Nothing Found"
 msgstr ""
 
-#: sc-session-provider2.js:188
+#: sc-session-provider2.js:190
 msgid "Payment unsuccessful. Please try again."
 msgstr ""
 
-#: sc-session-provider2.js:193
+#: sc-session-provider2.js:195
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
 msgstr ""
 
-#: sc-session-provider2.js:254
+#: sc-session-provider2.js:257
 msgid "Payment unsuccessful."
 msgstr ""
 
-#: sc-session-provider2.js:264
+#: sc-session-provider2.js:267
 msgid "Payment canceled. Please try again."
 msgstr ""
 
-#: sc-session-provider2.js:377
+#: sc-session-provider2.js:380
 msgid "Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment."
 msgstr ""
 
