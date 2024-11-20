@@ -9,15 +9,15 @@ export default ({ clientId, __unstableLayoutClassNames }) => {
 			template={TEMPLATE}
 			blockContexts={[
 				{
-					'surecart/checkbox/id': 'filter-1',
+					id: 'filter-1',
 					'surecart/checkbox/name': __('Filter 1'),
 				},
 				{
-					'surecart/checkbox/id': 'filter-2',
+					id: 'filter-2',
 					'surecart/checkbox/name': __('Filter 2'),
 				},
 				{
-					'surecart/checkbox/id': 'filter-3',
+					id: 'filter-3',
 					'surecart/checkbox/name': __('Filter 3'),
 				},
 			]}
