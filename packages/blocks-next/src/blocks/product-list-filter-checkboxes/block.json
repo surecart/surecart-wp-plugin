@@ -19,13 +19,22 @@
 			"allowSwitching": false,
 			"allowInheriting": false,
 			"default": {
-				"type": "flex"
+				"type": "flex",
+				"orientation": "vertical"
 			}
 		},
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"],
-			"blockGap": true
+			"blockGap": true,
+			"default": {
+				"blockGap": "0"
+			}
+		},
+		"style": {
+			"spacing": {
+				"blockGap": "0"
+			}
 		}
 	},
 	"textdomain": "surecart",
