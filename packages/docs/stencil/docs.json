@@ -1,9 +1,9 @@
 {
-  "timestamp": "2024-11-13T16:54:25",
+  "timestamp": "2024-11-21T09:12:24",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.18.3",
-    "typescriptVersion": "5.4.5"
+    "version": "4.22.2",
+    "typescriptVersion": "5.5.4"
   },
   "components": [
     {
@@ -13138,7 +13138,7 @@
             "docs": ""
           },
           "complexType": {
-            "signature": "(source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>",
+            "signature": "(source?: \"close-button\" | \"keyboard\" | \"overlay\" | \"method\") => Promise<void>",
             "parameters": [
               {
                 "name": "source",
@@ -13154,7 +13154,7 @@
             },
             "return": "Promise<void>"
           },
-          "signature": "requestClose(source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>",
+          "signature": "requestClose(source?: \"close-button\" | \"keyboard\" | \"overlay\" | \"method\") => Promise<void>",
           "parameters": [
             {
               "name": "source",
@@ -31429,7 +31429,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/maniruzzamanakash/Local Sites/wpex/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }

@@ -1251,7 +1251,7 @@ export namespace Components {
           * The direction from which the drawer will open.
          */
         "placement": 'top' | 'end' | 'bottom' | 'start';
-        "requestClose": (source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>;
+        "requestClose": (source?: "close-button" | "keyboard" | "overlay" | "method") => Promise<void>;
         /**
           * Sticky drawer header
          */

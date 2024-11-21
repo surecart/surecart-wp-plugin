@@ -217,6 +217,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/styles/webhook-notice.js'
 		),
+		['styles/dataviews']: path.resolve(
+			__dirname,
+			'packages/admin/styles/dataviews.js'
+		),
 	},
 	output: {
 		filename: '[name].js',

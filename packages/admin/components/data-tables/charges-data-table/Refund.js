@@ -8,6 +8,9 @@ import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+import { DataViews } from '@wordpress/dataviews';
+// import styles.scss from the DataViews component.
+// import '@wordpress/dataviews/build-style/style.css';
 
 /**
  * Internal dependencies.
@@ -24,6 +27,7 @@ import {
 	ScDrawer,
 	ScInput,
 	ScCheckbox,
+	ScFormatNumber,
 } from '@surecart/components-react';
 
 export default ({ charge, onRequestClose, onRefunded, purchases }) => {
@@ -68,6 +72,14 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 		// }, charge?.amount - charge?.refunded_amount);
 		// setAmount(totalAmount);
 	}, [purchases]);
+
+	// on change individual amount, update the setAmount.
+	useEffect(() => {
+		const totalAmount = items.reduce((total, item) => {
+			return total + item.quantity * item.lineItem?.full_amount;
+		}, 0);
+		setAmount(totalAmount);
+	}, [items]);
 
 	console.log('purchases', purchases);
 
@@ -133,6 +145,136 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 			})
 		);
 	};
+
+	const data = [
+		{
+			id: 1,
+			title: 'Title',
+			author: 'Admin',
+			date: '2012-04-23T18:25:43.511Z',
+			status : 'publish',
+		},
+		{
+			id: 2,
+			title: 'Title',
+			author: 'Admin',
+			date: '2012-04-23T18:25:43.511Z',
+			status : 'publish',
+		},
+	];
+
+	// const getItemId = (item) => item.id;
+
+	const STATUSES = [
+		{ value: 'draft', label: __('Draft') },
+		{ value: 'future', label: __('Scheduled') },
+		{ value: 'pending', label: __('Pending Review') },
+		{ value: 'private', label: __('Private') },
+		{ value: 'publish', label: __('Published') },
+		{ value: 'trash', label: __('Trash') },
+	];
+
+	const fields = [
+		{
+			id: 'title',
+			label: 'Title',
+			enableHiding: false,
+			enableSorting: false,
+		},
+		{
+			id: 'date',
+			label: 'Date',
+			// render: ({ item }) => {
+			// 	return <time>{getFormattedDate(item.date)}</time>;
+			// },
+			enableSorting: false,
+		},
+		{
+			id: 'author',
+			label: 'Author',
+			// render: ({ item }) => {
+			// 	return <a href="...">{item.author}</a>;
+			// },
+			// elements: [
+			// 	{ value: 1, label: 'Admin' },
+			// 	{ value: 2, label: 'User' },
+			// ],
+			// filterBy: {
+			// 	operators: ['is', 'isNot'],
+			// },
+			enableSorting: false,
+		},
+		{
+			id: 'status',
+			label: 'Status',
+			// getValue: ({ item }) =>
+			// 	STATUSES.find(({ value }) => value === item.status)?.label ??
+			// 	item.status,
+			// elements: STATUSES,
+			// filterBy: {
+			// 	operators: ['isAny'],
+			// },
+			enableSorting: false,
+		},
+	];
+
+	const [view, setView] = useState({
+		type: 'list',
+		perPage: 5,
+		page: 1,
+		sort: {
+			field: 'date',
+			direction: 'desc',
+		},
+		search: '',
+		filters: [],
+		fields: ['title', 'date', 'author', 'status'],
+		layout: {},
+	});
+
+	const defaultLayouts = {
+		list: {
+			layout: {
+				primaryField: 'title',
+			},
+		},
+	};
+
+	const paginationInfo = {
+		totalItems: 2, // data.length,
+		totalPages: 1, // Math.ceil(data.length / view.perPage),
+	};
+
+	// const defaultLayouts = {
+	// 	table: {
+	// 		layout: {
+	// 			primaryField: 'title',
+	// 			styles: {
+	// 				image: {
+	// 					width: 50,
+	// 				},
+	// 				title: {
+	// 					maxWidth: 400,
+	// 				},
+	// 				type: {
+	// 					maxWidth: 400,
+	// 				},
+	// 				description: {
+	// 					maxWidth: 200,
+	// 				},
+	// 			},
+	// 		},
+	// 	},
+	// };
+
+	// const [view, setView] = useState({
+	// 	...DEFAULT_VIEW,
+	// 	fields: ['title', 'description', 'categories'],
+	// 	layout: defaultLayouts[DEFAULT_VIEW.type].layout,
+	// });
+	// const { data: shownData, paginationInfo } = useMemo( () => {
+	// 	return filterSortAndPaginate( data, view, fields );
+	// }, [ view ] );
 
 	return (
 		<ScForm
@@ -204,9 +346,20 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 													gap: 0.5em;
 												`}
 											>
-												<ScLineItem css={css``}>
+												<ScLineItem
+													css={css`
+														display: flex;
+														gap: 1em;
+														width: 100%;
+													`}
+												>
 													{!!product?.image_url ? (
 														<img
+															css={css`
+																flex: 0 0 48px;
+																width: 48px;
+																height: 48px;
+															`}
 															src={
 																product?.image_url
 															}
@@ -239,9 +392,12 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 															/>
 														</div>
 													)}
-													<span slot="title">
+													<div
+														slot="title"
+														style={{ width: 250 }}
+													>
 														{product?.name}
-													</span>
+													</div>
 													<div slot="description">
 														{!!subscription && (
 															<sc-tag type="info">
@@ -252,79 +408,70 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 															</sc-tag>
 														)}
 													</div>
-													<div slot="price">
-														<div
-															css={css`
-																display: flex;
-																gap: 1em;
-																justify-content: space-between;
-															`}
-														>
-															<ScInput
-																label={__(
-																	'Quantity',
-																	'surecart'
-																)}
-																showLabel={
-																	false
-																}
-																value={quantity}
-																max={
-																	originalQuantity
-																}
-																type="number"
-																min={0}
-																onScInput={(
-																	e
-																) => {
-																	updateItems(
-																		index,
-																		{
-																			quantity:
-																				parseInt(
-																					e
-																						.target
-																						.value
-																				),
-																		}
-																	);
-																}}
-															>
-																<span
-																	slot="suffix"
-																	css={css`
-																		opacity: 0.65;
-																	`}
-																>
-																	{sprintf(
-																		__(
-																			'of %d',
-																			'surecart'
-																		),
-																		originalQuantity
-																	)}
-																</span>
-															</ScInput>
 
-															<div>
-																{lineItem?.price && (
-																	<ScPriceInput
-																		label={__(
-																			'Price',
-																			'surecart'
-																		)}
-																		value={
-																			lineItem?.price
-																		}
-																		currencyCode={
-																			charge?.currency
-																		}
-																		showCode
-																		disabled
-																	/>
+													<div
+														slot="price"
+														css={css`
+															display: flex;
+															gap: 2em;
+															justify-content: space-between;
+															align-items: center;
+														`}
+													>
+														<ScInput
+															label={__(
+																'Quantity',
+																'surecart'
+															)}
+															showLabel={false}
+															value={quantity}
+															max={
+																originalQuantity
+															}
+															type="number"
+															min={0}
+															onScInput={(e) => {
+																updateItems(
+																	index,
+																	{
+																		quantity:
+																			parseInt(
+																				e
+																					.target
+																					.value
+																			),
+																	}
+																);
+															}}
+														>
+															<span
+																slot="suffix"
+																css={css`
+																	opacity: 0.65;
+																`}
+															>
+																{sprintf(
+																	__(
+																		'of %d',
+																		'surecart'
+																	),
+																	originalQuantity
 																)}
-															</div>
-														</div>
+															</span>
+														</ScInput>
+														<ScFormatNumber
+															type="currency"
+															value={
+																(lineItem?.full_amount ??
+																	0) *
+																(quantity ??
+																	lineItem?.quantity)
+															}
+															currency={
+																lineItem?.price
+																	?.currency
+															}
+														/>
 													</div>
 												</ScLineItem>
 												<div
@@ -388,8 +535,36 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 							</ScFormControl>
 						)}
 
+						<DataViews
+							data={data}
+							fields={fields}
+							view={view}
+							onChangeView={setView}
+							defaultLayouts={defaultLayouts}
+							paginationInfo={paginationInfo}
+							header={null}
+							search={false}
+						/>
+
+						{/* <DataViews
+							getItemId={(item) => item.id.toString()}
+							paginationInfo={paginationInfo}
+							data={data}
+							view={view}
+							fields={fields}
+							onChangeView={setView}
+							actions={actions}
+							defaultLayouts={defaultLayouts}
+						/> */}
+
 						<div>
-							<ScFormControl label={__('Reason', 'surecart')}>
+							<ScFormControl
+								label={__('Reason', 'surecart')}
+								css={css`
+									margin-top: var(--sc-spacing-small);
+									margin-bottom: var(--sc-spacing-large);
+								`}
+							>
 								<ScSelect
 									name="reason"
 									value={reason}
@@ -420,6 +595,9 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 
 						<div>
 							<ScPriceInput
+								css={css`
+									margin-top: var(--sc-spacing-small);
+								`}
 								required
 								name="amount"
 								label={__('Refund Amount', 'surecart')}
@@ -445,7 +623,13 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 						)}
 					</div>
 				</div>
-				<ScButton type="primary" slot="footer" busy={loading} submit>
+				<ScButton
+					type="primary"
+					slot="footer"
+					busy={loading}
+					submit
+					disabled={loading || !amount}
+				>
 					{__('Refund', 'surecart')}
 				</ScButton>
 				<ScButton type="text" slot="footer" onClick={onRequestClose}>
