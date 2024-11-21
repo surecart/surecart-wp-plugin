@@ -33,6 +33,9 @@ class CompatibilityService {
 		// Yoast SEO fix.
 		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
 
+		// Siteground JS combine exclude.
+		add_filter( 'sgo_javascript_combine_exclude_ids', [ $this, 'sitegroundJsCombineExcludeScriptIds' ] );
+
 		// Show gutenberg active notice.
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 
@@ -197,5 +200,24 @@ class CompatibilityService {
 				]
 			);
 		}
+	}
+
+	/**
+	 * Exclude SureCart JS modules from Siteground JS combine.
+	 * This is to prevent the JS modules from being combined and minified by Siteground.
+	 *
+	 * @param array $exclude_ids Array of JS module IDs to exclude.
+	 *
+	 * @return array
+	 */
+	public function sitegroundJsCombineExcludeScriptIds( $exclude_ids ) {
+		$exclude_ids[] = '@surecart/product-page-js-module';
+		$exclude_ids[] = '@surecart/image-slider-js-module';
+		$exclude_ids[] = '@surecart/checkout-js-module';
+		$exclude_ids[] = '@surecart/cart-js-module';
+		$exclude_ids[] = '@surecart/checkout-service-js-module';
+		$exclude_ids[] = '@surecart/checkout-events-js-module';
+
+		return $exclude_ids;
 	}
 }
