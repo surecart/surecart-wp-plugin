@@ -14,7 +14,9 @@ export default ({
 	const blockProps = useBlockProps({
 		className: 'sc-dropdown',
 	});
-	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy');
+	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
+		per_page: -1,
+	});
 
 	// get all visible taxonomies for this post type.
 	const taxonomies = (allTaxonomies ?? []).filter(
