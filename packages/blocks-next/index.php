@@ -146,6 +146,26 @@ add_action(
 			$static_assets['version']
 		);
 
+		add_action(
+			'wp_footer',
+			function () {
+				?>
+				<script>
+					window.scFetchData =
+					<?php
+					echo wp_json_encode(
+						[
+							'root_url'       => esc_url_raw( get_rest_url() ),
+							'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+							'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+						]
+					);
+					?>
+				</script>
+				<?php
+			}
+		);
+
 		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/dialog/index.asset.php';
 		wp_register_script_module(

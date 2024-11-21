@@ -114,6 +114,14 @@ class AdminMenuPageService {
 			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
 
+		// Check if we're editing a taxonomy that applies to sc_product post types.
+		$screen   = get_current_screen();
+		$taxonomy = get_taxonomy( $screen->taxonomy );
+		if ( $screen && 'edit-tags' === $screen->base && in_array( 'sc_product', (array) $taxonomy->object_type, true ) ) {
+			$file         = 'sc-dashboard';
+			$submenu_file = \SureCart::taxonomies()->editLink( $screen->taxonomy, 'sc_product' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		}
+
 		return $file;
 	}
 
@@ -181,7 +189,9 @@ class AdminMenuPageService {
 
 		$affiliate_pages = array( 'sc-affiliates', 'sc-affiliate-requests', 'sc-affiliate-clicks', 'sc-affiliate-referrals', 'sc-affiliate-payouts', 'sc-affiliate-payout-groups' );
 
-		$is_product_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-upsell-funnels', 'sc-product-collections' ), true ) || in_array( $_GET['taxonomy'] ?? '', array( 'sc_collection' ), true );
+		$taxonomies = array_diff( get_object_taxonomies( 'sc_product' ), array( 'sc_account', 'sc_collection' ) );
+		sort( $taxonomies, SORT_STRING ); // Sort the taxonomies alphabetically.
+		$is_product_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-upsell-funnels', 'sc-product-collections' ), true ) || in_array( $_GET['taxonomy'] ?? '', array_merge( $taxonomies, array( 'sc_collection' ) ), true );
 
 		$this->pages = array(
 			'get-started'             => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
@@ -192,6 +202,23 @@ class AdminMenuPageService {
 			'invoices'                => in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts', 'sc-invoices' ], true ) ? \add_submenu_page( $this->slug, __( 'Invoices', 'surecart' ), '↳ ' . __( 'Invoices', 'surecart' ), 'edit_sc_invoices', 'sc-invoices', '__return_false' ) : null,
 			'products'                => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),
 			'product-collections'     => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Product Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ) : null,
+		);
+
+		if ( ! empty( $taxonomies ) && is_array( $taxonomies ) && $is_product_menu_opened ) {
+			$this->pages += array_map(
+				function ( $taxonomy ) {
+					if ( ! taxonomy_exists( $taxonomy ) ) {
+						return null;
+					}
+					$taxonomy_obj = get_taxonomy( $taxonomy );
+					return \add_submenu_page( $this->slug, $taxonomy_obj->label, '↳ ' . $taxonomy_obj->labels->menu_name ?? $taxonomy_obj->label, 'edit_sc_products', \SureCart::taxonomies()->editLink( $taxonomy_obj->name, 'sc_product' ), '' );
+				},
+				$taxonomies,
+				[ $is_product_menu_opened, $this->slug ]
+			);
+		}
+		
+		$this->pages += array(
 			'bumps'                   => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ) : null,
 			'upsells'                 => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Upsells', 'surecart' ), '↳ ' . __( 'Upsells', 'surecart' ), 'edit_sc_products', 'sc-upsell-funnels', '__return_false' ) : null,
 			'product-groups'          => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ) : null,

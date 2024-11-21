@@ -80,7 +80,7 @@ class OrderProtocolRestServiceProvider extends RestServiceProvider implements Re
 				'id'            => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at'    => [
@@ -94,22 +94,22 @@ class OrderProtocolRestServiceProvider extends RestServiceProvider implements Re
 				'footer'        => [
 					'description' => esc_html__( 'The default footer that is shown on all order statements (i.e. invoices and receipts).', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'memo'          => [
 					'description' => esc_html__( 'The default memo that is shown on all order statements (i.e. invoices and receipts).', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'number_prefix' => [
 					'description' => esc_html__( 'The prefix that is added to all order numbers. Must be between 3-12 characters and only include letters.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'number_type'   => [
 					'description' => esc_html__( 'The type of number to use for orders – one of sequential or token.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];
