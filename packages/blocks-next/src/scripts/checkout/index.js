@@ -4,8 +4,10 @@
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
 const { __, sprintf, _n } = wp.i18n;
-const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
+
+const { speak: fallbackSpeak } = require('../a11y');
+const speak = wp?.a11y?.speak || fallbackSpeak;
 
 /**
  * Get checkout data from local storage based on mode and formId.

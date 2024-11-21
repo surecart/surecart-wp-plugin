@@ -9,9 +9,11 @@ import { store, getContext } from '@wordpress/interactivity';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
-const { speak } = wp.a11y;
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
+
+const { speak: fallbackSpeak } = require('../a11y');
+const speak = wp?.a11y?.speak || fallbackSpeak;
 
 /**
  * Check if the key is not submit key.
