@@ -7,7 +7,7 @@ import { ScButton, ScIcon } from '@surecart/components-react';
 import Content from './Content';
 import Icon from '../../templates/Icon';
 
-export default ({ handleStepChange }) => {
+export default ({ handleStepChange, setCurrentStep }) => {
 	return (
 		<Content>
 			<Step imageNode={<Icon />} textAlign="left" width="480px">
@@ -65,7 +65,7 @@ export default ({ handleStepChange }) => {
 					{scData?.connect_url && (
 						<ScButton
 							size="large"
-							href={scData.connect_url}
+							onClick={() => setCurrentStep(6)}
 							css={css`
 								flex: 1;
 							`}
