@@ -9,8 +9,9 @@
 	"example": {},
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
-		"label": {
-			"type": "string"
+		"taxonomy": {
+			"type": "string",
+			"default": "sc_collection"
 		}
 	},
 	"supports": {
