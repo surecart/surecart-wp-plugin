@@ -307,7 +307,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
-= 3.0.4 - November 20th, 2024 =
+= 3.0.4 - November 21st, 2024 =
 - Fix: Issue where connecting an existing site would just take you to the dashboard without instructions during onboarding.
 - Fix: Issue if there are more than 10 product taxonomies, the taxonomy filter on the shop page would not include it.
 - Fix: Issue where creating a new product could sometims show a blank screen after saving.
