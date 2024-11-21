@@ -12,7 +12,9 @@ export default ({
 	attributes: { taxonomy: taxonomySlug },
 	setAttributes,
 }) => {
-	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy');
+	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
+		per_page: -1,
+	});
 
 	// get all visible taxonomies for this post type.
 	const taxonomies = (allTaxonomies ?? []).filter(
