@@ -6,6 +6,7 @@ import { ScIcon, ScInput, ScButton, ScForm } from '@surecart/components-react';
 import Content from './Content';
 import { useState } from 'react';
 import { useEntityRecord } from '@wordpress/core-data';
+import { createInterpolateElement } from '@wordpress/element';
 import Error from '../../components/Error';
 
 export default ({ setCurrentStep }) => {
@@ -106,10 +107,23 @@ export default ({ setCurrentStep }) => {
 									font-size: 16px;
 								`}
 							/>
-							{__(
-								'Need help finding your API token?',
-								'surecart'
-							)}
+							<span>
+								{createInterpolateElement(
+									__(
+										'Need help finding your <a>API token</a>?',
+										'surecart'
+									),
+									{
+										a: (
+											<ScButton
+												href="https://app.surecart.com/organizations"
+												target="_blank"
+												type="link"
+											/>
+										),
+									}
+								)}
+							</span>
 						</div>
 						<ScButton
 							href="https://surecart.com/docs/add-surecart-api/"
