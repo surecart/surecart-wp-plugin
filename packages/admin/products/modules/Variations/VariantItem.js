@@ -46,7 +46,9 @@ export default ({
 	 * Link media.
 	 */
 	const onLinkMedia = (media) =>
-		updateVariant({ image_id: media?.id, image_url: media?.url });
+		updateVariant({
+			metadata: { ...(variant.metadata || []), wp_media: media?.[0]?.id },
+		});
 
 	/**
 	 * Unlink Media
@@ -56,7 +58,12 @@ export default ({
 			__('Are you sure you wish to unlink this image?', 'surecart')
 		);
 		if (!confirmUnlinkMedia) return;
-		updateVariant({ image_id: null, image_url: null, image: null });
+		updateVariant({
+			image_id: null, // backwards compatibility.
+			image_url: null, // backwards compatibility.
+			image: null, // backwards compatibility.
+			metadata: { ...(variant.metadata || []), wp_media: null },
+		});
 	};
 
 	/**
@@ -97,7 +104,6 @@ export default ({
 				>
 					<Image
 						variant={variant}
-						existingMediaIds={image_id ? [image_id] : []}
 						onAdd={onLinkMedia}
 						onRemove={onUnlinkMedia}
 					/>
@@ -136,7 +142,9 @@ export default ({
 							min="0"
 							value={amount}
 							placeholder={defaultAmount}
-							currency={currency}
+							currencyCode={
+								currency || window?.scData?.currency_code
+							}
 							css={css`
 								min-width: 100px;
 							`}

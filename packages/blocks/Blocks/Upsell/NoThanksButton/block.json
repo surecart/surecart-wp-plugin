@@ -2,7 +2,7 @@
 	"name": "surecart/upsell-no-thanks",
 	"title": "Decline Upsell Button",
 	"description": "Display a upsell decline button.",
-	"category": "surecart",
+	"category": "surecart-upsell-page",
 	"keywords": ["no", "thanks", "button", "decline", "upsell"],
 	"ancestor": ["surecart/upsell"],
 	"textdomain": "surecart",

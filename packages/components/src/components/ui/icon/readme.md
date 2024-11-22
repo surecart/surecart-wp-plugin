@@ -45,6 +45,7 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
  - [sc-dialog](../sc-dialog)
@@ -57,6 +58,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -108,6 +110,7 @@ graph TD;
   sc-charges-list --> sc-icon
   sc-checkout-mollie-payment --> sc-icon
   sc-checkout-stock-alert --> sc-icon
+  sc-checkout-test-complete --> sc-icon
   sc-coupon-form --> sc-icon
   sc-customer-details --> sc-icon
   sc-dialog --> sc-icon
@@ -120,6 +123,7 @@ graph TD;
   sc-invoices-list --> sc-icon
   sc-license --> sc-icon
   sc-licenses-list --> sc-icon
+  sc-line-item-invoice-receipt-download --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
   sc-order-confirm-provider --> sc-icon

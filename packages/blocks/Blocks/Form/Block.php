@@ -107,7 +107,7 @@ class Block extends BaseBlock {
 			);
 		}
 
-		return \SureCart::blocks()->render(
+		return \SureCart::block()->render(
 			'blocks/form',
 			[
 				'align'            => $attributes['align'] ?? '',
@@ -132,6 +132,11 @@ class Block extends BaseBlock {
 		// don't persist in the admin.
 		if ( is_admin() ) {
 			return false;
+		}
+
+		// if there is a checkout id in the url, use url persistence.
+		if ( ! empty( $_GET['checkout_id'] ) ) {
+			return 'url';
 		}
 
 		// default checkout form should persist in the browser.

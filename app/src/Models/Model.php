@@ -5,11 +5,12 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Concerns\Arrayable;
+use SureCart\Concerns\Objectable;
 
 /**
  * Model class
  */
-abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelInterface {
+abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Objectable, ModelInterface {
 	/**
 	 * Keeps track of booted models
 	 *
@@ -30,6 +31,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @var array
 	 */
 	protected $attributes = [];
+
+	/**
+	 * Static cache for attribute lookups.
+	 *
+	 * @var array
+	 */
+	private static $attribute_cache = [];
 
 	/**
 	 * Default attributes.
@@ -146,6 +154,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->bootModel();
 		$this->syncOriginal();
 		$this->fill( $attributes );
+	}
+
+	/**
+	 * Get the object name
+	 *
+	 * @return string
+	 */
+	protected function getObjectName() {
+		return $this->object_name;
 	}
 
 	/**
@@ -411,10 +428,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			// set attribute.
 			if ( ! $is_guarded ) {
 				$this->setAttribute( $key, $value );
-			} else {
-				if ( $this->isFillable( $key ) ) {
+			} elseif ( $this->isFillable( $key ) ) {
 					$this->setAttribute( $key, $value );
-				}
 			}
 		}
 
@@ -425,16 +440,26 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Get the metadata attribute.
+	 * This makes sure the metadata is always an object.
+	 *
+	 * @return object
+	 */
+	public function getMetadataAttribute() {
+		return (object) ( $this->attributes['metadata'] ?? [] );
+	}
+
+	/**
 	 * Get the person who created it.
 	 *
 	 * @return int|false
 	 */
 	public function getCreatedByAttribute() {
-		if ( empty( $this->attributes['metadata']['wp_created_by'] ) ) {
+		if ( empty( $this->metadata->wp_created_by ) ) {
 			return false;
 		}
 
-		return (int) $this->attributes['metadata']['wp_created_by'];
+		return (int) $this->metadata->wp_created_by;
 	}
 
 	/**
@@ -487,22 +512,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 *
 	 * @param array $meta_data Model meta data.
 	 *
-	 * @return this
+	 * @return self
 	 */
-	public function setMetadataAttributes( $meta_data ) {
-		$this->attributes['metadata'] = apply_filters( "surecart/$this->object_name/set_meta_data", $meta_data );
-		return $this;
-	}
-
-	/**
-	 * Set a single meta data attribute
-	 *
-	 * @param string $key Meta data key.
-	 * @param string $data Meta data value.
-	 * @return this
-	 */
-	public function addToMetaData( $key, $data ) {
-		$this->setMetaDataAttributes( array_merge( $this->attributes['metadata'] ?? [], [ $key => $data ] ) );
+	public function setMetadataAttribute( $meta_data ) {
+		$this->attributes['metadata'] = (object) apply_filters( "surecart/$this->object_name/set_meta_data", $meta_data );
 		return $this;
 	}
 
@@ -718,7 +731,9 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			return $items;
 		}
 
-		return ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
+		$item = ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
+
+		return $item;
 	}
 
 	/**
@@ -749,7 +764,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Is the response an Error?
 	 *
-	 * @param Array|\WP_Error|\WP_REST_Response $response Response from request.
+	 * @param array|\WP_Error|\WP_REST_Response $response Response from request.
 	 *
 	 * @return boolean
 	 */
@@ -760,7 +775,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Get fresh instance from DB.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	protected function fresh() {
 		if ( ! $this->attributes['id'] ) {
@@ -777,7 +792,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Get fresh instance from DB.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	protected function refresh() {
 		if ( ! $this->attributes['id'] ) {
@@ -843,8 +858,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 		// add created by WordPress param.
 		$user_id = get_current_user_id();
-		if ( $user_id ) {
-			$this->addToMetaData( 'wp_created_by', $user_id );
+		if ( $user_id && isset( $this->metadata ) ) {
+			$this->metadata->wp_created_by = $user_id;
 		}
 
 		$created = $this->makeRequest(
@@ -879,10 +894,41 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Queue a sync job for later.
+	 *
+	 * @return \SureCart\Background\QueueService
+	 */
+	protected function queueSync() {
+		return \SureCart::queue()->async( 'surecart/sync/product', [ 'id' => $this->id ] );
+	}
+
+	/**
+	 * Only return specific properties from the model.
+	 *
+	 * @param array $attributes Attributes to return.
+	 *
+	 * @return array
+	 */
+	protected function only( $attributes ) {
+		$attributes = is_array( $attributes ) ? $attributes : func_get_args();
+		return array_intersect_key( $this->toArray(), array_flip( $attributes ) );
+	}
+
+	/**
+	 * Return all attributes except the ones passed.
+	 *
+	 * @param array $attributes Attributes to exclude.
+	 */
+	protected function without( $attributes ) {
+		$attributes = is_array( $attributes ) ? $attributes : func_get_args();
+		return array_diff_key( $this->toArray(), array_flip( $attributes ) );
+	}
+
+	/**
 	 * Update the model.
 	 *
 	 * @param array $attributes Attributes to update.
-	 * @return $this|false
+	 * @return $this|\WP_Error|false
 	 */
 	protected function update( $attributes = [] ) {
 		if ( $this->fireModelEvent( 'updating' ) === false ) {
@@ -1037,9 +1083,46 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Get a in-memory cached attribute.
+	 *
+	 * @param string $key The attribute key.
+	 * @return mixed|null The cached value or null if not found.
+	 */
+	protected function getCachedAttribute( $key ) {
+		if ( ! isset( self::$attribute_cache ) ) {
+			self::$attribute_cache = [];
+		}
+
+		if ( empty( $this->id ) ) {
+			return null;
+		}
+
+		return self::$attribute_cache[ $this->id . '_' . $key ] ?? null;
+	}
+
+	/**
+	 * Set a cached attribute in memory.
+	 *
+	 * @param string $key   The attribute key.
+	 * @param mixed  $value The value to cache.
+	 * @return void
+	 */
+	protected function setAttributeCache( $key, $value ) {
+		if ( ! isset( self::$attribute_cache ) ) {
+			self::$attribute_cache = [];
+		}
+
+		if ( empty( $this->id ) ) {
+			return;
+		}
+
+		self::$attribute_cache[ $this->id . '_' . $key ] = $value;
+	}
+
+	/**
 	 * Serialize to json.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
@@ -1047,16 +1130,55 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Convert to object.
+	 *
+	 * @return Object
+	 */
+	public function toObject() {
+		$attributes = (object) $this->attributes;
+
+		// Check if any accessor is available and call it.
+		foreach ( get_class_methods( $this ) as $method ) {
+			if ( method_exists( get_class(), $method ) ) {
+				continue;
+			}
+
+			if ( 'get' === substr( $method, 0, 3 ) && 'Attribute' === substr( $method, -9 ) ) {
+				$key = str_replace( [ 'get', 'Attribute' ], '', $method );
+				if ( $key ) {
+					$pieces           = preg_split( '/(?=[A-Z])/', $key );
+					$pieces           = array_map( 'strtolower', array_filter( $pieces ) );
+					$key              = implode( '_', $pieces );
+					$value            = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
+					$attributes->$key = $this->{$method}( $value );
+				}
+			}
+		}
+
+		// Check if any attribute is a model and call toArray.
+		array_walk_recursive(
+			$attributes,
+			function ( &$value ) {
+				if ( is_a( $value, Objectable::class ) ) {
+					$value = $value->toObject();
+				}
+			}
+		);
+
+		return $attributes;
+	}
+
+	/**
 	 * Calls accessors during toArray.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		$attributes = $this->getAttributes();
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( method_exists( get_class(), $method ) ) {
+			if ( ! method_exists( get_class( $this ), $method ) ) {
 				continue;
 			}
 
@@ -1075,8 +1197,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// Check if any attribute is a model and call toArray.
 		array_walk_recursive(
 			$attributes,
-			function ( &$value, $key ) {
-				if ( $value instanceof Model ) {
+			function ( &$value ) {
+				if ( is_a( $value, Arrayable::class ) ) {
 					$value = $value->toArray();
 				}
 			}
@@ -1219,7 +1341,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) : void {
+	public function offsetUnset( $offset ): void {
 		unset( $this->attributes[ $offset ], $this->relations[ $offset ] );
 	}
 

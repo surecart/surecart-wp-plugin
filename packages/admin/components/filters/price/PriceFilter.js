@@ -4,7 +4,6 @@ import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../admin/util/translations';
 import FilterItem from '../FilterItem';
 import LineItemLabel from '../../../ui/LineItemLabel';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from '@wordpress/element';
@@ -34,6 +33,7 @@ export default ({ id, onRemove }) => {
 					expand: [
 						'product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 				}),
@@ -53,7 +53,7 @@ export default ({ id, onRemove }) => {
 	return (
 		<FilterItem
 			loading={loading}
-			media={getFeaturedProductMediaAttributes(price?.product)}
+			image={price?.product?.line_item_image}
 			icon={'image'}
 			onRemove={onRemove}
 		>

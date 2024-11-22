@@ -10,6 +10,7 @@
 use SureCart\Middleware\CheckoutFormModeMiddleware;
 use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardRedirectMiddleware;
+use SureCart\Middleware\InvoiceRedirectMiddleware;
 use SureCart\Middleware\LoginLinkMiddleware;
 use SureCart\Middleware\OrderRedirectMiddleware;
 use SureCart\Middleware\PathRedirectMiddleware;
@@ -21,16 +22,6 @@ use SureCart\Middleware\UpsellMiddleware;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/*
-|--------------------------------------------------------------------------
-| Product Page
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-	->get()
-	->where( 'query_var', 'sc_product_page_id' )
-	->handle( 'ProductPageController@show' );
 
 /*
 |--------------------------------------------------------------------------
@@ -67,16 +58,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Collection Page
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-	->get()
-	->where( 'query_var', 'sc_collection_page_id' )
-	->handle( 'CollectionPageController@show' );
-
-/*
-|--------------------------------------------------------------------------
 | Receive Webhooks
 |--------------------------------------------------------------------------
 */
@@ -100,6 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// redirect in this order.
 	->middleware( PathRedirectMiddleware::class )
 	->middleware( OrderRedirectMiddleware::class )
+	->middleware( InvoiceRedirectMiddleware::class )
 	->middleware( PurchaseRedirectMiddleware::class )
 	->middleware( CheckoutRedirectMiddleware::class )
 	->middleware( PaymentFailureRedirectMiddleware::class )

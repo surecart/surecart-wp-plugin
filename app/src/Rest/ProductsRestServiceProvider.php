@@ -9,7 +9,6 @@ use SureCart\Controllers\Rest\ProductsController;
  * Service provider for Price Rest Requests
  */
 class ProductsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-
 	/**
 	 * Endpoint.
 	 *
@@ -23,6 +22,40 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @var string
 	 */
 	protected $controller = ProductsController::class;
+
+	/**
+	 * Register Additional REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/sync/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'sync' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/sync_all',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'syncAll' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
 
 	/**
 	 * Get our sample schema for a post.
@@ -195,6 +228,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
+		$request['context'] = 'edit';
 		return current_user_can( 'publish_sc_products' );
 	}
 
@@ -205,6 +239,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
+		$request['context'] = 'edit';
 		return current_user_can( 'edit_sc_products' );
 	}
 
@@ -215,6 +250,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
+		$request['context'] = 'edit';
 		return current_user_can( 'delete_sc_products' );
 	}
 

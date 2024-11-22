@@ -4,8 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { LineItem, Product, FeaturedProductMediaAttributes, Variant } from '../../../../types';
-import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
+import { LineItem, Product, Variant } from '../../../../types';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
 import { getMaxStockQuantity } from '../../../../functions/quantity';
@@ -54,7 +53,7 @@ export class ScLineItems {
    */
   isEditable(item: LineItem) {
     // ad_hoc prices and bumps cannot have quantity.
-    if (item?.price?.ad_hoc || item?.bump_amount) {
+    if (item?.price?.ad_hoc || item?.bump_amount || item?.locked) {
       return false;
     }
     return this.editable;
@@ -76,23 +75,19 @@ export class ScLineItems {
     return (
       <div class="line-items" part="base" tabindex="0">
         {(checkoutState?.checkout?.line_items?.data || []).map(item => {
-          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
           const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
-
           return (
             <div class="line-item">
               <sc-product-line-item
                 key={item.id}
-                imageUrl={url}
-                imageTitle={title}
-                imageAlt={alt}
+                image={item?.image}
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 purchasableStatusDisplay={item?.purchasable_status_display}
                 {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
-                removable={this.removable}
+                removable={!item?.locked && this.removable}
                 quantity={item.quantity}
                 fees={item?.fees?.data}
                 setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}

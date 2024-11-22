@@ -4,6 +4,8 @@ import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
 import { addLineItem, removeLineItem, updateLineItem } from '../../services/session';
 import apiFetch from '../../functions/fetch';
+import { Invoice } from '../../types';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Clear the current checkout.
@@ -86,8 +88,19 @@ export const trackOrderBump = (bumpId: string) => {
   }
 
   apiFetch({
-    path: `surecart/v1/checkouts/${state.checkout.id}/offer_bump/${bumpId}`,
+    path: addQueryArgs(`surecart/v1/checkouts/${state.checkout.id}/offer_bump/${bumpId}`, {
+      t: Date.now(),
+      ...(!!(state?.checkout?.invoice as Invoice)?.id && { type: 'open_invoice' }),
+    }),
     method: 'POST',
     keepalive: true, // Important: allow the request to outlive the page.
   });
+};
+
+window.sc = {
+  ...(window?.sc || {}),
+  checkout: {
+    ...(window?.sc?.checkout || {}),
+    addLineItem: addCheckoutLineItem,
+  },
 };

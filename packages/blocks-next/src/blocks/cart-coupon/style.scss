@@ -1,0 +1,45 @@
+.wp-block-surecart-slide-out-cart-coupon {
+	.trigger {
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.sc-tag {
+		button {
+			background: transparent;
+			border: none;
+			padding: 0px;
+			cursor: pointer;
+			margin-left: 0.5em;
+			color: var(--sc-color-gray-700);
+			box-shadow: none;
+
+			&:focus {
+				outline: none;
+				box-shadow: 0 0 0 var(--sc-focus-ring-width)
+					var(--sc-focus-ring-color-primary);
+			}
+
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+
+	.sc-line-item__price-description {
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.sc-coupon-input-label {
+		margin-bottom: var(--sc-input-label-margin);
+		font-style: normal;
+		font-size: var(--sc-input-label-font-size-medium);
+		font-weight: var(--sc-font-weight-normal);
+	}
+}

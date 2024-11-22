@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 /**
  * WordPress dependencies
  */
@@ -9,12 +7,11 @@ import {
 	InspectorControls,
 	PanelColorSettings,
 	RichText,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
-	SelectControl,
-	TextControl,
 	ToolbarButton,
 	ToolbarGroup,
 } from '@wordpress/components';
@@ -24,38 +21,15 @@ import { edit } from '@wordpress/icons';
 /**
  * Component Dependencies
  */
-import { ScButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
 import PriceInfo from '../../components/PriceInfo';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, label, size, line_items, backgroundColor, textColor } =
-		attributes;
+	const { label, line_items, backgroundColor, textColor } = attributes;
 	const [showChangeProducts, setShowChangeProducts] = useState(false);
-
-	const renderButton = () => {
-		return (
-			<ScButton
-				type={type}
-				size={size}
-				style={{
-					...(backgroundColor
-						? { '--primary-background': backgroundColor }
-						: {}),
-					...(textColor ? { '--primary-color': textColor } : {}),
-				}}
-			>
-				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-			</ScButton>
-		);
-	};
+	const blockProps = useBlockProps({
+		className: 'wp-block-button',
+	});
 
 	if (showChangeProducts || !line_items?.length) {
 		return (
@@ -81,62 +55,6 @@ export default ({ className, attributes, setAttributes }) => {
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Button Text', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<SelectControl
-							label={__('Size', 'surecart')}
-							value={size}
-							onChange={(size) => {
-								setAttributes({ size });
-							}}
-							options={[
-								{
-									value: null,
-									label: 'Select a Size',
-									disabled: true,
-								},
-								{
-									value: 'small',
-									label: __('Small', 'surecart'),
-								},
-								{
-									value: 'medium',
-									label: __('Medium', 'surecart'),
-								},
-								{
-									value: 'large',
-									label: __('Large', 'surecart'),
-								},
-							]}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<SelectControl
-							label={__('Type', 'surecart')}
-							value={type}
-							onChange={(type) => {
-								setAttributes({ type });
-							}}
-							options={[
-								{
-									value: 'primary',
-									label: __('Button', 'surecart'),
-								},
-								{
-									value: 'text',
-									label: __('Text Link', 'surecart'),
-								},
-							]}
-						/>
-					</PanelRow>
-				</PanelBody>
 				<PanelColorSettings
 					title={__('Color Settings')}
 					colorSettings={[
@@ -168,7 +86,31 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			{renderButton()}
+			<div {...blockProps}>
+				<button
+					type="button"
+					class="sc-button wp-element-button wp-block-button__link sc-button__link"
+					style={{
+						...(backgroundColor
+							? {
+									backgroundColor: backgroundColor,
+							  }
+							: {}),
+						...(textColor ? { color: textColor } : {}),
+					}}
+				>
+					<span class="sc-button__link-text">
+						<RichText
+							aria-label={__('Button text')}
+							placeholder={__('Add text…')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
+							withoutInteractiveFormatting
+							allowedFormats={['core/bold', 'core/italic']}
+						/>
+					</span>
+				</button>
+			</div>
 		</div>
 	);
 };

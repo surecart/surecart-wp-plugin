@@ -10,6 +10,7 @@ import SelectModel from './SelectModel';
 export default (props) => {
 	const {
 		name,
+		kind = 'surecart',
 		requestQuery = {},
 		display,
 		exclude = [],
@@ -36,7 +37,7 @@ export default (props) => {
 	};
 
 	const fetchData = async () => {
-		const { baseURL } = select(coreStore).getEntityConfig('surecart', name);
+		const { baseURL } = select(coreStore).getEntityConfig(kind, name);
 		if (!baseURL) return;
 
 		const queryArgs = {
@@ -69,7 +70,7 @@ export default (props) => {
 			}
 
 			// add to redux for other page items
-			receiveEntityRecords('surecart', name, models, queryArgs);
+			receiveEntityRecords(kind, name, models, queryArgs);
 		} catch (error) {
 			console.error(error);
 		} finally {

@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 add_filter(
 	'do_redirect_guess_404_permalink',
-	function( $guess ) {
+	function ( $guess ) {
 		if ( ( strpos( $_SERVER['REQUEST_URI'], '/' . untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/' ) !== false ) ) {
 			return false;
 		}
@@ -52,7 +52,7 @@ function surecart_uninstall() {
 // Otherwise the homepage if they cannot access admin.
 add_filter(
 	'surecart.middleware.user.can.redirect_url',
-	function( $url ) {
+	function ( $url ) {
 		if ( current_user_can( 'read' ) ) {
 			return get_admin_url() . 'admin.php?page=sc-denied';
 		}

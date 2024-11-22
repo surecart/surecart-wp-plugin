@@ -46,10 +46,11 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
 
-	const { records: shippingRates, hasResolved: isShippingRatesResolved } =
+	const { records: shippingRates, isResolving: loadingShippingRates } =
 		useEntityRecords('surecart', 'shipping-rate', {
+			context: 'edit',
+			shipping_zone_ids: [shippingZone?.id],
 			per_page: 100,
-			shipping_zone_ids: [shippingZone.id],
 			expand: ['shipping_method'],
 		});
 
@@ -181,6 +182,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 				css={css`
 					position: relative;
 				`}
+				loading={loadingShippingRates}
 			>
 				<ScFlex justifyContent="space-between">
 					<div>

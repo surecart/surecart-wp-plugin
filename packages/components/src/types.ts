@@ -25,6 +25,12 @@ declare global {
         product?: any;
         products?: any;
       };
+      checkout?: {
+        addLineItem: (data: any) => void;
+      };
+      cart?: {
+        toggle: (open: boolean) => void;
+      };
     };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;
@@ -36,6 +42,7 @@ declare global {
       account_id: string;
       account_slug: string;
       api_url: string;
+      home_url: string;
       plugin_url: string;
       page_id: string;
       persist_cart: 'browser' | 'url' | false;
@@ -333,6 +340,7 @@ export interface Product extends Object {
   tax_enabled: boolean;
   purchase_limit: number;
   metrics: ProductMetrics;
+  line_item_image: ImageAttributes;
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';
@@ -420,6 +428,18 @@ export type LineItemsData = {
   [id: string]: Array<LineItemData>;
 };
 
+export interface ImageAttributes {
+  src: string;
+  alt?: string;
+  class?: string;
+  decoding?: string;
+  height?: number;
+  loading?: string;
+  sizes?: string;
+  srcset?: string;
+  width?: number;
+}
+
 export interface LineItem extends Object {
   id?: string;
   ad_hoc_amount?: number;
@@ -428,6 +448,7 @@ export interface LineItem extends Object {
   quantity: number;
   checkout: string | Checkout;
   bump: string | Bump;
+  image: ImageAttributes;
   fees?: {
     object: 'list';
     pagination: Pagination;
@@ -451,6 +472,7 @@ export interface LineItem extends Object {
   purchasable_status_display: string;
   variant_options: Array<string>;
   variant?: Variant;
+  locked: boolean;
 }
 
 export interface DeletedItem {
@@ -487,39 +509,16 @@ export type TaxStatus = 'disabled' | 'address_invalid' | 'reverse_charged' | 'ta
 export interface Invoice extends Object {
   id: string;
   object: 'invoice';
-  currency: string;
-  amount_due: number;
-  invoice_items: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<InvoiceItem>;
-  };
-  discount_amount: number;
+  automatic_collection: boolean;
+  due_date?: number;
+  issue_date?: number;
+  footer?: string;
+  memo?: string;
   live_mode: boolean;
+  status: InvoiceStatus;
+  checkout: Checkout | string;
   metadata: object;
-  number: string;
-  period_end_at: number;
-  period_start_at: number;
-  proration_amount: number;
-  processor_data: {
-    stripe: object;
-  };
-  status: OrderStatus;
-  subtotal_amount: number;
-  tax_amount: number;
-  tax_status: TaxStatus;
-  tax_label: string;
-  total_amount: number;
-  billing_address: string | BillingAddress;
-  charge: string | Charge;
-  customer: string | Customer;
-  discount: string | object;
-  payment_intent: string | PaymentIntent;
-  payment_method: string | PaymentMethod;
-  shipping_address: string | ShippingAddress;
-  subscription: string | Subscription;
-  tax_identifier: string | object;
-  url: string;
+  order_number: string;
   created_at: number;
   updated_at: number;
 }
@@ -600,6 +599,7 @@ export interface Order extends Object {
   status?: OrderStatus;
   shipment_status?: OrderShipmentStatus;
   checkout?: Checkout | string;
+  invoice?: Invoice | string;
   created_at: number;
   updated_at: number;
 }
@@ -655,6 +655,7 @@ export interface Checkout extends Object {
   total_amount?: number;
   subtotal_amount?: number;
   full_amount?: number;
+  paid_amount?: number;
   proration_amount?: number;
   total_savings_amount?: number;
   applied_balance_amount?: number;
@@ -718,6 +719,8 @@ export interface Checkout extends Object {
   updated_at: number;
   variant: string;
   upsells_expire_at?: number;
+  invoice?: string | Invoice;
+  pdf_url?: string;
 }
 
 export interface ShippingMethod {
@@ -911,7 +914,8 @@ export interface SubscriptionProtocol {
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
-export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
+export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled' | 'draft';
+export type InvoiceStatus = 'paid' | 'open' | 'draft';
 export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
 export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';
 export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';
@@ -927,6 +931,7 @@ export interface PaymentMethod extends Object {
   type: string;
   bank_account: BankAccount | string;
   payment_instrument: PaymentInstrument | string;
+  payment_method_name: string;
   payment_intent: PaymentIntent | string;
   billing_agreement?: BillingAgreement | string;
   card: any;

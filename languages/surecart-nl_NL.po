@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the SureCart package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-30 10:10:13+0000\n"
+"PO-Revision-Date: 2024-09-19 08:34:56+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -75,6 +75,16 @@ msgstr "Product Collecties"
 msgctxt "block keyword"
 msgid "description"
 msgstr "omschrijving"
+
+#: packages/blocks/Blocks/FirstName/block.json
+msgctxt "block title"
+msgid "First Name"
+msgstr "Voornaam"
+
+#: packages/blocks/Blocks/LastName/block.json
+msgctxt "block title"
+msgid "Last Name"
+msgstr "Achternaam"
 
 #: views/admin/advanced.php:30
 #: packages/admin/settings/abandoned/AbandonedSettings.js:284
@@ -375,3 +385,13 @@ msgstr "Betaalplatforms"
 #: views/layouts/partials/admin-settings-sidebar.php:35
 msgid "Subscription Saver"
 msgstr "Abonnementenbehoud"
+
+#: packages/blocks/Blocks/Product/BuyButton/Block.php:128
+#: packages/blocks/Blocks/Upsell/SubmitButton/Block.php:131
+msgid "Sold Out"
+msgstr "Uitverkocht"
+
+#: app/src/Controllers/Admin/Products/ProductsListTable.php:347
+#: packages/admin/checkouts/modules/SelectShipping.js:130
+msgid "Free"
+msgstr "Gratis"

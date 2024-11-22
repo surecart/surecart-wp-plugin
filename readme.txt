@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
-Requires at least: 6.3
-Tested up to: 6.6
-Stable tag: 2.31.2
+Requires at least: 6.6
+Tested up to: 6.7
+Stable tag: 3.0.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,6 +305,88 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.0.4 - November 21st, 2024 =
+- Fix: Issue where connecting an existing site would take you to the dashboard without instructions during onboarding.
+- Fix: Issue if there are more than 10 product taxonomies, there is a possibility the you may not be able to select it as the product shop page filter.
+- Fix: Issue where creating a new product could sometimes show a blank screen after saving.
+- Fix: PHP notices that could happen due to migration from 2.x to 3.x.
+- Fix: Deprecation warning with PHP version 8.2+.
+
+= 3.0.3 - November 20th, 2024 =
+- New: Add Taxonomy Support to Products
+- New: Add ability to filter by any taxonomy on product list front-end.
+- New: Extra security setting to prevent non-admin users from making test payments.
+- Improvement: Lazy load javascript modules on front-end for improved performance.
+- Fix: Customer dashbaord template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
+- Fix: Issue where product form was wrapping some non-content elementor templates.
+- Fix: Issue with Mollie and Paystack payment redirects sometimes not creating WordPress user accounts.
+- Fix: Opacity of backdrop on cart in firefox.
+- Fix: Potential race condition in cart due to module imports under certain caching conditions.
+- Fix: Upgrade staging site warning should no longer show if you have alread upgraded to 3.0.
+- Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
+- Fix: Issue with non-cached items sometimes loading on front-end if there is a server timeout.
+- Fix: Minor security issue.
+
+= 3.0.2 - November 13th, 2024 =
+- Improvement: WordPress 6.7 compatibility.
+- Improvement: Rename "Orders & Receipts" to "Orders & Invoices" on settings page.
+- Improvement: Add minimum height to quantity selector to prevent conflicts with some themes.
+- Fix: Rare race condition in WordPress 6.7 that could cause cart not to load on some pages.
+- Fix: Issue in WordPress 6.7 where multiple shop page filter tags were not displaying.
+- Fix: Incorrect amount paid displayed on customer dashboard order details in some cases.
+
+= 3.0.1 - November 11th, 2024 =
+- Improvement: Update Interactivity API search and cart functions to work with upcoming WordPress 6.7 release.
+- Fix: Issue with invoices not clearing cart once purchased.
+
+= 3.0.0 - November 11th, 2024 =
+- New: Completely rebuilt Shop, Product, and Cart systems using the Interactivity API for better performance and customization.
+- New: Variant images - automatically show/hide images based on the selected variation.
+- New: Bricks Builder integration.
+- New: Advanced Custom Fields integration.
+- New: Meta Box integration.
+- New: Product now sync with custom post types for better compatibility with other plugins.
+- New: Products now use the WP Media Library for images.
+- New: 1-click shop page patterns/templates for easy styles.
+- Improvement: More customizable product, shop and cart templates.
+- Improvement: Preload pagination and filter links on shop page.
+- Improvement: More performant loading of shop and product pages due to server side rendering of state.
+- Improvement: Realtime search of products on shop page.
+- Improvement: Slide out cart traps focus for better accessibility.
+- Improvement: Quick view icon to view product from edit product page.
+- Improvement: Upsells are now out of beta.
+- Improvement: Move SureCart admin menu to further up to help with navigation, due to the number of submenu items.
+
+= 2.40.1 - October 30th, 2024 =
+- Fix: Issue where checkout mode was not being honored when using direct checkout links.
+
+= 2.40.0 - October 30th, 2024 =
+- New: Invoicing - Create and send invoices to customers!
+- Improvement: Allow editing of order name, address, and tax information in the admin.
+- Improvement: Rework caching architecture for cached resources.
+- Improvement: Improve warning message when deleting a customer record.
+- Improvement: Remove unnecessary order expansions on the customer list page to improve performance.
+- Improvement: Better error message for when the subscription period end is earlier than the start date.
+- Fix: Change "Setup" to "Set Up" on the onboarding page.
+- Fix: Issue where currency was sometimes wrong on affiliate commission, adding variants, and upsell discounts.
+- Fix: Missing WordPress php filter for surecart/request/model.
+
+= 2.31.3 - October 10th, 2024 =
+- Improvement: Add plugin update notice for major versions.
+- Improvement: Fallback tax rate now supports up to 3 decimal places.
+- Improvement: Increase maximum quantity limit from 100 on checkout page.
+- Fix: Integrations listing on orders admin page not accurate when using variants.
+- Fix: Handle error when bulk deleting products without selecting any products.
+- Fix: Store account model as array instead of serialized object to prevent issues with wp-cli.
+- Fix: Show better error message if same shipping profile name is given.
+- Fix: Deprecation warning with PHP version 8.3.
+- Fix: Confusing pricing on admin subscription view page when there is a setup fee.
+- Fix: Abandoned at created_at incorrectly getting date from updated_at.
+- Fix: Order Bump price sometimes has a negative (-) sign.
+- Fix: Remove duplicate styles from certain blocks on shop and product pages.
+
 = 2.31.2 - September 17th, 2024 =
 - Fix: Issue with Mollie ApplePay not showing in some cases.
 - Fix: iDEAL redirect not creating WordPress customer accounts right away if checkout does not use cart.
@@ -350,7 +432,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Don't use hardcoded prefix when deleting expired incoming webhook rows.
 - Fix: Cart menu icon not visible in Elementor menu when it was added via Theme Builder.
 - Fix: Issue with user subscription upgrade not always running integrations.
-- Fix: Allow customers to cancel subscriptions without a payment method on customer dashboard.
+- Fix: Issue with affiliate signup link not correct on admin settings page.
 
 = 2.29.1 - July 15th, 2024 =
 - Fix: Compatibility with WordPress 6.6.
@@ -687,3 +769,4 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 * Update: Remove unnecessary express pay blocks from new form templates.
 
 Full changelog can be found here – [SureCart changelog](https://surecart.com/whats-new/)
+

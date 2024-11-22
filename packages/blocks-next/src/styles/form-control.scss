@@ -1,0 +1,176 @@
+.sc-form-control {
+	display: block;
+	width: 100%;
+	padding: 0 var(--sc-input-spacing-medium);
+	height: calc(
+		var(--sc-input-height-medium) - var(--sc-input-border-width) * 2
+	);
+	font-size: var(--sc-input-font-size-medium);
+	font-family: var(--sc-input-font-family);
+	font-weight: var(--sc-input-font-weight);
+	color: var(--sc-color-gray-700);
+	box-sizing: border-box;
+	background-color: var(--sc-input-background-color);
+	border: var(--sc-input-border-width) solid var(--sc-input-border-color);
+	border-radius: var(--sc-border-radius-medium);
+	box-shadow: var(--sc-input-box-shadow);
+	transition: var(--sc-input-transition, var(--sc-transition-medium)) color,
+		var(--sc-input-transition, var(--sc-transition-medium)) border,
+		var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+
+	&[type='file'] {
+		overflow: hidden;
+
+		&:not(:disabled):not([readonly]) {
+			padding: 8px 10px !important;
+			cursor: pointer;
+		}
+	}
+
+	/** Disable number input spinner on firefox */
+	&[type='number'] {
+		-moz-appearance: textfield;
+	}
+	/** Disable number input spinner on other browsers */
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button,
+	&::-webkit-search-results-decoration {
+		-webkit-appearance: none;
+	}
+
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus,
+	&:-webkit-autofill:active {
+		box-shadow: 0 0 0 var(--sc-input-height-large)
+			var(--sc-input-background-color-hover) inset !important;
+		-webkit-text-fill-color: var(--sc-input-color);
+	}
+
+	&:hover {
+		color: var(--sc-input-color-hover);
+		background-color: var(--sc-input-background-color-hover);
+		border-color: var(--sc-input-border-color-hover);
+		z-index: 7;
+	}
+
+	&:focus {
+		color: var(--sc-input-color-focus);
+		background-color: var(--sc-input-background-color-focus) !important;
+		border-color: var(--sc-input-border-color-focus) !important;
+		outline: 0;
+		box-shadow: 0 0 0 var(--sc-focus-ring-width)
+			var(--sc-focus-ring-color-primary);
+	}
+
+	&::placeholder {
+		color: var(--sc-input-placeholder-color);
+		opacity: 1;
+	}
+
+	&:disabled {
+		background-color: var(--sc-input-background-color-disabled);
+		border-color: var(--sc-input-border-color-disabled);
+		opacity: 0.5;
+		cursor: not-allowed;
+
+		&::placeholder {
+			color: var(--sc-input-placeholder-color-disabled);
+		}
+	}
+
+	&::file-selector-button {
+		padding: var(--sc-spacing-medium);
+		margin: calc(var(--sc-spacing-medium) * -1);
+		margin-inline-end: var(--sc-spacing-medium);
+		color: var(--sc-color-white);
+		background-color: var(--sc-color-primary-500);
+		pointer-events: none;
+		border-color: inherit;
+		border-style: solid;
+		border-width: 0;
+		border-inline-end-width: var(--sc-input-border-width);
+		border-radius: 0;
+		transition: var(--sc-transition-medium);
+	}
+
+	&:hover:not(:disabled):not([readonly])::file-selector-button {
+		opacity: 0.9;
+	}
+
+	// Small form control.
+	&-sm {
+		padding: 0 var(--sc-input-spacing-small);
+		height: calc(
+			var(--sc-input-height-small) - var(--sc-input-border-width) * 2
+		);
+		font-size: var(--sc-font-size-small);
+		border-radius: var(--sc-border-radius-small);
+
+		&[type='file'] {
+			&:not(:disabled):not([readonly]) {
+				padding: 2px 8px !important;
+			}
+		}
+
+		&::file-selector-button {
+			padding: var(--sc-spacing-small);
+			margin: calc(var(--sc-spacing-small) * -1);
+			margin-inline-end: var(--sc-spacing-small);
+		}
+	}
+
+	// Large form control.
+	&-lg {
+		padding: 0 var(--sc-spacing-large);
+		font-size: var(--sc-font-size-large);
+		border-radius: var(--sc-border-radius-medium);
+
+		&::file-selector-button {
+			padding: var(--sc-spacing-large);
+			margin: calc(var(--sc-spacing-large) * -1);
+			margin-inline-end: var(--sc-spacing-large);
+		}
+	}
+}
+
+// Form control compatibility for textarea.
+textarea {
+	&.sc-form-control {
+		min-height: var(--sc-input-height);
+		height: auto;
+
+		&-sm {
+			min-height: var(--sc-input-height-small);
+			height: auto;
+		}
+
+		&-lg {
+			min-height: var(--sc-input-height-large);
+			height: auto;
+		}
+	}
+}
+
+// Form Label style.
+.sc-form-label {
+	margin-bottom: var(--sc-input-label-margin);
+	font-style: normal;
+	font-size: var(--sc-input-label-font-size-medium);
+	font-weight: var(--sc-font-weight-normal);
+	color: var(--sc-input-label-color);
+}
+
+// Form Help Text style.
+.sc-help-text {
+	display: block;
+	font-size: var(--sc-input-help-text-font-size-medium);
+    color: var(--sc-input-help-text-color);
+}

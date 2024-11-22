@@ -35,6 +35,7 @@ export default ({ customerId }) => {
 					expand: [
 						'product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 						'variant',
 						'price',
