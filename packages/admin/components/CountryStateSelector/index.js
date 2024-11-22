@@ -9,9 +9,13 @@ import { __ } from '@wordpress/i18n';
 export default ({ value, onChange }) => {
 	const [search, setSearch] = useState('');
 
-	const countries = allCountries.filter((country) => {
-		return country[0].toLowerCase().includes(search.toLowerCase());
-	});
+	const countries = allCountries.filter(
+		(country) =>
+			country[0].toLowerCase().includes(search.toLowerCase()) ||
+			country[2].find((state) => {
+				return state[0].toLowerCase().includes(search.toLowerCase());
+			})
+	);
 
 	const onChangeSelection = (newValue, country) => {
 		// country removed.
