@@ -79,7 +79,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 	};
 
 	const renderShippingRates = () => {
-		if (!isShippingRatesResolved && !shippingRates?.length) {
+		if (loadingShippingRates && !shippingRates?.length) {
 			return <ProgressBar />;
 		}
 
