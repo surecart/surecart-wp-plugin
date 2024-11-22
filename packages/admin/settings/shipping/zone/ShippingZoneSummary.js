@@ -17,7 +17,7 @@ export default ({ shippingZone }) => {
 			if (territory?.states?.length === 1) {
 				const stateName = allCountries
 					.find((country) => country[1] === territory?.country)[2]
-					.find((state) => state[1] === territory?.states[0])[0];
+					.find((state) => state[1] === territory?.states[0])?.[0];
 				return `${countryName} (${stateName})`;
 			}
 
