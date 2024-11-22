@@ -44,7 +44,7 @@ abstract class BaseSettings {
 	public function __construct() {
 		$this->tabs = [
 			'brand'                          => __( 'Design & Branding', 'surecart' ),
-			'order'                          => __( 'Orders & Receipts', 'surecart' ),
+			'order'                          => __( 'Orders & Invoices', 'surecart' ),
 			'abandoned_checkout'             => __( 'Abandoned Checkout', 'surecart' ),
 			'customer_notification_protocol' => __( 'Notifications', 'surecart' ),
 			'subscription_protocol'          => __( 'Subscriptions', 'surecart' ),

@@ -46,6 +46,7 @@ export default function ProductListEdit({
 			perPage: limit || perPage,
 			include: ids?.length ? ids : include,
 		});
+		setAttributes({ limit: null });
 	}, [limit, ids]);
 
 	/**

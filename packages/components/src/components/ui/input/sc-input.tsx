@@ -309,7 +309,12 @@ export class ScInput {
                 // onInvalid={this.handleInvalid}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
-                onKeyDown={e => e.stopPropagation()}
+                onKeyDown={e => {
+                  // Only stop propagation on keys that are not handled by the browser
+                  if (!['Enter', 'ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.key)) {
+                    e.stopPropagation();
+                  }
+                }}
               />
             </slot>
 

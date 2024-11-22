@@ -10,6 +10,7 @@
 use SureCart\Middleware\CheckoutFormModeMiddleware;
 use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardRedirectMiddleware;
+use SureCart\Middleware\InvoiceRedirectMiddleware;
 use SureCart\Middleware\LoginLinkMiddleware;
 use SureCart\Middleware\OrderRedirectMiddleware;
 use SureCart\Middleware\PathRedirectMiddleware;
@@ -80,6 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// redirect in this order.
 	->middleware( PathRedirectMiddleware::class )
 	->middleware( OrderRedirectMiddleware::class )
+	->middleware( InvoiceRedirectMiddleware::class )
 	->middleware( PurchaseRedirectMiddleware::class )
 	->middleware( CheckoutRedirectMiddleware::class )
 	->middleware( PaymentFailureRedirectMiddleware::class )

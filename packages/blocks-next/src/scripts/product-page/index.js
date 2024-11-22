@@ -6,7 +6,6 @@ import { store, getContext } from '@wordpress/interactivity';
 /**
  * Internal dependencies.
  */
-import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
@@ -185,10 +184,7 @@ const { state, actions } = store('surecart/product-page', {
 		 * Get the checkout url based on the built line item.
 		 */
 		get checkoutUrl() {
-			const { checkoutUrl, addToCart } = getContext();
-			if (addToCart) {
-				return '';
-			}
+			const { checkoutUrl } = getContext();
 			return addQueryArgs(checkoutUrl, {
 				line_items: [state.lineItem],
 				no_cart: true,
@@ -303,7 +299,7 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	actions: {
-		addToCart: async (e) => {
+		*addToCart(e) {
 			const hasContextBusy = Object.values(e.submitter.dataset).includes(
 				'context.busy'
 			);
@@ -316,7 +312,12 @@ const { state, actions } = store('surecart/product-page', {
 			try {
 				context.busy = true;
 
-				const checkout = await addCheckoutLineItem(state.lineItem);
+				const { addCheckoutLineItem } = yield import(
+					/* webpackIgnore: true */
+					'@surecart/checkout-service'
+				);
+
+				const checkout = yield* addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
 
 				// no busy context, wait to toggle cart
@@ -360,11 +361,13 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Handle submit callback.
 		 */
-		handleSubmit(e) {
+		*handleSubmit(e) {
 			e.preventDefault(); // prevent the form from submitting.
+			e.stopPropagation(); // prevent the event from bubbling up.
+
 			// if the button hdoes not have a value, add to cart.
 			if (!e?.submitter?.value) {
-				return actions.addToCart(e);
+				return yield actions.addToCart(e);
 			}
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);

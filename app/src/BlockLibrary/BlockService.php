@@ -169,6 +169,18 @@ class BlockService {
 	}
 
 	/**
+	 * Get the product page blocks migration service.
+	 *
+	 * @param object $block Block.
+	 * @param string $old_block_name Old block name.
+	 *
+	 * @return ProductPageBlocksMigrationService
+	 */
+	public function productPageBlocksMigration( $block, $old_block_name ) {
+		return new ProductPageBlocksMigrationService( $block, $old_block_name );
+	}
+
+	/**
 	 * Block anchor support service.
 	 *
 	 * @return BlockAnchorSupportService
