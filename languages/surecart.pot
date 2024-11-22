@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-20T16:47:29+00:00\n"
+"POT-Creation-Date: 2024-11-21T22:39:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -3546,7 +3546,7 @@ msgstr ""
 #: src/Rest/ProductCollectionsRestServiceProvider.php:46
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
 #: src/Rest/ProductMediaRestServiceProvider.php:75
-#: src/Rest/ProductsRestServiceProvider.php:81
+#: src/Rest/ProductsRestServiceProvider.php:80
 #: src/Rest/PromotionRestServiceProvider.php:46
 #: src/Rest/ProvisionalAccountRestServiceProvider.php:54
 #: src/Rest/PurchasesRestServiceProvider.php:88
@@ -3664,7 +3664,7 @@ msgstr ""
 #: src/Rest/MediaRestServiceProvider.php:72
 #: src/Rest/PriceRestServiceProvider.php:98
 #: src/Rest/ProductMediaRestServiceProvider.php:114
-#: src/Rest/ProductsRestServiceProvider.php:175
+#: src/Rest/ProductsRestServiceProvider.php:174
 #: src/Rest/StatisticRestServiceProvider.php:72
 msgid "The page of items you want returned."
 msgstr ""
@@ -3680,7 +3680,7 @@ msgstr ""
 #: src/Rest/MediaRestServiceProvider.php:76
 #: src/Rest/PriceRestServiceProvider.php:102
 #: src/Rest/ProductMediaRestServiceProvider.php:118
-#: src/Rest/ProductsRestServiceProvider.php:179
+#: src/Rest/ProductsRestServiceProvider.php:178
 #: src/Rest/StatisticRestServiceProvider.php:76
 msgid "A limit on the number of items to be returned, between 1 and 100."
 msgstr ""
@@ -3688,7 +3688,7 @@ msgstr ""
 #: src/Rest/ActivationRestServiceProvider.php:97
 #: src/Rest/PriceRestServiceProvider.php:82
 #: src/Rest/ProductMediaRestServiceProvider.php:98
-#: src/Rest/ProductsRestServiceProvider.php:151
+#: src/Rest/ProductsRestServiceProvider.php:150
 msgid "Ensure result set excludes specific IDs."
 msgstr ""
 
@@ -3965,7 +3965,7 @@ msgid "The content for the object."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:70
-#: src/Rest/ProductsRestServiceProvider.php:139
+#: src/Rest/ProductsRestServiceProvider.php:138
 msgid "Whether to get archived products or not."
 msgstr ""
 
@@ -3974,7 +3974,7 @@ msgid "Only return prices that allow ad hoc amounts or not."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:78
-#: src/Rest/ProductsRestServiceProvider.php:147
+#: src/Rest/ProductsRestServiceProvider.php:146
 msgid "The query to be used for full text search of this collection."
 msgstr ""
 
@@ -3991,32 +3991,32 @@ msgstr ""
 msgid "A limit on the number of records returned"
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:87
+#: src/Rest/ProductsRestServiceProvider.php:86
 msgid "Files attached to the product."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:95
+#: src/Rest/ProductsRestServiceProvider.php:94
 msgid "Stored product metadata"
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:106
+#: src/Rest/ProductsRestServiceProvider.php:105
 msgid "Top level metrics for the product."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:143
+#: src/Rest/ProductsRestServiceProvider.php:142
 msgid "Only return products that are recurring or not recurring (one time)."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:159
+#: src/Rest/ProductsRestServiceProvider.php:158
 msgid "Only return objects that belong to the given product groups."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:167
+#: src/Rest/ProductsRestServiceProvider.php:166
 msgid "Only return objects that belong to the given product collections."
 msgstr ""
 
-#: src/Rest/ProductsRestServiceProvider.php:195
-#: src/Rest/ProductsRestServiceProvider.php:213
+#: src/Rest/ProductsRestServiceProvider.php:194
+#: src/Rest/ProductsRestServiceProvider.php:212
 msgid "Sorry, you are not allowed to edit products."
 msgstr ""
 
@@ -10299,6 +10299,7 @@ msgid "Get started with SureCart"
 msgstr ""
 
 #: dashboard/components/GetStarted.js:81
+#: onboarding/components/Connect.js:79
 msgid "Connect"
 msgstr ""
 
@@ -10918,6 +10919,48 @@ msgstr ""
 msgid "Enter email address"
 msgstr ""
 
+#: onboarding/components/Connect.js:54
+#: onboarding/components/InitialSetup.js:78
+msgid "Connect Existing Store"
+msgstr ""
+
+#: onboarding/components/Connect.js:59
+msgid "Your API Token"
+msgstr ""
+
+#: onboarding/components/Connect.js:61
+#: settings/connection/ConnectionSettings.js:68
+msgid "Enter your api token"
+msgstr ""
+
+#: onboarding/components/Connect.js:112
+msgid "Need help finding your <a>API token</a>?"
+msgstr ""
+
+#: onboarding/components/Connect.js:134
+msgid "Help Doc"
+msgstr ""
+
+#: onboarding/components/Connect.js:170
+#: onboarding/components/ProgressIndicator.js:39
+#: settings/shipping/rate/ShippingRateForm.js:503
+#: Blocks/Form/components/Setup.js:66
+msgid "Back"
+msgstr ""
+
+#: onboarding/components/Connect.js:180
+msgid "Knowledge Base"
+msgstr ""
+
+#: onboarding/components/ConnectDone.js:28
+#: onboarding/components/SetupDone.js:44
+msgid "Congratulations!"
+msgstr ""
+
+#: onboarding/components/ConnectDone.js:29
+msgid "Your store has been connected."
+msgstr ""
+
 #: onboarding/components/InitialSetup.js:22
 msgid "Welcome, Let’s Set Up Your Online Store"
 msgstr ""
@@ -10928,10 +10971,6 @@ msgstr ""
 
 #: onboarding/components/InitialSetup.js:63
 msgid "Create New Store"
-msgstr ""
-
-#: onboarding/components/InitialSetup.js:78
-msgid "Connect Existing Store"
 msgstr ""
 
 #: onboarding/components/InitialSetup.js:88
@@ -10952,12 +10991,6 @@ msgstr ""
 msgid "Privacy Policy"
 msgstr ""
 
-#: onboarding/components/ProgressIndicator.js:39
-#: settings/shipping/rate/ShippingRateForm.js:503
-#: Blocks/Form/components/Setup.js:66
-msgid "Back"
-msgstr ""
-
 #: onboarding/components/ProgressIndicator.js:81
 #: Blocks/Form/edit.js:498
 #: sc-cancel-survey2.js:89
@@ -10966,10 +10999,6 @@ msgstr ""
 #: sc-upsell.js:30
 #: store3.js:106
 msgid "Continue"
-msgstr ""
-
-#: onboarding/components/SetupDone.js:44
-msgid "Congratulations!"
 msgstr ""
 
 #: onboarding/components/SetupDone.js:45
@@ -10996,19 +11025,20 @@ msgstr ""
 msgid "Choose some example data or start from scratch."
 msgstr ""
 
-#: onboarding/Onboarding.js:134
+#: onboarding/Onboarding.js:141
 msgid "Store was created, but seeding of new products failed."
 msgstr ""
 
-#: onboarding/Onboarding.js:146
+#: onboarding/Onboarding.js:153
 msgid "Failed to create store. Please try again."
 msgstr ""
 
-#: onboarding/Onboarding.js:210
+#: onboarding/Onboarding.js:222
 msgid "Add A Product"
 msgstr ""
 
-#: onboarding/Onboarding.js:226
+#: onboarding/Onboarding.js:238
+#: onboarding/Onboarding.js:263
 msgid "View My Products"
 msgstr ""
 
@@ -13590,10 +13620,6 @@ msgstr ""
 
 #: settings/connection/ConnectionSettings.js:67
 msgid "API Token"
-msgstr ""
-
-#: settings/connection/ConnectionSettings.js:68
-msgid "Enter your api token"
 msgstr ""
 
 #: settings/connection/ConnectionSettings.js:79
