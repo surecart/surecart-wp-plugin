@@ -6,9 +6,6 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 const { __, sprintf, _n } = wp.i18n;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
-const { speak: fallbackSpeak } = require('../a11y');
-const speak = wp?.a11y?.speak || fallbackSpeak;
-
 /**
  * Get checkout data from local storage based on mode and formId.
  */
@@ -354,6 +351,11 @@ const { state, actions } = store('surecart/checkout', {
 
 			const { mode, formId } = getContext();
 
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(__('Applying promotion code.', 'surecart'), 'assertive');
 
 			const { handleCouponApply } = yield import(
@@ -386,6 +388,10 @@ const { state, actions } = store('surecart/checkout', {
 		removeDiscount: function* () {
 			const context = getContext();
 			const { mode, formId } = context;
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(__('Removing promotion code.', 'surecart'), 'assertive');
 			const { handleCouponApply } = yield import(
 				/* webpackIgnore: true */
@@ -479,13 +485,17 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Increase the quantity of the line item.
 		 */
-		onQuantityIncrease: async (e) => {
+		onQuantityIncrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity + 1;
-			await actions.updateLineItem({ quantity });
+			yield actions.updateLineItem({ quantity });
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -499,7 +509,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Decrease the quantity of the line item.
 		 */
-		onQuantityDecrease: async (e) => {
+		onQuantityDecrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -508,7 +518,11 @@ const { state, actions } = store('surecart/checkout', {
 			if (quantity < 1) {
 				return;
 			}
-			await actions.updateLineItem({ quantity });
+			yield actions.updateLineItem({ quantity });
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -522,10 +536,14 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Change the quantity of the line item.
 		 */
-		onQuantityChange: async (e) => {
+		onQuantityChange: function* (e) {
 			const quantity = parseInt(e.target.value || '');
-			await actions.updateLineItem({ quantity });
+			yield* actions.updateLineItem({ quantity });
 
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -563,6 +581,10 @@ const { state, actions } = store('surecart/checkout', {
 		removeLineItem: function* () {
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(__('Removing line item.', 'surecart'), 'assertive');
 
 			const { removeCheckoutLineItem } = yield import(
