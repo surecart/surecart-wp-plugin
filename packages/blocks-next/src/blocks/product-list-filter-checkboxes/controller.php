@@ -12,6 +12,10 @@ $terms = get_terms(
 	)
 );
 
+if ( is_wp_error( $terms ) ) {
+	return '';
+}
+
 // we are on a collection page.
 $current_term = get_queried_object();
 if ( is_a( $current_term, \WP_Term::class ) ) {
