@@ -11,8 +11,6 @@
 
 namespace SureCart\WordPress;
 
-use SureCartCore\Application\Application;
-
 /**
  * Main communication channel with the theme.
  */
@@ -49,14 +47,17 @@ class IntegrationsService {
 
 		if ( ! isset( $installed_plugins[ $plugin_init_file ] ) ) {
 			return 'install';
-		} elseif ( is_plugin_active( $plugin_init_file ) ) {
-			if ( ! $this->isPluginConfigured( $plugin_init_file ) ) {
-				return 'configure';
-			}
-			return 'activated';
-		} else {
+		}
+
+		if ( ! is_plugin_active( $plugin_init_file ) ) {
 			return 'installed';
 		}
+
+		if ( ! $this->isPluginConfigured( $plugin_init_file ) ) {
+			return 'configure';
+		}
+
+		return 'activated';
 	}
 
 	/**
