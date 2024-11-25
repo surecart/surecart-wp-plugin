@@ -276,16 +276,32 @@ export default ({ order, checkout, loading }) => {
 
 				{/* Shipping */}
 				{!!checkout?.shipping_amount && (
-					<LineItem
-						label={`${__('Shipping', 'surecart')} ${
-							selectedShippingMethod?.name
-								? `(${selectedShippingMethod?.name})`
-								: ''
-						}`}
-						currency={checkout?.currency}
-						value={checkout?.shipping_amount}
-					/>
+					<span>
+						<LineItem
+							label={`${__('Shipping', 'surecart')} ${
+								selectedShippingMethod?.name
+									? `(${selectedShippingMethod?.name})`
+									: ''
+							}`}
+							currency={checkout?.currency}
+							value={checkout?.shipping_amount}
+						/>
+						{checkout?.selected_shipping_choice?.shipping_method
+							?.name && (
+							<span
+								css={css`
+									font-size: var(--sc-font-size-small);
+									line-height: var(--sc-line-height-dense);
+									color: var(--sc-input-label-color);
+								`}
+							>
+								{`(${checkout?.selected_shipping_choice?.shipping_method?.name})`}
+							</span>
+						)}
+					</span>
 				)}
+
+				{console.log(checkout)}
 
 				{/* Tax */}
 				{!!checkout?.tax_amount && (
