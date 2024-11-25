@@ -3,16 +3,11 @@ import SettingsBox from '../SettingsBox';
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
-import {
-	ScButton,
-	ScDialog,
-	ScFlex,
-	ScBlockUi,
-} from '@surecart/components-react';
+import { ScButton, ScBlockUi } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
-import { Modal } from '@wordpress/components';
+import { Flex, Modal } from '@wordpress/components';
 
 export default () => {
 	const sureTriggers = scData?.integrations?.suretriggers || {};
@@ -106,23 +101,21 @@ export default () => {
 	};
 
 	const buttonText = () => {
-		if (status === 'install') {
-			if (loading) {
-				return __('Installing...', 'surecart');
-			}
-			return __('Install & Activate', 'surecart');
-		}
-		if (status === 'installed') {
-			if (loading) {
-				return __('Activating...', 'surecart');
-			}
-			return __('Activate', 'surecart');
-		}
-		if (status === 'configure') {
-			return __('Configure', 'surecart');
-		}
-		if (status === 'activated') {
-			return __('View Integrations', 'surecart');
+		switch (status) {
+			case 'install':
+				return loading
+					? __('Installing...', 'surecart')
+					: __('Install & Activate', 'surecart');
+			case 'installed':
+				return loading
+					? __('Activating...', 'surecart')
+					: __('Activate', 'surecart');
+			case 'configure':
+				return __('Configure', 'surecart');
+			case 'activated':
+				return __('View Integrations', 'surecart');
+			default:
+				return '';
 		}
 	};
 
@@ -141,6 +134,7 @@ export default () => {
 			setOpen(true);
 		}
 	};
+
 	return (
 		<SettingsBox
 			title={__('Integrations via SureTriggers', 'surecart')}
@@ -150,30 +144,39 @@ export default () => {
 			)}
 			noButton
 		>
-			<ScFlex justifyContent="space-between">
-				<div style={{ width: '60%' }}>
-					<ScFlex justifyContent="flex-start">
+			<Flex justify="space-between" wrap="wrap" gap="20px">
+				<div
+					css={css`
+						flex: 1 1 425px;
+					`}
+				>
+					<Flex justify="flex-start">
 						<img src={sureTriggers?.logo} alt="SureTriggers" />
 						<img src={sureTriggers?.logoText} alt="SureTriggers" />
-					</ScFlex>
+					</Flex>
 					<p>
 						{__(
 							'SureTriggers lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & SureTriggers has got you covered.',
 							'surecart'
 						)}
 					</p>
-					<ScButton type="primary" onClick={() => onClick()}>
+					<ScButton type="primary" onClick={onClick}>
 						{buttonText()}
 					</ScButton>
 				</div>
-				<div style={{ width: '40%' }}>
+				<div
+					css={css`
+						flex: 1 1 200px;
+					`}
+				>
 					<img
 						src={sureTriggers?.banner}
 						alt="SureTriggers"
 						width="100%"
+						loading="lazy"
 					/>
 				</div>
-			</ScFlex>
+			</Flex>
 			{open && (
 				<Modal
 					isFullScreen
