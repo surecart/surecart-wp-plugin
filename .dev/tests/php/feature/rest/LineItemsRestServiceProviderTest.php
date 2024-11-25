@@ -22,6 +22,7 @@ class LineItemsRestServiceProviderTest extends SureCartUnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\WordPress\PluginServiceProvider::class,
+				\SureCart\Account\AccountServiceProvider::class,
 				LineItemsRestServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class
