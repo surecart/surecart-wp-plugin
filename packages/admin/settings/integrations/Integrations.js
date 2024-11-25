@@ -5,7 +5,7 @@ export default () => {
 	return (
 		<SettingsTemplate
 			title={__('Integrations', 'surecart')}
-			icon={<sc-icon name="credit-card"></sc-icon>}
+			icon={<sc-icon name="zap"></sc-icon>}
 			noButton
 		>
 			<Suretriggers />
