@@ -307,6 +307,12 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
+= 3.1.0 - November 26th, 2024 =
+- New: Shipping territories/regions. Create shipping rules for specific states, provinces and territories.
+- Improvement: Change the "Change Price" button on edit subscription to just "Change" to avoid confusion as you can change to a different product.
+- Fix: Make minimum version of WordPress required 6.6.
+- Fix: Recent orders on the customer dashboard should show checkout entered name instead of customer name.
+
 = 3.0.5 - November 22nd, 2024 =
 - Fix: Issue with XML exports and ZipWP compatibility.
 
