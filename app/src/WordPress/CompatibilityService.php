@@ -211,6 +211,10 @@ class CompatibilityService {
 	 * @return array
 	 */
 	public function sitegroundJsCombineExcludeScriptIds( $exclude_ids ) {
+		// WordPress scripts which depends on interactivity.
+		$exclude_ids[] = '@wordpress/block-library/navigation/view-js-module';
+
+		// SureCart scripts.
 		$exclude_ids[] = '@surecart/product-page-js-module';
 		$exclude_ids[] = '@surecart/image-slider-js-module';
 		$exclude_ids[] = '@surecart/checkout-js-module';
@@ -218,6 +222,8 @@ class CompatibilityService {
 		$exclude_ids[] = '@surecart/a11y-js-module';
 		$exclude_ids[] = '@surecart/checkout-service-js-module';
 		$exclude_ids[] = '@surecart/checkout-events-js-module';
+		$exclude_ids[] = '@surecart/dropdown-js-module';
+		$exclude_ids[] = '@surecart/product-list-js-module';
 
 		return $exclude_ids;
 	}
