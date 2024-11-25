@@ -15,6 +15,7 @@ import { useState } from '@wordpress/element';
 import EditContactInfo from './EditContactInfo';
 
 export default ({ checkout, loading, onManuallyRefetchOrder }) => {
+	const customer = checkout?.customer;
 	const [isEditing, setIsEditing] = useState(false);
 
 	return (
@@ -68,11 +69,11 @@ export default ({ checkout, loading, onManuallyRefetchOrder }) => {
 							href={addQueryArgs('admin.php', {
 								page: 'sc-customers',
 								action: 'edit',
-								id: checkout?.customer?.id,
+								id: customer?.id,
 							})}
 							slot="description"
 						>
-							{checkout?.name || checkout?.email}
+							{customer?.name || customer?.email}
 						</a>
 					</ScLineItem>
 				</div>
