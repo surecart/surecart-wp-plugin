@@ -226,4 +226,3 @@ const { state } = store('surecart/product-list', {
 		},
 	},
 });
-console.log(state);
