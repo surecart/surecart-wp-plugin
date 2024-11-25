@@ -175,6 +175,10 @@ const { state } = store('surecart/product-list', {
 			state.loading = false;
 			state.searching = false;
 		},
+		/** Toggle the sidebar. */
+		*toggleSidebar() {
+			state.sidebarOpen = !state.sidebarOpen;
+		},
 	},
 
 	callbacks: {
@@ -222,3 +226,4 @@ const { state } = store('surecart/product-list', {
 		},
 	},
 });
+console.log(state);

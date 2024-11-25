@@ -9,8 +9,9 @@
 	"example": {},
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
-		"label": {
-			"type": "string"
+		"sidebarOpen": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"supports": {
@@ -25,7 +26,7 @@
 		},
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"],
+			"margin": true,
 			"blockGap": true,
 			"default": {
 				"blockGap": "0"
@@ -39,5 +40,6 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css"]
+	"style": ["file:./style-index.css"],
+	"render": "file:./view.php"
 }

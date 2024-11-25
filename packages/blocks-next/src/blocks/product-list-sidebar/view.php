@@ -1,0 +1,6 @@
+<div
+	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+	data-wp-bind--hidden="!state.sidebarOpen" 
+>
+	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+</div>
