@@ -9,6 +9,7 @@ use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Product model
@@ -947,5 +948,14 @@ class Product extends Model implements PageModel {
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);
+	}
+
+	/**
+	 * Get the cataloged at date time attribute.
+	 *
+	 * @return string
+	 */
+	public function getCatalogedAtDateTimeAttribute() {
+		return ! empty( $this->cataloged_at ) ? TimeDate::formatDateAndTime( $this->cataloged_at ) : '';
 	}
 }

@@ -67,7 +67,7 @@ abstract class ListTable extends \WP_List_Table {
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
 			esc_attr( $model->created_at ),
 			esc_html( $model->created_at_date_time ),
-			esc_html( TimeDate::humanTimeDiff($model->created_at ) )
+			esc_html( TimeDate::humanTimeDiff( $model->created_at ) )
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
