@@ -207,10 +207,10 @@ class Currency {
 			$minimum_fraction_digits = ( 0.00 === $fractional_part ) ? 0 : 2;
 
 			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, apply_filters( 'surecart/currency/max_cents', $minimum_fraction_digits, $amount, $converted_amount ) );
-			return $fmt->formatCurrency( $converted_amount, strtoupper( $currency_code ) );
+			return apply_filters( 'surecart/currency/format', $fmt->formatCurrency( $converted_amount, strtoupper( $currency_code ) ), $amount, $currency_code );
 		}
 
-		return html_entity_decode( self::getCurrencySymbol( $currency_code ) ) . self::formatCurrencyNumber( $amount );
+		return apply_filters( 'surecart/currency/format', html_entity_decode( self::getCurrencySymbol( $currency_code ) ) . self::formatCurrencyNumber( $amount ), $amount, $currency_code );
 	}
 
 	/**
