@@ -40,6 +40,7 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css"],
-	"render": "file:./view.php"
+	"style": ["file:./style-index.css", "surecart-drawer"],
+	"render": "file:./view.php",
+	"viewScriptModule": ["@surecart/cart"]
 }
