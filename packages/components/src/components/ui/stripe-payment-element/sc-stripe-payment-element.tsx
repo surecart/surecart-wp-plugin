@@ -82,12 +82,17 @@ export class ScStripePaymentElement {
     });
   }
 
-  /** Maybe load the stripe element on load. */
-  async componentDidLoad() {
+  async maybeLoadInitialStripe() {
+    // Already loaded, no need to continue.
+    if (!!processorsState?.instances?.stripe) {
+      return;
+    }
+
     const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
       processorsState.instances.stripe = await loadStripe(processor_data?.publishable_key, { stripeAccount: processor_data?.account_id });
+      this.error = '';
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
       // don't continue.
@@ -110,6 +115,11 @@ export class ScStripePaymentElement {
         this.maybeConfirmOrder();
       }
     });
+  }
+
+  /** Maybe load the stripe element on load. */
+  async componentDidLoad() {
+    await this.maybeLoadInitialStripe();
   }
 
   disconnectedCallback() {
@@ -314,6 +324,8 @@ export class ScStripePaymentElement {
   }
 
   render() {
+    this.maybeLoadInitialStripe();
+
     return (
       <div class="sc-stripe-payment-element" data-testid="stripe-payment-element">
         {!!this.error && (
