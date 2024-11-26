@@ -31,7 +31,8 @@ export default ({ shippingZone }) => {
 				totalStates !== territory?.states?.length
 			) {
 				return sprintf(
-					__('%s (%s of %s Regions)', 'surecart'),
+					// translators: %s is the country name, %d is the number of states in the territory, %d is the total number of states in the country.
+					__('%s (%d of %d Regions)', 'surecart'),
 					countryName,
 					territory?.states?.length,
 					totalStates
