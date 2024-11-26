@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-25T23:00:23+00:00\n"
+"POT-Creation-Date: 2024-11-26T19:11:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -9250,6 +9250,12 @@ msgstr ""
 msgid "Complete Setup"
 msgstr ""
 
+#: components/CountryStateSelector/Country.js:81
+msgid "%d region"
+msgid_plural "%d regions"
+msgstr[0] ""
+msgstr[1] ""
+
 #: components/CountryStateSelector/index.js:60
 msgid "Search countries and regions to ship to"
 msgstr ""
@@ -10657,7 +10663,7 @@ msgid "*Tax to be paid on reverse charge basis"
 msgstr ""
 
 #: invoices/modules/Payment.js:179
-#: orders/modules/LineItems/index.js:328
+#: orders/modules/LineItems/index.js:326
 #: sc-line-item-tax2.js:38
 msgid "included"
 msgstr ""
@@ -14473,11 +14479,12 @@ msgstr ""
 msgid "No shipping zones or rates"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneSummary.js:34
-msgid "%s (%s of %s Regions)"
+#. translators: %s is the country name, %d is the number of states in the territory, %d is the total number of states in the country.
+#: settings/shipping/zone/ShippingZoneSummary.js:35
+msgid "%s (%d of %d Regions)"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneSummary.js:67
+#: settings/shipping/zone/ShippingZoneSummary.js:68
 msgid "%d more"
 msgstr ""
 
