@@ -16,7 +16,6 @@
 					'class'                    => 'sc-drawer sc-cart-drawer',
 					'data-wp-bind--aria-label' => 'surecart/cart::state.ariaLabel',
 					'data-wp-on--click'        => 'surecart/cart::actions.closeOverlay',
-					'data-wp-bind--hidden'     => '!state.sidebarOpen',
 				)
 			)
 		);

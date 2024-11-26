@@ -3,6 +3,8 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
+const { actions: cartActions } = store('surecart/cart');
+
 /**
  * Check if the link is valid.
  */
@@ -178,6 +180,7 @@ const { state } = store('surecart/product-list', {
 		/** Toggle the sidebar. */
 		*toggleSidebar() {
 			state.sidebarOpen = !state.sidebarOpen;
+			cartActions.toggle();
 		},
 	},
 

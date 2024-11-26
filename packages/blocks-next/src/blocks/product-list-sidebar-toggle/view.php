@@ -1,6 +1,7 @@
 <div 
     <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
     data-wp-on--click="surecart/product-list::actions.toggleSidebar"
+    data-wp-on--keydown="surecart/product-list::actions.toggleSidebar"
 >
     <?php
         echo wp_kses(
