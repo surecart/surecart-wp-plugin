@@ -118,7 +118,6 @@ export default ({ liveMode }) => {
 
 		return (orders || []).map((order) => {
 			const { checkout, created_at_date, id } = order;
-			const { customer } = checkout;
 			return (
 				<ScStackedListRow
 					style={{
@@ -133,16 +132,16 @@ export default ({ liveMode }) => {
 				>
 					<div>{created_at_date}</div>
 					<div>
-						{customer?.name || customer?.email}
+						{checkout?.name || checkout?.email}
 						<br />
-						{!!customer?.name && (
+						{!!checkout?.name && (
 							<span
 								style={{
 									color: '#6C727F',
 									'font-size': '14px',
 								}}
 							>
-								{customer?.email}
+								{checkout?.email}
 							</span>
 						)}
 					</div>
