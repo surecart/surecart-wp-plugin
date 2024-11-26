@@ -301,8 +301,6 @@ export default ({ order, checkout, loading }) => {
 					</span>
 				)}
 
-				{console.log(checkout)}
-
 				{/* Tax */}
 				{!!checkout?.tax_amount && (
 					<ScLineItem>
