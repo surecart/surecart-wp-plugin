@@ -37,7 +37,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Orders & Receipts', 'surecart')}
+			title={__('Orders & Invoices', 'surecart')}
 			icon={<sc-icon name="shopping-bag"></sc-icon>}
 			onSubmit={onSubmit}
 		>

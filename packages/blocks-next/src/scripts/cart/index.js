@@ -1,8 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
-import { processCartViewEvent } from '@surecart/checkout-events';
+import { store, getElement } from '@wordpress/interactivity';
 const { state: checkoutState } = store('surecart/checkout');
 const { __ } = wp.i18n;
 
@@ -44,12 +43,18 @@ const { state, actions } = store('surecart/cart', {
 		/**
 		 * Open the cart dialog.
 		 */
-		open: () => {
+		open: function* () {
 			state.dialog?.showModal();
-			// Trigger cart view event.
-			processCartViewEvent(checkoutState?.checkout);
 			// speak the cart dialog state.
 			state.label = __('Cart opened.', 'surecart');
+
+			const { processCartViewEvent } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-events'
+			);
+
+			// Trigger cart view event.
+			processCartViewEvent(checkoutState?.checkout);
 		},
 
 		/**

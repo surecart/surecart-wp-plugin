@@ -42,6 +42,7 @@ declare global {
       account_id: string;
       account_slug: string;
       api_url: string;
+      home_url: string;
       plugin_url: string;
       page_id: string;
       persist_cart: 'browser' | 'url' | false;
@@ -654,6 +655,7 @@ export interface Checkout extends Object {
   total_amount?: number;
   subtotal_amount?: number;
   full_amount?: number;
+  paid_amount?: number;
   proration_amount?: number;
   total_savings_amount?: number;
   applied_balance_amount?: number;

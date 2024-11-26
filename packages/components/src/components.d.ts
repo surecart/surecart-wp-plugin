@@ -545,6 +545,20 @@ export namespace Components {
      */
     interface ScCheckoutStockAlert {
     }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface ScCheckoutTestComplete {
+        /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus": string;
+        /**
+          * Success url.
+         */
+        "successUrl": string;
+    }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
     }
@@ -4256,6 +4270,10 @@ export interface ScCheckoutStockAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCheckoutStockAlertElement;
 }
+export interface ScCheckoutTestCompleteCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutTestCompleteElement;
+}
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
@@ -4803,6 +4821,28 @@ declare global {
     var HTMLScCheckoutStockAlertElement: {
         prototype: HTMLScCheckoutStockAlertElement;
         new (): HTMLScCheckoutStockAlertElement;
+    };
+    interface HTMLScCheckoutTestCompleteElementEventMap {
+        "scOrderPaid": Checkout;
+        "scSetState": string;
+    }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface HTMLScCheckoutTestCompleteElement extends Components.ScCheckoutTestComplete, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCheckoutTestCompleteElementEventMap>(type: K, listener: (this: HTMLScCheckoutTestCompleteElement, ev: ScCheckoutTestCompleteCustomEvent<HTMLScCheckoutTestCompleteElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCheckoutTestCompleteElementEventMap>(type: K, listener: (this: HTMLScCheckoutTestCompleteElement, ev: ScCheckoutTestCompleteCustomEvent<HTMLScCheckoutTestCompleteElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLScCheckoutTestCompleteElement: {
+        prototype: HTMLScCheckoutTestCompleteElement;
+        new (): HTMLScCheckoutTestCompleteElement;
     };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
@@ -6743,6 +6783,7 @@ declare global {
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
+        "sc-checkout-test-complete": HTMLScCheckoutTestCompleteElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choice-container": HTMLScChoiceContainerElement;
@@ -7501,6 +7542,25 @@ declare namespace LocalJSX {
           * Toggle line item event
          */
         "onScUpdateLineItem"?: (event: ScCheckoutStockAlertCustomEvent<LineItemData>) => void;
+    }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface ScCheckoutTestComplete {
+        /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus"?: string;
+        /**
+          * The order is paid event.
+         */
+        "onScOrderPaid"?: (event: ScCheckoutTestCompleteCustomEvent<Checkout>) => void;
+        "onScSetState"?: (event: ScCheckoutTestCompleteCustomEvent<string>) => void;
+        /**
+          * Success url.
+         */
+        "successUrl"?: string;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -11532,6 +11592,7 @@ declare namespace LocalJSX {
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
+        "sc-checkout-test-complete": ScCheckoutTestComplete;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choice-container": ScChoiceContainer;
@@ -11771,6 +11832,11 @@ declare module "@stencil/core" {
              * This component listens for stock requirements and displays a dialog to the user.
              */
             "sc-checkout-stock-alert": LocalJSX.ScCheckoutStockAlert & JSXBase.HTMLAttributes<HTMLScCheckoutStockAlertElement>;
+            /**
+             * This component listens to the order status
+             * and confirms the order when payment is successful.
+             */
+            "sc-checkout-test-complete": LocalJSX.ScCheckoutTestComplete & JSXBase.HTMLAttributes<HTMLScCheckoutTestCompleteElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choice-container": LocalJSX.ScChoiceContainer & JSXBase.HTMLAttributes<HTMLScChoiceContainerElement>;

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-01T20:21:28",
+  "timestamp": "2024-11-25T10:06:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -874,6 +874,7 @@
         "sc-checkout",
         "sc-checkout-form-errors",
         "sc-checkout-mollie-payment",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-custom-order-price-input",
         "sc-dashboard-module",
@@ -916,6 +917,9 @@
           "sc-alert"
         ],
         "sc-checkout-mollie-payment": [
+          "sc-alert"
+        ],
+        "sc-checkout-test-complete": [
           "sc-alert"
         ],
         "sc-coupon-form": [
@@ -2263,6 +2267,7 @@
         "sc-cart-form-submit",
         "sc-charges-list",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
@@ -2331,6 +2336,9 @@
           "sc-button"
         ],
         "sc-checkout-stock-alert": [
+          "sc-button"
+        ],
+        "sc-checkout-test-complete": [
           "sc-button"
         ],
         "sc-coupon-form": [
@@ -5466,7 +5474,8 @@
         "sc-form-components-validator",
         "sc-order-confirm-provider",
         "sc-session-provider",
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-checkout-test-complete"
       ],
       "dependencyGraph": {
         "sc-checkout": [
@@ -5479,7 +5488,8 @@
           "sc-form-components-validator",
           "sc-order-confirm-provider",
           "sc-session-provider",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-checkout-test-complete"
         ],
         "sc-alert": [
           "sc-icon"
@@ -5639,6 +5649,13 @@
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
+        ],
+        "sc-checkout-test-complete": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
         ]
       }
     },
@@ -6016,6 +6033,135 @@
         ],
         "sc-checkout": [
           "sc-checkout-stock-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/controllers/checkout-form/checkout-test-complete/checkout-test-complete.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-test-complete",
+      "readme": "# sc-checkout-test-complete\n\n\n",
+      "docs": "This component listens to the order status\nand confirms the order when payment is successful.",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkoutStatus",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "checkout-status",
+          "reflectToAttr": false,
+          "docs": "Checkout status to listen and do payment related stuff.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "Success url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scOrderPaid",
+          "detail": "Checkout",
+          "bubbles": true,
+          "complexType": {
+            "original": "Checkout",
+            "resolved": "Checkout",
+            "references": {
+              "Checkout": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::Checkout"
+              }
+            }
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "The order is paid event.",
+          "docsTags": []
+        },
+        {
+          "event": "scSetState",
+          "detail": "string",
+          "bubbles": true,
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-checkout"
+      ],
+      "dependencies": [
+        "sc-dialog",
+        "sc-icon",
+        "sc-dashboard-module",
+        "sc-alert",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-checkout-test-complete": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-checkout": [
+          "sc-checkout-test-complete"
         ]
       }
     },
@@ -10294,11 +10440,11 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; paid_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "complexType": {
             "original": "Partial<Checkout>",
-            "resolved": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+            "resolved": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; paid_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
             "references": {
               "Partial": {
                 "location": "global",
@@ -12001,6 +12147,7 @@
         "sc-cancel-survey",
         "sc-charges-list",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
@@ -12050,6 +12197,9 @@
           "sc-dashboard-module"
         ],
         "sc-checkout-stock-alert": [
+          "sc-dashboard-module"
+        ],
+        "sc-checkout-test-complete": [
           "sc-dashboard-module"
         ],
         "sc-customer-details": [
@@ -12341,6 +12491,7 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-license",
         "sc-login-provider",
         "sc-order-confirm-provider",
@@ -12367,6 +12518,9 @@
           "sc-dialog"
         ],
         "sc-checkout-stock-alert": [
+          "sc-dialog"
+        ],
+        "sc-checkout-test-complete": [
           "sc-dialog"
         ],
         "sc-license": [
@@ -16902,6 +17056,7 @@
         "sc-charges-list",
         "sc-checkout-mollie-payment",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-customer-details",
         "sc-dialog",
@@ -16987,6 +17142,9 @@
           "sc-icon"
         ],
         "sc-checkout-stock-alert": [
+          "sc-icon"
+        ],
+        "sc-checkout-test-complete": [
           "sc-icon"
         ],
         "sc-coupon-form": [
@@ -31429,7 +31587,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/maniruzzamanakash/Local Sites/surecart/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -44813,7 +44971,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Checkout": {
-      "declaration": "export interface Checkout extends Object {\n  id?: string;\n  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';\n  staged_payment_intents: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<PaymentIntent>;\n  };\n  abandoned_checkout_enabled: boolean;\n  billing_matches_shipping: boolean;\n  bump_amount: number;\n  payment_method_required?: boolean;\n  manual_payment: boolean;\n  manual_payment_method?: string | ManualPaymentMethod;\n  reusable_payment_method_required?: boolean;\n  number?: string;\n  amount_due?: number;\n  remaining_amount_due?: number;\n  trial_amount?: number;\n  charge?: string | Charge;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  email?: string;\n  phone?: string;\n  live_mode?: boolean;\n  currency?: string;\n  total_amount?: number;\n  subtotal_amount?: number;\n  full_amount?: number;\n  proration_amount?: number;\n  total_savings_amount?: number;\n  applied_balance_amount?: number;\n  discounts?: number;\n  shipping_address_required?: boolean;\n  tax_enabled: boolean;\n  tax_amount: number;\n  email_exists: boolean;\n  tax_inclusive_amount: number;\n  tax_exclusive_amount: number;\n  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';\n  tax_label: string;\n  tax_percent: number;\n  line_items: lineItems;\n  recommended_bumps?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Bump>;\n  };\n  current_upsell: Upsell;\n  recommended_upsells?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Upsell>;\n  };\n  metadata?: any;\n  payment_intent?: PaymentIntent;\n  payment_method?: PaymentMethod;\n  order?: string | Order;\n  customer: string | Customer;\n  subscriptions: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Subscription>;\n  };\n  purchases: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Purchase>;\n  };\n  discount_amount?: number;\n  discount?: DiscountResponse;\n  billing_address?: string | Address;\n  shipping_amount?: number;\n  shipping_address?: string | Address;\n  shipping_enabled?: boolean;\n  shipping_choices?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ShippingChoice>;\n  };\n  selected_shipping_choice?: string | ShippingChoice;\n  selected_shipping_choice_required: boolean;\n  processor_data?: ProcessorData;\n  tax_identifier?: {\n    number: string;\n    number_type: string;\n  };\n  url: string;\n  created_at?: number;\n  updated_at: number;\n  variant: string;\n  upsells_expire_at?: number;\n  invoice?: string | Invoice;\n  pdf_url?: string;\n}",
+      "declaration": "export interface Checkout extends Object {\n  id?: string;\n  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';\n  staged_payment_intents: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<PaymentIntent>;\n  };\n  abandoned_checkout_enabled: boolean;\n  billing_matches_shipping: boolean;\n  bump_amount: number;\n  payment_method_required?: boolean;\n  manual_payment: boolean;\n  manual_payment_method?: string | ManualPaymentMethod;\n  reusable_payment_method_required?: boolean;\n  number?: string;\n  amount_due?: number;\n  remaining_amount_due?: number;\n  trial_amount?: number;\n  charge?: string | Charge;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  email?: string;\n  phone?: string;\n  live_mode?: boolean;\n  currency?: string;\n  total_amount?: number;\n  subtotal_amount?: number;\n  full_amount?: number;\n  paid_amount?: number;\n  proration_amount?: number;\n  total_savings_amount?: number;\n  applied_balance_amount?: number;\n  discounts?: number;\n  shipping_address_required?: boolean;\n  tax_enabled: boolean;\n  tax_amount: number;\n  email_exists: boolean;\n  tax_inclusive_amount: number;\n  tax_exclusive_amount: number;\n  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';\n  tax_label: string;\n  tax_percent: number;\n  line_items: lineItems;\n  recommended_bumps?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Bump>;\n  };\n  current_upsell: Upsell;\n  recommended_upsells?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Upsell>;\n  };\n  metadata?: any;\n  payment_intent?: PaymentIntent;\n  payment_method?: PaymentMethod;\n  order?: string | Order;\n  customer: string | Customer;\n  subscriptions: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Subscription>;\n  };\n  purchases: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Purchase>;\n  };\n  discount_amount?: number;\n  discount?: DiscountResponse;\n  billing_address?: string | Address;\n  shipping_amount?: number;\n  shipping_address?: string | Address;\n  shipping_enabled?: boolean;\n  shipping_choices?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ShippingChoice>;\n  };\n  selected_shipping_choice?: string | ShippingChoice;\n  selected_shipping_choice_required: boolean;\n  processor_data?: ProcessorData;\n  tax_identifier?: {\n    number: string;\n    number_type: string;\n  };\n  url: string;\n  created_at?: number;\n  updated_at: number;\n  variant: string;\n  upsells_expire_at?: number;\n  invoice?: string | Invoice;\n  pdf_url?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

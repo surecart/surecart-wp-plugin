@@ -146,6 +146,26 @@ add_action(
 			$static_assets['version']
 		);
 
+		add_action(
+			'wp_footer',
+			function () {
+				?>
+				<script>
+					window.scFetchData =
+					<?php
+					echo wp_json_encode(
+						[
+							'root_url'       => esc_url_raw( get_rest_url() ),
+							'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+							'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+						]
+					);
+					?>
+				</script>
+				<?php
+			}
+		);
+
 		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/dialog/index.asset.php';
 		wp_register_script_module(
@@ -166,10 +186,6 @@ add_action(
 			'@surecart/dropdown',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/dropdown/index.js',
 			array(
-				array(
-					'id'     => '@surecart/dialog',
-					'import' => 'dynamic',
-				),
 				array(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
@@ -203,7 +219,7 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
 			[
 				[
-					'id'     => '@surecart/dialog',
+					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
 				],
 				[
@@ -228,6 +244,10 @@ add_action(
 			'@surecart/product-list',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-list/index.js',
 			[
+				[
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				],
 				[
 					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
@@ -268,6 +288,10 @@ add_action(
 					'id'     => '@surecart/api-fetch',
 					'import' => 'dynamic',
 				),
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
 			),
 			$static_assets['version']
 		);
@@ -277,12 +301,7 @@ add_action(
 		wp_register_script_module(
 			'@surecart/checkout-events',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout-events/index.js',
-			array(
-				array(
-					'id'     => '@surecart/api-fetch',
-					'import' => 'dynamic',
-				),
-			),
+			[],
 			$static_assets['version']
 		);
 
@@ -292,6 +311,14 @@ add_action(
 			'@surecart/cart',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/cart/index.js',
 			array(
+				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-events',
+					'import' => 'dynamic',
+				),
 				array(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
@@ -307,6 +334,10 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/checkout/index.js',
 			array(
 				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
 					'id'     => '@surecart/checkout-service',
 					'import' => 'dynamic',
 				),
@@ -320,10 +351,6 @@ add_action(
 				),
 				array(
 					'id'     => '@surecart/facebook-events',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => '@surecart/cart',
 					'import' => 'dynamic',
 				),
 			),

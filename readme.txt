@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
-Tested up to: 6.6
-Stable tag: 3.0.0
+Tested up to: 6.7
+Stable tag: 3.0.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,10 +305,46 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.0.5 - November 22nd, 2024 =
+- Fix: Issue with XML exports and ZipWP compatibility.
+
+= 3.0.4 - November 21st, 2024 =
+- Fix: Issue where connecting an existing site would take you to the dashboard without instructions during onboarding.
+- Fix: Issue if there are more than 10 product taxonomies, there is a possibility the you may not be able to select it as the product shop page filter.
+- Fix: Issue where creating a new product could sometimes show a blank screen after saving.
+- Fix: PHP notices that could happen due to migration from 2.x to 3.x.
+- Fix: Deprecation warning with PHP version 8.2+.
+
+= 3.0.3 - November 20th, 2024 =
+- New: Add Taxonomy Support to Products
+- New: Add ability to filter by any taxonomy on product list front-end.
+- New: Extra security setting to prevent non-admin users from making test payments.
+- Improvement: Lazy load javascript modules on front-end for improved performance.
+- Fix: Customer dashbaord template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
+- Fix: Issue where product form was wrapping some non-content elementor templates.
+- Fix: Issue with Mollie and Paystack payment redirects sometimes not creating WordPress user accounts.
+- Fix: Opacity of backdrop on cart in firefox.
+- Fix: Potential race condition in cart due to module imports under certain caching conditions.
+- Fix: Upgrade staging site warning should no longer show if you have alread upgraded to 3.0.
+- Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
+- Fix: Issue with non-cached items sometimes loading on front-end if there is a server timeout.
+- Fix: Minor security issue.
+
+= 3.0.2 - November 13th, 2024 =
+- Improvement: WordPress 6.7 compatibility.
+- Improvement: Rename "Orders & Receipts" to "Orders & Invoices" on settings page.
+- Improvement: Add minimum height to quantity selector to prevent conflicts with some themes.
+- Fix: Rare race condition in WordPress 6.7 that could cause cart not to load on some pages.
+- Fix: Issue in WordPress 6.7 where multiple shop page filter tags were not displaying.
+- Fix: Incorrect amount paid displayed on customer dashboard order details in some cases.
+
+= 3.0.1 - November 11th, 2024 =
+- Improvement: Update Interactivity API search and cart functions to work with upcoming WordPress 6.7 release.
+- Fix: Issue with invoices not clearing cart once purchased.
+
 = 3.0.0 - November 11th, 2024 =
-
-SureCart 3.0 is here! [Read The Upgrade Guide](https://surecart.com/docs/upgrading-to-surecart-v3/)
-
 - New: Completely rebuilt Shop, Product, and Cart systems using the Interactivity API for better performance and customization.
 - New: Variant images - automatically show/hide images based on the selected variation.
 - New: Bricks Builder integration.
