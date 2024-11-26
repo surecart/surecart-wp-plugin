@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-21T22:39:48+00:00\n"
+"POT-Creation-Date: 2024-11-25T23:00:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -315,7 +315,7 @@ msgstr ""
 #: src/WordPress/PostTypes/FormPostTypeService.php:339
 #: admin/user-profile.php:10
 #: admin/user-profile.php:18
-#: dashboard/components/RecentOrders.js:184
+#: dashboard/components/RecentOrders.js:183
 #: Blocks/Form/components/Mode.js:12
 #: Blocks/Form/components/Mode.js:32
 #: sc-customer-details2.js:431
@@ -560,7 +560,7 @@ msgstr ""
 #: settings/shipping/profile/DeleteShippingProfile.js:69
 #: settings/shipping/profile/ShippingProfile.js:160
 #: settings/shipping/zone/ConfirmDeleteZone.js:56
-#: settings/shipping/zone/ShippingZone.js:232
+#: settings/shipping/zone/ShippingZone.js:235
 #: settings/subscription-preservation/Reason.js:111
 #: settings/tax-override/TaxOverrideDeleteModal.js:120
 #: settings/tax-override/TaxOverrideRows.js:71
@@ -705,8 +705,8 @@ msgstr ""
 #: settings/customer/EmailRow.js:42
 #: settings/processors/ManualPaymentMethod.js:124
 #: settings/shipping/method/ShippingMethods.js:176
-#: settings/shipping/zone/ShippingZone.js:150
-#: settings/shipping/zone/ShippingZone.js:218
+#: settings/shipping/zone/ShippingZone.js:152
+#: settings/shipping/zone/ShippingZone.js:221
 #: settings/subscription-preservation/Reason.js:103
 #: settings/tax-override/TaxOverrideRows.js:67
 #: upsell-funnels/components/SelectTemplate/index.js:117
@@ -822,7 +822,7 @@ msgstr ""
 #: settings/shipping/profile/AddShippingProfile.js:88
 #: settings/shipping/profile/ShippingProfile.js:187
 #: settings/shipping/rate/ShippingRateForm.js:307
-#: settings/shipping/zone/ShippingZone.js:106
+#: settings/shipping/zone/ShippingZone.js:108
 #: upsell-funnels/components/SelectTemplate/create-modal.js:76
 #: upsell-funnels/components/SelectTemplatePart/create-modal.js:82
 #: upsell-funnels/CreateFunnel.js:60
@@ -987,7 +987,7 @@ msgstr ""
 #: products/modules/Variations/NewVariant.js:131
 #: products/modules/Variations/Variants.js:119
 #: settings/shipping/rate/ShippingRateForm.js:391
-#: settings/shipping/zone/ShippingZone.js:110
+#: settings/shipping/zone/ShippingZone.js:112
 #: store/add-entities.js:257
 #: subscriptions/edit/modules/Price.js:57
 #: subscriptions/show/modules/CurrentPlan.js:88
@@ -1532,7 +1532,7 @@ msgstr ""
 #: invoices/modules/SelectShipping.js:43
 #: invoices/modules/SelectShipping.js:59
 #: invoices/modules/SelectShipping.js:79
-#: orders/modules/LineItems/index.js:280
+#: orders/modules/LineItems/index.js:281
 #: products/modules/Shipping.js:25
 #: settings/shipping/ShippingSettings.js:120
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:257
@@ -7089,7 +7089,7 @@ msgstr ""
 #: products/modules/Affiliation.js:118
 #: settings/SettingsBox.js:54
 #: settings/SettingsTemplate.js:77
-#: settings/shipping/zone/ShippingZoneForm.js:237
+#: settings/shipping/zone/ShippingZoneForm.js:181
 #: settings/tax-override/TaxOverrideModal.js:272
 #: sc-customer-edit.js:124
 #: sc-order-bump2.js:80
@@ -7496,7 +7496,7 @@ msgstr[1] ""
 #: settings/shipping/profile/DeleteShippingProfile.js:76
 #: settings/shipping/rate/ShippingRateForm.js:511
 #: settings/shipping/zone/ConfirmDeleteZone.js:49
-#: settings/shipping/zone/ShippingZoneForm.js:245
+#: settings/shipping/zone/ShippingZoneForm.js:189
 #: settings/subscription-preservation/EditReason.js:149
 #: settings/tax-override/TaxOverrideDeleteModal.js:116
 #: settings/tax-override/TaxOverrideModal.js:263
@@ -8167,6 +8167,7 @@ msgstr ""
 #: affiliation-referrals/modules/Affiliation.js:104
 #: affiliations/modules/affiliation-products/Product.js:104
 #: bumps/modules/Price.js:52
+#: subscriptions/edit/modules/Price.js:136
 #: subscriptions/show/modules/CurrentPlan.js:155
 #: upsell-funnels/modules/Upsell/Product.js:88
 msgid "Change"
@@ -8938,7 +8939,7 @@ msgstr ""
 #: settings/brand/Logo.js:81
 #: settings/shipping/profile/Products.js:283
 #: settings/shipping/profile/Products.js:336
-#: settings/shipping/zone/ShippingZone.js:166
+#: settings/shipping/zone/ShippingZone.js:168
 #: subscriptions/edit/modules/Trial.js:38
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
 #: Blocks/ConditionalForm/selectors/SelectProcessors/ProcessorItem.js:26
@@ -9247,6 +9248,10 @@ msgstr ""
 #: dashboard/components/GetStarted.js:104
 #: sc-provisional-banner.js:15
 msgid "Complete Setup"
+msgstr ""
+
+#: components/CountryStateSelector/index.js:60
+msgid "Search countries and regions to ship to"
 msgstr ""
 
 #: components/data-tables/affiliates/PromotionsDataTable.js:69
@@ -10400,11 +10405,11 @@ msgstr ""
 msgid "You don't have any orders."
 msgstr ""
 
-#: dashboard/components/RecentOrders.js:218
+#: dashboard/components/RecentOrders.js:217
 msgid "Recent Orders"
 msgstr ""
 
-#: dashboard/components/RecentOrders.js:220
+#: dashboard/components/RecentOrders.js:219
 msgid "View All"
 msgstr ""
 
@@ -10652,7 +10657,7 @@ msgid "*Tax to be paid on reverse charge basis"
 msgstr ""
 
 #: invoices/modules/Payment.js:179
-#: orders/modules/LineItems/index.js:312
+#: orders/modules/LineItems/index.js:328
 #: sc-line-item-tax2.js:38
 msgid "included"
 msgstr ""
@@ -14229,7 +14234,7 @@ msgstr ""
 
 #: settings/shipping/profile/ShippingProfile.js:174
 #: settings/shipping/ShippingSettings.js:130
-#: settings/shipping/zone/ShippingZone.js:89
+#: settings/shipping/zone/ShippingZone.js:91
 msgid "No shipping rates"
 msgstr ""
 
@@ -14285,7 +14290,7 @@ msgid "Shipping rate added"
 msgstr ""
 
 #: settings/shipping/rate/ShippingRateForm.js:194
-#: settings/shipping/zone/ShippingZone.js:241
+#: settings/shipping/zone/ShippingZone.js:244
 msgid "Add Rate"
 msgstr ""
 
@@ -14382,48 +14387,47 @@ msgstr ""
 msgid "Fallback Zone"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZone.js:69
+#: settings/shipping/zone/ShippingZone.js:67
 msgid "Shipping rate deleted"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZone.js:91
+#: settings/shipping/zone/ShippingZone.js:93
 msgid "Customers won't be able to complete checkout for products in this zone."
 msgstr ""
 
-#: settings/shipping/zone/ShippingZone.js:108
+#: settings/shipping/zone/ShippingZone.js:110
 msgid "Condition"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZone.js:196
+#: settings/shipping/zone/ShippingZone.js:199
 msgid "Fallback"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:99
-msgid "Select at least one country to create zone."
+#: settings/shipping/zone/ShippingZoneForm.js:100
+msgid "Select at least one country or region."
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:111
+#: settings/shipping/zone/ShippingZoneForm.js:112
 msgid "Zone updated"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:117
+#: settings/shipping/zone/ShippingZoneForm.js:118
 msgid "Zone added"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:181
+#: settings/shipping/zone/ShippingZoneForm.js:154
 msgid "Zone Name"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:185
+#: settings/shipping/zone/ShippingZoneForm.js:158
 msgid "United States,  United Kingdom, Global ..."
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:191
-#: settings/shipping/zone/ShippingZoneForm.js:225
+#: settings/shipping/zone/ShippingZoneForm.js:165
 msgid "Select Countries"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:238
+#: settings/shipping/zone/ShippingZoneForm.js:182
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:100
 #: Blocks/Form/components/ChooseDesign.js:28
@@ -14437,19 +14441,19 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:264
+#: settings/shipping/zone/ShippingZoneForm.js:208
 msgid "Edit Zone"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:265
+#: settings/shipping/zone/ShippingZoneForm.js:209
 msgid "Add Zone"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:291
+#: settings/shipping/zone/ShippingZoneForm.js:236
 msgid "1. Create Zone"
 msgstr ""
 
-#: settings/shipping/zone/ShippingZoneForm.js:295
+#: settings/shipping/zone/ShippingZoneForm.js:240
 msgid "2. Create Rate"
 msgstr ""
 
@@ -14467,6 +14471,14 @@ msgstr ""
 
 #: settings/shipping/zone/ShippingZones.js:74
 msgid "No shipping zones or rates"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneSummary.js:34
+msgid "%s (%s of %s Regions)"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneSummary.js:67
+msgid "%d more"
 msgstr ""
 
 #: settings/subscription-preservation/Coupon.js:154
@@ -15408,10 +15420,6 @@ msgstr ""
 
 #: subscriptions/edit/modules/Price.js:130
 msgid "Edit Amount"
-msgstr ""
-
-#: subscriptions/edit/modules/Price.js:136
-msgid "Change Price"
 msgstr ""
 
 #: subscriptions/edit/modules/Price.js:144
