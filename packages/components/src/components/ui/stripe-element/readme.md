@@ -36,6 +36,12 @@
 
 Confirm card payment
 
+#### Parameters
+
+| Name     | Type  | Description |
+| -------- | ----- | ----------- |
+| `secret` | `any` |             |
+
 #### Returns
 
 Type: `Promise<any>`
@@ -45,6 +51,12 @@ Type: `Promise<any>`
 ### `confirmCardSetup(secret: any) => Promise<any>`
 
 Confirm card setup.
+
+#### Parameters
+
+| Name     | Type  | Description |
+| -------- | ----- | ----------- |
+| `secret` | `any` |             |
 
 #### Returns
 

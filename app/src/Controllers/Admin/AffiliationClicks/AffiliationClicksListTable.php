@@ -112,7 +112,7 @@ class AffiliationClicksListTable extends ListTable {
 		$is_expired = $click->expires_at < time();
 		$expires    = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			$is_expired ? __( 'Expired' ) : __( 'Expires on' ),
+			$is_expired ? __( 'Expired', 'surecart' ) : __( 'Expires on', 'surecart' ),
 			esc_attr( $click->expires_at ),
 			esc_html( $click->expires_at_date_time ),
 			esc_html( $is_expired ? TimeDate::humanTimeDiff( $click->expires_at ) : $click->expires_at_date_time )

@@ -21,17 +21,17 @@ use SureCart\Support\TimeDate;
  * Order model
  */
 class Checkout extends Model {
-	use HasCustomer,
-		HasSubscriptions,
-		HasDiscount,
-		HasShippingAddress,
-		HasPaymentIntent,
-		HasPaymentMethod,
-		HasPurchases,
-		CanFinalize,
-		HasProcessorType,
-		HasBillingAddress,
-		HasPaymentFailures;
+	use HasCustomer;
+	use HasSubscriptions;
+	use HasDiscount;
+	use HasShippingAddress;
+	use HasPaymentIntent;
+	use HasPaymentMethod;
+	use HasPurchases;
+	use CanFinalize;
+	use HasProcessorType;
+	use HasBillingAddress;
+	use HasPaymentFailures;
 
 	/**
 	 * Rest API endpoint
@@ -56,6 +56,107 @@ class Checkout extends Model {
 	public function __construct( $attributes = [], $type = '' ) {
 		$this->processor_type = $type;
 		parent::__construct( $attributes );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalDisplayAmountAttribute() {
+		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display full amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getFullDisplayAmountAttribute() {
+		return ! empty( $this->full_amount ) ? Currency::format( $this->full_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display discount amount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountDisplayAmountAttribute() {
+		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display bump amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getBumpDisplayAmountAttribute() {
+		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the converted total amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getConvertedTotalAmountAttribute() {
+		if ( $this->is_zero_decimal || empty( $this->total_amount ) ) {
+			return $this->total_amount;
+		}
+		return $this->total_amount / 100;
+	}
+
+	/**
+	 * Is the checkout an installment.
+	 *
+	 * @return bool
+	 */
+	public function getIsInstallmentAttribute() {
+		return $this->full_amount !== $this->subtotal_amount;
+	}
+
+	/**
+	 * Get the line items count attribute.
+	 *
+	 * @return int
+	 */
+	public function getLineItemsCountAttribute() {
+		if ( empty( $this->line_items ) || empty( $this->line_items->data ) ) {
+			return 0;
+		}
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $count, $item ) {
+				return $count + ( $item->quantity ?? 0 );
+			},
+			0
+		);
+	}
+
+	/**
+	 * Get the has recurring attribute.
+	 *
+	 * Do any line items have a recurring price?
+	 *
+	 * @return bool
+	 */
+	public function getHasRecurringAttribute() {
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $carry, $item ) {
+				return $carry || isset( $item->price->recurring_interval );
+			},
+			false
+		);
 	}
 
 	/**
@@ -121,6 +222,7 @@ class Checkout extends Model {
 	 */
 	protected function update( $attributes = [] ) {
 		$this->setWriteAttributes();
+
 		return parent::update( $attributes );
 	}
 

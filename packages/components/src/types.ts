@@ -25,6 +25,12 @@ declare global {
         product?: any;
         products?: any;
       };
+      checkout?: {
+        addLineItem: (data: any) => void;
+      };
+      cart?: {
+        toggle: (open: boolean) => void;
+      };
     };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;
@@ -36,6 +42,7 @@ declare global {
       account_id: string;
       account_slug: string;
       api_url: string;
+      home_url: string;
       plugin_url: string;
       page_id: string;
       persist_cart: 'browser' | 'url' | false;
@@ -341,6 +348,7 @@ export interface Product extends Object {
   tax_enabled: boolean;
   purchase_limit: number;
   metrics: ProductMetrics;
+  line_item_image: ImageAttributes;
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';
@@ -428,6 +436,18 @@ export type LineItemsData = {
   [id: string]: Array<LineItemData>;
 };
 
+export interface ImageAttributes {
+  src: string;
+  alt?: string;
+  class?: string;
+  decoding?: string;
+  height?: number;
+  loading?: string;
+  sizes?: string;
+  srcset?: string;
+  width?: number;
+}
+
 export interface LineItem extends Object {
   id?: string;
   ad_hoc_amount?: number;
@@ -436,6 +456,7 @@ export interface LineItem extends Object {
   quantity: number;
   checkout: string | Checkout;
   bump: string | Bump;
+  image: ImageAttributes;
   fees?: {
     object: 'list';
     pagination: Pagination;
@@ -649,6 +670,7 @@ export interface Checkout extends Object {
   total_amount?: number;
   subtotal_amount?: number;
   full_amount?: number;
+  paid_amount?: number;
   proration_amount?: number;
   total_savings_amount?: number;
   applied_balance_amount?: number;

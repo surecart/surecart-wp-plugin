@@ -29,6 +29,16 @@ class Subscription extends Model {
 	protected $object_name = 'subscription';
 
 	/**
+	 * Set the current period attribute
+	 *
+	 * @param  object $value Return request properties.
+	 * @return void
+	 */
+	public function setCurrentPeriodAttribute( $value ) {
+		$this->setRelation( 'current_period', $value, Period::class );
+	}
+
+	/**
 	 * Update the model.
 	 *
 	 * @param array $attributes Attributes to update.

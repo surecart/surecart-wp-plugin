@@ -6,8 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Charge, Checkout, FeaturedProductMediaAttributes, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
-import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
+import { Charge, Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-order',
@@ -127,13 +126,10 @@ export class ScOrder {
     return (
       <Fragment>
         {(checkout?.line_items?.data || []).map(item => {
-          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
           return (
             <sc-product-line-item
               key={item.id}
-              imageUrl={url}
-              imageAlt={alt}
-              imageTitle={title}
+              image={item?.image}
               name={(item?.price?.product as Product)?.name}
               priceName={item?.price?.name}
               variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
@@ -311,11 +307,7 @@ export class ScOrder {
           >
             <span slot="title">{__('Amount Paid', 'surecart')}</span>
             <span slot="price">
-              <sc-format-number
-                type="currency"
-                currency={(checkout?.charge as Charge)?.currency}
-                value={(checkout?.charge as Charge)?.amount ? (checkout?.charge as Charge)?.amount - (checkout?.charge as Charge)?.refunded_amount : 0}
-              ></sc-format-number>
+              <sc-format-number type="currency" currency={(checkout?.charge as Charge)?.currency} value={checkout?.paid_amount}></sc-format-number>
             </span>
             <span slot="currency">{(checkout?.charge as Charge)?.currency}</span>
           </sc-line-item>

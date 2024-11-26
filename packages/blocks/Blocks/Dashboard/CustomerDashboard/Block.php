@@ -19,13 +19,13 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		if ( ! is_user_logged_in() ) {
-			return \SureCart::blocks()->render( 'web/login' );
+			return \SureCart::block()->render( 'web/login' );
 		}
 
 		// cannot get user.
 		$user = User::current();
 		if ( ! $user ) {
-			return \SureCart::blocks()->render( 'web/login' );
+			return \SureCart::block()->render( 'web/login' );
 		}
 
 		return $content;

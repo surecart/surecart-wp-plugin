@@ -41,6 +41,24 @@ class Coupon extends Model {
 	protected $cache_key = 'coupons';
 
 	/**
+	 * Get the human discount attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountAttribute() {
+		if ( ! empty( $this->amount_off ) && ! empty( $this->currency ) ) {
+			return Currency::format( $this->amount_off, $this->currency );
+		}
+
+		if ( ! empty( $this->percent_off ) ) {
+			return sprintf( __( '%1d%% off', 'surecart' ), $this->percent_off | 0 );
+		}
+
+		return '';
+
+	}
+
+	/**
 	 * Get discount amount attribute.
 	 *
 	 * @return string

@@ -4,6 +4,7 @@ namespace SureCart\Tests\Services;
 
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\UpgradeNoticeService;
+use SureCart\WordPress\PluginService;
 
 class UpgradeNoticeServiceTest extends SureCartUnitTestCase
 {
@@ -42,7 +43,14 @@ class UpgradeNoticeServiceTest extends SureCartUnitTestCase
 	 * @return void
 	 */
 	public function test_should_show_update_notice_for_available_higher_version() {
-        $this->assertTrue($this->service->shouldShowUpdateNotice('3.0.0'));
+		\SureCart::alias('plugin', function () {
+			return new class {
+				public function version() {
+					return '2.0.0';
+				}
+			};
+		});
+        $this->assertTrue($this->service->shouldShowUpdateNotice());
 	}
 
     /**
@@ -50,8 +58,15 @@ class UpgradeNoticeServiceTest extends SureCartUnitTestCase
 	 *
 	 * @return void
 	 */
-    public function test_should_not_show_update_notice_for_lower_version() {
-        $this->assertFalse($this->service->shouldShowUpdateNotice('1.9.9'));
+    public function test_should_not_show_update_notice_for_higher_current_version() {
+		\SureCart::alias('plugin', function () {
+			return new class {
+				public function version() {
+					return '3.0.1';
+				}
+			};
+		});
+        $this->assertFalse($this->service->shouldShowUpdateNotice());
     }
 
     /**
@@ -59,7 +74,14 @@ class UpgradeNoticeServiceTest extends SureCartUnitTestCase
 	 *
 	 * @return void
 	 */
-    public function test_should_not_show_update_notice_for_non_numeric_version() {
-        $this->assertFalse($this->service->shouldShowUpdateNotice('3.0-beta'));
+    public function test_should_show_update_notice_for_non_numeric_version() {
+		\SureCart::alias('plugin', function () {
+			return new class {
+				public function version() {
+					return '3.0-beta';
+				}
+			};
+		});
+        $this->assertTrue($this->service->shouldShowUpdateNotice());
     }
 }

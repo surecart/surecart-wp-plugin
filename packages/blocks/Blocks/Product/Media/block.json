@@ -1,6 +1,6 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-media",
+	"name": "surecart/product-media-old",
 	"title": "Product Media",
 	"description": "A container to display the product media",
 	"category": "surecart",

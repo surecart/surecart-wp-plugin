@@ -7,19 +7,10 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                 | Type      | Default                   |
-| ------------- | -------------- | --------------------------- | --------- | ------------------------- |
-| `bump`        | --             | The bump                    | `Bump`    | `undefined`               |
-| `cdnRoot`     | `cdn-root`     |                             | `string`  | `window.scData?.cdn_root` |
-| `showControl` | `show-control` | Should we show the controls | `boolean` | `undefined`               |
-
-
-## Events
-
-| Event              | Description            | Type                        |
-| ------------------ | ---------------------- | --------------------------- |
-| `scAddLineItem`    | Add line item event    | `CustomEvent<LineItemData>` |
-| `scRemoveLineItem` | Remove line item event | `CustomEvent<LineItemData>` |
+| Property      | Attribute      | Description                 | Type      | Default     |
+| ------------- | -------------- | --------------------------- | --------- | ----------- |
+| `bump`        | --             | The bump                    | `Bump`    | `undefined` |
+| `showControl` | `show-control` | Should we show the controls | `boolean` | `undefined` |
 
 
 ## Shadow Parts

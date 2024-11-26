@@ -6,6 +6,7 @@ const expand = [
 	'line_item.variant',
 	'price.product',
 	'product.featured_product_media',
+	'product.product_medias',
 	'product_media.media',
 	'customer',
 	'customer.shipping_address',

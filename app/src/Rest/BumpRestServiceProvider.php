@@ -53,7 +53,7 @@ class BumpRestServiceProvider extends RestServiceProvider implements RestService
 				'id'          => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'object'      => [
@@ -77,37 +77,37 @@ class BumpRestServiceProvider extends RestServiceProvider implements RestService
 				'amount_off'  => [
 					'description' => esc_html__( 'Amount (in the currency of the price) that will be taken off line items associated with this bump.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'enabled'     => [
 					'description' => esc_html__( 'Whether or not this bump is currently enabled and being shown to customers.', 'surecart' ),
 					'type'        => 'boolean',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'filters'     => [
 					'description' => esc_html__( 'The conditions that will filter this bump to be recommeneded. Accepted keys are price_ids, product_ids, and product_group_ids with array values.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'name'        => [
 					'description' => esc_html__( 'This is shown to the customer on invoices and line items.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'percent_off' => [
 					'description' => esc_html__( 'Percent that will be taken off line items associated with this bump.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'priority'    => [
 					'description' => esc_html__( 'The priority of this bump in relation to other bumps. Must be in the range of 1 - 5.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'price'       => [
 					'description' => esc_html__( 'The UUID of the price.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];

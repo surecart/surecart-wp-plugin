@@ -16,7 +16,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.settings.permalinks.product'] = function() {
+		$container['surecart.settings.permalinks.product'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'product',
@@ -37,7 +37,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.buy'] = function() {
+		$container['surecart.settings.permalinks.buy'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'buy',
@@ -58,7 +58,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.collection'] = function() {
+		$container['surecart.settings.permalinks.collection'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'                => 'collection',
@@ -80,7 +80,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.upsell'] = function() {
+		$container['surecart.settings.permalinks.upsell'] = function () {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'upsell',
@@ -110,25 +110,17 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.settings.permalinks.product']->bootstrap();
-		( new PermalinkService() )
-			->params( [ 'sc_product_page_id' ] )
-			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_product_page_id=$matches[1]' )
-			->create();
+		// ( new PermalinkService() )
+		// ->params( [ 'sc_product_page_id' ] )
+		// ->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+		// ->query( 'index.php?sc_product_page_id=$matches[1]' )
+		// ->create();
 
 		$container['surecart.settings.permalinks.buy']->bootstrap();
 		( new PermalinkService() )
 			->params( [ 'sc_checkout_product_id' ] )
 			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$' )
 			->query( 'index.php?sc_checkout_product_id=$matches[1]' )
-			->create();
-
-		// Collection.
-		$container['surecart.settings.permalinks.collection']->bootstrap();
-		( new PermalinkService() )
-			->params( [ 'sc_collection_page_id' ] )
-			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_collection_page_id=$matches[1]' )
 			->create();
 
 		// Upsell.

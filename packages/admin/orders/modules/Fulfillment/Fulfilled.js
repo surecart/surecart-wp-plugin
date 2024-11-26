@@ -29,10 +29,12 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 
 	let total = (fulfillment?.fulfillment_items?.data || []).reduce(
 		(accumulator, item) => {
-			return accumulator + item?.line_item?.quantity;
+			return accumulator + item?.quantity;
 		},
 		0
 	);
+
+	console.log('fulfillment items', fulfillment?.fulfillment_items?.data);
 
 	const cancelFulfillment = async () => {
 		try {

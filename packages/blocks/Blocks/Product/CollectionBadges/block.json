@@ -18,6 +18,7 @@
 		"reusable": false,
 		"html": false,
 		"multiple": false,
+		"inserter": false,
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
