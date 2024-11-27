@@ -83,11 +83,12 @@ export class ScStripePaymentElement {
     });
   }
 
-  /** Sync the checkout mode with the store */
+  /** Sync the checkout mode */
   async syncCheckoutMode() {
-    onChange('mode', () => {
-      if (!!processorsState?.instances?.stripe) return;
-      this.initilizeStripe();
+    onChange('checkout', () => {
+      if (typeof checkoutState?.checkout?.live_mode !== 'undefined' && !processorsState?.instances?.stripe) {
+        this.initilizeStripe();
+      }
     });
   }
 
