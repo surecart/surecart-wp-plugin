@@ -120,7 +120,9 @@ export class ScTextarea {
   @Watch('value')
   handleValueChange() {
     this.invalid = !this.input.checkValidity();
-    this.showCharLimit = this.maxlength - this.value.length <= CHAR_LIMIT_THRESHOLD;
+    const valueLength = this.value?.length || 0;
+    const maxLength = this.maxlength || Number.MAX_SAFE_INTEGER;
+    this.showCharLimit = maxLength - valueLength <= CHAR_LIMIT_THRESHOLD;
   }
 
   @Watch('disabled')
@@ -323,7 +325,7 @@ export class ScTextarea {
             </div>
             {this.showCharLimit && (
               <div slot="help" class={'textarea__char-limit-warning'}>
-                {sprintf(__('%d characters remaining', 'surecart'), this.maxlength - this.input.value.length)}
+                {sprintf(__('%d characters remaining', 'surecart'), this.maxlength && this.input?.value ? this.maxlength - this.input.value.length : this.maxlength)}
               </div>
             )}
           </div>
