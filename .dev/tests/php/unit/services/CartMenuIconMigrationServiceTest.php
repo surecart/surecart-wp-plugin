@@ -19,6 +19,7 @@ class CartMenuIconMigrationServiceTest extends SureCartUnitTestCase {
 				\SureCart\BlockLibrary\BlockServiceProvider::class,
 				\SureCart\Cart\CartServiceProvider::class,
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
+				\SureCart\WordPress\Posts\PostServiceProvider::class,
 				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
 			],
 		], false);

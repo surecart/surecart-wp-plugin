@@ -12,7 +12,9 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Database\MigrationsServiceProvider::class,
+				\SureCart\Account\AccountServiceProvider::class,
 			]
 		], false);
 	}
@@ -21,6 +23,12 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 	 * @group sync
 	 */
 	public function test_crud() {
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'test',
+			];
+		});
+
 		$not_found = VariantOptionValue::find(1);
 		$this->assertWPError( $not_found );
 

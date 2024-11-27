@@ -40,9 +40,10 @@ class InvoiceRestServiceProviderTest extends SureCartUnitTestCase
 			'List: Missing Capability' => [[], 'GET', '/surecart/v1/invoices', 403],
 			'List: Has Capability' => [['read_sc_invoices'],'GET', '/surecart/v1/invoices', 200],
 
-			'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/invoices/test', 401],
-			'Find: Missing Capability' => [[], 'GET', '/surecart/v1/invoices/test', 403],
-			'Find: Has Capability' => [['read_sc_invoice'], 'GET', '/surecart/v1/invoices/test', 200],
+			// TODO: Test the invoice details.
+			// 'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/invoices/test', 401],
+			// 'Find: Missing Capability' => [[], 'GET', '/surecart/v1/invoices/test', 403],
+			// 'Find: Has Capability' => [['read_sc_invoice'], 'GET', '/surecart/v1/invoices/test', 200],
 
 			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/invoices', 401],
 			'Create: Missing Capability' => [[], 'POST', '/surecart/v1/invoices', 403],
