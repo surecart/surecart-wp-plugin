@@ -131,11 +131,6 @@ export class ScStripePaymentElement {
     });
   }
 
-  /** Maybe load the stripe element on load. */
-  async componentDidLoad() {
-    await this.initilizeStripe();
-  }
-
   disconnectedCallback() {
     this.unlistenToFormState();
     this.unlistenToCheckout();
