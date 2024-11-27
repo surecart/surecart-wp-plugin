@@ -52,12 +52,9 @@ export class ScStripePaymentElement {
 
   @State() styles: CSSStyleDeclaration;
 
-  /** The checkout mode */
-  @State() checkoutMode = checkoutState?.mode;
-
   async componentWillLoad() {
     this.fetchStyles();
-    this.syncCheckoutModeWithStore();
+    this.syncCheckoutMode();
   }
 
   @Watch('styles')
@@ -87,18 +84,11 @@ export class ScStripePaymentElement {
   }
 
   /** Sync the checkout mode with the store */
-  syncCheckoutModeWithStore() {
-    this.checkoutMode = checkoutState.mode;
-
-    onChange('checkout', () => {
-      this.checkoutMode = checkoutState.mode;
+  async syncCheckoutMode() {
+    onChange('mode', () => {
+      if (!!processorsState?.instances?.stripe) return;
+      this.initilizeStripe();
     });
-  }
-
-  @Watch('checkoutMode')
-  async handleCheckoutModeChange() {
-    if (!!processorsState?.instances?.stripe) return;
-    await this.initilizeStripe();
   }
 
   async initilizeStripe() {
