@@ -52,8 +52,12 @@ export class ScStripePaymentElement {
 
   @State() styles: CSSStyleDeclaration;
 
+  /** The checkout mode */
+  @State() checkoutMode = checkoutState?.mode;
+
   async componentWillLoad() {
     this.fetchStyles();
+    this.syncCheckoutModeWithStore();
   }
 
   @Watch('styles')
@@ -82,12 +86,22 @@ export class ScStripePaymentElement {
     });
   }
 
-  async maybeLoadInitialStripe() {
-    // Already loaded, no need to continue.
-    if (!!processorsState?.instances?.stripe) {
-      return;
-    }
+  /** Sync the checkout mode with the store */
+  syncCheckoutModeWithStore() {
+    this.checkoutMode = checkoutState.mode;
 
+    onChange('checkout', () => {
+      this.checkoutMode = checkoutState.mode;
+    });
+  }
+
+  @Watch('checkoutMode')
+  async handleCheckoutModeChange() {
+    if (!!processorsState?.instances?.stripe) return;
+    await this.initilizeStripe();
+  }
+
+  async initilizeStripe() {
     const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
@@ -119,7 +133,7 @@ export class ScStripePaymentElement {
 
   /** Maybe load the stripe element on load. */
   async componentDidLoad() {
-    await this.maybeLoadInitialStripe();
+    await this.initilizeStripe();
   }
 
   disconnectedCallback() {
@@ -324,8 +338,6 @@ export class ScStripePaymentElement {
   }
 
   render() {
-    this.maybeLoadInitialStripe();
-
     return (
       <div class="sc-stripe-payment-element" data-testid="stripe-payment-element">
         {!!this.error && (
