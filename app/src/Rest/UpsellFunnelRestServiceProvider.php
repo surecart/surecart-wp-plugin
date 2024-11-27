@@ -52,31 +52,31 @@ class UpsellFunnelRestServiceProvider extends RestServiceProvider implements Res
 				'id'                 => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'object'             => [
 					'description' => esc_html__( 'Type of object (upsell_funnel)', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at'         => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'updated_at'         => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'filter_match_type'  => [
 					'description' => esc_html__( 'The matching strategy to use when filtering upsell funnels – can be null or one of all, any, none. If null, the upsell funnel will not be filtered and will be applicable to all checkouts.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'filter_price_ids'   => [
 					'description' => esc_html__( 'The prices to filter this upsell funnel by.', 'surecart' ),
@@ -84,7 +84,7 @@ class UpsellFunnelRestServiceProvider extends RestServiceProvider implements Res
 					'items'       => [
 						'type' => 'string',
 					],
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'filter_product_ids' => [
 					'description' => esc_html__( 'The products to filter this upsell funnel by.', 'surecart' ),
@@ -92,22 +92,22 @@ class UpsellFunnelRestServiceProvider extends RestServiceProvider implements Res
 					'items'       => [
 						'type' => 'string',
 					],
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'enabled'            => [
 					'description' => esc_html__( 'Whether or not this upsell is currently enabled and being shown to customers.', 'surecart' ),
 					'type'        => 'boolean',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'name'               => [
 					'description' => esc_html__( 'A name for this upsell that will be visible to customers. If empty, the product name will be used.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'priority'           => [
 					'description' => esc_html__( 'The priority of this upsell in relation to other upsells. Must be in the range of 1 - 5.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];

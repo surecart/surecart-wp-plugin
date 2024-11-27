@@ -60,10 +60,14 @@ export default ({ attributes, setAttributes, clientId }) => {
 		ajax_pagination,
 		pagination_auto_scroll,
 		pagination_size,
+		query,
 		ids,
 	} = attributes;
 
 	const apiTokenConnected = scData?.is_account_connected;
+
+	const updateQuery = (newQuery) =>
+		setAttributes({ query: { ...query, ...newQuery } });
 
 	const blockProps = useBlockProps();
 
@@ -204,6 +208,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 
 	useEffect(() => {
 		if (ids.length) {
+			updateQuery({ include: ids });
 			setAttributes({ type: 'custom' });
 		}
 	}, [ids]);
@@ -411,8 +416,10 @@ export default ({ attributes, setAttributes, clientId }) => {
 												key={id}
 												id={id}
 												onClear={() =>
-													setAttributes({
-														ids: (ids || []).filter(
+													updateQuery({
+														include: (
+															ids || []
+														).filter(
 															(product_id) =>
 																product_id !==
 																id
@@ -537,7 +544,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 										? pagination_enabled
 										: false
 								}
-								{...(!apiTokenConnected ? { products: getDummyProducts(limit) } : {})}
+								{...(!apiTokenConnected
+									? { products: getDummyProducts(limit) }
+									: {})}
 								collectionEnabled={collection_enabled}
 							/>
 						)}

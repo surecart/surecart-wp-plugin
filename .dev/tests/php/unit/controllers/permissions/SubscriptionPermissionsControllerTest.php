@@ -28,6 +28,9 @@ class SubscriptionPermissionsControllerTest extends SureCartUnitTestCase {
 		parent::setUp();
 	}
 
+	/**
+	 * @group permissions
+	 */
 	public function test_handle_edit_subscription()
 	{
 		// mock the requests in the container

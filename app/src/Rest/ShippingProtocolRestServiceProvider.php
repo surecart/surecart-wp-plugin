@@ -80,21 +80,21 @@ class ShippingProtocolRestServiceProvider  extends RestServiceProvider implement
 				'id'               => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'shipping_enabled' => [
 					'description' => esc_html__( 'Whether or not shipping is enabled', 'surecart' ),
 					'type'        => 'boolean',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'created_at'       => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'updated_at'       => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];

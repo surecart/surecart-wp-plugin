@@ -45,43 +45,47 @@ class TemplateUtilityService {
 	public function __construct( $templates_directory, $template_parts_directory ) {
 		$this->templates_directory      = $templates_directory;
 		$this->template_parts_directory = $template_parts_directory;
-		$this->plugin_template_types    = [
-			'single-product'          => [
+		$this->plugin_template_types    = array(
+			'single-sc_product'       => array(
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
-			],
-			'product-info'            => [
+				'post_types'  => array( 'sc_product' ),
+			),
+			'product-info'            => array(
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
 				'site-editor' => false,
-			],
-			'single-upsell'           => [
+				'post_types'  => array( 'sc_product' ),
+			),
+			'single-upsell'           => array(
 				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
-			],
-			'upsell-info'             => [
+				'post_types'  => array( 'sc_upsell' ),
+			),
+			'upsell-info'             => array(
 				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
 				'site-editor' => false,
-			],
-			'product-collection'      => [
+				'post_types'  => array( 'sc_upsell' ),
+			),
+			'taxonomy-sc_collection'  => array(
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
-			],
-			'product-collection-part' => [
+			),
+			'product-collection-part' => array(
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
 				'site-editor' => false,
-			],
-			'cart'                    => [
+			),
+			'cart'                    => array(
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
 				'description' => __( 'The slide-out cart template.', 'surecart' ),
-			],
-			'checkout'                => [
+			),
+			'checkout'                => array(
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Checkout', 'Template name', 'surecart' ) : _x( 'Checkout', 'Template name', 'surecart' ),
 				'description' => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
-			],
-		];
+			),
+		);
 	}
 
 	/**
@@ -106,10 +110,10 @@ class TemplateUtilityService {
 
 		$filepath = DIRECTORY_SEPARATOR . $templates_dir . DIRECTORY_SEPARATOR . $template_filename;
 
-		$possible_paths = [
+		$possible_paths = array(
 			get_stylesheet_directory() . $filepath,
 			get_template_directory() . $filepath,
-		];
+		);
 
 		// Return the first matching.
 		foreach ( $possible_paths as $path ) {
@@ -167,7 +171,7 @@ class TemplateUtilityService {
 	 * @return boolean
 	 */
 	public function themeHasTemplate( $template_name ) {
-		return ! ! $this->getThemeTemplatePath( $template_name, 'wp_template' );
+		return (bool) $this->getThemeTemplatePath( $template_name, 'wp_template' );
 	}
 
 	/**
@@ -177,7 +181,7 @@ class TemplateUtilityService {
 	 * @return boolean
 	 */
 	public function themeHasTemplatePart( $template_name ) {
-		return ! ! $this->getThemeTemplatePath( $template_name, 'wp_template_part' );
+		return (bool) $this->getThemeTemplatePath( $template_name, 'wp_template_part' );
 	}
 
 	/**
@@ -240,7 +244,12 @@ class TemplateUtilityService {
 		$template->status         = $post->post_status;
 		$template->has_theme_file = $has_theme_file;
 		$template->is_custom      = true;
-		$template->post_types     = array( 'sc_product', 'sc_collection', 'sc_upsell', 'page' ); // Don't appear in any Edit Post template selector dropdown.
+		$template->post_types     = array(); // don't appear in edit posts dropdown.
+
+		// this is a customized version of the template.
+		if ( ! empty( $this->plugin_template_types[ $post->post_name ]['post_types'] ) ) {
+			$template->post_types = $this->plugin_template_types[ $post->post_name ]['post_types'];
+		}
 
 		if ( 'wp_template_part' === $post->post_type ) {
 			$type_terms = get_the_terms( $post, 'wp_template_part_area' );
@@ -357,8 +366,8 @@ class TemplateUtilityService {
 		$template->status         = 'publish';
 		$template->has_theme_file = true;
 		$template->origin         = $template_file->source;
-		$template->is_custom      = true; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
-		$template->post_types     = [ 'sc_product', 'sc_collection', 'sc_bump', 'page' ]; // Don't appear in any Edit Post template selector dropdown.
+		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
+		$template->post_types     = $template_file->post_types ?? array(); // Set the post type.
 		$template->area           = 'uncategorized';
 
 		if ( 'wp_template' === $template_type && isset( $default_template_types[ $template_file->slug ] ) ) {
@@ -432,7 +441,6 @@ class TemplateUtilityService {
 			'source'      => $template_is_from_theme ? 'theme' : 'plugin',
 			'title'       => $this->getBlockTemplateTitle( $template_slug ),
 			'description' => $this->getBlockTemplateDescription( $template_slug ),
-			'post_types'  => array( 'sc_product', 'sc_collection', 'sc_bump' ), // Don't appear in any Edit Post template selector dropdown.
 		);
 
 		return (object) $new_template_item;
@@ -449,13 +457,13 @@ class TemplateUtilityService {
 
 		// Get the slugs of all templates that have been customised and saved in the database.
 		$customised_template_slugs = array_map(
-			function( $template ) {
+			function ( $template ) {
 				return $template->slug;
 			},
 			array_values(
 				array_filter(
 					$templates,
-					function( $template ) {
+					function ( $template ) {
 						// This template has been customised and saved as a post.
 						return 'custom' === $template->source;
 					}
@@ -470,7 +478,7 @@ class TemplateUtilityService {
 		return array_values(
 			array_filter(
 				$templates,
-				function( $template ) use ( $customised_template_slugs ) {
+				function ( $template ) use ( $customised_template_slugs ) {
 					// This template has been customised and saved as a post, so return it.
 					return ! ( 'theme' === $template->source && in_array( $template->slug, $customised_template_slugs, true ) );
 				}

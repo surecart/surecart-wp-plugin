@@ -15,7 +15,6 @@ import {
 import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
-import { getFormattedPrice } from '../../../../util';
 import BuyLink from './BuyLink';
 import { ScMenuDivider } from '@surecart/components-react';
 import { SortableKnob } from 'react-easy-sort';
@@ -142,12 +141,7 @@ export default ({
 													text-decoration: line-through;
 												`}
 											>
-												{getFormattedPrice({
-													amount: price?.scratch_amount,
-													currency:
-														price?.currency ||
-														scData.currency_code,
-												})}
+												{price?.scratch_display_amount}
 											</span>{' '}
 										</>
 									)}
@@ -157,12 +151,7 @@ export default ({
 										font-size: 14px;
 									`}
 								>
-									{getFormattedPrice({
-										amount: price?.amount,
-										currency:
-											price?.currency ||
-											scData.currency_code,
-									})}
+									{price?.display_amount}
 								</span>
 							</>
 						)}{' '}

@@ -3,7 +3,7 @@
 	"name": "surecart/upsell-countdown-timer",
 	"title": "Countdown Timer",
 	"description": "Display a countdown timer for upsell, encouraging customers to take action before the offer expires.",
-	"category": "surecart",
+	"category": "surecart-upsell-page",
 	"ancestor": ["surecart/upsell"],
 	"attributes": {
 		"textAlign": {

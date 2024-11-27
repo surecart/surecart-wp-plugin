@@ -54,13 +54,11 @@ class UpgradeNoticeService {
 	/**
 	 * Should show update notice?
 	 *
-	 * @param string $new_version Plugin new version.
-	 *
 	 * @return boolean
 	 */
-	public function shouldShowUpdateNotice( $new_version ) {
+	public function shouldShowUpdateNotice() {
 		$highest_version = max( $this->show_update_notice_versions );
-		return version_compare( $new_version, $highest_version, '>=' );
+		return version_compare( \SureCart::plugin()->version(), $highest_version, '<' );
 	}
 
 	/**
@@ -109,6 +107,12 @@ class UpgradeNoticeService {
 						)
 					);
 					?>
+					<p>
+						<?php echo esc_html__( 'If you are updating from a version prior to 3.0.0, please read the upgrade guide for important information about the changes in this version.', 'surecart' ); ?>
+					</p>
+					<p>
+						<a href="https://surecart.com/docs/upgrading-to-surecart-v3/" class="button button-primary" target="_blank"><?php echo esc_html__( 'Read the Upgrade Guide', 'surecart' ); ?></a>
+					</p>
 				</div>
 			</div>
 		</div>

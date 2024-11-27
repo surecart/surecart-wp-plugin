@@ -4,6 +4,7 @@ namespace SureCart\WordPress\Assets;
 
 use SureCart\Models\ManualPaymentMethod;
 use SureCart\Models\Processor;
+use SureCart\Support\Currency;
 
 /**
  * Handles the component theme.
@@ -110,8 +111,10 @@ class ScriptsService {
 					'cdn_root'             => SURECART_CDN_IMAGE_BASE,
 					'root_url'             => esc_url_raw( get_rest_url() ),
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
+					'home_url'             => esc_url_raw( home_url() ),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
+					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
@@ -135,7 +138,7 @@ class ScriptsService {
 		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 
 		// core-data.
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
+		$asset_file                   = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
 		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'sc-core-data',
@@ -146,7 +149,7 @@ class ScriptsService {
 		);
 
 		// ui.
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
+		$asset_file                   = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
 		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'sc-ui-data',
@@ -167,7 +170,7 @@ class ScriptsService {
 		}
 
 		// templates.
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/admin.asset.php';
+		$asset_file                   = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/templates/admin.asset.php';
 		$asset_file['dependencies'][] = 'regenerator-runtime';
 		wp_register_script(
 			'surecart-templates-admin',
@@ -220,7 +223,7 @@ class ScriptsService {
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'wp_head',
-			function() {
+			function () {
 				wp_dequeue_script( 'wpcom-notes-common' );
 				wp_dequeue_script( 'wpcom-notes-admin-bar' );
 				wp_dequeue_style( 'wpcom-notes-admin-bar' );
@@ -285,14 +288,14 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function registerBlocks() {
-		$enabled_payment_processors = array_values(
+		$enabled_payment_processors = is_admin() ? array_values(
 			array_filter(
 				(array) Processor::get() ?? [],
-				function( $payment_method ) {
+				function ( $payment_method ) {
 					return $payment_method->enabled ?? false;
 				}
 			)
-		);
+		) : [];
 		// blocks.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 		$deps       = $asset_file['dependencies'] ?? [];
@@ -342,6 +345,7 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
+					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
@@ -371,7 +375,7 @@ class ScriptsService {
 				'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 				'processors'           => $enabled_payment_processors,
-				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
+				'manualPaymentMethods' => is_admin() ? ( (array) ManualPaymentMethod::get() ?? [] ) : [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,
 				'theme'                => get_option( 'surecart_theme', 'light' ),

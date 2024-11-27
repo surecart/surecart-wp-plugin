@@ -34,7 +34,7 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function show( $id ) {
-		return \SureCart::blocks()->render(
+		return \SureCart::block()->render(
 			'web/dashboard/subscriptions/show',
 			[
 				'id' => $id,

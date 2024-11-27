@@ -46,14 +46,97 @@ class ProductCollection extends Model implements PageModel {
 	 * @return $this|false
 	 */
 	protected function create( $attributes = [] ) {
-		if ( ! wp_is_block_theme() ) {
-			$attributes['metadata'] = [
-				...$attributes['metadata'] ?? [],
-				'wp_template_id' => apply_filters( 'surecart/templates/collections/default', 'pages/template-surecart-collection.php' ),
-			];
+		$created = parent::create( $attributes );
+
+		if ( is_wp_error( $created ) ) {
+			return $created;
 		}
 
-		return parent::create( $attributes );
+		// sync with the post.
+		$this->sync();
+
+		return $this;
+	}
+
+	/**
+	 * Update a model
+	 *
+	 * @param array $attributes Attributes to update.
+	 *
+	 * @return $this|false
+	 */
+	protected function update( $attributes = array() ) {
+		// update the model.
+		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		// sync with the post.
+		$this->sync();
+
+		// return.
+		return $this;
+	}
+
+		/**
+		 * Update a model
+		 *
+		 * @param string $id The id of the model to delete.
+		 * @return $this|false
+		 */
+	protected function delete( $id = '' ) {
+		// delete the model.
+		$deleted = parent::delete( $id );
+
+		// check for errors.
+		if ( is_wp_error( $deleted ) ) {
+			return $deleted;
+		}
+
+		// delete the post.
+		$this->deleteSynced( $id );
+
+		// return.
+		return $this;
+	}
+
+	/**
+	 * Delete the synced post.
+	 *
+	 * @param string $id The id of the model to delete.
+	 * @return \SureCart\Models\Product
+	 */
+	protected function deleteSynced( $id = '' ) {
+		$id = ! empty( $id ) ? $id : $this->id;
+		\SureCart::sync()
+			->collection()
+			->delete( $id );
+
+		return $this;
+	}
+
+	/**
+	 * Sync the collection
+	 */
+	public function sync() {
+		\SureCart::sync()
+			->collection()
+			->sync( $this );
+
+		return $this;
+	}
+
+	/**
+	 * Get the attached term.
+	 *
+	 * @return int|false
+	 */
+	public function getTermAttribute() {
+		if ( empty( $this->id ) ) {
+			return false;
+		}
+		return \SureCart::sync()->collection()->findByModelId( $this->id );
 	}
 
 	/**
@@ -80,8 +163,8 @@ class ProductCollection extends Model implements PageModel {
 	 * @return string|false
 	 */
 	public function getTemplatePartIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
-			return $this->attributes['metadata']->wp_template_part_id;
+		if ( ! empty( $this->metadata->wp_template_part_id ) ) {
+			return $this->metadata->wp_template_part_id;
 		}
 		return 'surecart/surecart//product-collection-part';
 	}
@@ -92,14 +175,14 @@ class ProductCollection extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+		if ( ! empty( $this->metadata->wp_template_id ) ) {
 			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+			if ( wp_is_block_theme() && false !== strpos( $this->metadata->wp_template_id, '.php' ) ) {
 				return 'surecart/surecart//product-collection';
 			}
 
 			// this is acceptable.
-			return $this->attributes['metadata']->wp_template_id;
+			return $this->metadata->wp_template_id;
 		}
 		return 'surecart/surecart//product-collection';
 	}
@@ -113,21 +196,14 @@ class ProductCollection extends Model implements PageModel {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
-		// permalinks off.
-		if ( ! get_option( 'permalink_structure' ) ) {
-			return add_query_arg( 'sc_collection_page_id', $this->slug, get_home_url() );
-		}
-		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . trailingslashit( $this->slug );
-	}
 
-	/**
-	 * Get the JSON Schema Array
-	 *
-	 * @return array
-	 */
-	public function getJsonSchemaArray(): array {
-		return [];
+		$term = $this->term;
+
+		if ( isset( $term->term_id ) ) {
+			return get_term_link( $term );
+		}
+
+		return '';
 	}
 
 	/**
@@ -182,7 +258,7 @@ class ProductCollection extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getTemplateContent() : string {
+	public function getTemplateContent(): string {
 		return wp_is_block_theme() ?
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';

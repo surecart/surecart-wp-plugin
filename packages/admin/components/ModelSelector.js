@@ -10,11 +10,13 @@ import SelectModel from './SelectModel';
 export default (props) => {
 	const {
 		name,
+		kind = 'surecart',
 		requestQuery = {},
 		display,
 		exclude = [],
 		onChangeQuery = () => {},
 		renderChoices,
+		fetchOnLoad = false,
 	} = props;
 	const [query, setQuery] = useState(null);
 	const [models, setModels] = useState([]);
@@ -35,7 +37,7 @@ export default (props) => {
 	};
 
 	const fetchData = async () => {
-		const { baseURL } = select(coreStore).getEntityConfig('surecart', name);
+		const { baseURL } = select(coreStore).getEntityConfig(kind, name);
 		if (!baseURL) return;
 
 		const queryArgs = {
@@ -68,7 +70,7 @@ export default (props) => {
 			}
 
 			// add to redux for other page items
-			receiveEntityRecords('surecart', name, models, queryArgs);
+			receiveEntityRecords(kind, name, models, queryArgs);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -87,6 +89,12 @@ export default (props) => {
 		if (query === null || isLoading) return;
 		fetchData();
 	}, [page, perPage, query]);
+
+	useEffect(() => {
+		if (fetchOnLoad) {
+			fetchData();
+		}
+	}, [fetchOnLoad]);
 
 	// if the query changes, reset the page to 1.
 	useEffect(() => {

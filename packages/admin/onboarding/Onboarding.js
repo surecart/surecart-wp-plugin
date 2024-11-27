@@ -5,7 +5,8 @@ import { __ } from '@wordpress/i18n';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
 import Layout from './components/Layout';
@@ -17,6 +18,8 @@ import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
 import ConfirmStoreEmail from './components/ConfirmStoreEmail';
 import { ScIcon, ScButton } from '@surecart/components-react';
+import Connect from './components/Connect';
+import ConnectDone from './components/ConnectDone';
 
 let confettiIntervalId;
 let confettiTimerId;
@@ -95,6 +98,54 @@ export default () => {
 				color: brandColor,
 			});
 
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'store'
+			);
+
+			if (!selectedTemplate) {
+				handleStepChange('forward');
+				return;
+			}
+
+			// check seed status for up to 1 minute.
+			let hasSeeded = false;
+			let attempts = 0;
+			const maxAttempts = 12; // Example: max 1 minute wait if seeded_at is not set.
+			while (!hasSeeded && attempts < maxAttempts) {
+				try {
+					const { seeded_at } = await apiFetch({
+						path: baseURL + '/account',
+					});
+
+					if (seeded_at) {
+						hasSeeded = true;
+					} else {
+						// wait 5 seconds.
+						await new Promise((resolve) =>
+							setTimeout(resolve, 3000)
+						);
+						attempts++;
+					}
+				} catch (error) {
+					console.error('Error fetching API:', error);
+					// Optionally, wait before retrying or break out of the loop
+					await new Promise((resolve) => setTimeout(resolve, 3000));
+					attempts++;
+				}
+			}
+
+			if (!hasSeeded) {
+				createErrorNotice(
+					error?.message ||
+						__(
+							'Store was created, but seeding of new products failed.',
+							'surecart'
+						),
+					{ type: 'snackbar' }
+				);
+			}
+
 			handleStepChange('forward');
 		} catch (error) {
 			createErrorNotice(
@@ -109,7 +160,12 @@ export default () => {
 	function renderContent(step) {
 		switch (step) {
 			case 0:
-				return <InitialSetup handleStepChange={handleStepChange} />;
+				return (
+					<InitialSetup
+						handleStepChange={handleStepChange}
+						setCurrentStep={setCurrentStep}
+					/>
+				);
 			case 1:
 				return (
 					<ConfirmStoreDetails
@@ -179,9 +235,33 @@ export default () => {
 										slot="prefix"
 										style={{ fontSize: '18px' }}
 									/>
-									{__('View My Store', 'surecart')}
+									{__('View My Products', 'surecart')}
 								</ScButton>
 							)
+						}
+					/>
+				);
+			case 6:
+				return <Connect setCurrentStep={setCurrentStep} />;
+			case 7:
+				return (
+					<ConnectDone
+						button={
+							<ScButton
+								type="primary"
+								size="large"
+								href={scData.success_url}
+								css={css`
+									min-width: 225px;
+								`}
+							>
+								<ScIcon
+									name="shopping-bag"
+									slot="prefix"
+									style={{ fontSize: '18px' }}
+								/>
+								{__('View My Products', 'surecart')}
+							</ScButton>
 						}
 					/>
 				);
@@ -191,7 +271,7 @@ export default () => {
 	}
 
 	useEffect(() => {
-		if (currentStep !== 5) return;
+		if (![5, 7].includes(currentStep)) return;
 		startAnimation();
 
 		confettiTimerId = setTimeout(
@@ -221,7 +301,7 @@ export default () => {
 					left: 0,
 				}}
 			/>
-			{![0, 5].includes(currentStep) && <ConfirmExit />}
+			{![0, 5, 7].includes(currentStep) && <ConfirmExit />}
 		</>
 	);
 };

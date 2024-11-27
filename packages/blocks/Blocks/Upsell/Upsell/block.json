@@ -2,7 +2,7 @@
 	"name": "surecart/upsell",
 	"title": "Upsell",
 	"description": "Display an upsell.",
-	"category": "surecart",
+	"category": "surecart-upsell-page",
 	"keywords": ["upsell", "container"],
 	"textdomain": "surecart",
 	"supports": {

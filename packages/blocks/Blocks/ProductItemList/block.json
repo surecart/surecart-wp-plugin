@@ -10,6 +10,7 @@
 		"align": true,
 		"reusable": false,
 		"html": false,
+		"inserter": false,
 		"spacing": {
 			"blockGap": true,
 			"__experimentalDefaultControls": {

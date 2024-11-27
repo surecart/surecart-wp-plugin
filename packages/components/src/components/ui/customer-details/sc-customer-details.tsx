@@ -108,16 +108,17 @@ export class ScCustomerDetails {
           <strong>{label}</strong>
         </div>
         <div>
-          {formatAddress({
-            name,
-            postalCountry: country,
-            administrativeArea: state,
-            locality: city,
-            postalCode: postal_code,
-            addressLines: [line_1, line_2],
-          }).join('\n') +
-            '\n' +
-            countryName || country}
+          {[
+            ...(formatAddress({
+              name: name || '',
+              postalCountry: country || '',
+              administrativeArea: state || '',
+              locality: city || '',
+              postalCode: postal_code || '',
+              addressLines: [line_1, line_2].filter(Boolean),
+            }) || []),
+            countryName || country,
+          ].join('\n')}
         </div>
         <div></div>
       </sc-stacked-list-row>

@@ -3,7 +3,7 @@
 	"name": "surecart/dashboard-area",
 	"title": "Customer Dashboard",
 	"description": "Displays the users customer dashboard.",
-	"category": "surecart",
+	"category": "surecart-customer-dashboard",
 	"keywords": ["name", "customer", "dashboard"],
 	"textdomain": "surecart",
 	"supports": {

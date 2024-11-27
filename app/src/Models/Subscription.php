@@ -27,6 +27,16 @@ class Subscription extends Model {
 	protected $object_name = 'subscription';
 
 	/**
+	 * Set the current period attribute
+	 *
+	 * @param  object $value Return request properties.
+	 * @return void
+	 */
+	public function setCurrentPeriodAttribute( $value ) {
+		$this->setRelation( 'current_period', $value, Period::class );
+	}
+
+	/**
 	 * Update the model.
 	 *
 	 * @param array $attributes Attributes to update.
@@ -300,7 +310,7 @@ class Subscription extends Model {
 	 * Preview the upcoming invoice.
 	 *
 	 * @param string $args Arguments
-	 * @return $this|\WP_Error
+	 * @return Period|\WP_Error
 	 */
 	protected function upcomingPeriod( $args = [] ) {
 		if ( ! empty( $args['id'] ) ) {
@@ -331,13 +341,11 @@ class Subscription extends Model {
 			return $upcoming_period;
 		}
 
-		$this->resetAttributes();
-
-		$this->fill( $upcoming_period );
+		$upcoming_period = new Period( $upcoming_period );
 
 		$this->fireModelEvent( 'previewedUpcomingPeriod' );
 
-		return $this;
+		return $upcoming_period;
 	}
 
 	/**
