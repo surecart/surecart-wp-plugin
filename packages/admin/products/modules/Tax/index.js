@@ -42,7 +42,7 @@ export default ({ loading, product, updateProduct }) => {
 				<PanelRow>
 					<span>{__('Charge tax on this product', 'surecart')}</span>
 					<ToggleControl
-						__nextHasNoMarginBottom
+						__nextHasNoMarginBottom={true}
 						checked={
 							product?.tax_enabled &&
 							scData?.tax_protocol?.tax_enabled
