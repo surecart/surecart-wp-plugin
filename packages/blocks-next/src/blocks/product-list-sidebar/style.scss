@@ -4,6 +4,12 @@
     }
 }
 
+@media (min-width: 481px) {
+	.sc-drawer.wp-block-surecart-product-list-sidebar {
+		display: none !important;
+	}
+}
+
 .wp-block-surecart-product-list-sidebar.sc-drawer {
 	flex: 1 1 auto;
 	overflow: auto;
