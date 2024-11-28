@@ -1,10 +1,13 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { Icon } from '@wordpress/components';
-import { menu } from '@wordpress/icons';
+import Icon from '../../components/Icon';
 
-export default ({ attributes: { label } }) => {
+export default () => {
 	const blockProps = useBlockProps();
 
-	return <Icon {...blockProps} icon={menu} />;
+	return (
+		<div {...blockProps}>
+			<Icon name="menu" />
+		</div>
+	);
 };

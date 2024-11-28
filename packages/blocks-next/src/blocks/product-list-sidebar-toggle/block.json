@@ -8,11 +8,7 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
-	"attributes": {
-		"label": {
-			"type": "string"
-		}
-	},
+	"attributes": {},
 	"supports": {
 		"interactivity": true,
 		"spacing": {
