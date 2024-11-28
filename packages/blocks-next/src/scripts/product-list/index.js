@@ -179,8 +179,10 @@ const { state } = store('surecart/product-list', {
 		},
 		/** Toggle the sidebar. */
 		*toggleSidebar() {
+			if (window.matchMedia('(max-width: 480px)').matches) {
+				cartActions.toggle();
+			}
 			state.sidebarOpen = !state.sidebarOpen;
-			cartActions.toggle();
 		},
 	},
 
