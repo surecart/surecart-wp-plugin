@@ -1,8 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee } from '../../../types';
-import { sizeImage } from '../../../functions/media';
+import { Fee, ImageAttributes } from '../../../types';
 
 /**
  * @part base - The component base
@@ -33,14 +32,8 @@ import { sizeImage } from '../../../functions/media';
 export class ScProductLineItem {
   @Element() el: HTMLScProductLineItemElement;
 
-  /** Url for the product image */
-  @Prop() imageUrl: string;
-
-  /** Title for the product image */
-  @Prop() imageTitle: string;
-
-  /** Alternative description for the product image */
-  @Prop() imageAlt: string;
+  /** Image attributes. */
+  @Prop() image: ImageAttributes;
 
   /** Product name */
   @Prop() name: string;
@@ -82,7 +75,7 @@ export class ScProductLineItem {
   @Prop() editable: boolean = true;
 
   /** The max allowed. */
-  @Prop() max: number = 100;
+  @Prop() max: number;
 
   /** The SKU. */
   @Prop() sku: string = '';
@@ -165,15 +158,13 @@ export class ScProductLineItem {
           part="product-line-item"
           class={{
             'item': true,
-            'item--has-image': !!this.imageUrl,
+            'item--has-image': !!this.image?.src,
             'item--is-rtl': isRtl(),
             'product-line-item__editable': this.editable,
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.imageUrl && (
-            <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" alt={this.imageAlt} {...(this.imageTitle ? { title: this.imageTitle } : {})} />
-          )}
+          {!!this.image?.src && <img {...(this.image as any)} part="image" />}
           <div class="item__text" part="text">
             <div class="item__text-details">
               <div class="item__title" part="title">
@@ -203,7 +194,10 @@ export class ScProductLineItem {
                 quantity={this.quantity}
                 size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-                aria-label={sprintf(__('Change Quantity - %s %s', 'surecart'), this.name, this.priceName)}
+                aria-label={
+                  /** translators: %1$s: product name, %2$s: product price name */
+                  sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)
+                }
               ></sc-quantity-select>
             )}
           </div>
@@ -220,7 +214,8 @@ export class ScProductLineItem {
                   }
                 }}
                 tabindex="0"
-                aria-label={sprintf(__('Remove Item - %s %s', 'surecart'), this.name, this.priceName)}
+                // translators: Remove Item - Product Name Product Price Name
+                aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
               ></sc-icon>
             ) : (
               <div></div>

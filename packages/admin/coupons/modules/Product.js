@@ -12,7 +12,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import ModelSelector from '../../components/ModelSelector';
 import { intervalString } from '../../util/translations';
 import { _n, sprintf, __ } from '@wordpress/i18n';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
@@ -43,6 +42,7 @@ export default ({ id, onSelect }) => {
 					expand: [
 						'prices',
 						'featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 				}),
@@ -81,15 +81,12 @@ export default ({ id, onSelect }) => {
 	);
 	const firstPrice = activePrices?.[0];
 	const totalPrices = activePrices?.length;
-	const media = getFeaturedProductMediaAttributes(product);
 
 	return (
 		<ScFlex alignItems="center" justifyContent="flex-start">
-			{media.url ? (
+			{!!product?.line_item_image ? (
 				<img
-					src={media.url}
-					alt={media.alt}
-					{...(media.title ? { title: media.title } : {})}
+					{...product?.line_item_image}
 					css={css`
 						width: 40px;
 						height: 40px;

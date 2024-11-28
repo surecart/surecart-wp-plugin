@@ -72,7 +72,7 @@ export default ({ abandoned, checkout, loading }) => {
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
-					formatTime(abandoned.updated_at)
+					formatTime(abandoned.created_at)
 				)}
 			</div>
 			<div>{renderNotificationStatus()}</div>

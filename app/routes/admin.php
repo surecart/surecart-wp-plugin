@@ -101,24 +101,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Checkouts
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-->where( 'admin', 'sc-checkouts' )
-->middleware( 'user.can:edit_sc_orders' )
-->middleware( 'assets.components' )
-->middleware( 'assets.admin_colors' )
-->setNamespace( '\\SureCart\\Controllers\\Admin\\Checkouts\\' )
-->group(
-	function () {
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CheckoutsController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CheckoutsController@edit' );
-	}
-);
-
-/*
-|--------------------------------------------------------------------------
 | Invoices
 |--------------------------------------------------------------------------
 */
@@ -132,7 +114,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'InvoicesViewController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'InvoicesViewController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'InvoicesViewController@archive' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'create', 'action' )->middleware( 'nonce:create_invoices' )->handle( 'InvoicesViewController@create' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
+| Checkouts
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-checkouts' )
+->middleware( 'user.can:edit_sc_orders' )
+->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Checkouts\\' )
+->group(
+	function () {
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CheckoutsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CheckoutsController@edit' );
 	}
 );
 
@@ -154,6 +154,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->post()->middleware( 'nonce:bulk_delete_nonce' )->handle( 'ProductsController@bulkDelete' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductsController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'sync_all', 'action' )->middleware( 'nonce:sync_products' )->handle( 'ProductsController@syncAll' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'sync', 'action' )->middleware( 'nonce:sync_product' )->handle( 'ProductsController@sync' );
 	}
 );
 

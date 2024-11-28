@@ -47,7 +47,7 @@ $data       = $controller->getData();
 			<div class="sc-dashboard__column dashboard-left is-sticky">
 				<header class="sc-dashboard__header">
 					<div class="sc-dashboard__logo" >
-						<a href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_store_logo_url', get_home_url() ) ); ?>" aria-label="site logo">
+						<a href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_store_logo_url', get_home_url() ) ); ?>" aria-label="<?php esc_attr_e( 'Site logo', 'surecart' ); ?>">
 							<?php \SureCart::render( 'layouts/partials/store-logo', $data ); ?>
 						</a>
 					</div>
@@ -77,7 +77,7 @@ $data       = $controller->getData();
 				</header>
 
 				<div class="sc-dashboard__back sc-pin-bottom">
-					<sc-button href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_back_home_url', get_home_url() ) ); ?>" type="text" class="sc-link-home" aria-label="back home" role="button">
+					<sc-button href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_back_home_url', get_home_url() ) ); ?>" type="text" class="sc-link-home" aria-label="<?php esc_attr_e( 'Back Home', 'surecart' ); ?>" role="button">
 						<sc-icon name="arrow-left" slot="prefix"></sc-icon>
 						<?php echo esc_html( apply_filters( 'sc_customer_dashboard_back_home_text', __( 'Back Home', 'surecart' ) ) ); ?>
 					</sc-button>
@@ -85,7 +85,7 @@ $data       = $controller->getData();
 
 				<div class="sc-dashboard__user-menu">
 					<sc-dropdown style="width: 100%;" placement="top-right" distance="20" role="select" aria-multiselectable="false">
-						<sc-flex class="sc-dashboard__menu-trigger" align-items="center" justify-content="space-between" slot="trigger" tabindex="0" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>" aria-label="<?php echo esc_attr__( 'Open or close account menu', 'surecart' ); ?>" role="button">
+						<sc-flex class="sc-dashboard__menu-trigger" align-items="center" justify-content="space-between" slot="trigger" tabindex="0" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>" aria-label="<?php esc_attr_e( 'Open or close account menu', 'surecart' ); ?>" role="button">
 							<sc-flex class="sc-dashboard__menu-user" align-items="center" justify-content="space-between">
 								<sc-avatar image="<?php echo esc_url( get_avatar_url( $data['user']->user_email, array( 'default' => '404' ) ) ); ?>" style="--sc-avatar-size: 34px" initials="<?php echo esc_attr( substr( $data['user']->display_name, 0, 1 ) ); ?>"></sc-avatar>
 								<span class="sc-dashboard__user-menu-name"><?php echo esc_html( $data['user']->display_name ); ?></span>

@@ -10,7 +10,6 @@ import { sprintf, __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { ScFlex, ScFormatNumber, ScIcon } from '@surecart/components-react';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { intervalString } from '../../../../util/translations';
 
 export default ({ product }) => {
@@ -20,15 +19,12 @@ export default ({ product }) => {
 
 	const firstPrice = activePrices?.[0];
 	const totalPrices = activePrices?.length;
-	const media = getFeaturedProductMediaAttributes(product);
 
 	return (
 		<ScFlex alignItems="center" justifyContent="flex-start">
-			{media.url ? (
+			{!!product?.line_item_image?.src ? (
 				<img
-					src={media.url}
-					alt={media.alt}
-					{...(media.title ? { title: media.title } : {})}
+					{...product?.line_item_image}
 					css={css`
 						width: 40px;
 						height: 40px;

@@ -30,6 +30,12 @@ Type: `Promise<void>`
 
 Sets focus on the button.
 
+#### Parameters
+
+| Name      | Type           | Description |
+| --------- | -------------- | ----------- |
+| `options` | `FocusOptions` |             |
+
 #### Returns
 
 Type: `Promise<void>`

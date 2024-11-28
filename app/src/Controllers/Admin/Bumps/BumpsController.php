@@ -23,6 +23,7 @@ class BumpsController extends AdminController {
 						'title' => __( 'Bumps', 'surecart' ),
 					],
 				],
+				'report_url'       => SURECART_REPORTS_URL . 'bumps',
 			)
 		);
 		return \SureCart::view( 'admin/bumps/index' )->with( [ 'table' => $table ] );

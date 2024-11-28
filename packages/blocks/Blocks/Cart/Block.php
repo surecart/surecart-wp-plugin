@@ -9,15 +9,14 @@ use SureCartBlocks\Blocks\BaseBlock;
  */
 class Block extends BaseBlock {
 	/**
-	 * Render the block
+	 * Render the block.
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content Post content.
-	 * @param object $block Block object.
 	 *
 	 * @return string
 	 */
-	public function render( $attributes, $content, $block = null ) {
-		return filter_block_content( $content, 'post' );
+	public function render( $attributes, $content ) {
+		return \SureCart::block()->cartMigration( $attributes, $this->block )->render();
 	}
 }

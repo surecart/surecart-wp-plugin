@@ -7,19 +7,18 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                                | Type                                                                 | Default     |
-| ----------- | ----------- | ------------------------------------------ | -------------------------------------------------------------------- | ----------- |
-| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                                            | `false`     |
-| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                            | `false`     |
-| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                     | `'medium'`  |
-| `status`    | `status`    | The tag's statux type.                     | `"canceled" \| "paid" \| "payment_failed" \| "processing" \| "void"` | `undefined` |
+| Property    | Attribute   | Description                                | Type                                                                            | Default     |
+| ----------- | ----------- | ------------------------------------------ | ------------------------------------------------------------------------------- | ----------- |
+| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                                                       | `false`     |
+| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                                       | `false`     |
+| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                                | `'medium'`  |
+| `status`    | `status`    | The tag's statux type.                     | `"canceled" \| "draft" \| "paid" \| "payment_failed" \| "processing" \| "void"` | `undefined` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -32,7 +31,6 @@
 ```mermaid
 graph TD;
   sc-order-status-badge --> sc-tag
-  sc-invoices-list --> sc-order-status-badge
   sc-order --> sc-order-status-badge
   sc-order-confirmation-details --> sc-order-status-badge
   sc-orders-list --> sc-order-status-badge

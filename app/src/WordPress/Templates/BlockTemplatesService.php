@@ -71,12 +71,7 @@ class BlockTemplatesService {
 			return $template;
 		}
 
-		list( $template_id, $template_slug ) = $template_name_parts;
-
-		// If we are not dealing with a SureCart template let's return early and let it continue through the process.
-		if ( $this->utility::PLUGIN_SLUG !== $template_id ) {
-			return $template;
-		}
+		$template_slug = $template_name_parts[1];
 
 		// If we don't have a template let Gutenberg do its thing.
 		if ( ! $this->blockTemplateIsAvailable( $template_slug, $template_type ) ) {
@@ -85,8 +80,11 @@ class BlockTemplatesService {
 
 		$directory          = $this->utility->getTemplatesDirectory( $template_type );
 		$template_file_path = $directory . '/' . $template_slug . '.html';
-		$template_object    = $this->utility->createNewBlockTemplateObject( $template_file_path, $template_type, $template_slug );
-		$template_built     = $this->utility->buildTemplateResultFromFile( $template_object, $template_type );
+		if ( ! is_readable( $template_file_path ) ) {
+			return $template;
+		}
+		$template_object = $this->utility->createNewBlockTemplateObject( $template_file_path, $template_type, $template_slug );
+		$template_built  = $this->utility->buildTemplateResultFromFile( $template_object, $template_type );
 
 		if ( null !== $template_built ) {
 			return $template_built;
@@ -120,8 +118,7 @@ class BlockTemplatesService {
 			// on the template file, then lets skip it so that it doesn't get added. This is typically used to hide templates
 			// in the template dropdown on the Edit Post page.
 			if ( $post_type &&
-				isset( $template_file->post_types ) &&
-				! in_array( $post_type, $template_file->post_types, true )
+				! in_array( $post_type, $template_file->post_types ?? [], true )
 			) {
 				continue;
 			}
@@ -167,7 +164,7 @@ class BlockTemplatesService {
 		 * templates that aren't listed in theme.json.
 		 */
 		$query_result = array_map(
-			function( $template ) {
+			function ( $template ) {
 				if ( 'theme' === $template->origin && $this->utility->templateHasTitle( $template ) ) {
 					return $template;
 				}
@@ -281,7 +278,7 @@ class BlockTemplatesService {
 		$saved_sc_templates = $check_query->posts;
 
 		return array_map(
-			function( $saved_sc_template ) {
+			function ( $saved_sc_template ) {
 				return $this->utility->buildTemplateResultsFromPost( $saved_sc_template );
 			},
 			$saved_sc_templates
@@ -334,5 +331,4 @@ class BlockTemplatesService {
 
 		return $templates;
 	}
-
 }

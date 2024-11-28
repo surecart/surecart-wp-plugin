@@ -1,6 +1,7 @@
+import { registerBlocks } from './register-block';
+
 import * as address from '@blocks/Address';
 import * as bumpLineItem from '@blocks/BumpLineItem';
-// blocks
 import * as button from '@blocks/Button';
 import * as checkbox from '@blocks/Checkbox';
 import * as checkoutErrors from '@blocks/CheckoutErrors';
@@ -41,13 +42,16 @@ import * as switchBlock from '@blocks/Switch';
 import * as taxIdInput from '@blocks/TaxIdInput';
 import * as taxLineItem from '@blocks/TaxLineItem';
 import * as textarea from '@blocks/Textarea';
+import * as invoiceNumber from '@blocks/InvoiceNumber';
+import * as invoiceDueDate from '@blocks/InvoiceDueDate';
+import * as invoiceReceiptDownload from '@blocks/InvoiceReceiptDownload';
+import * as invoiceMemo from '@blocks/InvoiceMemo';
+import * as invoiceDetails from '@blocks/InvoiceDetails';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 import * as shippingChoices from '@blocks/ShippingChoices';
-
-import { registerBlocks } from './register-block';
 
 registerBlocks([
 	button,
@@ -91,6 +95,11 @@ registerBlocks([
 	submit,
 	subtotal,
 	switchBlock,
+	invoiceNumber,
+	invoiceDueDate,
+	invoiceReceiptDownload,
+	invoiceDetails,
+	invoiceMemo,
 	total,
 	totals,
 	shippingChoices,

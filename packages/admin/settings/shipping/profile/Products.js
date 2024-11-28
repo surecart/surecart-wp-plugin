@@ -26,15 +26,10 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { intervalString } from '../../../util/translations';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
 import usePagination from '../../../hooks/usePagination';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 const PRODUCTS_PER_PAGE = 5;
 
-export default ({
-	shippingProfileId,
-	isDefaultProfile,
-	loading: loadingShippingProfile,
-}) => {
+export default ({ shippingProfileId, isDefaultProfile }) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const [open, setOpen] = useState(false);
@@ -56,6 +51,7 @@ export default ({
 					expand: [
 						'prices',
 						'featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 				},
@@ -119,10 +115,17 @@ export default ({
 		setBusy(true);
 
 		try {
-			await saveEntityRecord('surecart', 'product', {
-				id,
-				shipping_profile: shippingProfileId,
-			});
+			await saveEntityRecord(
+				'surecart',
+				'product',
+				{
+					id,
+					shipping_profile: shippingProfileId,
+				},
+				{
+					throwOnError: true,
+				}
+			);
 			setDraftProducts(0);
 			createSuccessNotice(__('Product added', 'surecart'), {
 				type: 'snackbar',
@@ -141,15 +144,12 @@ export default ({
 		);
 		const firstPrice = activePrices?.[0];
 		const totalPrices = activePrices?.length;
-		const media = getFeaturedProductMediaAttributes(product);
 
 		return (
 			<ScFlex alignItems="center" justifyContent="flex-start">
-				{media?.url ? (
+				{product?.line_item_image?.src ? (
 					<img
-						src={media.url}
-						alt={media.alt}
-						{...(media.title ? { title: media.title } : {})}
+						{...product.line_item_image}
 						css={css`
 							width: 40px;
 							height: 40px;

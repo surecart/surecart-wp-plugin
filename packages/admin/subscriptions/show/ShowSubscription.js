@@ -70,6 +70,7 @@ export default () => {
 							'price.product',
 							'period.subscription',
 							'product.featured_product_media',
+							'product.product_medias',
 							'product_media.media',
 						],
 					}
@@ -134,6 +135,7 @@ export default () => {
 						'price',
 						'price.product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 						'customer',
 						'customer.balances',
@@ -170,10 +172,10 @@ export default () => {
 	);
 
 	useEffect(() => {
-		if (id) {
+		if (id && 'canceled' !== subscription?.status) {
 			fetchUpcomingPeriod();
 		}
-	}, [id, subscription?.discount?.id]);
+	}, [id, subscription?.discount?.id, subscription?.status]);
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
@@ -461,7 +463,7 @@ export default () => {
 					<PendingUpdate subscription={subscription} />
 				)}
 
-				{!!upcoming && (
+				{!!upcoming && 'canceled' !== subscription?.status && (
 					<LineItems period={upcoming} loading={loadingUpcoming} />
 				)}
 

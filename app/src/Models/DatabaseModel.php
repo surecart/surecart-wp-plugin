@@ -400,10 +400,8 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			// set attribute.
 			if ( ! $is_guarded ) {
 				$this->setAttribute( $key, maybe_unserialize( maybe_unserialize( $value ) ) );
-			} else {
-				if ( $this->isFillable( $key ) ) {
+			} elseif ( $this->isFillable( $key ) ) {
 					$this->setAttribute( $key, maybe_unserialize( maybe_unserialize( $value ) ) );
-				}
 			}
 		}
 
@@ -718,7 +716,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			array_merge(
 				[ 'created_at' => current_time( 'mysql' ) ],
 				array_map(
-					function( $item ) {
+					function ( $item ) {
 						return maybe_serialize( $item );
 					},
 					$this->attributes
@@ -774,7 +772,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			array_merge(
 				[ 'updated_at' => current_time( 'mysql' ) ],
 				array_map(
-					function( $item ) {
+					function ( $item ) {
 						return maybe_serialize( $item );
 					},
 					$attributes
@@ -812,13 +810,36 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			return false;
 		}
 
-		$deleted = $this->getQuery()->where( 'ID', $id )->delete();
+		$delete = $this->getQuery();
+
+		// deleting a single.
+		if ( $id ) {
+			$delete = $delete->where( 'ID', $id );
+		}
+
+		// delete.
+		$deleted = $delete->delete();
+
 		if ( false === $deleted ) {
 			return new \WP_Error( 'could_not_delete', 'Could not delete.' );
 		}
 
 		$this->fireModelEvent( 'deleted' );
 
+		return $deleted;
+	}
+
+	/**
+	 * Delete all items.
+	 *
+	 * @return $this|false
+	 */
+	protected function deleteAll() {
+		$delete  = $this->getQuery();
+		$deleted = $delete->delete();
+		if ( false === $deleted ) {
+			return new \WP_Error( 'could_not_delete', 'Could not delete.' );
+		}
 		return $deleted;
 	}
 
@@ -913,14 +934,14 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 	/**
 	 * Calls accessors during toArray.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		$attributes = $this->getAttributes();
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( method_exists( get_class(), $method ) ) {
+			if ( method_exists( get_class( $this ), $method ) ) {
 				continue;
 			}
 

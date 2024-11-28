@@ -111,7 +111,7 @@ class UpsellTemplatesService {
 
 		// create a fake post for the upsell.
 		$post                    = new \stdClass();
-		$post->post_title        = $upsell->name;
+		$post->post_title        = $product->name;
 		$post->post_name         = $upsell->id;
 		$post->post_content      = '<div>' . ( $content ?? '' ) . '</div>';
 		$post->post_status       = 'publish';
@@ -177,6 +177,10 @@ class UpsellTemplatesService {
 
 		// check for upsell and use the template id.
 		$upsell = get_query_var( 'surecart_current_upsell' );
+
+		if ( empty( $upsell ) ) {
+			return $template;
+		}
 
 		if ( ! empty( $upsell->metadata->wp_template_id ) ) {
 			$page_template = $upsell->metadata->wp_template_id;

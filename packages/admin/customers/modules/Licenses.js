@@ -38,6 +38,7 @@ export default ({ customerId }) => {
 						'purchase.product',
 						'purchase.variant',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 				},
