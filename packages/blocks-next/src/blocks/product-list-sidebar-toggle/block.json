@@ -8,12 +8,25 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
-	"attributes": {},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Filter"
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"spacing": {
 			"padding": true,
 			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true
 		}
 	},
 	"textdomain": "surecart",
