@@ -28,6 +28,7 @@
 		<div
 			class="sc-sidebar-header__close"
 			data-wp-on--click="surecart/cart::actions.toggle"
+			data-wp-on--keydown="surecart/cart::actions.toggle"
 			role="button"
 			tabindex="0"
 			aria-label="<?php esc_attr_e( 'Close cart', 'surecart' ); ?>"

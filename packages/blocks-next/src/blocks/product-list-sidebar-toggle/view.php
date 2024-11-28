@@ -1,7 +1,8 @@
-<div 
+<button 
     <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
     data-wp-on--click="surecart/product-list::actions.toggleSidebar"
-    data-wp-on--keydown="surecart/product-list::actions.toggleSidebar"
+    aria-haspopup="dialog"
+    aria-label="<?php esc_attr_e( 'Open sidebar', 'surecart' ); ?>"
 >
     <?php
         echo wp_kses(
@@ -17,4 +18,4 @@
             sc_allowed_svg_html()
         );
     ?>
-</div>
+</button>
