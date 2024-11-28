@@ -9,6 +9,10 @@
 	"example": {},
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Filters"
+		},
 		"sidebarOpen": {
 			"type": "boolean",
 			"default": true

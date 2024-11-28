@@ -6,6 +6,9 @@
 	) ); ?>
 	data-wp-bind--hidden="!state.sidebarOpen" 
 >
+	<span class="sc-sidebar-label" inert>
+		<?php echo wp_kses_post( $attributes['label'] ); ?>
+	</span>
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 <dialog
@@ -21,6 +24,21 @@
 		);
 		?>
 	>
+	<div class="sc-sidebar-header">
+		<div
+			class="sc-sidebar-header__close"
+			data-wp-on--click="surecart/cart::actions.toggle"
+			role="button"
+			tabindex="0"
+			aria-label="<?php esc_attr_e( 'Close cart', 'surecart' ); ?>"
+		>
+			<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
+		</div>
+
+		<span class="sc-sidebar-header__title" inert>
+			<?php echo wp_kses_post( $attributes['label'] ); ?>
+		</span>
+	</div>
 	<div class="sc-drawer__wrapper">
 		<?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>

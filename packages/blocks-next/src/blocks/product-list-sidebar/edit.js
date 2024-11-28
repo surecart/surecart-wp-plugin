@@ -4,7 +4,12 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	ToggleControl,
+	TextControl,
+} from '@wordpress/components';
 
 const TEMPLATE = [
 	[
@@ -20,7 +25,7 @@ const TEMPLATE = [
 	],
 ];
 
-export default ({ attributes: { sidebarOpen }, setAttributes }) => {
+export default ({ attributes: { sidebarOpen, label }, setAttributes }) => {
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
@@ -41,6 +46,13 @@ export default ({ attributes: { sidebarOpen }, setAttributes }) => {
 							onChange={(sidebarOpen) =>
 								setAttributes({ sidebarOpen })
 							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Label', 'surecart')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 				</PanelBody>

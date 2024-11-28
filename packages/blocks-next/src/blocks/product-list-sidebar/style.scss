@@ -13,6 +13,38 @@
 	box-shadow: 0 1px 2px #0d131e1a;
 	font-size: 16px;
 
+	.sc-sidebar-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: var(--sc-drawer-border);
+		padding-top: 1.25em;
+		padding-bottom: 1.25em;
+		padding-left: 1.25em;
+		padding-right: 1.25em;
+		color: var(--sc-line-item-title-color, var(--sc-input-label-color));
+		&__title {
+			width: 100%;
+			text-align: center;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			padding: 0 var(--sc-spacing-small);
+		}
+	
+		&__close,
+		&__close svg {
+			cursor: pointer;
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	.sc-drawer__wrapper {
+		padding: 1.25em;
+		min-height: auto;
+		color: var(--sc-input-label-color);
+	}
 	.sc-alert {
 		border-radius: 0;
 		&__icon svg {
