@@ -1,12 +1,15 @@
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import ErrorBoundary from '../../components/error-boundary';
 import '../store';
 
 import Settings from './Integrations';
+import { RouterProvider } from '../../router';
 
-render(
+const root = createRoot(document.getElementById('app'));
+root.render(
 	<ErrorBoundary>
-		<Settings />
-	</ErrorBoundary>,
-	document.getElementById('app')
+		<RouterProvider>
+			<Settings />
+		</RouterProvider>
+	</ErrorBoundary>
 );

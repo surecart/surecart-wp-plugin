@@ -38,3 +38,5 @@ export function RouterProvider({ children }) {
 		</HistoryContext.Provider>
 	);
 }
+
+export * from './useLink';

@@ -59,3 +59,14 @@ add_filter(
 		return $url;
 	}
 );
+
+
+add_filter(
+	'suremembers_after_restricted_message_content',
+	function ( $args ) {
+		global $post;
+		if ( 123 === $post->ID ) {
+			echo do_shortcode( '[sc_product_cart_button id="asdfasdfasdfasdf"]' );
+		}
+	}
+);
