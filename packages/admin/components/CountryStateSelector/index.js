@@ -19,7 +19,7 @@ export default ({ value, onChange }) => {
 
 	const onChangeSelection = (newValue, country) => {
 		// country removed.
-		if (newValue === null || newValue.states.length === 0) {
+		if (newValue === null) {
 			return onChange((prev) =>
 				prev.filter((v) => v.country !== country)
 			);
