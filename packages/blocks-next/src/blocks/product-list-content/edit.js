@@ -4,14 +4,26 @@ import { __ } from '@wordpress/i18n';
 const TEMPLATE = [
 	[
 		'surecart/product-list-sidebar',
-		{ style: { layout: { selfStretch: 'fixed', flexSize: '20%' } } },
+		{
+			style: {
+				layout: {
+					selfStretch: 'fixed',
+					flexSize: '20%',
+					type: 'flex',
+					orientation: 'vertical',
+				},
+			},
+		},
 	],
 	[
 		'surecart/product-template',
 		{
 			style: {
 				spacing: { blockGap: '30px' },
-				layout: { selfStretch: 'fit', flexSize: null },
+				layout: {
+					selfStretch: 'fit',
+					flexSize: null,
+				},
 			},
 			layout: { type: 'grid', columnCount: 4 },
 		},

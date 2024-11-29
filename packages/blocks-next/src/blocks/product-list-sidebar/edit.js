@@ -1,15 +1,11 @@
 import {
 	useBlockProps,
-	useInnerBlocksProps,
 	InspectorControls,
+	InnerBlocks,
+	RichText,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import {
-	PanelBody,
-	PanelRow,
-	ToggleControl,
-	TextControl,
-} from '@wordpress/components';
+import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 
 const TEMPLATE = [
 	[
@@ -25,10 +21,13 @@ const TEMPLATE = [
 	],
 ];
 
-export default ({ attributes: { sidebarOpen, label }, setAttributes }) => {
-	const blockProps = useBlockProps();
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		template: TEMPLATE,
+export default ({
+	attributes: { sidebarOpen, label },
+	setAttributes,
+	__unstableLayoutClassNames,
+}) => {
+	const blockProps = useBlockProps({
+		className: `${__unstableLayoutClassNames}`,
 	});
 
 	return (
@@ -48,16 +47,21 @@ export default ({ attributes: { sidebarOpen, label }, setAttributes }) => {
 							}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Label', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div {...innerBlocksProps} />
+			<div {...blockProps}>
+				<RichText
+					tagName="span"
+					className="sc-sidebar-label"
+					aria-label={__('Label text', 'surecart')}
+					placeholder={__('Add label…', 'surecart')}
+					value={label}
+					onChange={(label) => setAttributes({ label })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
+				<InnerBlocks templateLock={false} template={TEMPLATE} />
+			</div>
 		</>
 	);
 };
