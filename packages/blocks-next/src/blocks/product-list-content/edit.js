@@ -13,6 +13,10 @@ const TEMPLATE = [
 					orientation: 'vertical',
 				},
 			},
+			layout: {
+				type: 'flex',
+				orientation: 'vertical',
+			},
 		},
 	],
 	[

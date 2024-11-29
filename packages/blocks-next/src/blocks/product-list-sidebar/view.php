@@ -12,11 +12,10 @@
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 <dialog
-		class="sc-drawer sc-cart-drawer wp-block-surecart-product-list-sidebar"
-		data-wp-bind--aria-label='surecart/cart::state.ariaLabel'
-		data-wp-on--click='surecart/cart::actions.closeOverlay'
-		open
-	>
+	class="sc-drawer sc-cart-drawer wp-block-surecart-product-list-sidebar"
+	data-wp-bind--aria-label='surecart/cart::state.ariaLabel'
+	data-wp-on--click='surecart/cart::actions.closeOverlay'
+>
 	<div class="sc-sidebar-header">
 		<div
 			class="sc-sidebar-header__close"

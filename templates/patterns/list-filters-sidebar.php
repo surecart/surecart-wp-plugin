@@ -3,11 +3,11 @@
  * Product List Filters in Sidebar block pattern.
  */
 return [
-	'title'      => __( 'Product List Filters in Sidebar', 'surecart' ),
+	'title'      => __( 'Product List with Filters in Sidebar', 'surecart' ),
 	'categories' => [ 'surecart_shop' ],
 	'blockTypes' => [ 'surecart/product-list' ],
 	'priority'   => 1,
-	'content'    => '<!-- wp:surecart/product-list {"limit":null} -->
+	'content'    => '<!-- wp:surecart/product-list {"limit":null,"metadata":{"categories":["surecart_shop"],"patternName":"surecart-list-filters-sidebar","name":"Product List Filters in Sidebar"}} -->
 <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
 <div class="wp-block-group"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 <div class="wp-block-group"><!-- wp:surecart/product-list-sidebar-toggle /--></div>
@@ -18,9 +18,9 @@ return [
 <!-- /wp:group --></div>
 <!-- /wp:group -->
 
-<!-- wp:surecart/product-list-content -->
-<!-- wp:surecart/product-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"20%"}}} -->
-<!-- wp:surecart/product-list-filter-checkboxes {"style":{"spacing":{"blockGap":"0","margin":{"top":"0","bottom":"var:preset|spacing|10"}}}} -->
+<!-- wp:surecart/product-list-content {"layout":{"type":"flex","orientation":"horizontal","verticalAlignment":"top","flexWrap":"nowrap"}} -->
+<!-- wp:surecart/product-list-sidebar {"label":"\u003cstrong\u003eFilters\u003c/strong\u003e","style":{"layout":{"selfStretch":"fixed","flexSize":"20%","type":"flex","orientation":"vertical" }},"fontSize":"large"} -->
+<!-- wp:surecart/product-list-filter-checkboxes {"label":"\u003cstrong\u003eCollections\u003c/strong\u003e","style":{"spacing":{"blockGap":"0","margin":{"top":"0","bottom":"0"}}},"fontSize":"medium"} -->
 <!-- wp:surecart/product-list-filter-checkbox /-->
 <!-- /wp:surecart/product-list-filter-checkboxes -->
 <!-- /wp:surecart/product-list-sidebar -->
