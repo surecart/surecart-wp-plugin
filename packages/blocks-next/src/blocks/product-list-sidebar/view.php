@@ -12,17 +12,10 @@
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 <dialog
-		<?php
-		echo wp_kses_data(
-			get_block_wrapper_attributes(
-				array(
-					'class'                    => 'sc-drawer sc-cart-drawer',
-					'data-wp-bind--aria-label' => 'surecart/cart::state.ariaLabel',
-					'data-wp-on--click'        => 'surecart/cart::actions.closeOverlay',
-				)
-			)
-		);
-		?>
+		class="sc-drawer sc-cart-drawer wp-block-surecart-product-list-sidebar"
+		data-wp-bind--aria-label='surecart/cart::state.ariaLabel'
+		data-wp-on--click='surecart/cart::actions.closeOverlay'
+		open
 	>
 	<div class="sc-sidebar-header">
 		<div
@@ -40,7 +33,13 @@
 			<?php echo wp_kses_post( $attributes['label'] ); ?>
 		</span>
 	</div>
-	<div class="sc-drawer__wrapper">
+	<div
+		<?php echo wp_kses_data( get_block_wrapper_attributes(
+			array(
+				'class' => 'sc-drawer__wrapper',
+			)
+		) ); ?>
+	>
 		<?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
 	<!-- speak element -->

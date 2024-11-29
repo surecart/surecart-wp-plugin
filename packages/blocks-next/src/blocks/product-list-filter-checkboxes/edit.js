@@ -1,17 +1,27 @@
 import { __ } from '@wordpress/i18n';
 import TemplateListEdit from '../../components/TemplateListEdit';
-import { InspectorControls } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	store as blockEditorStore,
+	InnerBlocks,
+	RichText,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
 import { useEntityRecords } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
 const TEMPLATE = [['surecart/product-list-filter-checkbox']];
 
 export default ({
 	clientId,
 	__unstableLayoutClassNames,
-	attributes: { taxonomy: taxonomySlug },
+	attributes: { taxonomy: taxonomySlug, label },
 	setAttributes,
 }) => {
+	const blockCount = useSelect((select) =>
+		select(blockEditorStore).getBlockCount(clientId)
+	);
 	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
 		per_page: -1,
 	});
@@ -21,6 +31,11 @@ export default ({
 		(taxonomy) =>
 			taxonomy.types.includes('sc_product') && taxonomy?.visibility.public
 	);
+
+	const blockProps = useBlockProps({
+		className: __unstableLayoutClassNames,
+	});
+
 	return (
 		<>
 			<InspectorControls>
@@ -48,25 +63,39 @@ export default ({
 					)}
 				</PanelBody>
 			</InspectorControls>
-			<TemplateListEdit
-				template={TEMPLATE}
-				blockContexts={[
-					{
-						id: 'filter-1',
-						'surecart/checkbox/name': __('Filter 1'),
-					},
-					{
-						id: 'filter-2',
-						'surecart/checkbox/name': __('Filter 2'),
-					},
-					{
-						id: 'filter-3',
-						'surecart/checkbox/name': __('Filter 3'),
-					},
-				]}
-				className={__unstableLayoutClassNames}
-				clientId={clientId}
-			/>
+			<div {...blockProps}>
+				<RichText
+					tagName="span"
+					aria-label={__('Label text', 'surecart')}
+					placeholder={__('Add label…', 'surecart')}
+					value={label}
+					onChange={(label) => setAttributes({ label })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
+				<TemplateListEdit
+					template={TEMPLATE}
+					blockContexts={[
+						{
+							id: 'filter-1',
+							'surecart/checkbox/name': __('Filter 1'),
+						},
+						{
+							id: 'filter-2',
+							'surecart/checkbox/name': __('Filter 2'),
+						},
+						{
+							id: 'filter-3',
+							'surecart/checkbox/name': __('Filter 3'),
+						},
+					]}
+					className={__unstableLayoutClassNames}
+					clientId={clientId}
+					renderAppender={
+						blockCount ? undefined : InnerBlocks.ButtonBlockAppender
+					}
+				/>
+			</div>
 		</>
 	);
 };

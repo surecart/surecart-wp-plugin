@@ -36,6 +36,16 @@
 				"blockGap": "0"
 			}
 		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
+		},
 		"style": {
 			"spacing": {
 				"blockGap": "0"

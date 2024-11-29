@@ -14,7 +14,11 @@ const TEMPLATE = [
 			style: {
 				spacing: {
 					blockGap: '0',
-					margin: { top: '0', bottom: 'var:preset|spacing|10' },
+					margin: { top: '0', bottom: '0' },
+				},
+				layout: {
+					type: 'flex',
+					orientation: 'vertical',
 				},
 			},
 		},
