@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { hasState, hasCity, hasPostal, countryChoices } from '../../../functions/address';
+import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address } from '../../../types';
 
@@ -137,18 +137,12 @@ export class ScAddress {
 
   /** Set the regions based on the country. */
   setRegions() {
-    if (hasState(this.address?.country)) {
-      import('./countries.json').then(module => {
-        const countryRegions = module?.[this.address.country] as Array<{ value: string; label: string }>;
-
-        this.regions = (countryRegions || []).map(region => ({
-          ...region,
-          label: this.decodeHtmlEntities(region.label),
-        }));
-      });
-    } else {
-      this.regions = [];
-    }
+    import('country-region-data').then(module => {
+      this.regions = (module?.[this.address.country]?.[2] || []).map(region => ({
+        value: region[1],
+        label: this.decodeHtmlEntities(region[0]),
+      }));
+    });
   }
 
   componentWillLoad() {
