@@ -156,7 +156,9 @@ export class ScStripePaymentElement {
     if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
-      const address = getCompleteAddress('shipping');
+      const rawAddress = getCompleteAddress('shipping');
+      const { line1, line2, city, state, country, postal_code } = rawAddress || {};
+      const address = !!rawAddress ? { line1, line2, city, state, country, postal_code } : null;
 
       // create the payment element.
       (processorsState.instances.stripeElements as any)
