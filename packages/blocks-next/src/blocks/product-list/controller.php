@@ -17,5 +17,9 @@ $controller = new ProductListBlock( $block );
 $query      = $controller->query();
 $products   = $query->products;
 
+if ( empty( $products ) ) {
+	return;
+}
+
 // return the view.
 return 'file:./view.php';

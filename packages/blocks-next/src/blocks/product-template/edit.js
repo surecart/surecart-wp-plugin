@@ -208,6 +208,10 @@ export default ({
 		}
 	);
 
+	if ((!products || !products?.length) && !isResolving) {
+		return __('No Products Found, Please add some products!', 'surecart');
+	}
+
 	const setDisplayLayout = (newDisplayLayout) =>
 		setAttributes({
 			layout: { ...layout, ...newDisplayLayout },
