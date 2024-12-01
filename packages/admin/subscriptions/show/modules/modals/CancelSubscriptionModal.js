@@ -32,13 +32,16 @@ export default ({ subscription, open, onRequestClose }) => {
 			setLoading(true);
 			setError(null);
 
-			let subscriptionCancelUrl = `surecart/v1/subscriptions/${id}/cancel`;
-
 			// If the subscription is already cancelled and has a restore_at date,
 			// we just need to update the restore_at date to null to cancel the subscription.
-			if (subscription?.status === 'canceled' && !!subscription?.restore_at) {
-				subscriptionCancelUrl = `surecart/v1/subscriptions/${id}`;
-			}
+			const subscriptionCancelUrl = `surecart/v1/subscriptions/${id}${
+				!(
+					subscription?.status === 'canceled' &&
+					subscription?.restore_at
+				)
+					? '/cancel'
+					: ''
+			}`;
 
 			await apiFetch({
 				method: 'PATCH',
