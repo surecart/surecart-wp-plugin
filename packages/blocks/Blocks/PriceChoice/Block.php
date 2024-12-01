@@ -25,6 +25,10 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( empty( $attributes['price_id'] ) ) {
+			return null;
+		}
+
 		$price = Price::with( array( 'product' ) )->find( $attributes['price_id'] );
 
 		// empty check.

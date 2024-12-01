@@ -136,14 +136,34 @@ add_action(
 			array(
 				array(
 					'id'     => 'wp-url',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => 'wp-api-fetch',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
+		);
+
+		add_action(
+			'wp_footer',
+			function () {
+				?>
+				<script>
+					window.scFetchData =
+					<?php
+					echo wp_json_encode(
+						[
+							'root_url'       => esc_url_raw( get_rest_url() ),
+							'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+							'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+						]
+					);
+					?>
+				</script>
+				<?php
+			}
 		);
 
 		// instead, use a static loader that injects the script at runtime.
@@ -154,7 +174,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -168,7 +188,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -200,11 +220,11 @@ add_action(
 			[
 				[
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				],
 				[
 					'id'     => '@surecart/checkout-service',
-					'import' => 'static',
+					'import' => 'dynamic',
 				],
 				[
 					'id'     => '@surecart/google-events',
@@ -226,7 +246,7 @@ add_action(
 			[
 				[
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				],
 				[
 					'id'     => '@wordpress/interactivity-router',
@@ -252,7 +272,7 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -266,11 +286,11 @@ add_action(
 			array(
 				array(
 					'id'     => '@surecart/api-fetch',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -293,15 +313,15 @@ add_action(
 			array(
 				array(
 					'id'     => '@surecart/checkout',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/checkout-events',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 			),
 			$static_assets['version']
@@ -315,15 +335,15 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/checkout-service',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/checkout-events',
-					'import' => 'static',
+					'import' => 'dynamic',
 				),
 				array(
 					'id'     => '@surecart/google-events',

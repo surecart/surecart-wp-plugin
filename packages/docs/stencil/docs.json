@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-12-01T15:06:50",
+  "timestamp": "2024-11-25T10:06:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -874,6 +874,7 @@
         "sc-checkout",
         "sc-checkout-form-errors",
         "sc-checkout-mollie-payment",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-custom-order-price-input",
         "sc-dashboard-module",
@@ -916,6 +917,9 @@
           "sc-alert"
         ],
         "sc-checkout-mollie-payment": [
+          "sc-alert"
+        ],
+        "sc-checkout-test-complete": [
           "sc-alert"
         ],
         "sc-coupon-form": [
@@ -2263,6 +2267,7 @@
         "sc-cart-form-submit",
         "sc-charges-list",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
@@ -2331,6 +2336,9 @@
           "sc-button"
         ],
         "sc-checkout-stock-alert": [
+          "sc-button"
+        ],
+        "sc-checkout-test-complete": [
           "sc-button"
         ],
         "sc-coupon-form": [
@@ -5466,7 +5474,8 @@
         "sc-form-components-validator",
         "sc-order-confirm-provider",
         "sc-session-provider",
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-checkout-test-complete"
       ],
       "dependencyGraph": {
         "sc-checkout": [
@@ -5479,7 +5488,8 @@
           "sc-form-components-validator",
           "sc-order-confirm-provider",
           "sc-session-provider",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-checkout-test-complete"
         ],
         "sc-alert": [
           "sc-icon"
@@ -5644,6 +5654,13 @@
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
+        ],
+        "sc-checkout-test-complete": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
         ]
       }
     },
@@ -6021,6 +6038,135 @@
         ],
         "sc-checkout": [
           "sc-checkout-stock-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/controllers/checkout-form/checkout-test-complete/checkout-test-complete.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-test-complete",
+      "readme": "# sc-checkout-test-complete\n\n\n",
+      "docs": "This component listens to the order status\nand confirms the order when payment is successful.",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkoutStatus",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "checkout-status",
+          "reflectToAttr": false,
+          "docs": "Checkout status to listen and do payment related stuff.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "Success url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scOrderPaid",
+          "detail": "Checkout",
+          "bubbles": true,
+          "complexType": {
+            "original": "Checkout",
+            "resolved": "Checkout",
+            "references": {
+              "Checkout": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::Checkout"
+              }
+            }
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "The order is paid event.",
+          "docsTags": []
+        },
+        {
+          "event": "scSetState",
+          "detail": "string",
+          "bubbles": true,
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-checkout"
+      ],
+      "dependencies": [
+        "sc-dialog",
+        "sc-icon",
+        "sc-dashboard-module",
+        "sc-alert",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-checkout-test-complete": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-checkout": [
+          "sc-checkout-test-complete"
         ]
       }
     },
@@ -12006,6 +12152,7 @@
         "sc-cancel-survey",
         "sc-charges-list",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
@@ -12055,6 +12202,9 @@
           "sc-dashboard-module"
         ],
         "sc-checkout-stock-alert": [
+          "sc-dashboard-module"
+        ],
+        "sc-checkout-test-complete": [
           "sc-dashboard-module"
         ],
         "sc-customer-details": [
@@ -12346,6 +12496,7 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-license",
         "sc-login-provider",
         "sc-order-confirm-provider",
@@ -12372,6 +12523,9 @@
           "sc-dialog"
         ],
         "sc-checkout-stock-alert": [
+          "sc-dialog"
+        ],
+        "sc-checkout-test-complete": [
           "sc-dialog"
         ],
         "sc-license": [
@@ -16917,6 +17071,7 @@
         "sc-charges-list",
         "sc-checkout-mollie-payment",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-customer-details",
         "sc-dialog",
@@ -17002,6 +17157,9 @@
           "sc-icon"
         ],
         "sc-checkout-stock-alert": [
+          "sc-icon"
+        ],
+        "sc-checkout-test-complete": [
           "sc-icon"
         ],
         "sc-coupon-form": [
@@ -31502,7 +31660,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/maniruzzamanakash/Local Sites/surecart/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }

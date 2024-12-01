@@ -99,7 +99,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @param string $id The id of the product to sync.
 	 *
-	 * @return \WP_Post|\WP_Error
+	 * @return \WP_Post|\WP_Error|self
 	 */
 	protected function sync( $id = '' ) {
 		// set the id.
