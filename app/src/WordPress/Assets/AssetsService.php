@@ -216,7 +216,7 @@ class AssetsService {
 	 * @return void
 	 */
 	public function addComponentData( $tag, $selector, $data = array() ) {
-		if ( ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) && 'thrive' !== $this->loader->getPageBuilder() ) {
+		if ( ( $this->loader->isUsingPageBuilder() ) && 'thrive' !== $this->loader->getPageBuilder() ) {
 			return $this->outputComponentScript( $tag, $selector, $data );
 		}
 
