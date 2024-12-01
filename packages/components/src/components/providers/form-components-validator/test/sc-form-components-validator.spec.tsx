@@ -54,7 +54,7 @@ describe('sc-form-components-validator', () => {
       template: () => (
         <sc-form-components-validator>
           <sc-order-summary>
-            <sc-order-coupon-form label="Add Coupon Code" placeholder="Enter coupon code" button-text="Apply Coupon" collapsed></sc-order-coupon-form>
+            <sc-line-item-total total="subtotal"></sc-line-item-total>
           </sc-order-summary>
         </sc-form-components-validator>
       ),

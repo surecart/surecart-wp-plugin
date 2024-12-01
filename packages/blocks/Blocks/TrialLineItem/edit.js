@@ -1,47 +1,32 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
+import { ScLineItemTrial } from '@surecart/components-react';
 import { InspectorControls } from '@wordpress/block-editor';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	Disabled,
-} from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes }) => {
-	const { disabled } = attributes;
-	const blockProps = useBlockProps({
-		style: {
-			opacity: disabled ? 0.5 : 1,
-		},
-	});
+	const { label } = attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Trial Line Item Settings')}>
+				<PanelBody>
 					<PanelRow>
 						<TextControl
-							label={__('Label')}
-							value={attributes.label}
+							label={__('Label', 'surecart')}
+							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<Disabled>
-					<sc-trial-line-item
-						label={attributes.label}
-					></sc-trial-line-item>
-				</Disabled>
+				<ScLineItemTrial label={label} />
 			</div>
 		</Fragment>
 	);

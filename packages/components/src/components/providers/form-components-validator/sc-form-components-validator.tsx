@@ -282,13 +282,13 @@ export class ScFormComponentsValidator {
   addTrialLineItem() {
     if (this.hasTrialLineItem) return;
 
-    const couponForm = this.el.querySelector('sc-order-coupon-form');
+    const subtotal = this.el.querySelector('sc-line-item-total[total=subtotal]');
     const trialItem = document.createElement('sc-line-item-trial');
 
-    if (!couponForm) return;
+    if (!subtotal) return;
 
     // Insert the trial item before the coupon form.
-    couponForm.parentNode.insertBefore(trialItem, couponForm);
+    subtotal.parentNode.insertBefore(trialItem, subtotal.nextSibling);
 
     this.hasTrialLineItem = true;
   }

@@ -152,6 +152,8 @@ export class ScCouponForm {
   }
 
   render() {
+    const isFreeTrial = !!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due;
+
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
     }
@@ -160,13 +162,7 @@ export class ScCouponForm {
       let humanDiscount = this.getHumanReadableDiscount();
 
       return (
-        <sc-line-item
-          exportparts="description:info, price-description:discount, price:amount"
-          class={{
-            'coupon-display': true,
-            'coupon-display--price-trial': !!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due,
-          }}
-        >
+        <sc-line-item exportparts="description:info, price-description:discount, price:amount">
           <span slot="description">
             <div part="discount-label">{__('Discount', 'surecart')}</div>
             <sc-tag
@@ -203,9 +199,9 @@ export class ScCouponForm {
                   {this.translateHumanDiscountWithDuration(humanDiscount)}
                 </span>
               )}
-              <span slot="price">
-                {!!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due ? (
-                  __('Applied on first payment', 'surecart')
+              <span slot={isFreeTrial ? 'price-description' : 'price'}>
+                {isFreeTrial ? (
+                  __('(To be applied on first payment)', 'surecart')
                 ) : (
                   <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
                 )}

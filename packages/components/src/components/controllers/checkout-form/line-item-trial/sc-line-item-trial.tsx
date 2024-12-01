@@ -15,7 +15,7 @@ export class ScLineItemTrial {
 
   render() {
     if (!checkoutState?.checkout?.trial_amount) {
-      return <Host></Host>;
+      return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (
