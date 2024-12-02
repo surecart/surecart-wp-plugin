@@ -151,6 +151,13 @@ export class ScCouponForm {
     }
   }
 
+  renderTrialText() {
+    if (this.discount?.coupon?.duration === 'once') {
+      return __('Applies on first payment', 'surecart');
+    }
+    return __('Starting on first payment', 'surecart');
+  }
+
   render() {
     const isFreeTrial = !!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due;
 
@@ -200,11 +207,7 @@ export class ScCouponForm {
                 </span>
               )}
               <span slot={isFreeTrial ? 'price-description' : 'price'}>
-                {isFreeTrial ? (
-                  __('(To be applied on first payment)', 'surecart')
-                ) : (
-                  <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
-                )}
+                {isFreeTrial ? this.renderTrialText() : <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>}
               </span>
             </Fragment>
           ) : (
