@@ -27,11 +27,6 @@ class CacheServiceProvider implements ServiceProviderInterface {
 		$container['surecart.wpfastest_cache'] = function () {
 			return new WpFastestCacheService();
 		};
-
-		$app = $container[ SURECART_APPLICATION_KEY ];
-
-		$app->alias( 'litespeed_cache', 'surecart.litespeed_cache' );
-		$app->alias( 'wpfastest_cache', 'surecart.wpfastest_cache' );
 	}
 
 	/**
@@ -40,13 +35,11 @@ class CacheServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		$this->container = $container;
-
 		add_action(
 			'plugins_loaded',
-			function () {
-				$this->container['surecart.litespeed_cache']->bootstrap();
-				$this->container['surecart.wpfastest_cache']->bootstrap();
+			function () use ( $container ) {
+				$container['surecart.litespeed_cache']->bootstrap();
+				$container['surecart.wpfastest_cache']->bootstrap();
 			}
 		);
 	}

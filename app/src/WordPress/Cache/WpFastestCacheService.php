@@ -15,7 +15,7 @@ class WpFastestCacheService {
 			return;
 		}
 
-		add_action( 'wp', [ $this, 'disableCacheForCustomerDashboard' ] );
+		add_action( 'init', [ $this, 'disableCacheForCustomerDashboard' ] );
 	}
 
 	/**
