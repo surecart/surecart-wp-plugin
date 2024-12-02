@@ -309,6 +309,7 @@ IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading
 
 = 3.1.2 - December 2nd, 2024 =
 - Improvement: Added clarification text on checkout page for when a coupon is applied after a trial starts.
+- Improvement: Add trial line item block to checkout for better totals calculation.
 - Improvement: Added automatic cache exclusions for SiteGround Optimizer.
 - Improvement: Progressively load accessibility scripts on front-end pages only when speech is needed.
 - Improvement: Add css to product page block to prevent themes from applying unwanted negative margins.
