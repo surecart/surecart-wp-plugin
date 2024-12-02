@@ -11,8 +11,6 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { external } from '@wordpress/icons';
-import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -263,54 +261,33 @@ export default () => {
 				</div>
 			}
 			button={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.5em;
-					`}
+				<ScDropdown
+					position="bottom-right"
+					style={{ '--panel-width': '14em' }}
 				>
-					{!!order?.checkout?.invoice && (
-						<Button
-							icon={external}
-							label={__('View Invoice Page', 'surecart')}
-							href={`admin.php?page=sc-invoices&action=edit&id=${order?.checkout?.invoice}`}
-							showTooltip={true}
-							size="compact"
-							target="_blank"
-						/>
+					{menuItems.length > 0 && (
+						<>
+							<ScButton
+								type="primary"
+								slot="trigger"
+								caret
+								loading={!hasLoadedOrder}
+							>
+								{__('Actions', 'surecart')}
+							</ScButton>
+							<ScMenu>
+								{menuItems.map((menuItem, key) => (
+									<ScMenuItem
+										onClick={() => setModal(menuItem.modal)}
+										key={key}
+									>
+										{menuItem.title}
+									</ScMenuItem>
+								))}
+							</ScMenu>
+						</>
 					)}
-
-					<ScDropdown
-						position="bottom-right"
-						style={{ '--panel-width': '14em' }}
-					>
-						{menuItems.length > 0 && (
-							<>
-								<ScButton
-									type="primary"
-									slot="trigger"
-									caret
-									loading={!hasLoadedOrder}
-								>
-									{__('Actions', 'surecart')}
-								</ScButton>
-								<ScMenu>
-									{menuItems.map((menuItem, key) => (
-										<ScMenuItem
-											onClick={() =>
-												setModal(menuItem.modal)
-											}
-											key={key}
-										>
-											{menuItem.title}
-										</ScMenuItem>
-									))}
-								</ScMenu>
-							</>
-						)}
-					</ScDropdown>
-				</div>
+				</ScDropdown>
 			}
 			sidebar={
 				<Sidebar

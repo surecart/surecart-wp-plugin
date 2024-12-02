@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 import { ScIcon } from '@surecart/components-react';
 import PostDropdownButton from '../../../components/PostDropdownButton';
 
-export default ({ invoicePagelink }) => {
+export default ({ invoicePageLink }) => {
 	return (
 		<PanelRow>
 			<div>{__('Invoice', 'surecart')}</div>
@@ -23,7 +23,7 @@ export default ({ invoicePagelink }) => {
 				`}
 			>
 				<PostDropdownButton
-					href={invoicePagelink}
+					href={invoicePageLink}
 					target="_blank"
 					rel="noopener noreferrer"
 					icon={

@@ -18,15 +18,11 @@ export default ({ checkout, loading }) => {
 		return null;
 	}
 
-	const invoicePageLink = `/wp-admin/admin.php?page=sc-invoices&action=edit&id=${checkout.invoice.id}`;
+	const invoicePageLink = `${scData?.home_url}/wp-admin/admin.php?page=sc-invoices&action=edit&id=${checkout.invoice.id}`;
 
 	return (
 		<Box title={__('Invoice Information', 'surecart')} loading={loading}>
-			<div
-				css={css`
-					display: grid;
-				`}
-			>
+			<div>
 				<InvoiceStatus status={checkout.invoice.status} />
 				<InvoicePageLink invoicePageLink={invoicePageLink} />
 			</div>
