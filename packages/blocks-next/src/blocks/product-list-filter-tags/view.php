@@ -1,5 +1,15 @@
 <?php
+use SureCart\Models\Blocks\ProductListBlock;
 global $sc_query_id;
+
+$controller = new ProductListBlock( $block );
+$query      = $controller->query();
+$products   = $query->products;
+
+if ( empty( $products ) ) {
+	return;
+}
+
 $params         = \SureCart::block()->urlParams( 'products' );
 $all_taxonomies = $params->getAllTaxonomyArgs();
 

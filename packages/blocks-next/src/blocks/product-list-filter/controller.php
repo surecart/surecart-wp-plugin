@@ -1,4 +1,14 @@
 <?php
+use SureCart\Models\Blocks\ProductListBlock;
+
+$controller = new ProductListBlock( $block );
+$query      = $controller->query();
+$products   = $query->products;
+
+if ( empty( $products ) ) {
+	return;
+}
+
 global $sc_query_id;
 
 $taxonomy_slug   = $attributes['taxonomy'] ?? 'sc_collection';

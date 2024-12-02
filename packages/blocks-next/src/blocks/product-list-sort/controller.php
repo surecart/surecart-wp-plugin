@@ -1,4 +1,14 @@
 <?php
+use SureCart\Models\Blocks\ProductListBlock;
+
+$controller = new ProductListBlock( $block );
+$query      = $controller->query();
+$products   = $query->products;
+
+if ( empty( $products ) ) {
+	return;
+}
+
 global $sc_query_id;
 $params         = \SureCart::block()->urlParams( 'products' );
 $query_order_by = $params->getArg( 'orderby' ) ?? $block->context['query']['orderBy'] ?? '';
