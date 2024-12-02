@@ -253,4 +253,20 @@ class PageService {
 
 		return get_post( $page_id );
 	}
+
+	/**
+	 * Check if the current page is the customer dashboard page.
+	 *
+	 * @return boolean
+	 */
+	public function isCustomerDashboardPage() {
+		$customer_dashboard_url = $this->url( 'dashboard' );
+
+		$scheme      = is_ssl() ? 'https://' : 'http://';
+		$host        = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
+		$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+		$current_url = $scheme . $host . $request_uri;
+
+		return trim( $current_url, '/' ) === trim( $customer_dashboard_url, '/' );
+	}
 }

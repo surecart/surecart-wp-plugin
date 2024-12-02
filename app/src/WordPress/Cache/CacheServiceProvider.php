@@ -41,7 +41,13 @@ class CacheServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$this->container = $container;
-		$container['surecart.litespeed_cache']->bootstrap();
-		$container['surecart.wpfastest_cache']->bootstrap();
+
+		add_action(
+			'plugins_loaded',
+			function () {
+				$this->container['surecart.litespeed_cache']->bootstrap();
+				$this->container['surecart.wpfastest_cache']->bootstrap();
+			}
+		);
 	}
 }
