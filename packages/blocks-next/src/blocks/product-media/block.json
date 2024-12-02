@@ -50,10 +50,5 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": ["surecart-image-slider"],
-	"viewScriptModule": "@surecart/image-slider",
-	"style": [
-		"file:./style-index.css",
-		"surecart-image-slider",
-		"surecart-product-media"
-	]
+	"style": ["file:./style-index.css"]
 }
