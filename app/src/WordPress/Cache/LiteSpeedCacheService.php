@@ -19,11 +19,7 @@ class LiteSpeedCacheService {
 	 * @return void
 	 */
 	public function disableCacheForCustomerDashboard() {
-		$customer_dashboard_url = \SureCart::pages()->url( 'dashboard' );
-
-		$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-		if ( trim( $current_url, '/' ) === trim( $customer_dashboard_url, '/' ) ) {
+		if ( \SureCart::pages()->isCustomerDashboardPage() ) {
 			do_action( 'litespeed_control_set_nocache', 'surecart customer dashboard' );
 		}
 	}
