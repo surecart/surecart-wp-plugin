@@ -1,11 +1,6 @@
 <?php
-use SureCart\Models\Blocks\ProductListBlock;
 
-$controller = new ProductListBlock( $block );
-$query      = $controller->query();
-$products   = $query->products;
-
-if ( empty( $products ) ) {
+if ( sc_is_product_list_empty( $block ) ) {
 	return;
 }
 
