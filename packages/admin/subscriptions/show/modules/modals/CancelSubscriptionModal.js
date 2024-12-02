@@ -126,7 +126,9 @@ export default ({ subscription, open, onRequestClose }) => {
 					disabled={loading}
 					slot="footer"
 				>
-					{__('Cancel Subscription', 'surecart')}
+					{checked === 'immediate'
+						? __('Cancel Subscription', 'surecart')
+						: __('Schedule Cancellation', 'surecart')}
 				</ScButton>
 				{loading && (
 					<ScBlockUi
