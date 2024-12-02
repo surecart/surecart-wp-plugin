@@ -42,6 +42,7 @@ module.exports = [
 			'@surecart/api-fetch': '@surecart/api-fetch',
 			'@surecart/checkout-service': '@surecart/checkout-service',
 			'@surecart/checkout-events': '@surecart/checkout-events',
+			'@surecart/a11y': '@surecart/a11y',
 		},
 	},
 ];
