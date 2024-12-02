@@ -2,10 +2,11 @@
 
 namespace SureCartBlocks\Blocks\AddToCartButton;
 
-use SureCart\Models\Form;
+use SureCart\Models\Blocks\ProductPageBlock;
 use SureCart\Models\Price;
+
 /**
- * Logout Button Block.
+ * AddToCart Button Block.
  */
 class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 	/**
@@ -22,12 +23,27 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			return '';
 		}
 
-		$price = Price::find( $attributes['price_id'] );
+		$price = Price::with( [ 'product', 'product.variants' ] )->find( $attributes['price_id'] );
 		if ( empty( $price->id ) ) {
 			return '';
 		}
 
-		// need a form for checkout.
+		// get the product.
+		$product = $price->product;
+
+		// setup the postdata.
+		global $post;
+		$post = $product->post;  // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited,
+		setup_postdata( $post );
+
+		$variants = ! empty( $attributes['variant_id'] ) ? array_filter(
+			$product->variants->data ?? [],
+			function ( $variant ) use ( $attributes ) {
+				return $variant->id == $attributes['variant_id'];
+			}
+		) : null;
+		$variant  = $variants ? array_shift( $variants ) : null;
+
 		$form = \SureCart::forms()->getDefault();
 		if ( empty( $form->ID ) ) {
 			return '';
@@ -36,22 +52,23 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 		// Use backgroundColor and textColor if exist.
 		$styles = '';
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
-			$styles .= '--sc-color-primary-500: ' . $attributes['backgroundColor'] . '; ';
-			$styles .= '--sc-focus-ring-color-primary: ' . $attributes['backgroundColor'] . '; ';
-			$styles .= '--sc-input-border-color-focus: ' . $attributes['backgroundColor'] . '; ';
+			$styles .= "background-color: {$attributes['backgroundColor']}; ";
 		}
 		if ( ! empty( $attributes['textColor'] ) ) {
-			$styles .= '--sc-color-primary-text: ' . $attributes['textColor'] . '; ';
+			$styles .= "color: {$attributes['textColor']}; ";
 		}
+
+		$class = 'sc-button wp-element-button wp-block-button__link sc-button__link';
 
 		// Slide-out is disabled, go directly to checkout.
 		if ( (bool) get_option( 'sc_slide_out_cart_disabled', false ) ) {
-			return \SureCart::blocks()->render(
+			return \SureCart::block()->render(
 				'blocks/buy-button',
 				[
 					'type'  => $attributes['type'] ?? 'primary',
 					'size'  => $attributes['size'] ?? 'medium',
 					'style' => $styles,
+					'class' => $class,
 					'href'  => $this->href(
 						[
 							[
@@ -66,39 +83,114 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 			);
 		}
 
+		$controller = new ProductPageBlock();
+
+		$price_attributes = [
+			'id',
+			'archived',
+			'amount',
+			'display_amount',
+			'scratch_amount',
+			'scratch_display_amount',
+			'ad_hoc',
+			'is_zero_decimal',
+			'currency_symbol',
+			'converted_ad_hoc_min_amount',
+			'converted_ad_hoc_max_amount',
+			'setup_fee_text',
+			'interval_text',
+			'short_interval_text',
+			'interval_count_text',
+			'payments_text',
+			'trial_text',
+		];
+
+		$context = $controller->context(
+			[
+				'selectedPrice' => $price ? $price->only( $price_attributes ) : null,
+				'prices'        => array_map( fn( $price ) => $price->only( $price_attributes ), [ $price ] ),
+				'variantValues' => $variant ? array_filter(
+					[
+						'option_1' => $variant->option_1 ?? null,
+						'option_2' => $variant->option_2 ?? null,
+						'option_3' => $variant->option_3 ?? null,
+					]
+				) : [],
+			]
+		);
+
 		ob_start(); ?>
+		<style>
+			.sc-form, .sc-form-wrapper {
+				display: inline-block;
+			}
+		</style>
+		<div
+			class="sc-form-wrapper"
+			data-wp-interactive='{ "namespace": "surecart/product-page" }'
+			<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
+		>
+			<form class="sc-form" data-wp-on--submit="callbacks.handleSubmit">
+				<?php if ( ! empty( $price->ad_hoc ) ) : ?>
+					<div class="sc-form-group">
+						<label for="sc-product-custom-amount" class="sc-form-label">
+							<?php echo wp_kses_post( $attributes['ad_hoc_label'] ?? esc_html_e( 'Amount', 'surecart' ) ); ?>
+						</label>
+						<div class="sc-input-group">
+							<span class="sc-input-group-text" id="basic-addon1" data-wp-text="context.selectedPrice.currency_symbol"></span>
 
-		<sc-cart-form
-			price-id="<?php echo esc_attr( $attributes['price_id'] ); ?>"
-			variant-id="<?php echo esc_attr( $attributes['variant_id'] ?? '' ); ?>"
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
-			<?php if ( ! empty( $styles ) ) { ?>
-				 style="<?php echo esc_attr( $styles ); ?>"
-			<?php } ?>>
+							<input
+								class="sc-form-control"
+								id="sc-product-custom-amount"
+								type="number"
+								step="0.01"
+								required
+								placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? '' ); ?>"
+								data-wp-bind--min="context.selectedPrice.converted_ad_hoc_min_amount"
+								data-wp-bind--max="context.selectedPrice.converted_ad_hoc_max_amount"
+								data-wp-bind--value="context.adHocAmount"
+								data-wp-on--input="callbacks.setAdHocAmount"
+							/>
+						</div>
+						<?php if ( ! empty( $attributes['help'] ) ) : ?>
+							<div class="sc-help-text">
+								<?php echo wp_kses_post( $attributes['help'] ); ?>
+							</div>
+						<?php endif; ?>
+					</div>
+				<?php endif; ?>
 
-			<?php if ( $price->ad_hoc ) : ?>
-				<sc-price-input
-					currency-code="<?php echo esc_attr( $price->currency ); ?>"
-					label="<?php echo esc_attr( ! empty( $attributes['ad_hoc_label'] ) ? $attributes['ad_hoc_label'] : __( 'Amount', 'surecart' ) ); ?>"
-					min="<?php echo (int) $price->ad_hoc_min_amount; ?>"
-					max="<?php echo (int) $price->ad_hoc_max_amount; ?>"
-					placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? '' ); ?>"
-					required
-					help="<?php echo esc_attr( $attributes['help'] ?? '' ); ?>"
-					name="price"
-				></sc-price-input>
-			<?php endif; ?>
-
-			<sc-cart-form-submit
-				type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>"
-				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>"
-			>
-				<?php echo ! empty( $attributes['button_text'] ) ? wp_kses_post( $attributes['button_text'] ) : esc_html__( 'Add To Cart', 'surecart' ); ?>
-			</sc-cart-form-submit>
-		</sc-cart-form>
-
-			<?php
-			return wp_kses_post( ob_get_clean() );
+				<div
+					<?php
+						echo wp_kses_data(
+							get_block_wrapper_attributes(
+								array(
+									'class' => 'wp-block-button',
+								)
+							)
+						);
+					?>
+				>
+					<button
+						type="submit"
+						class="<?php echo esc_attr( $class ); ?>"
+						data-wp-class--sc-button__link--busy="context.busy"
+						style="<?php echo esc_attr( $styles ); ?>"
+					>
+						<span class="sc-spinner" aria-hidden="true" data-wp-bind--hidden="!context.busy" hidden></span>
+						<span class="sc-button__link-text">
+							<?php
+							// pass content for shortcode usage.
+							echo wp_kses_post( ! empty( $content ) ? $content : $attributes['button_text'] );
+							?>
+						</span>
+					</button>
+				</div>
+			</form>
+		</div>
+		<?php
+		$output = ob_get_clean();
+		wp_reset_postdata();
+		return $output;
 	}
 }

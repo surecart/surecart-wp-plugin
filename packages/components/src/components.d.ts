@@ -5,12 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
-import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
-export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -544,6 +544,20 @@ export namespace Components {
      * This component listens for stock requirements and displays a dialog to the user.
      */
     interface ScCheckoutStockAlert {
+    }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface ScCheckoutTestComplete {
+        /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus": string;
+        /**
+          * Success url.
+         */
+        "successUrl": string;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
@@ -1959,7 +1973,6 @@ export namespace Components {
           * The bump
          */
         "bump": Bump;
-        "cdnRoot": string;
         /**
           * Should we show the controls
          */
@@ -2834,7 +2847,7 @@ export namespace Components {
         /**
           * Stores the price
          */
-        "price": string | Price1;
+        "price": string | Price;
         "required": boolean;
         /**
           * Show the radio/checkbox control
@@ -3089,7 +3102,7 @@ export namespace Components {
           * Product metrics
          */
         "metrics": ProductMetrics;
-        "prices": Price1[];
+        "prices": Price[];
         /**
           * Show price range?
          */
@@ -3115,17 +3128,9 @@ export namespace Components {
          */
         "fees": Fee[];
         /**
-          * Alternative description for the product image
+          * Image attributes.
          */
-        "imageAlt": string;
-        /**
-          * Title for the product image
-         */
-        "imageTitle": string;
-        /**
-          * Url for the product image
-         */
-        "imageUrl": string;
+        "image": ImageAttributes;
         /**
           * Recurring interval (i.e. monthly, once, etc.)
          */
@@ -3375,15 +3380,15 @@ export namespace Components {
         /**
           * The prices to choose from.
          */
-        "prices": Price1[];
+        "prices": Price[];
         /**
           * The product.
          */
-        "product": Product1;
+        "product": Product;
         /**
           * The currently selected price
          */
-        "selectedPrice": Price1;
+        "selectedPrice": Price;
         /**
           * Should we show the price?
          */
@@ -3747,7 +3752,7 @@ export namespace Components {
         /**
           * The subscription to reactivate
          */
-        "subscription": Subscription1;
+        "subscription": Subscription;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -4265,6 +4270,10 @@ export interface ScCheckoutStockAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCheckoutStockAlertElement;
 }
+export interface ScCheckoutTestCompleteCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutTestCompleteElement;
+}
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
@@ -4356,10 +4365,6 @@ export interface ScLoginProviderCustomEvent<T> extends CustomEvent<T> {
 export interface ScMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScMenuElement;
-}
-export interface ScOrderBumpCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderBumpElement;
 }
 export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4494,13 +4499,37 @@ export interface ScToggleCustomEvent<T> extends CustomEvent<T> {
     target: HTMLScToggleElement;
 }
 declare global {
+    interface HTMLScAddressElementEventMap {
+        "scChangeAddress": Partial<Address>;
+        "scInputAddress": Partial<Address>;
+    }
     interface HTMLScAddressElement extends Components.ScAddress, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScAddressElementEventMap>(type: K, listener: (this: HTMLScAddressElement, ev: ScAddressCustomEvent<HTMLScAddressElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScAddressElementEventMap>(type: K, listener: (this: HTMLScAddressElement, ev: ScAddressCustomEvent<HTMLScAddressElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScAddressElement: {
         prototype: HTMLScAddressElement;
         new (): HTMLScAddressElement;
     };
+    interface HTMLScAlertElementEventMap {
+        "scHide": void;
+        "scShow": void;
+    }
     interface HTMLScAlertElement extends Components.ScAlert, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScAlertElementEventMap>(type: K, listener: (this: HTMLScAlertElement, ev: ScAlertCustomEvent<HTMLScAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScAlertElementEventMap>(type: K, listener: (this: HTMLScAlertElement, ev: ScAlertCustomEvent<HTMLScAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScAlertElement: {
         prototype: HTMLScAlertElement;
@@ -4536,7 +4565,19 @@ declare global {
         prototype: HTMLScBreadcrumbsElement;
         new (): HTMLScBreadcrumbsElement;
     };
+    interface HTMLScButtonElementEventMap {
+        "scBlur": void;
+        "scFocus": void;
+    }
     interface HTMLScButtonElement extends Components.ScButton, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScButtonElementEventMap>(type: K, listener: (this: HTMLScButtonElement, ev: ScButtonCustomEvent<HTMLScButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScButtonElementEventMap>(type: K, listener: (this: HTMLScButtonElement, ev: ScButtonCustomEvent<HTMLScButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScButtonElement: {
         prototype: HTMLScButtonElement;
@@ -4548,19 +4589,55 @@ declare global {
         prototype: HTMLScButtonGroupElement;
         new (): HTMLScButtonGroupElement;
     };
+    interface HTMLScCancelDialogElementEventMap {
+        "scRequestClose": 'close-button' | 'keyboard' | 'overlay';
+        "scRefresh": void;
+    }
     interface HTMLScCancelDialogElement extends Components.ScCancelDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCancelDialogElementEventMap>(type: K, listener: (this: HTMLScCancelDialogElement, ev: ScCancelDialogCustomEvent<HTMLScCancelDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCancelDialogElementEventMap>(type: K, listener: (this: HTMLScCancelDialogElement, ev: ScCancelDialogCustomEvent<HTMLScCancelDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCancelDialogElement: {
         prototype: HTMLScCancelDialogElement;
         new (): HTMLScCancelDialogElement;
     };
+    interface HTMLScCancelDiscountElementEventMap {
+        "scCancel": void;
+        "scPreserved": void;
+    }
     interface HTMLScCancelDiscountElement extends Components.ScCancelDiscount, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCancelDiscountElementEventMap>(type: K, listener: (this: HTMLScCancelDiscountElement, ev: ScCancelDiscountCustomEvent<HTMLScCancelDiscountElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCancelDiscountElementEventMap>(type: K, listener: (this: HTMLScCancelDiscountElement, ev: ScCancelDiscountCustomEvent<HTMLScCancelDiscountElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCancelDiscountElement: {
         prototype: HTMLScCancelDiscountElement;
         new (): HTMLScCancelDiscountElement;
     };
+    interface HTMLScCancelSurveyElementEventMap {
+        "scAbandon": void;
+        "scSubmitReason": { reason: CancellationReason; comment: string };
+    }
     interface HTMLScCancelSurveyElement extends Components.ScCancelSurvey, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCancelSurveyElementEventMap>(type: K, listener: (this: HTMLScCancelSurveyElement, ev: ScCancelSurveyCustomEvent<HTMLScCancelSurveyElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCancelSurveyElementEventMap>(type: K, listener: (this: HTMLScCancelSurveyElement, ev: ScCancelSurveyCustomEvent<HTMLScCancelSurveyElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCancelSurveyElement: {
         prototype: HTMLScCancelSurveyElement;
@@ -4596,7 +4673,18 @@ declare global {
         prototype: HTMLScCartFormSubmitElement;
         new (): HTMLScCartFormSubmitElement;
     };
+    interface HTMLScCartHeaderElementEventMap {
+        "scCloseCart": void;
+    }
     interface HTMLScCartHeaderElement extends Components.ScCartHeader, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCartHeaderElementEventMap>(type: K, listener: (this: HTMLScCartHeaderElement, ev: ScCartHeaderCustomEvent<HTMLScCartHeaderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCartHeaderElementEventMap>(type: K, listener: (this: HTMLScCartHeaderElement, ev: ScCartHeaderCustomEvent<HTMLScCartHeaderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCartHeaderElement: {
         prototype: HTMLScCartHeaderElement;
@@ -4614,7 +4702,18 @@ declare global {
         prototype: HTMLScCartLoaderElement;
         new (): HTMLScCartLoaderElement;
     };
+    interface HTMLScCartSessionProviderElementEventMap {
+        "scSetState": 'loading' | 'busy' | 'navigating' | 'idle';
+    }
     interface HTMLScCartSessionProviderElement extends Components.ScCartSessionProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCartSessionProviderElementEventMap>(type: K, listener: (this: HTMLScCartSessionProviderElement, ev: ScCartSessionProviderCustomEvent<HTMLScCartSessionProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCartSessionProviderElementEventMap>(type: K, listener: (this: HTMLScCartSessionProviderElement, ev: ScCartSessionProviderCustomEvent<HTMLScCartSessionProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCartSessionProviderElement: {
         prototype: HTMLScCartSessionProviderElement;
@@ -4638,13 +4737,39 @@ declare global {
         prototype: HTMLScChargesListElement;
         new (): HTMLScChargesListElement;
     };
+    interface HTMLScCheckboxElementEventMap {
+        "scBlur": void;
+        "scChange": void;
+        "scFocus": void;
+    }
     interface HTMLScCheckboxElement extends Components.ScCheckbox, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCheckboxElementEventMap>(type: K, listener: (this: HTMLScCheckboxElement, ev: ScCheckboxCustomEvent<HTMLScCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCheckboxElementEventMap>(type: K, listener: (this: HTMLScCheckboxElement, ev: ScCheckboxCustomEvent<HTMLScCheckboxElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCheckboxElement: {
         prototype: HTMLScCheckboxElement;
         new (): HTMLScCheckboxElement;
     };
+    interface HTMLScCheckoutElementEventMap {
+        "scOrderUpdated": Checkout;
+        "scOrderFinalized": Checkout;
+        "scOrderError": ResponseError;
+    }
     interface HTMLScCheckoutElement extends Components.ScCheckout, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCheckoutElementEventMap>(type: K, listener: (this: HTMLScCheckoutElement, ev: ScCheckoutCustomEvent<HTMLScCheckoutElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCheckoutElementEventMap>(type: K, listener: (this: HTMLScCheckoutElement, ev: ScCheckoutCustomEvent<HTMLScCheckoutElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCheckoutElement: {
         prototype: HTMLScCheckoutElement;
@@ -4677,14 +4802,47 @@ declare global {
         prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
         new (): HTMLScCheckoutProductPriceVariantSelectorElement;
     };
+    interface HTMLScCheckoutStockAlertElementEventMap {
+        "scUpdateLineItem": LineItemData;
+    }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
      */
     interface HTMLScCheckoutStockAlertElement extends Components.ScCheckoutStockAlert, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCheckoutStockAlertElementEventMap>(type: K, listener: (this: HTMLScCheckoutStockAlertElement, ev: ScCheckoutStockAlertCustomEvent<HTMLScCheckoutStockAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCheckoutStockAlertElementEventMap>(type: K, listener: (this: HTMLScCheckoutStockAlertElement, ev: ScCheckoutStockAlertCustomEvent<HTMLScCheckoutStockAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCheckoutStockAlertElement: {
         prototype: HTMLScCheckoutStockAlertElement;
         new (): HTMLScCheckoutStockAlertElement;
+    };
+    interface HTMLScCheckoutTestCompleteElementEventMap {
+        "scOrderPaid": Checkout;
+        "scSetState": string;
+    }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface HTMLScCheckoutTestCompleteElement extends Components.ScCheckoutTestComplete, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCheckoutTestCompleteElementEventMap>(type: K, listener: (this: HTMLScCheckoutTestCompleteElement, ev: ScCheckoutTestCompleteCustomEvent<HTMLScCheckoutTestCompleteElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCheckoutTestCompleteElementEventMap>(type: K, listener: (this: HTMLScCheckoutTestCompleteElement, ev: ScCheckoutTestCompleteCustomEvent<HTMLScCheckoutTestCompleteElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLScCheckoutTestCompleteElement: {
+        prototype: HTMLScCheckoutTestCompleteElement;
+        new (): HTMLScCheckoutTestCompleteElement;
     };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
@@ -4692,13 +4850,39 @@ declare global {
         prototype: HTMLScCheckoutUnsavedChangesWarningElement;
         new (): HTMLScCheckoutUnsavedChangesWarningElement;
     };
+    interface HTMLScChoiceElementEventMap {
+        "scBlur": void;
+        "scChange": boolean;
+        "scFocus": void;
+    }
     interface HTMLScChoiceElement extends Components.ScChoice, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScChoiceElementEventMap>(type: K, listener: (this: HTMLScChoiceElement, ev: ScChoiceCustomEvent<HTMLScChoiceElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScChoiceElementEventMap>(type: K, listener: (this: HTMLScChoiceElement, ev: ScChoiceCustomEvent<HTMLScChoiceElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScChoiceElement: {
         prototype: HTMLScChoiceElement;
         new (): HTMLScChoiceElement;
     };
+    interface HTMLScChoiceContainerElementEventMap {
+        "scBlur": void;
+        "scChange": boolean;
+        "scFocus": void;
+    }
     interface HTMLScChoiceContainerElement extends Components.ScChoiceContainer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScChoiceContainerElementEventMap>(type: K, listener: (this: HTMLScChoiceContainerElement, ev: ScChoiceContainerCustomEvent<HTMLScChoiceContainerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScChoiceContainerElementEventMap>(type: K, listener: (this: HTMLScChoiceContainerElement, ev: ScChoiceContainerCustomEvent<HTMLScChoiceContainerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScChoiceContainerElement: {
         prototype: HTMLScChoiceContainerElement;
@@ -4722,7 +4906,19 @@ declare global {
         prototype: HTMLScColumnsElement;
         new (): HTMLScColumnsElement;
     };
+    interface HTMLScCompactAddressElementEventMap {
+        "scChangeAddress": Partial<Address>;
+        "scInputAddress": Partial<Address>;
+    }
     interface HTMLScCompactAddressElement extends Components.ScCompactAddress, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCompactAddressElementEventMap>(type: K, listener: (this: HTMLScCompactAddressElement, ev: ScCompactAddressCustomEvent<HTMLScCompactAddressElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCompactAddressElementEventMap>(type: K, listener: (this: HTMLScCompactAddressElement, ev: ScCompactAddressCustomEvent<HTMLScCompactAddressElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCompactAddressElement: {
         prototype: HTMLScCompactAddressElement;
@@ -4734,19 +4930,52 @@ declare global {
         prototype: HTMLScConditionalFormElement;
         new (): HTMLScConditionalFormElement;
     };
+    interface HTMLScConsumerElementEventMap {
+        "mountConsumer": any;
+    }
     interface HTMLScConsumerElement extends Components.ScConsumer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScConsumerElementEventMap>(type: K, listener: (this: HTMLScConsumerElement, ev: ScConsumerCustomEvent<HTMLScConsumerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScConsumerElementEventMap>(type: K, listener: (this: HTMLScConsumerElement, ev: ScConsumerCustomEvent<HTMLScConsumerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScConsumerElement: {
         prototype: HTMLScConsumerElement;
         new (): HTMLScConsumerElement;
     };
+    interface HTMLScCouponFormElementEventMap {
+        "scApplyCoupon": string;
+    }
     interface HTMLScCouponFormElement extends Components.ScCouponForm, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCouponFormElementEventMap>(type: K, listener: (this: HTMLScCouponFormElement, ev: ScCouponFormCustomEvent<HTMLScCouponFormElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCouponFormElementEventMap>(type: K, listener: (this: HTMLScCouponFormElement, ev: ScCouponFormCustomEvent<HTMLScCouponFormElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCouponFormElement: {
         prototype: HTMLScCouponFormElement;
         new (): HTMLScCouponFormElement;
     };
+    interface HTMLScCustomOrderPriceInputElementEventMap {
+        "scUpdateLineItem": LineItemData1;
+    }
     interface HTMLScCustomOrderPriceInputElement extends Components.ScCustomOrderPriceInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCustomOrderPriceInputElementEventMap>(type: K, listener: (this: HTMLScCustomOrderPriceInputElement, ev: ScCustomOrderPriceInputCustomEvent<HTMLScCustomOrderPriceInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCustomOrderPriceInputElementEventMap>(type: K, listener: (this: HTMLScCustomOrderPriceInputElement, ev: ScCustomOrderPriceInputCustomEvent<HTMLScCustomOrderPriceInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCustomOrderPriceInputElement: {
         prototype: HTMLScCustomOrderPriceInputElement;
@@ -4764,31 +4993,107 @@ declare global {
         prototype: HTMLScCustomerEditElement;
         new (): HTMLScCustomerEditElement;
     };
+    interface HTMLScCustomerEmailElementEventMap {
+        "scChange": void;
+        "scClear": void;
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+        "scUpdateOrderState": Checkout;
+        "scUpdateAbandonedCart": boolean;
+        "scLoginPrompt": void;
+    }
     interface HTMLScCustomerEmailElement extends Components.ScCustomerEmail, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCustomerEmailElementEventMap>(type: K, listener: (this: HTMLScCustomerEmailElement, ev: ScCustomerEmailCustomEvent<HTMLScCustomerEmailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCustomerEmailElementEventMap>(type: K, listener: (this: HTMLScCustomerEmailElement, ev: ScCustomerEmailCustomEvent<HTMLScCustomerEmailElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCustomerEmailElement: {
         prototype: HTMLScCustomerEmailElement;
         new (): HTMLScCustomerEmailElement;
     };
+    interface HTMLScCustomerFirstnameElementEventMap {
+        "scChange": void;
+        "scUpdateOrderState": Partial<Checkout>;
+        "scClear": void;
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+        "scUpdateCustomer": { email: string };
+    }
     interface HTMLScCustomerFirstnameElement extends Components.ScCustomerFirstname, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCustomerFirstnameElementEventMap>(type: K, listener: (this: HTMLScCustomerFirstnameElement, ev: ScCustomerFirstnameCustomEvent<HTMLScCustomerFirstnameElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCustomerFirstnameElementEventMap>(type: K, listener: (this: HTMLScCustomerFirstnameElement, ev: ScCustomerFirstnameCustomEvent<HTMLScCustomerFirstnameElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCustomerFirstnameElement: {
         prototype: HTMLScCustomerFirstnameElement;
         new (): HTMLScCustomerFirstnameElement;
     };
+    interface HTMLScCustomerLastnameElementEventMap {
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+    }
     interface HTMLScCustomerLastnameElement extends Components.ScCustomerLastname, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCustomerLastnameElementEventMap>(type: K, listener: (this: HTMLScCustomerLastnameElement, ev: ScCustomerLastnameCustomEvent<HTMLScCustomerLastnameElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCustomerLastnameElementEventMap>(type: K, listener: (this: HTMLScCustomerLastnameElement, ev: ScCustomerLastnameCustomEvent<HTMLScCustomerLastnameElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCustomerLastnameElement: {
         prototype: HTMLScCustomerLastnameElement;
         new (): HTMLScCustomerLastnameElement;
     };
+    interface HTMLScCustomerNameElementEventMap {
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+    }
     interface HTMLScCustomerNameElement extends Components.ScCustomerName, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCustomerNameElementEventMap>(type: K, listener: (this: HTMLScCustomerNameElement, ev: ScCustomerNameCustomEvent<HTMLScCustomerNameElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCustomerNameElementEventMap>(type: K, listener: (this: HTMLScCustomerNameElement, ev: ScCustomerNameCustomEvent<HTMLScCustomerNameElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCustomerNameElement: {
         prototype: HTMLScCustomerNameElement;
         new (): HTMLScCustomerNameElement;
     };
+    interface HTMLScCustomerPhoneElementEventMap {
+        "scChange": void;
+        "scClear": void;
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+    }
     interface HTMLScCustomerPhoneElement extends Components.ScCustomerPhone, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCustomerPhoneElementEventMap>(type: K, listener: (this: HTMLScCustomerPhoneElement, ev: ScCustomerPhoneCustomEvent<HTMLScCustomerPhoneElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCustomerPhoneElementEventMap>(type: K, listener: (this: HTMLScCustomerPhoneElement, ev: ScCustomerPhoneCustomEvent<HTMLScCustomerPhoneElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScCustomerPhoneElement: {
         prototype: HTMLScCustomerPhoneElement;
@@ -4812,7 +5117,23 @@ declare global {
         prototype: HTMLScDashboardModuleElement;
         new (): HTMLScDashboardModuleElement;
     };
+    interface HTMLScDialogElementEventMap {
+        "scRequestClose": 'close-button' | 'keyboard' | 'overlay';
+        "scShow": void;
+        "scAfterShow": void;
+        "scHide": void;
+        "scAfterHide": void;
+        "scInitialFocus": void;
+    }
     interface HTMLScDialogElement extends Components.ScDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScDialogElementEventMap>(type: K, listener: (this: HTMLScDialogElement, ev: ScDialogCustomEvent<HTMLScDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScDialogElementEventMap>(type: K, listener: (this: HTMLScDialogElement, ev: ScDialogCustomEvent<HTMLScDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScDialogElement: {
         prototype: HTMLScDialogElement;
@@ -4824,7 +5145,20 @@ declare global {
         prototype: HTMLScDividerElement;
         new (): HTMLScDividerElement;
     };
+    interface HTMLScDonationChoicesElementEventMap {
+        "scRemoveLineItem": LineItemData1;
+        "scUpdateLineItem": LineItemData1;
+        "scAddLineItem": LineItemData1;
+    }
     interface HTMLScDonationChoicesElement extends Components.ScDonationChoices, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScDonationChoicesElementEventMap>(type: K, listener: (this: HTMLScDonationChoicesElement, ev: ScDonationChoicesCustomEvent<HTMLScDonationChoicesElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScDonationChoicesElementEventMap>(type: K, listener: (this: HTMLScDonationChoicesElement, ev: ScDonationChoicesCustomEvent<HTMLScDonationChoicesElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScDonationChoicesElement: {
         prototype: HTMLScDonationChoicesElement;
@@ -4836,13 +5170,41 @@ declare global {
         prototype: HTMLScDownloadsListElement;
         new (): HTMLScDownloadsListElement;
     };
+    interface HTMLScDrawerElementEventMap {
+        "scInitialFocus": void;
+        "scRequestClose": 'close-button' | 'keyboard' | 'overlay' | 'method';
+        "scShow": void;
+        "scHide": void;
+        "scAfterShow": void;
+        "scAfterHide": void;
+    }
     interface HTMLScDrawerElement extends Components.ScDrawer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScDrawerElementEventMap>(type: K, listener: (this: HTMLScDrawerElement, ev: ScDrawerCustomEvent<HTMLScDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScDrawerElementEventMap>(type: K, listener: (this: HTMLScDrawerElement, ev: ScDrawerCustomEvent<HTMLScDrawerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScDrawerElement: {
         prototype: HTMLScDrawerElement;
         new (): HTMLScDrawerElement;
     };
+    interface HTMLScDropdownElementEventMap {
+        "scShow": void;
+        "scHide": void;
+    }
     interface HTMLScDropdownElement extends Components.ScDropdown, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScDropdownElementEventMap>(type: K, listener: (this: HTMLScDropdownElement, ev: ScDropdownCustomEvent<HTMLScDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScDropdownElementEventMap>(type: K, listener: (this: HTMLScDropdownElement, ev: ScDropdownCustomEvent<HTMLScDropdownElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScDropdownElement: {
         prototype: HTMLScDropdownElement;
@@ -4854,7 +5216,18 @@ declare global {
         prototype: HTMLScEmptyElement;
         new (): HTMLScEmptyElement;
     };
+    interface HTMLScErrorElementEventMap {
+        "scUpdateError": ResponseError;
+    }
     interface HTMLScErrorElement extends Components.ScError, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScErrorElementEventMap>(type: K, listener: (this: HTMLScErrorElement, ev: ScErrorCustomEvent<HTMLScErrorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScErrorElementEventMap>(type: K, listener: (this: HTMLScErrorElement, ev: ScErrorCustomEvent<HTMLScErrorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScErrorElement: {
         prototype: HTMLScErrorElement;
@@ -4878,7 +5251,20 @@ declare global {
         prototype: HTMLScFlexElement;
         new (): HTMLScFlexElement;
     };
+    interface HTMLScFormElementEventMap {
+        "scSubmit": void;
+        "scFormSubmit": void;
+        "scFormChange": Object;
+    }
     interface HTMLScFormElement extends Components.ScForm, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScFormElementEventMap>(type: K, listener: (this: HTMLScFormElement, ev: ScFormCustomEvent<HTMLScFormElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScFormElementEventMap>(type: K, listener: (this: HTMLScFormElement, ev: ScFormCustomEvent<HTMLScFormElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScFormElement: {
         prototype: HTMLScFormElement;
@@ -4912,10 +5298,21 @@ declare global {
         prototype: HTMLScFormRowElement;
         new (): HTMLScFormRowElement;
     };
+    interface HTMLScFormStateProviderElementEventMap {
+        "scSetCheckoutFormState": FormState;
+    }
     /**
      * This component listens for a confirmed event and redirects to the success url.
      */
     interface HTMLScFormStateProviderElement extends Components.ScFormStateProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScFormStateProviderElementEventMap>(type: K, listener: (this: HTMLScFormStateProviderElement, ev: ScFormStateProviderCustomEvent<HTMLScFormStateProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScFormStateProviderElementEventMap>(type: K, listener: (this: HTMLScFormStateProviderElement, ev: ScFormStateProviderCustomEvent<HTMLScFormStateProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScFormStateProviderElement: {
         prototype: HTMLScFormStateProviderElement;
@@ -4963,7 +5360,18 @@ declare global {
         prototype: HTMLScHeadingElement;
         new (): HTMLScHeadingElement;
     };
+    interface HTMLScIconElementEventMap {
+        "scLoad": void;
+    }
     interface HTMLScIconElement extends Components.ScIcon, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScIconElementEventMap>(type: K, listener: (this: HTMLScIconElement, ev: ScIconCustomEvent<HTMLScIconElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScIconElementEventMap>(type: K, listener: (this: HTMLScIconElement, ev: ScIconCustomEvent<HTMLScIconElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScIconElement: {
         prototype: HTMLScIconElement;
@@ -4975,7 +5383,22 @@ declare global {
         prototype: HTMLScImageSliderElement;
         new (): HTMLScImageSliderElement;
     };
+    interface HTMLScInputElementEventMap {
+        "scChange": void;
+        "scClear": void;
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+    }
     interface HTMLScInputElement extends Components.ScInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScInputElementEventMap>(type: K, listener: (this: HTMLScInputElement, ev: ScInputCustomEvent<HTMLScInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScInputElementEventMap>(type: K, listener: (this: HTMLScInputElement, ev: ScInputCustomEvent<HTMLScInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScInputElement: {
         prototype: HTMLScInputElement;
@@ -5071,7 +5494,18 @@ declare global {
         prototype: HTMLScLineItemsElement;
         new (): HTMLScLineItemsElement;
     };
+    interface HTMLScLineItemsProviderElementEventMap {
+        "scUpdateLineItems": Array<LineItemData1>;
+    }
     interface HTMLScLineItemsProviderElement extends Components.ScLineItemsProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScLineItemsProviderElementEventMap>(type: K, listener: (this: HTMLScLineItemsProviderElement, ev: ScLineItemsProviderCustomEvent<HTMLScLineItemsProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScLineItemsProviderElementEventMap>(type: K, listener: (this: HTMLScLineItemsProviderElement, ev: ScLineItemsProviderCustomEvent<HTMLScLineItemsProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScLineItemsProviderElement: {
         prototype: HTMLScLineItemsProviderElement;
@@ -5083,7 +5517,19 @@ declare global {
         prototype: HTMLScLoginFormElement;
         new (): HTMLScLoginFormElement;
     };
+    interface HTMLScLoginProviderElementEventMap {
+        "scSetLoggedIn": boolean;
+        "scSetCustomer": { email: string; name?: string };
+    }
     interface HTMLScLoginProviderElement extends Components.ScLoginProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScLoginProviderElementEventMap>(type: K, listener: (this: HTMLScLoginProviderElement, ev: ScLoginProviderCustomEvent<HTMLScLoginProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScLoginProviderElementEventMap>(type: K, listener: (this: HTMLScLoginProviderElement, ev: ScLoginProviderCustomEvent<HTMLScLoginProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScLoginProviderElement: {
         prototype: HTMLScLoginProviderElement;
@@ -5095,7 +5541,18 @@ declare global {
         prototype: HTMLScManualPaymentMethodElement;
         new (): HTMLScManualPaymentMethodElement;
     };
+    interface HTMLScMenuElementEventMap {
+        "scSelect": { item: HTMLScMenuItemElement };
+    }
     interface HTMLScMenuElement extends Components.ScMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScMenuElementEventMap>(type: K, listener: (this: HTMLScMenuElement, ev: ScMenuCustomEvent<HTMLScMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScMenuElementEventMap>(type: K, listener: (this: HTMLScMenuElement, ev: ScMenuCustomEvent<HTMLScMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScMenuElement: {
         prototype: HTMLScMenuElement;
@@ -5155,11 +5612,23 @@ declare global {
         prototype: HTMLScOrderConfirmComponentsValidatorElement;
         new (): HTMLScOrderConfirmComponentsValidatorElement;
     };
+    interface HTMLScOrderConfirmProviderElementEventMap {
+        "scOrderPaid": Checkout;
+        "scSetState": string;
+    }
     /**
      * This component listens to the order status
      * and confirms the order when payment is successful.
      */
     interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScOrderConfirmProviderElementEventMap>(type: K, listener: (this: HTMLScOrderConfirmProviderElement, ev: ScOrderConfirmProviderCustomEvent<HTMLScOrderConfirmProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScOrderConfirmProviderElementEventMap>(type: K, listener: (this: HTMLScOrderConfirmProviderElement, ev: ScOrderConfirmProviderCustomEvent<HTMLScOrderConfirmProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScOrderConfirmProviderElement: {
         prototype: HTMLScOrderConfirmProviderElement;
@@ -5255,7 +5724,19 @@ declare global {
         prototype: HTMLScOrderSubmitElement;
         new (): HTMLScOrderSubmitElement;
     };
+    interface HTMLScOrderSummaryElementEventMap {
+        "scShow": void;
+        "scHide": void;
+    }
     interface HTMLScOrderSummaryElement extends Components.ScOrderSummary, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScOrderSummaryElementEventMap>(type: K, listener: (this: HTMLScOrderSummaryElement, ev: ScOrderSummaryCustomEvent<HTMLScOrderSummaryElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScOrderSummaryElementEventMap>(type: K, listener: (this: HTMLScOrderSummaryElement, ev: ScOrderSummaryCustomEvent<HTMLScOrderSummaryElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScOrderSummaryElement: {
         prototype: HTMLScOrderSummaryElement;
@@ -5273,7 +5754,19 @@ declare global {
         prototype: HTMLScOrdersListElement;
         new (): HTMLScOrdersListElement;
     };
+    interface HTMLScPaginationElementEventMap {
+        "scPrevPage": void;
+        "scNextPage": void;
+    }
     interface HTMLScPaginationElement extends Components.ScPagination, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPaginationElementEventMap>(type: K, listener: (this: HTMLScPaginationElement, ev: ScPaginationCustomEvent<HTMLScPaginationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPaginationElementEventMap>(type: K, listener: (this: HTMLScPaginationElement, ev: ScPaginationCustomEvent<HTMLScPaginationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScPaginationElement: {
         prototype: HTMLScPaginationElement;
@@ -5333,7 +5826,19 @@ declare global {
         prototype: HTMLScPaypalAddMethodElement;
         new (): HTMLScPaypalAddMethodElement;
     };
+    interface HTMLScPaypalButtonsElementEventMap {
+        "scSetState": string;
+        "scPaid": void;
+    }
     interface HTMLScPaypalButtonsElement extends Components.ScPaypalButtons, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPaypalButtonsElementEventMap>(type: K, listener: (this: HTMLScPaypalButtonsElement, ev: ScPaypalButtonsCustomEvent<HTMLScPaypalButtonsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPaypalButtonsElementEventMap>(type: K, listener: (this: HTMLScPaypalButtonsElement, ev: ScPaypalButtonsCustomEvent<HTMLScPaypalButtonsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScPaypalButtonsElement: {
         prototype: HTMLScPaypalButtonsElement;
@@ -5345,7 +5850,22 @@ declare global {
         prototype: HTMLScPaystackAddMethodElement;
         new (): HTMLScPaystackAddMethodElement;
     };
+    interface HTMLScPhoneInputElementEventMap {
+        "scChange": void;
+        "scClear": void;
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+    }
     interface HTMLScPhoneInputElement extends Components.ScPhoneInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPhoneInputElementEventMap>(type: K, listener: (this: HTMLScPhoneInputElement, ev: ScPhoneInputCustomEvent<HTMLScPhoneInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPhoneInputElementEventMap>(type: K, listener: (this: HTMLScPhoneInputElement, ev: ScPhoneInputCustomEvent<HTMLScPhoneInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScPhoneInputElement: {
         prototype: HTMLScPhoneInputElement;
@@ -5372,25 +5892,75 @@ declare global {
         prototype: HTMLScPriceElement;
         new (): HTMLScPriceElement;
     };
+    interface HTMLScPriceChoiceElementEventMap {
+        "scUpdateLineItem": LineItemData1;
+        "scRemoveLineItem": LineItemData1;
+        "scAddEntities": any;
+    }
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPriceChoiceElementEventMap>(type: K, listener: (this: HTMLScPriceChoiceElement, ev: ScPriceChoiceCustomEvent<HTMLScPriceChoiceElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPriceChoiceElementEventMap>(type: K, listener: (this: HTMLScPriceChoiceElement, ev: ScPriceChoiceCustomEvent<HTMLScPriceChoiceElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScPriceChoiceElement: {
         prototype: HTMLScPriceChoiceElement;
         new (): HTMLScPriceChoiceElement;
     };
+    interface HTMLScPriceChoiceContainerElementEventMap {
+        "scChange": void;
+    }
     interface HTMLScPriceChoiceContainerElement extends Components.ScPriceChoiceContainer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPriceChoiceContainerElementEventMap>(type: K, listener: (this: HTMLScPriceChoiceContainerElement, ev: ScPriceChoiceContainerCustomEvent<HTMLScPriceChoiceContainerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPriceChoiceContainerElementEventMap>(type: K, listener: (this: HTMLScPriceChoiceContainerElement, ev: ScPriceChoiceContainerCustomEvent<HTMLScPriceChoiceContainerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScPriceChoiceContainerElement: {
         prototype: HTMLScPriceChoiceContainerElement;
         new (): HTMLScPriceChoiceContainerElement;
     };
+    interface HTMLScPriceChoicesElementEventMap {
+        "scRemoveLineItem": LineItemData1;
+        "scUpdateLineItem": LineItemData1;
+    }
     interface HTMLScPriceChoicesElement extends Components.ScPriceChoices, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPriceChoicesElementEventMap>(type: K, listener: (this: HTMLScPriceChoicesElement, ev: ScPriceChoicesCustomEvent<HTMLScPriceChoicesElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPriceChoicesElementEventMap>(type: K, listener: (this: HTMLScPriceChoicesElement, ev: ScPriceChoicesCustomEvent<HTMLScPriceChoicesElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScPriceChoicesElement: {
         prototype: HTMLScPriceChoicesElement;
         new (): HTMLScPriceChoicesElement;
     };
+    interface HTMLScPriceInputElementEventMap {
+        "scChange": void;
+        "scInput": void;
+        "scFocus": void;
+        "scBlur": void;
+    }
     interface HTMLScPriceInputElement extends Components.ScPriceInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPriceInputElementEventMap>(type: K, listener: (this: HTMLScPriceInputElement, ev: ScPriceInputCustomEvent<HTMLScPriceInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPriceInputElementEventMap>(type: K, listener: (this: HTMLScPriceInputElement, ev: ScPriceInputCustomEvent<HTMLScPriceInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScPriceInputElement: {
         prototype: HTMLScPriceInputElement;
@@ -5438,7 +6008,19 @@ declare global {
         prototype: HTMLScProductItemImageElement;
         new (): HTMLScProductItemImageElement;
     };
+    interface HTMLScProductItemListElementEventMap {
+        "scSearched": ProductsSearchedParams;
+        "scProductsViewed": ProductsViewedParams;
+    }
     interface HTMLScProductItemListElement extends Components.ScProductItemList, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScProductItemListElementEventMap>(type: K, listener: (this: HTMLScProductItemListElement, ev: ScProductItemListCustomEvent<HTMLScProductItemListElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScProductItemListElementEventMap>(type: K, listener: (this: HTMLScProductItemListElement, ev: ScProductItemListCustomEvent<HTMLScProductItemListElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScProductItemListElement: {
         prototype: HTMLScProductItemListElement;
@@ -5456,7 +6038,19 @@ declare global {
         prototype: HTMLScProductItemTitleElement;
         new (): HTMLScProductItemTitleElement;
     };
+    interface HTMLScProductLineItemElementEventMap {
+        "scUpdateQuantity": number;
+        "scRemove": void;
+    }
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScProductLineItemElementEventMap>(type: K, listener: (this: HTMLScProductLineItemElement, ev: ScProductLineItemCustomEvent<HTMLScProductLineItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScProductLineItemElementEventMap>(type: K, listener: (this: HTMLScProductLineItemElement, ev: ScProductLineItemCustomEvent<HTMLScProductLineItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScProductLineItemElement: {
         prototype: HTMLScProductLineItemElement;
@@ -5492,7 +6086,18 @@ declare global {
         prototype: HTMLScProductQuantityElement;
         new (): HTMLScProductQuantityElement;
     };
+    interface HTMLScProductSelectedPriceElementEventMap {
+        "scUpdateLineItem": LineItemData;
+    }
     interface HTMLScProductSelectedPriceElement extends Components.ScProductSelectedPrice, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScProductSelectedPriceElementEventMap>(type: K, listener: (this: HTMLScProductSelectedPriceElement, ev: ScProductSelectedPriceCustomEvent<HTMLScProductSelectedPriceElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScProductSelectedPriceElementEventMap>(type: K, listener: (this: HTMLScProductSelectedPriceElement, ev: ScProductSelectedPriceCustomEvent<HTMLScProductSelectedPriceElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScProductSelectedPriceElement: {
         prototype: HTMLScProductSelectedPriceElement;
@@ -5510,7 +6115,18 @@ declare global {
         prototype: HTMLScProseElement;
         new (): HTMLScProseElement;
     };
+    interface HTMLScProviderElementEventMap {
+        "mountConsumer": any;
+    }
     interface HTMLScProviderElement extends Components.ScProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScProviderElementEventMap>(type: K, listener: (this: HTMLScProviderElement, ev: ScProviderCustomEvent<HTMLScProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScProviderElementEventMap>(type: K, listener: (this: HTMLScProviderElement, ev: ScProviderCustomEvent<HTMLScProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScProviderElement: {
         prototype: HTMLScProviderElement;
@@ -5528,31 +6144,94 @@ declare global {
         prototype: HTMLScPurchaseDownloadsListElement;
         new (): HTMLScPurchaseDownloadsListElement;
     };
+    interface HTMLScQuantitySelectElementEventMap {
+        "scChange": number;
+        "scInput": number;
+        "scFocus": void;
+        "scBlur": void;
+    }
     interface HTMLScQuantitySelectElement extends Components.ScQuantitySelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScQuantitySelectElementEventMap>(type: K, listener: (this: HTMLScQuantitySelectElement, ev: ScQuantitySelectCustomEvent<HTMLScQuantitySelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScQuantitySelectElementEventMap>(type: K, listener: (this: HTMLScQuantitySelectElement, ev: ScQuantitySelectCustomEvent<HTMLScQuantitySelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScQuantitySelectElement: {
         prototype: HTMLScQuantitySelectElement;
         new (): HTMLScQuantitySelectElement;
     };
+    interface HTMLScRadioElementEventMap {
+        "scBlur": void;
+        "scChange": void;
+        "scFocus": void;
+    }
     interface HTMLScRadioElement extends Components.ScRadio, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScRadioElementEventMap>(type: K, listener: (this: HTMLScRadioElement, ev: ScRadioCustomEvent<HTMLScRadioElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScRadioElementEventMap>(type: K, listener: (this: HTMLScRadioElement, ev: ScRadioCustomEvent<HTMLScRadioElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScRadioElement: {
         prototype: HTMLScRadioElement;
         new (): HTMLScRadioElement;
     };
+    interface HTMLScRadioGroupElementEventMap {
+        "scChange": string;
+    }
     interface HTMLScRadioGroupElement extends Components.ScRadioGroup, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScRadioGroupElementEventMap>(type: K, listener: (this: HTMLScRadioGroupElement, ev: ScRadioGroupCustomEvent<HTMLScRadioGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScRadioGroupElementEventMap>(type: K, listener: (this: HTMLScRadioGroupElement, ev: ScRadioGroupCustomEvent<HTMLScRadioGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScRadioGroupElement: {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
     };
+    interface HTMLScRecurringPriceChoiceContainerElementEventMap {
+        "scChange": string;
+    }
     interface HTMLScRecurringPriceChoiceContainerElement extends Components.ScRecurringPriceChoiceContainer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScRecurringPriceChoiceContainerElementEventMap>(type: K, listener: (this: HTMLScRecurringPriceChoiceContainerElement, ev: ScRecurringPriceChoiceContainerCustomEvent<HTMLScRecurringPriceChoiceContainerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScRecurringPriceChoiceContainerElementEventMap>(type: K, listener: (this: HTMLScRecurringPriceChoiceContainerElement, ev: ScRecurringPriceChoiceContainerCustomEvent<HTMLScRecurringPriceChoiceContainerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScRecurringPriceChoiceContainerElement: {
         prototype: HTMLScRecurringPriceChoiceContainerElement;
         new (): HTMLScRecurringPriceChoiceContainerElement;
     };
+    interface HTMLScRichTextElementEventMap {
+        "scChange": void;
+        "scInput": void;
+        "scBlur": void;
+        "scFocus": void;
+    }
     interface HTMLScRichTextElement extends Components.ScRichText, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScRichTextElementEventMap>(type: K, listener: (this: HTMLScRichTextElement, ev: ScRichTextCustomEvent<HTMLScRichTextElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScRichTextElementEventMap>(type: K, listener: (this: HTMLScRichTextElement, ev: ScRichTextCustomEvent<HTMLScRichTextElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScRichTextElement: {
         prototype: HTMLScRichTextElement;
@@ -5564,13 +6243,44 @@ declare global {
         prototype: HTMLScSecureNoticeElement;
         new (): HTMLScSecureNoticeElement;
     };
+    interface HTMLScSelectElementEventMap {
+        "scSearch": string;
+        "scOpen": string;
+        "scClose": string;
+        "scBlur": void;
+        "scFocus": void;
+        "scChange": ChoiceItem;
+        "scScrollEnd": void;
+    }
     interface HTMLScSelectElement extends Components.ScSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScSelectElementEventMap>(type: K, listener: (this: HTMLScSelectElement, ev: ScSelectCustomEvent<HTMLScSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScSelectElementEventMap>(type: K, listener: (this: HTMLScSelectElement, ev: ScSelectCustomEvent<HTMLScSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScSelectElement: {
         prototype: HTMLScSelectElement;
         new (): HTMLScSelectElement;
     };
+    interface HTMLScSessionProviderElementEventMap {
+        "scUpdateOrderState": Checkout;
+        "scUpdateDraftState": Checkout;
+        "scPaid": void;
+        "scSetState": FormStateSetter;
+    }
     interface HTMLScSessionProviderElement extends Components.ScSessionProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScSessionProviderElementEventMap>(type: K, listener: (this: HTMLScSessionProviderElement, ev: ScSessionProviderCustomEvent<HTMLScSessionProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScSessionProviderElementEventMap>(type: K, listener: (this: HTMLScSessionProviderElement, ev: ScSessionProviderCustomEvent<HTMLScSessionProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScSessionProviderElement: {
         prototype: HTMLScSessionProviderElement;
@@ -5618,19 +6328,61 @@ declare global {
         prototype: HTMLScStripeAddMethodElement;
         new (): HTMLScStripeAddMethodElement;
     };
+    interface HTMLScStripeElementElementEventMap {
+        "scPaid": void;
+        "scSetState": FormStateSetter;
+        "scPaymentInfoAdded": PaymentInfoAddedParams;
+    }
     interface HTMLScStripeElementElement extends Components.ScStripeElement, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScStripeElementElementEventMap>(type: K, listener: (this: HTMLScStripeElementElement, ev: ScStripeElementCustomEvent<HTMLScStripeElementElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScStripeElementElementEventMap>(type: K, listener: (this: HTMLScStripeElementElement, ev: ScStripeElementCustomEvent<HTMLScStripeElementElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScStripeElementElement: {
         prototype: HTMLScStripeElementElement;
         new (): HTMLScStripeElementElement;
     };
+    interface HTMLScStripePaymentElementElementEventMap {
+        "scPaid": void;
+        "scSetState": FormStateSetter;
+        "scPaymentInfoAdded": PaymentInfoAddedParams;
+    }
     interface HTMLScStripePaymentElementElement extends Components.ScStripePaymentElement, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScStripePaymentElementElementEventMap>(type: K, listener: (this: HTMLScStripePaymentElementElement, ev: ScStripePaymentElementCustomEvent<HTMLScStripePaymentElementElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScStripePaymentElementElementEventMap>(type: K, listener: (this: HTMLScStripePaymentElementElement, ev: ScStripePaymentElementCustomEvent<HTMLScStripePaymentElementElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScStripePaymentElementElement: {
         prototype: HTMLScStripePaymentElementElement;
         new (): HTMLScStripePaymentElementElement;
     };
+    interface HTMLScStripePaymentRequestElementEventMap {
+        "scFormSubmit": any;
+        "scPaid": void;
+        "scPayError": any;
+        "scSetState": string;
+        "scPaymentRequestLoaded": boolean;
+        "scUpdateOrderState": any;
+    }
     interface HTMLScStripePaymentRequestElement extends Components.ScStripePaymentRequest, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScStripePaymentRequestElementEventMap>(type: K, listener: (this: HTMLScStripePaymentRequestElement, ev: ScStripePaymentRequestCustomEvent<HTMLScStripePaymentRequestElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScStripePaymentRequestElementEventMap>(type: K, listener: (this: HTMLScStripePaymentRequestElement, ev: ScStripePaymentRequestCustomEvent<HTMLScStripePaymentRequestElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScStripePaymentRequestElement: {
         prototype: HTMLScStripePaymentRequestElement;
@@ -5648,7 +6400,19 @@ declare global {
         prototype: HTMLScSubscriptionAdHocConfirmElement;
         new (): HTMLScSubscriptionAdHocConfirmElement;
     };
+    interface HTMLScSubscriptionCancelElementEventMap {
+        "scAbandon": void;
+        "scCancelled": void;
+    }
     interface HTMLScSubscriptionCancelElement extends Components.ScSubscriptionCancel, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScSubscriptionCancelElementEventMap>(type: K, listener: (this: HTMLScSubscriptionCancelElement, ev: ScSubscriptionCancelCustomEvent<HTMLScSubscriptionCancelElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScSubscriptionCancelElementEventMap>(type: K, listener: (this: HTMLScSubscriptionCancelElement, ev: ScSubscriptionCancelCustomEvent<HTMLScSubscriptionCancelElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScSubscriptionCancelElement: {
         prototype: HTMLScSubscriptionCancelElement;
@@ -5678,7 +6442,19 @@ declare global {
         prototype: HTMLScSubscriptionPaymentMethodElement;
         new (): HTMLScSubscriptionPaymentMethodElement;
     };
+    interface HTMLScSubscriptionReactivateElementEventMap {
+        "scRequestClose": 'close-button' | 'keyboard' | 'overlay';
+        "scRefresh": void;
+    }
     interface HTMLScSubscriptionReactivateElement extends Components.ScSubscriptionReactivate, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScSubscriptionReactivateElementEventMap>(type: K, listener: (this: HTMLScSubscriptionReactivateElement, ev: ScSubscriptionReactivateCustomEvent<HTMLScSubscriptionReactivateElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScSubscriptionReactivateElementEventMap>(type: K, listener: (this: HTMLScSubscriptionReactivateElement, ev: ScSubscriptionReactivateCustomEvent<HTMLScSubscriptionReactivateElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScSubscriptionReactivateElement: {
         prototype: HTMLScSubscriptionReactivateElement;
@@ -5708,25 +6484,73 @@ declare global {
         prototype: HTMLScSubscriptionsListElement;
         new (): HTMLScSubscriptionsListElement;
     };
+    interface HTMLScSummaryElementEventMap {
+        "scShow": void;
+        "scHide": void;
+    }
     interface HTMLScSummaryElement extends Components.ScSummary, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScSummaryElementEventMap>(type: K, listener: (this: HTMLScSummaryElement, ev: ScSummaryCustomEvent<HTMLScSummaryElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScSummaryElementEventMap>(type: K, listener: (this: HTMLScSummaryElement, ev: ScSummaryCustomEvent<HTMLScSummaryElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScSummaryElement: {
         prototype: HTMLScSummaryElement;
         new (): HTMLScSummaryElement;
     };
+    interface HTMLScSwitchElementEventMap {
+        "scBlur": void;
+        "scChange": void;
+        "scFocus": void;
+    }
     interface HTMLScSwitchElement extends Components.ScSwitch, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScSwitchElementEventMap>(type: K, listener: (this: HTMLScSwitchElement, ev: ScSwitchCustomEvent<HTMLScSwitchElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScSwitchElementEventMap>(type: K, listener: (this: HTMLScSwitchElement, ev: ScSwitchCustomEvent<HTMLScSwitchElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScSwitchElement: {
         prototype: HTMLScSwitchElement;
         new (): HTMLScSwitchElement;
     };
+    interface HTMLScTabElementEventMap {
+        "scClose": void;
+    }
     interface HTMLScTabElement extends Components.ScTab, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScTabElementEventMap>(type: K, listener: (this: HTMLScTabElement, ev: ScTabCustomEvent<HTMLScTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScTabElementEventMap>(type: K, listener: (this: HTMLScTabElement, ev: ScTabCustomEvent<HTMLScTabElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScTabElement: {
         prototype: HTMLScTabElement;
         new (): HTMLScTabElement;
     };
+    interface HTMLScTabGroupElementEventMap {
+        "scTabHide": string;
+        "scTabShow": string;
+    }
     interface HTMLScTabGroupElement extends Components.ScTabGroup, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScTabGroupElementEventMap>(type: K, listener: (this: HTMLScTabGroupElement, ev: ScTabGroupCustomEvent<HTMLScTabGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScTabGroupElementEventMap>(type: K, listener: (this: HTMLScTabGroupElement, ev: ScTabGroupCustomEvent<HTMLScTabGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScTabGroupElement: {
         prototype: HTMLScTabGroupElement;
@@ -5762,13 +6586,38 @@ declare global {
         prototype: HTMLScTableRowElement;
         new (): HTMLScTableRowElement;
     };
+    interface HTMLScTagElementEventMap {
+        "scClear": ScTag;
+    }
     interface HTMLScTagElement extends Components.ScTag, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScTagElementEventMap>(type: K, listener: (this: HTMLScTagElement, ev: ScTagCustomEvent<HTMLScTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScTagElementEventMap>(type: K, listener: (this: HTMLScTagElement, ev: ScTagCustomEvent<HTMLScTagElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScTagElement: {
         prototype: HTMLScTagElement;
         new (): HTMLScTagElement;
     };
+    interface HTMLScTaxIdInputElementEventMap {
+        "scChange": { number: string; number_type: string };
+        "scInput": Partial<{ number: string; number_type: string }>;
+        "scInputType": string;
+        "scSetState": string;
+    }
     interface HTMLScTaxIdInputElement extends Components.ScTaxIdInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScTaxIdInputElementEventMap>(type: K, listener: (this: HTMLScTaxIdInputElement, ev: ScTaxIdInputCustomEvent<HTMLScTaxIdInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScTaxIdInputElementEventMap>(type: K, listener: (this: HTMLScTaxIdInputElement, ev: ScTaxIdInputCustomEvent<HTMLScTaxIdInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScTaxIdInputElement: {
         prototype: HTMLScTaxIdInputElement;
@@ -5780,13 +6629,39 @@ declare global {
         prototype: HTMLScTextElement;
         new (): HTMLScTextElement;
     };
+    interface HTMLScTextareaElementEventMap {
+        "scChange": void;
+        "scInput": void;
+        "scBlur": void;
+        "scFocus": void;
+    }
     interface HTMLScTextareaElement extends Components.ScTextarea, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScTextareaElementEventMap>(type: K, listener: (this: HTMLScTextareaElement, ev: ScTextareaCustomEvent<HTMLScTextareaElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScTextareaElementEventMap>(type: K, listener: (this: HTMLScTextareaElement, ev: ScTextareaCustomEvent<HTMLScTextareaElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScTextareaElement: {
         prototype: HTMLScTextareaElement;
         new (): HTMLScTextareaElement;
     };
+    interface HTMLScToggleElementEventMap {
+        "scShow": void;
+        "scHide": void;
+    }
     interface HTMLScToggleElement extends Components.ScToggle, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScToggleElementEventMap>(type: K, listener: (this: HTMLScToggleElement, ev: ScToggleCustomEvent<HTMLScToggleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScToggleElementEventMap>(type: K, listener: (this: HTMLScToggleElement, ev: ScToggleCustomEvent<HTMLScToggleElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScToggleElement: {
         prototype: HTMLScToggleElement;
@@ -5908,6 +6783,7 @@ declare global {
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
+        "sc-checkout-test-complete": HTMLScCheckoutTestCompleteElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choice-container": HTMLScChoiceContainerElement;
@@ -6666,6 +7542,25 @@ declare namespace LocalJSX {
           * Toggle line item event
          */
         "onScUpdateLineItem"?: (event: ScCheckoutStockAlertCustomEvent<LineItemData>) => void;
+    }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface ScCheckoutTestComplete {
+        /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus"?: string;
+        /**
+          * The order is paid event.
+         */
+        "onScOrderPaid"?: (event: ScCheckoutTestCompleteCustomEvent<Checkout>) => void;
+        "onScSetState"?: (event: ScCheckoutTestCompleteCustomEvent<string>) => void;
+        /**
+          * Success url.
+         */
+        "successUrl"?: string;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -8231,15 +9126,6 @@ declare namespace LocalJSX {
           * The bump
          */
         "bump"?: Bump;
-        "cdnRoot"?: string;
-        /**
-          * Add line item event
-         */
-        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
-        /**
-          * Remove line item event
-         */
-        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
         /**
           * Should we show the controls
          */
@@ -9146,7 +10032,7 @@ declare namespace LocalJSX {
         /**
           * Stores the price
          */
-        "price"?: string | Price1;
+        "price"?: string | Price;
         "required"?: boolean;
         /**
           * Show the radio/checkbox control
@@ -9420,7 +10306,7 @@ declare namespace LocalJSX {
           * Product metrics
          */
         "metrics"?: ProductMetrics;
-        "prices"?: Price1[];
+        "prices"?: Price[];
         /**
           * Show price range?
          */
@@ -9446,17 +10332,9 @@ declare namespace LocalJSX {
          */
         "fees"?: Fee[];
         /**
-          * Alternative description for the product image
+          * Image attributes.
          */
-        "imageAlt"?: string;
-        /**
-          * Title for the product image
-         */
-        "imageTitle"?: string;
-        /**
-          * Url for the product image
-         */
-        "imageUrl"?: string;
+        "image"?: ImageAttributes;
         /**
           * Recurring interval (i.e. monthly, once, etc.)
          */
@@ -9737,15 +10615,15 @@ declare namespace LocalJSX {
         /**
           * The prices to choose from.
          */
-        "prices"?: Price1[];
+        "prices"?: Price[];
         /**
           * The product.
          */
-        "product"?: Product1;
+        "product"?: Product;
         /**
           * The currently selected price
          */
-        "selectedPrice"?: Price1;
+        "selectedPrice"?: Price;
         /**
           * Should we show the price?
          */
@@ -10175,7 +11053,7 @@ declare namespace LocalJSX {
         /**
           * The subscription to reactivate
          */
-        "subscription"?: Subscription1;
+        "subscription"?: Subscription;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -10714,6 +11592,7 @@ declare namespace LocalJSX {
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
+        "sc-checkout-test-complete": ScCheckoutTestComplete;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choice-container": ScChoiceContainer;
@@ -10953,6 +11832,11 @@ declare module "@stencil/core" {
              * This component listens for stock requirements and displays a dialog to the user.
              */
             "sc-checkout-stock-alert": LocalJSX.ScCheckoutStockAlert & JSXBase.HTMLAttributes<HTMLScCheckoutStockAlertElement>;
+            /**
+             * This component listens to the order status
+             * and confirms the order when payment is successful.
+             */
+            "sc-checkout-test-complete": LocalJSX.ScCheckoutTestComplete & JSXBase.HTMLAttributes<HTMLScCheckoutTestCompleteElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choice-container": LocalJSX.ScChoiceContainer & JSXBase.HTMLAttributes<HTMLScChoiceContainerElement>;

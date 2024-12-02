@@ -25,7 +25,7 @@ class Block extends BaseBlock {
 		// get the current page tab and possible id.
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 
-		return \SureCart::blocks()->render(
+		return \SureCart::block()->render(
 			'blocks/dashboard-tab',
 			[
 				'active' => $tab === $attributes['panel'] ? 'true' : 'false',

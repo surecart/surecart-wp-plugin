@@ -49,10 +49,10 @@ export default () => {
 	const [saving, setSaving] = useState(false);
 	const [currentModal, setCurrentModal] = useState(null);
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createSuccessNotice } = useDispatch(noticesStore);
-
 	const { save } = useSave();
 	const id = useSelect((select) => select(dataStore).selectPageId());
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
 	const {
 		customer,
 		editCustomer,
@@ -95,6 +95,9 @@ export default () => {
 		try {
 			setError(null);
 			await deleteCustomer({ throwOnError: true });
+			createSuccessNotice(__('Deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
 			window.location.assign('admin.php?page=sc-customers');
 		} catch (e) {
 			console.error(e);

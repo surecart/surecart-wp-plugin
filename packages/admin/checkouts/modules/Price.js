@@ -15,10 +15,7 @@ import {
 	ScPriceInput,
 	ScForm,
 } from '@surecart/components-react';
-import {
-	getFeaturedProductMediaAttributes,
-	getMaxStockQuantity,
-} from '@surecart/components';
+import { getMaxStockQuantity } from '@surecart/components';
 import LineItemLabel from '../../ui/LineItemLabel';
 
 export default ({
@@ -31,7 +28,6 @@ export default ({
 	ad_hoc_amount,
 	lineItem,
 }) => {
-	const media = getFeaturedProductMediaAttributes(price?.product);
 	const [open, setOpen] = useState(false);
 	const maxStockQuantity = getMaxStockQuantity(
 		price?.product,
@@ -50,11 +46,9 @@ export default ({
 			<ScTableRow>
 				<ScTableCell>
 					<ScFlex alignItems="center" justifyContent="flex-start">
-						{media?.url ? (
+						{price?.product?.line_item_image?.src ? (
 							<img
-								src={media.url}
-								alt={media.alt}
-								{...(media.title ? { title: media.title } : {})}
+								{...price.product.line_item_image}
 								css={css`
 									width: var(
 										--sc-product-line-item-image-size,

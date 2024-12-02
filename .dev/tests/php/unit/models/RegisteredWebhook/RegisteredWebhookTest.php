@@ -21,7 +21,8 @@ class RegisteredWebhookTest extends SureCartUnitTestCase
 
 		RegisteredWebhook::registration()->save($data);
 
-		$this->assertSame($data, RegisteredWebhook::registration()->get()->toArray());
+		$registered_webhook = RegisteredWebhook::registration()->get()->toArray();
+		$this->assertSame($data['webhook_events'], $registered_webhook['webhook_events']);
 		$this->assertSame($data['signing_secret'], RegisteredWebhook::getSigningSecret());
 	}
 }

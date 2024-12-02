@@ -17,7 +17,6 @@ import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { getSKUText } from '../../../util/products';
 
 const status = {
@@ -70,19 +69,6 @@ export default ({ order, checkout, loading }) => {
 				name="circle"
 			/>
 		);
-	};
-
-	const getImageAttributes = (item) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(
-			item?.price?.product,
-			item?.variant
-		);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
 	};
 
 	const selectedShippingMethod = (
@@ -225,7 +211,7 @@ export default ({ order, checkout, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							{...getImageAttributes(item)}
+							image={item?.image}
 							name={item?.price?.product?.name}
 							priceName={item?.price?.name}
 							variantLabel={
@@ -290,15 +276,29 @@ export default ({ order, checkout, loading }) => {
 
 				{/* Shipping */}
 				{!!checkout?.shipping_amount && (
-					<LineItem
-						label={`${__('Shipping', 'surecart')} ${
-							selectedShippingMethod?.name
-								? `(${selectedShippingMethod?.name})`
-								: ''
-						}`}
-						currency={checkout?.currency}
-						value={checkout?.shipping_amount}
-					/>
+					<span>
+						<LineItem
+							label={`${__('Shipping', 'surecart')} ${
+								selectedShippingMethod?.name
+									? `(${selectedShippingMethod?.name})`
+									: ''
+							}`}
+							currency={checkout?.currency}
+							value={checkout?.shipping_amount}
+						/>
+						{checkout?.selected_shipping_choice?.shipping_method
+							?.name && (
+							<span
+								css={css`
+									font-size: var(--sc-font-size-small);
+									line-height: var(--sc-line-height-dense);
+									color: var(--sc-input-label-color);
+								`}
+							>
+								{`(${checkout?.selected_shipping_choice?.shipping_method?.name})`}
+							</span>
+						)}
+					</span>
 				)}
 
 				{/* Tax */}

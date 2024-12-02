@@ -49,7 +49,7 @@ class OnboardingScriptsController extends AdminModelEditController {
 			)
 		);
 		$this->data['user_email']  = is_user_logged_in() ? wp_get_current_user()->user_email : '';
-		$this->data['success_url'] = esc_url_raw( \SureCart::pages()->url( 'shop' ) );
+		$this->data['success_url'] = esc_url_raw( \SureCart::getUrl()->index( 'products' ) );
 
 		parent::enqueue();
 	}

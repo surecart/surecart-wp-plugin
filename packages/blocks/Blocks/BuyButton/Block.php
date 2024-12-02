@@ -19,18 +19,19 @@ class Block extends BaseBlock {
 
 		$styles = '';
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
-			$styles .= '--primary-background: ' . $attributes['backgroundColor'] . '; ';
+			$styles .= "background-color: {$attributes['backgroundColor']}; ";
 		}
 		if ( ! empty( $attributes['textColor'] ) ) {
-			$styles .= '--primary-color: ' . $attributes['textColor'] . '; ';
+			$styles .= "color: {$attributes['textColor']}; ";
 		}
 
-		return \SureCart::blocks()->render(
+		return \SureCart::block()->render(
 			'blocks/buy-button',
 			[
 				'type'  => $attributes['type'] ?? 'primary',
 				'size'  => $attributes['size'] ?? 'medium',
 				'style' => $styles,
+				'class' => 'sc-button wp-element-button wp-block-button__link sc-button__link',
 				'href'  => $this->href( $attributes['line_items'] ?? [] ),
 				'label' => $attributes['label'] ?? __( 'Buy Now', 'surecart' ),
 			]

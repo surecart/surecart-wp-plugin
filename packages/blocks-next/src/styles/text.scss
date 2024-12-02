@@ -1,0 +1,20 @@
+.sc-text {
+	margin: 0;
+	font-size: var(--font-size);
+	font-weight: var(--font-weight);
+	line-height: var(--line-height);
+	text-align: var(--text-align);
+	color: var(--sc-stacked-list-row-text-color, var(--color));
+
+	&.is-truncated {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&--is-rtl {
+		.text {
+			text-align: right;
+		}
+	}
+}
