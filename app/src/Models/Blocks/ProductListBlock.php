@@ -83,7 +83,7 @@ class ProductListBlock {
 		// build up the query.
 		$this->query_vars = array_filter(
 			array(
-				'post_type'           => 'sc_productt',
+				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => $per_page,
@@ -131,7 +131,7 @@ class ProductListBlock {
 
 		$collection_id = sanitize_text_field( $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? '' );
 
-		// handle collection id send from "sc_productt_collection" shortcode.
+		// handle collection id send from "sc_product_collection" shortcode.
 		if ( ! empty( $collection_id ) ) {
 			$collection_ids = array_unique( array_map( 'sanitize_text_field', explode( ',', $collection_id ) ) );
 
@@ -211,7 +211,7 @@ class ProductListBlock {
 			if ( ! empty( $ids_that_are_strings ) ) {
 				$legacy_ids = get_posts(
 					[
-						'post_type'      => 'sc_productt',
+						'post_type'      => 'sc_product',
 						'status'         => 'publish',
 						'fields'         => 'ids',
 						'posts_per_page' => -1,
