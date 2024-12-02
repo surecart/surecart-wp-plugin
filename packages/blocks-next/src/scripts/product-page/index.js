@@ -9,7 +9,6 @@ import { store, getContext } from '@wordpress/interactivity';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
-const { speak } = wp.a11y;
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
 
@@ -445,16 +444,21 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Handle the quantity change.
 		 */
-		onQuantityChange: (e) => {
+		onQuantityChange: function* (e) {
 			const context = getContext();
 			context.quantity = Math.max(parseInt(e.target.value), 1);
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity decrease.
 		 */
-		onQuantityDecrease: (e) => {
+		onQuantityDecrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -465,13 +469,18 @@ const { state, actions } = store('surecart/product-page', {
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
 
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity increase.
 		 */
-		onQuantityIncrease: (e) => {
+		onQuantityIncrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -480,6 +489,12 @@ const { state, actions } = store('surecart/product-page', {
 
 			const context = getContext();
 			context.quantity = state.quantity + 1;
+
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},
