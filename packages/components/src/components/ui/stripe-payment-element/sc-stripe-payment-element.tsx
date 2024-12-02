@@ -147,7 +147,6 @@ export class ScStripePaymentElement {
 
   /** Update the payment element mode, amount and currency when it changes. */
   createOrUpdateElements() {
-    console.log('createOrUpdateElements')
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
     if (!processorsState.instances.stripe) return;
