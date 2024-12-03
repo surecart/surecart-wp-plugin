@@ -67,7 +67,7 @@ return array(
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IncomingWebhooksRestServiceProvider::class,
 		\SureCart\Rest\RegisteredWebhookRestServiceProvider::class,
-		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
+		\SureCart\Rest\IntegrationsCatalogRestServiceProvider::class,
 		\SureCart\Rest\CancellationActRestServiceProvider::class,
 		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
@@ -213,7 +213,7 @@ return array(
 		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
-		
+
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,

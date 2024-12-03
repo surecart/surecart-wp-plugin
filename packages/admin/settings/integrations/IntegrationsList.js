@@ -3,12 +3,10 @@ import { css, jsx } from '@emotion/react';
 import SettingsTemplate from '../SettingsTemplate';
 import { __ } from '@wordpress/i18n';
 import Suretriggers from './Suretriggers';
-import Provider from './Provider';
+import IntegrationCard from './IntegrationCard';
 import { useEntityRecords } from '@wordpress/core-data';
 export default () => {
-	const { records } = useEntityRecords('surecart', 'integration_provider', {
-		context: 'edit',
-	});
+	const { records } = useEntityRecords('surecart', 'integration_catalog');
 
 	return (
 		<SettingsTemplate
@@ -24,10 +22,11 @@ export default () => {
 						auto-fill,
 						minmax(200px, 1fr)
 					);
+					grid-auto-rows: 1fr; /* Makes all rows equal height */
 				`}
 			>
 				{(records || []).map((record) => (
-					<Provider key={record.id} provider={record} />
+					<IntegrationCard key={record.id} integration={record} />
 				))}
 			</div>
 			<Suretriggers />
