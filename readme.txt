@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -306,6 +306,9 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.1.1 - November 28th, 2024 =
+- Fix: Issue where shipping address was not displaying regions for some countries on the checkout page.
 
 = 3.1.0 - November 26th, 2024 =
 - New: Shipping territories/regions. Create shipping rules for specific states, provinces and territories.
