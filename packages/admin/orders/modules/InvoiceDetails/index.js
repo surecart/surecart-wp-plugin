@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -18,10 +19,14 @@ export default ({ checkout, loading }) => {
 		return null;
 	}
 
-	const invoicePageLink = `${scData?.home_url}/wp-admin/admin.php?page=sc-invoices&action=edit&id=${checkout.invoice.id}`;
+	const invoicePageLink = addQueryArgs('admin.php', {
+		page: 'sc-invoices',
+		action: 'edit',
+		id: checkout.invoice.id,
+   });
 
 	return (
-		<Box title={__('Invoice Information', 'surecart')} loading={loading}>
+		<Box title={__('Invoice', 'surecart')} loading={loading}>
 			<div>
 				<InvoiceStatus status={checkout.invoice.status} />
 				<InvoicePageLink invoicePageLink={invoicePageLink} />
