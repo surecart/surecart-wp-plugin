@@ -24,11 +24,9 @@ export default ({ invoicePageLink }) => {
 			>
 				<PostDropdownButton
 					href={invoicePageLink}
-					target="_blank"
-					rel="noopener noreferrer"
 					icon={
 						<ScIcon
-							name="external-link"
+							name="arrow-right"
 							css={css`
 								margin-left: var(--sc-spacing-small);
 								color: var(--sc-color-gray-300);
@@ -36,7 +34,7 @@ export default ({ invoicePageLink }) => {
 						/>
 					}
 				>
-					{__('View', 'surecart')}
+					{__('View Invoice', 'surecart')}
 				</PostDropdownButton>
 			</div>
 		</PanelRow>
