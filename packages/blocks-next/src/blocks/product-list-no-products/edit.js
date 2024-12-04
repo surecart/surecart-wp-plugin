@@ -9,7 +9,8 @@ const TEMPLATE = [
 		'core/paragraph',
 		{
 			placeholder: __(
-				'Add text or blocks that will display when a query returns no results.'
+				'Add text or blocks that will display when a query returns no products.',
+				'surecart'
 			),
 		},
 	],
@@ -17,9 +18,9 @@ const TEMPLATE = [
 
 export default function QueryNoResultsEdit() {
 	const blockProps = useBlockProps();
-	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
-	} );
+	});
 
-	return <div { ...innerBlocksProps } />;
+	return <div {...innerBlocksProps} />;
 }

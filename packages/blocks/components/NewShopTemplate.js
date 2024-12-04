@@ -236,5 +236,20 @@ export const newShopTemplate = (attributes, childBlocks) => {
 				},
 			},
 		],
+		[
+			'surecart/product-list-no-products',
+			{},
+			[
+				[
+					'core/paragraph',
+					{
+						placeholder: __(
+							'Add text or blocks that will display when a query returns no products.',
+							'surecart'
+						),
+					},
+				],
+			],
+		],
 	].filter(Boolean);
 };

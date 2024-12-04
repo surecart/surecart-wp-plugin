@@ -36,6 +36,11 @@ return [
 <div style="height:80px;width:0px" aria-hidden="true" class="wp-block-spacer"></div>
 <!-- /wp:spacer -->
 <!-- /wp:surecart/product-template -->
+<!-- wp:surecart/product-list-no-products -->
+	<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no products."} -->
+	<p></p>
+	<!-- /wp:paragraph -->
+<!-- /wp:surecart/product-list-no-products -->
 <!-- /wp:surecart/product-list --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column -->
@@ -71,5 +76,10 @@ return [
 <!-- /wp:surecart/product-list --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
+<!-- wp:surecart/product-list-no-products -->
+	<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no products."} -->
+	<p></p>
+	<!-- /wp:paragraph -->
+<!-- /wp:surecart/product-list-no-products -->
 <!-- /wp:columns -->',
 ];

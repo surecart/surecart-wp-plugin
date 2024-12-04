@@ -60,6 +60,11 @@ return [
 <!-- /wp:cover --></div>
 <!-- /wp:group -->
 <!-- /wp:surecart/product-template -->
+<!-- wp:surecart/product-list-no-products -->
+	<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no products."} -->
+	<p></p>
+	<!-- /wp:paragraph -->
+<!-- /wp:surecart/product-list-no-products -->
 <!-- /wp:surecart/product-list --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
