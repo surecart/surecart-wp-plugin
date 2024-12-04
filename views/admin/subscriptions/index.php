@@ -23,6 +23,7 @@
 
 	<?php $table->search_form( __( 'Search Subscriptions', 'surecart' ), 'sc-search-subscriptions' ); ?>
 	<form id="posts-filter" method="get">
+		<?php $table->views(); ?>
 		<?php $table->display(); ?>
 		<div id="ajax-response"></div>
 	</form>

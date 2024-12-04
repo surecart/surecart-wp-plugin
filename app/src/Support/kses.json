@@ -311,6 +311,14 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-test-complete": {
+    "checkout-status": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,
@@ -1002,6 +1010,13 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-trial": {
+    "label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-items": {
     "editable": true,
     "removable": true,
@@ -1109,7 +1124,6 @@
   },
   "sc-order-bump": {
     "bump": true,
-    "cdn-root": true,
     "show-control": true,
     "style": true,
     "id": true,
@@ -1738,9 +1752,7 @@
     "currency": true,
     "editable": true,
     "fees": true,
-    "image-alt": true,
-    "image-title": true,
-    "image-url": true,
+    "image": true,
     "interval": true,
     "max": true,
     "name": true,

@@ -47,20 +47,24 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   z-index: 2;
 }
 
+[class*='wp-block-surecart-'][hidden] {
+  display: none;
+}
+
 :root {
   /** Brand */
-  --sc-color-brand-primary: #01824C;
-  --sc-color-brand-secondary: #2CC965;
-  --sc-color-brand-heading: #002E33;
-  --sc-color-brand-body: #45505F;
-  --sc-color-brand-main-background: #F2FAFC;
-  --sc-color-brand-content-background: #FFFFFF;
-  --sc-color-brand-stroke: #E7ECEE;
-  --sc-color-brand-subheading: #9CA7AB;
-  --sc-color-brand-pastel-pink: #FCF2F7;
-  --sc-color-brand-pastel-orange: #FEF9F6;
-  --sc-color-brand-pastel-purple: #F7F6FE;
-  --sc-color-brand-pastel-green: #E6F9EE;
+  --sc-color-brand-primary: #01824c;
+  --sc-color-brand-secondary: #2cc965;
+  --sc-color-brand-heading: #002e33;
+  --sc-color-brand-body: #45505f;
+  --sc-color-brand-main-background: #f2fafc;
+  --sc-color-brand-content-background: #ffffff;
+  --sc-color-brand-stroke: #e7ecee;
+  --sc-color-brand-subheading: #9ca7ab;
+  --sc-color-brand-pastel-pink: #fcf2f7;
+  --sc-color-brand-pastel-orange: #fef9f6;
+  --sc-color-brand-pastel-purple: #f7f6fe;
+  --sc-color-brand-pastel-green: #e6f9ee;
 
   /** Colors */
   --sc-color-black: #000;
@@ -159,7 +163,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-border-radius-pill: 9999px;
   --sc-shadow-x-small: 0 1px 0 #0d131e0d;
   --sc-shadow-small: 0 1px 2px #0d131e1a;
-  --sc-shadow-medium: 0 0 #000,0 0 #000,0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --sc-shadow-medium: 0 0 #000, 0 0 #000, 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --sc-shadow-large: 0 2px 8px #0d131e1a;
   --sc-shadow-x-large: 0 4px 16px #0d131e1a;
   --sc-spacing-xxx-small: 0.125em;
@@ -178,7 +182,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-transition-fast: 150ms;
   --sc-transition-x-fast: 50ms;
   --sc-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
-  --sc-font-sans: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --sc-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --sc-font-serif: Georgia, 'Times New Roman', serif;
   --sc-font-size-xx-small: 0.625em;
   --sc-font-size-x-small: 0.75em;
@@ -227,7 +231,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --sc-input-height-small: 2.25em;
   --sc-input-height-medium: 2.8em;
-  --sc-input-height-large: 3.0em;
+  --sc-input-height-large: 3em;
   --sc-input-background-color: var(--sc-color-white);
   --sc-input-background-color-hover: var(--sc-color-white);
   --sc-input-background-color-focus: var(--sc-color-white);
@@ -276,7 +280,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-error-text-color: var(--sc-color-danger-500);
   --sc-toggle-size: 1em;
   --sc-toggle-shady-color: var(--sc-color-gray-50);
-  --sc-radio-size:  0.85em;
+  --sc-radio-size: 0.85em;
   --sc-toggle-radio-size: 0.85em;
   --sc-checkbox-size: 1em;
   --sc-overlay-background-color: #37415180;
@@ -293,6 +297,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-tooltip-arrow-size: 5px;
   --sc-tooltip-arrow-start-end-offset: 8px;
   --sc-quantity-control-height: 2em;
+  --sc-quantity-control-height-small: 1.7em;
   --sc-z-index-drawer: 99999;
   --sc-z-index-dialog: 100000;
   --sc-z-index-dropdown: 900;
@@ -717,6 +722,7 @@ sc-checkout [hidden] {
 .surecart-theme-dark sc-heading,
 .surecart-theme-dark sc-form-row,
 .surecart-theme-dark sc-form-control,
+.surecart-theme-dark .sc-form-control,
 .surecart-theme-dark sc-menu-label,
 .surecart-theme-dark sc-customer-details,
 .surecart-theme-dark .menu-item,
@@ -735,7 +741,19 @@ sc-checkout [hidden] {
 .surecart-theme-dark entry-title,
 .surecart-theme-dark sc-toggle,
 .surecart-theme-dark sc-tab-group,
-.surecart-theme-dark sc-login-form
-{
+.surecart-theme-dark sc-login-form {
   color: var(--sc-color-gray-300);
+}
+
+.sc-screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
 }

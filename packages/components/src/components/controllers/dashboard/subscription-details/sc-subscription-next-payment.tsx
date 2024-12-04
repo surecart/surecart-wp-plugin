@@ -112,14 +112,14 @@ export class ScSubscriptionNextPayment {
           <sc-card noPadding borderless>
             {checkout?.line_items?.data.map(item => (
               <sc-product-line-item
-                imageUrl={(item.price?.product as Product)?.image_url}
+                image={(item.price?.product as Product)?.line_item_image}
                 name={(item.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 editable={false}
                 removable={false}
                 quantity={item?.quantity}
-                amount={item?.total_amount}
+                amount={item?.subtotal_amount}
                 currency={item?.price?.currency}
                 interval={intervalString(item?.price)}
                 purchasableStatusDisplay={item?.purchasable_status_display}

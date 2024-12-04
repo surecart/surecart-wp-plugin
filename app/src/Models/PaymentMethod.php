@@ -2,13 +2,14 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasPaymentInstrument;
 use SureCart\Models\Traits\HasPaymentIntent;
 
 /**
- * Payment intent model.
+ * Payment method model.
  */
 class PaymentMethod extends Model {
-	use HasCustomer, HasPaymentIntent;
+	use HasCustomer, HasPaymentIntent, HasPaymentInstrument;
 
 	/**
 	 * Rest API endpoint
@@ -60,5 +61,14 @@ class PaymentMethod extends Model {
 		$this->fireModelEvent( 'detached' );
 
 		return $this;
+	}
+
+	/**
+	 * Get the translated payment method name.
+	 *
+	 * @return string
+	 */
+	public function getPaymentMethodNameAttribute(): string {
+		return $this->payment_instrument->display_name ?? '';
 	}
 }

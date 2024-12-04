@@ -20,7 +20,7 @@ class CheckoutPermissionsTest extends SureCartUnitTestCase {
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Permissions\PermissionsServiceProvider::class,
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
-				\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
 				\SureCart\Activation\ActivationServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class,
 			]

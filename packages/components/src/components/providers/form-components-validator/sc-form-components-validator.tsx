@@ -47,6 +47,9 @@ export class ScFormComponentsValidator {
   /** Is there an invoice memo */
   @State() hasInvoiceMemo: boolean;
 
+  /** Is there a trial line item */
+  @State() hasTrialLineItem: boolean;
+
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
@@ -78,6 +81,11 @@ export class ScFormComponentsValidator {
       this.addInvoiceDetails();
       this.addInvoiceMemo();
     }
+
+    // automatically add trial line item if we have a trial amount.
+    if (!!checkoutState.checkout?.trial_amount) {
+      this.addTrialLineItem();
+    }
   }
 
   @Watch('hasAddress')
@@ -95,6 +103,7 @@ export class ScFormComponentsValidator {
     this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
     this.hasInvoiceDetails = !!this.el.querySelector('sc-invoice-details');
     this.hasInvoiceMemo = !!this.el.querySelector('sc-invoice-memo');
+    this.hasTrialLineItem = !!this.el.querySelector('sc-line-item-trial');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -132,6 +141,22 @@ export class ScFormComponentsValidator {
     if (!!customerName) {
       customerName.required = true;
       return;
+    }
+
+    // if we have a customer first name field, require that.
+    const customerFirstName = this.el.querySelector('sc-customer-firstname');
+    const customerLastName = this.el.querySelector('sc-customer-lastname');
+
+    // if we have a customer first name field, require that.
+    if (!!customerFirstName) {
+      customerFirstName.required = true;
+
+      // if we have a customer last name field, require that.
+      if (!!customerLastName) {
+        customerLastName.required = true;
+      }
+
+      return; // we're done here.
     }
 
     // require the name and show the name input.
@@ -252,6 +277,20 @@ export class ScFormComponentsValidator {
     invoiceDetails.appendChild(invoiceMemo);
 
     this.hasInvoiceMemo = true;
+  }
+
+  addTrialLineItem() {
+    if (this.hasTrialLineItem) return;
+
+    const subtotal = this.el.querySelector('sc-line-item-total[total=subtotal]');
+    const trialItem = document.createElement('sc-line-item-trial');
+
+    if (!subtotal) return;
+
+    // Insert the trial item before the coupon form.
+    subtotal.parentNode.insertBefore(trialItem, subtotal.nextSibling);
+
+    this.hasTrialLineItem = true;
   }
 
   render() {

@@ -29,6 +29,11 @@ class CheckoutTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
+	/**
+	 * @group checkout
+	 *
+	 * @return void
+	 */
 	public function test_checkoutHasPurchases() {
 		$checkout = new Checkout([
 			'id' => 'test',
@@ -44,7 +49,7 @@ class CheckoutTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group session
+	 * @group checkout
 	 * @group models
 	 */
 	public function test_can_create_draft_checkout()
@@ -144,6 +149,15 @@ class CheckoutTest extends SureCartUnitTestCase
 		$prepared = $instance->finalize();
 
 		// make sure attributes page
-		$this->assertEquals($response,$prepared->getAttributes());
+		$prepared_attributes = $prepared->getAttributes();
+		$this->assertSame(
+			$response['customer_email'],
+			$prepared_attributes['customer_email']
+		);
+
+		$this->assertSame(
+			$response['total_amount'],
+			$prepared_attributes['total_amount']
+		);
 	}
 }

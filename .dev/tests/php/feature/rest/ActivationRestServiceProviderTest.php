@@ -48,7 +48,6 @@ class ActivationRestServiceProviderTest extends SureCartUnitTestCase{
 
 	/**
 	 * @dataProvider requestProvider
-	 * @group failing
 	 */
 	public function test_permissions($caps, $method, $route, $status){
 		//mock the requests in the container

@@ -20,6 +20,13 @@
 
 
 
+#### Parameters
+
+| Name   | Type  | Description |
+| ------ | ----- | ----------- |
+| `type` | `any` |             |
+| `args` | `{}`  |             |
+
 #### Returns
 
 Type: `Promise<void>`

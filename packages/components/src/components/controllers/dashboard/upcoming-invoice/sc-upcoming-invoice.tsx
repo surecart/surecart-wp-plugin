@@ -214,7 +214,7 @@ export class ScUpcomingInvoice {
       <div class="new-plan">
         <div class="new-plan__heading">{this.renderName(this.price)}</div>
         <div>
-          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.total_amount}></sc-format-number> {intervalString(this.price)}
+          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.subtotal_amount}></sc-format-number> {intervalString(this.price)}
         </div>
         <div style={{ fontSize: 'var(--sc-font-size-small)' }}>{this.renderRenewalText()}</div>
       </div>
@@ -237,7 +237,7 @@ export class ScUpcomingInvoice {
       <Fragment>
         {checkout?.line_items?.data.map(item => (
           <sc-product-line-item
-            imageUrl={(item.price?.product as Product)?.image_url}
+            image={(item.price?.product as Product)?.line_item_image}
             name={(item.price?.product as Product)?.name}
             priceName={item?.price?.name}
             variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
@@ -245,7 +245,7 @@ export class ScUpcomingInvoice {
             purchasableStatusDisplay={item?.purchasable_status_display}
             removable={false}
             quantity={item?.quantity}
-            amount={item?.total_amount}
+            amount={item?.subtotal_amount}
             currency={item?.price?.currency}
             interval={intervalString(item?.price)}
             onScUpdateQuantity={e => this.updateQuantity(e)}
@@ -280,6 +280,7 @@ export class ScUpcomingInvoice {
 
         <sc-coupon-form
           discount={checkout?.discount}
+          discountAmount={checkout?.discount_amount}
           label={__('Add Coupon Code', 'surecart')}
           onScApplyCoupon={e => this.applyCoupon(e)}
           error={this.couponError}

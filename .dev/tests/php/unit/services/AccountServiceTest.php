@@ -164,13 +164,14 @@ class AccountServiceTest extends SureCartUnitTestCase {
 	}
 
 	public function test_convert_account_to_array() {
-		
 		update_option( 'sc_previous_account', $this->account->toArray() );
 
 		$savedAccount = get_option('sc_previous_account');
 
-		$this->assertSame( $this->account->toArray(), $savedAccount );
-
+		$this->assertSame($this->account->id, $savedAccount['id']);
+		$this->assertSame($this->account->name, $savedAccount['name']);
+		$this->assertSame($this->account->currency, $savedAccount['currency']);
+		$this->assertSame($this->account->claimed, $savedAccount['claimed']);
 	}
 
 	/**

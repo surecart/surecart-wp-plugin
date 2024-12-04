@@ -1,12 +1,15 @@
 {
 	"name": "surecart/add-to-cart-button",
+	"apiVersion": 3,
 	"title": "Add To Cart Button",
 	"description": "Display a button to add a specific price to the cart.",
-	"category": "surecart",
+	"category": "surecart-product-page",
 	"keywords": ["name", "customer"],
 	"textdomain": "surecart",
 	"parent": null,
+	"version": "1.0.0",
 	"supports": {
+		"interactivity": true,
 		"html": false
 	},
 	"attributes": {
@@ -17,14 +20,6 @@
 		"ad_hoc_label": {
 			"type": "string",
 			"default": "Amount"
-		},
-		"type": {
-			"type": "string",
-			"default": "primary"
-		},
-		"size": {
-			"type": "string",
-			"default": "medium"
 		},
 		"backgroundColor": {
 			"type": "string"
@@ -52,5 +47,17 @@
 		}
 	},
 	"script": "surecart-components",
-	"style": "surecart-themes-default"
+	"style": [
+		"wp-block-button",
+		"surecart-wp-button",
+		"surecart-themes-default",
+		"surecart-input-group",
+		"surecart-spinner",
+		"surecart-button",
+		"surecart-form-control",
+		"surecart-form-group",
+		"surecart-text"
+	],
+	"viewScript": ["wp-url", "wp-api-fetch", "wp-i18n", "wp-a11y"],
+	"viewScriptModule": ["@surecart/product-page", "@surecart/cart"]
 }

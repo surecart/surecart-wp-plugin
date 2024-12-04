@@ -4,6 +4,7 @@ namespace SureCartBlocks\Blocks\Product;
 
 use SureCart\Models\Product;
 use SureCartBlocks\Blocks\BaseBlock;
+use SureCart\Models\Form;
 
 /**
  * Product Block
@@ -29,10 +30,16 @@ abstract class ProductBlock extends BaseBlock {
 		}
 
 		$product_state[ $product->id ] = $product->getInitialPageState();
+		$form = \SureCart::forms()->getDefault();
 
 		sc_initial_state(
 			[
 				'product' => $product_state,
+				'checkout' => [
+					'formId'  => $form ? $form->ID : '',
+					'mode'    => Form::getMode( $form->ID ),
+					'persist' => 'browser',
+				],
 			]
 		);
 	}

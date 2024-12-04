@@ -18,6 +18,13 @@ class Block extends BaseBlock {
 	public static $instance = 0;
 
 	/**
+	 * Block attributes.
+	 *
+	 * @var array
+	 */
+	public $attributes = [];
+
+	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.

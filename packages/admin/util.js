@@ -29,7 +29,7 @@ export const maybeConvertAmount = (amount, currency) => {
 		'XPF',
 		'XPT',
 		'XTS',
-	].includes(currency.toUpperCase())
+	].includes(currency?.toUpperCase())
 		? amount
 		: amount / 100;
 };
@@ -55,9 +55,12 @@ export const getHumanDiscount = (coupon, currency = 'usd') => {
 export const getFormattedPrice = ({ amount, currency = 'usd' }) => {
 	const converted = maybeConvertAmount(parseFloat(amount), currency);
 
+	const minimumFractionDigits = amount % 1 == 0 ? 0 : 2;
+
 	return `${new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency,
+		minimumFractionDigits,
 	}).format(parseFloat(converted.toFixed(2)))}`;
 };
 
@@ -119,6 +122,6 @@ export const createErrorString = (error) => {
 		.map((error) => error?.message)
 		.filter((n) => n);
 	return `${error?.message || __('Something went wrong.', 'surecart')}${
-		additionalErrors?.length && ` ${additionalErrors.join('. ')}`
+		!!additionalErrors?.length ? ` ${additionalErrors.join('. ')}` : ''
 	}`;
 };

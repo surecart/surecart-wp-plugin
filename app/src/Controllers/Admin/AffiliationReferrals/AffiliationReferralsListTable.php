@@ -285,7 +285,7 @@ class AffiliationReferralsListTable extends ListTable {
 		}
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr__( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order->id ) ); ?>">
+		<a aria-label="<?php esc_attr_e( 'View Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $checkout->order->id ) ); ?>">
 			#<?php echo esc_html( $checkout->order->number ?? $checkout->order->id ); ?>
 		</a>
 		<?php

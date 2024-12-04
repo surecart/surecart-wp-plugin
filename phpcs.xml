@@ -14,7 +14,7 @@
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
 
 	<rule ref="WordPress-Core">
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 		<exclude name="Squiz.Commenting.FileComment" />
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
