@@ -312,6 +312,48 @@ export class ScOrder {
             <span slot="currency">{(checkout?.charge as Charge)?.currency}</span>
           </sc-line-item>
         )}
+        {!!checkout?.refunded_amount && (
+          <Fragment>
+            <sc-line-item
+              style={{
+                'width': '100%',
+                '--price-size': 'var(--sc-font-size-x-large)',
+              }}
+            >
+              <span slot="description">{__('Refunded', 'surecart')}</span>
+              <span slot="price">
+                <sc-format-number 
+                  style={{
+                      'font-weight': 'var(--sc-font-weight-semibold)',
+                      color: 'var(--sc-color-gray-800)',
+                  }} 
+                  type="currency" 
+                  currency={checkout?.currency} 
+                  value={checkout?.refunded_amount}
+                ></sc-format-number>
+              </span>
+            </sc-line-item>
+            <sc-line-item
+            style={{
+              'width': '100%',
+              '--price-size': 'var(--sc-font-size-x-large)',
+            }}
+          >
+            <span slot="title">{__('Net Payment', 'surecart')}</span>
+            <span slot="price">
+              <sc-format-number 
+                style={{
+                    'font-weight': 'var(--sc-font-weight-semibold)',
+                    color: 'var(--sc-color-gray-800)',
+                }} 
+                type="currency" 
+                currency={checkout?.currency} 
+                value={checkout?.net_paid_amount}
+              ></sc-format-number>
+            </span>
+          </sc-line-item>
+        </Fragment>
+        )}
       </Fragment>
     );
   }
