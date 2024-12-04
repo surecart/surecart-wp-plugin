@@ -8,6 +8,7 @@ import * as checkoutErrors from '@blocks/CheckoutErrors';
 import * as column from '@blocks/Column';
 import * as columns from '@blocks/Columns';
 import * as coupon from '@blocks/Coupon';
+import * as trialLineItem from '@blocks/TrialLineItem';
 import * as divider from '@blocks/Divider';
 import * as donation from '@blocks/Donation';
 import * as productDonation from '@blocks/ProductDonation';
@@ -106,4 +107,5 @@ registerBlocks([
 	shippingLineItem,
 	orderBumps,
 	conditionalForm,
+	trialLineItem,
 ]);

@@ -181,6 +181,15 @@ add_action(
 		);
 
 		// instead, use a static loader that injects the script at runtime.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/a11y/index.asset.php';
+		wp_register_script_module(
+			'@surecart/a11y',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/a11y/index.js',
+			array(),
+			$static_assets['version']
+		);
+
+		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/dropdown/index.asset.php';
 		wp_register_script_module(
 			'@surecart/dropdown',
@@ -232,6 +241,10 @@ add_action(
 				],
 				[
 					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/a11y',
 					'import' => 'dynamic',
 				],
 			],
@@ -351,6 +364,10 @@ add_action(
 				),
 				array(
 					'id'     => '@surecart/facebook-events',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/a11y',
 					'import' => 'dynamic',
 				),
 			),

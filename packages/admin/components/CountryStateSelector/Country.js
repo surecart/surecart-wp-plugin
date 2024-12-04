@@ -8,16 +8,16 @@ import { _n } from '@wordpress/i18n';
 export default ({ country, value, onChange }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const territories = (country[2] || []).filter(
-		(region) => region[1] && region[1] !== 'undefined' // might be a bug in the data
+		(region) => region[1] && region[1] !== 'undefined'
 	);
 	const territoriesCount = territories.length || 0;
 
-	// when the country is selected, also select the territories
+	// when the country is selected, set states as empty array
 	const onSelectCountry = (checked) => {
 		if (checked) {
 			onChange({
 				country: country[1],
-				states: country[2].map((state) => state[1]),
+				states: [],
 			});
 		} else {
 			onChange(null);
@@ -25,11 +25,36 @@ export default ({ country, value, onChange }) => {
 	};
 
 	const onChangeTerritory = (checked, region) => {
-		if (checked) {
+		// If country is fully selected and we're unchecking a state
+		if (isCountryFullySelected && !checked) {
+			// Select all states except the one being unchecked
+			const allStatesExceptCurrent = territories
+				.map((territory) => territory[1])
+				.filter((state) => state !== region);
+
 			onChange({
 				country: country[1],
-				states: [...(value?.states || []), region],
+				states: allStatesExceptCurrent,
 			});
+			return;
+		}
+
+		if (checked) {
+			// Get new states array
+			const newStates = [...(value?.states || []), region];
+
+			// If all states are selected, set to empty array
+			if (newStates.length === territoriesCount) {
+				onChange({
+					country: country[1],
+					states: [],
+				});
+			} else {
+				onChange({
+					country: country[1],
+					states: newStates,
+				});
+			}
 		} else {
 			onChange({
 				country: country[1],
@@ -39,6 +64,9 @@ export default ({ country, value, onChange }) => {
 			});
 		}
 	};
+
+	// Helper to determine if all states are selected
+	const isCountryFullySelected = value?.states?.length === 0;
 
 	return (
 		<div
@@ -63,7 +91,11 @@ export default ({ country, value, onChange }) => {
 						padding: var(--sc-spacing-large);
 					`}
 					__nextHasNoMarginBottom
-					checked={value?.country === country[1]}
+					checked={
+						value?.country === country[1] &&
+						(value?.states?.length === 0 ||
+							value?.states?.length === territoriesCount)
+					}
 					onChange={onSelectCountry}
 				/>
 
@@ -100,9 +132,10 @@ export default ({ country, value, onChange }) => {
 						return (
 							<CheckboxControl
 								label={region[0]}
-								checked={(value?.states || []).includes(
-									region[1]
-								)}
+								checked={
+									isCountryFullySelected ||
+									(value?.states || []).includes(region[1])
+								}
 								onChange={(checked) =>
 									onChangeTerritory(checked, region[1])
 								}
