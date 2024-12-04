@@ -21,6 +21,7 @@ const ALLOWED_BLOCKS = [
 	'surecart/divider',
 	'surecart/line-items',
 	'surecart/tax-line-item',
+	'surecart/trial-line-item',
 	'surecart/total',
 	'surecart/bump-line-item',
 	'surecart/subtotal',
@@ -54,6 +55,7 @@ export default ({ attributes, setAttributes }) => {
 						text: __('Subtotal', 'surecart'),
 					},
 				],
+				['surecart/trial-line-item', {}],
 				[
 					'surecart/coupon',
 					{

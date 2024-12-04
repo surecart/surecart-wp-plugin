@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-13T16:54:25",
+  "timestamp": "2024-12-02T21:40:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -874,6 +874,7 @@
         "sc-checkout",
         "sc-checkout-form-errors",
         "sc-checkout-mollie-payment",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-custom-order-price-input",
         "sc-dashboard-module",
@@ -916,6 +917,9 @@
           "sc-alert"
         ],
         "sc-checkout-mollie-payment": [
+          "sc-alert"
+        ],
+        "sc-checkout-test-complete": [
           "sc-alert"
         ],
         "sc-coupon-form": [
@@ -2263,6 +2267,7 @@
         "sc-cart-form-submit",
         "sc-charges-list",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
@@ -2331,6 +2336,9 @@
           "sc-button"
         ],
         "sc-checkout-stock-alert": [
+          "sc-button"
+        ],
+        "sc-checkout-test-complete": [
           "sc-button"
         ],
         "sc-coupon-form": [
@@ -5466,7 +5474,8 @@
         "sc-form-components-validator",
         "sc-order-confirm-provider",
         "sc-session-provider",
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-checkout-test-complete"
       ],
       "dependencyGraph": {
         "sc-checkout": [
@@ -5479,7 +5488,8 @@
           "sc-form-components-validator",
           "sc-order-confirm-provider",
           "sc-session-provider",
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-checkout-test-complete"
         ],
         "sc-alert": [
           "sc-icon"
@@ -5544,7 +5554,8 @@
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
           "sc-divider",
-          "sc-invoice-memo"
+          "sc-invoice-memo",
+          "sc-line-item-trial"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -5630,6 +5641,10 @@
         "sc-invoice-memo": [
           "sc-skeleton"
         ],
+        "sc-line-item-trial": [
+          "sc-line-item",
+          "sc-format-number"
+        ],
         "sc-order-confirm-provider": [
           "sc-dialog",
           "sc-icon",
@@ -5639,6 +5654,13 @@
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
+        ],
+        "sc-checkout-test-complete": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
         ]
       }
     },
@@ -6016,6 +6038,135 @@
         ],
         "sc-checkout": [
           "sc-checkout-stock-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/controllers/checkout-form/checkout-test-complete/checkout-test-complete.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-test-complete",
+      "readme": "# sc-checkout-test-complete\n\n\n",
+      "docs": "This component listens to the order status\nand confirms the order when payment is successful.",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checkoutStatus",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "checkout-status",
+          "reflectToAttr": false,
+          "docs": "Checkout status to listen and do payment related stuff.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "Success url.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scOrderPaid",
+          "detail": "Checkout",
+          "bubbles": true,
+          "complexType": {
+            "original": "Checkout",
+            "resolved": "Checkout",
+            "references": {
+              "Checkout": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::Checkout"
+              }
+            }
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "The order is paid event.",
+          "docsTags": []
+        },
+        {
+          "event": "scSetState",
+          "detail": "string",
+          "bubbles": true,
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-checkout"
+      ],
+      "dependencies": [
+        "sc-dialog",
+        "sc-icon",
+        "sc-dashboard-module",
+        "sc-alert",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-checkout-test-complete": [
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-checkout": [
+          "sc-checkout-test-complete"
         ]
       }
     },
@@ -12001,6 +12152,7 @@
         "sc-cancel-survey",
         "sc-charges-list",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
@@ -12050,6 +12202,9 @@
           "sc-dashboard-module"
         ],
         "sc-checkout-stock-alert": [
+          "sc-dashboard-module"
+        ],
+        "sc-checkout-test-complete": [
           "sc-dashboard-module"
         ],
         "sc-customer-details": [
@@ -12341,6 +12496,7 @@
       "dependents": [
         "sc-cancel-dialog",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-license",
         "sc-login-provider",
         "sc-order-confirm-provider",
@@ -12367,6 +12523,9 @@
           "sc-dialog"
         ],
         "sc-checkout-stock-alert": [
+          "sc-dialog"
+        ],
+        "sc-checkout-test-complete": [
           "sc-dialog"
         ],
         "sc-license": [
@@ -14719,7 +14878,8 @@
         "sc-line-item-invoice-due-date",
         "sc-line-item-invoice-receipt-download",
         "sc-divider",
-        "sc-invoice-memo"
+        "sc-invoice-memo",
+        "sc-line-item-trial"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
@@ -14735,7 +14895,8 @@
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
           "sc-divider",
-          "sc-invoice-memo"
+          "sc-invoice-memo",
+          "sc-line-item-trial"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -14832,6 +14993,10 @@
         ],
         "sc-invoice-memo": [
           "sc-skeleton"
+        ],
+        "sc-line-item-trial": [
+          "sc-line-item",
+          "sc-format-number"
         ],
         "sc-checkout": [
           "sc-form-components-validator"
@@ -16332,6 +16497,7 @@
         "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
+        "sc-line-item-trial",
         "sc-order",
         "sc-order-bump",
         "sc-order-confirmation-totals",
@@ -16381,6 +16547,9 @@
           "sc-format-number"
         ],
         "sc-line-item-total": [
+          "sc-format-number"
+        ],
+        "sc-line-item-trial": [
           "sc-format-number"
         ],
         "sc-order": [
@@ -16902,6 +17071,7 @@
         "sc-charges-list",
         "sc-checkout-mollie-payment",
         "sc-checkout-stock-alert",
+        "sc-checkout-test-complete",
         "sc-coupon-form",
         "sc-customer-details",
         "sc-dialog",
@@ -16987,6 +17157,9 @@
           "sc-icon"
         ],
         "sc-checkout-stock-alert": [
+          "sc-icon"
+        ],
+        "sc-checkout-test-complete": [
           "sc-icon"
         ],
         "sc-coupon-form": [
@@ -19262,6 +19435,7 @@
         "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
+        "sc-line-item-trial",
         "sc-line-items",
         "sc-order",
         "sc-order-confirmation-details",
@@ -19298,6 +19472,9 @@
           "sc-line-item"
         ],
         "sc-line-item-total": [
+          "sc-line-item"
+        ],
+        "sc-line-item-trial": [
           "sc-line-item"
         ],
         "sc-line-items": [
@@ -19784,6 +19961,60 @@
         ],
         "sc-order-confirmation-totals": [
           "sc-line-item-total"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/controllers/checkout-form/line-item-trial/sc-line-item-trial.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-line-item-trial",
+      "readme": "# sc-line-item-trial\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The label for the trial item",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [
+        "sc-line-item",
+        "sc-format-number"
+      ],
+      "dependencyGraph": {
+        "sc-line-item-trial": [
+          "sc-line-item",
+          "sc-format-number"
+        ],
+        "sc-form-components-validator": [
+          "sc-line-item-trial"
         ]
       }
     },

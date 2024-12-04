@@ -81,6 +81,7 @@ Type: `Promise<boolean>`
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
 - [sc-session-provider](../../../providers/session-provider)
 - [sc-block-ui](../../../ui/block-ui)
+- [sc-checkout-test-complete](../checkout-test-complete)
 
 ### Graph
 ```mermaid
@@ -95,6 +96,7 @@ graph TD;
   sc-checkout --> sc-order-confirm-provider
   sc-checkout --> sc-session-provider
   sc-checkout --> sc-block-ui
+  sc-checkout --> sc-checkout-test-complete
   sc-alert --> sc-icon
   sc-checkout-stock-alert --> sc-dialog
   sc-checkout-stock-alert --> sc-dashboard-module
@@ -134,6 +136,7 @@ graph TD;
   sc-form-components-validator --> sc-line-item-invoice-receipt-download
   sc-form-components-validator --> sc-divider
   sc-form-components-validator --> sc-invoice-memo
+  sc-form-components-validator --> sc-line-item-trial
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -186,12 +189,19 @@ graph TD;
   sc-line-item-invoice-receipt-download --> sc-skeleton
   sc-line-item-invoice-receipt-download --> sc-icon
   sc-invoice-memo --> sc-skeleton
+  sc-line-item-trial --> sc-line-item
+  sc-line-item-trial --> sc-format-number
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module
   sc-order-confirm-provider --> sc-alert
   sc-order-confirm-provider --> sc-button
   sc-session-provider --> sc-line-items-provider
+  sc-checkout-test-complete --> sc-dialog
+  sc-checkout-test-complete --> sc-icon
+  sc-checkout-test-complete --> sc-dashboard-module
+  sc-checkout-test-complete --> sc-alert
+  sc-checkout-test-complete --> sc-button
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

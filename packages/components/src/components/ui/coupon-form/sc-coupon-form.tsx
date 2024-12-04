@@ -4,6 +4,7 @@ import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { getHumanDiscount, getHumanDiscountRedeemableStatus } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
+import { state as checkoutState } from '../../../store/checkout';
 
 /**
  * @part base - The elements base wrapper.
@@ -150,7 +151,16 @@ export class ScCouponForm {
     }
   }
 
+  renderTrialText() {
+    if (this.discount?.coupon?.duration === 'once') {
+      return __('Applies on first payment', 'surecart');
+    }
+    return __('Starting on first payment', 'surecart');
+  }
+
   render() {
+    const isFreeTrial = !!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due;
+
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
     }
@@ -196,8 +206,8 @@ export class ScCouponForm {
                   {this.translateHumanDiscountWithDuration(humanDiscount)}
                 </span>
               )}
-              <span slot="price">
-                <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
+              <span slot={isFreeTrial ? 'price-description' : 'price'}>
+                {isFreeTrial ? this.renderTrialText() : <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>}
               </span>
             </Fragment>
           ) : (

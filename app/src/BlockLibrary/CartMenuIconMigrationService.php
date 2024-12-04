@@ -44,8 +44,8 @@ class CartMenuIconMigrationService {
 	 * @return string
 	 */
 	public function render(): string {
-		$cart_menu_icon_block_attrs  = wp_json_encode( $this->attributes, JSON_FORCE_OBJECT );
-		$this->block_html .= '<!-- wp:surecart/cart-menu-icon-button ' . $cart_menu_icon_block_attrs . ' /-->';
+		$cart_menu_icon_block_attrs = wp_json_encode( $this->attributes, JSON_FORCE_OBJECT );
+		$this->block_html          .= '<!-- wp:surecart/cart-menu-icon-button ' . $cart_menu_icon_block_attrs . ' /-->';
 
 		return do_blocks( $this->block_html );
 	}

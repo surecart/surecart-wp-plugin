@@ -1,6 +1,7 @@
 <?php
 namespace Surecart\Tests\Migrations;
 
+use SureCart\Request\RequestService;
 use SureCart\Database\UpdateMigrationServiceProvider;
 
 class UpdateMigrationServiceProviderTest extends \WP_UnitTestCase {
@@ -10,13 +11,21 @@ class UpdateMigrationServiceProviderTest extends \WP_UnitTestCase {
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
 				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
+				\SureCart\Account\AccountServiceProvider::class,
 			]
 		], false);
 	}
 
 	public function test_has_default_template_cart(){
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
 		$this->assertNotEmpty( $template->content );
 		$this->assertEmpty($template->wp_id);

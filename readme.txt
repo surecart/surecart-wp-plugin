@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.0.2
+Stable tag: 3.1.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -306,6 +306,52 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.1.2 - December 2nd, 2024 =
+- Improvement: Added clarification text on checkout page for when a coupon is applied after a trial starts.
+- Improvement: Add trial line item block to checkout for better totals calculation.
+- Improvement: Added automatic cache exclusions for SiteGround Optimizer.
+- Improvement: Progressively load accessibility scripts on front-end pages only when speech is needed.
+- Improvement: Add css to product page block to prevent themes from applying unwanted negative margins.
+- Improvement: Added PHP filters for the number formatter to allow easier customization of currency formatting.
+- Improvement: Disabled loading of slideshow script on product pages without multiple images.
+- Fix: Resolved obscure bug where cents were not formatting correctly with currencies using commas instead of dots when a required PHP library was missing.
+- Fix: Fixed incorrect line item amounts displayed when updating subscription plans with coupons.
+- Fix: Fixed issue where customer dashboard subscription filter was missing when only one plan type was available.
+
+= 3.1.1 - November 28th, 2024 =
+- Fix: Issue where shipping address was not displaying regions for some countries on the checkout page.
+
+= 3.1.0 - November 26th, 2024 =
+- New: Shipping territories/regions. Create shipping rules for specific states, provinces and territories.
+- Improvement: Change the "Change Price" button on edit subscription to just "Change" to avoid confusion as you can change to a different product.
+- Fix: Make minimum version of WordPress required 6.6.
+- Fix: Recent orders on the customer dashboard should show checkout entered name instead of customer name.
+
+= 3.0.5 - November 22nd, 2024 =
+- Fix: Issue with XML exports and ZipWP compatibility.
+
+= 3.0.4 - November 21st, 2024 =
+- Fix: Issue where connecting an existing site would take you to the dashboard without instructions during onboarding.
+- Fix: Issue if there are more than 10 product taxonomies, there is a possibility the you may not be able to select it as the product shop page filter.
+- Fix: Issue where creating a new product could sometimes show a blank screen after saving.
+- Fix: PHP notices that could happen due to migration from 2.x to 3.x.
+- Fix: Deprecation warning with PHP version 8.2+.
+
+= 3.0.3 - November 20th, 2024 =
+- New: Add Taxonomy Support to Products
+- New: Add ability to filter by any taxonomy on product list front-end.
+- New: Extra security setting to prevent non-admin users from making test payments.
+- Improvement: Lazy load javascript modules on front-end for improved performance.
+- Fix: Customer dashbaord template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
+- Fix: Issue where product form was wrapping some non-content elementor templates.
+- Fix: Issue with Mollie and Paystack payment redirects sometimes not creating WordPress user accounts.
+- Fix: Opacity of backdrop on cart in firefox.
+- Fix: Potential race condition in cart due to module imports under certain caching conditions.
+- Fix: Upgrade staging site warning should no longer show if you have alread upgraded to 3.0.
+- Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
+- Fix: Issue with non-cached items sometimes loading on front-end if there is a server timeout.
+- Fix: Minor security issue.
 
 = 3.0.2 - November 13th, 2024 =
 - Improvement: WordPress 6.7 compatibility.

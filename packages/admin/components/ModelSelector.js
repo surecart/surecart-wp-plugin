@@ -16,6 +16,7 @@ export default (props) => {
 		exclude = [],
 		onChangeQuery = () => {},
 		renderChoices,
+		fetchOnLoad = false,
 	} = props;
 	const [query, setQuery] = useState(null);
 	const [models, setModels] = useState([]);
@@ -88,6 +89,12 @@ export default (props) => {
 		if (query === null || isLoading) return;
 		fetchData();
 	}, [page, perPage, query]);
+
+	useEffect(() => {
+		if (fetchOnLoad) {
+			fetchData();
+		}
+	}, [fetchOnLoad]);
 
 	// if the query changes, reset the page to 1.
 	useEffect(() => {

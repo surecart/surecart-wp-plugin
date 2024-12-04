@@ -350,7 +350,7 @@ class ProductListMigrationService {
 			return;
 		}
 
-		$attributes = $this->attributes['pagination_size'] ? [
+		$attributes = ! empty( $this->attributes['pagination_size'] ) ? [
 			'style' => [
 				'typography' => [
 					'fontSize' => $this->attributes['pagination_size'],

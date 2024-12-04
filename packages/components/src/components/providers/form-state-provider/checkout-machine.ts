@@ -29,6 +29,7 @@ export const checkoutMachine = createMachine({
         PAYING: 'paying',
         REJECT: 'draft',
         PAID: 'confirming',
+        TEST_MODE_RESTRICTED: 'test_mode_restricted',
       },
     },
     paying: {
@@ -56,6 +57,7 @@ export const checkoutMachine = createMachine({
         REDIRECT: 'redirecting',
       },
     },
+    test_mode_restricted: {},
     redirecting: {},
     failure: {
       on: {

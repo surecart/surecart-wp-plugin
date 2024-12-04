@@ -6,11 +6,9 @@ import { store, getContext } from '@wordpress/interactivity';
 /**
  * Internal dependencies.
  */
-import { addCheckoutLineItem } from '@surecart/checkout-service';
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
-const { speak } = wp.a11y;
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
 
@@ -300,7 +298,7 @@ const { state, actions } = store('surecart/product-page', {
 	},
 
 	actions: {
-		addToCart: async (e) => {
+		*addToCart(e) {
 			const hasContextBusy = Object.values(e.submitter.dataset).includes(
 				'context.busy'
 			);
@@ -313,7 +311,12 @@ const { state, actions } = store('surecart/product-page', {
 			try {
 				context.busy = true;
 
-				const checkout = await addCheckoutLineItem(state.lineItem);
+				const { addCheckoutLineItem } = yield import(
+					/* webpackIgnore: true */
+					'@surecart/checkout-service'
+				);
+
+				const checkout = yield* addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
 
 				// no busy context, wait to toggle cart
@@ -357,11 +360,13 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Handle submit callback.
 		 */
-		handleSubmit(e) {
+		*handleSubmit(e) {
 			e.preventDefault(); // prevent the form from submitting.
+			e.stopPropagation(); // prevent the event from bubbling up.
+
 			// if the button hdoes not have a value, add to cart.
 			if (!e?.submitter?.value) {
-				return actions.addToCart(e);
+				return yield actions.addToCart(e);
 			}
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);
@@ -439,16 +444,21 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Handle the quantity change.
 		 */
-		onQuantityChange: (e) => {
+		onQuantityChange: function* (e) {
 			const context = getContext();
 			context.quantity = Math.max(parseInt(e.target.value), 1);
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity decrease.
 		 */
-		onQuantityDecrease: (e) => {
+		onQuantityDecrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -459,13 +469,18 @@ const { state, actions } = store('surecart/product-page', {
 			if (state.isQuantityDisabled) return;
 			context.quantity = Math.max(1, state.quantity - 1);
 
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 
 		/**
 		 * Handle the quantity increase.
 		 */
-		onQuantityIncrease: (e) => {
+		onQuantityIncrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -474,6 +489,12 @@ const { state, actions } = store('surecart/product-page', {
 
 			const context = getContext();
 			context.quantity = state.quantity + 1;
+
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(`Quantity set to ${context.quantity}`, 'polite');
 		},
 	},

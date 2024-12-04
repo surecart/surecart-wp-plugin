@@ -2,7 +2,8 @@
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
 			array(
-				'class' => 'wp-block-button ' . esc_attr( $width_class ),
+				'class'            => 'wp-block-button ' . esc_attr( $width_class ),
+				'data-sc-block-id' => 'product-buy-button',
 			)
 		)
 	);
