@@ -56,6 +56,11 @@ class HealthService {
 					'value'   => ! empty( $total_failed ) ? sprintf( __( '%d Unprocessed webhooks', 'surecart' ), $total_failed ) : __( 'Working', 'surecart' ),
 					'private' => false,
 				),
+				'encryption_key'      => array(
+					'label'   => __( 'Encryption Key', 'surecart' ),
+					'value'   => defined( 'SURECART_ENCRYPTION_KEY' ) ? __( 'Defined', 'surecart' ) : __( 'Not defined', 'surecart' ),
+					'private' => false,
+				),
 			),
 		);
 		return $debug_info;
