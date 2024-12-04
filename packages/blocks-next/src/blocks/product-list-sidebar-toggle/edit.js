@@ -20,7 +20,7 @@ export default ({ attributes: { label }, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<Icon name="filter" />
+				<Icon name="sliders" className="sc-sidebar-toggle__icon" />
 				{label || __('Filter', 'surecart')}
 			</div>
 		</>
