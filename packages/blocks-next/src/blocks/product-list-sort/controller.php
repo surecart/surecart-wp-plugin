@@ -1,9 +1,4 @@
 <?php
-
-if ( sc_is_product_list_empty( $block ) ) {
-	return;
-}
-
 global $sc_query_id;
 $params         = \SureCart::block()->urlParams( 'products' );
 $query_order_by = $params->getArg( 'orderby' ) ?? $block->context['query']['orderBy'] ?? '';

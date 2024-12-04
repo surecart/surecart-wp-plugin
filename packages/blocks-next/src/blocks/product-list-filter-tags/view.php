@@ -1,11 +1,5 @@
 <?php
-
 global $sc_query_id;
-
-if ( sc_is_product_list_empty( $block ) ) {
-	return;
-}
-
 $params         = \SureCart::block()->urlParams( 'products' );
 $all_taxonomies = $params->getAllTaxonomyArgs();
 

@@ -1,9 +1,4 @@
 <?php
-
-if ( sc_is_product_list_empty( $block ) ) {
-	return;
-}
-
 global $sc_query_id;
 
 $taxonomy_slug   = $attributes['taxonomy'] ?? 'sc_collection';

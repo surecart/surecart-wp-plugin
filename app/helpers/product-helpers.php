@@ -205,18 +205,3 @@ function sc_unique_product_list_id( $prefix = '' ) {
 	static $id_counter = -1;
 	return $prefix . (string) ++$id_counter;
 }
-
-/**
- * Check if the product list is empty.
- *
- * @param array $block The block.
- *
- * @return bool
- */
-function sc_is_product_list_empty( $block ) {
-	$controller = new ProductListBlock( $block );
-	$query      = $controller->query();
-	$products   = $query->products;
-
-	return empty( $products ) || ! $query->have_posts();
-}
