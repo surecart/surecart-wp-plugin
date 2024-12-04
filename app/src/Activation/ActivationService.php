@@ -31,8 +31,8 @@ class ActivationService {
 	/**
 	 * Get dependencies for this service.
 	 *
-	 * @param \SureCart\Permissions\RolesService   $roles Roles service.
-	 * @param \SureCart\WordPress\Pages\PageSeeder $seeder Seeder service.
+	 * @param \SureCart\Permissions\RolesService        $roles Roles service.
+	 * @param \SureCart\WordPress\Pages\PageSeeder      $seeder Seeder service.
 	 * @param \SureCart\Permissions\SureCartSaltService $salt Salt service.
 	 */
 	public function __construct( \SureCart\Permissions\RolesService $roles, \SureCart\WordPress\Pages\PageSeeder $seeder, \SureCart\Permissions\SureCartSaltService $salt ) {

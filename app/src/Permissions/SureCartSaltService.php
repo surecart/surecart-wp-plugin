@@ -14,12 +14,12 @@ class SureCartSaltService {
 	 * @return string|null
 	 */
 	public function getWpConfigPath() {
-		// Default location within ABSPATH
+		// Default location within ABSPATH.
 		if ( file_exists( ABSPATH . 'wp-config.php' ) ) {
 			return ABSPATH . 'wp-config.php';
 		}
 
-		// One directory above ABSPATH
+		// One directory above ABSPATH.
 		elseif ( file_exists( dirname( ABSPATH ) . '/wp-config.php' ) ) {
 			return dirname( ABSPATH ) . '/wp-config.php';
 		}
@@ -28,6 +28,11 @@ class SureCartSaltService {
 		return null;
 	}
 
+	/**
+	 * Write the salt to the wp-config.php file.
+	 *
+	 * @return void
+	 */
 	public function write() {
 		// If the wp-config.php file does not exist, return.
 		if ( empty( $this->getWpConfigPath() ) ) {
@@ -48,6 +53,7 @@ class SureCartSaltService {
 		try {
 			$service = new WPConfigTransformService( $this->getWpConfigPath() );
 		} catch ( \Exception $e ) {
+			var_dump( $e->getMessage() );
 			// silently fail.
 			return;
 		}
