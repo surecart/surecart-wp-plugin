@@ -1841,6 +1841,12 @@ export namespace Components {
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
     }
+    interface ScLineItemTrial {
+        /**
+          * The label for the trial item
+         */
+        "label": string;
+    }
     interface ScLineItems {
         /**
           * Is the line item editable?
@@ -5488,6 +5494,12 @@ declare global {
         prototype: HTMLScLineItemTotalElement;
         new (): HTMLScLineItemTotalElement;
     };
+    interface HTMLScLineItemTrialElement extends Components.ScLineItemTrial, HTMLStencilElement {
+    }
+    var HTMLScLineItemTrialElement: {
+        prototype: HTMLScLineItemTrialElement;
+        new (): HTMLScLineItemTrialElement;
+    };
     interface HTMLScLineItemsElement extends Components.ScLineItems, HTMLStencilElement {
     }
     var HTMLScLineItemsElement: {
@@ -6846,6 +6858,7 @@ declare global {
         "sc-line-item-shipping": HTMLScLineItemShippingElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
+        "sc-line-item-trial": HTMLScLineItemTrialElement;
         "sc-line-items": HTMLScLineItemsElement;
         "sc-line-items-provider": HTMLScLineItemsProviderElement;
         "sc-login-form": HTMLScLoginFormElement;
@@ -8996,6 +9009,12 @@ declare namespace LocalJSX {
         "checkout"?: Checkout;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
+    }
+    interface ScLineItemTrial {
+        /**
+          * The label for the trial item
+         */
+        "label"?: string;
     }
     interface ScLineItems {
         /**
@@ -11655,6 +11674,7 @@ declare namespace LocalJSX {
         "sc-line-item-shipping": ScLineItemShipping;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
+        "sc-line-item-trial": ScLineItemTrial;
         "sc-line-items": ScLineItems;
         "sc-line-items-provider": ScLineItemsProvider;
         "sc-login-form": ScLoginForm;
@@ -11906,6 +11926,7 @@ declare module "@stencil/core" {
             "sc-line-item-shipping": LocalJSX.ScLineItemShipping & JSXBase.HTMLAttributes<HTMLScLineItemShippingElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
+            "sc-line-item-trial": LocalJSX.ScLineItemTrial & JSXBase.HTMLAttributes<HTMLScLineItemTrialElement>;
             "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;
             "sc-line-items-provider": LocalJSX.ScLineItemsProvider & JSXBase.HTMLAttributes<HTMLScLineItemsProviderElement>;
             "sc-login-form": LocalJSX.ScLoginForm & JSXBase.HTMLAttributes<HTMLScLoginFormElement>;

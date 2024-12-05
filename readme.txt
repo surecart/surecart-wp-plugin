@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -306,6 +306,18 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.1.2 - December 2nd, 2024 =
+- Improvement: Added clarification text on checkout page for when a coupon is applied after a trial starts.
+- Improvement: Add trial line item block to checkout for better totals calculation.
+- Improvement: Added automatic cache exclusions for SiteGround Optimizer.
+- Improvement: Progressively load accessibility scripts on front-end pages only when speech is needed.
+- Improvement: Add css to product page block to prevent themes from applying unwanted negative margins.
+- Improvement: Added PHP filters for the number formatter to allow easier customization of currency formatting.
+- Improvement: Disabled loading of slideshow script on product pages without multiple images.
+- Fix: Resolved obscure bug where cents were not formatting correctly with currencies using commas instead of dots when a required PHP library was missing.
+- Fix: Fixed incorrect line item amounts displayed when updating subscription plans with coupons.
+- Fix: Fixed issue where customer dashboard subscription filter was missing when only one plan type was available.
 
 = 3.1.1 - November 28th, 2024 =
 - Fix: Issue where shipping address was not displaying regions for some countries on the checkout page.
