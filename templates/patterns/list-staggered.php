@@ -37,8 +37,8 @@ return [
 <!-- /wp:spacer -->
 <!-- /wp:surecart/product-template -->
 <!-- wp:surecart/product-list-no-products -->
-	<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no products."} -->
-	<p></p>
+	<!-- wp:paragraph {"align":"center","placeholder":"Add text or blocks that will display when a query returns no products."} -->
+		<p class="has-text-align-center">We couldn\'t find any products that match your criteria. Explore other options!</p>
 	<!-- /wp:paragraph -->
 <!-- /wp:surecart/product-list-no-products -->
 <!-- /wp:surecart/product-list --></div>
@@ -76,10 +76,5 @@ return [
 <!-- /wp:surecart/product-list --></div>
 <!-- /wp:group --></div>
 <!-- /wp:column --></div>
-<!-- wp:surecart/product-list-no-products -->
-	<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no products."} -->
-	<p></p>
-	<!-- /wp:paragraph -->
-<!-- /wp:surecart/product-list-no-products -->
 <!-- /wp:columns -->',
 ];

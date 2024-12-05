@@ -247,6 +247,11 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							'Add text or blocks that will display when a query returns no products.',
 							'surecart'
 						),
+						align: 'center',
+						content: __(
+							"We couldn't find any products that match your criteria. Explore other options!",
+							'surecart'
+						),
 					},
 				],
 			],
