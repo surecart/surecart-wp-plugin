@@ -72,12 +72,22 @@ export default ({ integration }) => {
 									font-size: 12px;
 								`}
 							>
-								{__('Enabled', 'surecart')}
+								{integration?.is_pre_installed
+									? __('Pre-installed', 'surecart')
+									: __('Enabled', 'surecart')}
 							</div>
 						)}
 					</div>
 				</div>
-				{integration?.summary}
+
+				<div
+					css={css`
+						color: var(--sc-color-gray-500);
+						line-height: 1.3;
+					`}
+				>
+					{integration?.summary}
+				</div>
 			</div>
 		</a>
 	);

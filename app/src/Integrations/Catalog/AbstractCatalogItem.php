@@ -19,6 +19,31 @@ abstract class AbstractCatalogItem implements ArrayAccess, JsonSerializable, Arr
 	protected $attributes = [];
 
 	/**
+	 * The priority.
+	 */
+	public function getPriority() {
+		return 10;
+	}
+
+	/**
+	 * Get the plugin slug for the integration.
+	 *
+	 * @return string
+	 */
+	public function getPluginSlug() {
+		return '';
+	}
+
+	/**
+	 * Get the plugin file name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getPluginFileName() {
+		return '';
+	}
+
+	/**
 	 * Get the model attributes
 	 *
 	 * @return array
@@ -99,6 +124,40 @@ abstract class AbstractCatalogItem implements ArrayAccess, JsonSerializable, Arr
 		);
 
 		return $attributes;
+	}
+
+	/**
+	 * Is the plugin installed?
+	 *
+	 * @return boolean
+	 */
+	public function getIsPluginInstalled() {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		if ( empty( $this->getPluginFileName() ) ) {
+			return false;
+		}
+		$all_plugins = get_plugins();
+		return isset( $all_plugins[ $this->getPluginFileName() ] );
+	}
+
+	/**
+	 * Is the integration enabled?
+	 *
+	 * @return boolean
+	 */
+	public function getIsEnabled() {
+		return false;
+	}
+
+	/**
+	 * Is the integration pre-installed?
+	 *
+	 * @return boolean
+	 */
+	public function getIsPreInstalled() {
+		return false;
 	}
 
 	/**

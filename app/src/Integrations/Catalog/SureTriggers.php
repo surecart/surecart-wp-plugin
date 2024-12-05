@@ -7,6 +7,13 @@ namespace SureCart\Integrations\Catalog;
  */
 class SureTriggers extends AbstractCatalogItem {
 	/**
+	 * The priority.
+	 */
+	public function getPriority() {
+		return 0;
+	}
+
+	/**
 	 * Get the id for the integration.
 	 *
 	 * @return string
@@ -30,7 +37,7 @@ class SureTriggers extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getCategories() {
-		return [ __( 'Automation', 'surecart' ), __( 'Recommended', 'surecart' ) ];
+		return [ __( 'Recommended', 'surecart' ), __( 'Automation', 'surecart' ) ];
 	}
 
 	/**
@@ -43,15 +50,6 @@ class SureTriggers extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the video id for the integration.
-	 *
-	 * @return string
-	 */
-	public function getYouTubeVideoId() {
-		return 'im1AS07locA';
-	}
-
-	/**
 	 * Get the description for the integration.
 	 *
 	 * @return string
@@ -60,29 +58,46 @@ class SureTriggers extends AbstractCatalogItem {
 		ob_start();
 		?>
 		<h2><?php esc_html_e( 'Overview', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'LearnDash is a powerful learning management system that allows you to create and manage courses, lessons, and quizzes.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'SureTriggers is a powerful automation platform built specifically to work with SureCart, allowing you to create sophisticated workflows and integrate with hundreds of popular apps.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Range Check-ins reduce meeting load by keeping every team member informed and connected day-to-day. Check-in asynchronously on a personal and professional level so the whole team feels in sync, wherever you are.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'As a native integration, SureTriggers seamlessly connects with SureCart to automate your entire business workflow. Trigger actions based on customer purchases, subscription changes, abandoned carts, and more.', 'surecart' ); ?></p>
 
-		<p><?php esc_html_e( 'With the Linear and Range integration, you can pull Linear activity directly into your Range Check-ins.', 'surecart' ); ?></p>
-		<p><?php esc_html_e( 'Once you’ve connected your Linear and Range workspaces, any Linear issues that you create, comment on, or update will appear in your Range sidebar as suggested items to include in your Check-in.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Connect SureCart with popular tools like email marketing platforms, CRMs, and membership sites. Send personalized emails, update customer records, and manage user access automatically based on SureCart activities.', 'surecart' ); ?></p>
 
-		<p><?php esc_html_e( 'Messages like “Completed” and “Assigned” will appear alongside Linear issues in Range when you make an update to one of your assigned issues.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Build powerful automation workflows without any coding knowledge. Use pre-built templates or create custom workflows that perfectly match your business needs.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'Configure', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'In Range, visit Settings > Integrations and locate Linear. Click Set this up and complete the authorization step. Once you’ve connected your team’s Linear and Range workspaces, every team member will need to click Link under Settings > Integrations > Linear in Range to start syncing their Linear activity to Range.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Install and activate both SureTriggers and SureCart plugins. Navigate to SureTriggers to start creating your automation workflows. Choose from dozens of pre-built SureCart triggers and actions, or create your own custom automation sequences.', 'surecart' ); ?></p>
 		<?php
 		return ob_get_clean();
 	}
 
 	/**
-	 * Is the integration external?
+	 * Get the plugin slug for the integration.
+	 *
+	 * @return string
+	 */
+	public function getPluginSlug() {
+		return 'suretriggers';
+	}
+
+	/**
+	 * Get the plugin file name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getPluginFileName() {
+		return 'suretriggers/suretriggers.php';
+	}
+
+	/**
+	 * Is the integration enabled?
 	 *
 	 * @return boolean
 	 */
-	public function getIsExternal() {
-		return true;
+	public function getIsEnabled() {
+		return defined( 'SURETRIGGERS_VERSION' );
 	}
 
 	/**
@@ -95,12 +110,12 @@ class SureTriggers extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Is the integration enabled?
+	 * Get the youtube video id for the integration.
 	 *
-	 * @return boolean
+	 * @return string
 	 */
-	public function getIsEnabled() {
-		return defined( 'SURE_TRIGGERS_FILE' );
+	public function getYouTubeVideoId() {
+		return 'im1AS07locA';
 	}
 
 	/**

@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 
-export default () => {
+export default ({ record }) => {
 	useEffect(() => {
+		if (!record?.is_enabled) {
+			return;
+		}
+
 		if (window?.SureTriggers) {
 			window.SureTriggers.init({
 				st_embed_url: 'https://app.suretriggers.com/embed-login',
@@ -28,16 +32,18 @@ export default () => {
 				},
 			});
 		}
-	}, []);
+	}, [record]);
 
 	return (
-		<div
-			style={{
-				width: '100%',
-				height: '100%',
-				minHeight: '800px',
-			}}
-			id="suretriggers-iframe-wrapper"
-		></div>
+		record?.is_enabled && (
+			<div
+				style={{
+					width: '100%',
+					height: '100%',
+					minHeight: '800px',
+				}}
+				id="suretriggers-iframe-wrapper"
+			></div>
+		)
 	);
 };

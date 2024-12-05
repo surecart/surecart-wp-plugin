@@ -5,14 +5,60 @@ import {
 	ScBreadcrumbs,
 	ScButton,
 	ScCard,
+	ScIcon,
 } from '@surecart/components-react';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { useLink, useLocation } from '../../router';
 import { useEntityRecord } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { ExternalLink } from '@wordpress/components';
+import PluginActivationButton from './PluginActivationButton';
+
+const ActivateButton = ({ record, onActivated }) => {
+	if (
+		record?.plugin_slug &&
+		record?.plugin_file_name &&
+		!record?.is_plugin_active
+	) {
+		return (
+			<PluginActivationButton
+				plugin={record?.plugin_file_name}
+				slug={record?.plugin_slug}
+				onActivated={onActivated}
+			/>
+		);
+	}
+
+	if (!!record?.activation_link) {
+		return (
+			<ScButton
+				type="primary"
+				href={record?.activation_link}
+				target="_blank"
+			>
+				{__('Enable', 'surecart')}
+				<ScIcon name="external-link" slot="suffix" />
+			</ScButton>
+		);
+	}
+
+	return <ScButton type="primary">{__('Enable', 'surecart')}</ScButton>;
+};
+
+const ActivatedButton = ({ record }) => {
+	return (
+		<ScButton type="text" disabled>
+			{record?.is_pre_installed
+				? __('Pre-installed', 'surecart')
+				: __('Enabled', 'surecart')}
+		</ScButton>
+	);
+};
 
 export default ({ id }) => {
 	const location = useLocation();
+	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const { record } = useEntityRecord('surecart', 'integration_catalog', id);
 	const { id: _, ...rest } = location.params;
 	const { href, onClick } = useLink({ ...rest });
@@ -25,13 +71,15 @@ export default ({ id }) => {
 		// Component doesn't exist, silently fail
 	}
 
+	const showDetails = !(IntegrationComponent && record?.is_enabled);
+
 	return (
 		<div
 			css={css`
 				display: grid;
 				gap: 1.5em;
-				max-width: 600px;
 				margin: auto;
+				width: 100%;
 			`}
 		>
 			<ScBreadcrumbs>
@@ -195,32 +243,66 @@ export default ({ id }) => {
 							</div>
 						)}
 
-						<ScButton
-							type="primary"
+						<div
 							css={css`
 								margin-left: auto;
 							`}
 						>
-							Enable
-						</ScButton>
+							{record?.is_enabled ? (
+								<ActivatedButton record={record} />
+							) : (
+								<ActivateButton
+									record={record}
+									onActivated={invalidateResolutionForStore}
+								/>
+							)}
+						</div>
 					</div>
 
-					{!record?.is_enabled && record?.you_tube_video_id && (
-						<iframe
-							width="560"
-							height="315"
-							src={`https://www.youtube.com/embed/${record?.you_tube_video_id}`}
-							title="YouTube video player"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							referrerpolicy="strict-origin-when-cross-origin"
-							allowfullscreen
-						></iframe>
+					{showDetails && !!record?.you_tube_video_id && (
+						<div
+							css={css`
+								width: 100%;
+								min-width: 400px;
+								max-width: 800px;
+							`}
+						>
+							<div
+								css={css`
+									position: relative;
+									width: 100%;
+									overflow: hidden;
+									padding-top: 56.25%;
+								`}
+							>
+								<iframe
+									width="560"
+									height="315"
+									style={{
+										position: 'absolute',
+										top: 0,
+										left: 0,
+										right: 0,
+										width: '100%',
+										height: '100%',
+										border: 'none',
+									}}
+									src={`https://www.youtube.com/embed/${record?.you_tube_video_id}`}
+									title="YouTube video player"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									referrerpolicy="strict-origin-when-cross-origin"
+									allowfullscreen
+								></iframe>
+							</div>
+						</div>
 					)}
 
-					{IntegrationComponent && <IntegrationComponent />}
+					{IntegrationComponent && (
+						<IntegrationComponent record={record} />
+					)}
 
-					{!record?.is_enabled && (
+					{showDetails && (
 						<div
 							css={css`
 								h1,
