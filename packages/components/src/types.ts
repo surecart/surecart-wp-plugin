@@ -723,6 +723,8 @@ export interface Checkout extends Object {
   pdf_url?: string;
   refunded_amount?: number;
   net_paid_amount?: number;
+  credited_balance_amount?: number;
+  tax_reverse_charged_amount?: number;
 }
 
 export interface ShippingMethod {
