@@ -16,7 +16,7 @@ class FormPostTypeServiceTest extends SureCartUnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\WordPress\Posts\PostServiceProvider::class,
-				\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
 			]
 		], false);
