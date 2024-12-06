@@ -5,6 +5,8 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 
 const { actions: cartActions } = store('surecart/cart');
 
+const { speak } = wp.a11y;
+
 /**
  * Check if the link is valid.
  */
@@ -178,7 +180,15 @@ const { state } = store('surecart/product-list', {
 			state.searching = false;
 		},
 		/** Toggle the sidebar. */
-		*toggleSidebar() {
+		*toggleSidebar(event) {
+			// no-op if not enter or space key
+			if (
+				event?.type === 'keydown' &&
+				!['Enter', 'Space'].includes(event.key)
+			) {
+				return true;
+			}
+
 			if (window.matchMedia('(max-width: 480px)').matches) {
 				cartActions.toggle();
 			}

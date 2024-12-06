@@ -1,0 +1,13 @@
+.wp-block-surecart-product-list-sort-radio-group {
+	width: 100%;
+	.wp-block-surecart-product-list-sort-radio {
+		cursor: pointer;
+		text-decoration: none !important;
+		input[type="radio"] {
+			cursor: pointer;
+		}
+		label {
+			cursor: pointer;
+		}
+	}
+}
