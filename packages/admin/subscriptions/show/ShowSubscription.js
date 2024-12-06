@@ -185,10 +185,12 @@ export default () => {
 	const renderCancelButton = () => {
 		// completed.
 		if ('completed' === subscription?.status) return null;
+
 		// canceled but not paused.
 		if ('canceled' === subscription?.status && !subscription?.restore_at)
 			return null;
 
+		// scheduled for cancelation.
 		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
 			return (
 				<>
@@ -202,8 +204,12 @@ export default () => {
 			);
 		}
 
-		// If paused, show cancel paused modal.
-		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
+		// paused(canceled) or scheduled paused.
+		if (
+			(subscription?.cancel_at_period_end ||
+				subscription?.status === 'canceled') &&
+			subscription?.restore_at
+		) {
 			return (
 				<ScMenuItem onClick={() => setModal('cancel_paused')}>
 					{__('Cancel Subscription', 'surecart')}
