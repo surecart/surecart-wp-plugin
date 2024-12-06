@@ -88,6 +88,42 @@ class Astra extends AbstractCatalogItem {
 	}
 
 	/**
+	 * Get the docs url for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://wpastra.com/docs/integrate-surecart-with-astra/';
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'Astra';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://wpastra.com/support/';
+	}
+
+	/**
+	 * Get the website url for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return 'https://wpastra.com/';
+	}
+
+	/**
 	 * Get the plugin file name for the integration.
 	 *
 	 * @return string

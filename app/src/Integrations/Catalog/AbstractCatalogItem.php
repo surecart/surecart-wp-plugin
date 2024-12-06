@@ -44,6 +44,33 @@ abstract class AbstractCatalogItem implements ArrayAccess, JsonSerializable, Arr
 	}
 
 	/**
+	 * Get the documentation link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return '';
+	}
+
+	/**
+	 * Get the website link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return '';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return '';
+	}
+
+	/**
 	 * Get the model attributes
 	 *
 	 * @return array

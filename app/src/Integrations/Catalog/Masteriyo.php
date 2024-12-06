@@ -107,7 +107,7 @@ class Masteriyo extends AbstractCatalogItem {
 	 *
 	 * @return boolean
 	 */
-	public function getActivationLink() {
+	public function getEnableLink() {
 		return admin_url( 'admin.php?page=masteriyo#/add-ons' );
 	}
 

@@ -80,7 +80,7 @@ class LearnDash extends AbstractCatalogItem {
 	 *
 	 * @return boolean
 	 */
-	public function getActivationLink() {
+	public function getEnableLink() {
 		return 'https://learndash.com/';
 	}
 

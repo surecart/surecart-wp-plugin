@@ -67,24 +67,6 @@ class IndependentAnalytics extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginSlug() {
-		return 'independent-analytics';
-	}
-
-	/**
-	 * Get the plugin file name for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginFileName() {
-		return 'independent-analytics/independent-analytics.php';
-	}
-
-	/**
 	 * Get the logo URL for the integration.
 	 *
 	 * @return string
@@ -99,7 +81,16 @@ class IndependentAnalytics extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'INDEPENDENT_ANALYTICS_VERSION' );
+		return function_exists( '\IAWPSCOPED\iawp_is_pro' ) && \IAWPSCOPED\iawp_is_pro();
+	}
+
+	/**
+	 * Get the docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://independentwp.com/knowledgebase/woocommerce/woocommerce-integration/';
 	}
 
 	/**
@@ -117,7 +108,7 @@ class IndependentAnalytics extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSupportLink() {
-		return 'https://independentanalytics.com/support/';
+		return 'https://independentwp.com/contact/';
 	}
 
 	/**
@@ -126,6 +117,15 @@ class IndependentAnalytics extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getWebsiteLink() {
-		return 'https://independentanalytics.com/';
+		return 'https://independentwp.com/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://independentwp.com/pricing/';
 	}
 }

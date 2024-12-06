@@ -3,7 +3,7 @@
 namespace SureCart\Integrations\Catalog;
 
 /**
- * LearnDash integration catalog listing.
+ * LifterLMS integration catalog listing.
  */
 class LifterLMS extends AbstractCatalogItem {
 	/**

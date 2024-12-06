@@ -39,7 +39,7 @@ class MemberPress extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSummary() {
-		return __( 'Integrate MemberPress with SureCart to sell memberships and digital products with a powerful checkout experience.', 'surecart' );
+		return __( 'Integrate MemberPress with SureCart to sell memberships with a powerful checkout experience.', 'surecart' );
 	}
 
 	/**

@@ -67,24 +67,6 @@ class ConversionBridge extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginSlug() {
-		return 'conversion-bridge';
-	}
-
-	/**
-	 * Get the plugin file name for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginFileName() {
-		return 'conversion-bridge/conversion-bridge.php';
-	}
-
-	/**
 	 * Get the logo URL for the integration.
 	 *
 	 * @return string
@@ -117,7 +99,7 @@ class ConversionBridge extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSupportLink() {
-		return 'https://conversionbridge.com/support/';
+		return 'https://conversionbridgewp.com/support/';
 	}
 
 	/**
@@ -126,6 +108,15 @@ class ConversionBridge extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getWebsiteLink() {
-		return 'https://conversionbridge.com/';
+		return 'https://conversionbridgewp.com/integration/sure-cart/';
+	}
+
+	/**
+	 * Get the docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://conversionbridgewp.com/docs/';
 	}
 }
