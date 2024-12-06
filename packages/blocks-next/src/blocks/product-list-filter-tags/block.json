@@ -10,7 +10,8 @@
 	"ancestor": ["surecart/product-list"],
 	"attributes": {
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Applied Filters"
 		}
 	},
 	"supports": {
@@ -26,6 +27,16 @@
 			"padding": true,
 			"margin": ["top", "bottom"],
 			"blockGap": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
 		}
 	},
 	"textdomain": "surecart",
