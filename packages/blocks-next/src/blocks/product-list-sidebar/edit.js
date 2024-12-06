@@ -5,7 +5,12 @@ import {
 	RichText,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	ToggleControl,
+	TextControl,
+} from '@wordpress/components';
 
 const TEMPLATE = [
 	[
@@ -51,20 +56,17 @@ export default ({
 							}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Mobile Header Label', 'surecart')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<RichText
-					tagName="span"
-					className="sc-sidebar-label"
-					aria-label={__('Label text', 'surecart')}
-					placeholder={__('Add label…', 'surecart')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-				<InnerBlocks templateLock={false} template={TEMPLATE} />
+				<InnerBlocks template={TEMPLATE} templateLock={false} />
 			</div>
 		</>
 	);

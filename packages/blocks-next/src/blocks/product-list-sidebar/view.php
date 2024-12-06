@@ -6,9 +6,6 @@
 	) ); ?>
 	data-wp-bind--hidden="!state.sidebarOpen" 
 >
-	<span class="sc-sidebar-label" inert>
-		<?php echo wp_kses_post( $attributes['label'] ); ?>
-	</span>
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 <dialog
