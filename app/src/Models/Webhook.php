@@ -32,5 +32,5 @@ class Webhook extends Model {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'webhook_endpoints_updated_at';
+	protected $cache_key = 'webhook_endpoints';
 }

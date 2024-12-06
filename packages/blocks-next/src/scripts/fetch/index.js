@@ -5,22 +5,22 @@ apiFetch.fetchAllMiddleware = null;
 
 apiFetch.use(
 	apiFetch.createRootURLMiddleware(
-		window?.parent?.scData?.root_url || window?.scData?.root_url
+		window?.parent?.scFetchData?.root_url || window?.scFetchData?.root_url
 	)
 );
 
-if (window?.scData?.nonce) {
+if (window?.scFetchData?.nonce) {
 	// @ts-ignore
 	apiFetch.nonceMiddleware = apiFetch.createNonceMiddleware(
-		window?.scData?.nonce
+		window?.scFetchData?.nonce
 	);
 	// @ts-ignore
 	apiFetch.use(apiFetch.nonceMiddleware);
 }
 
-if (window?.scData?.nonce_endpoint) {
+if (window?.scFetchData?.nonce_endpoint) {
 	// @ts-ignore
-	apiFetch.nonceEndpoint = window?.scData?.nonce_endpoint;
+	apiFetch.nonceEndpoint = window?.scFetchData?.nonce_endpoint;
 }
 
 // Add a timestamp so it can bypass cache rest api

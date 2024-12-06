@@ -36,8 +36,6 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return void
 	 */
 	public function registerRoutes() {
-		parent::registerRoutes();
-
 		register_rest_route(
 			"$this->name/v$this->version",
 			$this->endpoint . '/upsell/',
@@ -77,6 +75,18 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
+				],
+				'checkout' => [
+					'description' => esc_html__( 'The checkout for the line item.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'properties'  => [
+						'customer' => [
+							'description' => esc_html__( 'The customer associated with the checkout.', 'surecart' ),
+							'type'        => 'object',
+							'context'     => [ 'edit' ], // customer is only available in the edit context.
+						],
+					],
 				],
 			],
 		];

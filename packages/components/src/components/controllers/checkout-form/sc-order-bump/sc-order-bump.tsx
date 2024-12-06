@@ -1,12 +1,11 @@
-import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
-import { isBumpInOrder } from '../../../../functions/line-items';
 import { getFormattedPrice, intervalString } from '../../../../functions/price';
 import { state as checkoutState } from '@store/checkout';
 
-import { Bump, LineItemData, Price, Product } from '../../../../types';
-import { trackOrderBump } from '@store/checkout/mutations';
+import { Bump, Price, Product } from '../../../../types';
+import { addCheckoutLineItem, removeCheckoutLineItem, trackOrderBump } from '@store/checkout/mutations';
 
 @Component({
   tag: 'sc-order-bump',
@@ -20,31 +19,27 @@ export class ScOrderBump {
   /** Should we show the controls */
   @Prop({ reflect: true }) showControl: boolean;
 
-  @Prop() cdnRoot: string = window.scData?.cdn_root;
-
-  /** Add line item event */
-  @Event() scAddLineItem: EventEmitter<LineItemData>;
-
-  /** Remove line item event */
-  @Event() scRemoveLineItem: EventEmitter<LineItemData>;
+  /** The bump line item */
+  lineItem() {
+    return checkoutState?.checkout?.line_items?.data?.find(item => item?.bump === this.bump?.id);
+  }
 
   /** Update the line item. */
-  updateLineItem(add: boolean) {
-    const price_id = (this.bump.price as Price)?.id || (this.bump?.price as string);
-    if (add) {
-      this.scAddLineItem.emit({
-        bump: this.bump?.id,
-        price_id,
-        quantity: 1,
-      });
-      speak(__('Order bump applied.', 'surecart'));
-    } else {
-      this.scRemoveLineItem.emit({
-        price_id,
-        quantity: 1,
-      });
+  updateLineItem() {
+    const price = (this.bump.price as Price)?.id || (this.bump?.price as string);
+
+    if (this.lineItem()) {
+      removeCheckoutLineItem(this.lineItem()?.id);
       speak(__('Order bump Removed.', 'surecart'));
+      return;
     }
+
+    addCheckoutLineItem({
+      bump: this.bump?.id,
+      price,
+      quantity: 1,
+    });
+    speak(__('Order bump applied.', 'surecart'));
   }
 
   componentDidLoad() {
@@ -146,13 +141,17 @@ export class ScOrderBump {
         value={this.bump?.id}
         type="checkbox"
         showControl={this.showControl}
-        checked={isBumpInOrder(this.bump, checkoutState?.checkout)}
-        onScChange={e => this.updateLineItem(e.target.checked)}
+        checked={!!this.lineItem()}
+        onClick={e => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          this.updateLineItem();
+        }}
         onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             e.stopImmediatePropagation();
-            this.updateLineItem(!isBumpInOrder(this.bump, checkoutState?.checkout));
+            this.updateLineItem();
           }
         }}
         exportparts="base, control, checked-icon, title"

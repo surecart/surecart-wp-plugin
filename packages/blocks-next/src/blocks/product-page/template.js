@@ -174,23 +174,92 @@ export default [
 										},
 										[
 											[
-												'surecart/price-amount',
+												'core/group',
 												{
 													style: {
-														elements: {
-															link: {
-																color: {
-																	text: 'var:preset|color|accent-3',
-																},
-															},
-														},
-														typography: {
-															fontStyle: 'normal',
-															fontWeight: '700',
+														spacing: {
+															blockGap: '0.5rem',
 														},
 													},
-													textColor: 'accent-3',
+													layout: {
+														type: 'flex',
+														flexWrap: 'nowrap',
+														justifyContent: 'left',
+													},
 												},
+												[
+													[
+														'surecart/price-scratch-amount',
+														{
+															style: {
+																elements: {
+																	link: {
+																		color: {
+																			text: '#686868',
+																		},
+																	},
+																},
+																typography: {
+																	fontStyle:
+																		'normal',
+																	fontWeight:
+																		'700',
+																	textDecoration:
+																		'line-through',
+																},
+															},
+															textColor:
+																'#686868',
+														},
+														[],
+													],
+													[
+														'surecart/price-amount',
+														{
+															style: {
+																elements: {
+																	link: {
+																		color: {
+																			text: 'var:preset|color|accent-3',
+																		},
+																	},
+																},
+																typography: {
+																	fontStyle:
+																		'normal',
+																	fontWeight:
+																		'700',
+																},
+															},
+															textColor:
+																'accent-3',
+														},
+														[],
+													],
+													[
+														'surecart/price-interval',
+														{
+															style: {
+																elements: {
+																	link: {
+																		color: {
+																			text: 'var:preset|color|accent-3',
+																		},
+																	},
+																},
+																typography: {
+																	fontStyle:
+																		'normal',
+																	fontWeight:
+																		'700',
+																},
+															},
+															textColor:
+																'accent-3',
+														},
+														[],
+													],
+												],
 											],
 											[
 												'surecart/price-trial',

@@ -50,7 +50,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'products_updated_at';
+	protected $cache_key = 'products';
 
 	/**
 	 * Create a new model
@@ -99,7 +99,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @param string $id The id of the product to sync.
 	 *
-	 * @return \WP_Post|\WP_Error
+	 * @return \WP_Post|\WP_Error|self
 	 */
 	protected function sync( $id = '' ) {
 		// set the id.
@@ -227,6 +227,7 @@ class Product extends Model implements PageModel {
 		// get the product and decode it.
 		$product = get_post_meta( $this->post->ID, 'product', true );
 		$product = is_string( $product ) ? json_decode( get_post_meta( $this->post->ID, 'product', true ) ) : $product;
+		$product = (object) $product;
 		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
 			return false;
 		}
@@ -518,14 +519,14 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->netadata->wp_template_id ) ) {
+		if ( ! empty( $this->metadata->wp_template_id ) ) {
 			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->netadata->wp_template_id, '.php' ) ) {
+			if ( wp_is_block_theme() && false !== strpos( $this->metadata->wp_template_id, '.php' ) ) {
 				return 'single-sc_product';
 			}
 
 			// this is acceptable.
-			return $this->netadata->wp_template_id;
+			return $this->metadata->wp_template_id;
 		}
 
 		return '';
@@ -783,10 +784,8 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setGalleryIdsAttribute( $value ) {
-		$this->attributes['metadata'] = wp_parse_args(
-			(object) [ 'gallery_ids' => is_string( $value ) ? $value : wp_json_encode( $value ) ],
-			$this->attributes['metadata'] ?? (object) [],
-		);
+		$this->attributes['metadata']              = (object) ( $this->attributes['metadata'] ?? [] );
+		$this->attributes['metadata']->gallery_ids = is_string( $value ) ? $value : wp_json_encode( $value );
 	}
 
 	/**
@@ -836,7 +835,7 @@ class Product extends Model implements PageModel {
 			)
 		);
 
-		$this->setCachedAttribute( 'gallery', $gallery );
+		$this->setAttributeCache( 'gallery', $gallery );
 
 		return $gallery;
 	}

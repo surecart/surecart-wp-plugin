@@ -157,6 +157,7 @@ return array(
 		\SureCartBlocks\Blocks\Address\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Coupon\Block::class,
+		\SureCartBlocks\Blocks\TrialLineItem\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
@@ -178,6 +179,7 @@ return array(
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
@@ -201,7 +203,6 @@ return array(
 		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
-		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
@@ -213,7 +214,7 @@ return array(
 		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
-		
+
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,

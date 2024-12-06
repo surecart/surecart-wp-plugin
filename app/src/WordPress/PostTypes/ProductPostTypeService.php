@@ -911,6 +911,12 @@ class ProductPostTypeService {
 					'terms'    => array_map( 'intval', $legacy_collection_ids ?? array() ),
 				);
 			}
+			// if orderBy is price then order by min_price_amount.
+			if ( ! empty( $request['orderBy'] ) && 'price' === $request['orderBy'] ) {
+				$args['meta_key'] = 'min_price_amount';
+				$args['orderby']  = 'meta_value_num';
+			}
+
 			$args['post_status'] = $request['post_status'] ?? [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
 
 			$args['no_found_rows'] = true;

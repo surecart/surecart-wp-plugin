@@ -33,6 +33,9 @@ class CompatibilityService {
 		// Yoast SEO fix.
 		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
 
+		// Siteground JS combine exclude.
+		add_filter( 'sgo_javascript_combine_exclude_ids', [ $this, 'sitegroundJsCombineExcludeScriptIds' ] );
+
 		// Show gutenberg active notice.
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 
@@ -43,6 +46,29 @@ class CompatibilityService {
 		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
 			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 		}
+
+		add_action( 'render_block', [ $this, 'fixKadenceAccordionPaneButtonType' ], 10, 2 );
+	}
+
+	/**
+	 * Adds type="button" to the button in the Kadence Accordion Pane.
+	 * This prevents the button from submitting the form.
+	 *
+	 * @param string $content Block content.
+	 * @param array  $block Block data.
+	 *
+	 * @return string
+	 */
+	public function fixKadenceAccordionPaneButtonType( $content, $block ) {
+		if ( 'kadence/pane' === $block['blockName'] ) {
+			$processor = new \WP_HTML_Tag_Processor( $content );
+			$has_tag   = $processor->next_tag( 'button' );
+			if ( $has_tag ) {
+				$processor->set_attribute( 'type', 'button' );
+			}
+			return $processor->get_updated_html();
+		}
+		return $content;
 	}
 
 	/**
@@ -174,5 +200,31 @@ class CompatibilityService {
 				]
 			);
 		}
+	}
+
+	/**
+	 * Exclude SureCart JS modules from Siteground JS combine.
+	 * This is to prevent the JS modules from being combined and minified by Siteground.
+	 *
+	 * @param array $exclude_ids Array of JS module IDs to exclude.
+	 *
+	 * @return array
+	 */
+	public function sitegroundJsCombineExcludeScriptIds( $exclude_ids ) {
+		// WordPress scripts which depends on interactivity.
+		$exclude_ids[] = '@wordpress/block-library/navigation/view-js-module';
+
+		// SureCart scripts.
+		$exclude_ids[] = '@surecart/product-page-js-module';
+		$exclude_ids[] = '@surecart/image-slider-js-module';
+		$exclude_ids[] = '@surecart/checkout-js-module';
+		$exclude_ids[] = '@surecart/cart-js-module';
+		$exclude_ids[] = '@surecart/a11y-js-module';
+		$exclude_ids[] = '@surecart/checkout-service-js-module';
+		$exclude_ids[] = '@surecart/checkout-events-js-module';
+		$exclude_ids[] = '@surecart/dropdown-js-module';
+		$exclude_ids[] = '@surecart/product-list-js-module';
+
+		return $exclude_ids;
 	}
 }

@@ -89,6 +89,7 @@ const TEMPLATE = [
 					['surecart/customer-downloads', {}],
 					['surecart/customer-payment-methods', {}],
 					['surecart/customer-orders', {}],
+					['surecart/customer-invoices', {}],
 				],
 			],
 		],

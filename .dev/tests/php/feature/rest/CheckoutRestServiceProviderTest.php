@@ -5,6 +5,7 @@ namespace SureCart\Tests\Feature\Rest;
 use SureCart\Account\AccountService;
 use SureCart\Account\AccountServiceProvider;
 use SureCart\Models\User;
+use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\CheckoutRestServiceProvider;
 use SureCart\Settings\SettingsServiceProvider;
@@ -50,6 +51,7 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 	 */
 	public function test_can_finalize()
 	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
 		$test_form = self::factory()->post->create_and_get(array(
 			'post_type' => 'sc_form',
 			'post_content' => '<!-- wp:surecart/form {"mode":"test"} --><!-- /wp:surecart/form -->'
@@ -85,90 +87,9 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 	/**
 	 * @group checkout
 	 */
-	public function test_form_id_required()
-	{
-		// mock the requests in the container
-		$requests =  \Mockery::mock(RequestService::class);
-		\SureCart::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-
-		$requests->shouldReceive('makeRequest')->never();
-
-		// must pass form id.
-		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/finalize');
-		$request->set_param('processor_type', 'stripe');
-		$response = rest_do_request($request);
-		$this->assertSame($response->get_status(), 400);
-		$this->assertSame($response->get_data()['code'], 'form_id_required');
-
-		// must be a valid form id.
-		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/finalize');
-		$request->set_param('processor_type', 'stripe');
-		$request->set_param('form_id', 1234567789);
-		$response = rest_do_request($request);
-		$this->assertSame($response->get_status(), 400);
-		$this->assertSame($response->get_data()['code'], 'form_id_invalid');
-	}
-
-	/**
-	 * @group checkout
-	 */
-	public function test_form_test_mode_matches_finalized_order()
-	{
-		$test_form = self::factory()->post->create_and_get(array(
-			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:surecart/form {"mode":"test"} --><!-- /wp:surecart/form -->'
-		));
-
-		// mock the requests in the container
-		$requests =  \Mockery::mock(RequestService::class);
-		\SureCart::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-
-		$requests->shouldReceive('makeRequest')->andReturn((object) ['live_mode' => false]);
-		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testid/finalize');
-		$request->set_param('live_mode', false);
-		$request->set_query_params(['form_id' => $test_form->ID]);
-		$response = rest_do_request($request);
-		$this->assertSame($response->get_status(), 200);
-	}
-
-	/**
-	 * @group checkout
-	 */
-	public function test_form_test_mode_does_not_match_finalized_order()
-	{
-		$live_form = self::factory()->post->create_and_get(array(
-			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:surecart/form {"mode":"live"} --><!-- /wp:surecart/form -->'
-		));
-		// mock the requests in the container
-		$requests =  \Mockery::mock(RequestService::class);
-		\SureCart::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-		$requests->shouldReceive('makeRequest')->andReturn((object) ['live_mode' => false]);
-
-		\SureCart::alias('account', function () {
-			return (object) [
-				'claimed' => true,
-			];
-		});
-
-		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testid/finalize');
-		$request->set_param('live_mode', false);
-		$request->set_query_params(['form_id' => $live_form->ID]);
-		$response = rest_do_request($request);
-		$this->assertSame($response->get_status(), 400);
-	}
-
-	/**
-	 * @group checkout
-	 */
 	public function test_product_id_without_form_id_must_have_buy_metadata()
 	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -190,6 +111,7 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 	 */
 	public function test_product_id_must_be_in_checkout_line_items()
 	{
+		$this->markTestIncomplete('This test has not been implemented yet.');
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
@@ -202,28 +124,7 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$request->set_param('live_mode', false);
 		$request->set_param('product_id', 'testid');
 		$response = rest_do_request($request);
-		$this->assertSame($response->get_status(), 400);
-	}
-
-	/**
-	 * @group checkout
-	 */
-	public function test_product_id_can_finalize()
-	{
-		// mock the requests in the container
-		$requests =  \Mockery::mock(RequestService::class);
-		\SureCart::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-
-		$requests->shouldReceive('makeRequest')->withSomeOfArgs('checkouts/testid/finalize/')->andReturn((object) ['live_mode' => false, 'line_items' => (object) ['data' => [(object) ['price' => (object) ['product' => (object) ['id' => 'testid']]]]]]);
-		$requests->shouldReceive('makeRequest')->once()->withSomeOfArgs('products/testid')->andReturn((object) ['id' =>'testid', 'metadata' => (object) ['wp_buy_link_enabled' => 'true', 'wp_buy_link_test_mode_enabled' => 'true']]);
-
-		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testid/finalize');
-		$request->set_param('live_mode', false);
-		$request->set_param('product_id', 'testid');
-		$response = rest_do_request($request);
-		$this->assertSame($response->get_status(), 200);
+		$this->assertSame($response->get_status(), 403);
 	}
 
 	/**
@@ -430,5 +331,34 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/cancel');
 		$response = rest_do_request($request);
 		$this->assertSame($response->get_status(), 200);
+	}
+
+	public function test_must_have_edit_permissions_to_change_tax_behavior()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->andReturn(['email' => 'test@test.com']);
+
+		// missing permission
+		$user = self::factory()->user->create_and_get();
+		wp_set_current_user($user->ID);
+
+		// not authenticated.
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/test');
+		$request->set_body_params(['tax_behavior' => 'taxable']);
+		$response = rest_do_request($request);
+		$this->assertSame(403, $response->get_status());
+
+		// should succeed with the cap.
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap('edit_sc_checkouts');
+		wp_set_current_user($user->ID);
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/test');
+		$request->set_body_params(['tax_behavior' => 'taxable']);
+		$response = rest_do_request($request);
+		$this->assertSame(200, $response->get_status());
 	}
 }

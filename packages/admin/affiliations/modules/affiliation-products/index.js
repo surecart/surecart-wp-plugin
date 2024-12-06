@@ -18,9 +18,9 @@ import usePagination from '../../../hooks/usePagination';
 import ProductsDataTable from '../../../components/data-tables/affiliates/products';
 import CommissionForm from '../../../components/affiliates/commission/CommissionForm';
 import useSave from '../../../settings/UseSave';
-import ConfirmDelete from './ConfirmDelete';
 import EmptyCommissions from '../../../components/affiliates/commission/EmptyCommissions';
 import GuideModal from '../../../components/affiliates/commission/GuideModal';
+import Confirm from '../../../components/confirm';
 import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ affiliationId }) => {
@@ -35,7 +35,8 @@ export default ({ affiliationId }) => {
 	const perPage = 5;
 
 	const { save } = useSave();
-	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+	const { editEntityRecord, saveEntityRecord, deleteEntityRecord } =
+		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [saving, setSaving] = useState(false);
 	const defaultAffiliationProduct = {
@@ -163,6 +164,33 @@ export default ({ affiliationId }) => {
 		} catch (error) {
 			console.error('error', error);
 			setError(error);
+		} finally {
+			setSaving(false);
+		}
+	};
+
+	const onDelete = async () => {
+		try {
+			setSaving(true);
+
+			await deleteEntityRecord(
+				'surecart',
+				'affiliation-product',
+				affiliationProduct?.id,
+				undefined,
+				{
+					throwOnError: true,
+				}
+			);
+
+			createSuccessNotice(__('Affiliate product deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			setModal(false);
+		} catch (e) {
+			setError(e);
+			console.error(e);
 		} finally {
 			setSaving(false);
 		}
@@ -300,13 +328,15 @@ export default ({ affiliationId }) => {
 				loading={saving || loading}
 			/>
 
-			<ConfirmDelete
+			<Confirm
 				open={modal === 'delete'}
 				onRequestClose={() => setModal(false)}
-				affiliationId={affiliationId}
-				affiliationProductId={affiliationProduct?.id}
-				onDeleted={onDeleted}
-			/>
+				error={error}
+				loading={saving || loading}
+				onConfirm={onDelete}
+			>
+				{__('Are you sure? This cannot be undone.', 'surecart')}
+			</Confirm>
 
 			<GuideModal
 				open={guide}
