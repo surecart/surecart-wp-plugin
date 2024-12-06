@@ -53,12 +53,11 @@ export default ({
 		try {
 			setBusy(true);
 			const checkout = await apiFetch({
-				path: addQueryArgs(`/surecart/v1/checkouts/${checkoutId}`, {
+				path: addQueryArgs(`/surecart/v1/draft-checkouts/${checkoutId}`, {
 					expand: checkoutOrderExpands,
 				}),
 				method: 'PATCH',
 				data: {
-					context: 'edit',
 					shipping_address: shippingAddress,
 					...(billingMatchesShipping
 						? {}
