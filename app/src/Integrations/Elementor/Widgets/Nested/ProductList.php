@@ -105,14 +105,16 @@ class ProductList extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 			return (int) $this->get_elementor_product_list_loop_item();
 		}
 
-		// Query WP to get a handle on the template were going to copy
-		$query = new \WP_Query([
-			'post_type' => 'elementor_library',
-			'name' => 'surecart_product_list_loop_item',
-			'posts_per_page' => 1
-		]);
+		// Query WP to get a handle on the template were going to copy.
+		$query = new \WP_Query(
+			[
+				'post_type'      => 'elementor_library',
+				'name'           => 'surecart_product_list_loop_item',
+				'posts_per_page' => 1,
+			]
+		);
 
-		// No need to set up The Loop - we just want one post
+		// No need to set up The Loop - we just want one post.
 		$template = $query->found_posts ? $query->posts[0] : false;
 
 		// If the template doesn't exist, create it.
@@ -245,7 +247,7 @@ class ProductList extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 			false,
 		);
 
-		// Update the post content
+		// Update the post content.
 		update_post_meta( $post_id, '_elementor_data', wp_json_encode( $content ) );
 		update_post_meta( $post_id, Document::TYPE_META_KEY, LoopDocument::get_type() );
 
@@ -266,29 +268,29 @@ class ProductList extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 
 		return [
 			[
-				'elType' => 'container',
+				'elType'   => 'container',
 				'settings' => [
 					'flex_direction' => 'column',
-					'content_width' => 'full',
+					'content_width'  => 'full',
 				],
 				'elements' => [
 					[
-						'elType' => 'widget',
+						'elType'     => 'widget',
 						'widgetType' => 'loop-grid',
-						'settings' => [
-							'template_id' => $template_id,
-							'pagination_page_limit' => 10,
-							'pagination_prev_label' => __( 'Previous', 'surecart' ),
-							'pagination_next_label' => __( 'Next', 'surecart' ),
-							'text' => __( 'Load More', 'surecart' ),
+						'settings'   => [
+							'template_id'                => $template_id,
+							'pagination_page_limit'      => 10,
+							'pagination_prev_label'      => __( 'Previous', 'surecart' ),
+							'pagination_next_label'      => __( 'Next', 'surecart' ),
+							'text'                       => __( 'Load More', 'surecart' ),
 							'load_more_no_posts_custom_message' => __( 'No more products to load.', 'surecart' ),
 							'nothing_found_message_text' => __( 'It seems we can\'t find what you\'re looking for.', 'surecart' ),
-							'post_query_post_type' => 'sc_product',
+							'post_query_post_type'       => 'sc_product',
 						],
-						'elements' => [],
+						'elements'   => [],
 					],
 				],
-				'isInner' => false,
+				'isInner'  => false,
 			],
 		];
 	}
