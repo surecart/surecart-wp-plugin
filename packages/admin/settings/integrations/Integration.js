@@ -14,6 +14,7 @@ import { useEntityRecord } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { ExternalLink } from '@wordpress/components';
 import PluginActivationButton from './PluginActivationButton';
+import Notifications from '../../components/Notifications';
 
 const ActivateButton = ({ record, onActivated }) => {
 	if (
@@ -30,13 +31,9 @@ const ActivateButton = ({ record, onActivated }) => {
 		);
 	}
 
-	if (!!record?.activation_link) {
+	if (!!record?.enable_link) {
 		return (
-			<ScButton
-				type="primary"
-				href={record?.activation_link}
-				target="_blank"
-			>
+			<ScButton type="primary" href={record?.enable_link} target="_blank">
 				{__('Enable', 'surecart')}
 				<ScIcon name="external-link" slot="suffix" />
 			</ScButton>
@@ -336,6 +333,19 @@ export default ({ id }) => {
 					)}
 				</div>
 			</ScCard>
+			<Notifications
+				css={css`
+					position: fixed !important;
+					left: auto !important;
+					right: 40px;
+					bottom: 40px;
+					width: auto !important;
+
+					:first-letter {
+						text-transform: uppercase;
+					}
+				`}
+			/>
 		</div>
 	);
 };

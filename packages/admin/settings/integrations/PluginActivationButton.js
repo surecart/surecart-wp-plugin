@@ -41,14 +41,16 @@ export default ({
 				method: 'POST',
 				body: formData,
 			});
-			console.log('response', response);
+			if (!response?.success) {
+				throw new Error(__('Could not install plugin.', 'surecart'));
+			}
+			setStatus('installed');
 		} catch (error) {
 			createErrorNotice(
 				error?.message || __('Something went wrong', 'surecart')
 			);
 		} finally {
 			setLoading(false);
-			setStatus('installed');
 			createSuccessNotice(__('Plugin installed.', 'surecart'));
 		}
 	};
@@ -68,14 +70,18 @@ export default ({
 				method: 'POST',
 				body: formData,
 			});
-			console.log('response', response);
+			if (!response?.success) {
+				throw new Error({
+					message: __('Could not activate plugin.', 'surecart'),
+				});
+			}
+			setStatus('activated');
 		} catch (error) {
 			createErrorNotice(
 				error?.message || __('Something went wrong', 'surecart')
 			);
 		} finally {
 			setLoading(false);
-			setStatus('activated');
 			createSuccessNotice(__('Plugin activated.', 'surecart'));
 		}
 	};
