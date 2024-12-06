@@ -23,7 +23,7 @@ class AvadaServiceProvider implements ServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @param  \Pimple\Container $container Service Container.
+	 * @param \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.plugins.avada']->bootstrap();

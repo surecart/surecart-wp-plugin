@@ -11,9 +11,10 @@ class AvadaService {
 	 *
 	 * @return void
 	 */
-	public function bootstrap() {
+	public function bootstrap(): void {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAvadaBlockStyles' ], 999999 ); // must be greater than 999.
-		add_action( 'after_setup_theme', [ $this, 'removeClientSideRouting' ] );
+		add_action( 'after_setup_theme', [ $this, 'removeClientSideNavigation' ] );
+		add_action( 'render_block', [ $this, 'balanceBlockTagsForAvada' ], 10, 2 );
 	}
 
 	/**
@@ -21,7 +22,7 @@ class AvadaService {
 	 *
 	 * @return void
 	 */
-	public function enqueueAvadaBlockStyles() {
+	public function enqueueAvadaBlockStyles(): void {
 		wp_enqueue_style( 'global-styles' );
 		wp_enqueue_style( 'wp-block-library' );
 		wp_enqueue_style( 'wp-block-library-theme' );
@@ -29,15 +30,39 @@ class AvadaService {
 	}
 
 	/**
+	 * Check if Avada theme is active.
+	 *
+	 * @return bool
+	 */
+	private function isAvadaActive(): bool {
+		$active_theme = wp_get_theme();
+		return 'Avada' === $active_theme->get( 'Name' );
+	}
+
+	/**
 	 * Remove the client-side navigation for Avada.
 	 *
 	 * @return void
 	 */
-	public function removeClientSideRouting() {
-		$active_theme = wp_get_theme();
-
-		if ( 'Avada' === $active_theme->get( 'Name' ) ) {
-			wp_interactivity_config( 'core/router', array( 'clientNavigationDisabled' => true ) );
+	public function removeClientSideNavigation(): void {
+		if ( ! $this->isAvadaActive() ) {
+			return;
 		}
+		wp_interactivity_config( 'core/router', [ 'clientNavigationDisabled' => true ] );
+	}
+
+	/**
+	 * Balance block tags for Avada.
+	 *
+	 * @param string $block_content The block content.
+	 * @param array  $block         The block.
+	 *
+	 * @return string
+	 */
+	public function balanceBlockTagsForAvada( string $block_content, array $block ): string {
+		if ( ! $this->isAvadaActive() ) {
+			return $block_content;
+		}
+		return balanceTags( $block_content, true );
 	}
 }

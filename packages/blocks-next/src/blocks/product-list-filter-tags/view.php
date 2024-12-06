@@ -63,9 +63,6 @@ foreach ( $product_terms as $filter_tag ) :
 
 		$block_content = ( new WP_Block( $block_instance ) )->render( array( 'dynamic' => false ) );
 
-		// Remove any wrapping </div> tag, as product-list-filter-tag should not have a wrapping div.
-		$block_content = preg_replace( '/^<div[^>]*>|<\/div>$/i', '', $block_content );
-
 		remove_filter( 'render_block_context', $filter_block_context, 1 );
 	?>
 	<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
