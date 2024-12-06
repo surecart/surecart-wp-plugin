@@ -86,19 +86,19 @@ export class ScStripePaymentElement {
   /** Sync the checkout mode */
   async syncCheckoutMode() {
     onChange('checkout', () => {
-      if (typeof checkoutState?.checkout?.live_mode !== 'undefined' && !processorsState?.instances?.stripe) {
-        this.initializeStripe();
-      }
+      this.initializeStripe();
     });
   }
 
   async componentDidLoad() {
-    if (typeof checkoutState?.checkout?.live_mode !== 'undefined' && !processorsState?.instances?.stripe) {
-      this.initializeStripe();
-    }
+    this.initializeStripe();
   }
 
   async initializeStripe() {
+    if (typeof checkoutState?.checkout?.live_mode === 'undefined' || processorsState?.instances?.stripe) {
+      return;
+    }
+
     const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
