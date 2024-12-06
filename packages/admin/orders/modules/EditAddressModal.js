@@ -58,6 +58,7 @@ export default ({
 				}),
 				method: 'PATCH',
 				data: {
+					context: 'edit',
 					shipping_address: shippingAddress,
 					...(billingMatchesShipping
 						? {}
