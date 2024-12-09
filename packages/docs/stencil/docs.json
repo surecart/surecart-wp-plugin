@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-25T10:06:28",
+  "timestamp": "2024-12-09T18:53:23",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -5554,7 +5554,8 @@
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
           "sc-divider",
-          "sc-invoice-memo"
+          "sc-invoice-memo",
+          "sc-line-item-trial"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -5639,6 +5640,10 @@
         ],
         "sc-invoice-memo": [
           "sc-skeleton"
+        ],
+        "sc-line-item-trial": [
+          "sc-line-item",
+          "sc-format-number"
         ],
         "sc-order-confirm-provider": [
           "sc-dialog",
@@ -14873,7 +14878,8 @@
         "sc-line-item-invoice-due-date",
         "sc-line-item-invoice-receipt-download",
         "sc-divider",
-        "sc-invoice-memo"
+        "sc-invoice-memo",
+        "sc-line-item-trial"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
@@ -14889,7 +14895,8 @@
           "sc-line-item-invoice-due-date",
           "sc-line-item-invoice-receipt-download",
           "sc-divider",
-          "sc-invoice-memo"
+          "sc-invoice-memo",
+          "sc-line-item-trial"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -14986,6 +14993,10 @@
         ],
         "sc-invoice-memo": [
           "sc-skeleton"
+        ],
+        "sc-line-item-trial": [
+          "sc-line-item",
+          "sc-format-number"
         ],
         "sc-checkout": [
           "sc-form-components-validator"
@@ -16486,6 +16497,7 @@
         "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
+        "sc-line-item-trial",
         "sc-order",
         "sc-order-bump",
         "sc-order-confirmation-totals",
@@ -16535,6 +16547,9 @@
           "sc-format-number"
         ],
         "sc-line-item-total": [
+          "sc-format-number"
+        ],
+        "sc-line-item-trial": [
           "sc-format-number"
         ],
         "sc-order": [
@@ -19420,6 +19435,7 @@
         "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
+        "sc-line-item-trial",
         "sc-line-items",
         "sc-order",
         "sc-order-confirmation-details",
@@ -19456,6 +19472,9 @@
           "sc-line-item"
         ],
         "sc-line-item-total": [
+          "sc-line-item"
+        ],
+        "sc-line-item-trial": [
           "sc-line-item"
         ],
         "sc-line-items": [
@@ -19942,6 +19961,60 @@
         ],
         "sc-order-confirmation-totals": [
           "sc-line-item-total"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/controllers/checkout-form/line-item-trial/sc-line-item-trial.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-line-item-trial",
+      "readme": "# sc-line-item-trial\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The label for the trial item",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [
+        "sc-line-item",
+        "sc-format-number"
+      ],
+      "dependencyGraph": {
+        "sc-line-item-trial": [
+          "sc-line-item",
+          "sc-format-number"
+        ],
+        "sc-form-components-validator": [
+          "sc-line-item-trial"
         ]
       }
     },
@@ -31587,7 +31660,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/maniruzzamanakash/Local Sites/surecart/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }

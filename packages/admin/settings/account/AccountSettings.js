@@ -10,72 +10,39 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Error from '../../components/Error';
-import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { useEntityRecord } from '@wordpress/core-data';
 import { getCurrencySymbol } from '../../util';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
-	const { editEntityRecord } = useDispatch(coreStore);
-	const {
-		item: accountItem,
-		itemError: accountItemError,
-		editItem: editAccountItem,
-		hasLoadedItem: hasLoadedAccountItem,
-	} = useEntity('store', 'account');
-
-	const { hasLiveOrders } = useSelect((select) => {
-		const liveOrderCount =
-			select(coreStore).getEntityRecords('surecart', 'order', {
-				live_mode: true,
-				per_page: 1,
-			})?.length || 0;
-
-		return {
-			hasLiveOrders: liveOrderCount > 0,
-		};
-	});
 
 	const {
-		item: portalItem,
-		itemError: portalItemError,
-		editItem: portalEditItem,
-		hasLoadedItem: portalHasLoadedItem,
-	} = useEntity('store', 'portal_protocol');
-	const {
-		item: notificationItem,
-		itemError: notificationItemError,
-		editItem: notificationEditItem,
-		hasLoadedItem: notificationHasLoadedItem,
-	} = useEntity('store', 'customer_notification_protocol');
-	/** Edit Item */
-	const brandEditItem = (data) =>
-		editEntityRecord('surecart', 'store', 'brand', data);
+		editedRecord: accountItem,
+		edit: editAccountItem,
+		hasResolved: hasLoadedAccountItem,
+	} = useEntityRecord('surecart', 'store', 'account');
 
-	/** Load Item */
 	const {
-		item: brandItem,
-		itemError: brandItemError,
-		hasLoadedItem: brandHasLoadedItem,
-	} = useSelect((select) => {
-		const entityData = ['surecart', 'store', 'brand'];
-		return {
-			item: select(coreStore).getEditedEntityRecord(...entityData),
-			itemError: select(coreStore)?.getResolutionError?.(
-				'getEditedEntityRecord',
-				...entityData
-			),
-			hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
-				'getEditedEntityRecord',
-				[...entityData]
-			),
-		};
-	});
+		editedRecord: portalItem,
+		edit: portalEditItem,
+		hasResolved: portalHasLoadedItem,
+	} = useEntityRecord('surecart', 'store', 'customer_portal_protocol');
+
+	const {
+		editedRecord: notificationItem,
+		edit: notificationEditItem,
+		hasResolved: notificationHasLoadedItem,
+	} = useEntityRecord('surecart', 'store', 'customer_notification_protocol');
+
+	const {
+		editedRecord: brandItem,
+		edit: brandEditItem,
+		hasResolved: brandHasLoadedItem,
+	} = useEntityRecord('surecart', 'store', 'brand');
 
 	const supportedCurrencyOptions = Object.keys(
 		scData?.supported_currencies || {}
@@ -110,17 +77,7 @@ export default () => {
 			onSubmit={onSubmit}
 			loading={!hasLoadedAccountItem || !portalHasLoadedItem}
 		>
-			<Error
-				error={
-					accountItemError ||
-					portalItemError ||
-					brandItemError ||
-					notificationItemError ||
-					error
-				}
-				setError={setError}
-				margin="80px"
-			/>
+			<Error error={error} setError={setError} margin="80px" />
 
 			<SettingsBox
 				title={__('Store Details', 'surecart')}
@@ -179,8 +136,8 @@ export default () => {
 							choices={supportedCurrencyOptions}
 							label={__('Store Currency', 'surecart')}
 							required
-							disabled={hasLiveOrders}
-							{...(hasLiveOrders
+							disabled={accountItem?.currency_locked}
+							{...(accountItem?.currency_locked
 								? {}
 								: {
 										help: __(
@@ -189,7 +146,7 @@ export default () => {
 										),
 								  })}
 						/>
-						{hasLiveOrders && (
+						{accountItem?.currency_locked && (
 							<div
 								css={css`
 									padding: var(--sc-spacing-small);

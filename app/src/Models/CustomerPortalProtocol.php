@@ -5,20 +5,20 @@ namespace SureCart\Models;
 /**
  * Holds the data of the current account.
  */
-class PortalProtocol extends Model {
+class CustomerPortalProtocol extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'portal_protocol';
+	protected $endpoint = 'customer_portal_protocol';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'portal_protocol';
+	protected $object_name = 'customer_portal_protocol';
 
 	/**
 	 * Does an update clear account cache?
