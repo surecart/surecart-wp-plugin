@@ -53,7 +53,7 @@ class SureCartSaltService {
 		try {
 			$service = new WPConfigTransformService( $this->getWpConfigPath() );
 		} catch ( \Exception $e ) {
-			var_dump( $e->getMessage() );
+			error_log( $e->getMessage() );
 			// silently fail.
 			return;
 		}
