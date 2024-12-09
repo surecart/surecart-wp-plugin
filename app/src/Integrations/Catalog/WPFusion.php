@@ -106,4 +106,13 @@ class WPFusion extends AbstractCatalogItem {
 	public function getSupportName() {
 		return 'WPFusion';
 	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://wpfusion.com/documentation/ecommerce/surecart/';
+	}
 }
