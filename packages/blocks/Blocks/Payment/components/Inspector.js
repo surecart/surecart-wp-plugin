@@ -5,7 +5,6 @@ import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Flex, PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import PaymentMethodCheckbox from './PaymentMethodCheckbox';
-import { ScPremiumTag, ScUpgradeRequired } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, disabled_methods } = attributes;
@@ -30,17 +29,9 @@ export default ({ attributes, setAttributes }) => {
 				title={
 					<Flex align={'center'} gap={8}>
 						{__('Enabled Processors', 'surecart')}{' '}
-						{!scBlockData?.entitlements
-							?.form_specific_payment_methods && (
-							<ScUpgradeRequired>
-								<ScPremiumTag />
-							</ScUpgradeRequired>
-						)}
 					</Flex>
 				}
-				initialOpen={
-					scBlockData?.entitlements?.form_specific_payment_methods
-				}
+				initialOpen={true}
 			>
 				<PanelRow>
 					<p>
@@ -59,10 +50,6 @@ export default ({ attributes, setAttributes }) => {
 							id={'mollie'}
 							attributes={attributes}
 							setAttributes={setAttributes}
-							disabled={
-								!scBlockData?.entitlements
-									?.form_specific_payment_methods
-							}
 						/>
 					</PanelRow>
 				)}
@@ -75,11 +62,7 @@ export default ({ attributes, setAttributes }) => {
 							id={'stripe'}
 							attributes={attributes}
 							setAttributes={setAttributes}
-							disabled={
-								!scBlockData?.entitlements
-									?.form_specific_payment_methods ||
-								isMollieEnabled
-							}
+							disabled={isMollieEnabled}
 						/>
 					</PanelRow>
 				)}
@@ -92,11 +75,7 @@ export default ({ attributes, setAttributes }) => {
 							id={'paypal'}
 							attributes={attributes}
 							setAttributes={setAttributes}
-							disabled={
-								!scBlockData?.entitlements
-									?.form_specific_payment_methods ||
-								isMollieEnabled
-							}
+							disabled={isMollieEnabled}
 						/>
 					</PanelRow>
 				)}
@@ -109,11 +88,7 @@ export default ({ attributes, setAttributes }) => {
 							id={'paystack'}
 							attributes={attributes}
 							setAttributes={setAttributes}
-							disabled={
-								!scBlockData?.entitlements
-									?.form_specific_payment_methods ||
-								isMollieEnabled
-							}
+							disabled={isMollieEnabled}
 						/>
 					</PanelRow>
 				)}
@@ -129,10 +104,6 @@ export default ({ attributes, setAttributes }) => {
 							id={'mock'}
 							attributes={attributes}
 							setAttributes={setAttributes}
-							disabled={
-								!scBlockData?.entitlements
-									?.form_specific_payment_methods
-							}
 						/>
 					</PanelRow>
 				)}
