@@ -67,24 +67,6 @@ class BuddyBoss extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginSlug() {
-		return 'buddyboss-platform';
-	}
-
-	/**
-	 * Get the plugin file name for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginFileName() {
-		return 'buddyboss-platform/bp-loader.php';
-	}
-
-	/**
 	 * Get the logo URL for the integration.
 	 *
 	 * @return string
@@ -127,5 +109,14 @@ class BuddyBoss extends AbstractCatalogItem {
 	 */
 	public function getWebsiteLink() {
 		return 'https://www.buddyboss.com/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://buddyboss.com/';
 	}
 }

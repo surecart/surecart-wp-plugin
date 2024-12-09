@@ -30,7 +30,7 @@ class FluentCRM extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getCategories() {
-		return [ __( 'CRM & Marketing', 'surecart' ) ];
+		return [ __( 'Customer Experience', 'surecart' ) ];
 	}
 
 	/**
@@ -90,11 +90,38 @@ class FluentCRM extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Is the integration enabled?
+	 * Get the website link for the integration.
 	 *
-	 * @return boolean
+	 * @return string
 	 */
-	public function getIsEnabled() {
-		return defined( 'FLUENTCRM' );
+	public function getWebsiteLink() {
+		return 'https://fluentcrm.com/';
+	}
+
+	/**
+	 * Get the docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://fluentcrm.com/docs/surecart-automation-with-fluentcrm/';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://wpmanageninja.com/support-tickets/';
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'FluentCRM';
 	}
 }

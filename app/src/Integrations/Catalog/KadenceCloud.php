@@ -58,13 +58,13 @@ class KadenceCloud extends AbstractCatalogItem {
 		ob_start();
 		?>
 		<h2><?php esc_html_e( 'Overview', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Kadence Cloud provides access to a vast library of pre-built templates and patterns that work seamlessly with Kadence Blocks. Create professional websites quickly with ready-to-use designs.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Sell access keys to Kadence Cloud and give your customers instant access to hundreds of premium templates, patterns, and design libraries for WordPress.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'SureCart integrates with Kadence Cloud to provide pre-built e-commerce templates and patterns. Import ready-made designs for your product pages, checkout forms, and customer portals.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'SureCart seamlessly integrates with Kadence Cloud to automatically provision and deliver access keys to your customers after purchase. Customers can instantly access the Kadence Cloud library to build professional WordPress websites.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'Configure', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Install and activate Kadence Blocks, Kadence Cloud, and SureCart plugins. Access the template library through the block editor to start building your e-commerce pages with professional designs.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Connect your Kadence Cloud account, create your products in SureCart, and start selling access keys. Your customers will automatically receive their access credentials upon successful purchase.', 'surecart' ); ?></p>
 		<?php
 		return ob_get_clean();
 	}
@@ -75,33 +75,51 @@ class KadenceCloud extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getLogo() {
-		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/kadence-cloud.svg' );
+		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/kadence.svg' );
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
+	 * Get if the integration is pre-installed.
 	 *
-	 * @return string
+	 * @return boolean
 	 */
-	public function getPluginSlug() {
-		return 'kadence-blocks';
+	public function getIsPreInstalled() {
+		return true;
 	}
 
 	/**
-	 * Get the plugin file name for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginFileName() {
-		return 'kadence-blocks/kadence-blocks.php';
-	}
-
-	/**
-	 * Is the integration enabled?
+	 * Get if the integration is enabled.
 	 *
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'KADENCE_BLOCKS_VERSION' );
+		return true;
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'Kadence Cloud';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://www.kadencewp.com/premium-support-tickets/';
+	}
+
+	/**
+	 * Get the docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://www.kadencewp.com/help-center/docs/kadence-cloud/how-to-sell-access-keys-surecart/';
 	}
 }

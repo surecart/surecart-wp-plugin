@@ -5,14 +5,14 @@ namespace SureCart\Integrations\Catalog;
 /**
  * Flowmattic integration catalog listing.
  */
-class Flowmattic extends AbstractCatalogItem {
+class PabblyConnect extends AbstractCatalogItem {
 	/**
 	 * Get the id for the integration.
 	 *
 	 * @return string
 	 */
 	public function getId() {
-		return 'surecart/flowmattic';
+		return 'pabbly-connect';
 	}
 
 	/**
@@ -21,7 +21,7 @@ class Flowmattic extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getName() {
-		return 'Flowmattic';
+		return 'Pabbly Connect';
 	}
 
 	/**
@@ -39,7 +39,7 @@ class Flowmattic extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSummary() {
-		return __( 'Integrate Flowmattic with SureCart to automate your WordPress workflows and connect with other plugins.', 'surecart' );
+		return __( 'Integrate Pabbly Connect with SureCart to automate your eCommerce workflows.', 'surecart' );
 	}
 
 	/**
@@ -51,13 +51,13 @@ class Flowmattic extends AbstractCatalogItem {
 		ob_start();
 		?>
 		<h2><?php esc_html_e( 'Overview', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Flowmattic is a powerful WordPress automation plugin that helps you create automated workflows between your favorite WordPress plugins.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Pabbly Connect is a powerful WordPress automation plugin that helps you create automated workflows between your favorite WordPress plugins.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Connect SureCart with Flowmattic to automate tasks based on store events. Create workflows that trigger when customers make purchases, subscriptions change, or refunds occur.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Connect SureCart with Pabbly Connect to automate tasks based on store events. Create workflows that trigger when customers make purchases, subscriptions change, or refunds occur.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'Configure', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Install and activate both Flowmattic and SureCart plugins. Navigate to Flowmattic to start creating your automation workflows using SureCart triggers and actions.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Install and activate both Pabbly Connect and SureCart plugins. Navigate to Pabbly Connect to start creating your automation workflows using SureCart triggers and actions.', 'surecart' ); ?></p>
 		<?php
 		return ob_get_clean();
 	}
@@ -68,7 +68,7 @@ class Flowmattic extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getLogo() {
-		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/flowmattic.svg' );
+		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/pabbly.svg' );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Flowmattic extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getEnableLink() {
-		return 'https://flowmattic.com/integration/surecart/';
+		return 'https://www.pabbly.com/connect/';
 	}
 
 	/**
@@ -86,7 +86,7 @@ class Flowmattic extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSupportLink() {
-		return 'https://flowmattic.com/contact-support/';
+		return 'https://forum.pabbly.com/';
 	}
 
 	/**
@@ -95,7 +95,7 @@ class Flowmattic extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSupportName() {
-		return 'Flowmattic';
+		return 'Pabbly Connect';
 	}
 
 	/**
@@ -104,15 +104,6 @@ class Flowmattic extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getWebsiteLink() {
-		return 'https://flowmattic.com/integration/surecart/';
-	}
-
-	/**
-	 * Get the website name for the integration.
-	 *
-	 * @return string
-	 */
-	public function getDocsLink() {
-		return 'https://docs.flowmattic.com/';
+		return 'https://www.pabbly.com/connect/';
 	}
 }

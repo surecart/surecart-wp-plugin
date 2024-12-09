@@ -88,20 +88,47 @@ class Metabox extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin file name for the integration.
+	 * Get the website link for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginFileName() {
-		return 'meta-box/meta-box.php';
+	public function getWebsiteLink() {
+		return 'https://metabox.io/';
 	}
 
 	/**
-	 * Is the integration enabled?
+	 * Get the docs link for the integration.
 	 *
-	 * @return boolean
+	 * @return string
 	 */
-	public function getIsEnabled() {
-		return class_exists( 'RWMB_Loader' );
+	public function getDocsLink() {
+		return 'https://docs.metabox.io/';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://support.metabox.io/';
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'Meta Box';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://metabox.io/';
 	}
 }

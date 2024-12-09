@@ -97,4 +97,31 @@ class Integrately extends AbstractCatalogItem {
 	public function getDocsLink() {
 		return 'https://integrately.com/docs';
 	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://integrately.com/';
+	}
+
+	/**
+	 * Is the integration enabled?
+	 *
+	 * @return boolean
+	 */
+	public function getIsEnabled() {
+		return true;
+	}
+
+	/**
+	 * Is the integration pre-installed?
+	 *
+	 * @return boolean
+	 */
+	public function getIsPreInstalled() {
+		return true;
+	}
 }

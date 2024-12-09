@@ -67,24 +67,6 @@ class MemberPress extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginSlug() {
-		return 'memberpress';
-	}
-
-	/**
-	 * Get the plugin file name for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginFileName() {
-		return 'memberpress/memberpress.php';
-	}
-
-	/**
 	 * Get the logo URL for the integration.
 	 *
 	 * @return string
@@ -126,6 +108,15 @@ class MemberPress extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getWebsiteLink() {
+		return 'https://memberpress.com/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
 		return 'https://memberpress.com/';
 	}
 }

@@ -115,4 +115,13 @@ class Zapier extends AbstractCatalogItem {
 	public function getIsPreInstalled() {
 		return true;
 	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://zapier.com/apps/surecart/integrations';
+	}
 }

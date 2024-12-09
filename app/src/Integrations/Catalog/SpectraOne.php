@@ -46,7 +46,7 @@ class SpectraOne extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSummary() {
-		return __( 'A modern, lightweight, and fully FSE compatible WordPress theme designed for the block editor.', 'surecart' );
+		return __( 'A modern, lightweight, and fully customizable WordPress FSE theme built for the Gutenberg era.', 'surecart' );
 	}
 
 	/**
@@ -58,13 +58,13 @@ class SpectraOne extends AbstractCatalogItem {
 		ob_start();
 		?>
 		<h2><?php esc_html_e( 'Overview', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Spectra One is a modern WordPress theme built for full site editing. It provides a perfect foundation for creating beautiful, responsive websites with the WordPress block editor.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Spectra One is a modern Full Site Editing (FSE) WordPress theme that leverages the power of the Gutenberg block editor. It offers a perfect balance of performance and customization for creating stunning e-commerce websites.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'SureCart integrates with Spectra One to provide a seamless e-commerce experience. Use the full site editor to create custom templates for your product pages, checkout forms, and customer portals.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'SureCart seamlessly integrates with Spectra One to deliver a modern shopping experience. Use the Full Site Editor to create and customize your store pages with beautiful, responsive designs that perfectly match your brand.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'Configure', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Install and activate both Spectra One theme and SureCart plugin. Use the Site Editor to customize your store\'s appearance and create a cohesive brand experience.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Install and activate both Spectra One theme and SureCart plugin. Use the Full Site Editor to customize your store\'s design and create a professional e-commerce website.', 'surecart' ); ?></p>
 		<?php
 		return ob_get_clean();
 	}
@@ -88,12 +88,48 @@ class SpectraOne extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin file name for the integration.
+	 * Get the docs url for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginFileName() {
-		return 'spectra-one/spectra-one.php';
+	public function getDocsLink() {
+		return 'https://wpspectra.com/docs/';
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'Spectra One';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://wpspectra.com/support/';
+	}
+
+	/**
+	 * Get the website url for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return 'https://wpspectra.com/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://wpspectra.com/';
 	}
 
 	/**

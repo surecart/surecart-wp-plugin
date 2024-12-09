@@ -51,7 +51,7 @@ class KadenceInsights extends AbstractCatalogItem {
 		ob_start();
 		?>
 		<h2><?php esc_html_e( 'Overview', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Kadence Insights is a powerful WordPress plugin that makes A/B/n testing simple. Test, track, and optimize your page elements directly within WordPress, and see real-time results to make confident decisions that drive higher conversions.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Kadence Insights is a powerful WordPress plugin that makes A/B testing simple. Test, track, and optimize your page elements directly within WordPress, and see real-time results to make confident decisions that drive higher conversions.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
 		<p><?php esc_html_e( 'Connect Kadence Insights with SureCart to track essential e-commerce metrics while maintaining user privacy and GDPR compliance.', 'surecart' ); ?></p>
@@ -99,7 +99,7 @@ class KadenceInsights extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'KADENCE_INSIGHTS_VERSION' );
+		return is_plugin_active( 'kadence-insights/kadence-insights.php' );
 	}
 
 	/**
@@ -126,6 +126,15 @@ class KadenceInsights extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getWebsiteLink() {
+		return 'https://www.kadencewp.com/kadence-insights/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
 		return 'https://www.kadencewp.com/kadence-insights/';
 	}
 }

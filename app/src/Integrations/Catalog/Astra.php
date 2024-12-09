@@ -79,15 +79,6 @@ class Astra extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginSlug() {
-		return 'astra';
-	}
-
-	/**
 	 * Get the docs url for the integration.
 	 *
 	 * @return string
@@ -124,12 +115,12 @@ class Astra extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin file name for the integration.
+	 * Get the enable link for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginFileName() {
-		return 'astra/astra.php';
+	public function getEnableLink() {
+		return 'https://wpastra.com/';
 	}
 
 	/**

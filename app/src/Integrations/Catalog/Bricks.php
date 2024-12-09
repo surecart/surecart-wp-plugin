@@ -79,21 +79,48 @@ class Bricks extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
+	 * Get the docs url for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginSlug() {
-		return 'bricks';
+	public function getDocsLink() {
+		return 'https://surecart.com/docs-category/bricks-builder/';
 	}
 
 	/**
-	 * Get the plugin file name for the integration.
+	 * Get the support name for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginFileName() {
-		return 'bricks/bricks.php';
+	public function getSupportName() {
+		return 'SureCart';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://surecart.com/support/';
+	}
+
+	/**
+	 * Get the website url for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return 'https://bricksbuilder.io/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://bricksbuilder.io/';
 	}
 
 	/**
@@ -102,6 +129,6 @@ class Bricks extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'BRICKS_VERSION' );
+		return wp_get_theme()->get_template() === 'bricks';
 	}
 }

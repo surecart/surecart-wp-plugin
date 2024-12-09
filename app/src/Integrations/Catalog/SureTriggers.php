@@ -58,7 +58,7 @@ class SureTriggers extends AbstractCatalogItem {
 		ob_start();
 		?>
 		<h2><?php esc_html_e( 'Overview', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'SureTriggers is a powerful automation platform built specifically to work with SureCart, allowing you to create sophisticated workflows and integrate with hundreds of popular apps.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'SureTriggers is a powerful automation platform built in tandem to work with SureCart, allowing you to create sophisticated workflows and integrate with hundreds of popular apps.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
 		<p><?php esc_html_e( 'As a native integration, SureTriggers seamlessly connects with SureCart to automate your entire business workflow. Trigger actions based on customer purchases, subscription changes, abandoned carts, and more.', 'surecart' ); ?></p>
@@ -97,7 +97,7 @@ class SureTriggers extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'SURETRIGGERS_VERSION' );
+		return is_plugin_active( 'suretriggers/suretriggers.php' );
 	}
 
 	/**

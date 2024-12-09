@@ -44,11 +44,30 @@ const ActivateButton = ({ record, onActivated }) => {
 };
 
 const ActivatedButton = ({ record }) => {
+	if (record?.is_pre_installed) {
+		if (!!record?.enable_link) {
+			return (
+				<ScButton
+					type="text"
+					href={record?.enable_link}
+					target="_blank"
+				>
+					{__('Pre-installed', 'surecart')}
+					<ScIcon name="external-link" slot="suffix" />
+				</ScButton>
+			);
+		}
+
+		return (
+			<ScButton type="text" disabled>
+				{__('Pre-installed', 'surecart')}
+			</ScButton>
+		);
+	}
+
 	return (
 		<ScButton type="text" disabled>
-			{record?.is_pre_installed
-				? __('Pre-installed', 'surecart')
-				: __('Enabled', 'surecart')}
+			{__('Enabled', 'surecart')}
 		</ScButton>
 	);
 };

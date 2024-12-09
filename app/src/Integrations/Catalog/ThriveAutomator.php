@@ -54,7 +54,7 @@ class ThriveAutomator extends AbstractCatalogItem {
 		<p><?php esc_html_e( 'Thrive Automator is a powerful automation tool that allows you to create custom workflows triggered by actions in your WordPress site and connected apps.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Connect SureCart with Thrive Automator to automate tasks based on store events like purchases, subscription changes, refunds, and more. Create powerful workflows without any coding knowledge.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Connect SureCart with Thrive Automator to automate tasks based on store purchase events. Create powerful workflows without any coding knowledge.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'Configure', 'surecart' ); ?></h2>
 		<p><?php esc_html_e( 'Install and activate both Thrive Automator and SureCart plugins. Navigate to Thrive Automator to start creating your automation workflows using SureCart triggers and actions.', 'surecart' ); ?></p>
@@ -95,6 +95,33 @@ class ThriveAutomator extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'THRIVE_AUTOMATOR_PLUGIN_FILE' );
+		return is_plugin_active( 'thrive-automator/thrive-automator.php' );
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'SureCart';
+	}
+
+	/**
+	 * Get the website link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return 'https://thriveautomator.com/';
+	}
+
+	/**
+	 * Get the docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://thriveautomator.com/docs/';
 	}
 }

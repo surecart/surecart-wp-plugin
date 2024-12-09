@@ -61,12 +61,21 @@ class SureMembers extends AbstractCatalogItem {
 		<p><?php esc_html_e( 'SureMembers is a powerful WordPress membership plugin that helps you create and manage membership sites, protect content, and deliver exclusive content to your members.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Connect SureCart with SureMembers to automatically grant access to protected content when customers purchase memberships. Create tiered access levels and manage member permissions seamlessly.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Connect SureCart with SureMembers to automatically grant access to protected content when customers purchase memberships. Create tiered access levels and manage member permissions seamlessly. These products were made to work together!', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'Configure', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Install and activate both SureMembers and SureCart plugins. Navigate to SureMembers settings to configure access rules and start protecting your content.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Install and activate both SureMembers and SureCart plugins. Navigate to SureMembers settings to configure access rules and start protecting your content. Add access groups to your products and start selling memberships.', 'surecart' ); ?></p>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get the YouTube video ID for the integration.
+	 *
+	 * @return string
+	 */
+	public function getYouTubeVideoId() {
+		return 'TTT_y_JRTOI';
 	}
 
 	/**
@@ -79,21 +88,48 @@ class SureMembers extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
+	 * Get the enable link for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginSlug() {
-		return 'suremembers';
+	public function getEnableLink() {
+		return 'https://suremembers.com/';
 	}
 
 	/**
-	 * Get the plugin file name for the integration.
+	 * Get the docs link for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginFileName() {
-		return 'suremembers/suremembers.php';
+	public function getDocsLink() {
+		return 'https://suremembers.com/docs/yearly-membership-plan-with-surecart-and-suremembers/';
+	}
+
+	/**
+	 * Get the website link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return 'https://suremembers.com/';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://suremembers.com/support/';
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'SureMembers';
 	}
 
 	/**
@@ -102,6 +138,6 @@ class SureMembers extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'SUREMEMBERS_VERSION' );
+		return is_plugin_active( 'suremembers/suremembers.php' );
 	}
 }

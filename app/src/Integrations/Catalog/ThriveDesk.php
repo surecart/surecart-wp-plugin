@@ -39,7 +39,7 @@ class ThriveDesk extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getCategories() {
-		return [ __( 'Customer Support', 'surecart' ) ];
+		return [ __( 'Customer Experience', 'surecart' ) ];
 	}
 
 	/**
@@ -117,7 +117,16 @@ class ThriveDesk extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getDocsLink() {
-		return 'https://help.thrivedesk.com/article/thrivedesk-surecart-integration';
+		return 'https://help.thrivedesk.com/en/surecart-integration';
+	}
+
+	/**
+	 * Get the youtube id for the integration.
+	 *
+	 * @return string
+	 */
+	public function getYouTubeVideoId() {
+		return 'fHQ9MIfDMMs';
 	}
 
 	/**
@@ -127,5 +136,32 @@ class ThriveDesk extends AbstractCatalogItem {
 	 */
 	public function getWebsiteLink() {
 		return 'https://thrivedesk.com/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://thrivedesk.com/';
+	}
+
+	/**
+	 * Is the integration enabled?
+	 *
+	 * @return boolean
+	 */
+	public function getIsEnabled() {
+		return true;
+	}
+
+	/**
+	 * Is the integration pre-installed?
+	 *
+	 * @return boolean
+	 */
+	public function getIsPreInstalled() {
+		return true;
 	}
 }

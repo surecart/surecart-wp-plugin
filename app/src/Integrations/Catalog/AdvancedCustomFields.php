@@ -104,4 +104,40 @@ class AdvancedCustomFields extends AbstractCatalogItem {
 	public function getIsEnabled() {
 		return class_exists( 'ACF' );
 	}
+
+	/**
+	 * Get the website link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return 'https://advancedcustomfields.com/';
+	}
+
+	/**
+	 * Get the docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://www.advancedcustomfields.com/resources/';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://www.advancedcustomfields.com/support/';
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'Advanced Custom Fields';
+	}
 }

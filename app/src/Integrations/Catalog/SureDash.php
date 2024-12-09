@@ -19,7 +19,7 @@ class SureDash extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getId() {
-		return 'surecart/suredash';
+		return 'suredash';
 	}
 
 	/**
@@ -58,37 +58,37 @@ class SureDash extends AbstractCatalogItem {
 		ob_start();
 		?>
 		<h2><?php esc_html_e( 'Overview', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'SureDash is a powerful learning management system that helps you create and sell online courses effortlessly.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'SureDash is an all-in-one community platform that helps you connect, engage, and grow your online community while scaling your business.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'How it works', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Connect SureDash with SureCart to monetize your online courses. Sell access to individual courses or course bundles through SureCart\'s optimized checkout process.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Connect SureDash with SureCart to monetize your community. Sell memberships, access passes, and exclusive content through SureCart\'s optimized checkout process.', 'surecart' ); ?></p>
 
-		<p><?php esc_html_e( 'When students purchase access through SureCart, they automatically gain entry to their purchased courses, creating a seamless learning experience.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'When members purchase access through SureCart, they automatically gain entry to your community spaces and content, creating a seamless member experience.', 'surecart' ); ?></p>
 
-		<p><?php esc_html_e( 'Leverage SureCart\'s powerful features like multiple payment options, subscription management, and abandoned cart recovery to grow your online course business.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Leverage SureCart\'s powerful features like multiple payment options, subscription management, and abandoned cart recovery to grow your community business.', 'surecart' ); ?></p>
 
 		<h2><?php esc_html_e( 'Configure', 'surecart' ); ?></h2>
-		<p><?php esc_html_e( 'Install and activate both SureDash and SureCart plugins. Set up your courses in SureDash, then create corresponding products in SureCart. In the SureCart product editor, select the SureDash integration and choose which courses to associate with your product.', 'surecart' ); ?></p>
+		<p><?php esc_html_e( 'Install and activate both SureDash and SureCart plugins. Set up your customer dashboard in SureDash. Sell memberships, access passes, and exclusive content through SureCart\'s optimized checkout process.', 'surecart' ); ?></p>
 		<?php
 		return ob_get_clean();
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
+	 * Get the YouTube video ID for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginSlug() {
-		return 'suredash';
+	public function getYouTubeVideoId() {
+		return '7syWO6epxnE';
 	}
 
 	/**
-	 * Get the plugin file name for the integration.
+	 * Get the enable link for the integration.
 	 *
 	 * @return string
 	 */
-	public function getPluginFileName() {
-		return 'suredash/suredash.php';
+	public function getEnableLink() {
+		return 'https://suredash.com/';
 	}
 
 	/**
@@ -106,7 +106,7 @@ class SureDash extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'SUREDASH_VERSION' );
+		return is_plugin_active( 'suredash/suredash.php' );
 	}
 
 	/**
@@ -115,7 +115,7 @@ class SureDash extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSupportName() {
-		return 'SureCart';
+		return 'SureDash';
 	}
 
 	/**
@@ -124,7 +124,7 @@ class SureDash extends AbstractCatalogItem {
 	 * @return string
 	 */
 	public function getSupportLink() {
-		return 'https://surecart.com/support/';
+		return 'https://suredash.com/contact/';
 	}
 
 	/**
@@ -134,5 +134,14 @@ class SureDash extends AbstractCatalogItem {
 	 */
 	public function getWebsiteLink() {
 		return 'https://suredash.com/';
+	}
+
+	/**
+	 * Get docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://suredash.com/docs/';
 	}
 }

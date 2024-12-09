@@ -81,7 +81,7 @@ class ConversionBridge extends AbstractCatalogItem {
 	 * @return boolean
 	 */
 	public function getIsEnabled() {
-		return defined( 'CONVERSION_BRIDGE_VERSION' );
+		return is_plugin_active( 'conversion-bridge/conversion-bridge.php' );
 	}
 
 	/**
@@ -118,5 +118,14 @@ class ConversionBridge extends AbstractCatalogItem {
 	 */
 	public function getDocsLink() {
 		return 'https://conversionbridgewp.com/docs/';
+	}
+
+	/**
+	 * Get the enable link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getEnableLink() {
+		return 'https://conversionbridgewp.com/';
 	}
 }

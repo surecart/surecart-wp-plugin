@@ -113,4 +113,49 @@ class BlockEditor extends AbstractCatalogItem {
 	public function getIsPreInstalled() {
 		return true;
 	}
+
+	/**
+	 * Get the youtube video id for the integration.
+	 *
+	 * @return string
+	 */
+	public function getYouTubeVideoId() {
+		return '8niZ9cUhSEE';
+	}
+
+	/**
+	 * Get the website link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getWebsiteLink() {
+		return 'https://wordpress.org/plugins/gutenberg/';
+	}
+
+	/**
+	 * Get the docs link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getDocsLink() {
+		return 'https://surecart.com/docs/customize-product-template/';
+	}
+
+	/**
+	 * Get the support link for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportLink() {
+		return 'https://surecart.com/support/';
+	}
+
+	/**
+	 * Get the support name for the integration.
+	 *
+	 * @return string
+	 */
+	public function getSupportName() {
+		return 'SureCart';
+	}
 }
