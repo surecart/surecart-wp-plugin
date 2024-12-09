@@ -170,8 +170,8 @@ class BuyPageController extends BasePageController {
 	 * @return string
 	 */
 	public function termsText() {
-		$terms_url   = \SureCart::account()->portal_protocol->terms_url;
-		$privacy_url = \SureCart::account()->portal_protocol->privacy_url;
+		$terms_url   = \SureCart::account()->customer_portal_protocol->terms_url;
+		$privacy_url = \SureCart::account()->customer_portal_protocol->privacy_url;
 
 		if ( ! empty( $terms_url ) && ! empty( $privacy_url ) ) {
 			return sprintf(
