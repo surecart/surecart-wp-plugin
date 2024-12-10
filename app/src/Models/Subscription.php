@@ -10,7 +10,9 @@ use SureCart\Models\Traits\HasPurchase;
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasPrice, HasPurchase;
+	use HasCustomer;
+	use HasPrice;
+	use HasPurchase;
 
 	/**
 	 * Rest API endpoint
@@ -413,7 +415,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanBeSwitched() {
 		// updates are not enabled for the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_updates_enabled ) ) {
 			return false;
 		}
 		// already set to canceling.
@@ -469,7 +471,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanBeCanceled() {
 		// updates are not enabled for the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_cancellations_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled ) ) {
 			return false;
 		}
 
@@ -497,7 +499,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanUpdateQuantity() {
 		// quantity changes are not enabled for this account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_quantity_updates_enabled ) ) {
 			return false;
 		}
 		return true;
@@ -515,4 +517,3 @@ class Subscription extends Model {
 		return $stat->where( $args )->find( 'subscriptions' );
 	}
 }
-
