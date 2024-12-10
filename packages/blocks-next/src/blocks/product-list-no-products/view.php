@@ -1,4 +1,13 @@
 <?php
+use SureCart\Models\Blocks\ProductListBlock;
+
+$controller = new ProductListBlock( $block );
+$query      = $controller->query();
+
+if ( $query->have_posts() ) {
+	return '';
+}
+
 if ( empty( trim( $content ) ) ) {
 	return '';
 }
