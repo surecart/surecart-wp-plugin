@@ -76,6 +76,15 @@ class KadenceInsights extends AbstractCatalogItem {
 	}
 
 	/**
+	 * Get the YouTube video ID for the integration.
+	 *
+	 * @return string
+	 */
+	public function getYouTubeVideoId() {
+		return 'm9fZkuhc-aQ';
+	}
+
+	/**
 	 * Is the integration enabled?
 	 *
 	 * @return boolean
