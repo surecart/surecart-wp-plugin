@@ -160,6 +160,10 @@ export default ({
 
 	const selectedZone = availableZones.find((z) => z.id === data?.tax_zone);
 
+	const defaultTaxLabel = (availableZones || []).find(
+		(z) => z.id === data?.tax_zone
+	)?.default_label;
+
 	const requiresManualTaxOverride =
 		selectedZone?.default_rate === 0 ||
 		(region === 'ca' &&
@@ -180,24 +184,26 @@ export default ({
 			style={{ '--sc-form-row-spacing': 'var(--sc-spacing-large)' }}
 		>
 			<Error error={error} setError={setError} />
-			<ScSelect
-				search
-				loading={fetching}
-				disabled={registration?.id}
-				value={data?.tax_zone}
-				unselect={false}
-				label={zoneName[region] || __('Region', 'surecart')}
-				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(availableZones || [])
-					.reverse()
-					.map(({ state_name, country_name, id }) => {
-						return {
-							label: state_name || country_name,
-							value: id,
-						};
-					})}
-				required
-			/>
+			{!registration?.id && (
+				<ScSelect
+					search
+					loading={fetching}
+					disabled={registration?.id}
+					value={data?.tax_zone}
+					unselect={false}
+					label={zoneName[region] || __('Region', 'surecart')}
+					onScChange={(e) => updateData({ tax_zone: e.target.value })}
+					choices={(availableZones || [])
+						.reverse()
+						.map(({ state_name, country_name, id }) => {
+							return {
+								label: state_name || country_name,
+								value: id,
+							};
+						})}
+					required
+				/>
+			)}
 
 			{region !== 'other' && (
 				<>
@@ -266,6 +272,22 @@ export default ({
 				</ScInput>
 			)}
 
+			<ScInput
+				type="text"
+				label={__('Tax Label', 'surecart')}
+				value={data?.label}
+				help={__(
+					'The name of the tax that is displayed to customers during checkout and on invoices and receipts.',
+					'surecart'
+				)}
+				placeholder={
+					defaultTaxLabel ||
+					tax_zone?.default_label ||
+					__('Tax', 'surecart')
+				}
+				onScInput={(e) => updateData({ label: e.target.value })}
+			></ScInput>
+
 			{region !== 'us' && (
 				<ScTaxIdInput
 					type={type}
@@ -315,7 +337,9 @@ export default ({
 					)}
 				</div>
 				<ScButton type="primary" submit>
-					{__('Collect Tax', 'surecart')}
+					{registration?.id
+						? __('Save Changes', 'surecart')
+						: __('Collect Tax', 'surecart')}
 				</ScButton>
 			</sc-flex>
 
