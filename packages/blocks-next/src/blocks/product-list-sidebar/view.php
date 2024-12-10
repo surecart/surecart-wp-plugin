@@ -1,13 +1,16 @@
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes(
-		array(
-			'class' => 'sc-sidebar-desktop',
+	<?php echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class' => 'sc-sidebar-desktop',
+			)
 		)
-	) ); ?>
-	data-wp-bind--hidden="!state.sidebarOpen" 
+	); ?>
+	data-wp-bind--hidden="!state.sidebarOpen"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
+
 <dialog
 	class="sc-drawer sc-cart-drawer wp-block-surecart-product-list-sidebar"
 	data-wp-bind--aria-label='surecart/cart::state.ariaLabel'
@@ -20,7 +23,7 @@
 			data-wp-on--keydown="surecart/cart::actions.toggle"
 			role="button"
 			tabindex="0"
-			aria-label="<?php esc_attr_e( 'Close cart', 'surecart' ); ?>"
+			aria-label="<?php esc_attr_e( 'Close sidebar', 'surecart' ); ?>"
 		>
 			<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
 		</div>
@@ -30,11 +33,15 @@
 		</span>
 	</div>
 	<div
-		<?php echo wp_kses_data( get_block_wrapper_attributes(
-			array(
-				'class' => 'sc-drawer__wrapper',
+		<?php
+		echo wp_kses_data(
+			get_block_wrapper_attributes(
+				array(
+					'class' => 'sc-drawer__wrapper',
+				)
 			)
-		) ); ?>
+		);
+		?>
 	>
 		<?php echo do_blocks( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
