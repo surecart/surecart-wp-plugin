@@ -67,24 +67,6 @@ class KadenceInsights extends AbstractCatalogItem {
 	}
 
 	/**
-	 * Get the plugin slug for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginSlug() {
-		return 'kadence-insights';
-	}
-
-	/**
-	 * Get the plugin file name for the integration.
-	 *
-	 * @return string
-	 */
-	public function getPluginFileName() {
-		return 'kadence-insights/kadence-insights.php';
-	}
-
-	/**
 	 * Get the logo URL for the integration.
 	 *
 	 * @return string
