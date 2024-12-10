@@ -1,45 +1,52 @@
 <?php
 global $sc_query_id;
-$params = \SureCart::block()->urlParams( 'products' );
-$filter = $params->getArg( 'sc_collection' );
+$params         = \SureCart::block()->urlParams( 'products' );
+$all_taxonomies = $params->getAllTaxonomyArgs();
 
 // no filters, don't render this block.
-if ( empty( $filter ) ) {
+if ( empty( $all_taxonomies ) ) {
 	return;
 }
 
-$product_collections = get_terms(
-	[
-		'taxonomy'   => 'sc_collection',
-		'hide_empty' => false,
-		'include'    => $filter,
-	]
-);
+$product_terms = array();
+foreach ( $all_taxonomies as $taxonomy_name => $term_slugs ) {
+	$terms = get_terms(
+		[
+			'taxonomy'   => $taxonomy_name,
+			'hide_empty' => false,
+			'slug'       => $term_slugs,
+		]
+	);
+
+	if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+		$product_terms = array_merge( $product_terms, $terms );
+	}
+}
 
 // map the collections to the view.
-$product_collections = array_map(
-	function ( $collection ) use ( $params ) {
-		return (object) [
-			'href' => $params->removeFilterArg( 'sc_collection', $collection->term_id ),
-			'name' => $collection->name,
-			'id'   => $collection->term_id,
+$product_terms = array_map(
+	function ( $term ) use ( $params ) {
+		return [
+			'href' => $params->removeFilterArg( $term->taxonomy, $term->slug ),
+			'name' => $term->name,
+			'id'   => $term->slug,
 		];
 	},
-	$product_collections ?? []
+	$product_terms ?? []
 );
 
 // no collections, don't render this block.
-if ( empty( $product_collections ) ) {
+if ( empty( $product_terms ) ) {
 	return;
 }
 
 ?>
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'role' => 'list' ] ) ); ?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'collections' => $product_collections ] ) ); ?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'collections' => $product_terms ] ) ); ?>
 >
 <?php
-foreach ( $product_collections as $filter_tag ) :
+foreach ( $product_terms as $filter_tag ) :
 	// Get an instance of the current Post Template block.
 		$block_instance = $block->parsed_block;
 
