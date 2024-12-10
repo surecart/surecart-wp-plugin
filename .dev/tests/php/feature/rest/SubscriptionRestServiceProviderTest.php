@@ -100,7 +100,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Quantity: Own with protocol enabled' => ['PUT','/surecart/v1/subscriptions/correct', 200, ['body' => ['quantity' => 2 ]], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_quantity_updates_enabled' => true
 						]
 					];
@@ -109,7 +109,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Quantity: Others with protocol enabled' => ['PUT','/surecart/v1/subscriptions/wrong', 403, ['body' => ['quantity' => 2 ]], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_quantity_updates_enabled' => true
 						]
 					];
@@ -118,7 +118,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Quantity: Own with protocol disabled' => ['PUT','/surecart/v1/subscriptions/correct', 403, ['body' => ['quantity' => 2 ]], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_quantity_updates_enabled' => false
 						]
 					];
@@ -127,7 +127,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Price: Own with protocol enabled' => ['PUT','/surecart/v1/subscriptions/correct', 200, ['body' => ['price' => 'test']], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_updates_enabled' => true
 						]
 					];
@@ -136,7 +136,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Price: Others with protocol enabled' => ['PUT','/surecart/v1/subscriptions/wrong', 403, ['body' => ['price' => 'test']], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_updates_enabled' => true
 						]
 					];
@@ -145,7 +145,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Price: Own with protocol disabled' => ['PUT','/surecart/v1/subscriptions/correct', 403, ['body' => ['price' => 'test']], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_updates_enabled' => false
 						]
 					];
@@ -154,7 +154,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Variant: Own with protocol enabled' => ['PUT','/surecart/v1/subscriptions/correct', 200, ['body' => ['variant' => 'test']], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_updates_enabled' => true
 						]
 					];
@@ -163,7 +163,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Variant: Others with protocol enabled' => ['PUT','/surecart/v1/subscriptions/wrong', 403, ['body' => ['variant' => 'test']], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_updates_enabled' => true
 						]
 					];
@@ -172,7 +172,7 @@ class SubscriptionRestServiceProviderTest extends SureCartUnitTestCase {
 			'Variant: Own with protocol disabled' => ['PUT','/surecart/v1/subscriptions/correct', 403, ['body' => ['variant' => 'test']], function() {
 				\SureCart::alias('account', function () {
 					return (object) [
-						'portal_protocol' => (object) [
+						'customer_portal_protocol' => (object) [
 							'subscription_updates_enabled' => false
 						]
 					];
