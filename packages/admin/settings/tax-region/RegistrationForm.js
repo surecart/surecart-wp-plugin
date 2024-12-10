@@ -167,7 +167,9 @@ export default ({
 	const requiresManualTaxOverride =
 		selectedZone?.default_rate === 0 ||
 		(region === 'ca' &&
-			['QC', 'SK', 'MB', 'BC'].includes(selectedZone?.state));
+			['QC', 'SK', 'MB', 'BC'].includes(
+				selectedZone?.state || registration?.tax_zone?.state
+			));
 
 	// Set taxType to 'manual' if requiresManualTaxOverride is true.
 	useEffect(() => {
