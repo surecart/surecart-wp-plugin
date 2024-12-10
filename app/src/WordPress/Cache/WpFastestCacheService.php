@@ -24,7 +24,7 @@ class WpFastestCacheService {
 			return;
 		}
 
-		if ( \SureCart::pages()->isCustomerDashboardPage() && function_exists( 'wpfc_exclude_current_page' ) ) {
+		if ( \SureCart::pages()->isCustomerDashboardPageByUrl() && function_exists( 'wpfc_exclude_current_page' ) ) {
 			wpfc_exclude_current_page();
 		}
 	}

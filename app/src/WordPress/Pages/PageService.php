@@ -255,18 +255,18 @@ class PageService {
 	}
 
 	/**
-	 * Check if the current page is the customer dashboard page.
+	 * Check if the page is the customer dashboard page by current URL.
 	 *
 	 * @return boolean
 	 */
-	public function isCustomerDashboardPage() {
-		$customer_dashboard_url = $this->url( 'dashboard' );
+	public function isCustomerDashboardPageByUrl(): bool {
+		$customer_dashboard_url = untrailingslashit( $this->url( 'dashboard' ) );
 
 		$scheme      = is_ssl() ? 'https://' : 'http://';
 		$host        = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
 		$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
-		$current_url = $scheme . $host . $request_uri;
+		$current_url = untrailingslashit( $scheme . $host . $request_uri );
 
-		return trim( $current_url, '/' ) === trim( $customer_dashboard_url, '/' );
+		return $current_url === $customer_dashboard_url;
 	}
 }
