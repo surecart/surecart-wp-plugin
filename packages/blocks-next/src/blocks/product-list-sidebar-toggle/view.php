@@ -8,9 +8,9 @@
 	tabindex="0"
 >
 	<?php
-		echo wp_kses(
+		echo ! empty( $attributes['icon'] ) && 'none' !== $attributes['icon'] ? wp_kses(
 			SureCart::svg()->get(
-				'sliders',
+				$attributes['icon'],
 				[
 					'aria-label' => __(
 						'Open sidebar',
@@ -20,7 +20,7 @@
 				],
 			),
 			sc_allowed_svg_html()
-		);
+		) : '';
 
 		echo wp_kses_post( $attributes['label'] ?? __( 'Filter', 'surecart' ) );
 		?>

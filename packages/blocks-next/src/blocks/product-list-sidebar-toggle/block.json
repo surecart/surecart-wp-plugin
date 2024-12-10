@@ -12,6 +12,10 @@
 		"label": {
 			"type": "string",
 			"default": "Filter"
+		},
+		"icon": {
+			"type": "string",
+			"default": "sliders"
 		}
 	},
 	"supports": {
@@ -27,6 +31,18 @@
 		},
 		"color": {
 			"text": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
 		}
 	},
 	"textdomain": "surecart",
