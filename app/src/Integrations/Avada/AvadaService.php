@@ -14,19 +14,7 @@ class AvadaService {
 	public function bootstrap(): void {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAvadaBlockStyles' ], 999999 ); // must be greater than 999.
 		add_action( 'after_setup_theme', [ $this, 'removeClientSideNavigation' ] );
-		add_action( 'render_block', [ $this, 'balanceBlockTagsForAvada' ], 10, 2 );
-	}
-
-	/**
-	 * Enqueue the Avada block styles.
-	 *
-	 * @return void
-	 */
-	public function enqueueAvadaBlockStyles(): void {
-		wp_enqueue_style( 'global-styles' );
-		wp_enqueue_style( 'wp-block-library' );
-		wp_enqueue_style( 'wp-block-library-theme' );
-		wp_enqueue_style( 'classic-theme-styles' );
+		apply_filters( 'render_block', [ $this, 'balanceBlockTagsForAvada' ], 10, 2 );
 	}
 
 	/**
@@ -37,6 +25,22 @@ class AvadaService {
 	private function isAvadaActive(): bool {
 		$active_theme = wp_get_theme();
 		return 'Avada' === $active_theme->get( 'Name' );
+	}
+
+	/**
+	 * Enqueue the Avada block styles.
+	 *
+	 * @return void
+	 */
+	public function enqueueAvadaBlockStyles(): void {
+		if ( ! $this->isAvadaActive() ) {
+			return;
+		}
+
+		wp_enqueue_style( 'global-styles' );
+		wp_enqueue_style( 'wp-block-library' );
+		wp_enqueue_style( 'wp-block-library-theme' );
+		wp_enqueue_style( 'classic-theme-styles' );
 	}
 
 	/**
