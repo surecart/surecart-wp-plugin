@@ -1,27 +1,23 @@
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import Icon from '../../components/Icon';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
 export default ({ attributes: { label }, setAttributes }) => {
 	const blockProps = useBlockProps();
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={__('Settings', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Label', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-				</PanelBody>
-			</InspectorControls>
 			<div {...blockProps}>
 				<Icon name="sliders" className="sc-sidebar-toggle__icon" />
-				{label || __('Filter', 'surecart')}
+				<RichText
+					tagName="span"
+					aria-label={__('Label text', 'surecart')}
+					placeholder={__('Add label…', 'surecart')}
+					value={label}
+					onChange={(label) => setAttributes({ label })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
 			</div>
 		</>
 	);

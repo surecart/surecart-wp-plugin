@@ -22,6 +22,6 @@
 			sc_allowed_svg_html()
 		);
 
-		echo esc_html( $attributes['label'] ?? __( 'Filter', 'surecart' ) );
+		echo wp_kses_post( $attributes['label'] ?? __( 'Filter', 'surecart' ) );
 		?>
 </div>
