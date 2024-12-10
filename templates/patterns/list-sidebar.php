@@ -19,7 +19,7 @@ return [
 <!-- /wp:group -->
 
 <!-- wp:surecart/product-list-content {"layout":{"type":"flex","orientation":"horizontal","verticalAlignment":"top","flexWrap":"nowrap"}} -->
-<!-- wp:surecart/product-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"20%","type":"flex","orientation":"vertical"}},"fontSize":"large"} -->
+<!-- wp:surecart/product-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"300px","type":"flex","orientation":"vertical"}},"fontSize":"large"} -->
 <!-- wp:surecart/product-list-filter-tags {"label":"\u003cstrong\u003eApplied Filters\u003c/strong\u003e","fontSize":"medium"} -->
 <!-- wp:surecart/product-list-filter-tag /-->
 <!-- /wp:surecart/product-list-filter-tags -->

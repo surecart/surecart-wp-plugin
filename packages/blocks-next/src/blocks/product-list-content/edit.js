@@ -8,7 +8,7 @@ const TEMPLATE = [
 			style: {
 				layout: {
 					selfStretch: 'fixed',
-					flexSize: '20%',
+					flexSize: '300px',
 					type: 'flex',
 					orientation: 'vertical',
 				},
