@@ -6,13 +6,11 @@ use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\Models\Account;
 use SureCart\Models\Brand;
 use SureCart\Models\TaxProtocol;
-use SureCart\Account\AccountService;
 use SureCart\Account\AccountServiceProvider;
 use SureCart\Request\RequestServiceProvider;
-use SureCart\Support\Server;
 use SureCart\Models\AffiliationProtocol;
 use SureCart\Models\ShippingProtocol;
-use SureCart\Models\PortalProtocol;
+use SureCart\Models\CustomerPortalProtocol;
 
 class AccountServiceTest extends SureCartUnitTestCase {
 	/**
@@ -21,7 +19,7 @@ class AccountServiceTest extends SureCartUnitTestCase {
 	public function setUp() : void
 	{
 		parent::setUp();
-		
+
 		//Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
@@ -98,7 +96,7 @@ class AccountServiceTest extends SureCartUnitTestCase {
 			'shipping_enabled' => true,
 		]);
 
-		$portalProtocol = new PortalProtocol([
+		$portalProtocol = new CustomerPortalProtocol([
 			'privacy_url' => 'http://bsfdev.test/privacy',
 			'terms_url' => 'http://bsfdev.test/terms'
 		]);
@@ -132,7 +130,7 @@ class AccountServiceTest extends SureCartUnitTestCase {
 			'customer_notification_protocol' => 'dc4a5c1a-693a-4290-b3d9-85db7f3d7fdc',
 			'owner' => '8161b42b-aa35-4a83-a1ae-9467b4a96561',
 			'order_protocol' => '91bca178-6bbc-4e40-8ccf-d7060653c0a2',
-			'portal_protocol' => $portalProtocol,
+			'customer_portal_protocol' => $portalProtocol,
 			'subscription_protocol' => (object)[],
 			'shipping_protocol' => $shippingProtocol,
 			'tax_protocol' => $taxProtocol,
@@ -155,8 +153,8 @@ class AccountServiceTest extends SureCartUnitTestCase {
 	public function test_account_service_when_transient_is_set() {
 		$accountService = \SureCart::account();
 
-		set_transient('surecart_account', $this->account); 
-		
+		set_transient('surecart_account', $this->account);
+
 		$this->assertSame('81784ba6-072b-48b4-a460-ec9405b2b540', $accountService->fetchCachedAccount()->id);
 
 		delete_transient('surecart_account');
@@ -192,8 +190,8 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$this->assertSame($this->account->entitlements->subscription_preservation, $account->entitlements->subscription_preservation);
 		$this->assertSame($this->account->plan->name, $account->plan->name);
 		$this->assertSame($this->account->shipping_protocol->shipping_enabled, $account->shipping_protocol->shipping_enabled);
-		$this->assertSame($this->account->portal_protocol->privacy_url, $account->portal_protocol->privacy_url);
-		$this->assertSame($this->account->portal_protocol->terms_url, $account->portal_protocol->terms_url);
+		$this->assertSame($this->account->customer_portal_protocol->privacy_url, $account->customer_portal_protocol->privacy_url);
+		$this->assertSame($this->account->customer_portal_protocol->terms_url, $account->customer_portal_protocol->terms_url);
 		$this->assertSame($this->account->brand->color, $account->brand->color);
 		$this->assertSame($this->account->brand->address->city, $account->brand->address->city);
 		$this->assertSame($this->account->tax_protocol->eu_tax_enabled, $account->tax_protocol->eu_tax_enabled);

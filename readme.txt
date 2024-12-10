@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -306,6 +306,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.1.3 - December 9th, 2024 =
+- New: Setting to force reusable payment methods on checkout.
+- Improvement: Added link to invoice from order page if order has an invoice.
+- Fix: Issue where terms, privacy and subscription changes were not able to be saved.
+- Fix: Issue where a paused subscription could not be canceled.
+- Fix: Warning when passing additional address parameters to Stripe payment elements.
+- Fix: Issue where previous access was not getting revoked on some integrations when subscription was updated.
 
 = 3.1.2 - December 2nd, 2024 =
 - Improvement: Added clarification text on checkout page for when a coupon is applied after a trial starts.
