@@ -1,15 +1,4 @@
-@media (max-width: 480px) {
-    .sc-sidebar-desktop.wp-block-surecart-product-list-sidebar {
-        display: none;
-    }
-}
-
-@media (min-width: 481px) {
-	.sc-drawer.wp-block-surecart-product-list-sidebar {
-		display: none !important;
-	}
-}
-
+// drawer
 .wp-block-surecart-product-list-sidebar.sc-drawer {
 	flex: 1 1 auto;
 	overflow: auto;
@@ -29,6 +18,7 @@
 		padding-left: 1.25em;
 		padding-right: 1.25em;
 		color: var(--sc-line-item-title-color, var(--sc-input-label-color));
+
 		&__title {
 			width: 100%;
 			text-align: center;
@@ -37,7 +27,7 @@
 			white-space: nowrap;
 			padding: 0 var(--sc-spacing-small);
 		}
-	
+
 		&__close,
 		&__close svg {
 			cursor: pointer;
@@ -69,4 +59,16 @@
 html:has(dialog.sc-drawer[open]) {
 	overflow: hidden;
 	scrollbar-gutter: stable;
+}
+
+@media (max-width: 768px) {
+	.sc-sidebar-desktop.wp-block-surecart-product-list-sidebar {
+		display: none;
+	}
+}
+
+@media (min-width: 769px) {
+	.sc-drawer.wp-block-surecart-product-list-sidebar {
+		display: none !important;
+	}
 }
