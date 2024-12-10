@@ -45,7 +45,7 @@ if ( empty( $product_terms ) ) {
 	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'role' => 'list' ] ) ); ?>
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'collections' => $product_terms ] ) ); ?>
 >
-<span> <?php echo wp_kses_post( $attributes['label'] ); ?> </span>
+<span><?php echo wp_kses_post( $attributes['label'] ); ?> </span>
 <?php
 foreach ( $product_terms as $filter_tag ) :
 	// Get an instance of the current Post Template block.
@@ -66,6 +66,8 @@ foreach ( $product_terms as $filter_tag ) :
 
 		remove_filter( 'render_block_context', $filter_block_context, 1 );
 	?>
-	<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	<div class="sc-product-list-filter-tag">
+		<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	</div>
 <?php endforeach; ?>
 </div>
