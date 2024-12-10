@@ -14,7 +14,7 @@ class AvadaService {
 	public function bootstrap(): void {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAvadaBlockStyles' ], 999999 ); // must be greater than 999.
 		add_action( 'after_setup_theme', [ $this, 'removeClientSideNavigation' ] );
-		apply_filters( 'render_block', [ $this, 'balanceBlockTagsForAvada' ], 10, 2 );
+		add_action( 'render_block', [ $this, 'balanceBlockTagsForAvada' ], 10, 2 );
 	}
 
 	/**
