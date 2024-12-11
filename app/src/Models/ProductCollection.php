@@ -10,7 +10,8 @@ use SureCart\Support\Contracts\PageModel;
  * Holds Product Collection data.
  */
 class ProductCollection extends Model implements PageModel {
-	use HasImageSizes, HasDates;
+	use HasImageSizes;
+	use HasDates;
 
 	/**
 	 * Rest API endpoint
