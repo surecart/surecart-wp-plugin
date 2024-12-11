@@ -9,7 +9,8 @@ use SureCart\Models\Traits\HasImageSizes;
  * Price model
  */
 class Media extends Model {
-	use HasImageSizes, HasDates;
+	use HasImageSizes;
+	use HasDates;
 
 	/**
 	 * Rest API endpoint
