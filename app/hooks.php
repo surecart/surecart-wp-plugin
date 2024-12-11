@@ -59,3 +59,11 @@ add_filter(
 		return $url;
 	}
 );
+
+add_action(
+	'surecart/models/checkout/creating',
+	function ( $checkout ) {
+		$checkout->shipping_address          = new \stdClass();
+		$checkout->shipping_address->country = 'NL';
+	}
+);

@@ -248,10 +248,7 @@ export const newShopTemplate = (attributes, childBlocks) => {
 							'surecart'
 						),
 						align: 'center',
-						content: __(
-							"We couldn't find any products that match your criteria. Explore other options!",
-							'surecart'
-						),
+						content: __('No products found.', 'surecart'),
 					},
 				],
 			],
