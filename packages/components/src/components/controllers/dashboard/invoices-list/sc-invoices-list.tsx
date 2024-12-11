@@ -144,13 +144,13 @@ export class ScInvoicesList {
 
   renderList() {
     return this.invoices.map(invoice => {
-      const { checkout, created_at_date } = invoice;
+      const { checkout, due_date_date } = invoice;
       if (!checkout) return null;
       const { amount_due, currency } = checkout as Checkout;
       return (
         <sc-stacked-list-row href={this.getInvoiceRedirectUrl(invoice)} style={{ '--columns': '4' }} mobile-size={500}>
           <div>#{invoice?.order_number}</div>
-          <div class="order__date">{created_at_date}</div>
+          <div>{due_date_date && invoice?.status === 'open' ? sprintf(__('Due %s', 'surecart'), due_date_date) : '—'}</div>
           <div class="invoices-list__status">
             <sc-invoice-status-badge status={invoice?.status}></sc-invoice-status-badge>
           </div>
