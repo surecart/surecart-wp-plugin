@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Models\Product;
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 /**
@@ -151,7 +150,7 @@ class ProductsListTable extends ListTable {
 				'status'              => __( 'Product Page', 'surecart' ),
 				'featured'            => __( 'Featured', 'surecart' ),
 				'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
-				'date'                => __( 'Date', 'surecart' ),
+				'date'                => __( 'Created', 'surecart' ),
 			)
 		);
 	}
