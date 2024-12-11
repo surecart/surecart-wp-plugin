@@ -260,13 +260,20 @@ class PageService {
 	 * @return boolean
 	 */
 	public function isCustomerDashboardPageByUrl(): bool {
-		$customer_dashboard_url = untrailingslashit( $this->url( 'dashboard' ) );
+		$customer_dashboard_url = $this->url( 'dashboard' );
 
+		// If the customer dashboard URL is empty, return false.
+		if ( empty( $customer_dashboard_url ) ) {
+			return false;
+		}
+
+		// Get the current URL.
 		$scheme      = is_ssl() ? 'https://' : 'http://';
 		$host        = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
 		$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
-		$current_url = untrailingslashit( $scheme . $host . $request_uri );
+		$current_url = $scheme . $host . $request_uri;
 
-		return $current_url === $customer_dashboard_url;
+		// Check if the current URL is the customer dashboard URL.
+		return untrailingslashit( $current_url ) === untrailingslashit( $customer_dashboard_url );
 	}
 }
