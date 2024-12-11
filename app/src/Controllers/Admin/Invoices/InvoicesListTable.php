@@ -196,7 +196,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_due_date( $invoice ) {
-		return $invoice->due_date_display ?? '-';
+		return $invoice->due_date_date ?? '-';
 	}
 
 	/**
@@ -207,7 +207,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_issue_date( $invoice ) {
-		return $invoice->issue_date_display ?? '-';
+		return $invoice->issue_date_date ?? '-';
 	}
 
 	/**

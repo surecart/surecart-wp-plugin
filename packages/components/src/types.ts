@@ -519,8 +519,9 @@ export interface Invoice extends Object {
   object: 'invoice';
   automatic_collection: boolean;
   due_date?: number;
-  due_date_display?: string;
+  due_date_date?: string;
   issue_date?: number;
+  issue_date_date?: string;
   footer?: string;
   memo?: string;
   live_mode: boolean;
