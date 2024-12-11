@@ -21,8 +21,6 @@ export class ScLineItemInvoiceDueDate {
     const checkout = checkoutState?.checkout;
     const dueDate = (checkout?.invoice as Invoice)?.due_date_date || null;
 
-    console.log(dueDate, checkout?.invoice);
-
     // Stop if checkout has no invoice due date.
     if (!dueDate) {
       return null;
