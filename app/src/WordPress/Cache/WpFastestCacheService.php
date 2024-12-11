@@ -19,13 +19,11 @@ class WpFastestCacheService {
 	 * @return void
 	 */
 	public function disableCacheForCustomerDashboard() {
-		// If WpFastestCache, class available, then only proceed.
-		if ( ! class_exists( 'WpFastestCache' ) ) {
+		// If wpfc_exclude_current_page', class available and customer dashboard page, then only proceed.
+		if ( ! function_exists( 'wpfc_exclude_current_page' ) || ! \SureCart::pages()->isCustomerDashboardPageByUrl() ) {
 			return;
 		}
 
-		if ( \SureCart::pages()->isCustomerDashboardPageByUrl() && function_exists( 'wpfc_exclude_current_page' ) ) {
-			wpfc_exclude_current_page();
-		}
+		wpfc_exclude_current_page();
 	}
 }

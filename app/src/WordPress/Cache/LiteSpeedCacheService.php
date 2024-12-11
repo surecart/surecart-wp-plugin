@@ -19,8 +19,10 @@ class LiteSpeedCacheService {
 	 * @return void
 	 */
 	public function disableCacheForCustomerDashboard() {
-		if ( \SureCart::pages()->isCustomerDashboardPageByUrl() ) {
-			do_action( 'litespeed_control_set_nocache', 'surecart customer dashboard' );
+		if ( ! \SureCart::pages()->isCustomerDashboardPageByUrl() ) {
+			return;
 		}
+
+		do_action( 'litespeed_control_set_nocache', 'surecart customer dashboard' );
 	}
 }
