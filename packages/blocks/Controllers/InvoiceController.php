@@ -70,9 +70,8 @@ class InvoiceController extends BaseController {
 			->id( 'customer-invoices-index' )
 			->with(
 				[
-					'heading'    => __( 'Invoices', 'surecart' ),
-					'isCustomer' => User::current()->isCustomer(),
-					'query'      => apply_filters(
+					'heading' => __( 'Invoices', 'surecart' ),
+					'query'   => apply_filters(
 						'surecart/dashboard/invoice_list/query',
 						[
 							'customer_ids' => array_values( User::current()->customerIds() ),
