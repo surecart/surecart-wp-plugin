@@ -95,7 +95,7 @@ return array(
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
 		\SureCart\Rest\PeriodRestServiceProvider::class,
 		\SureCart\Rest\SettingsRestServiceProvider::class,
-		\SureCart\Rest\PortalProtocolRestServiceProvider::class,
+		\SureCart\Rest\CustomerPortalProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
@@ -157,6 +157,7 @@ return array(
 		\SureCartBlocks\Blocks\Address\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Coupon\Block::class,
+		\SureCartBlocks\Blocks\TrialLineItem\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
@@ -213,7 +214,7 @@ return array(
 		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
-		
+
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,

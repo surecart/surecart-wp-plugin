@@ -30,7 +30,7 @@ class AdminPluginCacheService {
 				'wp-super-cache/wp-cache.php',
 				'autoptimize/autoptimize.php',
 				'wp-fastest-cache/wpFastestCache.php',
-				'sg-cachepress/sg-cachepress.php',
+				// 'sg-cachepress/sg-cachepress.php', // we added support for this in the plugin
 				'cache-enabler/cache-enabler.php',
 				'swift-performance-lite/performance.php',
 				'hummingbird-performance/wp-hummingbird.php',

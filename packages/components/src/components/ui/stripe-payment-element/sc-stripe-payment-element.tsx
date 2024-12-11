@@ -156,7 +156,7 @@ export class ScStripePaymentElement {
     if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
-      const address = getCompleteAddress('shipping');
+      const { line1, line2, city, state, country, postal_code } = getCompleteAddress('shipping') ?? {};
 
       // create the payment element.
       (processorsState.instances.stripeElements as any)
@@ -165,7 +165,7 @@ export class ScStripePaymentElement {
             billingDetails: {
               name: checkoutState.checkout?.name,
               email: checkoutState.checkout?.email,
-              ...(!!address ? { address } : {}),
+              ...(line1 && { address: { line1, line2, city, state, country, postal_code } }),
             },
           },
           fields: {

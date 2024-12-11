@@ -34,6 +34,7 @@
 - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
 - [sc-divider](../../ui/divider)
 - [sc-invoice-memo](../../controllers/checkout-form/invoice-memo)
+- [sc-line-item-trial](../../controllers/checkout-form/line-item-trial)
 
 ### Graph
 ```mermaid
@@ -51,6 +52,7 @@ graph TD;
   sc-form-components-validator --> sc-line-item-invoice-receipt-download
   sc-form-components-validator --> sc-divider
   sc-form-components-validator --> sc-invoice-memo
+  sc-form-components-validator --> sc-line-item-trial
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -106,6 +108,8 @@ graph TD;
   sc-line-item-invoice-receipt-download --> sc-skeleton
   sc-line-item-invoice-receipt-download --> sc-icon
   sc-invoice-memo --> sc-skeleton
+  sc-line-item-trial --> sc-line-item
+  sc-line-item-trial --> sc-format-number
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```
