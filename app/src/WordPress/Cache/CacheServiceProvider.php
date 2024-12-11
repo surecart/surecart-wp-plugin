@@ -35,12 +35,7 @@ class CacheServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		add_action(
-			'plugins_loaded',
-			function () use ( $container ) {
-				$container['surecart.litespeed_cache']->bootstrap();
-				$container['surecart.wpfastest_cache']->bootstrap();
-			}
-		);
+		$container['surecart.litespeed_cache']->bootstrap();
+		$container['surecart.wpfastest_cache']->bootstrap();
 	}
 }
