@@ -24,6 +24,18 @@
 			"text": true,
 			"background": true,
 			"enableContrastChecker": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
 		}
 	},
 	"textdomain": "surecart",
