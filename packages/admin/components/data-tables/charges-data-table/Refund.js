@@ -28,6 +28,7 @@ import {
 	ScCard,
 	ScText,
 } from '@surecart/components-react';
+import Error from '../../Error';
 
 export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [loading, setLoading] = useState(false);
@@ -154,13 +155,15 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 					amount,
 					reason,
 					charge: charge?.id,
-					refund_items: items.map((item) => ({
-						purchase: item.id,
-						quantity: item.quantity,
-						restock: item.restock,
-						revoke_purchase: item.revokePurchase,
-						line_item: item.lineItem?.id,
-					})),
+					refund_items: items
+						.filter((item) => item.quantity > 0)
+						.map((item) => ({
+							purchase: item.id,
+							quantity: item.quantity,
+							restock: item.restock,
+							revoke_purchase: item.revokePurchase,
+							line_item: item.lineItem?.id,
+						})),
 				},
 				{ throwOnError: true }
 			);
@@ -668,9 +671,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 						</ScCard>
 					</div>
 
-					<ScAlert type="danger" open={error}>
-						{error}
-					</ScAlert>
+					<Error error={error} setError={setError} />
 
 					{(loading || refundsLoading) && (
 						<sc-block-ui
