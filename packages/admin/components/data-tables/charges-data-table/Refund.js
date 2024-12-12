@@ -136,7 +136,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	// on change individual amount, update the setAmount.
 	useEffect(() => {
 		const totalAmount = items.reduce((total, item) => {
-			return total + item.quantity * item.lineItem?.full_amount;
+			return total + item.quantity * item.lineItem?.price?.amount;
 		}, 0);
 		setAmount(
 			Math.min(totalAmount, charge?.amount - charge?.refunded_amount)
@@ -445,7 +445,9 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 																<ScFormatNumber
 																	type="currency"
 																	value={
-																		(lineItem?.full_amount ??
+																		(lineItem
+																			?.price
+																			?.amount ??
 																			0) *
 																		(quantity ??
 																			lineItem?.quantity)
@@ -619,7 +621,8 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 																item.quantity *
 																	item
 																		.lineItem
-																		?.full_amount
+																		?.price
+																		?.amount
 															);
 														},
 														0
