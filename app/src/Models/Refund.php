@@ -4,11 +4,13 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCharge;
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasRefundItems;
+
 /**
- * Subscription model
+ * Refund model.
  */
 class Refund extends Model {
-	use HasCustomer, HasCharge;
+	use HasCustomer, HasCharge, HasRefundItems;
 
 	/**
 	 * Rest API endpoint
