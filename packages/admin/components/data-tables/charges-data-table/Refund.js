@@ -84,19 +84,27 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 		return {};
 	};
 
-	const refundedItems = (purchases || []).map((purchase) => {
-		const lineItem = purchase.line_items?.data?.[0];
-		const refundedItem = getRefundedItem(lineItem);
-		const qtyRefunded = refundedItem?.quantity || 0;
-		return {
-			...purchase,
-			quantity: purchase.quantity - qtyRefunded,
-			originalQuantity: purchase.quantity,
-			revokePurchase: refundedItem?.revoke_purchase || true,
-			restock: refundedItem?.restock || false,
-			lineItem,
-		};
-	});
+	const refundedItems = (purchases || [])
+		.filter((purchase) => {
+			const lineItem = purchase.line_items?.data?.[0];
+			const refundedItem = getRefundedItem(lineItem);
+			const qtyRefunded = refundedItem?.quantity || 0;
+			return qtyRefunded > 0;
+		})
+		.map((purchase) => {
+			const lineItem = purchase.line_items?.data?.[0];
+			const refundedItem = getRefundedItem(lineItem);
+			const qtyRefunded = refundedItem?.quantity || 0;
+
+			return {
+				...purchase,
+				quantity: purchase.quantity - qtyRefunded,
+				originalQuantity: purchase.quantity,
+				revokePurchase: refundedItem?.revoke_purchase || false,
+				restock: refundedItem?.restock || false,
+				lineItem,
+			};
+		});
 
 	useEffect(() => {
 		setItems(
@@ -130,7 +138,9 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 		const totalAmount = items.reduce((total, item) => {
 			return total + item.quantity * item.lineItem?.full_amount;
 		}, 0);
-		setAmount(totalAmount);
+		setAmount(
+			Math.min(totalAmount, charge?.amount - charge?.refunded_amount)
+		);
 
 		const totalQuantity = items.reduce((total, item) => {
 			return total + item.quantity;
@@ -358,8 +368,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 															<div
 																slot="title"
 																style={{
-																	width: 180,
-																	order: 1,
+																	width: 195,
 																}}
 															>
 																{product?.name}
