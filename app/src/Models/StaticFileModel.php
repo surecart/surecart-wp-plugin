@@ -14,6 +14,13 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 	use Facade;
 
 	/**
+	 * Rest API endpoint
+	 *
+	 * @var string
+	 */
+	protected $endpoint = '';
+
+	/**
 	 * Keeps track of booted models
 	 *
 	 * @var array
@@ -49,6 +56,13 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 	protected $query = [];
 
 	/**
+	 * Default query parameters
+	 *
+	 * @var array
+	 */
+	protected $default_query = [];
+
+	/**
 	 * Stores model relations
 	 *
 	 * @var array
@@ -70,18 +84,11 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 	protected $guarded = [];
 
 	/**
-	 * Static data from file
-	 *
-	 * @var array
-	 */
-	protected static $data = [];
-
-	/**
 	 * Path to the static data file
 	 *
 	 * @var string
 	 */
-	protected $directory = '';
+	protected $base_url = '';
 
 	/**
 	 * Model constructor
@@ -94,69 +101,15 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 		}
 
 		$this->bootModel();
-		$this->loadStaticData();
 		$this->syncOriginal();
 		$this->fill( $attributes );
 	}
 
 	/**
-	 * Load static data from directory.
-	 */
-	protected function loadStaticData() {
-		if ( empty( static::$data ) ) {
-
-			$files = array_filter(
-				glob( $this->directory . '/*.php' ),
-				function ( $file ) {
-					// Skip abstract classes (prefixed with Abstract).
-					return strpos( basename( $file ), 'Abstract' ) === false;
-				}
-			);
-
-			// Loop through each file and instantiate the class.
-			foreach ( $files as $file ) {
-				// Get the filename without extension.
-				$class_name = basename( $file, '.php' );
-
-				// Get namespace from directory path.
-				$relative_path = str_replace(
-					[ dirname( dirname( $this->directory ) ), '/' ],
-					[ '', '\\' ],
-					dirname( $file )
-				);
-				$namespace     = 'SureCart' . $relative_path;
-
-				// Build the full class name with namespace.
-				$full_class_name = $namespace . '\\' . $class_name;
-
-				if ( class_exists( $full_class_name ) ) {
-					// Store the instance data using getId() as the key.
-					static::$data[] = new $full_class_name();
-				}
-			}
-		}
-	}
-
-	/**
-	 * Get the query results
-	 *
-	 * @return array
-	 */
-	protected function executeQuery() {
-		$data = static::$data;
-
-		// Apply limit and offset.
-		if ( isset( $this->query['limit'] ) ) {
-			$data = array_slice( $data, $this->query['offset'] ?? 0, $this->query['limit'] );
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Find a specific model with an id
+	 * Find a specific model with an id.
 	 *
 	 * @param string $id Id of the model.
+	 *
 	 * @return $this|\WP_Error
 	 */
 	protected function find( $id = '' ) {
@@ -164,18 +117,13 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 			return false;
 		}
 
-		$result = array_filter(
-			static::$data,
-			function ( $item ) use ( $id ) {
-				return $item['id'] === $id;
-			}
-		);
+		$result = $this->makeRequest( [ 'id' => $id ] );
 
-		if ( empty( $result ) ) {
-			return new \WP_Error( 'not_found', 'This does not exist.' );
+		if ( is_wp_error( $result ) ) {
+			return new $result->get_error_message();
 		}
 
-		$attributes = reset( $result );
+		$attributes = json_decode( wp_remote_retrieve_body( $result ), true );
 
 		$this->fireModelEvent( 'found' );
 		$this->syncOriginal();
@@ -190,14 +138,31 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 	 * @return array
 	 */
 	protected function get() {
-		$data = static::$data;
+		$result = $this->makeRequest();
 
-		// Apply limit and offset.
-		if ( isset( $this->query['limit'] ) ) {
-			$data = array_slice( $data, $this->query['offset'] ?? 0, $this->query['limit'] );
+		if ( is_wp_error( $result ) ) {
+			return $result->get_error_message();
 		}
 
-		return $data;
+		$result = json_decode( wp_remote_retrieve_body( $result ), true );
+
+		foreach ( $result as $key => $item ) {
+			$result[ $key ] = new static( $item );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Make a request to the API.
+	 *
+	 * @param array $args Array of arguments.
+	 *
+	 * @return array|WP_Error
+	 */
+	protected function makeRequest( $args = [] ) {
+		$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
+		return wp_remote_get( add_query_arg( array_merge( $this->default_query, $this->query ), $this->base_url . $endpoint ) );
 	}
 
 	/**
@@ -282,13 +247,55 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 	}
 
 	/**
+	 * Calls a mutator based on set{Attribute}Attribute
+	 *
+	 * @param string $key Attribute key.
+	 * @param mixed  $type 'get' or 'set'.
+	 *
+	 * @return string|false
+	 */
+	public function getMutator( $key, $type ) {
+		$key = ucwords( str_replace( [ '-', '_' ], ' ', $key ) );
+
+		$method = $type . str_replace( ' ', '', $key ) . 'Attribute';
+
+		if ( method_exists( $this, $method ) ) {
+			return $method;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if the attribute exists.
+	 *
+	 * @param string $key Attribute key.
+	 * @return bool
+	 */
+	public function hasAttribute( $key ) {
+		return isset( $this->attributes[ $key ] );
+	}
+
+	/**
 	 * Get an attribute from the model.
 	 *
 	 * @param string $key Attribute key.
 	 * @return mixed
 	 */
 	public function getAttribute( $key ) {
-		return $this->attributes[ $key ] ?? null;
+		$attribute = null;
+
+		if ( $this->hasAttribute( $key ) ) {
+			$attribute = $this->attributes[ $key ];
+		}
+
+		$getter = $this->getMutator( $key, 'get' );
+
+		if ( $getter ) {
+			return $this->{$getter}( $attribute );
+		} elseif ( ! is_null( $attribute ) ) {
+			return $attribute;
+		}
 	}
 
 	/**
@@ -321,14 +328,23 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 		return isset( $this->attributes[ $offset ] );
 	}
 
+	/**
+	 * ArrayAccess implementation
+	 */
 	public function offsetGet( $offset ): mixed {
 		return $this->getAttribute( $offset );
 	}
 
+	/**
+	 * ArrayAccess implementation
+	 */
 	public function offsetSet( $offset, $value ): void {
 		$this->setAttribute( $offset, $value );
 	}
 
+	/**
+	 * ArrayAccess implementation
+	 */
 	public function offsetUnset( $offset ): void {
 		unset( $this->attributes[ $offset ] );
 	}
@@ -341,11 +357,61 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 	}
 
 	/**
+	 * Get the model attributes
+	 *
+	 * @return array
+	 */
+	public function getAttributes() {
+		return json_decode( wp_json_encode( $this->attributes ), true );
+	}
+
+	/**
 	 * Get the instance as an array.
 	 *
 	 * @return array
 	 */
 	public function toArray() {
-		return $this->attributes;
+		$attributes = $this->getAttributes();
+
+		// hoist up the acf attributes to the top level.
+		$acf        = $this->attributes['acf'];
+		$attributes = array_merge( $acf, $attributes );
+
+		// Check if any accessor is available and call it.
+		foreach ( get_class_methods( $this ) as $method ) {
+			if ( 'get' === substr( $method, 0, 3 ) && 'Attribute' === substr( $method, -9 ) ) {
+				$key = str_replace( [ 'get', 'Attribute' ], '', $method );
+				if ( $key ) {
+					$pieces             = preg_split( '/(?=[A-Z])/', $key );
+					$pieces             = array_map( 'strtolower', array_filter( $pieces ) );
+					$key                = implode( '_', $pieces );
+					$value              = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
+					$attributes[ $key ] = $this->{$method}( $value );
+				}
+			}
+		}
+
+		// Check if any attribute is a model and call toArray.
+		array_walk_recursive(
+			$attributes,
+			function ( &$value ) {
+				if ( is_a( $value, Arrayable::class ) ) {
+					$value = $value->toArray();
+				}
+			}
+		);
+
+		return $attributes;
+	}
+
+	/**
+	 * Get the attribute
+	 *
+	 * @param string $key Attribute name.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		return $this->getAttribute( $key );
 	}
 }

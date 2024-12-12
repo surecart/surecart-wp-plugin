@@ -4,18 +4,25 @@ import SettingsTemplate from '../SettingsTemplate';
 import { __ } from '@wordpress/i18n';
 import IntegrationCard from './IntegrationCard';
 import { useEntityRecords } from '@wordpress/core-data';
+import { ProgressBar } from '@wordpress/components';
+import { ScCard } from '@surecart/components-react';
+
 export default () => {
-	const { records } = useEntityRecords('surecart', 'integration_catalog', {
-		per_page: 100,
-	});
+	const { records, hasResolved } = useEntityRecords(
+		'surecart',
+		'integration_catalog',
+		{
+			per_page: 100,
+		}
+	);
 
 	// Group records by category
 	const groupedRecords = (records || []).reduce((acc, record) => {
-		(record.categories || []).forEach((category) => {
-			if (!acc[category]) {
-				acc[category] = [];
+		(record._embedded['wp:term'][0] || []).forEach(({ name }) => {
+			if (!acc[name]) {
+				acc[name] = [];
 			}
-			acc[category].push(record);
+			acc[name].push(record);
 		});
 		return acc;
 	}, {});
@@ -34,7 +41,7 @@ export default () => {
 				// Lower priority should come first, fallback to alphabetical
 				return (
 					(a.priority || 0) - (b.priority || 0) ||
-					a.name.localeCompare(b.name)
+					a.title?.rendered.localeCompare(b.title?.rendered)
 				);
 			}),
 		]);
@@ -45,11 +52,24 @@ export default () => {
 			icon={<sc-icon name="zap"></sc-icon>}
 			noButton
 		>
+			{!hasResolved && (
+				<div
+					css={css`
+						min-height: 600px;
+						width: 100%;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					`}
+				>
+					<ProgressBar />
+				</div>
+			)}
 			{sortedEntries.map(([category, categoryRecords]) => (
 				<div key={category}>
 					<h2
 						css={css`
-							olor: var(--sc-color-gray-500);
+							color: var(--sc-color-gray-500);
 							font-size: 12px;
 							text-transform: uppercase;
 							margin: 2em 0 1em;
@@ -58,7 +78,7 @@ export default () => {
 							}
 						`}
 					>
-						{category}
+						<span dangerouslySetInnerHTML={{ __html: category }} />
 					</h2>
 					<div
 						css={css`

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import { ScCard, ScTag } from '@surecart/components-react';
 import { useLink, useLocation } from '../../router';
 import { __ } from '@wordpress/i18n';
 
@@ -11,6 +10,10 @@ export default ({ integration }) => {
 		id: integration.id,
 		...location.params,
 	});
+
+	const sizes =
+		integration?._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes;
+	const logo = sizes?.medium?.source_url || sizes?.thumbnail?.source_url;
 
 	return (
 		<a
@@ -51,8 +54,8 @@ export default ({ integration }) => {
 					`}
 				>
 					<img
-						src={integration.logo}
-						alt={integration.name}
+						src={logo}
+						alt={integration.title?.rendered}
 						width={32}
 						height={32}
 					/>
@@ -64,17 +67,24 @@ export default ({ integration }) => {
 								margin: 0;
 							`}
 						>
-							{integration.name}
+							{integration.title?.rendered}
 						</h2>
+						{integration?.is_pre_installed && (
+							<div
+								css={css`
+									font-size: 12px;
+								`}
+							>
+								{__('Pre-installed', 'surecart')}
+							</div>
+						)}
 						{integration?.is_enabled && (
 							<div
 								css={css`
 									font-size: 12px;
 								`}
 							>
-								{integration?.is_pre_installed
-									? __('Pre-installed', 'surecart')
-									: __('Enabled', 'surecart')}
+								{__('Enabled', 'surecart')}
 							</div>
 						)}
 					</div>
@@ -86,7 +96,7 @@ export default ({ integration }) => {
 						line-height: 1.3;
 					`}
 				>
-					{integration?.summary}
+					{integration?.acf?.summary}
 				</div>
 			</div>
 		</a>

@@ -27,7 +27,7 @@ class IntegrationCatalogController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return rest_ensure_response( IntegrationCatalog::get( $request->get_param( 'provider' ) ) );
+		return rest_ensure_response( IntegrationCatalog::find( $request->get_param( 'id' ) ) );
 	}
 
 	/**

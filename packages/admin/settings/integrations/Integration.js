@@ -19,21 +19,25 @@ import Notifications from '../../components/Notifications';
 const ActivateButton = ({ record, onActivated }) => {
 	if (
 		record?.plugin_slug &&
-		record?.plugin_file_name &&
+		record?.plugin_file &&
 		!record?.is_plugin_active
 	) {
 		return (
 			<PluginActivationButton
-				plugin={record?.plugin_file_name}
+				plugin={record?.plugin_file}
 				slug={record?.plugin_slug}
 				onActivated={onActivated}
 			/>
 		);
 	}
 
-	if (!!record?.enable_link) {
+	if (!!record?.activation_link) {
 		return (
-			<ScButton type="primary" href={record?.enable_link} target="_blank">
+			<ScButton
+				type="primary"
+				href={record?.activation_link}
+				target="_blank"
+			>
 				{__('Enable', 'surecart')}
 				<ScIcon name="external-link" slot="suffix" />
 			</ScButton>
@@ -45,11 +49,11 @@ const ActivateButton = ({ record, onActivated }) => {
 
 const ActivatedButton = ({ record }) => {
 	if (record?.is_pre_installed) {
-		if (!!record?.enable_link) {
+		if (!!record?.activation_link) {
 			return (
 				<ScButton
 					type="text"
-					href={record?.enable_link}
+					href={record?.activation_link}
 					target="_blank"
 				>
 					{__('Pre-installed', 'surecart')}
@@ -57,7 +61,6 @@ const ActivatedButton = ({ record }) => {
 				</ScButton>
 			);
 		}
-
 		return (
 			<ScButton type="text" disabled>
 				{__('Pre-installed', 'surecart')}
@@ -67,9 +70,14 @@ const ActivatedButton = ({ record }) => {
 
 	return (
 		<ScButton type="text" disabled>
-			{__('Enabled', 'surecart')}
+			{__('Installed', 'surecart')}
 		</ScButton>
 	);
+};
+
+const getYouTubeSrc = (embedCode) => {
+	const match = embedCode?.match(/src="([^"]+)"/);
+	return match?.[1] || '';
 };
 
 export default ({ id }) => {
@@ -78,11 +86,14 @@ export default ({ id }) => {
 	const { record } = useEntityRecord('surecart', 'integration_catalog', id);
 	const { id: _, ...rest } = location.params;
 	const { href, onClick } = useLink({ ...rest });
+	const sizes =
+		record?._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes;
+	const logo = sizes?.medium?.source_url || sizes?.thumbnail?.source_url;
 
 	// Dynamically import the component based on id
 	let IntegrationComponent = null;
 	try {
-		IntegrationComponent = require(`./components/${id}`).default;
+		IntegrationComponent = require(`./components/${record?.slug}`).default;
 	} catch (e) {
 		// Component doesn't exist, silently fail
 	}
@@ -98,12 +109,17 @@ export default ({ id }) => {
 				width: 100%;
 			`}
 		>
-			<ScBreadcrumbs>
-				<ScBreadcrumb href={href} onClick={onClick}>
+			<div>
+				<ScButton
+					type="text"
+					href={href}
+					onClick={onClick}
+					size="small"
+				>
+					<ScIcon name="chevron-left" slot="prefix" />
 					{__('Integrations', 'surecart')}
-				</ScBreadcrumb>
-				<ScBreadcrumb>{record?.name}</ScBreadcrumb>
-			</ScBreadcrumbs>
+				</ScButton>
+			</div>
 
 			<div
 				css={css`
@@ -113,8 +129,8 @@ export default ({ id }) => {
 				`}
 			>
 				<img
-					src={record?.logo}
-					alt={record?.name}
+					src={logo}
+					alt={record?.title?.rendered}
 					css={css`
 						width: 48px;
 						height: 48px;
@@ -154,39 +170,42 @@ export default ({ id }) => {
 							gap: 2em;
 						`}
 					>
-						{!!record?.support_link && !!record?.support_name && (
-							<div
-								css={css`
-									display: grid;
-									gap: 0.1em;
-								`}
-							>
+						{!!record?.support_link?.url &&
+							!!record?.support_link?.title && (
 								<div
 									css={css`
-										text-transform: uppercase;
-										font-size: 10px;
+										display: grid;
+										gap: 0.1em;
 									`}
 								>
-									{__('Support', 'surecart')}
-								</div>
-								<div
-									css={css`
-										font-size: 12px;
-									`}
-								>
-									<ExternalLink
+									<div
 										css={css`
-											text-decoration: none;
-											color: var(--sc-color-primary-500);
-											font-weight: bold;
+											text-transform: uppercase;
+											font-size: 10px;
 										`}
-										href={record?.support_link}
 									>
-										{record?.support_name}
-									</ExternalLink>
+										{__('Support', 'surecart')}
+									</div>
+									<div
+										css={css`
+											font-size: 12px;
+										`}
+									>
+										<ExternalLink
+											css={css`
+												text-decoration: none;
+												color: var(
+													--sc-color-primary-500
+												);
+												font-weight: bold;
+											`}
+											href={record?.support_link?.url}
+										>
+											{record?.support_link?.title}
+										</ExternalLink>
+									</div>
 								</div>
-							</div>
-						)}
+							)}
 
 						{!!record?.docs_link && (
 							<div
@@ -264,7 +283,7 @@ export default ({ id }) => {
 								margin-left: auto;
 							`}
 						>
-							{record?.is_enabled ? (
+							{record?.is_enabled || record?.is_pre_installed ? (
 								<ActivatedButton record={record} />
 							) : (
 								<ActivateButton
@@ -275,7 +294,7 @@ export default ({ id }) => {
 						</div>
 					</div>
 
-					{showDetails && !!record?.you_tube_video_id && (
+					{showDetails && !!record?.youtube_embed && (
 						<div
 							css={css`
 								width: 100%;
@@ -303,12 +322,12 @@ export default ({ id }) => {
 										height: '100%',
 										border: 'none',
 									}}
-									src={`https://www.youtube.com/embed/${record?.you_tube_video_id}`}
+									src={getYouTubeSrc(record?.youtube_embed)}
 									title="YouTube video player"
-									frameborder="0"
+									frameBorder="0"
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									referrerpolicy="strict-origin-when-cross-origin"
-									allowfullscreen
+									referrerPolicy="strict-origin-when-cross-origin"
+									allowFullScreen
 								></iframe>
 							</div>
 						</div>
@@ -346,7 +365,7 @@ export default ({ id }) => {
 								}
 							`}
 							dangerouslySetInnerHTML={{
-								__html: record?.description,
+								__html: record?.content?.rendered,
 							}}
 						/>
 					)}

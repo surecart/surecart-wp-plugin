@@ -40,7 +40,7 @@ class IntegrationsCatalogRestServiceProvider extends RestServiceProvider impleme
 		// Find a specific provider data.
 		register_rest_route(
 			"$this->name/v$this->version",
-			'integration_catalog/(?P<provider>\S+)',
+			'integration_catalog/(?P<id>\d+)',
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,
