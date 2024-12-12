@@ -189,15 +189,6 @@ class ScriptsService {
 			$asset_file['version']
 		);
 
-		// dataviews.
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/dataviews.asset.php';
-		wp_register_style(
-			'surecart-dataviews',
-			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/dataviews.css',
-			$asset_file['dependencies'],
-			$asset_file['version']
-		);
-
 		wp_register_script(
 			'surecart-affiliate-tracking',
 			esc_url_raw( untrailingslashit( SURECART_JS_URL ) . '/v1/affiliates' ),

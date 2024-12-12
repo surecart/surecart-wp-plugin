@@ -82,7 +82,6 @@
 		"@wordpress/components": "^28.12.0",
 		"@wordpress/core-data": "^7.12.0",
 		"@wordpress/data": "^10.12.0",
-		"@wordpress/dataviews": "^4.8.0",
 		"@wordpress/date": "^4.57.0",
 		"@wordpress/dom-ready": "^4.12.0",
 		"@wordpress/e2e-test-utils-playwright": "^0.25.0",

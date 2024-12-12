@@ -65,7 +65,6 @@ class AssetsService {
 		add_action( 'init', array( $this->styles, 'register' ) );
 		// globals.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueGlobals' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAdminScripts' ) );
 
 		add_filter( 'enqueue_block_assets', array( $this, 'preloadBlockAssets' ) );
 		add_filter( 'render_block_data', array( $this, 'preloadComponents' ) );
@@ -127,15 +126,6 @@ class AssetsService {
 		if ( ( $tracking_enabled || $affiliate_script_defined ) && $account->entitlements->affiliates ) {
 			wp_enqueue_script( 'surecart-affiliate-tracking' );
 		}
-	}
-
-	/**
-	 * Enqueue admin scripts.
-	 *
-	 * @return void
-	 */
-	public function enqueueAdminScripts() {
-		wp_enqueue_style( 'surecart-dataviews' );
 	}
 
 	/**

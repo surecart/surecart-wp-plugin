@@ -6475,7 +6475,6 @@ __metadata:
     "@wordpress/components": ^28.12.0
     "@wordpress/core-data": ^7.12.0
     "@wordpress/data": ^9.27.0
-    "@wordpress/dataviews": ^4.8.0
     "@wordpress/date": ^4.57.0
     "@wordpress/dependency-extraction-webpack-plugin": ^5.8.0
     "@wordpress/dom-ready": ^4.12.0
@@ -9973,29 +9972,6 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
   checksum: 5c9ccc4c7207e5a3ec88ecc1949caa931d2e7821e3281fd347a133520425a4dcca432516e8af11a7bdec7d549b1e56d022721d8e92edb1dbd0108d0f8e3a09a1
-  languageName: node
-  linkType: hard
-
-"@wordpress/dataviews@npm:^4.8.0":
-  version: 4.8.0
-  resolution: "@wordpress/dataviews@npm:4.8.0"
-  dependencies:
-    "@ariakit/react": ^0.4.10
-    "@babel/runtime": 7.25.7
-    "@wordpress/components": "*"
-    "@wordpress/compose": "*"
-    "@wordpress/data": "*"
-    "@wordpress/element": "*"
-    "@wordpress/i18n": "*"
-    "@wordpress/icons": "*"
-    "@wordpress/primitives": "*"
-    "@wordpress/private-apis": "*"
-    "@wordpress/warning": "*"
-    clsx: ^2.1.1
-    remove-accents: ^0.5.0
-  peerDependencies:
-    react: ^18.0.0
-  checksum: 5652874f70d211b80405addd6e953c154be317b716c1f3ddfe2df27e6f0baba837feed99df5c8068672fd13768684f24bfc86474ae4d47159b48c41b1d9baa5d
   languageName: node
   linkType: hard
 
