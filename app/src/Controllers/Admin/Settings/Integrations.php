@@ -7,6 +7,15 @@ namespace SureCart\Controllers\Admin\Settings;
  */
 class Integrations extends BaseSettings {
 	/**
+	 * Dependencies.
+	 *
+	 * @var array
+	 */
+	protected $dependencies = [
+		'suretriggers-sdk',
+	];
+
+	/**
 	 * Script handles for pages
 	 *
 	 * @var array
