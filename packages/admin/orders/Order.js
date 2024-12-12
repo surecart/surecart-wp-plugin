@@ -253,6 +253,34 @@ export default () => {
 		setModal(false);
 	};
 
+	const checkoutId = order?.checkout?.id;
+	const { purchases, loadingPurchases } = useSelect(
+		(select) => {
+			if (!checkoutId) {
+				return {
+					purchases: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'purchase',
+				{
+					checkout_ids: checkoutId ? [checkoutId] : null,
+					expand: ['product', 'line_item', 'line_item.price'],
+				},
+			];
+			return {
+				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkoutId]
+	);
+
 	return (
 		<UpdateModel
 			title={
@@ -354,7 +382,7 @@ export default () => {
 					charge={order?.checkout?.charge}
 					loading={!hasLoadedOrder}
 				/>
-				<Charges checkoutId={order?.checkout?.id} />
+				<Charges checkoutId={checkoutId} purchases={purchases} />
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
@@ -386,9 +414,12 @@ export default () => {
 				{modal === 'refund' && (
 					<Refund
 						charge={refundCharge}
-						purchases={[]}
+						purchases={purchases}
 						onRefunded={onRefunded}
-						onRequestClose={() => setRefundCharge(false)}
+						onRequestClose={() => {
+							setRefundCharge(false);
+							setModal(false);
+						}}
 					/>
 				)}
 			</>
