@@ -21,8 +21,8 @@
 	<div class="sc-sidebar-header">
 		<div
 			class="sc-sidebar-header__close"
-			data-wp-on--click="actions.toggle"
-			data-wp-on--keydown="actions.toggle"
+			data-wp-on--click="actions.toggleMobile"
+			data-wp-on--keydown="actions.toggleMobile"
 			role="button"
 			tabindex="0"
 			aria-label="<?php esc_attr_e( 'Close sidebar', 'surecart' ); ?>"

@@ -47,11 +47,11 @@ const { state, actions } = store('surecart/sidebar', {
 			state.dialog?.close();
 			state.open = false;
 		},
-
 		/**
 		 * Toggle the sidebar dialog.
+		 * This is used for the desktop sidebar.
 		 */
-		toggle: (e) => {
+		toggleDesktop: (e) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
@@ -60,11 +60,21 @@ const { state, actions } = store('surecart/sidebar', {
 			// Prevent default behavior.
 			e?.preventDefault();
 
-			if (window.matchMedia('(max-width: 480px)').matches) {
-				state?.dialog?.open ? actions.close() : actions.open();
+			state.open = !state.open;
+		},
+		/**
+		 * Toggle the sidebar dialog.
+		 */
+		toggleMobile: (e) => {
+			// If the key is not space or enter, return.
+			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
+				return;
 			}
 
-			state.open = !state.open;
+			// Prevent default behavior.
+			e?.preventDefault();
+
+			state?.dialog?.open ? actions.close() : actions.open();
 		},
 
 		/**

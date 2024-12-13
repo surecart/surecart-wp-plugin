@@ -1,8 +1,25 @@
+<?php
+	$buttons = array(
+		array(
+			'class' => 'sc-sidebar-toggle-desktop',
+			'event' => 'actions.toggleDesktop',
+		),
+		array(
+			'class' => 'sc-sidebar-toggle-mobile',
+			'event' => 'actions.toggleMobile',
+		),
+	);
+?>
+<?php foreach ( $buttons as $button ) : ?>
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+	<?php echo wp_kses_data( get_block_wrapper_attributes(
+		array(
+			'class' => $button['class'],
+		)
+	) ); ?>
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
-	data-wp-on--click="actions.toggle"
-	data-wp-on--keydown="actions.toggle"
+	data-wp-on--click="<?php echo esc_attr( $button['event'] ); ?>"
+	data-wp-on--keydown="<?php echo esc_attr( $button['event'] ); ?>"
 	aria-haspopup="dialog"
 	aria-label="<?php esc_attr_e( 'Open sidebar', 'surecart' ); ?>"
 	role="button"
@@ -26,3 +43,4 @@
 		echo wp_kses_post( $attributes['label'] ?? __( 'Filter', 'surecart' ) );
 		?>
 </div>
+<?php endforeach; ?>
