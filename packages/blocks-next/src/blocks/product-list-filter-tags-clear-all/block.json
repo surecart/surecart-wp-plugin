@@ -8,7 +8,7 @@
 	"category": "surecart-product-list",
 	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-list"],
+	"ancestor": ["surecart/product-list-filter-tags"],
 	"attributes": {
 		"label": {
 			"type": "string",
