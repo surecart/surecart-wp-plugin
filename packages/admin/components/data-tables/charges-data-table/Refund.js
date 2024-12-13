@@ -25,10 +25,10 @@ import {
 	ScInput,
 	ScCheckbox,
 	ScFormatNumber,
-	ScCard,
 	ScText,
 } from '@surecart/components-react';
 import Error from '../../Error';
+import Box from '../../../ui/Box';
 
 export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [loading, setLoading] = useState(false);
@@ -237,8 +237,9 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 					css={css`
 						display: flex;
 						flex-direction: column;
-						height: 100%;
+						height: 110%;
 						padding: var(--sc-spacing-x-large);
+						background: #cccccc2e;
 					`}
 				>
 					{/* <ScAlert type="info" open>
@@ -278,362 +279,338 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 							`}
 						>
 							{!!items?.length && (
-								<ScCard
+								<Box
 									css={css`
 										display: grid;
 										gap: 0.5em;
 										overflow-x: auto;
 										margin-bottom: var(--sc-spacing-small);
 									`}
+									title={__('Refund item(s)', 'surecart')}
 								>
-									<ScFormControl
-										label={__('Refund item(s)', 'surecart')}
-									>
-										<div>
-											{items.map((purchase, index) => {
-												const {
-													product,
-													quantity,
-													originalQuantity,
-													subscription,
-													restock,
-													revokePurchase,
-													lineItem,
-												} = purchase;
-												return (
-													<div
+									<div>
+										{items.map((purchase, index) => {
+											const {
+												product,
+												quantity,
+												originalQuantity,
+												subscription,
+												restock,
+												revokePurchase,
+												lineItem,
+											} = purchase;
+											return (
+												<div
+													css={css`
+														border-bottom: ${index !==
+														items.length - 1
+															? '1px solid var(--sc-color-gray-300)'
+															: 'none'};
+														padding: var(
+																--sc-spacing-medium
+															)
+															0;
+														display: grid;
+														gap: 0.5em;
+													`}
+												>
+													<ScLineItem
 														css={css`
-															border-bottom: ${index !==
-															items.length - 1
-																? '1px solid var(--sc-color-gray-300)'
-																: 'none'};
-															padding: var(
-																	--sc-spacing-medium
-																)
-																0;
-															display: grid;
-															gap: 0.5em;
+															display: flex;
+															gap: 1em;
+															width: 100%;
 														`}
 													>
-														<ScLineItem
-															css={css`
-																display: flex;
-																gap: 1em;
-																width: 100%;
-															`}
-														>
-															{!!product?.image_url ? (
-																<img
-																	css={css`
-																		flex: 0
-																			0
-																			48px;
-																		width: 48px;
-																		height: 48px;
-																	`}
-																	src={
-																		product?.image_url
-																	}
-																	slot="image"
-																/>
-															) : (
-																<div
-																	css={css`
-																		width: 48px;
-																		height: 48px;
-																		object-fit: cover;
-																		background: var(
-																			--sc-color-gray-100
-																		);
-																		display: flex;
-																		align-items: center;
-																		justify-content: center;
-																		border-radius: var(
-																			--sc-border-radius-small
-																		);
-																	`}
-																	slot="image"
-																>
-																	<ScIcon
-																		style={{
-																			width: '18px',
-																			height: '18px',
-																		}}
-																		name={
-																			'image'
-																		}
-																	/>
-																</div>
-															)}
-															<div
-																slot="title"
-																style={{
-																	width: 195,
-																}}
-															>
-																{product?.name}
-															</div>
-															<div slot="description">
-																{!!subscription && (
-																	<ScText>
-																		{__(
-																			'The associated subscription will also be cancelled.',
-																			'surecart'
-																		)}
-																	</ScText>
-																)}
-															</div>
-
-															<div
-																slot="price"
+														{!!product?.image_url ? (
+															<img
 																css={css`
-																	display: flex;
-																	gap: 2em;
-																	justify-content: space-between;
-																	align-items: center;
-																	text-align: right;
-																	align-self: right;
+																	flex: 0 0
+																		48px;
+																	width: 48px;
+																	height: 48px;
 																`}
+																src={
+																	product?.image_url
+																}
+																slot="image"
+															/>
+														) : (
+															<div
+																css={css`
+																	width: 48px;
+																	height: 48px;
+																	object-fit: cover;
+																	background: var(
+																		--sc-color-gray-100
+																	);
+																	display: flex;
+																	align-items: center;
+																	justify-content: center;
+																	border-radius: var(
+																		--sc-border-radius-small
+																	);
+																`}
+																slot="image"
 															>
-																<ScInput
-																	label={__(
-																		'Quantity',
+																<ScIcon
+																	style={{
+																		width: '18px',
+																		height: '18px',
+																	}}
+																	name={
+																		'image'
+																	}
+																/>
+															</div>
+														)}
+														<div
+															slot="title"
+															style={{
+																width: 195,
+															}}
+														>
+															{product?.name}
+														</div>
+														<div slot="description">
+															{!!subscription && (
+																<ScText>
+																	{__(
+																		'The associated subscription will also be cancelled.',
 																		'surecart'
 																	)}
-																	showLabel={
-																		false
-																	}
-																	value={
-																		quantity
-																	}
-																	max={
-																		originalQuantity
-																	}
-																	type="number"
-																	min={0}
-																	onScInput={(
-																		e
-																	) => {
-																		updateItems(
-																			index,
-																			{
-																				quantity:
-																					parseInt(
-																						e
-																							.target
-																							.value
-																					),
-																			}
-																		);
-																	}}
-																>
-																	<span
-																		slot="suffix"
-																		css={css`
-																			opacity: 0.65;
-																		`}
-																	>
-																		{sprintf(
-																			__(
-																				'of %d',
-																				'surecart'
-																			),
-																			originalQuantity
-																		)}
-																	</span>
-																</ScInput>
-																<ScFormatNumber
-																	type="currency"
-																	value={
-																		(lineItem
-																			?.price
-																			?.amount ??
-																			0) *
-																		(quantity ??
-																			lineItem?.quantity)
-																	}
-																	currency={
-																		lineItem
-																			?.price
-																			?.currency
-																	}
-																/>
-															</div>
-														</ScLineItem>
+																</ScText>
+															)}
+														</div>
+
 														<div
+															slot="price"
 															css={css`
 																display: flex;
-																gap: 1em;
+																gap: 2em;
+																justify-content: space-between;
+																align-items: center;
+																text-align: right;
+																align-self: right;
 															`}
 														>
-															<ScCheckbox
-																css={css`
-																	padding-top: var(
-																		--sc-spacing-large
-																	);
-																	padding-bottom: var(
-																		--sc-spacing-small
-																	);
-																`}
-																checked={
-																	restock
+															<ScInput
+																label={__(
+																	'Quantity',
+																	'surecart'
+																)}
+																showLabel={
+																	false
 																}
-																onScChange={(
+																value={quantity}
+																max={
+																	originalQuantity
+																}
+																type="number"
+																min={0}
+																onScInput={(
 																	e
 																) => {
 																	updateItems(
 																		index,
 																		{
-																			restock:
-																				e
-																					.target
-																					.checked,
+																			quantity:
+																				parseInt(
+																					e
+																						.target
+																						.value
+																				),
 																		}
 																	);
 																}}
 															>
-																{__(
-																	'Restock',
-																	'surecart'
-																)}
-															</ScCheckbox>
-
-															<ScCheckbox
-																css={css`
-																	padding-top: var(
-																		--sc-spacing-large
-																	);
-																	padding-bottom: var(
-																		--sc-spacing-small
-																	);
-																`}
-																checked={
-																	revokePurchase
+																<span
+																	slot="suffix"
+																	css={css`
+																		opacity: 0.65;
+																	`}
+																>
+																	{sprintf(
+																		__(
+																			'of %d',
+																			'surecart'
+																		),
+																		originalQuantity
+																	)}
+																</span>
+															</ScInput>
+															<ScFormatNumber
+																type="currency"
+																value={
+																	(lineItem
+																		?.price
+																		?.amount ??
+																		0) *
+																	(quantity ??
+																		lineItem?.quantity)
 																}
-																onScChange={(
-																	e
-																) => {
-																	updateItems(
-																		index,
-																		{
-																			revokePurchase:
-																				e
-																					.target
-																					.checked,
-																		}
-																	);
-																}}
-															>
-																{__(
-																	'Revoke Purchase',
-																	'surecart'
-																)}
-															</ScCheckbox>
+																currency={
+																	lineItem
+																		?.price
+																		?.currency
+																}
+															/>
 														</div>
+													</ScLineItem>
+													<div
+														css={css`
+															display: flex;
+															gap: 1em;
+														`}
+													>
+														<ScCheckbox
+															css={css`
+																padding-top: var(
+																	--sc-spacing-large
+																);
+																padding-bottom: var(
+																	--sc-spacing-small
+																);
+															`}
+															checked={restock}
+															onScChange={(e) => {
+																updateItems(
+																	index,
+																	{
+																		restock:
+																			e
+																				.target
+																				.checked,
+																	}
+																);
+															}}
+														>
+															{__(
+																'Restock',
+																'surecart'
+															)}
+														</ScCheckbox>
+
+														<ScCheckbox
+															css={css`
+																padding-top: var(
+																	--sc-spacing-large
+																);
+																padding-bottom: var(
+																	--sc-spacing-small
+																);
+															`}
+															checked={
+																revokePurchase
+															}
+															onScChange={(e) => {
+																updateItems(
+																	index,
+																	{
+																		revokePurchase:
+																			e
+																				.target
+																				.checked,
+																	}
+																);
+															}}
+														>
+															{__(
+																'Revoke Purchase',
+																'surecart'
+															)}
+														</ScCheckbox>
 													</div>
-												);
-											})}
-										</div>
-									</ScFormControl>
-								</ScCard>
+												</div>
+											);
+										})}
+									</div>
+								</Box>
 							)}
 
-							<ScCard>
-								<ScFormControl
-									label={__('Reason for refund', 'surecart')}
-									css={css`
-										margin-bottom: var(--sc-spacing-large);
-									`}
-								>
-									<ScSelect
-										name="reason"
-										value={reason}
-										placeholder={__(
-											'Select a reason',
-											'surecart'
-										)}
-										onScChange={(e) => {
-											setReason(e.target.value);
-										}}
-										choices={[
-											{
-												label: __('Duplicate'),
-												value: 'duplicate',
-											},
-											{
-												label: __('Fraudulent'),
-												value: 'fraudulent',
-											},
-											{
-												label: __(
-													'Requested By Customer'
-												),
-												value: 'requested_by_customer',
-											},
-										]}
-									/>
-								</ScFormControl>
-							</ScCard>
+							<Box
+								title={__('Reason for refund', 'surecart')}
+								css={css`
+									margin-bottom: var(--sc-spacing-large);
+								`}
+							>
+								<ScSelect
+									name="reason"
+									value={reason}
+									placeholder={__(
+										'Select a reason',
+										'surecart'
+									)}
+									onScChange={(e) => {
+										setReason(e.target.value);
+									}}
+									choices={[
+										{
+											label: __('Duplicate'),
+											value: 'duplicate',
+										},
+										{
+											label: __('Fraudulent'),
+											value: 'fraudulent',
+										},
+										{
+											label: __('Requested By Customer'),
+											value: 'requested_by_customer',
+										},
+									]}
+								/>
+							</Box>
 						</div>
 
-						<ScCard
+						<Box
 							css={css`
 								flex-basis: 40%;
 								@media (max-width: 768px) {
 									flex-basis: 100%;
 								}
 							`}
+							title={__('Summary', 'surecart')}
+							style={{
+								marginBottom: 'var(--sc-spacing-large)',
+							}}
 						>
-							<ScFormControl
-								label={__('Summary', 'surecart')}
-								style={{
-									marginBottom: 'var(--sc-spacing-large)',
-								}}
-							>
-								{!totalQuantity ? (
-									<ScText
-										style={{
-											'line-height':
-												'var(--sc-line-height-dense)',
-											'--color':
-												'var(--sc-color-gray-500)',
-										}}
-									>
-										{__('No items selected.', 'surecart')}
-									</ScText>
-								) : (
-									<div>
-										<ScLineItem>
-											<span slot="description">
-												{__(
-													'Items subtotal',
-													'surecart'
-												)}{' '}
-												({totalQuantity})
-											</span>
-											<span slot="price">
-												<ScFormatNumber
-													type="currency"
-													value={items.reduce(
-														(total, item) => {
-															return (
-																total +
-																item.quantity *
-																	item
-																		.lineItem
-																		?.price
-																		?.amount
-															);
-														},
-														0
-													)}
-													currency={charge?.currency}
-												/>
-											</span>
-										</ScLineItem>
-									</div>
-								)}
-							</ScFormControl>
+							{!totalQuantity ? (
+								<ScText
+									style={{
+										'line-height':
+											'var(--sc-line-height-dense)',
+										'--color': 'var(--sc-color-gray-500)',
+									}}
+								>
+									{__('No items selected.', 'surecart')}
+								</ScText>
+							) : (
+								<div>
+									<ScLineItem>
+										<span slot="description">
+											{__('Items subtotal', 'surecart')} (
+											{totalQuantity})
+										</span>
+										<span slot="price">
+											<ScFormatNumber
+												type="currency"
+												value={items.reduce(
+													(total, item) => {
+														return (
+															total +
+															item.quantity *
+																item.lineItem
+																	?.price
+																	?.amount
+														);
+													},
+													0
+												)}
+												currency={charge?.currency}
+											/>
+										</span>
+									</ScLineItem>
+								</div>
+							)}
 
 							<div
 								css={css`
@@ -680,7 +657,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 									/>
 								</ScText>
 							</div>
-						</ScCard>
+						</Box>
 					</div>
 
 					<Error error={error} setError={setError} />
