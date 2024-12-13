@@ -4,7 +4,6 @@ import {
 	InspectorControls,
 	store as blockEditorStore,
 	InnerBlocks,
-	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
@@ -16,7 +15,7 @@ const TEMPLATE = [['surecart/product-list-filter-checkbox']];
 export default ({
 	clientId,
 	__unstableLayoutClassNames,
-	attributes: { taxonomy: taxonomySlug, label },
+	attributes: { taxonomy: taxonomySlug },
 	setAttributes,
 }) => {
 	const blockCount = useSelect((select) =>
@@ -64,15 +63,6 @@ export default ({
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<RichText
-					tagName="span"
-					aria-label={__('Label text', 'surecart')}
-					placeholder={__('Add label…', 'surecart')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
 				<TemplateListEdit
 					template={TEMPLATE}
 					blockContexts={[

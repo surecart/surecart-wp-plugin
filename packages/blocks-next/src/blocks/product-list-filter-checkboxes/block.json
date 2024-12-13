@@ -12,10 +12,6 @@
 		"taxonomy": {
 			"type": "string",
 			"default": "sc_collection"
-		},
-		"label": {
-			"type": "string",
-			"default": "Collections"
 		}
 	},
 	"supports": {

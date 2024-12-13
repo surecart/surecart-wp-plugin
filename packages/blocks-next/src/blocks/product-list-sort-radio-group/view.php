@@ -2,7 +2,6 @@
 	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'role' => 'list' ] ) ); ?>
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'sorting' => $options ] ) ); ?>
 >
-<span> <?php echo wp_kses_post( $attributes['label'] ); ?> </span>
 <?php
 foreach ( $options as $radio ) :
 	// Get an instance of the current Post Template block.

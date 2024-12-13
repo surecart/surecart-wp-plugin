@@ -1,30 +1,16 @@
 import { __ } from '@wordpress/i18n';
 import TemplateListEdit from '../../components/TemplateListEdit';
-import { RichText, useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 
 const TEMPLATE = [['surecart/product-list-sort-radio']];
 
-export default ({
-	clientId,
-	__unstableLayoutClassNames,
-	attributes: { label },
-	setAttributes,
-}) => {
+export default ({ clientId, __unstableLayoutClassNames }) => {
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
 	});
 
 	return (
 		<div {...blockProps}>
-			<RichText
-				tagName="span"
-				aria-label={__('Label text', 'surecart')}
-				placeholder={__('Add label…', 'surecart')}
-				value={label}
-				onChange={(label) => setAttributes({ label })}
-				withoutInteractiveFormatting
-				allowedFormats={['core/bold', 'core/italic']}
-			/>
 			<TemplateListEdit
 				template={TEMPLATE}
 				blockContexts={[
