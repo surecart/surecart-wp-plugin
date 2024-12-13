@@ -259,7 +259,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 					>
 						<div
 							css={css`
-								max-height: 300px;
+								max-height: 550px;
 								overflow-y: auto;
 							`}
 						>
