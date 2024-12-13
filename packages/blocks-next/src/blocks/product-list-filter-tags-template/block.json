@@ -1,21 +1,17 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-list-sidebar",
-	"title": "Sidebar",
-	"description": "Display the Product List Sidebar.",
+	"name": "surecart/product-list-filter-tags-template",
+	"title": "Template",
+	"description": "Display the filter tags.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
-	"ancestor": ["surecart/product-list"],
+	"ancestor": ["surecart/product-list-filter-tags"],
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Filters"
-		},
-		"sidebarOpen": {
-			"type": "boolean",
-			"default": true
+			"default": "Applied Filters"
 		}
 	},
 	"supports": {
@@ -24,17 +20,13 @@
 			"allowSwitching": false,
 			"allowInheriting": false,
 			"default": {
-				"type": "flex",
-				"orientation": "vertical"
+				"type": "flex"
 			}
 		},
 		"spacing": {
 			"padding": true,
-			"margin": true,
-			"blockGap": true,
-			"default": {
-				"blockGap": "0"
-			}
+			"margin": ["top", "bottom"],
+			"blockGap": true
 		},
 		"typography": {
 			"fontSize": true,
@@ -45,16 +37,10 @@
 			"text": true,
 			"background": true,
 			"enableContrastChecker": true
-		},
-		"style": {
-			"spacing": {
-				"blockGap": "0"
-			}
 		}
 	},
 	"textdomain": "surecart",
-	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css", "surecart-drawer"],
 	"render": "file:./view.php",
-	"viewScriptModule": ["@surecart/cart"]
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css"]
 }

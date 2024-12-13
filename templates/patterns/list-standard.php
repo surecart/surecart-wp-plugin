@@ -19,9 +19,9 @@ return [
 <!-- /wp:group -->
 
 <!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"},"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group" style="margin-bottom:10px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:surecart/product-list-filter-tags -->
+<div class="wp-block-group" style="margin-bottom:10px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:surecart/product-list-filter-tags {"layout":{"type":"flex","orientation":"vertical"}} --><!-- wp:surecart/product-list-filter-tags-template -->
 <!-- wp:surecart/product-list-filter-tag /-->
-<!-- /wp:surecart/product-list-filter-tags --></div>
+<!-- /wp:surecart/product-list-filter-tags-template --><!-- /wp:surecart/product-list-filter-tags --></div>
 <!-- /wp:group -->
 
 <!-- wp:surecart/product-template {"style":{"spacing":{"blockGap":"36px"}},"layout":{"type":"grid","columnCount":null,"minimumColumnWidth":"224px"}} -->

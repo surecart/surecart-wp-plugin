@@ -3,44 +3,41 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list-filter-tags",
 	"title": "Filter Tags",
-	"description": "Display the filter tags.",
+	"description": "Display the Product List Filter Tags.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
-	"attributes": {
-		"label": {
-			"type": "string",
-			"default": "Applied Filters"
-		}
-	},
+	"attributes": {},
 	"supports": {
 		"interactivity": true,
 		"layout": {
 			"allowSwitching": false,
 			"allowInheriting": false,
+			"allowSizingOnChildren": true,
 			"default": {
-				"type": "flex"
+				"type": "flex",
+				"orientation": "horizontal",
+				"verticalAlignment": "top",
+				"flexWrap": "nowrap"
 			}
 		},
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"],
-			"blockGap": true
+			"margin": true,
+			"blockGap": true,
+			"default": {
+				"blockGap": "0"
+			}
 		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontWeight": true
-		},
-		"color": {
-			"text": true,
-			"background": true,
-			"enableContrastChecker": true
+		"style": {
+			"spacing": {
+				"blockGap": "0"
+			}
 		}
 	},
 	"textdomain": "surecart",
-	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css"]
+	"style": ["file:./style-index.css"],
+	"render": "file:./view.php"
 }

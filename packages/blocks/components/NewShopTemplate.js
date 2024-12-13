@@ -204,7 +204,12 @@ export const newShopTemplate = (attributes, childBlocks) => {
 						},
 					},
 				},
-				collection_enabled && [['surecart/product-list-filter-tags']],
+				collection_enabled && [
+					[
+						'surecart/product-list-filter-tags',
+						{ layout: { type: 'flex', orientation: 'vertical' } },
+					],
+				],
 			].filter(Boolean),
 		[
 			'surecart/product-template',

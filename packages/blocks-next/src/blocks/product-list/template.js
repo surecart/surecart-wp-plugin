@@ -50,7 +50,12 @@ export const TEMPLATE = [
 				},
 			},
 		},
-		[['surecart/product-list-filter-tags']],
+		[
+			[
+				'surecart/product-list-filter-tags',
+				{ layout: { type: 'flex', orientation: 'vertical' } },
+			],
+		],
 	],
 	[
 		'surecart/product-template',

@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-list-sidebar-toggle",
-	"title": "Product List Sidebar Toggle",
+	"title": "Sidebar Toggle",
 	"description": "Display the Product List Sidebar Toggle.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
