@@ -18,6 +18,8 @@ import {
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
+import { DropdownMenu } from '@wordpress/components';
+import { moreHorizontal, trash } from '@wordpress/icons';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -27,7 +29,7 @@ import { intervalString } from '../../../util/translations';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
 import usePagination from '../../../hooks/usePagination';
 
-const PRODUCTS_PER_PAGE = 5;
+const PRODUCTS_PER_PAGE = 100;
 
 export default ({ shippingProfileId, isDefaultProfile }) => {
 	const [error, setError] = useState(null);
@@ -255,38 +257,50 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 							margin: 0;
 						`}
 					>
-						{products.map((product) => (
-							<ScStackedListRow key={product.id}>
-								{renderProduct(product)}
-								{!isDefaultProfile ? (
-									<ScDropdown
-										slot="suffix"
-										placement="bottom-end"
-									>
-										<ScButton
-											type="text"
-											slot="trigger"
-											circle
-										>
-											<ScIcon name="more-horizontal" />
-										</ScButton>
-										<ScMenu>
-											<ScMenuItem
-												onClick={() =>
-													onRemoveProduct(product.id)
-												}
-											>
-												<ScIcon
-													slot="prefix"
-													name="trash"
-												/>
-												{__('Remove', 'surecart')}
-											</ScMenuItem>
-										</ScMenu>
-									</ScDropdown>
-								) : null}
-							</ScStackedListRow>
-						))}
+						<div
+							css={css`
+								max-height: 300px;
+								overflow-y: auto;
+							`}
+						>
+							{products.map((product) => (
+								<ScStackedListRow key={product.id}>
+									{renderProduct(product)}
+									{!isDefaultProfile ? (
+										<div slot="suffix">
+											<DropdownMenu
+												controls={[
+													{
+														icon: trash,
+														onClick: () =>
+															onRemoveProduct(
+																product.id
+															),
+														title: __(
+															'Remove',
+															'surecart'
+														),
+													},
+												]}
+												icon={moreHorizontal}
+												label={__(
+													'More Actions',
+													'surecart'
+												)}
+												popoverProps={{
+													placement: 'bottom-end',
+												}}
+												menuProps={{
+													style: {
+														minWidth: '150px',
+													},
+												}}
+											/>
+										</div>
+									) : null}
+								</ScStackedListRow>
+							))}
+						</div>
 
 						{[...Array(draftProducts)].map((_, index) => (
 							<ScStackedListRow key={`draft-product-${index}`}>
@@ -341,7 +355,13 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						))}
 
 						{draftProducts === 0 && !isDefaultProfile && (
-							<ScStackedListRow>
+							<ScStackedListRow
+								css={css`
+									--sc-list-row-background-color: var(
+										--sc-color-gray-50
+									);
+								`}
+							>
 								<ScButton
 									type="default"
 									onClick={(e) => {
