@@ -1,7 +1,8 @@
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	data-wp-on--click="surecart/product-list::actions.toggleSidebar"
-	data-wp-on--keydown="surecart/product-list::actions.toggleSidebar"
+	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
+	data-wp-on--click="actions.toggle"
+	data-wp-on--keydown="actions.toggle"
 	aria-haspopup="dialog"
 	aria-label="<?php esc_attr_e( 'Open sidebar', 'surecart' ); ?>"
 	role="button"

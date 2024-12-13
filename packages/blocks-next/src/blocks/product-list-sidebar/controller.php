@@ -1,9 +1,9 @@
 <?php
 // Set the intitial state used in SSR.
 wp_interactivity_state(
-	'surecart/product-list',
+	'surecart/sidebar',
 	[
-		'sidebarOpen' => $attributes['sidebarOpen'] ?? false,
+		'open' => $attributes['sidebarOpen'] ?? true,
 	]
 );
 

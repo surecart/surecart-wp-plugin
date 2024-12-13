@@ -61,13 +61,13 @@ html:has(dialog.sc-drawer[open]) {
 	scrollbar-gutter: stable;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 479px) {
 	.sc-sidebar-desktop.wp-block-surecart-product-list-sidebar {
 		display: none;
 	}
 }
 
-@media (min-width: 769px) {
+@media (min-width: 480px) {
 	.sc-drawer.wp-block-surecart-product-list-sidebar {
 		display: none !important;
 	}

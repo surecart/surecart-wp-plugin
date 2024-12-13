@@ -6,21 +6,23 @@
 			)
 		)
 	); ?>
-	data-wp-bind--hidden="!state.sidebarOpen"
+	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
+	data-wp-bind--hidden="!state.open"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 
 <dialog
-	class="sc-drawer sc-cart-drawer wp-block-surecart-product-list-sidebar"
-	data-wp-bind--aria-label='surecart/cart::state.ariaLabel'
-	data-wp-on--click='surecart/cart::actions.closeOverlay'
+	class="sc-drawer sc-sidebar-drawer wp-block-surecart-product-list-sidebar"
+	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
+	data-wp-bind--aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
+	data-wp-on--click='actions.closeOverlay'
 >
 	<div class="sc-sidebar-header">
 		<div
 			class="sc-sidebar-header__close"
-			data-wp-on--click="surecart/cart::actions.toggle"
-			data-wp-on--keydown="surecart/cart::actions.toggle"
+			data-wp-on--click="actions.toggle"
+			data-wp-on--keydown="actions.toggle"
 			role="button"
 			tabindex="0"
 			aria-label="<?php esc_attr_e( 'Close sidebar', 'surecart' ); ?>"
