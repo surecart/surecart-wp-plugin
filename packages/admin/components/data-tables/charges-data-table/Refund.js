@@ -237,7 +237,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 					css={css`
 						display: flex;
 						flex-direction: column;
-						height: 110%;
+						height: 105%;
 						padding: var(--sc-spacing-x-large);
 						background: #cccccc2e;
 					`}
@@ -561,84 +561,85 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 							</Box>
 						</div>
 
-						<Box
+						<div
 							css={css`
 								flex-basis: 40%;
 								@media (max-width: 768px) {
 									flex-basis: 100%;
 								}
 							`}
-							title={__('Summary', 'surecart')}
-							style={{
-								marginBottom: 'var(--sc-spacing-large)',
-							}}
 						>
-							{!totalQuantity ? (
-								<ScText
-									style={{
-										'line-height':
-											'var(--sc-line-height-dense)',
-										'--color': 'var(--sc-color-gray-500)',
-									}}
-								>
-									{__('No items selected.', 'surecart')}
-								</ScText>
-							) : (
-								<div>
-									<ScLineItem>
-										<span slot="description">
-											{__('Items subtotal', 'surecart')} (
-											{totalQuantity})
-										</span>
-										<span slot="price">
-											<ScFormatNumber
-												type="currency"
-												value={items.reduce(
-													(total, item) => {
-														return (
-															total +
-															item.quantity *
-																item.lineItem
-																	?.price
-																	?.amount
-														);
-													},
-													0
-												)}
-												currency={charge?.currency}
-											/>
-										</span>
-									</ScLineItem>
-								</div>
-							)}
+							<Box
+								title={__('Summary', 'surecart')}
+								style={{
+									marginBottom: 'var(--sc-spacing-large)',
+								}}
+							>
+								{!totalQuantity ? (
+									<ScText
+										style={{
+											'line-height':
+												'var(--sc-line-height-dense)',
+											'--color':
+												'var(--sc-color-gray-500)',
+										}}
+									>
+										{__('No items selected.', 'surecart')}
+									</ScText>
+								) : (
+									<div>
+										<ScLineItem>
+											<span slot="description">
+												{__(
+													'Items subtotal',
+													'surecart'
+												)}{' '}
+												({totalQuantity})
+											</span>
+											<span slot="price">
+												<ScFormatNumber
+													type="currency"
+													value={items.reduce(
+														(total, item) => {
+															return (
+																total +
+																item.quantity *
+																	item
+																		.lineItem
+																		?.price
+																		?.amount
+															);
+														},
+														0
+													)}
+													currency={charge?.currency}
+												/>
+											</span>
+										</ScLineItem>
+									</div>
+								)}
+							</Box>
 
-							<div
+							<Box
 								css={css`
 									margin-top: var(--sc-spacing-large);
 								`}
+								title={__('Refund Amount', 'surecart')}
 							>
-								<ScFormControl
-									label={__('Refund Amount', 'surecart')}
-								>
-									<ScPriceInput
-										css={css`
-											margin-top: var(--sc-spacing-small);
-										`}
-										required
-										name="amount"
-										label={__('Manual', 'surecart')}
-										currencyCode={charge?.currency}
-										value={amount}
-										max={
-											charge?.amount -
-											charge?.refunded_amount
-										}
-										onScChange={(e) => {
-											setAmount(e.target.value);
-										}}
-										showCode
-									/>
-								</ScFormControl>
+								<ScPriceInput
+									required
+									name="amount"
+									label={__('Manual', 'surecart')}
+									currencyCode={charge?.currency}
+									value={amount}
+									max={
+										charge?.amount - charge?.refunded_amount
+									}
+									onScChange={(e) => {
+										setAmount(e.target.value);
+									}}
+									showCode
+								/>
 
 								<ScText
 									css={css`
@@ -656,8 +657,8 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 										currency={charge?.currency}
 									/>
 								</ScText>
-							</div>
-						</Box>
+							</Box>
+						</div>
 					</div>
 
 					<Error error={error} setError={setError} />
