@@ -722,6 +722,10 @@ export interface Checkout extends Object {
   upsells_expire_at?: number;
   invoice?: string | Invoice;
   pdf_url?: string;
+  refunded_amount?: number;
+  net_paid_amount?: number;
+  credited_balance_amount?: number;
+  tax_reverse_charged_amount?: number;
 }
 
 export interface ShippingMethod {
