@@ -38,7 +38,7 @@ return array(
 		\SureCart\Routing\PermalinkServiceProvider::class,
 		\SureCart\Routing\RouteConditionsServiceProvider::class,
 		\SureCart\Routing\AdminRouteServiceProvider::class,
-		\SureCart\Permissions\RolesServiceProvider::class,
+		\SureCart\Permissions\PermissionsServiceProvider::class,
 		\SureCart\Settings\SettingsServiceProvider::class,
 		\SureCart\Request\RequestServiceProvider::class,
 		\SureCart\View\ViewServiceProvider::class,

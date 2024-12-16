@@ -22,14 +22,23 @@ class ActivationService {
 	protected $seeder = null;
 
 	/**
+	 * Holds the salt service.
+	 *
+	 * @var \SureCart\Permissions\SureCartSaltService
+	 */
+	protected $salt = null;
+
+	/**
 	 * Get dependencies for this service.
 	 *
-	 * @param \SureCart\Permissions\RolesService   $roles Roles service.
-	 * @param \SureCart\WordPress\Pages\PageSeeder $seeder Seeder service.
+	 * @param \SureCart\Permissions\RolesService        $roles Roles service.
+	 * @param \SureCart\WordPress\Pages\PageSeeder      $seeder Seeder service.
+	 * @param \SureCart\Permissions\SureCartSaltService $salt Salt service.
 	 */
-	public function __construct( \SureCart\Permissions\RolesService $roles, \SureCart\WordPress\Pages\PageSeeder $seeder ) {
+	public function __construct( \SureCart\Permissions\RolesService $roles, \SureCart\WordPress\Pages\PageSeeder $seeder, \SureCart\Permissions\SureCartSaltService $salt ) {
 		$this->roles  = $roles;
 		$this->seeder = $seeder;
+		$this->salt   = $salt;
 	}
 
 	/**
@@ -53,6 +62,9 @@ class ActivationService {
 
 		// Seed pages and forms.
 		$this->seeder->seed();
+
+		// Add the encryption key to the wp-config.php file.
+		$this->salt->write();
 	}
 
 	/**
