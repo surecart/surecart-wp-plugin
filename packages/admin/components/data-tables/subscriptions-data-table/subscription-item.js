@@ -3,7 +3,6 @@ import { addQueryArgs } from '@wordpress/url';
 import {
 	ScButton,
 	ScDropdown,
-	ScFormatDate,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
@@ -24,13 +23,7 @@ export default (subscription) => {
 			return (
 				<span>
 					{__('Cancels', 'surecart')}{' '}
-					<sc-format-date
-						type="timestamp"
-						date={subscription?.current_period_end_at}
-						month="short"
-						day="numeric"
-						year="numeric"
-					></sc-format-date>
+					{subscription?.current_period_end_at_date}
 				</span>
 			);
 		}
@@ -38,14 +31,7 @@ export default (subscription) => {
 		if (subscription?.status === 'trialing' && subscription?.trial_end_at) {
 			return (
 				<span>
-					{__('Begins', 'surecart')}{' '}
-					<sc-format-date
-						type="timestamp"
-						date={subscription?.trial_end_at}
-						month="short"
-						day="numeric"
-						year="numeric"
-					></sc-format-date>
+					{__('Begins', 'surecart')} {subscription?.trial_end_at_date}
 				</span>
 			);
 		}
@@ -57,13 +43,7 @@ export default (subscription) => {
 			return (
 				<span>
 					{__('Renews', 'surecart')}{' '}
-					<sc-format-date
-						type="timestamp"
-						date={subscription?.current_period_end_at}
-						month="short"
-						day="numeric"
-						year="numeric"
-					></sc-format-date>
+					{subscription?.current_period_end_at_date}
 				</span>
 			);
 		}
@@ -71,17 +51,12 @@ export default (subscription) => {
 		if (subscription?.status === 'canceled' && subscription?.ended_at) {
 			return (
 				<span>
-					{__('Ended', 'surecart')}{' '}
-					<sc-format-date
-						type="timestamp"
-						date={subscription?.ended_at}
-						month="short"
-						day="numeric"
-						year="numeric"
-					></sc-format-date>
+					{__('Ended', 'surecart')} {subscription?.ended_at_date}
 				</span>
 			);
 		}
+
+		return '-';
 	};
 
 	const renderCancelButton = () => {
@@ -146,15 +121,7 @@ export default (subscription) => {
 				{product?.name}
 			</a>
 		),
-		created: (
-			<ScFormatDate
-				date={subscription?.created_at}
-				month="short"
-				day="numeric"
-				year="numeric"
-				type="timestamp"
-			></ScFormatDate>
-		),
+		created: subscription?.created_at_date,
 		plan: renderPlan(subscription),
 		cancel: renderCancelButton(subscription),
 		actions:

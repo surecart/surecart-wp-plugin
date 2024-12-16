@@ -50,7 +50,6 @@ graph TD;
   sc-subscriptions-list --> sc-block-ui
   sc-empty --> sc-icon
   sc-subscription-details --> sc-subscription-status-badge
-  sc-subscription-details --> sc-format-date
   sc-subscription-details --> sc-skeleton
   sc-subscription-details --> sc-format-number
   sc-subscription-details --> sc-flex
@@ -61,7 +60,6 @@ graph TD;
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
   sc-subscription-details --> sc-icon
-  sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-dialog --> sc-button
   sc-dialog --> sc-icon

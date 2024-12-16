@@ -5,9 +5,9 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasDates;
 
 /**
- * Holds balance transaction data
+ * PaymentFailure model.
  */
-class BalanceTransaction extends Model {
+class PaymentFailure extends Model {
 	use HasDates;
 
 	/**
@@ -15,12 +15,12 @@ class BalanceTransaction extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'balance_transactions';
+	protected $endpoint = 'payment_failures';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'balance_transaction';
+	protected $object_name = 'payment_failure';
 }

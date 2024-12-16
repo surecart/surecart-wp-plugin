@@ -423,7 +423,7 @@ export class ScOrder {
                   </sc-stacked-list-row>
                   <sc-stacked-list-row style={{ '--columns': '2' }}>
                     <div>{__('Date', 'surecart')}</div>
-                    <sc-format-date type="timestamp" date={this.order?.created_at} month="short" day="numeric" year="numeric"></sc-format-date>
+                    <span>{this.order?.created_at_date}</span>
                   </sc-stacked-list-row>
 
                   <sc-stacked-list-row style={{ '--columns': '2' }}>

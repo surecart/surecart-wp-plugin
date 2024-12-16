@@ -52,8 +52,7 @@ export class ScSubscriptionStatusBadge {
     if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at && this.subscription?.status !== 'canceled') {
       return (
         <Fragment>
-          {!!this.subscription?.restore_at ? __('Pauses', 'surecart') : __('Cancels', 'surecart')}{' '}
-          <sc-format-date type="timestamp" date={this.subscription.current_period_end_at} month="short" day="numeric"></sc-format-date>
+          {!!this.subscription?.restore_at ? __('Pauses', 'surecart') : __('Cancels', 'surecart')} {this.subscription.current_period_end_at_date}
         </Fragment>
       );
     }

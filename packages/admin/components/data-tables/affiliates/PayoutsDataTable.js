@@ -7,11 +7,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import {
-	ScFormatDate,
-	ScFormatNumber,
-	ScText,
-} from '@surecart/components-react';
+import { ScFormatNumber, ScText } from '@surecart/components-react';
 import { ScTag } from '@surecart/components-react';
 
 export default ({
@@ -42,8 +38,8 @@ export default ({
 						payout_email,
 						total_commission_amount,
 						currency,
-						end_date,
-						created_at,
+						end_at_date,
+						created_at_date,
 					}) => {
 						return {
 							status: (
@@ -67,24 +63,8 @@ export default ({
 							payout_email: (
 								<ScText truncate>{payout_email}</ScText>
 							),
-							end_date: (
-								<ScFormatDate
-									type="timestamp"
-									month="short"
-									day="numeric"
-									year="numeric"
-									date={end_date}
-								/>
-							),
-							date: (
-								<ScFormatDate
-									type="timestamp"
-									month="short"
-									day="numeric"
-									year="numeric"
-									date={created_at}
-								/>
-							),
+							end_date: end_at_date,
+							date: created_at_date,
 						};
 					}
 				)}
