@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\Checkout;
 use SureCart\Models\Form;
-use SureCart\Models\Product;
 use SureCart\Models\User;
 use SureCart\WordPress\Users\CustomerLinkService;
 use SureCart\WordPress\RecaptchaValidationService;
