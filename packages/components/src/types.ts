@@ -661,6 +661,7 @@ export interface Checkout extends Object {
   applied_balance_amount?: number;
   discounts?: number;
   shipping_address_required?: boolean;
+  shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';
   tax_enabled: boolean;
   tax_amount: number;
   email_exists: boolean;
