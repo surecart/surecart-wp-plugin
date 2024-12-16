@@ -16,7 +16,6 @@ export default ({
 	noButton,
 	prefix,
 	suffix,
-	loading,
 }) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
