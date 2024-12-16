@@ -162,7 +162,15 @@ abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayab
 	 */
 	protected function makeRequest( $args = [] ) {
 		$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
-		return wp_remote_get( add_query_arg( array_merge( $this->default_query, $this->query ), $this->base_url . $endpoint ) );
+		return wp_remote_get(
+			add_query_arg(
+				array_merge( $this->default_query, $this->query ),
+				$this->base_url . $endpoint
+			),
+			[
+				'timeout' => 20,
+			]
+		);
 	}
 
 	/**

@@ -17,11 +17,7 @@ import PluginActivationButton from './PluginActivationButton';
 import Notifications from '../../components/Notifications';
 
 const ActivateButton = ({ record, onActivated }) => {
-	if (
-		record?.plugin_slug &&
-		record?.plugin_file &&
-		!record?.is_plugin_active
-	) {
+	if (record?.plugin_slug && record?.plugin_file) {
 		return (
 			<PluginActivationButton
 				plugin={record?.plugin_file}
@@ -44,10 +40,19 @@ const ActivateButton = ({ record, onActivated }) => {
 		);
 	}
 
-	return <ScButton type="primary">{__('Enable', 'surecart')}</ScButton>;
+	return null;
 };
 
 const ActivatedButton = ({ record }) => {
+	if (record?.plugin_slug && record?.plugin_file) {
+		return (
+			<PluginActivationButton
+				plugin={record?.plugin_file}
+				slug={record?.plugin_slug}
+			/>
+		);
+	}
+
 	if (record?.is_pre_installed) {
 		if (!!record?.activation_link) {
 			return (
@@ -150,7 +155,7 @@ export default ({ id }) => {
 							font-size: 16px;
 						`}
 					>
-						{record?.name}
+						{record?.title?.rendered}
 					</h1>
 					<span>{record?.summary}</span>
 				</div>
@@ -233,9 +238,9 @@ export default ({ id }) => {
 											color: var(--sc-color-primary-500);
 											font-weight: bold;
 										`}
-										href={record?.docs_link}
+										href={record?.docs_link?.url}
 									>
-										{__('Docs', 'surecart')}
+										{record?.docs_link?.title}
 									</ExternalLink>
 								</div>
 							</div>
@@ -267,12 +272,9 @@ export default ({ id }) => {
 											color: var(--sc-color-primary-500);
 											font-weight: bold;
 										`}
-										href={record?.website_link}
+										href={record?.website_link?.url}
 									>
-										{new URL(record.website_link)?.host
-											.split('.')
-											.slice(-2)
-											.join('.')}
+										{record?.website_link?.title}
 									</ExternalLink>
 								</div>
 							</div>
@@ -365,7 +367,7 @@ export default ({ id }) => {
 								}
 							`}
 							dangerouslySetInnerHTML={{
-								__html: record?.content?.rendered,
+								__html: record?.description,
 							}}
 						/>
 					)}
