@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
-import { state as checkoutState, onChange as onCheckoutChange  } from '@store/checkout';
+import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
 
 import { createOrUpdateCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, LineItem, Prices, Product, ResponseError } from '../../../types';
@@ -168,7 +168,6 @@ export class ScStripePaymentRequest {
       total: {
         amount: order?.amount_due || 0,
         label: __('Total', 'surecart'),
-        pending: true,
       },
       displayItems,
     };
@@ -343,5 +342,4 @@ export class ScStripePaymentRequest {
   }
 }
 
-
-openWormhole(ScStripePaymentRequest, [ 'prices'], false);
+openWormhole(ScStripePaymentRequest, ['prices'], false);
