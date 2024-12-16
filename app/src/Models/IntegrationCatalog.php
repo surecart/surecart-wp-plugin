@@ -5,7 +5,7 @@ namespace SureCart\Models;
 /**
  * The integration listing model.
  */
-class IntegrationCatalog extends StaticFileModel {
+class IntegrationCatalog extends ExternalApiModel {
 	/**
 	 * Rest API endpoint
 	 *

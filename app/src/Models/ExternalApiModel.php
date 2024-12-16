@@ -8,9 +8,9 @@ use SureCart\Concerns\Arrayable;
 use SureCart\Models\Concerns\Facade;
 
 /**
- * Static File Model class
+ * External API Model class
  */
-abstract class StaticFileModel implements ArrayAccess, JsonSerializable, Arrayable, ModelInterface {
+abstract class ExternalApiModel implements ArrayAccess, JsonSerializable, Arrayable, ModelInterface {
 	use Facade;
 
 	/**
