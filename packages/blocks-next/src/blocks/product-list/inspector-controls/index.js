@@ -36,6 +36,14 @@ const sortingOptions = [
 		label: __('Price, high to low', 'surecart'),
 		value: 'price:desc',
 	},
+	{
+		label: __('Alphabetical, A-Z', 'surecart'),
+		value: 'title:asc',
+	},
+	{
+		label: __('Alphabetical, Z-A', 'surecart'),
+		value: 'title:desc',
+	},
 ];
 
 /**
