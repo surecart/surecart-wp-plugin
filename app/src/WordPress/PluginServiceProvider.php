@@ -52,7 +52,6 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$app->alias( 'config', 'surecart.config.setting' );
 		$app->alias( 'healthCheck', 'surecart.health' );
 		$app->alias( 'state', 'surecart.initialstate' );
-		$app->alias( 'integrations', 'surecart.plugin.installation' );
 	}
 
 	/**
