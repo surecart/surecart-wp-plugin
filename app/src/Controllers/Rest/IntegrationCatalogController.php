@@ -29,26 +29,4 @@ class IntegrationCatalogController {
 	public function find( \WP_REST_Request $request ) {
 		return rest_ensure_response( IntegrationCatalog::find( $request->get_param( 'id' ) ) );
 	}
-
-	/**
-	 * Activate the integration.
-	 *
-	 * @param \WP_REST_Request $request Rest Request.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	public function activate( \WP_REST_Request $request ) {
-		return rest_ensure_response( IntegrationCatalog::activate( $request->get_param( 'provider' ) ) );
-	}
-
-	/**
-	 * Deactivate the integration.
-	 *
-	 * @param \WP_REST_Request $request Rest Request.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	public function deactivate( \WP_REST_Request $request ) {
-		return rest_ensure_response( IntegrationCatalog::deactivate( $request->get_param( 'provider' ) ) );
-	}
 }
