@@ -285,7 +285,7 @@ return array(
 	 * Links used.
 	 */
 	'links'                  => array(
-		'purchase' => 'https://app.surecart.com/plans',
+		'purchase' => 'https://app.surecart.com/billing',
 	),
 
 	/**
