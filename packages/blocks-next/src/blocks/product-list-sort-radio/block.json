@@ -8,7 +8,7 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"usesContext": ["surecart/radio/name"],
-	"ancestor": ["surecart/product-list-sort-radio-group"],
+	"ancestor": ["surecart/product-list-sort-radio-group-template"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {

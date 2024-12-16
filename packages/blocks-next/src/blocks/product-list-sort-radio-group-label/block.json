@@ -1,18 +1,18 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-list-filter-tags-title",
-	"title": "Title",
-	"description": "Display the product list filter tags title",
+	"name": "surecart/product-list-sort-radio-group-label",
+	"title": "Label",
+	"description": "Display the product list sort radio group label",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-list-filter-tags"],
+	"ancestor": ["surecart/product-list-sort-radio-group"],
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Applied Filters"
+			"default": "Sort by"
 		}
 	},
 	"supports": {

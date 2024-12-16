@@ -8,7 +8,7 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"usesContext": ["surecart/filterTag/name"],
-	"ancestor": ["surecart/product-list-filter-tags"],
+	"ancestor": ["surecart/product-list-filter-tags-template"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {

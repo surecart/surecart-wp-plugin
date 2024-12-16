@@ -3,45 +3,32 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list-sort-radio-group",
 	"title": "Sort Radio Group",
-	"description": "Display the sort radio group.",
+	"description": "Display the Product List Sort Radio Group.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list"],
-	"attributes": {
-		"taxonomy": {
-			"type": "string",
-			"default": "sc_collection"
-		}
-	},
-	"usesContext": ["query"],
+	"attributes": {},
 	"supports": {
 		"interactivity": true,
 		"layout": {
 			"allowSwitching": false,
 			"allowInheriting": false,
+			"allowSizingOnChildren": true,
 			"default": {
 				"type": "flex",
-				"orientation": "vertical"
+				"orientation": "horizontal",
+				"verticalAlignment": "top",
+				"flexWrap": "nowrap"
 			}
 		},
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"],
+			"margin": true,
 			"blockGap": true,
 			"default": {
 				"blockGap": "0"
 			}
-		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontWeight": true
-		},
-		"color": {
-			"text": true,
-			"background": true,
-			"enableContrastChecker": true
 		},
 		"style": {
 			"spacing": {
@@ -50,7 +37,7 @@
 		}
 	},
 	"textdomain": "surecart",
-	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css"]
+	"style": ["file:./style-index.css"],
+	"render": "file:./view.php"
 }
