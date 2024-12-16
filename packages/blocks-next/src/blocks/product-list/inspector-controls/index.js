@@ -29,20 +29,20 @@ const sortingOptions = [
 		value: 'date:asc',
 	},
 	{
-		label: __('Price, low to high', 'surecart'),
-		value: 'price:asc',
-	},
-	{
-		label: __('Price, high to low', 'surecart'),
-		value: 'price:desc',
-	},
-	{
 		label: __('Alphabetical, A-Z', 'surecart'),
 		value: 'title:asc',
 	},
 	{
 		label: __('Alphabetical, Z-A', 'surecart'),
 		value: 'title:desc',
+	},
+	{
+		label: __('Price, low to high', 'surecart'),
+		value: 'price:asc',
+	},
+	{
+		label: __('Price, high to low', 'surecart'),
+		value: 'price:desc',
 	},
 ];
 
