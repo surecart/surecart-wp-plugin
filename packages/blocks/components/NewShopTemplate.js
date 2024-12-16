@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 export const newShopTemplate = (attributes, childBlocks) => {
 	const {
 		sort_enabled,
