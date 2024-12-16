@@ -7,17 +7,6 @@ namespace SureCart\Controllers\Rest;
  */
 class IntegrationProvidersController {
 	/**
-	 * Model types.
-	 *
-	 * @var array<string>
-	 */
-	protected $model_types = [
-		'product',
-		'builder',
-		'automation',
-	];
-
-	/**
 	 * List providers for the integration providers for a model.
 	 * This is done through code, so we expose a filter here.
 	 *
@@ -26,19 +15,7 @@ class IntegrationProvidersController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function index( \WP_REST_Request $request ) {
-		// filter the model types.
-		$model_types = apply_filters( 'surecart/integrations/providers/model_types', $this->model_types );
-
-		if ( ! empty( $request->get_param( 'model' ) ) ) {
-			$providers = apply_filters( "surecart/integrations/providers/list/{$request->get_param( 'model' )}", [], $request->get_param( 'search' ), $request );
-			return rest_ensure_response( $providers );
-		}
-
-		$providers = [];
-		foreach ( $model_types as $model_type ) {
-			$providers = array_merge( $providers, apply_filters( "surecart/integrations/providers/list/{$model_type}", [], $request->get_param( 'search' ), $request ) );
-		}
-
+		$providers = apply_filters( "surecart/integrations/providers/list/{$request->get_param( 'model' )}", [], $request->get_param( 'search' ), $request );
 		return rest_ensure_response( $providers );
 	}
 
