@@ -11,7 +11,7 @@ class IntegrationCatalog extends ExternalApiModel {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'integrations';
+	protected $endpoint = 'v1';
 
 	/**
 	 * Default query parameters
@@ -30,7 +30,7 @@ class IntegrationCatalog extends ExternalApiModel {
 	 *
 	 * @var string
 	 */
-	protected $base_url = 'https://surecart.com/wp-json/wp/v2/';
+	protected $base_url = 'https://integrations-catalog.surecart.com/';
 
 	/**
 	 * Get the is plugin active attribute.
