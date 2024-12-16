@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-06T20:20:50+00:00\n"
+"POT-Creation-Date: 2024-12-09T18:54:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -106,7 +106,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:140
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:223
-#: settings/order/OrderProtocol.js:145
+#: settings/order/OrderProtocol.js:169
 msgid "Upsells"
 msgstr ""
 
@@ -464,6 +464,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:54
 #: invoices/components/Status.js:18
 #: orders/modules/Charges.js:100
+#: orders/modules/InvoiceDetails/InvoiceStatus.js:15
 #: orders/modules/Refunds.js:80
 #: orders/modules/Subscriptions.js:45
 #: products/components/Status/index.js:57
@@ -671,7 +672,6 @@ msgstr ""
 #: components/data-tables/licenses-data-table/license-item.js:74
 #: components/data-tables/OrdersDataTable.js:91
 #: components/data-tables/subscriptions-data-table/subscription-item.js:173
-#: invoices/components/OrderPageLink.js:39
 #: products/modules/BuyLink.js:332
 #: formats/ShowPrice.js:91
 msgid "View"
@@ -736,8 +736,9 @@ msgstr ""
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:288
 #: abandoned-checkouts/modules/LineItems/index.js:34
 #: components/data-tables/charges-data-table/index.js:157
+#: invoices/components/OrderPageLink.js:37
 #: invoices/Invoice.js:145
-#: orders/Order.js:257
+#: orders/Order.js:258
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:52
 #: subscriptions/show/modules/Periods.js:213
 msgid "View Order"
@@ -851,7 +852,7 @@ msgstr ""
 #: customers/modules/Details.js:61
 #: invoices/modules/SelectCustomer/CreateCustomer.js:111
 #: orders/modules/ContactInfo/EditContactInfo.js:146
-#: settings/account/AccountSettings.js:395
+#: settings/account/AccountSettings.js:352
 msgid "Email"
 msgstr ""
 
@@ -1073,8 +1074,8 @@ msgstr ""
 #: Controllers/SubscriptionController.php:400
 #: Controllers/SubscriptionController.php:485
 #: Controllers/SubscriptionController.php:544
-#: Controllers/SubscriptionController.php:608
-#: Controllers/SubscriptionController.php:675
+#: Controllers/SubscriptionController.php:607
+#: Controllers/SubscriptionController.php:674
 #: sc-upcoming-invoice.js:184
 msgid "Plan"
 msgstr ""
@@ -1332,6 +1333,8 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:50
 #: forms/invoice.php:6
+#: orders/modules/InvoiceDetails/index.js:29
+#: orders/modules/InvoiceDetails/InvoicePageLink.js:19
 #: store/add-entities.js:145
 msgid "Invoice"
 msgstr ""
@@ -1635,7 +1638,7 @@ msgstr ""
 #: components/data-tables/OrdersDataTable.js:28
 #: customers/modules/Orders.js:48
 #: dashboard/components/overview/charts/Orders.js:21
-#: orders/Order.js:254
+#: orders/Order.js:255
 #: settings/export/ExportSettings.js:27
 #: Controllers/OrderController.php:62
 #: Controllers/OrderController.php:123
@@ -1875,7 +1878,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:47
 #: layouts/partials/admin-settings-sidebar.php:15
-#: settings/order/OrderProtocol.js:40
+#: settings/order/OrderProtocol.js:41
 msgid "Orders & Invoices"
 msgstr ""
 
@@ -1905,7 +1908,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:64
-#: subscriptions/show/ShowSubscription.js:371
+#: subscriptions/show/ShowSubscription.js:439
 #: sc-subscriptions-list.js:141
 msgid "Subscriptions"
 msgstr ""
@@ -2246,8 +2249,8 @@ msgstr ""
 #: Controllers/SubscriptionController.php:383
 #: Controllers/SubscriptionController.php:468
 #: Controllers/SubscriptionController.php:527
-#: Controllers/SubscriptionController.php:605
-#: Controllers/SubscriptionController.php:672
+#: Controllers/SubscriptionController.php:604
+#: Controllers/SubscriptionController.php:671
 #: Controllers/UserController.php:61
 #: Blocks/Dashboard/CustomerDashboard/edit.js:173
 msgid "Dashboard"
@@ -3522,6 +3525,7 @@ msgstr ""
 #: src/Rest/ClicksRestServiceProvider.php:52
 #: src/Rest/CouponRestServiceProvider.php:46
 #: src/Rest/CustomerNotificationProtocolRestServiceProvider.php:81
+#: src/Rest/CustomerPortalProtocolRestServiceProvider.php:82
 #: src/Rest/CustomerRestServiceProvider.php:47
 #: src/Rest/DownloadRestServiceProvider.php:54
 #: src/Rest/DraftCheckoutRestServiceProvider.php:88
@@ -3541,7 +3545,6 @@ msgstr ""
 #: src/Rest/PayoutGroupsRestServiceProvider.php:52
 #: src/Rest/PayoutsRestServiceProvider.php:88
 #: src/Rest/PeriodRestServiceProvider.php:75
-#: src/Rest/PortalProtocolRestServiceProvider.php:83
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProcessorRestServiceProvider.php:68
 #: src/Rest/ProductCollectionsRestServiceProvider.php:46
@@ -3886,6 +3889,22 @@ msgstr ""
 msgid "The reply-to email address to use when sending emails to customers."
 msgstr ""
 
+#: src/Rest/CustomerPortalProtocolRestServiceProvider.php:96
+msgid "Whether or not customers can cancel subscriptions from the customer portal."
+msgstr ""
+
+#: src/Rest/CustomerPortalProtocolRestServiceProvider.php:101
+msgid "Whether or not customers can make subscription changes from the customer portal."
+msgstr ""
+
+#: src/Rest/CustomerPortalProtocolRestServiceProvider.php:106
+msgid "Whether or not customers can change subscription quantities from the customer portal."
+msgstr ""
+
+#: src/Rest/CustomerPortalProtocolRestServiceProvider.php:111
+msgid "The terms of service link that is shown to customers on the customer portal."
+msgstr ""
+
 #: src/Rest/CustomerRestServiceProvider.php:78
 msgid "Create the WordPress user."
 msgstr ""
@@ -3930,7 +3949,7 @@ msgid "The default footer that is shown on all order statements (i.e. invoices a
 msgstr ""
 
 #: src/Rest/OrderProtocolRestServiceProvider.php:100
-#: settings/order/OrderProtocol.js:137
+#: settings/order/OrderProtocol.js:161
 msgid "The default memo that is shown on all order statements (i.e. invoices and receipts)."
 msgstr ""
 
@@ -3940,22 +3959,6 @@ msgstr ""
 
 #: src/Rest/OrderProtocolRestServiceProvider.php:110
 msgid "The type of number to use for orders – one of sequential or token."
-msgstr ""
-
-#: src/Rest/PortalProtocolRestServiceProvider.php:97
-msgid "Whether or not customers can cancel subscriptions from the customer portal."
-msgstr ""
-
-#: src/Rest/PortalProtocolRestServiceProvider.php:102
-msgid "Whether or not customers can make subscription changes from the customer portal."
-msgstr ""
-
-#: src/Rest/PortalProtocolRestServiceProvider.php:107
-msgid "Whether or not customers can change subscription quantities from the customer portal."
-msgstr ""
-
-#: src/Rest/PortalProtocolRestServiceProvider.php:112
-msgid "The terms of service link that is shown to customers on the customer portal."
 msgstr ""
 
 #: src/Rest/PriceRestServiceProvider.php:53
@@ -6459,7 +6462,7 @@ msgid "Store ID"
 msgstr ""
 
 #: src/WordPress/HealthService.php:45
-#: settings/account/AccountSettings.js:156
+#: settings/account/AccountSettings.js:113
 msgid "Store URL"
 msgstr ""
 
@@ -7519,7 +7522,7 @@ msgstr[1] ""
 #: upsell-funnels/CreateFunnel.js:91
 #: upsell-funnels/modules/NewCondition.js:171
 #: upsell-funnels/modules/Upsell/EditUpsell.js:182
-#: Controllers/SubscriptionController.php:611
+#: Controllers/SubscriptionController.php:610
 #: Blocks/BuyButton/Placeholder.js:61
 #: Blocks/CheckoutForm/components/Empty.js:110
 #: Blocks/CheckoutForm/components/Empty.js:150
@@ -7569,7 +7572,7 @@ msgid "Your API key is incorrect. Please double-check it is correct and update i
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:5
-#: settings/account/AccountSettings.js:108
+#: settings/account/AccountSettings.js:75
 msgid "Store Settings"
 msgstr ""
 
@@ -7612,6 +7615,7 @@ msgstr ""
 #: web/dashboard/orders/show.php:34
 #: checkouts/modules/Payment.js:263
 #: invoices/modules/Payment.js:35
+#: settings/order/OrderProtocol.js:118
 #: sc-subscription-next-payment2.js:107
 #: sc-upcoming-invoice.js:224
 msgid "Payment"
@@ -7798,7 +7802,7 @@ msgstr ""
 #: orders/modules/Fulfillment/components/StatusDropdown.js:77
 #: orders/modules/Fulfillment/CreateFulfillment.js:137
 #: orders/modules/Fulfillment/Fulfilled.js:59
-#: orders/Order.js:183
+#: orders/Order.js:184
 #: product-collections/modules/Image.js:41
 #: product-collections/modules/Image.js:49
 #: product-collections/modules/Image.js:85
@@ -7816,7 +7820,7 @@ msgstr ""
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:75
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:68
 #: subscriptions/show/modules/Tax.js:42
-#: subscriptions/show/ShowSubscription.js:107
+#: subscriptions/show/ShowSubscription.js:111
 #: upsell-funnels/modules/Upsell/Product.js:54
 #: sc-cart-form.js:73
 #: sc-charges-list.js:75
@@ -7947,8 +7951,8 @@ msgstr ""
 #: abandoned-checkouts/modules/Address.js:10
 #: customers/EditCustomer.js:192
 #: invoices/modules/Address.js:252
-#: orders/Sidebar.js:80
-#: settings/account/AccountSettings.js:424
+#: orders/Sidebar.js:86
+#: settings/account/AccountSettings.js:381
 #: settings/tax/TaxSettings.js:137
 #: sc-address2.js:119
 #: sc-order-billing-address2.js:33
@@ -8129,8 +8133,8 @@ msgstr ""
 #: affiliation-referrals/EditAffiliationReferral.js:248
 #: affiliation-requests/EditAffiliationRequest.js:240
 #: invoices/Invoice.js:219
-#: orders/Order.js:275
-#: subscriptions/show/ShowSubscription.js:419
+#: orders/Order.js:276
+#: subscriptions/show/ShowSubscription.js:487
 msgid "Actions"
 msgstr ""
 
@@ -8408,7 +8412,7 @@ msgstr ""
 #: customers/EditCustomer.js:108
 #: customers/modules/PaymentMethods/Actions.js:139
 #: orders/modules/TaxInfo/index.js:192
-#: orders/Sidebar.js:37
+#: orders/Sidebar.js:38
 msgid "Are you sure? This cannot be undone."
 msgstr ""
 
@@ -9401,22 +9405,23 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/Cancel.js:124
 #: components/subscriptions/Cancel.js:37
 #: components/subscriptions/Cancel.js:86
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:115
-#: subscriptions/show/modules/modals/ForceCancelModal.js:93
-#: subscriptions/show/ShowSubscription.js:200
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:89
+#: subscriptions/show/modules/modals/ForceCancelModal.js:96
+#: subscriptions/show/ShowSubscription.js:215
+#: subscriptions/show/ShowSubscription.js:222
 msgid "Cancel Subscription"
 msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:101
 #: components/subscriptions/Cancel.js:69
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:96
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:69
 msgid "\tAt end of current period"
 msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:111
 #: components/subscriptions/Cancel.js:61
 #: settings/subscription/SubscriptionSettings.js:53
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:87
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:60
 msgid "Immediately"
 msgstr ""
 
@@ -9424,7 +9429,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
 #: components/data-tables/subscriptions-data-table/UnCancel.js:58
 #: components/subscriptions/Cancel.js:92
-#: subscriptions/show/ShowSubscription.js:189
+#: subscriptions/show/ShowSubscription.js:198
 msgid "Don't Cancel"
 msgstr ""
 
@@ -10134,7 +10139,7 @@ msgid "this customer"
 msgstr ""
 
 #: customers/EditCustomer.js:128
-#: orders/Sidebar.js:60
+#: orders/Sidebar.js:61
 msgid "Address deleted."
 msgstr ""
 
@@ -10201,7 +10206,7 @@ msgstr ""
 
 #: customers/modules/Details.js:77
 #: orders/modules/ContactInfo/EditContactInfo.js:134
-#: settings/account/AccountSettings.js:404
+#: settings/account/AccountSettings.js:361
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
 #: sc-customer-details2.js:397
 #: sc-customer-edit.js:99
@@ -10439,15 +10444,15 @@ msgstr ""
 #: orders/modules/OrderStatusConfirmModal.js:60
 #: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:51
 #: products/modules/Image/ConfirmDeleteImage.js:39
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:69
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:42
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:44
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:41
 #: subscriptions/show/modules/modals/DontCancelModal.js:44
-#: subscriptions/show/modules/modals/ForceCancelModal.js:68
+#: subscriptions/show/modules/modals/ForceCancelModal.js:71
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:52
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:75
 #: Controllers/SubscriptionController.php:547
-#: Controllers/SubscriptionController.php:678
+#: Controllers/SubscriptionController.php:677
 #: sc-upcoming-invoice.js:229
 msgid "Confirm"
 msgstr ""
@@ -10523,6 +10528,7 @@ msgid "Create Invoice"
 msgstr ""
 
 #: invoices/Invoice.js:93
+#: orders/modules/InvoiceDetails/InvoicePageLink.js:37
 msgid "View Invoice"
 msgstr ""
 
@@ -10535,7 +10541,7 @@ msgid "Update Invoice"
 msgstr ""
 
 #: invoices/Invoice.js:126
-#: orders/Order.js:193
+#: orders/Order.js:194
 msgid "Mark As Paid"
 msgstr ""
 
@@ -10561,7 +10567,7 @@ msgstr ""
 
 #: invoices/modules/AdditionalOptions.js:21
 #: invoices/modules/AdditionalOptions.js:55
-#: settings/order/OrderProtocol.js:125
+#: settings/order/OrderProtocol.js:149
 #: Blocks/InvoiceMemo/edit.js:22
 #: sc-invoice-memo2.js:28
 msgid "Memo"
@@ -10573,7 +10579,7 @@ msgstr ""
 
 #: invoices/modules/AdditionalOptions.js:31
 #: invoices/modules/AdditionalOptions.js:66
-#: settings/order/OrderProtocol.js:134
+#: settings/order/OrderProtocol.js:158
 msgid "Footer"
 msgstr ""
 
@@ -10907,7 +10913,7 @@ msgid "You can always change this later."
 msgstr ""
 
 #: onboarding/components/ConfirmStoreDetails.js:71
-#: settings/account/AccountSettings.js:180
+#: settings/account/AccountSettings.js:137
 msgid "Store Currency"
 msgstr ""
 
@@ -11069,7 +11075,7 @@ msgid "Update the contact information for this order."
 msgstr ""
 
 #: orders/modules/ContactInfo/index.js:24
-#: settings/account/AccountSettings.js:380
+#: settings/account/AccountSettings.js:337
 msgid "Contact Information"
 msgstr ""
 
@@ -11218,7 +11224,7 @@ msgid "Are you sure you wish to cancel the order?"
 msgstr ""
 
 #: orders/modules/OrderCancelConfirmModal.js:75
-#: orders/Order.js:200
+#: orders/Order.js:201
 msgid "Cancel Order"
 msgstr ""
 
@@ -11412,7 +11418,7 @@ msgstr ""
 msgid "Tax Information"
 msgstr ""
 
-#: orders/Order.js:222
+#: orders/Order.js:223
 msgid "Return"
 msgstr ""
 
@@ -12834,13 +12840,13 @@ msgid "Default (Customized)"
 msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:62
-#: settings/account/AccountSettings.js:98
+#: settings/account/AccountSettings.js:65
 #: settings/advanced/AdvancedSettings.js:102
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:63
 #: settings/brand/BrandSettings.js:71
 #: settings/connection/ConnectionSettings.js:38
 #: settings/customer/CustomerSettings.js:36
-#: settings/order/OrderProtocol.js:30
+#: settings/order/OrderProtocol.js:31
 #: settings/shipping/ShippingSettings.js:91
 #: settings/subscription-preservation/PreservationSettings.js:135
 #: settings/subscription/SubscriptionSettings.js:43
@@ -12851,7 +12857,7 @@ msgid "Settings Updated."
 msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:84
-#: settings/account/AccountSettings.js:341
+#: settings/account/AccountSettings.js:298
 #: settings/customer/CustomerSettings.js:73
 msgid "Notification Settings"
 msgstr ""
@@ -13028,117 +13034,117 @@ msgstr ""
 msgid "1 week"
 msgstr ""
 
-#: settings/account/AccountSettings.js:126
+#: settings/account/AccountSettings.js:83
 msgid "Store Details"
 msgstr ""
 
-#: settings/account/AccountSettings.js:127
+#: settings/account/AccountSettings.js:84
 msgid "The name of your store will be visible to customers, so you should use a name that is recognizable and identifies your store to your customers."
 msgstr ""
 
-#: settings/account/AccountSettings.js:142
-#: settings/account/AccountSettings.js:143
+#: settings/account/AccountSettings.js:99
+#: settings/account/AccountSettings.js:100
 msgid "Store Name"
 msgstr ""
 
-#: settings/account/AccountSettings.js:147
+#: settings/account/AccountSettings.js:104
 msgid "This is displayed in the UI and in notifications."
 msgstr ""
 
-#: settings/account/AccountSettings.js:157
+#: settings/account/AccountSettings.js:114
 msgid "https://example.com"
 msgstr ""
 
-#: settings/account/AccountSettings.js:161
+#: settings/account/AccountSettings.js:118
 msgid "This should be your live storefront URL."
 msgstr ""
 
-#: settings/account/AccountSettings.js:186
+#: settings/account/AccountSettings.js:143
 msgid "The default currency for new products."
 msgstr ""
 
-#: settings/account/AccountSettings.js:211
+#: settings/account/AccountSettings.js:168
 msgid "This option is locked after live orders are placed. To change your store currency, please"
 msgstr ""
 
-#: settings/account/AccountSettings.js:220
+#: settings/account/AccountSettings.js:177
 msgid "contact support."
 msgstr ""
 
-#: settings/account/AccountSettings.js:242
+#: settings/account/AccountSettings.js:199
 msgid "Time Zone"
 msgstr ""
 
-#: settings/account/AccountSettings.js:243
+#: settings/account/AccountSettings.js:200
 msgid "Change this if you want the store to be in a different time zone than your server."
 msgstr ""
 
-#: settings/account/AccountSettings.js:301
+#: settings/account/AccountSettings.js:258
 msgid "Store Language"
 msgstr ""
 
-#: settings/account/AccountSettings.js:302
+#: settings/account/AccountSettings.js:259
 msgid "The language used for notifications, invoices, etc."
 msgstr ""
 
-#: settings/account/AccountSettings.js:310
+#: settings/account/AccountSettings.js:267
 msgid "Terms Page"
 msgstr ""
 
-#: settings/account/AccountSettings.js:318
+#: settings/account/AccountSettings.js:275
 msgid "A link to your store terms page."
 msgstr ""
 
-#: settings/account/AccountSettings.js:324
+#: settings/account/AccountSettings.js:281
 msgid "Privacy Policy Page"
 msgstr ""
 
-#: settings/account/AccountSettings.js:332
+#: settings/account/AccountSettings.js:289
 msgid "A link to your privacy policy page."
 msgstr ""
 
-#: settings/account/AccountSettings.js:342
+#: settings/account/AccountSettings.js:299
 #: settings/customer/CustomerSettings.js:74
 msgid "Use these settings to configure how notifications are sent to your customers."
 msgstr ""
 
-#: settings/account/AccountSettings.js:356
+#: settings/account/AccountSettings.js:313
 #: settings/customer/CustomerSettings.js:88
 msgid "Sender Name"
 msgstr ""
 
-#: settings/account/AccountSettings.js:357
+#: settings/account/AccountSettings.js:314
 #: settings/customer/CustomerSettings.js:89
 msgid "Enter the sender name"
 msgstr ""
 
-#: settings/account/AccountSettings.js:364
+#: settings/account/AccountSettings.js:321
 #: settings/customer/CustomerSettings.js:96
 msgid "Reply To Email"
 msgstr ""
 
-#: settings/account/AccountSettings.js:365
+#: settings/account/AccountSettings.js:322
 #: settings/customer/CustomerSettings.js:97
 msgid "notifications@surecart.com"
 msgstr ""
 
-#: settings/account/AccountSettings.js:381
+#: settings/account/AccountSettings.js:338
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr ""
 
-#: settings/account/AccountSettings.js:397
+#: settings/account/AccountSettings.js:354
 msgid "Enter an email"
 msgstr ""
 
-#: settings/account/AccountSettings.js:406
+#: settings/account/AccountSettings.js:363
 msgid "Enter an phone number"
 msgstr ""
 
-#: settings/account/AccountSettings.js:413
+#: settings/account/AccountSettings.js:370
 msgid "Website"
 msgstr ""
 
-#: settings/account/AccountSettings.js:415
+#: settings/account/AccountSettings.js:372
 msgid "Enter a website URL"
 msgstr ""
 
@@ -13938,71 +13944,83 @@ msgstr ""
 msgid "Promotions"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:51
+#: settings/order/OrderProtocol.js:52
 msgid "Order Numbering"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:52
+#: settings/order/OrderProtocol.js:53
 msgid "Configure your order numbering style."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:59
+#: settings/order/OrderProtocol.js:60
 msgid "Order Number Prefix"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:64
+#: settings/order/OrderProtocol.js:65
 msgid "If you would like your order numbers to have a special prefix, you can enter it here. It must not contain underscores, spaces or dashes."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:72
+#: settings/order/OrderProtocol.js:73
 msgid "Order Numbers Counter"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:74
+#: settings/order/OrderProtocol.js:75
 msgid "Choose the style of order numbers."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:85
+#: settings/order/OrderProtocol.js:86
 msgid "Sequential"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:89
+#: settings/order/OrderProtocol.js:90
 msgid "Random Numbers And Letters"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:99
+#: settings/order/OrderProtocol.js:100
 msgid "Start Order Number At"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:107
+#: settings/order/OrderProtocol.js:108
 msgid "It must be greater than the largest existing order number."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:117
+#: settings/order/OrderProtocol.js:119
+msgid "Configure payment settings."
+msgstr ""
+
+#: settings/order/OrderProtocol.js:130
+msgid "Reusable Payment Methods Only"
+msgstr ""
+
+#: settings/order/OrderProtocol.js:132
+msgid "Require all checkouts to only display reusable payment methods - even if a subscription is not present. This allows the payment method to be saved for future purchases, but can limit the payment methods available to customers."
+msgstr ""
+
+#: settings/order/OrderProtocol.js:141
 msgid "Invoices & Receipts"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:118
+#: settings/order/OrderProtocol.js:142
 msgid "Add additional information to receipts and invoices."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:128
+#: settings/order/OrderProtocol.js:152
 msgid "This appears in the memo area of your invoices and receipts."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:146
+#: settings/order/OrderProtocol.js:170
 msgid "Upsell behavior settings."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:150
+#: settings/order/OrderProtocol.js:174
 msgid "Time Limit"
 msgstr ""
 
-#: settings/order/OrderProtocol.js:157
+#: settings/order/OrderProtocol.js:181
 msgid "The number of minutes that the upsell offer will be available for after the initial purchase."
 msgstr ""
 
-#: settings/order/OrderProtocol.js:166
+#: settings/order/OrderProtocol.js:190
 msgid "Minutes"
 msgstr ""
 
@@ -15231,7 +15249,7 @@ msgstr ""
 
 #: store/add-entities.js:194
 #: subscriptions/edit/modules/PaymentMethod/index.js:46
-#: Controllers/SubscriptionController.php:681
+#: Controllers/SubscriptionController.php:680
 #: sc-order.js:178
 msgid "Payment Method"
 msgstr ""
@@ -15343,7 +15361,7 @@ msgid "Subscription updated."
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:240
-#: subscriptions/show/ShowSubscription.js:375
+#: subscriptions/show/ShowSubscription.js:443
 msgid "Subscription Details"
 msgstr ""
 
@@ -15356,7 +15374,7 @@ msgstr ""
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:331
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:116
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:164
-#: subscriptions/show/ShowSubscription.js:245
+#: subscriptions/show/ShowSubscription.js:267
 msgid "Update Subscription"
 msgstr ""
 
@@ -15521,23 +15539,18 @@ msgstr ""
 msgid "Upcoming Billing Period"
 msgstr ""
 
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:46
-#: subscriptions/show/modules/modals/ForceCancelModal.js:48
-msgid "Subscription canceled."
-msgstr ""
-
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:47
-msgid "Subscription scheduled for cancelation."
-msgstr ""
-
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:75
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:48
 msgid "When do you want to cancel the subscription?"
 msgstr ""
 
-#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:107
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:80
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:59
-#: subscriptions/show/modules/modals/ForceCancelModal.js:85
+#: subscriptions/show/modules/modals/ForceCancelModal.js:88
 msgid "Don't cancel"
+msgstr ""
+
+#: subscriptions/show/modules/modals/CancelSubscriptionModal.js:90
+msgid "Schedule Cancellation"
 msgstr ""
 
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:30
@@ -15557,7 +15570,7 @@ msgid "Are you sure you want to complete this payment plan? This will eliminate 
 msgstr ""
 
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:63
-#: subscriptions/show/ShowSubscription.js:216
+#: subscriptions/show/ShowSubscription.js:238
 msgid "Complete Subscription"
 msgstr ""
 
@@ -15611,7 +15624,12 @@ msgstr ""
 msgid "Resume Subscription"
 msgstr ""
 
-#: subscriptions/show/modules/modals/ForceCancelModal.js:74
+#: subscriptions/show/modules/modals/ForceCancelModal.js:51
+#: subscriptions/show/ShowSubscription.js:398
+msgid "Subscription canceled."
+msgstr ""
+
+#: subscriptions/show/modules/modals/ForceCancelModal.js:77
 msgid "Are you sure you want to cancel this subscription?"
 msgstr ""
 
@@ -15620,7 +15638,7 @@ msgid "Subscription paused."
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:101
-#: subscriptions/show/ShowSubscription.js:280
+#: subscriptions/show/ShowSubscription.js:302
 msgid "Pause Subscription"
 msgstr ""
 
@@ -15629,12 +15647,12 @@ msgid "This will automatically pause the subscription on %s. Please choose a res
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:146
-#: subscriptions/show/ShowSubscription.js:264
+#: subscriptions/show/ShowSubscription.js:286
 msgid "Don't Pause"
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:155
-#: subscriptions/show/ShowSubscription.js:279
+#: subscriptions/show/ShowSubscription.js:301
 msgid "Pause"
 msgstr ""
 
@@ -15731,44 +15749,52 @@ msgstr ""
 msgid "Tax disabled."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:93
+#: subscriptions/show/ShowSubscription.js:97
 msgid "Payment method updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:192
+#: subscriptions/show/ShowSubscription.js:201
 msgid "Cancel Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:225
+#: subscriptions/show/ShowSubscription.js:247
 msgid "Restore Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:301
+#: subscriptions/show/ShowSubscription.js:323
 msgid "Pay Off"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:302
+#: subscriptions/show/ShowSubscription.js:324
 msgid "Pay Off Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:320
+#: subscriptions/show/ShowSubscription.js:342
 msgid "Restore At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:338
+#: subscriptions/show/ShowSubscription.js:360
 msgid "Change Renewal Date"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:397
+#: subscriptions/show/ShowSubscription.js:399
+msgid "Subscription scheduled for cancelation."
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:465
 msgid "Affiliate commissions updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:401
+#: subscriptions/show/ShowSubscription.js:469
 msgid "Commission On This Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:427
+#: subscriptions/show/ShowSubscription.js:495
 msgid "Cancel Pending Update"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:575
+msgid "Are you sure? Subscription will be canceled immediately."
 msgstr ""
 
 #: templates/Model.js:177
