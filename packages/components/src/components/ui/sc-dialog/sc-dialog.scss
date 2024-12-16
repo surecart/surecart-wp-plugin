@@ -1,6 +1,5 @@
 :host {
   --width: 31rem;
-  --height: auto;
   --header-spacing: var(--sc-spacing-large);
   --body-spacing: var(--sc-spacing-large);
   --footer-spacing: var(--sc-spacing-large);
@@ -27,7 +26,6 @@
   flex-direction: column;
   z-index: 2;
   width: var(--width);
-  height: var(--height);
   max-width: 100vw;
   max-height: 100vh;
   background-color: var(--sc-panel-background-color);
