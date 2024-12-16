@@ -307,6 +307,19 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
+= 3.1.4 - December 16th, 2024 =
+- Improvement: Automatic cache exclusions for on customer dashbaord login page.
+- Improvement: Write custom salt for api key encryption to prevent disconnection when using salt shaker and other security plugins.
+- Improvement: Use WordPress servert time for all times and dates throughout the plugin.
+- Improvement: Avada theme compatibility.
+- Improvement: Add refunded amount on customer dashboard order details page.
+- Improvement: Update js deprecation notices for WordPress 6.7.
+- Fix: Issue where full address was being collected in some cases where only a compact address was required.
+- Fix: Issue where updating the customer address on the admin could sometimes update to the current user address.
+- Fix: Stripe sometimes not loading if invoice was in live mode, but the store was in test mode.
+- Fix: Apple pay showing as "pending" in express payment element instead of the total amount.
+- Fix: Free accounts can now correctly limit payment methods on each form.
+
 = 3.1.3 - December 9th, 2024 =
 - New: Setting to force reusable payment methods on checkout.
 - Improvement: Added link to invoice from order page if order has an invoice.
