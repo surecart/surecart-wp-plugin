@@ -1,6 +1,7 @@
 <?php
 
 use SureCart\Models\Blocks\ProductListBlock;
+use SureCart\Models\Blocks\RelatedProductsBlock;
 
 if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
@@ -211,9 +212,18 @@ function sc_unique_product_list_id( $prefix = '' ) {
 /**
  * Get the product list query.
  *
+ * @param \WP_Block $block The block.
+ *
  * @return \WP_Query
  */
-function sc_product_list_query( $block = null ) {
+function sc_product_list_query( $block ) {
+	// we are handling related products here.
+	if ( ! empty( $block->parsed_block['attrs']['query']['related'] ) || ! empty( $block->context['query']['related'] ) ) {
+		$controller = new RelatedProductsBlock( $block );
+		return $controller->query();
+	}
+
+	// we are handling regular product list queries here.
 	$controller = new ProductListBlock( $block );
 	return $controller->query();
 }
