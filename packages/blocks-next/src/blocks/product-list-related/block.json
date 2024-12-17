@@ -18,20 +18,13 @@
 			"type": "object",
 			"default": {
 				"perPage": 4,
-				"pages": 0,
-				"offset": 0,
+				"totalPages": 3,
 				"postType": "sc_product",
 				"order": "desc",
 				"orderBy": "date",
-				"author": "",
-				"search": "",
-				"exclude": [],
-				"include": [],
-				"sticky": "",
+				"taxonomy": "sc_collection",
 				"related": true,
-				"inherit": true,
-				"taxQuery": null,
-				"parents": []
+				"fallback": true
 			}
 		}
 	},

@@ -3,9 +3,13 @@
  */
 import { InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { PanelBody } from '@wordpress/components';
-import { RangeControl } from '@wordpress/components';
-import { SelectControl } from '@wordpress/components';
+import {
+	RangeControl,
+	ToggleControl,
+	SelectControl,
+	PanelBody,
+} from '@wordpress/components';
+import { useEntityRecords } from '@wordpress/core-data';
 
 const sortingOptions = [
 	{
@@ -32,9 +36,19 @@ const sortingOptions = [
 export default function ProductListInspectorControls({
 	onUpdateQuery,
 	attributes: {
-		query: { perPage, order, orderBy },
+		query: { perPage, order, orderBy, taxonomy, totalPages, fallback },
 	},
 }) {
+	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
+		per_page: -1,
+	});
+
+	// get all visible taxonomies for this post type.
+	const taxonomies = (allTaxonomies ?? []).filter(
+		(taxonomy) =>
+			taxonomy.types.includes('sc_product') && taxonomy?.visibility.public
+	);
+
 	return (
 		<InspectorControls>
 			<PanelBody title={__('Attributes', 'surecart')}>
@@ -45,6 +59,19 @@ export default function ProductListInspectorControls({
 					step={1}
 					min={1}
 					max={40}
+				/>
+
+				<RangeControl
+					label={__('Total Pages', 'surecart')}
+					help={__(
+						'Limit the number of pages to display.',
+						'surecart'
+					)}
+					value={totalPages}
+					onChange={(totalPages) => onUpdateQuery({ totalPages })}
+					step={1}
+					min={1}
+					max={5}
 				/>
 
 				<SelectControl
@@ -60,6 +87,30 @@ export default function ProductListInspectorControls({
 							orderBy: sort[0],
 						});
 					}}
+				/>
+
+				{Array.isArray(taxonomies) && (
+					<SelectControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
+						label={__('Taxonomy')}
+						options={taxonomies.map((t) => ({
+							label: t.name,
+							value: t.slug,
+						}))}
+						value={taxonomy}
+						onChange={(taxonomy) => onUpdateQuery({ taxonomy })}
+					/>
+				)}
+
+				<ToggleControl
+					label={__('All Products Fallback', 'surecart')}
+					help={__(
+						'If there are no related products, show all products.',
+						'surecart'
+					)}
+					checked={fallback}
+					onChange={(fallback) => onUpdateQuery({ fallback })}
 				/>
 			</PanelBody>
 		</InspectorControls>

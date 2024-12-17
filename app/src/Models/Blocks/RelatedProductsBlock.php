@@ -108,6 +108,9 @@ class RelatedProductsBlock {
 	/**
 	 * Run the query
 	 *
+	 * This first gets post ids based on shared object terms.
+	 * Then it creates a WP_Query object with the post ids.
+	 *
 	 * @return $this|\WP_Error
 	 */
 	public function query() {
@@ -119,35 +122,46 @@ class RelatedProductsBlock {
 
 		global $wpdb;
 
+		$page     = $this->url->getCurrentPage();
+		$per_page = $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $this->block->context['query']['perPage'] ?? 3;
+		$order    = $this->block->parsed_block['attrs']['query']['order'] ?? $this->block->context['query']['order'] ?? 'desc';
+		$orderby  = $this->block->parsed_block['attrs']['query']['orderBy'] ?? $this->block->context['query']['orderBy'] ?? 'date';
+		$taxonomy = $this->block->parsed_block['attrs']['query']['taxonomy'] ?? $this->block->context['query']['taxonomy'] ?? 'sc_collection';
+
 		// get the current posts terms.
 		$term_ids = wp_get_object_terms(
 			get_the_ID(),
-			'sc_collection',
+			$taxonomy,
 			[ 'fields' => 'ids' ]
 		);
 
-		$query = $this->parse_query( $term_ids, [ get_the_ID() ] );
+		// If there are term ids, get the post ids.
+		if ( ! empty( $term_ids ) ) {
+			$query = $this->parse_query( $term_ids, [ get_the_ID() ] );
+			// phpcs:ignore WordPress.VIP.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
+			$post_ids = $wpdb->get_col( implode( ' ', (array) apply_filters( 'surecart_product_related_posts_query', $query, get_the_ID() ) ) );
 
-		// phpcs:ignore WordPress.VIP.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
-		$post_ids = $wpdb->get_col( implode( ' ', (array) apply_filters( 'surecart_product_related_posts_query', $query, get_the_ID() ) ) );
-
-		$page     = absint( $this->url->getCurrentPage() );
-		$per_page = absint( $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $this->block->context['query']['perPage'] ?? 3 );
-
-		// Maybe shuffle the post ids. We don't want to shuffle if there are more posts than the per page limit.
-		// This is because shuffle does not work with pagination.
-		if ( count( $post_ids ) <= $per_page ) {
-			if ( $this->block->parsed_block['attrs']['query']['shuffle'] ?? $this->block->context['query']['shuffle'] ?? false ) {
-				shuffle( $post_ids );
+			// Maybe shuffle the post ids. We don't want to shuffle if there are more posts than the per page limit.
+			// This is because shuffle does not work with pagination.
+			if ( count( $post_ids ) <= $per_page ) {
+				if ( $this->block->parsed_block['attrs']['query']['shuffle'] ?? $this->block->context['query']['shuffle'] ?? false ) {
+					shuffle( $post_ids );
+				}
 			}
 		}
+
+		// If there are no related products, show all products.
+		$fallback_to_all = $this->block->parsed_block['attrs']['query']['fallback'] ?? $this->block->context['query']['fallback'] ?? true;
+		$post_in         = ! empty( $post_ids ) ? array_map( 'absint', $post_ids ) : ( $fallback_to_all ? [ 0 ] : [] );
 
 		// Create WP_Query object with found post IDs.
 		$this->query = new \WP_Query(
 			[
 				'post_type'      => 'sc_product',
-				'post__in'       => ! empty( $post_ids ) ? $post_ids : [ 0 ], // Use 0 to return no results if empty.
-				'orderby'        => 'post__in',
+				'post__in'       => $post_in, // Use 0 to return no results if empty.
+				'orderby'        => esc_sql( $orderby ),
+				'post_status'    => 'publish',
+				'order'          => esc_sql( $order ),
 				'posts_per_page' => absint( $per_page ),
 				'paged'          => absint( $page ),
 			]
