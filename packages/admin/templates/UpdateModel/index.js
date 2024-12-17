@@ -10,11 +10,14 @@ import {
 	ScFeatureDemoBanner,
 } from '@surecart/components-react';
 import { PostLockedModal } from '@wordpress/editor';
-import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as uiStore } from '../../store/ui';
 import { useDispatch, useSelect } from '@wordpress/data';
 import UpgradeModal from '../../components/UpgradeModal';
+import { SlotFillProvider } from '@wordpress/components';
+import Main from './MainSlot';
+import Sidebar from './SidebarSlot';
+import { useEffect } from '@wordpress/element';
 
 export default ({
 	children,
@@ -29,6 +32,16 @@ export default ({
 	const modal = useSelect((select) => select(uiStore).showUpgradeModal());
 	const { setUpgradeModal } = useDispatch(uiStore);
 	const onRequestClose = () => setUpgradeModal(false);
+
+	useEffect(() => {
+		attachSlotsToWindow();
+	}, []);
+
+	const attachSlotsToWindow = () => {
+		window.surecart = window.surecart || {};
+		window.surecart.Main = Main;
+		window.surecart.Sidebar = Sidebar;
+	};
 
 	const banner = () => {
 		// not entitled.
@@ -64,7 +77,7 @@ export default ({
 	};
 
 	return (
-		<Fragment>
+		<SlotFillProvider>
 			<Global
 				styles={css`
 					#wpwrap {
@@ -188,6 +201,7 @@ export default ({
 						>
 							<Notices margin="80px" />
 							{children}
+							<Main.Slot />
 							{footer && (
 								<div>
 									<hr
@@ -209,6 +223,7 @@ export default ({
 								`}
 							>
 								{sidebar}
+								<Sidebar.Slot />
 							</div>
 						</div>
 					</div>
@@ -229,6 +244,6 @@ export default ({
 				{modal && <UpgradeModal onRequestClose={onRequestClose} />}
 			</ErrorBoundary>
 			<PostLockedModal />
-		</Fragment>
+		</SlotFillProvider>
 	);
 };

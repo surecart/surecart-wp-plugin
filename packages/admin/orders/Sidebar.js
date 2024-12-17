@@ -8,7 +8,6 @@ import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
-import { Slot } from '@wordpress/components';
 /**
  * Internal dependencies.
  */
@@ -112,10 +111,6 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 			>
 				{deleteConfirmMessage}
 			</Confirm>
-			<Slot
-				name="sc-view-orders-sidebar-end"
-				key="sc-view-orders-sidebar-end"
-			/>
 		</Fragment>
 	);
 };
