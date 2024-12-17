@@ -39,8 +39,8 @@ class ProductListBlock {
 	 *
 	 * @param \WP_Block $block The block.
 	 */
-	public function __construct( \WP_Block $block = null ) {
-		$this->block = $block ? $block : \WP_Block_Supports::$block_to_render;
+	public function __construct( \WP_Block $block ) {
+		$this->block = $block;
 		$this->url   = \SureCart::block()->urlParams( 'products' );
 	}
 
@@ -70,15 +70,12 @@ class ProductListBlock {
 	public function parse_query() {
 		$query = $this->getQueryContext();
 
-		$offset   = absint( $query['offset'] ?? 0 );
-		$per_page = $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $query['perPage'] ?? 15;
-		$order    = ! empty( $this->url->getArg( 'order' ) )
-			? sanitize_text_field( $this->url->getArg( 'order' ) )
-			: ( ! empty( $query['order'] ) ? $query['order'] : 'desc' );
-		$orderby  = ! empty( $this->url->getArg( 'orderby' ) )
-			? sanitize_text_field( $this->url->getArg( 'orderby' ) )
-			: ( ! empty( $query['orderBy'] ) ? $query['orderBy'] : 'date' );
-		$page     = $this->url->getCurrentPage();
+		$offset   = absint( $this->url->getArg( 'offset' ) ?? $this->block->parsed_block['attrs']['offset'] ?? $query['offset'] ?? 0 );
+		$page     = absint( $this->url->getCurrentPage() );
+		$per_page = absint( $this->url->getArg( 'perpage' ) ?? $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $query['perPage'] ?? 15 );
+		$order    = sanitize_text_field( $this->url->getArg( 'order' ) ?? $this->block->parsed_block['attrs']['query']['order'] ?? $query['order'] ?? 'desc' );
+		$orderby  = sanitize_text_field( $this->url->getArg( 'orderby' ) ?? $this->block->parsed_block['attrs']['query']['orderBy'] ?? $query['orderBy'] ?? 'date' );
+		$search   = sanitize_text_field( $this->url->getArg( 'search' ) ?? $this->block->parsed_block['attrs']['query']['search'] ?? $query['search'] ?? '' );
 
 		// build up the query.
 		$this->query_vars = array_filter(
@@ -88,22 +85,96 @@ class ProductListBlock {
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => $per_page,
 				'offset'              => ( $per_page * ( $page - 1 ) ) + $offset,
-				'paged'               => (int) $this->url->getCurrentPage(),
+				'paged'               => (int) $page,
 				'order'               => $order,
 				'orderby'             => $orderby,
-				's'                   => sanitize_text_field( $this->url->getArg( 'search' ) ),
+				's'                   => $search,
 			)
 		);
 
-		// handle search.
-		if ( ! empty( $query['search'] ) && empty( $this->query_vars['s'] ) ) {
-			$this->query_vars['s'] = sanitize_text_field( $query['search'] );
-		}
-
-		// put together price query.
+		// handle price query.
 		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
 			$this->query_vars['meta_key'] = 'min_price_amount';
 			$this->query_vars['orderby']  = 'meta_value_num';
+		}
+
+		// handle tax query.
+		$this->buildTaxQuery();
+
+		// handle featured.
+		if ( 'featured' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
+			$this->query_vars['meta_query'] = [
+				[
+					'key'     => 'featured',
+					'value'   => '1',
+					'compare' => '=',
+				],
+			];
+		}
+
+		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? $this->block->parsed_block['attrs']['type'] ?? 'all' ) ) {
+			// backward compatibility.
+			$ids = ! empty( $query['include'] ) ? $query['include'] : ( ! empty( $this->block->context['surecart/product-list/ids'] ) ? $this->block->context['surecart/product-list/ids'] : ( ! empty( $this->block->parsed_block['attrs']['ids'] ) ? $this->block->parsed_block['attrs']['ids'] : [] ) );
+
+			// fallback for older strings - get the ids of legacy products.
+			$legacy_ids           = [];
+			$ids_that_are_strings = array_map( 'sanitize_text_field', array_filter( $ids, 'is_string' ) );
+			if ( ! empty( $ids_that_are_strings ) ) {
+				$legacy_ids = get_posts(
+					[
+						'post_type'      => 'sc_product',
+						'status'         => 'publish',
+						'fields'         => 'ids',
+						'posts_per_page' => -1,
+						'meta_query'     => [
+							[
+								'key'     => 'sc_id',
+								'value'   => $ids_that_are_strings,
+								'compare' => 'IN',
+							],
+						],
+					]
+				);
+			}
+
+			// get only ids that are integers.
+			$ids_that_are_integers = array_filter( $ids, 'is_int' );
+
+			// post in.
+			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );
+
+			// order by posts if there is not an order by.
+			if ( empty( $this->query_vars['orderby'] ) ) {
+				$this->query_vars['orderby'] = 'post__in';
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Build the tax query.
+	 *
+	 * @return array
+	 */
+	public function buildTaxQuery() {
+		$query   = $this->getQueryContext();
+		$related = $this->block->parsed_block['attrs']['query']['related'] ?? $query['related'] ?? false;
+
+		// handle related products.
+		if ( ! empty( $related ) ) {
+			$this->query_vars['post__not_in'] = [ get_the_ID() ];
+			// get the first sc_collection term.
+			$terms = get_the_terms( get_the_ID(), 'sc_collection' );
+
+			if ( ! empty( $terms ) ) {
+				$this->query_vars['tax_query'][] = array(
+					'taxonomy' => 'sc_collection',
+					'field'    => 'term_id',
+					'terms'    => [ $terms[0]->term_id ],
+				);
+				return;
+			}
 		}
 
 		$tax_query = array(
@@ -121,12 +192,6 @@ class ProductListBlock {
 					);
 				}
 			}
-		}
-
-		// put together price query.
-		if ( 'price' === $orderby ) {
-			$this->query_vars['meta_key'] = 'min_price_amount';
-			$this->query_vars['orderby']  = 'meta_value_num';
 		}
 
 		$collection_id = sanitize_text_field( $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? '' );
@@ -186,59 +251,7 @@ class ProductListBlock {
 				);
 		}
 
-		$this->query_vars['tax_query'][] = $tax_query;
-
-		// handle featured.
-		if ( 'featured' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
-			$this->query_vars['meta_query'] = [
-				[
-					'key'     => 'featured',
-					'value'   => '1',
-					'compare' => '=',
-				],
-			];
-		}
-
-		if ( 'custom' === ( $this->block->context['surecart/product-list/type'] ?? $this->block->parsed_block['attrs']['type'] ?? 'all' ) ) {
-			$query = $this->getQueryContext();
-			// backward compatibility.
-
-			$ids = ! empty( $query['include'] ) ? $query['include'] : ( ! empty( $this->block->context['surecart/product-list/ids'] ) ? $this->block->context['surecart/product-list/ids'] : ( ! empty( $this->block->parsed_block['attrs']['ids'] ) ? $this->block->parsed_block['attrs']['ids'] : [] ) );
-
-			// fallback for older strings - get the ids of legacy products.
-			$legacy_ids           = [];
-			$ids_that_are_strings = array_map( 'sanitize_text_field', array_filter( $ids, 'is_string' ) );
-			if ( ! empty( $ids_that_are_strings ) ) {
-				$legacy_ids = get_posts(
-					[
-						'post_type'      => 'sc_product',
-						'status'         => 'publish',
-						'fields'         => 'ids',
-						'posts_per_page' => -1,
-						'meta_query'     => [
-							[
-								'key'     => 'sc_id',
-								'value'   => $ids_that_are_strings,
-								'compare' => 'IN',
-							],
-						],
-					]
-				);
-			}
-
-			// get only ids that are integers.
-			$ids_that_are_integers = array_filter( $ids, 'is_int' );
-
-			// post in.
-			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );
-
-			// order by posts if there is not an order by.
-			if ( empty( $this->query_vars['orderby'] ) ) {
-				$this->query_vars['orderby'] = 'post__in';
-			}
-		}
-
-		return $this;
+		return $tax_query;
 	}
 
 	/**

@@ -1,5 +1,4 @@
 <?php
-use SureCart\Models\Blocks\ProductListBlock;
 
 global $sc_query_id;
 
@@ -12,10 +11,13 @@ wp_interactivity_state(
 	]
 );
 
-// For Analytics.
-$controller = new ProductListBlock( $block );
-$query      = $controller->query();
-$products   = $query->products;
+// Create controller and run query.
+$query    = sc_product_list_query( $block );
+$products = $query->products;
+
+if ( empty( $products ) ) {
+	return;
+}
 
 // return the view.
 return 'file:./view.php';

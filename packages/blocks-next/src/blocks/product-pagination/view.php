@@ -1,9 +1,6 @@
 <?php
 
-use SureCart\Models\Blocks\ProductListBlock;
-
-$controller = new ProductListBlock( $block );
-$query      = $controller->query();
+$query = sc_product_list_query( $block );
 
 // there are less than 2 pages.
 if ( ( $query->max_num_pages ?? 1 ) < 2 ) {

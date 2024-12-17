@@ -1,4 +1,7 @@
 <?php
+
+use SureCart\Models\Blocks\ProductListBlock;
+
 if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
 	 * Get the product.
@@ -202,4 +205,25 @@ function sc_unique_product_page_id( $prefix = '' ) {
 function sc_unique_product_list_id( $prefix = '' ) {
 	static $id_counter = -1;
 	return $prefix . (string) ++$id_counter;
+}
+
+
+/**
+ * Get the product list query.
+ *
+ * @return \WP_Query
+ */
+function sc_product_list_query( $block = null ) {
+	$controller = new ProductListBlock( $block );
+	return $controller->query();
+}
+
+/**
+ * Get the product list prefix.
+ *
+ * @return string
+ */
+function sc_product_list_prefix( $block = null ) {
+	$controller = new ProductListBlock( $block );
+	return $controller->urlParams()->getKey();
 }
