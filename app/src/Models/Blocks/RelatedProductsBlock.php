@@ -21,13 +21,6 @@ class RelatedProductsBlock {
 	protected $url;
 
 	/**
-	 * The query vars.
-	 *
-	 * @var array
-	 */
-	protected $query_vars = [];
-
-	/**
 	 * The query.
 	 *
 	 * @var \WP_Query
@@ -78,9 +71,10 @@ class RelatedProductsBlock {
 		global $wpdb;
 
 		$per_page         = absint( $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->context['query']['perPage'] ?? 15 );
+		$total_pages      = absint( $this->block->parsed_block['attrs']['query']['totalPages'] ?? $this->block->context['query']['totalPages'] ?? 3 );
 		$exclude_term_ids = $this->block->parsed_block['attrs']['query']['exclude_term_ids'] ?? $this->block->context['query']['exclude_term_ids'] ?? [];
 
-		$this->query_vars = array(
+		$query = array(
 			'fields' => "
 				SELECT DISTINCT ID FROM {$wpdb->posts} p
 			",
@@ -91,24 +85,24 @@ class RelatedProductsBlock {
 				AND p.post_type = 'sc_product'
 			",
 			'limits' => '
-				LIMIT ' . absint( apply_filters( 'surecart_product_related_posts_query_limit', max( $per_page, 9 ) ) ) . '
+				LIMIT ' . absint( apply_filters( 'surecart_product_related_posts_query_limit', $per_page * $total_pages ) ) . '
 			',
 		);
 
 		if ( count( $exclude_term_ids ) ) {
-			$this->query_vars['join']  .= " LEFT JOIN ( SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN ( " . implode( ',', array_map( 'absint', $exclude_term_ids ) ) . ' ) ) AS exclude_join ON exclude_join.object_id = p.ID';
-			$this->query_vars['where'] .= ' AND exclude_join.object_id IS NULL';
+			$query['join']  .= " LEFT JOIN ( SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN ( " . implode( ',', array_map( 'absint', $exclude_term_ids ) ) . ' ) ) AS exclude_join ON exclude_join.object_id = p.ID';
+			$query['where'] .= ' AND exclude_join.object_id IS NULL';
 		}
 
 		if ( count( $include_term_ids ) ) {
-			$this->query_vars['join'] .= " INNER JOIN ( SELECT object_id FROM {$wpdb->term_relationships} INNER JOIN {$wpdb->term_taxonomy} using( term_taxonomy_id ) WHERE term_id IN ( " . implode( ',', array_map( 'absint', $include_term_ids ) ) . ' ) ) AS include_join ON include_join.object_id = p.ID';
+			$query['join'] .= " INNER JOIN ( SELECT object_id FROM {$wpdb->term_relationships} INNER JOIN {$wpdb->term_taxonomy} using( term_taxonomy_id ) WHERE term_id IN ( " . implode( ',', array_map( 'absint', $include_term_ids ) ) . ' ) ) AS include_join ON include_join.object_id = p.ID';
 		}
 
 		if ( count( $exclude_ids ) ) {
-			$this->query_vars['where'] .= ' AND p.ID NOT IN ( ' . implode( ',', array_map( 'absint', $exclude_ids ) ) . ' )';
+			$query['where'] .= ' AND p.ID NOT IN ( ' . implode( ',', array_map( 'absint', $exclude_ids ) ) . ' )';
 		}
 
-		return $this;
+		return $query;
 	}
 
 	/**
@@ -132,13 +126,21 @@ class RelatedProductsBlock {
 			[ 'fields' => 'ids' ]
 		);
 
-		$this->parse_query( $term_ids, [ get_the_ID() ] );
+		$query = $this->parse_query( $term_ids, [ get_the_ID() ] );
 
 		// phpcs:ignore WordPress.VIP.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
-		$post_ids = $wpdb->get_col( implode( ' ', (array) apply_filters( 'surecart_product_related_posts_query', $this->query_vars, get_the_ID() ) ) );
+		$post_ids = $wpdb->get_col( implode( ' ', (array) apply_filters( 'surecart_product_related_posts_query', $query, get_the_ID() ) ) );
 
 		$page     = absint( $this->url->getCurrentPage() );
-		$per_page = absint( $this->url->getArg( 'perpage' ) ?? $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $query['perPage'] ?? 3 );
+		$per_page = absint( $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $this->block->context['query']['perPage'] ?? 3 );
+
+		// Maybe shuffle the post ids. We don't want to shuffle if there are more posts than the per page limit.
+		// This is because shuffle does not work with pagination.
+		if ( count( $post_ids ) <= $per_page ) {
+			if ( $this->block->parsed_block['attrs']['query']['shuffle'] ?? $this->block->context['query']['shuffle'] ?? false ) {
+				shuffle( $post_ids );
+			}
+		}
 
 		// Create WP_Query object with found post IDs.
 		$this->query = new \WP_Query(
@@ -154,6 +156,7 @@ class RelatedProductsBlock {
 		// Cache the query result.
 		self::$cached_query = $this->query;
 
+		// return the query.
 		return $this;
 	}
 
