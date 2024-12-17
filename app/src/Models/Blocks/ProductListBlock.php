@@ -152,6 +152,64 @@ class ProductListBlock {
 		return $this;
 	}
 
+		/**
+		 * Builds the related posts query.
+		 *
+		 * @since 3.0.0
+		 *
+		 * @param array $cats_array  List of categories IDs.
+		 * @param array $tags_array  List of tags IDs.
+		 * @param array $exclude_ids Excluded IDs.
+		 * @param int   $limit       Limit of results.
+		 *
+		 * @return array
+		 */
+	public function get_related_products_query( $include_term_ids, $exclude_ids, $limit ) {
+		global $wpdb;
+
+		$exclude_term_ids            = array();
+		$product_visibility_term_ids = wc_get_product_visibility_term_ids();
+
+		if ( $product_visibility_term_ids['exclude-from-catalog'] ) {
+			$exclude_term_ids[] = $product_visibility_term_ids['exclude-from-catalog'];
+		}
+
+		if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) && $product_visibility_term_ids['outofstock'] ) {
+			$exclude_term_ids[] = $product_visibility_term_ids['outofstock'];
+		}
+
+		$query = array(
+			'fields' => "
+				SELECT DISTINCT ID FROM {$wpdb->posts} p
+			",
+			'join'   => '',
+			'where'  => "
+				WHERE 1=1
+				AND p.post_status = 'publish'
+				AND p.post_type = 'product'
+
+			",
+			'limits' => '
+				LIMIT ' . absint( $limit ) . '
+			',
+		);
+
+		if ( count( $exclude_term_ids ) ) {
+			$query['join']  .= " LEFT JOIN ( SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN ( " . implode( ',', array_map( 'absint', $exclude_term_ids ) ) . ' ) ) AS exclude_join ON exclude_join.object_id = p.ID';
+			$query['where'] .= ' AND exclude_join.object_id IS NULL';
+		}
+
+		if ( count( $include_term_ids ) ) {
+			$query['join'] .= " INNER JOIN ( SELECT object_id FROM {$wpdb->term_relationships} INNER JOIN {$wpdb->term_taxonomy} using( term_taxonomy_id ) WHERE term_id IN ( " . implode( ',', array_map( 'absint', $include_term_ids ) ) . ' ) ) AS include_join ON include_join.object_id = p.ID';
+		}
+
+		if ( count( $exclude_ids ) ) {
+			$query['where'] .= ' AND p.ID NOT IN ( ' . implode( ',', array_map( 'absint', $exclude_ids ) ) . ' )';
+		}
+
+		return $query;
+	}
+
 	/**
 	 * Build the tax query.
 	 *
