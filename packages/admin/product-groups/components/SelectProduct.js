@@ -39,7 +39,7 @@ export default ({ onSelect }) => {
 			});
 			mutate([...data, ...response]);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		} finally {
 			setLoading(false);
 		}

@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
+
 /**
  * Holds balance transaction data
  */
 class BalanceTransaction extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *

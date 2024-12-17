@@ -8,12 +8,15 @@ use SureCart\Models\LineItem;
 use SureCart\Models\Traits\CanFinalize;
 use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDiscount;
+use SureCart\Models\Traits\HasInvoice;
+use SureCart\Models\Traits\HasPaymentFailures;
 use SureCart\Models\Traits\HasPaymentIntent;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
 use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Order model
@@ -29,6 +32,8 @@ class Checkout extends Model {
 	use CanFinalize;
 	use HasProcessorType;
 	use HasBillingAddress;
+	use HasPaymentFailures;
+	use HasInvoice;
 
 	/**
 	 * Rest API endpoint
@@ -511,5 +516,14 @@ class Checkout extends Model {
 	 */
 	public function getShippingAddressRequiredAttribute(): bool {
 		return in_array( $this->shipping_address_accuracy_requirement, [ 'tax', 'full' ], true );
+	}
+
+	/**
+	 * Get the Paid at Date attribute.
+	 *
+	 * @return string
+	 */
+	public function getPaidAtDateAttribute() {
+		return ! empty( $this->paid_at ) ? TimeDate::formatDate( $this->paid_at ) : '';
 	}
 }

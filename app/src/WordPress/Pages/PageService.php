@@ -253,4 +253,27 @@ class PageService {
 
 		return get_post( $page_id );
 	}
+
+	/**
+	 * Check if the page is the customer dashboard page by current URL.
+	 *
+	 * @return boolean
+	 */
+	public function isCustomerDashboardPageByUrl(): bool {
+		$customer_dashboard_url = $this->url( 'dashboard' );
+
+		// If the customer dashboard URL is empty, return false.
+		if ( empty( $customer_dashboard_url ) ) {
+			return false;
+		}
+
+		// Get the current URL.
+		$scheme      = is_ssl() ? 'https://' : 'http://';
+		$host        = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
+		$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+		$current_url = $scheme . $host . $request_uri;
+
+		// Check if the current URL is the customer dashboard URL.
+		return untrailingslashit( $current_url ) === untrailingslashit( $customer_dashboard_url );
+	}
 }

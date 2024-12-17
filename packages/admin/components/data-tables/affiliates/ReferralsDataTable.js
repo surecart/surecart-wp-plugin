@@ -12,7 +12,6 @@ import { addQueryArgs } from '@wordpress/url';
 import DataTable from '../../DataTable';
 import {
 	ScButton,
-	ScFormatDate,
 	ScFormatNumber,
 	ScText,
 	ScTag,
@@ -42,7 +41,7 @@ export default ({
 				.map(
 					({
 						id,
-						created_at,
+						created_at_date,
 						status_type,
 						status_display_text,
 						description,
@@ -88,15 +87,7 @@ export default ({
 									value={commission_amount}
 								></ScFormatNumber>
 							),
-							date: (
-								<ScFormatDate
-									type="timestamp"
-									month="short"
-									day="numeric"
-									year="numeric"
-									date={created_at}
-								></ScFormatDate>
-							),
+							date: created_at_date,
 							view: (
 								<ScButton
 									href={addQueryArgs('admin.php', {

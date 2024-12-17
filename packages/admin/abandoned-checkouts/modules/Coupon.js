@@ -1,9 +1,4 @@
-import {
-	ScFormatDate,
-	ScFormatNumber,
-	ScLineItem,
-	ScTag,
-} from '@surecart/components-react';
+import { ScFormatNumber, ScLineItem, ScTag } from '@surecart/components-react';
 import { sprintf, __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 
@@ -55,16 +50,7 @@ export default ({ promotion, coupon, loading }) => {
 					<span slot="description">
 						{__('Redeem By', 'surecart')}
 					</span>
-					<ScFormatDate
-						slot="price"
-						type="timestamp"
-						date={promotion?.redeem_by}
-						month="short"
-						day="numeric"
-						year="numeric"
-						hour="numeric"
-						minute="numeric"
-					/>
+					<span slot="price">{promotion?.redeem_by_date_time}</span>
 				</ScLineItem>
 			)}
 		</Box>

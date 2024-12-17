@@ -6,7 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Charge, Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
+import { Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-order',
@@ -147,25 +147,9 @@ export class ScOrder {
           );
         })}
 
-        <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
-
-        <sc-line-item>
-          <span slot="description">{__('Subtotal', 'surecart')}</span>
-          <sc-format-number
-            slot="price"
-            style={{
-              'font-weight': 'var(--sc-font-weight-semibold)',
-              'color': 'var(--sc-color-gray-800)',
-            }}
-            type="currency"
-            currency={checkout?.currency}
-            value={checkout?.subtotal_amount}
-          ></sc-format-number>
-        </sc-line-item>
-
-        {!!checkout?.proration_amount && (
+        {checkout?.subtotal_amount !== checkout?.total_amount && (
           <sc-line-item>
-            <span slot="description">{__('Proration', 'surecart')}</span>
+            <span slot="description">{__('Subtotal', 'surecart')}</span>
             <sc-format-number
               slot="price"
               style={{
@@ -174,14 +158,14 @@ export class ScOrder {
               }}
               type="currency"
               currency={checkout?.currency}
-              value={checkout?.proration_amount}
+              value={checkout?.subtotal_amount}
             ></sc-format-number>
           </sc-line-item>
         )}
 
-        {!!checkout?.applied_balance_amount && (
+        {!!checkout?.trial_amount && (
           <sc-line-item>
-            <span slot="description">{__('Applied Balance', 'surecart')}</span>
+            <span slot="description">{__('Trial', 'surecart')}</span>
             <sc-format-number
               slot="price"
               style={{
@@ -190,7 +174,7 @@ export class ScOrder {
               }}
               type="currency"
               currency={checkout?.currency}
-              value={checkout?.applied_balance_amount}
+              value={checkout?.trial_amount}
             ></sc-format-number>
           </sc-line-item>
         )}
@@ -252,9 +236,10 @@ export class ScOrder {
 
         {!!checkout?.tax_amount && (
           <sc-line-item>
-            <span slot="description">
-              {formatTaxDisplay(checkout?.tax_label)} ({checkout?.tax_percent}%)
-            </span>
+            <span slot="description">{`${formatTaxDisplay(
+							checkout?.tax_label,
+							checkout?.tax_status === 'estimated'
+						)} (${checkout?.tax_percent}%)`}</span>
             <sc-format-number
               slot="price"
               style={{
@@ -265,6 +250,11 @@ export class ScOrder {
               currency={checkout?.currency}
               value={checkout?.tax_amount}
             ></sc-format-number>
+            {!!checkout?.tax_inclusive_amount && (
+							<span slot="price-description">
+								{`(${__('included', 'surecart')})`}
+							</span>
+						)}
           </sc-line-item>
         )}
 
@@ -283,6 +273,54 @@ export class ScOrder {
           <span slot="currency">{checkout?.currency}</span>
         </sc-line-item>
 
+        {!!checkout?.proration_amount && (
+          <sc-line-item>
+            <span slot="description">{__('Proration', 'surecart')}</span>
+            <sc-format-number
+              slot="price"
+              style={{
+                'font-weight': 'var(--sc-font-weight-semibold)',
+                'color': 'var(--sc-color-gray-800)',
+              }}
+              type="currency"
+              currency={checkout?.currency}
+              value={checkout?.proration_amount}
+            ></sc-format-number>
+          </sc-line-item>
+        )}
+
+        {!!checkout?.applied_balance_amount && (
+          <sc-line-item>
+            <span slot="description">{__('Applied Balance', 'surecart')}</span>
+            <sc-format-number
+              slot="price"
+              style={{
+                'font-weight': 'var(--sc-font-weight-semibold)',
+                'color': 'var(--sc-color-gray-800)',
+              }}
+              type="currency"
+              currency={checkout?.currency}
+              value={checkout?.applied_balance_amount}
+            ></sc-format-number>
+          </sc-line-item>
+        )}
+
+        {!!checkout?.credited_balance_amount && (
+          <sc-line-item>
+            <span slot="description">{__('Credited Balance', 'surecart')}</span>
+            <sc-format-number
+              slot="price"
+              style={{
+                'font-weight': 'var(--sc-font-weight-semibold)',
+                'color': 'var(--sc-color-gray-800)',
+              }}
+              type="currency"
+              currency={checkout?.currency}
+              value={checkout?.credited_balance_amount}
+            ></sc-format-number>
+          </sc-line-item>
+        )}
+
         {checkout?.amount_due !== checkout?.total_amount && (
           <sc-line-item
             style={{
@@ -297,20 +335,60 @@ export class ScOrder {
             <span slot="currency">{checkout?.currency}</span>
           </sc-line-item>
         )}
+        <sc-divider style={{ '--spacing': 'var(--sc-spacing-x-small)' }}></sc-divider>
 
-        {!!checkout?.charge && (
+        {!!checkout?.paid_amount && (
           <sc-line-item
             style={{
               'width': '100%',
               '--price-size': 'var(--sc-font-size-x-large)',
             }}
           >
-            <span slot="title">{__('Amount Paid', 'surecart')}</span>
+            <span slot="title">{__('Paid', 'surecart')}</span>
             <span slot="price">
-              <sc-format-number type="currency" currency={(checkout?.charge as Charge)?.currency} value={checkout?.paid_amount}></sc-format-number>
+              <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.paid_amount}></sc-format-number>
             </span>
-            <span slot="currency">{(checkout?.charge as Charge)?.currency}</span>
+            <span slot="currency">{checkout?.currency}</span>
           </sc-line-item>
+        )}
+        {!!checkout?.refunded_amount && (
+          <Fragment>
+            <sc-line-item
+              style={{
+                'width': '100%',
+                '--price-size': 'var(--sc-font-size-x-large)',
+              }}
+            >
+              <span slot="description">{__('Refunded', 'surecart')}</span>
+              <span slot="price">
+                <sc-format-number  
+                  type="currency" 
+                  currency={checkout?.currency} 
+                  value={checkout?.refunded_amount}
+                ></sc-format-number>
+              </span>
+            </sc-line-item>
+            <sc-line-item
+            style={{
+              'width': '100%',
+              '--price-size': 'var(--sc-font-size-x-large)',
+            }}
+          >
+            <span slot="title">{__('Net Payment', 'surecart')}</span>
+            <span slot="price">
+              <sc-format-number 
+                type="currency" 
+                currency={checkout?.currency} 
+                value={checkout?.net_paid_amount}
+              ></sc-format-number>
+            </span>
+          </sc-line-item>
+        </Fragment>
+        )}
+        {checkout?.tax_reverse_charged_amount > 0 && (
+        <sc-line-item>
+          <span slot="description">{__('*Tax to be paid on reverse charge basis', 'surecart')}</span>
+        </sc-line-item>
         )}
       </Fragment>
     );
@@ -345,7 +423,7 @@ export class ScOrder {
                   </sc-stacked-list-row>
                   <sc-stacked-list-row style={{ '--columns': '2' }}>
                     <div>{__('Date', 'surecart')}</div>
-                    <sc-format-date type="timestamp" date={this.order?.created_at} month="short" day="numeric" year="numeric"></sc-format-date>
+                    <span>{this.order?.created_at_date}</span>
                   </sc-stacked-list-row>
 
                   <sc-stacked-list-row style={{ '--columns': '2' }}>

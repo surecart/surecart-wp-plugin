@@ -124,7 +124,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $payout ) {
-		$date = date_i18n( get_option( 'date_format' ), $payout->created_at );
+		$date = esc_attr( $payout->created_at_date_time );
 
 		$actions = wp_kses_post(
 			$this->row_actions(
@@ -209,7 +209,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_period_end( $payout ) {
-		return "<sc-format-date date='$payout->end_date' type='timestamp' month='short' day='numeric' year='numeric' ></sc-format-date>";
+		return $payout->end_at_date;
 	}
 
 	/**

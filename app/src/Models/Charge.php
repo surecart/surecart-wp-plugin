@@ -3,6 +3,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasSubscription;
@@ -11,7 +12,7 @@ use SureCart\Models\Traits\HasSubscription;
  * Subscription model
  */
 class Charge extends Model {
-	use HasCustomer, HasOrder, HasSubscription, HasPaymentMethod;
+	use HasCustomer, HasOrder, HasSubscription, HasDates, HasPaymentMethod;
 
 	/**
 	 * Rest API endpoint
