@@ -90,129 +90,18 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	protected function get_default_children_elements() {
 		return [
 			[
-				'elType' => 'container',
+				'elType'   => 'container',
 				'settings' => [
 					'_title' => __( 'Product Container #1', 'surecart' ),
 				],
-				'elements' => [
-					[
-						'elType' => 'widget',
-						'settings' => [
-							'content_width' => 'full',
-							'_title' => __( 'SureCart Media', 'surecart' ),
-						],
-						'widgetType' => 'surecart-media',
-					],
-				],
+				'elements' => [],
 			],
 			[
-				'elType' => 'container',
+				'elType'   => 'container',
 				'settings' => [
 					'_title' => __( 'Product Container #2', 'surecart' ),
 				],
-				'elements' => [
-					[
-						'elType' => 'widget',
-						'settings' => [
-							'content_width' => 'full',
-							'_title' => __( 'SureCart Collection Tags', 'surecart' ),
-						],
-						'widgetType' => 'surecart-collection-tags',
-					],
-					[
-						'elType' => 'widget',
-						'settings' => [
-							'content_width' => 'full',
-						],
-						'widgetType' => 'theme-post-title',
-					],
-					[
-						'elType' => 'widget',
-						'settings' => [
-							'__dynamic__' => [
-								'excerpt' => '[elementor-tag id="" name="post-excerpt" settings="%7B%22max_length%22%3A%22%22%2C%22apply_to_post_content%22%3A%22yes%22%2C%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]',
-							],
-						],
-						'widgetType' => 'theme-post-excerpt',
-					],
-					[
-						'elType' => 'widget',
-						'settings' => [
-							'content_width' => 'full',
-						],
-						'widgetType' => 'surecart-selected-price',
-					],
-					[
-						'elType' => 'widget',
-						'widgetType' => 'surecart-price-chooser',
-						'settings' => [
-							'content_width' => 'full',
-							'label' => esc_html__('Pricing', 'surecart'),
-							'price_chooser_flex_direction' => 'column',
-							'price_chooser_flex_gap' => [
-								'column' => '12',
-								'row' => '12',
-								'isLinked' => true,
-								'unit' => 'px',
-								'size' => 12,
-							],
-							'price_chooser_columns_grid' => [
-								'unit' => 'fr',
-								'size' => 1,
-								'sizes' => [],
-							],
-							'price_chooser_flex_wrap' => 'wrap',
-						],
-					],
-					[
-						'elType' => 'widget',
-						'widgetType' => 'surecart-selected-price-ad-hoc-amount',
-						'settings' => [
-							'content_width' => 'full',
-							'label' => esc_html__('Enter an amount', 'surecart'),
-						],
-					],
-					[
-						'elType' => 'widget',
-						'widgetType' => 'surecart-variant-pills',
-						'settings' => [
-							'content_width' => 'full',
-						],
-					],
-					[
-						'elType' => 'widget',
-						'widgetType' => 'surecart-quantity',
-						'settings' => [
-							'content_width' => 'full',
-							'label' => esc_html__('Quantity', 'surecart'),
-						],
-					],
-					[
-						'elType' => 'widget',
-						'widgetType' => 'surecart-buy-button',
-						'settings' => [
-							'content_width' => 'full',
-							'width' => [
-								'unit' => '%',
-								'size' => '100',
-							],
-							'button_text' => esc_html__('Add To Cart', 'surecart'),
-						],
-					],
-					[
-						'elType' => 'widget',
-						'widgetType' => 'surecart-buy-button',
-						'settings' => [
-							'content_width' => 'full',
-							'buy_button_type' => 'yes',
-							'width' => [
-								'unit' => '%',
-								'size' => '100',
-							],
-							'button_text' => esc_html__('Buy Now', 'surecart'),
-						],
-					],
-				]
+				'elements' => [],
 			],
 		];
 	}
@@ -226,17 +115,13 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		return 'surecart_item_title';
 	}
 
-	// /**
-	//  * Get the default children title.
-	//  *
-	//  * @return string
-	//  */
-	// protected function get_default_children_title() {
-	// 	return esc_html__( 'Product Container', 'surecart' );
-	// }
-
+	/**
+	 * Get the default children title.
+	 *
+	 * @return string
+	 */
 	protected function get_default_children_title() {
-		return esc_html__( 'Product Container #%d', 'surecart' );
+		return esc_html__( 'Product Container %d', 'elementor' );
 	}
 
 	/**
