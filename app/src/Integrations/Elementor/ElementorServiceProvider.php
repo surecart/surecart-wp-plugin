@@ -18,6 +18,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
+		$container['surecart.elementor.setup']        = function () {
+			return new ElementorSetup();
+		};
 		$container['surecart.elementor.widgets']      = function () {
 			return new ElementorWidgetsService();
 		};
@@ -39,6 +42,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		// Elementor integration.
 		add_action( 'elementor/widgets/register', [ $this, 'widget' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
+		add_action( 'elementor/frontend/before_enqueue_styles', [ $this, 'add_surecart_icon' ], 1 );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
 
 		// Register product theme condition.
@@ -49,6 +53,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
+
+		// Bootstrap the setup.
+		$container['surecart.elementor.setup']->bootstrap();
 
 		// Bootstrap the widgets.
 		$container['surecart.elementor.widgets']->bootstrap();
@@ -127,6 +134,42 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			[
 				'site_url' => site_url(),
 			]
+		);
+	}
+
+	/**
+	 * Add SureCart icon to Elementor.
+	 *
+	 * @return void
+	 */
+	public function add_surecart_icon() {
+		$src = esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/icon.svg' );
+		$css = "
+        .elementor-add-new-section .elementor-surecart-template-button {
+            background-color: #fff;
+            -webkit-mask: url({$src}) no-repeat center;
+            mask: url({$src}) no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            background-color: #01824c;
+            transition: opacity 0.3s ease;
+        }
+
+        .elementor-add-new-section .elementor-surecart-template-button:hover {
+            opacity: 0.8;
+        }
+
+        .elementor-add-new-section .elementor-surecart-template-button > i {
+            height: 12px;
+        }
+
+        body .elementor-add-new-section .elementor-add-section-area-button {
+            margin-left: 0;
+        }";
+
+		wp_add_inline_style(
+			'elementor-icons',
+			$css
 		);
 	}
 
