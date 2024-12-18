@@ -137,104 +137,54 @@ class ProductList extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 	 *
 	 * @return int|\WP_Error
 	 */
-	private function create_product_list_loop_item()	 {
+	private function create_product_list_loop_item()  {
 		$content = [
 			[
 				'id' => uniqid(),
-				'elType' => 'container',
+				'elType' => 'widget',
+				'widgetType' => 'surecart-product',
 				'settings' => [],
 				'elements' => [
 					[
 						'id' => uniqid(),
 						'elType' => 'widget',
-						'widgetType' => 'surecart-product',
-						'settings' => [],
-						'elements' => [
-							[
-								'id' => uniqid(),
-								'elType' => 'container',
-								'settings' => [
-									'flex_direction' => 'row',
-									'flex_gap' => [
-										'unit' => 'px',
-										'size' => 0,
-										'column' => '0',
-										'row' => '0',
-									],
-								],
-								'elements' => [
-									[
-										'id' => uniqid(),
-										'elType' => 'container',
-										'settings' => [
-											'flex_direction' => 'column',
-											'content_width' => 'full',
-											'width' => [
-												'unit' => '%',
-												'size' => '50',
-											],
-										],
-										'elements' => [
-											[
-												'id' => uniqid(),
-												'elType' => 'widget',
-												'settings' => [
-													'__dynamic__' => [
-														'image' => '[elementor-tag id="" name="post-featured-image" settings="%7B%22fallback%22%3A%7B%22url%22%3A%22%22%2C%22id%22%3A%22%22%2C%22size%22%3A%22%22%7D%7D"]',
-													],
-													'height' => [
-														'unit' => 'px',
-														'size' => 400,
-														'sizes' => [],
-													],
-												],
-												'elements' => [],
-												'widgetType' => 'theme-post-featured-image',
-											],
-											[
-												'id' => uniqid(),
-												'elType' => 'widget',
-												'settings' => [
-													'__dynamic__' => [
-														'title' => '[elementor-tag id="" name="post-title" settings="%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]',
-													],
-													'title' => 'Add Your Heading Text Here',
-												],
-												'elements' => [],
-												'widgetType' => 'theme-post-title',
-											],
-											[
-												'id' => uniqid(),
-												'elType' => 'widget',
-												'settings' => [
-													'title' => 'Add Your Heading Text Here',
-													'header_size' => 'h6',
-													'__dynamic__' => [
-														'title' => '[elementor-tag id="44343d5" name="sc_product_price" settings="%7B%7D"]',
-													],
-												],
-												'elements' => [],
-												'widgetType' => 'heading',
-											],
-											[
-												'id' => uniqid(),
-												'elType' => 'widget',
-												'settings' => [
-													'button_text' => 'Add To Cart',
-													'button_out_of_stock_text' => 'Sold Out',
-													'button_unavailable_text' => 'Unavailable',
-												],
-												'elements' => [],
-												'widgetType' => 'surecart-buy-button',
-											],
-										],
-										'isInner' => true,
-									],
-								],
-								'isInner' => true,
-								'isLocked' => false,
+						'settings' => [
+							'__dynamic__' => [
+								'image' => '[elementor-tag id="" name="post-featured-image" settings="%7B%22fallback%22%3A%7B%22url%22%3A%22%22%2C%22id%22%3A%22%22%2C%22size%22%3A%22%22%7D%7D"]',
+							],
+							'height' => [
+								'unit' => 'px',
+								'size' => 400,
+								'sizes' => [],
 							],
 						],
+						'elements' => [],
+						'widgetType' => 'theme-post-featured-image',
+					],
+					[
+						'id' => uniqid(),
+						'elType' => 'widget',
+						'settings' => [
+							'__dynamic__' => [
+								'title' => '[elementor-tag id="" name="post-title" settings="%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D"]',
+							],
+							'title' => 'Add Your Heading Text Here',
+						],
+						'elements' => [],
+						'widgetType' => 'theme-post-title',
+					],
+					[
+						'id' => uniqid(),
+						'elType' => 'widget',
+						'settings' => [
+							'title' => 'Add Your Heading Text Here',
+							'header_size' => 'h6',
+							'__dynamic__' => [
+								'title' => '[elementor-tag id="44343d5" name="sc_product_price" settings="%7B%7D"]',
+							],
+						],
+						'elements' => [],
+						'widgetType' => 'heading',
 					],
 				],
 				'isInner' => false,
