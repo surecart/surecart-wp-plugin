@@ -14,5 +14,4 @@ $arrow_name = [
 $query     = sc_product_list_query( $block );
 $page_link = $query->next_page_link;
 
-// Render the block.
 return 'file:./view.php';

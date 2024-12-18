@@ -10,6 +10,7 @@ import {
 	PanelBody,
 } from '@wordpress/components';
 import { useEntityRecords } from '@wordpress/core-data';
+import { useEffect } from '@wordpress/element';
 
 const sortingOptions = [
 	{
@@ -28,6 +29,10 @@ const sortingOptions = [
 		label: __('Price, high to low', 'surecart'),
 		value: 'price:desc',
 	},
+	{
+		label: __('Random (pagination disabled)', 'surecart'),
+		value: 'rand:asc',
+	},
 ];
 
 /**
@@ -36,7 +41,7 @@ const sortingOptions = [
 export default function ProductListInspectorControls({
 	onUpdateQuery,
 	attributes: {
-		query: { perPage, order, orderBy, taxonomy, totalPages, fallback },
+		query: { perPage, pages, order, orderBy, taxonomy, fallback, shuffle },
 	},
 }) {
 	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
@@ -49,31 +54,15 @@ export default function ProductListInspectorControls({
 			taxonomy.types.includes('sc_product') && taxonomy?.visibility.public
 	);
 
+	useEffect(() => {
+		if (orderBy === 'rand') {
+			onUpdateQuery({ pages: 1 });
+		}
+	}, [orderBy]);
+
 	return (
 		<InspectorControls>
 			<PanelBody title={__('Attributes', 'surecart')}>
-				<RangeControl
-					label={__('Products Per Page', 'surecart')}
-					value={perPage}
-					onChange={(perPage) => onUpdateQuery({ perPage })}
-					step={1}
-					min={1}
-					max={40}
-				/>
-
-				<RangeControl
-					label={__('Total Pages', 'surecart')}
-					help={__(
-						'Limit the number of pages to display.',
-						'surecart'
-					)}
-					value={totalPages}
-					onChange={(totalPages) => onUpdateQuery({ totalPages })}
-					step={1}
-					min={1}
-					max={5}
-				/>
-
 				<SelectControl
 					__nextHasNoMarginBottom
 					__next40pxDefaultSize
@@ -100,6 +89,30 @@ export default function ProductListInspectorControls({
 						}))}
 						value={taxonomy}
 						onChange={(taxonomy) => onUpdateQuery({ taxonomy })}
+					/>
+				)}
+
+				<RangeControl
+					label={__('Products Per Page', 'surecart')}
+					value={perPage}
+					onChange={(perPage) => onUpdateQuery({ perPage })}
+					step={1}
+					min={1}
+					max={40}
+				/>
+
+				{orderBy !== 'rand' && (
+					<RangeControl
+						label={__('Max pages to show', 'surecart')}
+						value={pages}
+						onChange={(pages) => onUpdateQuery({ pages })}
+						step={1}
+						min={1}
+						max={10}
+						help={__(
+							'Limit the pages you want to show, even if the query has more results.',
+							'surecart'
+						)}
 					/>
 				)}
 

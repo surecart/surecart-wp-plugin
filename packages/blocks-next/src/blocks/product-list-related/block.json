@@ -18,7 +18,7 @@
 			"type": "object",
 			"default": {
 				"perPage": 4,
-				"totalPages": 3,
+				"pages": 3,
 				"postType": "sc_product",
 				"order": "desc",
 				"orderBy": "date",
