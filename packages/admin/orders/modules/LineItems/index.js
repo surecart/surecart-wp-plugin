@@ -18,6 +18,7 @@ import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 import { getSKUText } from '../../../util/products';
+import RefundLineItem from './RefundLineItem';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -28,7 +29,7 @@ const status = {
 	draft: __('Draft', 'surecart'),
 };
 
-export default ({ order, checkout, loading }) => {
+export default ({ order, checkout, refunds, loading }) => {
 	const line_items = checkout?.line_items?.data;
 
 	const statusBadge = () => {
@@ -76,6 +77,8 @@ export default ({ order, checkout, loading }) => {
 	)?.find(
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
+
+	console.log('refunds', refunds);
 
 	return (
 		<Box
@@ -181,11 +184,20 @@ export default ({ order, checkout, loading }) => {
 
 					{!!checkout?.refunded_amount && (
 						<>
-							<LineItem
-								label={__('Refunded', 'surecart')}
-								currency={checkout?.currency}
-								value={checkout?.refunded_amount}
-							/>
+							{/* Refunded line items */}
+							{refunds?.map((refund, index) => {
+								return (
+									<RefundLineItem
+										key={refund.id}
+										refund={refund}
+										label={
+											index === 0
+												? __('Refunded', 'surecart')
+												: ''
+										}
+									/>
+								);
+							})}
 
 							<LineItem
 								title={__('Net Payment', 'surecart')}

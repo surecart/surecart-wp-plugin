@@ -104,7 +104,8 @@ export default ({ refunds, loading }) => {
 										>
 											{sprintf(
 												__(' %d more', 'surecart'),
-												refund.refund_items.data.length
+												refund.refund_items.data
+													.length - 1
 											)}
 										</span>
 										{isVisible && (
@@ -120,8 +121,9 @@ export default ({ refunds, loading }) => {
 														overflow-y: auto;
 													`}
 												>
-													{refund.refund_items.data?.map(
-														(item, index) => (
+													{refund.refund_items.data
+														?.slice(1)
+														?.map((item, index) => (
 															<div
 																key={index}
 																css={css`
@@ -132,7 +134,7 @@ export default ({ refunds, loading }) => {
 																		.refund_items
 																		.data
 																		.length -
-																		1
+																		2
 																		? '1px solid var(--sc-color-gray-200)'
 																		: 'none'};
 																`}
@@ -143,8 +145,7 @@ export default ({ refunds, loading }) => {
 																	}
 																/>
 															</div>
-														)
-													)}
+														))}
 												</div>
 											</Popover>
 										)}
