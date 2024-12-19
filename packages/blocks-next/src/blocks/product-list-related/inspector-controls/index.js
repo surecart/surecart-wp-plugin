@@ -22,6 +22,14 @@ const sortingOptions = [
 		value: 'date:asc',
 	},
 	{
+		label: __('Alphabetical, A-Z', 'surecart'),
+		value: 'title:asc',
+	},
+	{
+		label: __('Alphabetical, Z-A', 'surecart'),
+		value: 'title:desc',
+	},
+	{
 		label: __('Price, low to high', 'surecart'),
 		value: 'price:asc',
 	},
