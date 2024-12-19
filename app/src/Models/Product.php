@@ -2,12 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Product model
@@ -16,6 +18,7 @@ class Product extends Model implements PageModel {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
+	use HasDates;
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
@@ -487,7 +490,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the featured image attribute.
 	 *
-	 * @return SureCart\Support\Contracts\GalleryItem|null;
+	 * @return \SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
 		$gallery = array_values( $this->gallery ?? array() );
@@ -507,7 +510,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Returns the product media image attributes.
 	 *
-	 * @return SureCart\Support\Contracts\GalleryItem|null;
+	 * @return \SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedMediaAttribute() {
 		return $this->featured_product_image;
@@ -925,5 +928,14 @@ class Product extends Model implements PageModel {
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);
+	}
+
+	/**
+	 * Get the cataloged at date time attribute.
+	 *
+	 * @return string
+	 */
+	public function getCatalogedAtDateTimeAttribute() {
+		return ! empty( $this->cataloged_at ) ? TimeDate::formatDateAndTime( $this->cataloged_at ) : '';
 	}
 }

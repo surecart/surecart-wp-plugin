@@ -25,13 +25,11 @@
 
 ### Depends on
 
-- [sc-format-date](../../util/format-date)
 - [sc-tag](../tag)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-subscription --> sc-subscription-status-badge
   sc-subscription-details --> sc-subscription-status-badge

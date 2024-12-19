@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
+
 /**
  * Fulfillment model.
  */
 class Fulfillment extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *

@@ -80,7 +80,7 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $act ) {
-		return '<sc-format-date date="' . (int) $act->performed_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+		return $act->performed_at_date_time;
 	}
 
 	/**

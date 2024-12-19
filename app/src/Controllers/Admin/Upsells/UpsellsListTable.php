@@ -205,30 +205,6 @@ class UpsellsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
-	 *
-	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $upsell_funnel ) {
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $upsell_funnel->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $upsell_funnel->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $upsell_funnel->created_at ) )
-		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $upsell_funnel->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $upsell_funnel->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $upsell_funnel->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
-	}
-
-	/**
 	 * Enabled column
 	 *
 	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.

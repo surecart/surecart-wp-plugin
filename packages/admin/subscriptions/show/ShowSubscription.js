@@ -605,6 +605,7 @@ export default () => {
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
 				currentPeriodEndAt={subscription?.current_period_end_at}
+				currentPeriodEndAtDate={subscription?.current_period_end_at_date}
 			/>
 			<RenewSubscriptionAtModal
 				open={modal === 'renew_at'}

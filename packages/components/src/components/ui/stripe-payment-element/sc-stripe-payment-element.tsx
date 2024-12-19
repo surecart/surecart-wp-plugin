@@ -54,6 +54,7 @@ export class ScStripePaymentElement {
 
   async componentWillLoad() {
     this.fetchStyles();
+    this.syncCheckoutMode();
   }
 
   @Watch('styles')
@@ -82,12 +83,27 @@ export class ScStripePaymentElement {
     });
   }
 
-  /** Maybe load the stripe element on load. */
+  /** Sync the checkout mode */
+  async syncCheckoutMode() {
+    onChange('checkout', () => {
+      this.initializeStripe();
+    });
+  }
+
   async componentDidLoad() {
+    this.initializeStripe();
+  }
+
+  async initializeStripe() {
+    if (typeof checkoutState?.checkout?.live_mode === 'undefined' || processorsState?.instances?.stripe) {
+      return;
+    }
+
     const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
       processorsState.instances.stripe = await loadStripe(processor_data?.publishable_key, { stripeAccount: processor_data?.account_id });
+      this.error = '';
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
       // don't continue.
