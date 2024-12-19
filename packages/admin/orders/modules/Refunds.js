@@ -4,9 +4,9 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
+import { useState, useRef } from '@wordpress/element';
+import { Popover } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -20,36 +20,11 @@ import {
 } from '@surecart/components-react';
 import DataTable from '../../components/DataTable';
 import { refundReasons } from '../../util/refunds';
+import ProductLineItem from '../../ui/ProductLineItem';
 
-export default ({ chargeId }) => {
-	const { refunds, loading } = useSelect(
-		(select) => {
-			if (!chargeId) {
-				return {
-					refunds: [],
-					loading: true,
-				};
-			}
-
-			const entityData = [
-				'surecart',
-				'refund',
-				{
-					charge_ids: chargeId ? [chargeId] : null,
-					per_page: 100,
-				},
-			];
-
-			return {
-				refunds: select(coreStore)?.getEntityRecords?.(...entityData),
-				loading: !select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
-			};
-		},
-		[chargeId]
-	);
+export default ({ refunds, loading }) => {
+	const anchor = useRef();
+	const [isVisible, setIsVisible] = useState(false);
 
 	const renderRefundStatusBadge = (status) => {
 		switch (status) {
@@ -82,6 +57,9 @@ export default ({ chargeId }) => {
 				title={__('Refunds', 'surecart')}
 				loading={loading}
 				columns={{
+					product: {
+						label: __('Product', 'surecart'),
+					},
 					date: {
 						label: __('Date', 'surecart'),
 					},
@@ -98,6 +76,90 @@ export default ({ chargeId }) => {
 				}}
 				items={refunds?.map((refund) => {
 					return {
+						product: refund?.refund_items?.data?.[0]?.line_item
+							?.price?.product?.id ? (
+							<>
+								<ProductLineItem
+									lineItem={
+										refund?.refund_items?.data?.[0]
+											?.line_item
+									}
+								/>
+
+								{/* if more than 1 items, show only there names */}
+								{refund?.refund_items?.data?.length > 1 && (
+									<div
+										onMouseEnter={() => setIsVisible(true)}
+										onMouseLeave={() => setIsVisible(false)}
+										css={css`
+											cursor: pointer;
+										`}
+									>
+										{__('and', 'surecart')}
+										<span
+											style={{
+												textDecoration: 'underline',
+											}}
+											ref={anchor}
+										>
+											{sprintf(
+												__(' %d more', 'surecart'),
+												refund.refund_items.data.length
+											)}
+										</span>
+										{isVisible && (
+											<Popover
+												anchor={anchor.current}
+												placement="top-start"
+											>
+												<div
+													css={css`
+														padding: 1em;
+														width: 200px;
+														max-height: 200px;
+														overflow-y: auto;
+													`}
+												>
+													{refund.refund_items.data?.map(
+														(item, index) => (
+															<div
+																key={index}
+																css={css`
+																	padding: 0.5em
+																		0px;
+																	border-bottom: ${index !==
+																	refund
+																		.refund_items
+																		.data
+																		.length -
+																		1
+																		? '1px solid var(--sc-color-gray-200)'
+																		: 'none'};
+																`}
+															>
+																<ProductLineItem
+																	lineItem={
+																		item.line_item
+																	}
+																/>
+															</div>
+														)
+													)}
+												</div>
+											</Popover>
+										)}
+									</div>
+								)}
+							</>
+						) : (
+							<ScText
+								css={css`
+									color: var(--sc-color-gray-500);
+								`}
+							>
+								{__('No product', 'surecart')}
+							</ScText>
+						),
 						amount: (
 							<sc-text
 								style={{
@@ -130,7 +192,8 @@ export default ({ chargeId }) => {
 									color: var(--sc-color-gray-500);
 								`}
 							>
-								{refundReasons?.[refund?.reason] || __('Unknown', 'surecart')}
+								{refundReasons?.[refund?.reason] ||
+									__('Unknown', 'surecart')}
 							</ScText>
 						),
 						status: (

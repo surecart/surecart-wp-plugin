@@ -31,7 +31,14 @@ import Error from '../../Error';
 import Box from '../../../ui/Box';
 import { refundResasonOptions } from '../../../util/refunds';
 
-export default ({ charge, onRequestClose, onRefunded, purchases }) => {
+export default ({
+	refunds,
+	refundsLoading,
+	charge,
+	onRequestClose,
+	onRefunded,
+	purchases,
+}) => {
 	const [loading, setLoading] = useState(false);
 	const [amount, setAmount] = useState(
 		charge?.amount - charge?.refunded_amount
@@ -44,35 +51,6 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 		useDispatch(coreStore);
 
 	const [items, setItems] = useState([]);
-	const [page, setPage] = useState(1);
-	const perPage = 100;
-	const chrgeId = charge?.id;
-	const { refunds, refundsLoading } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'refund',
-				{
-					context: 'edit',
-					charge_ids: [chrgeId],
-					page,
-					per_page: perPage,
-					expand: ['refund_items'],
-				},
-			];
-			const refunds = select(coreStore).getEntityRecords(...queryArgs);
-			const loading = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			);
-			return {
-				refunds,
-				refundsLoading: loading && page === 1,
-			};
-		},
-		[chrgeId, page]
-	);
-
 	const getRefundedItem = (purchaseItem) => {
 		for (const refund of refunds || []) {
 			const refundItem = refund?.refund_items?.data?.find(
