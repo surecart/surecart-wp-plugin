@@ -312,6 +312,7 @@ IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading
 - New: Customizable product list page empty state.
 - Fix: Issue where attachment page slugs could not be updated.
 - Fix: Apple pay showing as "pending" in express payment element instead of the total amount.
+- Fix: Issue where product filter could have a fatal error is the taxonomy was removed.
 
 = 3.1.4 - December 17th, 2024 =
 - Improvement: Automatic cache exclusions for customer dashboard login page.
