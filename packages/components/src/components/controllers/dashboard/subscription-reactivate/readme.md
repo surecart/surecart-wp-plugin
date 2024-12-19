@@ -36,7 +36,6 @@
 - [sc-alert](../../../ui/alert)
 - [sc-format-number](../../../util/format-number)
 - [sc-text](../../../ui/text)
-- [sc-format-date](../../../util/format-date)
 - [sc-button](../../../ui/button)
 - [sc-block-ui](../../../ui/block-ui)
 
@@ -50,7 +49,6 @@ graph TD;
   sc-subscription-reactivate --> sc-alert
   sc-subscription-reactivate --> sc-format-number
   sc-subscription-reactivate --> sc-text
-  sc-subscription-reactivate --> sc-format-date
   sc-subscription-reactivate --> sc-button
   sc-subscription-reactivate --> sc-block-ui
   sc-dialog --> sc-button

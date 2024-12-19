@@ -44,13 +44,17 @@ import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntil
 import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
 import Affiliates from '../../components/affiliates';
 import ForceCancelModal from './modules/modals/ForceCancelModal';
+import Confirm from '../../components/confirm';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
 	const [upcoming, setUpcoming] = useState();
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState(null);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
@@ -179,9 +183,14 @@ export default () => {
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
-		if (['completed', 'canceled'].includes(subscription?.status))
+		// completed.
+		if ('completed' === subscription?.status) return null;
+
+		// canceled but not paused.
+		if ('canceled' === subscription?.status && !subscription?.restore_at)
 			return null;
 
+		// scheduled for cancelation.
 		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
 			return (
 				<>
@@ -192,6 +201,19 @@ export default () => {
 						{__('Cancel Now', 'surecart')}
 					</ScMenuItem>
 				</>
+			);
+		}
+
+		// paused(canceled) or scheduled paused.
+		if (
+			(subscription?.cancel_at_period_end ||
+				subscription?.status === 'canceled') &&
+			subscription?.restore_at
+		) {
+			return (
+				<ScMenuItem onClick={() => setModal('cancel_paused')}>
+					{__('Cancel Subscription', 'surecart')}
+				</ScMenuItem>
 			);
 		}
 
@@ -342,6 +364,52 @@ export default () => {
 
 	const onRequestCloseModal = () => setModal(false);
 
+	const onCancel = async (e) => {
+		const { cancel_behavior } = await e.target.getFormJson();
+		try {
+			setBusy(true);
+			setError(null);
+
+			// If the subscription is already cancelled and has a restore_at date,
+			// we just need to update the restore_at date to null to cancel the subscription.
+			const subscriptionCancelUrl = `surecart/v1/subscriptions/${id}${
+				!(
+					subscription?.status === 'canceled' &&
+					subscription?.restore_at
+				)
+					? '/cancel'
+					: ''
+			}`;
+
+			await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(subscriptionCancelUrl, {
+					cancel_behavior,
+				}),
+				data: {
+					restore_at: null,
+				},
+			});
+
+			await invalidateResolutionForStore();
+
+			createSuccessNotice(
+				cancel_behavior === 'immediate'
+					? __('Subscription canceled.', 'surecart')
+					: __('Subscription scheduled for cancelation.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+			onRequestCloseModal();
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	return (
 		<Template
 			title={
@@ -484,7 +552,31 @@ export default () => {
 				subscription={subscription}
 				open={modal === 'cancel'}
 				onRequestClose={onRequestCloseModal}
+				onCancel={onCancel}
+				error={error}
+				setError={setError}
+				loading={!hasLoadedSubscription || busy}
 			/>
+			<Confirm
+				open={modal === 'cancel_paused'}
+				onRequestClose={onRequestCloseModal}
+				error={error}
+				loading={!hasLoadedSubscription || busy}
+				onConfirm={() =>
+					onCancel({
+						target: {
+							getFormJson: () => ({
+								cancel_behavior: 'immediate',
+							}),
+						},
+					})
+				}
+			>
+				{__(
+					'Are you sure? Subscription will be canceled immediately.',
+					'surecart'
+				)}
+			</Confirm>
 			<ForceCancelModal
 				open={modal === 'force_cancel'}
 				onRequestClose={onRequestCloseModal}
@@ -513,6 +605,7 @@ export default () => {
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
 				currentPeriodEndAt={subscription?.current_period_end_at}
+				currentPeriodEndAtDate={subscription?.current_period_end_at_date}
 			/>
 			<RenewSubscriptionAtModal
 				open={modal === 'renew_at'}

@@ -8,6 +8,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
+import { formatDate } from '../../../../admin/util/time';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
@@ -51,13 +52,7 @@ export default ({ attributes, setAttributes }) => {
 							mobile-size={500}
 						>
 							<div>
-								<sc-format-date
-									date={Date.now() / 1000}
-									type="timestamp"
-									month="short"
-									day="numeric"
-									year="numeric"
-								></sc-format-date>
+								{formatDate(Date.now())}
 							</div>
 
 							<div>
@@ -100,13 +95,7 @@ export default ({ attributes, setAttributes }) => {
 							mobile-size={500}
 						>
 							<div>
-								<sc-format-date
-									date={Date.now() / 1000}
-									type="timestamp"
-									month="short"
-									day="numeric"
-									year="numeric"
-								></sc-format-date>
+								{formatDate(Date.now())}
 							</div>
 
 							<div>

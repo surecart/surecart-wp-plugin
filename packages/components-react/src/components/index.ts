@@ -79,7 +79,6 @@ export const ScFormErrorProvider = /*@__PURE__*/createReactComponent<JSX.ScFormE
 export const ScFormRow = /*@__PURE__*/createReactComponent<JSX.ScFormRow, HTMLScFormRowElement>('sc-form-row');
 export const ScFormStateProvider = /*@__PURE__*/createReactComponent<JSX.ScFormStateProvider, HTMLScFormStateProviderElement>('sc-form-state-provider');
 export const ScFormatBytes = /*@__PURE__*/createReactComponent<JSX.ScFormatBytes, HTMLScFormatBytesElement>('sc-format-bytes');
-export const ScFormatDate = /*@__PURE__*/createReactComponent<JSX.ScFormatDate, HTMLScFormatDateElement>('sc-format-date');
 export const ScFormatInterval = /*@__PURE__*/createReactComponent<JSX.ScFormatInterval, HTMLScFormatIntervalElement>('sc-format-interval');
 export const ScFormatNumber = /*@__PURE__*/createReactComponent<JSX.ScFormatNumber, HTMLScFormatNumberElement>('sc-format-number');
 export const ScFulfillmentShippingStatusBadge = /*@__PURE__*/createReactComponent<JSX.ScFulfillmentShippingStatusBadge, HTMLScFulfillmentShippingStatusBadgeElement>('sc-fulfillment-shipping-status-badge');

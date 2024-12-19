@@ -31,7 +31,7 @@ export default () => {
 		itemError: portalItemError,
 		editItem: portalEditItem,
 		hasLoadedItem: portalHasLoadedItem,
-	} = useEntity('store', 'portal_protocol');
+	} = useEntity('store', 'customer_portal_protocol');
 
 	/**
 	 * Form is submitted.

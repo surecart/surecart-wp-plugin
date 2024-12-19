@@ -1,5 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScBlockUi,
 	ScButton,
@@ -8,59 +18,22 @@ import {
 	ScDialog,
 	ScForm,
 } from '@surecart/components-react';
-import { store as dataStore } from '@surecart/data';
-import apiFetch from '@wordpress/api-fetch';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
 import Error from '../../../../components/Error';
 
-export default ({ subscription, open, onRequestClose }) => {
-	const id = useSelect((select) => select(dataStore).selectPageId());
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(false);
+export default ({
+	subscription,
+	open,
+	onRequestClose,
+	onCancel,
+	loading,
+	error,
+	setError,
+}) => {
 	const [checked, setChecked] = useState('immediate');
-	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { invalidateResolutionForStore } = useDispatch(coreStore);
-
-	const onSubmit = async (e) => {
-		const { cancel_behavior } = await e.target.getFormJson();
-		try {
-			setLoading(true);
-			setError(null);
-
-			await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
-					cancel_behavior,
-				}),
-			});
-
-			await invalidateResolutionForStore();
-
-			createSuccessNotice(
-				cancel_behavior === 'immediate'
-					? __('Subscription canceled.', 'surecart')
-					: __('Subscription scheduled for cancelation.', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-			onRequestClose();
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	return (
 		<ScForm
-			onScFormSubmit={onSubmit}
+			onScFormSubmit={onCancel}
 			css={css`
 				--sc-form-row-spacing: var(--sc-spacing-large);
 			`}
@@ -112,7 +85,9 @@ export default ({ subscription, open, onRequestClose }) => {
 					disabled={loading}
 					slot="footer"
 				>
-					{__('Cancel Subscription', 'surecart')}
+					{checked === 'immediate'
+						? __('Cancel Subscription', 'surecart')
+						: __('Schedule Cancellation', 'surecart')}
 				</ScButton>
 				{loading && (
 					<ScBlockUi

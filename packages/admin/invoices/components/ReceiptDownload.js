@@ -31,7 +31,7 @@ export default ({ pdfUrl }) => {
 							name="external-link"
 							css={css`
 								margin-left: var(--sc-spacing-small);
-								color: var(--sc-color-gray-300);
+								color: var(--sc-color-gray-400);
 							`}
 						/>
 					}

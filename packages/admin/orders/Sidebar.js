@@ -20,6 +20,7 @@ import ViewAddress from '../components/address/ViewAddress';
 import EditAddressModal from './modules/EditAddressModal';
 import Confirm from '../components/confirm';
 import { checkoutOrderExpands } from '../util/orders';
+import InvoiceDetails from './modules/InvoiceDetails';
 
 const modals = {
 	EDIT_ADDRESS: 'EDIT_ADDRESS',
@@ -70,6 +71,11 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 
 	return (
 		<Fragment>
+			<InvoiceDetails
+				checkout={checkout}
+				loading={loading}
+			/>
+
 			<ContactInfo
 				checkout={checkout}
 				loading={loading}

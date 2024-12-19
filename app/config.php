@@ -33,11 +33,12 @@ return array(
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 		\SureCart\WordPress\CLI\CLIServiceProvider::class,
+		\SureCart\WordPress\Cache\CacheServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
 		\SureCart\Routing\PermalinkServiceProvider::class,
 		\SureCart\Routing\RouteConditionsServiceProvider::class,
 		\SureCart\Routing\AdminRouteServiceProvider::class,
-		\SureCart\Permissions\RolesServiceProvider::class,
+		\SureCart\Permissions\PermissionsServiceProvider::class,
 		\SureCart\Settings\SettingsServiceProvider::class,
 		\SureCart\Request\RequestServiceProvider::class,
 		\SureCart\View\ViewServiceProvider::class,
@@ -95,7 +96,7 @@ return array(
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
 		\SureCart\Rest\PeriodRestServiceProvider::class,
 		\SureCart\Rest\SettingsRestServiceProvider::class,
-		\SureCart\Rest\PortalProtocolRestServiceProvider::class,
+		\SureCart\Rest\CustomerPortalProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
@@ -147,6 +148,7 @@ return array(
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
+		\SureCart\Integrations\Avada\AvadaServiceProvider::class,
 	),
 
 	/**
@@ -283,7 +285,7 @@ return array(
 	 * Links used.
 	 */
 	'links'                  => array(
-		'purchase' => 'https://app.surecart.com/plans',
+		'purchase' => 'https://app.surecart.com/billing',
 	),
 
 	/**

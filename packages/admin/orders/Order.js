@@ -101,6 +101,7 @@ export default () => {
 						'checkout.discount',
 						'checkout.line_items',
 						'checkout.selected_shipping_choice',
+						'checkout.invoice',
 						'shipping_choice.shipping_method',
 						'discount.promotion',
 						'line_item.price',

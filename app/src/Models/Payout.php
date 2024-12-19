@@ -3,14 +3,16 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasAffiliation;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasReferrals;
+use SureCart\Support\TimeDate;
 
 /**
  * Payout model
  */
 class Payout extends Model {
-	use HasReferrals;
-	use HasAffiliation;
+	use HasReferrals, HasAffiliation, HasDates;
+
 
 	/**
 	 * Rest API endpoint
@@ -122,5 +124,14 @@ class Payout extends Model {
 	 */
 	protected function getStatusDisplayTextAttribute() {
 		return 'completed' === $this->status ? esc_html__( 'Completed', 'surecart' ) : esc_html__( 'Processing', 'surecart' );
+	}
+
+	/**
+	 * Get the end at date.
+	 *
+	 * @return string
+	 */
+	public function getEndAtDateAttribute() {
+		return ! empty( $this->end_date ) ? TimeDate::formatDate( $this->end_date ) : '';
 	}
 }

@@ -24,19 +24,17 @@ export default ({ orderPageUrl }) => {
 			>
 				<PostDropdownButton
 					href={orderPageUrl}
-					target="_blank"
-					rel="noopener noreferrer"
 					icon={
 						<ScIcon
-							name="external-link"
+							name="arrow-right"
 							css={css`
 								margin-left: var(--sc-spacing-small);
-								color: var(--sc-color-gray-300);
+								color: var(--sc-color-gray-400);
 							`}
 						/>
 					}
 				>
-					{__('View', 'surecart')}
+					{__('View Order', 'surecart')}
 				</PostDropdownButton>
 			</div>
 		</PanelRow>

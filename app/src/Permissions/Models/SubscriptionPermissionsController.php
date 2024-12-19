@@ -28,7 +28,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		}
 
 		// It's disabled on the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_cancellations_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled ) ) {
 			return false;
 		}
 
@@ -86,7 +86,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 
 		$subscription = Subscription::find( $args[2] );
 
-		if ( empty( \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_quantity_updates_enabled ) ) {
 			$subscription = Subscription::find( $args[2] );
 			if ( is_wp_error( $subscription ) ) {
 				return false;
@@ -127,7 +127,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		}
 
 		// It's disabled on the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_updates_enabled ) ) {
 			return false;
 		}
 

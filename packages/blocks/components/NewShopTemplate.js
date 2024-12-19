@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 export const newShopTemplate = (attributes, childBlocks) => {
 	const {
 		sort_enabled,
@@ -240,6 +241,23 @@ export const newShopTemplate = (attributes, childBlocks) => {
 					},
 				},
 			},
+		],
+		[
+			'surecart/product-list-no-products',
+			{},
+			[
+				[
+					'core/paragraph',
+					{
+						placeholder: __(
+							'Add text or blocks that will display when a query returns no products.',
+							'surecart'
+						),
+						align: 'center',
+						content: __('No products found.', 'surecart'),
+					},
+				],
+			],
 		],
 	].filter(Boolean);
 };

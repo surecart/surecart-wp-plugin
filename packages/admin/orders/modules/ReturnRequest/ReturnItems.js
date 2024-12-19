@@ -21,7 +21,6 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScBlockUi,
-	ScFormatDate,
 	ScTag,
 } from '@surecart/components-react';
 import Box from '../../../ui/Box';
@@ -228,16 +227,7 @@ export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 						>
 							{__('Returned on', 'surecart')}
 						</div>
-						<ScFormatDate
-							slot="price"
-							type="timestamp"
-							date={returnRequest?.created_at}
-							month="short"
-							day="numeric"
-							year="numeric"
-							hour="numeric"
-							minute="numeric"
-						/>
+						{returnRequest?.created_at_date_time}
 					</div>
 				</div>
 

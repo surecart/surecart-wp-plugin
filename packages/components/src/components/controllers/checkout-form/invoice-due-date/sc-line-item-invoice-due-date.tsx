@@ -19,7 +19,7 @@ import { Invoice } from '../../../../types';
 export class ScLineItemInvoiceDueDate {
   render() {
     const checkout = checkoutState?.checkout;
-    const dueDate = (checkout?.invoice as Invoice)?.due_date || null;
+    const dueDate = (checkout?.invoice as Invoice)?.due_date_date || null;
 
     // Stop if checkout has no invoice due date.
     if (!dueDate) {
@@ -41,7 +41,7 @@ export class ScLineItemInvoiceDueDate {
         <span slot="description">
           <slot name="title">{__('Due Date', 'surecart')}</slot>
         </span>
-        <sc-format-date slot="price-description" date={dueDate} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
+        <span slot="price-description">{dueDate}</span>
       </sc-line-item>
     );
   }

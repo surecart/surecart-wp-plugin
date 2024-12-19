@@ -2,28 +2,27 @@
 
 namespace SureCart\Rest;
 
-use SureCart\Controllers\Rest\PortalProtocolController;
-use SureCart\Controllers\Rest\SubscriptionProtocolController;
+use SureCart\Controllers\Rest\CustomerPortalProtocolController;
 use SureCart\Models\User;
 use SureCart\Rest\RestServiceInterface;
 
 /**
  * Service provider for Price Rest Requests
  */
-class PortalProtocolRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class CustomerPortalProtocolRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'portal_protocol';
+	protected $endpoint = 'customer_portal_protocol';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = PortalProtocolController::class;
+	protected $controller = CustomerPortalProtocolController::class;
 
 	/**
 	 * Methods allowed for the model.

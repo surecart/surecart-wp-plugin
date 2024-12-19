@@ -5,7 +5,7 @@ import {
 	RichText,
 	__experimentalUseColorProps as useColorProps,
 	InspectorControls,
-	useSetting,
+	useSettings,
 } from '@wordpress/block-editor';
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes }) => {
 	const colorProps = useColorProps(attributes);
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || ['%', 'px', 'em', 'rem'],
+		availableUnits: useSettings('spacing.units') || ['%', 'px', 'em', 'rem'],
 	});
 
 	return (
