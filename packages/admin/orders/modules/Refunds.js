@@ -1,13 +1,25 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { __, _n } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScFormatDate,
 	ScFormatNumber,
 	ScTag,
+	ScText,
 	ScTooltip,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../components/DataTable';
+import { refundReasons } from '../../util/refunds';
 
 export default ({ chargeId }) => {
 	const { refunds, loading } = useSelect(
@@ -76,6 +88,9 @@ export default ({ chargeId }) => {
 					amount: {
 						label: __('Amount Refunded', 'surecart'),
 					},
+					refund_reason: {
+						label: __('Reason', 'surecart'),
+					},
 					status: {
 						label: __('Status', 'surecart'),
 						width: '100px',
@@ -108,6 +123,15 @@ export default ({ chargeId }) => {
 								minute="numeric"
 								type="timestamp"
 							/>
+						),
+						refund_reason: (
+							<ScText
+								css={css`
+									color: var(--sc-color-gray-500);
+								`}
+							>
+								{refundReasons?.[refund?.reason] || __('Unknown', 'surecart')}
+							</ScText>
 						),
 						status: (
 							<>

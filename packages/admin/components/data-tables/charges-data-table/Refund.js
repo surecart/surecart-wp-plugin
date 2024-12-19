@@ -29,6 +29,7 @@ import {
 } from '@surecart/components-react';
 import Error from '../../Error';
 import Box from '../../../ui/Box';
+import { refundResasonOptions } from '../../../util/refunds';
 
 export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [loading, setLoading] = useState(false);
@@ -543,20 +544,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 									onScChange={(e) => {
 										setReason(e.target.value);
 									}}
-									choices={[
-										{
-											label: __('Duplicate'),
-											value: 'duplicate',
-										},
-										{
-											label: __('Fraudulent'),
-											value: 'fraudulent',
-										},
-										{
-											label: __('Requested By Customer'),
-											value: 'requested_by_customer',
-										},
-									]}
+									choices={refundResasonOptions}
 								/>
 							</Box>
 						</div>
