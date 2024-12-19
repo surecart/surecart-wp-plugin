@@ -87,7 +87,7 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 		);
 
 		// If there are term ids, get the post ids.
-		if ( ! empty( $term_ids ) ) {
+		if ( ! empty( $term_ids ) && ! is_wp_error( $term_ids ) ) {
 			$query = $this->parse_query( $term_ids, [ get_the_ID() ] );
 			// phpcs:ignore WordPress.VIP.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
 			$post_ids = $wpdb->get_col( implode( ' ', (array) apply_filters( 'surecart_product_related_posts_query', $query, get_the_ID() ) ) );
