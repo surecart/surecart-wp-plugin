@@ -6,13 +6,10 @@ import {
 	ScBlockUi,
 	ScButton,
 	ScCard,
-	ScDropdown,
 	ScEmpty,
 	ScFlex,
 	ScFormatNumber,
 	ScIcon,
-	ScMenu,
-	ScMenuItem,
 	ScStackedList,
 	ScStackedListRow,
 } from '@surecart/components-react';
@@ -34,8 +31,6 @@ const PRODUCTS_PER_PAGE = 100;
 export default ({ shippingProfileId, isDefaultProfile }) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
-	const [open, setOpen] = useState(false);
-	const [draftProducts, setDraftProducts] = useState(0);
 	const [currentPage, setCurrentPage] = useState(1);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -128,7 +123,6 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 					throwOnError: true,
 				}
 			);
-			setDraftProducts(0);
 			createSuccessNotice(__('Product added', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -251,7 +245,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						)}
 					</div>
 				)}
-				{products?.length || !!draftProducts || currentPage > 1 ? (
+				{products?.length ? (
 					<ScStackedList
 						css={css`
 							margin: 0;
@@ -259,7 +253,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 					>
 						<div
 							css={css`
-								max-height: 550px;
+								max-height: 520px;
 								overflow-y: auto;
 							`}
 						>
@@ -302,78 +296,38 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 							))}
 						</div>
 
-						{[...Array(draftProducts)].map((_, index) => (
-							<ScStackedListRow key={`draft-product-${index}`}>
-								<ModelSelector
-									css={css`
-										min-width: 380px;
-									`}
-									key={index}
-									open={open}
-									onScClose={() => setOpen(false)}
-									fetchOnLoad={true}
-									name="product"
-									placeholder={__(
-										'Find a product...',
-										'surecart'
-									)}
-									requestQuery={{
-										archived: false,
-										expand: ['prices'],
-									}}
-									exclude={products?.map(
-										(product) => product.id
-									)}
-									onSelect={(id) => {
-										onSelectProduct(id);
-									}}
-								/>
-								<ScDropdown
-									slot="suffix"
-									placement="bottom-end"
-								>
-									<ScButton type="text" slot="trigger" circle>
-										<ScIcon name="more-horizontal" />
-									</ScButton>
-									<ScMenu>
-										<ScMenuItem
-											onClick={() =>
-												setDraftProducts(
-													draftProducts - 1
-												)
-											}
-										>
-											<ScIcon
-												slot="prefix"
-												name="trash"
-											/>
-											{__('Remove', 'surecart')}
-										</ScMenuItem>
-									</ScMenu>
-								</ScDropdown>
-							</ScStackedListRow>
-						))}
-
-						{draftProducts === 0 && !isDefaultProfile && (
-							<ScStackedListRow
+						<ScStackedListRow
+							css={css`
+								--sc-list-row-background-color: var(
+									--sc-color-gray-50
+								);
+							`}
+						>
+							<ModelSelector
 								css={css`
-									--sc-list-row-background-color: var(
-										--sc-color-gray-50
-									);
+									min-width: 380px;
 								`}
+								fetchOnLoad={true}
+								name="product"
+								placeholder={__(
+									'Find a product...',
+									'surecart'
+								)}
+								requestQuery={{
+									archived: false,
+									expand: ['prices'],
+								}}
+								exclude={products?.map((product) => product.id)}
+								onSelect={(id) => {
+									onSelectProduct(id);
+								}}
 							>
-								<ScButton
-									type="default"
-									onClick={(e) => {
-										setDraftProducts(draftProducts + 1);
-										setOpen(true);
-									}}
-								>
+								<ScButton type="default" slot="trigger">
 									<ScIcon name="plus" />
 									{__('Add Product', 'surecart')}
 								</ScButton>
-							</ScStackedListRow>
-						)}
+							</ModelSelector>
+						</ScStackedListRow>
 					</ScStackedList>
 				) : (
 					<ScEmpty
@@ -383,18 +337,6 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						`}
 					>
 						{__('No products in this profile.', 'surecart')}
-						{!isDefaultProfile && (
-							<ScButton
-								type="default"
-								onClick={() => {
-									setDraftProducts(draftProducts + 1);
-									setOpen(true);
-								}}
-							>
-								<ScIcon name="plus" />
-								{__('Add Product', 'surecart')}
-							</ScButton>
-						)}
 					</ScEmpty>
 				)}
 				{hasPagination && (
