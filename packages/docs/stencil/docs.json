@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-12-09T18:53:23",
+  "timestamp": "2024-12-17T20:43:47",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -2697,7 +2697,6 @@
           "sc-spinner"
         ],
         "sc-subscription-cancel": [
-          "sc-format-date",
           "sc-skeleton",
           "sc-dashboard-module",
           "sc-flex",
@@ -4421,7 +4420,6 @@
         "sc-tag",
         "sc-stacked-list-row",
         "sc-skeleton",
-        "sc-format-date",
         "sc-text",
         "sc-format-number",
         "sc-dashboard-module",
@@ -4437,7 +4435,6 @@
           "sc-tag",
           "sc-stacked-list-row",
           "sc-skeleton",
-          "sc-format-date",
           "sc-text",
           "sc-format-number",
           "sc-dashboard-module",
@@ -5630,8 +5627,7 @@
         ],
         "sc-line-item-invoice-due-date": [
           "sc-line-item",
-          "sc-skeleton",
-          "sc-format-date"
+          "sc-skeleton"
         ],
         "sc-line-item-invoice-receipt-download": [
           "sc-line-item",
@@ -10445,11 +10441,11 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; paid_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; paid_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; shipping_address_accuracy_requirement?: \"none\" | \"full\" | \"tax\"; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; refunded_amount?: number; net_paid_amount?: number; credited_balance_amount?: number; tax_reverse_charged_amount?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "complexType": {
             "original": "Partial<Checkout>",
-            "resolved": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; paid_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+            "resolved": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; remaining_amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; paid_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; shipping_address_accuracy_requirement?: \"none\" | \"full\" | \"tax\"; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; refunded_amount?: number; net_paid_amount?: number; credited_balance_amount?: number; tax_reverse_charged_amount?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
             "references": {
               "Partial": {
                 "location": "global",
@@ -14983,8 +14979,7 @@
         ],
         "sc-line-item-invoice-due-date": [
           "sc-line-item",
-          "sc-skeleton",
-          "sc-format-date"
+          "sc-skeleton"
         ],
         "sc-line-item-invoice-receipt-download": [
           "sc-line-item",
@@ -15598,463 +15593,6 @@
         ],
         "sc-purchase-downloads-list": [
           "sc-format-bytes"
-        ]
-      }
-    },
-    {
-      "filePath": "src/components/util/format-date/sc-format-date.tsx",
-      "encapsulation": "none",
-      "tag": "sc-format-date",
-      "readme": "# ce-format-date\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "date",
-          "type": "Date | number | string",
-          "complexType": {
-            "original": "Date | string | number",
-            "resolved": "Date | number | string",
-            "references": {
-              "Date": {
-                "location": "global",
-                "id": "global::Date"
-              }
-            }
-          },
-          "mutable": false,
-          "attr": "date",
-          "reflectToAttr": false,
-          "docs": "The date/time to format. If not set, the current date and time will be used.",
-          "docsTags": [],
-          "default": "new Date()",
-          "values": [
-            {
-              "type": "Date"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "day",
-          "type": "\"2-digit\" | \"numeric\"",
-          "complexType": {
-            "original": "'numeric' | '2-digit'",
-            "resolved": "\"2-digit\" | \"numeric\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "day",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the day.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "2-digit",
-              "type": "string"
-            },
-            {
-              "value": "numeric",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "era",
-          "type": "\"long\" | \"narrow\" | \"short\"",
-          "complexType": {
-            "original": "'narrow' | 'short' | 'long'",
-            "resolved": "\"long\" | \"narrow\" | \"short\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "era",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the era.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "long",
-              "type": "string"
-            },
-            {
-              "value": "narrow",
-              "type": "string"
-            },
-            {
-              "value": "short",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "hour",
-          "type": "\"2-digit\" | \"numeric\"",
-          "complexType": {
-            "original": "'numeric' | '2-digit'",
-            "resolved": "\"2-digit\" | \"numeric\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "hour",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the hour.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "2-digit",
-              "type": "string"
-            },
-            {
-              "value": "numeric",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "hourFormat",
-          "type": "\"12\" | \"24\" | \"auto\"",
-          "complexType": {
-            "original": "'auto' | '12' | '24'",
-            "resolved": "\"12\" | \"24\" | \"auto\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "hour-format",
-          "reflectToAttr": false,
-          "docs": "When set, 24 hour time will always be used.",
-          "docsTags": [],
-          "default": "'auto'",
-          "values": [
-            {
-              "value": "12",
-              "type": "string"
-            },
-            {
-              "value": "24",
-              "type": "string"
-            },
-            {
-              "value": "auto",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "locale",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "locale",
-          "reflectToAttr": false,
-          "docs": "The locale to use when formatting the date/time.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "minute",
-          "type": "\"2-digit\" | \"numeric\"",
-          "complexType": {
-            "original": "'numeric' | '2-digit'",
-            "resolved": "\"2-digit\" | \"numeric\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "minute",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the minute.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "2-digit",
-              "type": "string"
-            },
-            {
-              "value": "numeric",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "month",
-          "type": "\"2-digit\" | \"long\" | \"narrow\" | \"numeric\" | \"short\"",
-          "complexType": {
-            "original": "'numeric' | '2-digit' | 'narrow' | 'short' | 'long'",
-            "resolved": "\"2-digit\" | \"long\" | \"narrow\" | \"numeric\" | \"short\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "month",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the month.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "2-digit",
-              "type": "string"
-            },
-            {
-              "value": "long",
-              "type": "string"
-            },
-            {
-              "value": "narrow",
-              "type": "string"
-            },
-            {
-              "value": "numeric",
-              "type": "string"
-            },
-            {
-              "value": "short",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "second",
-          "type": "\"2-digit\" | \"numeric\"",
-          "complexType": {
-            "original": "'numeric' | '2-digit'",
-            "resolved": "\"2-digit\" | \"numeric\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "second",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the second.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "2-digit",
-              "type": "string"
-            },
-            {
-              "value": "numeric",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "timeZone",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "time-zone",
-          "reflectToAttr": false,
-          "docs": "The time zone to express the time in.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "timeZoneName",
-          "type": "\"long\" | \"short\"",
-          "complexType": {
-            "original": "'short' | 'long'",
-            "resolved": "\"long\" | \"short\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "time-zone-name",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the time.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "long",
-              "type": "string"
-            },
-            {
-              "value": "short",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "type",
-          "type": "\"date\" | \"timestamp\"",
-          "complexType": {
-            "original": "'timestamp' | 'date'",
-            "resolved": "\"date\" | \"timestamp\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "type",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "'date'",
-          "values": [
-            {
-              "value": "date",
-              "type": "string"
-            },
-            {
-              "value": "timestamp",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "weekday",
-          "type": "\"long\" | \"narrow\" | \"short\"",
-          "complexType": {
-            "original": "'narrow' | 'short' | 'long'",
-            "resolved": "\"long\" | \"narrow\" | \"short\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "weekday",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the weekday.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "long",
-              "type": "string"
-            },
-            {
-              "value": "narrow",
-              "type": "string"
-            },
-            {
-              "value": "short",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "year",
-          "type": "\"2-digit\" | \"numeric\"",
-          "complexType": {
-            "original": "'numeric' | '2-digit'",
-            "resolved": "\"2-digit\" | \"numeric\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "year",
-          "reflectToAttr": false,
-          "docs": "The format for displaying the year.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "2-digit",
-              "type": "string"
-            },
-            {
-              "value": "numeric",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "sc-charges-list",
-        "sc-invoices-list",
-        "sc-license",
-        "sc-line-item-invoice-due-date",
-        "sc-order",
-        "sc-orders-list",
-        "sc-subscription",
-        "sc-subscription-cancel",
-        "sc-subscription-details",
-        "sc-subscription-reactivate",
-        "sc-subscription-status-badge",
-        "sc-upcoming-invoice"
-      ],
-      "dependencies": [],
-      "dependencyGraph": {
-        "sc-charges-list": [
-          "sc-format-date"
-        ],
-        "sc-invoices-list": [
-          "sc-format-date"
-        ],
-        "sc-license": [
-          "sc-format-date"
-        ],
-        "sc-line-item-invoice-due-date": [
-          "sc-format-date"
-        ],
-        "sc-order": [
-          "sc-format-date"
-        ],
-        "sc-orders-list": [
-          "sc-format-date"
-        ],
-        "sc-subscription": [
-          "sc-format-date"
-        ],
-        "sc-subscription-cancel": [
-          "sc-format-date"
-        ],
-        "sc-subscription-details": [
-          "sc-format-date"
-        ],
-        "sc-subscription-reactivate": [
-          "sc-format-date"
-        ],
-        "sc-subscription-status-badge": [
-          "sc-format-date"
-        ],
-        "sc-upcoming-invoice": [
-          "sc-format-date"
         ]
       }
     },
@@ -18920,7 +18458,6 @@
         "sc-skeleton",
         "sc-divider",
         "sc-empty",
-        "sc-format-date",
         "sc-invoice-status-badge",
         "sc-format-number",
         "sc-dashboard-module",
@@ -18937,7 +18474,6 @@
           "sc-skeleton",
           "sc-divider",
           "sc-empty",
-          "sc-format-date",
           "sc-invoice-status-badge",
           "sc-format-number",
           "sc-dashboard-module",
@@ -19021,7 +18557,6 @@
         "sc-stacked-list-row",
         "sc-input",
         "sc-button",
-        "sc-format-date",
         "sc-block-ui",
         "sc-dialog",
         "sc-icon",
@@ -19039,7 +18574,6 @@
           "sc-stacked-list-row",
           "sc-input",
           "sc-button",
-          "sc-format-date",
           "sc-block-ui",
           "sc-dialog",
           "sc-icon",
@@ -19602,14 +19136,12 @@
       ],
       "dependencies": [
         "sc-line-item",
-        "sc-skeleton",
-        "sc-format-date"
+        "sc-skeleton"
       ],
       "dependencyGraph": {
         "sc-line-item-invoice-due-date": [
           "sc-line-item",
-          "sc-skeleton",
-          "sc-format-date"
+          "sc-skeleton"
         ],
         "sc-form-components-validator": [
           "sc-line-item-invoice-due-date"
@@ -21289,10 +20821,10 @@
         "sc-skeleton",
         "sc-empty",
         "sc-product-line-item",
-        "sc-divider",
         "sc-line-item",
         "sc-format-number",
         "sc-tag",
+        "sc-divider",
         "sc-spacing",
         "sc-dashboard-module",
         "sc-order-manual-instructions",
@@ -21300,7 +20832,6 @@
         "sc-stacked-list",
         "sc-stacked-list-row",
         "sc-order-status-badge",
-        "sc-format-date",
         "sc-payment-method",
         "sc-button",
         "sc-icon",
@@ -21312,10 +20843,10 @@
           "sc-skeleton",
           "sc-empty",
           "sc-product-line-item",
-          "sc-divider",
           "sc-line-item",
           "sc-format-number",
           "sc-tag",
+          "sc-divider",
           "sc-spacing",
           "sc-dashboard-module",
           "sc-order-manual-instructions",
@@ -21323,7 +20854,6 @@
           "sc-stacked-list",
           "sc-stacked-list-row",
           "sc-order-status-badge",
-          "sc-format-date",
           "sc-payment-method",
           "sc-button",
           "sc-icon",
@@ -25457,7 +24987,6 @@
         "sc-skeleton",
         "sc-divider",
         "sc-empty",
-        "sc-format-date",
         "sc-text",
         "sc-order-shipment-badge",
         "sc-format-number",
@@ -25477,7 +25006,6 @@
           "sc-skeleton",
           "sc-divider",
           "sc-empty",
-          "sc-format-date",
           "sc-text",
           "sc-order-shipment-badge",
           "sc-format-number",
@@ -38489,7 +38017,6 @@
       "dependents": [],
       "dependencies": [
         "sc-subscription-status-badge",
-        "sc-format-date",
         "sc-stacked-list-row",
         "sc-skeleton",
         "sc-subscription-next-payment",
@@ -38506,7 +38033,6 @@
       "dependencyGraph": {
         "sc-subscription": [
           "sc-subscription-status-badge",
-          "sc-format-date",
           "sc-stacked-list-row",
           "sc-skeleton",
           "sc-subscription-next-payment",
@@ -38521,7 +38047,6 @@
           "sc-subscription-reactivate"
         ],
         "sc-subscription-status-badge": [
-          "sc-format-date",
           "sc-tag"
         ],
         "sc-subscription-next-payment": [
@@ -38543,7 +38068,6 @@
         ],
         "sc-subscription-details": [
           "sc-subscription-status-badge",
-          "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
           "sc-flex",
@@ -38603,7 +38127,6 @@
           "sc-cancel-discount"
         ],
         "sc-subscription-cancel": [
-          "sc-format-date",
           "sc-skeleton",
           "sc-dashboard-module",
           "sc-flex",
@@ -38644,7 +38167,6 @@
           "sc-alert",
           "sc-format-number",
           "sc-text",
-          "sc-format-date",
           "sc-button",
           "sc-block-ui"
         ]
@@ -38967,7 +38489,6 @@
         "sc-cancel-dialog"
       ],
       "dependencies": [
-        "sc-format-date",
         "sc-skeleton",
         "sc-dashboard-module",
         "sc-flex",
@@ -38976,7 +38497,6 @@
       ],
       "dependencyGraph": {
         "sc-subscription-cancel": [
-          "sc-format-date",
           "sc-skeleton",
           "sc-dashboard-module",
           "sc-flex",
@@ -39096,7 +38616,6 @@
       ],
       "dependencies": [
         "sc-subscription-status-badge",
-        "sc-format-date",
         "sc-skeleton",
         "sc-format-number",
         "sc-flex",
@@ -39111,7 +38630,6 @@
       "dependencyGraph": {
         "sc-subscription-details": [
           "sc-subscription-status-badge",
-          "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
           "sc-flex",
@@ -39124,7 +38642,6 @@
           "sc-icon"
         ],
         "sc-subscription-status-badge": [
-          "sc-format-date",
           "sc-tag"
         ],
         "sc-dialog": [
@@ -39245,7 +38762,6 @@
         ],
         "sc-subscription-details": [
           "sc-subscription-status-badge",
-          "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
           "sc-flex",
@@ -39258,7 +38774,6 @@
           "sc-icon"
         ],
         "sc-subscription-status-badge": [
-          "sc-format-date",
           "sc-tag"
         ],
         "sc-dialog": [
@@ -39764,7 +39279,6 @@
         "sc-alert",
         "sc-format-number",
         "sc-text",
-        "sc-format-date",
         "sc-button",
         "sc-block-ui"
       ],
@@ -39777,7 +39291,6 @@
           "sc-alert",
           "sc-format-number",
           "sc-text",
-          "sc-format-date",
           "sc-button",
           "sc-block-ui"
         ],
@@ -39976,12 +39489,10 @@
         "sc-subscription-details"
       ],
       "dependencies": [
-        "sc-format-date",
         "sc-tag"
       ],
       "dependencyGraph": {
         "sc-subscription-status-badge": [
-          "sc-format-date",
           "sc-tag"
         ],
         "sc-subscription": [
@@ -40548,7 +40059,6 @@
         ],
         "sc-subscription-details": [
           "sc-subscription-status-badge",
-          "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
           "sc-flex",
@@ -40561,7 +40071,6 @@
           "sc-icon"
         ],
         "sc-subscription-status-badge": [
-          "sc-format-date",
           "sc-tag"
         ],
         "sc-dialog": [
@@ -44184,7 +43693,6 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-format-date",
         "sc-skeleton",
         "sc-format-number",
         "sc-product-line-item",
@@ -44205,7 +43713,6 @@
       ],
       "dependencyGraph": {
         "sc-upcoming-invoice": [
-          "sc-format-date",
           "sc-skeleton",
           "sc-format-number",
           "sc-product-line-item",
@@ -45044,7 +44551,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Checkout": {
-      "declaration": "export interface Checkout extends Object {\n  id?: string;\n  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';\n  staged_payment_intents: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<PaymentIntent>;\n  };\n  abandoned_checkout_enabled: boolean;\n  billing_matches_shipping: boolean;\n  bump_amount: number;\n  payment_method_required?: boolean;\n  manual_payment: boolean;\n  manual_payment_method?: string | ManualPaymentMethod;\n  reusable_payment_method_required?: boolean;\n  number?: string;\n  amount_due?: number;\n  remaining_amount_due?: number;\n  trial_amount?: number;\n  charge?: string | Charge;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  email?: string;\n  phone?: string;\n  live_mode?: boolean;\n  currency?: string;\n  total_amount?: number;\n  subtotal_amount?: number;\n  full_amount?: number;\n  paid_amount?: number;\n  proration_amount?: number;\n  total_savings_amount?: number;\n  applied_balance_amount?: number;\n  discounts?: number;\n  shipping_address_required?: boolean;\n  tax_enabled: boolean;\n  tax_amount: number;\n  email_exists: boolean;\n  tax_inclusive_amount: number;\n  tax_exclusive_amount: number;\n  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';\n  tax_label: string;\n  tax_percent: number;\n  line_items: lineItems;\n  recommended_bumps?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Bump>;\n  };\n  current_upsell: Upsell;\n  recommended_upsells?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Upsell>;\n  };\n  metadata?: any;\n  payment_intent?: PaymentIntent;\n  payment_method?: PaymentMethod;\n  order?: string | Order;\n  customer: string | Customer;\n  subscriptions: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Subscription>;\n  };\n  purchases: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Purchase>;\n  };\n  discount_amount?: number;\n  discount?: DiscountResponse;\n  billing_address?: string | Address;\n  shipping_amount?: number;\n  shipping_address?: string | Address;\n  shipping_enabled?: boolean;\n  shipping_choices?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ShippingChoice>;\n  };\n  selected_shipping_choice?: string | ShippingChoice;\n  selected_shipping_choice_required: boolean;\n  processor_data?: ProcessorData;\n  tax_identifier?: {\n    number: string;\n    number_type: string;\n  };\n  url: string;\n  created_at?: number;\n  updated_at: number;\n  variant: string;\n  upsells_expire_at?: number;\n  invoice?: string | Invoice;\n  pdf_url?: string;\n}",
+      "declaration": "export interface Checkout extends Object {\n  id?: string;\n  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';\n  staged_payment_intents: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<PaymentIntent>;\n  };\n  abandoned_checkout_enabled: boolean;\n  billing_matches_shipping: boolean;\n  bump_amount: number;\n  payment_method_required?: boolean;\n  manual_payment: boolean;\n  manual_payment_method?: string | ManualPaymentMethod;\n  reusable_payment_method_required?: boolean;\n  number?: string;\n  amount_due?: number;\n  remaining_amount_due?: number;\n  trial_amount?: number;\n  charge?: string | Charge;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  email?: string;\n  phone?: string;\n  live_mode?: boolean;\n  currency?: string;\n  total_amount?: number;\n  subtotal_amount?: number;\n  full_amount?: number;\n  paid_amount?: number;\n  proration_amount?: number;\n  total_savings_amount?: number;\n  applied_balance_amount?: number;\n  discounts?: number;\n  shipping_address_required?: boolean;\n  shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';\n  tax_enabled: boolean;\n  tax_amount: number;\n  email_exists: boolean;\n  tax_inclusive_amount: number;\n  tax_exclusive_amount: number;\n  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';\n  tax_label: string;\n  tax_percent: number;\n  line_items: lineItems;\n  recommended_bumps?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Bump>;\n  };\n  current_upsell: Upsell;\n  recommended_upsells?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Upsell>;\n  };\n  metadata?: any;\n  payment_intent?: PaymentIntent;\n  payment_method?: PaymentMethod;\n  order?: string | Order;\n  customer: string | Customer;\n  subscriptions: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Subscription>;\n  };\n  purchases: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Purchase>;\n  };\n  discount_amount?: number;\n  discount?: DiscountResponse;\n  billing_address?: string | Address;\n  shipping_amount?: number;\n  shipping_address?: string | Address;\n  shipping_enabled?: boolean;\n  shipping_choices?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ShippingChoice>;\n  };\n  selected_shipping_choice?: string | ShippingChoice;\n  selected_shipping_choice_required: boolean;\n  processor_data?: ProcessorData;\n  tax_identifier?: {\n    number: string;\n    number_type: string;\n  };\n  url: string;\n  created_at?: number;\n  updated_at: number;\n  variant: string;\n  upsells_expire_at?: number;\n  invoice?: string | Invoice;\n  pdf_url?: string;\n  refunded_amount?: number;\n  net_paid_amount?: number;\n  credited_balance_amount?: number;\n  tax_reverse_charged_amount?: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -45099,7 +44606,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Order": {
-      "declaration": "export interface Order extends Object {\n  id?: string;\n  object: 'order';\n  number?: string;\n  order_type?: 'checkout' | 'subscription';\n  statement_url?: string;\n  status?: OrderStatus;\n  shipment_status?: OrderShipmentStatus;\n  checkout?: Checkout | string;\n  invoice?: Invoice | string;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Order extends Object {\n  id?: string;\n  object: 'order';\n  number?: string;\n  order_type?: 'checkout' | 'subscription';\n  statement_url?: string;\n  status?: OrderStatus;\n  shipment_status?: OrderShipmentStatus;\n  checkout?: Checkout | string;\n  invoice?: Invoice | string;\n  created_at: number;\n  created_at_date: string;\n  updated_at: number;\n  updated_at_date: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -45109,7 +44616,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Subscription": {
-      "declaration": "export interface Subscription extends Object {\n  id: string;\n  object: 'subscription';\n  currency?: string;\n  status: SubscriptionStatus;\n  live_mode: boolean;\n  external_subscription_id: string;\n  current_cancellation_act: string | CancellationAct;\n  trial_end_at: number;\n  processor_type: 'stripe' | 'paypal';\n  order: Order;\n  customer: Customer;\n  discount: DiscountResponse;\n  finite: boolean;\n  pending_update: {\n    ad_hoc_amount?: number;\n    price?: string;\n    quantity?: number;\n    variant?: string;\n  };\n  purchase: Purchase | string;\n  cancel_at_period_end: number | false;\n  current_period: string | Period;\n  current_period_end_at: number | false;\n  current_period_start_at: number | false;\n  remaining_period_count: number | null;\n  ended_at: number;\n  end_behavior: 'cancel' | 'complete';\n  payment_method: PaymentMethod | string;\n  manual_payment_method: ManualPaymentMethod | string;\n  manual_payment: boolean;\n  price: Price;\n  ad_hoc_amount: number;\n  variant?: Variant | string;\n  variant_options?: Array<string>;\n  created_at: number;\n  updated_at: number;\n  restore_at?: number;\n}",
+      "declaration": "export interface Subscription extends Object {\n  id: string;\n  object: 'subscription';\n  currency?: string;\n  status: SubscriptionStatus;\n  live_mode: boolean;\n  external_subscription_id: string;\n  current_cancellation_act: string | CancellationAct;\n  trial_end_at: number;\n  trial_end_at_date: string;\n  trial_end_at_date_time: string;\n  processor_type: 'stripe' | 'paypal';\n  order: Order;\n  customer: Customer;\n  discount: DiscountResponse;\n  finite: boolean;\n  pending_update: {\n    ad_hoc_amount?: number;\n    price?: string;\n    quantity?: number;\n    variant?: string;\n  };\n  purchase: Purchase | string;\n  cancel_at_period_end: number | false;\n  current_period: string | Period;\n  current_period_end_at: number | false;\n  current_period_end_at_date: string;\n  current_period_end_at_date_time: string;\n  current_period_start_at: number | false;\n  current_period_start_at_date: string;\n  remaining_period_count: number | null;\n  ended_at: number;\n  ended_at_date: string;\n  end_behavior: 'cancel' | 'complete';\n  payment_method: PaymentMethod | string;\n  manual_payment_method: ManualPaymentMethod | string;\n  manual_payment: boolean;\n  price: Price;\n  ad_hoc_amount: number;\n  variant?: Variant | string;\n  variant_options?: Array<string>;\n  created_at: number;\n  created_at_date: string;\n  updated_at: number;\n  updated_at_date: string;\n  restore_at?: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -45124,7 +44631,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::License": {
-      "declaration": "export interface License {\n  id: string;\n  object: 'license';\n  activation_limit: number;\n  activation_count: number;\n  key: string;\n  activations?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Activation>;\n  };\n  status: 'inactive' | 'active' | 'revoked';\n  purchase: string | Purchase;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface License {\n  id: string;\n  object: 'license';\n  activation_limit: number;\n  activation_count: number;\n  key: string;\n  activations?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Activation>;\n  };\n  status: 'inactive' | 'active' | 'revoked';\n  purchase: string | Purchase;\n  created_at: number;\n  created_at_date: string;\n  updated_at: number;\n  updated_at_date: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
