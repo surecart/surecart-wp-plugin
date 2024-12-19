@@ -8,6 +8,7 @@ import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
+
 /**
  * Internal dependencies.
  */
@@ -70,12 +71,17 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 
 	return (
 		<Fragment>
-			<InvoiceDetails checkout={checkout} loading={loading} />
+			<InvoiceDetails
+				checkout={checkout}
+				loading={loading}
+			/>
+
 			<ContactInfo
 				checkout={checkout}
 				loading={loading}
 				onManuallyRefetchOrder={onManuallyRefetchOrder}
 			/>
+
 			<ViewAddress
 				title={__('Address', 'surecart')}
 				loading={loading}
@@ -85,13 +91,16 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 				onEditAddress={() => setModal(modals.EDIT_ADDRESS)}
 				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
 			/>
+
 			<TaxInfo
 				checkout={checkout}
 				loading={loading}
 				onManuallyRefetchOrder={onManuallyRefetchOrder}
 			/>
+
 			<Purchases checkoutId={checkout?.id} />
 			<MetaData order={order} loading={loading} />
+
 			<EditAddressModal
 				open={modal === modals.EDIT_ADDRESS}
 				checkoutShippingAddress={checkout?.shipping_address}
@@ -102,6 +111,7 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 				onRequestClose={() => setModal('')}
 				checkoutId={checkout?.id}
 			/>
+
 			<Confirm
 				open={modal === modals.CONFIRM_DELETE_ADDRESS}
 				onRequestClose={() => setModal('')}
