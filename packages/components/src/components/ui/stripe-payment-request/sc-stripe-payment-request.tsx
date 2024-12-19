@@ -130,7 +130,6 @@ export class ScStripePaymentRequest {
         total: {
           amount: order?.amount_due || 0,
           label: __('Total', 'surecart'),
-          pending: true,
         },
       });
     } catch (e) {
