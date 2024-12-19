@@ -28,6 +28,23 @@ const BLANK = [
 		},
 	],
 	['surecart/product-pagination'],
+	[
+		'surecart/product-list-no-products',
+		{},
+		[
+			[
+				'core/paragraph',
+				{
+					placeholder: __(
+						'Add text or blocks that will display when a query returns no products.',
+						'surecart'
+					),
+					align: 'center',
+					content: __('No products found.', 'surecart'),
+				},
+			],
+		],
+	],
 ];
 
 /**
