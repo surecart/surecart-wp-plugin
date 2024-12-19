@@ -68,9 +68,6 @@ export default (props) => {
 					setModels((state) => [...state, data[i]]);
 				}
 			}
-
-			// add to redux for other page items
-			receiveEntityRecords(kind, name, models, queryArgs);
 		} catch (error) {
 			console.error(error);
 		} finally {
