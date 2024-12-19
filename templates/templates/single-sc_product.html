@@ -1,6 +1,6 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"layout":{"type":"constrained"}} -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"40px"}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group">
 	<!-- wp:surecart/product-page {"metadata":{"categories":["surecart_product_page"],"patternName":"surecart-product-standard","name":"Classic Product"},"align":"wide"} -->
 	<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"30px","left":"60px"}}}} -->
@@ -30,8 +30,8 @@
 				<!-- /wp:group -->
 
 				<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
-				<div class="wp-block-group">
-					<!-- wp:surecart/product-selected-price-trial /-->
+				<div class="wp-block-group"><!-- wp:surecart/product-selected-price-trial /-->
+
 					<!-- wp:surecart/product-selected-price-fees /-->
 				</div>
 				<!-- /wp:group -->
@@ -53,7 +53,9 @@
 				<!-- wp:group {"style":{"spacing":{"blockGap":"0.5rem"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
 				<div class="wp-block-group">
 					<!-- wp:surecart/price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","fontStyle":"normal","fontWeight":"500"},"color":{"text":"#686868"}}} /-->
+
 					<!-- wp:surecart/price-amount {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->
+
 					<!-- wp:surecart/price-interval {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->
 				</div>
 				<!-- /wp:group -->
@@ -82,12 +84,8 @@
 	</div>
 	<!-- /wp:columns -->
 	<!-- /wp:surecart/product-page -->
-</div>
-<!-- /wp:group -->
 
-<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"5em"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group" style="margin-bottom:5em">
-	<!-- wp:surecart/product-list-related {"limit":null,"query":{"perPage":3,"pages":3,"offset":0,"postType":"sc_product","order":"asc","orderBy":"title","author":"","search":"","exclude":[],"include":[],"sticky":"","related":true,"inherit":true,"taxQuery":null,"parents":[],"taxonomy":"sc_collection","totalPages":3,"fallback":true,"shuffle":true},"metadata":{"categories":["surecart_shop"],"patternName":"surecart-related-carousel","name":"Related Products Carousel"},"align":"wide","layout":{"type":"default"}} -->
+	<!-- wp:surecart/product-list-related {"limit":null,"query":{"perPage":3,"pages":3,"offset":0,"postType":"sc_product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","related":true,"inherit":true,"taxQuery":null,"parents":[],"taxonomy":"sc_collection","totalPages":3,"fallback":true,"shuffle":true},"metadata":{"categories":["surecart_shop"],"patternName":"surecart-related-carousel","name":"Related Products Carousel"},"align":"wide","layout":{"type":"default"}} -->
 	<!-- wp:group {"style":{"spacing":{"padding":{"right":"0px","left":"0px"},"margin":{"bottom":"30px"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
 	<div class="wp-block-group" style="margin-bottom:30px;padding-right:0px;padding-left:0px">
 		<!-- wp:group {"style":{"spacing":{"padding":{"right":"0px","left":"0px"}}},"layout":{"type":"default"}} -->
@@ -98,8 +96,8 @@
 		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:heading {"textAlign":"center","level":3,"className":"is-style-default","style":{"typography":{"fontSize":"25px"}}} -->
-		<h3 class="wp-block-heading has-text-align-center is-style-default" style="font-size:25px">You may also like
+		<!-- wp:heading {"textAlign":"center","level":3,"className":"is-style-default","style":{"typography":{"fontSize":"32px"}}} -->
+		<h3 class="wp-block-heading has-text-align-center is-style-default" style="font-size:32px">You may also like
 		</h3>
 		<!-- /wp:heading -->
 
@@ -119,8 +117,8 @@
 		<!-- wp:group {"style":{"color":{"background":"#0000000d"},"border":{"radius":"10px"},"spacing":{"padding":{"top":"0px","bottom":"0px","left":"0px","right":"0px"},"margin":{"top":"0px","bottom":"0px"}}},"layout":{"type":"constrained"}} -->
 		<div class="wp-block-group has-background"
 			style="border-radius:10px;background-color:#0000000d;margin-top:0px;margin-bottom:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px">
-			<!-- wp:cover {"useFeaturedImage":true,"dimRatio":0,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"contentPosition":"top right","style":{"dimensions":{"aspectRatio":"3/4"},"layout":{"selfStretch":"fit","flexSize":null},"spacing":{"margin":{"bottom":"15px"}},"border":{"radius":"10px"}},"layout":{"type":"default"}} -->
-			<div class="wp-block-cover has-custom-content-position is-position-top-right"
+			<!-- wp:cover {"useFeaturedImage":true,"dimRatio":0,"isUserOverlayColor":true,"focalPoint":{"x":0.5,"y":0.5},"contentPosition":"top right","isDark":false,"style":{"dimensions":{"aspectRatio":"3/4"},"layout":{"selfStretch":"fit","flexSize":null},"spacing":{"margin":{"bottom":"15px"}},"border":{"radius":"10px"}},"layout":{"type":"default"}} -->
+			<div class="wp-block-cover is-light has-custom-content-position is-position-top-right"
 				style="border-radius:10px;margin-bottom:15px"><span aria-hidden="true"
 					class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>
 				<div class="wp-block-cover__inner-container">

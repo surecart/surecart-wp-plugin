@@ -7,7 +7,7 @@ return [
 	'categories' => [ 'surecart_product_page' ],
 	'blockTypes' => [ 'surecart/product-list-related' ],
 	'priority'   => 3,
-	'content'    => '<!-- wp:surecart/product-list-related {"limit":null,"query":{"perPage":3,"pages":3,"offset":0,"postType":"sc_product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","related":true,"inherit":true,"taxQuery":null,"parents":[],"taxonomy":"sc_collection","totalPages":3,"fallback":true,"shuffle":true},"metadata":{"categories":["surecart_product_page"],"patternName":"surecart-related-carousel","name":"Related Products Carousel"},"align":"wide","layout":{"type":"default"}} -->
+	'content'    => '<!-- wp:surecart/product-list-related {"limit":null,"query":{"perPage":3,"pages":3,"offset":0,"postType":"sc_product","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"include":[],"sticky":"","related":true,"inherit":true,"taxQuery":null,"parents":[],"taxonomy":"sc_collection","totalPages":3,"fallback":true,"shuffle":true},"metadata":{"categories":["surecart_shop"],"patternName":"surecart-related-carousel","name":"Related Products Carousel"},"align":"wide","layout":{"type":"default"}} -->
 <!-- wp:group {"style":{"spacing":{"padding":{"right":"0px","left":"0px"},"margin":{"bottom":"30px"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
 <div class="wp-block-group" style="margin-bottom:30px;padding-right:0px;padding-left:0px"><!-- wp:group {"style":{"spacing":{"padding":{"right":"0px","left":"0px"}}},"layout":{"type":"default"}} -->
 <div class="wp-block-group" style="padding-right:0px;padding-left:0px"><!-- wp:surecart/product-pagination {"showLabel":false,"style":{"typography":{"fontSize":"32px"}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
@@ -15,8 +15,9 @@ return [
 <!-- /wp:surecart/product-pagination --></div>
 <!-- /wp:group -->
 
-<!-- wp:heading {"textAlign":"center","level":3,"className":"is-style-default","style":{"typography":{"fontSize":"25px"}}} -->
-<h3 class="wp-block-heading has-text-align-center is-style-default" style="font-size:25px">You may also like</h3>
+<!-- wp:heading {"textAlign":"center","level":3,"className":"is-style-default","style":{"typography":{"fontSize":"32px"}}} -->
+<h3 class="wp-block-heading has-text-align-center is-style-default" style="font-size:32px">You may also like
+		</h3>
 <!-- /wp:heading -->
 
 <!-- wp:group {"style":{"spacing":{"padding":{"right":"0px","left":"0px"}}},"layout":{"type":"default"}} -->
