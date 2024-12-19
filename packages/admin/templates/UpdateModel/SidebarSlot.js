@@ -1,9 +1,5 @@
 import { createSlotFill } from '@wordpress/components';
 
-const { Fill, Slot } = createSlotFill('Sidebar');
-
-const Sidebar = ({ children }) => <Fill>{children}</Fill>;
-
-Sidebar.Slot = Slot;
+const Sidebar = createSlotFill('Sidebar');
 
 export default Sidebar;

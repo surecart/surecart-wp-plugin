@@ -17,7 +17,7 @@ import UpgradeModal from '../../components/UpgradeModal';
 import { SlotFillProvider } from '@wordpress/components';
 import Main from './MainSlot';
 import Sidebar from './SidebarSlot';
-import { useEffect } from '@wordpress/element';
+import { getAddons } from './register';
 
 export default ({
 	children,
@@ -32,16 +32,6 @@ export default ({
 	const modal = useSelect((select) => select(uiStore).showUpgradeModal());
 	const { setUpgradeModal } = useDispatch(uiStore);
 	const onRequestClose = () => setUpgradeModal(false);
-
-	useEffect(() => {
-		attachSlotsToWindow();
-	}, []);
-
-	const attachSlotsToWindow = () => {
-		window.surecart = window.surecart || {};
-		window.surecart.Main = Main;
-		window.surecart.Sidebar = Sidebar;
-	};
 
 	const banner = () => {
 		// not entitled.
@@ -76,8 +66,21 @@ export default ({
 		return null;
 	};
 
+	const addonsMain = getAddons('main');
+	const addonsSidebar = getAddons('sidebar');
+
 	return (
 		<SlotFillProvider>
+			<Main.Fill>
+				{addonsMain?.map((addon) => {
+					return addon?.render();
+				})}
+			</Main.Fill>
+			<Sidebar.Fill>
+				{addonsSidebar?.map((addon) => {
+					return addon?.render();
+				})}
+			</Sidebar.Fill>
 			<Global
 				styles={css`
 					#wpwrap {
