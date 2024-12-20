@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
@@ -16,7 +16,6 @@ import {
 	ScAlert,
 	ScButton,
 	ScForm,
-	ScFormControl,
 	ScLineItem,
 	ScPriceInput,
 	ScSelect,
