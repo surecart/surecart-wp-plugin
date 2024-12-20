@@ -8,12 +8,7 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"ancestor": ["surecart/product-list-filter-checkboxes"],
-	"attributes": {
-		"taxonomy": {
-			"type": "string",
-			"default": "sc_collection"
-		}
-	},
+	"usesContext": ["surecart/product-list-filter-checkboxes/taxonomy"],
 	"supports": {
 		"interactivity": true,
 		"layout": {

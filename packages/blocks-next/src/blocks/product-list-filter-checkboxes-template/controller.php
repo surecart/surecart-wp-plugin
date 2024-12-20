@@ -1,7 +1,7 @@
 <?php
 global $sc_query_id;
 
-$taxonomy_slug   = $attributes['taxonomy'] ?? 'sc_collection';
+$taxonomy_slug   = $block->context['surecart/product-list-filter-checkboxes/taxonomy'] ?? 'sc_collection';
 $taxonomy_object = get_taxonomy( $taxonomy_slug );
 
 // get non-empty terms.
