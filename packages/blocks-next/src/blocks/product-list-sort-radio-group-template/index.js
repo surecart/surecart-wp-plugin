@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { addSubmenu as icon } from '@wordpress/icons';
+import { layout as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
