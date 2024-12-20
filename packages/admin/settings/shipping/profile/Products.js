@@ -14,7 +14,7 @@ import {
 	ScStackedListRow,
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
-import { useState, useEffect, useRef } from '@wordpress/element';
+import { useState, useRef, useLayoutEffect } from '@wordpress/element';
 import { DropdownMenu } from '@wordpress/components';
 import { moreHorizontal, trash } from '@wordpress/icons';
 import ModelSelector from '../../../components/ModelSelector';
@@ -51,6 +51,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						'product.product_medias',
 						'product_media.media',
 					],
+					sort: 'updated_at:asc',
 				},
 			];
 
@@ -135,11 +136,14 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 	};
 
 	const listRef = useRef(null);
-	useEffect(() => {
+	const totalProducts = products?.length ?? 0;
+	useLayoutEffect(() => {
 		if (listRef.current) {
-			listRef.current.scrollTop = listRef.current.scrollHeight;
+			setTimeout(() => {
+				listRef.current.scrollTop = listRef.current.scrollHeight;
+			}, 0);
 		}
-	}, [products]);
+	}, [totalProducts]);
 
 	const renderProduct = (product) => {
 		const activePrices = product?.prices?.data?.filter(
