@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { select } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -24,7 +24,6 @@ export default (props) => {
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(10);
 	const [isLoading, setIsLoading] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const handleOnChangeQuery = (queryValue) => {
 		setQuery(queryValue);
