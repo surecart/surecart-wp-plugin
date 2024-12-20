@@ -14,7 +14,7 @@ import {
 	ScStackedListRow,
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { DropdownMenu } from '@wordpress/components';
 import { moreHorizontal, trash } from '@wordpress/icons';
 import ModelSelector from '../../../components/ModelSelector';
@@ -134,6 +134,13 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 		}
 	};
 
+	const listRef = useRef(null);
+	useEffect(() => {
+		if (listRef.current) {
+			listRef.current.scrollTop = listRef.current.scrollHeight;
+		}
+	}, [products]);
+
 	const renderProduct = (product) => {
 		const activePrices = product?.prices?.data?.filter(
 			(price) => !price?.archived
@@ -208,6 +215,32 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 		);
 	};
 
+	const renderModelSelector = () => {
+		return (
+			<ModelSelector
+				css={css`
+					min-width: 380px;
+				`}
+				fetchOnLoad={true}
+				name="product"
+				placeholder={__('Find a product...', 'surecart')}
+				requestQuery={{
+					archived: false,
+					expand: ['prices'],
+				}}
+				exclude={products?.map((product) => product.id)}
+				onSelect={(id) => {
+					onSelectProduct(id);
+				}}
+			>
+				<ScButton type="default" slot="trigger">
+					<ScIcon name="plus" />
+					{__('Add Product', 'surecart')}
+				</ScButton>
+			</ModelSelector>
+		);
+	};
+
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
@@ -256,6 +289,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 								max-height: 520px;
 								overflow-y: auto;
 							`}
+							ref={listRef}
 						>
 							{products.map((product) => (
 								<ScStackedListRow key={product.id}>
@@ -303,30 +337,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 								);
 							`}
 						>
-							<ModelSelector
-								css={css`
-									min-width: 380px;
-								`}
-								fetchOnLoad={true}
-								name="product"
-								placeholder={__(
-									'Find a product...',
-									'surecart'
-								)}
-								requestQuery={{
-									archived: false,
-									expand: ['prices'],
-								}}
-								exclude={products?.map((product) => product.id)}
-								onSelect={(id) => {
-									onSelectProduct(id);
-								}}
-							>
-								<ScButton type="default" slot="trigger">
-									<ScIcon name="plus" />
-									{__('Add Product', 'surecart')}
-								</ScButton>
-							</ModelSelector>
+							{renderModelSelector()}
 						</ScStackedListRow>
 					</ScStackedList>
 				) : (
@@ -337,6 +348,8 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						`}
 					>
 						{__('No products in this profile.', 'surecart')}
+
+						{renderModelSelector()}
 					</ScEmpty>
 				)}
 				{hasPagination && (
