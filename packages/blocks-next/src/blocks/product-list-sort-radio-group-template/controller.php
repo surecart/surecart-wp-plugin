@@ -18,6 +18,18 @@ $options = [
 		'checked' => 'asc' === $query_order && 'date' === $query_order_by,
 	],
 	[
+		'value'   => 'title:asc',
+		'href'    => $params->addArg( 'order', 'asc' )->addArg( 'orderby', 'title' )->url(),
+		'label'   => esc_html__( 'Alphabetical, A-Z', 'surecart' ),
+		'checked' => 'asc' === $query_order && 'title' === $query_order_by,
+	],
+	[
+		'value'   => 'title:desc',
+		'href'    => $params->addArg( 'order', 'desc' )->addArg( 'orderby', 'title' )->url(),
+		'label'   => esc_html__( 'Alphabetical, Z-A', 'surecart' ),
+		'checked' => 'desc' === $query_order && 'title' === $query_order_by,
+	],
+	[
 		'value'   => 'price:asc',
 		'href'    => $params->addArg( 'order', 'asc' )->addArg( 'orderby', 'price' )->url(),
 		'label'   => esc_html__( 'Price, low to high', 'surecart' ),

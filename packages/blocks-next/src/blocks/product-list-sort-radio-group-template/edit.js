@@ -23,6 +23,14 @@ export default ({ clientId, __unstableLayoutClassNames }) => {
 						'surecart/radio/name': __('Oldest'),
 					},
 					{
+						id: 'title:asc',
+						'surecart/radio/name': __('Alphabetical, A-Z'),
+					},
+					{
+						id: 'title:asc',
+						'surecart/radio/name': __('Alphabetical, Z-A'),
+					},
+					{
 						id: 'price:desc',
 						'surecart/radio/name': __('Price, low to high'),
 					},
