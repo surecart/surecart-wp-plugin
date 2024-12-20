@@ -419,7 +419,12 @@ export default () => {
 					loading={!hasLoadedOrder}
 					refunds={refunds}
 				/>
-				<Charges checkoutId={checkoutId} purchases={purchases} />
+				<Charges
+					checkoutId={checkoutId}
+					purchases={purchases}
+					refunds={refunds}
+					refundsLoading={refundsLoading}
+				/>
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}

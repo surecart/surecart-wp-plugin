@@ -53,7 +53,7 @@ export default ({
 	const getRefundedItem = (purchaseItem) => {
 		for (const refund of refunds || []) {
 			const refundItem = refund?.refund_items?.data?.find(
-				(item) => item?.line_item === purchaseItem?.id
+				(item) => item?.line_item?.id === purchaseItem?.id
 			);
 			if (refundItem) {
 				return refundItem;
@@ -62,32 +62,36 @@ export default ({
 		return {};
 	};
 
-	const refundedItems = (purchases || [])
-		.filter((purchase) => {
-			const lineItem = purchase.line_items?.data?.[0];
-			const refundedItem = getRefundedItem(lineItem);
-			const qtyRefunded = refundedItem?.quantity || 0;
-			return qtyRefunded > 0;
-		})
-		.map((purchase) => {
-			const lineItem = purchase.line_items?.data?.[0];
-			const refundedItem = getRefundedItem(lineItem);
-			const qtyRefunded = refundedItem?.quantity || 0;
+	const totalRefundedQuantity = (refunds ?? []).reduce(
+		(totalQuantity, refund) => {
+			const refundItemsQuantity = (
+				refund.refund_items?.data ?? []
+			).reduce((subtotalQuantity, item) => {
+				return subtotalQuantity + (item?.quantity || 0);
+			}, 0);
+			return totalQuantity + refundItemsQuantity;
+		},
+		0
+	);
 
-			return {
-				...purchase,
-				quantity: purchase.quantity - qtyRefunded,
-				originalQuantity: purchase.quantity,
-				revokePurchase: refundedItem?.revoke_purchase || false,
-				restock: refundedItem?.restock || false,
-				lineItem,
-			};
-		});
+	const totalPurchaseQuantity = (purchases ?? []).reduce(
+		(totalQuantity, purchase) => {
+			return totalQuantity + (purchase?.quantity || 0);
+		},
+		0
+	);
+
+	const refundedMessage =
+		totalRefundedQuantity !== totalPurchaseQuantity
+			? __(
+					'Some items in this order have been removed or added to a return.',
+					'surecart'
+			  )
+			: __('All items in this order have been refunded.', 'surecart');
 
 	useEffect(() => {
 		setItems(
 			(purchases || [])
-				// .filter((purchase) => !purchase?.revoked)
 				.filter(({ id, quantity, ...item }) => {
 					const lineItem = item.line_items?.data?.[0];
 					const qtyRefunded =
@@ -101,7 +105,7 @@ export default ({
 					return {
 						...item,
 						id,
-						quantity: 0, // quantity - qtyRefunded,
+						quantity: 0,
 						originalQuantity: quantity - qtyRefunded,
 						revokePurchase: refundedItem?.revoke_purchase || true,
 						restock: refundedItem?.restock || false,
@@ -228,12 +232,9 @@ export default ({
 					</ScAlert> */}
 
 					{/* If some items already refunded, we'll show and alert */}
-					{refundedItems?.length > 0 && (
+					{totalRefundedQuantity > 0 && (
 						<ScAlert type="info" open>
-							{__(
-								'Some items in this order have been removed or added to a return.',
-								'surecart'
-							)}
+							{refundedMessage}
 						</ScAlert>
 					)}
 
@@ -468,35 +469,41 @@ export default ({
 															)}
 														</ScCheckbox>
 
-														<ScCheckbox
-															css={css`
-																padding-top: var(
-																	--sc-spacing-large
-																);
-																padding-bottom: var(
-																	--sc-spacing-small
-																);
-															`}
-															checked={
-																revokePurchase
-															}
-															onScChange={(e) => {
-																updateItems(
-																	index,
-																	{
-																		revokePurchase:
-																			e
-																				.target
-																				.checked,
-																	}
-																);
-															}}
-														>
-															{__(
-																'Revoke Purchase',
-																'surecart'
-															)}
-														</ScCheckbox>
+														{!getRefundedItem(
+															lineItem
+														)?.revoke_purchase && (
+															<ScCheckbox
+																css={css`
+																	padding-top: var(
+																		--sc-spacing-large
+																	);
+																	padding-bottom: var(
+																		--sc-spacing-small
+																	);
+																`}
+																checked={
+																	revokePurchase
+																}
+																onScChange={(
+																	e
+																) => {
+																	updateItems(
+																		index,
+																		{
+																			revokePurchase:
+																				e
+																					.target
+																					.checked,
+																		}
+																	);
+																}}
+															>
+																{__(
+																	'Revoke Purchase',
+																	'surecart'
+																)}
+															</ScCheckbox>
+														)}
 													</div>
 												</div>
 											);
