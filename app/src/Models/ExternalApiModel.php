@@ -162,15 +162,34 @@ abstract class ExternalApiModel implements ArrayAccess, JsonSerializable, Arraya
 	 */
 	protected function makeRequest( $args = [] ) {
 		$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
-		return wp_remote_get(
-			add_query_arg(
-				array_merge( $this->default_query, $this->query ),
-				$this->base_url . $endpoint
-			),
+		$url      = add_query_arg(
+			array_merge( $this->default_query, $this->query ),
+			$this->base_url . $endpoint
+		);
+
+		// Create a unique transient key based on the URL.
+		$transient_key = 'sc_remote_request_' . md5( $url );
+
+		// Try to get cached response from transient.
+		$cached_response = get_transient( $transient_key );
+		if ( false !== $cached_response ) {
+			return $cached_response;
+		}
+
+		// Make the request if no cache exists in transient.
+		$response = wp_remote_get(
+			$url,
 			[
 				'timeout' => 20,
 			]
 		);
+
+		// Cache successful responses for 24 hours.
+		if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
+			set_transient( $transient_key, $response, DAY_IN_SECONDS );
+		}
+
+		return $response;
 	}
 
 	/**
@@ -330,28 +349,41 @@ abstract class ExternalApiModel implements ArrayAccess, JsonSerializable, Arraya
 	}
 
 	/**
-	 * ArrayAccess implementation
+	 * Check if offset exists.
+	 *
+	 * @param mixed $offset Array offset.
+	 * @return bool
 	 */
 	public function offsetExists( $offset ): bool {
 		return isset( $this->attributes[ $offset ] );
 	}
 
 	/**
-	 * ArrayAccess implementation
+	 * Get offset value.
+	 *
+	 * @param mixed $offset Array offset.
+	 * @return mixed
 	 */
 	public function offsetGet( $offset ): mixed {
 		return $this->getAttribute( $offset );
 	}
 
 	/**
-	 * ArrayAccess implementation
+	 * Set offset value.
+	 *
+	 * @param mixed $offset Array offset.
+	 * @param mixed $value  Offset value.
+	 * @return void
 	 */
 	public function offsetSet( $offset, $value ): void {
 		$this->setAttribute( $offset, $value );
 	}
 
 	/**
-	 * ArrayAccess implementation
+	 * Unset offset.
+	 *
+	 * @param mixed $offset Array offset.
+	 * @return void
 	 */
 	public function offsetUnset( $offset ): void {
 		unset( $this->attributes[ $offset ] );
