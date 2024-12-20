@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasLineItem;
+
 /**
  * RefundItem model
  */
 class RefundItem extends Model {
+	use HasLineItem;
+
 	/**
 	 * Rest API endpoint
 	 *
