@@ -4,7 +4,7 @@
  */
 return [
 	'title'      => __( 'Related Products Carousel (Alternate)', 'surecart' ),
-	'categories' => [ 'surecart_product_page' ],
+	'categories' => [ 'surecart_related_products' ],
 	'blockTypes' => [ 'surecart/product-list-related' ],
 	'priority'   => 4,
 	'content'    => '<!-- wp:surecart/product-list-related {"limit":null,"query":{"perPage":3,"pages":3,"offset":0,"postType":"sc_product","order":"asc","orderBy":"title","author":"","search":"","exclude":[],"include":[],"sticky":"","related":true,"inherit":true,"taxQuery":null,"parents":[],"taxonomy":"sc_collection","totalPages":3,"fallback":true,"shuffle":true},"metadata":{"categories":["surecart_product_page"],"patternName":"surecart-related-carousel-alternate","name":"Related Products Carousel"},"align":"wide","layout":{"type":"default"}} -->
