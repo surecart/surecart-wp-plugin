@@ -514,6 +514,7 @@ export default ({
 							>
 								<ScSelect
 									name="reason"
+									required
 									value={reason}
 									placeholder={__(
 										'Select a reason',
