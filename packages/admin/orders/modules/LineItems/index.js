@@ -8,7 +8,7 @@ import {
 	ScLineItem,
 	ScProductLineItem,
 } from '@surecart/components-react';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -19,6 +19,7 @@ import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 import { getSKUText } from '../../../util/products';
 import RefundLineItem from './RefundLineItem';
+import Refunds from '../Refunds';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -30,6 +31,7 @@ const status = {
 };
 
 export default ({ order, checkout, refunds, loading }) => {
+	const [modal, setModal] = useState(false);
 	const line_items = checkout?.line_items?.data;
 
 	const statusBadge = () => {
@@ -191,9 +193,26 @@ export default ({ order, checkout, refunds, loading }) => {
 										key={refund.id}
 										refund={refund}
 										label={
-											index === 0
-												? __('Refunded', 'surecart')
-												: ''
+											index === 0 ? (
+												<>
+													{__('Refunded', 'surecart')}{' '}
+													<ScButton
+														size="small"
+														onClick={() =>
+															setModal(
+																'refund_history'
+															)
+														}
+													>
+														{__(
+															'History',
+															'surecart'
+														)}
+													</ScButton>
+												</>
+											) : (
+												''
+											)
 										}
 									/>
 								);
@@ -341,6 +360,14 @@ export default ({ order, checkout, refunds, loading }) => {
 					</ScLineItem>
 				)}
 			</Fragment>
+
+			<Refunds
+				open={modal === 'refund_history'}
+				chargeId={order?.checkout?.charge?.id}
+				refunds={refunds}
+				loading={loading}
+				onRequestClose={() => setModal(false)}
+			/>
 		</Box>
 	);
 };

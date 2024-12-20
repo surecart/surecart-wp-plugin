@@ -9,7 +9,7 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScFormatNumber, ScLineItem } from '@surecart/components-react';
+import { ScFormatNumber } from '@surecart/components-react';
 import { refundReasons } from '../../../util/refunds';
 
 export default ({ label, refund }) => {

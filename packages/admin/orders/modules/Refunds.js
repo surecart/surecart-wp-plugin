@@ -12,17 +12,23 @@ import { Popover } from '@wordpress/components';
  * Internal dependencies.
  */
 import {
+	ScButton,
+	ScDrawer,
+	ScEmpty,
 	ScFormatDate,
 	ScFormatNumber,
+	ScIcon,
+	ScSkeleton,
+	ScTable,
+	ScTableCell,
+	ScTableRow,
 	ScTag,
 	ScText,
-	ScTooltip,
 } from '@surecart/components-react';
-import DataTable from '../../components/DataTable';
 import { refundReasons } from '../../util/refunds';
 import ProductLineItem from '../../ui/ProductLineItem';
 
-export default ({ refunds, loading }) => {
+export default ({ refunds, loading, onRequestClose, open }) => {
 	const anchor = useRef();
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -51,173 +57,244 @@ export default ({ refunds, loading }) => {
 		return null;
 	}
 
-	return (
-		<>
-			<DataTable
-				title={__('Refunds', 'surecart')}
-				loading={loading}
-				columns={{
-					product: {
-						label: __('Product', 'surecart'),
-					},
-					date: {
-						label: __('Date', 'surecart'),
-					},
-					amount: {
-						label: __('Amount Refunded', 'surecart'),
-					},
-					refund_reason: {
-						label: __('Reason', 'surecart'),
-					},
-					status: {
-						label: __('Status', 'surecart'),
-						width: '100px',
-					},
-				}}
-				items={refunds?.map((refund) => {
-					return {
-						product: refund?.refund_items?.data?.[0]?.line_item
-							?.price?.product?.id ? (
-							<>
-								<ProductLineItem
-									lineItem={
-										refund?.refund_items?.data?.[0]
-											?.line_item
-									}
-								/>
+	const renderContent = () => {
+		if (loading) {
+			return (
+				<div
+					css={css`
+						display: grid;
+						gap: 0.5em;
+						padding: var(--sc-drawer-body-spacing);
+					`}
+				>
+					<ScSkeleton style={{ width: '40%' }}></ScSkeleton>
+					<ScSkeleton style={{ width: '60%' }}></ScSkeleton>
+					<ScSkeleton style={{ width: '30%' }}></ScSkeleton>
+				</div>
+			);
+		}
 
-								{/* if more than 1 items, show only there names */}
-								{refund?.refund_items?.data?.length > 1 && (
-									<div
-										onMouseEnter={() => setIsVisible(true)}
-										onMouseLeave={() => setIsVisible(false)}
-										css={css`
-											cursor: pointer;
-										`}
-									>
-										{__('and', 'surecart')}
-										<span
-											style={{
-												textDecoration: 'underline',
-											}}
-											ref={anchor}
-										>
-											{sprintf(
-												__(' %d more', 'surecart'),
-												refund.refund_items.data
-													.length - 1
-											)}
-										</span>
-										{isVisible && (
-											<Popover
-												anchor={anchor.current}
-												placement="top-start"
-											>
+		if (!refunds?.length) {
+			return (
+				<div
+					css={css`
+						padding: var(--sc-drawer-body-spacing);
+					`}
+				>
+					<ScEmpty icon="activity">
+						{__('There are no refund history', 'surecart')}
+					</ScEmpty>
+				</div>
+			);
+		}
+
+		return (
+			<div>
+				<ScTable>
+					<ScTableCell slot="head" style={{ width: '200px' }}>
+						{__('Product', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Date', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Amount Refunded', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Reason', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Status', 'surecart')}
+					</ScTableCell>
+
+					{(refunds || []).map(
+						({
+							amount,
+							currency,
+							updated_at,
+							reason,
+							refund_items,
+						}) => (
+							<ScTableRow>
+								<ScTableCell>
+									{refund_items?.data?.[0]?.line_item?.price
+										?.product?.id ? (
+										<>
+											<ProductLineItem
+												lineItem={
+													refund_items?.data?.[0]
+														?.line_item
+												}
+											/>
+
+											{refund_items?.data?.length > 1 && (
 												<div
+													onMouseEnter={() =>
+														setIsVisible(true)
+													}
+													onMouseLeave={() =>
+														setIsVisible(false)
+													}
 													css={css`
-														padding: 1em;
-														width: 200px;
-														max-height: 200px;
-														overflow-y: auto;
+														cursor: pointer;
 													`}
 												>
-													{refund.refund_items.data
-														?.slice(1)
-														?.map((item, index) => (
+													{__('and', 'surecart')}
+													<span
+														style={{
+															textDecoration:
+																'underline',
+														}}
+														ref={anchor}
+													>
+														{sprintf(
+															__(
+																' %d more',
+																'surecart'
+															),
+															refund_items.data
+																.length - 1
+														)}
+													</span>
+													{isVisible && (
+														<Popover
+															anchor={
+																anchor.current
+															}
+															placement="top-start"
+														>
 															<div
-																key={index}
 																css={css`
-																	padding: 0.5em
-																		0px;
-																	border-bottom: ${index !==
-																	refund
-																		.refund_items
-																		.data
-																		.length -
-																		2
-																		? '1px solid var(--sc-color-gray-200)'
-																		: 'none'};
+																	padding: 1em;
+																	width: 200px;
+																	max-height: 200px;
+																	overflow-y: auto;
 																`}
 															>
-																<ProductLineItem
-																	lineItem={
-																		item.line_item
-																	}
-																/>
+																{refund_items.data
+																	?.slice(1)
+																	?.map(
+																		(
+																			item,
+																			index
+																		) => (
+																			<div
+																				key={
+																					index
+																				}
+																				css={css`
+																					padding: 0.5em
+																						0px;
+																					border-bottom: ${index !==
+																					refund_items
+																						.data
+																						.length -
+																						2
+																						? '1px solid var(--sc-color-gray-200)'
+																						: 'none'};
+																				`}
+																			>
+																				<ProductLineItem
+																					lineItem={
+																						item.line_item
+																					}
+																				/>
+																			</div>
+																		)
+																	)}
 															</div>
-														))}
+														</Popover>
+													)}
 												</div>
-											</Popover>
-										)}
-									</div>
-								)}
-							</>
-						) : (
-							<ScText
-								css={css`
-									color: var(--sc-color-gray-500);
-								`}
-							>
-								{__('No product', 'surecart')}
-							</ScText>
-						),
-						amount: (
-							<sc-text
-								style={{
-									'--font-weight':
-										'var(--sc-font-weight-bold)',
-								}}
-							>
-								-
-								<ScFormatNumber
-									type="currency"
-									currency={refund?.currency || 'usd'}
-									value={refund?.amount}
-								/>
-							</sc-text>
-						),
-						date: (
-							<ScFormatDate
-								date={refund?.updated_at}
-								month="long"
-								day="numeric"
-								year="numeric"
-								hour="numeric"
-								minute="numeric"
-								type="timestamp"
-							/>
-						),
-						refund_reason: (
-							<ScText
-								css={css`
-									color: var(--sc-color-gray-500);
-								`}
-							>
-								{refundReasons?.[refund?.reason] ||
-									__('Unknown', 'surecart')}
-							</ScText>
-						),
-						status: (
-							<>
-								<ScTooltip
-									type="danger"
-									text={
-										refund?.failure_reason ===
-										'insufficient_funds'
-											? __(
-													'Insufficient Funds',
-													'surecart'
-											  )
-											: null
-									}
-								>
-									{renderRefundStatusBadge(refund?.status)}
-								</ScTooltip>
-							</>
-						),
-					};
-				})}
-			/>
+											)}
+										</>
+									) : (
+										<ScText
+											css={css`
+												color: var(--sc-color-gray-500);
+											`}
+										>
+											{__('No product', 'surecart')}
+										</ScText>
+									)}
+								</ScTableCell>
+								<ScTableCell>
+									<ScFormatDate
+										date={updated_at}
+										month="long"
+										day="numeric"
+										year="numeric"
+										hour="numeric"
+										minute="numeric"
+										type="timestamp"
+									/>
+								</ScTableCell>
+								<ScTableCell>
+									<sc-text
+										style={{
+											'--font-weight':
+												'var(--sc-font-weight-bold)',
+										}}
+									>
+										-
+										<ScFormatNumber
+											type="currency"
+											currency={currency || 'usd'}
+											value={amount}
+										/>
+									</sc-text>
+								</ScTableCell>
+								<ScTableCell>
+									<ScText
+										css={css`
+											color: var(--sc-color-gray-500);
+										`}
+									>
+										{refundReasons?.[reason] ||
+											__('Unknown', 'surecart')}
+									</ScText>
+								</ScTableCell>
+								<ScTableCell>
+									{renderRefundStatusBadge('succeeded')}
+								</ScTableCell>
+							</ScTableRow>
+						)
+					)}
+				</ScTable>
+			</div>
+		);
+	};
+
+	return (
+		<>
+			<ScDrawer
+				style={{ '--sc-drawer-size': '48rem' }}
+				open={open}
+				stickyHeader
+				onScAfterHide={() => onRequestClose()}
+			>
+				<span
+					slot="header"
+					css={css`
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						padding: var(--sc-drawer-header-spacing);
+						border-bottom: var(--sc-drawer-border);
+					`}
+				>
+					{__('Refund History', 'surecart')}
+
+					<ScButton
+						type="text"
+						size="small"
+						onClick={() => onRequestClose()}
+					>
+						<ScIcon class="cart__close" name="x"></ScIcon>
+					</ScButton>
+				</span>
+				{renderContent()}
+			</ScDrawer>
 		</>
 	);
 };

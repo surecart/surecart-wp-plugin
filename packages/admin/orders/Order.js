@@ -429,11 +429,7 @@ export default () => {
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
 				/>
-				<Refunds
-					chargeId={order?.checkout?.charge?.id}
-					refunds={refunds}
-					loading={refundsLoading}
-				/>
+
 				<Subscriptions checkoutId={order?.checkout?.id} />
 				<OrderStatusConfirmModal
 					order={order}
