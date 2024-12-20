@@ -17,7 +17,7 @@
 			"allowSizingOnChildren": true,
 			"default": {
 				"type": "flex",
-				"orientation": "horizontal",
+				"orientation": "vertical",
 				"verticalAlignment": "top",
 				"flexWrap": "nowrap"
 			}
