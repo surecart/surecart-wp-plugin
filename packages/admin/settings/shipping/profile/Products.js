@@ -139,9 +139,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 	const totalProducts = products?.length ?? 0;
 	useLayoutEffect(() => {
 		if (listRef.current) {
-			setTimeout(() => {
-				listRef.current.scrollTop = listRef.current.scrollHeight;
-			}, 0);
+			listRef.current.scrollTop = listRef.current.scrollHeight;
 		}
 	}, [totalProducts]);
 
