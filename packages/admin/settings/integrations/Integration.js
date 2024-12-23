@@ -1,18 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import {
-	ScBreadcrumb,
-	ScBreadcrumbs,
-	ScButton,
-	ScCard,
-	ScIcon,
-} from '@surecart/components-react';
+import { ScButton, ScCard, ScIcon } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useLink, useLocation } from '../../router';
 import { useEntityRecord } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { ExternalLink } from '@wordpress/components';
+import { addQueryArgs } from '@wordpress/url';
 import PluginActivationButton from './PluginActivationButton';
 import Notifications from '../../components/Notifications';
 
@@ -24,6 +19,21 @@ const ActivateButton = ({ record, onActivated }) => {
 				slug={record?.plugin_slug}
 				onActivated={onActivated}
 			/>
+		);
+	}
+
+	if (record?.theme_slug && !record?.activation_link) {
+		return (
+			<ScButton
+				type="primary"
+				href={addQueryArgs('theme-install.php', {
+					theme: record?.theme_slug,
+				})}
+				target="_blank"
+			>
+				{__('Enable', 'surecart')}
+				<ScIcon name="external-link" slot="suffix" />
+			</ScButton>
 		);
 	}
 
