@@ -239,18 +239,14 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function get_product_template(): array {
-		$template_path = SURECART_PLUGIN_DIR . '/templates/elementor/surecart-single-product.json';
-		if ( ! is_file( $template_path ) || ! is_readable( $template_path ) ) {
-			throw new \Exception( __( 'Template file not found or not readable.', 'surecart' ) );
-		}
-
 		try {
+			$template_path    = SURECART_PLUGIN_DIR . '/templates/elementor/surecart-single-product.json';
 			$template_content = file_get_contents( $template_path );
-		} catch ( \Throwable $th ) {
-			$template_content = '';
-			error_log( 'Error while reading the template file: ' . $th->getMessage() );
-		}
 
-		return $template_content ? json_decode( $template_content, true ) : [];
+			return json_decode( $template_content, true ) ?: [];
+		} catch ( \Throwable $th ) {
+			error_log( 'Error while reading the template file: ' . $th->getMessage() );
+			return [];
+		}
 	}
 }
