@@ -38,13 +38,12 @@ jQuery(window).ready(function () {
 		templateAddSection.html(oldTemplateButton);
 	}
 
-	elementor.on('preview:loaded', function () {
+	elementor.on('preview:loaded', function (e) {
 		jQuery(elementor.$previewContents[0].body).on(
 			'click',
 			'.elementor-surecart-template-button',
-			function (event) {
-				// $e.run('library/open', { toDefault: true });
-				$e.route( 'library/templates/my-templates' );
+			function () {
+				$e.route('library/templates/my-templates');
 
 				// setTimeout(() => {
 				// 	jQuery('#elementor-template-library-filter-text').val('SureCart');
@@ -52,4 +51,38 @@ jQuery(window).ready(function () {
 			}
 		);
 	});
+
+	/**
+	 * When adding a SureCart Product Widget, replace the default block with the product element.
+	 * This addresses issues with nested widgets in Elementor, ensuring state preservation on reload.
+	 */
+	elementor.hooks.addAction(
+		'panel/open_editor/widget/surecart-product',
+		function (panel, model, view) {
+			const productElement = window?.scElementorData?.sc_product_template;
+			const container = elementor.getPreviewContainer();
+
+			// Remove the default SureCart block by clearing the model.
+			model.destroy();
+
+			const at = container.view.collection.length - 1 || 0;
+
+			// Insert the product element content into the editor.
+			productElement.content.forEach((contentElement) => {
+				$e.run('document/elements/create', {
+					container,
+					model: contentElement,
+					options: { at },
+				});
+			});
+
+			$e.run('document/elements/settings', {
+				container,
+				settings: productElement.page_settings,
+				options: {
+					external: true,
+				},
+			});
+		}
+	);
 }, jQuery);

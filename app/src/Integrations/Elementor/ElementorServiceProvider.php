@@ -132,7 +132,8 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url' => site_url(),
+				'site_url'            => site_url(),
+				'sc_product_template' => $this->get_product_template(),
 			]
 		);
 	}
@@ -230,5 +231,26 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function handle_product_page_wrapper( string $content ): string {
 		return ( new ProductPageWrapperService( $content ) )->wrap();
+	}
+
+	/**
+	 * Get SureCart product template.
+	 *
+	 * @return array
+	 */
+	public function get_product_template(): array {
+		$template_path = SURECART_PLUGIN_DIR . '/templates/elementor/surecart-single-product.json';
+		if ( ! is_file( $template_path ) || ! is_readable( $template_path ) ) {
+			throw new \Exception( __( 'Template file not found or not readable.', 'surecart' ) );
+		}
+
+		try {
+			$template_content = file_get_contents( $template_path );
+		} catch ( \Throwable $th ) {
+			$template_content = '';
+			error_log( 'Error while reading the template file: ' . $th->getMessage() );
+		}
+
+		return $template_content ? json_decode( $template_content, true ) : [];
 	}
 }
