@@ -18,6 +18,7 @@ import { SlotFillProvider } from '@wordpress/components';
 import Main from './MainSlot';
 import Sidebar from './SidebarSlot';
 import { getAddons } from './register';
+import Box from '../../ui/Box';
 
 export default ({
 	children,
@@ -73,12 +74,20 @@ export default ({
 		<SlotFillProvider>
 			<Main.Fill>
 				{addonsMain?.map((addon) => {
-					return addon?.render();
+					return (
+						<Box title={addon?.title || addon?.name}>
+							{addon?.render()}
+						</Box>
+					);
 				})}
 			</Main.Fill>
 			<Sidebar.Fill>
 				{addonsSidebar?.map((addon) => {
-					return addon?.render();
+					return (
+						<Box title={addon?.title || addon?.name}>
+							{addon?.render()}
+						</Box>
+					);
 				})}
 			</Sidebar.Fill>
 			<Global
