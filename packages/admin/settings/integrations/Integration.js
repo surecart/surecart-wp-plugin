@@ -91,9 +91,7 @@ export default ({ id }) => {
 	const { record } = useEntityRecord('surecart', 'integration_catalog', id);
 	const { id: _, ...rest } = location.params;
 	const { href, onClick } = useLink({ ...rest });
-	const sizes =
-		record?._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes;
-	const logo = sizes?.medium?.source_url || sizes?.thumbnail?.source_url;
+	const logo = record?.logo_url;
 
 	// Dynamically import the component based on id
 	let IntegrationComponent = null;

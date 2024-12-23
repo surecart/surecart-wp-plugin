@@ -73,4 +73,24 @@ class IntegrationCatalog extends ExternalApiModel {
 
 		return false;
 	}
+
+	/**
+	 * Get the logo URL.
+	 *
+	 * @return string
+	 */
+	public function getLogoUrlAttribute() {
+		// svg first.
+		if ( file_exists( SURECART_PLUGIN_DIR . '/images/integrations/' . $this->slug . '.svg' ) ) {
+			return untrailingslashit( \SureCart::core()->assets()->getUrl() ) . '/images/integrations/' . $this->slug . '.svg';
+		}
+
+		// then png.
+		if ( file_exists( SURECART_PLUGIN_DIR . '/images/integrations/' . $this->slug . '.png' ) ) {
+			return untrailingslashit( \SureCart::core()->assets()->getUrl() ) . '/images/integrations/' . $this->slug . '.png';
+		}
+
+		// then fallback to the featured media.
+		return $this->_embedded['wp:featuredmedia'][0]['media_details']['sizes']['medium']['source_url'] ?? '';
+	}
 }

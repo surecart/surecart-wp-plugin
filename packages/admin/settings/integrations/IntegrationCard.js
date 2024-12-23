@@ -11,9 +11,7 @@ export default ({ integration }) => {
 		...location.params,
 	});
 
-	const sizes =
-		integration?._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes;
-	const logo = sizes?.medium?.source_url || sizes?.thumbnail?.source_url;
+	const logo = integration?.logo_url;
 
 	return (
 		<a
