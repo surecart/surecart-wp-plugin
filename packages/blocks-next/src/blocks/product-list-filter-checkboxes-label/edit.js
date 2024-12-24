@@ -27,11 +27,7 @@ export default ({
 			taxonomies.find((t) => t.slug === taxonomySlug)?.name ??
 			__('Filter by', 'surecart');
 
-		const updatedLabel = label.includes('<strong>')
-			? `<strong>${newLabel}</strong>`
-			: newLabel;
-
-		setAttributes({ label: updatedLabel });
+		setAttributes({ label: newLabel });
 	}, [taxonomySlug]);
 
 	const blockProps = useBlockProps();
@@ -44,7 +40,7 @@ export default ({
 				value={label}
 				onChange={(label) => setAttributes({ label })}
 				withoutInteractiveFormatting
-				allowedFormats={['core/bold', 'core/italic']}
+				allowedFormats={[]}
 			/>
 		</div>
 	);

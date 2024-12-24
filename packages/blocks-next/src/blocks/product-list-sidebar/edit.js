@@ -25,14 +25,14 @@ const TEMPLATE = [
 			[
 				'surecart/product-list-filter-tags-label',
 				{
-					label: '<strong>Applied Filters</strong>',
+					label: 'Applied Filters',
 					fontSize: 'medium',
 				},
 			],
 			[
 				'surecart/product-list-filter-tags-template',
 				{
-					label: '<strong>Applied Filters</strong>',
+					label: 'Applied Filters',
 					style: {
 						spacing: {
 							blockGap: '8px',
@@ -56,7 +56,7 @@ const TEMPLATE = [
 			[
 				'surecart/product-list-filter-tags-clear-all',
 				{
-					label: '<strong>Clear all</strong>',
+					label: 'Clear all',
 					style: {
 						typography: {
 							textDecoration: 'underline',
@@ -84,7 +84,7 @@ const TEMPLATE = [
 			[
 				'surecart/product-list-sort-radio-group-label',
 				{
-					label: '<strong>Sort by</strong>',
+					label: 'Sort by',
 					fontSize: 'medium',
 				},
 			],
@@ -119,7 +119,7 @@ const TEMPLATE = [
 			[
 				'surecart/product-list-filter-checkboxes-label',
 				{
-					label: '<strong>Filter by</strong>',
+					label: 'Filter by',
 					fontSize: 'medium',
 				},
 			],

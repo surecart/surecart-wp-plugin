@@ -12,7 +12,7 @@ export default ({ setAttributes, attributes: { label } }) => {
 				value={label}
 				onChange={(label) => setAttributes({ label })}
 				withoutInteractiveFormatting
-				allowedFormats={['core/bold', 'core/italic']}
+				allowedFormats={[]}
 			/>
 		</div>
 	);
