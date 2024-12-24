@@ -59,30 +59,48 @@ jQuery(window).ready(function () {
 	elementor.hooks.addAction(
 		'panel/open_editor/widget/surecart-product',
 		function (panel, model, view) {
-			const productElement = window?.scElementorData?.sc_product_template;
-			const container = elementor.getPreviewContainer();
-
 			// Remove the default SureCart block by clearing the model.
 			model.destroy();
 
-			const at = container.view.collection.length - 1 || 0;
-
-			// Insert the product element content into the editor.
-			productElement.content.forEach((contentElement) => {
-				$e.run('document/elements/create', {
-					container,
-					model: contentElement,
-					options: { at },
-				});
-			});
-
-			$e.run('document/elements/settings', {
-				container,
-				settings: productElement.page_settings,
-				options: {
-					external: true,
-				},
-			});
+			insertSureCartTemplates(
+				window?.scElementorData?.sc_product_template
+			);
 		}
 	);
+
+	elementor.hooks.addAction(
+		'panel/open_editor/widget/surecart-shop',
+		function (panel, model, view) {
+			// Remove the default SureCart block by clearing the model.
+			model.destroy();
+
+			insertSureCartTemplates(
+				window?.scElementorData?.sc_shop_page_template,
+				model
+			);
+		}
+	);
+
+	function insertSureCartTemplates(template) {
+		const container = elementor.getPreviewContainer();
+
+		const at = container.view.collection.length - 1 || 0;
+
+		// Insert the product element content into the editor.
+		template.content.forEach((contentElement) => {
+			$e.run('document/elements/create', {
+				container,
+				model: contentElement,
+				options: { at },
+			});
+		});
+
+		$e.run('document/elements/settings', {
+			container,
+			settings: template.page_settings,
+			options: {
+				external: true,
+			},
+		});
+	}
 }, jQuery);

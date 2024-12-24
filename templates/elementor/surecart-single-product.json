@@ -97,7 +97,30 @@
 										"buy_button_type": "yes",
 										"button_text": "Buy Now",
 										"button_out_of_stock_text": "Sold Out",
-										"button_unavailable_text": "Unavailable"
+										"button_unavailable_text": "Unavailable",
+										"button_typography_typography": "custom",
+										"button_typography_font_family": "Roboto",
+										"button_typography_font_weight": "600",
+										"button_text_color": "#000000",
+										"button_background_color": "#FFFFFF",
+										"button_border_border": "solid",
+										"button_border_width": {
+											"unit": "px",
+											"top": "1",
+											"right": "1",
+											"bottom": "1",
+											"left": "1",
+											"isLinked": false
+										},
+										"button_border_color": "#313131",
+										"button_border_radius": {
+											"unit": "px",
+											"top": "5",
+											"right": "5",
+											"bottom": "5",
+											"left": "5",
+											"isLinked": false
+										}
 									},
 									"elements": [],
 									"isInner": false,

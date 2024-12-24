@@ -18,8 +18,8 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.elementor.setup']        = function () {
-			return new ElementorSetup();
+		$container['surecart.elementor.seeder']       = function () {
+			return new ElementoTemplateSeeder();
 		};
 		$container['surecart.elementor.widgets']      = function () {
 			return new ElementorWidgetsService();
@@ -54,14 +54,17 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
 
-		// Bootstrap the setup.
-		$container['surecart.elementor.setup']->bootstrap();
+		// Bootstrap the template seeder.
+		$container['surecart.elementor.seeder']->bootstrap();
 
 		// Bootstrap the widgets.
 		$container['surecart.elementor.widgets']->bootstrap();
 
 		// Bootstrap the dynamic tags.
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'elementor_seeder', 'surecart.elementor.seeder' );
 	}
 
 	/**
@@ -132,8 +135,10 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url'            => site_url(),
-				'sc_product_template' => $this->get_product_template(),
+				'site_url'                        => site_url(),
+				'sc_product_template'             => $this->get_product_template(),
+				'sc_shop_page_loop_item_template' => $this->get_shop_page_loop_item_template(),
+				'sc_shop_page_template'           => $this->get_shop_page_template(),
 			]
 		);
 	}
@@ -239,11 +244,50 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function get_product_template(): array {
+		return $this->get_elementor_template_from_file( 'surecart-single-product.json' );
+	}
+
+	/**
+	 * Get SureCart shop page loop item template.
+	 *
+	 * @return array
+	 */
+	public function get_shop_page_loop_item_template(): array {
+		return $this->get_elementor_template_from_file( 'surecart-shop-page-loop-item.json' );
+	}
+
+	/**
+	 * Get SureCart shop page template.
+	 *
+	 * @return array
+	 */
+	public function get_shop_page_template(): array {
+		$template = $this->get_elementor_template_from_file( 'surecart-shop-page.json' );
+
+		// Add the shop page loop item template as template_id.
+		$loop_template = \SureCart::elementor_seeder()->getShopPageLoopItemTemplate();
+		$template_id   = $loop_template->ID ?? $loop_template ?? '';
+
+		if ( ! empty( $template_id ) ) {
+			$template['content'][0]['elements'][0]['settings']['template_id'] = $template_id;
+		}
+
+		return $template;
+	}
+
+	/**
+	 * Get Elementor template from file.
+	 *
+	 * @param string $file_name The file name.
+	 *
+	 * @return array
+	 */
+	public function get_elementor_template_from_file( string $file_name ) {
 		try {
-			$template_path    = SURECART_PLUGIN_DIR . '/templates/elementor/surecart-single-product.json';
+			$template_path    = SURECART_PLUGIN_DIR . '/templates/elementor/' . $file_name;
 			$template_content = file_get_contents( $template_path );
 
-			return json_decode( $template_content, true ) ?: [];
+			return isset( $template_content ) ? json_decode( $template_content, true ) : [];
 		} catch ( \Throwable $th ) {
 			error_log( 'Error while reading the template file: ' . $th->getMessage() );
 			return [];

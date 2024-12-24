@@ -7,16 +7,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Product widget.
+ * Shop Page widget.
  */
-class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
+class Shop extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
 	/**
 	 * Get the widget name.
 	 *
 	 * @return string
 	 */
 	public function get_name() {
-		return 'surecart-product';
+		return 'surecart-shop';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Product', 'surecart' );
+		return esc_html__( 'Shop', 'surecart' );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return string
 	 */
 	public function get_icon() {
-		return 'eicon-product-pages';
+		return 'eicon-gallery-grid';
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return array
 	 */
 	public function get_keywords() {
-		return [ 'product', 'surecart' ];
+		return [ 'product', 'shop', 'surecart' ];
 	}
 
 	/**
@@ -88,7 +88,15 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return array
 	 */
 	protected function get_default_children_elements() {
-		return [];
+		return [
+			[
+				'elType'   => 'container',
+				'settings' => [
+					'_title' => __( 'Product Container', 'surecart' ),
+				],
+				'elements' => [],
+			],
+		];
 	}
 
 	/**
@@ -115,7 +123,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return string
 	 */
 	protected function get_default_children_placeholder_selector() {
-		return '.e-n-product';
+		return '.e-n-shop';
 	}
 
 	/**
@@ -133,7 +141,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return string
 	 */
 	protected function get_html_wrapper_class() {
-		return 'elementor-widget-n-product';
+		return 'elementor-widget-n-shop';
 	}
 
 	/**
@@ -245,7 +253,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 				parent::get_initial_config(),
 				[
 					'support_improved_repeaters' => true,
-					'target_container'           => [ '.e-n-product' ],
+					'target_container'           => [ '.e-n-shop' ],
 					'node'                       => 'details',
 					'is_interlaced'              => true,
 				]
@@ -274,7 +282,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 */
 	protected function content_template() {
 		?>
-		<div class="e-n-product">
+		<div class="e-n-shop">
 		</div>
 		<?php
 	}

@@ -5,44 +5,62 @@
 			"settings": [],
 			"elements": [
 				{
-					"id": "6cb9be69",
-					"settings": {
-						"__dynamic__": {
-							"image": "[elementor-tag id=\"\" name=\"post-featured-image\" settings=\"%7B%22fallback%22%3A%7B%22url%22%3A%22%22%2C%22id%22%3A%22%22%2C%22size%22%3A%22%22%7D%7D\"]",
-							"link": "[elementor-tag id=\"f7edbb2\" name=\"featured-image-data\" settings=\"%7B%7D\"]"
-						},
-						"link_to": "custom"
-					},
-					"elements": [],
-					"isInner": false,
-					"widgetType": "theme-post-featured-image",
-					"elType": "widget"
-				},
-				{
-					"id": "1753ae5",
-					"settings": {
-						"__dynamic__": {
-							"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
-						},
-						"title": "Add Your Heading Text Here",
-						"header_size": "h3"
-					},
-					"elements": [],
-					"isInner": false,
-					"widgetType": "theme-post-title",
-					"elType": "widget"
-				},
-				{
-					"id": "31f39c8f",
-					"settings": {
-						"title": "Add Your Heading Text Here",
-						"__dynamic__": {
-							"title": "[elementor-tag id=\"a2b8ae9\" name=\"sc_product_price\" settings=\"%7B%7D\"]"
+					"id": "59987b87",
+					"settings": [],
+					"elements": [
+						{
+							"id": "33c6b588",
+							"settings": { "_title": "Product Container" },
+							"elements": [
+								{
+									"id": "6cb9be69",
+									"settings": {
+										"__dynamic__": {
+											"image": "[elementor-tag id=\"\" name=\"post-featured-image\" settings=\"%7B%22fallback%22%3A%7B%22url%22%3A%22%22%2C%22id%22%3A%22%22%2C%22size%22%3A%22%22%7D%7D\"]",
+											"link": "[elementor-tag id=\"\" name=\"featured-image-data\" settings=\"%7B%7D\"]"
+										},
+										"link_to": "custom"
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "theme-post-featured-image",
+									"elType": "widget"
+								},
+								{
+									"id": "1753ae5",
+									"settings": {
+										"__dynamic__": {
+											"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+										},
+										"title": "Add Your Heading Text Here",
+										"header_size": "h3"
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "theme-post-title",
+									"elType": "widget"
+								},
+								{
+									"id": "31f39c8f",
+									"settings": {
+										"title": "Add Your Heading Text Here",
+										"__dynamic__": {
+											"title": "[elementor-tag id=\"\" name=\"sc_product_price\" settings=\"%7B%7D\"]"
+										}
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "heading",
+									"elType": "widget"
+								}
+							],
+							"isInner": true,
+							"elType": "container",
+							"isLocked": true
 						}
-					},
-					"elements": [],
+					],
 					"isInner": false,
-					"widgetType": "heading",
+					"widgetType": "surecart-product",
 					"elType": "widget"
 				}
 			],
