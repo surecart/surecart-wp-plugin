@@ -251,7 +251,8 @@ class ProductPostTypeService {
 	 */
 	public function saveAttachmentFields( $post, $attachment ) {
 		$attachid = $post['ID']; // yes this is actually an array here.
-		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] );
+		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] ?? '' );
+		return $post;
 	}
 
 	/**

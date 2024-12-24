@@ -12,9 +12,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScFormatDate } from '@surecart/components-react';
 import PostDropdownButton from '../../components/PostDropdownButton';
 import PostDropdownContent from '../../components/PostDropdownContent';
+import { formatDate } from '../../util/time';
 
 export default ({ invoice, updateInvoice }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
@@ -44,15 +44,7 @@ export default ({ invoice, updateInvoice }) => {
 	};
 
 	const getTitle = () => {
-		return invoice?.issue_date ? (
-			<ScFormatDate
-				type="timestamp"
-				month="short"
-				day="numeric"
-				year="numeric"
-				date={invoice?.issue_date}
-			/>
-		) : isDraftInvoice ? (
+		return invoice?.issue_date ? formatDate(invoice?.issue_date * 1000) : isDraftInvoice ? (
 			__('Today', 'surecart')
 		) : (
 			__('No Issue Date', 'surecart')
@@ -67,14 +59,14 @@ export default ({ invoice, updateInvoice }) => {
 					actions={
 						invoice?.issue_date
 							? [
-									{
-										label: __('Clear', 'surecart'),
-										onClick: () => {
-											updateInvoice({ issue_date: null });
-											onClose();
-										},
+								{
+									label: __('Clear', 'surecart'),
+									onClick: () => {
+										updateInvoice({ issue_date: null });
+										onClose();
 									},
-							  ]
+								},
+							]
 							: []
 					}
 					onClose={onClose}
@@ -131,17 +123,7 @@ export default ({ invoice, updateInvoice }) => {
 				/>
 			) : (
 				<div>
-					{invoice?.issue_date ? (
-						<ScFormatDate
-							type="timestamp"
-							month="short"
-							day="numeric"
-							year="numeric"
-							date={invoice?.issue_date}
-						/>
-					) : (
-						'-'
-					)}
+					{invoice?.issue_date ? formatDate(invoice?.issue_date * 1000) : '-'}
 				</div>
 			)}
 		</PanelRow>

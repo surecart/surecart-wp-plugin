@@ -68,7 +68,7 @@ export default () => {
 				page: 'sc-affiliate-payouts',
 			});
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			setIsSaving(false);
 			setError(e);
 		}

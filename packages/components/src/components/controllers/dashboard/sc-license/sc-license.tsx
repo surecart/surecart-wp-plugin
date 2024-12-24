@@ -170,7 +170,7 @@ export class ScLicense {
               </sc-stacked-list-row>
               <sc-stacked-list-row style={{ '--columns': '2' }}>
                 <div>{__('Date', 'surecart')}</div>
-                <sc-format-date date={this.license?.created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
+                <span>{this.license?.created_at_date}</span>
               </sc-stacked-list-row>
               <sc-stacked-list-row style={{ '--columns': '2' }}>
                 <div>{__('Activations Count', 'surecart')}</div>
@@ -191,7 +191,7 @@ export class ScLicense {
               <sc-stacked-list>
                 {this.license?.activations.data.map(activation => (
                   <sc-stacked-list-row style={{ '--columns': '4' }}>
-                    <sc-format-date class="license__date" date={activation.created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
+                    <div class="license__date">{activation.created_at_date}</div>
                     <div>{activation.name}</div>
                     <div>{activation.fingerprint}</div>
                     <div>

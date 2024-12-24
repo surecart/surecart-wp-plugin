@@ -66,16 +66,17 @@ abstract class ListTable extends \WP_List_Table {
 		$created = sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
 			esc_attr( $model->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $model->created_at ) ),
+			esc_html( $model->created_at_date_time ),
 			esc_html( TimeDate::humanTimeDiff( $model->created_at ) )
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
 			__( 'Updated', 'surecart' ),
-			esc_attr( $model->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $model->updated_at ) ),
+			esc_attr( $model->updated_at_date_time ),
+			esc_html( $model->updated_at_date_time ),
 			esc_html( TimeDate::humanTimeDiff( $model->updated_at ) )
 		);
+
 		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
@@ -87,22 +88,13 @@ abstract class ListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_created( $model ) {
-		return sprintf(
-			'<sc-format-date
-				date="%1$s"
-				month="long"
-				day="numeric"
-				year="numeric"
-				hour="numeric"
-				minute="numeric"
-				type="timestamp"></sc-format-date>',
-			esc_attr( $model->created_at )
-		);
+		return esc_attr( $model->created_at_date_time );
 	}
+
 	/**
 	 * The mode for the model.
 	 *
-	 * @param SureCart\Model $model Model.
+	 * @param \SureCart\Models\Model $model Model.
 	 *
 	 * @return string
 	 */

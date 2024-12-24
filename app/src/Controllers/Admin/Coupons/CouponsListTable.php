@@ -2,11 +2,9 @@
 
 namespace SureCart\Controllers\Admin\Coupons;
 
-use NumberFormatter;
 use SureCart\Models\Coupon;
 use SureCart\Models\Product;
 use SureCart\Models\Promotion;
-use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
@@ -160,23 +158,24 @@ class CouponsListTable extends ListTable {
 		echo \esc_html( "$coupon->times_redeemed / $max" );
 		?>
 		<br />
-		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $coupon->redeem_by ) ); ?></div>
+		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $coupon ) ); ?></div>
 		<?php
 		return ob_get_clean();
 	}
 
 	/**
-	 * Render the "Redeem By"
+	 * Render the Valid Until string.
 	 *
-	 * @param string $timestamp Redeem timestamp.
+	 * @param \SureCart\Models\Coupon $coupon Coupon model.
 	 * @return string
 	 */
-	public function get_expiration_string( $timestamp = '' ) {
-		if ( ! $timestamp ) {
+	public function get_expiration_string( $coupon ) {
+		if ( ! $coupon->redeem_by ) {
 			return '';
 		}
+
 		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp ) );
+		return sprintf( __( 'Valid until %s', 'surecart' ), $coupon->redeem_by_date );
 	}
 
 	/**

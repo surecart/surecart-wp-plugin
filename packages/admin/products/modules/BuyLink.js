@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ScDivider } from '@surecart/components-react';
-import { useSetting } from '@wordpress/block-editor';
+import { useSettings } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
@@ -38,7 +38,7 @@ export default ({ product, updateProduct, loading }) => {
 	);
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',
@@ -125,7 +125,7 @@ export default ({ product, updateProduct, loading }) => {
 								'Instantly publish a shareable page for this product.',
 								'surecart'
 							)}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata?.wp_buy_link_enabled ===
 								'true'
@@ -144,7 +144,7 @@ export default ({ product, updateProduct, loading }) => {
 								'Change the instant checkout to test mode.',
 								'surecart'
 							)}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata
 									?.wp_buy_link_test_mode_enabled === 'true'
@@ -160,7 +160,7 @@ export default ({ product, updateProduct, loading }) => {
 						<ScDivider />
 						<ToggleControl
 							label={__('Show store logo', 'surecart')}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata?.wp_buy_link_logo_disabled !==
 								'true'
@@ -189,7 +189,7 @@ export default ({ product, updateProduct, loading }) => {
 						)}
 						<ToggleControl
 							label={__('Show product image', 'surecart')}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata
 									?.wp_buy_link_product_image_disabled !==
@@ -205,7 +205,7 @@ export default ({ product, updateProduct, loading }) => {
 						></ToggleControl>
 						<ToggleControl
 							label={__('Show product description', 'surecart')}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata
 									?.wp_buy_link_product_description_disabled !==
@@ -220,7 +220,7 @@ export default ({ product, updateProduct, loading }) => {
 						/>
 						<ToggleControl
 							label={__('Show coupon field', 'surecart')}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata
 									?.wp_buy_link_coupon_field_disabled !==
@@ -236,7 +236,7 @@ export default ({ product, updateProduct, loading }) => {
 						/>
 						<ToggleControl
 							label={__('Show terms and conditions', 'surecart')}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata
 									?.wp_buy_link_terms_disabled !== 'true'
@@ -252,7 +252,7 @@ export default ({ product, updateProduct, loading }) => {
 
 						<ToggleControl
 							label={__('Custom thank you page', 'surecart')}
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							checked={
 								product?.metadata
 									?.wp_buy_link_success_page_enabled ===
@@ -286,7 +286,7 @@ export default ({ product, updateProduct, loading }) => {
 						)}
 						<ScDivider />
 						<BaseControl
-							__nextHasNoMarginBottom
+							__nextHasNoMarginBottom={true}
 							label={__('Link', 'surecart')}
 							css={css`
 								overflow: hidden;

@@ -13,7 +13,8 @@ import {
 } from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { dateI18n, getDate, getSettings } from '@wordpress/date';
+import { getDate } from '@wordpress/date';
+import { formatDateTime } from '../../../util/time';
 
 export default ({ product, updateProduct }) => {
 	// Use internal state instead of a ref to make sure that the component
@@ -108,7 +109,6 @@ export default ({ product, updateProduct }) => {
 };
 
 function RenderDropdownButton({ isOpen, onClick, product }) {
-	const { formats, timezone } = getSettings();
 	return (
 		<Button
 			className="edit-post-post-url__toggle"
@@ -121,11 +121,7 @@ function RenderDropdownButton({ isOpen, onClick, product }) {
 				text-align: right;
 			`}
 		>
-			{dateI18n(
-				`${formats.date} ${formats.time}`,
-				product?.cataloged_at * 1000,
-				timezone.string
-			)}
+			{formatDateTime(product?.cataloged_at * 1000)}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
