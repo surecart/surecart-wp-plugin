@@ -19,7 +19,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart.elementor.seeder']       = function () {
-			return new ElementoTemplateSeeder();
+			return new ElementorTemplateSeeder();
 		};
 		$container['surecart.elementor.widgets']      = function () {
 			return new ElementorWidgetsService();

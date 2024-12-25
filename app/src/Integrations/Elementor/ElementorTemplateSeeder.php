@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Elementor Template Seeder.
  */
-class ElementoTemplateSeeder {
+class ElementorTemplateSeeder {
 	const SURECART_SHOP_PAGE_LOOP_TEMPLATE = 'surecart_elementor_shop_page_loop_template';
 
 	/**
@@ -86,15 +86,19 @@ class ElementoTemplateSeeder {
 					]
 				);
 
-			if ( empty( $result ) || empty( $result[0] ) ) {
+			if ( empty( $result ) || is_wp_error( $result ) ) {
+				error_log( 'Error creating SureCart Shop Page Loop Item template: ' );
+				error_log( print_r( $result, true ) );
 				return;
 			}
 
 			$template    = $result[0];
 			$template_id = $template['template_id'];
 
-			update_post_meta( $template_id, '_elementor_edit_mode', 'builder' );
+			update_post_meta( $template_id, Document::BUILT_WITH_ELEMENTOR_META_KEY, 'builder' );
 			update_post_meta( $template_id, Document::TYPE_META_KEY, LoopDocument::get_type() );
+			update_post_meta( $template_id, Document::PAGE_META_KEY, [] );
+			update_post_meta( $template_id, '_elementor_source', 'post' );
 
 			update_post_meta( $template_id, '_elementor_version', ELEMENTOR_VERSION );
 			update_post_meta( $template_id, '_elementor_pro_version', ELEMENTOR_PRO_VERSION ?? '' );
