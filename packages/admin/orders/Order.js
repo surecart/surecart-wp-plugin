@@ -33,7 +33,7 @@ import LineItems from './modules/LineItems';
 import OrderCancelConfirmModal from './modules/OrderCancelConfirmModal';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
 import PaymentFailures from './modules/PaymentFailures';
-import Refund from './modules/Refund';
+import CreateRefund from './modules/Refund/CreateRefund';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
@@ -453,7 +453,7 @@ export default () => {
 				/>
 
 				{modal === 'refund' && (
-					<Refund
+					<CreateRefund
 						charge={refundCharge}
 						purchases={purchases}
 						refunds={refunds}

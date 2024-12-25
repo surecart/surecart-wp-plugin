@@ -18,8 +18,8 @@ import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 import { getSKUText } from '../../../util/products';
-import RefundLineItem from './RefundLineItem';
-import Refunds from '../Refunds';
+import RefundLineItem from '../Refund/RefundLineItem';
+import RefundHistory from '../Refund/RefundHistory';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -361,7 +361,7 @@ export default ({ order, checkout, refunds, loading }) => {
 				)}
 			</Fragment>
 
-			<Refunds
+			<RefundHistory
 				open={modal === 'refund_history'}
 				chargeId={order?.checkout?.charge?.id}
 				refunds={refunds}

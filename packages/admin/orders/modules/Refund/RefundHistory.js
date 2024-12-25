@@ -25,8 +25,8 @@ import {
 	ScTag,
 	ScText,
 } from '@surecart/components-react';
-import { refundReasons } from '../../util/refunds';
-import ProductLineItem from '../../ui/ProductLineItem';
+import { refundReasons } from '../../../util/refunds';
+import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ refunds, loading, onRequestClose, open }) => {
 	const anchor = useRef();

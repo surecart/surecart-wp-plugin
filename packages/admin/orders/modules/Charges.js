@@ -1,10 +1,16 @@
+/**
+ * External dependencies.
+ */
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 
+/**
+ * Internal dependencies.
+ */
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
-import Refund from './Refund';
+import CreateRefund from './Refund/CreateRefund';
 
 export default ({ checkoutId, purchases, refunds, refundsLoading }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
@@ -82,8 +88,9 @@ export default ({ checkoutId, purchases, refunds, refundsLoading }) => {
 				data={charges}
 				isLoading={loading}
 			/>
+
 			{!!refundCharge && (
-				<Refund
+				<CreateRefund
 					charge={refundCharge}
 					purchases={purchases}
 					onRefunded={onRefunded}
