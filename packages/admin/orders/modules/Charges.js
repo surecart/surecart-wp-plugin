@@ -12,7 +12,7 @@ import { useState } from '@wordpress/element';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
 import CreateRefund from './Refund/CreateRefund';
 
-export default ({ checkoutId, purchases, refunds, refundsLoading }) => {
+export default ({ checkoutId, purchases }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { charges, loading, invalidateCharges } = useSelect(
@@ -95,8 +95,6 @@ export default ({ checkoutId, purchases, refunds, refundsLoading }) => {
 					purchases={purchases}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
-					refunds={refunds}
-					refundsLoading={refundsLoading}
 				/>
 			)}
 		</>

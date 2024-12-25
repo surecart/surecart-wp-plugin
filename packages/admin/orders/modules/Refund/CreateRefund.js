@@ -28,16 +28,10 @@ import {
 } from '@surecart/components-react';
 import Error from '../../../components/Error';
 import Box from '../../../ui/Box';
+import useRefund from '../../hooks/useRefund';
 import { refundResasonOptions } from '../../../util/refunds';
 
-export default ({
-	refunds,
-	refundsLoading,
-	charge,
-	onRequestClose,
-	onRefunded,
-	purchases,
-}) => {
+export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [loading, setLoading] = useState(false);
 	const [amount, setAmount] = useState(
 		charge?.amount - charge?.refunded_amount
@@ -45,6 +39,7 @@ export default ({
 	const [totalQuantity, setTotalQuantity] = useState(0);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
+	const { refunds, loading: refundsLoading } = useRefund(charge?.id);
 
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
@@ -115,7 +110,7 @@ export default ({
 		);
 	}, [purchases, refunds]);
 
-	// on change individual amount, update the setAmount.
+	// On change individual amount, update the setAmount.
 	useEffect(() => {
 		const totalAmount = items.reduce((total, item) => {
 			return total + item.quantity * item.lineItem?.price?.amount;
@@ -129,8 +124,6 @@ export default ({
 		}, 0);
 		setTotalQuantity(totalQuantity);
 	}, [items]);
-
-	console.log('purchases', purchases);
 
 	/**
 	 * Handle submit.

@@ -20,6 +20,7 @@ import LineItem from './LineItem';
 import { getSKUText } from '../../../util/products';
 import RefundLineItem from '../Refund/RefundLineItem';
 import RefundHistory from '../Refund/RefundHistory';
+import useRefund from '../../hooks/useRefund';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -30,9 +31,10 @@ const status = {
 	draft: __('Draft', 'surecart'),
 };
 
-export default ({ order, checkout, refunds, loading }) => {
+export default ({ order, checkout }) => {
 	const [modal, setModal] = useState(false);
 	const line_items = checkout?.line_items?.data;
+	const { refunds, loading } = useRefund(order?.checkout?.charge?.id);
 
 	const statusBadge = () => {
 		if (!order?.status) {
@@ -79,8 +81,6 @@ export default ({ order, checkout, refunds, loading }) => {
 	)?.find(
 		({ id }) => checkout?.selected_shipping_choice === id
 	)?.shipping_method;
-
-	console.log('refunds', refunds);
 
 	return (
 		<Box
@@ -184,47 +184,36 @@ export default ({ order, checkout, refunds, loading }) => {
 						/>
 					)}
 
-					{!!checkout?.refunded_amount && (
-						<>
-							{/* Refunded line items */}
-							{refunds?.map((refund, index) => {
-								return (
-									<RefundLineItem
-										key={refund.id}
-										refund={refund}
-										label={
-											index === 0 ? (
-												<>
-													{__('Refunded', 'surecart')}{' '}
-													<ScButton
-														size="small"
-														onClick={() =>
-															setModal(
-																'refund_history'
-															)
-														}
-													>
-														{__(
-															'History',
-															'surecart'
-														)}
-													</ScButton>
-												</>
-											) : (
-												''
-											)
-										}
-									/>
-								);
-							})}
-
-							<LineItem
-								title={__('Net Payment', 'surecart')}
-								currency={checkout?.currency}
-								value={checkout?.net_paid_amount}
+					{!!checkout?.refunded_amount &&
+						refunds?.map((refund, index) => (
+							<RefundLineItem
+								key={refund.id}
+								refund={refund}
+								label={
+									index === 0 ? (
+										<>
+											{__('Refunded', 'surecart')}{' '}
+											<ScButton
+												size="small"
+												onClick={() =>
+													setModal('refund_history')
+												}
+											>
+												{__('History', 'surecart')}
+											</ScButton>
+										</>
+									) : (
+										''
+									)
+								}
 							/>
-						</>
-					)}
+						))}
+
+					<LineItem
+						title={__('Net Payment', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.net_paid_amount}
+					/>
 
 					{checkout?.tax_reverse_charged_amount > 0 && (
 						<LineItem
@@ -364,8 +353,6 @@ export default ({ order, checkout, refunds, loading }) => {
 			<RefundHistory
 				open={modal === 'refund_history'}
 				chargeId={order?.checkout?.charge?.id}
-				refunds={refunds}
-				loading={loading}
 				onRequestClose={() => setModal(false)}
 			/>
 		</Box>

@@ -27,8 +27,9 @@ import {
 } from '@surecart/components-react';
 import { refundReasons } from '../../../util/refunds';
 import ProductLineItem from '../../../ui/ProductLineItem';
+import useRefund from '../../hooks/useRefund';
 
-export default ({ refunds, loading, onRequestClose, open }) => {
+export default ({ chargeId, onRequestClose, open }) => {
 	const anchor = useRef();
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -51,6 +52,8 @@ export default ({ refunds, loading, onRequestClose, open }) => {
 		}
 		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
 	};
+
+	const { refunds, loading } = useRefund(chargeId);
 
 	// don't render anything if loading.
 	if (loading || !refunds?.length) {

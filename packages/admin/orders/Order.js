@@ -131,42 +131,6 @@ export default () => {
 		[id]
 	);
 
-	const chargeId = order?.checkout?.charge?.id;
-	const { refunds, refundsLoading } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'refund',
-				{
-					context: 'edit',
-					charge_ids: [chargeId],
-					per_page: 100,
-					expand: [
-						'refund_items',
-						'refund_item.line_item',
-						'line_item.price',
-						'line_item.variant',
-						'variant.image',
-						'price.product',
-						'product.featured_product_media',
-						'product.product_medias',
-						'product_media.media',
-					],
-				},
-			];
-			const refunds = select(coreStore).getEntityRecords(...queryArgs);
-			const loading = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			);
-			return {
-				refunds,
-				refundsLoading: loading,
-			};
-		},
-		[chargeId]
-	);
-
 	const { returnRequests, returnRequestsLoading } = useSelect(
 		(select) => {
 			if (!order?.id) {
@@ -278,6 +242,7 @@ export default () => {
 	const [refundCharge, setRefundCharge] = useState(
 		order?.checkout?.charges?.data?.[0]
 	);
+
 	useEffect(() => {
 		setRefundCharge(order?.checkout?.charges?.data?.[0]);
 	}, [order?.checkout?.charges?.data]);
@@ -416,13 +381,10 @@ export default () => {
 					checkout={order?.checkout}
 					charge={order?.checkout?.charge}
 					loading={!hasLoadedOrder}
-					refunds={refunds}
 				/>
 				<Charges
 					checkoutId={checkoutId}
 					purchases={purchases}
-					refunds={refunds}
-					refundsLoading={refundsLoading}
 				/>
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
@@ -456,8 +418,6 @@ export default () => {
 					<CreateRefund
 						charge={refundCharge}
 						purchases={purchases}
-						refunds={refunds}
-						refundsLoading={refundsLoading}
 						onRefunded={onRefunded}
 						onRequestClose={() => {
 							setRefundCharge(false);
