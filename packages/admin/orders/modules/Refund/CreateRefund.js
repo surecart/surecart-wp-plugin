@@ -116,14 +116,23 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 			(purchases || [])
 				.filter(({ id, quantity, ...item }) => {
 					const lineItem = item.line_items?.data?.[0];
-					const qtyRefunded =
-						getRefundedItem(lineItem)?.quantity || 0;
+					const qtyRefunded = refunds.reduce((total, refund) => {
+						const refundItem = refund?.refund_items?.data?.find(
+							(item) => item?.line_item?.id === lineItem?.id
+						);
+						return total + (refundItem?.quantity || 0);
+					}, 0);
 					return quantity - qtyRefunded > 0;
 				})
 				.map(({ id, quantity, ...item }) => {
 					const lineItem = item.line_items?.data?.[0];
+					const qtyRefunded = refunds.reduce((total, refund) => {
+						const refundItem = refund?.refund_items?.data?.find(
+							(item) => item?.line_item?.id === lineItem?.id
+						);
+						return total + (refundItem?.quantity || 0);
+					}, 0);
 					const refundedItem = getRefundedItem(lineItem);
-					const qtyRefunded = refundedItem?.quantity || 0;
 					return {
 						...item,
 						id,
