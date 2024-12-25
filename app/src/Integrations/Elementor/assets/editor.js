@@ -28,20 +28,6 @@ jQuery(window).ready(function () {
 		win.focus();
 	});
 
-	elementor.on('preview:loaded', function (e) {
-		jQuery(elementor.$previewContents[0].body).on(
-			'click',
-			'.elementor-surecart-template-button',
-			function () {
-				$e.route('library/templates/my-templates');
-
-				// setTimeout(() => {
-				// 	jQuery('#elementor-template-library-filter-text').val('SureCart');
-				// }, 50);
-			}
-		);
-	});
-
 	/**
 	 * When adding a SureCart Product Widget, replace the default block with the product element.
 	 * This addresses issues with nested widgets in Elementor, ensuring state preservation on reload.
