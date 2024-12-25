@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
@@ -31,7 +31,8 @@ import Box from '../../../ui/Box';
 import useRefund from '../../hooks/useRefund';
 import { refundResasonOptions } from '../../../util/refunds';
 
-export default ({ charge, onRequestClose, onRefunded, purchases }) => {
+export default ({ charge, onRequestClose, onRefunded }) => {
+	const checkoutId = charge?.checkout?.id ?? charge?.checkout;
 	const [loading, setLoading] = useState(false);
 	const [amount, setAmount] = useState(
 		charge?.amount - charge?.refunded_amount
@@ -39,10 +40,36 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 	const [totalQuantity, setTotalQuantity] = useState(0);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
-	const { refunds, loading: refundsLoading } = useRefund(charge?.id);
+	const { refunds, loading: fetchingRefunds } = useRefund(charge?.id);
 
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
+	const { purchases, fetchingPurchases } = useSelect(
+		(select) => {
+			if (!checkoutId) {
+				return {
+					purchases: [],
+					loading: true,
+				};
+			}
+			const entityData = [
+				'surecart',
+				'purchase',
+				{
+					checkout_ids: checkoutId ? [checkoutId] : null,
+					expand: ['product', 'line_item', 'line_item.price'],
+				},
+			];
+			return {
+				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[checkoutId]
+	);
 
 	const [items, setItems] = useState([]);
 	const getRefundedItem = (purchaseItem) => {
@@ -629,7 +656,7 @@ export default ({ charge, onRequestClose, onRefunded, purchases }) => {
 
 					<Error error={error} setError={setError} />
 
-					{(loading || refundsLoading) && (
+					{(loading || fetchingRefunds || fetchingPurchases) && (
 						<sc-block-ui
 							spinner
 							style={{ zIndex: 9 }}

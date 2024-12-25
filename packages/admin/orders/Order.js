@@ -382,10 +382,7 @@ export default () => {
 					charge={order?.checkout?.charge}
 					loading={!hasLoadedOrder}
 				/>
-				<Charges
-					checkoutId={checkoutId}
-					purchases={purchases}
-				/>
+				<Charges checkoutId={checkoutId} />
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
@@ -417,12 +414,8 @@ export default () => {
 				{modal === 'refund' && (
 					<CreateRefund
 						charge={refundCharge}
-						purchases={purchases}
 						onRefunded={onRefunded}
-						onRequestClose={() => {
-							setRefundCharge(false);
-							setModal(false);
-						}}
+						onRequestClose={() => setModal(false)}
 					/>
 				)}
 			</>
