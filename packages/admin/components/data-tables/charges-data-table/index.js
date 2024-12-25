@@ -1,8 +1,15 @@
-import DataTable from '../../DataTable';
-import { ScButton, ScPaymentMethod } from '@surecart/components-react';
+/**
+ * External dependencies.
+ */
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
+import { ScButton, ScPaymentMethod } from '@surecart/components-react';
+import DataTable from '../../DataTable';
 
 export default ({
 	data = [],
@@ -36,10 +43,7 @@ export default ({
 	};
 
 	const renderRefundButton = (charge) => {
-		if (charge?.fully_refunded) {
-			return null;
-		}
-		if (!onRefundClick) {
+		if (charge?.fully_refunded || !onRefundClick) {
 			return null;
 		}
 

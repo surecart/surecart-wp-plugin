@@ -33,13 +33,12 @@ import LineItems from './modules/LineItems';
 import OrderCancelConfirmModal from './modules/OrderCancelConfirmModal';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
 import PaymentFailures from './modules/PaymentFailures';
-import Refunds from './modules/Refunds';
+import Refund from './modules/Refund';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
 import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
 import ReturnItems from './modules/ReturnRequest/ReturnItems';
-import Refund from '../components/data-tables/charges-data-table/Refund';
 
 export default () => {
 	const [modal, setModal] = useState();

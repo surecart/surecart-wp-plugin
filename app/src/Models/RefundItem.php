@@ -5,20 +5,20 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasLineItem;
 
 /**
- * RefundItem model
+ * RefundItem model.
  */
 class RefundItem extends Model {
 	use HasLineItem;
 
 	/**
-	 * Rest API endpoint
+	 * Rest API endpoint.
 	 *
 	 * @var string
 	 */
 	protected $endpoint = 'refund_items';
 
 	/**
-	 * Object name
+	 * Object name.
 	 *
 	 * @var string
 	 */

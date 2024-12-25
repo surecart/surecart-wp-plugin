@@ -26,7 +26,7 @@ import {
 	ScFormatNumber,
 	ScText,
 } from '@surecart/components-react';
-import Error from '../../Error';
+import Error from '../../../components/Error';
 import Box from '../../../ui/Box';
 import { refundResasonOptions } from '../../../util/refunds';
 

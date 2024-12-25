@@ -4,7 +4,7 @@ import { __, _n } from '@wordpress/i18n';
 import { useState } from 'react';
 
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
-import Refund from '../../components/data-tables/charges-data-table/Refund';
+import Refund from './Refund';
 
 export default ({ checkoutId, purchases, refunds, refundsLoading }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
