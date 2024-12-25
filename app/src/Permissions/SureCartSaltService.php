@@ -52,17 +52,17 @@ class SureCartSaltService {
 		// Create the service.
 		try {
 			$service = new WPConfigTransformService( $this->getWpConfigPath() );
+
+			// sanity check.
+			if ( $service->exists( 'constant', 'SURECART_ENCRYPTION_KEY' ) ) {
+				return;
+			}
+
+			$service->add( 'constant', 'SURECART_ENCRYPTION_KEY', LOGGED_IN_KEY );
 		} catch ( \Exception $e ) {
 			error_log( $e->getMessage() );
 			// silently fail.
 			return;
 		}
-
-		// sanity check.
-		if ( $service->exists( 'constant', 'SURECART_ENCRYPTION_KEY' ) ) {
-			return;
-		}
-
-		$service->add( 'constant', 'SURECART_ENCRYPTION_KEY', LOGGED_IN_KEY );
 	}
 }
