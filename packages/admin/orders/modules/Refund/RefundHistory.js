@@ -15,7 +15,6 @@ import {
 	ScButton,
 	ScDrawer,
 	ScEmpty,
-	ScFormatDate,
 	ScFormatNumber,
 	ScIcon,
 	ScSkeleton,
@@ -28,6 +27,7 @@ import {
 import { refundReasons } from '../../../util/refunds';
 import ProductLineItem from '../../../ui/ProductLineItem';
 import useRefund from '../../hooks/useRefund';
+import { formatDateTime } from '../../../util/time';
 
 export default ({ chargeId, onRequestClose, open }) => {
 	const anchor = useRef();
@@ -222,15 +222,7 @@ export default ({ chargeId, onRequestClose, open }) => {
 									)}
 								</ScTableCell>
 								<ScTableCell>
-									<ScFormatDate
-										date={updated_at}
-										month="long"
-										day="numeric"
-										year="numeric"
-										hour="numeric"
-										minute="numeric"
-										type="timestamp"
-									/>
+									{formatDateTime(updated_at * 1000)}
 								</ScTableCell>
 								<ScTableCell>
 									<sc-text
