@@ -13,7 +13,6 @@ import { useState } from '@wordpress/element';
 import {
 	ScButton,
 	ScDropdown,
-	ScFormatDate,
 	ScFormControl,
 	ScIcon,
 	ScInput,
@@ -29,6 +28,7 @@ import Box from '../../ui/Box';
 import PaymentMethods from './PaymentMethods';
 import PaymentCollectionDueDate from '../components/PaymentCollectionDueDate';
 import { useInvoice } from '../hooks/useInvoice';
+import { formatDate } from '../../util/time';
 
 export default ({ paymentMethod, setPaymentMethod }) => {
 	const { invoice, checkout, loading, editInvoice, isDraftInvoice } =
@@ -43,13 +43,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 				{__('Charged on ', 'surecart')}{' '}
 				{checkout?.paid_at ? (
 					<>
-						<ScFormatDate
-							date={checkout?.paid_at}
-							type="timestamp"
-							month="long"
-							day="numeric"
-							year="numeric"
-						/>
+						{checkout?.paid_at_date}
 
 						{!!paymentMethod?.id && !checkout?.manual_payment && (
 							<div
@@ -120,13 +114,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 				{invoice?.due_date ? (
 					<>
 						{__('Payment is requested by ', 'surecart')}{' '}
-						<ScFormatDate
-							date={invoice?.due_date}
-							type="timestamp"
-							month="long"
-							day="numeric"
-							year="numeric"
-						/>
+						{formatDate(invoice?.due_date * 1000)}
 					</>
 				) : (
 					__('No due date.', 'surecart')

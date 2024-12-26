@@ -12,7 +12,7 @@ import {
 	BlockVerticalAlignmentToolbar,
 	InspectorControls,
 	useBlockProps,
-	useSetting,
+	useSettings,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 	store as blockEditorStore,
@@ -51,7 +51,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 	});
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',

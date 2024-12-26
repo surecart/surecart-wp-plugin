@@ -1,4 +1,3 @@
-import { ScFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ subscription }) => {
@@ -23,13 +22,7 @@ export default ({ subscription }) => {
 				<div>
 					<strong>{sprintf(__('Cancels on', 'surecart'))}</strong>
 				</div>
-				<ScFormatDate
-					date={subscription.current_period_end_at}
-					type="timestamp"
-					month="long"
-					day="numeric"
-					year="numeric"
-				></ScFormatDate>
+				{subscription.current_period_end_at_date}
 			</div>
 		);
 	}
@@ -40,13 +33,7 @@ export default ({ subscription }) => {
 				<div>
 					<strong>{sprintf(__('Ended', 'surecart'))}</strong>
 				</div>
-				<ScFormatDate
-					date={subscription.ended_at}
-					type="timestamp"
-					month="long"
-					day="numeric"
-					year="numeric"
-				></ScFormatDate>
+				{subscription.ended_at_date}
 			</div>
 		);
 	}
@@ -57,13 +44,7 @@ export default ({ subscription }) => {
 				<div>
 					<strong>{sprintf(__('Trial ends on', 'surecart'))}</strong>
 				</div>
-				<ScFormatDate
-					date={subscription?.current_period_end_at}
-					type="timestamp"
-					month="long"
-					day="numeric"
-					year="numeric"
-				></ScFormatDate>
+				{subscription?.current_period_end_at_date}
 			</div>
 		);
 	}
@@ -76,13 +57,7 @@ export default ({ subscription }) => {
 				<div>
 					<strong>{sprintf(__('Renews on', 'surecart'))}</strong>
 				</div>
-				<ScFormatDate
-					date={subscription.current_period_end_at}
-					type="timestamp"
-					month="long"
-					day="numeric"
-					year="numeric"
-				></ScFormatDate>
+				{subscription.current_period_end_at_date}
 			</div>
 		);
 	}

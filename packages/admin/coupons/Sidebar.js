@@ -2,14 +2,13 @@
 import { css, jsx } from '@emotion/core';
 
 import { __, sprintf, _n } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import { ScFormatDate } from '@surecart/components-react';
+import { formatDateTime } from '../util/time';
 
-export default ({ coupon, updateCoupon, loading }) => {
+export default ({ coupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
 			return sprintf(__('%s%% off', 'surecart'), coupon?.percent_off);
@@ -79,13 +78,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 
 					{!!coupon?.redeem_by && (
 						<Definition title={__('Redeem By', 'surecart')}>
-							<ScFormatDate
-								type="timestamp"
-								date={coupon.redeem_by}
-								month="long"
-								day="numeric"
-								year="numeric"
-							/>
+							{formatDateTime(coupon.redeem_by * 1000)}
 						</Definition>
 					)}
 
@@ -93,19 +86,13 @@ export default ({ coupon, updateCoupon, loading }) => {
 
 					{!!coupon?.updated_at && (
 						<Definition title={__('Last Updated', 'surecart')}>
-							{format(
-								'F j, Y',
-								new Date(coupon.updated_at * 1000)
-							)}
+							{coupon.updated_at_date_time}
 						</Definition>
 					)}
 
 					{!!coupon?.created_at && (
 						<Definition title={__('Created', 'surecart')}>
-							{format(
-								'F j, Y',
-								new Date(coupon.created_at * 1000)
-							)}
+							{coupon.created_at_date_time}
 						</Definition>
 					)}
 					{!!coupon?.archived_at && (
@@ -115,10 +102,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 							`}
 							title={__('Archived On', 'surecart')}
 						>
-							{format(
-								'F j, Y',
-								new Date(product?.archived_at * 1000)
-							)}
+							{coupon?.archived_at_date_time}
 						</Definition>
 					)}
 				</Fragment>

@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Models\Product;
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 /**
@@ -151,7 +150,7 @@ class ProductsListTable extends ListTable {
 				'status'              => __( 'Product Page', 'surecart' ),
 				'featured'            => __( 'Featured', 'surecart' ),
 				'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
-				'date'                => __( 'Date', 'surecart' ),
+				'date'                => __( 'Created', 'surecart' ),
 			)
 		);
 	}
@@ -309,7 +308,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Handle the type column output.
 	 *
-	 * @param \SureCart\Models\Price $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 *
 	 * @return string
 	 */
@@ -381,19 +380,14 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
+	 * Handle the product cataloged date column.
 	 *
-	 * @param \SureCart\Models\Price $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 *
 	 * @return string
 	 */
 	public function column_date( $product ) {
-		return sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $product->cataloged_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->cataloged_at ) ),
-			esc_html( TimeDate::formatDateAndTime( $product->cataloged_at ) )
-		);
+		return $product->cataloged_at_date_time;
 	}
 
 	/**

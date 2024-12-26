@@ -54,7 +54,7 @@ class InvoicesListTable extends ListTable {
 			'customer'   => __( 'Customer', 'surecart' ),
 			'method'     => __( 'Method', 'surecart' ),
 			'total'      => __( 'Total', 'surecart' ),
-			'date'       => __( 'Created', 'surecart' ),
+			'created'    => __( 'Created', 'surecart' ),
 			'mode'       => '',
 		];
 	}
@@ -189,17 +189,6 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the total column.
-	 *
-	 * @param Invoice $invoice Invoice model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $invoice ) {
-		return '<sc-format-date date="' . (int) $invoice->created_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
-	}
-
-	/**
 	 * Handle invoice due date.
 	 *
 	 * @param Invoice $invoice Invoice model.
@@ -207,7 +196,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_due_date( $invoice ) {
-		return $invoice->due_date ? '<sc-format-date date="' . (int) $invoice->due_date . '" type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>' : '-';
+		return $invoice->due_date_date ?? '-';
 	}
 
 	/**
@@ -218,7 +207,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_issue_date( $invoice ) {
-		return $invoice->issue_date ? '<sc-format-date date="' . (int) $invoice->issue_date . '" type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>' : '-';
+		return $invoice->issue_date_date ?? '-';
 	}
 
 	/**

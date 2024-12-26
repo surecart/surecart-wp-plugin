@@ -3,7 +3,7 @@ namespace SureCart\Tests\Controllers\Permissions;
 
 use SureCart\Models\User;
 use SureCart\Permissions\Models\SubscriptionPermissionsController;
-use SureCart\Permissions\RolesServiceProvider;
+use SureCart\Permissions\PermissionsServiceProvider;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
@@ -20,7 +20,7 @@ class SubscriptionPermissionsControllerTest extends SureCartUnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				RequestServiceProvider::class,
-				RolesServiceProvider::class,
+				PermissionsServiceProvider::class,
 				ErrorsServiceProvider::class
 			]
 		], false);

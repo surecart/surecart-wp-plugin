@@ -94,7 +94,7 @@ export default ({
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
-						const { currency, amount, created_at } = charge;
+						const { currency, amount, created_at_date } = charge;
 						return {
 							amount: (
 								<sc-text
@@ -125,15 +125,7 @@ export default ({
 									)}
 								</sc-text>
 							),
-							date: (
-								<sc-format-date
-									type="timestamp"
-									date={created_at}
-									month="long"
-									day="numeric"
-									year="numeric"
-								></sc-format-date>
-							),
+							date: created_at_date,
 							method: (
 								<ScPaymentMethod
 									paymentMethod={charge?.payment_method}

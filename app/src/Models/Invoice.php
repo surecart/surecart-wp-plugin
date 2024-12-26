@@ -3,12 +3,15 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCheckout;
+use SureCart\Models\Traits\HasDates;
+use SureCart\Support\TimeDate;
 
 /**
  * Invoice model
  */
 class Invoice extends Model {
 	use HasCheckout;
+	use HasDates;
 
 	/**
 	 * Rest API endpoint
@@ -61,7 +64,7 @@ class Invoice extends Model {
 		}
 
 		if ( empty( $this->attributes['id'] ) ) {
-			return new \WP_Error( 'not_saved', __('Please create the invoice first.', 'surecart') );
+			return new \WP_Error( 'not_saved', __( 'Please create the invoice first.', 'surecart' ) );
 		}
 
 		$drafted = \SureCart::request(
@@ -102,7 +105,7 @@ class Invoice extends Model {
 		}
 
 		if ( empty( $this->attributes['id'] ) ) {
-			return new \WP_Error( 'not_saved', __('Please create the invoice first.', 'surecart') );
+			return new \WP_Error( 'not_saved', __( 'Please create the invoice first.', 'surecart' ) );
 		}
 
 		$opened = \SureCart::request(
@@ -122,5 +125,41 @@ class Invoice extends Model {
 		$this->fireModelEvent( 'opened' );
 
 		return $this;
+	}
+
+	/**
+	 * Get the due date display.
+	 *
+	 * @return string
+	 */
+	public function getDueDateDateAttribute() {
+		return ! empty( $this->due_date ) ? TimeDate::formatDate( $this->due_date ) : '';
+	}
+
+	/**
+	 * Get the due date time display.
+	 *
+	 * @return string
+	 */
+	public function getDueDateTimeDateAttribute() {
+		return ! empty( $this->due_date ) ? TimeDate::formatDateAndTime( $this->due_date ) : '';
+	}
+
+	/**
+	 * Get the issue date display.
+	 *
+	 * @return string
+	 */
+	public function getIssueDateDateAttribute() {
+		return ! empty( $this->issue_date ) ? TimeDate::formatDate( $this->issue_date ) : '';
+	}
+
+	/**
+	 * Get the issue date time display.
+	 *
+	 * @return string
+	 */
+	public function getIssueDateTimeDateAttribute() {
+		return ! empty( $this->issue_date ) ? TimeDate::formatDateAndTime( $this->issue_date ) : '';
 	}
 }

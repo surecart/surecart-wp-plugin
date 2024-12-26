@@ -3,7 +3,7 @@ namespace SureCart\Tests\WordPress\Admin;
 
 
 use SureCart\Activation\ActivationServiceProvider;
-use SureCart\Permissions\RolesServiceProvider;
+use SureCart\Permissions\PermissionsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\Pages\PageService;
 use SureCart\WordPress\Pages\PageServiceProvider;
@@ -25,7 +25,7 @@ class InstallTest extends SureCartUnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				PageServiceProvider::class,
-				RolesServiceProvider::class,
+				PermissionsServiceProvider::class,
 				PostTypeServiceProvider::class,
 				ActivationServiceProvider::class,
 				PluginServiceProvider::class,

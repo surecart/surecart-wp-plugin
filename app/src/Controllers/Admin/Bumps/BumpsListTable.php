@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Admin\Bumps;
 
 use SureCart\Models\Bump;
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 /**
@@ -207,30 +206,6 @@ class BumpsListTable extends ListTable {
 			' . esc_html__( 'One-Time', 'surecart' ) . '
 		</div>
 	</sc-tag>';
-	}
-
-	/**
-	 * Handle the status
-	 *
-	 * @param \SureCart\Models\Price $bump Bump model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $bump ) {
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $bump->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $bump->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $bump->created_at ) )
-		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $bump->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $bump->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $bump->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
 	/**

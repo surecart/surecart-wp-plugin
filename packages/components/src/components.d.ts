@@ -1436,61 +1436,6 @@ export namespace Components {
          */
         "value": number;
     }
-    interface ScFormatDate {
-        /**
-          * The date/time to format. If not set, the current date and time will be used.
-         */
-        "date": Date | string | number;
-        /**
-          * The format for displaying the day.
-         */
-        "day": 'numeric' | '2-digit';
-        /**
-          * The format for displaying the era.
-         */
-        "era": 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the hour.
-         */
-        "hour": 'numeric' | '2-digit';
-        /**
-          * When set, 24 hour time will always be used.
-         */
-        "hourFormat": 'auto' | '12' | '24';
-        /**
-          * The locale to use when formatting the date/time.
-         */
-        "locale": string;
-        /**
-          * The format for displaying the minute.
-         */
-        "minute": 'numeric' | '2-digit';
-        /**
-          * The format for displaying the month.
-         */
-        "month": 'numeric' | '2-digit' | 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the second.
-         */
-        "second": 'numeric' | '2-digit';
-        /**
-          * The time zone to express the time in.
-         */
-        "timeZone": string;
-        /**
-          * The format for displaying the time.
-         */
-        "timeZoneName": 'short' | 'long';
-        "type": 'timestamp' | 'date';
-        /**
-          * The format for displaying the weekday.
-         */
-        "weekday": 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the year.
-         */
-        "year": 'numeric' | '2-digit';
-    }
     interface ScFormatInterval {
         "every": string;
         "fallback": string;
@@ -5330,12 +5275,6 @@ declare global {
         prototype: HTMLScFormatBytesElement;
         new (): HTMLScFormatBytesElement;
     };
-    interface HTMLScFormatDateElement extends Components.ScFormatDate, HTMLStencilElement {
-    }
-    var HTMLScFormatDateElement: {
-        prototype: HTMLScFormatDateElement;
-        new (): HTMLScFormatDateElement;
-    };
     interface HTMLScFormatIntervalElement extends Components.ScFormatInterval, HTMLStencilElement {
     }
     var HTMLScFormatIntervalElement: {
@@ -6835,7 +6774,6 @@ declare global {
         "sc-form-row": HTMLScFormRowElement;
         "sc-form-state-provider": HTMLScFormStateProviderElement;
         "sc-format-bytes": HTMLScFormatBytesElement;
-        "sc-format-date": HTMLScFormatDateElement;
         "sc-format-interval": HTMLScFormatIntervalElement;
         "sc-format-number": HTMLScFormatNumberElement;
         "sc-fulfillment-shipping-status-badge": HTMLScFulfillmentShippingStatusBadgeElement;
@@ -8593,61 +8531,6 @@ declare namespace LocalJSX {
           * The number to format in bytes.
          */
         "value"?: number;
-    }
-    interface ScFormatDate {
-        /**
-          * The date/time to format. If not set, the current date and time will be used.
-         */
-        "date"?: Date | string | number;
-        /**
-          * The format for displaying the day.
-         */
-        "day"?: 'numeric' | '2-digit';
-        /**
-          * The format for displaying the era.
-         */
-        "era"?: 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the hour.
-         */
-        "hour"?: 'numeric' | '2-digit';
-        /**
-          * When set, 24 hour time will always be used.
-         */
-        "hourFormat"?: 'auto' | '12' | '24';
-        /**
-          * The locale to use when formatting the date/time.
-         */
-        "locale"?: string;
-        /**
-          * The format for displaying the minute.
-         */
-        "minute"?: 'numeric' | '2-digit';
-        /**
-          * The format for displaying the month.
-         */
-        "month"?: 'numeric' | '2-digit' | 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the second.
-         */
-        "second"?: 'numeric' | '2-digit';
-        /**
-          * The time zone to express the time in.
-         */
-        "timeZone"?: string;
-        /**
-          * The format for displaying the time.
-         */
-        "timeZoneName"?: 'short' | 'long';
-        "type"?: 'timestamp' | 'date';
-        /**
-          * The format for displaying the weekday.
-         */
-        "weekday"?: 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the year.
-         */
-        "year"?: 'numeric' | '2-digit';
     }
     interface ScFormatInterval {
         "every"?: string;
@@ -11651,7 +11534,6 @@ declare namespace LocalJSX {
         "sc-form-row": ScFormRow;
         "sc-form-state-provider": ScFormStateProvider;
         "sc-format-bytes": ScFormatBytes;
-        "sc-format-date": ScFormatDate;
         "sc-format-interval": ScFormatInterval;
         "sc-format-number": ScFormatNumber;
         "sc-fulfillment-shipping-status-badge": ScFulfillmentShippingStatusBadge;
@@ -11903,7 +11785,6 @@ declare module "@stencil/core" {
              */
             "sc-form-state-provider": LocalJSX.ScFormStateProvider & JSXBase.HTMLAttributes<HTMLScFormStateProviderElement>;
             "sc-format-bytes": LocalJSX.ScFormatBytes & JSXBase.HTMLAttributes<HTMLScFormatBytesElement>;
-            "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
             "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
             "sc-fulfillment-shipping-status-badge": LocalJSX.ScFulfillmentShippingStatusBadge & JSXBase.HTMLAttributes<HTMLScFulfillmentShippingStatusBadgeElement>;
