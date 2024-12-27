@@ -72,6 +72,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function register_style_settings() {
+		// Scratch Amount Styles.
 		$this->start_controls_section(
 			'section_scratch_amount',
 			[
@@ -88,12 +89,21 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-scratch-amount' => 'color: {{VALUE}}',
 				],
-				'default'   => '#686868',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'scratch_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-scratch-amount',
 			]
 		);
 
 		$this->end_controls_section();
 
+		// Price Amount Styles.
 		$this->start_controls_section(
 			'section_amount_style',
 			[
@@ -110,12 +120,21 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-amount' => 'color: {{VALUE}}',
 				],
-				'default'   => '#686868',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'amount_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-amount',
 			]
 		);
 
 		$this->end_controls_section();
 
+		// Price Interval Styles.
 		$this->start_controls_section(
 			'section_interval_style',
 			[
@@ -132,12 +151,21 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-interval' => 'color: {{VALUE}}',
 				],
-				'default'   => '#686868',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'interval_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-interval',
 			]
 		);
 
 		$this->end_controls_section();
 
+		// Sale Badge Styles.
 		$this->start_controls_section(
 			'section_sale_badge_style',
 			[
@@ -154,7 +182,6 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'color: {{VALUE}}',
 				],
-				'default'   => '#ffffff',
 			]
 		);
 
@@ -166,12 +193,54 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'background-color: {{VALUE}}',
 				],
-				'default'   => '#000000',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'badge_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-sale-badge',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'badge_border',
+				'label'    => esc_html__( 'Border', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-sale-badge',
+			]
+		);
+
+		$this->add_control(
+			'badge_border_radius',
+			[
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'badge_padding',
+			[
+				'label'      => esc_html__( 'Padding', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
 
 		$this->end_controls_section();
 
+		// Trial Text Styles.
 		$this->start_controls_section(
 			'section_trial_style',
 			[
@@ -188,12 +257,21 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-trial' => 'color: {{VALUE}}',
 				],
-				'default'   => '#686868',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'trial_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-trial',
 			]
 		);
 
 		$this->end_controls_section();
 
+		// Setup Fee Styles.
 		$this->start_controls_section(
 			'section_fees_style',
 			[
@@ -210,7 +288,15 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-fees' => 'color: {{VALUE}}',
 				],
-				'default'   => '#686868',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'fees_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-fees',
 			]
 		);
 
@@ -244,13 +330,13 @@ class SelectedPrice extends \Elementor\Widget_Base {
 			<div class="wp-block-group">
 				<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"bottom"}} -->
 				<div class="wp-block-group">
-					<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","fontSize":"24px","lineHeight":"1.5"},"color":{"text":"#686868"},"elements":{"link":{"color":{"text":"#686868"}}}}} /-->
+					<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","lineHeight":"1.5"},"color":{"text":"#686868"},"elements":{"link":{"color":{"text":"#686868"}}}}} /-->
 
-					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px","lineHeight":"1.5"}}} /-->
+					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"lineHeight":"1.5"}}} /-->
 
 					<!-- wp:surecart/product-selected-price-interval {"style":{"typography":{"lineHeight":"2"}}} /-->
 
-					<!-- wp:surecart/product-sale-badge {"style":{"border":{"radius":"15px"},"typography":{"fontSize":"12px","lineHeight":"2.1"},"layout":{"selfStretch":"fit","flexSize":null},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
+					<!-- wp:surecart/product-sale-badge {"style":{"border":{"radius":"15px"},"typography":{"lineHeight":"2.1"},"layout":{"selfStretch":"fit","flexSize":null},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} /-->
 				</div>
 			</div>
 		</div>
@@ -265,19 +351,21 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	protected function content_template() {
 		?>
 		<div class="wp-block-surecart-selected-price">
-			<div style="display: flex; justify-content:flex-start; gap: 5px;">
-				<span tabindex="0" class="wp-block-surecart-product-selected-price-scratch-amount" style="font-size: 24px; line-height: 1.5; text-decoration: line-through;">
+			<div class="sc-price-wrapper">
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-scratch-amount">
 					<?php echo esc_html( Currency::format( 20 ) ); ?>
 				</span>
-				<span tabindex="0" class="wp-block-surecart-product-selected-price-amount" style="font-size: 24px; line-height: 1.5;">
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-amount">
 					<?php echo esc_html( Currency::format( 15 ) ); ?>
 				</span>
-				<span tabindex="0" class="wp-block-surecart-product-selected-price-interval" style="line-height: 2;">/ <?php echo esc_html__( 'mo', 'surecart' ); ?></span>
-				<span tabindex="0" class="wp-block-surecart-product-sale-badge" style="min-width: 1px; padding: 2px 10px; border-radius: 15px; font-size: 12px; max-width: 50px; align-self: center">
+				<span tabindex="0" class="wp-block-surecart-product-selected-price-interval">
+					/ <?php echo esc_html__( 'mo', 'surecart' ); ?>
+				</span>
+				<span tabindex="0" class="wp-block-surecart-product-sale-badge">
 					<?php echo esc_html__( 'Sale', 'surecart' ); ?>
 				</span>
 			</div>
-			<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+			<div class="sc-price-meta">
 				<span tabindex="0" class="wp-block-surecart-product-selected-price-trial">
 					<?php echo esc_html__( 'Starting in 7 days.', 'surecart' ); ?>
 				</span>
