@@ -71,7 +71,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	protected function get_views() {
 		foreach ( $this->getStatuses() as $status => $label ) {
 			$current_link_attributes = '';
-			$link = admin_url( 'admin.php?page=sc-affiliate-payouts' );
+			$link                    = admin_url( 'admin.php?page=sc-affiliate-payouts' );
 
 			if ( ! empty( $_GET['status'] ) ) {
 				if ( $status === $_GET['status'] ) {
@@ -105,14 +105,17 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array(
-			'date'         => __( 'Date', 'surecart' ),
-			'status'       => __( 'Status', 'surecart' ),
-			'affiliate'    => __( 'Affiliate', 'surecart' ),
-			'payout_email' => __( 'Payout Email', 'surecart' ),
-			'period_end'   => __( 'Period End', 'surecart' ),
-			'referrals'    => __( 'Referrals', 'surecart' ),
-			'amount'       => __( 'Amount', 'surecart' ),
+		return array_merge(
+			[
+				'date'         => __( 'Date', 'surecart' ),
+				'status'       => __( 'Status', 'surecart' ),
+				'affiliate'    => __( 'Affiliate', 'surecart' ),
+				'payout_email' => __( 'Payout Email', 'surecart' ),
+				'period_end'   => __( 'Period End', 'surecart' ),
+				'referrals'    => __( 'Referrals', 'surecart' ),
+				'amount'       => __( 'Amount', 'surecart' ),
+			],
+			parent::get_columns()
 		);
 	}
 
@@ -134,7 +137,7 @@ class AffiliationPayoutsListTable extends ListTable {
 						'make_processing' => '<a href="' . esc_url( $this->get_action_url( $payout->id, 'make_processing' ) ) . '">' . esc_html__( 'Make Processing', 'surecart' ) . '</a>',
 						'delete'          => '<a href="' . esc_url( $this->get_action_url( $payout->id, 'delete' ) ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>',
 					),
-					function( $action, $key ) use ( $payout ) {
+					function ( $action, $key ) use ( $payout ) {
 						if ( 'complete' === $key && 'completed' === $payout->status ) {
 							return false;
 						}

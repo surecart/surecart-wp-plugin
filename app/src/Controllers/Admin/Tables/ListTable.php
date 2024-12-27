@@ -38,6 +38,22 @@ abstract class ListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Override the parent columns method. Defines the columns to use in your listing table
+	 *
+	 * @return Array
+	 */
+	public function get_columns() {
+		$current_page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+
+		/**
+		 * Filters the columns displayed in the Coupons list table.
+		 *
+		 * @param string[] $coupon_columns An associative array of column headings.
+		 */
+		return (array) apply_filters( "manage_{$current_page}_columns", array() );
+	}
+
+	/**
 	 * Get the archive query status.
 	 *
 	 * @return boolean|null

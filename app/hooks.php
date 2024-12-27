@@ -59,3 +59,11 @@ add_filter(
 		return $url;
 	}
 );
+
+
+add_action( 'admin_init', function() {
+	add_filter('manage_sc-coupons_columns', function($columns) {
+		$columns["metabox"] = "Metabox";
+		return $columns;
+	});
+});

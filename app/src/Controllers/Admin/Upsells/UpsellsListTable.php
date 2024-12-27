@@ -55,7 +55,7 @@ class UpsellsListTable extends ListTable {
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-upsell-funnels' );
+			$link                    = admin_url( 'admin.php?page=sc-upsell-funnels' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -88,12 +88,15 @@ class UpsellsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return [
-			'name'     => __( 'Name', 'surecart' ),
-			'priority' => __( 'Priority', 'surecart' ),
-			'enabled'  => __( 'Status', 'surecart' ),
-			'date'     => __( 'Date', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'name'     => __( 'Name', 'surecart' ),
+				'priority' => __( 'Priority', 'surecart' ),
+				'enabled'  => __( 'Status', 'surecart' ),
+				'date'     => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
