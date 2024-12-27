@@ -136,6 +136,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			[
 				'site_url'                        => site_url(),
 				'sc_product_template'             => $this->get_product_template(),
+				'sc_product_card_template'        => $this->get_product_card_template(),
 				'sc_shop_page_loop_item_template' => $this->get_shop_page_loop_item_template(),
 				'sc_shop_page_template'           => $this->get_shop_page_template(),
 			]
@@ -208,6 +209,15 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function get_product_template(): array {
 		return $this->get_elementor_template_from_file( 'surecart-single-product.json' );
+	}
+
+	/**
+	 * Get SureCart product card template for Shop Page.
+	 *
+	 * @return array
+	 */
+	public function get_product_card_template(): array {
+		return $this->get_elementor_template_from_file( 'surecart-product-card.json' );
 	}
 
 	/**

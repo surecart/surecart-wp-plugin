@@ -45,6 +45,18 @@ jQuery(window).ready(function () {
 	);
 
 	elementor.hooks.addAction(
+		'panel/open_editor/widget/surecart-product-card',
+		function (panel, model, view) {
+			// Remove the default SureCart block by clearing the model.
+			model.destroy();
+
+			insertSureCartTemplates(
+				window?.scElementorData?.sc_product_card_template
+			);
+		}
+	);
+
+	elementor.hooks.addAction(
 		'panel/open_editor/widget/surecart-shop',
 		function (panel, model, view) {
 			// Remove the default SureCart block by clearing the model.
