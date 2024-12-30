@@ -73,22 +73,14 @@ export default ({
 	return (
 		<SlotFillProvider>
 			<Main.Fill>
-				{addonsMain?.map((addon) => {
-					return (
-						<Box title={addon?.title || addon?.name}>
-							{addon?.render()}
-						</Box>
-					);
-				})}
+				{addonsMain?.map((addon) => (
+					<Box title={addon?.title}>{addon?.render()}</Box>
+				))}
 			</Main.Fill>
 			<Sidebar.Fill>
-				{addonsSidebar?.map((addon) => {
-					return (
-						<Box title={addon?.title || addon?.name}>
-							{addon?.render()}
-						</Box>
-					);
-				})}
+				{addonsSidebar?.map((addon) => (
+					<Box title={addon?.title}>{addon?.render()}</Box>
+				))}
 			</Sidebar.Fill>
 			<Global
 				styles={css`
