@@ -62,7 +62,17 @@ add_filter(
 
 
 add_action( 'admin_init', function() {
-	add_filter('manage_sc-coupons_columns', function($columns) {
+	if ( empty( $_GET['page'] ) ) {
+		return;
+	}
+
+	$page = sanitize_text_field( $_GET['page'] ) ?? '';
+
+	if ( empty( $page ) ) {
+		return;
+	}
+
+	add_filter('manage_' . $page . '_columns', function($columns) {
 		$columns["metabox"] = "Metabox";
 		return $columns;
 	});
