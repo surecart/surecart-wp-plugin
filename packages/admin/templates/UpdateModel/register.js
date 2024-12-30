@@ -44,6 +44,17 @@ export function registerAddon(name, settings) {
 
 	plugins[name] = {
 		name,
+		title:
+			settings.title ||
+			name
+				.replace(/[-_]/g, ' ') // Replace dashes and underscores with spaces
+				.split(' ')
+				.map(
+					(word) =>
+						word.charAt(0).toUpperCase() +
+						word.slice(1).toLowerCase()
+				)
+				.join(' '),
 		...settings,
 	};
 
