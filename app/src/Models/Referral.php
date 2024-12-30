@@ -4,6 +4,7 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasAffiliation;
 use SureCart\Models\Traits\HasCheckout;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPayout;
 use SureCart\Models\Traits\HasReferralItems;
 
@@ -11,7 +12,7 @@ use SureCart\Models\Traits\HasReferralItems;
  * Referral model
  */
 class Referral extends Model {
-	use HasAffiliation, HasCheckout, HasPayout, HasReferralItems;
+	use HasAffiliation, HasCheckout, HasPayout, HasReferralItems, HasDates;
 
 	/**
 	 * Rest API endpoint

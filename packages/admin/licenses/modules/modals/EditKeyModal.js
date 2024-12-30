@@ -74,7 +74,7 @@ export default ({ open, onRequestClose, license }) => {
 			onRequestClose();
 		} catch (e) {
 			setError(e);
-			console.log(e);
+			console.error(e);
 		} finally {
 			setBusy(false);
 		}

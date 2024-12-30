@@ -249,7 +249,9 @@ export interface License {
   status: 'inactive' | 'active' | 'revoked';
   purchase: string | Purchase;
   created_at: number;
+  created_at_date: string;
   updated_at: number;
+  updated_at_date: string;
 }
 
 export interface CancellationReason {
@@ -274,6 +276,7 @@ export interface Period {
   checkout: string | Checkout;
   customer_id: string | Customer;
   end_at?: number;
+  end_at_date?: string;
   next_payment_retry_at: number;
   payment_retry_count: number;
   price: string | Price;
@@ -282,10 +285,13 @@ export interface Period {
   renewal: boolean;
   skip_proration: boolean;
   start_at: number;
+  start_at_date?: string;
   status: 'draft';
   subscription: string | Subscription;
   created_at: number;
+  created_at_date: string;
   updated_at: number;
+  updated_at_date: string;
 }
 
 export interface Activation {
@@ -296,7 +302,9 @@ export interface Activation {
   fingerprint: string;
   license: string | License;
   created_at: number;
+  created_at_date: string;
   updated_at: number;
+  updated_at_date: string;
 }
 
 export interface Variant {
@@ -511,7 +519,9 @@ export interface Invoice extends Object {
   object: 'invoice';
   automatic_collection: boolean;
   due_date?: number;
+  due_date_date?: string;
   issue_date?: number;
+  issue_date_date?: string;
   footer?: string;
   memo?: string;
   live_mode: boolean;
@@ -520,7 +530,9 @@ export interface Invoice extends Object {
   metadata: object;
   order_number: string;
   created_at: number;
+  created_at_date: string;
   updated_at: number;
+  updated_at_date: string;
 }
 
 export interface BillingAddress extends Address {}
@@ -548,6 +560,7 @@ export interface ProductMedia {
 export interface Charge extends Object {
   amount: number;
   created_at: number;
+  created_at_date: string;
   currency: string;
   customer: string | Customer;
   external_charge_id: string;
@@ -561,6 +574,7 @@ export interface Charge extends Object {
   refunded_amount: number;
   status: 'pending' | 'succeeded' | 'failed';
   updated_at: number;
+  updated_at_date: string;
 }
 
 export interface TaxIdentifier {
@@ -601,7 +615,9 @@ export interface Order extends Object {
   checkout?: Checkout | string;
   invoice?: Invoice | string;
   created_at: number;
+  created_at_date: string;
   updated_at: number;
+  updated_at_date: string;
 }
 
 export interface ShippingChoice {
@@ -661,6 +677,7 @@ export interface Checkout extends Object {
   applied_balance_amount?: number;
   discounts?: number;
   shipping_address_required?: boolean;
+  shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';
   tax_enabled: boolean;
   tax_amount: number;
   email_exists: boolean;
@@ -721,6 +738,10 @@ export interface Checkout extends Object {
   upsells_expire_at?: number;
   invoice?: string | Invoice;
   pdf_url?: string;
+  refunded_amount?: number;
+  net_paid_amount?: number;
+  credited_balance_amount?: number;
+  tax_reverse_charged_amount?: number;
 }
 
 export interface ShippingMethod {
@@ -845,6 +866,8 @@ export interface Subscription extends Object {
   external_subscription_id: string;
   current_cancellation_act: string | CancellationAct;
   trial_end_at: number;
+  trial_end_at_date: string;
+  trial_end_at_date_time: string;
   processor_type: 'stripe' | 'paypal';
   order: Order;
   customer: Customer;
@@ -860,9 +883,13 @@ export interface Subscription extends Object {
   cancel_at_period_end: number | false;
   current_period: string | Period;
   current_period_end_at: number | false;
+  current_period_end_at_date: string;
+  current_period_end_at_date_time: string;
   current_period_start_at: number | false;
+  current_period_start_at_date: string;
   remaining_period_count: number | null;
   ended_at: number;
+  ended_at_date: string;
   end_behavior: 'cancel' | 'complete';
   payment_method: PaymentMethod | string;
   manual_payment_method: ManualPaymentMethod | string;
@@ -872,7 +899,9 @@ export interface Subscription extends Object {
   variant?: Variant | string;
   variant_options?: Array<string>;
   created_at: number;
+  created_at_date: string;
   updated_at: number;
+  updated_at_date: string;
   restore_at?: number;
 }
 

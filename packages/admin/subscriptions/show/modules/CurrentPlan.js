@@ -58,7 +58,7 @@ export default ({ lineItem, loading, subscription }) => {
 				{ type: 'snackbar' }
 			);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			createErrorNotice(
 				e?.message || __('Something went wrong', 'surecart'),
 				{ type: 'snackbar' }

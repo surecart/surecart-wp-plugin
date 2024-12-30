@@ -163,17 +163,6 @@ class ProductGroupsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the total column
-	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $order ) {
-		return "<sc-format-date date='$order->created' type='timestamp'></sc-format-date>";
-	}
-
-	/**
 	 * Handle the status
 	 *
 	 * @param \SureCart\Models\Order $order Order Model.

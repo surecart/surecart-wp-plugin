@@ -133,8 +133,9 @@ class AffiliationReferralsListTable extends ListTable {
 	 */
 	public function column_date( $referral ) {
 		ob_start();
-		echo wp_kses_post( date_i18n( get_option( 'date_format' ), $referral->created_at ) );
+		echo esc_attr( $referral->created_at_date_time );
 		?>
+
 		<?php
 		echo wp_kses_post(
 			$this->row_actions(

@@ -8,7 +8,7 @@ import { jsx } from '@emotion/core';
 /**
  * Internal dependencies
  */
-import { ScFormatDate, ScTag } from '@surecart/components-react';
+import { ScTag } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 
@@ -71,22 +71,10 @@ export default ({ referral, loading }) => {
 				<hr />
 
 				<Definition title={__('Created', 'surecart')}>
-					<ScFormatDate
-						type="timestamp"
-						month="short"
-						day="numeric"
-						year="numeric"
-						date={click?.created_at}
-					/>
+					{click?.created_at_date_time}
 				</Definition>
-				<Definition title={__('Expires on', 'surecart')}>
-					<ScFormatDate
-						type="timestamp"
-						month="short"
-						day="numeric"
-						year="numeric"
-						date={click?.expires_at}
-					/>
+				<Definition title={__('Expires', 'surecart')}>
+					{click?.expires_at_date_time}
 				</Definition>
 			</Fragment>
 		);

@@ -14,13 +14,13 @@ import {
 	ScButton,
 	ScDropdown,
 	ScFlex,
-	ScFormatDate,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
 	ScText,
 } from '@surecart/components-react';
 import UpdateExpireAtModal from './UpdateExpireAtModal';
+import { formatDate } from '../../util/time';
 
 export default ({ item, updateItem, commissionText }) => {
 	const [modal, setModal] = useState(false);
@@ -56,13 +56,7 @@ export default ({ item, updateItem, commissionText }) => {
 							`}
 						>
 							{__('Until', 'surecart')}{' '}
-							<ScFormatDate
-								type="timestamp"
-								date={item?.affiliation_expires_at}
-								month="short"
-								day="numeric"
-								year="numeric"
-							/>
+							{formatDate(item?.affiliation_expires_at * 1000)}
 						</span>
 					)}
 				</div>

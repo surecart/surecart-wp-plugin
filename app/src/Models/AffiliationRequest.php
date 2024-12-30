@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
+
 /**
  * Affiliation Request Model
  */
 class AffiliationRequest extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *
