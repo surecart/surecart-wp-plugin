@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { RichText } from '@wordpress/block-editor';
-import { ScFormatDate, ScLineItem } from '@surecart/components-react';
+import { ScLineItem } from '@surecart/components-react';
+import { formatDate } from '../../../admin/util/time';
 
 export default ({ attributes, setAttributes }) => {
 	const { text } = attributes;
@@ -15,14 +16,7 @@ export default ({ attributes, setAttributes }) => {
 				onChange={(text) => setAttributes({ text })}
 				allowedFormats={[]}
 			/>
-			<ScFormatDate
-				date={new Date().getTime() / 1000}
-				type="timestamp"
-				month="short"
-				day="numeric"
-				year="numeric"
-				slot="price-description"
-			/>
+			{formatDate(Date().now())}
 		</ScLineItem>
 	);
 };

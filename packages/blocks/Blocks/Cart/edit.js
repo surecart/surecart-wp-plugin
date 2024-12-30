@@ -25,7 +25,7 @@ const allowedBlocks = [
 	'surecart/cart-message',
 ];
 
-import { useSetting } from '@wordpress/block-editor';
+import { useSettings } from '@wordpress/block-editor';
 
 export default ({ attributes: { width }, setAttributes }) => {
 	const blockProps = useBlockProps({
@@ -53,7 +53,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 	);
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',

@@ -84,7 +84,7 @@ export default ({ id }) => {
 		try {
 			save({ successMessage: __('Referral updated.', 'surecart') });
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });
 		}
 	};
@@ -121,7 +121,7 @@ export default ({ id }) => {
 				}
 			);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });
 		} finally {
 			setChangingStatus(false);
@@ -160,7 +160,7 @@ export default ({ id }) => {
 				}
 			);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });
 		} finally {
 			setChangingStatus(false);
@@ -196,7 +196,7 @@ export default ({ id }) => {
 				}
 			);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });
 		} finally {
 			setChangingStatus(false);

@@ -6,26 +6,23 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { DateTimePicker, Modal } from '@wordpress/components';
-import { useState } from '@wordpress/element';
-import { useEffect } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
-import { ScFormatDate, ScButton, ScIcon } from '@surecart/components-react';
 import Error from './Error';
+import { formatDateTime } from '../util/time';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default (props) => {
 	const {
 		currentDate,
 		onChange,
 		onChoose,
-		onClear = () => {},
-		onRequestClose = () => {},
 		placeholder,
 		title,
 		chooseDateLabel,
-		clearDateLabel,
 		required,
 		children,
 		...rest
@@ -44,8 +41,6 @@ export default (props) => {
 		setIsVisible((state) => !state);
 	};
 
-	const noDateSetOrRequired = !date && !required;
-
 	const onChooseDate = () => {
 		if (!date && required) {
 			setError({
@@ -54,10 +49,7 @@ export default (props) => {
 			return;
 		}
 
-		// If date is not set and not required, set current date.
-		const updatedDate = noDateSetOrRequired ? new Date() : date;
-
-		onChoose(updatedDate);
+		onChoose(date);
 		toggleVisible();
 	};
 
@@ -75,40 +67,28 @@ export default (props) => {
 			{children ? (
 				<a onClick={toggleVisible}>{children}</a>
 			) : (
-				<ScButton onClick={toggleVisible}>
-					{currentDate ? (
-						<ScFormatDate
-							date={currentDate}
-							month="long"
-							day="numeric"
-							year="numeric"
-						/>
-					) : (
-						placeholder || __('Select date', 'surecart')
-					)}
-
-					<ScIcon
-						name={currentDate ? 'edit' : 'plus'}
-						slot="suffix"
-					/>
-				</ScButton>
+				<>
+					<ScButton onClick={toggleVisible}>
+						{currentDate
+							? formatDateTime(currentDate)
+							: placeholder || __('Select date', 'surecart')}
+						{currentDate ? (
+							<ScIcon name="edit" slot="suffix" />
+						) : (
+							<ScIcon name="plus" slot="suffix" />
+						)}
+					</ScButton>
+				</>
 			)}
 
 			{isVisible && (
-				<Modal
-					title={title}
-					onRequestClose={() => {
-						onRequestClose();
-						toggleVisible();
-					}}
-				>
+				<Modal title={title} onRequestClose={toggleVisible}>
 					<Error error={error} />
 					<DateTimePicker
 						currentDate={date}
 						onChange={onChangeDate}
 						{...rest}
 					/>
-
 					<div
 						css={css`
 							margin-top: 1em;
@@ -120,15 +100,8 @@ export default (props) => {
 						<ScButton type="primary" onClick={onChooseDate}>
 							{chooseDateLabel || __('Choose', 'surecart')}
 						</ScButton>
-						<ScButton
-							onClick={() => {
-								onClear();
-								toggleVisible();
-							}}
-						>
-							{noDateSetOrRequired
-								? __('Cancel', 'surecart')
-								: clearDateLabel || __('Clear', 'surecart')}
+						<ScButton onClick={toggleVisible}>
+							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
 				</Modal>

@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 export const TEMPLATE = [
 	[
 		'core/group',
@@ -60,4 +62,21 @@ export const TEMPLATE = [
 		},
 	],
 	['surecart/product-pagination'],
+	[
+		'surecart/product-list-no-products',
+		{},
+		[
+			[
+				'core/paragraph',
+				{
+					placeholder: __(
+						'Add text or blocks that will display when a query returns no products.',
+						'surecart'
+					),
+					align: 'center',
+					content: __('No products found.', 'surecart'),
+				},
+			],
+		],
+	],
 ];

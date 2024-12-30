@@ -1,15 +1,13 @@
 /** @jsx jsx */
-import { formatTime } from '../../../util/time';
 import { css, jsx } from '@emotion/core';
 import {
 	ScFlex,
-	ScFormatDate,
 	ScSkeleton,
 	ScSubscriptionStatusBadge,
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 
-export default ({ subscription, customer, product, loading }) => {
+export default ({ subscription, customer, loading }) => {
 	const renderStartDate = () => {
 		if (subscription?.current_period_end_at == null) {
 			return (
@@ -36,13 +34,18 @@ export default ({ subscription, customer, product, loading }) => {
 							{sprintf(__('Restores on', 'surecart'))}
 						</strong>
 					</div>
-					<ScFormatDate
-						date={subscription.restore_at}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					></ScFormatDate>
+					{subscription.restore_at_date}
+				</div>
+			);
+		}
+
+		if (subscription?.ended_at) {
+			return (
+				<div>
+					<div>
+						<strong>{sprintf(__('Ended', 'surecart'))}</strong>
+					</div>
+					{subscription.ended_at_date}
 				</div>
 			);
 		}
@@ -59,30 +62,7 @@ export default ({ subscription, customer, product, loading }) => {
 					<div>
 						<strong>{sprintf(__('Cancels on', 'surecart'))}</strong>
 					</div>
-					<ScFormatDate
-						date={subscription.current_period_end_at}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					></ScFormatDate>
-				</div>
-			);
-		}
-
-		if (subscription?.ended_at) {
-			return (
-				<div>
-					<div>
-						<strong>{sprintf(__('Ended', 'surecart'))}</strong>
-					</div>
-					<ScFormatDate
-						date={subscription.ended_at}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					></ScFormatDate>
+					{subscription.current_period_end_at_date}
 				</div>
 			);
 		}
@@ -95,13 +75,7 @@ export default ({ subscription, customer, product, loading }) => {
 							{sprintf(__('Trial ends on', 'surecart'))}
 						</strong>
 					</div>
-					<ScFormatDate
-						date={subscription?.current_period_end_at}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					></ScFormatDate>
+					{subscription?.current_period_end_at_date}
 				</div>
 			);
 		}
@@ -115,13 +89,7 @@ export default ({ subscription, customer, product, loading }) => {
 					<div>
 						<strong>{sprintf(__('Renews on', 'surecart'))}</strong>
 					</div>
-					<ScFormatDate
-						date={subscription.current_period_end_at}
-						type="timestamp"
-						month="long"
-						day="numeric"
-						year="numeric"
-					></ScFormatDate>
+					{subscription.current_period_end_at_date}
 				</div>
 			);
 		}
@@ -184,7 +152,7 @@ export default ({ subscription, customer, product, loading }) => {
 					</div>
 					{sprintf(
 						__('Created on %s', 'surecart'),
-						formatTime(subscription.created_at)
+						subscription?.created_at_date_time
 					)}
 				</div>
 				<div>

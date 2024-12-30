@@ -3,7 +3,6 @@ import { intervalString } from '../../../../util/translations';
 import LineItem from './LineItem';
 import {
 	ScDivider,
-	ScFormatDate,
 	ScFormatNumber,
 	ScLineItem,
 	ScProductLineItem,
@@ -24,14 +23,7 @@ export default ({ period, loading }) => {
 			header_action={
 				!!period?.start_at && (
 					<div>
-						{__('Bills on', 'surecart')}{' '}
-						<ScFormatDate
-							type="timestamp"
-							date={period?.start_at}
-							month="short"
-							day="numeric"
-							year="numeric"
-						></ScFormatDate>
+						{__('Bills on', 'surecart')} {period?.start_at_date}
 					</div>
 				)
 			}

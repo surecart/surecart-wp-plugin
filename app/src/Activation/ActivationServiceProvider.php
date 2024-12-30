@@ -16,7 +16,7 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart.activation'] = function ( $container ) {
-			return new ActivationService( $container['surecart.permissions.roles'], $container['surecart.pages.seeder'] );
+			return new ActivationService( $container['surecart.permissions.roles'], $container['surecart.pages.seeder'], $container['surecart.permissions.salts'] );
 		};
 
 		// register alias.

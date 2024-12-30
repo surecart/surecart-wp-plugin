@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\AffiliationRequests;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\AffiliationRequest;
+use WP_Error;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -109,7 +110,7 @@ class AffiliationRequestsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return object|WP_Error
 	 */
 	private function table_data() {
 		$affiliate_request_query = AffiliationRequest::where(

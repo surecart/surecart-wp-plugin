@@ -12,7 +12,7 @@ import { Fragment } from '@wordpress/element';
  */
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
-import { ScAvatar, ScFormatDate, ScTag } from '@surecart/components-react';
+import { ScAvatar, ScTag } from '@surecart/components-react';
 import useAvatar from '../../hooks/useAvatar';
 
 export default ({ affiliation, loading }) => {
@@ -23,8 +23,8 @@ export default ({ affiliation, loading }) => {
 		email,
 		code,
 		payout_email,
-		created_at,
-		updated_at,
+		created_at_date_time,
+		updated_at_date_time,
 	} = affiliation;
 
 	const avatarUrl = useAvatar({ email: affiliation?.email });
@@ -82,27 +82,15 @@ export default ({ affiliation, loading }) => {
 
 				<hr />
 
-				{updated_at && (
+				{!!updated_at_date_time && (
 					<Definition title={__('Last Updated', 'surecart')}>
-						<ScFormatDate
-							type="timestamp"
-							month="short"
-							day="numeric"
-							year="numeric"
-							date={updated_at}
-						/>
+						{updated_at_date_time}
 					</Definition>
 				)}
 
-				{created_at && (
+				{!!created_at_date_time && (
 					<Definition title={__('Created', 'surecart')}>
-						<ScFormatDate
-							type="timestamp"
-							month="short"
-							day="numeric"
-							year="numeric"
-							date={created_at}
-						/>
+						{created_at_date_time}
 					</Definition>
 				)}
 			</Fragment>

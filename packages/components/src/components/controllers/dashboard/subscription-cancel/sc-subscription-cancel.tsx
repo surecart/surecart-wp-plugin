@@ -54,10 +54,7 @@ export class ScSubscriptionCancel {
         {this?.protocol?.cancel_behavior === 'pending' ? (
           <div slot="description">
             {__('Your plan will be canceled, but is still available until the end of your billing period on', 'surecart')}{' '}
-            <strong>
-              <sc-format-date type="timestamp" date={this?.subscription?.current_period_end_at as number} month="long" day="numeric" year="numeric"></sc-format-date>
-            </strong>
-            . {__('If you change your mind, you can renew your subscription.', 'surecart')}
+            <strong>{this?.subscription?.current_period_end_at_date}</strong>. {__('If you change your mind, you can renew your subscription.', 'surecart')}
           </div>
         ) : (
           <div slot="description">{__('Your plan will be canceled immediately and cannot be modified later.', 'surecart')}</div>

@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -144,21 +144,13 @@ export class ScInvoicesList {
 
   renderList() {
     return this.invoices.map(invoice => {
-      const { checkout } = invoice;
+      const { checkout, due_date_date } = invoice;
       if (!checkout) return null;
       const { amount_due, currency } = checkout as Checkout;
       return (
         <sc-stacked-list-row href={this.getInvoiceRedirectUrl(invoice)} style={{ '--columns': '4' }} mobile-size={500}>
           <div>#{invoice?.order_number}</div>
-          <div>
-            {invoice?.due_date ? (
-              <Fragment>
-                {__('Due on', 'surecart')} <sc-format-date class="invoice__date" date={invoice?.due_date * 1000} month="short" day="numeric" year="numeric"></sc-format-date>
-              </Fragment>
-            ) : (
-              '—'
-            )}
-          </div>
+          <div>{due_date_date && invoice?.status === 'open' ? sprintf(__('Due %s', 'surecart'), due_date_date) : '—'}</div>
           <div class="invoices-list__status">
             <sc-invoice-status-badge status={invoice?.status}></sc-invoice-status-badge>
           </div>

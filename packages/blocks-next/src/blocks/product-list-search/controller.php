@@ -10,6 +10,5 @@ if ( ! empty( $block->context['query']['search'] ) ) {
 $controller = new ProductListBlock( $block );
 $list_query = $controller->query();
 $value      = $list_query->s;
-
 // return the view.
 return 'file:./view.php';

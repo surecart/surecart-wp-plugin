@@ -256,18 +256,7 @@ export default () => {
 											</ScTableCell>
 										)}
 										<ScTableCell>
-											{registration?.label ||
-												tax_zone?.default_label ||
-												__('Tax', 'surecart')}
-										</ScTableCell>
-										<ScTableCell>
-											<sc-format-date
-												type="timestamp"
-												month="short"
-												day="numeric"
-												year="numeric"
-												date={registration?.updated_at}
-											></sc-format-date>
+											{registration?.updated_at_date}
 										</ScTableCell>
 									</ScTableRow>
 								);

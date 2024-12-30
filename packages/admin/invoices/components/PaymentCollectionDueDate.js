@@ -12,8 +12,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScIcon, ScFormatDate } from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 import PostDropdownContent from '../../components/PostDropdownContent';
+import { formatDate } from '../../util/time';
 
 export default ({ invoice, updateInvoice }) => {
 	const isDraftInvoice = invoice?.status === 'draft';
@@ -40,15 +41,7 @@ export default ({ invoice, updateInvoice }) => {
 	};
 
 	const getTitle = () => {
-		return invoice?.due_date ? (
-			<ScFormatDate
-				type="timestamp"
-				month="short"
-				day="numeric"
-				year="numeric"
-				date={invoice?.due_date}
-			/>
-		) : isDraftInvoice ? (
+		return invoice?.due_date ? formatDate(invoice?.due_date * 1000) : isDraftInvoice ? (
 			__('Set Due Date', 'surecart')
 		) : (
 			__('No Due Date', 'surecart')
@@ -116,17 +109,7 @@ export default ({ invoice, updateInvoice }) => {
 						padding-right: var(--sc-spacing-large);
 					`}
 				>
-					{invoice?.due_date ? (
-						<ScFormatDate
-							type="timestamp"
-							month="short"
-							day="numeric"
-							year="numeric"
-							date={invoice?.due_date}
-						/>
-					) : (
-						'-'
-					)}
+					{invoice?.due_date ? formatDate(invoice?.due_date * 1000) : '-'}
 				</div>
 			)}
 		</div>

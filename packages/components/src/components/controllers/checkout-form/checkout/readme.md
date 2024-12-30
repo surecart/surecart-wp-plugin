@@ -184,7 +184,6 @@ graph TD;
   sc-line-item-invoice-number --> sc-skeleton
   sc-line-item-invoice-due-date --> sc-line-item
   sc-line-item-invoice-due-date --> sc-skeleton
-  sc-line-item-invoice-due-date --> sc-format-date
   sc-line-item-invoice-receipt-download --> sc-line-item
   sc-line-item-invoice-receipt-download --> sc-skeleton
   sc-line-item-invoice-receipt-download --> sc-icon
