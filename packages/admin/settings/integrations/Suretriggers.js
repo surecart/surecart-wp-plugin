@@ -64,12 +64,15 @@ export default () => {
 			console.log('response', response);
 		} catch (error) {
 			createErrorNotice(
-				error?.message || __('Something went wrong', 'surecart')
+				error?.message || __('Something went wrong', 'surecart'),
+				{ type: 'snackbar' }
 			);
 		} finally {
 			setLoading(false);
 			setStatus('installed');
-			createSuccessNotice(__('Plugin installed.', 'surecart'));
+			createSuccessNotice(__('Plugin installed.', 'surecart'), {
+				type: 'snackbar',
+			});
 		}
 	};
 
@@ -91,12 +94,15 @@ export default () => {
 			console.log('response', response);
 		} catch (error) {
 			createErrorNotice(
-				error?.message || __('Something went wrong', 'surecart')
+				error?.message || __('Something went wrong', 'surecart'),
+				{ type: 'snackbar' }
 			);
 		} finally {
 			setLoading(false);
 			setStatus('activated');
-			createSuccessNotice(__('Plugin activated.', 'surecart'));
+			createSuccessNotice(__('Plugin activated.', 'surecart'), {
+				type: 'snackbar',
+			});
 		}
 	};
 

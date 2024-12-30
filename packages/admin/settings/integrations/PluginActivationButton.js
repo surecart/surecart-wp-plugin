@@ -54,13 +54,22 @@ export default ({ plugin, slug, onActivated }) => {
 			createSuccessNotice(
 				pluginData
 					? __('Plugin activated.', 'surecart')
-					: __('Plugin installed and activated.', 'surecart')
+					: __('Plugin installed and activated.', 'surecart'),
+				{ type: 'snackbar' }
 			);
 		} catch (error) {
 			console.error(error);
-			createErrorNotice(
-				error?.message || __('Something went wrong', 'surecart')
-			);
+			if (error?.code === 'unexpected_output') {
+				createErrorNotice(
+					'The plugin generated an unexpected output. Please try refreshing the page to make sure the plugin is activated.',
+					{ type: 'snackbar' }
+				);
+			} else {
+				createErrorNotice(
+					error?.message || __('Something went wrong', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			}
 		} finally {
 			setIsSaving(false);
 		}
