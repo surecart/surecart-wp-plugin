@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 export default ({ plugin, slug, onActivated }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
+	const { invalidateResolution } = useDispatch(coreStore);
 	const previousStatus = useRef(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -33,7 +34,7 @@ export default ({ plugin, slug, onActivated }) => {
 	const activatePlugin = async () => {
 		try {
 			setIsSaving(true);
-			const response = await saveEntityRecord(
+			await saveEntityRecord(
 				'root',
 				'plugin',
 				{
@@ -44,19 +45,24 @@ export default ({ plugin, slug, onActivated }) => {
 					throwOnError: true,
 				}
 			);
-			if (response?.status !== 'active') {
-				throw new Error(
-					pluginData
-						? __('Could not activate plugin.', 'surecart')
-						: __('Could not install plugin.', 'surecart')
-				);
-			}
+
+			// Force a refresh of the entity record
+			invalidateResolution('core', 'getEntityRecord', [
+				'root',
+				'plugin',
+				plugin.replace(/\.php$/, ''),
+			]);
+
+			// If we get here, it means the request was successful
 			createSuccessNotice(
 				pluginData
 					? __('Plugin activated.', 'surecart')
 					: __('Plugin installed and activated.', 'surecart'),
 				{ type: 'snackbar' }
 			);
+
+			// Add a small delay to allow for any post-activation processes
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 		} catch (error) {
 			console.error(error);
 			if (error?.code === 'unexpected_output') {
