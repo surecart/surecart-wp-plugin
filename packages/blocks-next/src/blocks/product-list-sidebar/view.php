@@ -21,6 +21,9 @@
 	data-wp-on-window--resize="actions.close"
 >
 	<div class="sc-sidebar-header">
+		<span class="sc-sidebar-header__title" inert>
+			<?php echo wp_kses_post( $attributes['label'] ); ?>
+		</span>
 		<div
 			class="sc-sidebar-header__close"
 			data-wp-on--click="actions.toggleMobile"
@@ -32,9 +35,6 @@
 			<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
 		</div>
 
-		<span class="sc-sidebar-header__title" inert>
-			<?php echo wp_kses_post( $attributes['label'] ); ?>
-		</span>
 	</div>
 	<div
 		<?php
