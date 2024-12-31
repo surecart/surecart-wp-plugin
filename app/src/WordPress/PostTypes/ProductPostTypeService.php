@@ -80,6 +80,7 @@ class ProductPostTypeService {
 		// handle post thumbnails from gallery.
 		add_filter( 'post_thumbnail_id', array( $this, 'postThumbnailId' ), 10, 5 );
 		add_filter( 'wp_get_attachment_image', array( $this, 'getAttachmentImage' ), 10, 5 );
+		add_filter( 'wp_get_attachment_image_src', array( $this, 'getAttachmentImageSrc' ), 10, 4 );
 		add_filter( 'has_post_thumbnail', array( $this, 'hasPostThumbnail' ), 10, 2 );
 		add_filter( 'post_thumbnail_html', array( $this, 'postThumbnailHTML' ), 10, 5 );
 		add_filter( 'post_thumbnail_url', array( $this, 'postThumbnailURL' ), 10, 2 );
@@ -165,6 +166,57 @@ class ProductPostTypeService {
 		}
 
 		return $product->featured_image->html( $size, $attr );
+	}
+
+	/**
+	 * Get the attachment image src.
+	 *
+	 * @param array|false  $image         {
+	 *     Array of image data, or boolean false if no image is available.
+	 *
+	 *     @type string $0 Image source URL.
+	 *     @type int    $1 Image width in pixels.
+	 *     @type int    $2 Image height in pixels.
+	 *     @type bool   $3 Whether the image is a resized image.
+	 * }
+	 * @param int          $attachment_id Image attachment ID.
+	 * @param string|int[] $size          Requested image size. Can be any registered image size name, or
+	 *                                    an array of width and height values in pixels (in that order).
+	 * @param bool         $icon          Whether the image should be treated as an icon.
+	 *
+	 * @return array|false
+	 */
+	public function getAttachmentImageSrc( $image, $attachment_id, $size, $icon ) {
+		if ( ! empty( $image ) ) {
+			return $image;
+		}
+
+		// check if we have an attachment id.
+		if ( ! empty( $attachment_id ) && ! empty( $image ) ) {
+			return $image;
+		}
+
+		// check post type.
+		global $post;
+		if ( empty( $post->post_type ) || $post->post_type !== $this->post_type ) {
+			return $image;
+		}
+
+		$product = sc_get_product();
+		if ( empty( $product ) ) {
+			return $image;
+		}
+
+		if ( empty( $product->featured_image ) || empty( $image[0] ?? null ) ) {
+			return [
+				$product->featured_image?->attributes()->src ?? \SureCart::core()->assets()->getUrl() . '/images/placeholder.jpg',
+				$product->featured_image?->attributes()->width ?? false,
+				$product->featured_image?->attributes()->height ?? false,
+				false, // not resized.
+			];
+		}
+
+		return $image;
 	}
 
 	/**
