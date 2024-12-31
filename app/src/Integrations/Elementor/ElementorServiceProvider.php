@@ -18,9 +18,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.elementor.seeder']       = function () {
-			return new ElementorTemplateSeeder();
-		};
 		$container['surecart.elementor.widgets']      = function () {
 			return new ElementorWidgetsService();
 		};
@@ -53,17 +50,11 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
 
-		// Bootstrap the template seeder.
-		$container['surecart.elementor.seeder']->bootstrap();
-
 		// Bootstrap the widgets.
 		$container['surecart.elementor.widgets']->bootstrap();
 
 		// Bootstrap the dynamic tags.
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
-
-		$app = $container[ SURECART_APPLICATION_KEY ];
-		$app->alias( 'elementor_seeder', 'surecart.elementor.seeder' );
 	}
 
 	/**
@@ -134,19 +125,17 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url'                        => site_url(),
-				'sc_product_template'             => $this->get_product_template(),
-				'sc_product_card_template'        => $this->get_product_card_template(),
-				'sc_shop_page_loop_item_template' => $this->get_shop_page_loop_item_template(),
-				'sc_shop_page_template'           => $this->get_shop_page_template(),
+				'site_url'                 => site_url(),
+				'sc_product_template'      => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
+				'sc_product_card_template' => $this->get_elementor_template_from_file( 'surecart-product-card.json' ),
 			]
 		);
 	}
 
 	/**
-	 * Elementor surecart categories register
+	 * Elementor surecart categories register.
 	 *
-	 * @param Obj $elements_manager Elementor category manager.
+	 * @param \Elementor\Elements_Manager $elements_manager The elements manager.
 	 *
 	 * @return void
 	 */
@@ -161,7 +150,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Elementor widget register
+	 * Elementor widget register.
+	 *
+	 * @param \Elementor\Widgets_Manager $widgets_manager The widgets manager.
 	 *
 	 * @return void
 	 */
@@ -170,7 +161,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Add product theme condition
+	 * Add product theme condition.
 	 *
 	 * @param \ElementorPro\Modules\ThemeBuilder\Classes\Documents_Manager $documents_manager The documents manager.
 	 *
@@ -181,7 +172,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Add product theme condition
+	 * Add product theme condition.
 	 *
 	 * @param \ElementorPro\Modules\ThemeBuilder\Classes\Conditions_Manager $conditions_manager The conditions manager.
 	 *
@@ -203,52 +194,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Get SureCart product template.
-	 *
-	 * @return array
-	 */
-	public function get_product_template(): array {
-		return $this->get_elementor_template_from_file( 'surecart-single-product.json' );
-	}
-
-	/**
-	 * Get SureCart product card template for Shop Page.
-	 *
-	 * @return array
-	 */
-	public function get_product_card_template(): array {
-		return $this->get_elementor_template_from_file( 'surecart-product-card.json' );
-	}
-
-	/**
-	 * Get SureCart shop page loop item template.
-	 *
-	 * @return array
-	 */
-	public function get_shop_page_loop_item_template(): array {
-		return $this->get_elementor_template_from_file( 'surecart-shop-page-loop-item.json' );
-	}
-
-	/**
-	 * Get SureCart shop page template.
-	 *
-	 * @return array
-	 */
-	public function get_shop_page_template(): array {
-		$template = $this->get_elementor_template_from_file( 'surecart-shop-page.json' );
-
-		// Add the shop page loop item template as template_id.
-		$loop_template = \SureCart::elementor_seeder()->getShopPageLoopItemTemplate();
-		$template_id   = $loop_template->ID ?? $loop_template ?? '';
-
-		if ( ! empty( $template_id ) ) {
-			$template['content'][0]['elements'][0]['settings']['template_id'] = $template_id;
-		}
-
-		return $template;
-	}
-
-	/**
 	 * Get Elementor template from file.
 	 *
 	 * @param string $file_name The file name.
@@ -258,7 +203,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	public function get_elementor_template_from_file( string $file_name ) {
 		try {
 			$template_path    = SURECART_PLUGIN_DIR . '/templates/elementor/' . $file_name;
-			$template_content = file_get_contents( $template_path );
+			$template_content = file_get_contents( $template_path ); // phpcs:ignore
 
 			return isset( $template_content ) ? json_decode( $template_content, true ) : [];
 		} catch ( \Throwable $th ) {
