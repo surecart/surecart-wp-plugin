@@ -8,6 +8,7 @@
 	); ?>
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	data-wp-bind--hidden="!state.open"
+	data-wp-on-window--resize="actions.close"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
@@ -17,6 +18,7 @@
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	data-wp-bind--aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
 	data-wp-on--click='actions.closeOverlay'
+	data-wp-on-window--resize="actions.close"
 >
 	<div class="sc-sidebar-header">
 		<div
