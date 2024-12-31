@@ -56,23 +56,9 @@ jQuery(window).ready(function () {
 		}
 	);
 
-	elementor.hooks.addAction(
-		'panel/open_editor/widget/surecart-shop',
-		function (panel, model, view) {
-			// Remove the default SureCart block by clearing the model.
-			model.destroy();
-
-			insertSureCartTemplates(
-				window?.scElementorData?.sc_shop_page_template,
-				model
-			);
-		}
-	);
-
 	function insertSureCartTemplates(template) {
 		const container = elementor.getPreviewContainer();
-
-		const at = container.view.collection.length - 1 || 0;
+		let at = container.view.collection.length - 1 || 0;
 
 		// Insert the product element content into the editor.
 		template.content.forEach((contentElement) => {
@@ -81,8 +67,12 @@ jQuery(window).ready(function () {
 				model: contentElement,
 				options: { at },
 			});
+
+			// Increment the index to ensure elements are added in the correct order.
+			at++;
 		});
 
+		// Apply the page settings after all elements are inserted.
 		$e.run('document/elements/settings', {
 			container,
 			settings: template.page_settings,
@@ -90,5 +80,8 @@ jQuery(window).ready(function () {
 				external: true,
 			},
 		});
+
+		// Delete last container element as, its creating empty container widget.
+		container.view.collection.pop();
 	}
 }, jQuery);
