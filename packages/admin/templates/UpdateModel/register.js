@@ -1,4 +1,5 @@
 const plugins = {};
+import { getQueryArg } from '@wordpress/url';
 
 export function registerAddon(name, settings) {
 	if (typeof settings !== 'object') {
@@ -65,5 +66,15 @@ export function getAddons(scope) {
 	return Object.values(plugins).filter((plugin) => plugin.scope === scope);
 }
 
+export function getCurrentPage() {
+	return getQueryArg(window.location, 'page');
+}
+
+export function getCurrentPageId() {
+	return getQueryArg(window.location, 'id');
+}
+
 window.surecart = window.surecart || {};
 window.surecart.registerAddon = registerAddon;
+window.surecart.getCurrentPage = getCurrentPage;
+window.surecart.getCurrentPageId = getCurrentPageId;
