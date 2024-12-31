@@ -9,6 +9,7 @@ export const useLink = (params) => {
 	const onClick = (event) => {
 		event.preventDefault();
 		history.push(params);
+		window.scrollTo(0, 0);
 	};
 
 	return { href, onClick };
