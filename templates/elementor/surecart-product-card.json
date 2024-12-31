@@ -2,13 +2,13 @@
 	"content": [
 		{
 			"id": "30691ca2",
-			"settings": {
-				"link_to_product": "yes"
-			},
+			"settings": [],
 			"elements": [
 				{
 					"id": "720ccdd7",
-					"settings": [],
+					"settings": {
+						"link_to_product": "yes"
+					},
 					"elements": [
 						{
 							"id": "41a6bac6",

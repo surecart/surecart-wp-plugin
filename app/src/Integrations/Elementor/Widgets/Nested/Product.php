@@ -186,10 +186,14 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		$item_content = ob_get_clean();
 
 		if ( 'yes' === $settings['link_to_product'] ) {
-			$item_content = sprintf( '<a href="%s">%s</a>', get_permalink(), $item_content );
+			?>
+			<a href="<?php echo esc_url( get_permalink() ); ?>">
+				<?php echo do_blocks( $item_content ); ?>
+			</a>
+			<?php
+		} else {
+			echo do_blocks( $item_content );
 		}
-
-		echo do_blocks( $item_content );
 	}
 
 	/**

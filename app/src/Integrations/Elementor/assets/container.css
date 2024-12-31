@@ -46,3 +46,8 @@
 .wp-block-surecart-product-page {
 	display: flex;
 }
+
+.elementor-widget-n-product .elementor-widget-container a,
+.elementor-widget-n-product a {
+	text-decoration: none;
+}

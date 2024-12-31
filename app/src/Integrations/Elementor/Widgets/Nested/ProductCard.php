@@ -176,7 +176,6 @@ class ProductCard extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 		<!-- wp:surecart/product-page -->
 		<?php
 		$children = $this->get_children();
-		error_log( print_r( $children, true ) );
 		foreach ( $children as $index => $child ) {
 			$this->print_child($index );
 		}
@@ -187,10 +186,14 @@ class ProductCard extends \Elementor\Modules\NestedElements\Base\Widget_Nested_B
 		$item_content = ob_get_clean();
 
 		if ( 'yes' === $settings['link_to_product'] ) {
-			$item_content = sprintf( '<a href="%s">%s</a>', get_permalink(), $item_content );
+			?>
+			<a href="<?php echo esc_url( get_permalink() ); ?>">
+				<?php echo do_blocks( $item_content ); ?>
+			</a>
+			<?php
+		} else {
+			echo do_blocks( $item_content );
 		}
-
-		echo do_blocks( $item_content );
 	}
 
 	/**
