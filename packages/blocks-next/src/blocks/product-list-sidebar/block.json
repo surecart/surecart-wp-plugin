@@ -18,6 +18,7 @@
 			"default": true
 		}
 	},
+	"usesContext": ["query"],
 	"supports": {
 		"interactivity": true,
 		"layout": {

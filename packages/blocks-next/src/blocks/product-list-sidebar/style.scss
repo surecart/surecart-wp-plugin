@@ -37,10 +37,31 @@
 	}
 
 	.sc-drawer__wrapper {
-		padding: 1.25em;
-		min-height: auto;
-		color: var(--sc-input-label-color);
-		gap: 1.2em;
+		.sc-drawer__items {
+			flex: 1 1 200px;
+			gap: 1.25em;
+			overflow: auto;
+			display: flex;
+			flex-direction: column;
+			padding: 1.25em;
+			color: var(--sc-input-label-color);
+			gap: 1.2em;
+		}
+		.wp-block-buttons {
+			padding: 1.25em 1.25em 1.25em 1.25em;
+			.wp-block-button {
+				width: 100%;
+				.wp-block-button__link{
+					position: relative;
+					text-decoration: none;
+					width: 100%;
+					display: block;
+					-webkit-box-sizing: border-box;
+					box-sizing: border-box;
+					text-align: center;
+				}
+			}
+		}
 	}
 	.sc-alert {
 		border-radius: 0;
