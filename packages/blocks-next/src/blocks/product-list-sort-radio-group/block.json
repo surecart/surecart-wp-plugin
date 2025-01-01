@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-list-sort-radio-group",
-	"title": "Sort Radio Group",
+	"title": "Sort (Radio Group)",
 	"description": "Display the Product List Sort Radio Group.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",

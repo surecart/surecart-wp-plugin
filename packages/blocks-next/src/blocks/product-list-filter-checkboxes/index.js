@@ -3,7 +3,9 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { check as icon } from '@wordpress/icons';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { select } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -11,9 +13,6 @@ import { __, sprintf } from '@wordpress/i18n';
 import edit from './edit';
 import metadata from './block.json';
 import save from './save';
-import './style.scss';
-import { store as coreStore } from '@wordpress/core-data';
-import { select } from '@wordpress/data';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -39,9 +38,6 @@ registerBlockType(metadata.name, {
 
 		if (!taxonomy || !taxonomy?.name) return false;
 
-		return sprintf(
-			'%s Checkboxes',
-			taxonomy.labels?.singular_name ?? taxonomy.name
-		);
+		return taxonomy.name;
 	},
 });

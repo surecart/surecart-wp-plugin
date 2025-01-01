@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { check as icon } from '@wordpress/icons';
+import { homeButton as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
