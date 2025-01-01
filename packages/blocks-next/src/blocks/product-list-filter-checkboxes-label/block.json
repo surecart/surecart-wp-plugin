@@ -9,7 +9,7 @@
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-list-filter-checkboxes"],
-	"usesContext": ["surecart/product-list-filter-checkboxes/taxonomy"],
+	"usesContext": ["taxonomySlug"],
 	"attributes": {
 		"label": {
 			"type": "string",
