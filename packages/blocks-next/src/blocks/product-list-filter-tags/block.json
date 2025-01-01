@@ -29,11 +29,6 @@
 			"default": {
 				"blockGap": "0"
 			}
-		},
-		"style": {
-			"spacing": {
-				"blockGap": "0"
-			}
 		}
 	},
 	"textdomain": "surecart",
