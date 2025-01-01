@@ -5,9 +5,7 @@ import { useEffect } from '@wordpress/element';
 
 export default ({
 	setAttributes,
-	context: {
-		'surecart/product-list-filter-checkboxes/taxonomy': taxonomySlug,
-	},
+	context: { taxonomySlug },
 	attributes: { label },
 }) => {
 	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
@@ -22,13 +20,14 @@ export default ({
 
 	useEffect(() => {
 		if (!taxonomySlug) return;
+		if (!taxonomies?.length) return;
 
 		const newLabel =
 			taxonomies.find((t) => t.slug === taxonomySlug)?.name ??
 			__('Filter by', 'surecart');
 
 		setAttributes({ label: newLabel });
-	}, [taxonomySlug]);
+	}, [taxonomySlug, taxonomies]);
 
 	const blockProps = useBlockProps();
 	return (
