@@ -1,12 +1,22 @@
 .sc-form-check {
 	display: flex;
 	align-items: center;
-	gap: 0.5em;
+	gap: 0.75em;
+
+	label {
+		font-size: var(--sc-input-font-size-medium);
+		font-weight: var(--sc-input-font-weight);
+		font-style: normal;
+		font-weight: normal;
+		line-height: var(--sc-checkbox-size);
+	}
 }
 
-.sc-check-input {
-	width: 1.25em;
-	height: 1.25em;
+.sc-check-input,
+.sc-check-input[type="checkbox"],
+.sc-check-input[type="radio"] {
+	width: 1em;
+	height: 1em;
 	margin: 0.25em 0;
 	vertical-align: top;
 	background: {
