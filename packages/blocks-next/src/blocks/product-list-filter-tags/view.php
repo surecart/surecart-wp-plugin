@@ -10,6 +10,17 @@ if ( 'surecart/product-list-filter-tag' === $block->parsed_block['innerBlocks'][
 
 $all_taxonomies = \SureCart::block()->urlParams( 'products' )->getAllTaxonomyArgs();
 ?>
-<div <?php echo wp_kses_data( get_block_wrapper_attributes( [ 'class' => empty( $all_taxonomies ) ? 'is-empty' : '' ] ) ); ?>>
+<div
+<?php
+echo wp_kses_data(
+	get_block_wrapper_attributes(
+		[
+			'class'       => empty( $all_taxonomies ) ? 'is-empty' : '',
+			'aria-hidden' => empty( $all_taxonomies ) ? 'true' : 'false',
+		]
+	)
+);
+?>
+>
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
