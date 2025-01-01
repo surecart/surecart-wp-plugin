@@ -27,6 +27,7 @@ export default ({ attributes: { taxonomy: taxonomySlug }, setAttributes }) => {
 		(taxonomy) =>
 			taxonomy.types.includes('sc_product') && taxonomy?.visibility.public
 	);
+
 	return (
 		<>
 			<InspectorControls>
@@ -54,6 +55,7 @@ export default ({ attributes: { taxonomy: taxonomySlug }, setAttributes }) => {
 					)}
 				</PanelBody>
 			</InspectorControls>
+
 			<div {...innerBlocksProps} />
 		</>
 	);

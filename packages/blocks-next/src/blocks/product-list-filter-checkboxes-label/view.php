@@ -10,4 +10,3 @@
 >
 	<?php echo wp_kses_post( $attributes['label'] ); ?>
 </span>
-

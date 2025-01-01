@@ -12,7 +12,7 @@ if ( ! $query->have_posts() ) {
 <?php
 echo wp_kses_data( get_block_wrapper_attributes( $wrapper_attributes ) );
 ?>
-							>
+>
 	<?php
 	while ( $query->have_posts() ) :
 		$query->the_post();
