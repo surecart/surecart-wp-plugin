@@ -9,14 +9,18 @@
 			'event' => 'actions.toggleMobile',
 		),
 	);
-?>
+	?>
 <?php foreach ( $buttons as $button ) : ?>
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes(
-		array(
-			'class' => $button['class'],
+	<?php
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class' => $button['class'],
+			)
 		)
-	) ); ?>
+	);
+	?>
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	data-wp-on--click="<?php echo esc_attr( $button['event'] ); ?>"
 	data-wp-on--keydown="<?php echo esc_attr( $button['event'] ); ?>"
@@ -41,6 +45,6 @@
 		) : '';
 
 		echo wp_kses_post( $attributes['label'] ?? __( 'Filter', 'surecart' ) );
-		?>
+	?>
 </div>
 <?php endforeach; ?>
