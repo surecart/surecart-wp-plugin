@@ -29,5 +29,5 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"render": "file:./view.php",
-	"style": ["file:./style-index.css", "surecart-radio-checkbox"]
+	"style": ["surecart-radio-checkbox"]
 }

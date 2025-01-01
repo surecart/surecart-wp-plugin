@@ -47,6 +47,7 @@ const { state, actions } = store('surecart/sidebar', {
 			state.dialog?.close();
 			state.open = false;
 		},
+
 		/**
 		 * Toggle the sidebar dialog.
 		 * This is used for the desktop sidebar.

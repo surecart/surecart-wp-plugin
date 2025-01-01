@@ -5,6 +5,7 @@
 				'aria-label'      => esc_html( $checkbox->label ),
 				'aria-checked'    => $checkbox->checked ? 'true' : 'false',
 				'aria-labelledby' => $checkbox->label,
+				'class'           => 'sc-form-check',
 			]
 		)
 	); ?>

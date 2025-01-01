@@ -1,38 +1,49 @@
+.sc-form-check {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
 .sc-check-input {
-    width: 1.25em;
-    height: 1.25em;
-    margin-top: .25em;
-    margin-bottom: .25em;
-    vertical-align: top;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: 1px solid rgba(0, 0, 0, .25);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
-}
+	width: 1.25em;
+	height: 1.25em;
+	margin: 0.25em 0;
+	vertical-align: top;
+	background: {
+		color: #fff;
+		repeat: no-repeat;
+		position: center;
+		size: contain;
+	}
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	appearance: none;
+	color-adjust: exact;
 
-.sc-check-input[type=radio] {
-    border-radius: 50%;
-}
+	// Radio
+	&[type="radio"] {
+		border-radius: 50%;
+		&:checked {
+			background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+		}
+	}
 
-.sc-check-input[type=checkbox] {
-    border-radius: .25em;
-}
+	// Checkbox
+	&[type="checkbox"] {
+		border-radius: 0.25em;
+		&:checked {
+			background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+		}
+	}
 
-.sc-check-input:checked {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-}
-
-.sc-check-input:checked[type="radio"] {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
-}
-
-.sc-check-input:checked[type="checkbox"] {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+	// Checked
+	&:checked {
+		background-color: var(
+			--sc-check-input-background-color,
+			var(--sc-color-primary-500)
+		);
+		border-color: var(
+			--sc-check-input-border-color,
+			var(--sc-color-primary-500)
+		);
+	}
 }

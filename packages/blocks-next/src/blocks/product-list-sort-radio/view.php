@@ -1,10 +1,11 @@
-<a 
+<a
 	<?php echo wp_kses_data(
 		get_block_wrapper_attributes(
 			[
 				'aria-label'      => esc_html( $radio->label ),
 				'aria-checked'    => $radio->checked ? 'true' : 'false',
 				'aria-labelledby' => $radio->label,
+				'class'           => 'sc-form-check',
 			]
 		)
 	); ?>
