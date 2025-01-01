@@ -37,7 +37,6 @@ const { state, actions } = store('surecart/sidebar', {
 		 */
 		open: function* () {
 			state.dialog?.showModal();
-			state.open = true;
 		},
 
 		/**
@@ -45,7 +44,20 @@ const { state, actions } = store('surecart/sidebar', {
 		 */
 		close: () => {
 			state.dialog?.close();
+		},
+
+		/**
+		 * Close the desktop sidebar.
+		 */
+		closeDesktop: () => {
 			state.open = false;
+		},
+
+		/**
+		 * Open the desktop sidebar.
+		 */
+		openDesktop: () => {
+			state.open = true;
 		},
 
 		/**
@@ -63,6 +75,7 @@ const { state, actions } = store('surecart/sidebar', {
 
 			state.open = !state.open;
 		},
+
 		/**
 		 * Toggle the sidebar dialog.
 		 */

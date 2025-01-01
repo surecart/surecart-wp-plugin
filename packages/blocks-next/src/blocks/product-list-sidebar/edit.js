@@ -1,8 +1,7 @@
 import {
 	useBlockProps,
 	InspectorControls,
-	InnerBlocks,
-	RichText,
+	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import {
@@ -141,7 +140,7 @@ const TEMPLATE = [
 ];
 
 export default ({
-	attributes: { sidebarOpen, label },
+	attributes: { open, label },
 	setAttributes,
 	__unstableLayoutClassNames,
 }) => {
@@ -149,35 +148,33 @@ export default ({
 		className: `${__unstableLayoutClassNames}`,
 	});
 
+	const innerBlockProps = useInnerBlocksProps(blockProps, {
+		template: TEMPLATE,
+		templateLock: false,
+	});
+
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
-					<PanelRow>
-						<ToggleControl
-							label={__('Default Open?', 'surecart')}
-							help={__(
-								'Enable this if you want sidebar to be open by default.',
-								'surecart'
-							)}
-							checked={sidebarOpen}
-							onChange={(sidebarOpen) =>
-								setAttributes({ sidebarOpen })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Mobile Header Label', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
+					<ToggleControl
+						label={__('Open by default', 'surecart')}
+						help={__(
+							'Do you want sidebar to be open by default?',
+							'surecart'
+						)}
+						checked={open}
+						onChange={(open) => setAttributes({ open })}
+					/>
+
+					<TextControl
+						label={__('Mobile Label', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...blockProps}>
-				<InnerBlocks template={TEMPLATE} templateLock={false} />
-			</div>
+			<div {...innerBlockProps} />
 		</>
 	);
 };

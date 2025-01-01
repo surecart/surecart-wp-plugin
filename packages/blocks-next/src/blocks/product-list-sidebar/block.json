@@ -13,7 +13,7 @@
 			"type": "string",
 			"default": "Filters"
 		},
-		"sidebarOpen": {
+		"open": {
 			"type": "boolean",
 			"default": true
 		}
