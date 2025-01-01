@@ -3,11 +3,6 @@ global $sc_query_id;
 $params         = \SureCart::block()->urlParams( 'products' );
 $all_taxonomies = $params->getAllTaxonomyArgs();
 
-// no filters, don't render this block.
-if ( empty( $all_taxonomies ) ) {
-	return;
-}
-
 $product_terms = array();
 foreach ( $all_taxonomies as $taxonomy_name => $term_slugs ) {
 	$terms = get_terms(
@@ -34,11 +29,6 @@ $product_terms = array_map(
 	},
 	$product_terms ?? []
 );
-
-// no collections, don't render this block.
-if ( empty( $product_terms ) ) {
-	return;
-}
 
 ?>
 <div
