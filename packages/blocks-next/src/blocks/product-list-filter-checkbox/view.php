@@ -13,7 +13,7 @@
 	data-wp-on--mouseenter="surecart/product-list::actions.prefetch"
 	role="checkbox"
 >
-	<input tabindex="-1" type="checkbox" id="<?php echo (int) $checkbox->value; ?>" <?php checked( $checkbox->checked ); ?> />
+	<input tabindex="-1" class="sc-check-input" type="checkbox" id="<?php echo (int) $checkbox->value; ?>" <?php checked( $checkbox->checked ); ?> />
 	<label for="<?php echo (int) $checkbox->value; ?>"><?php echo esc_html( $checkbox->label ); ?></label>
 </a>
 
