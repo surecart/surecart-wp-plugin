@@ -17,7 +17,7 @@ interface Store {
   taxProtocol: TaxProtocol;
   isCheckoutPage: boolean;
   validateStock: boolean;
-  persist: 'browser' | 'url';
+  persist: 'browser' | 'url' | false;
   paymentMethodRequiresShipping: boolean;
 }
 
