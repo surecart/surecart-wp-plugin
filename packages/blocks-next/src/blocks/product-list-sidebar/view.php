@@ -6,6 +6,7 @@
 			)
 		)
 	); ?>
+	aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	data-wp-bind--hidden="!state.open"
 	data-wp-on-window--resize="actions.close"
@@ -16,7 +17,7 @@
 <dialog
 	class="sc-drawer sc-sidebar-drawer wp-block-surecart-product-list-sidebar"
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
-	data-wp-bind--aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
+	aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
 	data-wp-on--click='actions.closeOverlay'
 	data-wp-on-window--resize="actions.close"
 >
