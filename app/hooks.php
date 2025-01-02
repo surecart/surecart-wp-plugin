@@ -74,6 +74,7 @@ add_action(
 			return;
 		}
 
+		// Add a custom column to the list table.
 		add_filter(
 			'manage_' . $page . '_columns',
 			function ( $columns ) {
@@ -82,6 +83,7 @@ add_action(
 			}
 		);
 
+		// Add the content to the custom column.
 		add_action(
 			'manage_' . $page . '_custom_column',
 			function ( $column_name, $data ) {
