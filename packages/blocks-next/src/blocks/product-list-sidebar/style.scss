@@ -1,14 +1,15 @@
 // drawer
 .wp-block-surecart-product-list-sidebar.is-position-sticky {
 	overflow: auto;
-	height: 100svh;
+	max-height: 100svh;
+	min-height: fit-content;
 	flex-wrap: nowrap;
 	top: 0;
 	padding-bottom: 40px;
 
 	.admin-bar & {
 		top: 40px;
-		height: calc(100svh - 40px);
+		max-height: calc(100svh - 40px);
 	}
 }
 
