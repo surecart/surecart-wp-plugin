@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list-filter-checkboxes",
 	"title": "Filter Checkboxes",
-	"description": "Display the Product List Filter Checkboxes.",
+	"description": "Display the product list filter checkboxes.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
@@ -37,14 +37,10 @@
 			"default": {
 				"blockGap": "0"
 			}
-		},
-		"style": {
-			"spacing": {
-				"blockGap": "0"
-			}
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
 	"render": "file:./view.php"
 }

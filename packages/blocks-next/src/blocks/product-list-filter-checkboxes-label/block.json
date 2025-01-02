@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list-filter-checkboxes-label",
 	"title": "Label",
-	"description": "Display the product list filter checkboxes label",
+	"description": "Display the product list filter checkboxes label.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"icon": "media-interactive",
@@ -38,5 +38,6 @@
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
+	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js"
 }
