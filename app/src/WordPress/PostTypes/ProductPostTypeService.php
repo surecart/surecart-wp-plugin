@@ -207,11 +207,17 @@ class ProductPostTypeService {
 			return $image;
 		}
 
+		$placeholder_image = apply_filters(
+			'sc_product_list_placeholder_image',
+			\SureCart::core()->assets()->getUrl() . '/images/placeholder.jpg',
+			$product
+		);
+
 		if ( empty( $product->featured_image ) || empty( $image[0] ?? null ) ) {
 			return [
-				$product->featured_image?->attributes()->src ?? \SureCart::core()->assets()->getUrl() . '/images/placeholder.jpg',
-				$product->featured_image?->attributes()->width ?? false,
-				$product->featured_image?->attributes()->height ?? false,
+				$placeholder_image,
+				0, // width.
+				0, // height.
 				false, // not resized.
 			];
 		}
