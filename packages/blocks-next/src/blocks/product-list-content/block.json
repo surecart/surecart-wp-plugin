@@ -29,15 +29,9 @@
 			"default": {
 				"blockGap": "0"
 			}
-		},
-		"style": {
-			"spacing": {
-				"blockGap": "0"
-			}
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css"],
 	"render": "file:./view.php"
 }
