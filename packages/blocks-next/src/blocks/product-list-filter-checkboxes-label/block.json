@@ -38,6 +38,5 @@
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
-	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js"
 }
