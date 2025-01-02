@@ -323,7 +323,7 @@ export class ScSessionProvider {
     console.info('Handling initial line items.');
     // TODO: move this to central store.
     const address = this.el.querySelector('sc-order-shipping-address');
-    await this.loadUpdate({
+    return this.loadUpdate({
       line_items,
       refresh_line_items: true,
       ...(promotion_code ? { discount: { promotion_code } } : {}),
@@ -335,7 +335,6 @@ export class ScSessionProvider {
           }
         : {}),
     });
-    window.history.replaceState({}, document.title, addQueryArgs(window.location.href, { checkout_id: checkoutState?.checkout?.id }));
   }
 
   /** Handle a brand new checkout. */
