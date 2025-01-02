@@ -29,6 +29,9 @@
 				"orientation": "vertical"
 			}
 		},
+		"position": {
+			"sticky": true
+		},
 		"spacing": {
 			"padding": true,
 			"margin": true,
