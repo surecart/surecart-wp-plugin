@@ -11,7 +11,15 @@ import { select } from '@wordpress/data';
 import Edit from './edit';
 import metadata from './block.json';
 import save from './save';
+
+/**
+ * Styles
+ */
 import './style.scss';
+
+/**
+ * Components
+ */
 import FilterTagsMigration from './FilterTagsMigration';
 
 /**

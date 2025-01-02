@@ -3,8 +3,7 @@
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
 			[
-				'aria-label' => wp_strip_all_tags( $attributes['label'] ),
-				'id'         => 'sort-radio-group-label-' . $sc_query_id,
+				'id' => 'sort-radio-group-label-' . $sc_query_id,
 			]
 		)
 	);

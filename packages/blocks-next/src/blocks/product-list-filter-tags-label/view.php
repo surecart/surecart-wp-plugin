@@ -2,8 +2,7 @@
 	<?php echo wp_kses_data(
 		get_block_wrapper_attributes(
 			[
-				'aria-label'      => wp_strip_all_tags( $attributes['label'] ),
-				'aria-labelledby' => wp_strip_all_tags( $attributes['label'] ),
+				'id' => 'filter-tags-label-' . $sc_query_id,
 			]
 		)
 	); ?>
