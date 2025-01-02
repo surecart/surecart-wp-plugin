@@ -48,6 +48,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
+			add_action( 'elementor/frontend/builder_content_data', array( $this, 'append_product_widget_wrapper' ), 10, 2 );
 		}
 
 		// Bootstrap the widgets.
@@ -191,6 +192,71 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function handle_product_page_wrapper( string $content ): string {
 		return ( new ProductPageWrapperService( $content ) )->wrap();
+	}
+
+	/**
+	 * Frontend builder content data.
+	 *
+	 * Filters the builder content in the frontend.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $data    The builder content.
+	 * @param int   $post_id The post ID.
+	 */
+	public function append_product_widget_wrapper( $data, $post_id ) {
+		// If no data, return.
+		if ( empty( $data[0]['elements'] ) ) {
+			return $data;
+		}
+
+		// If not surecart product, return.
+		if ( ! is_singular( 'sc_product' ) ) {
+			return $data;
+		}
+
+		$post = get_post( $post_id );
+
+		if ( ! $post ) {
+			return $data;
+		}
+
+		$product_page_wrapper = new ProductPageWrapperService( $post->post_content );
+
+		// If the post has no product buy button, return.
+		if ( ! $product_page_wrapper->hasProductBuyButton() ) {
+			return $data;
+		}
+
+		// If already has product page wrapper, return.
+		if ( $product_page_wrapper->hasProductPageWrapper() ) {
+			return $data;
+		}
+
+		return $this->addProductElement( $data );
+	}
+
+	/**
+	 * Add product element wrapper to the content.
+	 *
+	 * @param array $data The data.
+	 *
+	 * @return array
+	 */
+	private function addProductElement( $data ): array {
+		$data_elements       = $data[0]['elements'];
+		$data[0]['elements'] = [
+			[
+				'id'         => '720cczz7',
+				'elements'   => $data_elements,
+				'settings'   => [],
+				'widgetType' => 'surecart-product',
+				'isInner'    => false,
+				'elType'     => 'widget',
+			],
+		];
+
+		return $data;
 	}
 
 	/**
