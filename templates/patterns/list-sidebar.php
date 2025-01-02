@@ -15,7 +15,7 @@ return [
 <!-- /wp:group -->
 
 <!-- wp:surecart/product-list-content {"layout":{"type":"flex","orientation":"horizontal","verticalAlignment":"top","flexWrap":"nowrap"}} -->
-<!-- wp:surecart/product-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"225px"},"spacing":{"blockGap":"30px"}}} -->
+<!-- wp:surecart/product-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"225px"},"spacing":{"blockGap":"30px"},"position":{"type":"sticky","top":"0px"}}} -->
 <!-- wp:surecart/product-list-filter-tags {"layout":{"type":"flex","orientation":"vertical"}} -->
 <!-- wp:surecart/product-list-filter-tags-label {"style":{"typography":{"fontWeight":"700","fontStyle":"normal"}},"fontSize":"medium"} /-->
 
@@ -35,7 +35,7 @@ return [
 <!-- /wp:surecart/product-list-sort-radio-group -->
 
 <!-- wp:surecart/product-list-filter-checkboxes {"layout":{"type":"flex","orientation":"vertical"},"style":{"spacing":{"blockGap":"8px"}}} -->
-<!-- wp:surecart/product-list-filter-checkboxes-label {"style":{"typography":{"fontWeight":"700","fontStyle":"normal","fontSize":"16px"}}} /-->
+<!-- wp:surecart/product-list-filter-checkboxes-label {"label":"Collections","style":{"typography":{"fontWeight":"700","fontStyle":"normal","fontSize":"16px"}}} /-->
 
 <!-- wp:surecart/product-list-filter-checkboxes-template {"style":{"spacing":{"blockGap":"6px","margin":{"top":"0","bottom":"0"}}},"fontSize":"medium"} -->
 <!-- wp:surecart/product-list-filter-checkbox {"style":{"typography":{"fontSize":"16px"}}} /-->
