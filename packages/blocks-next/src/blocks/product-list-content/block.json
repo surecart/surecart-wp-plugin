@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list-content",
 	"title": "Content",
-	"description": "Display the Product List Content.",
+	"description": "Display the product list content.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
