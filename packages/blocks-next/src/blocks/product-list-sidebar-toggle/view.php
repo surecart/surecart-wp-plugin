@@ -1,12 +1,14 @@
 <?php
 	$buttons = array(
 		array(
-			'class' => 'sc-sidebar-toggle-desktop',
-			'event' => 'actions.toggleDesktop',
+			'class'     => 'sc-sidebar-toggle-desktop',
+			'event'     => 'actions.toggleDesktop',
+			'ariaLabel' => 'state.ariaLabelDesktop',
 		),
 		array(
-			'class' => 'sc-sidebar-toggle-mobile',
-			'event' => 'actions.toggleMobile',
+			'class'     => 'sc-sidebar-toggle-mobile',
+			'event'     => 'actions.toggleMobile',
+			'ariaLabel' => 'state.ariaLabelMobile',
 		),
 	);
 	?>
@@ -25,7 +27,7 @@
 	data-wp-on--click="<?php echo esc_attr( $button['event'] ); ?>"
 	data-wp-on--keydown="<?php echo esc_attr( $button['event'] ); ?>"
 	aria-haspopup="dialog"
-	aria-label="<?php esc_attr_e( 'Open sidebar', 'surecart' ); ?>"
+	data-wp-bind--aria-label="<?php echo esc_attr( $button['ariaLabel'] ); ?>"
 	role="button"
 	tabindex="0"
 >

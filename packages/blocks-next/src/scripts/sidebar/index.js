@@ -29,6 +29,12 @@ const { state, actions } = store('surecart/sidebar', {
 
 			return dialog;
 		},
+		get ariaLabelDesktop() {
+			return state?.open
+				? __('Close sidebar', 'surecart')
+				: __('Open sidebar', 'surecart');
+		},
+		ariaLabelMobile: __('Open sidebar', 'surecart'),
 	},
 
 	actions: {
@@ -37,6 +43,7 @@ const { state, actions } = store('surecart/sidebar', {
 		 */
 		open: function* () {
 			state.dialog?.showModal();
+			state.ariaLabelMobile = __('Close sidebar', 'surecart');
 		},
 
 		/**
@@ -44,6 +51,7 @@ const { state, actions } = store('surecart/sidebar', {
 		 */
 		close: () => {
 			state.dialog?.close();
+			state.ariaLabelMobile = __('Open sidebar', 'surecart');
 		},
 
 		/**
