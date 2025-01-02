@@ -1,5 +1,14 @@
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'role' => 'list' ] ) ); ?>
+	<?php
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			[
+				'role'             => 'list',
+				'aria-describedby' => 'sort-radio-group-label-' . $sc_query_id,
+			]
+		)
+	);
+	?>
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'sorting' => $options ] ) ); ?>
 >
 <?php
