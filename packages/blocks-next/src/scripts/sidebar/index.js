@@ -110,6 +110,3 @@ const { state, actions } = store('surecart/sidebar', {
 		},
 	},
 });
-
-// Listen for sidebar toggle event.
-addEventListener('scToggleSidebar', actions.toggle); // Listen for checkout update on product page.

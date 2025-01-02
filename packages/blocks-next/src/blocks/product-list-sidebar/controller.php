@@ -8,7 +8,7 @@ $query      = $controller->query();
 wp_interactivity_state(
 	'surecart/sidebar',
 	[
-		'open' => $attributes['sidebarOpen'] ?? true,
+		'open' => $attributes['open'] ?? true,
 	]
 );
 

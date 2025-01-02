@@ -4,12 +4,7 @@ import {
 	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import {
-	PanelBody,
-	PanelRow,
-	ToggleControl,
-	TextControl,
-} from '@wordpress/components';
+import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
 
 const TEMPLATE = [
 	[
@@ -174,6 +169,7 @@ export default ({
 					/>
 				</PanelBody>
 			</InspectorControls>
+
 			<div {...innerBlockProps} />
 		</>
 	);

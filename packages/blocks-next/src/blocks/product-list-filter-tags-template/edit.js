@@ -1,15 +1,10 @@
 import { __ } from '@wordpress/i18n';
 import TemplateListEdit from '../../components/TemplateListEdit';
-import { RichText, useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 
 const TEMPLATE = [['surecart/product-list-filter-tag']];
 
-export default ({
-	clientId,
-	__unstableLayoutClassNames,
-	attributes: { label },
-	setAttributes,
-}) => {
+export default ({ clientId, __unstableLayoutClassNames }) => {
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
 	});

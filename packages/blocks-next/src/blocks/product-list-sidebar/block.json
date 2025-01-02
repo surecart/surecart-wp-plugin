@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list-sidebar",
 	"title": "Sidebar",
-	"description": "Display the Product List Sidebar.",
+	"description": "Display the product list sidebar.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},

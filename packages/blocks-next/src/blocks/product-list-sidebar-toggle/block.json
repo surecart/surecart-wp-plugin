@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-list-sidebar-toggle",
 	"title": "Sidebar Toggle Button",
-	"description": "Display the Product List Sidebar Toggle.",
+	"description": "Display the product list sidebar toggle.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},

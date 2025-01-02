@@ -1,17 +1,18 @@
 <?php
-	$buttons = array(
-		array(
-			'class'     => 'sc-sidebar-toggle-desktop',
-			'event'     => 'actions.toggleDesktop',
-			'ariaLabel' => 'state.ariaLabelDesktop',
-		),
-		array(
-			'class'     => 'sc-sidebar-toggle-mobile',
-			'event'     => 'actions.toggleMobile',
-			'ariaLabel' => 'state.ariaLabelMobile',
-		),
-	);
-	?>
+$buttons = array(
+	array(
+		'class'     => 'sc-sidebar-toggle-desktop',
+		'event'     => 'actions.toggleDesktop',
+		'ariaLabel' => 'state.ariaLabelDesktop',
+	),
+	array(
+		'class'     => 'sc-sidebar-toggle-mobile',
+		'event'     => 'actions.toggleMobile',
+		'ariaLabel' => 'state.ariaLabelMobile',
+	),
+);
+?>
+
 <?php foreach ( $buttons as $button ) : ?>
 <div
 	<?php

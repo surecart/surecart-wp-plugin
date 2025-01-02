@@ -5,8 +5,6 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 
 const { actions: cartActions } = store('surecart/cart');
 
-const { speak } = wp.a11y;
-
 /**
  * Check if the link is valid.
  */

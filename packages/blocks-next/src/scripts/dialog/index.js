@@ -7,7 +7,6 @@ store('surecart/dialog', {
 	actions: {
 		toggle: (targetClass = null) => {
 			const { target } = getContext() || {};
-			console.log('target', target);
 
 			// Get passed target or <dialog>.
 			let dialog = document.querySelector(targetClass ?? target ?? null);
