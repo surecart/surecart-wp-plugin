@@ -61,19 +61,36 @@ add_filter(
 );
 
 
-add_action( 'admin_init', function() {
-	if ( empty( $_GET['page'] ) ) {
-		return;
+add_action(
+	'admin_init',
+	function () {
+		if ( empty( $_GET['page'] ) ) {
+			return;
+		}
+
+		$page = sanitize_text_field( $_GET['page'] ) ?? '';
+
+		if ( empty( $page ) ) {
+			return;
+		}
+
+		add_filter(
+			'manage_' . $page . '_columns',
+			function ( $columns ) {
+				$columns['metabox'] = 'Metabox';
+				return $columns;
+			}
+		);
+
+		add_action(
+			'manage_' . $page . '_custom_column',
+			function ( $column_name, $data ) {
+				if ( 'metabox' === $column_name ) {
+					echo esc_html( $data->id );
+				}
+			},
+			10,
+			2
+		);
 	}
-
-	$page = sanitize_text_field( $_GET['page'] ) ?? '';
-
-	if ( empty( $page ) ) {
-		return;
-	}
-
-	add_filter('manage_' . $page . '_columns', function($columns) {
-		$columns["metabox"] = "Metabox";
-		return $columns;
-	});
-});
+);
