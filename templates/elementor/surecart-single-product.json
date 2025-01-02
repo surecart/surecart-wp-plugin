@@ -2,188 +2,182 @@
 	"content": [
 		{
 			"id": "71f479ff",
-			"settings": [],
+			"settings": {
+				"flex_direction": "row",
+				"content_width": "full"
+			},
 			"elements": [
 				{
-					"id": "5e05c8f4",
-					"settings": [],
+					"id": "703dc9d5",
+					"settings": { "_title": "Product Container #1" },
 					"elements": [
 						{
-							"id": "703dc9d5",
-							"settings": { "_title": "Product Container #1" },
-							"elements": [
-								{
-									"id": "421ee3e1",
-									"settings": [],
-									"elements": [],
-									"isInner": false,
-									"widgetType": "surecart-media",
-									"elType": "widget"
-								}
-							],
-							"isInner": true,
-							"elType": "container",
-							"isLocked": true
-						},
-						{
-							"id": "72cf69ad",
-							"settings": { "_title": "Product Container #2" },
-							"elements": [
-								{
-									"id": "2925be0d",
-									"settings": {
-										"__dynamic__": {
-											"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
-										},
-										"title": "Add Your Heading Text Here",
-										"header_size": "h2"
-									},
-									"elements": [],
-									"isInner": false,
-									"widgetType": "theme-post-title",
-									"elType": "widget"
-								},
-								{
-									"id": "5b3b27b0",
-									"settings": {
-										"scratch_typography_typography": "custom",
-										"scratch_typography_font_size": {
-											"unit": "px",
-											"size": 24,
-											"sizes": []
-										},
-										"scratch_text_color": "#868585",
-										"amount_typography_typography": "custom",
-										"amount_typography_font_size": {
-											"unit": "px",
-											"size": 24,
-											"sizes": []
-										},
-										"badge_text_color": "#FFFFFF",
-										"badge_background_color": "#000000",
-										"badge_border_border": "solid",
-										"badge_border_width": {
-											"unit": "px",
-											"top": "1",
-											"right": "1",
-											"bottom": "1",
-											"left": "1",
-											"isLinked": true
-										},
-										"badge_border_color": "#000000",
-										"badge_border_radius": {
-											"unit": "px",
-											"top": "14",
-											"right": "14",
-											"bottom": "14",
-											"left": "14",
-											"isLinked": true
-										},
-										"badge_padding": {
-											"unit": "px",
-											"top": "4",
-											"right": "10",
-											"bottom": "4",
-											"left": "10",
-											"isLinked": false
-										},
-										"badge_typography_typography": "custom",
-										"badge_typography_font_size": {
-											"unit": "px",
-											"size": 12,
-											"sizes": []
-										}
-									},
-									"elements": [],
-									"isInner": false,
-									"widgetType": "surecart-selected-price",
-									"elType": "widget"
-								},
-								{
-									"id": "3d235015",
-									"settings": {
-										"__dynamic__": {
-											"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%7D\"]"
-										}
-									},
-									"elements": [],
-									"isInner": false,
-									"widgetType": "theme-post-excerpt",
-									"elType": "widget"
-								},
-								{
-									"id": "503b5afa",
-									"settings": { "label": "Pricing" },
-									"elements": [],
-									"isInner": false,
-									"widgetType": "surecart-price-chooser",
-									"elType": "widget"
-								},
-								{
-									"id": "62c70def",
-									"settings": { "label": "Quantity" },
-									"elements": [],
-									"isInner": false,
-									"widgetType": "surecart-quantity",
-									"elType": "widget"
-								},
-								{
-									"id": "1651338d",
-									"settings": {
-										"button_text": "Add To Cart",
-										"button_out_of_stock_text": "Sold Out",
-										"button_unavailable_text": "Unavailable"
-									},
-									"elements": [],
-									"isInner": false,
-									"widgetType": "surecart-buy-button",
-									"elType": "widget"
-								},
-								{
-									"id": "30eabad0",
-									"settings": {
-										"buy_button_type": "yes",
-										"button_text": "Buy Now",
-										"button_out_of_stock_text": "Sold Out",
-										"button_unavailable_text": "Unavailable",
-										"button_typography_typography": "custom",
-										"button_typography_font_family": "Roboto",
-										"button_typography_font_weight": "600",
-										"button_text_color": "#000000",
-										"button_background_color": "#FFFFFF",
-										"button_border_border": "solid",
-										"button_border_width": {
-											"unit": "px",
-											"top": "1",
-											"right": "1",
-											"bottom": "1",
-											"left": "1",
-											"isLinked": false
-										},
-										"button_border_color": "#313131",
-										"button_border_radius": {
-											"unit": "px",
-											"top": "5",
-											"right": "5",
-											"bottom": "5",
-											"left": "5",
-											"isLinked": false
-										}
-									},
-									"elements": [],
-									"isInner": false,
-									"widgetType": "surecart-buy-button",
-									"elType": "widget"
-								}
-							],
-							"isInner": true,
-							"elType": "container",
-							"isLocked": true
+							"id": "421ee3e1",
+							"settings": [],
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-media",
+							"elType": "widget"
 						}
 					],
-					"isInner": false,
-					"widgetType": "surecart-product",
-					"elType": "widget"
+					"isInner": true,
+					"elType": "container",
+					"isLocked": true
+				},
+				{
+					"id": "72cf69ad",
+					"settings": { "_title": "Product Container #2" },
+					"elements": [
+						{
+							"id": "2925be0d",
+							"settings": {
+								"__dynamic__": {
+									"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+								},
+								"title": "Add Your Heading Text Here",
+								"header_size": "h2"
+							},
+							"elements": [],
+							"isInner": false,
+							"widgetType": "theme-post-title",
+							"elType": "widget"
+						},
+						{
+							"id": "5b3b27b0",
+							"settings": {
+								"scratch_typography_typography": "custom",
+								"scratch_typography_font_size": {
+									"unit": "px",
+									"size": 24,
+									"sizes": []
+								},
+								"scratch_text_color": "#868585",
+								"amount_typography_typography": "custom",
+								"amount_typography_font_size": {
+									"unit": "px",
+									"size": 24,
+									"sizes": []
+								},
+								"badge_text_color": "#FFFFFF",
+								"badge_background_color": "#000000",
+								"badge_border_border": "solid",
+								"badge_border_width": {
+									"unit": "px",
+									"top": "1",
+									"right": "1",
+									"bottom": "1",
+									"left": "1",
+									"isLinked": true
+								},
+								"badge_border_color": "#000000",
+								"badge_border_radius": {
+									"unit": "px",
+									"top": "14",
+									"right": "14",
+									"bottom": "14",
+									"left": "14",
+									"isLinked": true
+								},
+								"badge_padding": {
+									"unit": "px",
+									"top": "4",
+									"right": "10",
+									"bottom": "4",
+									"left": "10",
+									"isLinked": false
+								},
+								"badge_typography_typography": "custom",
+								"badge_typography_font_size": {
+									"unit": "px",
+									"size": 12,
+									"sizes": []
+								}
+							},
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-selected-price",
+							"elType": "widget"
+						},
+						{
+							"id": "3d235015",
+							"settings": {
+								"__dynamic__": {
+									"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%7D\"]"
+								}
+							},
+							"elements": [],
+							"isInner": false,
+							"widgetType": "theme-post-excerpt",
+							"elType": "widget"
+						},
+						{
+							"id": "503b5afa",
+							"settings": { "label": "Pricing" },
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-price-chooser",
+							"elType": "widget"
+						},
+						{
+							"id": "62c70def",
+							"settings": { "label": "Quantity" },
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-quantity",
+							"elType": "widget"
+						},
+						{
+							"id": "1651338d",
+							"settings": {
+								"button_text": "Add To Cart",
+								"button_out_of_stock_text": "Sold Out",
+								"button_unavailable_text": "Unavailable"
+							},
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-buy-button",
+							"elType": "widget"
+						},
+						{
+							"id": "30eabad0",
+							"settings": {
+								"buy_button_type": "yes",
+								"button_text": "Buy Now",
+								"button_out_of_stock_text": "Sold Out",
+								"button_unavailable_text": "Unavailable",
+								"button_typography_typography": "custom",
+								"button_typography_font_family": "Roboto",
+								"button_typography_font_weight": "600",
+								"button_text_color": "#000000",
+								"button_background_color": "#FFFFFF",
+								"button_border_border": "solid",
+								"button_border_width": {
+									"unit": "px",
+									"top": "1",
+									"right": "1",
+									"bottom": "1",
+									"left": "1",
+									"isLinked": false
+								},
+								"button_border_color": "#313131",
+								"button_border_radius": {
+									"unit": "px",
+									"top": "5",
+									"right": "5",
+									"bottom": "5",
+									"left": "5",
+									"isLinked": false
+								}
+							},
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-buy-button",
+							"elType": "widget"
+						}
+					],
+					"isInner": true,
+					"elType": "container",
+					"isLocked": true
 				}
 			],
 			"isInner": false,
