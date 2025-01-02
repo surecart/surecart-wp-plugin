@@ -45,11 +45,19 @@
 		}
 		&:indeterminate {
 			background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
+			background-color: var(
+				--sc-check-input-background-color,
+				var(--sc-color-primary-500)
+			);
+			border-color: var(
+				--sc-check-input-border-color,
+				var(--sc-color-primary-500)
+			);
 		}
 	}
 
 	// Checked & Indeterminate.
-	&:checked, &:indeterminate {
+	&:checked {
 		background-color: var(
 			--sc-check-input-background-color,
 			var(--sc-color-primary-500)
