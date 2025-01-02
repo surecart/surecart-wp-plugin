@@ -134,7 +134,7 @@
 						}
 					],
 					"isInner": false,
-					"widgetType": "surecart-product",
+					"widgetType": "surecart-product-card",
 					"elType": "widget"
 				}
 			],
