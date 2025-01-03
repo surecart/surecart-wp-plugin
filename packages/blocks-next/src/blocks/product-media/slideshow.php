@@ -5,7 +5,7 @@
 	data-wp-watch="actions.updateSlider"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
 >
-	<div class="swiper" style="height: <?php echo esc_attr( $height ); ?>">
+	<div class="swiper" style="height: <?php echo esc_attr( $height ); ?>" data-wp-interactive='{ "namespace": "core/gallery" }' <?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'images' => $product->gallery_ids ] ) ); ?>>
 		<div class="swiper-wrapper">
 			<?php foreach ( $gallery as $index => $image ) : ?>
 				<div
@@ -23,10 +23,14 @@
 					);
 					?>
 				>
-					<div class="swiper-zoom-container" data-swiper-zoom="5">
+					<div
+						data-wp-interactive='{ "namespace": "@surecart/lightbox" }'
+						<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'class' => 'wp-lightbox-container' ] ) ); ?>
+						<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'imageId' => $image->id ] ) ); ?>
+					>
 						<?php
-							echo wp_kses_post(
-								$image->html(
+							echo wp_kses(
+								$image->withLightbox()->html(
 									'large',
 									array_filter(
 										[
@@ -34,7 +38,8 @@
 											'style'   => ( ! empty( $width ) ? 'max-width:' . esc_attr( $width ) : '' ) . ';' . ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ? "height: {$attributes['height']}" : '' ),
 										]
 									)
-								)
+								),
+								sc_allowed_svg_html()
 							);
 						?>
 					</div>

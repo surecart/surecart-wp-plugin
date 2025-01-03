@@ -18,6 +18,9 @@ if ( empty( $gallery ) ) {
 	return ! empty( $attributes['hide_empty'] ) ? '' : 'file:./empty.php';
 }
 
+wp_enqueue_style( 'surecart-lightbox' );
+wp_enqueue_script_module( '@surecart/lightbox' );
+
 // handle image.
 if ( count( $gallery ) === 1 ) {
 	return 'file:./image.php';
@@ -26,6 +29,7 @@ if ( count( $gallery ) === 1 ) {
 // only enqueue if we are needing a slideshow.
 wp_enqueue_style( 'surecart-image-slider' );
 wp_enqueue_script_module( '@surecart/image-slider' );
+wp_interactivity_state( 'core/gallery' );
 
 // handle slideshow.
 $slider_options = array(
