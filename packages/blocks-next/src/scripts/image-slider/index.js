@@ -21,8 +21,11 @@ const { state } = store('surecart/image-slider', {
 			const { state: productState } = store('surecart/product-page');
 			const { state: lightboxState } = store('@surecart/lightbox');
 
-			if (lightboxState.currentImageIndex !== -1) {
-				state.swiper.slideTo(lightboxState.currentImageIndex);
+			if (
+				lightboxState?.currentImageIndex &&
+				lightboxState.currentImageIndex !== -1
+			) {
+				state.swiper.slideTo(lightboxState.currentImageIndex - 1, 0);
 			}
 
 			// the selected variant has not changed.

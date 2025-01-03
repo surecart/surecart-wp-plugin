@@ -116,12 +116,28 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 			state.scrollTopReset = document.documentElement.scrollTop;
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 
-			// get only the image ids that share the same galleryId as the imageId
-			state.images = Object.keys(state.metadata).filter(
-				(key) =>
-					state.metadata[key].galleryId ===
-					state.metadata[imageId].galleryId
-			);
+			// get only the image ids that share the same galleryId as the imageId and are not hidden
+			state.images = Object.keys(state.metadata).filter((key) => {
+				const metadata = state.metadata[key];
+				const imageRef = metadata.imageRef;
+
+				// Check if image exists and check visibility of image and all its parents
+				const isVisible =
+					imageRef &&
+					(function isElementVisible(element) {
+						while (element) {
+							const style = window.getComputedStyle(element);
+							if (style.display === 'none') return false;
+							element = element.parentElement;
+						}
+						return true;
+					})(imageRef);
+
+				return (
+					metadata.galleryId === state.metadata[imageId].galleryId &&
+					isVisible
+				);
+			});
 
 			// Sets the current image index to the one that was clicked.
 			callbacks.setCurrentImageIndex(imageId);
@@ -182,7 +198,7 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 			}
 
 			e.stopPropagation();
-			if (state.currentImageIndex - 1 < 0) {
+			if (!state.hasPreviousImage) {
 				return;
 			}
 			state.currentImageIndex = state.currentImageIndex - 1;
@@ -194,7 +210,7 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 			}
 
 			e.stopPropagation();
-			if (state.currentImageIndex + 1 >= state.images.length) {
+			if (!state.hasNextImage) {
 				return;
 			}
 			state.currentImageIndex = state.currentImageIndex + 1;
