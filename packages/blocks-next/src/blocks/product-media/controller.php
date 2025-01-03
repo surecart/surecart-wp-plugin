@@ -19,7 +19,7 @@ if ( empty( $gallery ) ) {
 }
 
 wp_enqueue_style( 'surecart-lightbox' );
-wp_enqueue_script_module( '@surecart/lightbox' );
+wp_enqueue_script_module( 'surecart/lightbox' );
 
 // handle image.
 if ( count( $gallery ) === 1 ) {

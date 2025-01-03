@@ -28,7 +28,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function html( $size = 'full', $attr = [] ): string {
+	public function html( $size = 'full', $attr = [], $metadata = [] ): string {
 		// If the item is not set, return null.
 		if ( ! isset( $this->item->ID ) ) {
 			return '';
@@ -53,40 +53,39 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		if ( $this->with_lightbox ) {
 			$this->with_lightbox = false; // reset to false.
 
+			// get the image data.
 			$full_data = $this->attributes( 'full' );
 
+			// set the lightbox state.
 			wp_interactivity_state(
-				'@surecart/lightbox',
+				'surecart/lightbox',
 				array(
 					'metadata' => array(
 						// metadata keyed by unique image id.
-						$this->id => array(
-							'uploadedSrc'      => $full_data->src,
-							'figureClassNames' => 'test',
-							'figureStyles'     => 'test',
-							'imgClassNames'    => $full_data->class,
-							'imgStyles'        => 'test',
-							'targetWidth'      => $full_data->width,
-							'targetHeight'     => $full_data->height,
-							'scaleAttr'        => false,
-							'alt'              => 'test',
-							'screenReaderText' => 'test',
-							'galleryId'        => 'test',
+						$this->id => wp_parse_args(
+							$metadata,
+							array(
+								'uploadedSrc'      => $full_data->src,
+								'imgClassNames'    => $full_data->class,
+								'targetWidth'      => $full_data->width,
+								'targetHeight'     => $full_data->height,
+								'scaleAttr'        => false, // false or 'contain'.
+								'alt'              => $full_data->alt,
+								// translators: %s is the image title.
+								'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $this->post_title ),
+								'galleryId'        => 'test',
+							),
 						),
 					),
 				)
 			);
 
-			$tags->set_attribute( 'data-wp-init', 'callbacks.setButtonStyles' );
-			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setButtonStyles' );
-			$tags->set_attribute( 'data-wp-on-async-window--resize', 'callbacks.setButtonStyles' );
-			// Sets an event callback on the `img` because the `figure` element can also
-			// contain a caption, and we don't want to trigger the lightbox when the
-			// caption is clicked.
+			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
 			$tags->set_attribute( 'data-wp-class--hide', 'state.isContentHidden' );
 			$tags->set_attribute( 'data-wp-class--show', 'state.isContentVisible' );
 
+			// add the lightbox trigger button.
 			return $tags->get_updated_html() .
 				'<button
 					class="lightbox-trigger"
@@ -98,9 +97,13 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 					data-wp-style--right="state.imageButtonRight"
 					data-wp-style--top="state.imageButtonTop"
 				>
-				<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
-					<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
-				</svg>
+				' . \SureCart::svg()->get(
+						'maximize',
+						[
+							'width'  => 16,
+							'height' => 16,
+						]
+					) . '
 			</button>';
 		}
 

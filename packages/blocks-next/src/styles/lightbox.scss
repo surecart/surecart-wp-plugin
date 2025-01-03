@@ -1,4 +1,4 @@
-.wp-lightbox-container {
+.sc-lightbox-container {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -7,11 +7,11 @@
 		cursor: zoom-in;
 	}
 
-	img:hover + button {
+	img:hover + button.lightbox-trigger {
 		opacity: 1;
 	}
 
-	button {
+	button.lightbox-trigger {
 		opacity: 0;
 		border: none;
 		background-color: rgb(90 90 90 / 25%);
@@ -50,12 +50,13 @@
 		&:focus,
 		&:not(:hover):not(:active):not(.has-background) {
 			background-color: rgb(90 90 90 / 25%);
+			padding: 2px;
 			border: none;
 		}
 	}
 }
 
-.wp-lightbox-overlay {
+.sc-lightbox-overlay {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -67,7 +68,7 @@
 	visibility: hidden;
 	cursor: zoom-out;
 
-	.close-button {
+	.sc-lightbox-close-button {
 		position: absolute;
 		top: calc(
 			env(safe-area-inset-top) + 16px
@@ -78,11 +79,12 @@
 		padding: 0;
 		cursor: pointer;
 		z-index: 5000000;
-		min-width: 40px; // equivalent to $button-size-next-default-40px
-		min-height: 40px; // equivalent to $button-size-next-default-40px
+		min-width: 40px;
+		min-height: 40px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		box-shadow: none;
 
 		&:hover,
 		&:focus,
@@ -92,8 +94,8 @@
 		}
 	}
 
-	.prev-button,
-	.next-button {
+	.sc-lightbox-prev-button,
+	.sc-lightbox-next-button {
 		display: none;
 		position: absolute;
 		top: 50%;
@@ -105,6 +107,7 @@
 		min-height: 40px; // equivalent to $button-size-next-default-40px;
 		align-items: center;
 		justify-content: center;
+		box-shadow: none;
 
 		&[hidden] {
 			display: none;
@@ -126,27 +129,27 @@
 		}
 	}
 
-	.prev-button {
+	.sc-lightbox-prev-button {
 		left: calc(
 			env(safe-area-inset-left) + 16px
 		); // equivalent to $grid-unit-20
 	}
 
-	.next-button {
+	.sc-lightbox-next-button {
 		right: calc(
 			env(safe-area-inset-right) + 16px
 		); // equivalent to $grid-unit-20
 	}
 
-	.lightbox-image-container {
+	.sc-lightbox-image-container {
 		position: absolute;
 		overflow: hidden;
 		top: 50%;
 		left: 50%;
 		transform-origin: top left;
 		transform: translate(-50%, -50%);
-		width: var(--wp--lightbox-container-width);
-		height: var(--wp--lightbox-container-height);
+		width: var(--sc-lightbox--container-width);
+		height: var(--sc-lightbox--container-height);
 		z-index: 9999999999;
 	}
 
@@ -163,10 +166,10 @@
 		margin: 0;
 
 		img {
-			min-width: var(--wp--lightbox-image-width);
-			min-height: var(--wp--lightbox-image-height);
-			width: var(--wp--lightbox-image-width);
-			height: var(--wp--lightbox-image-height);
+			min-width: var(--sc-lightbox--image-width);
+			min-height: var(--sc-lightbox--image-height);
+			width: var(--sc-lightbox--image-width);
+			height: var(--sc-lightbox--image-height);
 		}
 
 		figcaption {
@@ -212,7 +215,7 @@
 				opacity: 1;
 				visibility: visible;
 				animation: none;
-				.lightbox-image-container {
+				.sc-lightbox-image-container {
 					animation: lightbox-zoom-in 0.4s;
 					// Override fade animation for image
 					img {
@@ -226,7 +229,7 @@
 			&.show-closing-animation {
 				&:not(.active) {
 					animation: none;
-					.lightbox-image-container {
+					.sc-lightbox-image-container {
 						animation: lightbox-zoom-out 0.4s;
 						// Override fade animation for image
 						img {
@@ -282,12 +285,12 @@
 	0% {
 		transform: translate(
 				calc(
-					(-100vw + var(--wp--lightbox-scrollbar-width)) / 2 +
-						var(--wp--lightbox-initial-left-position)
+					(-100vw + var(--sc-lightbox--scrollbar-width)) / 2 +
+						var(--sc-lightbox--initial-left-position)
 				),
-				calc(-50vh + var(--wp--lightbox-initial-top-position))
+				calc(-50vh + var(--sc-lightbox--initial-top-position))
 			)
-			scale(var(--wp--lightbox-scale));
+			scale(var(--sc-lightbox--scale));
 	}
 	100% {
 		transform: translate(-50%, -50%) scale(1, 1);
@@ -306,11 +309,11 @@
 		visibility: hidden;
 		transform: translate(
 				calc(
-					(-100vw + var(--wp--lightbox-scrollbar-width)) / 2 +
-						var(--wp--lightbox-initial-left-position)
+					(-100vw + var(--sc-lightbox--scrollbar-width)) / 2 +
+						var(--sc-lightbox--initial-left-position)
 				),
-				calc(-50vh + var(--wp--lightbox-initial-top-position))
+				calc(-50vh + var(--sc-lightbox--initial-top-position))
 			)
-			scale(var(--wp--lightbox-scale));
+			scale(var(--sc-lightbox--scale));
 	}
 }

@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
-// import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Tracks whether user is touching screen; used to differentiate behavior for
@@ -28,73 +27,148 @@ let lastTouchTime = 0;
  */
 let inertElements = [];
 
-const { state, actions, callbacks } = store('@surecart/lightbox', {
+const { state, actions, callbacks } = store('surecart/lightbox', {
 	state: {
+		/**
+		 * Array of image IDs in the current lightbox gallery.
+		 */
 		images: [],
+
+		/**
+		 * Index of currently displayed image in the images array.
+		 */
 		currentImageIndex: -1,
-		originalImageId: -1,
+
+		/**
+		 * Gets the ID of the currently displayed image.
+		 *
+		 * @return {string|null} Image ID or null if no image is selected.
+		 */
 		get currentImageId() {
 			return state.currentImageIndex > -1 && state.images.length > 0
 				? state.images[state.currentImageIndex]
 				: null;
 		},
+
+		/**
+		 * Gets the metadata object for the current image.
+		 *
+		 * @return {Object} Image metadata including src, styles, refs etc.
+		 */
 		get currentImage() {
 			return state.metadata[state.currentImageId];
 		},
+
+		/**
+		 * Checks if gallery has multiple images to enable navigation.
+		 *
+		 * @return {boolean} True if gallery has more than one image.
+		 */
 		get hasNavigation() {
 			return state.images.length > 1;
 		},
+
+		/**
+		 * Checks if there is a next image available in the gallery.
+		 *
+		 * @return {boolean} True if next image exists.
+		 */
 		get hasNextImage() {
 			return state.currentImageIndex + 1 < state.images.length;
 		},
+
+		/**
+		 * Checks if there is a previous image available in the gallery.
+		 *
+		 * @return {boolean} True if previous image exists.
+		 */
 		get hasPreviousImage() {
 			return state.currentImageIndex - 1 >= 0;
 		},
+
+		/**
+		 * Determines if the lightbox overlay is currently open.
+		 *
+		 * @return {boolean} True if lightbox is open.
+		 */
 		get overlayOpened() {
 			return state.currentImageId !== null;
 		},
+
+		/**
+		 * Gets the ARIA role attribute for the lightbox.
+		 *
+		 * @return {string|null} 'dialog' if overlay is open, null otherwise.
+		 */
 		get roleAttribute() {
 			return state.overlayOpened ? 'dialog' : null;
 		},
+
+		/**
+		 * Gets the ARIA modal attribute for the lightbox.
+		 *
+		 * @return {string|null} 'true' if overlay is open, null otherwise.
+		 */
 		get ariaModal() {
 			return state.overlayOpened ? 'true' : null;
 		},
+
+		/**
+		 * Gets the source URL for the enlarged image.
+		 *
+		 * @return {string} Image URL or blank GIF data URI if no source available.
+		 */
 		get enlargedSrc() {
 			return (
 				state.currentImage.uploadedSrc ||
-				'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+				'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=' // blank gif
 			);
 		},
-		get figureStyles() {
-			return (
-				state.overlayOpened &&
-				`${state.currentImage.figureStyles?.replace(
-					/margin[^;]*;?/g,
-					''
-				)};`
-			);
-		},
+
+		/**
+		 * When the lightbox is open, we want to add object-fit:cover to the image.
+		 *
+		 * @return {string|boolean} CSS styles string or false if overlay is closed.
+		 */
 		get imgStyles() {
-			return (
-				state.overlayOpened &&
-				`${state.currentImage.imgStyles?.replace(
-					/;$/,
-					''
-				)}; object-fit:cover;`
-			);
+			return state.overlayOpened && 'object-fit:cover;';
 		},
+
+		/**
+		 * Gets the right position of the image button.
+		 *
+		 * @return {string} CSS right position value.
+		 */
 		get imageButtonRight() {
 			const { imageId } = getContext();
 			return state.metadata[imageId].imageButtonRight;
 		},
+
+		/**
+		 * Gets the top position of the image button.
+		 *
+		 * @return {string} CSS top position value.
+		 */
 		get imageButtonTop() {
 			const { imageId } = getContext();
 			return state.metadata[imageId].imageButtonTop;
 		},
+
+		/**
+		 * Determines if the content should be hidden.
+		 *
+		 * @return {boolean} True if content should be hidden.
+		 */
 		get isContentHidden() {
 			const ctx = getContext();
 			return state.overlayEnabled && state.currentImageId === ctx.imageId;
 		},
+
+		/**
+		 * Determines if the content should be visible.
+		 *
+		 * @return {boolean} True if content should be visible.
+		 */
 		get isContentVisible() {
 			const ctx = getContext();
 			return (
@@ -104,7 +178,7 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 	},
 	actions: {
 		showLightbox() {
-			const { imageId } = getContext();
+			const { imageId, images } = getContext();
 
 			// Bails out if the image has not loaded yet.
 			if (!state.metadata[imageId].imageRef?.complete) {
@@ -117,8 +191,8 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 
 			// get only the image ids that share the same galleryId as the imageId and are not hidden
-			state.images = Object.keys(state.metadata).filter((key) => {
-				const metadata = state.metadata[key];
+			state.images = (images || []).filter((id) => {
+				const metadata = state.metadata[id];
 				const imageRef = metadata.imageRef;
 
 				// Check if image exists and check visibility of image and all its parents
@@ -141,7 +215,6 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 
 			// Sets the current image index to the one that was clicked.
 			callbacks.setCurrentImageIndex(imageId);
-			state.originalImageId = imageId;
 
 			// Sets the current expanded image in the state and enables the overlay.
 			state.overlayEnabled = true;
@@ -149,10 +222,10 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 			// Computes the styles of the overlay for the animation.
 			callbacks.setOverlayStyles();
 
-			// make all children of the document inert exempt .wp-lightbox-overlay
+			// make all children of the document inert exempt .sc-lightbox-overlay
 			inertElements = [];
 			document
-				.querySelectorAll('body > :not(.wp-lightbox-overlay)')
+				.querySelectorAll('body > :not(.sc-lightbox-overlay)')
 				.forEach((el) => {
 					if (!el.hasAttribute('inert')) {
 						el.setAttribute('inert', '');
@@ -285,11 +358,6 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 			if (!state.overlayEnabled) {
 				return;
 			}
-
-			// get original image
-			const imageToUse = true
-				? state.metadata[state.originalImageId].imageRef
-				: state.currentImage.imageRef;
 
 			let {
 				naturalWidth,
@@ -451,14 +519,14 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 			// though this can be removed if the issue is fixed in the future.
 			state.overlayStyles = `
 				:root {
-					--wp--lightbox-initial-top-position: ${screenPosY}px;
-					--wp--lightbox-initial-left-position: ${screenPosX}px;
-					--wp--lightbox-container-width: ${containerWidth + 1}px;
-					--wp--lightbox-container-height: ${containerHeight + 1}px;
-					--wp--lightbox-image-width: ${lightboxImgWidth}px;
-					--wp--lightbox-image-height: ${lightboxImgHeight}px;
-					--wp--lightbox-scale: ${containerScale};
-					--wp--lightbox-scrollbar-width: ${
+					--sc-lightbox--initial-top-position: ${screenPosY}px;
+					--sc-lightbox--initial-left-position: ${screenPosX}px;
+					--sc-lightbox--container-width: ${containerWidth + 1}px;
+					--sc-lightbox--container-height: ${containerHeight + 1}px;
+					--sc-lightbox--image-width: ${lightboxImgWidth}px;
+					--sc-lightbox--image-height: ${lightboxImgHeight}px;
+					--sc-lightbox--scale: ${containerScale};
+					--sc-lightbox--scrollbar-width: ${
 						window.innerWidth - document.documentElement.clientWidth
 					}px;
 				}
@@ -472,84 +540,11 @@ const { state, actions, callbacks } = store('@surecart/lightbox', {
 				ref.textContent = state.currentImage.screenReaderText;
 			}
 		},
-		setButtonStyles() {
+		setImageRef() {
 			const { imageId } = getContext();
 			const { ref } = getElement();
-
 			state.metadata[imageId].imageRef = ref;
 			state.metadata[imageId].currentSrc = ref.currentSrc;
-
-			const { naturalWidth, naturalHeight, offsetWidth, offsetHeight } =
-				ref;
-
-			// If the image isn't loaded yet, it can't calculate where the button
-			// should be.
-			if (naturalWidth === 0 || naturalHeight === 0) {
-				return;
-			}
-
-			const figure = ref.parentElement;
-			const figureWidth = ref.parentElement.clientWidth;
-
-			// It needs special handling for the height because a caption will cause
-			// the figure to be taller than the image, which means it needs to
-			// account for that when calculating the placement of the button in the
-			// top right corner of the image.
-			let figureHeight = ref.parentElement.clientHeight;
-			const caption = figure.querySelector('figcaption');
-			if (caption) {
-				const captionComputedStyle = window.getComputedStyle(caption);
-				if (
-					!['absolute', 'fixed'].includes(
-						captionComputedStyle.position
-					)
-				) {
-					figureHeight =
-						figureHeight -
-						caption.offsetHeight -
-						parseFloat(captionComputedStyle.marginTop) -
-						parseFloat(captionComputedStyle.marginBottom);
-				}
-			}
-
-			const buttonOffsetTop = figureHeight - offsetHeight;
-			const buttonOffsetRight = figureWidth - offsetWidth;
-
-			let imageButtonTop = buttonOffsetTop + 16;
-			let imageButtonRight = buttonOffsetRight + 16;
-
-			// In the case of an image with object-fit: contain, the size of the
-			// <img> element can be larger than the image itself, so it needs to
-			// calculate where to place the button.
-			if (state.metadata[imageId].scaleAttr === 'contain') {
-				// Natural ratio of the image.
-				const naturalRatio = naturalWidth / naturalHeight;
-				// Offset ratio of the image.
-				const offsetRatio = offsetWidth / offsetHeight;
-
-				if (naturalRatio >= offsetRatio) {
-					// If it reaches the width first, it keeps the width and compute the
-					// height.
-					const referenceHeight = offsetWidth / naturalRatio;
-					imageButtonTop =
-						(offsetHeight - referenceHeight) / 2 +
-						buttonOffsetTop +
-						16;
-					imageButtonRight = buttonOffsetRight + 16;
-				} else {
-					// If it reaches the height first, it keeps the height and compute
-					// the width.
-					const referenceWidth = offsetHeight * naturalRatio;
-					imageButtonTop = buttonOffsetTop + 16;
-					imageButtonRight =
-						(offsetWidth - referenceWidth) / 2 +
-						buttonOffsetRight +
-						16;
-				}
-			}
-
-			state.metadata[imageId].imageButtonTop = imageButtonTop;
-			state.metadata[imageId].imageButtonRight = imageButtonRight;
 		},
 		setOverlayFocus() {
 			if (state.overlayEnabled) {
