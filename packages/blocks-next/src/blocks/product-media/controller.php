@@ -18,8 +18,10 @@ if ( empty( $gallery ) ) {
 	return ! empty( $attributes['hide_empty'] ) ? '' : 'file:./empty.php';
 }
 
-wp_enqueue_style( 'surecart-lightbox' );
-wp_enqueue_script_module( 'surecart/lightbox' );
+if ( ! empty( $attributes['lightbox'] ) ) {
+	wp_enqueue_style( 'surecart-lightbox' );
+	wp_enqueue_script_module( 'surecart/lightbox' );
+}
 
 // handle image.
 if ( count( $gallery ) === 1 ) {

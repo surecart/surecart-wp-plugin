@@ -30,7 +30,7 @@
 					>
 						<?php
 							echo wp_kses(
-								$image->withLightbox()->html(
+								$image->withLightbox( $attributes['lightbox'] )->html(
 									'large',
 									array_filter(
 										[

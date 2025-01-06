@@ -5,7 +5,7 @@
 >
 	<?php
 	echo wp_kses(
-		$featured_image->withLightbox()->html(
+		$featured_image->withLightbox( $attributes['lightbox'] )->html(
 			'large',
 			array(
 				'loading' => 'eager',
