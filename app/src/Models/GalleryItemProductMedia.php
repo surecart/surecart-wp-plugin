@@ -86,6 +86,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 				)
 			);
 
+			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
 			$tags->set_attribute( 'data-wp-class--hide', 'state.isContentHidden' );
