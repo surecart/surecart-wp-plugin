@@ -164,7 +164,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 						'default' => [
 							'unit'  => 'fr',
 							'size'  => 1,
-							'sizes' => []
+							'sizes' => [],
 						],
 					],
 					'gaps'         => [
@@ -172,7 +172,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 							'column'   => '15',
 							'row'      => '15',
 							'isLinked' => true,
-							'unit'     => 'px'
+							'unit'     => 'px',
 						],
 					],
 				],

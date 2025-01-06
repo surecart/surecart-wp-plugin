@@ -89,15 +89,25 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-scratch-amount' => 'color: {{VALUE}}',
 				],
+				'default'   => '#868585',
 			]
 		);
 
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name'     => 'scratch_typography',
-				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-scratch-amount',
+				'name'           => 'scratch_typography',
+				'label'          => esc_html__( 'Typography', 'surecart' ),
+				'selector'       => '{{WRAPPER}} .wp-block-surecart-product-selected-price-scratch-amount',
+				'fields_options' => [
+					'font_size' => [
+						'default'    => [
+							'size' => '24',
+							'unit' => 'px',
+						],
+						'size_units' => [ 'px' ],
+					],
+				],
 			]
 		);
 
@@ -120,15 +130,25 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-amount' => 'color: {{VALUE}}',
 				],
+				'default'   => '#000000',
 			]
 		);
 
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name'     => 'amount_typography',
-				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-selected-price-amount',
+				'name'           => 'amount_typography',
+				'label'          => esc_html__( 'Typography', 'surecart' ),
+				'selector'       => '{{WRAPPER}} .wp-block-surecart-product-selected-price-amount',
+				'fields_options' => [
+					'font_size' => [
+						'default'    => [
+							'size' => '24',
+							'unit' => 'px',
+						],
+						'size_units' => [ 'px' ],
+					],
+				],
 			]
 		);
 
@@ -151,6 +171,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-interval' => 'color: {{VALUE}}',
 				],
+				'default'   => '#000000',
 			]
 		);
 
@@ -182,6 +203,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'color: {{VALUE}}',
 				],
+				'default'   => '#FFFFFF',
 			]
 		);
 
@@ -193,6 +215,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'background-color: {{VALUE}}',
 				],
+				'default'   => '#000000',
 			]
 		);
 
@@ -211,6 +234,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'name'     => 'badge_border',
 				'label'    => esc_html__( 'Border', 'surecart' ),
 				'selector' => '{{WRAPPER}} .wp-block-surecart-product-sale-badge',
+				'default'  => 'solid',
 			]
 		);
 
@@ -223,6 +247,13 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors'  => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'default'    => [
+					'top'    => '14',
+					'right'  => '14',
+					'bottom' => '14',
+					'left'   => '14',
+					'unit'   => 'px',
+				],
 			]
 		);
 
@@ -234,6 +265,13 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'default'    => [
+					'top'    => '4',
+					'right'  => '10',
+					'bottom' => '4',
+					'left'   => '10',
+					'unit'   => 'px',
 				],
 			]
 		);
@@ -257,6 +295,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-trial' => 'color: {{VALUE}}',
 				],
+				'default'   => '#000000',
 			]
 		);
 
@@ -288,6 +327,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-fees' => 'color: {{VALUE}}',
 				],
+				'default'   => '#000000',
 			]
 		);
 
@@ -340,7 +380,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				</div>
 			</div>
 		</div>
-	<?php
+		<?php
 	}
 
 	/**
