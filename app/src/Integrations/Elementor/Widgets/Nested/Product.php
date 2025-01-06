@@ -34,7 +34,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Product', 'surecart' );
+		return esc_html__( 'Product Page', 'surecart' );
 	}
 
 	/**
