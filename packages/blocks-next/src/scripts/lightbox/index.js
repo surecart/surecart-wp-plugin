@@ -536,6 +536,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 		initTriggerButton() {
 			const { imageId } = getContext();
 			const { ref } = getElement();
+			// this is needed to re-focus the button when the lightbox is closed.
 			state.metadata[imageId].buttonRef = ref;
 		},
 	},
