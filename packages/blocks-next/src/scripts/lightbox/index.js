@@ -135,26 +135,6 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 		},
 
 		/**
-		 * Gets the right position of the image button.
-		 *
-		 * @return {string} CSS right position value.
-		 */
-		get imageButtonRight() {
-			const { imageId } = getContext();
-			return state.metadata[imageId].imageButtonRight;
-		},
-
-		/**
-		 * Gets the top position of the image button.
-		 *
-		 * @return {string} CSS top position value.
-		 */
-		get imageButtonTop() {
-			const { imageId } = getContext();
-			return state.metadata[imageId].imageButtonTop;
-		},
-
-		/**
 		 * Determines if the content should be hidden.
 		 *
 		 * @return {boolean} True if content should be hidden.

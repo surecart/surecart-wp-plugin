@@ -95,8 +95,6 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 					aria-label="' . esc_attr__( 'Expand image', 'surecart' ) . '"
 					data-wp-init="callbacks.initTriggerButton"
 					data-wp-on-async--click="actions.showLightbox"
-					data-wp-style--right="state.imageButtonRight"
-					data-wp-style--top="state.imageButtonTop"
 				>
 				' . \SureCart::svg()->get(
 						'maximize',
