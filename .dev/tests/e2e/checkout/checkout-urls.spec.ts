@@ -14,17 +14,18 @@ interface Form {
 }
 
 test.describe('Checkout Urls', () => {
-	let product, persisted = {
-		form: {} as Form,
-		post: {} as Post,
-		blocks: '',
-	},
-	unpersisted = {
-		form: {} as Form,
-		post: {} as Post,
-		blocks: '',
-	},
-	prices;
+	let product,
+		persisted = {
+			form: {} as Form,
+			post: {} as Post,
+			blocks: '',
+		},
+		unpersisted = {
+			form: {} as Form,
+			post: {} as Post,
+			blocks: '',
+		},
+		prices;
 
 	test.beforeEach(async ({ requestUtils, page }) => {
 		await createAccount(requestUtils);
@@ -56,7 +57,7 @@ test.describe('Checkout Urls', () => {
 				amount: 1500,
 				currency: 'usd',
 				product: product.id,
-			}
+			},
 		];
 
 		const priceResponses = await Promise.all(
@@ -204,19 +205,19 @@ test.describe('Checkout Urls', () => {
 		});
 	});
 
-	test('Should render initial line items (persisted)', async ({
-		page,
-	}) => {
+	test('Should render initial line items (persisted)', async ({ page }) => {
 		await page.goto('/');
 		await page.evaluate(() => window.localStorage.clear());
 
-		await page.goto(addQueryArgs(persisted.post.link, {
-			line_items: [
-				{
-					price_id: prices[0].id,
-				}
-			]
-		}));
+		await page.goto(
+			addQueryArgs(persisted.post.link, {
+				line_items: [
+					{
+						price_id: prices[0].id,
+					},
+				],
+			})
+		);
 
 		await expect(page.getByText('Test URL Product')).toBeVisible();
 
@@ -230,19 +231,19 @@ test.describe('Checkout Urls', () => {
 		await expect(page.getByText('Test URL Product')).toBeVisible();
 	});
 
-	test('Should render initial line items (unpersisted)', async ({
-		page,
-	}) => {
+	test('Should render initial line items (unpersisted)', async ({ page }) => {
 		await page.goto('/');
 		await page.evaluate(() => window.localStorage.clear());
 
-		await page.goto(addQueryArgs(unpersisted.post.link, {
-			line_items: [
-				{
-					price_id: prices[0].id,
-				}
-			]
-		}));
+		await page.goto(
+			addQueryArgs(unpersisted.post.link, {
+				line_items: [
+					{
+						price_id: prices[0].id,
+					},
+				],
+			})
+		);
 
 		await expect(page.getByText('Test URL Product')).toBeVisible();
 
@@ -259,37 +260,134 @@ test.describe('Checkout Urls', () => {
 		await expect(page.getByText('Test URL Product')).toBeVisible();
 	});
 
-	test('Should replace and not add to the cart', async ({
-		page,
-	}) => {
+	test('Should replace and not add to the cart', async ({ page }) => {
 		await page.goto('/');
 		await page.evaluate(() => window.localStorage.clear());
 
 		// reload with different line items
-		await page.goto(addQueryArgs(persisted.post.link, {
-			line_items: [
-				{
-					price_id: prices[0].id,
-				}
-			]
-		}));
+		await page.goto(
+			addQueryArgs(persisted.post.link, {
+				line_items: [
+					{
+						price_id: prices[0].id,
+					},
+				],
+			})
+		);
 
 		await expect(page.getByText('Test URL Product')).toBeVisible();
 
 		// Check initial quantity is 1
-		await expect(page.locator('sc-quantity-select')).toHaveAttribute('quantity', '1');
+		await expect(page.locator('sc-quantity-select')).toHaveAttribute(
+			'quantity',
+			'1'
+		);
 
 		// reload with different line items
-		await page.goto(addQueryArgs(persisted.post.link, {
-			line_items: [
-				{
-					price_id: prices[0].id,
-				}
-			]
-		}));
+		await page.goto(
+			addQueryArgs(persisted.post.link, {
+				line_items: [
+					{
+						price_id: prices[0].id,
+					},
+				],
+			})
+		);
 
 		// Check initial quantity is 1
-		await expect(page.locator('sc-quantity-select')).toHaveAttribute('quantity', '1');
+		await expect(page.locator('sc-quantity-select')).toHaveAttribute(
+			'quantity',
+			'1'
+		);
+	});
+
+	test('Buy now should not replace the previous cart (persisted)', async ({
+		page,
+	}) => {
+		await page.goto(product.permalink);
+
+		// Add to cart button click.
+		await page
+			.locator('.wp-block-surecart-product-buy-button button')
+			.nth(0)
+			.click();
+		await page.waitForTimeout(2000);
+		// This ensures that product added to cart.
+		await expect(
+			page
+				.locator(
+					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
+				)
+				.nth(0)
+		).toHaveText('Test URL Product');
+
+		await page.goto(
+			addQueryArgs(persisted.post.link, {
+				line_items: [
+					{
+						price_id: prices[0].id,
+					},
+				],
+			})
+		);
+
+		await page.locator('sc-order-submit').nth(0).click();
+
+		await page.waitForTimeout(2000);
+
+		await page.goto(product.permalink);
+
+		await expect(
+			page
+				.locator(
+					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
+				)
+				.nth(0)
+		).toHaveText('Test URL Product');
+	});
+
+	test('Buy now should not replace the previous cart (unpersisted)', async ({
+		page,
+	}) => {
+		await page.goto(product.permalink);
+
+		// Add to cart button click.
+		await page
+			.locator('.wp-block-surecart-product-buy-button button')
+			.nth(0)
+			.click();
+		await page.waitForTimeout(2000);
+		// This ensures that product added to cart.
+		await expect(
+			page
+				.locator(
+					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
+				)
+				.nth(0)
+		).toHaveText('Test URL Product');
+
+		await page.goto(
+			addQueryArgs(unpersisted.post.link, {
+				line_items: [
+					{
+						price_id: prices[0].id,
+					},
+				],
+			})
+		);
+
+		await page.locator('sc-order-submit').nth(0).click();
+
+		await page.waitForTimeout(2000);
+
+		await page.goto(product.permalink);
+
+		await expect(
+			page
+				.locator(
+					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
+				)
+				.nth(0)
+		).toHaveText('Test URL Product');
 	});
 });
-
