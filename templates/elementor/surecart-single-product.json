@@ -135,13 +135,12 @@
 							},
 							"elements": [],
 							"isInner": false,
-							"widgetType": "surecart-buy-button",
+							"widgetType": "surecart-add-to-cart-button",
 							"elType": "widget"
 						},
 						{
 							"id": "30eabad0",
 							"settings": {
-								"buy_button_type": "yes",
 								"button_text": "Buy Now",
 								"button_out_of_stock_text": "Sold Out",
 								"button_unavailable_text": "Unavailable",

@@ -191,7 +191,7 @@ class ProductCard extends Product {
 							'button_unavailable_text'  => esc_html__( 'Unavailable', 'surecart' ),
 						],
 						'elements'   => [],
-						'widgetType' => 'surecart-buy-button',
+						'widgetType' => 'surecart-add-to-cart-button',
 					],
 				],
 				'isInner'  => false,
