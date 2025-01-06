@@ -50,9 +50,16 @@
 			"background": true,
 			"enableContrastChecker": true
 		},
-		"style": {
-			"spacing": {
-				"blockGap": "0"
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
 			}
 		}
 	},
