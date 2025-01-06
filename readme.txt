@@ -307,6 +307,18 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
+= 3.2.0 - January 8th, 2025 =
+- New: Related products block.
+- New: Integrations section on settings page.
+- Improvement: Format checkout finalize error message.
+- Fix: CSS issue for shop page filter tags incorrectly breaking lines on shortcodes and page builders.
+- Fix: Compatiblity with Winden and some other plugins that use ajax to load data with posts in admin.
+- Fix: Issue where max-width of product media block could sometimes overflow on mobile.
+- Fix: Issue with extra space below line items on mobile in some cases.
+- Fix: Compatibility issue with object cache pro where SureCart was not retuning a string for cache_key.
+- Fix: Issue where custom tax labels could not be changed after they were created.
+- New: Ability for 3rd party developers to add UI elements to admin pages. [Docs](https://developer.surecart.com/docs/admin-custom-ui-elements)
+
 = 3.1.6 - December 23rd, 2024 =
 - Improvement: Improve wording of bump auto-apply help text in admin.
 - Fix: Silent error handling when adding a custom salt to the wp-config file fails.
