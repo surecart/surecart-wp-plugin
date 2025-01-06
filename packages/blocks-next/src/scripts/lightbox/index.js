@@ -171,7 +171,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 
 			// get only the image ids that share the same galleryId as the imageId and are not hidden
-			state.images = (images || []).filter((id) => {
+			state.images = [...(images || []), imageId].filter((id) => {
 				const metadata = state.metadata[id];
 				const imageRef = metadata.imageRef;
 
