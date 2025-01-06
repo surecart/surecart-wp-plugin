@@ -13,8 +13,8 @@ class ElementorWidgetsService {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerStyles' ] );
-		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerNestedWidgets' ] );
+		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueueEditorScripts' ], 1 );
 		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueueStyles' ], 1 );
 	}
