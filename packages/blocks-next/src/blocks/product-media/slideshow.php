@@ -26,7 +26,15 @@
 					<div
 						data-wp-interactive='{ "namespace": "surecart/lightbox" }'
 						<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'class' => 'sc-lightbox-container' ] ) ); ?>
-						<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'imageId' => $image->id ] ) ); ?>
+						<?php
+						echo wp_kses_data(
+							wp_interactivity_data_wp_context(
+								[
+									'imageId' => $image->id, // this is needed to keep track of the image in the lightbox.
+								]
+							)
+						);
+						?>
 					>
 						<?php
 							echo wp_kses(
