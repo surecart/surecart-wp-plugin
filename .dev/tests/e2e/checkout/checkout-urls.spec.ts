@@ -390,4 +390,40 @@ test.describe('Checkout Urls', () => {
 				.nth(0)
 		).toHaveText('Test URL Product');
 	});
+
+	test('Cart should clear after successful purchase ', async ({ page }) => {
+		await page.goto('/');
+		await page.evaluate(() => window.localStorage.clear());
+
+		await page.goto(
+			addQueryArgs(persisted.post.link, {
+				line_items: [
+					{
+						price_id: prices[0].id,
+					},
+				],
+			})
+		);
+
+		await expect(page.getByText('Test URL Product')).toBeVisible();
+
+		// page url should not have checkout id
+		expect(page.url()).not.toContain('checkout_id');
+
+		// reload without checkout id
+		await page.reload();
+
+		// page url should not have checkout id
+		await expect(page.getByText('Test URL Product')).toBeVisible();
+
+		await page.locator('sc-order-submit').nth(0).click();
+
+		await page.waitForLoadState('networkidle');
+
+		await page.goto(persisted.post.link);
+
+		await page.waitForLoadState('networkidle');
+
+		await expect(page.getByText('Your cart is empty.')).toBeVisible();
+	});
 });
