@@ -92,7 +92,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 					class="lightbox-trigger"
 					type="button"
 					aria-haspopup="dialog"
-					aria-label="' . esc_attr__( 'Open image in lightbox', 'surecart' ) . '"
+					aria-label="' . esc_attr__( 'Expand image', 'surecart' ) . '"
 					data-wp-init="callbacks.initTriggerButton"
 					data-wp-on-async--click="actions.showLightbox"
 					data-wp-style--right="state.imageButtonRight"
