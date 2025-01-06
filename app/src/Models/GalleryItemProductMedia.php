@@ -79,7 +79,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 								'alt'              => $full_data->alt,
 								// translators: %s is the image title.
 								'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $full_data->alt ),
-								'galleryId'        => 'test',
+								'galleryId'        => get_the_ID(),
 							),
 						),
 					),

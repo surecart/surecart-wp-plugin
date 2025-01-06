@@ -73,7 +73,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 								'alt'              => $full_data->alt,
 								// translators: %s is the image title.
 								'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $this->post_title ),
-								'galleryId'        => 'test',
+								'galleryId'        => get_the_ID(),
 							),
 						),
 					),
