@@ -52,7 +52,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor' ];
+		return [ 'surecart-elementor-product' ];
 	}
 
 	/**

@@ -140,9 +140,25 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function categories_registered( $elements_manager ) {
 		$elements_manager->add_category(
-			'surecart-elementor',
+			'surecart-elementor-product',
 			[
-				'title' => esc_html__( 'SureCart', 'surecart' ),
+				'title' => esc_html__( 'SureCart Product Page', 'surecart' ),
+				'icon'  => 'fa fa-plug',
+			]
+		);
+
+		$elements_manager->add_category(
+			'surecart-elementor-product-loop',
+			[
+				'title' => esc_html__( 'SureCart Product Loop', 'surecart' ),
+				'icon'  => 'fa fa-plug',
+			]
+		);
+
+		$elements_manager->add_category(
+			'surecart-elementor-checkout',
+			[
+				'title' => esc_html__( 'SureCart Checkout Page', 'surecart' ),
 				'icon'  => 'fa fa-plug',
 			]
 		);

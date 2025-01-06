@@ -90,7 +90,7 @@ class ElementorWidgetsService {
 	 */
 	public function enqueueEditorScripts() {
 		wp_enqueue_script( 'surecart-elementor-product', plugins_url( 'Widgets/Nested/assets/js/product/index.js', __FILE__ ), [ 'elementor-common' ], '1.0', true );
-		wp_enqueue_script( 'surecart-elementor-product-card', plugins_url( 'Widgets/Nested/assets/js/product-card/index.js', __FILE__ ), [ 'elementor-common' ], '1.0', true );
+		wp_enqueue_script( 'surecart-elementor-product-loop', plugins_url( 'Widgets/Nested/assets/js/product-card/index.js', __FILE__ ), [ 'elementor-common' ], '1.0', true );
 	}
 
 	/**

@@ -69,7 +69,7 @@ class ReusableFormWidget extends Widget_Base {
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor' ];
+		return [ 'surecart-elementor-checkout' ];
 	}
 
 	/**

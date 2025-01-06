@@ -61,7 +61,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor' ];
+		return [ 'surecart-elementor-product' ];
 	}
 
 	/**

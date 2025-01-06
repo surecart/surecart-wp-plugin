@@ -61,7 +61,16 @@ class ProductCard extends Product {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'surecart-elementor-product-card' ];
+		return [ 'surecart-elementor-product-loop' ];
+	}
+
+	/**
+	 * Get the widget categories.
+	 *
+	 * @return array
+	 */
+	public function get_categories() {
+		return [ 'surecart-elementor-product-loop' ];
 	}
 
 	/**
