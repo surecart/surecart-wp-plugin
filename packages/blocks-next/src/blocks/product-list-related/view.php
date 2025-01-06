@@ -6,6 +6,7 @@
 			array(
 				'urlPrefix' => sc_product_list_prefix( $block ),
 				'products'  => $products,
+				'history'   => false,
 			)
 		)
 	);

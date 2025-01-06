@@ -2,6 +2,12 @@
 $content = surecart_get_the_block_template_html( $product->template_part->content ?? '' ); // phpcs:ignore WordPress.Security.EscapeOutput
 get_header();
 global $content_width;
+$template_id    = $product->template_part_id ?? 'surecart/surecart//product-info';
+$block_template = get_block_template( $template_id, 'wp_template_part' );
+if ( empty( $block_template ) ) {
+	$block_template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+}
+$content = surecart_get_the_block_template_html( $block_template->content ?? '' );
 echo '<style>
 .sc-template-wrapper,
 .sc-template-container {

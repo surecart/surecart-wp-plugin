@@ -11,9 +11,13 @@ wp_interactivity_state(
 	]
 );
 
-// For Analytics.
+// Create controller and run query.
 $query    = sc_product_list_query( $block );
 $products = $query->products;
+
+if ( empty( $products ) ) {
+	return;
+}
 
 // return the view.
 return 'file:./view.php';
