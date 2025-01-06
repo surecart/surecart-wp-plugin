@@ -31,7 +31,6 @@ if ( count( $gallery ) === 1 ) {
 // only enqueue if we are needing a slideshow.
 wp_enqueue_style( 'surecart-image-slider' );
 wp_enqueue_script_module( '@surecart/image-slider' );
-wp_interactivity_state( 'core/gallery' );
 
 // handle slideshow.
 $slider_options = array(
