@@ -5,7 +5,7 @@
 			'large',
 			array(
 				'loading' => 'eager',
-				'style'   => ! empty( $width ) ? 'max-width:' . esc_attr( $width ) : '',
+				'style'   => ! empty( $width ) ? 'max-width: min(' . esc_attr( $width ) . ', 100%)' : '',
 			)
 		)
 	);
