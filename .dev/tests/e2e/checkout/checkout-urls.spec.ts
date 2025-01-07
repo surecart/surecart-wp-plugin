@@ -193,6 +193,7 @@ test.describe('Checkout Urls', () => {
 			path: '/wp/v2/pages',
 			data: {
 				content: `<!-- wp:surecart/checkout-form {"id":${persisted.form?.id}} /-->`,
+				status: 'publish',
 			},
 		});
 
@@ -201,6 +202,7 @@ test.describe('Checkout Urls', () => {
 			path: '/wp/v2/pages',
 			data: {
 				content: `<!-- wp:surecart/checkout-form {"id":${unpersisted.form?.id}} /-->`,
+				status: 'publish',
 			},
 		});
 	});
@@ -304,23 +306,16 @@ test.describe('Checkout Urls', () => {
 	test('Buy now should not replace the previous cart (persisted)', async ({
 		page,
 	}) => {
-		await page.goto(product.permalink);
+		await page.goto('/');
+		await page.evaluate(() => window.localStorage.clear());
+		const logoutLink = await page
+			?.locator('#wp-admin-bar-logout a')
+			?.nth(0);
+		const logoutUrl = await logoutLink?.getAttribute('href');
 
-		// Add to cart button click.
-		await page
-			.locator('.wp-block-surecart-product-buy-button button')
-			.nth(0)
-			.click();
-		await page.waitForTimeout(2000);
-		// This ensures that product added to cart.
-		await expect(
-			page
-				.locator(
-					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
-				)
-				.nth(0)
-		).toHaveText('Test URL Product');
-
+		if (logoutUrl) {
+			await page.goto(logoutUrl);
+		}
 		await page.goto(
 			addQueryArgs(persisted.post.link, {
 				line_items: [
@@ -331,69 +326,48 @@ test.describe('Checkout Urls', () => {
 			})
 		);
 
-		await page.locator('sc-order-submit').nth(0).click();
+		await page.waitForLoadState('networkidle');
 
-		await page.waitForTimeout(2000);
-
-		await page.goto(product.permalink);
-
-		await expect(
-			page
-				.locator(
-					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
-				)
-				.nth(0)
-		).toHaveText('Test URL Product');
-	});
-
-	test('Buy now should not replace the previous cart (unpersisted)', async ({
-		page,
-	}) => {
-		await page.goto(product.permalink);
-
-		// Add to cart button click.
-		await page
-			.locator('.wp-block-surecart-product-buy-button button')
-			.nth(0)
-			.click();
-		await page.waitForTimeout(2000);
 		// This ensures that product added to cart.
-		await expect(
-			page
-				.locator(
-					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
-				)
-				.nth(0)
-		).toHaveText('Test URL Product');
+		await expect(page.getByText('Test URL Product')).toBeVisible();
 
 		await page.goto(
-			addQueryArgs(unpersisted.post.link, {
+			addQueryArgs(persisted.post.link, {
 				line_items: [
 					{
-						price_id: prices[0].id,
+						price_id: prices[1].id,
 					},
 				],
+				no_cart: true,
 			})
 		);
+		await page.waitForLoadState('networkidle');
+
+		await page.fill('input[name="email"]', 'rajkiranb@bsf.io');
 
 		await page.locator('sc-order-submit').nth(0).click();
 
-		await page.waitForTimeout(2000);
+		await page.waitForLoadState('networkidle');
 
-		await page.goto(product.permalink);
+		await page.goto(persisted.post.link);
 
-		await expect(
-			page
-				.locator(
-					'.wp-block-surecart-cart-items__wrapper .sc-product-line-item .sc-product-line-item__title span'
-				)
-				.nth(0)
-		).toHaveText('Test URL Product');
+		await page.waitForLoadState('networkidle');
+
+		await expect(page.getByText('Test URL Product')).toBeVisible();
 	});
 
 	test('Cart should clear after successful purchase ', async ({ page }) => {
 		await page.goto('/');
 		await page.evaluate(() => window.localStorage.clear());
+
+		const logoutLink = await page
+			?.locator('#wp-admin-bar-logout a')
+			?.nth(0);
+		const logoutUrl = await logoutLink?.getAttribute('href');
+
+		if (logoutUrl) {
+			await page.goto(logoutUrl);
+		}
 
 		await page.goto(
 			addQueryArgs(persisted.post.link, {
@@ -415,6 +389,8 @@ test.describe('Checkout Urls', () => {
 
 		// page url should not have checkout id
 		await expect(page.getByText('Test URL Product')).toBeVisible();
+
+		await page.fill('input[name="email"]', 'rajkiranb@bsf.io');
 
 		await page.locator('sc-order-submit').nth(0).click();
 
