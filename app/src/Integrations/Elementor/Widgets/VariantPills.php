@@ -252,6 +252,11 @@ class VariantPills extends \Elementor\Widget_Base {
 			return;
 		}
 
+		// If product has no variants, return.
+		if ( empty( sc_get_product()->variant_options->data ?? [] ) ) {
+			return;
+		}
+
 		$settings           = $this->get_settings_for_display();
 		$variant_attributes = array(
 			'highlight_text'       => $settings['pill_highlight_text_color'] ?? '',

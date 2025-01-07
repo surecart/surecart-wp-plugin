@@ -119,6 +119,14 @@
 							"elType": "widget"
 						},
 						{
+							"id": "7c5b30ef",
+							"settings": [],
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-variant-pills",
+							"elType": "widget"
+						},
+						{
 							"id": "62c70def",
 							"settings": { "label": "Quantity" },
 							"elements": [],
