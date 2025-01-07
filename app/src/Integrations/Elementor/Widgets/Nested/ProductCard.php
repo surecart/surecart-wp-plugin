@@ -198,4 +198,32 @@ class ProductCard extends Product {
 			],
 		];
 	}
+
+	/**
+	 * Render the widget.
+	 *
+	 * @return void
+	 */
+	protected function render() {
+		// items content.
+		ob_start();
+		?>
+
+		<!-- wp:surecart/product-page -->
+		<?php
+		$children = $this->get_children();
+		foreach ( $children as $index => $child ) {
+			$this->print_child($index );
+		}
+		?>
+		<!-- /wp:surecart/product-page -->
+
+		<?php
+		$item_content = ob_get_clean();
+		?>
+		<a href="<?php echo esc_url( get_permalink() ); ?>">
+			<?php echo do_blocks( $item_content ); ?>
+		</a>
+		<?php
+	}
 }
