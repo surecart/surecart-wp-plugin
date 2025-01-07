@@ -1,10 +1,16 @@
-.wp-block-surecart-product-list {
+.wp-block-surecart-product-list-related {
 	position: relative;
 	box-sizing: border-box;
+	.alignwide {
+		width: 100%;
+		margin: auto;
+		padding: 0;
+	}
 }
-.alignwide.wp-block-group:has(.wp-block-surecart-product-list),
-.alignwide.wp-block-group:has(+ .wp-block-surecart-product-list),
-.alignwide.wp-block-surecart-product-list {
+
+.alignwide.wp-block-group:has(.wp-block-surecart-product-list-related),
+.alignwide.wp-block-group:has(+ .wp-block-surecart-product-list-related),
+.alignwide.wp-block-surecart-product-list-related {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 100%;
