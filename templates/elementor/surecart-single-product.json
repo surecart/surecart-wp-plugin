@@ -140,6 +140,14 @@
 							"elType": "widget"
 						},
 						{
+							"id": "79d7190e",
+							"settings": { "label": "Enter an amount" },
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-selected-price-ad-hoc-amount",
+							"elType": "widget"
+						},
+						{
 							"id": "1651338d",
 							"settings": {
 								"button_text": "Add To Cart"
