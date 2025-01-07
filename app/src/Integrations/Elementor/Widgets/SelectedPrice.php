@@ -2,6 +2,7 @@
 
 namespace SureCart\Integrations\Elementor\Widgets;
 
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use SureCart\Support\Currency;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -89,7 +90,9 @@ class SelectedPrice extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-selected-price-scratch-amount' => 'color: {{VALUE}}',
 				],
-				'default'   => '#868585',
+				'global'    => [
+					'default' => Global_Colors::COLOR_SECONDARY,
+				],
 			]
 		);
 
@@ -358,21 +361,21 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
-
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->content_template();
 			return;
 		}
+
+		$settings = $this->get_settings_for_display();
 
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 			<div class="wp-block-group">
 				<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"bottom"}} -->
 				<div class="wp-block-group">
-					<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through","lineHeight":"1.5"},"color":{"text":"#686868"},"elements":{"link":{"color":{"text":"#686868"}}}}} /-->
+					<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through"},"color":{"text":"<?php echo esc_attr( $settings['text_color'] ); ?>"}}} /-->
 
-					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"lineHeight":"1.5"}}} /-->
+					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px","color":{"text":"<?php echo esc_attr( $settings['amount_text_color'] ); ?>"}}}} /-->
 
 					<!-- wp:surecart/product-selected-price-interval {"style":{"typography":{"lineHeight":"2"}}} /-->
 
