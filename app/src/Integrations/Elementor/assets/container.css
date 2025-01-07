@@ -48,6 +48,10 @@
 	width: 100%;
 }
 
+.e-loop-item .wp-block-surecart-product-page .e-con {
+	flex-basis: 100%;
+}
+
 .wp-block-surecart-product-page .e-con {
 	flex-basis: 50%;
 }
