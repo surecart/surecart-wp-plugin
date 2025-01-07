@@ -103,6 +103,7 @@ class BuyButton extends AddToCartButton {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-button__link' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wp-block-button__link:hover' => 'color: {{VALUE}}',
 				],
 				'default'   => '#000000',
 			]

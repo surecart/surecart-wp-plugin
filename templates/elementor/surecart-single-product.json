@@ -35,7 +35,12 @@
 									"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
 								},
 								"title": "Add Your Heading Text Here",
-								"header_size": "h2"
+								"header_size": "h1",
+								"typography_font_size": {
+									"unit": "px",
+									"size": 32,
+									"sizes": []
+								}
 							},
 							"elements": [],
 							"isInner": false,

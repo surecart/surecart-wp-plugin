@@ -39,12 +39,17 @@
 	}
 }
 
-.e-n-product {
+.e-n-product,
+.wp-block-surecart-product-page {
 	display: flex;
 }
 
-.wp-block-surecart-product-page {
-	display: flex;
+.elementor-widget-n-product {
+	width: 100%;
+}
+
+.wp-block-surecart-product-page .e-con {
+	flex-basis: 50%;
 }
 
 .elementor-widget-n-product .elementor-widget-container a,
