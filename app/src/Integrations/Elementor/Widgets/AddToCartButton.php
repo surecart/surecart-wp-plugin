@@ -119,7 +119,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 *
 	 * @return void
 	 */
-	private function register_content_settings() {
+	protected function register_content_settings() {
 		$this->register_text_settings();
 	}
 
@@ -128,7 +128,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 *
 	 * @return void
 	 */
-	private function register_style_settings() {
+	protected function register_style_settings() {
 		$this->start_controls_section(
 			'section_style',
 			[
@@ -169,6 +169,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				],
 			]
 		);
+
 		$this->add_responsive_control(
 			'button_width',
 			array(
@@ -202,7 +203,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			[
 				'name'     => 'button_border',
 				'selector' => '{{WRAPPER}} .wp-block_button__link',
-			]
+			],
 		);
 
 		$this->add_control(

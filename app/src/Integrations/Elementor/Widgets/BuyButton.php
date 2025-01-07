@@ -72,35 +72,102 @@ class BuyButton extends AddToCartButton {
 	}
 
 	/**
-	 * Register the widget content settings.
+	 * Register the widget style settings.
 	 *
 	 * @return void
 	 */
-	private function register_content_settings() {
+	protected function register_style_settings(): void {
 		$this->start_controls_section(
-			'section_content',
+			'section_style',
 			[
-				'label' => esc_html__( 'Content Settings', 'surecart' ),
+				'label' => esc_html__( 'Button', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'button_typography',
+				'global'   => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'selector' => '{{WRAPPER}} .wp-block-button__link',
 			]
 		);
 
 		$this->add_control(
-			'buy_button_type',
+			'button_text_color',
 			[
-				'label'       => esc_html__( 'Go Directly To Checkout', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::SWITCHER,
-				'label_on'    => esc_html__( 'Yes', 'surecart' ),
-				'label_off'   => esc_html__( 'No', 'surecart' ),
-				'default'     => 'no',
-				'description' => esc_html__( 'Bypass adding to cart and go directly to the checkout.', 'surecart' ),
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-button__link' => 'color: {{VALUE}}',
+				],
+				'default'   => '#000000',
 			]
 		);
 
-		$this->end_controls_section();
+		$this->add_control(
+			'button_background_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-button__link' => 'background-color: {{VALUE}}',
+				],
+				'default'   => '#FFFFFF',
+			]
+		);
 
-		/**
-		 * Register the default text settings.
-		 */
-		$this->register_text_settings();
+		$this->add_responsive_control(
+			'button_width',
+			array(
+				'label'      => esc_html__( 'Width', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => array(
+					'{{WRAPPER}} .wp-block-button__link' => 'width: {{SIZE}}{{UNIT}};',
+				),
+				'default'    => [
+					'size' => 100,
+					'unit' => '%',
+				],
+			)
+		);
+
+		$this->add_responsive_control(
+			'button_padding',
+			[
+				'label'      => esc_html__( 'Padding', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .wp-block-button__link' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name'     => 'button_border',
+				'selector' => '{{WRAPPER}} .wp-block_button__link',
+			],
+		);
+
+		$this->add_control(
+			'button_border_radius',
+			array(
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => array(
+					'{{WRAPPER}} .wp-block_button__link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
 	}
 }
