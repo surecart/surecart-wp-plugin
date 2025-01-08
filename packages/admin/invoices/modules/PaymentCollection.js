@@ -296,7 +296,7 @@ export default ({ paymentMethod, setPaymentMethod }) => {
 									type="default"
 									onClick={() => setModal('payment')}
 								>
-									{__('Add Payment Method', 'surecart')}
+									{__('Select Payment Method', 'surecart')}
 								</ScButton>
 							</>
 						)}
