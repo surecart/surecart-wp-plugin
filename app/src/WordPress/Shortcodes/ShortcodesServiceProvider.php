@@ -2,7 +2,6 @@
 
 namespace SureCart\WordPress\Shortcodes;
 
-use SureCartBlocks\Blocks\AddToCartButton\Block as AddtoCartBlock;
 use SureCartBlocks\Blocks\BuyButton\Block as BuyButtonBlock;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
@@ -345,9 +344,11 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$label = strip_shortcodes( $content );
 		$atts  = shortcode_atts(
 			[
-				'type'  => 'primary',
-				'size'  => 'medium',
-				'label' => $label,
+				'type'             => 'primary',
+				'size'             => 'medium',
+				'label'            => $label,
+				'amount'           => $atts['amount'] ?? null,
+				'amount_placement' => $atts['amount_placement'] ?? 'before',
 			],
 			$atts,
 			'sc_buy_button'

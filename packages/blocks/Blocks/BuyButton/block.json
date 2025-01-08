@@ -39,6 +39,13 @@
 		"line_items": {
 			"type": "array",
 			"default": []
+		},
+		"amount": {
+			"type": "number"
+		},
+		"amount_placement": {
+			"type": "string",
+			"default": "before"
 		}
 	},
 	"script": "surecart-components",

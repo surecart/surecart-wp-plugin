@@ -2,9 +2,11 @@
 
 namespace SureCartBlocks\Blocks\BuyButton;
 
+use SureCart\Support\Currency;
 use SureCartBlocks\Blocks\BaseBlock;
+
 /**
- * Logout Button Block.
+ * Buy Button Block.
  */
 class Block extends BaseBlock {
 	/**
@@ -16,7 +18,6 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content = '' ) {
-
 		$styles = '';
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
 			$styles .= "background-color: {$attributes['backgroundColor']}; ";
@@ -28,12 +29,14 @@ class Block extends BaseBlock {
 		return \SureCart::block()->render(
 			'blocks/buy-button',
 			[
-				'type'  => $attributes['type'] ?? 'primary',
-				'size'  => $attributes['size'] ?? 'medium',
-				'style' => $styles,
-				'class' => 'sc-button wp-element-button wp-block-button__link sc-button__link',
-				'href'  => $this->href( $attributes['line_items'] ?? [] ),
-				'label' => $attributes['label'] ?? __( 'Buy Now', 'surecart' ),
+				'type'             => $attributes['type'] ?? 'primary',
+				'size'             => $attributes['size'] ?? 'medium',
+				'style'            => $styles,
+				'class'            => 'sc-button wp-element-button wp-block-button__link sc-button__link',
+				'href'             => $this->href( $attributes['line_items'] ?? [] ),
+				'label'            => $attributes['label'] ?? __( 'Buy Now', 'surecart' ),
+				'amount'           => ! empty( $attributes['amount'] ) ? Currency::format( $attributes['amount'] ) : '',
+				'amount_placement' => ! empty( $attributes['amount_placement'] ) ? $attributes['amount_placement'] : 'before',
 			]
 		);
 	}
@@ -46,7 +49,7 @@ class Block extends BaseBlock {
 	 */
 	public function lineItems( $line_items ) {
 		return array_map(
-			function( $item ) {
+			function ( $item ) {
 				return [
 					'price_id'   => $item['id'] ?? null,
 					'variant_id' => $item['variant_id'] ?? null,

@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+
 /**
  * WordPress dependencies
  */
@@ -23,9 +26,19 @@ import { edit } from '@wordpress/icons';
  */
 import Placeholder from './Placeholder';
 import PriceInfo from '../../components/PriceInfo';
+import { TextControl } from '@wordpress/components';
+import { SelectControl } from '@wordpress/components';
+import { ScFormatNumber, ScText } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { label, line_items, backgroundColor, textColor } = attributes;
+	const {
+		label,
+		line_items,
+		backgroundColor,
+		textColor,
+		amount,
+		amount_placement,
+	} = attributes;
 	const [showChangeProducts, setShowChangeProducts] = useState(false);
 	const blockProps = useBlockProps({
 		className: 'wp-block-button',
@@ -84,6 +97,73 @@ export default ({ className, attributes, setAttributes }) => {
 						);
 					})}
 				</PanelBody>
+
+				<PanelBody title={__('Amount Settings', 'surecart')}>
+					<ScText
+						as="p"
+						css={css`
+							margin-bottom: 10px;
+							color: var(--sc-color-gray-500);
+						`}
+					>
+						{__(
+							'If you want to show a custom amount, you can set it here.',
+							'surecart'
+						)}
+					</ScText>
+					<PanelRow
+						css={css`
+							flex-direction: column;
+							gap: 10px;
+							justify-content: flex-start;
+							align-items: flex-start;
+						`}
+					>
+						<label htmlFor="amount">
+							{__('Amount (in cents)', 'surecart')}
+						</label>
+						<TextControl
+							type="number"
+							id="amount"
+							name="amount"
+							value={amount}
+							onChange={(value) =>
+								setAttributes({ amount: value })
+							}
+							min="0"
+						/>
+					</PanelRow>
+					<PanelRow
+						css={css`
+							flex-direction: column;
+							gap: 10px;
+							justify-content: flex-start;
+							align-items: flex-start;
+						`}
+					>
+						<label htmlFor="amount_placement">
+							{__('Amount Placement', 'surecart')}
+						</label>
+						<SelectControl
+							id="amount_placement"
+							name="amount_placement"
+							value={amount_placement}
+							onChange={(value) =>
+								setAttributes({
+									amount_placement: value,
+								})
+							}
+							disabled={!amount}
+						>
+							<option value="before">
+								{__('Before Button Text', 'surecart')}
+							</option>
+							<option value="after">
+								{__('After Button Text', 'surecart')}
+							</option>
+						</SelectControl>
+					</PanelRow>
+				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
@@ -99,6 +179,19 @@ export default ({ className, attributes, setAttributes }) => {
 						...(textColor ? { color: textColor } : {}),
 					}}
 				>
+					{amount && amount_placement === 'before' && (
+						<span
+							class="sc-button__link-text"
+							style={{ marginRight: 5 }}
+						>
+							<ScFormatNumber
+								type="currency"
+								currency="USD"
+								value={amount}
+							/>
+						</span>
+					)}
+
 					<span class="sc-button__link-text">
 						<RichText
 							aria-label={__('Button text')}
@@ -109,6 +202,19 @@ export default ({ className, attributes, setAttributes }) => {
 							allowedFormats={['core/bold', 'core/italic']}
 						/>
 					</span>
+
+					{amount && amount_placement === 'after' && (
+						<span
+							class="sc-button__link-text"
+							style={{ marginLeft: 5 }}
+						>
+							<ScFormatNumber
+								type="currency"
+								currency="USD"
+								value={amount}
+							/>
+						</span>
+					)}
 				</button>
 			</div>
 		</div>
