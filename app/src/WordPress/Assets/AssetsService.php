@@ -77,11 +77,9 @@ class AssetsService {
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
-		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
-		$this->loader->whenRendered( 'surecart/product-item-list', [ $this, 'enqueueComponents' ] );
+
+		// Load the components for old blocks.
+		$this->conditionallyLoadComponentsForOldBlocks();
 	}
 
 	public function preloadBlockAssets() {
@@ -269,5 +267,29 @@ class AssetsService {
 			})();
 		</script>
 		<?php
+	}
+
+	/**
+	 * Conditionally load components for old blocks.
+	 *
+	 * @return void
+	 */
+	public function conditionallyLoadComponentsForOldBlocks(): void {
+		$blocks = apply_filters(
+			'surecart_conditionally_rendered_block_list',
+			[
+				'surecart/logout-button',
+				'surecart/customer-dashboard-button',
+				'surecart/buy-button',
+				'surecart/customer-dashboard',
+				'surecart/checkout-form',
+				'surecart/order-confirmation',
+				'surecart/product-item-list',
+			]
+		);
+
+		foreach ( $blocks as $block ) {
+			$this->loader->whenRendered( $block, [ $this, 'enqueueComponents' ] );
+		}
 	}
 }
