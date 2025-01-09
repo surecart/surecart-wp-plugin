@@ -308,14 +308,7 @@ test.describe('Checkout Urls', () => {
 	}) => {
 		await page.goto('/');
 		await page.evaluate(() => window.localStorage.clear());
-		const logoutLink = await page
-			?.locator('#wp-admin-bar-logout a')
-			?.nth(0);
-		const logoutUrl = await logoutLink?.getAttribute('href');
-
-		if (logoutUrl) {
-			await page.goto(logoutUrl);
-		}
+		await page.context().clearCookies();
 		await page.goto(
 			addQueryArgs(persisted.post.link, {
 				line_items: [
@@ -360,14 +353,7 @@ test.describe('Checkout Urls', () => {
 		await page.goto('/');
 		await page.evaluate(() => window.localStorage.clear());
 
-		const logoutLink = await page
-			?.locator('#wp-admin-bar-logout a')
-			?.nth(0);
-		const logoutUrl = await logoutLink?.getAttribute('href');
-
-		if (logoutUrl) {
-			await page.goto(logoutUrl);
-		}
+		await page.context().clearCookies();
 
 		await page.goto(
 			addQueryArgs(persisted.post.link, {
