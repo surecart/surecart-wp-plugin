@@ -155,6 +155,26 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 				!state.overlayEnabled && state.currentImageId === ctx.imageId
 			);
 		},
+
+		/**
+		 * Gets the right position of the image button.
+		 *
+		 * @return {number} Right position of the image button.
+		 */
+		get imageButtonRight() {
+			const { imageId } = getContext();
+			return state.metadata[imageId].imageButtonRight;
+		},
+
+		/**
+		 * Gets the top position of the image button.
+		 *
+		 * @return {number} Top position of the image button.
+		 */
+		get imageButtonTop() {
+			const { imageId } = getContext();
+			return state.metadata[imageId].imageButtonTop;
+		},
 	},
 	actions: {
 		showLightbox() {
@@ -171,7 +191,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 
 			// get only the image ids that share the same galleryId as the imageId and are not hidden
-			state.images = (images || []).filter((id) => {
+			state.images = (images || [imageId]).filter((id) => {
 				const metadata = state.metadata[id];
 				const imageRef = metadata.imageRef;
 
@@ -525,6 +545,82 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			const { ref } = getElement();
 			state.metadata[imageId].imageRef = ref;
 			state.metadata[imageId].currentSrc = ref.currentSrc;
+			callbacks.setButtonStyles();
+		},
+		setButtonStyles() {
+			const { imageId } = getContext();
+			const { ref } = getElement();
+			const { naturalWidth, naturalHeight, offsetWidth, offsetHeight } =
+				ref;
+
+			// If the image isn't loaded yet, it can't calculate where the button
+			// should be.
+			if (naturalWidth === 0 || naturalHeight === 0) {
+				return;
+			}
+
+			const figure = ref.parentElement;
+			const figureWidth = ref.parentElement.clientWidth;
+
+			// It needs special handling for the height because a caption will cause
+			// the figure to be taller than the image, which means it needs to
+			// account for that when calculating the placement of the button in the
+			// top right corner of the image.
+			let figureHeight = ref.parentElement.clientHeight;
+			const caption = figure.querySelector('figcaption');
+			if (caption) {
+				const captionComputedStyle = window.getComputedStyle(caption);
+				if (
+					!['absolute', 'fixed'].includes(
+						captionComputedStyle.position
+					)
+				) {
+					figureHeight =
+						figureHeight -
+						caption.offsetHeight -
+						parseFloat(captionComputedStyle.marginTop) -
+						parseFloat(captionComputedStyle.marginBottom);
+				}
+			}
+
+			const buttonOffsetTop = figureHeight - offsetHeight;
+			const buttonOffsetRight = figureWidth - offsetWidth;
+
+			let imageButtonTop = buttonOffsetTop + 16;
+			let imageButtonRight = buttonOffsetRight + 16;
+
+			// In the case of an image with object-fit: contain, the size of the
+			// <img> element can be larger than the image itself, so it needs to
+			// calculate where to place the button.
+			if (state.metadata[imageId].scaleAttr === 'contain') {
+				// Natural ratio of the image.
+				const naturalRatio = naturalWidth / naturalHeight;
+				// Offset ratio of the image.
+				const offsetRatio = offsetWidth / offsetHeight;
+
+				if (naturalRatio >= offsetRatio) {
+					// If it reaches the width first, it keeps the width and compute the
+					// height.
+					const referenceHeight = offsetWidth / naturalRatio;
+					imageButtonTop =
+						(offsetHeight - referenceHeight) / 2 +
+						buttonOffsetTop +
+						16;
+					imageButtonRight = buttonOffsetRight + 16;
+				} else {
+					// If it reaches the height first, it keeps the height and compute
+					// the width.
+					const referenceWidth = offsetHeight * naturalRatio;
+					imageButtonTop = buttonOffsetTop + 16;
+					imageButtonRight =
+						(offsetWidth - referenceWidth) / 2 +
+						buttonOffsetRight +
+						16;
+				}
+			}
+
+			state.metadata[imageId].imageButtonTop = imageButtonTop;
+			state.metadata[imageId].imageButtonRight = imageButtonRight;
 		},
 		setOverlayFocus() {
 			if (state.overlayEnabled) {
