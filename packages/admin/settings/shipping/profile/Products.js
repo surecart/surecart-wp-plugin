@@ -141,7 +141,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 		if (listRef.current) {
 			setTimeout(() => {
 				listRef.current.scrollTop = listRef.current.scrollHeight;
-			}, 0);
+			}, 50);
 		}
 	}, [totalProducts]);
 
