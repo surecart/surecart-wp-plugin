@@ -322,8 +322,9 @@ test.describe('Checkout Urls', () => {
 		await page.waitForLoadState('networkidle');
 
 		// This ensures that product added to cart.
-		await expect(page.getByText('Test URL Product')).toBeVisible();
+		await expect(page.getByText('One Time')).toBeVisible();
 
+		// we are adding a different product to the cart, via url only.
 		await page.goto(
 			addQueryArgs(persisted.post.link, {
 				line_items: [
@@ -336,6 +337,8 @@ test.describe('Checkout Urls', () => {
 		);
 		await page.waitForLoadState('networkidle');
 
+		await expect(page.getByText('Every Month', { exact: true })).toBeVisible();
+
 		await page.fill('input[name="email"]', 'rajkiranb@bsf.io');
 
 		await page.locator('sc-order-submit').nth(0).click();
@@ -346,7 +349,7 @@ test.describe('Checkout Urls', () => {
 
 		await page.waitForLoadState('networkidle');
 
-		await expect(page.getByText('Test URL Product')).toBeVisible();
+		await expect(page.getByText('One Time')).toBeVisible();
 	});
 
 	test('Cart should clear after successful purchase ', async ({ page }) => {
