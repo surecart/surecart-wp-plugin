@@ -11,7 +11,10 @@ use SureCart\Models\Traits\HasRefundItems;
  * Refund model.
  */
 class Refund extends Model {
-	use HasCustomer, HasCharge, HasDates, HasRefundItems;
+	use HasCustomer;
+	use HasCharge;
+	use HasDates;
+	use HasRefundItems;
 
 	/**
 	 * Rest API endpoint
