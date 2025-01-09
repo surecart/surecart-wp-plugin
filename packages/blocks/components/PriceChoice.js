@@ -16,6 +16,7 @@ import { intervalString } from '../../admin/util/translations';
 import LineItemLabel from '../../admin/ui/LineItemLabel';
 
 export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
+	console.log('choice', choice);
 	// get price from choice.
 	const price = useSelect(
 		(select) => {
@@ -57,12 +58,12 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 	const renderPrice = (withQuantity = false) => {
 		if (!price?.id) return '—';
 		if (price?.ad_hoc) return __('Custom', 'surecart');
+		const amount = variant?.amount ?? price?.amount;
+
 		return (
 			<sc-format-number
 				type="currency"
-				value={
-					price?.amount * (withQuantity ? choice?.quantity || 1 : 1)
-				}
+				value={amount * (withQuantity ? choice?.quantity || 1 : 1)}
 				currency={price?.currency}
 			/>
 		);
@@ -96,9 +97,9 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 									type="currency"
 									currency={price?.currency || 'usd'}
 									value={
-										!!price?.ad_hoc && price?.ad_hoc_amount
-											? price?.ad_hoc_amount
-											: price?.amount
+										!!price?.ad_hoc
+											? price?.amount
+											: variant?.amount ?? price?.amount
 									}
 								/>
 								{intervalString(price)}
