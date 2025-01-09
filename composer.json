@@ -16,7 +16,8 @@
 		"guzzlehttp/psr7": "^2.7.0",
 		"typisttech/imposter-plugin": "^0.6.2",
 		"surecart/wp-query-builder": "dev-master",
-		"woocommerce/action-scheduler": "^3.6"
+		"woocommerce/action-scheduler": "^3.6",
+		"brainstormforce/nps-survey": "^1"
 	},
 	"require-dev": {
 		"php": "^7.4|^8.0|^8.1",
@@ -46,6 +47,11 @@
 					"reference": "master"
 				}
 			}
+		},
+		{
+			"name": "brainstormforce/nps-survey",
+			"type": "vcs",
+			"url": "git@github.com:brainstormforce/nps-survey.git"
 		}
 	],
 	"autoload": {
