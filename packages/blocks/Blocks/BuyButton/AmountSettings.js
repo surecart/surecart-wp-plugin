@@ -102,6 +102,8 @@ export default ({ setAttributes, line_items, amount, amount_placement }) => {
 						css={css`
 							text-transform: uppercase;
 						`}
+						max={price?.ad_hoc ? price?.ad_hoc_max_amount : null}
+						min={price?.ad_hoc ? price?.ad_hoc_min_amount : null}
 					/>
 
 					<ScText
