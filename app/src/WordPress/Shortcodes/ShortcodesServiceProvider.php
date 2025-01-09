@@ -348,7 +348,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'size'             => 'medium',
 				'label'            => $label,
 				'amount'           => $atts['amount'] ?? null,
-				'amount_placement' => $atts['amount_placement'] ?? 'before',
+				'amount_placement' => $atts['amount_placement'] ?? 'none',
 			],
 			$atts,
 			'sc_buy_button'

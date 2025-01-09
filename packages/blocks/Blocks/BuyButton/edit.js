@@ -26,9 +26,8 @@ import { edit } from '@wordpress/icons';
  */
 import Placeholder from './Placeholder';
 import PriceInfo from '../../components/PriceInfo';
-import { TextControl } from '@wordpress/components';
-import { SelectControl } from '@wordpress/components';
-import { ScFormatNumber, ScText } from '@surecart/components-react';
+import AmountSettings from './AmountSettings';
+import { ScFormatNumber } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const {
@@ -98,72 +97,13 @@ export default ({ className, attributes, setAttributes }) => {
 					})}
 				</PanelBody>
 
-				<PanelBody title={__('Amount Settings', 'surecart')}>
-					<ScText
-						as="p"
-						css={css`
-							margin-bottom: 10px;
-							color: var(--sc-color-gray-500);
-						`}
-					>
-						{__(
-							'If you want to show a custom amount, you can set it here.',
-							'surecart'
-						)}
-					</ScText>
-					<PanelRow
-						css={css`
-							flex-direction: column;
-							gap: 10px;
-							justify-content: flex-start;
-							align-items: flex-start;
-						`}
-					>
-						<label htmlFor="amount">
-							{__('Amount (in cents)', 'surecart')}
-						</label>
-						<TextControl
-							type="number"
-							id="amount"
-							name="amount"
-							value={amount}
-							onChange={(value) =>
-								setAttributes({ amount: value })
-							}
-							min="0"
-						/>
-					</PanelRow>
-					<PanelRow
-						css={css`
-							flex-direction: column;
-							gap: 10px;
-							justify-content: flex-start;
-							align-items: flex-start;
-						`}
-					>
-						<label htmlFor="amount_placement">
-							{__('Amount Placement', 'surecart')}
-						</label>
-						<SelectControl
-							id="amount_placement"
-							name="amount_placement"
-							value={amount_placement}
-							onChange={(value) =>
-								setAttributes({
-									amount_placement: value,
-								})
-							}
-							disabled={!amount}
-						>
-							<option value="before">
-								{__('Before Button Text', 'surecart')}
-							</option>
-							<option value="after">
-								{__('After Button Text', 'surecart')}
-							</option>
-						</SelectControl>
-					</PanelRow>
-				</PanelBody>
+				{/* If there is one line item, we'll show the amount settings */}
+				<AmountSettings
+					line_items={line_items}
+					amount={amount}
+					amount_placement={amount_placement}
+					setAttributes={setAttributes}
+				/>
 			</InspectorControls>
 
 			<div {...blockProps}>
@@ -181,12 +121,12 @@ export default ({ className, attributes, setAttributes }) => {
 				>
 					{amount && amount_placement === 'before' && (
 						<span
-							class="sc-button__link-text"
+							class="sc-button__link-text sc-button__price-before"
 							style={{ marginRight: 5 }}
 						>
 							<ScFormatNumber
 								type="currency"
-								currency="USD"
+								currency={scData.currency}
 								value={amount}
 							/>
 						</span>
@@ -204,13 +144,10 @@ export default ({ className, attributes, setAttributes }) => {
 					</span>
 
 					{amount && amount_placement === 'after' && (
-						<span
-							class="sc-button__link-text"
-							style={{ marginLeft: 5 }}
-						>
+						<span class="sc-button__link-text sc-button__price-after">
 							<ScFormatNumber
 								type="currency"
-								currency="USD"
+								currency={scData.currency}
 								value={amount}
 							/>
 						</span>

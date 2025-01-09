@@ -1,0 +1,7 @@
+.wp-block-surecart-buy-button .sc-button__price-before {
+	margin-right: var(--sc-spacing-x-small);
+}
+
+.wp-block-surecart-buy-button .sc-button__price-after {
+	margin-left: var(--sc-spacing-x-small);
+}

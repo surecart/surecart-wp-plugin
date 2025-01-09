@@ -77,7 +77,6 @@ export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 				`}
 			>
 				<PriceSelector
-					ad_hoc={false}
 					onSelect={({ price_id, variant_id }) =>
 						onUpdate({ id: price_id, variant_id })
 					}

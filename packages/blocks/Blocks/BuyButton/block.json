@@ -45,11 +45,12 @@
 		},
 		"amount_placement": {
 			"type": "string",
-			"default": "before"
+			"default": "none"
 		}
 	},
 	"script": "surecart-components",
 	"style": [
+		"file:./style.css",
 		"wp-block-button",
 		"surecart-wp-button",
 		"surecart-themes-default",
