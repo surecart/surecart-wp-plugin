@@ -12,6 +12,7 @@ import { button as icon } from '@wordpress/icons';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { updateCartLineItem } from '../../util';
+import { ScForm } from '@surecart/components-react';
 
 export default ({
 	setAttributes,
@@ -29,51 +30,54 @@ export default ({
 
 	return (
 		<Placeholder icon={icon} label={__('Select some products', 'surecart')}>
-			<div
-				css={css`
-					display: grid;
-					gap: 0.5em;
-					width: 100%;
-				`}
-			>
-				<PriceChoices
-					choices={line_items}
-					onUpdate={updateLineItem}
-					onRemove={removeLineItem}
-					onNew={() => {}}
-				/>
-				<hr />
+			<ScForm onSubmit={(e) => e.preventDefault()}>
 				<div
 					css={css`
-						display: flex;
-						justify-content: ${!!selectedLineItems?.length
-							? 'space-between'
-							: 'flex-end'};
+						display: grid;
+						gap: 0.5em;
+						width: 100%;
 					`}
 				>
-					{!!selectedLineItems?.length && (
+					<PriceChoices
+						choices={line_items}
+						onUpdate={updateLineItem}
+						onRemove={removeLineItem}
+						onNew={() => {}}
+					/>
+					<hr />
+					<div
+						css={css`
+							display: flex;
+							justify-content: ${!!selectedLineItems?.length
+								? 'space-between'
+								: 'flex-end'};
+						`}
+					>
+						{!!selectedLineItems?.length && (
+							<Button
+								variant="secondary"
+								onClick={() => {
+									setLineItems([]);
+								}}
+							>
+								{__('Cancel', 'surecart')}
+							</Button>
+						)}
 						<Button
-							variant="secondary"
+							variant="primary"
+							type="submit"
 							onClick={() => {
-								setLineItems([]);
+								setAttributes({ line_items });
+								setShowChangeProducts(false);
 							}}
 						>
-							{__('Cancel', 'surecart')}
+							{!!selectedLineItems?.length
+								? __('Update Buy Button', 'surecart')
+								: __('Create Buy Button', 'surecart')}
 						</Button>
-					)}
-					<Button
-						variant="primary"
-						onClick={() => {
-							setAttributes({ line_items });
-							setShowChangeProducts(false);
-						}}
-					>
-						{!!selectedLineItems?.length
-							? __('Update Buy Button', 'surecart')
-							: __('Create Buy Button', 'surecart')}
-					</Button>
+					</div>
 				</div>
-			</div>
+			</ScForm>
 		</Placeholder>
 	);
 };

@@ -42,10 +42,6 @@
 		},
 		"amount": {
 			"type": "number"
-		},
-		"amount_placement": {
-			"type": "string",
-			"default": "none"
 		}
 	},
 	"script": "surecart-components",

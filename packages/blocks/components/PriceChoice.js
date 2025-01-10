@@ -7,6 +7,7 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScFormatNumber,
+	ScPriceInput,
 } from '@surecart/components-react';
 import { Spinner } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
@@ -55,10 +56,38 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 		[price]
 	);
 
+	const amount = variant?.amount ?? price?.amount;
+
+	console.log('price', price);
+
 	const renderPrice = (withQuantity = false) => {
 		if (!price?.id) return '—';
-		if (price?.ad_hoc) return __('Custom', 'surecart');
-		const amount = variant?.amount ?? price?.amount;
+
+		// For ad-hoc price, lets add a custom input if needed.
+		if (price?.ad_hoc) {
+			return (
+				<ScPriceInput
+					placeholder={__('Enter Custom Amount', 'surecart')}
+					currencyCode={scData.currency}
+					value={choice?.ad_hoc_amount || price?.ad_hoc_max_amount}
+					onScInput={(e) => {
+						onUpdate({
+							id: choice?.id,
+							ad_hoc_amount: e.target.value,
+							quantity: choice?.quantity || 1,
+							...(choice?.variant_id
+								? { variant_id: choice.variant_id }
+								: {}),
+						});
+					}}
+					max={price?.ad_hoc_max_amount}
+					min={price?.ad_hoc_min_amount}
+					css={css`
+						max-width: 100px;
+					`}
+				/>
+			);
+		}
 
 		return (
 			<sc-format-number
@@ -125,19 +154,21 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 					/>
 				</sc-table-cell>
 			)}
-			<sc-table-cell style={{ textAlign: 'right' }}>
-				{renderPrice(true)}{' '}
-				<span
-					css={css`
-						color: var(--sc-color-gray-500);
-					`}
-				>
-					{price &&
-						intervalString(price, {
-							showOnce: true,
-							labels: { interval: '/' },
-						})}
-				</span>
+			<sc-table-cell style={{ textAlign: 'center' }}>
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					{renderPrice(true)}{' '}
+					<span
+						css={css`
+							color: var(--sc-color-gray-500);
+						`}
+					>
+						{price &&
+							intervalString(price, {
+								showOnce: true,
+								labels: { interval: '/' },
+							})}
+					</span>
+				</div>
 			</sc-table-cell>
 			<sc-table-cell>
 				<ScDropdown position="bottom-right">

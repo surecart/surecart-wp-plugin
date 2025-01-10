@@ -344,11 +344,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$label = strip_shortcodes( $content );
 		$atts  = shortcode_atts(
 			[
-				'type'             => 'primary',
-				'size'             => 'medium',
-				'label'            => $label,
-				'amount'           => $atts['amount'] ?? null,
-				'amount_placement' => $atts['amount_placement'] ?? 'none',
+				'type'  => 'primary',
+				'size'  => 'medium',
+				'label' => $label,
 			],
 			$atts,
 			'sc_buy_button'
@@ -360,6 +358,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'price_id' => null,
 				'quantity' => 1,
+				'amount'   => null,
 			]
 		);
 

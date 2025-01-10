@@ -26,8 +26,6 @@ import { edit } from '@wordpress/icons';
  */
 import Placeholder from './Placeholder';
 import PriceInfo from '../../components/PriceInfo';
-import AmountSettings from './AmountSettings';
-import { ScFormatNumber } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const {
@@ -96,14 +94,6 @@ export default ({ className, attributes, setAttributes }) => {
 						);
 					})}
 				</PanelBody>
-
-				{/* If there is one line item, we'll show the amount settings */}
-				<AmountSettings
-					line_items={line_items}
-					amount={amount}
-					amount_placement={amount_placement}
-					setAttributes={setAttributes}
-				/>
 			</InspectorControls>
 
 			<div {...blockProps}>
@@ -119,19 +109,6 @@ export default ({ className, attributes, setAttributes }) => {
 						...(textColor ? { color: textColor } : {}),
 					}}
 				>
-					{amount && amount_placement === 'before' && (
-						<span
-							class="sc-button__link-text sc-button__price-before"
-							style={{ marginRight: 5 }}
-						>
-							<ScFormatNumber
-								type="currency"
-								currency={scData.currency}
-								value={amount}
-							/>
-						</span>
-					)}
-
 					<span class="sc-button__link-text">
 						<RichText
 							aria-label={__('Button text')}
@@ -142,16 +119,6 @@ export default ({ className, attributes, setAttributes }) => {
 							allowedFormats={['core/bold', 'core/italic']}
 						/>
 					</span>
-
-					{amount && amount_placement === 'after' && (
-						<span class="sc-button__link-text sc-button__price-after">
-							<ScFormatNumber
-								type="currency"
-								currency={scData.currency}
-								value={amount}
-							/>
-						</span>
-					)}
 				</button>
 			</div>
 		</div>
