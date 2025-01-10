@@ -279,6 +279,24 @@ const { state, actions } = store('surecart/checkout', {
 
 	actions: {
 		/**
+		 * Fetch the checkout.
+		 */
+		fetch: function* () {
+			// get the context.
+			const { mode, formId } = getContext();
+
+			// fetch the checkout.
+			const { fetchCheckout } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+			const checkout = yield* fetchCheckout({ id: state.checkout?.id });
+
+			// set the checkout.
+			actions.setCheckout(checkout, mode, formId);
+		},
+
+		/**
 		 * Toggle the discount input.
 		 */
 		toggleDiscountInput(e) {
