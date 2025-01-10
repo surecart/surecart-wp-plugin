@@ -27,12 +27,12 @@ class NpsSurveyNotice {
 			'nps-survey-surecart',
 			array(
 				'show_if'          => true,
-				'dismiss_timespan' => 2 * MINUTE_IN_SECONDS, // 2 * WEEK_IN_SECONDS,
+				'dismiss_timespan' => 1 * WEEK_IN_SECONDS,
 				'display_after'    => 0,
 				'plugin_slug'      => 'surecart',
 				'message'          => array(
 					// Step 1 i.e rating input.
-					'logo'                  => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/logo.svg' ),
+					'logo'                  => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/icon.svg' ),
 					'plugin_name'           => __( 'SureCart', 'surecart' ),
 					'nps_rating_message'    => __( 'How likely are you to recommend #pluginname to your friends or colleagues?', 'surecart' ),
 
@@ -45,6 +45,7 @@ class NpsSurveyNotice {
 					'plugin_rating_title'   => __( 'Thank you for your feedback', 'surecart' ),
 					'plugin_rating_content' => __( 'We value your input. How can we improve your experience?', 'surecart' ),
 				),
+				'show_on_screens'  => array( 'dashboard', 'toplevel_page_sc-dashboard' ),
 			)
 		);
 	}
