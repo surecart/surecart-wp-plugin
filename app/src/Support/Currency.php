@@ -7,6 +7,31 @@ namespace SureCart\Support;
  */
 class Currency {
 	/**
+	 * Exchange rates.
+	 * TODO: Get from service.
+	 *
+	 * @var array
+	 */
+	protected static $exchange_rates = [
+		'usd' => 1,
+		'eur' => 0.85,
+		'gbp' => 0.75,
+		'afn' => 80,
+	];
+
+	/**
+	 * Get the exchange rate for the current currency.
+	 *
+	 * @return float
+	 */
+	public static function getExchangeRate() {
+		if ( empty( $_GET['currency'] ) ) {
+			return 1;
+		}
+		return self::$exchange_rates[ strtolower( $_GET['currency'] ) ] ?? 1;
+	}
+
+	/**
 	 * Get all available Currency symbols.
 	 * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
 	 */
@@ -192,6 +217,13 @@ class Currency {
 	 * @return string
 	 */
 	public static function format( $amount, $currency_code = null ) {
+		$session_currency = strtolower( sanitize_text_field( $_GET['currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( in_array( $session_currency, array_keys( self::getSupportedCurrencies() ), true ) ) {
+			$currency_code = $session_currency;
+		}
+
+		$amount = $amount * self::getExchangeRate( $currency_code );
+
 		if ( empty( $currency_code ) ) {
 			$currency_code = \SureCart::account()->currency;
 		}
