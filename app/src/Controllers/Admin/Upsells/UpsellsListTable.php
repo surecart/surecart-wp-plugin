@@ -264,6 +264,9 @@ class UpsellsListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $upsell_funnel, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $upsell_funnel, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return ' < a href     = "' . \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) . '" > ' . $upsell_funnel->name . ' < / a > ';

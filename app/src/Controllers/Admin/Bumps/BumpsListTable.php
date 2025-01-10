@@ -275,6 +275,9 @@ class BumpsListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $bump, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $bump, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return ' < a href     = "' . \SureCart::getUrl()->edit( 'bump', $bump->id ) . '" > ' . $bump->name . ' < / a > ';

@@ -167,6 +167,9 @@ class CustomersListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $product, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';

@@ -247,6 +247,9 @@ class AffiliationsListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $affiliation, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $affiliation, $column_name );
+
 		switch ( $column_name ) {
 			case 'description':
 			case 'email':

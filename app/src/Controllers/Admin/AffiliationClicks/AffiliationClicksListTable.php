@@ -277,6 +277,9 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $item, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $item, $column_name );
+
 		return $item->$column_name ?? '';
 	}
 

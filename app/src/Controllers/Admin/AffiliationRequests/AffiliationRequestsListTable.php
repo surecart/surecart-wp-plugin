@@ -171,6 +171,9 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $affiliate_request, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $affiliate_request, $column_name );
+
 		if ( 'name' === $column_name ) {
 			return '<a href="' . \SureCart::getUrl()->edit( 'affiliate-request', $affiliate_request->id ) . '">'
 				. $affiliate_request->first_name . ' ' . $affiliate_request->last_name
