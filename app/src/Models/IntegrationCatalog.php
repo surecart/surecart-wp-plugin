@@ -91,6 +91,6 @@ class IntegrationCatalog extends ExternalApiModel {
 		}
 
 		// then fallback to the featured media.
-		return $this->_embedded['wp:featuredmedia'][0]['media_details']['sizes']['medium']['source_url'] ?? '';
+		return $this->_embedded['wp:featuredmedia'][0]['media_details']['sizes']['medium']['source_url'] ?? $this->_embedded['wp:featuredmedia'][0]['source_url'] ?? '';
 	}
 }
