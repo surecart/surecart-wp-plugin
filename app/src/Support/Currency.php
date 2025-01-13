@@ -20,23 +20,43 @@ class Currency {
 	];
 
 	/**
+	 * Get the current currency.
+	 *
+	 * @return string
+	 */
+	public static function getCurrentCurrency() {
+		return strtolower( sanitize_text_field( $_GET['currency'] ?? \SureCart::account()->currency ?? 'usd' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	}
+
+	/**
+	 * Check if the current currency is different from the default currency.
+	 *
+	 * @return bool
+	 */
+	public static function hasDisplayCurrency() {
+		return isset( $_GET['currency'] );
+	}
+
+	/**
 	 * Get the exchange rate for the current currency.
 	 *
 	 * @return float
 	 */
 	public static function getExchangeRate() {
-		if ( empty( $_GET['currency'] ) ) {
-			return 1;
-		}
-		return self::$exchange_rates[ strtolower( $_GET['currency'] ) ] ?? 1;
+		return self::$exchange_rates[ self::getCurrentCurrency() ] ?? 1;
 	}
 
 	/**
 	 * Get all available Currency symbols.
+	 *
 	 * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
+	 *
+	 * @param string|null $key Currency code.
+	 *
+	 * @return string
 	 */
 	public static function getCurrencySymbol( $key = null ) {
-		$key     = strtoupper( $key ?? \SureCart::account()->currency ?? '' );
+		$key     = strtoupper( $key ?? self::getCurrentCurrency() );
 		$symbols = apply_filters(
 			'surecart/currency_symbols',
 			array(
@@ -217,16 +237,11 @@ class Currency {
 	 * @return string
 	 */
 	public static function format( $amount, $currency_code = null ) {
-		$session_currency = strtolower( sanitize_text_field( $_GET['currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( in_array( $session_currency, array_keys( self::getSupportedCurrencies() ), true ) ) {
-			$currency_code = $session_currency;
+		if ( empty( $currency_code ) || self::hasDisplayCurrency() ) {
+			$currency_code = self::getCurrentCurrency();
 		}
 
 		$amount = $amount * self::getExchangeRate( $currency_code );
-
-		if ( empty( $currency_code ) ) {
-			$currency_code = \SureCart::account()->currency;
-		}
 
 		if ( class_exists( 'NumberFormatter' ) ) {
 			$fmt              = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
@@ -283,11 +298,15 @@ class Currency {
 	}
 
 	/**
-	 * Format the currency number
+	 * Format the currency number.
+	 *
+	 * @param integer $amount Amount.
+	 * @param string  $currency_code Currency code.
+	 *
+	 * @return string Formatted currency number.
 	 */
 	public static function formatCurrencyNumber( $amount, $currency_code = 'usd' ) {
 		$amount = (float) $amount;
-		// TODO: Test this.
 		if ( in_array( strtoupper( $currency_code ), self::getZeroDecicalCurrencies(), true ) ) {
 			return self::formatCents( $amount, 1 );
 		}
@@ -307,13 +326,11 @@ class Currency {
 		if ( is_numeric( $number ) ) { // a number.
 			if ( ! $number ) { // zero.
 				$money = ( 2 === $cents ? '0.00' : '0' ); // output zero.
-			} else { // value.
-				if ( floor( $number ) == $number ) { // whole number.
-					$money = number_format_i18n( (float) $number, ( 2 === $cents ? 2 : 0 ) ); // format.
-				} else { // cents.
+			} elseif ( floor( $number ) == $number ) { // whole number.
+				$money = number_format_i18n( (float) $number, ( 2 === $cents ? 2 : 0 ) ); // format.
+			} else { // cents.
 					$money = number_format_i18n( round( (float) $number, 2 ), ( 0 === $cents ? 0 : 2 ) ); // format.
-				} // integer or decimal.
-			} // value.
+			} // integer or decimal.
 
 			// Remove any comma separators.
 			$money = str_replace( ',', '', $money );
@@ -325,7 +342,7 @@ class Currency {
 	/**
 	 * Get a list of supported currencies.
 	 *
-	 * @param string $provider Provider.
+	 * @return array
 	 */
 	public static function getSupportedCurrencies() {
 		return [
