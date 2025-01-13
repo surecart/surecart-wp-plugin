@@ -197,16 +197,16 @@
 	// or faster than the scrim to give a sense of depth.
 	&.active {
 		visibility: visible;
-		animation: both turn-on-visibility 0.25s;
+		animation: both sc-turn-on-visibility 0.25s;
 		img {
-			animation: both turn-on-visibility 0.35s;
+			animation: both sc-turn-on-visibility 0.35s;
 		}
 	}
 	&.show-closing-animation {
 		&:not(.active) {
-			animation: both turn-off-visibility 0.35s;
+			animation: both sc-turn-off-visibility 0.35s;
 			img {
-				animation: both turn-off-visibility 0.25s;
+				animation: both sc-turn-off-visibility 0.25s;
 			}
 		}
 	}
@@ -218,28 +218,28 @@
 				visibility: visible;
 				animation: none;
 				.sc-lightbox-image-container {
-					animation: lightbox-zoom-in 0.4s;
+					animation: sc-lightbox-zoom-in 0.4s;
 					// Override fade animation for image
 					img {
 						animation: none;
 					}
 				}
 				.scrim {
-					animation: turn-on-visibility 0.4s forwards;
+					animation: sc-turn-on-visibility 0.4s forwards;
 				}
 			}
 			&.show-closing-animation {
 				&:not(.active) {
 					animation: none;
 					.sc-lightbox-image-container {
-						animation: lightbox-zoom-out 0.4s;
+						animation: sc-lightbox-zoom-out 0.4s;
 						// Override fade animation for image
 						img {
 							animation: none;
 						}
 					}
 					.scrim {
-						animation: turn-off-visibility 0.4s forwards;
+						animation: sc-turn-off-visibility 0.4s forwards;
 					}
 				}
 			}
@@ -259,7 +259,7 @@
 	}
 }
 
-@keyframes turn-on-visibility {
+@keyframes sc-turn-on-visibility {
 	0% {
 		opacity: 0;
 	}
@@ -268,7 +268,7 @@
 	}
 }
 
-@keyframes turn-off-visibility {
+@keyframes sc-turn-off-visibility {
 	0% {
 		opacity: 1;
 		visibility: visible;
@@ -283,7 +283,7 @@
 	}
 }
 
-@keyframes lightbox-zoom-in {
+@keyframes sc-lightbox-zoom-in {
 	0% {
 		transform: translate(
 				calc(
@@ -299,7 +299,7 @@
 	}
 }
 
-@keyframes lightbox-zoom-out {
+@keyframes sc-lightbox-zoom-out {
 	0% {
 		visibility: visible;
 		transform: translate(-50%, -50%) scale(1, 1);
