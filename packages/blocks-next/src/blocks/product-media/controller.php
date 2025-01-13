@@ -2,7 +2,6 @@
 
 $product = sc_get_product();
 
-
 $gallery        = $product->gallery ?? [];
 $featured_image = $gallery[0] ?? null;
 

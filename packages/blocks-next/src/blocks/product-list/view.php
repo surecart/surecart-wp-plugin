@@ -4,7 +4,7 @@
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			array(
-				'urlPrefix' => $controller->urlParams()->getKey(),
+				'urlPrefix' => sc_product_list_prefix( $block ),
 				'products'  => $products,
 			)
 		)

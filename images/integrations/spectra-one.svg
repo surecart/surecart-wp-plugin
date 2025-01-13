@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   fill="none"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="Logo-Spectra.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.678"
+     inkscape:cx="83.432658"
+     inkscape:cy="154.64839"
+     inkscape:window-width="1638"
+     inkscape:window-height="1048"
+     inkscape:window-x="2291"
+     inkscape:window-y="238"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="below">
+    <rect
+       style="fill:#5733ff;fill-opacity:1;stroke-width:0.253711;stroke-dasharray:1.52227, 0.253711;stroke-opacity:0.988235"
+       id="rect999"
+       width="128"
+       height="128"
+       x="0"
+       y="0"
+       rx="10.146141" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="above">
+    <path
+       fill-rule="evenodd"
+       clip-rule="evenodd"
+       d="m 44.703222,42.991826 c -10.011137,5.90464 -7.610369,21.69548 3.759872,24.729337 l 18.988287,5.06675 c 1.58336,0.42266 1.869824,2.59303 0.452608,3.42887 l -18.354687,10.7863 -1.94048,19.054077 35.687934,-21.049087 c 10.011139,-5.90464 7.61037,-21.695487 -3.75961,-24.729337 l -18.988548,-5.06675 c -1.583104,-0.422399 -1.869824,-2.59303 -0.452608,-3.42887 l 18.354946,-10.7863 1.94048,-19.053979 z"
+       fill="#5733ff"
+       id="path2"
+       style="fill:#ffffff;stroke-width:0.256"
+       sodipodi:nodetypes="cccccccsccccc" />
+  </g>
+</svg>

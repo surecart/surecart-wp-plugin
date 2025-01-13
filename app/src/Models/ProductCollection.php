@@ -255,15 +255,4 @@ class ProductCollection extends Model implements PageModel {
 		}
 		return $this->imageSrcSet( $this->attributes['image']->url, $sizes );
 	}
-
-	/**
-	 * Get Template Content.
-	 *
-	 * @return string
-	 */
-	public function getTemplateContent(): string {
-		return wp_is_block_theme() ?
-			$this->template->content ?? '' :
-			$this->template_part->content ?? '';
-	}
 }

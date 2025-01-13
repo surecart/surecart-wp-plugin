@@ -22,6 +22,7 @@ export default ({
 	clientId,
 	attributes: { paginationArrow, showLabel },
 	setAttributes,
+	context,
 }) => {
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -52,6 +53,10 @@ export default ({
 		},
 		[clientId]
 	);
+
+	if (context?.query?.pages === 1) {
+		return null;
+	}
 
 	return (
 		<>
