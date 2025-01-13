@@ -1,5 +1,4 @@
 <?php
-use SureCart\Models\Blocks\ProductListBlock;
 
 // we have already defined a search query.
 if ( ! empty( $block->context['query']['search'] ) ) {
@@ -7,8 +6,7 @@ if ( ! empty( $block->context['query']['search'] ) ) {
 }
 
 // get the search query.
-$controller = new ProductListBlock( $block );
-$list_query = $controller->query();
+$list_query = sc_product_list_query( $block );
 $value      = $list_query->s;
 // return the view.
 return 'file:./view.php';

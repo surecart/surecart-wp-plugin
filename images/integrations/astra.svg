@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   sodipodi:docname="Logo-Astra.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient1005">
+      <stop
+         style="stop-color:#4b2cdd;stop-opacity:1"
+         offset="0"
+         id="stop1001" />
+      <stop
+         style="stop-color:#ab38e2;stop-opacity:1"
+         offset="1"
+         id="stop1003" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1005"
+       id="linearGradient7009"
+       gradientUnits="userSpaceOnUse"
+       x1="74.777466"
+       y1="428.94531"
+       x2="424.12531"
+       y2="65.356316"
+       gradientTransform="matrix(0.2536535,0,0,0.2537694,0.6420138,0.39849833)" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.839"
+     inkscape:cx="77.473182"
+     inkscape:cy="221.69249"
+     inkscape:window-width="2560"
+     inkscape:window-height="1403"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g8" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g8">
+    <rect
+       style="fill:url(#linearGradient7009);fill-opacity:1;stroke-width:0.253711;stroke-dasharray:1.52227, 0.253711;stroke-opacity:0.988235"
+       id="rect999"
+       width="128"
+       height="128"
+       x="0"
+       y="0"
+       rx="10.146141" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.256px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 30.850642,96.957719 63.078991,28.535754 71.095309,43.966671 44.750316,96.967457 Z"
+       id="path893" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.256px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 64.2381,84.982953 77.559457,56.599752 97.339776,97.025603 H 82.189548 L 77.13727,85.174316 Z"
+       id="path895" />
+  </g>
+</svg>

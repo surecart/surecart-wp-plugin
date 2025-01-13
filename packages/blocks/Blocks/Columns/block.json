@@ -42,13 +42,12 @@
 				"padding": true
 			}
 		},
-		"__experimentalLayout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"allowEditing": false,
+		"layout": {
+			"allowInheriting": true,
+			"allowEditing": true,
 			"default": {
 				"type": "flex",
-				"flexWrap": "nowrap"
+				"flexWrap": "wrap"
 			}
 		}
 	},
