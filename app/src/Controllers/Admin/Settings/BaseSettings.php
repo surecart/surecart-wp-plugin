@@ -53,6 +53,7 @@ abstract class BaseSettings {
 			'processors'                     => __( 'Payment Processors', 'surecart' ),
 			'export'                         => __( 'Data Export', 'surecart' ),
 			'connection'                     => __( 'Connection', 'surecart' ),
+			'integrations'                   => __( 'Integrations', 'surecart' ),
 			'advanced'                       => __( 'Advanced', 'surecart' ),
 		];
 	}
@@ -127,25 +128,29 @@ abstract class BaseSettings {
 			true
 		);
 
+		wp_register_script( 'suretriggers-sdk', 'https://app.suretriggers.com/js/v2/embed.js', array(), '1.0.0', false );
+
 		wp_set_script_translations( $handle, 'surecart' );
 
 		wp_localize_script(
 			$handle,
 			'scData',
 			[
-				'supported_currencies' => Currency::getSupportedCurrencies(),
-				'app_url'              => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
-				'account_id'           => \SureCart::account()->id,
-				'account_slug'         => \SureCart::account()->slug,
-				'api_url'              => \SureCart::requests()->getBaseUrl(),
-				'currency'             => \SureCart::account()->currency,
-				'time_zones'           => TimeDate::timezoneOptions(),
-				'entitlements'         => \SureCart::account()->entitlements,
-				'brand_color'          => \SureCart::account()->brand->color ?? null,
-				'plan_name'            => \SureCart::account()->plan->name ?? '',
-				'processors'           => Processor::get(),
-				'is_block_theme'       => (bool) wp_is_block_theme(),
-				'claim_url'            => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'supported_currencies'   => Currency::getSupportedCurrencies(),
+				'app_url'                => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
+				'account_id'             => \SureCart::account()->id,
+				'account_slug'           => \SureCart::account()->slug,
+				'api_url'                => \SureCart::requests()->getBaseUrl(),
+				'ajax_url'               => admin_url( 'admin-ajax.php' ),
+				'plugin_installer_nonce' => wp_create_nonce( 'updates' ),
+				'currency'               => \SureCart::account()->currency,
+				'time_zones'             => TimeDate::timezoneOptions(),
+				'entitlements'           => \SureCart::account()->entitlements,
+				'brand_color'            => \SureCart::account()->brand->color ?? null,
+				'plan_name'              => \SureCart::account()->plan->name ?? '',
+				'processors'             => Processor::get(),
+				'is_block_theme'         => (bool) wp_is_block_theme(),
+				'claim_url'              => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 			]
 		);
 	}
