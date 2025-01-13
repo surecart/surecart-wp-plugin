@@ -356,9 +356,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_line_item',
 			$content,
 			[
-				'price_id' => null,
-				'quantity' => 1,
-				'amount'   => null,
+				'price_id'      => null,
+				'quantity'      => 1,
+				'ad_hoc_amount' => null,
 			]
 		);
 

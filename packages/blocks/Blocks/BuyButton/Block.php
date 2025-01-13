@@ -2,10 +2,7 @@
 
 namespace SureCartBlocks\Blocks\BuyButton;
 
-use SureCart\Support\Currency;
 use SureCartBlocks\Blocks\BaseBlock;
-use SureCart\Models\Variant;
-use SureCart\Models\Price;
 
 /**
  * Buy Button Block.
@@ -51,10 +48,10 @@ class Block extends BaseBlock {
 		return array_map(
 			function ( $item ) {
 				return [
-					'price_id'   => $item['id'] ?? null,
-					'variant_id' => $item['variant_id'] ?? null,
-					'quantity'   => $item['quantity'] ?? 1,
-					'amount'     => $item['amount'] ?? null,
+					'price_id'      => $item['id'] ?? null,
+					'variant_id'    => $item['variant_id'] ?? null,
+					'quantity'      => $item['quantity'] ?? 1,
+					'ad_hoc_amount' => $item['ad_hoc_amount'] ?? null,
 				];
 			},
 			$line_items ?? []

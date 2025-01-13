@@ -17,7 +17,6 @@ import { intervalString } from '../../admin/util/translations';
 import LineItemLabel from '../../admin/ui/LineItemLabel';
 
 export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
-	console.log('choice', choice);
 	// get price from choice.
 	const price = useSelect(
 		(select) => {
@@ -56,10 +55,6 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 		[price]
 	);
 
-	const amount = variant?.amount ?? price?.amount;
-
-	console.log('price', price);
-
 	const renderPrice = (withQuantity = false) => {
 		if (!price?.id) return '—';
 
@@ -69,7 +64,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 				<ScPriceInput
 					placeholder={__('Enter Custom Amount', 'surecart')}
 					currencyCode={scData.currency}
-					value={choice?.ad_hoc_amount || price?.ad_hoc_max_amount}
+					value={choice?.ad_hoc_amount || price?.amount}
 					onScInput={(e) => {
 						onUpdate({
 							id: choice?.id,
@@ -97,6 +92,8 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 			/>
 		);
 	};
+
+	const amount = variant?.amount ?? price?.amount;
 
 	return (
 		<sc-table-row>
@@ -151,6 +148,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 									: {}),
 							})
 						}
+						disabled={!!price?.ad_hoc}
 					/>
 				</sc-table-cell>
 			)}

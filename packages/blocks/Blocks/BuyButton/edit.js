@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
-
 /**
  * WordPress dependencies
  */
@@ -28,14 +25,7 @@ import Placeholder from './Placeholder';
 import PriceInfo from '../../components/PriceInfo';
 
 export default ({ className, attributes, setAttributes }) => {
-	const {
-		label,
-		line_items,
-		backgroundColor,
-		textColor,
-		amount,
-		amount_placement,
-	} = attributes;
+	const { label, line_items, backgroundColor, textColor } = attributes;
 	const [showChangeProducts, setShowChangeProducts] = useState(false);
 	const blockProps = useBlockProps({
 		className: 'wp-block-button',

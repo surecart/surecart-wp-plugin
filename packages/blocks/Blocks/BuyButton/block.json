@@ -39,14 +39,10 @@
 		"line_items": {
 			"type": "array",
 			"default": []
-		},
-		"amount": {
-			"type": "number"
 		}
 	},
 	"script": "surecart-components",
 	"style": [
-		"file:./style.css",
 		"wp-block-button",
 		"surecart-wp-button",
 		"surecart-themes-default",
