@@ -13,7 +13,7 @@
 		"surecart/product-list/type",
 		"surecart/product-list/ids"
 	],
-	"ancestor": ["surecart/product-list"],
+	"ancestor": ["surecart/product-list", "surecart/product-list-related"],
 	"allowedBlocks": [
 		"surecart/product-pagination-previous",
 		"surecart/product-pagination-numbers",

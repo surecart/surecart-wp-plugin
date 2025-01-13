@@ -16,9 +16,11 @@
 		"spacing": {
 			"padding": true,
 			"margin": true,
+			"blockGap": true,
 			"__experimentalDefaultControls": {
 				"padding": true,
-				"margin": true
+				"margin": true,
+				"blockGap": true
 			}
 		},
 		"typography": {
