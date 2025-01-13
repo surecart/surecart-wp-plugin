@@ -308,7 +308,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
 = 3.2.0 - January 13th, 2025 =
-- New: Related products block.
+- New: Related products block. [Docs](https://surecart.com/docs/related-products/)
 - New: Integrations section on settings page.
 - New: Ability for 3rd party developers to add UI elements to admin pages. [Docs](https://developer.surecart.com/docs/admin-custom-ui-elements)
 - Improvement: Format checkout finalize error message.
