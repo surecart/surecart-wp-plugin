@@ -254,32 +254,6 @@ export default () => {
 	};
 
 	const checkoutId = order?.checkout?.id;
-	const { purchases, loadingPurchases } = useSelect(
-		(select) => {
-			if (!checkoutId) {
-				return {
-					purchases: [],
-					loading: true,
-				};
-			}
-			const entityData = [
-				'surecart',
-				'purchase',
-				{
-					checkout_ids: checkoutId ? [checkoutId] : null,
-					expand: ['product', 'line_item', 'line_item.price'],
-				},
-			];
-			return {
-				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
-				loading: !select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
-			};
-		},
-		[checkoutId]
-	);
 
 	return (
 		<UpdateModel
@@ -387,8 +361,7 @@ export default () => {
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
 				/>
-
-				<Subscriptions checkoutId={order?.checkout?.id} />
+				<Subscriptions checkoutId={checkoutId} />
 				<OrderStatusConfirmModal
 					order={order}
 					open={modal === 'order_status_update'}
