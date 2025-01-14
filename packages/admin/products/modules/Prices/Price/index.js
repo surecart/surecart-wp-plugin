@@ -16,6 +16,7 @@ import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
 import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
+import SwapPrice from '../../../components/price/parts/SwapPrice';
 
 export default ({ price, product }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -233,6 +234,7 @@ export default ({ price, product }) => {
 								price={currentPrice}
 								updatePrice={editPrice}
 							/>
+							<SwapPrice price={currentPrice} />
 						</div>
 					</div>
 

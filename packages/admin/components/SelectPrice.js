@@ -19,6 +19,7 @@ export default ({
 	children,
 	ad_hoc = true,
 	variable = true,
+	exclude = [],
 	loading,
 	onScrollEnd = () => {},
 	includeVariants = true,
@@ -57,6 +58,7 @@ export default ({
 						return true;
 					})
 					.filter((price) => !price?.archived)
+					.filter((price) => !exclude.includes(price.id))
 					.map((price) => {
 						const variants = product?.variants?.data || [];
 
