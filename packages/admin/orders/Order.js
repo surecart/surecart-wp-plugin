@@ -228,10 +228,13 @@ export default () => {
 		// Add refund option if only one charge is present.
 		// For multiple charges, refund should be done from the charges table individually.
 		if (order?.checkout?.charges?.data?.length === 1) {
-			menuItems.push({
-				title: __('Refund', 'surecart'),
-				modal: 'refund',
-			});
+			const charge = order?.checkout?.charges?.data?.[0] ?? null;
+			if (!charge?.fully_refunded) {
+				menuItems.push({
+					title: __('Refund', 'surecart'),
+					modal: 'refund',
+				});
+			}
 		}
 
 		return menuItems;
