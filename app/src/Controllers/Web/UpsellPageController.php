@@ -30,7 +30,8 @@ class UpsellPageController extends BasePageController {
 	 *
 	 * @return void
 	 */
-	public function addSeoMetaData(): void { ?>
+	public function addSeoMetaData(): void {
+		?>
 		<meta name="robots" content="noindex" />
 		<?php
 	}
@@ -110,7 +111,7 @@ class UpsellPageController extends BasePageController {
 		// handle block theme.
 		if ( wp_is_block_theme() ) {
 			global $_wp_current_template_content;
-			$_wp_current_template_content = $this->model->template->content ?? '';
+			$_wp_current_template_content = get_block_template( $this->model->template_id )->content ?? '';
 		}
 
 		// include the default view.

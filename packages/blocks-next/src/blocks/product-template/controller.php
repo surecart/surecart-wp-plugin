@@ -1,9 +1,6 @@
 <?php
 
-use SureCart\Models\Blocks\ProductListBlock;
-
-$controller = new ProductListBlock( $block );
-$query      = $controller->query();
+$query = sc_product_list_query( $block );
 
 // If we have a button or a link, we need to wrap the content in a form element.
 $has_button         = ( new \WP_HTML_Tag_Processor( $content ?? '' ) )->next_tag( 'button' );

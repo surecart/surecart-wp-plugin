@@ -1,9 +1,6 @@
 <?php
 
-use SureCart\Models\Blocks\ProductListBlock;
-
-$controller       = new ProductListBlock( $block );
-$query            = $controller->query();
+$query            = sc_product_list_query( $block );
 $pagination_links = $query->pagination_links;
 
 // Render the block.
