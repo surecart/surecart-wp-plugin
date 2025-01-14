@@ -57,6 +57,7 @@
 									"sizes": []
 								},
 								"scratch_text_color": "#868585",
+								"scratch_typography_text_decoration": "line-through",
 								"amount_typography_typography": "custom",
 								"amount_typography_font_size": {
 									"unit": "px",
@@ -95,6 +96,24 @@
 								"badge_typography_font_size": {
 									"unit": "px",
 									"size": 12,
+									"sizes": []
+								},
+								"interval_typography_typography": "custom",
+								"interval_typography_font_size": {
+									"unit": "px",
+									"size": 14,
+									"sizes": []
+								},
+								"trial_typography_typography": "custom",
+								"trial_typography_font_size": {
+									"unit": "px",
+									"size": 14,
+									"sizes": []
+								},
+								"fees_typography_typography": "custom",
+								"fees_typography_font_size": {
+									"unit": "px",
+									"size": 14,
 									"sizes": []
 								}
 							},

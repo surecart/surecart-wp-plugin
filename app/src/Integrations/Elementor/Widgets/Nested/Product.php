@@ -61,7 +61,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**
@@ -79,7 +79,7 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**

@@ -59,7 +59,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**

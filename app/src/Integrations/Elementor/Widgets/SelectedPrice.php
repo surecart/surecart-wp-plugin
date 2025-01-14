@@ -55,7 +55,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_style_depends() {
-		return array();
+		return array( 'surecart-tag' );
 	}
 
 	/**

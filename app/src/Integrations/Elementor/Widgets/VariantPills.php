@@ -52,7 +52,16 @@ class VariantPills extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
+	}
+
+	/**
+	 * Get style dependencies.
+	 *
+	 * @return array Element styles dependencies.
+	 */
+	public function get_style_depends() {
+		return array( 'surecart-product-variants', 'surecart-pill' );
 	}
 
 	/**
@@ -128,6 +137,7 @@ class VariantPills extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill:not(.sc-pill-option__button--selected)' => 'color: {{VALUE}}',
 				],
+				'default'   => '#FFFFFF',
 			]
 		);
 
@@ -136,6 +146,9 @@ class VariantPills extends \Elementor\Widget_Base {
 			[
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
+				'global'    => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill:not(.sc-pill-option__button--selected)' => 'background-color: {{VALUE}}',
 				],
@@ -281,7 +294,7 @@ class VariantPills extends \Elementor\Widget_Base {
 	protected function content_template() {
 		?>
 		<div class="wp-block-surecart-product-variant-pills">
-			<label for="" class="sc-form-label"><?php echo esc_html__( 'Color', 'surecart' ); ?></label>
+			<label class="sc-form-label"><?php echo esc_html__( 'Color', 'surecart' ); ?></label>
 			<div class="sc-pill-option__wrapper">
 				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Red', 'surecart' ); ?></div>
 				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Blue', 'surecart' ); ?></div>

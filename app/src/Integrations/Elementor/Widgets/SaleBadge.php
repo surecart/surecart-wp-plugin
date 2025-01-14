@@ -47,12 +47,21 @@ class SaleBadge extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the style dependencies.
+	 *
+	 * @return array
+	 */
+	public function get_style_depends() {
+		return array( 'surecart-tag' );
+	}
+
+	/**
 	 * Get the widget categories.
 	 *
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**

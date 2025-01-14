@@ -43,7 +43,7 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	 * Get style dependencies.
 	 */
 	public function get_style_depends() {
-		return [ 'surecart-form-control', 'surecart-input-group' ];
+		return array( 'surecart-form-control', 'surecart-input-group' );
 	}
 
 	/**
@@ -61,7 +61,7 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**

@@ -52,7 +52,7 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**
@@ -61,9 +61,8 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_style_depends() {
-		return [ 'surecart-quantity-selector', 'surecart-input-group' ];
+		return array( 'surecart-quantity-selector', 'surecart-input-group' );
 	}
-
 
 	/**
 	 * Register the widget content settings.

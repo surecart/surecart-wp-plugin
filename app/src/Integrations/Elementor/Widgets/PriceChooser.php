@@ -54,7 +54,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product' ];
+		return array( 'surecart-elementor-product' );
 	}
 
 	/**
@@ -63,7 +63,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_style_depends() {
-		return array( 'surecart-choice', 'surecart-elementor-container-style' );
+		return array( 'surecart-choice', 'surecart-elementor-container-style', 'surecart-elementor-style' );
 	}
 
 	/**
@@ -536,7 +536,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 						<span class="wp-block-surecart-price-name"><?php echo esc_html__( 'One Time', 'surecart' ); ?></span>
 						<div class="is-layout-flex" style="flex-direction: column;align-items:flex-end;gap:0;">
 							<?php // translators: %s is the price. ?>
-							<span class="wp-block-surecart-price-amount" style="font-size:small;"><?php echo esc_html( Currency::format( 1000 ) ); ?></span>
+							<span class="wp-block-surecart-price-amount"><?php echo esc_html( Currency::format( 1000 ) ); ?></span>
 							<?php // translators: %s is the setup fee. ?>
 							<span class="wp-block-surecart-price-setup-fee" style="font-size:small;"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 200 ) ) ); ?></span>
 						</div>
