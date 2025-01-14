@@ -47,6 +47,17 @@ class Currency {
 	}
 
 	/**
+	 * Get the name of the currency.
+	 *
+	 * @param string $currency_code Currency code.
+	 *
+	 * @return string The name of the currency.
+	 */
+	public static function getName( $currency_code ) {
+		return self::getSupportedCurrencies()[ $currency_code ] ?? $currency_code;
+	}
+
+	/**
 	 * Get all available Currency symbols.
 	 *
 	 * Currency symbols and names should follow the Unicode CLDR recommendation (http://cldr.unicode.org/translation/currency-names)
