@@ -59,6 +59,10 @@ msgstr ""
 msgid "Product Page"
 msgstr ""
 
+#: src/BlockLibrary/BlockPatternsService.php:31
+msgid "Related Products"
+msgstr ""
+
 #: src/BlockLibrary/BlockServiceProvider.php:120
 #: src/Controllers/Admin/Orders/OrdersListTable.php:261
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:238
@@ -95,7 +99,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:58
 #: invoices/modules/Prices.js:51
 #: orders/modules/Subscriptions.js:49
-#: store/add-entities.js:222
+#: store/add-entities.js:229
 #: subscriptions/show/modules/PendingUpdate.js:56
 #: upsell-funnels/modules/NewCondition.js:86
 #: Blocks/CheckoutForm/components/PriceChoices.js:48
@@ -356,7 +360,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutViewController.php:20
 #: admin/abandoned-orders/index.php:18
-#: store/add-entities.js:180
+#: store/add-entities.js:187
 msgid "Abandoned Checkouts"
 msgstr ""
 
@@ -366,7 +370,7 @@ msgstr ""
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
 #: components/data-tables/affiliates/ClicksDataTable.js:36
-#: store/add-entities.js:348
+#: store/add-entities.js:355
 msgid "Clicks"
 msgstr ""
 
@@ -559,7 +563,7 @@ msgstr ""
 #: settings/subscription-preservation/Reason.js:111
 #: settings/tax-override/TaxOverrideDeleteModal.js:120
 #: settings/tax-override/TaxOverrideRows.js:71
-#: settings/tax-region/RegistrationForm.js:313
+#: settings/tax-region/RegistrationForm.js:337
 #: upsell-funnels/EditFunnel.js:244
 #: sc-payment-methods-list.js:162
 #: sc-payment-methods-list.js:196
@@ -642,7 +646,7 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:115
 #: affiliations/modules/Referrals.js:64
 #: invoices/components/OrderPageLink.js:19
-#: store/add-entities.js:173
+#: store/add-entities.js:180
 #: Controllers/OrderController.php:126
 msgid "Order"
 msgstr ""
@@ -905,6 +909,8 @@ msgstr ""
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:284
 #: affiliations/ViewAffiliation.js:225
 #: components/data-tables/subscriptions-data-table/StartPlan.js:73
+#: settings/integrations/PluginActivationButton.js:83
+#: settings/integrations/Suretriggers.js:118
 msgid "Activate"
 msgstr ""
 
@@ -981,7 +987,7 @@ msgstr ""
 #: products/modules/Variations/Variants.js:119
 #: settings/shipping/rate/ShippingRateForm.js:391
 #: settings/shipping/zone/ShippingZone.js:112
-#: store/add-entities.js:257
+#: store/add-entities.js:264
 #: subscriptions/edit/modules/Price.js:57
 #: subscriptions/show/modules/CurrentPlan.js:88
 #: Blocks/CheckoutForm/entities.js:19
@@ -1008,8 +1014,8 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:189
 #: products/modules/Prices/NewPrice/index.js:142
 #: products/modules/Prices/Price/Header.js:84
-#: store/add-entities.js:418
 #: store/add-entities.js:425
+#: store/add-entities.js:432
 #: subscriptions/edit/EditSubscription.js:231
 #: sc-subscription-details2.js:81
 #: sc-subscription.js:154
@@ -1316,7 +1322,7 @@ msgstr ""
 #: forms/invoice.php:6
 #: orders/modules/InvoiceDetails/index.js:29
 #: orders/modules/InvoiceDetails/InvoicePageLink.js:19
-#: store/add-entities.js:145
+#: store/add-entities.js:152
 msgid "Invoice"
 msgstr ""
 
@@ -1534,8 +1540,12 @@ msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:120
 #: src/Controllers/Admin/Products/ProductsListTable.php:148
+#: src/Controllers/Admin/Settings/BaseSettings.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:112
+#: layouts/partials/admin-settings-sidebar.php:66
 #: products/modules/integrations/Integrations.js:76
+#: settings/integrations/Integration.js:133
+#: settings/integrations/IntegrationsList.js:51
 msgid "Integrations"
 msgstr ""
 
@@ -1924,8 +1934,8 @@ msgstr ""
 msgid "Connection"
 msgstr ""
 
-#: src/Controllers/Admin/Settings/BaseSettings.php:56
-#: layouts/partials/admin-settings-sidebar.php:67
+#: src/Controllers/Admin/Settings/BaseSettings.php:57
+#: layouts/partials/admin-settings-sidebar.php:70
 #: products/modules/Advanced.js:7
 msgid "Advanced"
 msgstr ""
@@ -2098,7 +2108,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Tables/ListTable.php:74
 #: settings/shipping/profile/ShippingProfile.js:114
-#: settings/tax-region/TaxRegionSettings.js:227
+#: settings/tax-region/TaxRegionSettings.js:230
 msgid "Updated"
 msgstr ""
 
@@ -2140,7 +2150,7 @@ msgid "Edit Upsell"
 msgstr ""
 
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:246
-#: src/Controllers/Web/UpsellPageController.php:52
+#: src/Controllers/Web/UpsellPageController.php:53
 #: upsell-funnels/EditFunnel.js:220
 msgid "Edit Upsell Funnel"
 msgstr ""
@@ -3456,7 +3466,7 @@ msgid "Missing ID"
 msgstr ""
 
 #. translators: %1$1s is the min price, %2$2s is the max price.
-#: src/Models/Product.php:890
+#: src/Models/Product.php:870
 msgid "%1$1s - %2$2s"
 msgstr ""
 
@@ -3522,6 +3532,7 @@ msgstr ""
 #: src/Rest/FulfillmentRestServiceProvider.php:53
 #: src/Rest/IncomingWebhooksRestServiceProvider.php:95
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:106
+#: src/Rest/IntegrationsCatalogRestServiceProvider.php:76
 #: src/Rest/IntegrationsRestServiceProvider.php:78
 #: src/Rest/LicenseRestServiceProvider.php:54
 #: src/Rest/LineItemsRestServiceProvider.php:74
@@ -3651,6 +3662,7 @@ msgstr ""
 #: src/Rest/FulfillmentRestServiceProvider.php:72
 #: src/Rest/IncomingWebhooksRestServiceProvider.php:131
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:129
+#: src/Rest/IntegrationsCatalogRestServiceProvider.php:99
 #: src/Rest/IntegrationsRestServiceProvider.php:118
 #: src/Rest/LicenseRestServiceProvider.php:73
 #: src/Rest/LineItemsRestServiceProvider.php:105
@@ -3667,6 +3679,7 @@ msgstr ""
 #: src/Rest/FulfillmentRestServiceProvider.php:76
 #: src/Rest/IncomingWebhooksRestServiceProvider.php:135
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:133
+#: src/Rest/IntegrationsCatalogRestServiceProvider.php:103
 #: src/Rest/IntegrationsRestServiceProvider.php:122
 #: src/Rest/LicenseRestServiceProvider.php:77
 #: src/Rest/LineItemsRestServiceProvider.php:109
@@ -3917,6 +3930,7 @@ msgid "The SureCart model id."
 msgstr ""
 
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:125
+#: src/Rest/IntegrationsCatalogRestServiceProvider.php:95
 msgid "The model to get integration providers for."
 msgstr ""
 
@@ -4169,7 +4183,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:204
 #: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:36
 #: admin/product-collections/index.php:6
-#: store/add-entities.js:250
+#: store/add-entities.js:257
 msgid "Product Collections"
 msgstr ""
 
@@ -6328,7 +6342,7 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:184
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:198
-#: templates/UpdateModel/index.js:40
+#: templates/UpdateModel/index.js:44
 msgid "Complete Signup"
 msgstr ""
 
@@ -6361,12 +6375,12 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:233
 #: affiliations/modules/Payouts.js:54
 #: components/data-tables/affiliates/PayoutsDataTable.js:29
-#: store/add-entities.js:369
+#: store/add-entities.js:376
 msgid "Payouts"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:234
-#: store/add-entities.js:376
+#: store/add-entities.js:383
 msgid "Payout Groups"
 msgstr ""
 
@@ -6777,7 +6791,7 @@ msgstr ""
 #: src/WordPress/PostTypes/ProductPostTypeService.php:268
 #: products/modules/Prices/Price/BuyLink.js:30
 #: products/modules/Variations/Variants.js:116
-#: store/add-entities.js:446
+#: store/add-entities.js:453
 msgid "Variant"
 msgstr ""
 
@@ -7573,7 +7587,7 @@ msgstr ""
 msgid "Store Settings"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:72
+#: layouts/partials/admin-settings-sidebar.php:75
 #: Blocks/Checkbox/components/Inspector.js:39
 #: Blocks/Email/components/Inspector.js:32
 #: Blocks/FirstName/edit.js:52
@@ -7774,8 +7788,20 @@ msgstr ""
 msgid "Classic Product List"
 msgstr ""
 
+#: patterns/product-alternate.php:6
+msgid "Classic Product (Alternate)"
+msgstr ""
+
 #: patterns/product-standard.php:6
 msgid "Classic Product"
+msgstr ""
+
+#: patterns/related-carousel-alternate.php:6
+msgid "Related Products Carousel (Alternate)"
+msgstr ""
+
+#: patterns/related-carousel.php:6
+msgid "Related Products Carousel"
 msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:98
@@ -7807,6 +7833,9 @@ msgstr ""
 #: products/modules/SingleDownload.js:47
 #: settings/advanced/components/CustomerSyncModal.js:44
 #: settings/connection/components/ResyncWebhooks.js:30
+#: settings/integrations/PluginActivationButton.js:62
+#: settings/integrations/Suretriggers.js:67
+#: settings/integrations/Suretriggers.js:97
 #: settings/processors/ManualPaymentMethod.js:52
 #: settings/processors/ManualPaymentMethod.js:83
 #: settings/subscription-preservation/Reason.js:45
@@ -7889,6 +7918,8 @@ msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:190
 #: settings/abandoned/AbandonedSettings.js:95
+#: settings/integrations/IntegrationCard.js:85
+#: settings/integrations/PluginActivationButton.js:72
 #: settings/subscription-preservation/PreservationSettings.js:187
 msgid "Enabled"
 msgstr ""
@@ -8266,7 +8297,7 @@ msgid "Creation Mode"
 msgstr ""
 
 #: affiliation-referrals/modules/Summary.js:18
-#: settings/tax-region/RegistrationForm.js:238
+#: settings/tax-region/RegistrationForm.js:246
 msgid "Manual"
 msgstr ""
 
@@ -9058,6 +9089,7 @@ msgstr ""
 #: checkouts/modules/Tax/index.js:88
 #: invoices/modules/Tax/index.js:37
 #: products/modules/Tax/index.js:14
+#: settings/tax-region/RegistrationForm.js:288
 #: subscriptions/show/modules/Tax.js:55
 #: util/tax.js:6
 #: Blocks/Upsell/UpsellTotals/edit.js:31
@@ -9273,7 +9305,7 @@ msgid "View Coupon"
 msgstr ""
 
 #: components/data-tables/affiliates/ReferralItemsDataTable.js:29
-#: store/add-entities.js:362
+#: store/add-entities.js:369
 msgid "Referral Items"
 msgstr ""
 
@@ -9287,7 +9319,7 @@ msgstr ""
 #: components/data-tables/charges-data-table/Refund.js:126
 #: components/data-tables/charges-data-table/Refund.js:254
 #: settings/customer/CustomerSettings.js:433
-#: store/add-entities.js:278
+#: store/add-entities.js:285
 msgid "Refund"
 msgstr ""
 
@@ -10854,7 +10886,7 @@ msgid "%1s of %2s Activations Used"
 msgstr ""
 
 #: licenses/modules/Details/index.js:35
-#: store/add-entities.js:152
+#: store/add-entities.js:159
 #: Controllers/LicenseController.php:134
 msgid "License"
 msgstr ""
@@ -11328,7 +11360,7 @@ msgid "Returned on"
 msgstr ""
 
 #: orders/modules/ReturnRequest/ReturnReasonsSelector.js:14
-#: store/add-entities.js:460
+#: store/add-entities.js:467
 msgid "Return Reason"
 msgstr ""
 
@@ -13133,6 +13165,7 @@ msgid "Enter an phone number"
 msgstr ""
 
 #: settings/account/AccountSettings.js:370
+#: settings/integrations/Integration.js:270
 msgid "Website"
 msgstr ""
 
@@ -13936,6 +13969,76 @@ msgstr ""
 msgid "Promotions"
 msgstr ""
 
+#: settings/integrations/Integration.js:34
+#: settings/integrations/Integration.js:47
+#: settings/processors/ManualPaymentMethod.js:135
+msgid "Enable"
+msgstr ""
+
+#: settings/integrations/Integration.js:74
+#: settings/integrations/Integration.js:81
+#: settings/integrations/IntegrationCard.js:76
+msgid "Pre-installed"
+msgstr ""
+
+#: settings/integrations/Integration.js:88
+msgid "Installed"
+msgstr ""
+
+#: settings/integrations/Integration.js:200
+msgid "Support"
+msgstr ""
+
+#: settings/integrations/Integration.js:236
+msgid "Docs"
+msgstr ""
+
+#: settings/integrations/PluginActivationButton.js:51
+#: settings/integrations/Suretriggers.js:103
+msgid "Plugin activated."
+msgstr ""
+
+#: settings/integrations/PluginActivationButton.js:52
+msgid "Plugin installed and activated."
+msgstr ""
+
+#: settings/integrations/PluginActivationButton.js:84
+#: settings/integrations/Suretriggers.js:114
+msgid "Install & Activate"
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:73
+msgid "Plugin installed."
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:113
+msgid "Installing..."
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:117
+msgid "Activating..."
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:120
+msgid "Configure"
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:122
+msgid "View Integrations"
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:146
+msgid "Integrations via SureTriggers"
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:147
+msgid "Boost your sales by automating customer actions & streamlining workflows with seamless SureCart and SureTriggers integration."
+msgstr ""
+
+#: settings/integrations/Suretriggers.js:164
+msgid "SureTriggers lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & SureTriggers has got you covered."
+msgstr ""
+
 #: settings/order/OrderProtocol.js:52
 msgid "Order Numbering"
 msgstr ""
@@ -14075,10 +14178,6 @@ msgstr ""
 
 #: settings/processors/ManualPaymentMethod.js:75
 msgid "Payment method enabled."
-msgstr ""
-
-#: settings/processors/ManualPaymentMethod.js:135
-msgid "Enable"
 msgstr ""
 
 #: settings/processors/ManualPaymentMethods.js:47
@@ -14333,7 +14432,7 @@ msgid "Maximum weight"
 msgstr ""
 
 #: settings/shipping/rate/ShippingRateForm.js:336
-#: store/add-entities.js:404
+#: store/add-entities.js:411
 msgid "Shipping Method"
 msgstr ""
 
@@ -14867,13 +14966,13 @@ msgid "Product Collection"
 msgstr ""
 
 #: settings/tax-override/TaxOverrideModal.js:212
-#: settings/tax-region/RegistrationForm.js:189
+#: settings/tax-region/RegistrationForm.js:196
 #: settings/tax-region/TaxRegionSettings.js:213
 msgid "Region"
 msgstr ""
 
 #: settings/tax-override/TaxOverrideModal.js:244
-#: settings/tax-region/RegistrationForm.js:257
+#: settings/tax-region/RegistrationForm.js:265
 #: settings/tax-region/TaxRegionSettings.js:220
 msgid "Tax Rate"
 msgstr ""
@@ -14897,7 +14996,7 @@ msgstr ""
 
 #: settings/tax-region/RegionSettings.js:38
 #: settings/tax-region/RegionSettings.js:104
-#: settings/tax-region/RegistrationForm.js:273
+#: settings/tax-region/RegistrationForm.js:297
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
@@ -14922,8 +15021,12 @@ msgstr ""
 msgid "Enable this if your business makes up to €10,000 EUR in sales to other EU countries and you only plan to submit a domestic VAT return. If enabled, your home country VAT rate will apply to all EU orders."
 msgstr ""
 
-#: settings/tax-region/RegistrationDialog.js:17
-#: settings/tax-region/RegistrationForm.js:318
+#: settings/tax-region/RegistrationDialog.js:26
+msgid "%s Tax"
+msgstr ""
+
+#: settings/tax-region/RegistrationDialog.js:30
+#: settings/tax-region/RegistrationForm.js:344
 #: settings/tax-region/TaxRegionSettings.js:204
 #: subscriptions/show/modules/Tax.js:60
 msgid "Collect Tax"
@@ -14950,25 +15053,38 @@ msgid "State"
 msgstr ""
 
 #. translators: %s: state/region name
-#: settings/tax-region/RegistrationForm.js:219
+#: settings/tax-region/RegistrationForm.js:227
 msgid "Please specify a tax rate for %s, as it requires manual entry"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:232
+#: settings/tax-region/RegistrationForm.js:240
 msgid "Tax Calculation"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:242
-#: settings/tax-region/TaxRegionSettings.js:247
+#: settings/tax-region/RegistrationForm.js:250
+#: settings/tax-region/TaxRegionSettings.js:250
 msgid "Automatic"
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:299
+#: settings/tax-region/RegistrationForm.js:279
+#: settings/tax-region/TaxRegionSettings.js:224
+msgid "Tax Label"
+msgstr ""
+
+#: settings/tax-region/RegistrationForm.js:281
+msgid "The name of the tax that is displayed to customers during checkout and on invoices and receipts."
+msgstr ""
+
+#: settings/tax-region/RegistrationForm.js:323
 msgid "Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
 msgstr ""
 
-#: settings/tax-region/RegistrationForm.js:303
+#: settings/tax-region/RegistrationForm.js:327
 msgid "Tax is automatically calculated and applied to orders. Make sure you’re registered with the appropriate tax jurisdictions before enabling tax collection."
+msgstr ""
+
+#: settings/tax-region/RegistrationForm.js:343
+msgid "Save Changes"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:30
@@ -15070,11 +15186,11 @@ msgid "%s Tax Region"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:191
-#: store/add-entities.js:298
+#: store/add-entities.js:305
 msgid "Tax Registration"
 msgstr ""
 
-#: settings/tax-region/TaxRegionSettings.js:267
+#: settings/tax-region/TaxRegionSettings.js:270
 msgid "You don't have any tax registrations. Add a tax registration to start collecting tax."
 msgstr ""
 
@@ -15223,116 +15339,120 @@ msgid "Integration Provider"
 msgstr ""
 
 #: store/add-entities.js:138
+msgid "Integration Catalog"
+msgstr ""
+
+#: store/add-entities.js:145
 #: store/integration/register/index.js:31
 msgid "Integration Provider Items"
 msgstr ""
 
-#: store/add-entities.js:159
+#: store/add-entities.js:166
 msgid "Line Items"
 msgstr ""
 
-#: store/add-entities.js:166
+#: store/add-entities.js:173
 msgid "Media"
 msgstr ""
 
-#: store/add-entities.js:187
+#: store/add-entities.js:194
 msgid "Payment Intent"
 msgstr ""
 
-#: store/add-entities.js:194
+#: store/add-entities.js:201
 #: subscriptions/edit/modules/PaymentMethod/index.js:46
 #: Controllers/SubscriptionController.php:680
 #: sc-order.js:189
 msgid "Payment Method"
 msgstr ""
 
-#: store/add-entities.js:201
+#: store/add-entities.js:208
 msgid "Provisional Accounts"
 msgstr ""
 
-#: store/add-entities.js:208
+#: store/add-entities.js:215
 msgid "Manual Payment Method"
 msgstr ""
 
-#: store/add-entities.js:215
+#: store/add-entities.js:222
 msgid "Billing Period"
 msgstr ""
 
-#: store/add-entities.js:229
+#: store/add-entities.js:236
 msgid "Product Media"
 msgstr ""
 
-#: store/add-entities.js:236
+#: store/add-entities.js:243
 #: Blocks/ConditionalForm/translations.js:7
 msgid "Processor"
 msgstr ""
 
-#: store/add-entities.js:243
+#: store/add-entities.js:250
 msgid "Product Group"
 msgstr ""
 
-#: store/add-entities.js:264
+#: store/add-entities.js:271
 msgid "Promotion"
 msgstr ""
 
-#: store/add-entities.js:285
-#: store/add-entities.js:291
+#: store/add-entities.js:292
+#: store/add-entities.js:298
 msgid "Shipping Protocol"
 msgstr ""
 
-#: store/add-entities.js:305
+#: store/add-entities.js:312
 msgid "Tax Zone"
 msgstr ""
 
-#: store/add-entities.js:312
+#: store/add-entities.js:319
 msgid "Tax Override"
 msgstr ""
 
-#: store/add-entities.js:319
+#: store/add-entities.js:326
 msgid "Affiliation Protocol"
 msgstr ""
 
-#: store/add-entities.js:326
+#: store/add-entities.js:333
 msgid "Affiliation Request"
 msgstr ""
 
-#: store/add-entities.js:333
+#: store/add-entities.js:340
 msgid "Affiliations"
 msgstr ""
 
-#: store/add-entities.js:340
+#: store/add-entities.js:347
 msgid "Affiliation Product"
 msgstr ""
 
-#: store/add-entities.js:355
+#: store/add-entities.js:362
 msgid "Referral"
 msgstr ""
 
-#: store/add-entities.js:383
+#: store/add-entities.js:390
 msgid "Shipping Profile"
 msgstr ""
 
-#: store/add-entities.js:390
+#: store/add-entities.js:397
 msgid "Shipping Zone"
 msgstr ""
 
-#: store/add-entities.js:397
+#: store/add-entities.js:404
 msgid "Shipping Rate"
 msgstr ""
 
-#: store/add-entities.js:411
+#: store/add-entities.js:418
 msgid "Statistic"
 msgstr ""
 
-#: store/add-entities.js:432
+#: store/add-entities.js:439
 msgid "Incoming Webhook"
 msgstr ""
 
-#: store/add-entities.js:439
+#: store/add-entities.js:446
 msgid "Variant Option"
 msgstr ""
 
-#: store/add-entities.js:453
+#: store/add-entities.js:460
 msgid "Return Request"
 msgstr ""
 
@@ -15790,11 +15910,11 @@ msgstr ""
 msgid "Go back."
 msgstr ""
 
-#: templates/UpdateModel/index.js:45
+#: templates/UpdateModel/index.js:49
 msgid "This is a demo of a premium feature. To get this feature, complete your setup and upgrade your plan."
 msgstr ""
 
-#: templates/UpdateModel/index.js:49
+#: templates/UpdateModel/index.js:53
 msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
 msgstr ""
 
@@ -21042,7 +21162,7 @@ msgstr ""
 
 #: fetch.js:426
 #: fetch.js:760
-#: fetch.js:785
+#: fetch.js:794
 msgid "The response is not a valid JSON response."
 msgstr ""
 

@@ -978,7 +978,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @return $this|false
 	 */
 	protected function delete( $id = '' ) {
-		$id = $id ? $id : $this->id;
+		$this->id = $id ? $id : $this->id;
 
 		if ( $this->fireModelEvent( 'deleting' ) === false ) {
 			return false;
@@ -986,7 +986,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		$deleted = $this->makeRequest(
 			[
-				'id'     => $id,
+				'id'     => $this->id,
 				'method' => 'DELETE',
 			]
 		);

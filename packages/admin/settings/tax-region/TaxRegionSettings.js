@@ -220,6 +220,9 @@ export default () => {
 									{__('Tax Rate', 'surecart')}
 								</ScTableCell>
 							)}
+							<ScTableCell slot="head">
+								{__('Tax Label', 'surecart')}
+							</ScTableCell>
 							<ScTableCell
 								slot="head"
 								style={{ textAlign: 'right' }}

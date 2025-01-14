@@ -36,7 +36,6 @@ class AvadaService {
 		}
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAvadaBlockStyles' ], 999999 ); // must be greater than 999.
-		add_action( 'render_block', [ $this, 'balanceBlockTagsForAvada' ], 10, 2 );
 	}
 
 	/**
@@ -49,17 +48,5 @@ class AvadaService {
 		wp_enqueue_style( 'wp-block-library' );
 		wp_enqueue_style( 'wp-block-library-theme' );
 		wp_enqueue_style( 'classic-theme-styles' );
-	}
-
-	/**
-	 * Balance block tags for Avada.
-	 *
-	 * @param string $block_content The block content.
-	 * @param array  $block         The block.
-	 *
-	 * @return string
-	 */
-	public function balanceBlockTagsForAvada( string $block_content, array $block ) {
-		return balanceTags( $block_content, true );
 	}
 }
