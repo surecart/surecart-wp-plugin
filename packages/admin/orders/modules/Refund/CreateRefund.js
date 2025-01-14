@@ -19,16 +19,17 @@ import {
 	ScLineItem,
 	ScPriceInput,
 	ScSelect,
-	ScIcon,
 	ScDrawer,
 	ScInput,
 	ScCheckbox,
 	ScFormatNumber,
 	ScText,
+	ScBlockUi,
 } from '@surecart/components-react';
 import Error from '../../../components/Error';
 import Box from '../../../ui/Box';
 import useRefund from '../../hooks/useRefund';
+import ProductLineItem from '../../../ui/ProductLineItem';
 import { refundResasonOptions } from '../../../util/refunds';
 
 export default ({ charge, onRequestClose, onRefunded }) => {
@@ -44,25 +45,35 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
-	const { purchases, fetchingPurchases } = useSelect(
+
+	const { lineItems, fetchingLineItems } = useSelect(
 		(select) => {
 			if (!checkoutId) {
 				return {
-					purchases: [],
-					loading: true,
+					lineItems: [],
+					fetchingLineItems: true,
 				};
 			}
+
 			const entityData = [
 				'surecart',
-				'purchase',
+				'line_item',
 				{
-					checkout_ids: checkoutId ? [checkoutId] : null,
-					expand: ['product', 'line_item', 'line_item.price'],
+					checkout_ids: [checkoutId],
+					expand: [
+						'price',
+						'price.product',
+						'variant',
+						'variant.image',
+						'product.featured_product_media',
+						'product.product_medias',
+						'product_media.media',
+					],
 				},
 			];
 			return {
-				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
-				loading: !select(coreStore)?.hasFinishedResolution?.(
+				lineItems: select(coreStore)?.getEntityRecords?.(...entityData),
+				fetchingLineItems: !select(coreStore)?.hasFinishedResolution?.(
 					'getEntityRecords',
 					[...entityData]
 				),
@@ -72,10 +83,10 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 	);
 
 	const [items, setItems] = useState([]);
-	const getRefundedItem = (purchaseItem) => {
+	const getRefundedItem = (lineItem) => {
 		for (const refund of refunds || []) {
 			const refundItem = refund?.refund_items?.data?.find(
-				(item) => item?.line_item?.id === purchaseItem?.id
+				(item) => item?.line_item?.id === lineItem?.id
 			);
 			if (refundItem) {
 				return refundItem;
@@ -96,15 +107,24 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 		0
 	);
 
-	const totalPurchaseQuantity = (purchases ?? []).reduce(
-		(totalQuantity, purchase) => {
-			return totalQuantity + (purchase?.quantity || 0);
+	const getTotalRefundedQuantityByLineItem = (lineItem) => {
+		return (refunds ?? []).reduce((totalQuantity, refund) => {
+			const refundItem = refund?.refund_items?.data?.find(
+				(item) => item?.line_item?.id === lineItem?.id
+			);
+			return totalQuantity + (refundItem?.quantity || 0);
+		}, 0);
+	};
+
+	const totalLineItemQuantity = (lineItems ?? []).reduce(
+		(totalQuantity, lineItem) => {
+			return totalQuantity + (lineItem?.quantity || 0);
 		},
 		0
 	);
 
 	const refundedMessage =
-		totalRefundedQuantity !== totalPurchaseQuantity
+		totalRefundedQuantity !== totalLineItemQuantity
 			? __(
 					'Some items in this order have been removed or added to a return.',
 					'surecart'
@@ -113,43 +133,32 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 
 	useEffect(() => {
 		setItems(
-			(purchases || [])
-				.filter(({ id, quantity, ...item }) => {
-					const lineItem = item.line_items?.data?.[0];
-					const qtyRefunded = refunds.reduce((total, refund) => {
-						const refundItem = refund?.refund_items?.data?.find(
-							(item) => item?.line_item?.id === lineItem?.id
-						);
-						return total + (refundItem?.quantity || 0);
-					}, 0);
-					return quantity - qtyRefunded > 0;
+			(lineItems || [])
+				.filter((lineItem) => {
+					const qtyRefunded =
+						getTotalRefundedQuantityByLineItem(lineItem);
+					return lineItem?.quantity - qtyRefunded > 0;
 				})
-				.map(({ id, quantity, ...item }) => {
-					const lineItem = item.line_items?.data?.[0];
-					const qtyRefunded = refunds.reduce((total, refund) => {
-						const refundItem = refund?.refund_items?.data?.find(
-							(item) => item?.line_item?.id === lineItem?.id
-						);
-						return total + (refundItem?.quantity || 0);
-					}, 0);
+				.map((lineItem) => {
+					const qtyRefunded =
+						getTotalRefundedQuantityByLineItem(lineItem);
 					const refundedItem = getRefundedItem(lineItem);
+
 					return {
-						...item,
-						id,
+						...lineItem,
 						quantity: 0,
-						originalQuantity: quantity - qtyRefunded,
+						originalQuantity: lineItem?.quantity - qtyRefunded,
 						revokePurchase: refundedItem?.revoke_purchase || true,
 						restock: refundedItem?.restock || false,
-						lineItem,
 					};
 				})
 		);
-	}, [purchases, refunds]);
+	}, [lineItems, refunds]);
 
 	// On change individual amount, update the setAmount.
 	useEffect(() => {
 		const totalAmount = items.reduce((total, item) => {
-			return total + item.quantity * item.lineItem?.price?.amount;
+			return total + item.quantity * item?.price?.amount;
 		}, 0);
 		setAmount(
 			Math.min(totalAmount, charge?.amount - charge?.refunded_amount)
@@ -183,7 +192,7 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 							quantity: item.quantity,
 							restock: item.restock,
 							revoke_purchase: item.revokePurchase,
-							line_item: item.lineItem?.id,
+							line_item: item.id,
 						})),
 				},
 				{ throwOnError: true }
@@ -297,16 +306,14 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 									title={__('Refund item(s)', 'surecart')}
 								>
 									<div>
-										{items.map((purchase, index) => {
+										{items.map((lineItem, index) => {
 											const {
-												product,
 												quantity,
 												originalQuantity,
-												subscription,
-												restock,
 												revokePurchase,
-												lineItem,
-											} = purchase;
+												restock,
+											} = lineItem;
+
 											return (
 												<div
 													css={css`
@@ -322,148 +329,95 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 														gap: 0.5em;
 													`}
 												>
-													<ScLineItem
-														css={css`
-															display: flex;
-															gap: 1em;
-															width: 100%;
-														`}
-													>
-														{!!product?.image_url ? (
-															<img
-																css={css`
-																	flex: 0 0
-																		48px;
-																	width: 48px;
-																	height: 48px;
-																`}
-																src={
-																	product?.image_url
-																}
-																slot="image"
-															/>
-														) : (
+													<ProductLineItem
+														lineItem={lineItem}
+														suffix={
 															<div
 																css={css`
-																	width: 48px;
-																	height: 48px;
-																	object-fit: cover;
-																	background: var(
-																		--sc-color-gray-100
-																	);
 																	display: flex;
+																	gap: 2em;
+																	justify-content: space-between;
 																	align-items: center;
-																	justify-content: center;
-																	border-radius: var(
-																		--sc-border-radius-small
-																	);
+																	text-align: right;
+																	align-self: right;
 																`}
-																slot="image"
 															>
-																<ScIcon
-																	style={{
-																		width: '18px',
-																		height: '18px',
+																<ScInput
+																	label={__(
+																		'Quantity',
+																		'surecart'
+																	)}
+																	showLabel={
+																		false
+																	}
+																	value={
+																		quantity
+																	}
+																	max={
+																		originalQuantity
+																	}
+																	type="number"
+																	min={0}
+																	onScInput={(
+																		e
+																	) => {
+																		updateItems(
+																			index,
+																			{
+																				quantity:
+																					parseInt(
+																						e
+																							.target
+																							.value
+																					),
+																			}
+																		);
 																	}}
-																	name={
-																		'image'
+																>
+																	<span
+																		slot="suffix"
+																		css={css`
+																			opacity: 0.65;
+																		`}
+																	>
+																		{sprintf(
+																			__(
+																				'of %d',
+																				'surecart'
+																			),
+																			originalQuantity
+																		)}
+																	</span>
+																</ScInput>
+																<ScFormatNumber
+																	type="currency"
+																	value={
+																		(lineItem
+																			?.price
+																			?.amount ??
+																			0) *
+																		(quantity ??
+																			lineItem?.quantity)
+																	}
+																	currency={
+																		lineItem
+																			?.price
+																			?.currency
 																	}
 																/>
 															</div>
-														)}
-														<div
-															slot="title"
-															style={{
-																width: 195,
-															}}
-														>
-															{product?.name}
-														</div>
-														<div slot="description">
-															{!!subscription && (
-																<ScText>
-																	{__(
-																		'The associated subscription will also be cancelled.',
-																		'surecart'
-																	)}
-																</ScText>
-															)}
-														</div>
-
-														<div
-															slot="price"
-															css={css`
-																display: flex;
-																gap: 2em;
-																justify-content: space-between;
-																align-items: center;
-																text-align: right;
-																align-self: right;
-															`}
-														>
-															<ScInput
-																label={__(
-																	'Quantity',
+														}
+													>
+														{/* {!!subscription && (
+															<ScText>
+																{__(
+																	'The associated subscription will also be cancelled.',
 																	'surecart'
 																)}
-																showLabel={
-																	false
-																}
-																value={quantity}
-																max={
-																	originalQuantity
-																}
-																type="number"
-																min={0}
-																onScInput={(
-																	e
-																) => {
-																	updateItems(
-																		index,
-																		{
-																			quantity:
-																				parseInt(
-																					e
-																						.target
-																						.value
-																				),
-																		}
-																	);
-																}}
-															>
-																<span
-																	slot="suffix"
-																	css={css`
-																		opacity: 0.65;
-																	`}
-																>
-																	{sprintf(
-																		__(
-																			'of %d',
-																			'surecart'
-																		),
-																		originalQuantity
-																	)}
-																</span>
-															</ScInput>
-															<ScFormatNumber
-																type="currency"
-																value={
-																	(lineItem
-																		?.price
-																		?.amount ??
-																		0) *
-																	(quantity ??
-																		lineItem?.quantity)
-																}
-																currency={
-																	lineItem
-																		?.price
-																		?.currency
-																}
-															/>
-														</div>
-													</ScLineItem>
+															</ScText>
+														)} */}
+													</ProductLineItem>
+
 													<div
 														css={css`
 															display: flex;
@@ -665,11 +619,8 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 
 					<Error error={error} setError={setError} />
 
-					{(loading || fetchingRefunds || fetchingPurchases) && (
-						<sc-block-ui
-							spinner
-							style={{ zIndex: 9 }}
-						></sc-block-ui>
+					{(loading || fetchingRefunds || fetchingLineItems) && (
+						<ScBlockUi spinner style={{ zIndex: 9 }} />
 					)}
 				</div>
 				<ScButton
