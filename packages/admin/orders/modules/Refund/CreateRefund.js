@@ -4,9 +4,11 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -32,57 +34,25 @@ import useRefund from '../../hooks/useRefund';
 import ProductLineItem from '../../../ui/ProductLineItem';
 import { refundResasonOptions } from '../../../util/refunds';
 
-export default ({ charge, onRequestClose, onRefunded }) => {
-	const checkoutId = charge?.checkout?.id ?? charge?.checkout;
+export default ({ checkout, charge, onRequestClose, onRefunded }) => {
+	if (!checkout.line_items) {
+		return null;
+	}
+
+	const lineItems = checkout?.line_items?.data || [];
 	const [loading, setLoading] = useState(false);
 	const [amount, setAmount] = useState(
 		charge?.amount - charge?.refunded_amount
 	);
+	const [updateReferralCommission, setUpdateReferralCommission] =
+		useState(true);
 	const [totalQuantity, setTotalQuantity] = useState(0);
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
+	const [items, setItems] = useState([]);
 	const { refunds, loading: fetchingRefunds } = useRefund(charge?.id);
 
-	const { saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
-
-	const { lineItems, fetchingLineItems } = useSelect(
-		(select) => {
-			if (!checkoutId) {
-				return {
-					lineItems: [],
-					fetchingLineItems: true,
-				};
-			}
-
-			const entityData = [
-				'surecart',
-				'line_item',
-				{
-					checkout_ids: [checkoutId],
-					expand: [
-						'price',
-						'price.product',
-						'variant',
-						'variant.image',
-						'product.featured_product_media',
-						'product.product_medias',
-						'product_media.media',
-					],
-				},
-			];
-			return {
-				lineItems: select(coreStore)?.getEntityRecords?.(...entityData),
-				fetchingLineItems: !select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
-			};
-		},
-		[checkoutId]
-	);
-
-	const [items, setItems] = useState([]);
+	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const getRefundedItem = (lineItem) => {
 		for (const refund of refunds || []) {
 			const refundItem = refund?.refund_items?.data?.find(
@@ -177,11 +147,20 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 		setError(false);
 		setLoading(true);
 
+		const { baseURL } = select(coreStore).getEntityConfig(
+			'surecart',
+			'refund'
+		);
+
 		try {
-			const refund = await saveEntityRecord(
-				'surecart',
-				'refund',
-				{
+			const refund = await apiFetch({
+				method: 'POST',
+				path: addQueryArgs(baseURL, {
+					...(checkout?.referral && {
+						update_referral_commission: updateReferralCommission,
+					}),
+				}),
+				data: {
 					amount,
 					reason,
 					charge: charge?.id,
@@ -195,8 +174,9 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 							line_item: item.id,
 						})),
 				},
-				{ throwOnError: true }
-			);
+			}).catch((e) => {
+				throw e;
+			});
 
 			if (refund?.status === 'failed') {
 				throw {
@@ -613,13 +593,50 @@ export default ({ charge, onRequestClose, onRefunded }) => {
 										currency={charge?.currency}
 									/>
 								</ScText>
+
+								{!!checkout?.referral && (
+									<div>
+										<ScCheckbox
+											css={css`
+												padding-top: var(
+													--sc-spacing-large
+												);
+												padding-bottom: var(
+													--sc-spacing-small
+												);
+											`}
+											checked={updateReferralCommission}
+											onScChange={(e) =>
+												setUpdateReferralCommission(
+													e.target.checked
+												)
+											}
+										>
+											{__(
+												'Adjust referral commission',
+												'surecart'
+											)}
+										</ScCheckbox>
+
+										<ScText
+											css={css`
+												color: var(--sc-color-gray-500);
+											`}
+										>
+											{__(
+												'This refund affects a referral. Adjust the commission as needed.',
+												'surecart'
+											)}
+										</ScText>
+									</div>
+								)}
 							</Box>
 						</div>
 					</div>
 
 					<Error error={error} setError={setError} />
 
-					{(loading || fetchingRefunds || fetchingLineItems) && (
+					{(loading || fetchingRefunds) && (
 						<ScBlockUi spinner style={{ zIndex: 9 }} />
 					)}
 				</div>
