@@ -50,6 +50,7 @@ export default ({
 			page: pagination.page,
 			per_page: pagination.per_page,
 			...requestQuery,
+			context: 'edit',
 		};
 
 		const data = select(coreStore).getEntityRecords('surecart', 'product', {

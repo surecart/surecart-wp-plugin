@@ -98,6 +98,8 @@ export class ScLineItems {
                 interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(checkoutState?.checkout) })}
                 onScUpdateQuantity={e => updateCheckoutLineItem({ id: item.id, data: { quantity: e.detail } })}
                 onScRemove={() => removeCheckoutLineItem(item?.id)}
+                displaySwap={item?.price?.current_swap}
+                currentSwap={item?.swap}
                 exportparts="base:line-item, product-line-item, image:line-item__image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input, line-item__price-description:line-item__price-description"
               />
             </div>

@@ -16,6 +16,7 @@ export const expand = [
   'line_item.variant',
   'variant.image',
   'price.product',
+  'price.current_swap',
   'product.product_medias',
   'product.featured_product_media',
   'product.product_collections',

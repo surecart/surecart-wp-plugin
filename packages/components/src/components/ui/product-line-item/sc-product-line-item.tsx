@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee, ImageAttributes } from '../../../types';
+import { Fee, ImageAttributes, Swap } from '../../../types';
 
 /**
  * @part base - The component base
@@ -83,6 +83,12 @@ export class ScProductLineItem {
   /** The purchasable status display */
   @Prop() purchasableStatusDisplay: string;
 
+  /** The swap for this line item price */
+  @Prop() displaySwap: Swap;
+
+  /** The swap for this line item price */
+  @Prop() currentSwap: Swap | string;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -149,6 +155,10 @@ export class ScProductLineItem {
         </div>
       </div>
     );
+  }
+
+  onSwapToggleChange(e) {
+    console.log(e.target.checked);
   }
 
   render() {
@@ -235,6 +245,11 @@ export class ScProductLineItem {
             </sc-line-item>
           );
         })}
+        {this.displaySwap && (
+            <sc-switch checked={!!this.currentSwap} onScChange={(e) => this.onSwapToggleChange(e)}>
+              {this.displaySwap?.description}
+            </sc-switch>
+        )}
       </div>
     );
   }

@@ -23,11 +23,15 @@ export default ({ price, product }) => {
 	const [error, setError] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const [currentPrice, setCurrentPrice] = useState(price);
+	const [currentSwap, setCurrentSwap] = useState(price?.current_swap);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const ref = useRef(null);
 	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
+	};
+	const editSwap = (data) => {
+		setCurrentSwap({ ...currentSwap, ...data });
 	};
 
 	// make sure current price stays up to date with changes.
@@ -56,6 +60,12 @@ export default ({ price, product }) => {
 			await saveEntityRecord('surecart', 'price', currentPrice, {
 				throwOnError: true,
 			});
+
+			if (currentSwap) {
+				await saveEntityRecord('surecart', 'swap', currentSwap, {
+					throwOnError: true,
+				});
+			}
 			setIsOpen(false);
 			createSuccessNotice(__('Price updated.', 'surecart'), {
 				type: 'snackbar',
@@ -234,7 +244,11 @@ export default ({ price, product }) => {
 								price={currentPrice}
 								updatePrice={editPrice}
 							/>
-							<SwapPrice price={currentPrice} />
+							<SwapPrice
+								price={currentPrice}
+								updateSwap={editSwap}
+								currentSwap={currentSwap}
+							/>
 						</div>
 					</div>
 
