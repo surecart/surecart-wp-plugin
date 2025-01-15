@@ -1730,6 +1730,7 @@
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
+    "display-amount": true,
     "editable": true,
     "fees": true,
     "image": true,
@@ -2354,7 +2355,6 @@
     "slot": true
   },
   "sc-total": {
-    "order": true,
     "total": true,
     "style": true,
     "id": true,

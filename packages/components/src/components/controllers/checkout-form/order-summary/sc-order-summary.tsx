@@ -118,7 +118,7 @@ export class ScOrderSummary {
                 currency={checkoutState.checkout?.currency || 'usd'}
               />
             )}
-            <sc-total class="total-price" total={'total'} order={checkoutState.checkout}></sc-total>
+            <sc-total class="total-price" total={'total'}></sc-total>
           </span>
         )}
       </sc-line-item>

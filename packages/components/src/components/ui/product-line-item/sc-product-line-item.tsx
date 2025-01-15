@@ -50,6 +50,9 @@ export class ScProductLineItem {
   /** Product monetary amount */
   @Prop() amount: number;
 
+  /** Product display amount */
+  @Prop() displayAmount: string;
+
   /** Product line item fees. */
   @Prop() fees: Fee[];
 
@@ -89,7 +92,16 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
+  renderAmount() {
+    if (this.displayAmount) {
+      return this.displayAmount;
+    }
+
+    return <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>;
+  }
+
   renderPriceAndInterval() {
+    console.log(this.displayAmount);
     const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
       return (
@@ -113,7 +125,7 @@ export class ScProductLineItem {
                 <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
               </Fragment>
             )}
-            <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
+            <span slot="price__amount">{this.renderAmount()}</span> {!!this.interval && this.interval}
             {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
           </div>
         </div>
@@ -128,7 +140,7 @@ export class ScProductLineItem {
               <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
             </Fragment>
           )}
-          <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>
+          {this.renderAmount()}
         </div>
         {!!this.interval && (
           <div class="price__description" part="price__description">

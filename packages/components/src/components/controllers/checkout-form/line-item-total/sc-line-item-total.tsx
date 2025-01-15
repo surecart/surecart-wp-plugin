@@ -99,7 +99,7 @@ export class ScLineItemTotal {
               )}
             </span>
             <span slot="price">
-              <sc-total order={checkout} total={this.total}></sc-total>
+              <sc-total total={this.total}></sc-total>
             </span>
           </sc-line-item>
 
@@ -108,9 +108,7 @@ export class ScLineItemTotal {
               <span slot="description">
                 <slot name="free-trial-description">{__('Trial', 'surecart')}</slot>
               </span>
-              <span slot="price">
-                <sc-format-number type="currency" value={checkout.trial_amount} currency={checkout.currency} />
-              </span>
+              <span slot="price">{checkout?.trial_display_amount}</span>
             </sc-line-item>
           )}
 
@@ -125,9 +123,7 @@ export class ScLineItemTotal {
               </span>
             )}
 
-            <span slot="price">
-              <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
-            </span>
+            <span slot="price">{checkout?.amount_due_display_amount}</span>
           </sc-line-item>
         </div>
       );
@@ -140,9 +136,7 @@ export class ScLineItemTotal {
             <span slot="description">
               <slot name="total-payments-description">{__('Total Installment Payments', 'surecart')}</slot>
             </span>
-            <span slot="price">
-              <sc-format-number type="currency" value={checkout?.full_amount} currency={checkout?.currency || 'usd'} />
-            </span>
+            <span slot="price">{checkout?.full_display_amount}</span>
           </sc-line-item>
         )}
 
@@ -150,10 +144,8 @@ export class ScLineItemTotal {
           {this.renderLineItemTitle(checkout)}
           {this.renderLineItemDescription(checkout)}
           <span slot="price">
-            {!!checkout?.total_savings_amount && this.total === 'total' && (
-              <sc-format-number class="scratch-price" type="currency" value={-checkout?.total_savings_amount + checkout?.total_amount} currency={checkout?.currency || 'usd'} />
-            )}
-            <sc-total class="total-price" order={checkout} total={this.total}></sc-total>
+            {!!checkout?.total_savings_amount && this.total === 'total' && <span class="scratch-price">{checkout?.scratch_display_amount}</span>}
+            <sc-total class="total-price" total={this.total}></sc-total>
           </span>
         </sc-line-item>
       </Fragment>

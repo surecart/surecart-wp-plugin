@@ -95,6 +95,7 @@ dispatch(coreStore).addEntities([
 		label: __('Display Currency', 'surecart'),
 		baseURL: '/surecart/v1/display_currencies',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'download',

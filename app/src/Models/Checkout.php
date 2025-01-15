@@ -65,8 +65,44 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
+	public function getAmountDueDisplayAmountAttribute() {
+		return ! empty( $this->amount_due ) ? Currency::format( $this->amount_due, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
 	public function getSubtotalDisplayAmountAttribute() {
 		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display scratch amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getScratchDisplayAmountAttribute() {
+		return Currency::format( (int) ( -$this->total_savings_amount + $this->total_amount ), $this->currency );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTrialDisplayAmountAttribute() {
+		return ! empty( $this->trial_amount ) ? Currency::format( $this->trial_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display remaining amount due attribute.
+	 *
+	 * @return string
+	 */
+	public function getRemainingAmountDueDisplayAmountAttribute() {
+		return ! empty( $this->remaining_amount_due ) ? Currency::format( $this->remaining_amount_due, $this->currency ) : '';
 	}
 
 	/**

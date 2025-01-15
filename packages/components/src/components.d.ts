@@ -3071,6 +3071,10 @@ export namespace Components {
          */
         "currency": string;
         /**
+          * Product display amount
+         */
+        "displayAmount": string;
+        /**
           * Can we select the quantity
          */
         "editable": boolean;
@@ -4110,7 +4114,6 @@ export namespace Components {
         "width": string;
     }
     interface ScTotal {
-        "order": Checkout;
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
@@ -10226,6 +10229,10 @@ declare namespace LocalJSX {
          */
         "currency"?: string;
         /**
+          * Product display amount
+         */
+        "displayAmount"?: string;
+        /**
           * Can we select the quantity
          */
         "editable"?: boolean;
@@ -11396,7 +11403,6 @@ declare namespace LocalJSX {
         "width"?: string;
     }
     interface ScTotal {
-        "order"?: Checkout;
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {

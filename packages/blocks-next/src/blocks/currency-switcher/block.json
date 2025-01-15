@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/currency-switcher",
+	"title": "Currency Switcher",
+	"description": "Display a currency switcher dropdown.",
+	"version": "1.0.0",
+	"category": "surecart",
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"render": "file:./view.php",
+	"style": ["surecart-dropdown", "surecart-button", "file:./style-index.css"],
+	"viewScriptModule": ["@surecart/dropdown", "file:./view.js"]
+}

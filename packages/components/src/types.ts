@@ -462,6 +462,8 @@ export interface LineItem extends Object {
     pagination: Pagination;
     data: Array<Fee>;
   };
+  ad_hoc_display_amount: string;
+  subtotal_display_amount: string;
   bump_amount: number;
   discount_amount: number;
   subtotal_amount: number;
@@ -658,8 +660,11 @@ export interface Checkout extends Object {
   reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
+  amount_due_display_amount?: string;
   remaining_amount_due?: number;
+  remaining_amount_due_display_amount?: string;
   trial_amount?: number;
+  trial_display_amount?: string;
   charge?: string | Charge;
   name?: string;
   first_name?: string;
@@ -671,10 +676,12 @@ export interface Checkout extends Object {
   total_amount?: number;
   subtotal_amount?: number;
   full_amount?: number;
+  full_display_amount?: string;
   paid_amount?: number;
   proration_amount?: number;
   total_savings_amount?: number;
   applied_balance_amount?: number;
+  scratch_display_amount?: string;
   discounts?: number;
   shipping_address_required?: boolean;
   shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';

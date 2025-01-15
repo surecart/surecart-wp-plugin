@@ -34,9 +34,9 @@ class CurrencyService {
 	 * @return string The filtered permalink.
 	 */
 	public function addCurrencyParam( $permalink ) {
-		if ( do_action( 'surecart/currency/filter_url', true, $permalink ) ) {
+		if ( apply_filters( 'surecart/currency/filter_url', true, $permalink ) ) {
 			$currency = Currency::getCurrentCurrency();
-			if ( $currency ) {
+			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
 				$permalink = add_query_arg( compact( 'currency' ), $permalink );
 			}
 		}

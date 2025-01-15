@@ -5,7 +5,11 @@ import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import { ScButton, ScIcon, ScSelect, ScTag } from '@surecart/components-react';
 import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews/wp';
-import { useEntityRecords, store as coreStore } from '@wordpress/core-data';
+import {
+	useEntityRecords,
+	useEntityRecord,
+	store as coreStore,
+} from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 import './style.scss';
@@ -15,11 +19,18 @@ import {
 	__experimentalText as Text,
 	__experimentalVStack as VStack,
 	__experimentalHStack as HStack,
+	Icon,
 } from '@wordpress/components';
+import { trash } from '@wordpress/icons';
 import { getCurrencySymbol } from '../../util';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default function DisplayCurrencySettings() {
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+
+	const { record: account } = useEntityRecord('surecart', 'store', 'account');
 
 	const defaultLayouts = {
 		table: {
@@ -31,7 +42,7 @@ export default function DisplayCurrencySettings() {
 
 	const [view, setView] = useState({
 		type: 'table',
-		per_page: 100,
+		per_page: 10,
 		page: 1,
 		sort: {
 			field: 'name',
@@ -55,7 +66,6 @@ export default function DisplayCurrencySettings() {
 
 	const {
 		records: currencies,
-		hasStarted,
 		hasResolved,
 		totalItems,
 		totalPages,
@@ -67,10 +77,6 @@ export default function DisplayCurrencySettings() {
 			totalPages,
 		}),
 		[totalItems, totalPages]
-	);
-
-	const defaultCurrency = (currencies || []).find(
-		(currency) => currency.is_default_currency
 	);
 
 	const supportedCurrencyOptions = Object.keys(
@@ -105,7 +111,9 @@ export default function DisplayCurrencySettings() {
 			id: 'label',
 			label: __('Label', 'presto-player'),
 			enableSorting: false,
-			render: ({ item }) => item?.currency?.toUpperCase?.(),
+			render: ({ item }) => (
+				<ScTag type="success">{item?.currency?.toUpperCase?.()}</ScTag>
+			),
 		},
 		{
 			id: 'rate',
@@ -116,11 +124,11 @@ export default function DisplayCurrencySettings() {
 					return '-';
 				}
 				return (
-					<>
-						1 {defaultCurrency?.currency?.toUpperCase?.()}={' '}
+					<ScTag>
+						1 {account?.currency?.toUpperCase?.()} ={' '}
 						{item?.current_exchange_rate}{' '}
 						{item?.currency?.toUpperCase?.()}
-					</>
+					</ScTag>
 				);
 			},
 		},
@@ -128,7 +136,7 @@ export default function DisplayCurrencySettings() {
 			id: 'preview',
 			enableSorting: false,
 			label: __('Preview', 'surecart'),
-			render: ({ item }) => <ScTag>{item?.display_example}</ScTag>,
+			render: ({ item }) => item?.display_example,
 		},
 	];
 
@@ -151,8 +159,64 @@ export default function DisplayCurrencySettings() {
 					throwOnError: true,
 				}
 			);
+
+			// Get the full currency name from supported currencies
+			const currencyName =
+				scData?.supported_currencies[currency] || currency;
+
+			createSuccessNotice(
+				sprintf(
+					/* translators: %s: currency name */
+					__('%s added successfully.', 'surecart'),
+					currencyName
+				),
+				{
+					type: 'snackbar',
+				}
+			);
 		} catch (error) {
 			console.error('Error adding currency:', error);
+		}
+	};
+
+	const handleDelete = async (items) => {
+		try {
+			// Delete all items concurrently
+			await Promise.all(
+				items.map((item) =>
+					deleteEntityRecord(
+						'surecart',
+						'display_currency',
+						item.id,
+						{
+							throwOnError: true,
+						}
+					)
+				)
+			);
+
+			createSuccessNotice(
+				sprintf(
+					_n(
+						'Successfully deleted %d currency.',
+						'Successfully deleted %d currencies.',
+						items.length,
+						'surecart'
+					),
+					items.length
+				),
+				{
+					type: 'snackbar',
+				}
+			);
+		} catch (error) {
+			createErrorNotice(
+				error?.message ||
+					__('Failed to delete currencies.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 		}
 	};
 
@@ -168,25 +232,27 @@ export default function DisplayCurrencySettings() {
 			<SettingsTemplate
 				title={__('Currency Settings', 'surecart')}
 				icon={<ScIcon name="dollar-sign" />}
-				loading={!hasStarted}
 				noButton
+				css={css`
+					margin-bottom: 60px;
+				`}
 			>
 				<SettingsBox
 					title={__('Display Currencies', 'surecart')}
 					description={__(
-						'Set the currencies you want to display on your site using the language of your site.',
+						'Set the currencies you want to display on your site.',
 						'surecart'
 					)}
-					loading={!hasStarted}
 					wrapperTag="div"
 					end={
 						<ScSelect
 							search
 							onScChange={onAddNewCurrency}
 							choices={supportedCurrencyOptions}
+							value={null}
 							placement="bottom-end"
 							css={css`
-								min-width: 300px;
+								min-width: 350px;
 								text-align: right;
 							`}
 						>
@@ -226,6 +292,7 @@ export default function DisplayCurrencySettings() {
 							supportedLayouts={['table']}
 							defaultLayouts={defaultLayouts}
 							paginationInfo={paginationInfo}
+							isLoading={!hasResolved}
 							actions={[
 								{
 									id: 'edit',
@@ -242,22 +309,20 @@ export default function DisplayCurrencySettings() {
 								},
 								{
 									id: 'delete',
+									icon: <Icon icon={trash} />,
 									label: __('Delete', 'surecart'),
 									isDestructive: true,
 									supportsBulk: true,
 									isEligible: (item) =>
 										!item.is_default_currency,
-									callback: () => {
-										console.log('delete');
-									},
 									hideModalHeader: true,
 									RenderModal: ({ items, closeModal }) => (
 										<VStack>
 											<Text>
 												{sprintf(
 													_n(
-														'Are you sure you want to delete %d item?',
-														'Are you sure you want to delete %d items?',
+														'Are you sure you want to delete %d currency?',
+														'Are you sure you want to delete %d currencies?',
 														items.length,
 														'surecart'
 													),
@@ -277,11 +342,7 @@ export default function DisplayCurrencySettings() {
 												<Button
 													variant="primary"
 													onClick={() => {
-														console.log(
-															'Deleting items:',
-															items
-														);
-														onActionPerformed();
+														handleDelete(items);
 														closeModal();
 													}}
 												>
