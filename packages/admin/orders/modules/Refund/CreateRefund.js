@@ -624,7 +624,7 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 											`}
 										>
 											{__(
-												'This refund affects a referral. Adjust the commission as needed.',
+												'Enable this to automatically adjust the referral commission in proportion to the refund amount.',
 												'surecart'
 											)}
 										</ScText>
