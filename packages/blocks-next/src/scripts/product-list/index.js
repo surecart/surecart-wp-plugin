@@ -3,6 +3,8 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
+const { actions: cartActions } = store('surecart/cart');
+
 /**
  * Check if the link is valid.
  */
@@ -40,6 +42,8 @@ const { state } = store('surecart/product-list', {
 			const { ref } = getElement();
 			const { history } = getContext();
 			const queryRef = ref.closest('[data-wp-router-region]');
+			console.log(ref);
+
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
 				event.preventDefault();
 				const { actions } = yield import(
@@ -175,6 +179,21 @@ const { state } = store('surecart/product-list', {
 
 			state.loading = false;
 			state.searching = false;
+		},
+		/** Toggle the sidebar. */
+		*toggleSidebar(event) {
+			// no-op if not enter or space key
+			if (
+				event?.type === 'keydown' &&
+				!['Enter', 'Space'].includes(event.key)
+			) {
+				return true;
+			}
+
+			if (window.matchMedia('(max-width: 480px)').matches) {
+				cartActions.toggle();
+			}
+			state.sidebarOpen = !state.sidebarOpen;
 		},
 	},
 

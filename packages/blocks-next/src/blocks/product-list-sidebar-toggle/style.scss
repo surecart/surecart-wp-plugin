@@ -1,0 +1,30 @@
+.wp-block-surecart-product-list-sidebar-toggle {
+	cursor: pointer;
+	user-select: none;
+	width: fit-content;
+	color: currentColor;
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	display: inline-flex;
+	gap: 0.5em;
+	align-items: center;
+	font-weight: var(--sc-font-weight-semibold);
+}
+
+.sc-sidebar-toggle__icon {
+	width: 1em;
+	height: 1em;
+}
+
+@media (max-width: 779px) {
+	.sc-sidebar-toggle-desktop {
+		display: none;
+	}
+}
+
+@media (min-width: 780px) {
+	.sc-sidebar-toggle-mobile {
+		display: none !important;
+	}
+}
