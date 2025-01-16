@@ -6,18 +6,17 @@ import {
 	ScBlockUi,
 	ScButton,
 	ScCard,
-	ScDropdown,
 	ScEmpty,
 	ScFlex,
 	ScFormatNumber,
 	ScIcon,
-	ScMenu,
-	ScMenuItem,
 	ScStackedList,
 	ScStackedListRow,
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from '@wordpress/element';
+import { useState, useRef, useLayoutEffect } from '@wordpress/element';
+import { DropdownMenu } from '@wordpress/components';
+import { moreHorizontal, trash } from '@wordpress/icons';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -27,13 +26,11 @@ import { intervalString } from '../../../util/translations';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
 import usePagination from '../../../hooks/usePagination';
 
-const PRODUCTS_PER_PAGE = 5;
+const PRODUCTS_PER_PAGE = 100;
 
 export default ({ shippingProfileId, isDefaultProfile }) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
-	const [open, setOpen] = useState(false);
-	const [draftProducts, setDraftProducts] = useState(0);
 	const [currentPage, setCurrentPage] = useState(1);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -54,6 +51,7 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						'product.product_medias',
 						'product_media.media',
 					],
+					sort: 'updated_at:asc',
 				},
 			];
 
@@ -126,7 +124,6 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 					throwOnError: true,
 				}
 			);
-			setDraftProducts(0);
 			createSuccessNotice(__('Product added', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -137,6 +134,16 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 			setBusy(false);
 		}
 	};
+
+	const listRef = useRef(null);
+	const totalProducts = products?.length ?? 0;
+	useLayoutEffect(() => {
+		if (listRef.current) {
+			setTimeout(() => {
+				listRef.current.scrollTop = listRef.current.scrollHeight;
+			}, 50);
+		}
+	}, [totalProducts]);
 
 	const renderProduct = (product) => {
 		const activePrices = product?.prices?.data?.filter(
@@ -212,6 +219,32 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 		);
 	};
 
+	const renderModelSelector = () => {
+		return (
+			<ModelSelector
+				css={css`
+					min-width: 380px;
+				`}
+				fetchOnLoad={true}
+				name="product"
+				placeholder={__('Find a product...', 'surecart')}
+				requestQuery={{
+					archived: false,
+					expand: ['prices'],
+				}}
+				exclude={products?.map((product) => product.id)}
+				onSelect={(id) => {
+					onSelectProduct(id);
+				}}
+			>
+				<ScButton type="default" slot="trigger">
+					<ScIcon name="plus" />
+					{__('Add Product', 'surecart')}
+				</ScButton>
+			</ModelSelector>
+		);
+	};
+
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
@@ -249,111 +282,67 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						)}
 					</div>
 				)}
-				{products?.length || !!draftProducts || currentPage > 1 ? (
+				{products?.length ? (
 					<ScStackedList
 						css={css`
 							margin: 0;
 						`}
 					>
-						{products.map((product) => (
-							<ScStackedListRow key={product.id}>
-								{renderProduct(product)}
-								{!isDefaultProfile ? (
-									<ScDropdown
-										slot="suffix"
-										placement="bottom-end"
-									>
-										<ScButton
-											type="text"
-											slot="trigger"
-											circle
-										>
-											<ScIcon name="more-horizontal" />
-										</ScButton>
-										<ScMenu>
-											<ScMenuItem
-												onClick={() =>
-													onRemoveProduct(product.id)
-												}
-											>
-												<ScIcon
-													slot="prefix"
-													name="trash"
-												/>
-												{__('Remove', 'surecart')}
-											</ScMenuItem>
-										</ScMenu>
-									</ScDropdown>
-								) : null}
-							</ScStackedListRow>
-						))}
-
-						{[...Array(draftProducts)].map((_, index) => (
-							<ScStackedListRow key={`draft-product-${index}`}>
-								<ModelSelector
-									css={css`
-										min-width: 380px;
-									`}
-									key={index}
-									open={open}
-									onScClose={() => setOpen(false)}
-									fetchOnLoad={true}
-									name="product"
-									placeholder={__(
-										'Find a product...',
-										'surecart'
-									)}
-									requestQuery={{
-										archived: false,
-										expand: ['prices'],
-									}}
-									exclude={products?.map(
-										(product) => product.id
-									)}
-									onSelect={(id) => {
-										onSelectProduct(id);
-									}}
-								/>
-								<ScDropdown
-									slot="suffix"
-									placement="bottom-end"
-								>
-									<ScButton type="text" slot="trigger" circle>
-										<ScIcon name="more-horizontal" />
-									</ScButton>
-									<ScMenu>
-										<ScMenuItem
-											onClick={() =>
-												setDraftProducts(
-													draftProducts - 1
-												)
-											}
-										>
-											<ScIcon
-												slot="prefix"
-												name="trash"
+						<div
+							css={css`
+								max-height: 520px;
+								overflow-y: auto;
+							`}
+							ref={listRef}
+						>
+							{products.map((product) => (
+								<ScStackedListRow key={product.id}>
+									{renderProduct(product)}
+									{!isDefaultProfile ? (
+										<div slot="suffix">
+											<DropdownMenu
+												controls={[
+													{
+														icon: trash,
+														onClick: () =>
+															onRemoveProduct(
+																product.id
+															),
+														title: __(
+															'Remove',
+															'surecart'
+														),
+													},
+												]}
+												icon={moreHorizontal}
+												label={__(
+													'More Actions',
+													'surecart'
+												)}
+												popoverProps={{
+													placement: 'bottom-end',
+												}}
+												menuProps={{
+													style: {
+														minWidth: '150px',
+													},
+												}}
 											/>
-											{__('Remove', 'surecart')}
-										</ScMenuItem>
-									</ScMenu>
-								</ScDropdown>
-							</ScStackedListRow>
-						))}
+										</div>
+									) : null}
+								</ScStackedListRow>
+							))}
+						</div>
 
-						{draftProducts === 0 && !isDefaultProfile && (
-							<ScStackedListRow>
-								<ScButton
-									type="default"
-									onClick={(e) => {
-										setDraftProducts(draftProducts + 1);
-										setOpen(true);
-									}}
-								>
-									<ScIcon name="plus" />
-									{__('Add Product', 'surecart')}
-								</ScButton>
-							</ScStackedListRow>
-						)}
+						<ScStackedListRow
+							css={css`
+								--sc-list-row-background-color: var(
+									--sc-color-gray-50
+								);
+							`}
+						>
+							{renderModelSelector()}
+						</ScStackedListRow>
 					</ScStackedList>
 				) : (
 					<ScEmpty
@@ -363,18 +352,8 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 						`}
 					>
 						{__('No products in this profile.', 'surecart')}
-						{!isDefaultProfile && (
-							<ScButton
-								type="default"
-								onClick={() => {
-									setDraftProducts(draftProducts + 1);
-									setOpen(true);
-								}}
-							>
-								<ScIcon name="plus" />
-								{__('Add Product', 'surecart')}
-							</ScButton>
-						)}
+
+						{renderModelSelector()}
 					</ScEmpty>
 				)}
 				{hasPagination && (
