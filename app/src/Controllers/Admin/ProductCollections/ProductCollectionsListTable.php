@@ -43,12 +43,15 @@ class ProductCollectionsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns(): array {
-		return [
-			'name'           => __( 'Name', 'surecart' ),
-			'products_count' => __( 'Products', 'surecart' ),
-			'description'    => __( 'Description', 'surecart' ),
-			'created'        => __( 'Created', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'name'           => __( 'Name', 'surecart' ),
+				'products_count' => __( 'Products', 'surecart' ),
+				'description'    => __( 'Description', 'surecart' ),
+				'created'        => __( 'Created', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
