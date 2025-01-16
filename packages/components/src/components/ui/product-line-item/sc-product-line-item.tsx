@@ -53,6 +53,9 @@ export class ScProductLineItem {
   /** Product display amount */
   @Prop() displayAmount: string;
 
+  /** Product scratch display amount */
+  @Prop() scratchDisplayAmount: string;
+
   /** Product line item fees. */
   @Prop() fees: Fee[];
 
@@ -122,7 +125,10 @@ export class ScProductLineItem {
             }{' '}
             {!!this.scratchAmount && this.scratchAmount > this.amount && (
               <Fragment>
-                <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+                <span class="item__scratch-price">
+                  {this.scratchDisplayAmount}
+                  {/* <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '} */}
+                </span>{' '}
               </Fragment>
             )}
             <span slot="price__amount">{this.renderAmount()}</span> {!!this.interval && this.interval}
@@ -137,7 +143,10 @@ export class ScProductLineItem {
         <div class="price" part="price__amount">
           {!!this.scratchAmount && this.scratchAmount !== this.amount && (
             <Fragment>
-              <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+              <span class="item__scratch-price">
+                {this.scratchDisplayAmount}
+                {/* <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '} */}
+              </span>{' '}
             </Fragment>
           )}
           {this.renderAmount()}
@@ -240,7 +249,7 @@ export class ScProductLineItem {
           if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
           return (
             <sc-line-item exportparts="price-description:line-item__price-description">
-              <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
+              <span slot="price-description">{fee?.display_amount}</span>
               <span slot="price-description" class="fee__description">
                 {fee?.description}
               </span>

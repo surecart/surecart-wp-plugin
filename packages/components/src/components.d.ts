@@ -3119,6 +3119,10 @@ export namespace Components {
          */
         "scratchAmount": number;
         /**
+          * Product scratch display amount
+         */
+        "scratchDisplayAmount": string;
+        /**
           * Is the setup fee not included in the free trial?
          */
         "setupFeeTrialEnabled": boolean;
@@ -10284,6 +10288,10 @@ declare namespace LocalJSX {
           * The line item scratch amount
          */
         "scratchAmount"?: number;
+        /**
+          * Product scratch display amount
+         */
+        "scratchDisplayAmount"?: string;
         /**
           * Is the setup fee not included in the free trial?
          */

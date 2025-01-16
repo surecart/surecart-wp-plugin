@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import { Component, Fragment, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -69,6 +69,33 @@ export class ScLineItemTotal {
     );
   }
 
+  renderConversion() {
+    if (this.total !== 'total') {
+      return null;
+    }
+    const checkout = this.checkout || checkoutState?.checkout;
+
+    return (
+      <Fragment>
+        <sc-divider></sc-divider>
+        <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
+          <span slot="title">
+            <slot name="charge-amount-description">{sprintf(__('Payment Total', 'surecart'), checkout?.currency?.toUpperCase())}</slot>
+          </span>
+          <span slot="price">
+            <span class="currency-label">{checkout?.currency?.toUpperCase()}</span>
+            {checkout?.amount_due_default_currency_display_amount}
+          </span>
+        </sc-line-item>
+        <sc-line-item>
+          <span slot="description" class="conversion-description">
+            {sprintf(__('Your payment will be processed in %s.', 'surecart'), checkout?.currency?.toUpperCase())}
+          </span>
+        </sc-line-item>
+      </Fragment>
+    );
+  }
+
   render() {
     const checkout = this.checkout || checkoutState?.checkout;
     // loading state
@@ -125,6 +152,8 @@ export class ScLineItemTotal {
 
             <span slot="price">{checkout?.amount_due_display_amount}</span>
           </sc-line-item>
+
+          {this.renderConversion()}
         </div>
       );
     }
@@ -148,6 +177,8 @@ export class ScLineItemTotal {
             <sc-total class="total-price" total={this.total}></sc-total>
           </span>
         </sc-line-item>
+
+        {this.renderConversion()}
       </Fragment>
     );
   }

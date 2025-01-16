@@ -105,6 +105,7 @@ export interface Price {
   name: string;
   description?: string;
   amount: number;
+  display_amount: string;
   full_amount: number;
   currency: string;
   recurring: boolean;
@@ -146,6 +147,11 @@ export interface Bump {
   id: string;
   object: 'bump';
   amount_off: number;
+  amount_off_display_amount: string;
+  subtotal_display_amount: string;
+  subtotal_amount: number;
+  total_display_amount: string;
+  total_amount: number;
   archived: boolean;
   archived_at: number;
   auto_apply: boolean;
@@ -472,6 +478,7 @@ export interface LineItem extends Object {
   tax_amount: number;
   fees_amount: number;
   scratch_amount: number;
+  scratch_display_amount: string;
   trial: boolean;
   total_savings_amount: number;
   created_at: number;
@@ -497,6 +504,7 @@ export interface Fee {
   object: 'fee';
   amount: number;
   description: string;
+  display_amount: string;
   fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;
   created_at: number;
@@ -661,6 +669,7 @@ export interface Checkout extends Object {
   number?: string;
   amount_due?: number;
   amount_due_display_amount?: string;
+  amount_due_default_currency_display_amount?: string;
   remaining_amount_due?: number;
   remaining_amount_due_display_amount?: string;
   trial_amount?: number;
@@ -673,6 +682,9 @@ export interface Checkout extends Object {
   phone?: string;
   live_mode?: boolean;
   currency?: string;
+  current_currency?: string;
+  tax_exclusive_display_amount?: string;
+  tax_inclusive_display_amount?: string;
   total_amount?: number;
   subtotal_amount?: number;
   full_amount?: number;

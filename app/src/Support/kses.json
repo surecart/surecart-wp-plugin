@@ -1742,6 +1742,7 @@
     "quantity": true,
     "removable": true,
     "scratch-amount": true,
+    "scratch-display-amount": true,
     "setup-fee-trial-enabled": true,
     "sku": true,
     "trial-duration-days": true,

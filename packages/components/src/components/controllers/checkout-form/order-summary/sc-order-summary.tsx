@@ -106,18 +106,11 @@ export class ScOrderSummary {
         {/* We have a trial, do not show total_savings_amount since it's based on the total_amount */}
         {checkoutState.checkout?.total_amount !== checkoutState.checkout?.amount_due ? (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            <sc-format-number class="total-price" type="currency" currency={checkoutState.checkout?.currency} value={checkoutState.checkout?.amount_due}></sc-format-number>
+            {checkoutState.checkout?.amount_due_display_amount}
           </span>
         ) : (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            {!!checkoutState.checkout?.total_savings_amount && (
-              <sc-format-number
-                class="total-price scratch-price"
-                type="currency"
-                value={-checkoutState.checkout?.total_savings_amount + checkoutState.checkout?.total_amount}
-                currency={checkoutState.checkout?.currency || 'usd'}
-              />
-            )}
+            {!!checkoutState.checkout?.total_savings_amount && checkoutState?.checkout?.scratch_display_amount}
             <sc-total class="total-price" total={'total'}></sc-total>
           </span>
         )}

@@ -24,6 +24,20 @@ class CurrencyService {
 
 		// Remove the currency parameter from the canonical permalink.
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
+
+		// Set the currency cookie.
+		add_action( 'plugins_loaded', array( $this, 'setCurrencyCookie' ) );
+	}
+
+	/**
+	 * Set the currency cookie.
+	 *
+	 * @return void
+	 */
+	public function setCurrencyCookie() {
+		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			sc_setcookie( 'sc_current_currency', $_GET['currency'], time() + 7 * DAY_IN_SECONDS ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
 	}
 
 	/**

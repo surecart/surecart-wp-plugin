@@ -93,8 +93,9 @@ export class ScLineItems {
                 setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
                 scratchAmount={item.ad_hoc_amount == null && item?.scratch_amount}
+                scratchDisplayAmount={item?.scratch_display_amount}
                 currency={checkoutState?.checkout?.currency}
-                displayAmount={item.ad_hoc_display_amount !== null ? item.ad_hoc_display_amount : item.subtotal_display_amount}
+                displayAmount={item.ad_hoc_amount !== null ? item.ad_hoc_display_amount : item.subtotal_display_amount}
                 trialDurationDays={item?.price?.trial_duration_days}
                 interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(checkoutState?.checkout) })}
                 onScUpdateQuantity={e => updateCheckoutLineItem({ id: item.id, data: { quantity: e.detail } })}

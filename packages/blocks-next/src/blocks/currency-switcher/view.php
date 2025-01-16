@@ -6,12 +6,21 @@
  */
 
 use SureCart\Models\DisplayCurrency;
+use SureCart\Support\Currency;
 
 // Get all display currencies.
 $currencies = DisplayCurrency::get();
 
+// Sort by currency name.
+usort(
+	$currencies,
+	function ( $a, $b ) {
+		return strcmp( $a->name, $b->name );
+	}
+);
+
 // Get current currency from URL or default.
-$current_currency = ! empty( $_GET['currency'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_GET['currency'] ) ) ) : strtoupper( \SureCart::account()->currency );
+$current_currency = Currency::getCurrentCurrency();
 ?>
 
 <div
@@ -46,8 +55,28 @@ $current_currency = ! empty( $_GET['currency'] ) ? strtoupper( sanitize_text_fie
 		tabindex="0"
 		aria-label="<?php esc_attr_e( 'Select Currency', 'surecart' ); ?>"
 	>
+		<img
+			src="<?php echo esc_url( plugins_url( 'images/flags/' . strtolower( $current_currency ) . '.svg', SURECART_PLUGIN_FILE ) ); ?>"
+			alt="<?php echo esc_attr( strtoupper( $current_currency ) ); ?> flag"
+			class="wp-block-surecart-currency-switcher__flag"
+			width="20"
+			height="15"
+		/>
 		<span class="wp-block-surecart-currency-switcher__label"><?php echo esc_html( $current_currency ); ?></span>
-		<span class="wp-block-surecart-currency-switcher__caret"><?php echo wp_kses( SureCart::svg()->get( 'chevron-down' ), sc_allowed_svg_html() ); ?></span>
+		<span class="wp-block-surecart-currency-switcher__caret">
+		<?php
+		echo wp_kses(
+			SureCart::svg()->get(
+				'chevron-down',
+				[
+					'width'  => 16,
+					'height' => 16,
+				]
+			),
+			sc_allowed_svg_html()
+		);
+		?>
+		</span>
 	</div>
 
 	<div
@@ -70,8 +99,16 @@ $current_currency = ! empty( $_GET['currency'] ) ? strtoupper( sanitize_text_fie
 				data-wp-on--click="surecart/currency-switcher::actions.navigate"
 				data-wp-class--sc-focused="surecart/dropdown::state.isMenuItemFocused"
 			>
+				<img
+					src="<?php echo esc_url( plugins_url( 'images/flags/' . strtolower( $currency->currency ) . '.svg', SURECART_PLUGIN_FILE ) ); ?>"
+					alt="<?php echo esc_attr( strtoupper( $currency->currency ) ); ?> flag"
+					class="sc-dropdown__menu-item__flag"
+					width="20"
+					height="15"
+				/>
 				<span class="sc-dropdown__menu-item__label">
 					<?php echo esc_html( $currency->name ); ?>
+					<span class="sc-dropdown__menu-item__symbol">(<?php echo esc_html( $currency->currency_symbol ); ?>)</span>
 				</span>
 
 				<?php if ( strtolower( $currency->currency ) === strtolower( $current_currency ) ) : ?>

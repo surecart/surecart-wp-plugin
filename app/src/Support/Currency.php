@@ -25,7 +25,24 @@ class Currency {
 	 * @return string
 	 */
 	public static function getCurrentCurrency() {
-		return strtolower( sanitize_text_field( $_GET['currency'] ?? \SureCart::account()->currency ?? 'usd' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return strtolower( sanitize_text_field( $_GET['currency'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+
+		if ( isset( $_COOKIE['sc_current_currency'] ) ) {
+			return strtolower( sanitize_text_field( $_COOKIE['sc_current_currency'] ) );
+		}
+
+		return self::getDefaultCurrency();
+	}
+
+	/**
+	 * Get the default currency.
+	 *
+	 * @return string
+	 */
+	public static function getDefaultCurrency() {
+		return strtolower( \SureCart::account()->currency ?? 'usd' );
 	}
 
 	/**
@@ -34,7 +51,7 @@ class Currency {
 	 * @return bool
 	 */
 	public static function hasDisplayCurrency() {
-		return isset( $_GET['currency'] );
+		return self::getCurrentCurrency() !== self::getDefaultCurrency();
 	}
 
 	/**
@@ -247,12 +264,20 @@ class Currency {
 	 *
 	 * @return string
 	 */
-	public static function format( $amount, $currency_code = null ) {
-		if ( empty( $currency_code ) || self::hasDisplayCurrency() ) {
-			$currency_code = self::getCurrentCurrency();
-		}
+	public static function format( $amount, $currency_code = null, $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'force' => false,
+			]
+		);
 
-		$amount = $amount * self::getExchangeRate( $currency_code );
+		// we only want to change currencies and convert amounts if we are not forcing the default currency.
+		// or if the currency code is not set.
+		if ( empty( $currency_code ) || ( self::hasDisplayCurrency() && ! $args['force'] ) ) {
+			$currency_code = self::getCurrentCurrency();
+			$amount        = $amount * self::getExchangeRate( $currency_code );
+		}
 
 		if ( class_exists( 'NumberFormatter' ) ) {
 			$fmt              = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
