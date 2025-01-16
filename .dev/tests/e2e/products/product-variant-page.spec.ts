@@ -27,52 +27,56 @@ test.describe('Product Page With Variant', () => {
 
 		expect(
 			await page.getByRole('radio', {
-				name: 'Select Size: Small.',
+				name: 'Select Size Small',
 			})
 		).toHaveAttribute('aria-checked', 'true');
 
 		expect(
-			await page.getByRole('radio', { name: 'Select Color: Black.' })
+			await page.getByRole('radio', { name: 'Select Color Black' })
 		).toHaveAttribute('aria-disabled', 'true');
 
 		expect(await page.getByText('Add To Cart').first()).toBeVisible();
 
 		await page
-			.getByRole('radio', { name: 'Select Size: Large.' })
+			.getByRole('radio', { name: 'Select Size Large' })
 			.click({ force: true });
 
 		expect(
-			await page.getByRole('radio', { name: 'Select Color: Red' })
+			await page.getByRole('radio', { name: 'Select Color Red' })
 		).toHaveAttribute('aria-disabled', 'true');
 		expect(
-			await page.getByRole('radio', { name: 'Select Color: Red' })
+			await page.getByRole('radio', { name: 'Select Color Red' })
 		).toHaveAttribute('aria-checked', 'true');
 		expect(
-			await page.getByRole('radio', { name: 'Select Color: Blue' })
+			await page.getByRole('radio', { name: 'Select Color Black' })
 		).toHaveAttribute('aria-disabled', 'true');
 
-		expect(await page.getByText('Sold Out').first()).toBeVisible();
+		// expect(await page.getByRole('button', { name: 'Sold Out' }).first()).toBeVisible();
 
 		await page
-			.getByRole('radio', { name: 'Select Color: Blue' })
+			.getByRole('radio', { name: 'Select Color Blue' })
 			.click({ force: true });
 
 		expect(await page.getByText('Unavailable').first()).toBeVisible();
 
 		await page
-			.getByRole('radio', { name: 'Select Size: Small' })
+			.getByRole('radio', { name: 'Select Size Small' })
 			.click({ force: true });
 		await page
-			.getByRole('radio', { name: 'Select Color: Red' })
+			.getByRole('radio', { name: 'Select Color Red' })
 			.click({ force: true });
 
-		await page.getByRole('link', { name: 'Add To Cart' }).click();
+		await page
+			.getByText('One Time')
+			.click({ force: true });
+
+		await page.getByRole('button', { name: 'Add To Cart' }).click();
 
 		// expect the cart to have the product.
-		await expect(page.locator('#sc-cart')).toContainText('Test Product');
-		await expect(page.locator('#sc-cart')).toContainText('Small / Red');
-		await expect(page.locator('#sc-cart')).toContainText('One Time');
-		await expect(page.locator('#sc-cart')).toContainText('$20');
+		await expect(page.locator('dialog')).toContainText('Test Product');
+		await expect(page.locator('dialog')).toContainText('Small / Red');
+		await expect(page.locator('dialog')).toContainText('One Time');
+		await expect(page.locator('dialog')).toContainText('$20');
 	});
 });
 

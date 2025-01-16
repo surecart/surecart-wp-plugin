@@ -323,7 +323,6 @@ export class ScSessionProvider {
     console.info('Handling initial line items.');
     // TODO: move this to central store.
     const address = this.el.querySelector('sc-order-shipping-address');
-    clearCheckout();
     return this.loadUpdate({
       line_items,
       refresh_line_items: true,
