@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -306,6 +306,11 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.2.2 - January 16th, 2025 =
+- Fix: Issue with buy now buttons sometimes clearing out existing cart items after purchase.
+- Fix: Issue where more than 30 products on shipping zone were not being shown.
+- Fix: Issue with legacy blocks javascript not being loaded on some instances.
 
 = 3.2.1 - January 14th, 2025 =
 - Change: Rename "Add Payment Method" to "Select Payment Method" on invoice creation page.
