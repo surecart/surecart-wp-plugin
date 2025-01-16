@@ -21,6 +21,25 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	protected $item = null;
 
 	/**
+	 * Whether to include lightbox.
+	 *
+	 * @var bool
+	 */
+	protected $with_lightbox = false;
+
+	/**
+	 * Set the lightbox attribute.
+	 *
+	 * @param bool $with_lightbox Whether to include lightbox.
+	 *
+	 * @return self
+	 */
+	public function withLightbox( $with_lightbox = true ) {
+		$this->with_lightbox = $with_lightbox;
+		return $this;
+	}
+
+	/**
 	 * Convert object to array.
 	 *
 	 * @return Array

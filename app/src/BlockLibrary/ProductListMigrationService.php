@@ -198,7 +198,7 @@ class ProductListMigrationService {
 		$this->block_html .= '<!-- wp:surecart/product-list-filter-tags {"layout":{"type":"flex","orientation":"vertical"}} -->';
 		$this->block_html .= '<!-- wp:surecart/product-list-filter-tags-template -->';
 		$this->block_html .= '<!-- wp:surecart/product-list-filter-tag /-->';
-		$this->block_html .= '</div><!-- /wp:group -->';
+		$this->block_html .= '<!-- /wp:surecart/product-list-filter-tags -->';
 		$this->block_html .= '</div><!-- /wp:group -->';
 	}
 

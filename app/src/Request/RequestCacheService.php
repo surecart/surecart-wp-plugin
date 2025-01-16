@@ -79,7 +79,7 @@ class RequestCacheService {
 	public function getTransientCacheKey() {
 		$timestamp = \SureCart::account()->cache_keys->{$this->account_cache_key} ?? 0;
 		if ( ! $timestamp ) {
-			return false;
+			return '';
 		}
 		// we need to hash this this because there is a limit on string size for the key on the options table.
 		return wp_hash( $this->endpoint . wp_json_encode( $this->args ) . $timestamp );

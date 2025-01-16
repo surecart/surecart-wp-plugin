@@ -5,54 +5,7 @@ namespace SureCart\Models\Blocks;
 /**
  * The product list block.
  */
-class ProductListBlock {
-	/**
-	 * The block.
-	 *
-	 * @var \WP_Block
-	 */
-	protected $block;
-
-	/**
-	 * The URL.
-	 *
-	 * @var object
-	 */
-	protected $url;
-
-	/**
-	 * The query vars.
-	 *
-	 * @var array
-	 */
-	protected $query_vars = [];
-
-	/**
-	 * The query.
-	 *
-	 * @var \WP_Query
-	 */
-	protected $query;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param \WP_Block $block The block.
-	 */
-	public function __construct( \WP_Block $block = null ) {
-		$this->block = $block ? $block : \WP_Block_Supports::$block_to_render;
-		$this->url   = \SureCart::block()->urlParams( 'products' );
-	}
-
-	/**
-	 * Get the URL.
-	 *
-	 * @return object|null
-	 */
-	public function urlParams() {
-		return $this->url;
-	}
-
+class ProductListBlock extends AbstractProductListBlock {
 	/**
 	 * Get the query context.
 	 *
@@ -81,7 +34,7 @@ class ProductListBlock {
 		$page     = $this->url->getCurrentPage();
 
 		// build up the query.
-		$this->query_vars = array_filter(
+		$query_vars = array_filter(
 			array(
 				'post_type'           => 'sc_product',
 				'post_status'         => 'publish',
@@ -96,14 +49,14 @@ class ProductListBlock {
 		);
 
 		// handle search.
-		if ( ! empty( $query['search'] ) && empty( $this->query_vars['s'] ) ) {
-			$this->query_vars['s'] = sanitize_text_field( $query['search'] );
+		if ( ! empty( $query['search'] ) && empty( $query_vars['s'] ) ) {
+			$query_vars['s'] = sanitize_text_field( $query['search'] );
 		}
 
 		// put together price query.
 		if ( 'price' === $this->url->getArg( 'orderby' ) ) {
-			$this->query_vars['meta_key'] = 'min_price_amount';
-			$this->query_vars['orderby']  = 'meta_value_num';
+			$query_vars['meta_key'] = 'min_price_amount';
+			$query_vars['orderby']  = 'meta_value_num';
 		}
 
 		$tax_query = array(
@@ -125,8 +78,8 @@ class ProductListBlock {
 
 		// put together price query.
 		if ( 'price' === $orderby ) {
-			$this->query_vars['meta_key'] = 'min_price_amount';
-			$this->query_vars['orderby']  = 'meta_value_num';
+			$query_vars['meta_key'] = 'min_price_amount';
+			$query_vars['orderby']  = 'meta_value_num';
 		}
 
 		$collection_id = sanitize_text_field( $this->block->context['surecart/product-list/collection_id'] ?? $this->block->parsed_block['attrs']['collection_id'] ?? '' );
@@ -186,11 +139,11 @@ class ProductListBlock {
 				);
 		}
 
-		$this->query_vars['tax_query'][] = $tax_query;
+		$query_vars['tax_query'][] = $tax_query;
 
 		// handle featured.
 		if ( 'featured' === ( $this->block->context['surecart/product-list/type'] ?? 'all' ) ) {
-			$this->query_vars['meta_query'] = [
+			$query_vars['meta_query'] = [
 				[
 					'key'     => 'featured',
 					'value'   => '1',
@@ -230,15 +183,15 @@ class ProductListBlock {
 			$ids_that_are_integers = array_filter( $ids, 'is_int' );
 
 			// post in.
-			$this->query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );
+			$query_vars['post__in'] = array_merge( $legacy_ids, $ids_that_are_integers );
 
 			// order by posts if there is not an order by.
-			if ( empty( $this->query_vars['orderby'] ) ) {
-				$this->query_vars['orderby'] = 'post__in';
+			if ( empty( $query_vars['orderby'] ) ) {
+				$query_vars['orderby'] = 'post__in';
 			}
 		}
 
-		return $this;
+		return $query_vars;
 	}
 
 	/**
@@ -262,66 +215,13 @@ class ProductListBlock {
 	 * @return $this|\WP_Error
 	 */
 	public function query() {
-		$this->parse_query();
+		$query_vars = $this->parse_query();
 		wp_reset_postdata();
 
 		add_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
-		$this->query = new \WP_Query( $this->query_vars );
+		$this->query = new \WP_Query( $query_vars );
 		remove_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
 
 		return $this;
-	}
-
-	/**
-	 * Get the query attribute.
-	 *
-	 * @param string $key The key.
-	 * @return \WP_Query
-	 */
-	public function __get( $key ) {
-		// handle pagination.
-		if ( 'next_page_link' === $key ) {
-			return $this->max_num_pages && $this->max_num_pages !== $this->paged ? $this->url->addPageArg( $this->paged + 1 )->url() : '';
-		}
-
-		if ( 'previous_page_link' === $key ) {
-			return $this->paged > 1 ? $this->url->addPageArg( $this->paged - 1 )->url() : '';
-		}
-
-		if ( 'pagination_links' === $key ) {
-			return array_map(
-				function ( $i ) {
-					return array(
-						'href'    => $this->url->addPageArg( $i )->url(),
-						'name'    => $i,
-						'current' => (int) $i === (int) $this->paged,
-					);
-				},
-				range( 1, $this->max_num_pages )
-			);
-		}
-
-		if ( 'products' === $key ) {
-			return array_map(
-				function ( $post ) {
-					return sc_get_product( $post );
-				},
-				$this->query->posts
-			);
-		}
-
-		return $this->query->$key ?? $this->query->query[ $key ] ?? $this->query->query_vars[ $key ] ?? null;
-	}
-
-	/**
-	 * Call the query method.
-	 *
-	 * @param string $method The method.
-	 * @param array  $args   The arguments.
-	 *
-	 * @return mixed
-	 */
-	public function __call( $method, $args ) {
-		return $this->query->$method( ...$args );
 	}
 }

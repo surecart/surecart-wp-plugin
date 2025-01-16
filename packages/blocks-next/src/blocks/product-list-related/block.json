@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-list-related",
+	"title": "Related Products",
+	"description": "Display a list of products related to the current product.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"providesContext": {
+		"query": "query",
+		"surecart/product-list/limit": "limit"
+	},
+	"attributes": {
+		"limit": {
+			"type": "number"
+		},
+		"query": {
+			"type": "object",
+			"default": {
+				"perPage": 4,
+				"pages": 3,
+				"postType": "sc_product",
+				"order": "desc",
+				"orderBy": "date",
+				"taxonomy": "sc_collection",
+				"related": true,
+				"fallback": true
+			}
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"layout": true,
+		"align": true,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": [
+		"file:./style-index.css",
+		"surecart-block-ui",
+		"surecart-tag",
+		"surecart-theme-base"
+	]
+}
