@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useRef, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -14,7 +14,13 @@ import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
-import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
+import {
+	ScButton,
+	ScIcon,
+	ScDrawer,
+	ScForm,
+	ScDivider,
+} from '@surecart/components-react';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
 import SwapPrice from '../../../components/price/parts/SwapPrice';
 
@@ -23,10 +29,19 @@ export default ({ price, product }) => {
 	const [error, setError] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const [currentPrice, setCurrentPrice] = useState(price);
-	const [currentSwap, setCurrentSwap] = useState(price?.current_swap);
+	const [currentSwap, setCurrentSwap] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { record: swap } = useEntityRecord(
+		'surecart',
+		'swap',
+		price?.current_swap
+	);
 	const ref = useRef(null);
-	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+	const {
+		deleteEntityRecord,
+		saveEntityRecord,
+		invalidateResolutionForStore,
+	} = useDispatch(coreStore);
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
 	};
@@ -38,6 +53,10 @@ export default ({ price, product }) => {
 	useEffect(() => {
 		setCurrentPrice(price);
 	}, [price]);
+
+	useEffect(() => {
+		setCurrentSwap(swap);
+	}, [swap]);
 
 	// get any save errors.
 	const { savePriceError } = useSelect(
@@ -66,6 +85,7 @@ export default ({ price, product }) => {
 					throwOnError: true,
 				});
 			}
+			await invalidateResolutionForStore();
 			setIsOpen(false);
 			createSuccessNotice(__('Price updated.', 'surecart'), {
 				type: 'snackbar',
@@ -244,10 +264,17 @@ export default ({ price, product }) => {
 								price={currentPrice}
 								updatePrice={editPrice}
 							/>
+							<ScDivider
+								style={{
+									'margin-left': '-30px',
+									'margin-right': '-30px',
+								}}
+							/>
 							<SwapPrice
 								price={currentPrice}
 								updateSwap={editSwap}
 								currentSwap={currentSwap}
+								isSaving={isSaving}
 							/>
 						</div>
 					</div>

@@ -19,7 +19,6 @@ import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 import Error from '../../../../components/Error';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
-import SwapPrice from '../../../components/price/parts/SwapPrice';
 
 export default ({ isOpen, onRequestClose, product }) => {
 	if (!isOpen) return null;
@@ -170,8 +169,6 @@ export default ({ isOpen, onRequestClose, product }) => {
 						)}
 
 						<CanUpgrade price={price} updatePrice={updatePrice} />
-
-						<SwapPrice price={price} />
 					</div>
 				</div>
 				<div

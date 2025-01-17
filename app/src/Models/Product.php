@@ -25,7 +25,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'prices', 'price.current_swap', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
+	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
 
 	/**
 	 * Rest API endpoint
