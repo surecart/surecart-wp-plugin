@@ -576,6 +576,7 @@ export interface Charge extends Object {
   created_at: number;
   created_at_date: string;
   currency: string;
+  display_amount: string;
   customer: string | Customer;
   external_charge_id: string;
   fully_refunded: boolean;
@@ -1270,6 +1271,7 @@ export interface ProductState {
   quantity: number;
   selectedPrice: Price;
   total: number;
+  range_display_amount: string;
   busy: boolean;
   disabled: boolean;
   checkoutUrl: string;

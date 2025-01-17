@@ -7,12 +7,17 @@ use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasSubscription;
+use SureCart\Support\Currency;
 
 /**
  * Subscription model
  */
 class Charge extends Model {
-	use HasCustomer, HasOrder, HasSubscription, HasDates, HasPaymentMethod;
+	use HasCustomer;
+	use HasOrder;
+	use HasSubscription;
+	use HasDates;
+	use HasPaymentMethod;
 
 	/**
 	 * Rest API endpoint
@@ -35,5 +40,14 @@ class Charge extends Model {
 	 */
 	protected function refund() {
 		return new Refund( [ 'charge' => $this->id ] );
+	}
+
+	/**
+	 * Get the display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAmountDisplayAmountAttribute() {
+		return Currency::format( $this->amount, $this->currency );
 	}
 }
