@@ -6,6 +6,7 @@ import {
 	ScIcon,
 	ScSelect,
 	ScDrawer,
+	ScDivider,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -19,6 +20,7 @@ import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 import Error from '../../../../components/Error';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
+import SwapPrice from '../../../components/price/parts/SwapPrice';
 
 export default ({ isOpen, onRequestClose, product }) => {
 	if (!isOpen) return null;
@@ -28,6 +30,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 	const [price, setPrice] = useState({
 		portal_subscription_update_enabled: true,
 	});
+	const [currentSwap, setCurrentSwap] = useState(null);
 	const [type, setType] = useState('once');
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -38,11 +41,15 @@ export default ({ isOpen, onRequestClose, product }) => {
 		setPrice({ ...price, ...data });
 	};
 
+	const editSwap = (data) => {
+		setCurrentSwap({ ...currentSwap, ...data });
+	};
+
 	const onSubmit = async (e) => {
 		e.stopPropagation();
 		try {
 			setLoading(true);
-			await saveEntityRecord(
+			const newPrice = await saveEntityRecord(
 				'surecart',
 				'price',
 				{
@@ -51,6 +58,18 @@ export default ({ isOpen, onRequestClose, product }) => {
 				},
 				{ throwOnError: true }
 			);
+
+			if (currentSwap) {
+				await saveEntityRecord(
+					'surecart',
+					'swap',
+					{
+						...currentSwap,
+						price: newPrice.id,
+					},
+					{ throwOnError: true }
+				);
+			}
 			createSuccessNotice(__('Price added.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -169,6 +188,19 @@ export default ({ isOpen, onRequestClose, product }) => {
 						)}
 
 						<CanUpgrade price={price} updatePrice={updatePrice} />
+
+						<ScDivider
+							style={{
+								'margin-left': '-30px',
+								'margin-right': '-30px',
+							}}
+						/>
+
+						<SwapPrice
+							price={price}
+							updateSwap={editSwap}
+							currentSwap={currentSwap}
+						/>
 					</div>
 				</div>
 				<div
