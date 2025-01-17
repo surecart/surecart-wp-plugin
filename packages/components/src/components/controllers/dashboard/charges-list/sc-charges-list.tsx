@@ -120,7 +120,7 @@ export class ScChargesList {
     }
 
     return this.charges.map(charge => {
-      const { currency, amount, created_at_date, display_amount } = charge;
+      const { created_at_date, display_amount } = charge;
 
       return (
         <sc-stacked-list-row

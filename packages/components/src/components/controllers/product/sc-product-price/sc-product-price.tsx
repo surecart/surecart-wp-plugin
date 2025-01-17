@@ -27,10 +27,7 @@ export class ScProductPrice {
   @Prop() productId: string;
 
   renderRange() {
-    if (state[this.productId]?.prices?.length === 1) {
-      return this.renderPrice(state[this.productId]?.prices[0]);
-    }
-    return <sc-price-range prices={state[this.productId]?.prices} />;
+    return state[this.productId]?.range_display_amount;
   }
 
   renderVariantPrice(selectedVariant: Variant) {
