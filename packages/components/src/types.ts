@@ -697,17 +697,23 @@ export interface Checkout extends Object {
   live_mode?: boolean;
   currency?: string;
   current_currency?: string;
+  discounts_display_amount?: string;
+  discounts_display?: string;
   tax_exclusive_display_amount?: string;
   tax_inclusive_display_amount?: string;
   total_amount?: number;
+  total_display_amount?: string;
   subtotal_amount?: number;
+  subtotal_display_amount?: string;
   full_amount?: number;
   full_display_amount?: string;
   paid_amount?: number;
+  paid_display_amount?: string;
   proration_amount?: number;
   proration_display_amount?: string;
   total_savings_amount?: number;
   applied_balance_amount?: number;
+  applied_balance_display_amount?: string;
   scratch_display_amount?: string;
   discounts?: number;
   shipping_address_required?: boolean;
@@ -766,9 +772,13 @@ export interface Checkout extends Object {
   invoice?: string | Invoice;
   pdf_url?: string;
   refunded_amount?: number;
+  refunded_display_amount?: string;
   net_paid_amount?: number;
+  net_paid_display_amount?: string;
   credited_balance_amount?: number;
+  credited_balance_display_amount?: string;
   tax_reverse_charged_amount?: number;
+  tax_reverse_charged_display_amount?: string;
 }
 
 export interface ShippingMethod {

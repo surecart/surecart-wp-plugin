@@ -79,6 +79,33 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display discounts amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountsDisplayAmountAttribute() {
+		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display tax reverse charged amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxReverseChargedDisplayAmountAttribute() {
+		return ! empty( $this->tax_reverse_charged_amount ) ? Currency::format( $this->tax_reverse_charged_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display tax reverse charged amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountsDisplayAttribute() {
+		return ! empty( $this->discounts ) ? Currency::format( $this->discounts, $this->currency ) : '';
+	}
+
+	/**
 	 * Get the display scratch amount attribute.
 	 *
 	 * @return string
@@ -103,6 +130,24 @@ class Checkout extends Model {
 	 */
 	public function getRemainingAmountDueDisplayAmountAttribute() {
 		return ! empty( $this->remaining_amount_due ) ? Currency::format( $this->remaining_amount_due, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display refunded amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getRefundedDisplayAmountAttribute() {
+		return ! empty( $this->refunded_amount ) ? Currency::format( $this->refunded_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display net paid amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getNetPaidDisplayAmountAttribute() {
+		return ! empty( $this->net_paid_amount ) ? Currency::format( $this->net_paid_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -564,6 +609,15 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the paid display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getPaidDisplayAmountAttribute() {
+		return Currency::format( $this->paid_amount, $this->currency );
+	}
+
+	/**
 	 * Get the Paid at Date attribute.
 	 *
 	 * @return string
@@ -579,6 +633,24 @@ class Checkout extends Model {
 	 */
 	public function getProrationDisplayAmountAttribute() {
 		return Currency::format( $this->proration_amount, $this->currency );
+	}
+
+	/**
+	 * Get the applied balance display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAppliedBalanceDisplayAmountAttribute() {
+		return Currency::format( $this->applied_balance_amount, $this->currency );
+	}
+
+	/**
+	 * Get the credited balance display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCreditedBalanceDisplayAmountAttribute() {
+		return Currency::format( $this->credited_balance_amount, $this->currency );
 	}
 
 	/**
