@@ -224,3 +224,19 @@ export const updateLineItem = async ({ id, data }) => {
 
   return item?.checkout as Checkout;
 };
+
+export const toggleSwap = async ({ id, action = 'swap' }) => {
+  const item = (await apiFetch({
+    path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
+      expand: [
+        ...(expand || []).map(item => {
+          return item.includes('.') ? item : `checkout.${item}`;
+        }),
+        'checkout',
+      ],
+    }),
+    method: 'PATCH',
+  })) as LineItem;
+
+  return item?.checkout as Checkout;
+};

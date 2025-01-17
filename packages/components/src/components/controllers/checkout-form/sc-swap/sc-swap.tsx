@@ -1,9 +1,8 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { LineItem, Checkout } from 'src/types';
-import apiFetch from '../../../../functions/fetch';
+import { LineItem } from 'src/types';
 import { state as checkoutState } from '@store/checkout';
-import { createOrUpdateCheckout } from '../../../../services/session';
+import { toggleSwap } from '@services/session';
 import { updateFormState } from '@store/form/mutations';
 
 @Component({
@@ -18,17 +17,7 @@ export class ScSwap {
   async onSwapToggleChange(e) {
     try {
         updateFormState('FETCH');
-        await apiFetch({
-            path: `/surecart/v1/line_items/${this.lineItem?.id}/${e.target.checked ? 'swap' : 'unswap'}`,
-            method: 'PATCH',
-        });
-
-        checkoutState.checkout = (await createOrUpdateCheckout({
-            id: checkoutState.checkout.id,
-            data: {
-              refresh_line_items: true,
-            },
-        })) as Checkout;
+          checkoutState.checkout = await toggleSwap({ id: this.lineItem?.id, action: e.target.checked ? 'swap' : 'unswap' });
         updateFormState('RESOLVE');
     } catch (e) {
         updateFormState('REJECT');
