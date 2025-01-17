@@ -1730,8 +1730,6 @@
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
-    "current-swap": true,
-    "display-swap": true,
     "editable": true,
     "fees": true,
     "image": true,
@@ -2183,6 +2181,13 @@
     "collapsible": true,
     "loading": true,
     "open-text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-swap": {
+    "line-item": true,
     "style": true,
     "id": true,
     "class": true,

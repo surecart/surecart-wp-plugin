@@ -495,7 +495,7 @@ export interface LineItem extends Object {
   variant_options: Array<string>;
   variant?: Variant;
   locked: boolean;
-  swap?: Swap | string;
+  swap?: Swap;
 }
 
 export interface DeletedItem {
