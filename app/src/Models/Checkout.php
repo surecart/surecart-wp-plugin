@@ -546,6 +546,15 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the shipping display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getShippingDisplayAmountAttribute() {
+		return Currency::format( $this->shipping_amount, $this->currency );
+	}
+
+	/**
 	 * If the shipping address is required.
 	 *
 	 * @return bool
@@ -561,6 +570,15 @@ class Checkout extends Model {
 	 */
 	public function getPaidAtDateAttribute() {
 		return ! empty( $this->paid_at ) ? TimeDate::formatDate( $this->paid_at ) : '';
+	}
+
+	/**
+	 * Get the proration display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getProrationDisplayAmountAttribute() {
+		return Currency::format( $this->proration_amount, $this->currency );
 	}
 
 	/**
@@ -597,5 +615,14 @@ class Checkout extends Model {
 	 */
 	public function getTaxInclusiveDisplayAmountAttribute() {
 		return Currency::format( $this->tax_inclusive_amount, $this->currency );
+	}
+
+	/**
+	 * Get the tax display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxDisplayAmountAttribute() {
+		return Currency::format( $this->tax_amount, $this->currency );
 	}
 }

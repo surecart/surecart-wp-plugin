@@ -32,13 +32,7 @@ export class ScLineItemShipping {
     return (
       <sc-line-item>
         <span slot="description">{this.label || __('Shipping', 'surecart')}</span>
-        <span slot="price">
-          {checkout?.shipping_amount ? (
-            <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.shipping_amount}></sc-format-number>
-          ) : (
-            __('Free', 'surecart')
-          )}
-        </span>
+        <span slot="price">{checkout?.shipping_amount ? checkout?.shipping_display_amount : __('Free', 'surecart')}</span>
       </sc-line-item>
     );
   }

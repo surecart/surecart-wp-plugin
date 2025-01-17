@@ -117,6 +117,7 @@ export interface Price {
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
   scratch_amount: number;
+  scratch_display_amount: string;
   setup_fee_enabled: boolean;
   setup_fee_amount: number;
   setup_fee_name: string;
@@ -331,6 +332,7 @@ export interface Variant {
   position: number;
   product: string | Product;
   sku?: string | null;
+  display_amount?: string;
   created_at: number;
   updated_at: number;
 }
@@ -656,6 +658,15 @@ export interface ShippingMethod {
 export interface Checkout extends Object {
   id?: string;
   status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
+  tax_amount: number;
+  tax_display_amount: string;
+  tax_inclusive_amount: number;
+  tax_exclusive_amount: number;
+  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
+  tax_label: string;
+  tax_percent: number;
+  tax_enabled: boolean;
+  email_exists: boolean;
   staged_payment_intents: {
     object: 'list';
     pagination: Pagination;
@@ -694,20 +705,13 @@ export interface Checkout extends Object {
   full_display_amount?: string;
   paid_amount?: number;
   proration_amount?: number;
+  proration_display_amount?: string;
   total_savings_amount?: number;
   applied_balance_amount?: number;
   scratch_display_amount?: string;
   discounts?: number;
   shipping_address_required?: boolean;
   shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';
-  tax_enabled: boolean;
-  tax_amount: number;
-  email_exists: boolean;
-  tax_inclusive_amount: number;
-  tax_exclusive_amount: number;
-  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
-  tax_label: string;
-  tax_percent: number;
   line_items: lineItems;
   recommended_bumps?: {
     object: 'list';
@@ -739,6 +743,7 @@ export interface Checkout extends Object {
   discount?: DiscountResponse;
   billing_address?: string | Address;
   shipping_amount?: number;
+  shipping_display_amount?: string;
   shipping_address?: string | Address;
   shipping_enabled?: boolean;
   shipping_choices?: {
