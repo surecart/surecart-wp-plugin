@@ -106,6 +106,7 @@ export interface Price {
   description?: string;
   amount: number;
   display_amount: string;
+  setup_fee_display_amount: string;
   full_amount: number;
   currency: string;
   recurring: boolean;
@@ -471,6 +472,7 @@ export interface LineItem extends Object {
   ad_hoc_display_amount: string;
   subtotal_display_amount: string;
   bump_amount: number;
+  bump_display_amount: string;
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
@@ -662,6 +664,7 @@ export interface Checkout extends Object {
   abandoned_checkout_enabled: boolean;
   billing_matches_shipping: boolean;
   bump_amount: number;
+  bump_display_amount: string;
   payment_method_required?: boolean;
   manual_payment: boolean;
   manual_payment_method?: string | ManualPaymentMethod;
