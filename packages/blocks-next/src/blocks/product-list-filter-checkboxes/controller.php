@@ -1,7 +1,8 @@
 <?php
+
 use SureCart\Models\Blocks\ProductListBlock;
 
-$options = ( new ProductListBlock( $block ) )->getTermOptions( $block->context['taxonomySlug'] ?? 'sc_collection' );
+$options = ( new ProductListBlock( $block ) )->getTermOptions( $attributes['taxonomy'] ?? 'sc_collection' );
 
 // no filter options.
 if ( empty( $options ) ) {

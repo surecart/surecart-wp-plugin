@@ -1,3 +1,4 @@
+<?php global $sc_query_id; ?>
 <div
 	<?php
 	echo wp_kses_data(
