@@ -54,7 +54,7 @@ class BumpsListTable extends ListTable {
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-bumps' );
+			$link                    = admin_url( 'admin.php?page=sc-bumps' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -90,15 +90,18 @@ class BumpsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'surecart' ),
-			// 'description' => __( 'Description', 'surecart' ),
-			'price' => __( 'Price', 'surecart' ),
-			// 'type'         => __( 'Type', 'surecart' ),
-			// 'integrations' => __( 'Integrations', 'surecart' ),
-			'date'  => __( 'Date', 'surecart' ),
-		];
+		return array_merge(
+			[
+				// 'cb'          => '<input type="checkbox" />',
+				'name'  => __( 'Name', 'surecart' ),
+				// 'description' => __( 'Description', 'surecart' ),
+				'price' => __( 'Price', 'surecart' ),
+				// 'type'         => __( 'Type', 'surecart' ),
+				// 'integrations' => __( 'Integrations', 'surecart' ),
+				'date'  => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -244,7 +247,7 @@ class BumpsListTable extends ListTable {
 		ob_start();
 		?>
 
-	  <div>
+		<div>
 		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ); ?>">
 			<?php echo esc_html( $bump->name ? $bump->name : $bump->price->product->name ); ?>
 		</a>
@@ -272,6 +275,9 @@ class BumpsListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $bump, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $bump, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return ' < a href     = "' . \SureCart::getUrl()->edit( 'bump', $bump->id ) . '" > ' . $bump->name . ' < / a > ';

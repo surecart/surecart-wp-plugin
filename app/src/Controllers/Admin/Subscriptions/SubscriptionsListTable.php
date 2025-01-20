@@ -104,15 +104,18 @@ class SubscriptionsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'customer'           => __( 'Customer', 'surecart' ),
-			'status'             => __( 'Status', 'surecart' ),
-			'plan'               => __( 'Plan', 'surecart' ),
-			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
-			'integrations'       => __( 'Integrations', 'surecart' ),
-			'created'            => __( 'Created', 'surecart' ),
-			'mode'               => '',
-		];
+		return array_merge(
+			[
+				'customer'           => __( 'Customer', 'surecart' ),
+				'status'             => __( 'Status', 'surecart' ),
+				'plan'               => __( 'Plan', 'surecart' ),
+				'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
+				'integrations'       => __( 'Integrations', 'surecart' ),
+				'created'            => __( 'Created', 'surecart' ),
+				'mode'               => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**

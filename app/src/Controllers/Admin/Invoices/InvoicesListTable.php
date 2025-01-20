@@ -46,17 +46,20 @@ class InvoicesListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return [
-			'invoice'    => __( 'Invoice', 'surecart' ),
-			'issue_date' => __( 'Issued', 'surecart' ),
-			'due_date'   => __( 'Due', 'surecart' ),
-			'status'     => __( 'Status', 'surecart' ),
-			'customer'   => __( 'Customer', 'surecart' ),
-			'method'     => __( 'Method', 'surecart' ),
-			'total'      => __( 'Total', 'surecart' ),
-			'created'    => __( 'Created', 'surecart' ),
-			'mode'       => '',
-		];
+		return array_merge(
+			[
+				'invoice'    => __( 'Invoice', 'surecart' ),
+				'issue_date' => __( 'Issued', 'surecart' ),
+				'due_date'   => __( 'Due', 'surecart' ),
+				'status'     => __( 'Status', 'surecart' ),
+				'customer'   => __( 'Customer', 'surecart' ),
+				'method'     => __( 'Method', 'surecart' ),
+				'total'      => __( 'Total', 'surecart' ),
+				'created'    => __( 'Created', 'surecart' ),
+				'mode'       => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**

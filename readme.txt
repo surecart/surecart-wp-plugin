@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.2.2
+Stable tag: 3.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -306,6 +306,16 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.3.0 - January 21st, 2025 =
+- New: Image lightbox for product media on product pages.
+- New: Sidebar layout for shop page with checkbox filters.
+- Improvement: Add ability for 3rd party developers to add UI elements to admin pages. [Docs](https://developer.surecart.com/docs/admin-custom-ui-elements)
+- Improvement: Filter blocks names now show the selected taxonomy.
+- Improvement: Add additional style and customization options to search block.
+- Change: Internal refactor from return_url to external_url.
+- Fix: Fix missing redirection to product list page after deleting a product.
+- Fix: Product pages sometimes loading the default template instead of the selected template.
 
 = 3.2.2 - January 16th, 2025 =
 - Fix: Issue with buy now buttons sometimes clearing out existing cart items after purchase.

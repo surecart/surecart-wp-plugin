@@ -66,6 +66,15 @@ class Media extends \Bricks\Element {
 			'default'    => true,
 		];
 
+		$this->controls['lightbox'] = [
+			'tab'        => 'content',
+			'label'      => esc_html__( 'Enlarge on click', 'surecart' ),
+			'type'       => 'checkbox',
+			'inline'     => true,
+			'fullAccess' => true,
+			'default'    => true,
+		];
+
 		$this->controls['height'] = [
 			'tab'         => 'content',
 			'label'       => esc_html__( 'Height', 'surecart' ),
@@ -124,6 +133,7 @@ class Media extends \Bricks\Element {
 			[
 				'auto_height'         => (bool) ! empty( $this->settings['auto_height'] ),
 				'height'              => esc_html( $this->settings['height'] ),
+				'lightbox'            => (bool) ! empty( $this->settings['lightbox'] ),
 				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
 				'thumbnails_per_page' => ! empty( $this->settings['thumbnails_per_page'] ) ? (int) $this->settings['thumbnails_per_page'] : null,
 			]
