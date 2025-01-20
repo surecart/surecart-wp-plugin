@@ -66,6 +66,7 @@ export const ScDivider = /*@__PURE__*/createReactComponent<JSX.ScDivider, HTMLSc
 export const ScDonationChoices = /*@__PURE__*/createReactComponent<JSX.ScDonationChoices, HTMLScDonationChoicesElement>('sc-donation-choices');
 export const ScDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScDownloadsList, HTMLScDownloadsListElement>('sc-downloads-list');
 export const ScDrawer = /*@__PURE__*/createReactComponent<JSX.ScDrawer, HTMLScDrawerElement>('sc-drawer');
+export const ScDrawerSection = /*@__PURE__*/createReactComponent<JSX.ScDrawerSection, HTMLScDrawerSectionElement>('sc-drawer-section');
 export const ScDropdown = /*@__PURE__*/createReactComponent<JSX.ScDropdown, HTMLScDropdownElement>('sc-dropdown');
 export const ScEmpty = /*@__PURE__*/createReactComponent<JSX.ScEmpty, HTMLScEmptyElement>('sc-empty');
 export const ScError = /*@__PURE__*/createReactComponent<JSX.ScError, HTMLScErrorElement>('sc-error');

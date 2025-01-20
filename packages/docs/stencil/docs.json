@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-01-17T09:31:28",
+  "timestamp": "2025-01-20T09:28:39",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -13462,6 +13462,46 @@
           "sc-drawer"
         ]
       }
+    },
+    {
+      "filePath": "src/components/ui/sc-drawer-section/sc-drawer-section.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-drawer-section",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "title",
+          "reflectToAttr": false,
+          "docs": "The product id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "src/components/ui/dropdown/dropdown.tsx",
@@ -40341,6 +40381,7 @@
       "filePath": "src/components/controllers/checkout-form/sc-swap/sc-swap.tsx",
       "encapsulation": "shadow",
       "tag": "sc-swap",
+      "readme": "# sc-swap\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

@@ -19,7 +19,7 @@ import {
 	ScIcon,
 	ScDrawer,
 	ScForm,
-	ScDivider,
+	ScDrawerSection,
 } from '@surecart/components-react';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
 import SwapPrice from '../../../components/price/parts/SwapPrice';
@@ -229,53 +229,60 @@ export default ({ price, product }) => {
 							`}
 						>
 							<Error error={error} setError={setError} />
-
-							<PriceName
-								price={currentPrice}
-								updatePrice={editPrice}
-								ref={ref}
-							/>
-
-							{getPriceType() === 'subscription' && (
-								<Subscription
-									price={currentPrice}
-									updatePrice={editPrice}
-									product={product}
-								/>
-							)}
-
-							{getPriceType() === 'multiple' && (
-								<Multiple
-									price={currentPrice}
-									updatePrice={editPrice}
-									product={product}
-								/>
-							)}
-
-							{getPriceType() === 'once' && (
-								<OneTime
-									price={currentPrice}
-									updatePrice={editPrice}
-									product={product}
-								/>
-							)}
-
-							<CanUpgrade
-								price={currentPrice}
-								updatePrice={editPrice}
-							/>
-							<ScDivider
+							<ScDrawerSection
+								title={__('Basic', 'surecart')}
 								style={{
-									'margin-left': '-30px',
-									'margin-right': '-30px',
+									'--sc-drawer-section-padding': '0 30px',
+									'--sc-drawer-section-border-top': 'none',
 								}}
-							/>
-							<SwapPrice
-								price={currentPrice}
-								updateSwap={editSwap}
-								currentSwap={currentSwap}
-								isSaving={isSaving}
-							/>
+							>
+								<PriceName
+									price={currentPrice}
+									updatePrice={editPrice}
+									ref={ref}
+								/>
+
+								{getPriceType() === 'subscription' && (
+									<Subscription
+										price={currentPrice}
+										updatePrice={editPrice}
+										product={product}
+									/>
+								)}
+
+								{getPriceType() === 'multiple' && (
+									<Multiple
+										price={currentPrice}
+										updatePrice={editPrice}
+										product={product}
+									/>
+								)}
+
+								{getPriceType() === 'once' && (
+									<OneTime
+										price={currentPrice}
+										updatePrice={editPrice}
+										product={product}
+									/>
+								)}
+								<CanUpgrade
+									price={currentPrice}
+									updatePrice={editPrice}
+								/>
+							</ScDrawerSection>
+							<ScDrawerSection
+								title={__('Revenue Booster', 'surecart')}
+								style={{
+									'--sc-drawer-section-padding': '2em 30px 0',
+								}}
+							>
+								<SwapPrice
+									price={currentPrice}
+									updateSwap={editSwap}
+									currentSwap={currentSwap}
+									isSaving={isSaving}
+								/>
+							</ScDrawerSection>
 						</div>
 					</div>
 

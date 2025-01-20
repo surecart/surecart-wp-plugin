@@ -7,6 +7,7 @@ import {
 	ScSelect,
 	ScDrawer,
 	ScDivider,
+	ScDrawerSection,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -134,73 +135,82 @@ export default ({ isOpen, onRequestClose, product }) => {
 						`}
 					>
 						<Error error={error} setError={setError} />
-
-						<PriceName
-							price={price}
-							updatePrice={updatePrice}
-							ref={ref}
-						/>
-
-						<ScSelect
-							label={__('Payment type', 'surecart')}
-							required
-							unselect={false}
-							value={type}
-							onScChange={(e) => setType(e.target.value)}
-							choices={[
-								{
-									value: 'once',
-									label: __('One Time', 'surecart'),
-								},
-								{
-									value: 'multiple',
-									label: __('Installment', 'surecart'),
-								},
-								{
-									value: 'subscription',
-									label: __('Subscription', 'surecart'),
-								},
-							]}
-						/>
-
-						{type === 'subscription' && (
-							<Subscription
-								price={price}
-								updatePrice={updatePrice}
-								product={product}
-							/>
-						)}
-
-						{type === 'multiple' && (
-							<Multiple
-								price={price}
-								updatePrice={updatePrice}
-								product={product}
-							/>
-						)}
-
-						{type === 'once' && (
-							<OneTime
-								price={price}
-								updatePrice={updatePrice}
-								product={product}
-							/>
-						)}
-
-						<CanUpgrade price={price} updatePrice={updatePrice} />
-
-						<ScDivider
+						<ScDrawerSection
+							title={__('Basic', 'surecart')}
 							style={{
-								'margin-left': '-30px',
-								'margin-right': '-30px',
+								'--sc-drawer-section-padding': '0 30px',
+								'--sc-drawer-section-border-top': 'none',
 							}}
-						/>
+						>
+							<PriceName
+								price={price}
+								updatePrice={updatePrice}
+								ref={ref}
+							/>
 
-						<SwapPrice
-							price={price}
-							updateSwap={editSwap}
-							currentSwap={currentSwap}
-						/>
+							<ScSelect
+								label={__('Payment type', 'surecart')}
+								required
+								unselect={false}
+								value={type}
+								onScChange={(e) => setType(e.target.value)}
+								choices={[
+									{
+										value: 'once',
+										label: __('One Time', 'surecart'),
+									},
+									{
+										value: 'multiple',
+										label: __('Installment', 'surecart'),
+									},
+									{
+										value: 'subscription',
+										label: __('Subscription', 'surecart'),
+									},
+								]}
+							/>
+
+							{type === 'subscription' && (
+								<Subscription
+									price={price}
+									updatePrice={updatePrice}
+									product={product}
+								/>
+							)}
+
+							{type === 'multiple' && (
+								<Multiple
+									price={price}
+									updatePrice={updatePrice}
+									product={product}
+								/>
+							)}
+
+							{type === 'once' && (
+								<OneTime
+									price={price}
+									updatePrice={updatePrice}
+									product={product}
+								/>
+							)}
+
+							<CanUpgrade
+								price={price}
+								updatePrice={updatePrice}
+							/>
+						</ScDrawerSection>
+						<ScDrawerSection
+							title={__('Revenue Booster', 'surecart')}
+							style={{
+								'--sc-drawer-section-padding': '2em 30px 0',
+							}}
+						>
+							<SwapPrice
+								price={price}
+								updateSwap={editSwap}
+								currentSwap={currentSwap}
+							/>
+						</ScDrawerSection>
 					</div>
 				</div>
 				<div

@@ -649,6 +649,13 @@
     "class": true,
     "slot": true
   },
+  "sc-drawer-section": {
+    "title": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-dropdown": {
     "click-el": true,
     "close-on-select": true,

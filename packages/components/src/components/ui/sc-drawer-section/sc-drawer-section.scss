@@ -1,0 +1,11 @@
+:host {
+    display: grid;
+    gap: 2em;
+    border-top: var(--sc-drawer-section-border-top, 1px solid #ccc);
+    margin-left: -30px;
+    margin-right: -30px;
+    padding: var(--sc-drawer-section-padding, 2em 30px);
+    h3 {
+        margin: 0;
+    }
+}
