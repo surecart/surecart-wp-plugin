@@ -50,31 +50,31 @@ class SwapRestServiceProvider extends RestServiceProvider implements RestService
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'          => [
+				'id'           => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'object'      => [
+				'object'       => [
 					'description' => esc_html__( 'Type of object (swap)', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 					'readonly'    => true,
 				],
-				'created_at'  => [
+				'created_at'   => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'updated_at'  => [
+				'updated_at'   => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'discarded_at'  => [
+				'discarded_at' => [
 					'description' => esc_html__( 'Time at which the object was discarded. Measured in seconds since the Unix epoch.', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
@@ -96,22 +96,22 @@ class SwapRestServiceProvider extends RestServiceProvider implements RestService
 					'type'        => 'object',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'price'     => [
+				'price'        => [
 					'description' => esc_html__( 'The associated price to swap from.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'swap_price'        => [
+				'swap_price'   => [
 					'description' => esc_html__( 'The associated price to swap to.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'archived'        => [
+				'archived'     => [
 					'description' => esc_html__( 'Whether or not this swap is archived.', 'surecart' ),
 					'type'        => 'boolean',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				
+
 			],
 		];
 
