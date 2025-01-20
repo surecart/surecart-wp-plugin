@@ -42,7 +42,6 @@ const { state } = store('surecart/product-list', {
 			const { ref } = getElement();
 			const { history } = getContext();
 			const queryRef = ref.closest('[data-wp-router-region]');
-			console.log(ref);
 
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
 				event.preventDefault();
