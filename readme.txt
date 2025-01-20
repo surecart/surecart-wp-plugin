@@ -311,6 +311,8 @@ IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading
 - New: Image lightbox for product media on product pages.
 - New: Sidebar layout for shop page with checkbox filters.
 - Improvement: Add ability for 3rd party developers to add UI elements to admin pages. [Docs](https://developer.surecart.com/docs/admin-custom-ui-elements)
+- Improvement: Filter blocks names now show the selected taxonomy.
+- Improvement: Add additional style and customization options to search block.
 - Change: Internal refactor from return_url to external_url.
 - Fix: Fix missing redirection to product list page after deleting a product.
 - Fix: Product pages sometimes loading the default template instead of the selected template.
