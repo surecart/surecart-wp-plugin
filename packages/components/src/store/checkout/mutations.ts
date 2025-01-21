@@ -10,7 +10,9 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Clear the current checkout.
  */
-export const clearCheckout = () => clearSavedCheckout(state.formId, state.mode);
+export const clearCheckout = () => {
+  clearSavedCheckout(state.formId, state.mode, state.checkout?.id);
+};
 
 /**
  * Lock the checkout (disables input and submission)

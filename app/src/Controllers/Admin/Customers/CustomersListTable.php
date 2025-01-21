@@ -47,12 +47,15 @@ class CustomersListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'name'    => __( 'Name', 'surecart' ),
-			'email'   => __( 'Email', 'surecart' ),
-			'created' => __( 'Created', 'surecart' ),
-			'mode'    => '',
-		];
+		return array_merge(
+			[
+				'name'    => __( 'Name', 'surecart' ),
+				'email'   => __( 'Email', 'surecart' ),
+				'created' => __( 'Created', 'surecart' ),
+				'mode'    => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -91,7 +94,7 @@ class CustomersListTable extends ListTable {
 	 * @return object|\WP_Error
 	 */
 	private function table_data() {
-		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+		$mode       = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
 		$conditions = array(
 			'query' => $this->get_search_query(),
 		);
@@ -164,6 +167,9 @@ class CustomersListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $product, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';

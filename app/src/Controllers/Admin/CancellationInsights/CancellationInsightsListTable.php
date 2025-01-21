@@ -47,15 +47,18 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'customer'            => __( 'Customer', 'surecart' ),
-			'plan'                => __( 'Plan', 'surecart' ),
-			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
-			'comment'             => __( 'Comment', 'surecart' ),
-			'status'              => __( 'Plan Status', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
-			'mode'                => '',
-		];
+		return array_merge(
+			[
+				'customer'            => __( 'Customer', 'surecart' ),
+				'plan'                => __( 'Plan', 'surecart' ),
+				'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
+				'comment'             => __( 'Comment', 'surecart' ),
+				'status'              => __( 'Plan Status', 'surecart' ),
+				'date'                => __( 'Date', 'surecart' ),
+				'mode'                => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -96,14 +99,14 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Object
 	 */
 	protected function table_data() {
-		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+		$mode       = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
 		$conditions = array();
 
 		if ( ! empty( $mode ) ) {
 			$conditions['live_mode'] = 'live' === $mode;
 		}
 
-		return CancellationAct::where($conditions)
+		return CancellationAct::where( $conditions )
 		->with(
 			[
 				'subscription',
@@ -200,9 +203,12 @@ class CancellationInsightsListTable extends ListTable {
 		if ( $act->preserved ) {
 			ob_start();
 			?>
-			<sc-tag type="success"><?php
+			<sc-tag type="success">
+			<?php
 			// translators: Subscription saver feature. This is displayed if the subscription has been "Saved" from cancellation.
-			echo esc_html__( 'Saved', 'surecart' ); ?> </sc-tag>
+			echo esc_html__( 'Saved', 'surecart' );
+			?>
+			</sc-tag>
 			<?php if ( $act->coupon_applied ) { ?>
 				<sc-tag type="info"><?php echo esc_html__( 'Coupon Applied', 'surecart' ); ?></sc-tag>
 			<?php } ?>

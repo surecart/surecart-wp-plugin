@@ -2,7 +2,6 @@
 
 $product = sc_get_product();
 
-
 $gallery        = $product->gallery ?? [];
 $featured_image = $gallery[0] ?? null;
 
@@ -16,6 +15,11 @@ if ( ! empty( $attributes['width'] ) ) {
 // handle empty.
 if ( empty( $gallery ) ) {
 	return ! empty( $attributes['hide_empty'] ) ? '' : 'file:./empty.php';
+}
+
+if ( ! empty( $attributes['lightbox'] ) ) {
+	wp_enqueue_style( 'surecart-lightbox' );
+	wp_enqueue_script_module( 'surecart/lightbox' );
 }
 
 // handle image.

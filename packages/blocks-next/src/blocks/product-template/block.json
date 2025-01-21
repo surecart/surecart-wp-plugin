@@ -25,6 +25,7 @@
 				"layout": true
 			}
 		},
+		"align": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,

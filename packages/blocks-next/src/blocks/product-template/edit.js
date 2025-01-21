@@ -15,6 +15,20 @@ import { useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
+const ALLOWED_ORDER_BY_VALUES = [
+	'author',
+	'date',
+	'id',
+	'include',
+	'modified',
+	'parent',
+	'relevance',
+	'slug',
+	'include_slugs',
+	'title',
+	'menu_order',
+];
+
 const TEMPLATE = [
 	[
 		'core/group',
@@ -196,7 +210,9 @@ export default ({
 		{
 			page: 1,
 			per_page: perPage || 15,
-			orderby: orderBy || 'date',
+			orderby: ALLOWED_ORDER_BY_VALUES.includes(orderBy)
+				? orderBy
+				: 'date',
 			order: order || 'desc',
 			post_status: ['publish'],
 			offset: offset || 0,

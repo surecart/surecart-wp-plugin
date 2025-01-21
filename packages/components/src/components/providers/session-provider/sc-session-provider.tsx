@@ -123,7 +123,7 @@ export class ScSessionProvider {
         id: checkoutState?.checkout?.id,
         query: {
           ...(selectedProcessor?.method ? { payment_method_type: selectedProcessor?.method } : {}),
-          return_url: addQueryArgs(window.location.href, {
+          external_url: addQueryArgs(window.location.href, {
             ...(checkoutState?.checkout?.id ? { checkout_id: checkoutState?.checkout?.id } : {}),
             is_surecart_payment_redirect: true,
           }),
@@ -323,7 +323,6 @@ export class ScSessionProvider {
     console.info('Handling initial line items.');
     // TODO: move this to central store.
     const address = this.el.querySelector('sc-order-shipping-address');
-    clearCheckout();
     return this.loadUpdate({
       line_items,
       refresh_line_items: true,

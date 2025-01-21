@@ -20,8 +20,14 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 	const swiper = useRef(null);
 	const thumbSwiper = useRef(null);
 
-	const { height, show_thumbnails, thumbnails_per_page, auto_height, width } =
-		attributes;
+	const {
+		height,
+		show_thumbnails,
+		thumbnails_per_page,
+		auto_height,
+		width,
+		lightbox,
+	} = attributes;
 	const [images, setImages] = useState([]);
 	const blockProps = useBlockProps({});
 
@@ -128,7 +134,25 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<ToggleControl
+						label={__('Enlarge on click', 'surecart')}
+						help={__(
+							'Scale images with a lightbox effect.',
+							'surecart'
+						)}
+						checked={lightbox}
+						onChange={(lightbox) =>
+							setAttributes({
+								lightbox,
+							})
+						}
+					/>
+
+					<ToggleControl
 						label={__('Auto Height', 'surecart')}
+						help={__(
+							'Automatically adjust the height of the slider to the image height.',
+							'surecart'
+						)}
 						checked={auto_height}
 						onChange={(auto_height) =>
 							setAttributes({

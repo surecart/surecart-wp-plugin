@@ -17,7 +17,13 @@
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
-		"align": ["wide", "full"]
+		"align": true,
+		"layout": true,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true
+		}
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
