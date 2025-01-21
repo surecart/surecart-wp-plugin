@@ -9,7 +9,7 @@
 			"elements": [
 				{
 					"id": "703dc9d5",
-					"settings": { "_title": "Product Container #1" },
+					"settings": { "_title": "Column" },
 					"elements": [
 						{
 							"id": "421ee3e1",
@@ -26,7 +26,7 @@
 				},
 				{
 					"id": "72cf69ad",
-					"settings": { "_title": "Product Container #2" },
+					"settings": { "_title": "Column" },
 					"elements": [
 						{
 							"id": "2925be0d",
