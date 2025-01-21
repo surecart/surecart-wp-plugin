@@ -90,6 +90,15 @@ class BlockService {
 	}
 
 	/**
+	 * Get product list filter tags migration service.
+	 *
+	 * @return ProductListFilterTagsMigrationService
+	 */
+	public function productListFilterTagsMigration() {
+		return new ProductListFilterTagsMigrationService();
+	}
+
+	/**
 	 * Get cart migration service.
 	 *
 	 * @param array $attributes Attributes.

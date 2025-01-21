@@ -28,7 +28,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function html( $size = 'full', $attr = [] ): string {
+	public function html( $size = 'full', $attr = [], $metadata = [] ): string {
 		// If the item is not set, return null.
 		if ( ! isset( $this->item->ID ) ) {
 			return '';
@@ -40,11 +40,73 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		// add any styles.
 		$tags = new \WP_HTML_Tag_Processor( $image );
 
+		// get the image tag.
+		$has_image = $tags->next_tag( 'img' );
+
 		// add inline styles.
 		if ( ! empty( $attr['style'] ) ) {
-			if ( $tags->next_tag( 'img' ) && ! empty( $attr['style'] ) ) {
+			if ( $has_image && ! empty( $attr['style'] ) ) {
 				$tags->set_attribute( 'style', $attr['style'] );
 			}
+		}
+
+		if ( $this->with_lightbox ) {
+			$this->with_lightbox = false; // reset to false.
+
+			// get the image data.
+			$full_data = $this->attributes( 'full' );
+
+			// set the lightbox state.
+			wp_interactivity_state(
+				'surecart/lightbox',
+				array(
+					'metadata' => array(
+						// metadata keyed by unique image id.
+						$this->id => wp_parse_args(
+							$metadata,
+							array(
+								'uploadedSrc'      => $full_data->src,
+								'imgClassNames'    => $full_data->class,
+								'targetWidth'      => $full_data->width,
+								'targetHeight'     => $full_data->height,
+								'scaleAttr'        => false, // false or 'contain'.
+								'alt'              => $full_data->alt,
+								// translators: %s is the image title.
+								'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $this->post_title ),
+								'galleryId'        => get_the_ID(),
+							),
+						),
+					),
+				)
+			);
+
+			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
+			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
+			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
+			$tags->set_attribute( 'data-wp-class--hide', 'state.isContentHidden' );
+			$tags->set_attribute( 'data-wp-class--show', 'state.isContentVisible' );
+			$tags->add_class( 'has-image-lightbox' );
+
+			// add the lightbox trigger button.
+			return $tags->get_updated_html() .
+				'<button
+					class="lightbox-trigger"
+					type="button"
+					aria-haspopup="dialog"
+					aria-label="' . esc_attr__( 'Expand image', 'surecart' ) . '"
+					data-wp-init="callbacks.initTriggerButton"
+					data-wp-on-async--click="actions.showLightbox"
+					data-wp-style--right="state.imageButtonRight"
+					data-wp-style--top="state.imageButtonTop"
+				>
+				' . \SureCart::svg()->get(
+						'maximize',
+						[
+							'width'  => 16,
+							'height' => 16,
+						]
+					) . '
+			</button>';
 		}
 
 		// return updated html.

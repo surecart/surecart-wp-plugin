@@ -174,7 +174,7 @@ class TemplatesService {
 		}
 
 		// check for product and use the template id.
-		$product = get_query_var( 'surecart_current_product' );
+		$product = sc_get_product();
 
 		if ( ! empty( $product->metadata->wp_template_id ) ) {
 			$page_template = $product->metadata->wp_template_id;

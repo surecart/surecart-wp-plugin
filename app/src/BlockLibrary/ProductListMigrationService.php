@@ -195,7 +195,8 @@ class ProductListMigrationService {
 
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 		$this->block_html .= '<div class="wp-block-group" style="margin-bottom:10px">';
-		$this->block_html .= '<!-- wp:surecart/product-list-filter-tags -->';
+		$this->block_html .= '<!-- wp:surecart/product-list-filter-tags {"layout":{"type":"flex","orientation":"vertical"}} -->';
+		$this->block_html .= '<!-- wp:surecart/product-list-filter-tags-template -->';
 		$this->block_html .= '<!-- wp:surecart/product-list-filter-tag /-->';
 		$this->block_html .= '<!-- /wp:surecart/product-list-filter-tags -->';
 		$this->block_html .= '</div><!-- /wp:group -->';

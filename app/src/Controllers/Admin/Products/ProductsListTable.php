@@ -138,20 +138,23 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array_filter(
-			array(
-				'cb'                  => '<input type="checkbox" />',
-				'name'                => __( 'Name', 'surecart' ),
-				'price'               => __( 'Price', 'surecart' ),
-				'commission_amount'   => __( 'Commission Amount', 'surecart' ),
-				'quantity'            => __( 'Quantity', 'surecart' ),
-				'integrations'        => __( 'Integrations', 'surecart' ),
-				'product_collections' => __( 'Collections', 'surecart' ),
-				'status'              => __( 'Product Page', 'surecart' ),
-				'featured'            => __( 'Featured', 'surecart' ),
-				'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
-				'date'                => __( 'Created', 'surecart' ),
-			)
+		return array_merge(
+			array_filter(
+				array(
+					'cb'                  => '<input type="checkbox" />',
+					'name'                => __( 'Name', 'surecart' ),
+					'price'               => __( 'Price', 'surecart' ),
+					'commission_amount'   => __( 'Commission Amount', 'surecart' ),
+					'quantity'            => __( 'Quantity', 'surecart' ),
+					'integrations'        => __( 'Integrations', 'surecart' ),
+					'product_collections' => __( 'Collections', 'surecart' ),
+					'status'              => __( 'Product Page', 'surecart' ),
+					'featured'            => __( 'Featured', 'surecart' ),
+					'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
+					'date'                => __( 'Created', 'surecart' ),
+				)
+			),
+			parent::get_columns()
 		);
 	}
 
@@ -541,6 +544,9 @@ class ProductsListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $product, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';

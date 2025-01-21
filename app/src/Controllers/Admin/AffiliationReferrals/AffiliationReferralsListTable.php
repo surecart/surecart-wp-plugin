@@ -111,16 +111,19 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array(
-			'date'          => esc_html__( 'Date', 'surecart' ),
-			'status'        => esc_html__( 'Status', 'surecart' ),
-			'payout_status' => esc_html__( 'Payout Status', 'surecart' ),
-			'payout_date'   => esc_html__( 'Payout Date', 'surecart' ),
-			'affiliate'     => esc_html__( 'Affiliate', 'surecart' ),
-			'description'   => esc_html__( 'Description', 'surecart' ),
-			'order'         => esc_html__( 'Order', 'surecart' ),
-			'commission'    => esc_html__( 'Commission', 'surecart' ),
-			'mode'          => '',
+		return array_merge(
+			[
+				'date'          => esc_html__( 'Date', 'surecart' ),
+				'status'        => esc_html__( 'Status', 'surecart' ),
+				'payout_status' => esc_html__( 'Payout Status', 'surecart' ),
+				'payout_date'   => esc_html__( 'Payout Date', 'surecart' ),
+				'affiliate'     => esc_html__( 'Affiliate', 'surecart' ),
+				'description'   => esc_html__( 'Description', 'surecart' ),
+				'order'         => esc_html__( 'Order', 'surecart' ),
+				'commission'    => esc_html__( 'Commission', 'surecart' ),
+				'mode'          => '',
+			],
+			parent::get_columns()
 		);
 	}
 
@@ -310,11 +313,11 @@ class AffiliationReferralsListTable extends ListTable {
 	 * @return \SureCart\Models\Collection;
 	 */
 	private function table_data() {
-		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+		$mode       = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
 		$conditions = array(
-			'query'     => $this->get_search_query(),
-			'status'    => [ $this->getFilteredStatus() ],
-			'expand'    => [
+			'query'  => $this->get_search_query(),
+			'status' => [ $this->getFilteredStatus() ],
+			'expand' => [
 				'affiliation',
 				'checkout',
 				'checkout.order',
@@ -326,7 +329,7 @@ class AffiliationReferralsListTable extends ListTable {
 			$conditions['live_mode'] = 'live' === $mode;
 		}
 
-		return Referral::where($conditions)->paginate(
+		return Referral::where( $conditions )->paginate(
 			array(
 				'per_page' => $this->get_items_per_page( 'affiliate_referrals' ),
 				'page'     => $this->get_pagenum(),
@@ -451,9 +454,9 @@ class AffiliationReferralsListTable extends ListTable {
 			add_query_arg(
 				array_filter(
 					[
-						'action'    => $action,
-						'nonce'     => wp_create_nonce( $action . '_affiliation' ),
-						'id'        => $id,
+						'action' => $action,
+						'nonce'  => wp_create_nonce( $action . '_affiliation' ),
+						'id'     => $id,
 					]
 				),
 				esc_url_raw( admin_url( 'admin.php?page=sc-affiliate-referrals' ) )

@@ -81,7 +81,7 @@ class PageSeeder {
 	 * @return void
 	 */
 	public function createShopPage() {
-		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/patterns/list-standard.php';
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/patterns/list-sidebar.php';
 
 		$shop = apply_filters(
 			'surecart/create_shop',

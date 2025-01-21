@@ -17,6 +17,11 @@ if ( empty( $gallery ) ) {
 	return ! empty( $attributes['hide_empty'] ) ? '' : 'file:./empty.php';
 }
 
+if ( ! empty( $attributes['lightbox'] ) ) {
+	wp_enqueue_style( 'surecart-lightbox' );
+	wp_enqueue_script_module( 'surecart/lightbox' );
+}
+
 // handle image.
 if ( count( $gallery ) === 1 ) {
 	return 'file:./image.php';

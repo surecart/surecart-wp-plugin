@@ -1964,6 +1964,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:7.25.7":
+  version: 7.25.7
+  resolution: "@babel/runtime@npm:7.25.7"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 1d6133ed1cf1de1533cfe84a4a8f94525271a0d93f6af4f2cdae14884ec3c8a7148664ddf7fd2a14f82cc4485904a1761821a55875ad241c8b4034e95e7134b2
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:7.7.2":
   version: 7.7.2
   resolution: "@babel/runtime@npm:7.7.2"
@@ -5837,7 +5846,7 @@ __metadata:
     "@wordpress/env": ^9.9.0
     "@wordpress/format-library": ^4.34.0
     "@wordpress/i18n": ^4.57.0
-    "@wordpress/icons": ^9.48.0
+    "@wordpress/icons": ^10.14.0
     "@wordpress/interface": ^5.34.0
     "@wordpress/media-utils": ^4.48.0
     "@wordpress/prettier-config": ^3.14.0
@@ -9074,6 +9083,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wordpress/element@npm:*":
+  version: 6.14.0
+  resolution: "@wordpress/element@npm:6.14.0"
+  dependencies:
+    "@babel/runtime": 7.25.7
+    "@types/react": ^18.2.79
+    "@types/react-dom": ^18.2.25
+    "@wordpress/escape-html": "*"
+    change-case: ^4.1.2
+    is-plain-object: ^5.0.0
+    react: ^18.3.0
+    react-dom: ^18.3.0
+  checksum: 35bad5c4513acc6a5b6887c20a188c57fc3d8c154bb7fd7288b3d2751a0dd3ee79f3e6d2036bd9336dfa2f06f6a88aa60dfe8a3a6866fabd28ee068c01f790bd
+  languageName: node
+  linkType: hard
+
 "@wordpress/element@npm:^5.34.0, @wordpress/element@npm:^5.35.0":
   version: 5.35.0
   resolution: "@wordpress/element@npm:5.35.0"
@@ -9109,6 +9134,15 @@ __metadata:
   bin:
     wp-env: bin/wp-env
   checksum: 55de1efe92d8fa58ad7e37d0b24b3b76583382bca37b98e51f81576d5db9225387db9961273ae8c3c651115ec6b89f059ea60e3e4b4c2349eec68c8ba291f222
+  languageName: node
+  linkType: hard
+
+"@wordpress/escape-html@npm:*":
+  version: 3.14.0
+  resolution: "@wordpress/escape-html@npm:3.14.0"
+  dependencies:
+    "@babel/runtime": 7.25.7
+  checksum: 5e9ac9e7293aeb19993123c2c2072b81a67647c3fff6dc32d748ab42153798cc2f740229e6ff0f17cff95487f91229382082efc833d8dcc76d39b1dedf9adf5b
   languageName: node
   linkType: hard
 
@@ -9214,7 +9248,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/icons@npm:^9.48.0, @wordpress/icons@npm:^9.49.0":
+"@wordpress/icons@npm:^10.14.0":
+  version: 10.14.0
+  resolution: "@wordpress/icons@npm:10.14.0"
+  dependencies:
+    "@babel/runtime": 7.25.7
+    "@wordpress/element": "*"
+    "@wordpress/primitives": "*"
+  checksum: 73042b4fdd00b67d601177a03c79aae84dbb50c7aec878e7bc22ea87ca444d69e78448d3803f72e9d44de1be1da332a77dfbd715c23beb69fd3ff502a6b457a6
+  languageName: node
+  linkType: hard
+
+"@wordpress/icons@npm:^9.49.0":
   version: 9.49.0
   resolution: "@wordpress/icons@npm:9.49.0"
   dependencies:
@@ -9457,6 +9502,19 @@ __metadata:
   peerDependencies:
     prettier: ">=3"
   checksum: 763085dbc280e5e068befb659c2946bc81d6e7e7693ac6437713078062af5c9bb261a66b242287ae7c87c1579439959056736968090125b37336d32f6fcbbebd
+  languageName: node
+  linkType: hard
+
+"@wordpress/primitives@npm:*":
+  version: 4.14.0
+  resolution: "@wordpress/primitives@npm:4.14.0"
+  dependencies:
+    "@babel/runtime": 7.25.7
+    "@wordpress/element": "*"
+    clsx: ^2.1.1
+  peerDependencies:
+    react: ^18.0.0
+  checksum: f55eb20548ef15fd124a4b7d8498ff6a420e0b2cef8e79da0896b7d2b44658abae9f3e98fcc69408583e0e8d6552d46a29b9b4ac4796a678254cc28e98e9b267
   languageName: node
   linkType: hard
 

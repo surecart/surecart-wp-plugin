@@ -37,7 +37,7 @@
 			)
 		);
 		?>
-			"
+		"
 	>
 		<span class="sc-button__label"><?php echo esc_html( $attributes['label'] ?? __( 'Filter', 'surecart' ) ); ?></span>
 		<span class="sc-button__caret"><?php echo wp_kses( SureCart::svg()->get( 'chevron-down' ), sc_allowed_svg_html() ); ?></span>
