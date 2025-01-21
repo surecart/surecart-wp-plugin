@@ -25,15 +25,69 @@ class Currency {
 	 * @return string
 	 */
 	public static function getCurrentCurrency() {
+		// if there is a currency in the url, use it.
 		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return strtolower( sanitize_text_field( $_GET['currency'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
+		// if there is a currency in the cookie, use it.
 		if ( isset( $_COOKIE['sc_current_currency'] ) ) {
 			return strtolower( sanitize_text_field( $_COOKIE['sc_current_currency'] ) );
 		}
 
+		// get the current locale currency.
+		if ( class_exists( 'NumberFormatter' ) ) {
+			$locale = self::getPreferredLocaleFromHeader();
+			if ( isset( $locale ) ) {
+				// Create a NumberFormatter in CURRENCY mode.
+				$fmt = new \NumberFormatter( $locale, \NumberFormatter::CURRENCY );
+				return strtolower( $fmt->getTextAttribute( \NumberFormatter::CURRENCY_CODE ) );
+			}
+		}
+
+		// if no currency is set, use the default currency.
 		return self::getDefaultCurrency();
+	}
+
+	/**
+	 * Get the preferred locale from the header.
+	 *
+	 * @return string
+	 */
+	public static function getPreferredLocaleFromHeader() {
+		$accept_language = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '';
+		// Split on commas.
+		$languages = explode( ',', $accept_language );
+		$best_lang = '';
+
+		foreach ( $languages as $lang ) {
+			// Each segment might look like "en-US" or "en;q=0.9".
+			// Strip out any ";q=..." portion.
+			if ( strpos( $lang, ';q=' ) !== false ) {
+				list( $lang_part, ) = explode( ';', $lang );
+			} else {
+				$lang_part = $lang;
+			}
+
+			// Clean up whitespace.
+			$lang_part = trim( $lang_part );
+
+			// If we haven't set a bestLang yet, use the first valid one.
+			if ( $lang_part ) {
+				$best_lang = $lang_part;
+				break;
+			}
+		}
+
+		// Convert from "en-US" to "en_US".
+		$best_lang = str_replace( '-', '_', $best_lang );
+
+		// Validate the locale format (must be in the format "en_US").
+		if ( ! preg_match( '/^[a-z]{2}_[A-Z]{2}$/', $best_lang ) ) {
+			return get_locale(); // Invalid format, fallback to default.
+		}
+
+		return $best_lang ? $best_lang : get_locale(); // Fallback.
 	}
 
 	/**
@@ -261,6 +315,7 @@ class Currency {
 	 *
 	 * @param integer $amount Amount as an integer.
 	 * @param string  $currency_code 3 digit currency code.
+	 * @param array   $args Additional formatting arguments.
 	 *
 	 * @return string
 	 */
