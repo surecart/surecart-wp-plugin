@@ -1,0 +1,102 @@
+// drawer
+.wp-block-surecart-product-list-sidebar.is-position-sticky {
+	overflow: auto;
+	height: 100svh;
+	flex-wrap: nowrap;
+	top: 0;
+	padding-bottom: 40px;
+
+	.admin-bar & {
+		top: 40px;
+		height: calc(100svh - 40px);
+	}
+}
+
+.wp-block-surecart-product-list-sidebar.sc-drawer {
+	flex: 1 1 auto;
+	overflow: auto;
+	width: 100%;
+	margin: auto;
+	border: var(--sc-drawer-border);
+	box-shadow: 0 1px 2px #0d131e1a;
+	font-size: 16px;
+
+	.sc-sidebar-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: var(--sc-drawer-border);
+		padding-top: 1.25em;
+		padding-bottom: 1.25em;
+		padding-left: 1.25em;
+		padding-right: 1.25em;
+		color: var(--sc-line-item-title-color, var(--sc-input-label-color));
+
+		&__title {
+			width: 100%;
+			text-align: left;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			padding: 0 var(--sc-spacing-small);
+		}
+
+		&__close,
+		&__close svg {
+			cursor: pointer;
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	.sc-drawer__wrapper {
+		.sc-drawer__items {
+			flex: 1 1 200px;
+			gap: 1.25em;
+			overflow: auto;
+			display: flex;
+			flex-direction: column;
+			padding: 1.25em;
+			color: var(--sc-input-label-color);
+			gap: 1.2em;
+		}
+		.wp-block-buttons {
+			padding: 1.25em 1.25em 1.25em 1.25em;
+			.wp-block-button {
+				width: 100%;
+				.wp-block-button__link {
+					position: relative;
+					text-decoration: none;
+					width: 100%;
+					display: block;
+					-webkit-box-sizing: border-box;
+					box-sizing: border-box;
+					text-align: center;
+				}
+			}
+		}
+	}
+	.sc-alert {
+		border-radius: 0;
+		&__icon svg {
+			width: 24px;
+			height: 24px;
+		}
+
+		*:not(:first-child) {
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Stop the body from scrolling when the cart drawer is open.
+html:has(dialog.sc-drawer[open]) {
+	overflow: hidden;
+	scrollbar-gutter: stable;
+}
+
+@media (max-width: 779px) {
+	.sc-sidebar-desktop.wp-block-surecart-product-list-sidebar {
+		display: none;
+	}
+}

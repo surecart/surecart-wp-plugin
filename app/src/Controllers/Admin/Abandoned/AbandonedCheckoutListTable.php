@@ -98,14 +98,17 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'placed_by'           => __( 'Placed By', 'surecart' ),
-			'created'             => __( 'Date', 'surecart' ),
-			'notification_status' => __( 'Email Status', 'surecart' ),
-			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
-			'total'               => __( 'Total', 'surecart' ),
-			'mode'                => '',
-		];
+		return array_merge(
+			[
+				'placed_by'           => __( 'Placed By', 'surecart' ),
+				'created'             => __( 'Date', 'surecart' ),
+				'notification_status' => __( 'Email Status', 'surecart' ),
+				'recovery_status'     => __( 'Recovery Status', 'surecart' ),
+				'total'               => __( 'Total', 'surecart' ),
+				'mode'                => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -114,7 +117,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+		$mode   = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
 		$status = $this->getStatus();
 		$where  = array();
 
@@ -181,7 +184,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			case 'sent':
 				return '<sc-tag type="success">' . __( 'Email Sent', 'surecart' ) . '</sc-tag>';
 		}
-		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
+		return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
 	}
 
 	/**
@@ -227,7 +230,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		<a  class="row-title" aria-label="<?php esc_attr_e( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php
 			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
+			printf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
 			?>
 		</a>
 		<br />

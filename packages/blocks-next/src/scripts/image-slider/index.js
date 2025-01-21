@@ -19,6 +19,14 @@ const { state } = store('surecart/image-slider', {
 	actions: {
 		updateSlider: () => {
 			const { state: productState } = store('surecart/product-page');
+			const { state: lightboxState } = store('surecart/lightbox');
+
+			if (
+				lightboxState?.currentImageIndex !== undefined &&
+				lightboxState.currentImageIndex !== -1
+			) {
+				state.swiper.slideTo(lightboxState.currentImageIndex, 0);
+			}
 
 			// the selected variant has not changed.
 			if (!productState.selectedVariant) {

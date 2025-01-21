@@ -280,6 +280,35 @@ class URLParamService {
 	}
 
 	/**
+	 * Remove all filter arguments from the URL.
+	 *
+	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return string
+	 */
+	public function removeAllFilterArgs( $instance_id = '' ) {
+		// get the instance ID.
+		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+
+		// get the existing filters.
+		$existing_filters = $this->getAllTaxonomyArgs( $instance_id );
+
+		// prepare keys to remove.
+		$keys_to_remove = [
+			$this->getKey( $this->pagination_key, $instance_id ),
+			$this->getKey( $this->search_key, $instance_id ),
+		];
+
+		// gather keys to remove using existing taxonomies keys.
+		foreach ( $existing_filters as $taxonomy_key => $terms ) {
+			$keys_to_remove[] = $this->getKey( $taxonomy_key, $instance_id );
+		}
+
+		// return the new URL without pagination for filtering.
+		return remove_query_arg( $keys_to_remove, $this->url );
+	}
+
+	/**
 	 * Remove a filter argument from the URL.
 	 *
 	 * @param  string $key Key.
