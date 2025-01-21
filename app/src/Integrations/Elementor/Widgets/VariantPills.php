@@ -137,7 +137,6 @@ class VariantPills extends \Elementor\Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill:not(.sc-pill-option__button--selected)' => 'color: {{VALUE}}',
 				],
-				'default'   => '#FFFFFF',
 			]
 		);
 
