@@ -1,0 +1,16 @@
+.wp-block-surecart-product-list-filter-checkboxes {
+	width: 100%;
+
+	.wp-block-surecart-product-list-filter-checkbox {
+		cursor: pointer;
+		text-decoration: none !important;
+
+		input[type="checkbox"] {
+			cursor: pointer;
+		}
+
+		label {
+			cursor: pointer;
+		}
+	}
+}

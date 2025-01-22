@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-list-sort-radio",
+	"title": "Radio",
+	"description": "Display the sort radio.",
+	"version": "1.0.0",
+	"category": "surecart-product-list",
+	"example": {},
+	"usesContext": ["surecart/radio/name"],
+	"ancestor": ["surecart/product-list-sort-radio-group-template"],
+	"supports": {
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"render": "file:./view.php",
+	"style": ["surecart-radio-checkbox"]
+}

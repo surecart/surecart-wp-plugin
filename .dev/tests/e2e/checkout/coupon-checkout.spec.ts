@@ -49,7 +49,7 @@ test.describe('Coupon', () => {
 		await page.goto(`/checkout?line_items[0][price]=${price.id}`);
 		await page.waitForLoadState('networkidle');
 
-		await page.getByText('Add Coupon Code').click();
+		await page.getByText('Add Coupon Code').locator('visible=true').click();
 		await page
 			.getByPlaceholder('Enter coupon code')
 			.locator('input')

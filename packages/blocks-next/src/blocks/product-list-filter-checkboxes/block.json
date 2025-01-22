@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-list-filter-checkboxes",
+	"title": "Filter Checkboxes",
+	"description": "Display the product list filter checkboxes.",
+	"version": "1.0.0",
+	"category": "surecart-product-list",
+	"example": {},
+	"ancestor": ["surecart/product-list"],
+	"attributes": {
+		"taxonomy": {
+			"type": "string",
+			"default": "sc_collection"
+		}
+	},
+	"providesContext": {
+		"taxonomySlug": "taxonomy"
+	},
+	"supports": {
+		"interactivity": true,
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"allowSizingOnChildren": true,
+			"default": {
+				"type": "flex",
+				"orientation": "horizontal",
+				"verticalAlignment": "top",
+				"flexWrap": "nowrap"
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true,
+			"default": {
+				"blockGap": "0"
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"render": "file:./view.php"
+}

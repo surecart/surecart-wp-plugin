@@ -77,6 +77,8 @@ class AssetsService {
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
+		$this->loader->whenRendered( 'surecart/logout-button', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/customer-dashboard-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
