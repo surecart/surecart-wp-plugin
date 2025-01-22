@@ -33,7 +33,7 @@ export default ({
 					requestQuery={{
 						archived: false,
 					}}
-					variable={false}
+					includeVariants={false}
 					placement="top-start"
 					position="top-left"
 					exclude={[price?.id]}
