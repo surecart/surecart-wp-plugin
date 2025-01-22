@@ -1,28 +1,17 @@
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import TemplateListEdit from '../../components/TemplateListEdit';
 
-const TEMPLATE = [['surecart/product-list-filter-tag']];
+const TEMPLATE = [
+	['surecart/product-list-filter-tags-label'],
+	['surecart/product-list-filter-tags-template'],
+	['surecart/product-list-filter-tags-clear-all'],
+];
 
-export default ({ clientId, __unstableLayoutClassNames }) => {
-	return (
-		<TemplateListEdit
-			template={TEMPLATE}
-			blockContexts={[
-				{
-					id: 'filter-1',
-					'surecart/filterTag/name': __('Filter 1'),
-				},
-				{
-					id: 'filter-2',
-					'surecart/filterTag/name': __('Filter 2'),
-				},
-				{
-					id: 'filter-3',
-					'surecart/filterTag/name': __('Filter 3'),
-				},
-			]}
-			className={__unstableLayoutClassNames}
-			clientId={clientId}
-		/>
-	);
+export default () => {
+	const blockProps = useBlockProps();
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		template: TEMPLATE,
+	});
+
+	return <div {...innerBlocksProps} />;
 };

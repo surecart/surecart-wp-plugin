@@ -3,6 +3,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { addSubmenu as icon } from '@wordpress/icons';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -16,4 +17,5 @@ import metadata from './block.json';
 registerBlockType(metadata.name, {
 	icon,
 	edit,
+	__experimentalLabel: () => __('Sort', 'surecart'),
 });

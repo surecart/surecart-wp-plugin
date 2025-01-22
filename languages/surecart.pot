@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-13T19:13:06+00:00\n"
+"POT-Creation-Date: 2025-01-16T21:43:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -1654,7 +1654,7 @@ msgstr ""
 #: product-groups/modules/Products.js:45
 #: products/EditProduct.js:270
 #: settings/advanced/AdvancedSettings.js:462
-#: settings/shipping/profile/Products.js:217
+#: settings/shipping/profile/Products.js:250
 #: upsell-funnels/modules/Conditions.js:132
 #: Blocks/Form/components/SelectPrices.js:111
 #: Blocks/ProductItemList/edit.js:363
@@ -7108,7 +7108,6 @@ msgstr ""
 #: settings/shipping/zone/ShippingZoneForm.js:181
 #: settings/tax-override/TaxOverrideModal.js:272
 #: sc-customer-edit.js:124
-#: sc-order-bump2.js:80
 #: sc-wordpress-user-edit.js:62
 msgid "Save"
 msgstr ""
@@ -8880,8 +8879,7 @@ msgstr ""
 #: invoices/modules/NewPrice.js:82
 #: product-groups/modules/NewProduct.js:59
 #: product-groups/modules/NewProduct.js:75
-#: settings/shipping/profile/Products.js:353
-#: settings/shipping/profile/Products.js:375
+#: settings/shipping/profile/Products.js:242
 #: upsell-funnels/modules/Upsell/index.js:52
 #: Blocks/CheckoutForm/components/Options.js:39
 #: Blocks/CheckoutForm/components/PriceChoices.js:128
@@ -8978,8 +8976,7 @@ msgstr ""
 #: products/modules/Image/WordPressMedia.js:47
 #: products/modules/SingleDownload.js:322
 #: settings/brand/Logo.js:81
-#: settings/shipping/profile/Products.js:283
-#: settings/shipping/profile/Products.js:336
+#: settings/shipping/profile/Products.js:311
 #: settings/shipping/zone/ShippingZone.js:168
 #: subscriptions/edit/modules/Trial.js:38
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
@@ -8990,8 +8987,6 @@ msgstr ""
 
 #: checkouts/modules/Payment.js:270
 #: checkouts/modules/PaymentMethods.js:138
-#: invoices/modules/PaymentCollection.js:299
-#: invoices/modules/PaymentMethods.js:152
 #: Controllers/PaymentMethodController.php:176
 #: Controllers/PaymentMethodController.php:181
 #: sc-mollie-add-method.js:103
@@ -10029,7 +10024,7 @@ msgid "Add Product Restriction"
 msgstr ""
 
 #: coupons/modules/ProductRestrictions.js:84
-#: settings/shipping/profile/Products.js:302
+#: settings/shipping/profile/Products.js:230
 msgid "Find a product..."
 msgstr ""
 
@@ -10748,6 +10743,11 @@ msgstr ""
 
 #: invoices/modules/PaymentCollection.js:214
 msgid "Automatically charge a payment method on file for this customer."
+msgstr ""
+
+#: invoices/modules/PaymentCollection.js:299
+#: invoices/modules/PaymentMethods.js:152
+msgid "Select Payment Method"
 msgstr ""
 
 #: invoices/modules/PaymentCollection.js:331
@@ -11958,6 +11958,7 @@ msgid "Archive Product"
 msgstr ""
 
 #: products/components/product/ActionsDropdown.js:42
+#: settings/shipping/profile/Products.js:318
 msgid "More Actions"
 msgstr ""
 
@@ -14303,42 +14304,42 @@ msgstr ""
 msgid "Are you sure you want to delete shipping profile? Deleting the shipping profile will remove associated shipping rates and shipping zones."
 msgstr ""
 
-#: settings/shipping/profile/Products.js:102
+#: settings/shipping/profile/Products.js:100
 msgid "Product removed"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:130
+#: settings/shipping/profile/Products.js:127
 msgid "Product added"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:192
+#: settings/shipping/profile/Products.js:199
 msgid "%d price"
 msgid_plural "%d prices"
 msgstr[0] ""
 msgstr[1] ""
 
-#: settings/shipping/profile/Products.js:220
+#: settings/shipping/profile/Products.js:253
 #: settings/shipping/ShippingSettings.js:185
 msgid "All products not in other profiles"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:221
+#: settings/shipping/profile/Products.js:254
 msgid "Add products to this shipping profile."
 msgstr ""
 
-#: settings/shipping/profile/Products.js:246
+#: settings/shipping/profile/Products.js:279
 msgid "New products are added to this profile."
 msgstr ""
 
-#: settings/shipping/profile/Products.js:365
+#: settings/shipping/profile/Products.js:354
 msgid "No products in this profile."
 msgstr ""
 
-#: settings/shipping/profile/Products.js:405
+#: settings/shipping/profile/Products.js:384
 msgid "To charge different rates for only certain products, create a new profile in"
 msgstr ""
 
-#: settings/shipping/profile/Products.js:415
+#: settings/shipping/profile/Products.js:394
 msgid "shipping settings"
 msgstr ""
 
@@ -21662,22 +21663,29 @@ msgstr ""
 msgid "You save %1$s%2$s."
 msgstr ""
 
+#: sc-order-bump2.js:80
+msgctxt "Save money"
+msgid "Save"
+msgstr ""
+
 #. translators: %s: amount percent off
 #: sc-order-bump2.js:85
 msgid "You save %s%%."
 msgstr ""
 
-#: sc-order-bump2.js:85
+#. translators: %s: amount percent off
+#: sc-order-bump2.js:87
+msgctxt "Save money"
 msgid "Save %s%%"
 msgstr ""
 
 #. translators: %s: order bump name
-#: sc-order-bump2.js:103
+#: sc-order-bump2.js:105
 msgid "Product: %s."
 msgstr ""
 
 #. translators: %s: Product description
-#: sc-order-bump2.js:105
+#: sc-order-bump2.js:107
 msgid "Product description: %s."
 msgstr ""
 
@@ -22160,7 +22168,7 @@ msgstr ""
 msgid "Payment canceled. Please try again."
 msgstr ""
 
-#: sc-session-provider2.js:380
+#: sc-session-provider2.js:379
 msgid "Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment."
 msgstr ""
 

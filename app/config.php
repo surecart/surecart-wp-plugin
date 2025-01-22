@@ -7,6 +7,8 @@
  * @package SureCart
  */
 
+use SureCart\Rest\IntegrationProvidersRestServiceProvider;
+
 return array(
 	/**
 	 * Array of service providers you wish to enable.
@@ -119,6 +121,7 @@ return array(
 		\SureCart\Rest\ShippingZoneRestServiceProvider::class,
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
 		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
+		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
 		\SureCart\Rest\VariantsRestServiceProvider::class,
 		\SureCart\Rest\VariantOptionsRestServiceProvider::class,

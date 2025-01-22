@@ -53,7 +53,7 @@ class AffiliationsListTable extends ListTable {
 	 */
 	protected function get_views() {
 		foreach ( $this->getStatuses() as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-affiliates' );
+			$link                    = admin_url( 'admin.php?page=sc-affiliates' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -89,15 +89,18 @@ class AffiliationsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array(
-			'name'                             => __( 'Name', 'surecart' ),
-			'email'                            => __( 'Email', 'surecart' ),
-			'status'                           => __( 'Status', 'surecart' ),
-			'clicks'                           => __( 'Clicks', 'surecart' ),
-			'referrals'                        => __( 'Referrals', 'surecart' ),
-			'total_commission_amount'          => __( 'Total Earnings', 'surecart' ),
-			'total_not_paid_commission_amount' => __( 'Unpaid Earnings', 'surecart' ),
-			'date'                             => __( 'Date', 'surecart' ),
+		return array_merge(
+			[
+				'name'                             => __( 'Name', 'surecart' ),
+				'email'                            => __( 'Email', 'surecart' ),
+				'status'                           => __( 'Status', 'surecart' ),
+				'clicks'                           => __( 'Clicks', 'surecart' ),
+				'referrals'                        => __( 'Referrals', 'surecart' ),
+				'total_commission_amount'          => __( 'Total Earnings', 'surecart' ),
+				'total_not_paid_commission_amount' => __( 'Unpaid Earnings', 'surecart' ),
+				'date'                             => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
 		);
 	}
 
@@ -244,6 +247,9 @@ class AffiliationsListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $affiliation, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $affiliation, $column_name );
+
 		switch ( $column_name ) {
 			case 'description':
 			case 'email':

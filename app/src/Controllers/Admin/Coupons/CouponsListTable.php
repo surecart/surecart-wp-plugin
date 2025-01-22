@@ -68,14 +68,17 @@ class CouponsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			// 'cb'          => '<input type="checkbox" />',
-			'name'           => __( 'Name', 'surecart' ),
-			'promotion_code' => __( 'Code', 'surecart' ),
-			'price'          => __( 'Price', 'surecart' ),
-			'usage'          => __( 'Usage', 'surecart' ),
-			'date'           => __( 'Date', 'surecart' ),
-		];
+		return array_merge(
+			[
+				// 'cb'          => '<input type="checkbox" />',
+				'name'           => __( 'Name', 'surecart' ),
+				'promotion_code' => __( 'Code', 'surecart' ),
+				'price'          => __( 'Price', 'surecart' ),
+				'usage'          => __( 'Usage', 'surecart' ),
+				'date'           => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**

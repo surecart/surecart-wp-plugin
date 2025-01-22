@@ -195,6 +195,54 @@ class ProductListBlock extends AbstractProductListBlock {
 	}
 
 	/**
+	 * Get the terms.
+	 *
+	 * @return array
+	 */
+	public function getTermOptions( $taxonomy_slug = 'sc_collection' ) {
+		$taxonomy_slug = ! empty( $taxonomy_slug ) ? $taxonomy_slug : 'sc_collection';
+
+		// get non-empty terms.
+		$terms = get_terms(
+			array(
+				'taxonomy'   => $taxonomy_slug,
+				'hide_empty' => true,
+			)
+		);
+
+		if ( is_wp_error( $terms ) ) {
+			return false;
+		}
+
+		// we are on a collection page.
+		$current_term = get_queried_object();
+		if ( is_a( $current_term, \WP_Term::class ) ) {
+			return false;
+		}
+
+		$url = \SureCart::block()->urlParams( 'products' );
+
+		$options = array_map(
+			function ( $term ) use ( $url, $taxonomy_slug ) {
+				return [
+					'value'   => $term->slug,
+					'label'   => $term->name,
+					'href'    => $url->hasFilterArg( $taxonomy_slug, $term->slug ) ? $url->removeFilterArg( $taxonomy_slug, $term->slug ) : $url->addFilterArg( $taxonomy_slug, $term->slug ),
+					'checked' => $url->hasFilterArg( $taxonomy_slug, $term->slug ),
+				];
+			},
+			$terms ?? []
+		);
+
+		// no filter options.
+		if ( empty( $options ) ) {
+			return false;
+		}
+
+		return $options;
+	}
+
+	/**
 	 * Offset the found posts.
 	 * See: https://codex.wordpress.org/Making_Custom_Queries_using_Offset_and_Pagination
 	 *

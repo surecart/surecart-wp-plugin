@@ -109,22 +109,22 @@ class OrdersListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-
-		$columns = [
-			// 'cb'          => '<input type="checkbox" />',
-			'order'              => __( 'Order', 'surecart' ),
-			'status'             => __( 'Status', 'surecart' ),
-			'fulfillment_status' => __( 'Fulfillment', 'surecart' ),
-			'shipment_status'    => __( 'Shipping', 'surecart' ),
-			'method'             => __( 'Method', 'surecart' ),
-			'integrations'       => __( 'Integrations', 'surecart' ),
-			'total'              => __( 'Total', 'surecart' ),
-			'type'               => __( 'Type', 'surecart' ),
-			'created'            => __( 'Date', 'surecart' ),
-			'mode'               => '',
-		];
-
-		return $columns;
+		return array_merge(
+			[
+				// 'cb'          => '<input type="checkbox" />',
+				'order'              => __( 'Order', 'surecart' ),
+				'status'             => __( 'Status', 'surecart' ),
+				'fulfillment_status' => __( 'Fulfillment', 'surecart' ),
+				'shipment_status'    => __( 'Shipping', 'surecart' ),
+				'method'             => __( 'Method', 'surecart' ),
+				'integrations'       => __( 'Integrations', 'surecart' ),
+				'total'              => __( 'Total', 'surecart' ),
+				'type'               => __( 'Type', 'surecart' ),
+				'created'            => __( 'Date', 'surecart' ),
+				'mode'               => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
