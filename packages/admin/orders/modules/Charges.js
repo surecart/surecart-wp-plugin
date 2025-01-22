@@ -5,9 +5,11 @@ import { useState } from 'react';
 
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
 import Refund from '../../components/data-tables/charges-data-table/Refund';
+import ChargeDetails from '../../components/data-tables/charges-data-table/ChargeDetails';
 
 export default ({ checkoutId }) => {
 	const [refundCharge, setRefundCharge] = useState(false);
+	const [chargeDetails, setChargeDetails] = useState(false);
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { charges, loading, invalidateCharges } = useSelect(
 		(select) => {
@@ -28,6 +30,9 @@ export default ({ checkoutId }) => {
 						'payment_method.payment_instrument',
 						'payment_method.paypal_account',
 						'payment_method.bank_account',
+						'payment_intent',
+						'payment_intent.platform_fee',
+						'payment_intent.service_fee',
 					],
 				},
 			];
@@ -100,12 +105,13 @@ export default ({ checkoutId }) => {
 						label: __('Status', 'surecart'),
 						width: '100px',
 					},
-					refund: {
+					more: {
 						width: '100px',
 					},
 				}}
 				showTotal
 				onRefundClick={setRefundCharge}
+				onChargeClick={setChargeDetails}
 				data={charges}
 				isLoading={loading}
 			/>
@@ -115,6 +121,12 @@ export default ({ checkoutId }) => {
 					purchases={purchases}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
+				/>
+			)}
+			{!!chargeDetails && (
+				<ChargeDetails
+					charge={chargeDetails}
+					onRequestClose={() => setChargeDetails(false)}
 				/>
 			)}
 		</>

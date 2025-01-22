@@ -1,5 +1,12 @@
 import DataTable from '../../DataTable';
-import { ScButton, ScPaymentMethod } from '@surecart/components-react';
+import {
+	ScButton,
+	ScPaymentMethod,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -13,6 +20,7 @@ export default ({
 	isFetching,
 	page,
 	onRefundClick,
+	onChargeClick,
 	setPage,
 	pagination,
 	columns,
@@ -44,9 +52,9 @@ export default ({
 		}
 
 		return (
-			<ScButton size="small" onClick={() => onRefundClick(charge)}>
+			<ScMenuItem onClick={() => onRefundClick(charge)}>
 				{__('Refund', 'surecart')}
-			</ScButton>
+			</ScMenuItem>
 		);
 	};
 
@@ -136,7 +144,6 @@ export default ({
 								/>
 							),
 							status: renderStatusTag(charge),
-							refund: renderRefundButton(charge),
 							order: charge?.checkout?.order?.id && (
 								<ScButton
 									href={addQueryArgs('admin.php', {
@@ -148,6 +155,32 @@ export default ({
 								>
 									{__('View Order', 'surecart')}
 								</ScButton>
+							),
+							more: (
+								<ScDropdown placement="bottom-end">
+									<ScButton
+										circle
+										type="text"
+										style={{
+											'--button-color':
+												'var(--sc-color-gray-600)',
+											margin: '-10px',
+										}}
+										slot="trigger"
+									>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										{renderRefundButton(charge)}
+										<ScMenuItem
+											onClick={() =>
+												onChargeClick(charge)
+											}
+										>
+											{__('View Details', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
 							),
 						};
 					})}
