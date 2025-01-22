@@ -79,33 +79,6 @@ class Media extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'thumbnails_per_page',
-			[
-				'label'       => esc_html__( 'Thumbnails per Page', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::NUMBER,
-				'default'     => 5,
-				'description' => esc_html__( 'Set the number of thumbnails to show per page.', 'surecart' ),
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	/**
-	 * Register the widget style settings.
-	 *
-	 * @return void
-	 */
-	protected function register_style_settings() {
-		$this->start_controls_section(
-			'section_style',
-			[
-				'label' => esc_html__( 'Slider', 'surecart' ),
-				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
 			'lightbox',
 			[
 				'label'       => esc_html__( 'Enlarge on Click', 'surecart' ),
@@ -195,6 +168,16 @@ class Media extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'thumbnails_per_page',
+			[
+				'label'       => esc_html__( 'Thumbnails per Page', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'default'     => 5,
+				'description' => esc_html__( 'Set the number of thumbnails to show per page.', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -205,7 +188,6 @@ class Media extends \Elementor\Widget_Base {
 	 */
 	protected function register_controls() {
 		$this->register_content_settings();
-		$this->register_style_settings();
 	}
 
 	/**
