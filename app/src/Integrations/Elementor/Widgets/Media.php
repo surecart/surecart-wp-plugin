@@ -106,6 +106,18 @@ class Media extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'lightbox',
+			[
+				'label'       => esc_html__( 'Enlarge on Click', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Yes', 'surecart' ),
+				'label_off'   => esc_html__( 'No', 'surecart' ),
+				'default'     => 'yes',
+				'description' => esc_html__( 'Scale images with a lightbox effect.', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
 			'slider_is_auto_height',
 			[
 				'label'     => esc_html__( 'Auto Height', 'surecart' ),
@@ -220,6 +232,7 @@ class Media extends \Elementor\Widget_Base {
 			'auto_height'         => 'yes' === $settings['slider_is_auto_height'],
 			'height'              => ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '',
 			'width'               => ! empty( $settings['slider_max_image_width']['size'] ) ? $settings['slider_max_image_width']['size'] . $settings['slider_max_image_width']['unit'] : '',
+			'lightbox'            => 'yes' === $settings['lightbox'],
 		);
 
 		?>
