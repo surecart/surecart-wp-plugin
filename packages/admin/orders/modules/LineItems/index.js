@@ -192,15 +192,16 @@ export default ({ order, checkout }) => {
 								label={
 									index === 0 ? (
 										<>
-											{__('Refunded', 'surecart')}{' '}
-											<ScButton
-												size="small"
+											{__('Refunded', 'surecart')} (
+											<a
+												href="#"
 												onClick={() =>
 													setModal('refund_history')
 												}
 											>
 												{__('History', 'surecart')}
-											</ScButton>
+											</a>
+											)
 										</>
 									) : (
 										''
