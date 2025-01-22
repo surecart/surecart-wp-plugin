@@ -6,8 +6,6 @@ import {
 	ScIcon,
 	ScSelect,
 	ScDrawer,
-	ScDivider,
-	ScDrawerSection,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -22,6 +20,7 @@ import Subscription from '../../../components/price/Subscription';
 import Error from '../../../../components/Error';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
 import SwapPrice from '../../../components/price/parts/SwapPrice';
+import DrawerSection from '../../../../ui/DrawerSection';
 
 export default ({ isOpen, onRequestClose, product }) => {
 	if (!isOpen) return null;
@@ -135,11 +134,11 @@ export default ({ isOpen, onRequestClose, product }) => {
 						`}
 					>
 						<Error error={error} setError={setError} />
-						<ScDrawerSection
+						<DrawerSection
 							title={__('Basic', 'surecart')}
 							style={{
-								'--sc-drawer-section-padding': '0 30px',
-								'--sc-drawer-section-border-top': 'none',
+								padding: '0 30px',
+								borderTop: 'none',
 							}}
 						>
 							<PriceName
@@ -198,11 +197,11 @@ export default ({ isOpen, onRequestClose, product }) => {
 								price={price}
 								updatePrice={updatePrice}
 							/>
-						</ScDrawerSection>
-						<ScDrawerSection
+						</DrawerSection>
+						<DrawerSection
 							title={__('Revenue Booster', 'surecart')}
 							style={{
-								'--sc-drawer-section-padding': '2em 30px 0',
+								padding: '2em 30px 0',
 							}}
 						>
 							<SwapPrice
@@ -210,7 +209,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 								updateSwap={editSwap}
 								currentSwap={currentSwap}
 							/>
-						</ScDrawerSection>
+						</DrawerSection>
 					</div>
 				</div>
 				<div

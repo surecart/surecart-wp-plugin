@@ -14,15 +14,10 @@ import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
-import {
-	ScButton,
-	ScIcon,
-	ScDrawer,
-	ScForm,
-	ScDrawerSection,
-} from '@surecart/components-react';
+import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
 import CanUpgrade from '../../../components/price/parts/CanUpgrade';
 import SwapPrice from '../../../components/price/parts/SwapPrice';
+import DrawerSection from '../../../../ui/DrawerSection';
 
 export default ({ price, product }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -229,11 +224,11 @@ export default ({ price, product }) => {
 							`}
 						>
 							<Error error={error} setError={setError} />
-							<ScDrawerSection
+							<DrawerSection
 								title={__('Basic', 'surecart')}
 								style={{
-									'--sc-drawer-section-padding': '0 30px',
-									'--sc-drawer-section-border-top': 'none',
+									padding: '0 30px',
+									borderTop: 'none',
 								}}
 							>
 								<PriceName
@@ -269,11 +264,11 @@ export default ({ price, product }) => {
 									price={currentPrice}
 									updatePrice={editPrice}
 								/>
-							</ScDrawerSection>
-							<ScDrawerSection
+							</DrawerSection>
+							<DrawerSection
 								title={__('Revenue Booster', 'surecart')}
 								style={{
-									'--sc-drawer-section-padding': '2em 30px 0',
+									padding: '2em 30px 0',
 								}}
 							>
 								<SwapPrice
@@ -282,7 +277,7 @@ export default ({ price, product }) => {
 									currentSwap={currentSwap}
 									isSaving={isSaving}
 								/>
-							</ScDrawerSection>
+							</DrawerSection>
 						</div>
 					</div>
 

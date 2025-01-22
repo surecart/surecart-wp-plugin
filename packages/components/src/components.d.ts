@@ -1271,12 +1271,6 @@ export namespace Components {
          */
         "stickyHeader": boolean;
     }
-    interface ScDrawerSection {
-        /**
-          * The product id.
-         */
-        "title": string;
-    }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
         /**
@@ -5155,12 +5149,6 @@ declare global {
         prototype: HTMLScDrawerElement;
         new (): HTMLScDrawerElement;
     };
-    interface HTMLScDrawerSectionElement extends Components.ScDrawerSection, HTMLStencilElement {
-    }
-    var HTMLScDrawerSectionElement: {
-        prototype: HTMLScDrawerSectionElement;
-        new (): HTMLScDrawerSectionElement;
-    };
     interface HTMLScDropdownElementEventMap {
         "scShow": void;
         "scHide": void;
@@ -6785,7 +6773,6 @@ declare global {
         "sc-donation-choices": HTMLScDonationChoicesElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
         "sc-drawer": HTMLScDrawerElement;
-        "sc-drawer-section": HTMLScDrawerSectionElement;
         "sc-dropdown": HTMLScDropdownElement;
         "sc-empty": HTMLScEmptyElement;
         "sc-error": HTMLScErrorElement;
@@ -8371,12 +8358,6 @@ declare namespace LocalJSX {
           * Sticky drawer header
          */
         "stickyHeader"?: boolean;
-    }
-    interface ScDrawerSection {
-        /**
-          * The product id.
-         */
-        "title"?: string;
     }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
@@ -11559,7 +11540,6 @@ declare namespace LocalJSX {
         "sc-donation-choices": ScDonationChoices;
         "sc-downloads-list": ScDownloadsList;
         "sc-drawer": ScDrawer;
-        "sc-drawer-section": ScDrawerSection;
         "sc-dropdown": ScDropdown;
         "sc-empty": ScEmpty;
         "sc-error": ScError;
@@ -11805,7 +11785,6 @@ declare module "@stencil/core" {
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
             "sc-drawer": LocalJSX.ScDrawer & JSXBase.HTMLAttributes<HTMLScDrawerElement>;
-            "sc-drawer-section": LocalJSX.ScDrawerSection & JSXBase.HTMLAttributes<HTMLScDrawerSectionElement>;
             "sc-dropdown": LocalJSX.ScDropdown & JSXBase.HTMLAttributes<HTMLScDropdownElement>;
             "sc-empty": LocalJSX.ScEmpty & JSXBase.HTMLAttributes<HTMLScEmptyElement>;
             "sc-error": LocalJSX.ScError & JSXBase.HTMLAttributes<HTMLScErrorElement>;
