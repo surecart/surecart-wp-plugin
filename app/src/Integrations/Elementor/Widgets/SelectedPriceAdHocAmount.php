@@ -163,6 +163,17 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 					'size' => 100,
 					'unit' => '%',
 				],
+				'range'      => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+					],
+					'em' => [
+						'min'  => 0,
+						'step' => 0.1,
+						'max'  => 10,
+					],
+				],
 			)
 		);
 

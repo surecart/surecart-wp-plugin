@@ -142,18 +142,26 @@ class Media extends \Elementor\Widget_Base {
 					'{{WRAPPER}} .sc-image-slider>.swiper' => 'height: {{SIZE}}{{UNIT}};',
 				],
 				'range'      => [
-					'px'  => [
+					'px'     => array(
 						'min' => 0,
 						'max' => 1000,
-					],
-					'em'  => [
+					),
+					'em'     => array(
+						'min'  => 0,
+						'step' => 0.1,
+						'max'  => 10,
+					),
+					'%'      => array(
 						'min' => 0,
 						'max' => 100,
-					],
-					'rem' => [
+					),
+					'rem'    => array(
 						'min' => 0,
 						'max' => 100,
-					],
+					),
+					'custom' => array(
+						'min' => 0,
+					),
 				],
 				'condition'  => [
 					'slider_is_auto_height!' => 'yes',

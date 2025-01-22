@@ -182,23 +182,17 @@ class CollectionTags extends \Elementor\Widget_Base {
 				'label'      => esc_html__( 'Gap', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
-				'range'      => array(
+				'range'      => [
 					'px' => array(
-						'min'  => 0,
-						'step' => 1,
-						'max'  => 100,
+						'min' => 0,
+						'max' => 1000,
 					),
 					'em' => array(
 						'min'  => 0,
 						'step' => 0.1,
 						'max'  => 10,
 					),
-					'%'  => array(
-						'min'  => 0,
-						'step' => 1,
-						'max'  => 100,
-					),
-				),
+				],
 				'default'    => array(
 					'size' => 3,
 					'unit' => 'px',

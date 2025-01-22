@@ -134,6 +134,17 @@ class BuyButton extends AddToCartButton {
 					'size' => 100,
 					'unit' => '%',
 				],
+				'range'      => [
+					'px' => array(
+						'min' => 0,
+						'max' => 1000,
+					),
+					'em' => array(
+						'min'  => 0,
+						'step' => 0.1,
+						'max'  => 10,
+					),
+				],
 			)
 		);
 

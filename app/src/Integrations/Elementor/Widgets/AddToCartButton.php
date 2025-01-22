@@ -179,9 +179,16 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .wp-block-button__link' => 'width: {{SIZE}}{{UNIT}};',
 				),
-				'default'    => [
-					'size' => 100,
-					'unit' => '%',
+				'range'      => [
+					'px' => array(
+						'min' => 0,
+						'max' => 1000,
+					),
+					'em' => array(
+						'min'  => 0,
+						'step' => 0.1,
+						'max'  => 10,
+					),
 				],
 			)
 		);
