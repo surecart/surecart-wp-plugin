@@ -128,7 +128,7 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 					reason,
 					charge: charge?.id,
 					refund_items: refundItems
-						.filter((refundItem) => refundItem.quantity > 0)
+						.filter((refundItem) => refundItem.refundQuantity > 0)
 						.map((refundItem) => ({
 							purchase: refundItem.id,
 							quantity: refundItem.refundQuantity,

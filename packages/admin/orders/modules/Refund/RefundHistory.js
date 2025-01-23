@@ -13,12 +13,9 @@ import { useEntityRecords } from '@wordpress/core-data';
  * Internal dependencies.
  */
 import {
-	ScButton,
 	ScDrawer,
 	ScEmpty,
 	ScFormatNumber,
-	ScIcon,
-	ScSkeleton,
 	ScTable,
 	ScTableCell,
 	ScTableRow,
@@ -29,7 +26,7 @@ import { refundReasons } from '../../../util/refunds';
 import ProductLineItem from '../../../ui/ProductLineItem';
 import { formatDateTime } from '../../../util/time';
 
-export default ({ chargeId, onRequestClose, open }) => {
+export default ({ chargeId, onRequestClose }) => {
 	const anchor = useRef();
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -72,9 +69,6 @@ export default ({ chargeId, onRequestClose, open }) => {
 				'product.product_medias',
 				'product_media.media',
 			],
-		},
-		{
-			enabled: open,
 		}
 	);
 
@@ -281,30 +275,11 @@ export default ({ chargeId, onRequestClose, open }) => {
 		<>
 			<ScDrawer
 				style={{ '--sc-drawer-size': '48rem' }}
-				open={open}
+				open={true}
 				stickyHeader
 				onScAfterHide={() => onRequestClose()}
+				label={__('Refund History', 'surecart')}
 			>
-				<span
-					slot="header"
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-						padding: var(--sc-drawer-header-spacing);
-						border-bottom: var(--sc-drawer-border);
-					`}
-				>
-					{__('Refund History', 'surecart')}
-
-					<ScButton
-						type="text"
-						size="small"
-						onClick={() => onRequestClose()}
-					>
-						<ScIcon class="cart__close" name="x"></ScIcon>
-					</ScButton>
-				</span>
 				{renderContent()}
 			</ScDrawer>
 		</>

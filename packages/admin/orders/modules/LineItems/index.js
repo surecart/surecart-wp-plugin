@@ -196,7 +196,7 @@ export default ({ order, checkout }) => {
 					)}
 
 					{!!checkout?.refunded_amount &&
-						refunds?.map((refund, index) => (
+						(refunds || []).reverse().map((refund, index) => (
 							<RefundLineItem
 								key={refund.id}
 								refund={refund}
@@ -362,11 +362,12 @@ export default ({ order, checkout }) => {
 				)}
 			</Fragment>
 
-			<RefundHistory
-				open={modal === 'refund_history'}
-				chargeId={order?.checkout?.charge?.id}
-				onRequestClose={() => setModal(false)}
-			/>
+			{modal === 'refund_history' && (
+				<RefundHistory
+					chargeId={order?.checkout?.charge?.id}
+					onRequestClose={() => setModal(false)}
+				/>
+			)}
 		</Box>
 	);
 };
