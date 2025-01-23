@@ -89,3 +89,12 @@ export const periodCountString = (price) => {
 		price.recurring_period_count
 	)})`;
 };
+
+export const getProcessorName = (type) => {
+	switch (type) {
+		case 'stripe':
+			return __('Stripe', 'surecart');
+		case 'paypal':
+			return __('PayPal', 'surecart');
+	}
+};

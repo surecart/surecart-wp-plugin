@@ -11,40 +11,10 @@ import {
 	ScPaymentMethod,
 	ScTag,
 } from '@surecart/components-react';
+import { getProcessorName } from '../../../util/translations';
 
 export default ({ charge, onRequestClose }) => {
 	const { amount, currency, created_at_date } = charge;
-
-	const getExternalChargeLink = (charge) => {
-		const paymentType = charge?.payment_method?.processor_type;
-
-		if (!['stripe', 'paypal'].includes(paymentType)) return null;
-
-		const externalChargeId = charge?.external_charge_id;
-		const isLiveMode = charge?.live_mode;
-
-		if (!externalChargeId) return null;
-
-		if (paymentType === 'stripe')
-			return `https://dashboard.stripe.com/${
-				!isLiveMode ? 'test/' : ''
-			}charges/${externalChargeId}`;
-
-		if (paymentType === 'paypal') {
-			return `https://www.${
-				!isLiveMode ? 'sandbox.' : ''
-			}paypal.com/activity/payment/${externalChargeId}`;
-		}
-	};
-
-	const getProcessorName = (type) => {
-		switch (type) {
-			case 'stripe':
-				return 'Stripe';
-			case 'paypal':
-				return 'PayPal';
-		}
-	};
 
 	const renderStatusTag = () => {
 		if (charge?.fully_refunded) {
@@ -117,7 +87,7 @@ export default ({ charge, onRequestClose }) => {
 					<ScPaymentMethod
 						slot="price"
 						paymentMethod={charge?.payment_method}
-						externalLink={getExternalChargeLink(charge)}
+						externalLink={charge?.external_charge_link}
 						externalLinkTooltipText={`${__(
 							'View charge on ',
 							'surecart'

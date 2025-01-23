@@ -10,6 +10,7 @@ import {
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { getProcessorName } from '../../../util/translations';
 
 export default ({
 	data = [],
@@ -80,15 +81,6 @@ export default ({
 		}
 	};
 
-	const getProcessorName = (type) => {
-		switch (type) {
-			case 'stripe':
-				return 'Stripe';
-			case 'paypal':
-				return 'PayPal';
-		}
-	};
-
 	return (
 		<Fragment>
 			<DataTable
@@ -133,7 +125,7 @@ export default ({
 							method: (
 								<ScPaymentMethod
 									paymentMethod={charge?.payment_method}
-									externalLink={getExternalChargeLink(charge)}
+									externalLink={charge?.external_charge_link}
 									externalLinkTooltipText={`${__(
 										'View charge on ',
 										'surecart'

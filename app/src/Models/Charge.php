@@ -12,7 +12,11 @@ use SureCart\Models\Traits\HasSubscription;
  * Subscription model
  */
 class Charge extends Model {
-	use HasCustomer, HasOrder, HasSubscription, HasDates, HasPaymentMethod;
+	use HasCustomer;
+	use HasOrder;
+	use HasSubscription;
+	use HasDates;
+	use HasPaymentMethod;
 
 	/**
 	 * Rest API endpoint
@@ -35,5 +39,36 @@ class Charge extends Model {
 	 */
 	protected function refund() {
 		return new Refund( [ 'charge' => $this->id ] );
+	}
+
+	/**
+	 * Get the human discount attribute.
+	 *
+	 * @return string
+	 */
+	public function getExternalChargeLinkAttribute() {
+		if ( ! $this->payment_method || ! $this->payment_method->processor_type ) {
+			return null;
+		}
+
+		$payment_type = $this->payment_method->processor_type;
+
+		if ( ! in_array( $payment_type, [ 'stripe', 'paypal' ], true ) ) {
+			return null;
+		}
+
+		if ( ! $this->external_charge_id ) {
+			return null;
+		}
+
+		$external_charge_id = $this->external_charge_id;
+		$is_live_mode       = $this->live_mode;
+
+		if ( 'stripe' === $payment_type ) {
+			return 'https://dashboard.stripe.com/' . ( ! $is_live_mode ? 'test/' : '' ) . 'charges/' . $external_charge_id;
+		}
+		if ( 'paypal' === $payment_type ) {
+			return 'https://www.' . ( ! $is_live_mode ? 'sandbox.' : '' ) . 'paypal.com/activity/payment/' . $external_charge_id;
+		}
 	}
 }
