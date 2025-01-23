@@ -1,4 +1,8 @@
 /** @jsx jsx */
+
+/**
+ * External dependencies.
+ */
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -13,7 +17,9 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useEntityRecords } from '@wordpress/core-data';
 
-/** @jsx jsx */
+/**
+ * Internal dependencies.
+ */
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
@@ -196,7 +202,7 @@ export default ({ order, checkout }) => {
 					)}
 
 					{!!checkout?.refunded_amount &&
-						(refunds || []).reverse().map((refund, index) => (
+						(refunds || []).map((refund, index) => (
 							<RefundLineItem
 								key={refund.id}
 								refund={refund}
@@ -206,9 +212,10 @@ export default ({ order, checkout }) => {
 											{__('Refunded', 'surecart')} (
 											<a
 												href="#"
-												onClick={() =>
-													setModal('refund_history')
-												}
+												onClick={(e) => {
+													e.preventDefault();
+													setModal('refund_history');
+												}}
 											>
 												{__('History', 'surecart')}
 											</a>
