@@ -182,17 +182,6 @@ class ProductCard extends Product {
 						'elements'   => [],
 						'widgetType' => 'surecart-selected-price',
 					],
-					[
-						'id'         => uniqid(),
-						'elType'     => 'widget',
-						'settings'   => [
-							'button_text'              => esc_html__( 'Add To Cart', 'surecart' ),
-							'button_out_of_stock_text' => esc_html__( 'Sold Out', 'surecart' ),
-							'button_unavailable_text'  => esc_html__( 'Unavailable', 'surecart' ),
-						],
-						'elements'   => [],
-						'widgetType' => 'surecart-add-to-cart-button',
-					],
 				],
 				'isInner'  => false,
 			],
@@ -213,7 +202,7 @@ class ProductCard extends Product {
 		<?php
 		$children = $this->get_children();
 		foreach ( $children as $index => $child ) {
-			$this->print_child($index );
+			$this->print_child( $index );
 		}
 		?>
 		<!-- /wp:surecart/product-page -->
