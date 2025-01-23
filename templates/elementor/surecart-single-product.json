@@ -144,7 +144,17 @@
 						},
 						{
 							"id": "7c5b30ef",
-							"settings": [],
+							"settings": {
+								"variant_pills_wrapper_container_type": "flex",
+								"variant_pills_wrapper_flex_direction": "column",
+								"variant_pills_wrapper_flex_gap": {
+									"column": "15",
+									"row": "15",
+									"isLinked": true,
+									"unit": "px",
+									"size": 15
+								}
+							},
 							"elements": [],
 							"isInner": false,
 							"widgetType": "surecart-variant-pills",

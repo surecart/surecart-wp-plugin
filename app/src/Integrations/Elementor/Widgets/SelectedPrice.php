@@ -373,9 +373,9 @@ class SelectedPrice extends \Elementor\Widget_Base {
 			<div class="wp-block-group">
 				<!-- wp:group {"style":{"spacing":{"blockGap":"0.5em"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"bottom"}} -->
 				<div class="wp-block-group">
-					<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through"},"color":{"text":"<?php echo esc_attr( $settings['text_color'] ); ?>"}}} /-->
+					<!-- wp:surecart/product-selected-price-scratch-amount {"style":{"typography":{"textDecoration":"line-through"},"color":{"text":"<?php echo esc_attr( $settings['text_color'] ?? '#ccc' ); ?>"}}} /-->
 
-					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px","color":{"text":"<?php echo esc_attr( $settings['amount_text_color'] ); ?>"}}}} /-->
+					<!-- wp:surecart/product-selected-price-amount {"style":{"typography":{"fontSize":"24px","color":{"text":"<?php echo esc_attr( $settings['amount_text_color'] ?? '#000' ); ?>"}}}} /-->
 
 					<!-- wp:surecart/product-selected-price-interval {"style":{"typography":{"lineHeight":"2"}}} /-->
 
