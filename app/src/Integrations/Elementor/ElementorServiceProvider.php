@@ -243,17 +243,13 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 
 		$product_page_wrapper = new ProductPageWrapperService( $post->post_content );
 
-		// If the post has no surecart block, return.
-		if ( ! $product_page_wrapper->hasAnySureCartProductBlock() ) {
-			return false;
-		}
-
 		// If already has product page wrapper, return.
 		if ( $product_page_wrapper->hasProductPageWrapper() ) {
 			return false;
 		}
 
-		return true;
+		// Check if the post has any surecart product block.
+		return $product_page_wrapper->hasAnySureCartProductBlock();
 	}
 
 	/**
