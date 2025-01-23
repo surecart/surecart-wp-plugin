@@ -169,7 +169,12 @@
 						{
 							"id": "1651338d",
 							"settings": {
-								"button_text": "Add To Cart"
+								"button_text": "Add To Cart",
+								"button_width": {
+									"unit": "%",
+									"size": 100,
+									"sizes": []
+								}
 							},
 							"elements": [],
 							"isInner": false,
@@ -179,7 +184,24 @@
 						{
 							"id": "30eabad0",
 							"settings": {
-								"button_text": "Buy Now"
+								"button_text": "Buy Now",
+								"button_border_width": {
+									"unit": "px",
+									"top": "1",
+									"right": "1",
+									"bottom": "1",
+									"left": "1",
+									"isLinked": true
+								},
+								"button_border_color": "#000000",
+								"button_border_radius": {
+									"unit": "px",
+									"top": "24",
+									"right": "24",
+									"bottom": "24",
+									"left": "24",
+									"isLinked": true
+								}
 							},
 							"elements": [],
 							"isInner": false,
