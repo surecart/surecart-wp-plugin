@@ -43,7 +43,7 @@ const RefundItem = ({
 			context: 'edit',
 			charge_ids: [chargeId],
 			per_page: 100,
-			expand: ['refund_items'],
+			expand: ['refund_items', 'refund_item.line_item'],
 		}
 	);
 
@@ -51,7 +51,7 @@ const RefundItem = ({
 	const hasRevokedPurchase = (refunds ?? []).some((refund) =>
 		(refund?.refund_items?.data ?? []).some(
 			(item) =>
-				item?.line_item === refundItem?.id && item?.revoke_purchase
+				item?.line_item?.id === refundItem?.id && item?.revoke_purchase
 		)
 	);
 
@@ -59,7 +59,7 @@ const RefundItem = ({
 	const totalRefundedQuantity = (refunds ?? []).reduce(
 		(totalQuantity, refund) => {
 			const alreadyRefundedItem = (refund?.refund_items?.data ?? []).find(
-				(item) => item?.line_item === refundItem?.id
+				(item) => item?.line_item?.id === refundItem?.id
 			);
 			return totalQuantity + (alreadyRefundedItem?.quantity || 0);
 		},

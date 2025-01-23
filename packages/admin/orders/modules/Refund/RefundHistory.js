@@ -6,7 +6,8 @@ import { css, jsx } from '@emotion/core';
  */
 import { __, _n } from '@wordpress/i18n';
 import { useState, useRef } from '@wordpress/element';
-import { Popover } from '@wordpress/components';
+import { Popover, ProgressBar } from '@wordpress/components';
+import { useEntityRecords } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -26,7 +27,6 @@ import {
 } from '@surecart/components-react';
 import { refundReasons } from '../../../util/refunds';
 import ProductLineItem from '../../../ui/ProductLineItem';
-import useRefund from '../../hooks/useRefund';
 import { formatDateTime } from '../../../util/time';
 
 export default ({ chargeId, onRequestClose, open }) => {
@@ -53,26 +53,43 @@ export default ({ chargeId, onRequestClose, open }) => {
 		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
 	};
 
-	const { refunds, loading } = useRefund(chargeId);
-
-	// don't render anything if loading.
-	if (loading || !refunds?.length) {
-		return null;
-	}
+	// get the refunds.
+	const { records: refunds, hasResolved } = useEntityRecords(
+		'surecart',
+		'refund',
+		{
+			context: 'edit',
+			charge_ids: [chargeId],
+			per_page: 100,
+			expand: [
+				'refund_items',
+				'refund_item.line_item',
+				'line_item.price',
+				'line_item.variant',
+				'variant.image',
+				'price.product',
+				'product.featured_product_media',
+				'product.product_medias',
+				'product_media.media',
+			],
+		},
+		{
+			enabled: open,
+		}
+	);
 
 	const renderContent = () => {
-		if (loading) {
+		if (!hasResolved) {
 			return (
 				<div
 					css={css`
-						display: grid;
-						gap: 0.5em;
-						padding: var(--sc-drawer-body-spacing);
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						height: 100%;
 					`}
 				>
-					<ScSkeleton style={{ width: '40%' }}></ScSkeleton>
-					<ScSkeleton style={{ width: '60%' }}></ScSkeleton>
-					<ScSkeleton style={{ width: '30%' }}></ScSkeleton>
+					<ProgressBar />
 				</div>
 			);
 		}

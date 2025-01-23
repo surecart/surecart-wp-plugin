@@ -50,7 +50,7 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 			context: 'edit',
 			charge_ids: [charge?.id],
 			per_page: 100,
-			expand: ['refund_items'],
+			expand: ['refund_items', 'refund_item.line_item'],
 		});
 
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
