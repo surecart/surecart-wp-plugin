@@ -35,6 +35,16 @@ class ProductPageWrapperService {
 	}
 
 	/**
+	 * Has any surecart product block.
+	 *
+	 * @return boolean
+	 */
+	public function hasAnySureCartProductBlock(): bool {
+		// Check for blocks starting with wp:surecart/product- or wp:surecart/price-.
+		return preg_match( '/wp:surecart\/product-|wp:surecart\/price-/', $this->content );
+	}
+
+	/**
 	 * Has product buy button.
 	 *
 	 * @return boolean
