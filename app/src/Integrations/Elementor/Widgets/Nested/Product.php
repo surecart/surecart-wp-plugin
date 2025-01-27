@@ -150,14 +150,14 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 		<?php
 		$children = $this->get_children();
 		foreach ( $children as $index => $child ) {
-			$this->print_child($index );
+			$this->print_child( $index );
 		}
 		?>
 		<!-- /wp:surecart/product-page -->
 
 		<?php
 		$item_content = ob_get_clean();
-		echo do_blocks( $item_content );
+		echo $item_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

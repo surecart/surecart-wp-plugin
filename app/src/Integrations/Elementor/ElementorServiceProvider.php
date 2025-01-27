@@ -218,13 +218,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return $data;
 		}
 
-		// For single product page add product element.
-		if ( is_singular( 'sc_product' ) ) {
-			return $this->addProductElement( $data );
-		}
-
-		// For shop page or any other page with surecart product blocks.
-		return $this->addProductCardElement( $data );
+		return $this->addProductElement( $data );
 	}
 
 	/**
@@ -259,49 +253,23 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @return array
 	 */
-	public function addProductCardElement( array $data ): array {
-		$data_elements       = $data[0]['elements'];
-		$data[0]['elements'] = [
-			[
-				'id'         => '720cczz7',
-				'elements'   => [
-					[
-						'id'       => '120ccab9',
-						'elements' => $data_elements,
-						'settings' => [],
-						'elType'   => 'container',
-					],
-				],
-				'settings'   => [],
-				'widgetType' => 'surecart-product',
-				'isInner'    => false,
-				'elType'     => 'widget',
-			],
-		];
-
-		return $data;
-	}
-
-	/**
-	 * Add product element wrapper to the content.
-	 *
-	 * @param array $data The data.
-	 *
-	 * @return array
-	 */
 	public function addProductElement( array $data ): array {
-		$data_elements       = $data[0]['elements'];
-		$data[0]['elements'] = [
-			[
-				'id'         => '720cczz7',
-				'elements'   => $data_elements,
-				'settings'   => [],
-				'widgetType' => 'surecart-product',
-				'isInner'    => false,
-				'elType'     => 'widget',
-			],
-		];
+		add_filter(
+			'elementor/frontend/the_content',
+			function ( $content ) {
+				if ( empty( sc_get_product() ) ) {
+					return $content;
+				}
 
+				// check for any surecart product block.
+				$product_page_wrapper = new ProductPageWrapperService( $content );
+				if ( $product_page_wrapper->hasAnySureCartProductBlock() ) {
+					return $content;
+				}
+
+				return do_blocks( $product_page_wrapper->addProductPageWrapper() );
+			}
+		);
 		return $data;
 	}
 

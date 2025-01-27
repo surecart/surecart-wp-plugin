@@ -211,7 +211,7 @@ class ProductCard extends Product {
 		$item_content = ob_get_clean();
 		?>
 		<a href="<?php echo esc_url( get_permalink() ); ?>">
-			<?php echo do_blocks( $item_content ); ?>
+			<?php echo $item_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</a>
 		<?php
 	}
