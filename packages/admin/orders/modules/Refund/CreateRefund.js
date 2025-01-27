@@ -45,6 +45,8 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 	const [reason, setReason] = useState('requested_by_customer');
 	const [error, setError] = useState(null);
 	const [refundItems, setRefundItems] = useState([]);
+	const [amount, setAmount] = useState(0);
+	const availableRefundAmount = charge?.amount - charge?.refunded_amount;
 	const { records: refunds, hasResolved: hasResolvedRefunds } =
 		useEntityRecords('surecart', 'refund', {
 			context: 'edit',
@@ -95,9 +97,18 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 		);
 	}, [checkout?.line_items?.data]);
 
-	const amount = refundItems.reduce((total, refundItem) => {
-		return total + refundItem.refundQuantity * refundItem?.price?.amount;
-	}, 0);
+	useEffect(() => {
+		const totalAmount = refundItems.reduce((total, refundItem) => {
+			return (
+				total + refundItem.refundQuantity * refundItem?.price?.amount
+			);
+		}, 0);
+		setAmount(
+			totalAmount > availableRefundAmount
+				? availableRefundAmount
+				: totalAmount
+		);
+	}, [refundItems]);
 
 	const totalQuantity = refundItems.reduce((total, refundItem) => {
 		return total + refundItem.refundQuantity;
@@ -210,32 +221,33 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 						}
 					`}
 				>
-					{!!refundItems?.length && (
-						<Box
-							css={css`
-								display: grid;
-								gap: 0.5em;
-								overflow-x: auto;
-								margin-bottom: var(--sc-spacing-small);
-								& > :not(:first-child) {
-									border-top: 1px solid
-										var(--sc-color-gray-300);
-								}
-							`}
-							title={__('Refund item(s)', 'surecart')}
-						>
-							{refundItems.map((refundItem) => (
-								<RefundItem
-									key={refundItem.id}
-									refundItem={refundItem}
-									chargeId={charge?.id}
-									onUpdate={(values) => {
-										updateItem(values, refundItem);
-									}}
-								/>
-							))}
-						</Box>
-					)}
+					{!!refundItems?.length &&
+						totalRefundedQuantity < totalLineItemQuantity && (
+							<Box
+								css={css`
+									display: grid;
+									gap: 0.5em;
+									overflow-x: auto;
+									margin-bottom: var(--sc-spacing-small);
+									& > :not(:first-child) {
+										border-top: 1px solid
+											var(--sc-color-gray-300);
+									}
+								`}
+								title={__('Refund item(s)', 'surecart')}
+							>
+								{refundItems.map((refundItem) => (
+									<RefundItem
+										key={refundItem.id}
+										refundItem={refundItem}
+										chargeId={charge?.id}
+										onUpdate={(values) => {
+											updateItem(values, refundItem);
+										}}
+									/>
+								))}
+							</Box>
+						)}
 
 					<Box
 						title={__('Reason for refund', 'surecart')}
@@ -341,7 +353,7 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 							label={__('Manual', 'surecart')}
 							currencyCode={charge?.currency}
 							value={amount}
-							max={charge?.amount - charge?.refunded_amount}
+							max={availableRefundAmount}
 							onScChange={(e) => {
 								setAmount(e.target.value);
 							}}
@@ -357,7 +369,7 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 							{__('Available for refund: ', 'surecart')}
 							<ScFormatNumber
 								type="currency"
-								value={charge?.amount - charge?.refunded_amount}
+								value={availableRefundAmount}
 								currency={charge?.currency}
 							/>
 						</ScText>
