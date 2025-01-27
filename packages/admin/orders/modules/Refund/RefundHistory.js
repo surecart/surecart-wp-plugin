@@ -21,7 +21,6 @@ import {
 } from '@surecart/components-react';
 import { refundReasons } from '../../../util/refunds';
 import ProductLineItem from '../../../ui/ProductLineItem';
-import { formatDateTime } from '../../../util/time';
 
 export default ({ refundId, onRequestClose }) => {
 	const renderRefundStatusBadge = (status) => {
@@ -59,16 +58,14 @@ export default ({ refundId, onRequestClose }) => {
 					</ScText>
 				)}
 			</ScTableCell>
-			<ScTableCell>
-				{formatDateTime(refund.updated_at * 1000)}
-			</ScTableCell>
+			<ScTableCell>{refund.updated_at_date}</ScTableCell>
 			<ScTableCell>
 				<sc-text
 					style={{
 						'--font-weight': 'var(--sc-font-weight-bold)',
 					}}
 				>
-					{item?.quantity || 'N/A'}
+					{item?.quantity || '-'}
 				</sc-text>
 			</ScTableCell>
 			<ScTableCell>
@@ -135,7 +132,7 @@ export default ({ refundId, onRequestClose }) => {
 						{__('Date', 'surecart')}
 					</ScTableCell>
 					<ScTableCell slot="head">
-						{__('Qty Refunded', 'surecart')}
+						{__('Qty', 'surecart')}
 					</ScTableCell>
 					<ScTableCell slot="head">
 						{__('Reason', 'surecart')}
