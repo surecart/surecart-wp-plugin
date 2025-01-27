@@ -1,4 +1,8 @@
 /** @jsx jsx */
+
+/**
+ * External dependencies.
+ */
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -8,19 +12,20 @@ import {
 	ScLineItem,
 	ScProductLineItem,
 } from '@surecart/components-react';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { useEntityRecords } from '@wordpress/core-data';
 
-/** @jsx jsx */
+/**
+ * Internal dependencies.
+ */
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 import { getSKUText } from '../../../util/products';
 import RefundLineItem from '../Refund/RefundLineItem';
-import RefundHistory from '../Refund/RefundHistory';
-import useRefund from '../../hooks/useRefund';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -32,9 +37,19 @@ const status = {
 };
 
 export default ({ order, checkout }) => {
-	const [modal, setModal] = useState(false);
 	const line_items = checkout?.line_items?.data;
-	const { refunds, loading } = useRefund(order?.checkout?.charge?.id);
+
+	// get the refunds.
+	const { records: refunds, hasResolved } = useEntityRecords(
+		'surecart',
+		'refund',
+		{
+			context: 'edit',
+			charge_ids: [order?.checkout?.charge?.id],
+			per_page: 100,
+			expand: ['refund_items', 'refund_item.line_item'],
+		}
+	);
 
 	const statusBadge = () => {
 		if (!order?.status) {
@@ -96,7 +111,7 @@ export default ({ order, checkout }) => {
 					{status[order?.status] || order?.status}
 				</div>
 			}
-			loading={loading}
+			loading={!hasResolved}
 			header_action={
 				order?.statement_url && (
 					<div
@@ -185,23 +200,14 @@ export default ({ order, checkout }) => {
 					)}
 
 					{!!checkout?.refunded_amount &&
-						refunds?.map((refund, index) => (
+						(refunds || []).map((refund, index) => (
 							<RefundLineItem
 								key={refund.id}
+								order={order}
 								refund={refund}
 								label={
 									index === 0 ? (
-										<>
-											{__('Refunded', 'surecart')}{' '}
-											<ScButton
-												size="small"
-												onClick={() =>
-													setModal('refund_history')
-												}
-											>
-												{__('History', 'surecart')}
-											</ScButton>
-										</>
+										<>{__('Refunded', 'surecart')}</>
 									) : (
 										''
 									)
@@ -349,12 +355,6 @@ export default ({ order, checkout }) => {
 					</ScLineItem>
 				)}
 			</Fragment>
-
-			<RefundHistory
-				open={modal === 'refund_history'}
-				chargeId={order?.checkout?.charge?.id}
-				onRequestClose={() => setModal(false)}
-			/>
 		</Box>
 	);
 };

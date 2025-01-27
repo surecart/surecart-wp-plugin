@@ -5,19 +5,14 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __, _n } from '@wordpress/i18n';
-import { useState, useRef } from '@wordpress/element';
-import { Popover } from '@wordpress/components';
+import { ProgressBar } from '@wordpress/components';
+import { useEntityRecords } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
  */
 import {
-	ScButton,
 	ScDrawer,
-	ScEmpty,
-	ScFormatNumber,
-	ScIcon,
-	ScSkeleton,
 	ScTable,
 	ScTableCell,
 	ScTableRow,
@@ -26,13 +21,9 @@ import {
 } from '@surecart/components-react';
 import { refundReasons } from '../../../util/refunds';
 import ProductLineItem from '../../../ui/ProductLineItem';
-import useRefund from '../../hooks/useRefund';
 import { formatDateTime } from '../../../util/time';
 
-export default ({ chargeId, onRequestClose, open }) => {
-	const anchor = useRef();
-	const [isVisible, setIsVisible] = useState(false);
-
+export default ({ refundId, onRequestClose }) => {
 	const renderRefundStatusBadge = (status) => {
 		switch (status) {
 			case 'pending':
@@ -53,40 +44,83 @@ export default ({ chargeId, onRequestClose, open }) => {
 		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
 	};
 
-	const { refunds, loading } = useRefund(chargeId);
+	const renderRefundTableRow = (item, refund) => (
+		<ScTableRow key={item?.id || refund?.id}>
+			<ScTableCell>
+				{item?.line_item?.price?.product?.id ? (
+					<ProductLineItem lineItem={item.line_item} />
+				) : (
+					<ScText
+						css={css`
+							color: var(--sc-color-gray-500);
+						`}
+					>
+						{__('No product', 'surecart')}
+					</ScText>
+				)}
+			</ScTableCell>
+			<ScTableCell>
+				{formatDateTime(refund.updated_at * 1000)}
+			</ScTableCell>
+			<ScTableCell>
+				<sc-text
+					style={{
+						'--font-weight': 'var(--sc-font-weight-bold)',
+					}}
+				>
+					{item?.quantity || 'N/A'}
+				</sc-text>
+			</ScTableCell>
+			<ScTableCell>
+				<ScText
+					css={css`
+						color: var(--sc-color-gray-500);
+					`}
+				>
+					{refundReasons?.[refund.reason] ||
+						__('Unknown', 'surecart')}
+				</ScText>
+			</ScTableCell>
+			<ScTableCell>{renderRefundStatusBadge(refund.status)}</ScTableCell>
+		</ScTableRow>
+	);
 
-	// don't render anything if loading.
-	if (loading || !refunds?.length) {
-		return null;
-	}
+	// get the refunds.
+	const { records: refunds, hasResolved } = useEntityRecords(
+		'surecart',
+		'refund',
+		{
+			context: 'edit',
+			ids: [refundId],
+			per_page: 100,
+			expand: [
+				'refund_items',
+				'refund_item.line_item',
+				'line_item.price',
+				'line_item.variant',
+				'variant.image',
+				'price.product',
+				'product.featured_product_media',
+				'product.product_medias',
+				'product_media.media',
+			],
+		}
+	);
+
+	const refund = refunds?.[0] || {};
 
 	const renderContent = () => {
-		if (loading) {
+		if (!hasResolved) {
 			return (
 				<div
 					css={css`
-						display: grid;
-						gap: 0.5em;
-						padding: var(--sc-drawer-body-spacing);
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						height: 100%;
 					`}
 				>
-					<ScSkeleton style={{ width: '40%' }}></ScSkeleton>
-					<ScSkeleton style={{ width: '60%' }}></ScSkeleton>
-					<ScSkeleton style={{ width: '30%' }}></ScSkeleton>
-				</div>
-			);
-		}
-
-		if (!refunds?.length) {
-			return (
-				<div
-					css={css`
-						padding: var(--sc-drawer-body-spacing);
-					`}
-				>
-					<ScEmpty icon="activity">
-						{__('There are no refund history', 'surecart')}
-					</ScEmpty>
+					<ProgressBar />
 				</div>
 			);
 		}
@@ -101,7 +135,7 @@ export default ({ chargeId, onRequestClose, open }) => {
 						{__('Date', 'surecart')}
 					</ScTableCell>
 					<ScTableCell slot="head">
-						{__('Amount Refunded', 'surecart')}
+						{__('Qty Refunded', 'surecart')}
 					</ScTableCell>
 					<ScTableCell slot="head">
 						{__('Reason', 'surecart')}
@@ -109,151 +143,12 @@ export default ({ chargeId, onRequestClose, open }) => {
 					<ScTableCell slot="head">
 						{__('Status', 'surecart')}
 					</ScTableCell>
-
-					{(refunds || []).map(
-						({
-							amount,
-							currency,
-							updated_at,
-							reason,
-							refund_items,
-						}) => (
-							<ScTableRow>
-								<ScTableCell>
-									{refund_items?.data?.[0]?.line_item?.price
-										?.product?.id ? (
-										<>
-											<ProductLineItem
-												lineItem={
-													refund_items?.data?.[0]
-														?.line_item
-												}
-											/>
-
-											{refund_items?.data?.length > 1 && (
-												<div
-													onMouseEnter={() =>
-														setIsVisible(true)
-													}
-													onMouseLeave={() =>
-														setIsVisible(false)
-													}
-													css={css`
-														cursor: pointer;
-													`}
-												>
-													{__('and', 'surecart')}
-													<span
-														style={{
-															textDecoration:
-																'underline',
-														}}
-														ref={anchor}
-													>
-														{sprintf(
-															__(
-																' %d more',
-																'surecart'
-															),
-															refund_items.data
-																.length - 1
-														)}
-													</span>
-													{isVisible && (
-														<Popover
-															anchor={
-																anchor.current
-															}
-															placement="top-start"
-														>
-															<div
-																css={css`
-																	padding: 1em;
-																	width: 200px;
-																	max-height: 200px;
-																	overflow-y: auto;
-																`}
-															>
-																{refund_items.data
-																	?.slice(1)
-																	?.map(
-																		(
-																			item,
-																			index
-																		) => (
-																			<div
-																				key={
-																					index
-																				}
-																				css={css`
-																					padding: 0.5em
-																						0px;
-																					border-bottom: ${index !==
-																					refund_items
-																						.data
-																						.length -
-																						2
-																						? '1px solid var(--sc-color-gray-200)'
-																						: 'none'};
-																				`}
-																			>
-																				<ProductLineItem
-																					lineItem={
-																						item.line_item
-																					}
-																				/>
-																			</div>
-																		)
-																	)}
-															</div>
-														</Popover>
-													)}
-												</div>
-											)}
-										</>
-									) : (
-										<ScText
-											css={css`
-												color: var(--sc-color-gray-500);
-											`}
-										>
-											{__('No product', 'surecart')}
-										</ScText>
-									)}
-								</ScTableCell>
-								<ScTableCell>
-									{formatDateTime(updated_at * 1000)}
-								</ScTableCell>
-								<ScTableCell>
-									<sc-text
-										style={{
-											'--font-weight':
-												'var(--sc-font-weight-bold)',
-										}}
-									>
-										-
-										<ScFormatNumber
-											type="currency"
-											currency={currency || 'usd'}
-											value={amount}
-										/>
-									</sc-text>
-								</ScTableCell>
-								<ScTableCell>
-									<ScText
-										css={css`
-											color: var(--sc-color-gray-500);
-										`}
-									>
-										{refundReasons?.[reason] ||
-											__('Unknown', 'surecart')}
-									</ScText>
-								</ScTableCell>
-								<ScTableCell>
-									{renderRefundStatusBadge('succeeded')}
-								</ScTableCell>
-							</ScTableRow>
+					{(refund.refund_items?.data || []).length > 0 ? (
+						(refund.refund_items?.data || []).map((item) =>
+							renderRefundTableRow(item, refund)
 						)
+					) : (
+						<>{renderRefundTableRow(null, refund)}</>
 					)}
 				</ScTable>
 			</div>
@@ -264,30 +159,11 @@ export default ({ chargeId, onRequestClose, open }) => {
 		<>
 			<ScDrawer
 				style={{ '--sc-drawer-size': '48rem' }}
-				open={open}
+				open={true}
 				stickyHeader
 				onScAfterHide={() => onRequestClose()}
+				label={__('Refund History', 'surecart')}
 			>
-				<span
-					slot="header"
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-						padding: var(--sc-drawer-header-spacing);
-						border-bottom: var(--sc-drawer-border);
-					`}
-				>
-					{__('Refund History', 'surecart')}
-
-					<ScButton
-						type="text"
-						size="small"
-						onClick={() => onRequestClose()}
-					>
-						<ScIcon class="cart__close" name="x"></ScIcon>
-					</ScButton>
-				</span>
 				{renderContent()}
 			</ScDrawer>
 		</>

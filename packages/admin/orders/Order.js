@@ -353,12 +353,14 @@ export default () => {
 					onCreateSuccess={manuallyRefetchOrder}
 					onDeleteSuccess={manuallyRefetchOrder}
 				/>
-				<LineItems
-					order={order}
-					checkout={order?.checkout}
-					charge={order?.checkout?.charge}
-					loading={!hasLoadedOrder}
-				/>
+				{order?.checkout && (
+					<LineItems
+						order={order}
+						checkout={order?.checkout}
+						charge={order?.checkout?.charge}
+						loading={!hasLoadedOrder}
+					/>
+				)}
 				<Charges checkout={order?.checkout} />
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
