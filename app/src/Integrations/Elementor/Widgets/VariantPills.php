@@ -70,6 +70,151 @@ class VariantPills extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	private function register_style_settings() {
+		$wrapper_selector              = '{{WRAPPER}} .wp-block-surecart-product-variant-pills__wrapper';
+		$pills_selector                = '{{WRAPPER}} .wp-block-surecart-product-variant-pills';
+		$pill_options_wrapper_selector = '{{WRAPPER}} .sc-pill-option__wrapper';
+
+		$this->start_controls_section(
+			'section_variant_pills_layout_style',
+			[
+				'label' => esc_html__( 'Layout', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'variant_pills_wrapper_container_type',
+			[
+				'label'            => esc_html__( 'Container Layout', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::SELECT,
+				'default'          => 'flex',
+				'options'          => [
+					'flex' => esc_html__( 'Flexbox', 'surecart' ),
+				],
+				'selectors'        => [
+					$wrapper_selector => '--display: {{VALUE}}; display: {{VALUE}}',
+				],
+				'separator'        => 'after',
+				'editor_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'variant_pills_wrapper_flex_direction',
+			[
+				'label'            => esc_html__( 'Flex Direction', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::SELECT,
+				'default'          => 'column',
+				'options'          => [
+					'row'    => esc_html__( 'Row', 'surecart' ),
+					'column' => esc_html__( 'Column', 'surecart' ),
+				],
+				'selectors'        => [
+					$wrapper_selector => 'flex-direction: {{VALUE}}',
+				],
+				'editor_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'variant_pills_wrapper_flex_gap',
+			[
+				'label'            => esc_html__( 'Flex Gap', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::SLIDER,
+				'size_units'       => [ 'px', 'em', '%' ],
+				'default'          => [
+					'size' => 15,
+					'unit' => 'px',
+				],
+				'selectors'        => [
+					$wrapper_selector => 'gap: {{SIZE}}{{UNIT}}',
+				],
+				'editor_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'variant_pills_wrapper_flex_justify_content',
+			[
+				'label'            => esc_html__( 'Justify Content', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::SELECT,
+				'default'          => 'flex-start',
+				'options'          => [
+					'flex-start'    => esc_html__( 'Start', 'surecart' ),
+					'flex-end'      => esc_html__( 'End', 'surecart' ),
+					'center'        => esc_html__( 'Center', 'surecart' ),
+					'space-between' => esc_html__( 'Space Between', 'surecart' ),
+					'space-around'  => esc_html__( 'Space Around', 'surecart' ),
+					'space-evenly'  => esc_html__( 'Space Evenly', 'surecart' ),
+				],
+				'selectors'        => [
+					$wrapper_selector => 'justify-content: {{VALUE}}',
+				],
+				'editor_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'variant_pills_wrapper_flex_align_items',
+			[
+				'label'            => esc_html__( 'Align Items', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::SELECT,
+				'default'          => 'flex-start',
+				'options'          => [
+					'flex-start' => esc_html__( 'Start', 'surecart' ),
+					'flex-end'   => esc_html__( 'End', 'surecart' ),
+					'center'     => esc_html__( 'Center', 'surecart' ),
+					'stretch'    => esc_html__( 'Stretch', 'surecart' ),
+					'baseline'   => esc_html__( 'Baseline', 'surecart' ),
+				],
+				'selectors'        => [
+					$wrapper_selector => 'align-items: {{VALUE}}',
+				],
+				'editor_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'variant_pills_wrapper_flex_wrap',
+			[
+				'label'            => esc_html__( 'Flex Wrap', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::SELECT,
+				'default'          => 'wrap',
+				'options'          => [
+					'nowrap'       => esc_html__( 'No Wrap', 'surecart' ),
+					'wrap'         => esc_html__( 'Wrap', 'surecart' ),
+					'wrap-reverse' => esc_html__( 'Wrap Reverse', 'surecart' ),
+				],
+				'selectors'        => [
+					$wrapper_selector => 'flex-wrap: {{VALUE}}',
+				],
+				'editor_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'variant_pills_wrapper_flex_align_content',
+			[
+				'label'            => esc_html__( 'Align Content', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::SELECT,
+				'default'          => 'flex-start',
+				'options'          => [
+					'flex-start'    => esc_html__( 'Start', 'surecart' ),
+					'flex-end'      => esc_html__( 'End', 'surecart' ),
+					'center'        => esc_html__( 'Center', 'surecart' ),
+					'space-between' => esc_html__( 'Space Between', 'surecart' ),
+					'space-around'  => esc_html__( 'Space Around', 'surecart' ),
+					'space-evenly'  => esc_html__( 'Space Evenly', 'surecart' ),
+				],
+				'selectors'        => [
+					$wrapper_selector => 'align-content: {{VALUE}}',
+				],
+				'editor_available' => true,
+			]
+		);
+
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_variant_pills_style',
 			[
@@ -84,7 +229,7 @@ class VariantPills extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-variant-pills' => 'color: {{VALUE}}',
+					$pills_selector => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -92,7 +237,7 @@ class VariantPills extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'pill_gap',
 			[
-				'label'       => esc_html__( 'Gap', 'surecart' ),
+				'label'       => esc_html__( 'Pill Gap', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::SLIDER,
 				'size_units'  => [ 'px', 'em', '%' ],
 				'description' => esc_html__( 'Space between each pill.', 'surecart' ),
@@ -100,21 +245,16 @@ class VariantPills extends \Elementor\Widget_Base {
 					'px' => [
 						'min'  => 0,
 						'step' => 1,
-						'max'  => 100,
+						'max'  => 1000,
 					],
 					'em' => [
 						'min'  => 0,
 						'step' => 0.1,
 						'max'  => 10,
 					],
-					'%'  => [
-						'min'  => 0,
-						'step' => 1,
-						'max'  => 100,
-					],
 				],
 				'selectors'   => [
-					'{{WRAPPER}} .sc-pill-option__wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					$pill_options_wrapper_selector => 'gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -276,6 +416,7 @@ class VariantPills extends \Elementor\Widget_Base {
 			'highlight_border'     => $settings['pill_highlight_border_color'] ?? '',
 		);
 
+		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-surecart-product-variant-pills__wrapper' );
 		?>
 		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 		<!-- wp:surecart/product-variant-pills -->
@@ -292,14 +433,24 @@ class VariantPills extends \Elementor\Widget_Base {
 	 */
 	protected function content_template() {
 		?>
-		<div class="wp-block-surecart-product-variant-pills">
-			<label class="sc-form-label"><?php echo esc_html__( 'Color', 'surecart' ); ?></label>
-			<div class="sc-pill-option__wrapper">
-				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Red', 'surecart' ); ?></div>
-				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Blue', 'surecart' ); ?></div>
-				<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Green', 'surecart' ); ?></div>
+			<div class="wp-block-surecart-product-variant-pills__wrapper">
+				<div class="wp-block-surecart-product-variant-pills">
+					<label class="sc-form-label"><?php echo esc_html__( 'Color', 'surecart' ); ?></label>
+					<div class="sc-pill-option__wrapper">
+						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Red', 'surecart' ); ?></div>
+						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Blue', 'surecart' ); ?></div>
+						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Green', 'surecart' ); ?></div>
+					</div>
+				</div>
+				<div class="wp-block-surecart-product-variant-pills">
+					<label class="sc-form-label"><?php echo esc_html__( 'Size', 'surecart' ); ?></label>
+					<div class="sc-pill-option__wrapper">
+						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Small', 'surecart' ); ?></div>
+						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Medium', 'surecart' ); ?></div>
+						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Large', 'surecart' ); ?></div>
+					</div>
+				</div>
 			</div>
-		</div>
 		<?php
 	}
 }

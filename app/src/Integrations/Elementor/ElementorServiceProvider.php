@@ -207,36 +207,49 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @param array $data    The builder content.
 	 * @param int   $post_id The post ID.
 	 */
-	public function append_product_widget_wrapper( $data, $post_id ) {
+	public function append_product_widget_wrapper( $data, $post_id ): array {
 		// If no data, return.
 		if ( empty( $data[0]['elements'] ) ) {
 			return $data;
 		}
 
-		// If not surecart product, return.
-		if ( ! is_singular( 'sc_product' ) ) {
+		// If no surecart blocks in the content, return.
+		if ( ! $this->needsProductElement( $post_id ) ) {
 			return $data;
 		}
 
+		// For single product page add product element.
+		if ( is_singular( 'sc_product' ) ) {
+			return $this->addProductElement( $data );
+		}
+
+		// For shop page or any other page with surecart product blocks.
+		return $this->addProductCardElement( $data );
+	}
+
+	/**
+	 * Check if the post needs product element.
+	 *
+	 * @param int $post_id The post ID.
+	 *
+	 * @return bool
+	 */
+	public function needsProductElement( $post_id ) {
 		$post = get_post( $post_id );
 
 		if ( ! $post ) {
-			return $data;
+			return false;
 		}
 
 		$product_page_wrapper = new ProductPageWrapperService( $post->post_content );
 
-		// If the post has no product buy button, return.
-		if ( ! $product_page_wrapper->hasProductBuyButton() ) {
-			return $data;
-		}
-
 		// If already has product page wrapper, return.
 		if ( $product_page_wrapper->hasProductPageWrapper() ) {
-			return $data;
+			return false;
 		}
 
-		return $this->addProductElement( $data );
+		// Check if the post has any surecart product block.
+		return $product_page_wrapper->hasAnySureCartProductBlock();
 	}
 
 	/**
@@ -246,7 +259,37 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @return array
 	 */
-	private function addProductElement( $data ): array {
+	public function addProductCardElement( array $data ): array {
+		$data_elements       = $data[0]['elements'];
+		$data[0]['elements'] = [
+			[
+				'id'         => '720cczz7',
+				'elements'   => [
+					[
+						'id'       => '120ccab9',
+						'elements' => $data_elements,
+						'settings' => [],
+						'elType'   => 'container',
+					],
+				],
+				'settings'   => [],
+				'widgetType' => 'surecart-product',
+				'isInner'    => false,
+				'elType'     => 'widget',
+			],
+		];
+
+		return $data;
+	}
+
+	/**
+	 * Add product element wrapper to the content.
+	 *
+	 * @param array $data The data.
+	 *
+	 * @return array
+	 */
+	public function addProductElement( array $data ): array {
 		$data_elements       = $data[0]['elements'];
 		$data[0]['elements'] = [
 			[

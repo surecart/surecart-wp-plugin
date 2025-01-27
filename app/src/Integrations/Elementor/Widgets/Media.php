@@ -79,29 +79,14 @@ class Media extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'thumbnails_per_page',
+			'lightbox',
 			[
-				'label'       => esc_html__( 'Thumbnails per Page', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::NUMBER,
-				'default'     => 5,
-				'description' => esc_html__( 'Set the number of thumbnails to show per page.', 'surecart' ),
-			]
-		);
-
-		$this->end_controls_section();
-	}
-
-	/**
-	 * Register the widget style settings.
-	 *
-	 * @return void
-	 */
-	protected function register_style_settings() {
-		$this->start_controls_section(
-			'section_style',
-			[
-				'label' => esc_html__( 'Slider', 'surecart' ),
-				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+				'label'       => esc_html__( 'Enlarge on Click', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Yes', 'surecart' ),
+				'label_off'   => esc_html__( 'No', 'surecart' ),
+				'default'     => 'yes',
+				'description' => esc_html__( 'Scale images with a lightbox effect.', 'surecart' ),
 			]
 		);
 
@@ -130,18 +115,26 @@ class Media extends \Elementor\Widget_Base {
 					'{{WRAPPER}} .sc-image-slider>.swiper' => 'height: {{SIZE}}{{UNIT}};',
 				],
 				'range'      => [
-					'px'  => [
+					'px'     => array(
 						'min' => 0,
 						'max' => 1000,
-					],
-					'em'  => [
+					),
+					'em'     => array(
+						'min'  => 0,
+						'step' => 0.1,
+						'max'  => 10,
+					),
+					'%'      => array(
 						'min' => 0,
 						'max' => 100,
-					],
-					'rem' => [
+					),
+					'rem'    => array(
 						'min' => 0,
 						'max' => 100,
-					],
+					),
+					'custom' => array(
+						'min' => 0,
+					),
 				],
 				'condition'  => [
 					'slider_is_auto_height!' => 'yes',
@@ -175,6 +168,16 @@ class Media extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'thumbnails_per_page',
+			[
+				'label'       => esc_html__( 'Thumbnails per Page', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'default'     => 5,
+				'description' => esc_html__( 'Set the number of thumbnails to show per page.', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -185,7 +188,6 @@ class Media extends \Elementor\Widget_Base {
 	 */
 	protected function register_controls() {
 		$this->register_content_settings();
-		$this->register_style_settings();
 	}
 
 	/**
@@ -220,6 +222,7 @@ class Media extends \Elementor\Widget_Base {
 			'auto_height'         => 'yes' === $settings['slider_is_auto_height'],
 			'height'              => ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '',
 			'width'               => ! empty( $settings['slider_max_image_width']['size'] ) ? $settings['slider_max_image_width']['size'] . $settings['slider_max_image_width']['unit'] : '',
+			'lightbox'            => 'yes' === $settings['lightbox'],
 		);
 
 		?>

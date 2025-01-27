@@ -140,6 +140,16 @@ class Quantity extends \Elementor\Widget_Base {
 				'label'      => esc_html__( 'Width', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
+				'range'      => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+					],
+					'em' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
 				'selectors'  => array(
 					'{{WRAPPER}} .wp-block-surecart-product-quantity .sc-quantity-selector' => 'width: {{SIZE}}{{UNIT}};',
 				),

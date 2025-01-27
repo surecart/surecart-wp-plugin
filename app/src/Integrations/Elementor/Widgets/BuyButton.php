@@ -77,6 +77,9 @@ class BuyButton extends AddToCartButton {
 	 * @return void
 	 */
 	protected function register_style_settings(): void {
+		$button_selector       = '{{WRAPPER}} .wp-block-button__link';
+		$button_hover_selector = '{{WRAPPER}} .wp-block-button__link:hover';
+
 		$this->start_controls_section(
 			'section_style',
 			[
@@ -92,7 +95,7 @@ class BuyButton extends AddToCartButton {
 				'global'   => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
-				'selector' => '{{WRAPPER}} .wp-block-button__link',
+				'selector' => $button_selector,
 			]
 		);
 
@@ -102,8 +105,8 @@ class BuyButton extends AddToCartButton {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-button__link' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wp-block-button__link:hover' => 'color: {{VALUE}}',
+					$button_selector       => 'color: {{VALUE}}',
+					$button_hover_selector => 'color: {{VALUE}}',
 				],
 				'default'   => '#000000',
 			]
@@ -115,7 +118,7 @@ class BuyButton extends AddToCartButton {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-button__link' => 'background-color: {{VALUE}}',
+					$button_selector => 'background-color: {{VALUE}}',
 				],
 				'default'   => '#FFFFFF',
 			]
@@ -128,11 +131,22 @@ class BuyButton extends AddToCartButton {
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
-					'{{WRAPPER}} .wp-block-button__link' => 'width: {{SIZE}}{{UNIT}};',
+					$button_selector => 'width: {{SIZE}}{{UNIT}};',
 				),
 				'default'    => [
 					'size' => 100,
 					'unit' => '%',
+				],
+				'range'      => [
+					'px' => array(
+						'min' => 0,
+						'max' => 1000,
+					),
+					'em' => array(
+						'min'  => 0,
+						'step' => 0.1,
+						'max'  => 10,
+					),
 				],
 			)
 		);
@@ -144,7 +158,7 @@ class BuyButton extends AddToCartButton {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .wp-block-button__link' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					$button_selector => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -153,7 +167,7 @@ class BuyButton extends AddToCartButton {
 			\Elementor\Group_Control_Border::get_type(),
 			[
 				'name'     => 'button_border',
-				'selector' => '{{WRAPPER}} .wp-block_button__link',
+				'selector' => $button_selector,
 			],
 		);
 
@@ -164,7 +178,7 @@ class BuyButton extends AddToCartButton {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
-					'{{WRAPPER}} .wp-block_button__link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					$button_selector => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
