@@ -17,6 +17,7 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"currencyConversion": true,
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]

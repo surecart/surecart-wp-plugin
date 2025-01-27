@@ -42,7 +42,8 @@
 			"__experimentalSkipSerialization": true,
 			"background": true,
 			"text": true
-		}
+		},
+		"currencyConversion": true
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",

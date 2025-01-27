@@ -8,6 +8,14 @@ use SureCart\Support\Currency;
  * Currency Service
  */
 class CurrencyService {
+
+	/**
+	 * Should convert currency?
+	 *
+	 * @var bool
+	 */
+	public $is_converting = false;
+
 	/**
 	 * Bootstrap the currency service.
 	 *
@@ -38,6 +46,17 @@ class CurrencyService {
 		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			sc_setcookie( 'sc_current_currency', $_GET['currency'], time() + 7 * DAY_IN_SECONDS ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
+	}
+
+	/**
+	 * Convert currency.
+	 *
+	 * @param bool $convert Convert.
+	 *
+	 * @return void
+	 */
+	public function convert( $convert = true ) {
+		$this->is_converting = $convert;
 	}
 
 	/**

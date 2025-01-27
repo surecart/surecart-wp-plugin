@@ -25,6 +25,11 @@ class Currency {
 	 * @return string
 	 */
 	public static function getCurrentCurrency() {
+		// if the currency is notbeing converted, use the default currency.
+		if ( ! \SureCart::currency()->is_converting ) {
+			return self::getDefaultCurrency();
+		}
+
 		// if there is a currency in the url, use it.
 		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return strtolower( sanitize_text_field( $_GET['currency'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended

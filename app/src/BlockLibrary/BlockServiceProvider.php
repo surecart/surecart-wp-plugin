@@ -34,6 +34,10 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockAnchorSupportService();
 		};
 
+		$container['block.support.currency'] = function () use ( $app ) {
+			return new BlockCurrencyConversionSupportService();
+		};
+
 		$container['blocks.patterns'] = function () use ( $app ) {
 			return new BlockPatternsService( $app );
 		};
@@ -73,6 +77,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		$container['blocks.validations']->bootstrap();
 		$container['blocks.mode_switcher']->bootstrap();
 		$container['block.support.anchor']->bootstrap();
+		$container['block.support.currency']->bootstrap();
 
 		// allow design tokens in css.
 		add_filter(

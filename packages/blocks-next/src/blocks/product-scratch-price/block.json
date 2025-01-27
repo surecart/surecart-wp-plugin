@@ -12,6 +12,7 @@
 	"ancestor": ["surecart/product-template"],
 	"supports": {
 		"interactivity": true,
+		"currencyConversion": true,
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]

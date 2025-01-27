@@ -207,6 +207,10 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 		do_action( 'litespeed_control_set_nocache', 'surecart api request' );
 
 		return function ( $request ) use ( $class, $method ) {
+			if ( null !== $request->get_param( 'convert_currency' ) ) {
+				\SureCart::currency()->convert( $request->get_param( 'convert_currency' ) );
+			}
+
 			// get and call controller with request.
 			$controller = \SureCart::closure()->method( $class, $method );
 			$model      = $controller( $request );

@@ -33,6 +33,7 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"currencyConversion": true,
 		"anchor": true,
 		"spacing": {
 			"__experimentalSkipSerialization": true,

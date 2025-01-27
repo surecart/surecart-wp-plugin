@@ -230,9 +230,10 @@ add_action(
 					<?php
 					echo wp_json_encode(
 						[
-							'root_url'       => esc_url_raw( get_rest_url() ),
-							'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-							'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+							'root_url'         => esc_url_raw( get_rest_url() ),
+							'nonce'            => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+							'nonce_endpoint'   => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+							'convert_currency' => \SureCart::currency()->is_converting,
 						]
 					);
 					?>
@@ -442,7 +443,7 @@ add_action(
 			),
 			$static_assets['version']
 		);
-		
+
 		// SureCart Checkout.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout/index.asset.php';
 		wp_register_script_module(

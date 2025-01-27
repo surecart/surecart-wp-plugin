@@ -41,8 +41,10 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new CompatibilityService();
 		};
 
-		$container['surecart.currency'] = function () {
-			return new CurrencyService();
+		// singleton.
+		$currency_service               = new CurrencyService();
+		$container['surecart.currency'] = function () use ( $currency_service ) {
+			return $currency_service;
 		};
 
 		$singleton                          = new StateService( [] );

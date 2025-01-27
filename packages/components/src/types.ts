@@ -5,6 +5,9 @@ import { StripeElementChangeEvent } from '@stripe/stripe-js';
 declare global {
   interface Window {
     grecaptcha: any;
+    scFetchData?: {
+      convert_currency?: boolean;
+    };
     surecart?: {
       product?: {
         store: ObservableMap<any>;
