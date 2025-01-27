@@ -1,15 +1,31 @@
 {
 	"content": [
 		{
-			"id": "71f479ff",
+			"id": "342d6ae",
 			"settings": {
 				"flex_direction": "row",
-				"content_width": "full"
+				"flex_gap": {
+					"column": "60",
+					"row": "60",
+					"isLinked": true,
+					"unit": "px",
+					"size": 60
+				}
 			},
 			"elements": [
 				{
 					"id": "703dc9d5",
-					"settings": { "_title": "Column" },
+					"settings": {
+						"_title": "Column",
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
+					},
 					"elements": [
 						{
 							"id": "421ee3e1",
@@ -26,7 +42,17 @@
 				},
 				{
 					"id": "72cf69ad",
-					"settings": { "_title": "Column" },
+					"settings": {
+						"_title": "Column",
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
+					},
 					"elements": [
 						{
 							"id": "2925be0d",
@@ -236,5 +262,5 @@
 	},
 	"version": "0.4",
 	"title": "SureCart Single Product Template",
-	"type": "surecart-product"
+	"type": "container"
 }
