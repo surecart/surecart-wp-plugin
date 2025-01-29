@@ -125,8 +125,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url'            => site_url(),
-				'sc_product_template' => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
+				'site_url'                 => site_url(),
+				'sc_product_template'      => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
+				'sc_product_card_template' => $this->get_elementor_template_from_file( 'surecart-product-card.json' ),
 			]
 		);
 	}
