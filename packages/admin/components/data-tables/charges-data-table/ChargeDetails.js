@@ -11,7 +11,9 @@ import {
 	ScPaymentMethod,
 	ScTag,
 	ScDivider,
+	ScIcon,
 } from '@surecart/components-react';
+import { Tooltip } from '@wordpress/components';
 import { getProcessorName } from '../../../util/translations';
 
 export default ({ charge, onRequestClose }) => {
@@ -64,7 +66,7 @@ export default ({ charge, onRequestClose }) => {
 			<div
 				css={css`
 					display: grid;
-					gap: 1.5em;
+					gap: 0.7em;
 					padding: var(--sc-spacing-x-large);
 				`}
 			>
@@ -103,11 +105,10 @@ export default ({ charge, onRequestClose }) => {
 				</ScLineItem>
 				{payment_intent?.platform_fee && (
 					<>
-						<ScDivider style={{ '--spacing': '1em' }} />
 						<h3
 							css={css`
 								font-size: 13px;
-								margin: 0;
+								margin: 1em 0 0;
 							`}
 						>
 							{__('Platform Fee', 'surecart')}
@@ -124,9 +125,6 @@ export default ({ charge, onRequestClose }) => {
 									payment_intent?.platform_fee?.base_amount
 								}
 							/>
-							<span slot="price-description">
-								{`(${payment_intent.platform_fee.base_rate}%)`}
-							</span>
 						</ScLineItem>
 						<ScLineItem>
 							<span slot="description">
@@ -141,7 +139,7 @@ export default ({ charge, onRequestClose }) => {
 									<ScLineItem
 										key={key}
 										style={{
-											'margin-left': '1em',
+											marginLeft: '1em',
 										}}
 									>
 										<span slot="description">
@@ -154,74 +152,76 @@ export default ({ charge, onRequestClose }) => {
 											currency={currency}
 											value={feature?.amount}
 										/>
-										<span slot="price-description">
-											{`(${feature?.effective_rate}%)`}
-										</span>
 									</ScLineItem>
 								);
 							})}
+					</>
+				)}
+				{payment_intent?.service_fee && (
+					<ScLineItem>
+						<span slot="description">
+							{__(
+								`${
+									payment_intent?.service_fee
+										?.organization_name || 'Partner'
+								} Service Fee`,
+								'surecart'
+							)}
+							<Tooltip
+								text={__(
+									'Fee charged by the partner for the service they provide.',
+									'surecart'
+								)}
+							>
+								<ScIcon
+									style={{
+										verticalAlign: 'middle',
+										marginLeft: '0.5em',
+										marginBottom: '0.1em',
+										color: '#000',
+									}}
+									name="info"
+								/>
+							</Tooltip>
+						</span>
+						<ScFormatNumber
+							slot="price"
+							type="currency"
+							currency={currency}
+							value={payment_intent?.service_fee?.amount}
+						/>
+					</ScLineItem>
+				)}
+				{(payment_intent?.platform_fee ||
+					payment_intent?.service_fee) && (
+					<>
 						<ScDivider style={{ '--spacing': '0.5em' }} />
 						<ScLineItem>
 							<span
 								slot="description"
 								style={{
-									'font-weight':
+									fontWeight:
 										'var(--sc-font-weight-semibold)',
 									color: 'var(--sc-color-gray-800)',
 								}}
 							>
-								{__('Total Amount', 'surecart')}
+								{__('Total Fees', 'surecart')}
 							</span>
 							<ScFormatNumber
 								slot="price"
 								type="currency"
 								currency={currency}
-								value={payment_intent?.platform_fee?.amount}
+								value={
+									(payment_intent?.platform_fee?.amount ??
+										0) +
+									(payment_intent?.service_fee?.amount ?? 0)
+								}
 								style={{
-									'font-weight':
+									fontWeight:
 										'var(--sc-font-weight-semibold)',
 									color: 'var(--sc-color-gray-800)',
 								}}
 							/>
-						</ScLineItem>
-					</>
-				)}
-				{payment_intent?.service_fee && (
-					<>
-						<ScDivider style={{ '--spacing': '1em' }} />
-						<h3
-							css={css`
-								font-size: 13px;
-								margin: 0;
-							`}
-						>
-							{__('Service Fee', 'surecart')}
-						</h3>
-						<ScLineItem>
-							<span
-								slot="description"
-								style={{
-									'font-weight':
-										'var(--sc-font-weight-semibold)',
-									color: 'var(--sc-color-gray-800)',
-								}}
-							>
-								{__('Total Amount', 'surecart')}
-							</span>
-							<ScFormatNumber
-								slot="price"
-								type="currency"
-								currency={currency}
-								value={payment_intent?.service_fee?.amount}
-								style={{
-									'font-weight':
-										'var(--sc-font-weight-semibold)',
-									color: 'var(--sc-color-gray-800)',
-								}}
-							/>
-							<span slot="price-description">
-								{`(${payment_intent?.service_fee?.rate}%)`}
-							</span>
 						</ScLineItem>
 					</>
 				)}
