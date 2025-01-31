@@ -113,7 +113,11 @@ export default ({ charge, onRequestClose }) => {
 						>
 							{__('Platform Fee', 'surecart')}
 						</h3>
-						<ScLineItem>
+						<ScLineItem
+							style={{
+								marginLeft: '1em',
+							}}
+						>
 							<span slot="description">
 								{__('Base Amount', 'surecart')}
 							</span>
@@ -125,11 +129,6 @@ export default ({ charge, onRequestClose }) => {
 									payment_intent?.platform_fee?.base_amount
 								}
 							/>
-						</ScLineItem>
-						<ScLineItem>
-							<span slot="description">
-								{__('Features', 'surecart')}
-							</span>
 						</ScLineItem>
 						{payment_intent?.platform_fee?.features_breakdown &&
 							Object.entries(
@@ -159,7 +158,13 @@ export default ({ charge, onRequestClose }) => {
 				)}
 				{payment_intent?.service_fee && (
 					<ScLineItem>
-						<span slot="description">
+						<span
+							slot="description"
+							style={{
+								fontSize: '13px',
+								fontWeight: 'var(--sc-font-weight-bold)',
+							}}
+						>
 							{__(
 								`${
 									payment_intent?.service_fee
