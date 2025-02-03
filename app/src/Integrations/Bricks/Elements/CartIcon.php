@@ -40,7 +40,7 @@ class CartIcon extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-shopping-cart';
+	public $icon = 'ti-bag';
 
 	/**
 	 * Get element label.
@@ -58,8 +58,11 @@ class CartIcon extends \Bricks\Element {
 	 */
 	public function set_controls() {
 		$this->controls['cart_icon'] = [
-			'label' => esc_html__( 'Icon', 'surecart' ),
-			'type'  => 'icon',
+			'label'   => esc_html__( 'Icon', 'surecart' ),
+			'type'    => 'icon',
+			'default' => [
+				'icon' => 'ti-bag',
+			],
 		];
 
 		$this->controls['cart_menu_always_shown'] = [
@@ -121,7 +124,11 @@ class CartIcon extends \Bricks\Element {
 			)
 		);
 
-		$bricks_icon = self::render_icon( $settings['cart_icon'] ?? 'shopping-bag' );
+		$bricks_icon = self::render_icon(
+			$settings['cart_icon'] ?? [
+				'icon' => 'ti-bag',
+			]
+		);
 
 		add_filter(
 			'sc_cart_menu_icon',
@@ -136,13 +143,8 @@ class CartIcon extends \Bricks\Element {
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$bricks_icon = empty( $bricks_icon ) ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-				<line x1="3" y1="6" x2="21" y2="6"></line>
-				<path d="M16 10a4 4 0 0 1-8 0"></path>
-			</svg>' : $bricks_icon;
-			$content     = '<div class="sc-cart-icon" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">' . $bricks_icon . '</div>';
-			$content    .= '<span class="sc-cart-count">2</span>';
+			$content  = '<div class="sc-cart-icon" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">' . $bricks_icon . '</div>';
+			$content .= '<span class="sc-cart-count">2</span>';
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$content,
