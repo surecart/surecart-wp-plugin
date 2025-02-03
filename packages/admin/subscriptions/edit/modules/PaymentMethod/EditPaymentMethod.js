@@ -23,7 +23,9 @@ export default ({
 	manualPayment,
 }) => {
 	const [paymentMethodId, setPaymentMethod] = useState(
-		paymentMethod?.id || paymentMethod
+		manualPayment
+			? manualPaymentMethod?.id || manualPaymentMethod
+			: paymentMethod?.id || paymentMethod
 	);
 
 	const { payment_methods, loading } = useSelect(
