@@ -174,7 +174,10 @@ export default ({ charge, onRequestClose }) => {
 							)}
 							<Tooltip
 								text={__(
-									'Fee charged by the partner for the service they provide.',
+									`This fee is charged by the organization or agency ${
+										payment_intent?.service_fee
+											?.organization_name || 'Partner'
+									} that owns this store. It is not a fee from SureCart.`,
 									'surecart'
 								)}
 							>
