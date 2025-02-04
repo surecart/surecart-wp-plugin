@@ -48,6 +48,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 			add_action( 'elementor/frontend/builder_content_data', array( $this, 'append_product_widget_wrapper' ), 10, 2 );
+
+			// TODO: Enable it onces elementor update is released.
+			// add_filter( 'elementor/element/print_elements_content', [ $this, 'append_product_widget_wrapper_content' ] );
 		}
 
 		// Bootstrap the widgets.
@@ -196,6 +199,29 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function product_theme_conditions( $conditions_manager ) {
 		$conditions_manager->register_condition_instance( new Conditions() );
+	}
+
+	/**
+	 * Frontend builder content data.
+	 *
+	 * @param string $content The builder content.
+	 *
+	 * @return string The builder content.
+	 */
+	public function append_product_widget_wrapper_content( $content ): string {
+		if ( empty( sc_get_product() ) ) {
+			return $content;
+		}
+
+		// If no surecart blocks in the content, return.
+		$product_page_wrapper = new ProductPageWrapperService( $content );
+
+		// Check if If already has product page wrapper or has any surecart product block.
+		if ( ! $product_page_wrapper->hasAnySureCartProductBlock() || $product_page_wrapper->hasProductPageWrapper() ) {
+			return $content;
+		}
+
+		return $product_page_wrapper->addProductPageWrapper();
 	}
 
 	/**
