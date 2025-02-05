@@ -46,8 +46,7 @@ class ProductsSyncProcess extends BackgroundProcess {
 				'per_page' => $args['batch_size'] ?? 25,
 			]
 		);
-		error_log( 'ProductsSyncProcess: ' . $page );
-		error_log( print_r( $products, true ) );
+
 		if ( is_wp_error( $products ) ) {
 			error_log( $products->get_error_message() );
 			return false;
