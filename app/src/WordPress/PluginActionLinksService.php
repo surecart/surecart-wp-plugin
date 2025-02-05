@@ -45,7 +45,7 @@ class PluginActionLinksService {
 			array(
 				'settings' => '<a href="' . esc_url( admin_url( 'admin.php?page=sc-settings' ) ) . '">' . esc_html__( 'Settings', 'surecart' ) . '</a>',
 				'docs'     => '<a href="https://surecart.com/docs" target="_blank">' . esc_html__( 'Documentation', 'surecart' ) . '</a>',
-				'upgrade'  => '<a href="https://app.surecart.com/billing" target="_blank">' . esc_html__( 'Upgrade', 'surecart' ) . '</a>',
+				'upgrade'  => '<a href="https://app.surecart.com/billing" target="_blank">' . esc_html__( 'Upgrade Plan', 'surecart' ) . '</a>',
 			),
 			$actions
 		);
