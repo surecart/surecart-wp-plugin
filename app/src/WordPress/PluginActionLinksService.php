@@ -1,20 +1,11 @@
 <?php
-/**
- * Plugin Action Links service.
- *
- * @package   SureCartAppCore
- * @author    SureCart <support@surecart.com>
- * @copyright  SureCart
- * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://surecart.com
- */
 
 namespace SureCart\WordPress;
 
 use SureCartCore\Application\Application;
 
 /**
- * Main communication channel with the theme.
+ * Plugin Action Links service.
  */
 class PluginActionLinksService {
 	/**
@@ -52,9 +43,9 @@ class PluginActionLinksService {
 	public function addPluginActionLinks( $actions ) {
 		return array_merge(
 			array(
-				'settings' => '<a href="' . admin_url( 'admin.php?page=sc-settings' ) . '">' . __( 'Settings', 'surecart' ) . '</a>',
-				'docs'     => '<a href="https://surecart.com/docs" target="_blank">' . __( 'Documentation', 'surecart' ) . '</a>',
-				'upgrade'  => '<a href="https://app.surecart.com/billing" target="_blank">' . __( 'Upgrade', 'surecart' ) . '</a>',
+				'settings' => '<a href="' . esc_url( admin_url( 'admin.php?page=sc-settings' ) ) . '">' . esc_html__( 'Settings', 'surecart' ) . '</a>',
+				'docs'     => '<a href="https://surecart.com/docs" target="_blank">' . esc_html__( 'Documentation', 'surecart' ) . '</a>',
+				'upgrade'  => '<a href="https://app.surecart.com/billing" target="_blank">' . esc_html__( 'Upgrade', 'surecart' ) . '</a>',
 			),
 			$actions
 		);
