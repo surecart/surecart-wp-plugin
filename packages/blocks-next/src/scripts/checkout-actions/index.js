@@ -83,7 +83,6 @@ export const withDefaultQuery = (query = {}) => {
 		...(!!context?.formId && { form_id: context?.formId }),
 		...(!!checkoutState?.product?.id && {
 			product_id: checkoutState?.product?.id,
-			convert_currency: true,
 		}),
 		...query,
 	};

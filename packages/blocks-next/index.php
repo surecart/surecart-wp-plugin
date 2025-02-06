@@ -230,10 +230,10 @@ add_action(
 					<?php
 					echo wp_json_encode(
 						[
-							'root_url'         => esc_url_raw( get_rest_url() ),
-							'nonce'            => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-							'nonce_endpoint'   => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-							'convert_currency' => \SureCart::currency()->is_converting,
+							'root_url'                   => esc_url_raw( get_rest_url() ),
+							'nonce'                      => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+							'nonce_endpoint'             => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+							'convert_currency_endpoints' => \SureCart::currency()->is_converting ? [ '/checkouts/', '/line_items/' ] : [],
 						]
 					);
 					?>

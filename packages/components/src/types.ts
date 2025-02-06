@@ -6,7 +6,7 @@ declare global {
   interface Window {
     grecaptcha: any;
     scFetchData?: {
-      convert_currency?: boolean;
+      convert_currency_endpoints?: string[];
     };
     surecart?: {
       product?: {
