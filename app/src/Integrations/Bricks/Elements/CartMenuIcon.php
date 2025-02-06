@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * CartIcon element.
+ * Cart Menu Icon element.
  */
-class CartIcon extends \Bricks\Element {
+class CartMenuIcon extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the surecart class.
 
 	/**
@@ -55,7 +55,7 @@ class CartIcon extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Cart Icon', 'surecart' );
+		return esc_html__( 'Cart Toggle Icon', 'surecart' );
 	}
 
 	/**
@@ -148,7 +148,7 @@ class CartIcon extends \Bricks\Element {
 		if ( $this->is_admin_editor() ) {
 			$content  = '<div class="sc-cart-icon" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">';
 			$content .= $this->cart_icon;
-			// $content .= '<span class="sc-cart-count">2</span>';
+			$content .= '<span class="sc-cart-count">2</span>';
 			$content .= '</div>';
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
