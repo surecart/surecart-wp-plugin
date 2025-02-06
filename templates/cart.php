@@ -9,11 +9,11 @@ return [
 	'content'    => '<!-- wp:surecart/slide-out-cart {"layout":{"type":"default"}} -->
 	<!-- wp:surecart/slide-out-cart-header {"text":"Review Your Cart"} /-->
 
-	<!-- wp:surecart/slide-out-cart-items /-->
+	<!-- wp:surecart/slide-out-cart-line-items /-->
 
 	<!-- wp:surecart/slide-out-cart-coupon /-->
 
-	<!-- wp:surecart/slide-out-cart-subtotal /-->
+	<!-- wp:surecart/slide-out-cart-items-subtotal /-->
 
 	<!-- wp:surecart/slide-out-cart-bump-line-item /-->
 

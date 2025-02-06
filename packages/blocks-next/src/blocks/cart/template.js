@@ -14,7 +14,7 @@ export const TEMPLATE = [
 		},
 	],
 	[
-		'surecart/slide-out-cart-items',
+		'surecart/slide-out-cart-line-items',
 		{
 			border: true,
 			padding: {
@@ -41,7 +41,7 @@ export const TEMPLATE = [
 		},
 	],
 	[
-		'surecart/slide-out-cart-subtotal',
+		'surecart/slide-out-cart-items-subtotal',
 		{
 			border: false,
 			padding: {

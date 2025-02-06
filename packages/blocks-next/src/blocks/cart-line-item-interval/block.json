@@ -6,7 +6,10 @@
 	"description": "Display the product line item interval.",
 	"version": "1.0.0",
 	"category": "surecart-cart",
-	"ancestor": ["surecart/slide-out-cart-items"],
+	"ancestor": [
+		"surecart/slide-out-cart-items",
+		"surecart/slide-out-cart-line-items"
+	],
 	"example": {},
 	"textdomain": "surecart",
 	"supports": {
