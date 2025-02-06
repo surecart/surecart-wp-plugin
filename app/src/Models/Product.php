@@ -2,12 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Product model
@@ -16,6 +18,7 @@ class Product extends Model implements PageModel {
 	use HasImageSizes;
 	use HasPurchases;
 	use HasCommissionStructure;
+	use HasDates;
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
@@ -50,7 +53,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'products_updated_at';
+	protected $cache_key = 'products';
 
 	/**
 	 * Create a new model
@@ -99,7 +102,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @param string $id The id of the product to sync.
 	 *
-	 * @return \WP_Post|\WP_Error
+	 * @return \WP_Post|\WP_Error|self
 	 */
 	protected function sync( $id = '' ) {
 		// set the id.
@@ -224,8 +227,10 @@ class Product extends Model implements PageModel {
 			return false;
 		}
 
-		// get the product.
+		// get the product and decode it.
 		$product = get_post_meta( $this->post->ID, 'product', true );
+		$product = is_string( $product ) ? json_decode( get_post_meta( $this->post->ID, 'product', true ) ) : $product;
+		$product = (object) $product;
 		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
 			return false;
 		}
@@ -485,7 +490,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the featured image attribute.
 	 *
-	 * @return SureCart\Support\Contracts\GalleryItem|null;
+	 * @return \SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
 		$gallery = array_values( $this->gallery ?? array() );
@@ -505,7 +510,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Returns the product media image attributes.
 	 *
-	 * @return SureCart\Support\Contracts\GalleryItem|null;
+	 * @return \SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedMediaAttribute() {
 		return $this->featured_product_image;
@@ -517,14 +522,14 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
+		if ( ! empty( $this->metadata->wp_template_id ) ) {
 			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+			if ( wp_is_block_theme() && false !== strpos( $this->metadata->wp_template_id, '.php' ) ) {
 				return 'single-sc_product';
 			}
 
 			// this is acceptable.
-			return $this->attributes['metadata']->wp_template_id;
+			return $this->metadata->wp_template_id;
 		}
 
 		return '';
@@ -715,7 +720,7 @@ class Product extends Model implements PageModel {
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		return get_block_template( $this->getTemplateIdAttribute() );
+		return null;// get_block_template( $this->getTemplateIdAttribute() );
 	}
 
 	/**
@@ -724,30 +729,10 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplatePartIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
-			return $this->attributes['metadata']->wp_template_part_id;
+		if ( ! empty( $this->metadata->wp_template_part_id ) ) {
+			return $this->metadata->wp_template_part_id;
 		}
 		return 'surecart/surecart//product-info';
-	}
-
-	/**
-	 * Get the product template part template.
-	 *
-	 * @return \WP_Template
-	 */
-	public function getTemplatePartAttribute() {
-		return get_block_template( $this->getTemplatePartIdAttribute(), 'wp_template_part' );
-	}
-
-	/**
-	 * Get Template Content.
-	 *
-	 * @return string
-	 */
-	public function getTemplateContent(): string {
-		return wp_is_block_theme() ?
-		$this->template->content ?? '' :
-		$this->template_part->content ?? '';
 	}
 
 	/**
@@ -757,7 +742,7 @@ class Product extends Model implements PageModel {
 	 */
 	public function getGalleryIdsAttribute() {
 		// fallback.
-		if ( empty( $this->attributes['metadata']->gallery_ids ) ) {
+		if ( empty( $this->metadata->gallery_ids ) ) {
 			return array_values(
 				array_filter(
 					array_map(
@@ -771,20 +756,19 @@ class Product extends Model implements PageModel {
 		}
 
 		// gallery.
-		return json_decode( $this->attributes['metadata']->gallery_ids ?? '' );
+		return json_decode( $this->metadata->gallery_ids ?? '' );
 	}
 
 	/**
 	 * Set the gallery ids attribute.
+	 * This needs to be converted to JSON for the platform.
 	 *
 	 * @param array $value The gallery array.
 	 * @return void
 	 */
 	public function setGalleryIdsAttribute( $value ) {
-		$this->attributes['metadata'] = wp_parse_args(
-			[ 'gallery_ids' => wp_json_encode( $value ) ],
-			$this->attributes['metadata'] ?? array(),
-		);
+		$this->attributes['metadata']              = (object) ( $this->attributes['metadata'] ?? [] );
+		$this->attributes['metadata']->gallery_ids = is_string( $value ) ? $value : wp_json_encode( $value );
 	}
 
 	/**
@@ -795,7 +779,12 @@ class Product extends Model implements PageModel {
 	 * @return GalleryItem[]
 	 */
 	public function getGalleryAttribute() {
-		return array_values(
+		$cached = $this->getCachedAttribute( 'gallery' );
+		if ( null !== $cached ) {
+			return $cached;
+		}
+
+		$gallery = array_values(
 			array_filter(
 				array_map(
 					function ( $id ) {
@@ -826,8 +815,12 @@ class Product extends Model implements PageModel {
 					// it must have a src at least.
 					return ! empty( $item ) && ! empty( $item->attributes()->src );
 				}
-			),
+			)
 		);
+
+		$this->setAttributeCache( 'gallery', $gallery );
+
+		return $gallery;
 	}
 
 	/**
@@ -937,5 +930,14 @@ class Product extends Model implements PageModel {
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);
+	}
+
+	/**
+	 * Get the cataloged at date time attribute.
+	 *
+	 * @return string
+	 */
+	public function getCatalogedAtDateTimeAttribute() {
+		return ! empty( $this->cataloged_at ) ? TimeDate::formatDateAndTime( $this->cataloged_at ) : '';
 	}
 }

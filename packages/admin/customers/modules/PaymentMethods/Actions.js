@@ -1,3 +1,15 @@
+/**
+ * External dependencies.
+ */
+import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScButton,
 	ScDropdown,
@@ -7,22 +19,20 @@ import {
 	ScMenuItem,
 	ScTag,
 } from '@surecart/components-react';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { useState } from 'react';
-import ConfirmDelete from './ConfirmDelete';
 import { createErrorString } from '../../../util';
+import Confirm from '../../../components/confirm';
 
 export default ({ customerId, isDefault, paymentMethod }) => {
 	const [modal, setModal] = useState(false);
+	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
 	const {
 		saveEditedEntityRecord,
 		editEntityRecord,
+		deleteEntityRecord,
 		invalidateResolutionForStore,
 	} = useDispatch(coreStore);
 
@@ -71,6 +81,32 @@ export default ({ customerId, isDefault, paymentMethod }) => {
 		}
 	};
 
+	const onDelete = async () => {
+		try {
+			setBusy(true);
+			setError(null);
+			await deleteEntityRecord(
+				'surecart',
+				'payment_method',
+				paymentMethod?.id,
+				{},
+				{
+					throwOnError: true,
+				}
+			);
+			createSuccessNotice(__('Payment method deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
+			await invalidateResolutionForStore();
+			setModal(false);
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	return (
 		<ScFlex alignItems="center" justifyContent="flex-end">
 			{isDefault && <ScTag type="info">Default</ScTag>}
@@ -91,11 +127,17 @@ export default ({ customerId, isDefault, paymentMethod }) => {
 					</ScMenu>
 				</ScDropdown>
 			)}
+
 			{!!modal && (
-				<ConfirmDelete
-					paymentMethod={paymentMethod}
+				<Confirm
+					open={!!modal}
 					onRequestClose={() => setModal(false)}
-				/>
+					onConfirm={onDelete}
+					loading={busy}
+					error={error}
+				>
+					{__('Are you sure? This cannot be undone.', 'surecart')}
+				</Confirm>
 			)}
 		</ScFlex>
 	);

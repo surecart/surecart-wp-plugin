@@ -1,7 +1,7 @@
 import { useDispatch, useSelect } from '@wordpress/data';
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { store as editorStore } from '@wordpress/editor';
-import { useSetting } from '@wordpress/block-editor';
+import { useSettings } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	PanelRow,
@@ -17,6 +17,7 @@ export default () => {
 		_surecart_dashboard_logo_width,
 		_surecart_dashboard_show_logo,
 		_surecart_dashboard_navigation_orders,
+		_surecart_dashboard_navigation_invoices,
 		_surecart_dashboard_navigation_subscriptions,
 		_surecart_dashboard_navigation_downloads,
 		_surecart_dashboard_navigation_account,
@@ -26,6 +27,7 @@ export default () => {
 			_surecart_dashboard_logo_width,
 			_surecart_dashboard_show_logo,
 			_surecart_dashboard_navigation_orders,
+			_surecart_dashboard_navigation_invoices,
 			_surecart_dashboard_navigation_subscriptions,
 			_surecart_dashboard_navigation_downloads,
 			_surecart_dashboard_navigation_account,
@@ -36,6 +38,7 @@ export default () => {
 			_surecart_dashboard_logo_width,
 			_surecart_dashboard_show_logo,
 			_surecart_dashboard_navigation_orders,
+			_surecart_dashboard_navigation_invoices,
 			_surecart_dashboard_navigation_subscriptions,
 			_surecart_dashboard_navigation_downloads,
 			_surecart_dashboard_navigation_account,
@@ -44,7 +47,7 @@ export default () => {
 	});
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',
@@ -119,6 +122,17 @@ export default () => {
 							editPost({
 								meta: {
 									_surecart_dashboard_navigation_orders,
+								},
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Invoices', 'surecart')}
+						checked={_surecart_dashboard_navigation_invoices}
+						onChange={(_surecart_dashboard_navigation_invoices) =>
+							editPost({
+								meta: {
+									_surecart_dashboard_navigation_invoices,
 								},
 							})
 						}

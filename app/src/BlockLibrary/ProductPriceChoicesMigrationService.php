@@ -52,11 +52,17 @@ class ProductPriceChoicesMigrationService {
 	 *
 	 * @return void
 	 */
-	public function renderPriceAmountTrialAndSetupFee() {
+	public function renderPriceAmountScratchAmountTrialAndSetupFee() {
 		$text_color        = $this->attributes['textColor'] ?? '#8a8a8a';
 		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fixed","flexSize":"50%"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->';
 		$this->block_html .= '<div class="wp-block-group">';
-		$this->block_html .= '<!-- wp:surecart/price-amount {"style":{"elements":{"link":{"color":{"text":"var:preset|color|accent-3"}}},"typography":{"fontStyle":"normal","fontWeight":"700"}},"textColor":"accent-3"} /-->';
+		$this->block_html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0.5rem"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->';
+		$this->block_html .= '<div class="wp-block-group">';
+		$this->block_html .= '<!-- wp:surecart/price-scratch-amount {"style":{"typography":{"textDecoration":"line-through"}},"color":{"text":"#686868"}} /-->';
+		$this->block_html .= '<!-- wp:surecart/price-amount {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->';
+		$this->block_html .= '<!-- wp:surecart/price-interval {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->';
+		$this->block_html .= '</div>';
+		$this->block_html .= '<!-- /wp:group -->';
 		$this->block_html .= '<!-- wp:surecart/price-trial {"style":{"color":{"text":"' . $text_color . '"},"elements":{"link":{"color":{"text":"' . $text_color . '"}}}},"fontSize":"small"} /-->';
 		$this->block_html .= '<!-- wp:surecart/price-setup-fee {"style":{"color":{"text":"' . $text_color . '"},"elements":{"link":{"color":{"text":"' . $text_color . '"}}}},"fontSize":"small"} /-->';
 		$this->block_html .= '</div>';
@@ -89,7 +95,7 @@ class ProductPriceChoicesMigrationService {
 		$this->block_html .= '<!-- wp:surecart/product-price-choice-template ' . wp_json_encode( $template_attributes ) . ' -->';
 		$this->renderPriceName();
 		if ( $this->attributes['show_price'] ) {
-			$this->renderPriceAmountTrialAndSetupFee();
+			$this->renderPriceAmountScratchAmountTrialAndSetupFee();
 		}
 		$this->block_html .= '<!-- /wp:surecart/product-price-choice-template -->';
 		$this->block_html .= '<!-- /wp:surecart/product-price-chooser -->';

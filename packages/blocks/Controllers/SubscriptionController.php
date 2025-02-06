@@ -185,7 +185,7 @@ class SubscriptionController extends BaseController {
 				->with(
 					[
 						'heading'                => __( 'Current Plan', 'surecart' ),
-						'showCancel'             => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
+						'showCancel'             => \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
 						'protocol'               => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
 						'subscription'           => $subscription,
 						'updatePaymentMethodUrl' => esc_url_raw(
@@ -216,8 +216,8 @@ class SubscriptionController extends BaseController {
 						'productId'      => $subscription->price->product->id,
 						'productGroupId' => ( $subscription->price->product->product_group
 						? ( $subscription->price->product->product_group->archived
-						   ? null
-						   : $subscription->price->product->product_group->id )
+							? null
+							: $subscription->price->product->product_group->id )
 						: null ),
 						'subscription'   => $subscription,
 						'successUrl'     => home_url(
@@ -349,8 +349,8 @@ class SubscriptionController extends BaseController {
 	 */
 	public function getTermsText() {
 		$account     = \SureCart::account();
-		$privacy_url = $account->portal_protocol->privacy_url ?? \get_privacy_policy_url();
-		$terms_url   = $account->portal_protocol->terms_url ?? '';
+		$privacy_url = $account->customer_portal_protocol->privacy_url ?? \get_privacy_policy_url();
+		$terms_url   = $account->customer_portal_protocol->terms_url ?? '';
 
 		if ( ! empty( $privacy_url ) && ! empty( $terms_url ) ) {
 			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
@@ -550,7 +550,7 @@ class SubscriptionController extends BaseController {
 
 			<?php
 			$terms            = $this->getTermsText();
-			$quantity_enabled = (bool) \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled;
+			$quantity_enabled = (bool) \SureCart::account()->customer_portal_protocol->subscription_quantity_updates_enabled;
 			if ( $this->getParam( 'ad_hoc_amount' ) ) {
 				$quantity_enabled = false;
 			}
@@ -578,7 +578,6 @@ class SubscriptionController extends BaseController {
 
 		<?php
 		return ob_get_clean();
-
 	}
 
 	/**

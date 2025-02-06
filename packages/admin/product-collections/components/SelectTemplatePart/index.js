@@ -60,6 +60,7 @@ export default function SelectTemplatePart({ collection, updateCollection }) {
 				renderToggle={({ isOpen, onToggle }) => (
 					<PostTemplateToggle
 						isOpen={isOpen}
+						collection={collection}
 						onClick={onToggle}
 						template={template}
 					/>
@@ -110,8 +111,17 @@ export default function SelectTemplatePart({ collection, updateCollection }) {
 	);
 }
 
-function PostTemplateToggle({ isOpen, onClick, template }) {
-	const templateTitle = getTemplateTitle(template);
+function PostTemplateToggle({ isOpen, onClick, collection, template }) {
+	// possibly convert "0" to false
+	const wp_template_id =
+		collection?.metadata?.wp_template_id &&
+		collection?.metadata?.wp_template_id !== '0'
+			? collection?.metadata?.wp_template_id
+			: false;
+
+	const templateTitle = wp_template_id
+		? getTemplateTitle(template)
+		: __('Theme', 'surecart');
 
 	return (
 		<Button

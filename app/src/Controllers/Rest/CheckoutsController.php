@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\Checkout;
 use SureCart\Models\Form;
-use SureCart\Models\Product;
 use SureCart\Models\User;
 use SureCart\WordPress\Users\CustomerLinkService;
 use SureCart\WordPress\RecaptchaValidationService;
@@ -29,10 +28,19 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		// if abandoned checkout is enabled, set the return url.
-		$request->set_param( 'abandoned_checkout_return_url', ! empty( $request->get_param( 'abandoned_checkout_enabled' ) ) ? esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) : null );
+		// Set the return url.
+		$request->set_param( 'external_url', esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) );
 
-		return $this->maybeSetUser( $class, $request );
+		// if this is an open invoice, we don't set the user.
+		if ( 'open_invoice' === $request->get_param( 'type' ) ) {
+			return apply_filters( 'surecart/request/model', $class, $request );
+		}
+
+		// set the user.
+		$class = $this->maybeSetUser( $class, $request );
+
+		// return the class.
+		return apply_filters( 'surecart/request/model', $class, $request );
 	}
 
 	/**
@@ -166,14 +174,6 @@ class CheckoutsController extends RestController {
 		$checkout  = new $this->class( [ 'id' => $request['id'] ] );
 		$finalized = $checkout->where( $request->get_query_params() )
 		->finalize( $request->get_body_params() );
-
-		// bail if error.
-		if ( is_wp_error( $finalized ) ) {
-			return $finalized;
-		}
-
-		// validate the finalized request.
-		$finalized = $this->validateFinalizeRequest( $finalized, $request );
 
 		// bail if error.
 		if ( is_wp_error( $finalized ) ) {
@@ -365,93 +365,6 @@ class CheckoutsController extends RestController {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Validate the finalized request.
-	 * We do this to make sure the form is in "Test" mode
-	 * if a test payment is requested. This prevents the spamming of any
-	 * forms on your site that are not in test mode or creating access to something
-	 * with a fake test payment.
-	 *
-	 * @param \SureCart\Models\Checkout $finalized Finalized checkout.
-	 * @param \WP_REST_Request          $request The request.
-	 *
-	 * @return \WP_Error|\SureCart\Models\Checkout
-	 */
-	public function validateFinalizeRequest( $finalized, $request ) {
-		// allow this if the user can edit orders.
-		if ( current_user_can( 'edit_sc_orders' ) ) {
-			return $finalized;
-		}
-
-		// make sure the form id is valid.
-		if ( ! empty( $request['form_id'] ) ) {
-			return $this->validateFormId( $finalized, $request );
-		}
-
-		return $this->validateProductId( $finalized, $request );
-	}
-
-	/**
-	 * Validate the product id.
-	 *
-	 * @param \WP_REST_Request       $request The rest request.
-	 * @param \SureCart\Models\Order $finalized The finalized order.
-	 *
-	 * @return \WP_Error|\SureCart\Models\Order
-	 */
-	public function validateProductId( $finalized, $request ) {
-		// make sure the product is valid.
-		if ( empty( $request['product_id'] ) ) {
-			return new \WP_Error( 'missing_parameters', 'You must pass a form id or product id in order to make this payment.', [ 'status' => 400 ] );
-		}
-		// make sure the product is valid.
-		$product = Product::find( $request['product_id'] );
-		if ( empty( $product->id ) ) {
-			return new \WP_Error( 'product_id_invalid', esc_html__( 'This product is invalid.', 'surecart' ), [ 'status' => 400 ] );
-		}
-
-		// check to make sure the product buy page is enabled.
-		if ( ! $product->buyLink()->isEnabled() ) {
-			return new \WP_Error( 'product_buy_page_disabled', esc_html__( 'This product is not available for purchase.', 'surecart' ), [ 'status' => 400 ] );
-		}
-
-		// the mode must match.
-		$mode = $product->buyLink()->getMode();
-		// if the request is for test mode, but the form is not test, return an error.
-		if ( false === $finalized->live_mode && 'test' !== $mode ) {
-			return new \WP_Error( 'invalid_mode', 'This page is set to live mode, but the request is for test mode. Please clear any site caching and try again.', [ 'status' => 400 ] );
-		}
-
-		// At least one line item must be for this product.
-		foreach ( $finalized->line_items->data as $line_item ) {
-			if ( $line_item->price->product->id === $product->id ) {
-				return $finalized;
-			}
-		}
-
-		return new \WP_Error( 'product_buy_page_disabled', esc_html__( 'This product is not available for purchase.', 'surecart' ), [ 'status' => 400 ] );
-	}
-
-	/**
-	 * Validate the form id.
-	 *
-	 * @param \WP_REST_Request       $request The rest request.
-	 * @param \SureCart\Models\Order $finalized The finalized order.
-	 *
-	 * @return \WP_Error|\SureCart\Models\Order
-	 */
-	public function validateFormId( $finalized, $request ) {
-		// the form's mode must be test.
-		$mode = $this->getFormMode( (int) $request['form_id'] );
-
-		// if the request is for test mode, but the form is not test, return an error.
-		if ( false === $finalized->live_mode && 'test' !== $mode ) {
-			return new \WP_Error( 'invalid_mode', 'The form is set to live mode, but the request is for test mode.', [ 'status' => 400 ] );
-		}
-
-		return $finalized;
 	}
 
 	/**

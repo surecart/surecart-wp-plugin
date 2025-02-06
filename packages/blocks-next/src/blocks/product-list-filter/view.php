@@ -27,16 +27,26 @@
 		data-wp-on--click="surecart/dropdown::actions.toggleMenu"
 		role="button"
 		tabindex="0"
-		aria-label="<?php esc_html_e( 'Filter by: Collection', 'surecart' ); ?>"
+		aria-label="
+		<?php
+		echo esc_attr(
+			sprintf(
+				// translators: %s is the taxonomy label.
+				__( 'Filter by: %s', 'surecart' ),
+				esc_html( $taxonomy_object->label )
+			)
+		);
+		?>
+		"
 	>
-		<span class="sc-button__label"><?php esc_html_e( 'Filter', 'surecart' ); ?></span>
+		<span class="sc-button__label"><?php echo esc_html( $attributes['label'] ?? __( 'Filter', 'surecart' ) ); ?></span>
 		<span class="sc-button__caret"><?php echo wp_kses( SureCart::svg()->get( 'chevron-down' ), sc_allowed_svg_html() ); ?></span>
 	</div>
 
 	<div
 		class="sc-dropdown__panel"
 		data-wp-bind--hidden="!context.isMenuOpen"
-		aria-hidden="!context.isMenuOpen"
+		data-wp-bind--aria-hidden="!context.isMenuOpen"
 		hidden
 	>
 		<?php foreach ( $options as $key => $option ) : ?>

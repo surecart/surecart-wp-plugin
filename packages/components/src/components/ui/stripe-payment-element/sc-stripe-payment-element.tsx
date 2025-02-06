@@ -54,6 +54,7 @@ export class ScStripePaymentElement {
 
   async componentWillLoad() {
     this.fetchStyles();
+    this.syncCheckoutMode();
   }
 
   @Watch('styles')
@@ -82,12 +83,27 @@ export class ScStripePaymentElement {
     });
   }
 
-  /** Maybe load the stripe element on load. */
+  /** Sync the checkout mode */
+  async syncCheckoutMode() {
+    onChange('checkout', () => {
+      this.initializeStripe();
+    });
+  }
+
   async componentDidLoad() {
+    this.initializeStripe();
+  }
+
+  async initializeStripe() {
+    if (typeof checkoutState?.checkout?.live_mode === 'undefined' || processorsState?.instances?.stripe) {
+      return;
+    }
+
     const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
       processorsState.instances.stripe = await loadStripe(processor_data?.publishable_key, { stripeAccount: processor_data?.account_id });
+      this.error = '';
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
       // don't continue.
@@ -121,7 +137,7 @@ export class ScStripePaymentElement {
     const styles = getComputedStyle(this.el);
     return {
       mode: checkoutState.checkout?.remaining_amount_due > 0 ? 'payment' : 'setup',
-      amount: checkoutState.checkout?.amount_due,
+      amount: checkoutState.checkout?.remaining_amount_due,
       currency: checkoutState.checkout?.currency,
       setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : null,
       appearance: {
@@ -150,12 +166,13 @@ export class ScStripePaymentElement {
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
     if (!processorsState.instances.stripe) return;
+    if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) return;
 
     // create the elements if they have not yet been created.
     if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
-      const address = getCompleteAddress('shipping');
+      const { line1, line2, city, state, country, postal_code } = getCompleteAddress('shipping') ?? {};
 
       // create the payment element.
       (processorsState.instances.stripeElements as any)
@@ -164,7 +181,7 @@ export class ScStripePaymentElement {
             billingDetails: {
               name: checkoutState.checkout?.name,
               email: checkoutState.checkout?.email,
-              ...(!!address ? { address } : {}),
+              ...(line1 && { address: { line1, line2, city, state, country, postal_code } }),
             },
           },
           fields: {

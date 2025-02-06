@@ -8,7 +8,7 @@ if ( ! $query->have_posts() ) {
 }
 ?>
 
-<ul <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<ul <?php echo wp_kses_data( get_block_wrapper_attributes( $wrapper_attributes ) ); ?>>
 	<?php
 	while ( $query->have_posts() ) :
 		$query->the_post();
@@ -28,12 +28,22 @@ if ( ! $query->have_posts() ) {
 			return $context;
 		};
 
+		$change_thumbnail_size = static function ( $size, $post_id ) use ( $product_post_id ) {
+			if ( $post_id === $product_post_id ) {
+				return apply_filters( 'surecart/product-list/thumbnail-cover-size', 'large', $post_id );
+			}
+			return $size;
+		};
+
 		// Use an early priority to so that other 'render_block_context' filters have access to the values.
 		add_filter( 'render_block_context', $filter_block_context, 1 );
+		add_filter( 'post_thumbnail_size', $change_thumbnail_size, 1, 2 );
+
 		// Render the inner blocks of the Post Template block with `dynamic` set to `false` to prevent calling
 		// `render_callback` and ensure that no wrapper markup is included.
 		$block_content = ( new WP_Block( $block_instance ) )->render( array( 'dynamic' => false ) );
 		remove_filter( 'render_block_context', $filter_block_context, 1 );
+		remove_filter( 'post_thumbnail_size', $change_thumbnail_size, 1 );
 
 		// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 		$post_classes = implode( ' ', get_post_class( 'wp-block-post' ) );

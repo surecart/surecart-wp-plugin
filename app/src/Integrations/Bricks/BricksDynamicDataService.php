@@ -245,17 +245,21 @@ class BricksDynamicDataService {
 				return '<!-- wp:surecart/product-selected-price-scratch-amount --><!-- /wp:surecart/product-selected-price-scratch-amount --> ';
 
 			case 'product_description':
-				return '<span class="sc-prose">' . wp_kses_post( ! empty( $filters['num_words'] ) ? \Bricks\Helpers::get_the_excerpt( $post, ! $filters['num_words'], null, true ) : $post->post_excerpt ) . '</span>';
+				$clean_excerpt = trim( wp_strip_all_tags( $post->post_excerpt ) );
+				if ( empty( $clean_excerpt ) ) {
+					return '';
+				}
+				return '<span class="sc-prose">' . wp_kses_post( ! empty( $filters['num_words'] ) ? \Bricks\Helpers::get_the_excerpt( $post, $filters['num_words'], null, true ) : $post->post_excerpt ?? '' ) . '</span>';
 
 			case 'product_stock':
 				// unlimited stock, don't display stock.
 				if ( $product ? $product->has_unlimited_stock : '' ) {
 					return '';
 				}
-				if ( isset( $filters['on_hand'] ) ) {
+				if ( isset( $filters['meta_key'] ) && 'on_hand' === $filters['meta_key'] ) {
 					return esc_html( $product ? $product->stock : '' );
 				}
-				if ( isset( $filters['held_stock'] ) ) {
+				if ( isset( $filters['meta_key'] ) && 'held' === $filters['meta_key'] ) {
 					return esc_html( $product ? $product->held_stock : '' );
 				}
 				return esc_html( $product ? $product->available_stock : '' );
@@ -307,19 +311,6 @@ class BricksDynamicDataService {
 				}
 				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
 				return '<!-- wp:surecart/product-selected-price-fees --><!-- /wp:surecart/product-selected-price-fees --> ';
-
-			case 'product_stock':
-				// Support ':held filter to get the price value as a simple string (e.g.: 65.3, 2.5, 5 ).
-				if ( isset( $filters['held'] ) ) {
-					return $product->held_stock;
-				}
-
-				// Support ':on_hand' filter to get the price value as a simple string (e.g.: 1450, 250, 5 ).
-				if ( isset( $filters['on_hand'] ) ) {
-					return $product->stock;
-				}
-
-				return $product->available_stock;
 
 			case 'price_name':
 				if ( $this->is_admin_editor() ) {

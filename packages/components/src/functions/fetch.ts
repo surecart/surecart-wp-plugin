@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 apiFetch.fetchAllMiddleware = null;
@@ -22,6 +22,39 @@ if (window?.scData?.nonce_endpoint) {
 apiFetch.use((options, next) => {
   options.path = addQueryArgs(options.path, { t: Date.now() });
   return next(options);
+});
+
+apiFetch.use((options, next) => {
+  const result = next(options);
+  result.catch(response => {
+    if (response.code === 'invalid_json') {
+      response.message = __('The response is not a valid JSON response.', 'surecart');
+      const debugSettingsUrl = 'https://surecart.com/docs/is-not-a-valid-json-response/';
+      response.additional_errors = [
+        {
+          code: 'invalid_json',
+          message: sprintf(
+            /* translators: %s: URL to debug settings page */
+            __('Please ensure that your site is not in debug mode as this may interfere with API responses. %s', 'surecart'),
+            `<a href="${debugSettingsUrl}" target="_blank" rel="noopener noreferrer">${__('More Information', 'surecart')}</a>`,
+          ),
+        },
+      ];
+    }
+
+    if (response.code === 'checkout.finalize_error') {
+      response.additional_errors = [
+        {
+          code: 'checkout.finalize_error',
+          message: response.message,
+        },
+      ];
+      response.message = __('We were not able to process this order', 'surecart');
+    }
+    return Promise.reject(response);
+  });
+
+  return result;
 });
 
 export default apiFetch;

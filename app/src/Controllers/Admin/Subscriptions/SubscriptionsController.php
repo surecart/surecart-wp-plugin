@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Admin\Subscriptions;
 
 use SureCart\Controllers\Admin\AdminController;
-use SureCart\Controllers\Admin\SubscriptionInsights\SubscriptionInsightsScriptsController;
 use SureCart\Controllers\Admin\Subscriptions\SubscriptionsListTable;
 use SureCart\Controllers\Admin\Subscriptions\Scripts\EditScriptsController;
 use SureCart\Controllers\Admin\Subscriptions\Scripts\ShowScriptsController;
@@ -16,9 +15,6 @@ class SubscriptionsController extends AdminController {
 	 * Orders index.
 	 */
 	public function index() {
-		// enqueue stats.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SubscriptionInsightsScriptsController::class, 'enqueue' ) );
-
 		$table = new SubscriptionsListTable();
 		$table->prepare_items();
 		$this->withHeader(
@@ -28,6 +24,7 @@ class SubscriptionsController extends AdminController {
 						'title' => __( 'Subscriptions', 'surecart' ),
 					],
 				],
+				'report_url'       => SURECART_REPORTS_URL . 'subscriptions',
 			)
 		);
 		return \SureCart::view( 'admin/subscriptions/index' )->with(

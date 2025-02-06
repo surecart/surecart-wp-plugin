@@ -3,10 +3,10 @@
 	align-items: center;
 	line-height: 1;
 	white-space: nowrap;
+	text-decoration: none;
 	user-select: none;
 	font-weight: var(--sc-font-weight-bold);
 	font-size: var(--sc-font-size-small);
-	height: calc(var(--sc-input-height-medium) * 0.75);
 	line-height: calc(
 		var(--sc-input-height-medium) - var(--sc-input-border-width) * 2
 	);
@@ -100,7 +100,6 @@
 
 .sc-tag--medium {
 	font-size: var(--sc-font-size-small);
-	height: calc(var(--sc-input-height-medium) * 0.75);
 	line-height: calc(
 		var(--sc-input-height-medium) - var(--sc-input-border-width) * 2
 	);
@@ -115,7 +114,6 @@
 
 .sc-tag--large {
 	font-size: var(--sc-button-font-size-large);
-	height: calc(var(--sc-input-height-large) * 0.75);
 	line-height: calc(
 		var(--sc-input-height-large) - var(--sc-input-border-width) * 2
 	);

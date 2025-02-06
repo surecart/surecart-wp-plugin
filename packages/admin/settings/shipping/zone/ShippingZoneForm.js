@@ -20,6 +20,7 @@ import Error from '../../../components/Error';
 import { countryChoices } from '@surecart/components';
 import ProgressBar from './ProgressBar';
 import ShippingRateForm from '../rate/ShippingRateForm';
+import CountryStateSelector from '../../../components/CountryStateSelector';
 
 const sections = {
 	SECTION_ADD_ZONE: 1,
@@ -37,7 +38,7 @@ export default ({
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
-	const [zoneCountries, setZoneCountries] = useState([]);
+	const [zoneTerritories, setZoneTerritories] = useState([]);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [section, setSection] = useState(sections.SECTION_ADD_ZONE);
@@ -51,7 +52,7 @@ export default ({
 			}, 100);
 		}
 		return () => {
-			setZoneCountries([]);
+			setZoneTerritories([]);
 			setZoneName('');
 			setError();
 		};
@@ -60,7 +61,7 @@ export default ({
 	useEffect(() => {
 		if (isEdit) {
 			setZoneName(selectedZone?.name || '');
-			setZoneCountries(selectedZone?.countries || []);
+			setZoneTerritories(selectedZone?.territories || []);
 		}
 	}, [isEdit]);
 
@@ -71,7 +72,7 @@ export default ({
 			{
 				name: zoneName,
 				shipping_profile_id: shippingProfileId,
-				countries: zoneCountries,
+				territories: zoneTerritories,
 			},
 			{ throwOnError: true }
 		);
@@ -87,17 +88,17 @@ export default ({
 			{
 				id: selectedZone.id,
 				name: zoneName,
-				countries: zoneCountries,
+				territories: zoneTerritories,
 			},
 			{ throwOnError: true }
 		);
 	};
 
 	const onSubmit = async () => {
-		if (!zoneCountries.length) {
+		if (!zoneTerritories.length) {
 			setError({
 				message: __(
-					'Select at least one country to create zone.',
+					'Select at least one country or region.',
 					'surecart'
 				),
 			});
@@ -126,38 +127,9 @@ export default ({
 		}
 	};
 
-	const onCountrySelect = (e) => {
-		const value = e.target.value;
-		if (!value) return;
-		setZoneCountries([...new Set([...zoneCountries, value])]);
-	};
-
-	const onRemoveZoneCountry = (value) => {
-		setZoneCountries(
-			zoneCountries.filter((zoneCountry) => zoneCountry !== value)
-		);
-	};
-
-	const renderCountryPill = (zoneCountry) => {
-		const country = countryChoices.find(
-			(countryChoice) => countryChoice.value === zoneCountry
-		);
-		return (
-			<ScTag
-				key={`zone-country-${country.value}`}
-				pill
-				clearable
-				onScClear={() => onRemoveZoneCountry(country.value)}
-			>
-				{country.label}
-			</ScTag>
-		);
-	};
-
 	const renderZoneForm = () => {
 		return (
 			<Fragment>
-				<Error error={error} setError={setError} />
 				<ScForm
 					onScSubmit={(e) => {
 						e.preventDefault();
@@ -175,6 +147,7 @@ export default ({
 							gap: var(--sc-spacing-medium);
 						`}
 					>
+						<Error error={error} setError={setError} />
 						<ScInput
 							ref={input}
 							required
@@ -187,44 +160,15 @@ export default ({
 								'surecart'
 							)}
 						/>
+
 						<ScFormControl
 							label={__('Select Countries', 'surecart')}
 							required
 						>
-							<ScSelect
-								search
-								closeOnSelect={false}
-								onScChange={onCountrySelect}
-								choices={countryChoices.map(
-									(countryChoice) => ({
-										...countryChoice,
-										checked: zoneCountries.includes(
-											countryChoice.value
-										),
-									})
-								)}
-							>
-								{!!zoneCountries.length ? (
-									<div
-										css={css`
-											display: flex;
-											flex-wrap: wrap;
-											justify-content: flex-start;
-											gap: 0.25em;
-											padding: var(
-													--sc-input-spacing-small
-												)
-												0;
-										`}
-									>
-										{zoneCountries.map((zoneCountry) =>
-											renderCountryPill(zoneCountry)
-										)}
-									</div>
-								) : (
-									__('Select Countries', 'surecart')
-								)}
-							</ScSelect>
+							<CountryStateSelector
+								value={zoneTerritories}
+								onChange={setZoneTerritories}
+							/>
 						</ScFormControl>
 					</ScFlex>
 					<ScFlex justifyContent="flex-start">
@@ -272,6 +216,7 @@ export default ({
 				onRequestClose();
 			}}
 			style={{
+				'--width': '38rem',
 				'--dialog-body-overflow': 'visible',
 				...(!isEdit
 					? { '--body-spacing': 'var(--sc-spacing-xx-large)' }

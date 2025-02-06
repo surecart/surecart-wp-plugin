@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-list-filter",
-	"title": "Filter",
+	"title": "Filter (Dropdown)",
 	"description": "Display the product filter.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
@@ -11,6 +11,10 @@
 	"attributes": {
 		"label": {
 			"type": "string"
+		},
+		"taxonomy": {
+			"type": "string",
+			"default": "sc_collection"
 		}
 	},
 	"supports": {
@@ -32,6 +36,6 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/dropdown.css", "file:../../styles/button.css"],
+	"style": ["surecart-dropdown", "surecart-button"],
 	"viewScriptModule": "@surecart/dropdown"
 }

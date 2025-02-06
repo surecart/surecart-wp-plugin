@@ -94,7 +94,7 @@ class ActivationRestServiceProvider extends RestServiceProvider implements RestS
 				'type'        => 'integer',
 			],
 			'ids'         => [
-				'description' => __( 'Ensure result set excludes specific IDs.' ),
+				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
@@ -102,7 +102,7 @@ class ActivationRestServiceProvider extends RestServiceProvider implements RestS
 				'default'     => [],
 			],
 			'license_ids' => [
-				'description' => __( 'Ensure result set excludes specific license IDs.' ),
+				'description' => __( 'Ensure result set excludes specific license IDs.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',

@@ -12,8 +12,9 @@ echo '<style>
 	margin-right: auto;
 }
 </style>';
-$template_part = get_term_meta( get_queried_object_id(), '_wp_page_template_part', true );
-$template_part = $template_part ? $template_part : 'product-collection-part';
+$collection    = sc_get_collection( get_queried_object_id() );
+$template_part = $collection->template_part_id;
+$template_part = $template_part ? $template_part : 'surecart/surecart//product-collection-part';
 ?>
 <div class="wp-block-group is-layout-constrained sc-template-wrapper" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
 	<div class="wp-block-group alignwide sc-template-container">

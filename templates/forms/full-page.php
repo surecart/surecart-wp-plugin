@@ -55,6 +55,8 @@ return [
 	<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
 	<!-- /wp:surecart/subtotal -->
 
+	<!-- wp:surecart/trial-line-item /-->
+
 	<!-- wp:surecart/coupon {"text":"","button_text":""} -->
 	<sc-order-coupon-form></sc-order-coupon-form>
 	<!-- /wp:surecart/coupon -->

@@ -5,6 +5,7 @@ import {
 	ScButton,
 	ScFormatNumber,
 	ScIcon,
+	ScLineItem,
 	ScTag,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
@@ -57,7 +58,7 @@ export default ({ lineItem, loading, subscription }) => {
 				{ type: 'snackbar' }
 			);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			createErrorNotice(
 				e?.message || __('Something went wrong', 'surecart'),
 				{ type: 'snackbar' }
@@ -124,7 +125,7 @@ export default ({ lineItem, loading, subscription }) => {
 													type="currency"
 													value={
 														lineItem?.ad_hoc_amount ||
-														lineItem?.total_amount
+														lineItem?.subtotal_amount
 													}
 													currency={
 														lineItem?.price
@@ -163,18 +164,42 @@ export default ({ lineItem, loading, subscription }) => {
 								css={css`
 									display: flex;
 									justify-content: flex-end;
+									flex-direction: column;
 								`}
 							>
 								<div>
 									<ScFormatNumber
 										type="currency"
-										value={lineItem?.total_amount}
+										value={lineItem?.subtotal_amount}
 										currency={lineItem?.price?.currency}
 									/>{' '}
 									{intervalString(lineItem?.price, {
 										labels: { interval: '/' },
 									})}
 								</div>
+								{lineItem?.price?.setup_fee_enabled && (
+									<div>
+										<span>
+											{lineItem?.price?.setup_fee_name ||
+												(lineItem?.price
+													?.setup_fee_amount < 0
+													? __('Discount', 'surecart')
+													: __(
+															'Setup Fee',
+															'surecart'
+													  ))}
+										</span>
+										{': '}
+										<ScFormatNumber
+											type="currency"
+											value={
+												lineItem?.price
+													?.setup_fee_amount
+											}
+											currency={lineItem?.price?.currency}
+										/>
+									</div>
+								)}
 							</div>
 						),
 					},

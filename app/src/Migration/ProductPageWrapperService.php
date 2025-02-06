@@ -35,6 +35,15 @@ class ProductPageWrapperService {
 	}
 
 	/**
+	 * Has product buy button
+	 *
+	 * @return boolean
+	 */
+	public function hasProductBuyButton() {
+		return preg_match( '/data-sc-block-id=(?:"product-buy-button"|\'product-buy-button\'|\\"product-buy-button\\"|\\\'product-buy-button\\\')/', $this->content );
+	}
+
+	/**
 	 * Has custom amount block
 	 *
 	 * @return boolean
@@ -49,7 +58,7 @@ class ProductPageWrapperService {
 	 * @return string
 	 */
 	public function addProductPageWrapper() {
-		return '<!-- wp:surecart/product-page -->' . $this->content . '<!-- /wp:surecart/product-page -->';
+		return '<!-- wp:surecart/product-page {"align":"wide"} -->' . $this->content . '<!-- /wp:surecart/product-page -->';
 	}
 
 	/**
@@ -71,7 +80,13 @@ class ProductPageWrapperService {
 	 * @return string
 	 */
 	public function wrap(): string {
+		// need to be a product page.
 		if ( ! is_singular( 'sc_product' ) ) {
+			return $this->content;
+		}
+
+		// need to have a product buy button.
+		if ( ! $this->hasProductBuyButton() ) {
 			return $this->content;
 		}
 

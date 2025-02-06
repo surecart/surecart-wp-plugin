@@ -3,7 +3,7 @@ import { render } from '@wordpress/element';
 /**
  * register store and entities.
  */
-import './store/register';
+import '../store/add-entities';
 
 /**
  * App

@@ -85,7 +85,7 @@ export class ScCompactAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
-    if (!this.address.country) return;
+    if (!this.address?.country) return;
     this.setRegions();
     this.showState = ['US', 'CA'].includes(this.address.country);
     this.showPostal = ['US'].includes(this.address.country);

@@ -17,16 +17,16 @@ class PostTypeServiceProvider implements ServiceProviderInterface {
 		$container['surecart.forms']                  = function ( $container ) {
 			return new FormPostTypeService( $container['surecart.pages'] );
 		};
-		$container['surecart.cart.post']              = function( $container ) {
+		$container['surecart.cart.post']              = function ( $container ) {
 			return new CartPostTypeService( $container['surecart.pages'] );
 		};
-		$container['surecart.post_types.product']     = function() {
+		$container['surecart.post_types.product']     = function () {
 			return new ProductPostTypeService();
 		};
-		$container['surecart.post_types.upsell_page'] = function() {
+		$container['surecart.post_types.upsell_page'] = function () {
 			return new ProductUpsellPagePostTypeService();
 		};
-		$container['surecart.metaboxes']              = function() {
+		$container['surecart.metaboxes']              = function () {
 			return new MetaboxService();
 		};
 

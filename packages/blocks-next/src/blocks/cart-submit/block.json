@@ -65,7 +65,8 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/wp-buttons.css",
+		"surecart-wp-buttons",
+		"surecart-wp-button",
 		"file:./style-index.css",
 		"wp-block-button"
 	]

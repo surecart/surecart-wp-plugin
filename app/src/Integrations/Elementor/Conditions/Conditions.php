@@ -35,7 +35,7 @@ class Conditions extends Condition_Base {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'SureCart', 'elementor-pro' );
+		return esc_html__( 'SureCart', 'surecart' );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Conditions extends Condition_Base {
 	 * @return string
 	 */
 	public function get_all_label() {
-		return esc_html__( 'All Products', 'elementor-pro' );
+		return esc_html__( 'All Products', 'surecart' );
 	}
 
 	/**

@@ -1,9 +1,10 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { sprintf, _n, __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
-import { Invoice } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
+import { Checkout, Invoice, Order } from '../../../../types';
 
 @Component({
   tag: 'sc-invoices-list',
@@ -22,6 +23,7 @@ export class ScInvoicesList {
   };
   @Prop() allLink: string;
   @Prop() heading: string;
+  @Prop() isCustomer: boolean;
 
   @State() invoices: Array<Invoice> = [];
 
@@ -50,7 +52,7 @@ export class ScInvoicesList {
   async initialFetch() {
     try {
       this.loading = true;
-      await this.getItems();
+      await this.getInvoices();
     } catch (e) {
       console.error(this.error);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -59,10 +61,10 @@ export class ScInvoicesList {
     }
   }
 
-  async fetchItems() {
+  async fetchInvoices() {
     try {
       this.busy = true;
-      await this.getItems();
+      await this.getInvoices();
     } catch (e) {
       console.error(this.error);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -71,11 +73,14 @@ export class ScInvoicesList {
     }
   }
 
-  /** Get all orders */
-  async getItems() {
+  /** Get all invoices */
+  async getInvoices() {
+    if (!this.isCustomer) {
+      return;
+    }
     const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/invoices/`, {
-        expand: ['invoice_items', 'charge'],
+        expand: ['checkout'],
         ...this.query,
       }),
       parse: false,
@@ -90,26 +95,12 @@ export class ScInvoicesList {
 
   nextPage() {
     this.query.page = this.query.page + 1;
-    this.fetchItems();
+    this.fetchInvoices();
   }
 
   prevPage() {
     this.query.page = this.query.page - 1;
-    this.fetchItems();
-  }
-
-  renderStatusBadge(invoice: Invoice) {
-    const { status, charge } = invoice;
-    if (typeof charge === 'object') {
-      if (charge?.fully_refunded) {
-        return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
-      }
-      if (charge?.refunded_amount) {
-        return <sc-tag type="info">{__('Partially Refunded', 'surecart')}</sc-tag>;
-      }
-    }
-
-    return <sc-order-status-badge status={status}></sc-order-status-badge>;
+    this.fetchInvoices();
   }
 
   renderLoading() {
@@ -131,33 +122,40 @@ export class ScInvoicesList {
       <div>
         <sc-divider style={{ '--spacing': '0' }}></sc-divider>
         <slot name="empty">
-          <sc-empty icon="tag">{__("You don't have any invoices.", 'surecart')}</sc-empty>
+          <sc-empty icon="shopping-bag">{__("You don't have any invoices.", 'surecart')}</sc-empty>
         </slot>
       </div>
     );
   }
 
+  getInvoiceRedirectUrl(invoice: Invoice) {
+    // if it's open, redirect to checkout for payment.
+    if (invoice.status === 'open') {
+      return `${window.scData.pages.checkout}?checkout_id=${(invoice?.checkout as Checkout)?.id}`;
+    }
+
+    // else it's paid(as we're fetching only open/paid), redirect to order detail page.
+    return addQueryArgs(window.location.href, {
+      action: 'show',
+      model: 'order',
+      id: ((invoice?.checkout as Checkout)?.order as Order)?.id,
+    });
+  }
+
   renderList() {
     return this.invoices.map(invoice => {
-      const { invoice_items, total_amount, currency, created_at, url } = invoice;
+      const { checkout, due_date_date } = invoice;
+      if (!checkout) return null;
+      const { amount_due, currency } = checkout as Checkout;
       return (
-        <sc-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
-          <div>
-            <sc-format-date class="order__date" date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
+        <sc-stacked-list-row href={this.getInvoiceRedirectUrl(invoice)} style={{ '--columns': '4' }} mobile-size={500}>
+          <div>#{invoice?.order_number}</div>
+          <div>{due_date_date && invoice?.status === 'open' ? sprintf(__('Due %s', 'surecart'), due_date_date) : '—'}</div>
+          <div class="invoices-list__status">
+            <sc-invoice-status-badge status={invoice?.status}></sc-invoice-status-badge>
           </div>
           <div>
-            <sc-text
-              truncate
-              style={{
-                '--color': 'var(--sc-color-gray-500)',
-              }}
-            >
-              {sprintf(_n('%s item', '%s items', invoice_items?.pagination?.count || 0, 'surecart'), invoice_items?.pagination?.count || 0)}
-            </sc-text>
-          </div>
-          <div>{this.renderStatusBadge(invoice)}</div>
-          <div>
-            <sc-format-number type="currency" currency={currency} value={total_amount}></sc-format-number>
+            <sc-format-number type="currency" currency={currency} value={amount_due}></sc-format-number>
           </div>
         </sc-stacked-list-row>
       );
@@ -184,13 +182,13 @@ export class ScInvoicesList {
     return (
       <sc-dashboard-module class="invoices-list" error={this.error}>
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Invoice History', 'surecart')}</slot>
+          <slot name="heading">{this.heading || __('Invoices', 'surecart')}</slot>
         </span>
 
         {!!this.allLink && !!this.invoices?.length && (
-          <sc-button type="link" href={this.allLink} slot="end">
+          <sc-button type="link" href={this.allLink} slot="end" aria-label={sprintf(__('View all %s', 'surecart'), this.heading || __('Invoices', 'surecart'))}>
             {__('View all', 'surecart')}
-            <sc-icon name="chevron-right" slot="suffix"></sc-icon>
+            <sc-icon aria-hidden="true" name="chevron-right" slot="suffix"></sc-icon>
           </sc-button>
         )}
 

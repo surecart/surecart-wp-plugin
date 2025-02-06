@@ -90,6 +90,15 @@ class BlockService {
 	}
 
 	/**
+	 * Get product list filter tags migration service.
+	 *
+	 * @return ProductListFilterTagsMigrationService
+	 */
+	public function productListFilterTagsMigration() {
+		return new ProductListFilterTagsMigrationService();
+	}
+
+	/**
 	 * Get cart migration service.
 	 *
 	 * @param array $attributes Attributes.
@@ -166,6 +175,18 @@ class BlockService {
 	 */
 	public function productVariantsMigration( $attributes = array(), $block = null ) {
 		return new ProductVariantsMigrationService( $attributes, $block );
+	}
+
+	/**
+	 * Get the product page blocks migration service.
+	 *
+	 * @param object $block Block.
+	 * @param string $old_block_name Old block name.
+	 *
+	 * @return ProductPageBlocksMigrationService
+	 */
+	public function productPageBlocksMigration( $block, $old_block_name ) {
+		return new ProductPageBlocksMigrationService( $block, $old_block_name );
 	}
 
 	/**

@@ -7,6 +7,11 @@ wp_interactivity_state(
 	'surecart/checkout',
 	array(
 		// derived states.
+		'checkout'             => [
+			'line_items' => [
+				'data' => [],
+			],
+		],
 		'discountIsRedeemable' => false,
 		'isDiscountApplied'    => false,
 		'itemsCount'           => 0,

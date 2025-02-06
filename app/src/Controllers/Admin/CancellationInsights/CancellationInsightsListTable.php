@@ -4,11 +4,14 @@ namespace SureCart\Controllers\Admin\CancellationInsights;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\CancellationAct;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class CancellationInsightsListTable extends ListTable {
+	use HasModeFilter;
+
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -44,14 +47,18 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'customer'            => __( 'Customer', 'surecart' ),
-			'plan'                => __( 'Plan', 'surecart' ),
-			'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
-			'comment'             => __( 'Comment', 'surecart' ),
-			'status'              => __( 'Plan Status', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'customer'            => __( 'Customer', 'surecart' ),
+				'plan'                => __( 'Plan', 'surecart' ),
+				'cancellation_reason' => __( 'Cancellation Reason', 'surecart' ),
+				'comment'             => __( 'Comment', 'surecart' ),
+				'status'              => __( 'Plan Status', 'surecart' ),
+				'date'                => __( 'Date', 'surecart' ),
+				'mode'                => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -76,7 +83,7 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $act ) {
-		return '<sc-format-date date="' . (int) $act->performed_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+		return $act->performed_at_date_time;
 	}
 
 	/**
@@ -92,11 +99,14 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return Object
 	 */
 	protected function table_data() {
-		return CancellationAct::where(
-			[
-				'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			]
-		)
+		$mode       = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+		$conditions = array();
+
+		if ( ! empty( $mode ) ) {
+			$conditions['live_mode'] = 'live' === $mode;
+		}
+
+		return CancellationAct::where( $conditions )
 		->with(
 			[
 				'subscription',
@@ -151,7 +161,7 @@ class CancellationInsightsListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customers', $act->subscription->customer->id ) ) . '" aria-label="' . esc_attr( 'View Customer', 'surecart' ) . '">' . esc_html__( 'View Customer', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customers', $act->subscription->customer->id ) ) . '" aria-label="' . esc_attr__( 'View Customer', 'surecart' ) . '">' . esc_html__( 'View Customer', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -172,6 +182,17 @@ class CancellationInsightsListTable extends ListTable {
 	}
 
 	/**
+	 * The mode for the model.
+	 *
+	 * @param SureCart\Model $model Model.
+	 *
+	 * @return string
+	 */
+	public function column_mode( $act ) {
+		return empty( $act->subscription->live_mode ) ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
+	}
+
+	/**
 	 * The status
 	 *
 	 * @param \SureCart\Models\CancellationAct $act Cancellation act model.
@@ -179,13 +200,15 @@ class CancellationInsightsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $act ) {
-
 		if ( $act->preserved ) {
 			ob_start();
 			?>
-			<sc-tag type="success"><?php
+			<sc-tag type="success">
+			<?php
 			// translators: Subscription saver feature. This is displayed if the subscription has been "Saved" from cancellation.
-			echo esc_html__( 'Saved', 'surecart' ); ?> </sc-tag>
+			echo esc_html__( 'Saved', 'surecart' );
+			?>
+			</sc-tag>
 			<?php if ( $act->coupon_applied ) { ?>
 				<sc-tag type="info"><?php echo esc_html__( 'Coupon Applied', 'surecart' ); ?></sc-tag>
 			<?php } ?>
@@ -204,5 +227,58 @@ class CancellationInsightsListTable extends ListTable {
 		);
 
 		return $badge;
+	}
+
+	/**
+	 * Displays extra table navigation.
+	 *
+	 * @param string $which Top or bottom placement.
+	 */
+	protected function extra_tablenav( $which ) {
+		?>
+		<input type="hidden" name="page" value="sc-cancellation-insights" />
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->mode_dropdown();
+
+			/**
+			 * Fires before the Filter button on the Posts and Pages list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @since 2.1.0
+			 * @since 4.4.0 The `$post_type` parameter was added.
+			 * @since 4.6.0 The `$which` parameter was added.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_cancellation_insights', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter' ), '', 'filter_action', false, array( 'id' => 'filter-by-mode-submit' ) );
+			}
+		}
+
+		?>
+		</div>
+
+		<?php
+		/**
+		 * Fires immediately following the closing "actions" div in the tablenav
+		 * for the affiliate referrals list table.
+		 *
+		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 */
+		do_action( 'manage_cancellation_insights_extra_tablenav', $which );
 	}
 }

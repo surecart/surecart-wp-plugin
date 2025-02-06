@@ -1,8 +1,8 @@
 <?php
 global $sc_query_id;
 $params         = \SureCart::block()->urlParams( 'products' );
-$query_order    = $params->getArg( 'order' ) ?? 'desc';
-$query_order_by = $params->getArg( 'orderby' ) ?? 'date';
+$query_order_by = $params->getArg( 'orderby' ) ?? $block->context['query']['orderBy'] ?? '';
+$query_order    = $params->getArg( 'order' ) ?? $block->context['query']['order'] ?? '';
 
 $options = [
 	[
@@ -16,6 +16,18 @@ $options = [
 		'href'    => $params->addArg( 'order', 'asc' )->addArg( 'orderby', 'date' )->url(),
 		'label'   => esc_html__( 'Oldest', 'surecart' ),
 		'checked' => 'asc' === $query_order && 'date' === $query_order_by,
+	],
+	[
+		'value'   => 'title:asc',
+		'href'    => $params->addArg( 'order', 'asc' )->addArg( 'orderby', 'title' )->url(),
+		'label'   => esc_html__( 'Alphabetical, A-Z', 'surecart' ),
+		'checked' => 'asc' === $query_order && 'title' === $query_order_by,
+	],
+	[
+		'value'   => 'title:desc',
+		'href'    => $params->addArg( 'order', 'desc' )->addArg( 'orderby', 'title' )->url(),
+		'label'   => esc_html__( 'Alphabetical, Z-A', 'surecart' ),
+		'checked' => 'desc' === $query_order && 'title' === $query_order_by,
 	],
 	[
 		'value'   => 'price:asc',

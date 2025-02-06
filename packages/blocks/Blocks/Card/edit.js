@@ -53,8 +53,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				{(isSelected || !!title) && (
 					<RichText
 						slot="title"
-						aria-label={__('Card Title')}
-						placeholder={__('Add title…')}
+						aria-label={__('Card Title', 'surecart')}
+						placeholder={__('Add title…', 'surecart')}
 						value={title}
 						onChange={(title) => setAttributes({ title })}
 						withoutInteractiveFormatting

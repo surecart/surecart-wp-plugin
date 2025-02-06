@@ -1,5 +1,4 @@
 import { render } from '@wordpress/element';
-
 /**
  * register store and entities.
  */
@@ -13,4 +12,5 @@ import Order from './Order';
 /**
  * Render
  */
+
 render(<Order />, document.getElementById('app'));

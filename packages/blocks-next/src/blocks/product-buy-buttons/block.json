@@ -16,9 +16,11 @@
 		"spacing": {
 			"padding": true,
 			"margin": true,
+			"blockGap": true,
 			"__experimentalDefaultControls": {
 				"padding": true,
-				"margin": true
+				"margin": true,
+				"blockGap": true
 			}
 		},
 		"typography": {
@@ -49,7 +51,7 @@
 			}
 		}
 	},
-	"style": ["file:../../styles/wp-buttons.css"],
+	"style": ["surecart-wp-buttons"],
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js"
 }

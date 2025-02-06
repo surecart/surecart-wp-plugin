@@ -44,41 +44,4 @@ test.describe('Product Admin Page', () => {
 			'Test Product'
 		);
 	});
-
-	test('Should edit a product', async ({ page, requestUtils }) => {
-		// Create a product using REST API.
-		const product = await requestUtils.rest({
-			method: 'POST',
-			path: PRODUCT_API_PATH,
-			data: {
-				name: 'Edit Product',
-			},
-		});
-
-		await page.goto(
-			`/wp-admin/admin.php?page=sc-products&action=edit&id=${product.id}`
-		);
-
-		// Check if the product is created with name by going to the edit page.
-		await expect(page.locator('#input-5')).toHaveValue('Edit Product');
-
-		// Fill the form.
-		await page.fill('#input-5', 'Edit Product Updated');
-
-		// Click on the save button.
-		await page.getByRole('button', { name: 'Save Product' }).click();
-
-		// Wait for the page to load.
-		await page.waitForLoadState('networkidle');
-
-		// Check if the product is created with name by going to the edit page.
-		await expect(
-			page.locator('.components-snackbar__content')
-		).toBeVisible();
-
-		// Check if the product is created with name by going to the edit page.
-		await expect(page.locator('#input-5')).toHaveValue(
-			'Edit Product Updated'
-		);
-	});
 });

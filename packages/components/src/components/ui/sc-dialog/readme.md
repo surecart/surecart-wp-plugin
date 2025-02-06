@@ -46,6 +46,7 @@
 
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -69,6 +70,7 @@ graph TD;
   sc-button --> sc-spinner
   sc-cancel-dialog --> sc-dialog
   sc-checkout-stock-alert --> sc-dialog
+  sc-checkout-test-complete --> sc-dialog
   sc-license --> sc-dialog
   sc-login-provider --> sc-dialog
   sc-order-confirm-provider --> sc-dialog

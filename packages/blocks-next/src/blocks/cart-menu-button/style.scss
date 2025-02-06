@@ -4,10 +4,12 @@
 	vertical-align: middle;
 	line-height: 1;
 	color: inherit;
+	cursor: pointer;
 
 	.sc-cart-icon {
 		font-size: var(--sc-cart-icon-size, 1.1em);
 		cursor: pointer;
+		position: relative;
 
 		svg {
 			width: 20px;

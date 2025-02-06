@@ -120,7 +120,7 @@ export class ScChargesList {
     }
 
     return this.charges.map(charge => {
-      const { currency, amount, created_at } = charge;
+      const { currency, amount, created_at_date } = charge;
 
       return (
         <sc-stacked-list-row
@@ -132,9 +132,7 @@ export class ScChargesList {
             id: ((charge.checkout as Checkout).order as Order)?.id,
           })}
         >
-          <strong>
-            <sc-format-date date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
-          </strong>
+          <strong>{created_at_date}</strong>
 
           <sc-text style={{ '--color': 'var(--sc-color-gray-500)' }}>{sprintf(__('#%s', 'surecart'), ((charge.checkout as Checkout).order as Order).number)}</sc-text>
 

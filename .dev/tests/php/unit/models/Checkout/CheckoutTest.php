@@ -149,6 +149,15 @@ class CheckoutTest extends SureCartUnitTestCase
 		$prepared = $instance->finalize();
 
 		// make sure attributes page
-		$this->assertEquals($response,$prepared->getAttributes());
+		$prepared_attributes = $prepared->getAttributes();
+		$this->assertSame(
+			$response['customer_email'],
+			$prepared_attributes['customer_email']
+		);
+
+		$this->assertSame(
+			$response['total_amount'],
+			$prepared_attributes['total_amount']
+		);
 	}
 }

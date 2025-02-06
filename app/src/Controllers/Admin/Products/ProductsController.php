@@ -74,6 +74,17 @@ class ProductsController extends AdminController {
 	 */
 	public function confirmBulkDelete() {
 		// find the products queued for bulk deletion.
+		if ( empty( $_REQUEST['bulk_action_product_ids'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_die(
+				sprintf(
+					'%s <a href="%s">%s</a>',
+					esc_html__( 'No products selected. Please choose at least one product to delete.', 'surecart' ),
+					esc_url( admin_url( 'admin.php?page=sc-products' ) ),
+					esc_html__( 'Go Back', 'surecart' )
+				)
+			);
+		}
+
 		$products = Product::where(
 			[
 				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -182,6 +193,15 @@ class ProductsController extends AdminController {
 					$gallery_paths[] = '/wp/v2/media/' . $id . '?context=edit';
 				}
 			}
+			$taxonomies = array_diff( get_object_taxonomies( 'sc_product' ), array( 'sc_account', 'sc_collection' ) );
+
+			if ( ! empty( $taxonomies ) ) {
+				$taxonomy_paths = [];
+				foreach ( $taxonomies as $taxonomy ) {
+					$taxonomy_paths[] = '/wp/v2/taxonomies/' . $taxonomy . '?context=edit';
+					$taxonomy_paths[] = '/wp/v2/' . $taxonomy;
+				}
+			}
 
 			$this->preloadPaths(
 				array_merge(
@@ -197,12 +217,16 @@ class ProductsController extends AdminController {
 						'/wp/v2/types?context=edit',
 						'/wp/v2/templates/' . $product->template_id . '?context=edit',
 						'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
+						'/wp/v2/taxonomies?context=view',
+						'/wp/v2/taxonomies?context=edit&per_page=100',
+						'/wp/v2/sc_product?context=edit&sc_id[0]=' . $product->id . '&per_page=1&_locale=user',
 						'/surecart/v1/products/' . $product->id . '?context=edit',
 						'/surecart/v1/integrations?context=edit&model_ids[0]=' . $product->id . '&per_page=50',
 						'/surecart/v1/integration_providers?context=edit',
 						'/surecart/v1/integration_provider_items?context=edit',
 					],
-					$gallery_paths
+					$gallery_paths,
+					$taxonomy_paths ?? []
 				)
 			);
 		}

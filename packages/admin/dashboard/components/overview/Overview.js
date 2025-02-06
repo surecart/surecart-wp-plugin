@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScDivider, ScFlex } from '@surecart/components-react';
+import { ScDivider, ScFlex, ScSwitch } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -18,7 +18,7 @@ import ReportByDropdown from './parts/ReportByDropdown';
 dayjs.extend(duration);
 dayjs.extend(utc);
 
-export default ({ liveMode }) => {
+export default ({ liveMode, setLiveMode }) => {
 	const currency = scData?.currency_code;
 	const [endDate, setEndDate] = useState(dayjs());
 	const [startDate, setStartDate] = useState(dayjs().add(-1, 'month'));
@@ -126,6 +126,15 @@ export default ({ liveMode }) => {
 					/>
 
 					<ScFlex alignItems={'center'}>
+						<ScSwitch
+							checked={!liveMode}
+							onScChange={(e) => {
+								setLiveMode(!e.target.checked);
+							}}
+							reversed
+						>
+							{__('Test Mode', 'surecart')}
+						</ScSwitch>
 						<ReportByDropdown
 							value={reportBy}
 							setValue={setReportBy}

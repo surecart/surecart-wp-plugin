@@ -109,7 +109,7 @@ export default ({ productId, product, updateProduct }) => {
 									id={id}
 									product={product}
 									isNew={
-										!savedProduct.gallery_ids?.includes(id)
+										!savedProduct?.gallery_ids?.includes(id)
 									}
 									updateProduct={updateProduct}
 									onRemove={() => onRemoveMedia(id)}

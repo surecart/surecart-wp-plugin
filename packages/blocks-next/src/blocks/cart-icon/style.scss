@@ -19,6 +19,7 @@
 	font-weight: var(--sc-font-weight-semibold);
 	transition: opacity var(--sc-transition-medium) ease;
 	box-shadow: var(--sc-shadow-small);
+	z-index: var(--sc-cart-icon-z-index, 99);
 	cursor: pointer;
 
 	&[hidden] {

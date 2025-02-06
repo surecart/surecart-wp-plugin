@@ -934,14 +934,14 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 	/**
 	 * Calls accessors during toArray.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		$attributes = $this->getAttributes();
 
 		// Check if any accessor is available and call it.
 		foreach ( get_class_methods( $this ) as $method ) {
-			if ( method_exists( get_class(), $method ) ) {
+			if ( ! method_exists( get_class( $this ), $method ) ) {
 				continue;
 			}
 

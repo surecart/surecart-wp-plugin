@@ -45,16 +45,16 @@ class TaxOverrideRestServiceProvider extends RestServiceProvider implements Rest
 				'id'         => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at' => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'updated_at' => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];

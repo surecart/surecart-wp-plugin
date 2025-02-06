@@ -8,8 +8,6 @@ import {
 	ScStackedListRow,
 	ScIcon,
 	ScButton,
-	ScFormatDate,
-	ScCcLogo,
 	ScFormatNumber,
 	ScSkeleton,
 	ScDivider,
@@ -119,8 +117,7 @@ export default ({ liveMode }) => {
 		}
 
 		return (orders || []).map((order) => {
-			const { checkout, created_at, id } = order;
-			const { customer } = checkout;
+			const { checkout, created_at_date, id } = order;
 			return (
 				<ScStackedListRow
 					style={{
@@ -133,37 +130,18 @@ export default ({ liveMode }) => {
 						id: id,
 					})}
 				>
+					<div>{created_at_date}</div>
 					<div>
-						<ScFormatDate
-							date={created_at}
-							month="short"
-							day="numeric"
-							year="numeric"
-							type="timestamp"
-						/>
+						{checkout?.name || checkout?.email}
 						<br />
-						<span style={{ color: '#6C727F', 'font-size': '14px' }}>
-							{' '}
-							at{' '}
-							<ScFormatDate
-								date={created_at}
-								hour="numeric"
-								minute="numeric"
-								type="timestamp"
-							/>
-						</span>
-					</div>
-					<div>
-						{customer?.name || customer?.email}
-						<br />
-						{!!customer?.name && (
+						{!!checkout?.name && (
 							<span
 								style={{
 									color: '#6C727F',
 									'font-size': '14px',
 								}}
 							>
-								{customer?.email}
+								{checkout?.email}
 							</span>
 						)}
 					</div>

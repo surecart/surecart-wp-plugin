@@ -56,6 +56,11 @@ class HealthService {
 					'value'   => ! empty( $total_failed ) ? sprintf( __( '%d Unprocessed webhooks', 'surecart' ), $total_failed ) : __( 'Working', 'surecart' ),
 					'private' => false,
 				),
+				'encryption_key'      => array(
+					'label'   => __( 'Encryption Key', 'surecart' ),
+					'value'   => defined( 'SURECART_ENCRYPTION_KEY' ) ? __( 'Defined', 'surecart' ) : __( 'Not defined', 'surecart' ),
+					'private' => false,
+				),
 			),
 		);
 		return $debug_info;
@@ -79,7 +84,7 @@ class HealthService {
 		$is_localhost = ( new Server( get_home_url() ) )->isLocalHost();
 		if ( ! $is_localhost ) {
 			$tests['direct']['surecart_webhook_test'] = array(
-				'label' => __( 'SureCart', 'neve' ) . ' ' . __( 'Webhooks Processing', 'surecart' ),
+				'label' => __( 'SureCart', 'surecart' ) . ' ' . __( 'Webhooks Processing', 'surecart' ),
 				'test'  => [ $this, 'webhooksProcessingTest' ],
 			);
 			$tests['async']['surecart_webhooks_test'] = array(

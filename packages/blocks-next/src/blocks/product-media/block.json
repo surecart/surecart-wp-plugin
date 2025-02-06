@@ -43,17 +43,16 @@
 			"type": "boolean",
 			"default": false
 		},
+		"lightbox": {
+			"type": "boolean",
+			"default": true
+		},
 		"id": {
 			"type": "string"
 		}
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["file:../../styles/image-slider.css"],
-	"viewScriptModule": "@surecart/image-slider",
-	"style": [
-		"file:./style-index.css",
-		"file:../../styles/image-slider.css",
-		"file:../../styles/product-media.css"
-	]
+	"editorStyle": ["surecart-image-slider"],
+	"style": ["file:./style-index.css"]
 }

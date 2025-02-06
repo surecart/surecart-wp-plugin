@@ -73,54 +73,54 @@ class BuyButton extends Element {
 		];
 
 		$this->controls['styleSeparator'] = [
-			'label' => esc_html__( 'Style', 'bricks' ),
+			'label' => esc_html__( 'Style', 'surecart' ),
 			'type'  => 'separator',
 		];
 
 		$this->controls['size'] = [
-			'label'       => esc_html__( 'Size', 'bricks' ),
+			'label'       => esc_html__( 'Size', 'surecart' ),
 			'type'        => 'select',
 			'options'     => $this->control_options['buttonSizes'],
 			'inline'      => true,
 			'reset'       => true,
-			'placeholder' => esc_html__( 'Default', 'bricks' ),
+			'placeholder' => esc_html__( 'Default', 'surecart' ),
 		];
 
 		$this->controls['style'] = [
-			'label'       => esc_html__( 'Style', 'bricks' ),
+			'label'       => esc_html__( 'Style', 'surecart' ),
 			'type'        => 'select',
 			'options'     => $this->control_options['styles'],
 			'inline'      => true,
 			'reset'       => true,
 			'default'     => 'primary',
-			'placeholder' => esc_html__( 'None', 'bricks' ),
+			'placeholder' => esc_html__( 'None', 'surecart' ),
 		];
 
 		$this->controls['circle'] = [
-			'label' => esc_html__( 'Circle', 'bricks' ),
+			'label' => esc_html__( 'Circle', 'surecart' ),
 			'type'  => 'checkbox',
 			'reset' => true,
 		];
 
 		$this->controls['outline'] = [
-			'label' => esc_html__( 'Outline', 'bricks' ),
+			'label' => esc_html__( 'Outline', 'surecart' ),
 			'type'  => 'checkbox',
 			'reset' => true,
 		];
 
 		// Icon
 		$this->controls['iconSeparator'] = [
-			'label' => esc_html__( 'Icon', 'bricks' ),
+			'label' => esc_html__( 'Icon', 'surecart' ),
 			'type'  => 'separator',
 		];
 
 		$this->controls['icon'] = [
-			'label' => esc_html__( 'Icon', 'bricks' ),
+			'label' => esc_html__( 'Icon', 'surecart' ),
 			'type'  => 'icon',
 		];
 
 		$this->controls['iconTypography'] = [
-			'label'    => esc_html__( 'Typography', 'bricks' ),
+			'label'    => esc_html__( 'Typography', 'surecart' ),
 			'type'     => 'typography',
 			'css'      => [
 				[
@@ -132,16 +132,16 @@ class BuyButton extends Element {
 		];
 
 		$this->controls['iconPosition'] = [
-			'label'       => esc_html__( 'Position', 'bricks' ),
+			'label'       => esc_html__( 'Position', 'surecart' ),
 			'type'        => 'select',
 			'options'     => $this->control_options['iconPosition'],
 			'inline'      => true,
-			'placeholder' => esc_html__( 'Right', 'bricks' ),
+			'placeholder' => esc_html__( 'Right', 'surecart' ),
 			'required'    => [ 'icon', '!=', '' ],
 		];
 
 		$this->controls['iconGap'] = [
-			'label'    => esc_html__( 'Gap', 'bricks' ),
+			'label'    => esc_html__( 'Gap', 'surecart' ),
 			'type'     => 'number',
 			'units'    => true,
 			'css'      => [
@@ -153,7 +153,7 @@ class BuyButton extends Element {
 		];
 
 		$this->controls['iconSpace'] = [
-			'label'    => esc_html__( 'Space between', 'bricks' ),
+			'label'    => esc_html__( 'Space between', 'surecart' ),
 			'type'     => 'checkbox',
 			'css'      => [
 				[

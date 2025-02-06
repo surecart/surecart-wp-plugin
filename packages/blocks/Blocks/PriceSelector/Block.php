@@ -54,7 +54,7 @@ class Block extends BaseBlock {
 
 		// there are no checked, so use the first one.
 		if ( empty( $checked ) ) {
-			$checked = [ $choices[0] ] ?? [];
+			$checked = ! empty( $choices[0] ) ? [ $choices[0] ] : [];
 		}
 
 		// get the line items.

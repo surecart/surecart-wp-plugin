@@ -81,33 +81,36 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 				'id'                         => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at'                 => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'updated_at'                 => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'payment_retry_window_weeks' => [
 					'description' => esc_html__( 'Payment retry window in weeks.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'cancel_behavior'            => [
 					'description' => esc_html__( 'Cancel behavior. Either pending or immediate.', 'surecart' ),
 					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'downgrade_behavior'         => [
 					'description' => esc_html__( 'Downgrade behavior. Either pending or immediate.', 'surecart' ),
 					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'upgrade_behavior'           => [
 					'description' => esc_html__( 'Upgrade behavior. Either pending or immediate.', 'surecart' ),
 					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];

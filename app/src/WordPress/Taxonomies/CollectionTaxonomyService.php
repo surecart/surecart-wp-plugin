@@ -67,7 +67,7 @@ class CollectionTaxonomyService {
 			return $link;
 		}
 
-		$collection = get_term_meta( $term_id, 'collection', true );
+		$collection = sc_get_collection( $term_id );
 
 		// if we have a collection, return the edit link.
 		if ( ! empty( $collection ) ) {
@@ -91,7 +91,7 @@ class CollectionTaxonomyService {
 		}
 
 		$term       = get_queried_object();
-		$collection = get_term_meta( $term->term_id, 'collection', true );
+		$collection = sc_get_collection( $term->term_id );
 
 		if ( wp_is_block_theme() && ! empty( $collection->metadata->wp_template_id ) ) {
 			global $_wp_current_template_id, $_wp_current_template_content;

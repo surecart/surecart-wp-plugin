@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { select } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -16,6 +16,7 @@ export default (props) => {
 		exclude = [],
 		onChangeQuery = () => {},
 		renderChoices,
+		fetchOnLoad = false,
 	} = props;
 	const [query, setQuery] = useState(null);
 	const [models, setModels] = useState([]);
@@ -23,7 +24,6 @@ export default (props) => {
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(10);
 	const [isLoading, setIsLoading] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const handleOnChangeQuery = (queryValue) => {
 		setQuery(queryValue);
@@ -67,9 +67,6 @@ export default (props) => {
 					setModels((state) => [...state, data[i]]);
 				}
 			}
-
-			// add to redux for other page items
-			receiveEntityRecords(kind, name, models, queryArgs);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -88,6 +85,12 @@ export default (props) => {
 		if (query === null || isLoading) return;
 		fetchData();
 	}, [page, perPage, query]);
+
+	useEffect(() => {
+		if (fetchOnLoad) {
+			fetchData();
+		}
+	}, [fetchOnLoad]);
 
 	// if the query changes, reset the page to 1.
 	useEffect(() => {

@@ -54,8 +54,11 @@ export default ({ attributes, setAttributes }) => {
 					}}
 				>
 					<RichText
-						aria-label={__('Message Text')}
-						placeholder={__('I.E. Free shipping on all orders…')}
+						aria-label={__('Message Text', 'surecart')}
+						placeholder={__(
+							'I.E. Free shipping on all orders…',
+							'surecart'
+						)}
 						value={text}
 						onChange={(text) => setAttributes({ text })}
 						withoutInteractiveFormatting

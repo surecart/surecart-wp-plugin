@@ -53,7 +53,7 @@ class CancellationActRestServiceProvider extends RestServiceProvider implements 
 				'id'         => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at' => [

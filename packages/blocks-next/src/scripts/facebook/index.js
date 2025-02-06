@@ -1,3 +1,5 @@
+import { maybeConvertAmount } from '../../utilities/currency';
+
 /**
  * Handle search event for Facebook.
  */

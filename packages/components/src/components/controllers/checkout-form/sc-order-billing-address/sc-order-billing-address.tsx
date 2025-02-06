@@ -75,7 +75,7 @@ export class ScOrderBillingAddress {
   }
 
   componentWillLoad() {
-    if (this.defaultCountry && !this.address.country) {
+    if (this.defaultCountry && !this.address?.country) {
       this.address.country = this.defaultCountry;
     }
 

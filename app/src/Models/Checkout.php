@@ -8,12 +8,15 @@ use SureCart\Models\LineItem;
 use SureCart\Models\Traits\CanFinalize;
 use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDiscount;
+use SureCart\Models\Traits\HasInvoice;
+use SureCart\Models\Traits\HasPaymentFailures;
 use SureCart\Models\Traits\HasPaymentIntent;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
 use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Order model
@@ -29,6 +32,8 @@ class Checkout extends Model {
 	use CanFinalize;
 	use HasProcessorType;
 	use HasBillingAddress;
+	use HasPaymentFailures;
+	use HasInvoice;
 
 	/**
 	 * Rest API endpoint
@@ -154,51 +159,6 @@ class Checkout extends Model {
 			},
 			false
 		);
-	}
-
-	/**
-	 * Get the human discount attribute.
-	 *
-	 * @return string
-	 */
-	public function getHumanDiscountAttribute() {
-		if ( empty( $this->discount->coupon ) ) {
-			return '';
-		}
-
-		if ( ! empty( $this->discount->coupon->percent_off ) ) {
-			if ( ! empty( $this->discount->coupon->amount_off ) && ! empty( $this->currency ) ) {
-				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
-			}
-
-			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
-		}
-
-		return '';
-	}
-
-	/**
-	 * Get the human discount with duration attribute.
-	 *
-	 * @return string
-	 */
-	public function getHumanDiscountWithDurationAttribute() {
-		if ( ! $this->hasRecurring ) {
-			return $this->human_discount;
-		}
-
-		$duration           = $this->discount->coupon->duration ?? '';
-		$duration_in_months = $this->discount->coupon->duration_in_months ?? 0;
-
-		switch ( $duration ) {
-			case 'once':
-				return sprintf( '%s %s', $this->human_discount, __( 'once', 'surecart' ) );
-			case 'repeating':
-				$months_label = sprintf( _n( '%d month', '%d months', $duration_in_months, 'surecart' ), $duration_in_months );
-				return sprintf( '%s for %s', $this->human_discount, $months_label );
-			default:
-				return $this->human_discount;
-		}
 	}
 
 	/**
@@ -502,5 +462,68 @@ class Checkout extends Model {
 		}
 
 		return $this->attributes['billing_address'] ?? null;
+	}
+
+	/**
+	 * Get the human discount attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountAttribute() {
+		if ( empty( $this->discount->coupon ) ) {
+			return '';
+		}
+
+		if ( ! empty( $this->discount->coupon->percent_off ) ) {
+			if ( ! empty( $this->discount->coupon->amount_off ) && ! empty( $this->currency ) ) {
+				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
+			}
+
+			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get the human discount with duration attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountWithDurationAttribute() {
+		if ( ! $this->hasRecurring ) {
+			return $this->human_discount;
+		}
+
+		$duration           = $this->discount->coupon->duration ?? '';
+		$duration_in_months = $this->discount->coupon->duration_in_months ?? 0;
+
+		switch ( $duration ) {
+			case 'once':
+				return sprintf( '%s %s', $this->human_discount, __( 'once', 'surecart' ) );
+			case 'repeating':
+				$months_label = sprintf( _n( '%d month', '%d months', $duration_in_months, 'surecart' ), $duration_in_months );
+				return sprintf( '%s for %s', $this->human_discount, $months_label );
+			default:
+				return $this->human_discount;
+		}
+	}
+
+	/**
+	 * If the shipping address is required.
+	 *
+	 * @return bool
+	 */
+	public function getShippingAddressRequiredAttribute(): bool {
+		return in_array( $this->shipping_address_accuracy_requirement, [ 'tax', 'full' ], true );
+	}
+
+	/**
+	 * Get the Paid at Date attribute.
+	 *
+	 * @return string
+	 */
+	public function getPaidAtDateAttribute() {
+		return ! empty( $this->paid_at ) ? TimeDate::formatDate( $this->paid_at ) : '';
 	}
 }

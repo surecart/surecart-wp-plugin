@@ -7,6 +7,8 @@
  * @package SureCart
  */
 
+use SureCart\Rest\IntegrationProvidersRestServiceProvider;
+
 return array(
 	/**
 	 * Array of service providers you wish to enable.
@@ -33,11 +35,12 @@ return array(
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 		\SureCart\WordPress\CLI\CLIServiceProvider::class,
+		\SureCart\WordPress\Cache\CacheServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
 		\SureCart\Routing\PermalinkServiceProvider::class,
 		\SureCart\Routing\RouteConditionsServiceProvider::class,
 		\SureCart\Routing\AdminRouteServiceProvider::class,
-		\SureCart\Permissions\RolesServiceProvider::class,
+		\SureCart\Permissions\PermissionsServiceProvider::class,
 		\SureCart\Settings\SettingsServiceProvider::class,
 		\SureCart\Request\RequestServiceProvider::class,
 		\SureCart\View\ViewServiceProvider::class,
@@ -67,7 +70,7 @@ return array(
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IncomingWebhooksRestServiceProvider::class,
 		\SureCart\Rest\RegisteredWebhookRestServiceProvider::class,
-		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
+		\SureCart\Rest\IntegrationsCatalogRestServiceProvider::class,
 		\SureCart\Rest\CancellationActRestServiceProvider::class,
 		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
@@ -95,7 +98,7 @@ return array(
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
 		\SureCart\Rest\PeriodRestServiceProvider::class,
 		\SureCart\Rest\SettingsRestServiceProvider::class,
-		\SureCart\Rest\PortalProtocolRestServiceProvider::class,
+		\SureCart\Rest\CustomerPortalProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderProtocolRestServiceProvider::class,
 		\SureCart\Rest\TaxRegistrationRestServiceProvider::class,
@@ -118,6 +121,7 @@ return array(
 		\SureCart\Rest\ShippingZoneRestServiceProvider::class,
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
 		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
+		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
 		\SureCart\Rest\VariantsRestServiceProvider::class,
 		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
@@ -147,6 +151,7 @@ return array(
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
+		\SureCart\Integrations\Avada\AvadaServiceProvider::class,
 	),
 
 	/**
@@ -157,6 +162,7 @@ return array(
 		\SureCartBlocks\Blocks\Address\Block::class,
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Coupon\Block::class,
+		\SureCartBlocks\Blocks\TrialLineItem\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
@@ -178,6 +184,7 @@ return array(
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
@@ -201,7 +208,6 @@ return array(
 		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
-		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
@@ -213,7 +219,7 @@ return array(
 		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
-		
+
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
@@ -282,7 +288,7 @@ return array(
 	 * Links used.
 	 */
 	'links'                  => array(
-		'purchase' => 'https://app.surecart.com/plans',
+		'purchase' => 'https://app.surecart.com/billing',
 	),
 
 	/**

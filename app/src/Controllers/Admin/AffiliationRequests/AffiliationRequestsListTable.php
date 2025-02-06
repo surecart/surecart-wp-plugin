@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\AffiliationRequests;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\AffiliationRequest;
+use WP_Error;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -52,7 +53,7 @@ class AffiliationRequestsListTable extends ListTable {
 	 */
 	protected function get_views() {
 		foreach ( $this->getStatuses() as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-affiliate-requests' );
+			$link                    = admin_url( 'admin.php?page=sc-affiliate-requests' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -88,12 +89,15 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array(
-			'name'         => __( 'Name', 'surecart' ),
-			'email'        => __( 'Email', 'surecart' ),
-			'payout_email' => __( 'Payout Email', 'surecart' ),
-			'status'       => __( 'Status', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
+		return array_merge(
+			[
+				'name'         => __( 'Name', 'surecart' ),
+				'email'        => __( 'Email', 'surecart' ),
+				'payout_email' => __( 'Payout Email', 'surecart' ),
+				'status'       => __( 'Status', 'surecart' ),
+				'date'         => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
 		);
 	}
 
@@ -109,7 +113,7 @@ class AffiliationRequestsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return object|WP_Error
 	 */
 	private function table_data() {
 		$affiliate_request_query = AffiliationRequest::where(
@@ -167,6 +171,9 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $affiliate_request, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $affiliate_request, $column_name );
+
 		if ( 'name' === $column_name ) {
 			return '<a href="' . \SureCart::getUrl()->edit( 'affiliate-request', $affiliate_request->id ) . '">'
 				. $affiliate_request->first_name . ' ' . $affiliate_request->last_name

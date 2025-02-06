@@ -55,7 +55,7 @@ class UpsellsListTable extends ListTable {
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-upsell-funnels' );
+			$link                    = admin_url( 'admin.php?page=sc-upsell-funnels' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -88,12 +88,15 @@ class UpsellsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return [
-			'name'     => __( 'Name', 'surecart' ),
-			'priority' => __( 'Priority', 'surecart' ),
-			'enabled'  => __( 'Status', 'surecart' ),
-			'date'     => __( 'Date', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'name'     => __( 'Name', 'surecart' ),
+				'priority' => __( 'Priority', 'surecart' ),
+				'enabled'  => __( 'Status', 'surecart' ),
+				'date'     => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -205,30 +208,6 @@ class UpsellsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
-	 *
-	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $upsell_funnel ) {
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $upsell_funnel->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $upsell_funnel->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $upsell_funnel->created_at ) )
-		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $upsell_funnel->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $upsell_funnel->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $upsell_funnel->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
-	}
-
-	/**
 	 * Enabled column
 	 *
 	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
@@ -267,7 +246,7 @@ class UpsellsListTable extends ListTable {
 			<?php
 			echo $this->row_actions(
 				[
-					'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr__( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 				],
 			);
 			?>
@@ -285,6 +264,9 @@ class UpsellsListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $upsell_funnel, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $upsell_funnel, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return ' < a href     = "' . \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) . '" > ' . $upsell_funnel->name . ' < / a > ';

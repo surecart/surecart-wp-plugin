@@ -1,8 +1,14 @@
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import FlatTermSelector from './FlatTermSelector';
 
-export default ({ post, loading }) => {
+import { PostTaxonomiesFlatTermSelector } from '@wordpress/editor';
+import { HierarchicalTermSelector } from './hierarchical-term-selector';
+import Box from '../../../ui/Box';
+
+export default ({ currentPost }) => {
+	if (!currentPost) {
+		return null;
+	}
 	// get all taxonomies.
 	const taxonomies = useSelect(
 		(select) => select(coreStore).getTaxonomies({ per_page: -1 }),
@@ -10,24 +16,23 @@ export default ({ post, loading }) => {
 	);
 
 	// get all visible taxonomies for this post type.
-	const visibleTaxonomies = (taxonomies ?? []).filter(
-		(taxonomy) =>
-			taxonomy.types.includes(post?.type) &&
-			taxonomy?.slug !== 'sc_collection'
-	);
+	const visibleTaxonomies = (taxonomies ?? [])
+		.filter(
+			(taxonomy) =>
+				taxonomy.types.includes(currentPost?.type) &&
+				taxonomy?.slug !== 'sc_collection'
+		)
+		?.sort((a, b) => a?.name?.localeCompare(b?.name));
 
 	// render all taxonomies.
 	return visibleTaxonomies.map((taxonomy) => {
 		const TaxonomyComponent = taxonomy.hierarchical
-			? FlatTermSelector
-			: FlatTermSelector;
+			? HierarchicalTermSelector
+			: PostTaxonomiesFlatTermSelector;
 		return (
-			<TaxonomyComponent
-				key={taxonomy.slug}
-				slug={taxonomy.slug}
-				post={post}
-				loading={loading}
-			/>
+			<Box key={taxonomy.slug} title={taxonomy?.name}>
+				<TaxonomyComponent key={taxonomy.slug} slug={taxonomy.slug} />
+			</Box>
 		);
 	});
 };

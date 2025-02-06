@@ -89,7 +89,7 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 				'id'               => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'object'           => [

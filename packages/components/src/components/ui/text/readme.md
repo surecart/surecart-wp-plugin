@@ -18,7 +18,6 @@
 ### Used by
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
- - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -32,7 +31,6 @@
 ```mermaid
 graph TD;
   sc-charges-list --> sc-text
-  sc-invoices-list --> sc-text
   sc-orders-list --> sc-text
   sc-payment-method --> sc-text
   sc-payment-methods-list --> sc-text

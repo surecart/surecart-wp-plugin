@@ -7,7 +7,8 @@
 <?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
 
 <?php
-if ( ! empty( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
+$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+if ( ! empty( $mode ) && 'test' === $mode ) {
 	?>
 	<div class="notice notice-info" style="padding-top: var(--sc-spacing-medium);">
 		<sc-text tag="h2" style="--font-size: var(--sc-font-size-x-large);--font-weight:bold;">
@@ -30,8 +31,12 @@ if ( ! empty( $_GET['live_mode'] ) && 'false' === $_GET['live_mode'] ) {
 	);
 	?>
 
-	<?php $table->views(); ?>
-	<?php $table->display(); ?>
+	<form id="posts-filter" method="get">
+		<?php $table->views(); ?>
+		<?php $table->display(); ?>
+
+		<div id="ajax-response"></div>
+	</form>
 </div>
 
 <script>

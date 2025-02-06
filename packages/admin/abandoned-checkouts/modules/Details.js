@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { __, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { formatTime } from '../../util/time';
 import { ScSkeleton, ScTag } from '@surecart/components-react';
 
 export default ({ abandoned, checkout, loading }) => {
@@ -72,7 +71,7 @@ export default ({ abandoned, checkout, loading }) => {
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
-					formatTime(abandoned.updated_at)
+					abandoned.created_at_date_time
 				)}
 			</div>
 			<div>{renderNotificationStatus()}</div>

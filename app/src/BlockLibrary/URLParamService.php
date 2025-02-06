@@ -89,6 +89,31 @@ class URLParamService {
 		return trim( $prefix . $instance_id . '-' . strtolower( $name ), '-' );
 	}
 
+	/**
+	 * Get the name of a key.
+	 *
+	 * @param  string $key Key.
+	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return string
+	 */
+	public function getName( $key = '', $instance_id = '' ) {
+		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+		$prefix      = ! empty( $this->prefix ) ? ( $this->prefix . '-' ) : '';
+
+		// Strip the prefix if it exists.
+		if ( ! empty( $prefix ) && strpos( $key, $prefix ) === 0 ) {
+			$key = substr( $key, strlen( $prefix ) );
+		}
+
+		// Strip the instance ID if it exists.
+		if ( ! empty( $instance_id ) && strpos( $key, $instance_id . '-' ) === 0 ) {
+			$key = substr( $key, strlen( $instance_id . '-' ) );
+		}
+
+		// Return the original name.
+		return $key;
+	}
 
 	/**
 	 * Get the filter arguments.
@@ -102,6 +127,46 @@ class URLParamService {
 		$instance_id = $instance_id ? $instance_id : $this->instance_id;
 		$key         = $this->getKey( $name, $instance_id );
 		return $_GET[ $key ] ?? null;
+	}
+
+	/**
+	 * Get the filter arguments.
+	 *
+	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return array
+	 */
+	public function getArgs( $instance_id = '' ) {
+		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+		$args        = [];
+		foreach ( $_GET as $key => $value ) {
+			if ( strpos( $key, $this->getKey( '', $instance_id ) ) === 0 ) {
+				$args[ $key ] = $value;
+			}
+		}
+		return $args;
+	}
+
+	/**
+	 * Get the filter arguments.
+	 *
+	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return array
+	 */
+	public function getAllTaxonomyArgs( $instance_id = '' ) {
+		$instance_id   = $instance_id ? $instance_id : $this->instance_id;
+		$args          = $this->getArgs( $instance_id ); // Use getArgs to get filtered arguments.
+		$taxonomy_args = [];
+
+		foreach ( $args as $key => $value ) {
+			$taxonomy_name = $this->getName( $key, $instance_id );
+			if ( taxonomy_exists( $taxonomy_name ) ) {
+				$taxonomy_args[ $taxonomy_name ] = $value;
+			}
+		}
+
+		return $taxonomy_args;
 	}
 
 	/**
@@ -122,6 +187,7 @@ class URLParamService {
 	 *
 	 * @param  string       $key Key.
 	 * @param  string|array $value Value.
+	 * @param  string       $instance_id Unique instance ID.
 	 * @return string
 	 */
 	public function addArg( $key, $value, $instance_id = '' ) {
@@ -211,6 +277,35 @@ class URLParamService {
 
 		// check if the value exists in the existing filters.
 		return in_array( strval( $value ), $existing_filters, false );
+	}
+
+	/**
+	 * Remove all filter arguments from the URL.
+	 *
+	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return string
+	 */
+	public function removeAllFilterArgs( $instance_id = '' ) {
+		// get the instance ID.
+		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+
+		// get the existing filters.
+		$existing_filters = $this->getAllTaxonomyArgs( $instance_id );
+
+		// prepare keys to remove.
+		$keys_to_remove = [
+			$this->getKey( $this->pagination_key, $instance_id ),
+			$this->getKey( $this->search_key, $instance_id ),
+		];
+
+		// gather keys to remove using existing taxonomies keys.
+		foreach ( $existing_filters as $taxonomy_key => $terms ) {
+			$keys_to_remove[] = $this->getKey( $taxonomy_key, $instance_id );
+		}
+
+		// return the new URL without pagination for filtering.
+		return remove_query_arg( $keys_to_remove, $this->url );
 	}
 
 	/**

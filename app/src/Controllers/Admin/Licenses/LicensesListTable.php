@@ -39,10 +39,11 @@ class LicensesListTable extends ListTable {
 		$this->items = $query->data;
 	}
 
-	public function search() { ?>
+	public function search() {
+		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Licenses' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Licenses', 'surecart' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -56,13 +57,16 @@ class LicensesListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'key'      => __( 'Key', 'surecart' ),
-			'customer' => __( 'Customer', 'surecart' ),
-			'purchase' => __( 'Purchase', 'surecart' ),
-			'status'   => __( 'Status', 'surecart' ),
-			'created'  => __( 'Created', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'key'      => __( 'Key', 'surecart' ),
+				'customer' => __( 'Customer', 'surecart' ),
+				'purchase' => __( 'Purchase', 'surecart' ),
+				'status'   => __( 'Status', 'surecart' ),
+				'created'  => __( 'Created', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -107,7 +111,7 @@ class LicensesListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ) . '" aria-label="' . esc_attr( 'Edit License', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ) . '" aria-label="' . esc_attr__( 'Edit License', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -184,6 +188,9 @@ class LicensesListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $product, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';

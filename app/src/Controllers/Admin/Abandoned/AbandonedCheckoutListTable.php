@@ -4,11 +4,14 @@ namespace SureCart\Controllers\Admin\Abandoned;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\AbandonedCheckout;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class AbandonedCheckoutListTable extends ListTable {
+	use HasModeFilter;
+
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -60,10 +63,6 @@ class AbandonedCheckoutListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 
-			if ( isset( $_GET['live_mode'] ) ) {
-				$link = add_query_arg( 'live_mode', sanitize_text_field($_GET['live_mode']), $link );
-			}
-
 			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
@@ -99,14 +98,17 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'placed_by'           => __( 'Placed By', 'surecart' ),
-			'date'                => __( 'Date', 'surecart' ),
-			'notification_status' => __( 'Email Status', 'surecart' ),
-			'recovery_status'     => __( 'Recovery Status', 'surecart' ),
-			'total'               => __( 'Total', 'surecart' ),
-			'mode'                => '',
-		];
+		return array_merge(
+			[
+				'placed_by'           => __( 'Placed By', 'surecart' ),
+				'created'             => __( 'Date', 'surecart' ),
+				'notification_status' => __( 'Email Status', 'surecart' ),
+				'recovery_status'     => __( 'Recovery Status', 'surecart' ),
+				'total'               => __( 'Total', 'surecart' ),
+				'mode'                => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -115,10 +117,13 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
+		$mode   = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
 		$status = $this->getStatus();
-		$where  = array(
-			'live_mode' => 'false' !== sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		);
+		$where  = array();
+
+		if ( ! empty( $mode ) ) {
+			$where['live_mode'] = 'live' === $mode;
+		}
 
 		if ( $status ) {
 			$where['notification_status'] = [ $status ];
@@ -160,17 +165,6 @@ class AbandonedCheckoutListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the total column
-	 *
-	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $abandoned ) {
-		return isset( $abandoned->created_at ) ? '<sc-format-date date="' . (int) $abandoned->created_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>' : '--';
-	}
-
-	/**
 	 * Handle the notification status
 	 *
 	 * @param \SureCart\Models\AbandonedCheckout $abandoned Abandoned checkout session.
@@ -190,7 +184,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			case 'sent':
 				return '<sc-tag type="success">' . __( 'Email Sent', 'surecart' ) . '</sc-tag>';
 		}
-		 return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
+		return '<sc-tag>' . esc_html( $abandoned->notification_status ?? 'Unknown' ) . '</sc-tag>';
 	}
 
 	/**
@@ -233,18 +227,73 @@ class AbandonedCheckoutListTable extends ListTable {
 	public function column_placed_by( $abandoned ) {
 		ob_start();
 		?>
-		<a  class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
+		<a  class="row-title" aria-label="<?php esc_attr_e( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
 			<?php
 			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
+			printf( esc_html__( 'By %s', 'surecart' ), esc_html( $abandoned->customer->name ?? $abandoned->customer->email ) );
 			?>
 		</a>
 		<br />
-		<a aria-label="<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
-			<?php echo esc_attr__( 'View Checkout', 'surecart' ); ?>
+		<a aria-label="<?php esc_attr_e( 'View Checkout', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'abandoned-checkout', $abandoned->id ) ); ?>">
+			<?php esc_attr_e( 'View Checkout', 'surecart' ); ?>
 		</a>
 		<?php
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Displays extra table navigation.
+	 *
+	 * @param string $which Top or bottom placement.
+	 */
+	protected function extra_tablenav( $which ) {
+		?>
+		<input type="hidden" name="page" value="sc-abandoned-checkouts" />
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->mode_dropdown();
+
+			/**
+			 * Fires before the Filter button on the Posts and Pages list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @since 2.1.0
+			 * @since 4.4.0 The `$post_type` parameter was added.
+			 * @since 4.6.0 The `$which` parameter was added.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_abandoned_checkouts', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter' ), '', 'filter_action', false, array( 'id' => 'filter-by-mode-submit' ) );
+			}
+		}
+
+		?>
+		</div>
+
+		<?php
+		/**
+		 * Fires immediately following the closing "actions" div in the tablenav for the posts
+		 * list table.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 */
+		do_action( 'manage_abandoned_checkouts_extra_tablenav', $which );
 	}
 }

@@ -7,13 +7,11 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScTag,
-	ScFormatNumber,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { ScFormatDate } from '@surecart/components-react';
 import StatusDropdown from './components/StatusDropdown';
 import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
@@ -31,10 +29,12 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 
 	let total = (fulfillment?.fulfillment_items?.data || []).reduce(
 		(accumulator, item) => {
-			return accumulator + item?.line_item?.quantity;
+			return accumulator + item?.quantity;
 		},
 		0
 	);
+
+	console.log('fulfillment items', fulfillment?.fulfillment_items?.data);
 
 	const cancelFulfillment = async () => {
 		try {
@@ -202,16 +202,7 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 							>
 								{__('Fulfilled on', 'surecart')}
 							</div>
-							<ScFormatDate
-								slot="price"
-								type="timestamp"
-								date={fulfillment?.created_at}
-								month="short"
-								day="numeric"
-								year="numeric"
-								hour="numeric"
-								minute="numeric"
-							/>
+							{fulfillment?.created_at_date_time}
 						</div>
 					</div>
 

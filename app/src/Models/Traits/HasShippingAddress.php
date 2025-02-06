@@ -10,7 +10,8 @@ trait HasShippingAddress {
 	 * @return $this
 	 */
 	protected function setShippingAddressAttribute( $value ) {
-		$this->attributes['shipping_address'] = (object) $value;
+		// force either string or object.
+		$this->attributes['shipping_address'] = is_string( $value ) ? $value : (object) $value;
 		return $this;
 	}
 }

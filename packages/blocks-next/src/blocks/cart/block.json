@@ -48,9 +48,9 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/drawer.css",
-		"file:../../styles/block-ui.css",
-		"file:../../styles/alert.css",
+		"surecart-drawer",
+		"surecart-block-ui",
+		"surecart-alert",
 		"file:./style-index.css",
 		"surecart-theme-base"
 	],

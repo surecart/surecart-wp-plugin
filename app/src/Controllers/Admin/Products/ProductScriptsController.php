@@ -38,7 +38,7 @@ class ProductScriptsController extends AdminModelEditController {
 
 	public function enqueue() {
 		$available_templates              = wp_get_theme()->get_page_templates( null, 'sc_product' );
-		$available_templates['']          = apply_filters( 'default_page_template_title', __( 'Theme Layout' ), 'rest-api' );
+		$available_templates['']          = apply_filters( 'default_page_template_title', __( 'Theme Layout', 'surecart' ), 'rest-api' );
 		$this->data['availableTemplates'] = $available_templates;
 		$this->data['metaBoxLocations']   = \SureCart::metaboxes()->perLocation();
 		$this->data['wpMetaBoxUrl']       = $this->getMetaBoxUrl();

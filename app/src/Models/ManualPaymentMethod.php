@@ -31,5 +31,5 @@ class ManualPaymentMethod extends Model {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'manual_payment_methods_updated_at';
+	protected $cache_key = 'manual_payment_methods';
 }

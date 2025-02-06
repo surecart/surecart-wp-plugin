@@ -1,8 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
-import { processCartViewEvent } from '@surecart/checkout-events';
+import { store, getElement } from '@wordpress/interactivity';
 const { state: checkoutState } = store('surecart/checkout');
 const { __ } = wp.i18n;
 
@@ -20,13 +19,7 @@ const { state, actions } = store('surecart/cart', {
 		 * This gets cached so we can call this many times without querying the DOM.
 		 */
 		get dialog() {
-			let dialog = null;
-			const target = getContext()?.target || '.sc-cart-drawer' || null;
-
-			// Get passed target or <dialog>.
-			if (typeof target === 'string') {
-				dialog = document?.querySelector(target) || null;
-			}
+			let dialog = document?.querySelector('.sc-cart-drawer') || null;
 
 			if (!dialog) {
 				const { ref } = getElement();
@@ -50,12 +43,18 @@ const { state, actions } = store('surecart/cart', {
 		/**
 		 * Open the cart dialog.
 		 */
-		open: () => {
+		open: function* () {
 			state.dialog?.showModal();
-			// Trigger cart view event.
-			processCartViewEvent(checkoutState?.checkout);
 			// speak the cart dialog state.
 			state.label = __('Cart opened.', 'surecart');
+
+			const { processCartViewEvent } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-events'
+			);
+
+			// Trigger cart view event.
+			processCartViewEvent(checkoutState?.checkout);
 		},
 
 		/**

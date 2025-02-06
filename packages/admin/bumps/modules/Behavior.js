@@ -12,7 +12,7 @@ export default ({ bump, updateBump }) => {
 			{__('Auto Apply Discount')}
 			<span slot="description">
 				{__(
-					'If enabled, the discount will be applied if the display conditions are satisfied, even if they do not click the bump. If disabled, the discount will only be applied if the customer clicks the order bump.',
+					'If enabled, the discount will be applied if the price is already in the checkout and the display conditions are satisfied, even if they do not click the bump. If disabled, the discount will only be applied if the customer clicks the order bump.',
 					'surecart'
 				)}
 			</span>

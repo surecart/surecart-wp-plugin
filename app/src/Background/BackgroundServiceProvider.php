@@ -19,11 +19,11 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 			return new QueueService();
 		};
 
-		$container['surecart.async.webhooks'] = function() {
+		$container['surecart.async.webhooks'] = function () {
 			return new AsyncWebhookService();
 		};
 
-		$container['surecart.bulk_action'] = function() {
+		$container['surecart.bulk_action'] = function () {
 			return new BulkActionService();
 		};
 
@@ -41,5 +41,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.bulk_action']->bootstrap();
+		$container['surecart.async.webhooks']->bootstrap();
 	}
 }

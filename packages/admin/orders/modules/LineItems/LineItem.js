@@ -1,8 +1,9 @@
 import { ScFormatNumber, ScLineItem } from '@surecart/components-react';
 
-export default ({ label, currency, value }) => {
+export default ({ title, label, currency, value }) => {
 	return (
 		<ScLineItem>
+			{title && <span slot="title">{title}</span>}
 			<span slot="description">{label}</span>
 			<ScFormatNumber
 				slot="price"

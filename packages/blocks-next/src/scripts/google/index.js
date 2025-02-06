@@ -1,3 +1,5 @@
+import { maybeConvertAmount } from '../../utilities/currency';
+
 /**
  * Track an event with Google Analytics or Google Tag Manager
  *

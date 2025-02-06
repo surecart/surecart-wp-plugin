@@ -38,6 +38,7 @@
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -80,6 +81,7 @@ graph TD;
   sc-cancel-survey --> sc-dashboard-module
   sc-charges-list --> sc-dashboard-module
   sc-checkout-stock-alert --> sc-dashboard-module
+  sc-checkout-test-complete --> sc-dashboard-module
   sc-customer-details --> sc-dashboard-module
   sc-customer-edit --> sc-dashboard-module
   sc-downloads-list --> sc-dashboard-module

@@ -24,7 +24,6 @@ class AffiliationReferralsController extends AdminController {
 						'title' => __( 'Affiliate Referrals', 'surecart' ),
 					],
 				],
-				'test_mode_toggle' => true,
 			)
 		);
 

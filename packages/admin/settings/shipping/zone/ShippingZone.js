@@ -17,15 +17,17 @@ import {
 	ScAlert,
 	ScUpgradeRequired,
 } from '@surecart/components-react';
+import { ProgressBar } from '@wordpress/components';
 import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import AddShippingRate from '../rate/AddShippingRate';
 import EditShippingRate from '../rate/EditShippingRate';
 import ConfirmDeleteZone from './ConfirmDeleteZone';
+import ShippingZoneSummary from './ShippingZoneSummary';
 
 const modals = {
 	ADD_RATE: 'add_shipping_rate',
@@ -43,6 +45,14 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 	const { deleteEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
+
+	const { records: shippingRates, isResolving: loadingShippingRates } =
+		useEntityRecords('surecart', 'shipping-rate', {
+			context: 'edit',
+			shipping_zone_ids: [shippingZone?.id],
+			per_page: 100,
+			expand: ['shipping_method'],
+		});
 
 	const onRemoveShippingRate = async (shippingRateId) => {
 		try {
@@ -68,8 +78,12 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 		setCurrentModal(modals.UPGRADE_REQUIRED);
 	};
 
-	const renderShippingRates = (shippingRates) => {
-		if (!shippingRates?.data?.length) {
+	const renderShippingRates = () => {
+		if (loadingShippingRates && !shippingRates?.length) {
+			return <ProgressBar />;
+		}
+
+		if (!shippingRates?.length) {
 			return (
 				<ScAlert
 					type="warning"
@@ -97,7 +111,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 				</ScTableCell>
 				<ScTableCell slot="head">{__('Price', 'surecart')}</ScTableCell>
 				<ScTableCell slot="head"></ScTableCell>
-				{shippingRates?.data?.map((shippingRate) => (
+				{(shippingRates || []).map((shippingRate) => (
 					<ScTableRow href="#" key={shippingRate.id}>
 						<ScTableCell>
 							{shippingRate.shipping_method?.name}
@@ -168,6 +182,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 				css={css`
 					position: relative;
 				`}
+				loading={loadingShippingRates}
 			>
 				<ScFlex justifyContent="space-between">
 					<div>
@@ -177,6 +192,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 							`}
 						>
 							{shippingZone.name}
+							<ShippingZoneSummary shippingZone={shippingZone} />
 						</strong>
 						{isFallback && (
 							<sc-tag type="success" size="medium">
@@ -222,7 +238,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 					</ScDropdown>
 				</ScFlex>
 				<Error error={error} setError={setError} />
-				{renderShippingRates(shippingZone?.shipping_rates)}
+				{renderShippingRates()}
 				<ScButton onClick={() => setCurrentModal(modals.ADD_RATE)}>
 					<ScIcon name="plus" slot="prefix" />
 					{__('Add Rate', 'surecart')}

@@ -19,16 +19,33 @@
 		"spacing": {
 			"padding": true,
 			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
 		}
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/input-group.css",
-		"file:../../styles/form-label.css",
-		"file:../../styles/form-control.css",
-		"file:../../styles/spinner.css",
+		"surecart-input-group",
+		"surecart-form-label",
+		"surecart-form-control",
+		"surecart-spinner",
 		"file:./index.css"
 	]
 }

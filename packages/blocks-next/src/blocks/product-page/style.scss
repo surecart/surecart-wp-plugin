@@ -1,3 +1,18 @@
 .wp-block-surecart-product-page {
 	width: 100%;
+	box-sizing: border-box;
+
+	&.alignwide {
+		width: 100%;
+		margin: auto;
+		padding: 0;
+	}
+}
+
+/** Fix for if themes dequeue default wordpress global styles */
+.is-layout-flex {
+	display: flex;
+}
+.is-layout-grid {
+	display: grid;
 }

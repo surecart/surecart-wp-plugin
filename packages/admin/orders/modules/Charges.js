@@ -94,6 +94,7 @@ export default ({ checkoutId }) => {
 					},
 					method: {
 						label: __('Method', 'surecart'),
+						width: '200px',
 					},
 					status: {
 						label: __('Status', 'surecart'),

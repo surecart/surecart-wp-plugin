@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -545,6 +545,20 @@ export namespace Components {
      */
     interface ScCheckoutStockAlert {
     }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface ScCheckoutTestComplete {
+        /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus": string;
+        /**
+          * Success url.
+         */
+        "successUrl": string;
+    }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
     }
@@ -774,6 +788,10 @@ export namespace Components {
          */
         "discountAmount": number;
         /**
+          * Is the form editable
+         */
+        "editable": boolean;
+        /**
           * The error message
          */
         "error": string;
@@ -801,6 +819,10 @@ export namespace Components {
           * Has recurring
          */
         "showInterval": boolean;
+        /**
+          * Focus the input.
+         */
+        "triggerFocus": () => Promise<void>;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -1414,61 +1436,6 @@ export namespace Components {
          */
         "value": number;
     }
-    interface ScFormatDate {
-        /**
-          * The date/time to format. If not set, the current date and time will be used.
-         */
-        "date": Date | string | number;
-        /**
-          * The format for displaying the day.
-         */
-        "day": 'numeric' | '2-digit';
-        /**
-          * The format for displaying the era.
-         */
-        "era": 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the hour.
-         */
-        "hour": 'numeric' | '2-digit';
-        /**
-          * When set, 24 hour time will always be used.
-         */
-        "hourFormat": 'auto' | '12' | '24';
-        /**
-          * The locale to use when formatting the date/time.
-         */
-        "locale": string;
-        /**
-          * The format for displaying the minute.
-         */
-        "minute": 'numeric' | '2-digit';
-        /**
-          * The format for displaying the month.
-         */
-        "month": 'numeric' | '2-digit' | 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the second.
-         */
-        "second": 'numeric' | '2-digit';
-        /**
-          * The time zone to express the time in.
-         */
-        "timeZone": string;
-        /**
-          * The format for displaying the time.
-         */
-        "timeZoneName": 'short' | 'long';
-        "type": 'timestamp' | 'date';
-        /**
-          * The format for displaying the weekday.
-         */
-        "weekday": 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the year.
-         */
-        "year": 'numeric' | '2-digit';
-    }
     interface ScFormatInterval {
         "every": string;
         "fallback": string;
@@ -1717,9 +1684,36 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScInvoiceDetails {
+    }
+    interface ScInvoiceMemo {
+        /**
+          * Memo Label
+         */
+        "text": string;
+    }
+    interface ScInvoiceStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": InvoiceStatus;
+    }
     interface ScInvoicesList {
         "allLink": string;
         "heading": string;
+        "isCustomer": boolean;
         /**
           * Query to fetch invoices
          */
@@ -1770,6 +1764,13 @@ export namespace Components {
         "label": string;
         "loading": boolean;
     }
+    interface ScLineItemInvoiceDueDate {
+    }
+    interface ScLineItemInvoiceNumber {
+    }
+    interface ScLineItemInvoiceReceiptDownload {
+        "checkout": Checkout;
+    }
     interface ScLineItemShipping {
         /**
           * Label
@@ -1784,6 +1785,12 @@ export namespace Components {
         "checkout": Checkout;
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
+    }
+    interface ScLineItemTrial {
+        /**
+          * The label for the trial item
+         */
+        "label": string;
     }
     interface ScLineItems {
         /**
@@ -1917,7 +1924,6 @@ export namespace Components {
           * The bump
          */
         "bump": Bump;
-        "cdnRoot": string;
         /**
           * Should we show the controls
          */
@@ -2244,13 +2250,13 @@ export namespace Components {
     }
     interface ScOrderSummary {
         "busy": boolean;
-        "closedText": string;
         "collapsed": boolean;
         "collapsedOnDesktop": boolean;
         "collapsedOnMobile": boolean;
         "collapsible": boolean;
-        "openText": string;
+        "invoiceSummaryText": string;
         "order": Checkout;
+        "orderSummaryText": string;
     }
     interface ScOrderTaxIdInput {
         /**
@@ -4215,6 +4221,10 @@ export interface ScCheckoutStockAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCheckoutStockAlertElement;
 }
+export interface ScCheckoutTestCompleteCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutTestCompleteElement;
+}
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
@@ -4307,17 +4317,9 @@ export interface ScMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScMenuElement;
 }
-export interface ScOrderBumpCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderBumpElement;
-}
 export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderConfirmProviderElement;
-}
-export interface ScOrderCouponFormCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderCouponFormElement;
 }
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4770,6 +4772,28 @@ declare global {
     var HTMLScCheckoutStockAlertElement: {
         prototype: HTMLScCheckoutStockAlertElement;
         new (): HTMLScCheckoutStockAlertElement;
+    };
+    interface HTMLScCheckoutTestCompleteElementEventMap {
+        "scOrderPaid": Checkout;
+        "scSetState": string;
+    }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface HTMLScCheckoutTestCompleteElement extends Components.ScCheckoutTestComplete, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScCheckoutTestCompleteElementEventMap>(type: K, listener: (this: HTMLScCheckoutTestCompleteElement, ev: ScCheckoutTestCompleteCustomEvent<HTMLScCheckoutTestCompleteElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScCheckoutTestCompleteElementEventMap>(type: K, listener: (this: HTMLScCheckoutTestCompleteElement, ev: ScCheckoutTestCompleteCustomEvent<HTMLScCheckoutTestCompleteElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLScCheckoutTestCompleteElement: {
+        prototype: HTMLScCheckoutTestCompleteElement;
+        new (): HTMLScCheckoutTestCompleteElement;
     };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
@@ -5251,12 +5275,6 @@ declare global {
         prototype: HTMLScFormatBytesElement;
         new (): HTMLScFormatBytesElement;
     };
-    interface HTMLScFormatDateElement extends Components.ScFormatDate, HTMLStencilElement {
-    }
-    var HTMLScFormatDateElement: {
-        prototype: HTMLScFormatDateElement;
-        new (): HTMLScFormatDateElement;
-    };
     interface HTMLScFormatIntervalElement extends Components.ScFormatInterval, HTMLStencilElement {
     }
     var HTMLScFormatIntervalElement: {
@@ -5331,6 +5349,24 @@ declare global {
         prototype: HTMLScInputElement;
         new (): HTMLScInputElement;
     };
+    interface HTMLScInvoiceDetailsElement extends Components.ScInvoiceDetails, HTMLStencilElement {
+    }
+    var HTMLScInvoiceDetailsElement: {
+        prototype: HTMLScInvoiceDetailsElement;
+        new (): HTMLScInvoiceDetailsElement;
+    };
+    interface HTMLScInvoiceMemoElement extends Components.ScInvoiceMemo, HTMLStencilElement {
+    }
+    var HTMLScInvoiceMemoElement: {
+        prototype: HTMLScInvoiceMemoElement;
+        new (): HTMLScInvoiceMemoElement;
+    };
+    interface HTMLScInvoiceStatusBadgeElement extends Components.ScInvoiceStatusBadge, HTMLStencilElement {
+    }
+    var HTMLScInvoiceStatusBadgeElement: {
+        prototype: HTMLScInvoiceStatusBadgeElement;
+        new (): HTMLScInvoiceStatusBadgeElement;
+    };
     interface HTMLScInvoicesListElement extends Components.ScInvoicesList, HTMLStencilElement {
     }
     var HTMLScInvoicesListElement: {
@@ -5361,6 +5397,24 @@ declare global {
         prototype: HTMLScLineItemBumpElement;
         new (): HTMLScLineItemBumpElement;
     };
+    interface HTMLScLineItemInvoiceDueDateElement extends Components.ScLineItemInvoiceDueDate, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceDueDateElement: {
+        prototype: HTMLScLineItemInvoiceDueDateElement;
+        new (): HTMLScLineItemInvoiceDueDateElement;
+    };
+    interface HTMLScLineItemInvoiceNumberElement extends Components.ScLineItemInvoiceNumber, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceNumberElement: {
+        prototype: HTMLScLineItemInvoiceNumberElement;
+        new (): HTMLScLineItemInvoiceNumberElement;
+    };
+    interface HTMLScLineItemInvoiceReceiptDownloadElement extends Components.ScLineItemInvoiceReceiptDownload, HTMLStencilElement {
+    }
+    var HTMLScLineItemInvoiceReceiptDownloadElement: {
+        prototype: HTMLScLineItemInvoiceReceiptDownloadElement;
+        new (): HTMLScLineItemInvoiceReceiptDownloadElement;
+    };
     interface HTMLScLineItemShippingElement extends Components.ScLineItemShipping, HTMLStencilElement {
     }
     var HTMLScLineItemShippingElement: {
@@ -5378,6 +5432,12 @@ declare global {
     var HTMLScLineItemTotalElement: {
         prototype: HTMLScLineItemTotalElement;
         new (): HTMLScLineItemTotalElement;
+    };
+    interface HTMLScLineItemTrialElement extends Components.ScLineItemTrial, HTMLStencilElement {
+    }
+    var HTMLScLineItemTrialElement: {
+        prototype: HTMLScLineItemTrialElement;
+        new (): HTMLScLineItemTrialElement;
     };
     interface HTMLScLineItemsElement extends Components.ScLineItems, HTMLStencilElement {
     }
@@ -5485,19 +5545,7 @@ declare global {
         prototype: HTMLScOrderBillingAddressElement;
         new (): HTMLScOrderBillingAddressElement;
     };
-    interface HTMLScOrderBumpElementEventMap {
-        "scAddLineItem": LineItemData1;
-        "scRemoveLineItem": LineItemData1;
-    }
     interface HTMLScOrderBumpElement extends Components.ScOrderBump, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLScOrderBumpElementEventMap>(type: K, listener: (this: HTMLScOrderBumpElement, ev: ScOrderBumpCustomEvent<HTMLScOrderBumpElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLScOrderBumpElementEventMap>(type: K, listener: (this: HTMLScOrderBumpElement, ev: ScOrderBumpCustomEvent<HTMLScOrderBumpElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScOrderBumpElement: {
         prototype: HTMLScOrderBumpElement;
@@ -5567,18 +5615,7 @@ declare global {
         prototype: HTMLScOrderConfirmationTotalsElement;
         new (): HTMLScOrderConfirmationTotalsElement;
     };
-    interface HTMLScOrderCouponFormElementEventMap {
-        "scApplyCoupon": string;
-    }
     interface HTMLScOrderCouponFormElement extends Components.ScOrderCouponForm, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLScOrderCouponFormElementEventMap>(type: K, listener: (this: HTMLScOrderCouponFormElement, ev: ScOrderCouponFormCustomEvent<HTMLScOrderCouponFormElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLScOrderCouponFormElementEventMap>(type: K, listener: (this: HTMLScOrderCouponFormElement, ev: ScOrderCouponFormCustomEvent<HTMLScOrderCouponFormElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLScOrderCouponFormElement: {
         prototype: HTMLScOrderCouponFormElement;
@@ -6697,6 +6734,7 @@ declare global {
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
+        "sc-checkout-test-complete": HTMLScCheckoutTestCompleteElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choice-container": HTMLScChoiceContainerElement;
@@ -6736,7 +6774,6 @@ declare global {
         "sc-form-row": HTMLScFormRowElement;
         "sc-form-state-provider": HTMLScFormStateProviderElement;
         "sc-format-bytes": HTMLScFormatBytesElement;
-        "sc-format-date": HTMLScFormatDateElement;
         "sc-format-interval": HTMLScFormatIntervalElement;
         "sc-format-number": HTMLScFormatNumberElement;
         "sc-fulfillment-shipping-status-badge": HTMLScFulfillmentShippingStatusBadgeElement;
@@ -6745,14 +6782,21 @@ declare global {
         "sc-icon": HTMLScIconElement;
         "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
+        "sc-invoice-details": HTMLScInvoiceDetailsElement;
+        "sc-invoice-memo": HTMLScInvoiceMemoElement;
+        "sc-invoice-status-badge": HTMLScInvoiceStatusBadgeElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-license": HTMLScLicenseElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
+        "sc-line-item-invoice-due-date": HTMLScLineItemInvoiceDueDateElement;
+        "sc-line-item-invoice-number": HTMLScLineItemInvoiceNumberElement;
+        "sc-line-item-invoice-receipt-download": HTMLScLineItemInvoiceReceiptDownloadElement;
         "sc-line-item-shipping": HTMLScLineItemShippingElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
+        "sc-line-item-trial": HTMLScLineItemTrialElement;
         "sc-line-items": HTMLScLineItemsElement;
         "sc-line-items-provider": HTMLScLineItemsProviderElement;
         "sc-login-form": HTMLScLoginFormElement;
@@ -7450,6 +7494,25 @@ declare namespace LocalJSX {
          */
         "onScUpdateLineItem"?: (event: ScCheckoutStockAlertCustomEvent<LineItemData>) => void;
     }
+    /**
+     * This component listens to the order status
+     * and confirms the order when payment is successful.
+     */
+    interface ScCheckoutTestComplete {
+        /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus"?: string;
+        /**
+          * The order is paid event.
+         */
+        "onScOrderPaid"?: (event: ScCheckoutTestCompleteCustomEvent<Checkout>) => void;
+        "onScSetState"?: (event: ScCheckoutTestCompleteCustomEvent<string>) => void;
+        /**
+          * Success url.
+         */
+        "successUrl"?: string;
+    }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
     }
@@ -7683,6 +7746,10 @@ declare namespace LocalJSX {
           * The discount amount
          */
         "discountAmount"?: number;
+        /**
+          * Is the form editable
+         */
+        "editable"?: boolean;
         /**
           * The error message
          */
@@ -8465,61 +8532,6 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
-    interface ScFormatDate {
-        /**
-          * The date/time to format. If not set, the current date and time will be used.
-         */
-        "date"?: Date | string | number;
-        /**
-          * The format for displaying the day.
-         */
-        "day"?: 'numeric' | '2-digit';
-        /**
-          * The format for displaying the era.
-         */
-        "era"?: 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the hour.
-         */
-        "hour"?: 'numeric' | '2-digit';
-        /**
-          * When set, 24 hour time will always be used.
-         */
-        "hourFormat"?: 'auto' | '12' | '24';
-        /**
-          * The locale to use when formatting the date/time.
-         */
-        "locale"?: string;
-        /**
-          * The format for displaying the minute.
-         */
-        "minute"?: 'numeric' | '2-digit';
-        /**
-          * The format for displaying the month.
-         */
-        "month"?: 'numeric' | '2-digit' | 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the second.
-         */
-        "second"?: 'numeric' | '2-digit';
-        /**
-          * The time zone to express the time in.
-         */
-        "timeZone"?: string;
-        /**
-          * The format for displaying the time.
-         */
-        "timeZoneName"?: 'short' | 'long';
-        "type"?: 'timestamp' | 'date';
-        /**
-          * The format for displaying the weekday.
-         */
-        "weekday"?: 'narrow' | 'short' | 'long';
-        /**
-          * The format for displaying the year.
-         */
-        "year"?: 'numeric' | '2-digit';
-    }
     interface ScFormatInterval {
         "every"?: string;
         "fallback"?: string;
@@ -8779,9 +8791,36 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScInvoiceDetails {
+    }
+    interface ScInvoiceMemo {
+        /**
+          * Memo Label
+         */
+        "text"?: string;
+    }
+    interface ScInvoiceStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: InvoiceStatus;
+    }
     interface ScInvoicesList {
         "allLink"?: string;
         "heading"?: string;
+        "isCustomer"?: boolean;
         /**
           * Query to fetch invoices
          */
@@ -8832,6 +8871,13 @@ declare namespace LocalJSX {
         "label"?: string;
         "loading"?: boolean;
     }
+    interface ScLineItemInvoiceDueDate {
+    }
+    interface ScLineItemInvoiceNumber {
+    }
+    interface ScLineItemInvoiceReceiptDownload {
+        "checkout"?: Checkout;
+    }
     interface ScLineItemShipping {
         /**
           * Label
@@ -8846,6 +8892,12 @@ declare namespace LocalJSX {
         "checkout"?: Checkout;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
+    }
+    interface ScLineItemTrial {
+        /**
+          * The label for the trial item
+         */
+        "label"?: string;
     }
     interface ScLineItems {
         /**
@@ -8976,15 +9028,6 @@ declare namespace LocalJSX {
           * The bump
          */
         "bump"?: Bump;
-        "cdnRoot"?: string;
-        /**
-          * Add line item event
-         */
-        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
-        /**
-          * Remove line item event
-         */
-        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
         /**
           * Should we show the controls
          */
@@ -9061,7 +9104,6 @@ declare namespace LocalJSX {
         "collapsed"?: boolean;
         "label"?: string;
         "loading"?: boolean;
-        "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
         "placeholder"?: string;
     }
     interface ScOrderDetail {
@@ -9315,11 +9357,11 @@ declare namespace LocalJSX {
     }
     interface ScOrderSummary {
         "busy"?: boolean;
-        "closedText"?: string;
         "collapsed"?: boolean;
         "collapsedOnDesktop"?: boolean;
         "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
+        "invoiceSummaryText"?: string;
         /**
           * Show the toggle
          */
@@ -9328,8 +9370,8 @@ declare namespace LocalJSX {
           * Show the toggle
          */
         "onScShow"?: (event: ScOrderSummaryCustomEvent<void>) => void;
-        "openText"?: string;
         "order"?: Checkout;
+        "orderSummaryText"?: string;
     }
     interface ScOrderTaxIdInput {
         /**
@@ -11452,6 +11494,7 @@ declare namespace LocalJSX {
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
+        "sc-checkout-test-complete": ScCheckoutTestComplete;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choice-container": ScChoiceContainer;
@@ -11491,7 +11534,6 @@ declare namespace LocalJSX {
         "sc-form-row": ScFormRow;
         "sc-form-state-provider": ScFormStateProvider;
         "sc-format-bytes": ScFormatBytes;
-        "sc-format-date": ScFormatDate;
         "sc-format-interval": ScFormatInterval;
         "sc-format-number": ScFormatNumber;
         "sc-fulfillment-shipping-status-badge": ScFulfillmentShippingStatusBadge;
@@ -11500,14 +11542,21 @@ declare namespace LocalJSX {
         "sc-icon": ScIcon;
         "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
+        "sc-invoice-details": ScInvoiceDetails;
+        "sc-invoice-memo": ScInvoiceMemo;
+        "sc-invoice-status-badge": ScInvoiceStatusBadge;
         "sc-invoices-list": ScInvoicesList;
         "sc-license": ScLicense;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
+        "sc-line-item-invoice-due-date": ScLineItemInvoiceDueDate;
+        "sc-line-item-invoice-number": ScLineItemInvoiceNumber;
+        "sc-line-item-invoice-receipt-download": ScLineItemInvoiceReceiptDownload;
         "sc-line-item-shipping": ScLineItemShipping;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
+        "sc-line-item-trial": ScLineItemTrial;
         "sc-line-items": ScLineItems;
         "sc-line-items-provider": ScLineItemsProvider;
         "sc-login-form": ScLoginForm;
@@ -11685,6 +11734,11 @@ declare module "@stencil/core" {
              * This component listens for stock requirements and displays a dialog to the user.
              */
             "sc-checkout-stock-alert": LocalJSX.ScCheckoutStockAlert & JSXBase.HTMLAttributes<HTMLScCheckoutStockAlertElement>;
+            /**
+             * This component listens to the order status
+             * and confirms the order when payment is successful.
+             */
+            "sc-checkout-test-complete": LocalJSX.ScCheckoutTestComplete & JSXBase.HTMLAttributes<HTMLScCheckoutTestCompleteElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choice-container": LocalJSX.ScChoiceContainer & JSXBase.HTMLAttributes<HTMLScChoiceContainerElement>;
@@ -11731,7 +11785,6 @@ declare module "@stencil/core" {
              */
             "sc-form-state-provider": LocalJSX.ScFormStateProvider & JSXBase.HTMLAttributes<HTMLScFormStateProviderElement>;
             "sc-format-bytes": LocalJSX.ScFormatBytes & JSXBase.HTMLAttributes<HTMLScFormatBytesElement>;
-            "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
             "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
             "sc-fulfillment-shipping-status-badge": LocalJSX.ScFulfillmentShippingStatusBadge & JSXBase.HTMLAttributes<HTMLScFulfillmentShippingStatusBadgeElement>;
@@ -11740,14 +11793,21 @@ declare module "@stencil/core" {
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
+            "sc-invoice-details": LocalJSX.ScInvoiceDetails & JSXBase.HTMLAttributes<HTMLScInvoiceDetailsElement>;
+            "sc-invoice-memo": LocalJSX.ScInvoiceMemo & JSXBase.HTMLAttributes<HTMLScInvoiceMemoElement>;
+            "sc-invoice-status-badge": LocalJSX.ScInvoiceStatusBadge & JSXBase.HTMLAttributes<HTMLScInvoiceStatusBadgeElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
+            "sc-line-item-invoice-due-date": LocalJSX.ScLineItemInvoiceDueDate & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceDueDateElement>;
+            "sc-line-item-invoice-number": LocalJSX.ScLineItemInvoiceNumber & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceNumberElement>;
+            "sc-line-item-invoice-receipt-download": LocalJSX.ScLineItemInvoiceReceiptDownload & JSXBase.HTMLAttributes<HTMLScLineItemInvoiceReceiptDownloadElement>;
             "sc-line-item-shipping": LocalJSX.ScLineItemShipping & JSXBase.HTMLAttributes<HTMLScLineItemShippingElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
+            "sc-line-item-trial": LocalJSX.ScLineItemTrial & JSXBase.HTMLAttributes<HTMLScLineItemTrialElement>;
             "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;
             "sc-line-items-provider": LocalJSX.ScLineItemsProvider & JSXBase.HTMLAttributes<HTMLScLineItemsProviderElement>;
             "sc-login-form": LocalJSX.ScLoginForm & JSXBase.HTMLAttributes<HTMLScLoginFormElement>;

@@ -75,7 +75,7 @@ export class ScProductLineItem {
   @Prop() editable: boolean = true;
 
   /** The max allowed. */
-  @Prop() max: number = 100;
+  @Prop() max: number;
 
   /** The SKU. */
   @Prop() sku: string = '';
@@ -194,7 +194,10 @@ export class ScProductLineItem {
                 quantity={this.quantity}
                 size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-                aria-label={sprintf(__('Change Quantity - %s %s', 'surecart'), this.name, this.priceName)}
+                aria-label={
+                  /** translators: %1$s: product name, %2$s: product price name */
+                  sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)
+                }
               ></sc-quantity-select>
             )}
           </div>
@@ -211,7 +214,8 @@ export class ScProductLineItem {
                   }
                 }}
                 tabindex="0"
-                aria-label={sprintf(__('Remove Item - %s %s', 'surecart'), this.name, this.priceName)}
+                // translators: Remove Item - Product Name Product Price Name
+                aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
               ></sc-icon>
             ) : (
               <div></div>

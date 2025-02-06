@@ -387,7 +387,7 @@ msgstr "Αποθηκεύτηκε"
 #: app/src/WordPress/Admin/Menus/AdminMenuPageService.php:170
 #: app/src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: app/src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
-#: app/src/WordPress/CompatibilityService.php:151
+#: app/src/WordPress/CompatibilityService.php:157
 #: app/src/WordPress/HealthService.php:32
 #: app/src/WordPress/HealthService.php:73
 #: app/src/WordPress/HealthService.php:86
@@ -406,7 +406,7 @@ msgstr "SureCart"
 
 #: app/src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:223
 #: app/src/Controllers/Admin/Tables/ListTable.php:110
-#: app/src/WordPress/PostTypes/FormPostTypeService.php:334
+#: app/src/WordPress/PostTypes/FormPostTypeService.php:339
 #: views/admin/user-profile.php:10 views/admin/user-profile.php:18
 #: packages/admin/dashboard/components/RecentOrders.js:184
 #: packages/blocks/Blocks/Form/components/Mode.js:12

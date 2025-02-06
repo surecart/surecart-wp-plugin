@@ -119,7 +119,7 @@ export class ScSubscriptionNextPayment {
                 editable={false}
                 removable={false}
                 quantity={item?.quantity}
-                amount={item?.total_amount}
+                amount={item?.subtotal_amount}
                 currency={item?.price?.currency}
                 interval={intervalString(item?.price)}
                 purchasableStatusDisplay={item?.purchasable_status_display}

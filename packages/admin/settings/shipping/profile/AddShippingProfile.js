@@ -45,6 +45,9 @@ export default ({ open, onRequestClose }) => {
 				'shipping-profile',
 				{
 					name: profileName,
+				},
+				{
+					throwOnError: true,
 				}
 			);
 
@@ -71,12 +74,22 @@ export default ({ open, onRequestClose }) => {
 			onScRequestClose={onRequestClose}
 			label={__('Add Shipping Profile', 'surecart')}
 		>
-			<Error error={error} setError={setError} />
+			<Error
+				error={error}
+				setError={setError}
+				css={css`
+					margin-bottom: var(--sc-spacing-small);
+				`}
+			/>
+
 			<ScInput
 				ref={input}
 				required
 				label={__('Name', 'surecart')}
-				help={__('Customers won’t see this.', 'surecart')}
+				help={__(
+					'Add a unique name. Customers won’t see this.',
+					'surecart'
+				)}
 				onScInput={(e) => setProfileName(e.target.value)}
 				name="name"
 			/>

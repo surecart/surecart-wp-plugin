@@ -3,18 +3,7 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
-/**
- * Internal dependencies.
- */
-import {
-	updateCheckoutLineItem,
-	removeCheckoutLineItem,
-	handleCouponApply,
-} from '@surecart/checkout-service';
-import { processCheckoutEvents } from '@surecart/checkout-events';
-
 const { __, sprintf, _n } = wp.i18n;
-const { speak } = wp.a11y;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
 /**
@@ -286,8 +275,21 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Handle checkout change.
 		 */
-		onChangeCheckout() {
+		onChangeCheckout: function* () {
 			const { checkout, oldCheckout } = state;
+
+			// line items have not changed.
+			if (
+				JSON.stringify(checkout?.line_items?.data || []) ===
+				JSON.stringify(oldCheckout?.line_items?.data || [])
+			) {
+				return;
+			}
+
+			const { processCheckoutEvents } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-events'
+			);
 
 			// Trigger events based on the checkout data.
 			processCheckoutEvents(checkout, oldCheckout);
@@ -358,7 +360,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Apply the promotion code.
 		 */
-		applyDiscount: async (e) => {
+		applyDiscount: function* (e) {
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -368,8 +370,19 @@ const { state, actions } = store('surecart/checkout', {
 
 			const { mode, formId } = getContext();
 
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+
 			speak(__('Applying promotion code.', 'surecart'), 'assertive');
-			const checkout = await handleCouponApply(state.promotionCode);
+
+			const { handleCouponApply } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			const checkout = yield* handleCouponApply(state.promotionCode);
 
 			if (checkout) {
 				speak(
@@ -391,11 +404,20 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the promotion code.
 		 */
-		removeDiscount: async () => {
+		removeDiscount: function* () {
 			const context = getContext();
 			const { mode, formId } = context;
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(__('Removing promotion code.', 'surecart'), 'assertive');
-			const checkout = await handleCouponApply(null);
+			const { handleCouponApply } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			const checkout = yield* handleCouponApply(null);
 
 			if (checkout) {
 				state.promotionCode = '';
@@ -482,13 +504,17 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Increase the quantity of the line item.
 		 */
-		onQuantityIncrease: async (e) => {
+		onQuantityIncrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity + 1;
-			await actions.updateLineItem({ quantity });
+			yield actions.updateLineItem({ quantity });
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -502,7 +528,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Decrease the quantity of the line item.
 		 */
-		onQuantityDecrease: async (e) => {
+		onQuantityDecrease: function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -511,7 +537,11 @@ const { state, actions } = store('surecart/checkout', {
 			if (quantity < 1) {
 				return;
 			}
-			await actions.updateLineItem({ quantity });
+			yield actions.updateLineItem({ quantity });
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -525,10 +555,14 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Change the quantity of the line item.
 		 */
-		onQuantityChange: async (e) => {
+		onQuantityChange: function* (e) {
 			const quantity = parseInt(e.target.value || '');
-			await actions.updateLineItem({ quantity });
+			yield* actions.updateLineItem({ quantity });
 
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -542,10 +576,16 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Update the line item.
 		 */
-		updateLineItem: async (data) => {
+		updateLineItem: function* (data) {
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
-			const checkout = await updateCheckoutLineItem({
+
+			const { updateCheckoutLineItem } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			const checkout = yield* updateCheckoutLineItem({
 				id: line_item?.id,
 				data,
 			});
@@ -557,12 +597,21 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the line item.
 		 */
-		removeLineItem: async () => {
+		removeLineItem: function* () {
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
 			speak(__('Removing line item.', 'surecart'), 'assertive');
 
-			const checkout = await removeCheckoutLineItem(line_item?.id);
+			const { removeCheckoutLineItem } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			const checkout = yield* removeCheckoutLineItem(line_item?.id);
 
 			actions.setCheckout(checkout, mode, formId);
 
@@ -575,4 +624,10 @@ const { state, actions } = store('surecart/checkout', {
 	},
 });
 
-addEventListener('scCheckoutUpdated', actions.updateCheckout); // Listen for checkout update on product page.
+addEventListener('scCheckoutUpdated', (e) => {
+	// if document has sc-checkout, bail.
+	if (document.querySelector('sc-checkout')) {
+		return;
+	}
+	actions.updateCheckout(e);
+}); // Listen for checkout update on product page only.

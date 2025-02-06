@@ -3,14 +3,19 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasPurchase;
+use SureCart\Support\TimeDate;
 
 /**
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasPrice, HasPurchase;
+	use HasCustomer;
+	use HasPrice;
+	use HasPurchase;
+	use HasDates;
 
 	/**
 	 * Rest API endpoint
@@ -310,7 +315,7 @@ class Subscription extends Model {
 	 * Preview the upcoming invoice.
 	 *
 	 * @param string $args Arguments
-	 * @return $this|\WP_Error
+	 * @return Period|\WP_Error
 	 */
 	protected function upcomingPeriod( $args = [] ) {
 		if ( ! empty( $args['id'] ) ) {
@@ -341,11 +346,11 @@ class Subscription extends Model {
 			return $upcoming_period;
 		}
 
-		$period = new Period( $upcoming_period );
+		$upcoming_period = new Period( $upcoming_period );
 
 		$this->fireModelEvent( 'previewedUpcomingPeriod' );
 
-		return $period;
+		return $upcoming_period;
 	}
 
 	/**
@@ -413,7 +418,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanBeSwitched() {
 		// updates are not enabled for the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_updates_enabled ) ) {
 			return false;
 		}
 		// already set to canceling.
@@ -469,7 +474,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanBeCanceled() {
 		// updates are not enabled for the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_cancellations_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled ) ) {
 			return false;
 		}
 
@@ -497,7 +502,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanUpdateQuantity() {
 		// quantity changes are not enabled for this account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_quantity_updates_enabled ) ) {
 			return false;
 		}
 		return true;
@@ -514,5 +519,103 @@ class Subscription extends Model {
 		$stat = new Statistic();
 		return $stat->where( $args )->find( 'subscriptions' );
 	}
-}
 
+	/**
+	 * Get the current period start at date.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriodStartAtDateAttribute() {
+		return ! empty( $this->current_period_start_at ) ? TimeDate::formatDate( $this->current_period_start_at ) : '';
+	}
+
+	/**
+	 * Get the current period end at date.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriodEndAtDateAttribute() {
+		return ! empty( $this->current_period_end_at ) ? TimeDate::formatDate( $this->current_period_end_at ) : '';
+	}
+
+	/**
+	 * Get the current period end at date time.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriodEndAtDateTimeAttribute() {
+		return ! empty( $this->current_period_end_at ) ? TimeDate::formatDateAndTime( $this->current_period_end_at ) : '';
+	}
+
+	/**
+	 * Get the start at date.
+	 *
+	 * @return string
+	 */
+	public function getStartAtDateAttribute() {
+		return ! empty( $this->start_at ) ? TimeDate::formatDate( $this->start_at ) : '';
+	}
+
+	/**
+	 * Get the end at date.
+	 *
+	 * @return string
+	 */
+	public function getEndAtDateAttribute() {
+		return ! empty( $this->end_at ) ? TimeDate::formatDate( $this->end_at ) : '';
+	}
+
+	/**
+	 * Get the ended at date.
+	 *
+	 * @return string
+	 */
+	public function getEndedAtDateAttribute() {
+		return ! empty( $this->ended_at ) ? TimeDate::formatDate( $this->ended_at ) : '';
+	}
+
+	/**
+	 * Get the restore at date.
+	 *
+	 * @return string
+	 */
+	public function getRestoreAtDateAttribute() {
+		return ! empty( $this->restore_at ) ? TimeDate::formatDate( $this->restore_at ) : '';
+	}
+
+	/**
+	 * Get the trial end at date.
+	 *
+	 * @return string
+	 */
+	public function getTrialEndAtDateAttribute() {
+		return ! empty( $this->trial_end_at ) ? TimeDate::formatDate( $this->trial_end_at ) : '';
+	}
+
+	/**
+	 * Get the trial end at date time.
+	 *
+	 * @return string
+	 */
+	public function getTrialEndAtAtDateTimeAttribute() {
+		return ! empty( $this->trial_end_at ) ? TimeDate::formatDateAndTime( $this->trial_end_at ) : '';
+	}
+
+	/**
+	 * Get the affiliation expires at date.
+	 *
+	 * @return string
+	 */
+	public function getAffiliationExpiresAtDateAttribute() {
+		return ! empty( $this->affiliation_expires_at ) ? TimeDate::formatDate( $this->affiliation_expires_at ) : '';
+	}
+
+	/**
+	 * Get the affiliation expires at date and time.
+	 *
+	 * @return string
+	 */
+	public function getAffiliationExpiresAtDateTimeAttribute() {
+		return ! empty( $this->affiliation_expires_at ) ? TimeDate::formatDateAndTime( $this->affiliation_expires_at ) : '';
+	}
+}

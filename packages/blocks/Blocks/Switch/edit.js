@@ -65,8 +65,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 			>
 				<RichText
 					tagName="span"
-					aria-label={__('Switch label')}
-					placeholder={__('Add some text...')}
+					aria-label={__('Switch label', 'surecart')}
+					placeholder={__('Add some text...', 'surecart')}
 					value={label}
 					onChange={(label) => setAttributes({ label })}
 				/>
@@ -74,7 +74,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					<RichText
 						tagName="span"
 						slot="description"
-						aria-label={__('Switch label')}
+						aria-label={__('Switch label', 'surecart')}
 						placeholder={__('Enter a description...', 'surecart')}
 						value={description}
 						onChange={(description) =>

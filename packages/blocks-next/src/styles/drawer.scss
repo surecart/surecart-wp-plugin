@@ -52,6 +52,7 @@
 
 	&::backdrop {
 		background-color: var(--sc-color-gray-800);
+		opacity: 0.25;
 		pointer-events: all;
 		animation: backdrop-fade-in
 			var(--sc-drawer-transition-speed, var(--sc-transition-medium)) ease

@@ -1,6 +1,5 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
-import PaginationFooter from '../PaginationFooter';
 import subscriptionItem from './subscription-item';
 
 export default ({

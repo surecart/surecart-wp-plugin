@@ -58,8 +58,25 @@ class TemplatesService {
 	public function bootstrap() {
 		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
 		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
+		add_filter( 'template_include', [ $this, 'fixFSEDashboardTemplate' ] );
 		add_filter( 'body_class', [ $this, 'bodyClass' ] );
 		add_action( 'init', [ $this, 'registerMeta' ] );
+	}
+
+	/**
+	 * Fix the dashboard template.
+	 *
+	 * @param string $template The template.
+	 * @return string
+	 */
+	public function fixFSEDashboardTemplate( $template ) {
+		if ( ! empty( get_the_ID() ) ) {
+			$saved_template = get_post_meta( get_the_ID(), '_wp_page_template', true );
+			if ( strpos( $saved_template, 'template-surecart-dashboard' ) !== false ) {
+				return plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/pages/template-surecart-dashboard.php';
+			}
+		}
+		return $template;
 	}
 
 	/**
@@ -94,6 +111,7 @@ class TemplatesService {
 		foreach ( [
 			'show_logo',
 			'navigation_orders',
+			'navigation_invoices',
 			'navigation_subscriptions',
 			'navigation_downloads',
 			'navigation_billing',
@@ -156,7 +174,7 @@ class TemplatesService {
 		}
 
 		// check for product and use the template id.
-		$product = get_query_var( 'surecart_current_product' );
+		$product = sc_get_product();
 
 		if ( ! empty( $product->metadata->wp_template_id ) ) {
 			$page_template = $product->metadata->wp_template_id;

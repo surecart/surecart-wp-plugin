@@ -56,6 +56,7 @@
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
@@ -115,6 +116,7 @@ graph TD;
   sc-cart-form-submit --> sc-button
   sc-charges-list --> sc-button
   sc-checkout-stock-alert --> sc-button
+  sc-checkout-test-complete --> sc-button
   sc-coupon-form --> sc-button
   sc-customer-details --> sc-button
   sc-customer-edit --> sc-button

@@ -1,9 +1,13 @@
 <?php
+
+use SureCart\Models\Blocks\ProductListBlock;
+use SureCart\Models\Blocks\RelatedProductsBlock;
+
 if ( ! function_exists( 'sc_get_product' ) ) {
 	/**
 	 * Get the product.
 	 *
-	 * @param \WP_Post|int $post The product post.
+	 * @param \WP_Post|int|string $post The product post.
 	 *
 	 * @return \SureCart\Models\Product|null
 	 */
@@ -13,11 +17,54 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 			return get_query_var( 'surecart_current_product' );
 		}
 
-		// make sure to get the post.
-		$post = get_post( $post );
+		// allow getting the product by sc_id.
+		if ( is_string( $post ) ) {
+			$posts = get_posts(
+				[
+					'post_type'  => 'sc_product',
+					'meta_query' => [
+						'key'   => 'sc_id',
+						'value' => $post,
+					],
+				]
+			);
+			$post  = count( $posts ) > 0 ? $posts[0] : get_post( $post );
+		} else {
+			$post = get_post( $post );
+		}
 
-		// return the post object.
-		return ! empty( $post ) ? get_post_meta( $post->ID, 'product', true ) : null;
+		// no post.
+		if ( ! $post ) {
+			return null;
+		}
+
+		// get the product.
+		$product = get_post_meta( $post->ID, 'product', true );
+		if ( empty( $product ) ) {
+			return null;
+		}
+
+		if ( is_array( $product ) ) {
+			$decoded = json_decode( wp_json_encode( $product ) );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// decode the product.
+		if ( is_string( $product ) ) {
+			$decoded = json_decode( $product );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// return the product.
+		return $product;
 	}
 }
 
@@ -159,4 +206,34 @@ function sc_unique_product_page_id( $prefix = '' ) {
 function sc_unique_product_list_id( $prefix = '' ) {
 	static $id_counter = -1;
 	return $prefix . (string) ++$id_counter;
+}
+
+
+/**
+ * Get the product list query.
+ *
+ * @param \WP_Block $block The block.
+ *
+ * @return \WP_Query
+ */
+function sc_product_list_query( $block ) {
+	// we are handling related products here.
+	if ( ! empty( $block->parsed_block['attrs']['query']['related'] ) || ! empty( $block->context['query']['related'] ) ) {
+		$controller = new RelatedProductsBlock( $block );
+		return $controller->query();
+	}
+
+	// we are handling regular product list queries here.
+	$controller = new ProductListBlock( $block );
+	return $controller->query();
+}
+
+/**
+ * Get the product list prefix.
+ *
+ * @return string
+ */
+function sc_product_list_prefix( $block = null ) {
+	$controller = new ProductListBlock( $block );
+	return $controller->urlParams()->getKey();
 }

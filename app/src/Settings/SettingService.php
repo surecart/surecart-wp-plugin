@@ -226,6 +226,15 @@ class SettingService {
 				'default'           => true,
 			]
 		);
+		$this->register(
+			'surecart',
+			'unrestricted_test_mode',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
 	}
 
 	/**
@@ -267,7 +276,7 @@ class SettingService {
 	 * @return mixed
 	 */
 	public function get( $name, $default = false ) {
-		return get_option( "surecart_${name}", $default );
+		return get_option( 'surecart_' . $name, $default );
 	}
 
 	/**

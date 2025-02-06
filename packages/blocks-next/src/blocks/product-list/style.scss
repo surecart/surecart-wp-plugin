@@ -9,3 +9,11 @@
 	margin-right: auto;
 	max-width: 100%;
 }
+
+/** Fix for if themes dequeue default wordpress global styles */
+.is-layout-flex {
+	display: flex;
+}
+.is-layout-grid {
+	display: grid;
+}

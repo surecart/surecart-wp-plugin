@@ -29,7 +29,7 @@ class AccountService {
 	 */
 	public function bootstrap() {
 		// clear account cache when account is updated.
-		\add_action( 'surecart/account_updated', [ $this, 'clearCache' ] );
+		\add_action( 'surecart/account_updated', array( $this, 'clearCache' ) );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class AccountService {
 			// there was an error or the account could not be fetched by other means.
 			if ( is_wp_error( $this->account ) || empty( $this->account->id ) ) {
 				// get the previously working account.
-				$previously_working_account = get_option( 'sc_previous_account' );
+				$previously_working_account = $this->convertArrayToAccount( get_option( 'sc_previous_account' ) );
 
 				// if there was no previously working account, return the error.
 				if ( empty( $previously_working_account ) || empty( $previously_working_account->id ) ) {
@@ -100,7 +100,7 @@ class AccountService {
 			}
 
 			// store the previously working account in case we need a fallback.
-			update_option( 'sc_previous_account', $this->account );
+			update_option( 'sc_previous_account', $this->account->toArray() );
 
 			// set the transient.
 			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
@@ -115,7 +115,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
-		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol', 'shipping_protocol', 'affiliation_protocol' ] )->find();
+		$this->account = Account::with( array( 'brand', 'brand.address', 'customer_portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol', 'shipping_protocol', 'affiliation_protocol' ) )->find();
 		return $this->account;
 	}
 
@@ -145,5 +145,26 @@ class AccountService {
 	 */
 	public function __get( $attribute ) {
 		return $this->account->$attribute ?? null;
+	}
+
+	/**
+	 * Convert an associative array back to an Account model.
+	 *
+	 * @param array $data Associative array.
+	 * @return \SureCart\Models\Account|null
+	 */
+	public function convertArrayToAccount( $data ) {
+		// Handle Backward Compatibility. If it's already an account, return it.
+		if ( $data instanceof Account ) {
+			return $data;
+		}
+
+		if ( empty( $data ) || ! isset( $data['id'] ) ) {
+			return null;
+		}
+
+		$data = json_decode( wp_json_encode( $data ) );
+
+		return new Account( $data );
 	}
 }

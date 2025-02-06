@@ -18,7 +18,7 @@ class Block extends ProductItemListBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$term                        = get_queried_object();
-		$collection                  = get_term_meta( $term->term_id, 'collection', true );
+		$collection                  = sc_get_collection( $term->term_id );
 		$attributes['collection_id'] = $collection->id;
 
 		return \SureCart::block()->productListMigration( $attributes, $this->block )->render();

@@ -8,7 +8,7 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"usesContext": ["surecart/filterTag/name"],
-	"ancestor": ["surecart/product-list-filter-tags"],
+	"ancestor": ["surecart/product-list-filter-tags-template"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {
@@ -24,10 +24,22 @@
 			"text": true,
 			"background": true,
 			"enableContrastChecker": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
 		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/tag.css"],
+	"style": ["surecart-checkbox"],
 	"render": "file:./view.php"
 }

@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-page",
-	"title": "Product Page",
-	"description": "Display product page information.",
+	"title": "Product Form",
+	"description": "Display product form.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"providesContext": {
@@ -17,7 +17,13 @@
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
-		"align": ["wide", "full"]
+		"align": true,
+		"layout": true,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true
+		}
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",

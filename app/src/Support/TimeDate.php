@@ -12,7 +12,7 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function getDateFormat() {
-		$date_format = get_option( 'date_format' );
+		$date_format = get_option( 'date_format', 'F j, Y' );
 		if ( empty( $date_format ) ) {
 			// Return default date format if the option is empty.
 			$date_format = 'F j, Y';
@@ -26,7 +26,7 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function getTimeFormat() {
-		$time_format = get_option( 'time_format' );
+		$time_format = get_option( 'time_format', 'g:i a' );
 		if ( empty( $time_format ) ) {
 			// Return default time format if the option is empty.
 			$time_format = 'g:i a';
@@ -40,7 +40,7 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function formatDate( $timestamp ) {
-		return date_i18n( self::getDateFormat(), $timestamp );
+		return wp_date( self::getDateFormat(), $timestamp );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function formatTime( $timestamp ) {
-		return date_i18n( self::getTimeFormat(), $timestamp );
+		return wp_date( self::getTimeFormat(), $timestamp );
 	}
 
 	/**

@@ -96,7 +96,7 @@ export default ({ upsell, onUpdate }) => {
 					ref={inputRef}
 					label={__('Discount amount', 'surecart')}
 					className="sc-amount-off"
-					currencyCode={scData?.currency}
+					currencyCode={scData?.currency_code}
 					disabled={type === 'percentage'}
 					attribute="amount_off"
 					value={upsell?.amount_off || null}

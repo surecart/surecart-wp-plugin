@@ -12,9 +12,10 @@ import {
 	ScDivider,
 	ScBreadcrumbs,
 	ScBreadcrumb,
-	ScSwitch,
 	ScProvisionalBanner,
 	ScAlert,
+	ScButton,
+	ScIcon,
 } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -65,15 +66,21 @@ export default () => {
 					</div>
 				}
 				end={
-					<ScSwitch
-						checked={!liveMode}
-						onScChange={(e) => {
-							setLiveMode(!e.target.checked);
-						}}
-						reversed
+					<ScFlex
+						alignItems="center"
+						justifyContent="flex-end"
+						gap="1em"
 					>
-						{__('Test Mode', 'surecart')}
-					</ScSwitch>
+						<ScButton
+							href={`${scData?.surecart_app_url}?switch_account_id=${scData?.account_id}`}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<ScIcon name="bar-chart-2" slot="prefix" />
+							{__('View Reports', 'surecart')}
+							<ScIcon name="external-link" slot="suffix" />
+						</ScButton>
+					</ScFlex>
 				}
 			>
 				<Fragment>

@@ -15,6 +15,20 @@ import { useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
+const ALLOWED_ORDER_BY_VALUES = [
+	'author',
+	'date',
+	'id',
+	'include',
+	'modified',
+	'parent',
+	'relevance',
+	'slug',
+	'include_slugs',
+	'title',
+	'menu_order',
+];
+
 const TEMPLATE = [
 	[
 		'core/group',
@@ -23,31 +37,52 @@ const TEMPLATE = [
 		},
 		[
 			[
-				'core/cover',
+				'core/group',
 				{
-					useFeaturedImage: true,
-					dimRatio: 0,
-					isUserOverlayColor: true,
-					focalPoint: { x: 0.5, y: 0.5 },
-					contentPosition: 'top right',
-					isDark: false,
 					style: {
-						dimensions: { aspectRatio: '3/4' },
-						layout: { selfStretch: 'fit', flexSize: null },
-						spacing: { margin: { bottom: '15px' } },
+						color: { background: '#0000000d' },
 						border: { radius: '10px' },
+						spacing: {
+							padding: {
+								top: '0px',
+								bottom: '0px',
+								left: '0px',
+								right: '0px',
+							},
+							margin: { top: '0px', bottom: '0px' },
+						},
 					},
-					layout: { type: 'default' },
+					layout: { type: 'constrained' },
 				},
 				[
 					[
-						'surecart/product-sale-badge',
+						'core/cover',
 						{
+							useFeaturedImage: true,
+							dimRatio: 0,
+							isUserOverlayColor: true,
+							focalPoint: { x: 0.5, y: 0.5 },
+							contentPosition: 'top right',
+							isDark: false,
 							style: {
-								typography: { fontSize: '12px' },
-								border: { radius: '100px' },
+								dimensions: { aspectRatio: '3/4' },
+								layout: { selfStretch: 'fit', flexSize: null },
+								spacing: { margin: { bottom: '15px' } },
+								border: { radius: '10px' },
 							},
+							layout: { type: 'default' },
 						},
+						[
+							[
+								'surecart/product-sale-badge',
+								{
+									style: {
+										typography: { fontSize: '12px' },
+										border: { radius: '100px' },
+									},
+								},
+							],
+						],
 					],
 				],
 			],
@@ -121,7 +156,16 @@ export default ({
 	__unstableLayoutClassNames,
 	setAttributes,
 	context: {
-		query: { perPage, include, taxQuery, postType, offset = 0, search },
+		query: {
+			perPage,
+			include,
+			taxQuery,
+			postType,
+			offset = 0,
+			search,
+			order,
+			orderBy,
+		},
 		'surecart/product-list/type': type,
 	},
 }) => {
@@ -166,13 +210,17 @@ export default ({
 		{
 			page: 1,
 			per_page: perPage || 15,
+			orderby: ALLOWED_ORDER_BY_VALUES.includes(orderBy)
+				? orderBy
+				: 'date',
+			order: order || 'desc',
 			post_status: ['publish'],
 			offset: offset || 0,
 			...(!!Object.keys(builtTaxQuery).length ? builtTaxQuery : {}),
 			...('custom' === type ? { include } : {}),
 			...('featured' === type ? { featured: true } : {}),
-			taxQuery,
-			search,
+			...(taxQuery ? taxQuery : {}),
+			...(search ? { search } : {}),
 		}
 	);
 

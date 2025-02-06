@@ -53,12 +53,15 @@ class ProductPriceChoicesMigrationServiceTest extends SureCartUnitTestCase{
 	}
 
 	/**
-	 * @group
+	 * @group testraj
 	 */
-	public function test_render_price_amount_trial_and_setup_fee(){
-		$this->service->renderPriceAmountTrialAndSetupFee();
+	public function test_render_price_amount_scratch_amount_trial_and_setup_fee(){
+		$this->service->renderPriceAmountScratchAmountTrialAndSetupFee();
 		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fixed","flexSize":"50%"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":{"blockGap":"0.5rem"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/price-amount', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/price-scratch-amount', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/price-interval', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/price-trial', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/price-setup-fee', $this->service->block_html);
 	}

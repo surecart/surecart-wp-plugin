@@ -36,8 +36,8 @@ export default ({ id, onRemove }) => {
 				}
 			`}
 			onClick={onRemove}
-			aria-label="Delete image"
-			title="Delete image"
+			aria-label={__('Delete image', 'surecart')}
+			title={__('Delete image', 'surecart')}
 		>
 			<div
 				css={css`

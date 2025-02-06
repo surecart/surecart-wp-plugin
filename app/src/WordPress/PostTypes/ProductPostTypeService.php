@@ -251,7 +251,8 @@ class ProductPostTypeService {
 	 */
 	public function saveAttachmentFields( $post, $attachment ) {
 		$attachid = $post['ID']; // yes this is actually an array here.
-		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] );
+		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] ?? '' );
+		return $post;
 	}
 
 	/**
@@ -268,7 +269,7 @@ class ProductPostTypeService {
 			'input'    => 'text',
 			'required' => false,
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
-			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
+			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).', 'surecart' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
 		return $form_fields;
 	}
@@ -276,12 +277,17 @@ class ProductPostTypeService {
 	/**
 	 * Sync the product.
 	 *
-	 * @param \SureCart\Models\Product $product The model.
+	 * @param \SureCart\Models\Model $model The model.
 	 *
 	 * @return void
 	 */
-	public function sync( \SureCart\Models\Product $product ) {
-		$product->sync();
+	public function sync( \SureCart\Models\Model $model ) {
+		// check if has method first.
+		if ( ! method_exists( $model, 'sync' ) ) {
+			return;
+		}
+
+		$model->sync();
 	}
 
 	/**
@@ -836,7 +842,7 @@ class ProductPostTypeService {
 			'gallery',
 			array(
 				'get_callback'    => function ( $post ) {
-					$product = get_post_meta( $post['id'], 'product', true );
+					$product = sc_get_product( $post['id'] );
 					return $product->gallery ?? [];
 				},
 				'update_callback' => function ( $value, $post ) {
@@ -906,6 +912,12 @@ class ProductPostTypeService {
 					'terms'    => array_map( 'intval', $legacy_collection_ids ?? array() ),
 				);
 			}
+			// if orderBy is price then order by min_price_amount.
+			if ( ! empty( $request['orderBy'] ) && 'price' === $request['orderBy'] ) {
+				$args['meta_key'] = 'min_price_amount';
+				$args['orderby']  = 'meta_value_num';
+			}
+
 			$args['post_status'] = $request['post_status'] ?? [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
 
 			$args['no_found_rows'] = true;
@@ -996,7 +1008,7 @@ class ProductPostTypeService {
 	 *
 	 * @param string $title The title.
 	 */
-	public function disallowPreTitle( $title ): string {
+	public function disallowPreTitle( $title ) {
 		if ( is_singular( 'sc_product' ) ) {
 			return '';
 		}

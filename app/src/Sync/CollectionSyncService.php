@@ -89,7 +89,7 @@ class CollectionSyncService {
 		}
 
 		// force delete post.
-		return wp_delete_term( $this->term, $this->taxonomy );
+		return wp_delete_term( $this->term->term_id, $this->taxonomy );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class CollectionSyncService {
 
 		update_term_meta( $this->term->term_id, 'sc_account', \SureCart::account()->id );
 		update_term_meta( $this->term->term_id, 'sc_id', $collection->id );
-		update_term_meta( $this->term->term_id, 'collection', $collection );
+		update_term_meta( $this->term->term_id, 'collection', $collection->toArray() );
 
 		return $this->term;
 	}
@@ -168,7 +168,7 @@ class CollectionSyncService {
 
 		update_term_meta( $term['term_id'], 'sc_account', \SureCart::account()->id );
 		update_term_meta( $term['term_id'], 'sc_id', $collection->id );
-		update_term_meta( $term['term_id'], 'collection', $collection );
+		update_term_meta( $term['term_id'], 'collection', $collection->toArray() );
 
 		$this->term = get_term( $term['term_id'], $this->taxonomy );
 

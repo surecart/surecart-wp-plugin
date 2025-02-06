@@ -86,6 +86,11 @@ export default () => {
 		'site',
 		'surecart_dashboard_admin_menu'
 	);
+	const [unrestrictedTestMode, setUnrestrictedTestMode] = useEntityProp(
+		'root',
+		'site',
+		'surecart_unrestricted_test_mode'
+	);
 
 	/**
 	 * Form is submitted.
@@ -180,6 +185,21 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
+				<ScSwitch
+					checked={!unrestrictedTestMode}
+					onScChange={(e) =>
+						setUnrestrictedTestMode(!e.target.checked)
+					}
+				>
+					{__('Test Mode Restricted', 'surecart')}
+					<span slot="description">
+						{__(
+							'Restrict test orders to store administrators only. Disable this setting to allow anyone to complete test orders.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
 				<ScSwitch
 					checked={honeypotEnabled}
 					onScChange={(e) => setHoneypotEnabled(e.target.checked)}

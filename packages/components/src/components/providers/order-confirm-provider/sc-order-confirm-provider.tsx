@@ -118,7 +118,12 @@ export class ScOrderConfirmProvider {
     return (
       <Host>
         <slot />
-        <sc-dialog open={!!this.showSuccessModal} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
+        <sc-dialog
+          open={!!this.showSuccessModal}
+          style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)', '--width': '400px' }}
+          noHeader
+          onScRequestClose={e => e.preventDefault()}
+        >
           <div class="confirm__icon">
             <div class="confirm__icon-container">
               <sc-icon name="check" />

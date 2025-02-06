@@ -134,6 +134,11 @@ class Block extends BaseBlock {
 			return false;
 		}
 
+		// if there is a checkout id in the url, use url persistence.
+		if ( ! empty( $_GET['checkout_id'] ) ) {
+			return 'url';
+		}
+
 		// default checkout form should persist in the browser.
 		if ( \SureCart::forms()->getDefaultId() === (int) $id ) {
 			return 'browser';

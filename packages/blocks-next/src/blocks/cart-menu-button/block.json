@@ -44,6 +44,6 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"style": ["file:./style-index.css"],
-	"editorStyle": ["file:../../styles/choice.css", "file:./index.css"],
+	"editorStyle": ["surecart-choice", "file:./index.css"],
 	"viewScriptModule": ["@surecart/checkout"]
 }

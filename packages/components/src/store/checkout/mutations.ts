@@ -3,11 +3,16 @@ import { clearCheckout as clearSavedCheckout } from '../checkouts/mutations';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
 import { addLineItem, removeLineItem, updateLineItem } from '../../services/session';
+import apiFetch from '../../functions/fetch';
+import { Invoice } from '../../types';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Clear the current checkout.
  */
-export const clearCheckout = () => clearSavedCheckout(state.formId, state.mode);
+export const clearCheckout = () => {
+  clearSavedCheckout(state.formId, state.mode, state.checkout?.id);
+};
 
 /**
  * Lock the checkout (disables input and submission)
@@ -74,6 +79,24 @@ export const addCheckoutLineItem = async data => {
     createErrorNotice(e);
     updateFormState('REJECT');
   }
+};
+
+/**
+ * Track order bump offers.
+ */
+export const trackOrderBump = (bumpId: string) => {
+  if (!state.checkout?.id) {
+    return;
+  }
+
+  apiFetch({
+    path: addQueryArgs(`surecart/v1/checkouts/${state.checkout.id}/offer_bump/${bumpId}`, {
+      t: Date.now(),
+      ...(!!(state?.checkout?.invoice as Invoice)?.id && { type: 'open_invoice' }),
+    }),
+    method: 'POST',
+    keepalive: true, // Important: allow the request to outlive the page.
+  });
 };
 
 window.sc = {

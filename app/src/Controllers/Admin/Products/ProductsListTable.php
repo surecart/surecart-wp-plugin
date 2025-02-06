@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Models\Product;
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 /**
@@ -139,20 +138,23 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array_filter(
-			array(
-				'cb'                  => '<input type="checkbox" />',
-				'name'                => __( 'Name', 'surecart' ),
-				'price'               => __( 'Price', 'surecart' ),
-				'commission_amount'   => __( 'Commission Amount', 'surecart' ),
-				'quantity'            => __( 'Quantity', 'surecart' ),
-				'integrations'        => __( 'Integrations', 'surecart' ),
-				'product_collections' => __( 'Collections', 'surecart' ),
-				'status'              => __( 'Product Page', 'surecart' ),
-				'featured'            => __( 'Featured', 'surecart' ),
-				'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
-				'date'                => __( 'Date', 'surecart' ),
-			)
+		return array_merge(
+			array_filter(
+				array(
+					'cb'                  => '<input type="checkbox" />',
+					'name'                => __( 'Name', 'surecart' ),
+					'price'               => __( 'Price', 'surecart' ),
+					'commission_amount'   => __( 'Commission Amount', 'surecart' ),
+					'quantity'            => __( 'Quantity', 'surecart' ),
+					'integrations'        => __( 'Integrations', 'surecart' ),
+					'product_collections' => __( 'Collections', 'surecart' ),
+					'status'              => __( 'Product Page', 'surecart' ),
+					'featured'            => __( 'Featured', 'surecart' ),
+					'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
+					'date'                => __( 'Created', 'surecart' ),
+				)
+			),
+			parent::get_columns()
 		);
 	}
 
@@ -309,7 +311,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Handle the type column output.
 	 *
-	 * @param \SureCart\Models\Price $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 *
 	 * @return string
 	 */
@@ -381,27 +383,14 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
+	 * Handle the product cataloged date column.
 	 *
-	 * @param \SureCart\Models\Price $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 *
 	 * @return string
 	 */
 	public function column_date( $product ) {
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $product->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->created_at ) )
-		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $product->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
+		return $product->cataloged_at_date_time;
 	}
 
 	/**
@@ -501,6 +490,7 @@ class ProductsListTable extends ListTable {
 	 * Get row actions.
 	 *
 	 * @param \SureCart\Models\Product $product Product model.
+	 * @param string                   $bulk_status Bulk status.
 	 *
 	 * @return array
 	 */
@@ -554,6 +544,9 @@ class ProductsListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $product, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';

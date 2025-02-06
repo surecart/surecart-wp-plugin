@@ -22,6 +22,7 @@
 
  - [sc-customer-details](../customer-details)
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
+ - [sc-form-components-validator](../../providers/form-components-validator)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
@@ -43,6 +44,7 @@
 graph TD;
   sc-customer-details --> sc-divider
   sc-express-payment --> sc-divider
+  sc-form-components-validator --> sc-divider
   sc-invoices-list --> sc-divider
   sc-licenses-list --> sc-divider
   sc-login-form --> sc-divider

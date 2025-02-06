@@ -13,15 +13,16 @@ class ShortcodesService {
 	 *
 	 * @var array
 	 */
-	protected $old_shortcode_block_names = [
-		'surecart/product-buy-button-old',
-		'surecart/product-price-choices',
-		'surecart/product-title-old',
-		'surecart/product-price',
-		'surecart/product-description-old',
-		'surecart/product-variant-choices',
-		'surecart/product-quantity-old',
-		'surecart/product-media-old',
+	protected $old_blocks_by_name = [
+		'surecart/product-collection-tags' => 'surecart/product-collection-tags',
+		'surecart/product-media'           => 'surecart/product-media-old',
+		'surecart/product-title'           => 'surecart/product-title-old',
+		'surecart/product-description'     => 'surecart/product-description-old',
+		'surecart/product-price'           => 'surecart/product-price',
+		'surecart/product-variant-choices' => 'surecart/product-variant-choices',
+		'surecart/product-price-choices'   => 'surecart/product-price-choices',
+		'surecart/product-quantity'        => 'surecart/product-quantity-old',
+		'surecart/product-buy-button'      => 'surecart/product-buy-button-old',
 	];
 
 	/**
@@ -124,21 +125,27 @@ class ShortcodesService {
 
 				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
 
-				if ( in_array( $block_name, $this->old_shortcode_block_names, true ) && ! empty( $shortcode_attrs['id'] ) ) {
-					// translators: %s is the shortcode name.
-					wp_trigger_error( '', sprintf( esc_html__( 'Passing an id to the [%s] shortcode is deprecated. Please use these shortcodes on product pages directly.', 'surecart' ), $name ) );
-						$block = new \WP_Block(
-							[
-								'blockName'    => $block_name,
-								'attrs'        => $shortcode_attrs,
-								'innerContent' => do_shortcode( $content ),
-							]
-						);
-						return $block->render();
-				}
+				// If the block is old block, we need to process it differently.
+				$block = (object) [
+					'parsed_block' => [
+						'blockName' => $block_name,
+						'attrs'     => $shortcode_attrs,
+					],
+				];
 
 				// we need to remove this since this is processed twice for some blocks.
 				add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
+
+				if ( ! empty( $this->old_blocks_by_name[ $block_name ] ) ) {
+					$old_block = \SureCart::block()
+						->productPageBlocksMigration( $block, $this->old_blocks_by_name[ $block_name ] )
+						->maybeRenderOldBlockFromShortcode( $name );
+				}
+
+				if ( ! empty( $old_block ) ) {
+					remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
+					return $old_block;
+				}
 
 				$content = $this->processBlock( $block_name, $shortcode_attrs, $content );
 

@@ -285,9 +285,9 @@ export class ScProductItemList {
 
   renderSortName() {
     switch (this.sort) {
-      case 'created_at:desc':
+      case 'cataloged_at:desc':
         return __('Latest', 'surecart');
-      case 'created_at:asc':
+      case 'cataloged_at:asc':
         return __('Oldest', 'surecart');
       case 'name:asc':
         return __('Alphabetical, A-Z', 'surecart');
@@ -342,10 +342,10 @@ export class ScProductItemList {
                       <sc-visually-hidden> {__('selected.', 'surecart')}</sc-visually-hidden>
                     </sc-button>
                     <sc-menu aria-label={__('Sort Products', 'surecart')}>
-                      <sc-menu-item aria-label={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
+                      <sc-menu-item aria-label={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'cataloged_at:desc')}>
                         {__('Latest', 'surecart')}
                       </sc-menu-item>
-                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} onClick={() => (this.sort = 'created_at:asc')}>
+                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} onClick={() => (this.sort = 'cataloged_at:asc')}>
                         {__('Oldest', 'surecart')}
                       </sc-menu-item>
                       <sc-menu-item aria-label={__('Sort by name, A to Z', 'surecart')} onClick={() => (this.sort = 'name:asc')}>

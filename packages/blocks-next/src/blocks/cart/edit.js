@@ -8,7 +8,7 @@ import {
 	InnerBlocks,
 	useInnerBlocksProps,
 	__experimentalUnitControl as UnitControl,
-	useSetting,
+	useSettings,
 } from '@wordpress/block-editor';
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
@@ -52,7 +52,7 @@ export default ({
 	);
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',

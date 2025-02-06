@@ -2,6 +2,7 @@
 namespace SureCart\Tests;
 
 use SureCart\Models\User;
+use SureCart\Permissions\Models\CheckoutPermissionsController;
 use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -17,7 +18,7 @@ class CheckoutPermissionsTest extends SureCartUnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
-				\SureCart\Permissions\RolesServiceProvider::class,
+				\SureCart\Permissions\PermissionsServiceProvider::class,
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
 				\SureCart\WordPress\PostTypes\PostTypeServiceProvider::class,
 				\SureCart\Activation\ActivationServiceProvider::class,
@@ -51,9 +52,17 @@ class CheckoutPermissionsTest extends SureCartUnitTestCase {
 
 		$user = self::factory()->user->create_and_get();
 
-		$this->assertFalse(user_can($user, 'read_sc_checkouts', 'Users should not be able to read checkouts by default'));
+		$this->assertFalse(user_can($user, 'read_sc_checkouts'), 'Users should not be able to read checkouts by default');
 		$this->assertTrue(user_can($user, 'edit_sc_checkout', 'testid'), 'Anyone can edit a draft checkout.');
-		$this->assertTrue(user_can($user, 'read_sc_checkout', 'testid', 'Anyone can read a draft checkout.'));
+		$this->assertTrue(user_can($user, 'read_sc_checkout', 'testid'), 'Anyone can read a draft checkout.');
+
+		$controller = new CheckoutPermissionsController();
+
+		// trying to update some fields that they shouldn't.
+		$this->assertFalse($controller->edit_sc_checkout( $user, [null, null, 'testid', ['tax_behavior' => 'something'] ], ['edit_sc_checkouts' => false]));
+
+		// test with a user that has the edit_sc_checkouts permission.
+		$this->assertTrue($controller->edit_sc_checkout( $user, [null, null, 'testid', ['tax_behavior' => 'something'] ], ['edit_sc_checkouts' => true]));
 	}
 
 	public function test_edit_and_view_paid_completed_permissions() {

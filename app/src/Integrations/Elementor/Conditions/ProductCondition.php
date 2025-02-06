@@ -34,7 +34,7 @@ class ProductCondition extends \ElementorPro\Modules\ThemeBuilder\Conditions\Con
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product', 'elementor-pro' );
+		return esc_html__( 'Product', 'surecart' );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class ProductCondition extends \ElementorPro\Modules\ThemeBuilder\Conditions\Con
 	 * @return string
 	 */
 	public function get_all_label() {
-		return esc_html__( 'All Products', 'elementor-pro' );
+		return esc_html__( 'All Products', 'surecart' );
 	}
 
 	/**

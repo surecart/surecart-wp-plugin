@@ -48,6 +48,24 @@ describe('sc-form-components-validator', () => {
     page.rootInstance.disconnectedCallback();
   });
 
+  it('appends missing trial line item if required', async () => {
+    const page = await newSpecPage({
+      components: [ScFormComponentsValidator],
+      template: () => (
+        <sc-form-components-validator>
+          <sc-order-summary>
+            <sc-line-item-total total="subtotal"></sc-line-item-total>
+          </sc-order-summary>
+        </sc-form-components-validator>
+      ),
+    });
+    checkoutState.checkout = { trial_amount: 10 } as Checkout;
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback();
+  });
+
   it('appends missing address field with shipping address required', async () => {
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],

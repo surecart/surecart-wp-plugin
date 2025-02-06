@@ -203,8 +203,27 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			return;
 		}
 
+		// price or variant has changed. We need to revoke access to the old one
+		// and provide access to the new one.
+		$previous_variant = $previous->variant ?? null;
+		$previous_price   = $previous->price ?? null;
+		if ( $data->price !== $previous_price || $data->variant !== $previous_variant ) {
+			$previous_purchase = new Purchase(
+				array_merge(
+					$purchase->toArray(),
+					[
+						'price'   => $previous_price,
+						'variant' => $previous_variant,
+					]
+				)
+			);
+			$this->onPurchaseProductUpdated( $purchase, $previous_purchase, $request );
+			return;
+		}
+
 		// The quantity has not changed.
-		if ( (int) $data->quantity === (int) $previous->quantity ) {
+		$previous_quantity = $previous->quantity ?? 1;
+		if ( (int) $data->quantity === $previous_quantity ) {
 			return;
 		}
 

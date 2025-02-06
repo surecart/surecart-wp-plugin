@@ -133,7 +133,7 @@ export default ({
 										<ScMenuItem
 											onClick={() => setDialog('price')}
 										>
-											{__('Change Price', 'surecart')}
+											{__('Change', 'surecart')}
 										</ScMenuItem>
 										{!price?.current_version && (
 											<ScMenuItem

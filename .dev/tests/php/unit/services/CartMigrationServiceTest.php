@@ -6,6 +6,9 @@ use SureCart\BlockLibrary\CartMigrationService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class CartMigrationServiceTest extends SureCartUnitTestCase {
+	/**
+	 * @var CartMigrationService
+	 */
 	public $service = null;
 
 	/**
@@ -33,7 +36,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 					['blockName' => 'surecart/cart-coupon', 'attrs' => ['key3' => 'value3']],
 					['blockName' => 'surecart/cart-bump-line-item', 'attrs' => ['key4' => 'value4']],
 					['blockName' => 'surecart/cart-subtotal', 'attrs' => ['key5' => 'value5']],
-					['blockName' => 'surecart/cart-message', 'attrs' => ['key6' => 'value6']],
+					['blockName' => 'surecart/cart-message', 'attrs' => ['key6' => 'value6','text' => 'value6']],
 					['blockName' => 'surecart/cart-submit', 'attrs' => ['key7' => 'value7']],
 				],
             ],
@@ -73,7 +76,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 					['blockName' => 'surecart/cart-coupon', 'attrs' => ['key3' => 'value3']],
 					['blockName' => 'surecart/cart-bump-line-item', 'attrs' => ['key4' => 'value4']],
 					['blockName' => 'surecart/cart-subtotal', 'attrs' => ['key5' => 'value5']],
-					['blockName' => 'surecart/cart-message', 'attrs' => ['key6' => 'value6']],
+					['blockName' => 'surecart/cart-message', 'attrs' => ['key6' => 'value6','text' => 'value6']],
 					['blockName' => 'surecart/cart-submit', 'attrs' => ['key7' => 'value7']],
                 ],
             ],
@@ -149,7 +152,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_message()
 	{
 		$this->service->renderCartMessage();
-		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-message {"key6":"value6"} /-->',$this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-message {"key6":"value6","text":"value6"} /-->', $this->service->block_html);
 	}
 
 	/**
@@ -172,7 +175,7 @@ class CartMigrationServiceTest extends SureCartUnitTestCase {
 		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-coupon {"key3":"value3"} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-bump-line-item {"key4":"value4"} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-subtotal {"key5":"value5"} /-->', $this->service->block_html);
-		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-message {"key6":"value6"} /-->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-message {"key6":"value6","text":"value6"} /-->', $this->service->block_html);
 		$this->assertStringContainsString('<!-- wp:surecart/slide-out-cart-submit {"key7":"value7"} /-->', $this->service->block_html);
 	}
 }

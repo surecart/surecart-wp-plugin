@@ -18,6 +18,8 @@ import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
 import ConfirmStoreEmail from './components/ConfirmStoreEmail';
 import { ScIcon, ScButton } from '@surecart/components-react';
+import Connect from './components/Connect';
+import ConnectDone from './components/ConnectDone';
 
 let confettiIntervalId;
 let confettiTimerId;
@@ -101,6 +103,11 @@ export default () => {
 				'store'
 			);
 
+			if (!selectedTemplate) {
+				handleStepChange('forward');
+				return;
+			}
+
 			// check seed status for up to 1 minute.
 			let hasSeeded = false;
 			let attempts = 0;
@@ -153,7 +160,12 @@ export default () => {
 	function renderContent(step) {
 		switch (step) {
 			case 0:
-				return <InitialSetup handleStepChange={handleStepChange} />;
+				return (
+					<InitialSetup
+						handleStepChange={handleStepChange}
+						setCurrentStep={setCurrentStep}
+					/>
+				);
 			case 1:
 				return (
 					<ConfirmStoreDetails
@@ -229,13 +241,37 @@ export default () => {
 						}
 					/>
 				);
+			case 6:
+				return <Connect setCurrentStep={setCurrentStep} />;
+			case 7:
+				return (
+					<ConnectDone
+						button={
+							<ScButton
+								type="primary"
+								size="large"
+								href={scData.success_url}
+								css={css`
+									min-width: 225px;
+								`}
+							>
+								<ScIcon
+									name="shopping-bag"
+									slot="prefix"
+									style={{ fontSize: '18px' }}
+								/>
+								{__('View My Products', 'surecart')}
+							</ScButton>
+						}
+					/>
+				);
 			default:
 				break;
 		}
 	}
 
 	useEffect(() => {
-		if (currentStep !== 5) return;
+		if (![5, 7].includes(currentStep)) return;
 		startAnimation();
 
 		confettiTimerId = setTimeout(
@@ -265,7 +301,7 @@ export default () => {
 					left: 0,
 				}}
 			/>
-			{![0, 5].includes(currentStep) && <ConfirmExit />}
+			{![0, 5, 7].includes(currentStep) && <ConfirmExit />}
 		</>
 	);
 };

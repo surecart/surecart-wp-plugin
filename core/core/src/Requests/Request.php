@@ -21,7 +21,7 @@ class Request extends ServerRequest implements RequestInterface {
 	 * {@inheritDoc}
 	 * @return static
 	 */
-	public static function fromGlobals() {
+	public static function fromGlobals(): \SureCartVendors\Psr\Http\Message\ServerRequestInterface {
 		$request = parent::fromGlobals();
 		$new     = new self(
 			$request->getMethod(),
@@ -74,7 +74,7 @@ class Request extends ServerRequest implements RequestInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getMethod() {
+	public function getMethod(): string {
 		$method = parent::getMethod();
 
 		if ( $method === 'POST' ) {
@@ -87,63 +87,63 @@ class Request extends ServerRequest implements RequestInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isGet() {
+	public function isGet(): bool {
 		return $this->getMethod() === 'GET';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isHead() {
+	public function isHead(): bool {
 		return $this->getMethod() === 'HEAD';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isPost() {
+	public function isPost(): bool {
 		return $this->getMethod() === 'POST';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isPut() {
+	public function isPut(): bool {
 		return $this->getMethod() === 'PUT';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isPatch() {
+	public function isPatch(): bool {
 		return $this->getMethod() === 'PATCH';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isDelete() {
+	public function isDelete(): bool {
 		return $this->getMethod() === 'DELETE';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isOptions() {
+	public function isOptions(): bool {
 		return $this->getMethod() === 'OPTIONS';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isReadVerb() {
+	public function isReadVerb(): bool {
 		return in_array( $this->getMethod(), [ 'GET', 'HEAD', 'OPTIONS' ] );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isAjax() {
+	public function isAjax(): bool {
 		return strtolower( $this->getHeaderLine( 'X-Requested-With' ) ) === 'xmlhttprequest';
 	}
 
@@ -235,7 +235,7 @@ class Request extends ServerRequest implements RequestInterface {
 	public function noCache() {
 		add_filter(
 			'nocache_headers',
-			function( $headers ) {
+			function ( $headers ) {
 				$headers['Cache-Control'] = 'no-cache, must-revalidate, max-age=0, no-store';
 				return $headers;
 			},

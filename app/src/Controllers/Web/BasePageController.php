@@ -148,7 +148,7 @@ abstract class BasePageController {
 	 *
 	 * @return string
 	 */
-	public function disallowPreTitle( $title ): string {
+	public function disallowPreTitle( $title ) {
 		if ( ! empty( $this->model->id ) ) {
 			return '';
 		}

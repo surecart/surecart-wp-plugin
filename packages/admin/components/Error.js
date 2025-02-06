@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { ScAlert } from '@surecart/components-react';
+import { createInterpolateElement } from '@wordpress/element';
 
 export default ({
 	error,
@@ -16,6 +17,21 @@ export default ({
 	if (typeof error === 'string') {
 		error = { message: error };
 	}
+
+	const invalidJSONErrorMessage = createInterpolateElement(
+		__(
+			'Please ensure that your site is not in debug mode as this may interfere with API responses. <a>More Information</a>'
+		),
+		{
+			a: (
+				<a
+					href="https://surecart.com/docs/is-not-a-valid-json-response/"
+					target="_blank"
+					rel="noopener noreferrer"
+				/>
+			),
+		}
+	);
 
 	return (
 		<ScAlert
@@ -37,6 +53,7 @@ export default ({
 					))}
 				</ul>
 			)}
+			{error?.code === 'invalid_json' && invalidJSONErrorMessage}
 			{children}
 		</ScAlert>
 	);

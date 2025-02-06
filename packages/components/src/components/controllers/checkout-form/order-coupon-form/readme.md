@@ -16,13 +16,6 @@
 | `placeholder` | `placeholder` |             | `string`  | `undefined` |
 
 
-## Events
-
-| Event           | Description | Type                  |
-| --------------- | ----------- | --------------------- |
-| `scApplyCoupon` |             | `CustomEvent<string>` |
-
-
 ## Dependencies
 
 ### Depends on

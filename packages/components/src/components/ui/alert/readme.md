@@ -70,6 +70,7 @@ Type: `Promise<void>`
  - [sc-checkout](../../controllers/checkout-form/checkout)
  - [sc-checkout-form-errors](../../controllers/checkout-form/checkout-form-errors)
  - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-dashboard-module](../dashboard-module)
@@ -107,6 +108,7 @@ graph TD;
   sc-checkout --> sc-alert
   sc-checkout-form-errors --> sc-alert
   sc-checkout-mollie-payment --> sc-alert
+  sc-checkout-test-complete --> sc-alert
   sc-coupon-form --> sc-alert
   sc-custom-order-price-input --> sc-alert
   sc-dashboard-module --> sc-alert

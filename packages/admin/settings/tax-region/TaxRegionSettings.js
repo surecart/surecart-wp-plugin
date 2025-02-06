@@ -220,6 +220,9 @@ export default () => {
 									{__('Tax Rate', 'surecart')}
 								</ScTableCell>
 							)}
+							<ScTableCell slot="head">
+								{__('Tax Label', 'surecart')}
+							</ScTableCell>
 							<ScTableCell
 								slot="head"
 								style={{ textAlign: 'right' }}
@@ -253,13 +256,7 @@ export default () => {
 											</ScTableCell>
 										)}
 										<ScTableCell>
-											<sc-format-date
-												type="timestamp"
-												month="short"
-												day="numeric"
-												year="numeric"
-												date={registration?.updated_at}
-											></sc-format-date>
+											{registration?.updated_at_date}
 										</ScTableCell>
 									</ScTableRow>
 								);

@@ -33,8 +33,8 @@ export default ({ attributes }) => {
 			</InspectorControls>
 			<ScOrderConfirmationCustomer {...blockProps}>
 				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
 					value={title}
 					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting

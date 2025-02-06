@@ -7,27 +7,25 @@
 
 ## Properties
 
-| Property  | Attribute  | Description             | Type                                  | Default                                |
-| --------- | ---------- | ----------------------- | ------------------------------------- | -------------------------------------- |
-| `allLink` | `all-link` |                         | `string`                              | `undefined`                            |
-| `heading` | `heading`  |                         | `string`                              | `undefined`                            |
-| `query`   | --         | Query to fetch invoices | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
+| Property     | Attribute     | Description             | Type                                  | Default                                |
+| ------------ | ------------- | ----------------------- | ------------------------------------- | -------------------------------------- |
+| `allLink`    | `all-link`    |                         | `string`                              | `undefined`                            |
+| `heading`    | `heading`     |                         | `string`                              | `undefined`                            |
+| `isCustomer` | `is-customer` |                         | `boolean`                             | `undefined`                            |
+| `query`      | --            | Query to fetch invoices | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [sc-tag](../../../ui/tag)
-- [sc-order-status-badge](../../../ui/order-status-badge)
 - [sc-card](../../../ui/card)
 - [sc-stacked-list](../../../ui/stacked-list)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-divider](../../../ui/divider)
 - [sc-empty](../../../ui/empty)
-- [sc-format-date](../../../util/format-date)
-- [sc-text](../../../ui/text)
+- [sc-invoice-status-badge](../../../ui/invoice-status-badge)
 - [sc-format-number](../../../util/format-number)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
@@ -38,24 +36,21 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-invoices-list --> sc-tag
-  sc-invoices-list --> sc-order-status-badge
   sc-invoices-list --> sc-card
   sc-invoices-list --> sc-stacked-list
   sc-invoices-list --> sc-stacked-list-row
   sc-invoices-list --> sc-skeleton
   sc-invoices-list --> sc-divider
   sc-invoices-list --> sc-empty
-  sc-invoices-list --> sc-format-date
-  sc-invoices-list --> sc-text
+  sc-invoices-list --> sc-invoice-status-badge
   sc-invoices-list --> sc-format-number
   sc-invoices-list --> sc-dashboard-module
   sc-invoices-list --> sc-button
   sc-invoices-list --> sc-icon
   sc-invoices-list --> sc-pagination
   sc-invoices-list --> sc-block-ui
-  sc-order-status-badge --> sc-tag
   sc-empty --> sc-icon
+  sc-invoice-status-badge --> sc-tag
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-button --> sc-spinner

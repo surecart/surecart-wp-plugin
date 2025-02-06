@@ -32,7 +32,7 @@ class Block extends BaseBlock {
 				return '';
 			}
 
-			$collection = get_term_meta( $term->term_id, 'collection', true );
+			$collection = sc_get_collection( $term->term_id );
 
 			if ( empty( $collection ) ) {
 				return '';

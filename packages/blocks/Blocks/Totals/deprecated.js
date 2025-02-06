@@ -95,4 +95,47 @@ export default [
 			);
 		},
 	},
+
+	{
+		attributes: {
+			collapsible: {
+				type: 'boolean',
+			},
+			collapsedOnDesktop: {
+				type: 'boolean',
+			},
+			closed_text: {
+				type: 'string',
+				default: 'Show Summary',
+			},
+			open_text: {
+				type: 'string',
+				default: 'Summary',
+			},
+			collapsedOnMobile: {
+				type: 'boolean',
+				default: false,
+			},
+		},
+		save({ attributes }) {
+			const {
+				collapsedOnDesktop,
+				collapsible,
+				closed_text,
+				open_text,
+				collapsedOnMobile,
+			} = attributes;
+			return (
+				<sc-order-summary
+					collapsible={collapsible ? '1' : false}
+					collapsed-on-desktop={collapsedOnDesktop ? '1' : false}
+					closed-text={closed_text}
+					open-text={open_text}
+					collapsed-on-mobile={collapsedOnMobile ? '1' : false}
+				>
+					<InnerBlocks.Content />
+				</sc-order-summary>
+			);
+		},
+	},
 ];

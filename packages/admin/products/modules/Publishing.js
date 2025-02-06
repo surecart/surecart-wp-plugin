@@ -9,6 +9,7 @@ import SelectTemplatePart from '../components/SelectTemplatePart';
 import Status from '../components/Status';
 import Url from '../components/Url';
 import { ScSwitch } from '@surecart/components-react';
+import CatalogedAt from '../components/CatalogedAt';
 
 export default ({ product, updateProduct, post, loading }) => {
 	const tag = document.querySelector('#wp-admin-bar-view-product-page');
@@ -64,7 +65,12 @@ export default ({ product, updateProduct, post, loading }) => {
 				)
 			}
 		>
-			<div>
+			<div
+				css={css`
+					margin-right: -15px;
+					width: auto;
+				`}
+			>
 				<Availability product={product} updateProduct={updateProduct} />
 				<Status product={product} updateProduct={updateProduct} />
 				{scData?.is_block_theme ? (
@@ -81,6 +87,7 @@ export default ({ product, updateProduct, post, loading }) => {
 					/>
 				)}
 				<Url product={product} updateProduct={updateProduct} />
+				<CatalogedAt product={product} updateProduct={updateProduct} />
 			</div>
 		</Box>
 	);

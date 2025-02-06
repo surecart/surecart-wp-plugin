@@ -63,5 +63,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:../../styles/tag.css", "file:./style-index.css"]
+	"style": ["surecart-tag", "file:./style-index.css"]
 }

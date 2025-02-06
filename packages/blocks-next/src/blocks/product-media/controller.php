@@ -2,7 +2,6 @@
 
 $product = sc_get_product();
 
-
 $gallery        = $product->gallery ?? [];
 $featured_image = $gallery[0] ?? null;
 
@@ -18,10 +17,19 @@ if ( empty( $gallery ) ) {
 	return ! empty( $attributes['hide_empty'] ) ? '' : 'file:./empty.php';
 }
 
+if ( ! empty( $attributes['lightbox'] ) ) {
+	wp_enqueue_style( 'surecart-lightbox' );
+	wp_enqueue_script_module( 'surecart/lightbox' );
+}
+
 // handle image.
 if ( count( $gallery ) === 1 ) {
 	return 'file:./image.php';
 }
+
+// only enqueue if we are needing a slideshow.
+wp_enqueue_style( 'surecart-image-slider' );
+wp_enqueue_script_module( '@surecart/image-slider' );
 
 // handle slideshow.
 $slider_options = array(

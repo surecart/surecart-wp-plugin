@@ -82,7 +82,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 				) : (
 					<ScPriceInput
 						className="sc-amount-off"
-						currencyCode={coupon?.currency}
+						currencyCode={coupon?.currency || scData?.currency_code}
 						disabled={type === 'percentage'}
 						attribute="amount_off"
 						label={__('Amount Off', 'surecart')}

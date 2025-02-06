@@ -1,9 +1,10 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch, Fragment } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch, Fragment, Method, Event, EventEmitter } from '@stencil/core';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { getHumanDiscount, getHumanDiscountRedeemableStatus } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
+import { state as checkoutState } from '../../../store/checkout';
 
 /**
  * @part base - The elements base wrapper.
@@ -32,6 +33,7 @@ import { DiscountResponse } from '../../../types';
   shadow: true,
 })
 export class ScCouponForm {
+  @Element() el: HTMLScCouponFormElement;
   private input: HTMLScInputElement;
   private couponTag: HTMLScTagElement;
   private addCouponTrigger: HTMLElement;
@@ -80,25 +82,15 @@ export class ScCouponForm {
   /** The text for apply button */
   @Prop({ reflect: true }) buttonText: string;
 
+  /** Is the form editable */
+  @Prop() editable: boolean = true;
+
   /** Auto focus the input when opened. */
   @Watch('open')
   handleOpenChange(val) {
     if (val) {
       setTimeout(() => this.input.triggerFocus(), 50);
     }
-  }
-  // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
-  @Watch('discount')
-  handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
-    if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
-
-    setTimeout(() => {
-      if (this?.discount?.promotion?.code) {
-        (this.couponTag.shadowRoot.querySelector('*') as any).focus();
-      } else {
-        this.addCouponTrigger.focus();
-      }
-    }, 50);
   }
 
   /** Close it when blurred and no value. */
@@ -118,7 +110,7 @@ export class ScCouponForm {
 
   /** Apply the coupon. */
   applyCoupon() {
-    this.scApplyCoupon.emit(this.input.value.toUpperCase());
+    this.scApplyCoupon.emit(this.value);
   }
 
   handleKeyDown(e) {
@@ -147,7 +139,28 @@ export class ScCouponForm {
     }
   }
 
+  /** Focus the input. */
+  @Method()
+  async triggerFocus() {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+
+    if (this?.discount?.promotion?.code) {
+      (this.couponTag.shadowRoot.querySelector('*') as HTMLElement)?.focus();
+    } else if (this.addCouponTrigger) {
+      this.addCouponTrigger.focus();
+    }
+  }
+
+  renderTrialText() {
+    if (this.discount?.coupon?.duration === 'once') {
+      return __('Applies on first payment', 'surecart');
+    }
+    return __('Starting on first payment', 'surecart');
+  }
+
   render() {
+    const isFreeTrial = !!checkoutState?.checkout?.trial_amount && !checkoutState?.checkout?.amount_due;
+
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
     }
@@ -163,12 +176,14 @@ export class ScCouponForm {
               exportparts="base:coupon-tag"
               type={'redeemable' === this.discount?.redeemable_status ? 'success' : 'warning'}
               class="coupon-tag"
-              clearable
+              clearable={this.editable}
               onScClear={() => {
+                if (!this.editable) return;
                 this.scApplyCoupon.emit(null);
                 this.open = false;
               }}
               onKeyDown={e => {
+                if (!this.editable) return;
                 if (e.key === 'Enter' || e.key === 'Escape') {
                   speak(__('Coupon was removed.', 'surecart'), 'assertive');
                   this.scApplyCoupon.emit(null);
@@ -191,8 +206,8 @@ export class ScCouponForm {
                   {this.translateHumanDiscountWithDuration(humanDiscount)}
                 </span>
               )}
-              <span slot="price">
-                <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
+              <span slot={isFreeTrial ? 'price-description' : 'price'}>
+                {isFreeTrial ? this.renderTrialText() : <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>}
               </span>
             </Fragment>
           ) : (

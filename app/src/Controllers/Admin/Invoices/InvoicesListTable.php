@@ -2,8 +2,7 @@
 
 namespace SureCart\Controllers\Admin\Invoices;
 
-use SureCart\Support\Currency;
-use SureCart\Support\TimeDate;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Invoice;
 
@@ -11,12 +10,12 @@ use SureCart\Models\Invoice;
  * Create a new table class that will extend the WP_List_Table
  */
 class InvoicesListTable extends ListTable {
-	public $checkbox = true;
+	use HasModeFilter;
 
 	/**
-	 * Prepare the items for the table to process
+	 * Prepare the items for the table to process.
 	 *
-	 * @return Void
+	 * @return void
 	 */
 	public function prepare_items() {
 		$columns  = $this->get_columns();
@@ -34,100 +33,92 @@ class InvoicesListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'orders' ),
+				'per_page'    => $this->get_items_per_page( 'invoices' ),
 			]
 		);
 
 		$this->items = $query->data;
 	}
 
-	public function search() {
-		?>
-	<form class="search-form"
-		method="get">
-		<?php $this->search_box( __( 'Search Invoices', 'surecart' ), 'order' ); ?>
-		<input type="hidden"
-			name="id"
-			value="1" />
-	</form>
-		<?php
-	}
-
 	/**
-	 * Override the parent columns method. Defines the columns to use in your listing table
+	 * Override the parent columns method. Defines the columns to use in your listing table.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
-		return [
-			'invoice' => __( 'Invoice', 'surecart' ),
-			'date'    => __( 'Date', 'surecart' ),
-			'status'  => __( 'Status', 'surecart' ),
-			'method'  => __( 'Method', 'surecart' ),
-			'total'   => __( 'Total', 'surecart' ),
-			'mode'    => '',
-		];
-	}
-
-	/**
-	 * Displays the checkbox column.
-	 *
-	 * @param Product $product The product model.
-	 */
-	public function column_cb( $product ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
-			<?php
+		return array_merge(
+			[
+				'invoice'    => __( 'Invoice', 'surecart' ),
+				'issue_date' => __( 'Issued', 'surecart' ),
+				'due_date'   => __( 'Due', 'surecart' ),
+				'status'     => __( 'Status', 'surecart' ),
+				'customer'   => __( 'Customer', 'surecart' ),
+				'method'     => __( 'Method', 'surecart' ),
+				'total'      => __( 'Total', 'surecart' ),
+				'created'    => __( 'Created', 'surecart' ),
+				'mode'       => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
 	 * Show the payment method for the invoice.
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Invoice model.
+	 * @param Invoice $invoice Invoice model.
 	 *
 	 * @return string
 	 */
 	public function column_method( $invoice ) {
-		if ( ! empty( $invoice->payment_intent->processor_type ) && 'paypal' === $invoice->payment_intent->processor_type ) {
-			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
+		if ( isset( $invoice->checkout->manual_payment_method->name ) ) {
+			return '<sc-tag>' . $invoice->checkout->manual_payment_method->name . '</sc-tag>';
 		}
-		if ( ! empty( $invoice->payment_intent->payment_method->card->brand ) ) {
-			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $invoice->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
-		}
-
-		return $invoice->payment_intent->processor_type ?? '-';
+		ob_start();
+		?>
+			<sc-payment-method id="sc-method-<?php echo esc_attr( $invoice->id ); ?>"></sc-payment-method>
+			<script>
+				document.getElementById('sc-method-<?php echo esc_attr( $invoice->id ); ?>').paymentMethod = <?php echo wp_json_encode( $invoice->checkout->payment_method ); ?>;
+			</script>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
-	 * Define which columns are hidden
+	 * Define which columns are hidden.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_hidden_columns() {
 		return array();
 	}
 
 	/**
-	 * Define the sortable columns
+	 * Get the table data.
 	 *
-	 * @return Array
-	 */
-	public function get_sortable_columns() {
-		return array( 'title' => array( 'title', false ) );
-	}
-
-	/**
-	 * Get the table data
-	 *
-	 * @return Array
+	 * @return object
 	 */
 	protected function table_data() {
-		return Invoice::where(
-			[
-				'status' => $this->getStatus(),
-			]
-		)->with( [ 'charge', 'customer', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
+		$status = $this->getStatus();
+		$mode   = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$where  = array(
+			'query' => $this->get_search_query(),
+		);
+
+		if ( ! empty( $mode ) ) {
+			$where['live_mode'] = 'live' === $mode;
+		}
+
+		if ( $status ) {
+			$where['status'] = [ $status ];
+		}
+
+		// Check if there is any sc_collection in the query, then filter it.
+		if ( ! empty( $_GET['sc_customer'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$where['customer_ids'] = array( sanitize_text_field( wp_unslash( $_GET['sc_customer'] ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+
+		return Invoice::where( $where )
+		->with( [ 'charge', 'checkout', 'checkout.order', 'checkout.charge', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.customer', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'invoices' ),
@@ -137,18 +128,52 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Get the archive query status.
+	 * Generates views links.
 	 *
-	 * @return boolean|null
+	 * @return array
+	 */
+	protected function get_views() {
+		$statuses = [
+			'all'   => __( 'All', 'surecart' ),
+			'paid'  => __( 'Paid', 'surecart' ),
+			'draft' => __( 'Draft', 'surecart' ),
+			'open'  => __( 'Open', 'surecart' ),
+		];
+
+		$link         = \SureCart::getUrl()->index( 'invoices' );
+		$status_links = [];
+
+		foreach ( $statuses as $status => $label ) {
+			$current_link_attributes = '';
+
+			if ( ! empty( $_GET['status'] ) ) {
+				if ( $status === $_GET['status'] ) {
+					$current_link_attributes = ' class="current" aria-current="page"';
+				}
+			} elseif ( 'all' === $status ) {
+				$current_link_attributes = ' class="current" aria-current="page"';
+			}
+
+			$link = add_query_arg( 'status', $status, $link );
+
+			if ( isset( $_GET['live_mode'] ) ) {
+				$link = add_query_arg( 'live_mode', sanitize_text_field( wp_unslash( $_GET['live_mode'] ) ), $link );
+			}
+
+			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
+		}
+
+		// filter links.
+		return apply_filters( 'sc_invoice_status_links', $status_links );
+	}
+
+	/**
+	 * Get the query status.
+	 *
+	 * @return array
 	 */
 	public function getStatus() {
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'paid' ) );
-		if ( 'paid' === $status ) {
-			return [ 'paid', 'completed' ];
-		}
-		if ( 'incomplete' === $status ) {
-			return [ 'finalized' ];
-		}
+		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? 'all' ) );
 		if ( 'all' === $status ) {
 			return [];
 		}
@@ -156,77 +181,168 @@ class InvoicesListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the total column
+	 * Handle the total column.
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Invoice Model.
+	 * @param Invoice $invoice Invoice Model.
 	 *
 	 * @return string
 	 */
 	public function column_total( $invoice ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $invoice->currency ) ) . '" value="' . (float) $invoice->amount_due . '"></sc-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $invoice->checkout->currency ?? 'u' ) ) . '" value="' . (float) $invoice->checkout->total_amount . '"></sc-format-number>';
 	}
 
 	/**
-	 * Handle the total column
+	 * Handle invoice due date.
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Invoice model.
+	 * @param Invoice $invoice Invoice model.
 	 *
 	 * @return string
 	 */
-	public function column_date( $invoice ) {
-		return '<sc-format-date date="' . (int) $invoice->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
+	public function column_due_date( $invoice ) {
+		return $invoice->due_date_date ?? '-';
 	}
 
 	/**
-	 * Render the "Redeem By"
+	 * Handle invoice issue date.
 	 *
-	 * @param string $timestamp Redeem timestamp.
+	 * @param Invoice $invoice Invoice model.
+	 *
 	 * @return string
 	 */
-	public function get_expiration_string( $timestamp = '' ) {
-		if ( ! $timestamp ) {
-			return '';
+	public function column_issue_date( $invoice ) {
+		return $invoice->issue_date_date ?? '-';
+	}
+
+	/**
+	 * Show customer as tag.
+	 *
+	 * @param Invoice $invoice The invoice model.
+	 */
+	public function column_customer( $invoice ) {
+		$customer = $invoice->checkout->customer ?? null;
+
+		if ( empty( $customer ) ) {
+			return '-';
 		}
-		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
+
+		$url = \SureCart::getUrl()->edit( 'customer', $customer->id );
+		return '<a href="' . esc_url( $url ) . '">' . ( ! empty( $customer->name ) ? $customer->name : $customer->email ) . '</a>';
 	}
 
 	/**
-	 * Handle the status
+	 * Handle the status.
 	 *
-	 * @param \SureCart\Models\Invoice $invoice Order Model.
+	 * @param Invoice $invoice Invoice Model.
 	 *
 	 * @return string
 	 */
 	public function column_status( $invoice ) {
-		if ( ! empty( $invoice->charge->fully_refunded ) ) {
+		if ( ! empty( $invoice->checkout->charge->fully_refunded ) ) {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
-		return '<sc-order-status-badge status="' . esc_attr( $invoice->status ) . '"></sc-order-status-badge>';
+		return '<sc-invoice-status-badge status="' . esc_attr( $invoice->status ) . '"></sc-invoice-status-badge>';
 	}
 
 	/**
-	 * Name of the coupon
+	 * Handle Invoice column.
 	 *
-	 * @param \SureCart\Models\Promotion $promotion Promotion model.
+	 * @param Invoice $invoice Invoice model.
 	 *
 	 * @return string
 	 */
 	public function column_invoice( $invoice ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
-			<?php echo esc_html( sanitize_text_field( $invoice->number ?? $invoice->id ) ); ?>
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Invoice', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
+			<?php echo ! empty( $invoice->checkout->order->number ) ? '#' . esc_html( $invoice->checkout->order->number ) : esc_html_e( '(draft)', 'surecart' ); ?>
 		</a>
-		<br />
-		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
-			<?php
-			// translators: Customer name.
-			echo esc_html( $invoice->customer->name ?? $invoice->customer->email );
-			?>
-		</a>
+
 		<?php
+		echo wp_kses_post(
+			$this->row_actions(
+				array_filter(
+					[
+						'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ) . '" aria-label="' . esc_attr__( 'Edit Invoice', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+						'view' => 'open' === $invoice->status && ! empty( $invoice->checkout_url ) ? '<a href="' . esc_url( $invoice->checkout_url ) . '" aria-label="' . esc_attr__( 'View Payment Page', 'surecart' ) . '">' . __( 'View Payment Page', 'surecart' ) . '</a>' : null,
+					]
+				),
+			)
+		);
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Handle the mode column.
+	 *
+	 * @param Invoice $invoice Invoice model.
+	 *
+	 * @return string
+	 */
+	public function column_mode( $invoice ) {
+		return empty( $invoice->checkout->live_mode ) ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
+	}
+
+	/**
+	 * Displays extra table navigation.
+	 *
+	 * @param string $which Top or bottom placement.
+	 */
+	protected function extra_tablenav( $which ) {
+		?>
+		<input type="hidden" name="page" value="sc-invoices" />
+
+		<?php if ( ! empty( $_GET['status'] ) ) : ?>
+			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
+		<?php endif; ?>
+
+		<?php if ( ! empty( $_GET['live_mode'] ) ) : ?>
+			<input type="hidden" name="live_mode" value="<?php echo esc_attr( $_GET['live_mode'] ); ?>" />
+		<?php endif; ?>
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->mode_dropdown();
+
+			/**
+			 * Fires before the Filter button on the Posts and Pages list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @since 2.1.0
+			 * @since 4.4.0 The `$post_type` parameter was added.
+			 * @since 4.6.0 The `$which` parameter was added.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_invoices', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter' ), '', 'filter_action', false, array( 'id' => 'filter-by-fulfillment-submit' ) );
+			}
+		}
+
+		?>
+		</div>
+
+		<?php
+		/**
+		 * Fires immediately following the closing "actions" div in the tablenav for the posts
+		 * list table.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 */
+		do_action( 'manage_invoices_extra_tablenav', $which );
 	}
 }

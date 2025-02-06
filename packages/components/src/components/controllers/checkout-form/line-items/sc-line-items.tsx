@@ -53,7 +53,7 @@ export class ScLineItems {
    */
   isEditable(item: LineItem) {
     // ad_hoc prices and bumps cannot have quantity.
-    if (item?.price?.ad_hoc || item?.bump_amount) {
+    if (item?.price?.ad_hoc || item?.bump_amount || item?.locked) {
       return false;
     }
     return this.editable;
@@ -87,7 +87,7 @@ export class ScLineItems {
                 purchasableStatusDisplay={item?.purchasable_status_display}
                 {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
-                removable={this.removable}
+                removable={!item?.locked && this.removable}
                 quantity={item.quantity}
                 fees={item?.fees?.data}
                 setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
