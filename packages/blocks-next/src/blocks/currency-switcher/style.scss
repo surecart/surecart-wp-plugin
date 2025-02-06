@@ -3,17 +3,14 @@
 	font-weight: 400;
 	line-height: 1.5;
 	font-family: var(--sc-font-sans);
+	user-select: none;
 
 	&__trigger {
 		display: flex;
 		align-items: center;
 		gap: 8px;
 		padding: 4px 8px;
-		border: 1px solid var(--sc-input-border-color);
-		border-radius: var(--sc-input-border-radius-medium);
 		cursor: pointer;
-		background: var(--sc-input-background-color);
-		color: var(--sc-input-color);
 		transition: all 0.2s ease;
 
 		&:hover {
@@ -37,6 +34,10 @@
 		margin-left: auto;
 		line-height: 1;
 		opacity: 0.7;
+	}
+
+	.sc-dropdown__panel {
+		max-height: var(--sc-currency-switcher-height, 318px);
 	}
 }
 
@@ -62,6 +63,7 @@
 
 	&__label {
 		font-size: var(--sc-font-size-small);
+		color: var(--sc-color-gray-700);
 		display: flex;
 		align-items: center;
 		gap: 6px;
