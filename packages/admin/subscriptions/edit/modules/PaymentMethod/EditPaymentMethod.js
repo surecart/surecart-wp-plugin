@@ -69,6 +69,7 @@ export default ({
 					context: 'edit',
 					customer_ids: [customerId],
 					reusable: true,
+					archived: false,
 					per_page: 100,
 				},
 			];
