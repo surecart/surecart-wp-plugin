@@ -1,15 +1,12 @@
 <?php
-
-/**
- * Cookie Helpers,
- */
-
 /**
  * Set a cookie.
  *
- * @param string $name   The name of the cookie.
- * @param string $value  The value of the cookie.
- * @param int    $expire The expiration time of the cookie.
+ * @param string  $name     The name of the cookie.
+ * @param string  $value    The value of the cookie.
+ * @param int     $expire   The expiration time of the cookie.
+ * @param boolean $secure   Whether the cookie should be served over HTTPS only.
+ * @param boolean $httponly Whether the cookie should be accessible via HTTP(S) only.
  */
 function sc_setcookie( $name, $value, $expire = 0, $secure = false, $httponly = false ) {
 	/**
