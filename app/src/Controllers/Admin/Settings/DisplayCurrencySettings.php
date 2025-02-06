@@ -22,7 +22,10 @@ class DisplayCurrencySettings extends BaseSettings {
 	 * @return function
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		// load the data views styles.
 		wp_enqueue_style( 'surecart-admin-display-currency', trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/admin/settings/style-display-currency.css', [], \SureCart::plugin()->version() );
+
+		// show the view.
 		return parent::show( $request );
 	}
 }
