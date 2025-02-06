@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/slide-out-cart-items",
+	"name": "surecart/slide-out-cart-line-items",
 	"title": "Cart Items",
 	"description": "The cart items",
 	"category": "surecart-cart",
@@ -9,12 +9,20 @@
 	"example": {},
 	"textdomain": "surecart",
 	"ancestor": ["surecart/slide-out-cart"],
+	"providesContext": {
+		"editable": "editable",
+		"removable": "removable"
+	},
 	"attributes": {
 		"removable": {
 			"type": "boolean",
 			"default": true
 		},
 		"editable": {
+			"type": "boolean",
+			"default": true
+		},
+		"divider_enabled": {
 			"type": "boolean",
 			"default": true
 		},
@@ -41,15 +49,41 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"layout": {
+			"allowSizingOnChildren": false
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "1.25em"
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
+		}
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": [
-		"surecart-line-item",
-		"surecart-product-line-item",
-		"surecart-input-group",
-		"surecart-quantity-selector",
+		"file:../../styles/line-item.css",
+		"file:../../styles/product-line-item.css",
+		"file:../../styles/input-group.css",
+		"file:../../styles/quantity-selector.css",
 		"file:./style-index.css"
 	],
 	"viewScriptModule": ["@surecart/cart"]
