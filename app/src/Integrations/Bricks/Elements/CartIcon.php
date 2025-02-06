@@ -43,6 +43,13 @@ class CartIcon extends \Bricks\Element {
 	public $icon = 'ti-bag';
 
 	/**
+	 * Cart icon.
+	 *
+	 * @var string
+	 */
+	public $cart_icon = '';
+
+	/**
 	 * Get element label.
 	 *
 	 * @return string
@@ -124,18 +131,14 @@ class CartIcon extends \Bricks\Element {
 			)
 		);
 
-		$bricks_icon = self::render_icon(
+		$this->cart_icon = self::render_icon(
 			$settings['cart_icon'] ?? [
 				'icon' => 'ti-bag',
 			]
 		);
 
-		add_filter(
-			'sc_cart_menu_icon',
-			function ( $icon ) use ( $bricks_icon ) {
-				return $bricks_icon ?? $icon;
-			}
-		);
+		// Filter cart icon.
+		add_filter( 'sc_cart_menu_icon', array( $this, 'render_bricks_icon' ) );
 
 		// Don't render if the cart is disabled.
 		if ( ! \SureCart::cart()->isCartEnabled() ) {
@@ -143,8 +146,10 @@ class CartIcon extends \Bricks\Element {
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$content  = '<div class="sc-cart-icon" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">' . $bricks_icon . '</div>';
-			$content .= '<span class="sc-cart-count">2</span>';
+			$content  = '<div class="sc-cart-icon" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">';
+			$content .= $this->cart_icon;
+			// $content .= '<span class="sc-cart-count">2</span>';
+			$content .= '</div>';
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$content,
@@ -159,5 +164,19 @@ class CartIcon extends \Bricks\Element {
 				'cart_menu_always_shown' => $cart_menu_always_shown, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			]
 		);
+
+		// Remove cart icon filter.
+		remove_filter( 'sc_cart_menu_icon', [ $this, 'render_bricks_icon' ] );
+	}
+
+	/**
+	 * Render Bricks icon.
+	 *
+	 * @param string $icon Icon.
+	 *
+	 * @return string
+	 */
+	public function render_bricks_icon( $icon ): string {
+		return $this->cart_icon ?? $icon;
 	}
 }
