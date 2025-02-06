@@ -23,7 +23,7 @@ class BlockCurrencyConversionSupportService {
 		// Get the block type object.
 		$block_type = \WP_Block_Type_Registry::get_instance()->get_registered( $parsed_block['blockName'] );
 
-		// Should the block convert currency? (either true or false)
+		// Should the block convert currency? (either true or false).
 		$support = $block_type->supports['currencyConversion'] ?? null;
 
 		if ( ! empty( $block_type ) && null !== $support ) {
