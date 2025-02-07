@@ -47,10 +47,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
-			add_action( 'elementor/frontend/builder_content_data', array( $this, 'append_product_widget_wrapper' ), 10, 2 );
 
-			// TODO: Enable it onces elementor update is released.
-			// add_filter( 'elementor/element/print_elements_content', [ $this, 'append_product_widget_wrapper_content' ] );
+			add_action( 'elementor/frontend/before_render', [ $this, 'disable_interactivity_process_directives_for_surecart_elements' ], 0 );
+			add_action( 'elementor/frontend/builder_content_data', array( $this, 'append_product_widget_wrapper' ), 10, 2 );
 		}
 
 		// Bootstrap the widgets.
@@ -202,26 +201,18 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Frontend builder content data.
+	 * Disable interactivity process directives for surecart elements.
 	 *
-	 * @param string $content The builder content.
+	 * @param \Elementor\Element_Base $element The element.
 	 *
-	 * @return string The builder content.
+	 * @return void
 	 */
-	public function append_product_widget_wrapper_content( $content ): string {
-		if ( empty( sc_get_product() ) ) {
-			return $content;
+	public function disable_interactivity_process_directives_for_surecart_elements( $element ) {
+		if ( strpos( $element->get_name(), 'surecart-' ) === false ) {
+			return;
 		}
 
-		// If no surecart blocks in the content, return.
-		$product_page_wrapper = new ProductPageWrapperService( $content );
-
-		// Check if If already has product page wrapper or has any surecart product block.
-		if ( ! $product_page_wrapper->hasAnySureCartProductBlock() || $product_page_wrapper->hasProductPageWrapper() ) {
-			return $content;
-		}
-
-		return $product_page_wrapper->addProductPageWrapper();
+		add_filter( 'interactivity_process_directives', '__return_false' );
 	}
 
 	/**
