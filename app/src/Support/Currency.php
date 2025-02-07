@@ -19,14 +19,15 @@ class Currency {
 			return self::getDefaultCurrency();
 		}
 
-		// if there is a currency in the url, use it.
-		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return strtolower( sanitize_text_field( $_GET['currency'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		}
+		// get the display currencies.
+		$display_currencies = DisplayCurrency::get();
 
-		// if there is a currency in the cookie, use it.
-		if ( isset( $_COOKIE['sc_current_currency'] ) ) {
-			return strtolower( sanitize_text_field( $_COOKIE['sc_current_currency'] ) );
+		// get the currency first from the url, then cookie.
+		$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? null ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// if we have a currency and it's a valid display currency, use it.
+		if ( ! empty( $currency ) && in_array( $currency, array_column( $display_currencies, 'currency' ), true ) ) {
+			return strtolower( sanitize_text_field( $currency ) );
 		}
 
 		// get the current locale currency.
@@ -34,8 +35,11 @@ class Currency {
 			$locale = self::getPreferredLocaleFromHeader();
 			if ( isset( $locale ) ) {
 				// Create a NumberFormatter in CURRENCY mode.
-				$fmt = new \NumberFormatter( $locale, \NumberFormatter::CURRENCY );
-				return strtolower( $fmt->getTextAttribute( \NumberFormatter::CURRENCY_CODE ) );
+				$fmt      = new \NumberFormatter( $locale, \NumberFormatter::CURRENCY );
+				$currency = strtolower( $fmt->getTextAttribute( \NumberFormatter::CURRENCY_CODE ) );
+				if ( ! empty( $currency ) && in_array( $currency, array_column( $display_currencies, 'currency' ), true ) ) {
+					return strtolower( sanitize_text_field( $currency ) );
+				}
 			}
 		}
 
