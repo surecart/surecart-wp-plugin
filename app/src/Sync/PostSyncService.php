@@ -131,6 +131,8 @@ class PostSyncService {
 	 */
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
 		$base_amount = ! empty( $model->prices->data[0]->amount ) ? $model->prices->data[0]->amount : 0;
+		$metadata    = array_diff_key( (array) $model->metadata, array_flip( array( 'gallery', 'gallery_ids', 'meta_description', 'page_title', 'wp_buy_link_coupon_field_disabled', 'wp_buy_link_custom_thankyou_page', 'wp_buy_link_custom_thankyou_page_url', 'wp_buy_link_enabled', 'wp_buy_link_logo_disabled', 'wp_buy_link_product_description_disabled', 'wp_buy_link_product_image_disabled', 'wp_buy_link_success_page_enabled', 'wp_buy_link_success_page_url', 'wp_buy_link_terms_disabled', 'wp_buy_link_test_mode_enabled', 'wp_created_by', 'wp_template_part_id', 'wp_template_id' ) ) );
+
 		return array(
 			'post_title'        => $model->name,
 			'post_type'         => $this->post_type,
@@ -142,25 +144,28 @@ class PostSyncService {
 			'post_modified'     => ( new \DateTime() )->setTimestamp( $model->updated_at )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 			'post_status'       => $this->getPostStatusFromModel( $model ),
-			'meta_input'        => array(
-				'sc_id'                        => $model->id,
-				'product'                      => $model->toArray(),
-				'min_price_amount'             => ! empty( $model->metrics->min_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->min_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
-				'max_price_amount'             => ! empty( $model->metrics->max_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->max_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
-				'available_stock'              => $model->available_stock,
-				'stock_enabled'                => $model->stock_enabled,
-				'allow_out_of_stock_purchases' => $model->allow_out_of_stock_purchases,
-				'featured'                     => $model->featured,
-				'recurring'                    => $model->recurring,
-				'shipping_enabled'             => $model->shipping_enabled,
-				'purchase_limit'               => $model->purchase_limit,
-				'sku'                          => $model->sku,
-				'weight'                       => $model->weight,
-				'weight_unit'                  => $model->weight_unit,
-				'display_amount'               => $model->display_amount,
-				'scratch_display_amount'       => $model->scratch_display_amount,
-				'range_display_amount'         => $model->range_display_amount,
-				'is_on_sale'                   => $model->is_on_sale,
+			'meta_input'        => array_merge(
+				$metadata,
+				array(
+					'sc_id'                        => $model->id,
+					'product'                      => $model->toArray(),
+					'min_price_amount'             => ! empty( $model->metrics->min_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->min_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
+					'max_price_amount'             => ! empty( $model->metrics->max_price_amount ) ? Currency::maybeConvertAmount( $model->metrics->max_price_amount ?? 0, $model->initial_price->currency ?? null ) : $base_amount,
+					'available_stock'              => $model->available_stock,
+					'stock_enabled'                => $model->stock_enabled,
+					'allow_out_of_stock_purchases' => $model->allow_out_of_stock_purchases,
+					'featured'                     => $model->featured,
+					'recurring'                    => $model->recurring,
+					'shipping_enabled'             => $model->shipping_enabled,
+					'purchase_limit'               => $model->purchase_limit,
+					'sku'                          => $model->sku,
+					'weight'                       => $model->weight,
+					'weight_unit'                  => $model->weight_unit,
+					'display_amount'               => $model->display_amount,
+					'scratch_display_amount'       => $model->scratch_display_amount,
+					'range_display_amount'         => $model->range_display_amount,
+					'is_on_sale'                   => $model->is_on_sale,
+				)
 			),
 		);
 	}
