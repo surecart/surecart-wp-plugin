@@ -71,10 +71,6 @@ export default function DisplayCurrencySettings() {
 		totalPages,
 	} = useEntityRecords('surecart', 'display_currency', queryArgs);
 
-	const getCurrencyFlag = (currency) => {
-		return scData?.currency_flags[currency] || '';
-	};
-
 	const paginationInfo = useMemo(
 		() => ({
 			totalItems,
@@ -82,21 +78,6 @@ export default function DisplayCurrencySettings() {
 		}),
 		[totalItems, totalPages]
 	);
-
-	const supportedCurrencyOptions = Object.keys(
-		scData?.supported_currencies || {}
-	).map((value) => {
-		return {
-			label: `${scData?.supported_currencies[value]} (${getCurrencySymbol(
-				value
-			)})`,
-			value,
-			icon: getCurrencyFlag(value),
-			disabled: (currencies || []).some(
-				(currency) => currency.currency === value
-			),
-		};
-	});
 
 	const fields = [
 		{
@@ -112,7 +93,7 @@ export default function DisplayCurrencySettings() {
 					`}
 				>
 					<img
-						src={getCurrencyFlag(item?.currency)}
+						src={item?.flag}
 						alt={item?.name}
 						width={20}
 						height={15}
@@ -265,7 +246,18 @@ export default function DisplayCurrencySettings() {
 						<ScSelect
 							search
 							onScChange={onAddNewCurrency}
-							choices={supportedCurrencyOptions}
+							choices={(scData?.supported_currencies || []).map(
+								({
+									name,
+									symbol,
+									currency: value,
+									flag: icon,
+								}) => ({
+									label: `${name} (${symbol})`,
+									value,
+									icon,
+								})
+							)}
 							value={null}
 							placement="bottom-end"
 							css={css`

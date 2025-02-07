@@ -71,4 +71,15 @@ class DisplayCurrency extends Model {
 	protected function getIsDefaultCurrencyAttribute() {
 		return \SureCart::account()->currency === $this->currency;
 	}
+
+	/**
+	 * Get the flag URL.
+	 *
+	 * @return string
+	 */
+	protected function getFlagAttribute() {
+		return file_exists( dirname( SURECART_PLUGIN_FILE ) . '/images/flags/' . strtolower( $this->currency ) . '.svg' )
+			? plugins_url( 'images/flags/' . strtolower( $this->currency ) . '.svg', SURECART_PLUGIN_FILE )
+			: null;
+	}
 }

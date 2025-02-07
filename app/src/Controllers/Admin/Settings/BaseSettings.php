@@ -136,8 +136,7 @@ abstract class BaseSettings {
 			$handle,
 			'scData',
 			[
-				'supported_currencies'   => Currency::getSupportedCurrencies(),
-				'currency_flags'         => Currency::getFlags(),
+				'supported_currencies'   => Currency::list(),
 				'app_url'                => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
 				'account_id'             => \SureCart::account()->id,
 				'account_slug'           => \SureCart::account()->slug,

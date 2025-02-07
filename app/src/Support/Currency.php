@@ -9,34 +9,6 @@ use SureCart\Models\DisplayCurrency;
  */
 class Currency {
 	/**
-	 * Get the currency flags.
-	 *
-	 * @return array
-	 */
-	public static function getFlags() {
-		return array_combine(
-			array_keys( self::getSupportedCurrencies() ),
-			array_map(
-				function ( $currency ) {
-					return self::getCurrencyFlag( $currency );
-				},
-				array_keys( self::getSupportedCurrencies() )
-			)
-		);
-	}
-
-	/**
-	 * Get the currency flag.
-	 *
-	 * @param string $currency The currency code.
-	 *
-	 * @return string
-	 */
-	public static function getCurrencyFlag( $currency ) {
-		return plugins_url( 'images/flags/' . strtolower( $currency ) . '.svg', SURECART_PLUGIN_FILE );
-	}
-
-	/**
 	 * Get the current currency.
 	 *
 	 * @return string
@@ -488,6 +460,24 @@ class Currency {
 	 *
 	 * @return array
 	 */
+	public static function list() {
+		$currencies = [];
+		foreach ( self::getSupportedCurrencies() as $currency => $name ) {
+			$currencies[] = [
+				'currency' => $currency,
+				'name'     => $name,
+				'symbol'   => html_entity_decode( self::getCurrencySymbol( $currency ) ),
+				'flag'     => plugins_url( 'images/flags/' . $currency . '.svg', SURECART_PLUGIN_FILE ),
+			];
+		}
+		return $currencies;
+	}
+
+	/**
+	 * Get a list of supported currencies.
+	 *
+	 * @return array
+	 */
 	public static function getSupportedCurrencies() {
 		return [
 			'all' => __( 'Albanian Lek', 'surecart' ),
@@ -577,7 +567,7 @@ class Currency {
 			'ang' => __( 'Netherlands Antillean Gulden', 'surecart' ),
 			'twd' => __( 'New Taiwan Dollar', 'surecart' ),
 			'nzd' => __( 'New Zealand Dollar', 'surecart' ),
-			'nio' => __( 'Nicaraguan C����rdoba', 'surecart' ),
+			'nio' => __( 'Nicaraguan Cordoba', 'surecart' ),
 			'ngn' => __( 'Nigerian Naira', 'surecart' ),
 			'nok' => __( 'Norwegian Krone', 'surecart' ),
 			'pkr' => __( 'Pakistani Rupee', 'surecart' ),
