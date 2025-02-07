@@ -208,7 +208,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function disable_interactivity_process_directives_for_surecart_elements( $element ) {
-		if ( strpos( $element->get_name(), 'surecart-' ) === false ) {
+		if ( false === strpos( $element->get_name(), 'surecart-' ) ) {
 			return;
 		}
 
