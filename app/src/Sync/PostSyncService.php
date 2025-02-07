@@ -130,8 +130,28 @@ class PostSyncService {
 	 * @return array
 	 */
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
-		$base_amount = ! empty( $model->prices->data[0]->amount ) ? $model->prices->data[0]->amount : 0;
-		$metadata    = array_diff_key( (array) $model->metadata, array_flip( array( 'gallery', 'gallery_ids', 'meta_description', 'page_title', 'wp_buy_link_coupon_field_disabled', 'wp_buy_link_custom_thankyou_page', 'wp_buy_link_custom_thankyou_page_url', 'wp_buy_link_enabled', 'wp_buy_link_logo_disabled', 'wp_buy_link_product_description_disabled', 'wp_buy_link_product_image_disabled', 'wp_buy_link_success_page_enabled', 'wp_buy_link_success_page_url', 'wp_buy_link_terms_disabled', 'wp_buy_link_test_mode_enabled', 'wp_created_by', 'wp_template_part_id', 'wp_template_id' ) ) );
+		$base_amount   = ! empty( $model->prices->data[0]->amount ) ? $model->prices->data[0]->amount : 0;
+		$excluded_keys = [
+			'gallery',
+			'gallery_ids',
+			'meta_description',
+			'page_title',
+			'wp_buy_link_coupon_field_disabled',
+			'wp_buy_link_custom_thankyou_page',
+			'wp_buy_link_custom_thankyou_page_url',
+			'wp_buy_link_enabled',
+			'wp_buy_link_logo_disabled',
+			'wp_buy_link_product_description_disabled',
+			'wp_buy_link_product_image_disabled',
+			'wp_buy_link_success_page_enabled',
+			'wp_buy_link_success_page_url',
+			'wp_buy_link_terms_disabled',
+			'wp_buy_link_test_mode_enabled',
+			'wp_created_by',
+			'wp_template_part_id',
+			'wp_template_id',
+		];
+		$metadata      = array_diff_key( (array) $model->metadata, array_flip( $excluded_keys ) );
 
 		return array(
 			'post_title'        => $model->name,
