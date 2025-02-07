@@ -2,22 +2,39 @@
 
 namespace SureCart\Support;
 
+use SureCart\Models\DisplayCurrency;
+
 /**
  * Handles currency coversion and formatting
  */
 class Currency {
 	/**
-	 * Exchange rates.
-	 * TODO: Get from service.
+	 * Get the currency flags.
 	 *
-	 * @var array
+	 * @return array
 	 */
-	protected static $exchange_rates = [
-		'usd' => 1,
-		'eur' => 0.85,
-		'gbp' => 0.75,
-		'afn' => 80,
-	];
+	public static function getFlags() {
+		return array_combine(
+			array_keys( self::getSupportedCurrencies() ),
+			array_map(
+				function ( $currency ) {
+					return self::getCurrencyFlag( $currency );
+				},
+				array_keys( self::getSupportedCurrencies() )
+			)
+		);
+	}
+
+	/**
+	 * Get the currency flag.
+	 *
+	 * @param string $currency The currency code.
+	 *
+	 * @return string
+	 */
+	public static function getCurrencyFlag( $currency ) {
+		return plugins_url( 'images/flags/' . strtolower( $currency ) . '.svg', SURECART_PLUGIN_FILE );
+	}
 
 	/**
 	 * Get the current currency.
@@ -116,10 +133,40 @@ class Currency {
 	/**
 	 * Get the exchange rate for the current currency.
 	 *
+	 * @param string|null $currency_code Currency code.
 	 * @return float
 	 */
-	public static function getExchangeRate() {
-		return self::$exchange_rates[ self::getCurrentCurrency() ] ?? 1;
+	public static function getExchangeRate( $currency_code = null ) {
+		// get the currency.
+		$currency = self::getDisplayCurrency( $currency_code );
+
+		// return the exchange rate.
+		return $currency->current_exchange_rate ?? 1;
+	}
+
+	/**
+	 * Get the currency.
+	 *
+	 * @param string $currency_code Currency code.
+	 *
+	 * @return DisplayCurrency|null
+	 */
+	public static function getDisplayCurrency( $currency_code = null ) {
+		// get the currencies.
+		$currencies = DisplayCurrency::get();
+
+		// get the currency.
+		$currency = array_values(
+			array_filter(
+				$currencies,
+				function ( $currency ) use ( $currency_code ) {
+					return strtolower( $currency_code ) === strtolower( $currency->currency );
+				}
+			)
+		);
+
+		// return the currency.
+		return $currency[0] ?? null;
 	}
 
 	/**
@@ -328,13 +375,14 @@ class Currency {
 		$args = wp_parse_args(
 			$args,
 			[
-				'force' => false,
+				// convert the currency by default.
+				'convert' => true,
 			]
 		);
 
 		// we only want to change currencies and convert amounts if we are not forcing the default currency.
 		// or if the currency code is not set.
-		if ( empty( $currency_code ) || ( self::hasDisplayCurrency() && ! $args['force'] ) ) {
+		if ( empty( $currency_code ) || ( self::hasDisplayCurrency() && ! empty( $args['convert'] ) ) ) {
 			$currency_code = self::getCurrentCurrency();
 			$amount        = $amount * self::getExchangeRate( $currency_code );
 		}
@@ -529,7 +577,7 @@ class Currency {
 			'ang' => __( 'Netherlands Antillean Gulden', 'surecart' ),
 			'twd' => __( 'New Taiwan Dollar', 'surecart' ),
 			'nzd' => __( 'New Zealand Dollar', 'surecart' ),
-			'nio' => __( 'Nicaraguan Córdoba', 'surecart' ),
+			'nio' => __( 'Nicaraguan C����rdoba', 'surecart' ),
 			'ngn' => __( 'Nigerian Naira', 'surecart' ),
 			'nok' => __( 'Norwegian Krone', 'surecart' ),
 			'pkr' => __( 'Pakistani Rupee', 'surecart' ),
