@@ -72,41 +72,4 @@ class ProductCard extends Product {
 	public function get_categories() {
 		return [ 'surecart-elementor-product-loop' ];
 	}
-
-	/**
-	 * Get the default children elements.
-	 *
-	 * @return array
-	 */
-	protected function get_default_children_elements() {
-		return [];
-	}
-
-	/**
-	 * Render the widget.
-	 *
-	 * @return void
-	 */
-	protected function render() {
-		// items content.
-		ob_start();
-		?>
-
-		<!-- wp:surecart/product-page -->
-		<?php
-		$children = $this->get_children();
-		foreach ( $children as $index => $child ) {
-			$this->print_child( $index );
-		}
-		?>
-		<!-- /wp:surecart/product-page -->
-
-		<?php
-		$item_content = ob_get_clean();
-		?>
-		<a href="<?php echo esc_url( get_permalink() ); ?>">
-			<?php echo $item_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-		</a>
-		<?php
-	}
 }
