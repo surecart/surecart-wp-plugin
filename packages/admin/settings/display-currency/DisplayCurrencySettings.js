@@ -71,6 +71,10 @@ export default function DisplayCurrencySettings() {
 		totalPages,
 	} = useEntityRecords('surecart', 'display_currency', queryArgs);
 
+	const getCurrencyFlag = (currency) => {
+		return scData?.currency_flags[currency] || '';
+	};
+
 	const paginationInfo = useMemo(
 		() => ({
 			totalItems,
@@ -87,6 +91,7 @@ export default function DisplayCurrencySettings() {
 				value
 			)})`,
 			value,
+			icon: getCurrencyFlag(value),
 			disabled: (currencies || []).some(
 				(currency) => currency.currency === value
 			),
@@ -99,12 +104,24 @@ export default function DisplayCurrencySettings() {
 			label: __('Currency', 'presto-player'),
 			enableGlobalSearch: true,
 			render: ({ item }) => (
-				<>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 10px;
+					`}
+				>
+					<img
+						src={getCurrencyFlag(item?.currency)}
+						alt={item?.name}
+						width={20}
+						height={15}
+					/>
 					<strong>{item?.name}</strong> ({item?.currency_symbol}){' '}
 					{item?.is_default_currency && (
 						<ScTag>{__('Default', 'surecart')}</ScTag>
 					)}
-				</>
+				</div>
 			),
 		},
 		{

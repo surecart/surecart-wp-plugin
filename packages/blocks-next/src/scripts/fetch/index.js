@@ -35,11 +35,6 @@ apiFetch.use((options, next) => {
 		...(!!getQueryArg(window.location.href, 'currency') && {
 			currency: getQueryArg(window.location.href, 'currency'),
 		}),
-		...(window?.scFetchData?.convert_currency_endpoints?.some?.((p) =>
-			options.path.includes(p)
-		) && {
-			convert_currency: true,
-		}),
 	});
 	return next(options);
 });
