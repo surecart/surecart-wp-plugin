@@ -146,9 +146,9 @@ class CartMenuIcon extends \Bricks\Element {
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$content  = '<div class="sc-cart-icon" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">';
+			$content  = '<div class="sc-cart-icon" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">';
 			$content .= $this->cart_icon;
-			$content .= '<span class="sc-cart-count">2</span>';
+			$content .= '<span class="sc-cart-count" style="box-sizing: border-box; position: absolute; inset: -12px -16px auto auto; text-align: center; font-size: 10px; font-weight: bold; border-radius: var(--sc-cart-icon-counter-border-radius, 9999px); color: var(--sc-cart-icon-counter-color, var(--sc-color-primary-text, var(--sc-color-white))); background: var(--sc-cart-icon-counter-background, var(--sc-color-primary-500)); box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large)); padding: 2px 6px; line-height: 14px; min-width: 14px; z-index: 1;">2</span>';
 			$content .= '</div>';
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
