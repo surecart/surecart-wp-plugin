@@ -175,7 +175,7 @@ export default function DisplayCurrencySettings() {
 			const currency = e.target.value;
 			if (!currency) return;
 
-			await saveEntityRecord(
+			const savedCurrency = await saveEntityRecord(
 				'surecart',
 				'display_currency',
 				{
@@ -186,15 +186,11 @@ export default function DisplayCurrencySettings() {
 				}
 			);
 
-			// Get the full currency name from supported currencies
-			const currencyName =
-				scData?.supported_currencies[currency] || currency;
-
 			createSuccessNotice(
 				sprintf(
 					/* translators: %s: currency name */
 					__('%s added successfully.', 'surecart'),
-					currencyName
+					savedCurrency?.name || currency
 				),
 				{
 					type: 'snackbar',
