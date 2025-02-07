@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Integrations\Elementor\Widgets\Nested;
+namespace SureCart\Integrations\Elementor\Widgets;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Card widget.
  */
-class ProductCard extends Product {
+class ProductCard extends \Elementor\Widget_Base {
 	/**
 	 * Get the widget name.
 	 *
@@ -17,6 +17,15 @@ class ProductCard extends Product {
 	 */
 	public function get_name() {
 		return 'surecart-product-card';
+	}
+
+	/**
+	 * Get the style dependencies.
+	 *
+	 * @return array
+	 */
+	public function get_style_depends() {
+		return array( 'surecart-elementor-container-style' );
 	}
 
 	/**
@@ -44,24 +53,6 @@ class ProductCard extends Product {
 	 */
 	public function get_keywords() {
 		return [ 'product', 'card', 'surecart' ];
-	}
-
-	/**
-	 * Get the default children title.
-	 *
-	 * @return string
-	 */
-	protected function get_default_children_title() {
-		return esc_html__( 'Product Card', 'surecart' );
-	}
-
-	/**
-	 * Get the widget script dependencies.
-	 *
-	 * @return array
-	 */
-	public function get_script_depends() {
-		return [ 'surecart-elementor-product-loop' ];
 	}
 
 	/**

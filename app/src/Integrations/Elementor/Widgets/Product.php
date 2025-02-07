@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Integrations\Elementor\Widgets\Nested;
+namespace SureCart\Integrations\Elementor\Widgets;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product widget.
  */
-class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base {
+class Product extends \Elementor\Widget_Base {
 	/**
 	 * Get the widget name.
 	 *
@@ -62,44 +62,5 @@ class Product extends \Elementor\Modules\NestedElements\Base\Widget_Nested_Base 
 	 */
 	public function get_categories() {
 		return array( 'surecart-elementor-product' );
-	}
-
-	/**
-	 * Get the widget script dependencies.
-	 *
-	 * @return array
-	 */
-	public function get_script_depends() {
-		return array( 'surecart-elementor-product' );
-	}
-
-	/**
-	 * Get the default children elements.
-	 *
-	 * @return array
-	 */
-	protected function get_default_children_elements() {
-		return [];
-	}
-
-	/**
-	 * Get the default repeater title setting key.
-	 *
-	 * @return string
-	 */
-	protected function get_default_repeater_title_setting_key() {
-		return 'surecart_item_title';
-	}
-
-	/**
-	 * Render the content template.
-	 *
-	 * @return void
-	 */
-	protected function content_template() {
-		?>
-		<div class="e-n-product">
-		</div>
-		<?php
 	}
 }
