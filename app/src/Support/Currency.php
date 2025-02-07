@@ -9,42 +9,81 @@ use SureCart\Models\DisplayCurrency;
  */
 class Currency {
 	/**
+	 * Check if the currency is supported and enabled for display/conversion.
+	 *
+	 * @param string $currency The currency code.
+	 *
+	 * @return bool
+	 */
+	public static function isSupportedCurrency( $currency ) {
+		if ( empty( $currency ) ) {
+			return false;
+		}
+		$display_currencies = DisplayCurrency::get();
+		return in_array( $currency, array_column( $display_currencies, 'currency' ), true );
+	}
+
+	/**
 	 * Get the current currency.
 	 *
 	 * @return string
 	 */
 	public static function getCurrentCurrency() {
-		// if the currency is notbeing converted, use the default currency.
+		// if the currency is not being converted, use the default currency.
 		if ( ! \SureCart::currency()->is_converting ) {
 			return self::getDefaultCurrency();
 		}
 
-		// get the display currencies.
-		$display_currencies = DisplayCurrency::get();
-
-		// get the currency first from the url, then cookie.
-		$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? null ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-		// if we have a currency and it's a valid display currency, use it.
-		if ( ! empty( $currency ) && in_array( $currency, array_column( $display_currencies, 'currency' ), true ) ) {
-			return strtolower( sanitize_text_field( $currency ) );
+		// Try getting currency from request parameters.
+		$currency = self::getCurrencyFromRequest();
+		if ( $currency ) {
+			return $currency;
 		}
 
-		// get the current locale currency.
-		if ( class_exists( 'NumberFormatter' ) && \SureCart::settings()->get( 'currency_geolocation_enabled', true ) ) {
-			$locale = self::getPreferredLocaleFromHeader();
-			if ( isset( $locale ) ) {
-				// Create a NumberFormatter in CURRENCY mode.
-				$fmt      = new \NumberFormatter( $locale, \NumberFormatter::CURRENCY );
-				$currency = strtolower( $fmt->getTextAttribute( \NumberFormatter::CURRENCY_CODE ) );
-				if ( ! empty( $currency ) && in_array( $currency, array_column( $display_currencies, 'currency' ), true ) ) {
-					return strtolower( sanitize_text_field( $currency ) );
-				}
-			}
+		// Try getting currency from geolocation.
+		$currency = self::getCurrencyFromGeolocation();
+		if ( $currency ) {
+			return $currency;
 		}
 
-		// if no currency is set, use the default currency.
+		// Fallback to default currency.
 		return self::getDefaultCurrency();
+	}
+
+	/**
+	 * Get currency from request parameters (URL or cookie)
+	 *
+	 * @return string|null
+	 */
+	protected static function getCurrencyFromRequest() {
+		$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? null ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return self::isSupportedCurrency( $currency ) ? strtolower( sanitize_text_field( $currency ) ) : null;
+	}
+
+	/**
+	 * Get currency from geolocation using NumberFormatter
+	 *
+	 * @return string|null
+	 */
+	protected static function getCurrencyFromGeolocation() {
+		if ( ! class_exists( 'NumberFormatter' ) || ! \SureCart::settings()->get( 'currency_geolocation_enabled', true ) ) {
+			return null;
+		}
+
+		$locale = self::getPreferredLocaleFromHeader();
+		if ( ! isset( $locale ) ) {
+			return null;
+		}
+
+		try {
+			$fmt      = new \NumberFormatter( $locale, \NumberFormatter::CURRENCY );
+			$currency = strtolower( $fmt->getTextAttribute( \NumberFormatter::CURRENCY_CODE ) );
+			return self::isSupportedCurrency( $currency ) ? strtolower( sanitize_text_field( $currency ) ) : null;
+		} catch ( \Exception $e ) {
+			error_log( 'SureCart: NumberFormatter error - ' . $e->getMessage() );
+		}
+
+		return null;
 	}
 
 	/**
@@ -80,8 +119,8 @@ class Currency {
 		// Convert from "en-US" to "en_US".
 		$best_lang = str_replace( '-', '_', $best_lang );
 
-		// Validate the locale format (must be in the format "en_US").
-		if ( ! preg_match( '/^[a-z]{2}_[A-Z]{2}$/', $best_lang ) ) {
+		// Validate the locale format (must be in standard locale format).
+		if ( ! preg_match( '/^[a-z]{2,3}(?:_[A-Z][a-z]{3})?(?:_[A-Z]{2})?$/', $best_lang ) ) {
 			return get_locale(); // Invalid format, fallback to default.
 		}
 
@@ -98,15 +137,6 @@ class Currency {
 	}
 
 	/**
-	 * Check if the current currency is different from the default currency.
-	 *
-	 * @return bool
-	 */
-	public static function hasDisplayCurrency() {
-		return self::getCurrentCurrency() !== self::getDefaultCurrency();
-	}
-
-	/**
 	 * Get the exchange rate for the current currency.
 	 *
 	 * @param string|null $currency_code Currency code.
@@ -117,7 +147,7 @@ class Currency {
 		$currency = self::getDisplayCurrency( $currency_code );
 
 		// return the exchange rate.
-		return $currency->current_exchange_rate ?? 1;
+		return $currency ? ( $currency->current_exchange_rate ?? 1 ) : 1;
 	}
 
 	/**
@@ -356,16 +386,18 @@ class Currency {
 			]
 		);
 
+		// maybe convert the amount.
+		$converted_amount = self::maybeConvertAmount( $amount, $currency_code );
+
 		// we only want to change currencies and convert amounts if we are not forcing the default currency.
 		// or if the currency code is not set.
-		if ( empty( $currency_code ) || ( self::hasDisplayCurrency() && ! empty( $args['convert'] ) ) ) {
-			$currency_code = self::getCurrentCurrency();
-			$amount        = $amount * self::getExchangeRate( $currency_code );
+		if ( ! empty( $args['convert'] ) ) {
+			$currency_code    = self::getCurrentCurrency();
+			$converted_amount = $converted_amount * self::getExchangeRate( $currency_code );
 		}
 
 		if ( class_exists( 'NumberFormatter' ) ) {
-			$fmt              = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
-			$converted_amount = self::maybeConvertAmount( $amount, $currency_code );
+			$fmt = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
 
 			// Extract the fractional part.
 			$fractional_part = fmod( $converted_amount, 1 );
@@ -377,7 +409,7 @@ class Currency {
 			return apply_filters( 'surecart/currency/format', $fmt->formatCurrency( $converted_amount, strtoupper( $currency_code ) ), $amount, $currency_code );
 		}
 
-		return apply_filters( 'surecart/currency/format', html_entity_decode( self::getCurrencySymbol( $currency_code ) ) . self::formatCurrencyNumber( $amount ), $amount, $currency_code );
+		return apply_filters( 'surecart/currency/format', html_entity_decode( self::getCurrencySymbol( $currency_code ) ) . self::formatCurrencyNumber( $converted_amount ), $amount, $currency_code );
 	}
 
 	/**
@@ -420,12 +452,15 @@ class Currency {
 	/**
 	 * Format the currency number.
 	 *
-	 * @param integer $amount Amount.
-	 * @param string  $currency_code Currency code.
+	 * @param integer|float $amount Amount.
+	 * @param string        $currency_code Currency code.
 	 *
 	 * @return string Formatted currency number.
 	 */
 	public static function formatCurrencyNumber( $amount, $currency_code = 'usd' ) {
+		if ( ! is_numeric( $amount ) ) {
+			return '0';
+		}
 		$amount = (float) $amount;
 		if ( in_array( strtoupper( $currency_code ), self::getZeroDecicalCurrencies(), true ) ) {
 			return self::formatCents( $amount, 1 );
