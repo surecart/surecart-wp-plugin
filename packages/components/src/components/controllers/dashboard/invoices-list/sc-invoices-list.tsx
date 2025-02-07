@@ -146,7 +146,7 @@ export class ScInvoicesList {
     return this.invoices.map(invoice => {
       const { checkout, due_date_date } = invoice;
       if (!checkout) return null;
-      const { amount_due, currency } = checkout as Checkout;
+      const { amount_due_display_amount } = checkout as Checkout;
       return (
         <sc-stacked-list-row href={this.getInvoiceRedirectUrl(invoice)} style={{ '--columns': '4' }} mobile-size={500}>
           <div>#{invoice?.order_number}</div>
@@ -154,9 +154,7 @@ export class ScInvoicesList {
           <div class="invoices-list__status">
             <sc-invoice-status-badge status={invoice?.status}></sc-invoice-status-badge>
           </div>
-          <div>
-            <sc-format-number type="currency" currency={currency} value={amount_due}></sc-format-number>
-          </div>
+          <div>{amount_due_display_amount}</div>
         </sc-stacked-list-row>
       );
     });
