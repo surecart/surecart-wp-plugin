@@ -3,11 +3,19 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 import { css, jsx, Global } from '@emotion/react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
-import { ScButton, ScIcon, ScSelect, ScTag } from '@surecart/components-react';
+import {
+	ScButton,
+	ScIcon,
+	ScSelect,
+	ScSwitch,
+	ScTag,
+} from '@surecart/components-react';
+import { trash } from '@wordpress/icons';
 import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews/wp';
 import {
 	useEntityRecords,
 	useEntityRecord,
+	useEntityProp,
 	store as coreStore,
 } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -21,16 +29,36 @@ import {
 	__experimentalHStack as HStack,
 	Icon,
 } from '@wordpress/components';
-import { trash } from '@wordpress/icons';
-import { getCurrencySymbol } from '../../util';
+import useSave from '../UseSave';
 import { store as noticesStore } from '@wordpress/notices';
+import Error from '../../components/Error';
 
 export default function DisplayCurrencySettings() {
+	const [error, setError] = useState(null);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-
 	const { record: account } = useEntityRecord('surecart', 'store', 'account');
+	const { save } = useSave();
+
+	// honeypot.
+	const [currencyGeolocationEnabled, setCurrencyGeolocationEnabled] =
+		useEntityProp('root', 'site', 'surecart_currency_geolocation_enabled');
+
+	/**
+	 * Form is submitted.
+	 */
+	const onSubmit = async () => {
+		setError(null);
+		try {
+			await save({
+				successMessage: __('Settings Updated.', 'surecart'),
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		}
+	};
 
 	const defaultLayouts = {
 		table: {
@@ -230,11 +258,37 @@ export default function DisplayCurrencySettings() {
 			<SettingsTemplate
 				title={__('Currency Settings', 'surecart')}
 				icon={<ScIcon name="dollar-sign" />}
-				noButton
 				css={css`
 					margin-bottom: 60px;
 				`}
+				onSubmit={onSubmit}
 			>
+				<Error error={error} setError={setError} margin="80px" />
+				<SettingsBox
+					title={__('Currency DisplaySettings', 'surecart')}
+					description={__(
+						'Set the currency display settings for your site.',
+						'surecart'
+					)}
+					noButton
+				>
+					<ScSwitch
+						checked={currencyGeolocationEnabled}
+						name="currency_geolocation_enabled"
+						onScChange={(e) =>
+							setCurrencyGeolocationEnabled(e.target.checked)
+						}
+					>
+						{__('Geolocation', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								"Use the user's location to determine which currency to display by default. NOTE: This may not work if the user is using a VPN, proxy, or you are caching your site pages.",
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</SettingsBox>
+
 				<SettingsBox
 					title={__('Display Currencies', 'surecart')}
 					description={__(

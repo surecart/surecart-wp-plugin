@@ -235,6 +235,16 @@ class SettingService {
 				'sanitize_callback' => 'boolval',
 			]
 		);
+		$this->register(
+			'surecart',
+			'currency_geolocation_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
 	}
 
 	/**

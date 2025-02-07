@@ -31,7 +31,7 @@ class Currency {
 		}
 
 		// get the current locale currency.
-		if ( class_exists( 'NumberFormatter' ) ) {
+		if ( class_exists( 'NumberFormatter' ) && \SureCart::settings()->get( 'currency_geolocation_enabled', true ) ) {
 			$locale = self::getPreferredLocaleFromHeader();
 			if ( isset( $locale ) ) {
 				// Create a NumberFormatter in CURRENCY mode.
