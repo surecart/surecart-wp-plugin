@@ -659,7 +659,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getAmountDueDefaultCurrencyDisplayAmountAttribute() {
-		return Currency::format( $this->amount_due, $this->currency, [ 'force' => true ] );
+		return Currency::format( $this->amount_due, $this->currency, [ 'convert' => false ] );
 	}
 
 	/**
