@@ -29,11 +29,6 @@ class Currency {
 	 * @return string
 	 */
 	public static function getCurrentCurrency() {
-		// if the currency is not being converted, use the default currency.
-		if ( ! \SureCart::currency()->is_converting ) {
-			return self::getDefaultCurrency();
-		}
-
 		// Try getting currency from request parameters.
 		$currency = self::getCurrencyFromRequest();
 		if ( $currency ) {
