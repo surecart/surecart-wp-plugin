@@ -43,12 +43,15 @@ class LineItemsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function swap( \WP_REST_Request $request ) {
-		$class     = new $this->class( $request->get_json_params() );
-		$class->id = $request['id'];
-		$model     = $this->middleware( $class, $request );
+		$model = $this->middleware( new $this->class( $request['id'] ), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
+
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
 		return $model->where( $request->get_query_params() )->swap( $request['id'] );
 	}
 
@@ -60,12 +63,15 @@ class LineItemsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function unswap( \WP_REST_Request $request ) {
-		$class     = new $this->class( $request->get_json_params() );
-		$class->id = $request['id'];
-		$model     = $this->middleware( $class, $request );
+		$model = $this->middleware( new $this->class( $request['id'] ), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
+
+		if ( ! empty( $this->with ) ) {
+			$model = $model->with( $this->with );
+		}
+
 		return $model->where( $request->get_query_params() )->unswap( $request['id'] );
 	}
 }
