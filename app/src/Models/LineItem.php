@@ -87,20 +87,18 @@ class LineItem extends Model {
 	 * @return $this|\WP_Error
 	 */
 	protected function swap( $id = null ) {
-		if ( $id ) {
-			$this->setAttribute( 'id', $id );
-		}
-
 		if ( $this->fireModelEvent( 'swaping' ) === false ) {
 			return $this;
 		}
 
-		if ( empty( $this->attributes['id'] ) ) {
+		$this->id = $id ? $id : $this->id;
+
+		if ( empty( $this->id ) ) {
 			return new \WP_Error( 'not_saved', 'No Line Item Id passed.' );
 		}
 
 		$swapped = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/swap',
+			$this->endpoint . '/' . $this->id . '/swap',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
@@ -112,7 +110,9 @@ class LineItem extends Model {
 		}
 
 		$this->resetAttributes();
+
 		$this->fill( $swapped );
+
 		$this->fireModelEvent( 'swapped' );
 
 		return $this;
@@ -126,20 +126,18 @@ class LineItem extends Model {
 	 * @return $this|\WP_Error
 	 */
 	protected function unswap( $id = null ) {
-		if ( $id ) {
-			$this->setAttribute( 'id', $id );
-		}
-
 		if ( $this->fireModelEvent( 'unswaping' ) === false ) {
 			return $this;
 		}
 
-		if ( empty( $this->attributes['id'] ) ) {
+		$this->id = $id ? $id : $this->id;
+
+		if ( empty( $this->id ) ) {
 			return new \WP_Error( 'not_saved', 'No Line Item Id passed.' );
 		}
 
 		$unswapped = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/unswap',
+			$this->endpoint . '/' . $this->id . '/unswap',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
@@ -151,7 +149,9 @@ class LineItem extends Model {
 		}
 
 		$this->resetAttributes();
+
 		$this->fill( $unswapped );
+
 		$this->fireModelEvent( 'unswapped' );
 
 		return $this;
