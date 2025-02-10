@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-28T14:32:01+00:00\n"
+"POT-Creation-Date: 2025-02-10T14:18:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -134,7 +134,7 @@ msgstr ""
 #: Controllers/PaymentMethodController.php:182
 #: Blocks/Payment/edit.js:33
 #: sc-license.js:130
-#: sc-order.js:189
+#: sc-order.js:186
 #: sc-payment.js:67
 msgid "Test Mode"
 msgstr ""
@@ -170,7 +170,6 @@ msgstr ""
 #: products/modules/Prices/index.js:59
 #: subscriptions/edit/modules/Price.js:54
 #: subscriptions/show/modules/CurrentPlan.js:85
-#: build/blocks/product-price-chooser/view.php:3
 #: src/blocks/product-price-chooser/view.php:3
 msgid "Pricing"
 msgstr ""
@@ -245,7 +244,7 @@ msgstr ""
 #: orders/modules/Refunds.js:69
 #: settings/connection/IncomingWebhooks.js:141
 #: sc-license.js:140
-#: sc-order.js:189
+#: sc-order.js:186
 msgid "Date"
 msgstr ""
 
@@ -285,10 +284,9 @@ msgstr ""
 #: Blocks/Upsell/UpsellTotals/edit.js:7
 #: Blocks/Upsell/UpsellTotals/edit.js:45
 #: components/PriceChoices.js:21
-#: build/blocks/cart-subtotal/view.php:14
 #: src/blocks/cart-subtotal/view.php:14
 #: sc-order-confirmation-totals2.js:37
-#: sc-order.js:162
+#: sc-order.js:159
 #: sc-stripe-payment-request2.js:99
 #: sc-stripe-payment-request2.js:136
 #: sc-upsell-totals.js:31
@@ -358,19 +356,11 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:464
 #: src/Controllers/Admin/Products/ProductsListTable.php:595
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:464
-#: build/blocks/product-list-filter/view.php:42
-#: build/blocks/product-list-sidebar-toggle/view.php:50
 #: src/blocks/product-list-filter/view.php:42
 #: src/blocks/product-list-sidebar-toggle/view.php:50
-#: build/blocks/product-list-filter-checkboxes/index.js:84
-#: build/blocks/product-list-filter/index.js:87
-#: build/blocks/product-list-filter/index.js:94
 #: src/blocks/product-list-filter-checkboxes/edit.js:51
 #: src/blocks/product-list-filter/edit.js:47
 #: src/blocks/product-list-filter/edit.js:57
-#: build/blocks/product-list-filter-checkboxes/index.js:65
-#: build/blocks/product-list-filter/index.js:61
-#: build/blocks/product-list-filter/index.js:71
 #: sc-product-item-list.js:259
 msgid "Filter"
 msgstr ""
@@ -534,7 +524,6 @@ msgstr ""
 #: Blocks/Donation/edit.js:258
 #: Blocks/DonationAmount/edit.js:34
 #: Blocks/ProductDonationAmount/edit.js:49
-#: build/blocks/product-selected-price-ad-hoc-amount/view.php:14
 #: src/blocks/product-selected-price-ad-hoc-amount/view.php:14
 msgid "Amount"
 msgstr ""
@@ -599,12 +588,6 @@ msgstr ""
 #: orders/modules/LineItems/index.js:23
 #: util.js:97
 #: Blocks/Form/edit.js:393
-#: build/blocks/product-selected-price-amount/index.js:82
-#: build/blocks/product-selected-price-fees/index.js:82
-#: build/blocks/product-selected-price-scratch-amount/index.js:82
-#: build/blocks/product-selected-price-amount/index.js:97
-#: build/blocks/product-selected-price-fees/index.js:97
-#: build/blocks/product-selected-price-scratch-amount/index.js:97
 #: sc-order-status-badge2.js:37
 msgid "Processing"
 msgstr ""
@@ -773,12 +756,6 @@ msgstr ""
 #: src/Models/Referral.php:166
 #: affiliation-referrals/EditAffiliationReferral.js:48
 #: util.js:96
-#: build/blocks/product-selected-price-amount/index.js:81
-#: build/blocks/product-selected-price-fees/index.js:81
-#: build/blocks/product-selected-price-scratch-amount/index.js:81
-#: build/blocks/product-selected-price-amount/index.js:96
-#: build/blocks/product-selected-price-fees/index.js:96
-#: build/blocks/product-selected-price-scratch-amount/index.js:96
 msgid "Reviewing"
 msgstr ""
 
@@ -788,12 +765,6 @@ msgstr ""
 #: src/Models/Referral.php:170
 #: affiliation-referrals/EditAffiliationReferral.js:46
 #: util.js:94
-#: build/blocks/product-selected-price-amount/index.js:79
-#: build/blocks/product-selected-price-fees/index.js:79
-#: build/blocks/product-selected-price-scratch-amount/index.js:79
-#: build/blocks/product-selected-price-amount/index.js:94
-#: build/blocks/product-selected-price-fees/index.js:94
-#: build/blocks/product-selected-price-scratch-amount/index.js:94
 msgid "Approved"
 msgstr ""
 
@@ -803,12 +774,6 @@ msgstr ""
 #: src/Models/Referral.php:168
 #: affiliation-referrals/EditAffiliationReferral.js:47
 #: util.js:95
-#: build/blocks/product-selected-price-amount/index.js:80
-#: build/blocks/product-selected-price-fees/index.js:80
-#: build/blocks/product-selected-price-scratch-amount/index.js:80
-#: build/blocks/product-selected-price-amount/index.js:95
-#: build/blocks/product-selected-price-fees/index.js:95
-#: build/blocks/product-selected-price-scratch-amount/index.js:95
 msgid "Denied"
 msgstr ""
 
@@ -903,12 +868,6 @@ msgstr ""
 #: src/Models/AffiliationRequest.php:123
 #: orders/modules/Refunds.js:41
 #: util.js:93
-#: build/blocks/product-selected-price-amount/index.js:78
-#: build/blocks/product-selected-price-fees/index.js:78
-#: build/blocks/product-selected-price-scratch-amount/index.js:78
-#: build/blocks/product-selected-price-amount/index.js:93
-#: build/blocks/product-selected-price-fees/index.js:93
-#: build/blocks/product-selected-price-scratch-amount/index.js:93
 msgid "Pending"
 msgstr ""
 
@@ -988,12 +947,6 @@ msgstr ""
 #: licenses/modules/Details/index.js:21
 #: util.js:91
 #: Blocks/Dashboard/CustomerLicenses/edit.js:75
-#: build/blocks/product-selected-price-amount/index.js:76
-#: build/blocks/product-selected-price-fees/index.js:76
-#: build/blocks/product-selected-price-scratch-amount/index.js:76
-#: build/blocks/product-selected-price-amount/index.js:91
-#: build/blocks/product-selected-price-fees/index.js:91
-#: build/blocks/product-selected-price-scratch-amount/index.js:91
 #: sc-license.js:109
 #: sc-licenses-list.js:82
 #: sc-subscription-status-badge2.js:55
@@ -1006,12 +959,6 @@ msgstr ""
 #: affiliations/ViewAffiliation.js:213
 #: licenses/modules/Details/index.js:27
 #: util.js:92
-#: build/blocks/product-selected-price-amount/index.js:77
-#: build/blocks/product-selected-price-fees/index.js:77
-#: build/blocks/product-selected-price-scratch-amount/index.js:77
-#: build/blocks/product-selected-price-amount/index.js:92
-#: build/blocks/product-selected-price-fees/index.js:92
-#: build/blocks/product-selected-price-scratch-amount/index.js:92
 #: sc-license.js:115
 msgid "Inactive"
 msgstr ""
@@ -1033,12 +980,6 @@ msgstr ""
 #: products/modules/SingleDownload.js:259
 #: upsell-funnels/EditFunnel.js:262
 #: util.js:89
-#: build/blocks/product-selected-price-amount/index.js:74
-#: build/blocks/product-selected-price-fees/index.js:74
-#: build/blocks/product-selected-price-scratch-amount/index.js:74
-#: build/blocks/product-selected-price-amount/index.js:89
-#: build/blocks/product-selected-price-fees/index.js:89
-#: build/blocks/product-selected-price-scratch-amount/index.js:89
 msgid "Archived"
 msgstr ""
 
@@ -1418,16 +1359,10 @@ msgstr ""
 #: util.js:98
 #: Blocks/Dashboard/CustomerInvoices/edit.js:60
 #: Blocks/Dashboard/CustomerOrders/edit.js:78
-#: build/blocks/product-selected-price-amount/index.js:83
-#: build/blocks/product-selected-price-fees/index.js:83
-#: build/blocks/product-selected-price-scratch-amount/index.js:83
-#: build/blocks/product-selected-price-amount/index.js:98
-#: build/blocks/product-selected-price-fees/index.js:98
-#: build/blocks/product-selected-price-scratch-amount/index.js:98
-#: sc-charges-list.js:91
+#: sc-charges-list.js:90
 #: sc-invoice-status-badge2.js:31
 #: sc-order-status-badge2.js:41
-#: sc-order.js:177
+#: sc-order.js:174
 msgid "Paid"
 msgstr ""
 
@@ -1439,12 +1374,6 @@ msgstr ""
 #: products/components/Status/index.js:95
 #: products/modules/Tax/Category.js:102
 #: util.js:90
-#: build/blocks/product-selected-price-amount/index.js:75
-#: build/blocks/product-selected-price-fees/index.js:75
-#: build/blocks/product-selected-price-scratch-amount/index.js:75
-#: build/blocks/product-selected-price-amount/index.js:90
-#: build/blocks/product-selected-price-fees/index.js:90
-#: build/blocks/product-selected-price-scratch-amount/index.js:90
 #: sc-invoice-status-badge2.js:35
 #: sc-order-status-badge2.js:47
 msgid "Draft"
@@ -1464,9 +1393,9 @@ msgstr ""
 #: invoices/modules/Payment.js:99
 #: orders/modules/LineItems/index.js:185
 #: Blocks/Dashboard/CustomerOrders/edit.js:121
-#: sc-charges-list.js:86
-#: sc-order.js:180
-#: sc-orders-list.js:115
+#: sc-charges-list.js:85
+#: sc-order.js:177
+#: sc-orders-list.js:114
 msgid "Refunded"
 msgstr ""
 
@@ -1494,7 +1423,7 @@ msgstr ""
 #: invoices/Invoice.js:258
 #: Controllers/InvoiceController.php:63
 #: Controllers/InvoiceController.php:73
-#: sc-invoices-list.js:149
+#: sc-invoices-list.js:148
 msgid "Invoices"
 msgstr ""
 
@@ -1526,8 +1455,8 @@ msgstr ""
 #: web/buy-template.php:93
 #: licenses/modules/Purchase.js:44
 #: store/add-entities.js:278
-#: sc-order-submit.js:57
-#: sc-order-submit.js:59
+#: sc-order-submit.js:56
+#: sc-order-submit.js:58
 msgid "Purchase"
 msgstr ""
 
@@ -1607,7 +1536,7 @@ msgstr ""
 #: settings/shipping/ShippingSettings.js:120
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:257
 #: subscriptions/show/modules/LineItems/index.js:102
-#: sc-line-item-shipping2.js:28
+#: sc-line-item-shipping2.js:27
 #: sc-order-confirmation-totals2.js:37
 #: sc-order.js:153
 #: sc-shipping-choices2.js:62
@@ -1737,12 +1666,8 @@ msgstr ""
 #: upsell-funnels/modules/Conditions.js:132
 #: Blocks/Form/components/SelectPrices.js:111
 #: Blocks/ProductItemList/edit.js:363
-#: build/blocks/product-list/index.js:321
-#: build/blocks/product-list/index.js:754
 #: src/blocks/product-list/inspector-controls/IncludeControls.js:179
 #: src/blocks/product-list/inspector-controls/index.js:99
-#: build/blocks/product-list/index.js:263
-#: build/blocks/product-list/index.js:649
 msgid "Products"
 msgstr ""
 
@@ -1841,7 +1766,6 @@ msgstr ""
 #: products/modules/Variations/Variants.js:123
 #: Blocks/CheckoutForm/components/PriceChoices.js:57
 #: components/PriceChoices.js:18
-#: build/blocks/product-quantity/view.php:3
 #: src/blocks/product-quantity/view.php:3
 #: sc-checkout-stock-alert2.js:110
 msgid "Quantity"
@@ -1878,16 +1802,10 @@ msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:308
 #: components/NewShopTemplate.js:257
-#: build/blocks/product-list-no-products/index.js:54
-#: build/blocks/product-list/index.js:954
-#: build/blocks/product-list/index.js:1101
 #: src/blocks/product-list-no-products/edit.js:16
 #: src/blocks/product-list/list-placeholder.js:43
 #: src/blocks/product-list/template.js:82
 #: src/components/ProductSelector.js:135
-#: build/blocks/product-list-no-products/index.js:30
-#: build/blocks/product-list/index.js:844
-#: build/blocks/product-list/index.js:1018
 #: sc-product-item-list.js:277
 msgid "No products found."
 msgstr ""
@@ -1905,8 +1823,8 @@ msgstr ""
 #: src/Models/Price.php:125
 #: checkouts/modules/SelectShipping.js:130
 #: invoices/modules/SelectShipping.js:95
-#: sc-line-item-shipping2.js:28
-#: sc-order-bump2.js:74
+#: sc-line-item-shipping2.js:27
+#: sc-order-bump2.js:70
 #: sc-price2.js:32
 #: sc-shipping-choices2.js:70
 #: sc-upsell-totals.js:22
@@ -2069,12 +1987,12 @@ msgstr ""
 
 #. translators: used as in time period: "for 3 months"
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:260
-#: sc-order-bump2.js:62
+#: sc-order-bump2.js:61
 #: sc-price-choice-container2.js:44
-#: sc-price-choice-container2.js:60
-#: sc-price-choice-container2.js:69
-#: sc-price-choice.js:790
-#: sc-price-choice.js:813
+#: sc-price-choice-container2.js:61
+#: sc-price-choice-container2.js:70
+#: sc-price-choice.js:791
+#: sc-price-choice.js:815
 #: sc-price2.js:43
 #: sc-price2.js:56
 #: sc-product-price-choices.js:29
@@ -2184,12 +2102,6 @@ msgstr[1] ""
 #: src/Models/Checkout.php:482
 #: src/Models/Coupon.php:54
 #: util.js:49
-#: build/blocks/product-selected-price-amount/index.js:38
-#: build/blocks/product-selected-price-fees/index.js:38
-#: build/blocks/product-selected-price-scratch-amount/index.js:38
-#: build/blocks/product-selected-price-amount/index.js:49
-#: build/blocks/product-selected-price-fees/index.js:49
-#: build/blocks/product-selected-price-scratch-amount/index.js:49
 #: price.js:13
 msgid "%1d%% off"
 msgstr ""
@@ -2376,7 +2288,7 @@ msgstr ""
 #: Controllers/DownloadController.php:135
 #: sc-dashboard-downloads-list.js:115
 #: sc-downloads-list.js:97
-#: sc-order.js:189
+#: sc-order.js:186
 msgid "Downloads"
 msgstr ""
 
@@ -2487,13 +2399,6 @@ msgstr ""
 #: invoices/modules/Tax/index.js:52
 #: Blocks/CartMenuButton/edit.js:31
 #: Blocks/StoreLogo/edit.js:150
-#: build/blocks/cart-menu-button/index.js:46
-#: build/blocks/product-image/index.js:193
-#: build/blocks/product-list-filter-checkboxes/index.js:72
-#: build/blocks/product-list-filter/index.js:75
-#: build/blocks/product-list-sidebar/index.js:140
-#: build/blocks/product-pagination/index.js:99
-#: build/blocks/product-title/index.js:86
 #: src/blocks/cart-menu-button/edit.js:26
 #: src/blocks/product-image/edit.js:165
 #: src/blocks/product-list-filter-checkboxes/edit.js:34
@@ -2501,13 +2406,6 @@ msgstr ""
 #: src/blocks/product-list-sidebar/edit.js:154
 #: src/blocks/product-pagination/edit.js:65
 #: src/blocks/product-title/edit.js:42
-#: build/blocks/cart-menu-button/index.js:26
-#: build/blocks/product-image/index.js:179
-#: build/blocks/product-list-filter-checkboxes/index.js:48
-#: build/blocks/product-list-filter/index.js:44
-#: build/blocks/product-list-sidebar/index.js:168
-#: build/blocks/product-pagination/index.js:79
-#: build/blocks/product-title/index.js:56
 msgid "Settings"
 msgstr ""
 
@@ -2547,7 +2445,7 @@ msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:58
 #: upsell-funnels/modules/Upsell/EditUpsell.js:138
-#: sc-product-selected-price.js:74
+#: sc-product-selected-price.js:73
 msgid "Product price"
 msgstr ""
 
@@ -2672,9 +2570,7 @@ msgstr ""
 
 #. translators: %s: Setup Fee amount.
 #: src/Integrations/Bricks/BricksDynamicDataService.php:334
-#: build/blocks/price-trial/index.js:26
 #: src/blocks/price-trial/edit.js:9
-#: build/blocks/price-trial/index.js:9
 msgid "Starting in 15 days"
 msgstr ""
 
@@ -2705,9 +2601,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:65
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:210
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:230
-#: build/blocks/product-buy-buttons/index.js:89
 #: src/blocks/product-buy-buttons/edit.js:49
-#: build/blocks/product-buy-buttons/index.js:63
 #: sc-product-price-modal.js:64
 msgid "Add To Cart"
 msgstr ""
@@ -2719,12 +2613,8 @@ msgstr ""
 #: Blocks/CustomerDashboardButton/edit.js:34
 #: Blocks/Form/edit.js:496
 #: Blocks/Submit/edit.js:44
-#: build/blocks/cart-coupon/index.js:178
-#: build/blocks/cart-submit/index.js:119
 #: src/blocks/cart-coupon/edit.js:166
 #: src/blocks/cart-submit/edit.js:85
-#: build/blocks/cart-coupon/index.js:180
-#: build/blocks/cart-submit/index.js:99
 msgid "Button Text"
 msgstr ""
 
@@ -2775,12 +2665,8 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:118
 #: settings/brand/components/CartSettings.js:219
 #: Blocks/CartMenuButton/edit.js:41
-#: build/blocks/cart-menu-button/index.js:55
-#: build/blocks/product-list-sidebar-toggle/index.js:82
 #: src/blocks/cart-menu-button/edit.js:36
 #: src/blocks/product-list-sidebar-toggle/edit.js:56
-#: build/blocks/cart-menu-button/index.js:36
-#: build/blocks/product-list-sidebar-toggle/index.js:70
 msgid "Icon"
 msgstr ""
 
@@ -2810,7 +2696,6 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:203
 #: src/Integrations/Bricks/Elements/Product.php:235
 #: src/Models/Blocks/ProductPageBlock.php:228
-#: build/blocks/product-buy-button/view.php:16
 #: src/blocks/product-buy-button/view.php:16
 msgid "Add to Cart"
 msgstr ""
@@ -2819,11 +2704,8 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/Product.php:247
 #: Blocks/AddToCartButton/Block.php:81
 #: Blocks/BuyButton/Block.php:36
-#: build/blocks/product-buy-button/view.php:16
 #: src/blocks/product-buy-button/view.php:16
-#: build/blocks/product-buy-buttons/index.js:94
 #: src/blocks/product-buy-buttons/edit.js:60
-#: build/blocks/product-buy-buttons/index.js:74
 msgid "Buy Now"
 msgstr ""
 
@@ -2831,7 +2713,6 @@ msgstr ""
 #: src/Models/Blocks/ProductPageBlock.php:229
 #: Blocks/Product/BuyButton/Block.php:128
 #: Blocks/Upsell/SubmitButton/Block.php:131
-#: build/blocks/product-buy-button/view.php:17
 #: src/blocks/product-buy-button/view.php:17
 msgid "Sold Out"
 msgstr ""
@@ -2843,7 +2724,6 @@ msgstr ""
 #: Blocks/Product/BuyButton/Block.php:144
 #: Blocks/Upsell/SubmitButton/Block.php:125
 #: Blocks/Upsell/SubmitButton/Block.php:149
-#: build/blocks/product-buy-button/view.php:18
 #: src/blocks/product-buy-button/view.php:18
 msgid "Unavailable For Purchase"
 msgstr ""
@@ -2869,18 +2749,14 @@ msgid "Auto height"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:71
-#: build/blocks/product-media/index.js:166
 #: src/blocks/product-media/edit.js:137
-#: build/blocks/product-media/index.js:153
 msgid "Enlarge on click"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:80
 #: Blocks/ProductCollectionImage/dimension-controls.js:141
 #: Blocks/ProductCollectionImage/dimension-controls.js:150
-#: build/blocks/product-image/index.js:179
 #: src/blocks/product-image/edit.js:144
-#: build/blocks/product-image/index.js:158
 msgid "Height"
 msgstr ""
 
@@ -2890,9 +2766,7 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:96
 #: Blocks/Product/Media/edit.js:68
-#: build/blocks/product-media/index.js:190
 #: src/blocks/product-media/edit.js:177
-#: build/blocks/product-media/index.js:193
 msgid "Unlimited"
 msgstr ""
 
@@ -2909,12 +2783,8 @@ msgid "Price Choice"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:75
-#: build/blocks/product-price-choice-template/index.js:133
-#: build/blocks/product-variant-pill/index.js:119
 #: src/blocks/product-price-choice-template/edit.js:148
 #: src/blocks/product-variant-pill/edit.js:75
-#: build/blocks/product-price-choice-template/index.js:148
-#: build/blocks/product-variant-pill/index.js:89
 msgid "Highlight Border"
 msgstr ""
 
@@ -2969,19 +2839,11 @@ msgstr ""
 #: Blocks/Switch/components/Inspector.js:23
 #: Blocks/Textarea/edit.js:42
 #: Blocks/TrialLineItem/edit.js:21
-#: build/blocks/cart-bump-line-item/index.js:86
-#: build/blocks/cart-coupon/index.js:166
-#: build/blocks/cart-subtotal/index.js:81
-#: build/blocks/product-quantity/index.js:79
 #: src/blocks/cart-bump-line-item/edit.js:38
 #: src/blocks/cart-coupon/edit.js:150
 #: src/blocks/cart-subtotal/edit.js:33
 #: src/blocks/product-quantity/edit.js:37
 #: src/components/LabelInspectorControls.js:24
-#: build/blocks/cart-bump-line-item/index.js:52
-#: build/blocks/cart-coupon/index.js:164
-#: build/blocks/cart-subtotal/index.js:47
-#: build/blocks/product-quantity/index.js:51
 msgid "Label"
 msgstr ""
 
@@ -3074,7 +2936,7 @@ msgstr ""
 #: src/Models/Price.php:122
 #: products/modules/Prices/Price/Header.js:130
 #: sc-price-choice-container2.js:53
-#: sc-price-choice.js:806
+#: sc-price-choice.js:807
 #: sc-price2.js:30
 #: sc-recurring-price-choice-container2.js:78
 msgid "Custom Amount"
@@ -3132,9 +2994,7 @@ msgstr ""
 #: src/WordPress/PostTypes/ProductPostTypeService.php:945
 #: Blocks/ProductItemList/edit.js:388
 #: Blocks/ProductItemList/edit.js:501
-#: build/blocks/product-list/index.js:760
 #: src/blocks/product-list/inspector-controls/index.js:106
-#: build/blocks/product-list/index.js:656
 msgid "All Products"
 msgstr ""
 
@@ -3232,9 +3092,7 @@ msgstr ""
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:29
 #: products/CreateProduct.js:65
-#: build/blocks/product-title/index.js:108
 #: src/blocks/product-title/edit.js:73
-#: build/blocks/product-title/index.js:87
 msgid "Product Name"
 msgstr ""
 
@@ -3569,11 +3427,9 @@ msgstr ""
 #: src/Models/Price.php:217
 #: products/modules/Prices/Price/Header.js:59
 #: subscriptions/show/modules/CurrentPlan.js:187
-#: build/blocks/product-selected-price-fees/index.js:122
 #: src/blocks/product-selected-price-fees/edit.js:16
-#: build/blocks/product-selected-price-fees/index.js:144
-#: sc-price-choice-container2.js:71
-#: sc-price-choice.js:815
+#: sc-price-choice-container2.js:73
+#: sc-price-choice.js:818
 #: sc-price2.js:58
 #: sc-recurring-price-choice-container2.js:87
 msgid "Setup Fee"
@@ -7429,18 +7285,9 @@ msgstr ""
 #: admin/affiliations/index.php:11
 #: Blocks/ProductCollection/edit.js:273
 #: Blocks/ProductItemList/edit.js:325
-#: build/blocks/product-list-search/view.php:28
 #: src/blocks/product-list-search/view.php:28
-#: build/blocks/product-list-related/index.js:1085
-#: build/blocks/product-list-search/index.js:78
-#: build/blocks/product-list/index.js:1651
-#: build/blocks/product-page/index.js:1056
 #: src/blocks/product-list-search/edit.js:29
 #: src/utilities/pattern-selection-modal.js:77
-#: build/blocks/product-list-related/index.js:1001
-#: build/blocks/product-list-search/index.js:43
-#: build/blocks/product-list/index.js:1539
-#: build/blocks/product-page/index.js:1068
 #: sc-product-item-list.js:266
 #: sc-product-item-list.js:275
 msgid "Search"
@@ -7852,7 +7699,7 @@ msgstr ""
 
 #: web/buy-template.php:54
 #: Blocks/OrderBumps/edit.js:16
-#: sc-order-bumps2.js:29
+#: sc-order-bumps2.js:28
 msgid "Recommended"
 msgstr ""
 
@@ -7863,13 +7710,9 @@ msgstr ""
 #: web/buy-template.php:57
 #: Blocks/CartCoupon/deprecated.js:48
 #: Blocks/Coupon/deprecated.js:25
-#: build/blocks/cart-coupon/view.php:100
-#: build/blocks/cart-coupon/view.php:131
 #: src/blocks/cart-coupon/view.php:100
 #: src/blocks/cart-coupon/view.php:131
-#: build/blocks/cart-coupon/index.js:140
 #: src/blocks/cart-coupon/edit.js:110
-#: build/blocks/cart-coupon/index.js:124
 msgid "Enter coupon code"
 msgstr ""
 
@@ -7882,13 +7725,9 @@ msgstr ""
 #: Blocks/CartCoupon/deprecated.js:51
 #: Blocks/Coupon/deprecated.js:28
 #: components/ColorPopup.js:83
-#: build/blocks/cart-coupon/view.php:111
-#: build/blocks/cart-coupon/view.php:141
 #: src/blocks/cart-coupon/view.php:111
 #: src/blocks/cart-coupon/view.php:141
-#: build/blocks/cart-coupon/index.js:152
 #: src/blocks/cart-coupon/edit.js:123
-#: build/blocks/cart-coupon/index.js:137
 #: sc-order-coupon-form.js:68
 msgid "Apply"
 msgstr ""
@@ -7909,9 +7748,7 @@ msgstr ""
 #: Blocks/Total/save.js:27
 #: Blocks/Totals/edit.js:55
 #: Blocks/Upsell/UpsellTotals/edit.js:21
-#: build/blocks/cart-subtotal/index.js:99
 #: src/blocks/cart-subtotal/edit.js:51
-#: build/blocks/cart-subtotal/index.js:65
 #: sc-line-item-total2.js:36
 #: sc-order-confirmation-totals2.js:37
 #: sc-order.js:140
@@ -7926,7 +7763,7 @@ msgstr ""
 #: Blocks/Total/edit.js:64
 #: Blocks/Total/save.js:24
 #: Blocks/Totals/edit.js:73
-#: sc-line-item-total2.js:57
+#: sc-line-item-total2.js:66
 msgid "Total Due Today"
 msgstr ""
 
@@ -8088,15 +7925,15 @@ msgstr ""
 #: subscriptions/show/ShowSubscription.js:111
 #: upsell-funnels/modules/Upsell/Product.js:54
 #: sc-cart-form.js:74
-#: sc-charges-list.js:75
+#: sc-charges-list.js:74
 #: sc-customer-edit.js:94
 #: sc-dashboard-customer-details.js:56
 #: sc-dashboard-downloads-list.js:65
 #: sc-dashboard-downloads-list.js:81
 #: sc-downloads-list.js:74
 #: sc-fulfillments.js:49
-#: sc-invoices-list.js:62
-#: sc-invoices-list.js:75
+#: sc-invoices-list.js:61
+#: sc-invoices-list.js:74
 #: sc-license.js:45
 #: sc-license.js:80
 #: sc-licenses-list.js:56
@@ -8108,8 +7945,8 @@ msgstr ""
 #: sc-order-coupon-form.js:58
 #: sc-order.js:67
 #: sc-order.js:87
-#: sc-orders-list.js:64
-#: sc-orders-list.js:77
+#: sc-orders-list.js:63
+#: sc-orders-list.js:76
 #: sc-password-nag.js:57
 #: sc-password-nag.js:87
 #: sc-payment-methods-list.js:77
@@ -8126,8 +7963,8 @@ msgstr ""
 #: sc-subscription-payment-method.js:157
 #: sc-subscription-payment.js:56
 #: sc-subscription-payment.js:111
-#: sc-subscription-reactivate2.js:52
-#: sc-subscription-reactivate2.js:71
+#: sc-subscription-reactivate2.js:51
+#: sc-subscription-reactivate2.js:70
 #: sc-subscription-switch.js:60
 #: sc-subscription.js:97
 #: sc-subscription.js:118
@@ -8239,17 +8076,14 @@ msgstr ""
 #: settings/subscription-preservation/Reason.js:69
 #: subscriptions/show/modules/CurrentPlan.js:186
 #: upsell-funnels/modules/Upsell/Discount.js:35
-#: build/blocks/cart-coupon/view.php:28
 #: src/blocks/cart-coupon/view.php:28
-#: build/blocks/cart-coupon/index.js:109
 #: src/blocks/cart-coupon/edit.js:62
-#: build/blocks/cart-coupon/index.js:76
 #: sc-coupon-form2.js:121
 #: sc-order-confirmation-totals2.js:33
 #: sc-order.js:146
 #: sc-order.js:149
-#: sc-price-choice-container2.js:71
-#: sc-price-choice.js:815
+#: sc-price-choice-container2.js:73
+#: sc-price-choice.js:818
 #: sc-recurring-price-choice-container2.js:87
 msgid "Discount"
 msgstr ""
@@ -8283,7 +8117,7 @@ msgstr ""
 #: orders/modules/LineItems/index.js:137
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:222
 #: subscriptions/show/modules/LineItems/index.js:70
-#: sc-order.js:162
+#: sc-order.js:159
 msgid "Proration"
 msgstr ""
 
@@ -8292,7 +8126,7 @@ msgstr ""
 #: orders/modules/LineItems/index.js:146
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:230
 #: subscriptions/show/modules/LineItems/index.js:78
-#: sc-order.js:165
+#: sc-order.js:162
 #: sc-subscription-next-payment2.js:107
 #: sc-upcoming-invoice.js:225
 msgid "Applied Balance"
@@ -8435,7 +8269,7 @@ msgstr ""
 #: Blocks/Dashboard/WordPressAccount/edit.js:44
 #: sc-customer-details2.js:432
 #: sc-donation-choices.js:132
-#: sc-product-selected-price.js:74
+#: sc-product-selected-price.js:73
 #: sc-subscription-payment.js:138
 #: sc-wordpress-user.js:38
 msgid "Update"
@@ -8528,8 +8362,8 @@ msgstr ""
 #: coupons/Sidebar.js:52
 #: subscriptions/edit/modules/UpcomingPeriod.js:94
 #: Blocks/Totals/edit.js:144
-#: sc-order-summary.js:24
-#: sc-order-summary.js:62
+#: sc-order-summary.js:23
+#: sc-order-summary.js:61
 #: sc-summary2.js:21
 #: sc-summary2.js:55
 #: sc-upcoming-invoice.js:230
@@ -8852,12 +8686,6 @@ msgstr ""
 #: store/ui/reducer.js:138
 #: upsell-funnels/CreateFunnel.js:39
 #: util.js:124
-#: build/blocks/product-selected-price-amount/index.js:95
-#: build/blocks/product-selected-price-fees/index.js:95
-#: build/blocks/product-selected-price-scratch-amount/index.js:95
-#: build/blocks/product-selected-price-amount/index.js:124
-#: build/blocks/product-selected-price-fees/index.js:124
-#: build/blocks/product-selected-price-scratch-amount/index.js:124
 #: sc-checkout-stock-alert2.js:87
 #: sc-upcoming-invoice.js:195
 msgid "Something went wrong."
@@ -9096,7 +8924,7 @@ msgstr ""
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:95
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:60
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:58
-#: sc-subscription-reactivate2.js:82
+#: sc-subscription-reactivate2.js:81
 msgid "Confirm Charge"
 msgstr ""
 
@@ -9169,8 +8997,8 @@ msgstr ""
 #: Blocks/Total/edit.js:34
 #: Blocks/Total/edit.js:79
 #: Blocks/Total/save.js:30
-#: sc-line-item-total2.js:57
-#: sc-line-item-trial2.js:22
+#: sc-line-item-total2.js:66
+#: sc-line-item-trial2.js:21
 #: sc-order.js:143
 #: sc-subscription-next-payment2.js:107
 #: sc-upcoming-invoice.js:225
@@ -9186,8 +9014,8 @@ msgstr ""
 #: Blocks/Total/edit.js:54
 #: Blocks/Total/edit.js:82
 #: Blocks/Total/save.js:33
-#: sc-line-item-total2.js:57
-#: sc-order.js:174
+#: sc-line-item-total2.js:66
+#: sc-order.js:171
 #: sc-upsell-totals.js:31
 msgid "Amount Due"
 msgstr ""
@@ -9267,15 +9095,9 @@ msgstr ""
 #: components/MediaLibrary/index.js:365
 #: invoices/modules/PaymentMethods.js:164
 #: Blocks/CheckoutForm/components/Empty.js:140
-#: build/blocks/product-list-related/index.js:448
-#: build/blocks/product-list/index.js:1002
-#: build/blocks/product-page/index.js:201
 #: src/blocks/product-list-related/list-placeholder.js:89
 #: src/blocks/product-list/list-placeholder.js:106
 #: src/blocks/product-page/list-placeholder.js:74
-#: build/blocks/product-list-related/index.js:393
-#: build/blocks/product-list/index.js:907
-#: build/blocks/product-page/index.js:158
 msgid "Choose"
 msgstr ""
 
@@ -9291,8 +9113,8 @@ msgstr ""
 
 #: checkouts/modules/Price.js:190
 #: invoices/modules/Price.js:225
-#: sc-price-choice-container2.js:71
-#: sc-price-choice.js:815
+#: sc-price-choice-container2.js:72
+#: sc-price-choice.js:817
 #: sc-recurring-price-choice-container2.js:87
 msgid "Starting in %s day"
 msgid_plural "Starting in %s days"
@@ -9566,8 +9388,8 @@ msgid "Referral Items"
 msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:30
-#: sc-charges-list.js:89
-#: sc-orders-list.js:118
+#: sc-charges-list.js:88
+#: sc-orders-list.js:117
 msgid "Partially Refunded"
 msgstr ""
 
@@ -9658,7 +9480,7 @@ msgstr ""
 #: components/data-tables/OrdersDataTable.js:54
 #: Blocks/Dashboard/CustomerOrders/edit.js:66
 #: Blocks/Dashboard/CustomerOrders/edit.js:109
-#: sc-orders-list.js:142
+#: sc-orders-list.js:141
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] ""
@@ -9670,12 +9492,9 @@ msgid "Load More"
 msgstr ""
 
 #: components/data-tables/purchases-data-table/purchase-item.js:33
-#: build/blocks/cart-items/view.php:40
 #: src/blocks/cart-items/view.php:40
-#: build/blocks/cart-items/index.js:140
 #: src/blocks/cart-items/edit.js:111
-#: build/blocks/cart-items/index.js:125
-#: sc-product-line-item2.js:60
+#: sc-product-line-item2.js:70
 msgid "Qty:"
 msgstr ""
 
@@ -9817,16 +9636,12 @@ msgid "Max"
 msgstr ""
 
 #: components/MediaLibrary/index.js:264
-#: build/blocks/product-media/slideshow.php:64
-#: build/blocks/product-pagination-previous/view.php:11
 #: src/blocks/product-media/slideshow.php:64
 #: src/blocks/product-pagination-previous/view.php:11
 msgid "Previous Page"
 msgstr ""
 
 #: components/MediaLibrary/index.js:272
-#: build/blocks/product-media/slideshow.php:101
-#: build/blocks/product-pagination-next/view.php:11
 #: src/blocks/product-media/slideshow.php:101
 #: src/blocks/product-pagination-next/view.php:11
 msgid "Next Page"
@@ -10716,7 +10531,7 @@ msgid "Yearly"
 msgstr ""
 
 #: dashboard/components/RecentOrders.js:66
-#: sc-orders-list.js:127
+#: sc-orders-list.js:126
 msgid "You don't have any orders."
 msgstr ""
 
@@ -10959,26 +10774,26 @@ msgstr ""
 
 #: invoices/modules/Payment.js:73
 #: orders/modules/LineItems/index.js:155
-#: sc-order.js:168
+#: sc-order.js:165
 msgid "Credited Balance"
 msgstr ""
 
 #: invoices/modules/Payment.js:105
 #: orders/modules/LineItems/index.js:191
-#: sc-order.js:183
+#: sc-order.js:180
 msgid "Net Payment"
 msgstr ""
 
 #: invoices/modules/Payment.js:114
 #: orders/modules/LineItems/index.js:200
-#: sc-order.js:183
+#: sc-order.js:180
 msgid "*Tax to be paid on reverse charge basis"
 msgstr ""
 
 #: invoices/modules/Payment.js:179
 #: orders/modules/LineItems/index.js:326
 #: sc-line-item-tax2.js:39
-#: sc-order.js:159
+#: sc-order.js:156
 msgid "included"
 msgstr ""
 
@@ -11050,8 +10865,8 @@ msgstr ""
 
 #: invoices/modules/Summary.js:27
 #: Blocks/Totals/edit.js:161
-#: sc-order-summary.js:25
-#: sc-order-summary.js:60
+#: sc-order-summary.js:24
+#: sc-order-summary.js:59
 msgid "Invoice Summary"
 msgstr ""
 
@@ -11948,13 +11763,7 @@ msgstr ""
 #: product-collections/modules/Image.js:171
 #: products/modules/SingleDownload.js:297
 #: settings/brand/Logo.js:75
-#: build/blocks/product-list-related/index.js:1130
-#: build/blocks/product-list/index.js:1696
-#: build/blocks/product-page/index.js:1101
 #: src/utilities/patterns-toolbar.js:20
-#: build/blocks/product-list-related/index.js:1035
-#: build/blocks/product-list/index.js:1573
-#: build/blocks/product-page/index.js:1102
 msgid "Replace"
 msgstr ""
 
@@ -12082,7 +11891,6 @@ msgid "Cataloged at"
 msgstr ""
 
 #: products/components/CatalogedAt/index.js:79
-#: build/blocks/product-selected-price-amount/view.php:3
 #: src/blocks/product-selected-price-amount/view.php:3
 msgid "Now"
 msgstr ""
@@ -12154,12 +11962,6 @@ msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:88
 #: util.js:85
-#: build/blocks/product-selected-price-amount/index.js:70
-#: build/blocks/product-selected-price-fees/index.js:70
-#: build/blocks/product-selected-price-scratch-amount/index.js:70
-#: build/blocks/product-selected-price-amount/index.js:85
-#: build/blocks/product-selected-price-fees/index.js:85
-#: build/blocks/product-selected-price-scratch-amount/index.js:85
 msgid "Day"
 msgstr ""
 
@@ -12169,23 +11971,11 @@ msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:96
 #: util.js:86
-#: build/blocks/product-selected-price-amount/index.js:71
-#: build/blocks/product-selected-price-fees/index.js:71
-#: build/blocks/product-selected-price-scratch-amount/index.js:71
-#: build/blocks/product-selected-price-amount/index.js:86
-#: build/blocks/product-selected-price-fees/index.js:86
-#: build/blocks/product-selected-price-scratch-amount/index.js:86
 msgid "Month"
 msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:100
 #: util.js:87
-#: build/blocks/product-selected-price-amount/index.js:72
-#: build/blocks/product-selected-price-fees/index.js:72
-#: build/blocks/product-selected-price-scratch-amount/index.js:72
-#: build/blocks/product-selected-price-amount/index.js:87
-#: build/blocks/product-selected-price-fees/index.js:87
-#: build/blocks/product-selected-price-scratch-amount/index.js:87
 msgid "Year"
 msgstr ""
 
@@ -12402,15 +12192,9 @@ msgstr ""
 #: Blocks/ProductCollectionImage/dimension-controls.js:163
 #: Blocks/ProductCollectionImage/dimension-controls.js:172
 #: Blocks/StoreLogo/edit.js:153
-#: build/blocks/cart/index.js:57
-#: build/blocks/product-image/index.js:186
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:43
 #: src/blocks/cart/edit.js:61
 #: src/blocks/product-image/edit.js:154
 #: src/blocks/product-selected-price-ad-hoc-amount/edit.js:33
-#: build/blocks/cart/index.js:61
-#: build/blocks/product-image/index.js:168
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:33
 msgid "Width"
 msgstr ""
 
@@ -12616,7 +12400,7 @@ msgstr ""
 
 #: products/modules/integrations/Price.js:155
 #: ui/LineItemLabel.js:34
-#: sc-product-line-item2.js:60
+#: sc-product-line-item2.js:70
 msgid "SKU:"
 msgstr ""
 
@@ -12743,9 +12527,7 @@ msgstr ""
 #: products/modules/Prices/NewPrice/index.js:134
 #: products/modules/Prices/Price/Header.js:87
 #: Blocks/Product/PriceChoices/edit.js:99
-#: build/blocks/product-price-chooser/index.js:53
 #: src/blocks/product-price-chooser/edit.js:42
-#: build/blocks/product-price-chooser/index.js:42
 msgid "One Time"
 msgstr ""
 
@@ -12819,7 +12601,7 @@ msgstr ""
 #: util/translations.js:49
 #: price.js:33
 #: price.js:66
-#: sc-price-choice-container2.js:57
+#: sc-price-choice-container2.js:58
 #: sc-price2.js:40
 msgid "every"
 msgstr ""
@@ -13917,9 +13699,7 @@ msgstr ""
 
 #: settings/brand/components/CartSettings.js:205
 #: Blocks/CartMenuButton/edit.js:71
-#: build/blocks/cart-menu-button/index.js:75
 #: src/blocks/cart-menu-button/edit.js:88
-#: build/blocks/cart-menu-button/index.js:88
 msgid "Enable to always show the cart button, even your cart is empty."
 msgstr ""
 
@@ -14865,12 +14645,9 @@ msgstr ""
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:100
 #: Blocks/Form/components/ChooseDesign.js:28
-#: build/blocks/product-pagination-next/view.php:22
 #: index.php:139
 #: src/blocks/product-pagination-next/view.php:22
-#: build/blocks/product-pagination-next/index.js:75
 #: src/blocks/product-pagination-next/edit.js:29
-#: build/blocks/product-pagination-next/index.js:43
 #: sc-icon2.js:44
 #: sc-icon2.js:46
 #: sc-login-form.js:154
@@ -15685,7 +15462,7 @@ msgstr ""
 #: store/add-entities.js:201
 #: subscriptions/edit/modules/PaymentMethod/index.js:46
 #: Controllers/SubscriptionController.php:680
-#: sc-order.js:189
+#: sc-order.js:186
 msgid "Payment Method"
 msgstr ""
 
@@ -15922,12 +15699,6 @@ msgstr ""
 #: subscriptions/shared/EndDate.js:9
 #: subscriptions/show/modules/Details.js:16
 #: util.js:88
-#: build/blocks/product-selected-price-amount/index.js:73
-#: build/blocks/product-selected-price-fees/index.js:73
-#: build/blocks/product-selected-price-scratch-amount/index.js:73
-#: build/blocks/product-selected-price-amount/index.js:88
-#: build/blocks/product-selected-price-fees/index.js:88
-#: build/blocks/product-selected-price-scratch-amount/index.js:88
 #: sc-subscription-switch.js:160
 msgid "Lifetime"
 msgstr ""
@@ -16248,12 +16019,9 @@ msgid "This is a demo of a premium feature. To get this feature, please upgrade 
 msgstr ""
 
 #: ui/PrevNextButtons.js:28
-#: build/blocks/product-pagination-previous/view.php:36
 #: index.php:138
 #: src/blocks/product-pagination-previous/view.php:36
-#: build/blocks/product-pagination-previous/index.js:77
 #: src/blocks/product-pagination-previous/edit.js:39
-#: build/blocks/product-pagination-previous/index.js:53
 #: sc-icon2.js:45
 #: sc-icon2.js:47
 #: sc-pagination2.js:43
@@ -16450,12 +16218,9 @@ msgstr ""
 
 #: upsell-funnels/modules/Upsell/EditUpsell.js:34
 #: Blocks/BumpLineItem/edit.js:26
-#: build/blocks/cart-bump-line-item/view.php:18
 #: src/blocks/cart-bump-line-item/view.php:18
-#: build/blocks/cart-bump-line-item/index.js:101
 #: src/blocks/cart-bump-line-item/edit.js:54
-#: build/blocks/cart-bump-line-item/index.js:68
-#: sc-line-item-bump.js:23
+#: sc-line-item-bump.js:22
 #: sc-order-confirmation-totals2.js:37
 msgid "Bundle Discount"
 msgstr ""
@@ -16507,12 +16272,6 @@ msgstr ""
 
 #: util.js:40
 #: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:26
-#: build/blocks/product-selected-price-amount/index.js:32
-#: build/blocks/product-selected-price-fees/index.js:32
-#: build/blocks/product-selected-price-scratch-amount/index.js:32
-#: build/blocks/product-selected-price-amount/index.js:40
-#: build/blocks/product-selected-price-fees/index.js:40
-#: build/blocks/product-selected-price-scratch-amount/index.js:40
 msgid "%s off"
 msgstr ""
 
@@ -16559,7 +16318,7 @@ msgstr ""
 #: Controllers/ChargeController.php:22
 #: Controllers/ChargeController.php:32
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:43
-#: sc-charges-list.js:127
+#: sc-charges-list.js:126
 #: sc-payment-methods-list.js:193
 msgid "Payment History"
 msgstr ""
@@ -16590,7 +16349,7 @@ msgid "Payment method not found."
 msgstr ""
 
 #: Controllers/OrderController.php:72
-#: sc-orders-list.js:157
+#: sc-orders-list.js:156
 msgid "Order History"
 msgstr ""
 
@@ -16743,15 +16502,6 @@ msgstr ""
 #: Blocks/Total/edit.js:18
 #: Blocks/Totals/edit.js:85
 #: Blocks/VariantPriceSelector/edit.js:264
-#: build/blocks/cart-bump-line-item/index.js:84
-#: build/blocks/cart-coupon/index.js:158
-#: build/blocks/cart-items/index.js:104
-#: build/blocks/cart-submit/index.js:117
-#: build/blocks/cart-subtotal/index.js:79
-#: build/blocks/product-list-related/index.js:209
-#: build/blocks/product-list/index.js:721
-#: build/blocks/product-media/index.js:164
-#: build/blocks/product-quantity/index.js:77
 #: src/blocks/cart-bump-line-item/edit.js:35
 #: src/blocks/cart-coupon/edit.js:138
 #: src/blocks/cart-items/edit.js:61
@@ -16761,15 +16511,6 @@ msgstr ""
 #: src/blocks/product-list/inspector-controls/index.js:64
 #: src/blocks/product-media/edit.js:135
 #: src/blocks/product-quantity/edit.js:34
-#: build/blocks/cart-bump-line-item/index.js:49
-#: build/blocks/cart-coupon/index.js:152
-#: build/blocks/cart-items/index.js:75
-#: build/blocks/cart-submit/index.js:96
-#: build/blocks/cart-subtotal/index.js:44
-#: build/blocks/product-list-related/index.js:157
-#: build/blocks/product-list/index.js:614
-#: build/blocks/product-media/index.js:151
-#: build/blocks/product-quantity/index.js:48
 msgid "Attributes"
 msgstr ""
 
@@ -16861,19 +16602,7 @@ msgstr ""
 #: Blocks/AddToCartButton/edit.js:78
 #: Blocks/BuyButton/edit.js:59
 #: components/CartInspectorControls.js:18
-#: build/blocks/cart-bump-line-item/index.js:179
-#: build/blocks/cart-coupon/index.js:263
-#: build/blocks/cart-header/index.js:169
-#: build/blocks/cart-items/index.js:245
-#: build/blocks/cart-message/index.js:155
-#: build/blocks/cart-subtotal/index.js:141
 #: src/components/CartInspectorControls.js:18
-#: build/blocks/cart-bump-line-item/index.js:126
-#: build/blocks/cart-coupon/index.js:261
-#: build/blocks/cart-header/index.js:114
-#: build/blocks/cart-items/index.js:222
-#: build/blocks/cart-message/index.js:108
-#: build/blocks/cart-subtotal/index.js:102
 msgid "Color Settings"
 msgstr ""
 
@@ -16881,38 +16610,14 @@ msgstr ""
 #: Blocks/BuyButton/edit.js:65
 #: Blocks/CartSubmit/edit.js:57
 #: components/CartInspectorControls.js:24
-#: build/blocks/cart-bump-line-item/index.js:185
-#: build/blocks/cart-coupon/index.js:269
-#: build/blocks/cart-header/index.js:175
-#: build/blocks/cart-items/index.js:251
-#: build/blocks/cart-message/index.js:161
-#: build/blocks/cart-subtotal/index.js:147
 #: src/components/CartInspectorControls.js:24
-#: build/blocks/cart-bump-line-item/index.js:132
-#: build/blocks/cart-coupon/index.js:267
-#: build/blocks/cart-header/index.js:120
-#: build/blocks/cart-items/index.js:228
-#: build/blocks/cart-message/index.js:114
-#: build/blocks/cart-subtotal/index.js:108
 msgid "Background Color"
 msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:90
 #: Blocks/BuyButton/edit.js:71
 #: components/CartInspectorControls.js:29
-#: build/blocks/cart-bump-line-item/index.js:191
-#: build/blocks/cart-coupon/index.js:275
-#: build/blocks/cart-header/index.js:181
-#: build/blocks/cart-items/index.js:257
-#: build/blocks/cart-message/index.js:167
-#: build/blocks/cart-subtotal/index.js:153
 #: src/components/CartInspectorControls.js:29
-#: build/blocks/cart-bump-line-item/index.js:137
-#: build/blocks/cart-coupon/index.js:272
-#: build/blocks/cart-header/index.js:125
-#: build/blocks/cart-items/index.js:233
-#: build/blocks/cart-message/index.js:119
-#: build/blocks/cart-subtotal/index.js:113
 msgid "Text Color"
 msgstr ""
 
@@ -16950,12 +16655,8 @@ msgstr ""
 #: Blocks/Submit/edit.js:162
 #: Blocks/Upsell/NoThanksButton/edit.js:95
 #: Blocks/Upsell/SubmitButton/edit.js:147
-#: build/blocks/cart-submit/index.js:151
-#: build/blocks/product-buy-button/index.js:100
 #: src/blocks/cart-submit/edit.js:117
 #: src/blocks/product-buy-button/edit.js:94
-#: build/blocks/cart-submit/index.js:131
-#: build/blocks/product-buy-button/index.js:94
 msgid "Button text"
 msgstr ""
 
@@ -16970,12 +16671,8 @@ msgstr ""
 #: Blocks/Submit/edit.js:163
 #: Blocks/Upsell/NoThanksButton/edit.js:96
 #: Blocks/Upsell/SubmitButton/edit.js:148
-#: build/blocks/cart-submit/index.js:152
-#: build/blocks/product-buy-button/index.js:101
 #: src/blocks/cart-submit/edit.js:118
 #: src/blocks/product-buy-button/edit.js:95
-#: build/blocks/cart-submit/index.js:132
-#: build/blocks/product-buy-button/index.js:95
 msgid "Add text…"
 msgstr ""
 
@@ -17023,9 +16720,7 @@ msgstr ""
 
 #: Blocks/CartCoupon/edit.js:41
 #: Blocks/Coupon/edit.js:38
-#: build/blocks/cart-coupon/index.js:160
 #: src/blocks/cart-coupon/edit.js:141
-#: build/blocks/cart-coupon/index.js:155
 msgid "Collapsed"
 msgstr ""
 
@@ -17044,58 +16739,42 @@ msgstr ""
 #: Blocks/Phone/edit.js:33
 #: Blocks/Switch/components/Inspector.js:30
 #: Blocks/Textarea/edit.js:49
-#: build/blocks/cart-coupon/index.js:172
 #: src/blocks/cart-coupon/edit.js:157
-#: build/blocks/cart-coupon/index.js:171
 msgid "Placeholder"
 msgstr ""
 
 #: Blocks/CartHeader/edit.js:38
-#: build/blocks/cart-header/index.js:78
-#: build/blocks/cart-header/index.js:87
 #: src/blocks/cart-header/edit.js:36
 #: src/blocks/cart-header/edit.js:49
-#: build/blocks/cart-header/index.js:50
-#: build/blocks/cart-header/index.js:63
 msgid "Header Text"
 msgstr ""
 
 #: Blocks/CartHeader/edit.js:39
-#: build/blocks/cart-header/index.js:88
 #: src/blocks/cart-header/edit.js:50
-#: build/blocks/cart-header/index.js:64
 msgid "Add a title…"
 msgstr ""
 
 #: Blocks/CartItems/edit.js:35
 #: Blocks/LineItems/edit.js:23
-#: build/blocks/cart-items/index.js:106
 #: src/blocks/cart-items/edit.js:64
-#: build/blocks/cart-items/index.js:78
 msgid "Removable"
 msgstr ""
 
 #: Blocks/CartItems/edit.js:36
 #: Blocks/LineItems/edit.js:24
-#: build/blocks/cart-items/index.js:107
 #: src/blocks/cart-items/edit.js:65
-#: build/blocks/cart-items/index.js:79
 msgid "Allow line items to be removed."
 msgstr ""
 
 #: Blocks/CartItems/edit.js:48
 #: Blocks/LineItems/edit.js:36
-#: build/blocks/cart-items/index.js:113
 #: src/blocks/cart-items/edit.js:77
-#: build/blocks/cart-items/index.js:91
 msgid "Editable"
 msgstr ""
 
 #: Blocks/CartItems/edit.js:49
 #: Blocks/LineItems/edit.js:37
-#: build/blocks/cart-items/index.js:114
 #: src/blocks/cart-items/edit.js:78
-#: build/blocks/cart-items/index.js:92
 msgid "Allow line item quantities to be editable."
 msgstr ""
 
@@ -17113,114 +16792,50 @@ msgid "every month"
 msgstr ""
 
 #: Blocks/CartMenuButton/edit.js:70
-#: build/blocks/cart-menu-button/index.js:74
 #: src/blocks/cart-menu-button/edit.js:87
-#: build/blocks/cart-menu-button/index.js:87
 msgid "Always show cart"
 msgstr ""
 
 #: Blocks/CartMessage/edit.js:57
-#: build/blocks/cart-message/index.js:75
 #: src/blocks/cart-message/edit.js:37
-#: build/blocks/cart-message/index.js:51
 msgid "Message Text"
 msgstr ""
 
 #: Blocks/CartMessage/edit.js:58
-#: build/blocks/cart-message/index.js:76
 #: src/blocks/cart-message/edit.js:38
-#: build/blocks/cart-message/index.js:52
 msgid "I.E. Free shipping on all orders…"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:51
-#: build/blocks/cart-submit/index.js:85
 #: src/blocks/cart-submit/edit.js:47
-#: build/blocks/cart-submit/index.js:61
 msgid "Section Color"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:61
 #: components/CartInspectorControls.js:33
-#: build/blocks/cart-bump-line-item/index.js:194
-#: build/blocks/cart-coupon/index.js:278
-#: build/blocks/cart-header/index.js:184
-#: build/blocks/cart-items/index.js:260
-#: build/blocks/cart-message/index.js:170
-#: build/blocks/cart-submit/index.js:95
-#: build/blocks/cart-subtotal/index.js:156
 #: src/blocks/cart-submit/edit.js:60
 #: src/components/CartInspectorControls.js:33
-#: build/blocks/cart-bump-line-item/index.js:141
-#: build/blocks/cart-coupon/index.js:276
-#: build/blocks/cart-header/index.js:129
-#: build/blocks/cart-items/index.js:237
-#: build/blocks/cart-message/index.js:123
-#: build/blocks/cart-submit/index.js:74
-#: build/blocks/cart-subtotal/index.js:117
 msgid "Spacing"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:63
 #: components/CartInspectorControls.js:35
-#: build/blocks/cart-bump-line-item/index.js:196
-#: build/blocks/cart-coupon/index.js:280
-#: build/blocks/cart-header/index.js:186
-#: build/blocks/cart-items/index.js:262
-#: build/blocks/cart-message/index.js:172
-#: build/blocks/cart-submit/index.js:97
-#: build/blocks/cart-subtotal/index.js:158
 #: src/blocks/cart-submit/edit.js:62
 #: src/components/CartInspectorControls.js:35
-#: build/blocks/cart-bump-line-item/index.js:143
-#: build/blocks/cart-coupon/index.js:278
-#: build/blocks/cart-header/index.js:131
-#: build/blocks/cart-items/index.js:239
-#: build/blocks/cart-message/index.js:125
-#: build/blocks/cart-submit/index.js:76
-#: build/blocks/cart-subtotal/index.js:119
 msgid "Padding"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:74
 #: components/CartInspectorControls.js:46
-#: build/blocks/cart-bump-line-item/index.js:208
-#: build/blocks/cart-coupon/index.js:292
-#: build/blocks/cart-header/index.js:198
-#: build/blocks/cart-items/index.js:274
-#: build/blocks/cart-message/index.js:184
-#: build/blocks/cart-submit/index.js:109
-#: build/blocks/cart-subtotal/index.js:170
 #: src/blocks/cart-submit/edit.js:73
 #: src/components/CartInspectorControls.js:46
-#: build/blocks/cart-bump-line-item/index.js:154
-#: build/blocks/cart-coupon/index.js:289
-#: build/blocks/cart-header/index.js:142
-#: build/blocks/cart-items/index.js:250
-#: build/blocks/cart-message/index.js:136
-#: build/blocks/cart-submit/index.js:87
-#: build/blocks/cart-subtotal/index.js:130
 msgid "Border"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:77
 #: components/CartInspectorControls.js:49
-#: build/blocks/cart-bump-line-item/index.js:210
-#: build/blocks/cart-coupon/index.js:294
-#: build/blocks/cart-header/index.js:200
-#: build/blocks/cart-items/index.js:276
-#: build/blocks/cart-message/index.js:186
-#: build/blocks/cart-submit/index.js:111
-#: build/blocks/cart-subtotal/index.js:172
 #: src/blocks/cart-submit/edit.js:76
 #: src/components/CartInspectorControls.js:49
-#: build/blocks/cart-bump-line-item/index.js:157
-#: build/blocks/cart-coupon/index.js:292
-#: build/blocks/cart-header/index.js:145
-#: build/blocks/cart-items/index.js:253
-#: build/blocks/cart-message/index.js:139
-#: build/blocks/cart-submit/index.js:90
-#: build/blocks/cart-subtotal/index.js:133
 msgid "Bottom Border"
 msgstr ""
 
@@ -17403,9 +17018,7 @@ msgstr ""
 #: Blocks/ProductDonationAmounts/edit.js:119
 #: Blocks/ProductDonationPrices/edit.js:90
 #: Blocks/ProductItemList/edit.js:236
-#: build/blocks/product-price-chooser/index.js:104
 #: src/blocks/product-price-chooser/edit.js:99
-#: build/blocks/product-price-chooser/index.js:99
 msgid "Columns"
 msgstr ""
 
@@ -17713,10 +17326,10 @@ msgstr ""
 #: Blocks/Dashboard/CustomerOrders/edit.js:43
 #: Blocks/Dashboard/CustomerSubscriptions/edit.js:52
 #: Blocks/Dashboard/OrderDownloads/edit.js:41
-#: sc-charges-list.js:127
-#: sc-invoices-list.js:149
+#: sc-charges-list.js:126
+#: sc-invoices-list.js:148
 #: sc-licenses-list.js:130
-#: sc-orders-list.js:157
+#: sc-orders-list.js:156
 #: sc-purchase-downloads-list2.js:70
 #: sc-subscriptions-list.js:141
 msgid "View all"
@@ -18132,9 +17745,7 @@ msgstr ""
 #: Blocks/Upsell/CountdownTimer/edit.js:40
 #: Blocks/Upsell/NoThanksButton/edit.js:29
 #: Blocks/Upsell/SubmitButton/edit.js:45
-#: build/blocks/product-buy-button/index.js:155
 #: src/components/WidthPanel.js:14
-#: build/blocks/product-buy-button/index.js:141
 msgid "Width settings"
 msgstr ""
 
@@ -18142,76 +17753,56 @@ msgstr ""
 #: Blocks/Upsell/CountdownTimer/edit.js:41
 #: Blocks/Upsell/NoThanksButton/edit.js:30
 #: Blocks/Upsell/SubmitButton/edit.js:46
-#: build/blocks/product-buy-button/index.js:91
 #: src/blocks/product-buy-button/edit.js:80
-#: build/blocks/product-buy-button/index.js:80
 msgid "Button width"
 msgstr ""
 
 #: Blocks/Product/BuyButton/edit.js:145
 #: Blocks/Upsell/CountdownTimer/edit.js:88
 #: Blocks/Upsell/SubmitButton/edit.js:110
-#: build/blocks/product-buy-button/index.js:75
 #: src/blocks/product-buy-button/edit.js:56
-#: build/blocks/product-buy-button/index.js:56
 msgid "Text settings"
 msgstr ""
 
 #: Blocks/Product/BuyButton/edit.js:148
 #: Blocks/Upsell/SubmitButton/edit.js:113
-#: build/blocks/product-buy-button/index.js:77
 #: src/blocks/product-buy-button/edit.js:59
-#: build/blocks/product-buy-button/index.js:59
 msgid "Out of stock label"
 msgstr ""
 
 #: Blocks/Product/BuyButton/edit.js:157
 #: Blocks/Upsell/SubmitButton/edit.js:122
-#: build/blocks/product-buy-button/index.js:83
 #: src/blocks/product-buy-button/edit.js:68
-#: build/blocks/product-buy-button/index.js:68
 msgid "Unavailable label"
 msgstr ""
 
 #: Blocks/Product/CollectionBadges/edit.js:62
-#: build/blocks/product-collection-tags/index.js:101
 #: src/blocks/product-collection-tags/edit.js:63
-#: build/blocks/product-collection-tags/index.js:79
 msgid "Number To Display"
 msgstr ""
 
 #: Blocks/Product/Description/edit.js:35
-#: build/blocks/product-description/index.js:65
 #: src/blocks/product-description/edit.js:21
-#: build/blocks/product-description/index.js:35
 msgid "Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle."
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:46
-#: build/blocks/product-media/index.js:173
 #: src/blocks/product-media/edit.js:151
-#: build/blocks/product-media/index.js:167
 msgid "Auto Height"
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:57
-#: build/blocks/product-media/index.js:180
 #: src/blocks/product-media/edit.js:166
-#: build/blocks/product-media/index.js:182
 msgid "Slider Height"
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:67
-#: build/blocks/product-media/index.js:189
 #: src/blocks/product-media/edit.js:176
-#: build/blocks/product-media/index.js:192
 msgid "Max Image Width"
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:78
-#: build/blocks/product-media/index.js:198
 #: src/blocks/product-media/edit.js:187
-#: build/blocks/product-media/index.js:203
 msgid "Thumbnails Per Page"
 msgstr ""
 
@@ -18238,9 +17829,7 @@ msgstr ""
 #: Blocks/Product/Title/heading-level-dropdown.js:42
 #: Blocks/ProductCollectionTitle/heading-level-dropdown.js:42
 #: Blocks/Upsell/Title/heading-level-dropdown.js:42
-#: build/blocks/product-title/index.js:209
 #: src/components/HeadingLebelDropdown.js:42
-#: build/blocks/product-title/index.js:156
 msgid "Change heading level"
 msgstr ""
 
@@ -18248,16 +17837,12 @@ msgstr ""
 #: Blocks/Product/Title/heading-level-dropdown.js:56
 #: Blocks/ProductCollectionTitle/heading-level-dropdown.js:56
 #: Blocks/Upsell/Title/heading-level-dropdown.js:56
-#: build/blocks/product-title/index.js:220
 #: src/components/HeadingLebelDropdown.js:56
-#: build/blocks/product-title/index.js:170
 msgid "Heading %d"
 msgstr ""
 
 #: Blocks/Product/VariantChoices/edit.js:60
-#: build/blocks/product-variant-pills/index.js:86
 #: src/blocks/product-variant-pills/edit.js:33
-#: build/blocks/product-variant-pills/index.js:49
 msgid "Color"
 msgstr ""
 
@@ -18300,15 +17885,9 @@ msgstr ""
 
 #: Blocks/ProductCollection/edit.js:260
 #: Blocks/ProductItemList/edit.js:312
-#: build/blocks/product-list-sort-radio-group/index.js:1588
-#: build/blocks/product-list-sort/index.js:57
-#: build/blocks/product-list-sort/index.js:1583
 #: src/blocks/product-list-sort-radio-group/index.js:22
 #: src/blocks/product-list-sort/edit.js:12
 #: src/blocks/product-list-sort/index.js:20
-#: build/blocks/product-list-sort-radio-group/index.js:1437
-#: build/blocks/product-list-sort/index.js:26
-#: build/blocks/product-list-sort/index.js:1442
 #: sc-product-item-list.js:232
 msgid "Sort"
 msgstr ""
@@ -18384,75 +17963,55 @@ msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:86
 #: Blocks/ProductCollectionImage/dimension-controls.js:96
-#: build/blocks/product-image/index.js:135
-#: build/blocks/product-image/index.js:146
 #: src/blocks/product-image/edit.js:91
 #: src/blocks/product-image/edit.js:101
-#: build/blocks/product-image/index.js:105
-#: build/blocks/product-image/index.js:115
 msgid "Aspect ratio"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:101
-#: build/blocks/product-image/index.js:151
 #: src/blocks/product-image/edit.js:106
-#: build/blocks/product-image/index.js:120
 msgid "Original"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:105
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:55
-#: build/blocks/product-image/index.js:154
 #: src/blocks/product-image/edit.js:110
-#: build/blocks/product-image/index.js:124
 msgid "Square"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:109
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:73
-#: build/blocks/product-image/index.js:157
 #: src/blocks/product-image/edit.js:114
-#: build/blocks/product-image/index.js:128
 msgid "16:9"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:113
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:77
-#: build/blocks/product-image/index.js:160
 #: src/blocks/product-image/edit.js:118
-#: build/blocks/product-image/index.js:132
 msgid "4:3"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:117
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:81
-#: build/blocks/product-image/index.js:163
 #: src/blocks/product-image/edit.js:122
-#: build/blocks/product-image/index.js:136
 msgid "3:2"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:121
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:99
-#: build/blocks/product-image/index.js:166
 #: src/blocks/product-image/edit.js:126
-#: build/blocks/product-image/index.js:140
 msgid "9:16"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:125
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:103
-#: build/blocks/product-image/index.js:169
 #: src/blocks/product-image/edit.js:130
-#: build/blocks/product-image/index.js:144
 msgid "3:4"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:129
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:107
-#: build/blocks/product-image/index.js:172
 #: src/blocks/product-image/edit.js:134
-#: build/blocks/product-image/index.js:148
 msgid "2:3"
 msgstr ""
 
@@ -18507,36 +18066,24 @@ msgid "Set Aspect Ratio"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:105
-#: build/blocks/product-image/index.js:112
-#: build/blocks/product-image/index.js:122
 #: src/blocks/product-image/edit.js:66
 #: src/blocks/product-image/edit.js:75
-#: build/blocks/product-image/index.js:80
-#: build/blocks/product-image/index.js:89
 msgid "Image Cropping"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:111
-#: build/blocks/product-image/index.js:129
 #: src/blocks/product-image/edit.js:81
-#: build/blocks/product-image/index.js:95
 msgid "Contain"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:115
-#: build/blocks/product-image/index.js:132
 #: src/blocks/product-image/edit.js:85
-#: build/blocks/product-image/index.js:99
 msgid "Cover"
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:258
-#: build/blocks/product-list-related/index.js:236
-#: build/blocks/product-list/index.js:723
 #: src/blocks/product-list-related/inspector-controls/index.js:104
 #: src/blocks/product-list/inspector-controls/index.js:66
-#: build/blocks/product-list-related/index.js:188
-#: build/blocks/product-list/index.js:616
 msgid "Products Per Page"
 msgstr ""
 
@@ -18549,24 +18096,18 @@ msgid "Show collection filtering."
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:371
-#: build/blocks/product-list/index.js:756
 #: src/blocks/product-list/inspector-controls/index.js:101
-#: build/blocks/product-list/index.js:651
 msgid "Products To Show"
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:392
-#: build/blocks/product-list/index.js:763
 #: src/blocks/product-list/inspector-controls/index.js:110
-#: build/blocks/product-list/index.js:660
 msgid "Featured Products"
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:396
 #: Blocks/ProductItemList/edit.js:403
-#: build/blocks/product-list/index.js:766
 #: src/blocks/product-list/inspector-controls/index.js:114
-#: build/blocks/product-list/index.js:664
 msgid "Hand Pick Products"
 msgstr ""
 
@@ -18583,23 +18124,17 @@ msgid "Setup Store"
 msgstr ""
 
 #: Blocks/ProductItemPrice/edit.js:46
-#: build/blocks/product-price/index.js:72
 #: src/blocks/product-price/edit.js:24
-#: build/blocks/product-price/index.js:38
 msgid "Options"
 msgstr ""
 
 #: Blocks/ProductItemPrice/edit.js:48
-#: build/blocks/product-price/index.js:74
 #: src/blocks/product-price/edit.js:26
-#: build/blocks/product-price/index.js:40
 msgid "Price Range"
 msgstr ""
 
 #: Blocks/ProductItemPrice/edit.js:49
-#: build/blocks/product-price/index.js:75
 #: src/blocks/product-price/edit.js:27
-#: build/blocks/product-price/index.js:41
 msgid "Show a range of prices if multiple prices are available or has variable products."
 msgstr ""
 
@@ -18672,7 +18207,7 @@ msgid "Link image to home"
 msgstr ""
 
 #: Blocks/Submit/deprecated.js:44
-#: sc-order-submit.js:59
+#: sc-order-submit.js:58
 msgid "This is a secure, encrypted payment."
 msgstr ""
 
@@ -18705,9 +18240,8 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:29
 #: Blocks/Subtotal/edit.js:56
 #: Blocks/Subtotal/save.js:17
-#: build/blocks/cart-subtotal/view.php:39
 #: src/blocks/cart-subtotal/view.php:39
-#: sc-line-item-total2.js:59
+#: sc-line-item-total2.js:68
 msgid "Total Installment Payments"
 msgstr ""
 
@@ -18868,15 +18402,9 @@ msgid "Product List (Migrated)"
 msgstr ""
 
 #: components/NewShopTemplate.js:252
-#: build/blocks/product-list-no-products/index.js:52
-#: build/blocks/product-list/index.js:952
-#: build/blocks/product-list/index.js:1099
 #: src/blocks/product-list-no-products/edit.js:11
 #: src/blocks/product-list/list-placeholder.js:38
 #: src/blocks/product-list/template.js:77
-#: build/blocks/product-list-no-products/index.js:25
-#: build/blocks/product-list/index.js:839
-#: build/blocks/product-list/index.js:1013
 msgid "Add text or blocks that will display when a query returns no products."
 msgstr ""
 
@@ -19079,7 +18607,6 @@ msgstr ""
 #: Blocks/Switch/block.json
 #: Blocks/Upsell/NoThanksButton/block.json
 #: Blocks/Upsell/SubmitButton/block.json
-#: build/blocks/product-buy-buttons/block.json
 #: src/blocks/product-buy-buttons/block.json
 msgctxt "block keyword"
 msgid "button"
@@ -19147,7 +18674,6 @@ msgid "confirm"
 msgstr ""
 
 #: Blocks/Cart/block.json
-#: build/blocks/cart/block.json
 #: src/blocks/cart/block.json
 msgctxt "block title"
 msgid "Cart"
@@ -19160,21 +18686,18 @@ msgid "The cart"
 msgstr ""
 
 #: Blocks/CartBumpLineItem/block.json
-#: build/blocks/cart-bump-line-item/block.json
 #: src/blocks/cart-bump-line-item/block.json
 msgctxt "block title"
 msgid "Cart Bump Line Item"
 msgstr ""
 
 #: Blocks/CartBumpLineItem/block.json
-#: build/blocks/cart-bump-line-item/block.json
 #: src/blocks/cart-bump-line-item/block.json
 msgctxt "block description"
 msgid "Display the cart bump line item"
 msgstr ""
 
 #: Blocks/CartCoupon/block.json
-#: build/blocks/cart-coupon/block.json
 #: src/blocks/cart-coupon/block.json
 msgctxt "block title"
 msgid "Cart Coupon"
@@ -19187,7 +18710,6 @@ msgstr ""
 
 #: Blocks/CartCoupon/block.json
 #: Blocks/Coupon/block.json
-#: build/blocks/cart-coupon/block.json
 #: src/blocks/cart-coupon/block.json
 msgctxt "block keyword"
 msgid "coupon"
@@ -19195,28 +18717,24 @@ msgstr ""
 
 #: Blocks/CartCoupon/block.json
 #: Blocks/Coupon/block.json
-#: build/blocks/cart-coupon/block.json
 #: src/blocks/cart-coupon/block.json
 msgctxt "block keyword"
 msgid "promo"
 msgstr ""
 
 #: Blocks/CartHeader/block.json
-#: build/blocks/cart-header/block.json
 #: src/blocks/cart-header/block.json
 msgctxt "block title"
 msgid "Cart Header"
 msgstr ""
 
 #: Blocks/CartHeader/block.json
-#: build/blocks/cart-header/block.json
 #: src/blocks/cart-header/block.json
 msgctxt "block description"
 msgid "Display a cart header"
 msgstr ""
 
 #: Blocks/CartItems/block.json
-#: build/blocks/cart-items/block.json
 #: src/blocks/cart-items/block.json
 msgctxt "block title"
 msgid "Cart Items"
@@ -19228,56 +18746,48 @@ msgid "Cart Menu Icon"
 msgstr ""
 
 #: Blocks/CartMenuButton/block.json
-#: build/blocks/cart-menu-button/block.json
 #: src/blocks/cart-menu-button/block.json
 msgctxt "block description"
 msgid "The cart menu icon that shows your cart quantity."
 msgstr ""
 
 #: Blocks/CartMessage/block.json
-#: build/blocks/cart-message/block.json
 #: src/blocks/cart-message/block.json
 msgctxt "block title"
 msgid "Cart Message"
 msgstr ""
 
 #: Blocks/CartMessage/block.json
-#: build/blocks/cart-message/block.json
 #: src/blocks/cart-message/block.json
 msgctxt "block description"
 msgid "Display a custom message in the cart"
 msgstr ""
 
 #: Blocks/CartSubmit/block.json
-#: build/blocks/cart-submit/block.json
 #: src/blocks/cart-submit/block.json
 msgctxt "block title"
 msgid "Cart Submit Button"
 msgstr ""
 
 #: Blocks/CartSubmit/block.json
-#: build/blocks/cart-submit/block.json
 #: src/blocks/cart-submit/block.json
 msgctxt "block description"
 msgid "The cart submit button"
 msgstr ""
 
 #: Blocks/CartSubtotal/block.json
-#: build/blocks/cart-subtotal/block.json
 #: src/blocks/cart-subtotal/block.json
 msgctxt "block title"
 msgid "Cart Subtotal"
 msgstr ""
 
 #: Blocks/CartSubtotal/block.json
-#: build/blocks/cart-subtotal/block.json
 #: src/blocks/cart-subtotal/block.json
 msgctxt "block description"
 msgid "Display the cart subtotal"
 msgstr ""
 
 #: Blocks/Checkbox/block.json
-#: build/blocks/product-list-filter-checkbox/block.json
 #: src/blocks/product-list-filter-checkbox/block.json
 msgctxt "block title"
 msgid "Checkbox"
@@ -19333,7 +18843,6 @@ msgstr ""
 #: Blocks/Product/CollectionBadges/block.json
 #: Blocks/Product/Quantity/block.json
 #: Blocks/Product/Title/block.json
-#: build/blocks/product-quantity/block.json
 #: src/blocks/product-quantity/block.json
 msgctxt "block keyword"
 msgid "form"
@@ -20019,7 +19528,6 @@ msgstr ""
 #: Blocks/LineItemShipping/block.json
 #: Blocks/TaxLineItem/block.json
 #: Blocks/Total/block.json
-#: build/blocks/cart-subtotal/block.json
 #: src/blocks/cart-subtotal/block.json
 msgctxt "block keyword"
 msgid "subtotal"
@@ -20182,9 +19690,6 @@ msgstr ""
 #: Blocks/ProductItemPrice/block.json
 #: Blocks/ProductItemTitle/block.json
 #: Blocks/VariantPriceSelector/block.json
-#: build/blocks/product-buy-buttons/block.json
-#: build/blocks/product-quantity/block.json
-#: build/blocks/product-template/block.json
 #: src/blocks/product-buy-buttons/block.json
 #: src/blocks/product-quantity/block.json
 #: src/blocks/product-template/block.json
@@ -20202,7 +19707,6 @@ msgid "choice"
 msgstr ""
 
 #: Blocks/PriceSelector/block.json
-#: build/blocks/product-price-chooser/block.json
 #: src/blocks/product-price-chooser/block.json
 msgctxt "block title"
 msgid "Price Selector"
@@ -20224,14 +19728,12 @@ msgid "Add a buy now or add to cart button."
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
-#: build/blocks/product-buy-buttons/block.json
 #: src/blocks/product-buy-buttons/block.json
 msgctxt "block keyword"
 msgid "buy"
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block variation title"
 msgid "Add To Cart Button"
@@ -20239,21 +19741,18 @@ msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 #: Blocks/ProductDonationRecurringPrices/block.json
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block variation description"
 msgid "Add a button to add the product to the cart."
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block variation title"
 msgid "Buy Now Button"
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block variation description"
 msgid "Add a button to buy the product."
@@ -20262,7 +19761,6 @@ msgstr ""
 #: Blocks/Product/BuyButton/block.json
 #: Blocks/Upsell/NoThanksButton/block.json
 #: Blocks/Upsell/SubmitButton/block.json
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block style label"
 msgid "Fill"
@@ -20271,7 +19769,6 @@ msgstr ""
 #: Blocks/Product/BuyButton/block.json
 #: Blocks/Upsell/NoThanksButton/block.json
 #: Blocks/Upsell/SubmitButton/block.json
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block style label"
 msgid "Outline"
@@ -20288,7 +19785,6 @@ msgid "Displays product collection selector for a product."
 msgstr ""
 
 #: Blocks/Product/Description/block.json
-#: build/blocks/product-description/block.json
 #: src/blocks/product-description/block.json
 msgctxt "block title"
 msgid "Product Description"
@@ -20307,14 +19803,12 @@ msgid "description"
 msgstr ""
 
 #: Blocks/Product/Media/block.json
-#: build/blocks/product-media/block.json
 #: src/blocks/product-media/block.json
 msgctxt "block title"
 msgid "Product Media"
 msgstr ""
 
 #: Blocks/Product/Media/block.json
-#: build/blocks/product-media/block.json
 #: src/blocks/product-media/block.json
 msgctxt "block description"
 msgid "A container to display the product media"
@@ -20324,14 +19818,12 @@ msgstr ""
 #: Blocks/ProductCollectionImage/block.json
 #: Blocks/ProductItemImage/block.json
 #: Blocks/StoreLogo/block.json
-#: build/blocks/product-media/block.json
 #: src/blocks/product-media/block.json
 msgctxt "block keyword"
 msgid "image"
 msgstr ""
 
 #: Blocks/Product/Media/block.json
-#: build/blocks/product-media/block.json
 #: src/blocks/product-media/block.json
 msgctxt "block keyword"
 msgid "media"
@@ -20353,14 +19845,12 @@ msgid "Product Price Choices"
 msgstr ""
 
 #: Blocks/Product/PriceChoices/block.json
-#: build/blocks/product-price-chooser/block.json
 #: src/blocks/product-price-chooser/block.json
 msgctxt "block description"
 msgid "Displays possible choices for product prices."
 msgstr ""
 
 #: Blocks/Product/Quantity/block.json
-#: build/blocks/product-quantity/block.json
 #: src/blocks/product-quantity/block.json
 msgctxt "block title"
 msgid "Product Quantity"
@@ -20372,7 +19862,6 @@ msgid "Displays quantity selector for a product."
 msgstr ""
 
 #: Blocks/Product/Quantity/block.json
-#: build/blocks/product-quantity/block.json
 #: src/blocks/product-quantity/block.json
 msgctxt "block keyword"
 msgid "quantity"
@@ -20380,7 +19869,6 @@ msgstr ""
 
 #: Blocks/Product/Title/block.json
 #: Blocks/ProductItemTitle/block.json
-#: build/blocks/product-title/block.json
 #: src/blocks/product-title/block.json
 msgctxt "block title"
 msgid "Product Title"
@@ -20432,7 +19920,6 @@ msgstr ""
 #: Blocks/ProductCollection/block.json
 #: Blocks/ProductItemList/block.json
 #: Blocks/ProductItemTitle/block.json
-#: build/blocks/product-template/block.json
 #: src/blocks/product-template/block.json
 msgctxt "block keyword"
 msgid "list"
@@ -20581,7 +20068,6 @@ msgid "thumbnail"
 msgstr ""
 
 #: Blocks/ProductItemList/block.json
-#: build/blocks/product-list/block.json
 #: src/blocks/product-list/block.json
 msgctxt "block title"
 msgid "Product List"
@@ -20603,7 +20089,6 @@ msgid "Displays the price of the product with the scratched price."
 msgstr ""
 
 #: Blocks/Radio/block.json
-#: build/blocks/product-list-sort-radio/block.json
 #: src/blocks/product-list-sort-radio/block.json
 msgctxt "block title"
 msgid "Radio"
@@ -20907,340 +20392,219 @@ msgctxt "block description"
 msgid "Displays a selector for selecting product prices and/or variants."
 msgstr ""
 
-#: build/blocks/cart-coupon/view.php:38
+#: index.php:137
+msgid "Enlarged images"
+msgstr ""
+
 #: src/blocks/cart-coupon/view.php:38
 msgid "Delete discount"
 msgstr ""
 
-#: build/blocks/cart-coupon/view.php:98
-#: build/blocks/cart-coupon/view.php:129
 #: src/blocks/cart-coupon/view.php:98
 #: src/blocks/cart-coupon/view.php:129
-#: build/blocks/cart-coupon/index.js:138
 #: src/blocks/cart-coupon/edit.js:107
-#: build/blocks/cart-coupon/index.js:121
 msgid "Coupon code"
 msgstr ""
 
-#: build/blocks/cart-header/view.php:15
 #: src/blocks/cart-header/view.php:15
 msgid "Close cart"
 msgstr ""
 
-#: build/blocks/cart-icon/view.php:22
 #: src/blocks/cart-icon/view.php:22
 msgid "Cart Button."
 msgstr ""
 
-#: build/blocks/cart-items/view.php:59
-#: build/blocks/product-quantity/view.php:18
 #: src/blocks/cart-items/view.php:59
 #: src/blocks/product-quantity/view.php:18
 #: sc-quantity-select2.js:64
 msgid "Decrease quantity by one."
 msgstr ""
 
-#: build/blocks/cart-items/view.php:86
-#: build/blocks/product-quantity/view.php:44
 #: src/blocks/cart-items/view.php:86
 #: src/blocks/product-quantity/view.php:44
 #: sc-quantity-select2.js:64
 msgid "Increase quantity by one."
 msgstr ""
 
-#: build/blocks/cart-items/view.php:99
 #: src/blocks/cart-items/view.php:99
 msgid "Remove item"
 msgstr ""
 
-#: build/blocks/cart-menu-button/view.php:19
 #: src/blocks/cart-menu-button/view.php:19
 msgid "Open cart"
 msgstr ""
 
 #. translators: %1$s: amount.
-#: build/blocks/price-amount/controller.php:14
 #: src/blocks/price-amount/controller.php:14
 msgid "Price: %1$s"
 msgstr ""
 
 #. translators: %1$s: scratch amount.
-#: build/blocks/price-scratch-amount/controller.php:16
 #: src/blocks/price-scratch-amount/controller.php:16
 msgid "Scratch Price: %1$s"
 msgstr ""
 
 #. translators: You are currently on a %s collection link.
-#: build/blocks/product-collection-tag/view.php:14
 #: src/blocks/product-collection-tag/view.php:14
 msgid "%s collection"
 msgstr ""
 
-#: build/blocks/product-list-filter-tag/view.php:15
 #: src/blocks/product-list-filter-tag/view.php:15
 msgid "Press enter to remove this filter."
 msgstr ""
 
-#: build/blocks/product-list-filter-tag/view.php:24
 #: src/blocks/product-list-filter-tag/view.php:24
-#: build/blocks/product-list-filter-tag/index.js:63
 #: src/blocks/product-list-filter-tag/edit.js:22
-#: build/blocks/product-list-filter-tag/index.js:36
 msgid "Remove tag"
 msgstr ""
 
-#: build/blocks/product-list-filter/view.php:23
-#: build/blocks/product-list-sort/view.php:23
 #: src/blocks/product-list-filter/view.php:23
 #: src/blocks/product-list-sort/view.php:23
 msgid "Press the arrow keys then enter to make a selection."
 msgstr ""
 
 #. translators: %s is the taxonomy label.
-#: build/blocks/product-list-filter/view.php:35
 #: src/blocks/product-list-filter/view.php:35
 msgid "Filter by: %s"
 msgstr ""
 
-#: build/blocks/product-list-search/view.php:54
 #: src/blocks/product-list-search/view.php:54
 msgid "Clear search"
 msgstr ""
 
-#: build/blocks/product-list-sidebar-toggle/view.php:40
 #: src/blocks/product-list-sidebar-toggle/view.php:40
-#: build/scripts/sidebar/index.js:101
-#: build/scripts/sidebar/index.js:103
-#: build/scripts/sidebar/index.js:118
 #: src/scripts/sidebar/index.js:35
 #: src/scripts/sidebar/index.js:37
 #: src/scripts/sidebar/index.js:54
-#: build/scripts/sidebar/index.js:72
-#: build/scripts/sidebar/index.js:74
-#: build/scripts/sidebar/index.js:91
 msgid "Open sidebar"
 msgstr ""
 
-#: build/blocks/product-list-sidebar/view.php:45
 #: src/blocks/product-list-sidebar/view.php:45
-#: build/scripts/sidebar/index.js:101
-#: build/scripts/sidebar/index.js:111
 #: src/scripts/sidebar/index.js:34
 #: src/scripts/sidebar/index.js:46
-#: build/scripts/sidebar/index.js:71
-#: build/scripts/sidebar/index.js:83
 msgid "Close sidebar"
 msgstr ""
 
 #. translators: %d is the current count of posts.
-#: build/blocks/product-list-sidebar/view.php:63
 #: src/blocks/product-list-sidebar/view.php:63
 msgid "View Results (%d)"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-template/controller.php:11
-#: build/blocks/product-list-sort/controller.php:11
 #: src/blocks/product-list-sort-radio-group-template/controller.php:11
 #: src/blocks/product-list-sort/controller.php:11
-#: build/blocks/product-list-related/index.js:153
-#: build/blocks/product-list-sort-radio-group-template/index.js:60
-#: build/blocks/product-list/index.js:681
 #: src/blocks/product-list-related/inspector-controls/index.js:17
 #: src/blocks/product-list-sort-radio-group-template/edit.js:19
 #: src/blocks/product-list/inspector-controls/index.js:24
-#: build/blocks/product-list-related/index.js:101
-#: build/blocks/product-list-sort-radio-group-template/index.js:33
-#: build/blocks/product-list/index.js:574
 #: sc-product-item-list.js:224
 #: sc-product-item-list.js:259
 msgid "Latest"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-template/controller.php:17
-#: build/blocks/product-list-sort/controller.php:17
 #: src/blocks/product-list-sort-radio-group-template/controller.php:17
 #: src/blocks/product-list-sort/controller.php:17
-#: build/blocks/product-list-related/index.js:156
-#: build/blocks/product-list-sort-radio-group-template/index.js:63
-#: build/blocks/product-list/index.js:684
 #: src/blocks/product-list-related/inspector-controls/index.js:21
 #: src/blocks/product-list-sort-radio-group-template/edit.js:23
 #: src/blocks/product-list/inspector-controls/index.js:28
-#: build/blocks/product-list-related/index.js:105
-#: build/blocks/product-list-sort-radio-group-template/index.js:37
-#: build/blocks/product-list/index.js:578
 #: sc-product-item-list.js:226
 #: sc-product-item-list.js:259
 msgid "Oldest"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-template/controller.php:23
-#: build/blocks/product-list-sort/controller.php:23
 #: src/blocks/product-list-sort-radio-group-template/controller.php:23
 #: src/blocks/product-list-sort/controller.php:23
-#: build/blocks/product-list-related/index.js:159
-#: build/blocks/product-list-sort-radio-group-template/index.js:66
-#: build/blocks/product-list/index.js:687
 #: src/blocks/product-list-related/inspector-controls/index.js:25
 #: src/blocks/product-list-sort-radio-group-template/edit.js:27
 #: src/blocks/product-list/inspector-controls/index.js:32
-#: build/blocks/product-list-related/index.js:109
-#: build/blocks/product-list-sort-radio-group-template/index.js:41
-#: build/blocks/product-list/index.js:582
 #: sc-product-item-list.js:228
 #: sc-product-item-list.js:259
 msgid "Alphabetical, A-Z"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-template/controller.php:29
-#: build/blocks/product-list-sort/controller.php:29
 #: src/blocks/product-list-sort-radio-group-template/controller.php:29
 #: src/blocks/product-list-sort/controller.php:29
-#: build/blocks/product-list-related/index.js:162
-#: build/blocks/product-list-sort-radio-group-template/index.js:69
-#: build/blocks/product-list/index.js:690
 #: src/blocks/product-list-related/inspector-controls/index.js:29
 #: src/blocks/product-list-sort-radio-group-template/edit.js:34
 #: src/blocks/product-list/inspector-controls/index.js:36
-#: build/blocks/product-list-related/index.js:113
-#: build/blocks/product-list-sort-radio-group-template/index.js:48
-#: build/blocks/product-list/index.js:586
 #: sc-product-item-list.js:230
 #: sc-product-item-list.js:259
 msgid "Alphabetical, Z-A"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-template/controller.php:35
-#: build/blocks/product-list-sort/controller.php:35
 #: src/blocks/product-list-sort-radio-group-template/controller.php:35
 #: src/blocks/product-list-sort/controller.php:35
-#: build/blocks/product-list-related/index.js:165
-#: build/blocks/product-list-sort-radio-group-template/index.js:72
-#: build/blocks/product-list/index.js:693
 #: src/blocks/product-list-related/inspector-controls/index.js:33
 #: src/blocks/product-list-sort-radio-group-template/edit.js:41
 #: src/blocks/product-list/inspector-controls/index.js:40
-#: build/blocks/product-list-related/index.js:117
-#: build/blocks/product-list-sort-radio-group-template/index.js:55
-#: build/blocks/product-list/index.js:590
 msgid "Price, low to high"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-template/controller.php:41
-#: build/blocks/product-list-sort/controller.php:41
 #: src/blocks/product-list-sort-radio-group-template/controller.php:41
 #: src/blocks/product-list-sort/controller.php:41
-#: build/blocks/product-list-related/index.js:168
-#: build/blocks/product-list-sort-radio-group-template/index.js:75
-#: build/blocks/product-list/index.js:696
 #: src/blocks/product-list-related/inspector-controls/index.js:37
 #: src/blocks/product-list-sort-radio-group-template/edit.js:48
 #: src/blocks/product-list/inspector-controls/index.js:44
-#: build/blocks/product-list-related/index.js:121
-#: build/blocks/product-list-sort-radio-group-template/index.js:62
-#: build/blocks/product-list/index.js:594
 msgid "Price, high to low"
 msgstr ""
 
 #. translators: %s is the current selected option.
-#: build/blocks/product-list-sort/view.php:33
 #: src/blocks/product-list-sort/view.php:33
 msgid "Order By: %s"
 msgstr ""
 
 #. translators: %s: page number.
-#: build/blocks/product-pagination-numbers/view.php:14
 #: src/blocks/product-pagination-numbers/view.php:14
 msgid "Page %s"
 msgstr ""
 
-#: build/blocks/product-scratch-price/view.php:2
 #: src/blocks/product-scratch-price/view.php:2
 msgid "Compare to"
 msgstr ""
 
-#: build/blocks/product-selected-price-scratch-amount/view.php:4
 #: src/blocks/product-selected-price-scratch-amount/view.php:4
 msgid "Was"
 msgstr ""
 
 #. translators: %s is the name of the variant option.
-#: build/blocks/product-variant-pill/view.php:45
 #: src/blocks/product-variant-pill/view.php:45
 msgid "Select %s"
 msgstr ""
 
-#: index.php:137
-msgid "Enlarged images"
-msgstr ""
-
-#: build/blocks/price-interval/index.js:20
-#: build/blocks/product-price-chooser/index.js:51
-#: build/blocks/product-selected-price-interval/index.js:20
 #: src/blocks/price-interval/edit.js:7
 #: src/blocks/product-price-chooser/edit.js:39
 #: src/blocks/product-selected-price-interval/edit.js:7
-#: build/blocks/price-interval/index.js:7
-#: build/blocks/product-price-chooser/index.js:39
-#: build/blocks/product-selected-price-interval/index.js:7
 msgid "/ mo"
 msgstr ""
 
-#: build/blocks/price-name/index.js:53
 #: src/blocks/price-name/edit.js:7
-#: build/blocks/price-name/index.js:21
 msgid "Price Name"
 msgstr ""
 
-#: build/blocks/price-setup-fee/index.js:26
 #: src/blocks/price-setup-fee/edit.js:9
-#: build/blocks/price-setup-fee/index.js:9
 msgid "12 Signup Fee"
 msgstr ""
 
-#: build/blocks/product-collection-tag/index.js:66
 #: src/blocks/product-collection-tag/edit.js:22
-#: build/blocks/product-collection-tag/index.js:36
 msgid "Link to collection page"
 msgstr ""
 
-#: build/blocks/product-image/index.js:196
 #: src/blocks/product-image/edit.js:168
-#: build/blocks/product-image/index.js:182
 msgid "Make image a link"
 msgstr ""
 
-#: build/blocks/product-image/index.js:203
-#: build/blocks/product-title/index.js:96
 #: src/blocks/product-image/edit.js:177
 #: src/blocks/product-title/edit.js:54
-#: build/blocks/product-image/index.js:191
-#: build/blocks/product-title/index.js:68
 msgid "Open in new tab"
 msgstr ""
 
-#: build/blocks/product-image/index.js:210
-#: build/blocks/product-title/index.js:103
 #: src/blocks/product-image/edit.js:187
 #: src/blocks/product-title/edit.js:64
-#: build/blocks/product-image/index.js:201
-#: build/blocks/product-title/index.js:78
 msgid "Link rel"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-label/index.js:72
 #: src/blocks/product-list-filter-checkboxes-label/edit.js:27
-#: build/blocks/product-list-filter-checkboxes-label/index.js:41
 msgid "Filter by"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-label/index.js:80
-#: build/blocks/product-list-filter-tags-clear-all/index.js:55
-#: build/blocks/product-list-filter-tags-label/index.js:55
-#: build/blocks/product-list-sidebar-toggle/index.js:103
-#: build/blocks/product-list-sort-radio-group-label/index.js:55
-#: build/blocks/product-price-chooser/index.js:117
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:57
 #: src/blocks/product-list-filter-checkboxes-label/edit.js:37
 #: src/blocks/product-list-filter-tags-clear-all/edit.js:10
 #: src/blocks/product-list-filter-tags-label/edit.js:10
@@ -21248,23 +20612,9 @@ msgstr ""
 #: src/blocks/product-list-sort-radio-group-label/edit.js:10
 #: src/blocks/product-price-chooser/edit.js:126
 #: src/blocks/product-selected-price-ad-hoc-amount/edit.js:50
-#: build/blocks/product-list-filter-checkboxes-label/index.js:51
-#: build/blocks/product-list-filter-tags-clear-all/index.js:24
-#: build/blocks/product-list-filter-tags-label/index.js:24
-#: build/blocks/product-list-sidebar-toggle/index.js:109
-#: build/blocks/product-list-sort-radio-group-label/index.js:24
-#: build/blocks/product-price-chooser/index.js:126
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:50
 msgid "Label text"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-label/index.js:81
-#: build/blocks/product-list-filter-tags-clear-all/index.js:56
-#: build/blocks/product-list-filter-tags-label/index.js:56
-#: build/blocks/product-list-sidebar-toggle/index.js:104
-#: build/blocks/product-list-sort-radio-group-label/index.js:56
-#: build/blocks/product-price-chooser/index.js:118
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:58
 #: src/blocks/product-list-filter-checkboxes-label/edit.js:38
 #: src/blocks/product-list-filter-tags-clear-all/edit.js:11
 #: src/blocks/product-list-filter-tags-label/edit.js:11
@@ -21272,484 +20622,216 @@ msgstr ""
 #: src/blocks/product-list-sort-radio-group-label/edit.js:11
 #: src/blocks/product-price-chooser/edit.js:127
 #: src/blocks/product-selected-price-ad-hoc-amount/edit.js:51
-#: build/blocks/product-list-filter-checkboxes-label/index.js:52
-#: build/blocks/product-list-filter-tags-clear-all/index.js:25
-#: build/blocks/product-list-filter-tags-label/index.js:25
-#: build/blocks/product-list-sidebar-toggle/index.js:110
-#: build/blocks/product-list-sort-radio-group-label/index.js:25
-#: build/blocks/product-price-chooser/index.js:127
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:51
 msgid "Add label…"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-template/index.js:60
-#: build/blocks/product-list-filter-tags-template/index.js:60
 #: src/blocks/product-list-filter-checkboxes-template/edit.js:17
 #: src/blocks/product-list-filter-tags-template/edit.js:18
-#: build/blocks/product-list-filter-checkboxes-template/index.js:31
-#: build/blocks/product-list-filter-tags-template/index.js:32
 msgid "Filter 1"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-template/index.js:63
-#: build/blocks/product-list-filter-tags-template/index.js:63
 #: src/blocks/product-list-filter-checkboxes-template/edit.js:21
 #: src/blocks/product-list-filter-tags-template/edit.js:22
-#: build/blocks/product-list-filter-checkboxes-template/index.js:35
-#: build/blocks/product-list-filter-tags-template/index.js:36
 msgid "Filter 2"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-template/index.js:66
-#: build/blocks/product-list-filter-tags-template/index.js:66
 #: src/blocks/product-list-filter-checkboxes-template/edit.js:25
 #: src/blocks/product-list-filter-tags-template/edit.js:26
-#: build/blocks/product-list-filter-checkboxes-template/index.js:39
-#: build/blocks/product-list-filter-tags-template/index.js:40
 msgid "Filter 3"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes/index.js:76
-#: build/blocks/product-list-filter/index.js:79
-#: build/blocks/product-list-related/index.js:226
 #: src/blocks/product-list-filter-checkboxes/edit.js:39
 #: src/blocks/product-list-filter/edit.js:35
 #: src/blocks/product-list-related/inspector-controls/index.js:93
-#: build/blocks/product-list-filter-checkboxes/index.js:53
-#: build/blocks/product-list-filter/index.js:49
-#: build/blocks/product-list-related/index.js:177
 msgid "Taxonomy"
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:171
 #: src/blocks/product-list-related/inspector-controls/index.js:41
-#: build/blocks/product-list-related/index.js:125
 msgid "Random (pagination disabled)"
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:213
-#: build/blocks/product-list/index.js:743
 #: src/blocks/product-list-related/inspector-controls/index.js:77
 #: src/blocks/product-list/inspector-controls/index.js:86
-#: build/blocks/product-list-related/index.js:161
-#: build/blocks/product-list/index.js:636
 msgid "Default Sorting"
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:245
 #: src/blocks/product-list-related/inspector-controls/index.js:114
-#: build/blocks/product-list-related/index.js:198
 msgid "Max pages to show"
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:253
 #: src/blocks/product-list-related/inspector-controls/index.js:120
-#: build/blocks/product-list-related/index.js:204
 msgid "Limit the pages you want to show, even if the query has more results."
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:255
 #: src/blocks/product-list-related/inspector-controls/index.js:128
-#: build/blocks/product-list-related/index.js:212
 msgid "All Products Fallback"
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:256
 #: src/blocks/product-list-related/inspector-controls/index.js:129
-#: build/blocks/product-list-related/index.js:213
 msgid "If there are no related products, show all products."
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:444
-#: build/blocks/product-list/index.js:998
 #: src/blocks/product-list-related/list-placeholder.js:80
 #: src/blocks/product-list/list-placeholder.js:97
-#: build/blocks/product-list-related/index.js:384
-#: build/blocks/product-list/index.js:898
 msgid "Choose a pattern for the product list or start with a basic layout."
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:453
-#: build/blocks/product-list/index.js:1007
-#: build/blocks/product-page/index.js:206
 #: src/blocks/product-list-related/list-placeholder.js:103
 #: src/blocks/product-list/list-placeholder.js:120
 #: src/blocks/product-page/list-placeholder.js:88
-#: build/blocks/product-list-related/index.js:407
-#: build/blocks/product-list/index.js:921
-#: build/blocks/product-page/index.js:172
 msgid "Start basic"
 msgstr ""
 
-#: build/blocks/product-list-related/index.js:1073
-#: build/blocks/product-list/index.js:1639
-#: build/blocks/product-page/index.js:1044
-#: src/utilities/pattern-selection-modal.js:66
-#: build/blocks/product-list-related/index.js:990
-#: build/blocks/product-list/index.js:1528
-#: build/blocks/product-page/index.js:1057
-msgid "Choose a pattern"
-msgstr ""
-
-#: build/blocks/product-list-related/index.js:1084
-#: build/blocks/product-list/index.js:1650
-#: build/blocks/product-page/index.js:1055
-#: src/utilities/pattern-selection-modal.js:76
-#: build/blocks/product-list-related/index.js:1000
-#: build/blocks/product-list/index.js:1538
-#: build/blocks/product-page/index.js:1067
-msgid "Search for patterns"
-msgstr ""
-
-#: build/blocks/product-list-sidebar-toggle/index.js:87
-#: build/blocks/product-pagination/index.js:187
 #: src/blocks/product-list-sidebar-toggle/edit.js:59
 #: src/blocks/product-pagination/query-pagination-arrow-controls.js:17
-#: build/blocks/product-list-sidebar-toggle/index.js:73
-#: build/blocks/product-pagination/index.js:141
 msgid "A decorative arrow appended to the next and previous page link."
 msgstr ""
 
-#: build/blocks/product-list-sidebar-toggle/index.js:91
 #: src/blocks/product-list-sidebar-toggle/edit.js:66
-#: build/blocks/product-list-sidebar-toggle/index.js:80
 msgctxt "Arrow option for Product List Sidebar Toggle blocks"
 msgid "None"
 msgstr ""
 
-#: build/blocks/product-list-sidebar-toggle/index.js:94
 #: src/blocks/product-list-sidebar-toggle/edit.js:73
-#: build/blocks/product-list-sidebar-toggle/index.js:87
 msgctxt "Arrow option for Product List Sidebar Toggle blocks"
 msgid "Sliders"
 msgstr ""
 
-#: build/blocks/product-list-sidebar-toggle/index.js:97
 #: src/blocks/product-list-sidebar-toggle/edit.js:80
-#: build/blocks/product-list-sidebar-toggle/index.js:94
 msgctxt "Arrow option for Product List Sidebar Toggle blocks"
 msgid "Menu"
 msgstr ""
 
-#: build/blocks/product-list-sidebar/index.js:142
 #: src/blocks/product-list-sidebar/edit.js:156
-#: build/blocks/product-list-sidebar/index.js:170
 msgid "Open by default"
 msgstr ""
 
-#: build/blocks/product-list-sidebar/index.js:143
 #: src/blocks/product-list-sidebar/edit.js:157
-#: build/blocks/product-list-sidebar/index.js:171
 msgid "Do you want sidebar to be open by default?"
 msgstr ""
 
-#: build/blocks/product-list-sidebar/index.js:149
 #: src/blocks/product-list-sidebar/edit.js:166
-#: build/blocks/product-list-sidebar/index.js:180
 msgid "Mobile Label"
 msgstr ""
 
-#: build/blocks/product-list/index.js:326
 #: src/blocks/product-list/inspector-controls/IncludeControls.js:184
-#: build/blocks/product-list/index.js:268
 msgid "Search for a product"
 msgstr ""
 
-#: build/blocks/product-list/index.js:385
-#: build/blocks/product-list/index.js:804
-#: src/blocks/product-list/inspector-controls/index.js:162
-#: src/blocks/product-list/inspector-controls/KeywordControls.js:30
-#: build/blocks/product-list/index.js:308
-#: build/blocks/product-list/index.js:712
-msgid "Keyword"
-msgstr ""
-
-#: build/blocks/product-list/index.js:732
 #: src/blocks/product-list/inspector-controls/index.js:75
-#: build/blocks/product-list/index.js:625
 msgid "Offset"
 msgstr ""
 
-#: build/blocks/product-list/index.js:777
 #: src/blocks/product-list/inspector-controls/index.js:127
-#: build/blocks/product-list/index.js:677
 msgid "Filters"
 msgstr ""
 
-#: build/blocks/product-list/index.js:794
 #: src/blocks/product-list/inspector-controls/index.js:149
-#: build/blocks/product-list/index.js:699
 msgid "Taxonomies"
 msgstr ""
 
-#: build/blocks/product-media/index.js:167
+#: src/blocks/product-list/inspector-controls/index.js:162
+#: src/blocks/product-list/inspector-controls/KeywordControls.js:30
+msgid "Keyword"
+msgstr ""
+
 #: src/blocks/product-media/edit.js:138
-#: build/blocks/product-media/index.js:154
 msgid "Scale images with a lightbox effect."
 msgstr ""
 
-#: build/blocks/product-media/index.js:174
 #: src/blocks/product-media/edit.js:152
-#: build/blocks/product-media/index.js:168
 msgid "Automatically adjust the height of the slider to the image height."
 msgstr ""
 
-#: build/blocks/product-page/index.js:197
 #: src/blocks/product-page/list-placeholder.js:65
-#: build/blocks/product-page/index.js:149
 msgid "Choose a pattern for the product page or start with a basic layout."
 msgstr ""
 
-#: build/blocks/product-pagination-next/index.js:74
 #: src/blocks/product-pagination-next/edit.js:28
-#: build/blocks/product-pagination-next/index.js:42
 msgid "Next page link"
 msgstr ""
 
-#: build/blocks/product-pagination-previous/index.js:76
 #: src/blocks/product-pagination-previous/edit.js:38
-#: build/blocks/product-pagination-previous/index.js:52
 msgid "Previous page link"
 msgstr ""
 
-#: build/blocks/product-pagination/index.js:184
 #: src/blocks/product-pagination/query-pagination-arrow-controls.js:14
-#: build/blocks/product-pagination/index.js:138
 msgid "Arrow"
 msgstr ""
 
-#: build/blocks/product-pagination/index.js:191
 #: src/blocks/product-pagination/query-pagination-arrow-controls.js:24
-#: build/blocks/product-pagination/index.js:148
 msgctxt "Arrow option for Query Pagination Next/Previous blocks"
 msgid "None"
 msgstr ""
 
-#: build/blocks/product-pagination/index.js:194
 #: src/blocks/product-pagination/query-pagination-arrow-controls.js:31
-#: build/blocks/product-pagination/index.js:155
 msgctxt "Arrow option for Query Pagination Next/Previous blocks"
 msgid "Arrow"
 msgstr ""
 
-#: build/blocks/product-pagination/index.js:197
 #: src/blocks/product-pagination/query-pagination-arrow-controls.js:38
-#: build/blocks/product-pagination/index.js:162
 msgctxt "Arrow option for Query Pagination Next/Previous blocks"
 msgid "Chevron"
 msgstr ""
 
-#: build/blocks/product-pagination/index.js:229
 #: src/blocks/product-pagination/query-pagination-label-control.js:11
-#: build/blocks/product-pagination/index.js:181
 msgid "Show label text"
 msgstr ""
 
-#: build/blocks/product-pagination/index.js:230
 #: src/blocks/product-pagination/query-pagination-label-control.js:12
-#: build/blocks/product-pagination/index.js:182
 msgid "Toggle off to hide the label text, e.g. \"Next Page\"."
 msgstr ""
 
-#: build/blocks/product-price-chooser/index.js:49
 #: src/blocks/product-price-chooser/edit.js:37
-#: build/blocks/product-price-chooser/index.js:37
 msgid "Subscribe & Save"
 msgstr ""
 
-#: build/blocks/product-price-chooser/index.js:114
 #: src/blocks/product-price-chooser/edit.js:110
-#: build/blocks/product-price-chooser/index.js:110
 msgid "This block will only show multiple columns if the width of the container is over 600px."
 msgstr ""
 
-#: build/blocks/product-sale-badge/index.js:55
 #: src/blocks/product-sale-badge/edit.js:29
-#: build/blocks/product-sale-badge/index.js:29
 msgid "Sale Label"
 msgstr ""
 
-#: build/blocks/product-sale-badge/index.js:55
 #: src/blocks/product-sale-badge/edit.js:29
-#: build/blocks/product-sale-badge/index.js:29
 msgid "Empty Sale label"
 msgstr ""
 
-#: build/blocks/product-sale-badge/index.js:57
 #: src/blocks/product-sale-badge/edit.js:31
-#: build/blocks/product-sale-badge/index.js:31
 msgid "Type in sale badge text"
 msgstr ""
 
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:41
 #: src/blocks/product-selected-price-ad-hoc-amount/edit.js:31
-#: build/blocks/product-selected-price-ad-hoc-amount/index.js:31
 msgid "Custom Amount Settings"
 msgstr ""
 
-#: build/blocks/product-selected-price-trial/index.js:20
 #: src/blocks/product-selected-price-trial/edit.js:7
-#: build/blocks/product-selected-price-trial/index.js:7
 msgid "Starting in 7 days."
 msgstr ""
 
-#: build/blocks/product-template-container/index.js:114
 #: src/blocks/product-template-container/index.js:27
-#: build/blocks/product-template-container/index.js:71
 msgid "Main"
 msgstr ""
 
-#: build/blocks/product-template/index.js:345
 #: src/blocks/product-template/edit.js:235
-#: build/blocks/product-template/index.js:279
 msgid "List view"
 msgstr ""
 
-#: build/blocks/product-template/index.js:352
 #: src/blocks/product-template/edit.js:241
-#: build/blocks/product-template/index.js:285
 msgid "Grid view"
 msgstr ""
 
-#: build/blocks/product-title/index.js:89
 #: src/blocks/product-title/edit.js:45
-#: build/blocks/product-title/index.js:59
 msgid "Make title a link"
 msgstr ""
 
-#: build/blocks/product-variant-pill/index.js:101
 #: src/blocks/product-variant-pill/edit.js:57
-#: build/blocks/product-variant-pill/index.js:71
 msgid "Highlight Text"
 msgstr ""
 
-#: build/blocks/product-variant-pill/index.js:110
 #: src/blocks/product-variant-pill/edit.js:65
-#: build/blocks/product-variant-pill/index.js:79
 msgid "Highlight Background"
-msgstr ""
-
-#: build/scripts/cart/index.js:84
-#: src/scripts/cart/index.js:14
-#: build/scripts/cart/index.js:51
-msgid "Review your cart."
-msgstr ""
-
-#: build/scripts/cart/index.js:117
-#: src/scripts/cart/index.js:49
-#: build/scripts/cart/index.js:86
-msgid "Cart opened."
-msgstr ""
-
-#: build/scripts/cart/index.js:131
-#: src/scripts/cart/index.js:65
-#: build/scripts/cart/index.js:102
-msgid "Cart closed."
-msgstr ""
-
-#: build/scripts/checkout-actions/index.js:293
-#: src/scripts/checkout-actions/index.js:175
-#: build/scripts/checkout-actions/index.js:226
-#: index5.js:186
-msgid "Failed to delete"
-msgstr ""
-
-#. translators: %d: number of items in the cart
-#: build/scripts/checkout/index.js:244
-#: src/scripts/checkout/index.js:201
-#: build/scripts/checkout/index.js:238
-msgid "Total of %d item in the cart"
-msgid_plural "Total of %d items in the cart"
-msgstr[0] ""
-msgstr[1] ""
-
-#: build/scripts/checkout/index.js:388
-#: src/scripts/checkout/index.js:359
-#: build/scripts/checkout/index.js:396
-msgid "Applying promotion code."
-msgstr ""
-
-#. translators: %s: promotion code
-#: build/scripts/checkout/index.js:396
-#: src/scripts/checkout/index.js:372
-#: build/scripts/checkout/index.js:409
-msgid "Promotion code %s has been applied."
-msgstr ""
-
-#: build/scripts/checkout/index.js:417
-#: src/scripts/checkout/index.js:395
-#: build/scripts/checkout/index.js:432
-msgid "Removing promotion code."
-msgstr ""
-
-#: build/scripts/checkout/index.js:427
-#: src/scripts/checkout/index.js:408
-#: build/scripts/checkout/index.js:445
-msgid "Promotion code has been removed."
-msgstr ""
-
-#. translators: %d: quantity
-#: build/scripts/checkout/index.js:508
-#: src/scripts/checkout/index.js:502
-#: build/scripts/checkout/index.js:539
-msgid "Quantity increased to %d."
-msgstr ""
-
-#. translators: %d: quantity
-#: build/scripts/checkout/index.js:532
-#: src/scripts/checkout/index.js:529
-#: build/scripts/checkout/index.js:566
-msgid "Quantity decreased to %d."
-msgstr ""
-
-#. translators: %d: quantity
-#: build/scripts/checkout/index.js:547
-#: src/scripts/checkout/index.js:550
-#: build/scripts/checkout/index.js:587
-msgid "Quantity changed to %d."
-msgstr ""
-
-#: build/scripts/checkout/index.js:584
-#: src/scripts/checkout/index.js:588
-#: build/scripts/checkout/index.js:625
-msgid "Removing line item."
-msgstr ""
-
-#: build/scripts/image-slider/index.js:10521
-#: src/scripts/image-slider/index.js:53
-#: build/scripts/image-slider/index.js:9905
-msgid "Go to previous slide."
-msgstr ""
-
-#: build/scripts/image-slider/index.js:10522
-#: src/scripts/image-slider/index.js:54
-#: build/scripts/image-slider/index.js:9906
-msgid "This is the first slide."
-msgstr ""
-
-#: build/scripts/image-slider/index.js:10523
-#: src/scripts/image-slider/index.js:55
-#: build/scripts/image-slider/index.js:9907
-msgid "This is the last slide."
-msgstr ""
-
-#: build/scripts/image-slider/index.js:10524
-#: src/scripts/image-slider/index.js:56
-#: build/scripts/image-slider/index.js:9908
-msgid "Go to next slide."
-msgstr ""
-
-#: build/scripts/image-slider/index.js:10525
-#: src/scripts/image-slider/index.js:57
-#: build/scripts/image-slider/index.js:9909
-msgid "Slide {{index}} of {{slidesLength}}."
-msgstr ""
-
-#. translators: %s: product name
-#: build/scripts/product-page/index.js:457
-#: src/scripts/product-page/index.js:328
-#: build/scripts/product-page/index.js:392
-msgid "%s has been added to your cart."
 msgstr ""
 
 #: src/components/LabelInspectorControls.js:27
@@ -21764,209 +20846,265 @@ msgstr ""
 msgid "Search or type a product name"
 msgstr ""
 
-#: build/blocks/cart-coupon/block.json
+#: src/scripts/cart/index.js:14
+msgid "Review your cart."
+msgstr ""
+
+#: src/scripts/cart/index.js:49
+msgid "Cart opened."
+msgstr ""
+
+#: src/scripts/cart/index.js:65
+msgid "Cart closed."
+msgstr ""
+
+#: src/scripts/checkout-actions/index.js:175
+#: index5.js:186
+msgid "Failed to delete"
+msgstr ""
+
+#. translators: %d: number of items in the cart
+#: src/scripts/checkout/index.js:201
+msgid "Total of %d item in the cart"
+msgid_plural "Total of %d items in the cart"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/scripts/checkout/index.js:359
+msgid "Applying promotion code."
+msgstr ""
+
+#. translators: %s: promotion code
+#: src/scripts/checkout/index.js:372
+msgid "Promotion code %s has been applied."
+msgstr ""
+
+#: src/scripts/checkout/index.js:395
+msgid "Removing promotion code."
+msgstr ""
+
+#: src/scripts/checkout/index.js:408
+msgid "Promotion code has been removed."
+msgstr ""
+
+#. translators: %d: quantity
+#: src/scripts/checkout/index.js:502
+msgid "Quantity increased to %d."
+msgstr ""
+
+#. translators: %d: quantity
+#: src/scripts/checkout/index.js:529
+msgid "Quantity decreased to %d."
+msgstr ""
+
+#. translators: %d: quantity
+#: src/scripts/checkout/index.js:550
+msgid "Quantity changed to %d."
+msgstr ""
+
+#: src/scripts/checkout/index.js:588
+msgid "Removing line item."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:53
+msgid "Go to previous slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:54
+msgid "This is the first slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:55
+msgid "This is the last slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:56
+msgid "Go to next slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:57
+msgid "Slide {{index}} of {{slidesLength}}."
+msgstr ""
+
+#. translators: %s: product name
+#: src/scripts/product-page/index.js:328
+msgid "%s has been added to your cart."
+msgstr ""
+
+#: src/utilities/pattern-selection-modal.js:66
+msgid "Choose a pattern"
+msgstr ""
+
+#: src/utilities/pattern-selection-modal.js:76
+msgid "Search for patterns"
+msgstr ""
+
 #: src/blocks/cart-coupon/block.json
 msgctxt "block description"
 msgid "Display a coupon form in the cart"
 msgstr ""
 
-#: build/blocks/cart-icon/block.json
 #: src/blocks/cart-icon/block.json
 msgctxt "block title"
 msgid "Floating Cart Icon"
 msgstr ""
 
-#: build/blocks/cart-icon/block.json
 #: src/blocks/cart-icon/block.json
 msgctxt "block description"
 msgid "The cart icon that shows your cart quantity."
 msgstr ""
 
-#: build/blocks/cart-items/block.json
 #: src/blocks/cart-items/block.json
 msgctxt "block description"
 msgid "The cart items"
 msgstr ""
 
-#: build/blocks/cart-menu-button/block.json
 #: src/blocks/cart-menu-button/block.json
 msgctxt "block title"
 msgid "Cart Toggle Icon"
 msgstr ""
 
-#: build/blocks/cart-subtotal/block.json
 #: src/blocks/cart-subtotal/block.json
 msgctxt "block keyword"
 msgid "cart"
 msgstr ""
 
-#: build/blocks/cart/block.json
 #: src/blocks/cart/block.json
 msgctxt "block description"
 msgid "Display SureCart slide out cart"
 msgstr ""
 
-#: build/blocks/price-amount/block.json
 #: src/blocks/price-amount/block.json
 msgctxt "block title"
 msgid "Price Amount"
 msgstr ""
 
-#: build/blocks/price-amount/block.json
 #: src/blocks/price-amount/block.json
 msgctxt "block description"
 msgid "Displays amount of a price."
 msgstr ""
 
-#: build/blocks/price-interval/block.json
 #: src/blocks/price-interval/block.json
 msgctxt "block title"
 msgid "Price Interval"
 msgstr ""
 
-#: build/blocks/price-interval/block.json
 #: src/blocks/price-interval/block.json
 msgctxt "block description"
 msgid "Displays the price interval."
 msgstr ""
 
-#: build/blocks/price-name/block.json
 #: src/blocks/price-name/block.json
 msgctxt "block title"
 msgid "Price Name"
 msgstr ""
 
-#: build/blocks/price-name/block.json
 #: src/blocks/price-name/block.json
 msgctxt "block description"
 msgid "Displays the name of a price."
 msgstr ""
 
-#: build/blocks/price-scratch-amount/block.json
 #: src/blocks/price-scratch-amount/block.json
 msgctxt "block title"
 msgid "Price Scratch Amount"
 msgstr ""
 
-#: build/blocks/price-scratch-amount/block.json
 #: src/blocks/price-scratch-amount/block.json
 msgctxt "block description"
 msgid "Displays scratch amount of a price."
 msgstr ""
 
-#: build/blocks/price-setup-fee/block.json
 #: src/blocks/price-setup-fee/block.json
 msgctxt "block title"
 msgid "Price Setup Fee"
 msgstr ""
 
-#: build/blocks/price-setup-fee/block.json
 #: src/blocks/price-setup-fee/block.json
 msgctxt "block description"
 msgid "Displays the setup fee of a price."
 msgstr ""
 
-#: build/blocks/price-trial/block.json
 #: src/blocks/price-trial/block.json
 msgctxt "block title"
 msgid "Price Trial"
 msgstr ""
 
-#: build/blocks/price-trial/block.json
 #: src/blocks/price-trial/block.json
 msgctxt "block description"
 msgid "Displays trial of a price."
 msgstr ""
 
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block title"
 msgid "Product Buy Button"
 msgstr ""
 
-#: build/blocks/product-buy-button/block.json
 #: src/blocks/product-buy-button/block.json
 msgctxt "block description"
 msgid "Display the product buy button."
 msgstr ""
 
-#: build/blocks/product-buy-buttons/block.json
 #: src/blocks/product-buy-buttons/block.json
 msgctxt "block title"
 msgid "Buy Buttons"
 msgstr ""
 
-#: build/blocks/product-buy-buttons/block.json
 #: src/blocks/product-buy-buttons/block.json
 msgctxt "block description"
 msgid "Displays product buy and add to cart buttons"
 msgstr ""
 
-#: build/blocks/product-collection-tag/block.json
-#: build/blocks/product-list-filter-tag/block.json
 #: src/blocks/product-collection-tag/block.json
 #: src/blocks/product-list-filter-tag/block.json
 msgctxt "block title"
 msgid "Tag"
 msgstr ""
 
-#: build/blocks/product-collection-tag/block.json
 #: src/blocks/product-collection-tag/block.json
 msgctxt "block description"
 msgid "A product collection tag for a product."
 msgstr ""
 
-#: build/blocks/product-collection-tags/block.json
 #: src/blocks/product-collection-tags/block.json
 msgctxt "block title"
 msgid "Collection Tags"
 msgstr ""
 
-#: build/blocks/product-collection-tags/block.json
 #: src/blocks/product-collection-tags/block.json
 msgctxt "block description"
 msgid "Displays collection selectors for a product."
 msgstr ""
 
-#: build/blocks/product-description/block.json
 #: src/blocks/product-description/block.json
 msgctxt "block description"
 msgid "Display the product description."
 msgstr ""
 
-#: build/blocks/product-image/block.json
 #: src/blocks/product-image/block.json
 msgctxt "block title"
 msgid "Image"
 msgstr ""
 
-#: build/blocks/product-image/block.json
 #: src/blocks/product-image/block.json
 msgctxt "block description"
 msgid "Display the product image."
 msgstr ""
 
-#: build/blocks/product-list-content/block.json
 #: src/blocks/product-list-content/block.json
 msgctxt "block title"
 msgid "Content"
 msgstr ""
 
-#: build/blocks/product-list-content/block.json
 #: src/blocks/product-list-content/block.json
 msgctxt "block description"
 msgid "Display the product list content."
 msgstr ""
 
-#: build/blocks/product-list-filter-checkbox/block.json
 #: src/blocks/product-list-filter-checkbox/block.json
 msgctxt "block description"
 msgid "Display the filter checkbox."
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-label/block.json
-#: build/blocks/product-list-filter-tags-label/block.json
-#: build/blocks/product-list-sort-radio-group-label/block.json
 #: src/blocks/product-list-filter-checkboxes-label/block.json
 #: src/blocks/product-list-filter-tags-label/block.json
 #: src/blocks/product-list-sort-radio-group-label/block.json
@@ -21974,16 +21112,11 @@ msgctxt "block title"
 msgid "Label"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-label/block.json
 #: src/blocks/product-list-filter-checkboxes-label/block.json
 msgctxt "block description"
 msgid "Display the product list filter checkboxes label."
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-template/block.json
-#: build/blocks/product-list-filter-tags-template/block.json
-#: build/blocks/product-list-sort-radio-group-template/block.json
-#: build/blocks/product-template/block.json
 #: src/blocks/product-list-filter-checkboxes-template/block.json
 #: src/blocks/product-list-filter-tags-template/block.json
 #: src/blocks/product-list-sort-radio-group-template/block.json
@@ -21992,411 +21125,342 @@ msgctxt "block title"
 msgid "Template"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes-template/block.json
 #: src/blocks/product-list-filter-checkboxes-template/block.json
 msgctxt "block description"
 msgid "Display the filter checkboxes."
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes/block.json
 #: src/blocks/product-list-filter-checkboxes/block.json
 msgctxt "block title"
 msgid "Filter Checkboxes"
 msgstr ""
 
-#: build/blocks/product-list-filter-checkboxes/block.json
 #: src/blocks/product-list-filter-checkboxes/block.json
 msgctxt "block description"
 msgid "Display the product list filter checkboxes."
 msgstr ""
 
-#: build/blocks/product-list-filter-tag/block.json
 #: src/blocks/product-list-filter-tag/block.json
 msgctxt "block description"
 msgid "Display the filter tag."
 msgstr ""
 
-#: build/blocks/product-list-filter-tags-clear-all/block.json
 #: src/blocks/product-list-filter-tags-clear-all/block.json
 msgctxt "block title"
 msgid "Clear All"
 msgstr ""
 
-#: build/blocks/product-list-filter-tags-clear-all/block.json
 #: src/blocks/product-list-filter-tags-clear-all/block.json
 msgctxt "block description"
 msgid "Display the product list filter tags clear all link."
 msgstr ""
 
-#: build/blocks/product-list-filter-tags-label/block.json
 #: src/blocks/product-list-filter-tags-label/block.json
 msgctxt "block description"
 msgid "Display the product list filter tags label"
 msgstr ""
 
-#: build/blocks/product-list-filter-tags-template/block.json
 #: src/blocks/product-list-filter-tags-template/block.json
 msgctxt "block description"
 msgid "Display the filter tags."
 msgstr ""
 
-#: build/blocks/product-list-filter-tags/block.json
 #: src/blocks/product-list-filter-tags/block.json
 msgctxt "block title"
 msgid "Applied Filters"
 msgstr ""
 
-#: build/blocks/product-list-filter-tags/block.json
 #: src/blocks/product-list-filter-tags/block.json
 msgctxt "block description"
 msgid "Display the applied filters."
 msgstr ""
 
-#: build/blocks/product-list-filter/block.json
 #: src/blocks/product-list-filter/block.json
 msgctxt "block title"
 msgid "Filter (Dropdown)"
 msgstr ""
 
-#: build/blocks/product-list-filter/block.json
 #: src/blocks/product-list-filter/block.json
 msgctxt "block description"
 msgid "Display the product filter."
 msgstr ""
 
-#: build/blocks/product-list-no-products/block.json
 #: src/blocks/product-list-no-products/block.json
 msgctxt "block title"
 msgid "No products"
 msgstr ""
 
-#: build/blocks/product-list-no-products/block.json
 #: src/blocks/product-list-no-products/block.json
 msgctxt "block description"
 msgid "Contains the block elements used to render content when no products are found."
 msgstr ""
 
-#: build/blocks/product-list-related/block.json
 #: src/blocks/product-list-related/block.json
 msgctxt "block title"
 msgid "Related Products"
 msgstr ""
 
-#: build/blocks/product-list-related/block.json
 #: src/blocks/product-list-related/block.json
 msgctxt "block description"
 msgid "Display a list of products related to the current product."
 msgstr ""
 
-#: build/blocks/product-list-search/block.json
 #: src/blocks/product-list-search/block.json
 msgctxt "block title"
 msgid "Search"
 msgstr ""
 
-#: build/blocks/product-list-search/block.json
 #: src/blocks/product-list-search/block.json
 msgctxt "block description"
 msgid "Display the product search."
 msgstr ""
 
-#: build/blocks/product-list-sidebar-toggle/block.json
 #: src/blocks/product-list-sidebar-toggle/block.json
 msgctxt "block title"
 msgid "Sidebar Toggle Button"
 msgstr ""
 
-#: build/blocks/product-list-sidebar-toggle/block.json
 #: src/blocks/product-list-sidebar-toggle/block.json
 msgctxt "block description"
 msgid "Display the product list sidebar toggle."
 msgstr ""
 
-#: build/blocks/product-list-sidebar/block.json
 #: src/blocks/product-list-sidebar/block.json
 msgctxt "block title"
 msgid "Sidebar"
 msgstr ""
 
-#: build/blocks/product-list-sidebar/block.json
 #: src/blocks/product-list-sidebar/block.json
 msgctxt "block description"
 msgid "Display the product list sidebar."
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-label/block.json
 #: src/blocks/product-list-sort-radio-group-label/block.json
 msgctxt "block description"
 msgid "Display the product list sort radio group label"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group-template/block.json
 #: src/blocks/product-list-sort-radio-group-template/block.json
 msgctxt "block description"
 msgid "Display the sort radio group template."
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group/block.json
 #: src/blocks/product-list-sort-radio-group/block.json
 msgctxt "block title"
 msgid "Sort (Radio Group)"
 msgstr ""
 
-#: build/blocks/product-list-sort-radio-group/block.json
 #: src/blocks/product-list-sort-radio-group/block.json
 msgctxt "block description"
 msgid "Display the Product List Sort Radio Group."
 msgstr ""
 
-#: build/blocks/product-list-sort-radio/block.json
 #: src/blocks/product-list-sort-radio/block.json
 msgctxt "block description"
 msgid "Display the sort radio."
 msgstr ""
 
-#: build/blocks/product-list-sort/block.json
 #: src/blocks/product-list-sort/block.json
 msgctxt "block title"
 msgid "Sort (Dropdown)"
 msgstr ""
 
-#: build/blocks/product-list-sort/block.json
 #: src/blocks/product-list-sort/block.json
 msgctxt "block description"
 msgid "Display the product sort."
 msgstr ""
 
-#: build/blocks/product-list/block.json
 #: src/blocks/product-list/block.json
 msgctxt "block description"
 msgid "Display a list of products."
 msgstr ""
 
-#: build/blocks/product-page/block.json
 #: src/blocks/product-page/block.json
 msgctxt "block title"
 msgid "Product Form"
 msgstr ""
 
-#: build/blocks/product-page/block.json
 #: src/blocks/product-page/block.json
 msgctxt "block description"
 msgid "Display product form."
 msgstr ""
 
-#: build/blocks/product-pagination-next/block.json
 #: src/blocks/product-pagination-next/block.json
 msgctxt "block title"
 msgid "Next"
 msgstr ""
 
-#: build/blocks/product-pagination-next/block.json
 #: src/blocks/product-pagination-next/block.json
 msgctxt "block description"
 msgid "Display the product pagination next."
 msgstr ""
 
-#: build/blocks/product-pagination-numbers/block.json
 #: src/blocks/product-pagination-numbers/block.json
 msgctxt "block title"
 msgid "Numbers"
 msgstr ""
 
-#: build/blocks/product-pagination-numbers/block.json
 #: src/blocks/product-pagination-numbers/block.json
 msgctxt "block description"
 msgid "Display the product pagination numbers."
 msgstr ""
 
-#: build/blocks/product-pagination-previous/block.json
 #: src/blocks/product-pagination-previous/block.json
 msgctxt "block title"
 msgid "Previous"
 msgstr ""
 
-#: build/blocks/product-pagination-previous/block.json
 #: src/blocks/product-pagination-previous/block.json
 msgctxt "block description"
 msgid "Display the product pagination previous."
 msgstr ""
 
-#: build/blocks/product-pagination/block.json
 #: src/blocks/product-pagination/block.json
 msgctxt "block title"
 msgid "Pagination"
 msgstr ""
 
-#: build/blocks/product-pagination/block.json
 #: src/blocks/product-pagination/block.json
 msgctxt "block description"
 msgid "Display the product pagination."
 msgstr ""
 
-#: build/blocks/product-price-choice-template/block.json
-#: build/blocks/product-price/block.json
 #: src/blocks/product-price-choice-template/block.json
 #: src/blocks/product-price/block.json
 msgctxt "block title"
 msgid "Price"
 msgstr ""
 
-#: build/blocks/product-price-choice-template/block.json
 #: src/blocks/product-price-choice-template/block.json
 msgctxt "block description"
 msgid "Displays the price of a product with a choice of options."
 msgstr ""
 
-#: build/blocks/product-price/block.json
 #: src/blocks/product-price/block.json
 msgctxt "block description"
 msgid "Display the static product price."
 msgstr ""
 
-#: build/blocks/product-quantity/block.json
 #: src/blocks/product-quantity/block.json
 msgctxt "block description"
 msgid "Display the product quantity selector"
 msgstr ""
 
-#: build/blocks/product-sale-badge/block.json
 #: src/blocks/product-sale-badge/block.json
 msgctxt "block title"
 msgid "Sale Badge"
 msgstr ""
 
-#: build/blocks/product-sale-badge/block.json
 #: src/blocks/product-sale-badge/block.json
 msgctxt "block description"
 msgid "Display a badge if the product is currently on sale"
 msgstr ""
 
-#: build/blocks/product-scratch-price/block.json
 #: src/blocks/product-scratch-price/block.json
 msgctxt "block title"
 msgid "Scratch Price"
 msgstr ""
 
-#: build/blocks/product-scratch-price/block.json
 #: src/blocks/product-scratch-price/block.json
 msgctxt "block description"
 msgid "Display the product scratch price."
 msgstr ""
 
-#: build/blocks/product-selected-price-ad-hoc-amount/block.json
 #: src/blocks/product-selected-price-ad-hoc-amount/block.json
 msgctxt "block title"
 msgid "Selected Price Custom Amount"
 msgstr ""
 
-#: build/blocks/product-selected-price-ad-hoc-amount/block.json
 #: src/blocks/product-selected-price-ad-hoc-amount/block.json
 msgctxt "block description"
 msgid "Displays the currently selected price custom amount."
 msgstr ""
 
-#: build/blocks/product-selected-price-amount/block.json
 #: src/blocks/product-selected-price-amount/block.json
 msgctxt "block title"
 msgid "Selected Price Amount"
 msgstr ""
 
-#: build/blocks/product-selected-price-amount/block.json
 #: src/blocks/product-selected-price-amount/block.json
 msgctxt "block description"
 msgid "Displays the currently selected price or variant amount."
 msgstr ""
 
-#: build/blocks/product-selected-price-fees/block.json
 #: src/blocks/product-selected-price-fees/block.json
 msgctxt "block title"
 msgid "Selected Price Fees"
 msgstr ""
 
-#: build/blocks/product-selected-price-fees/block.json
 #: src/blocks/product-selected-price-fees/block.json
 msgctxt "block description"
 msgid "Displays the currently selected price fees."
 msgstr ""
 
-#: build/blocks/product-selected-price-interval/block.json
 #: src/blocks/product-selected-price-interval/block.json
 msgctxt "block title"
 msgid "Selected Price Interval"
 msgstr ""
 
-#: build/blocks/product-selected-price-interval/block.json
 #: src/blocks/product-selected-price-interval/block.json
 msgctxt "block description"
 msgid "Displays the currently selected price interval."
 msgstr ""
 
-#: build/blocks/product-selected-price-scratch-amount/block.json
 #: src/blocks/product-selected-price-scratch-amount/block.json
 msgctxt "block title"
 msgid "Selected Price Scratch Amount"
 msgstr ""
 
-#: build/blocks/product-selected-price-scratch-amount/block.json
 #: src/blocks/product-selected-price-scratch-amount/block.json
 msgctxt "block description"
 msgid "Displays the currently selected price scratch amount."
 msgstr ""
 
-#: build/blocks/product-selected-price-trial/block.json
 #: src/blocks/product-selected-price-trial/block.json
 msgctxt "block title"
 msgid "Selected Price Trial"
 msgstr ""
 
-#: build/blocks/product-selected-price-trial/block.json
 #: src/blocks/product-selected-price-trial/block.json
 msgctxt "block description"
 msgid "Displays the currently selected price trial."
 msgstr ""
 
-#: build/blocks/product-template-container/block.json
 #: src/blocks/product-template-container/block.json
 msgctxt "block title"
 msgid "Product Template Container"
 msgstr ""
 
-#: build/blocks/product-template-container/block.json
 #: src/blocks/product-template-container/block.json
 msgctxt "block description"
 msgid "Display the Product Template Container."
 msgstr ""
 
-#: build/blocks/product-template/block.json
 #: src/blocks/product-template/block.json
 msgctxt "block description"
 msgid "Displays products list."
 msgstr ""
 
-#: build/blocks/product-title/block.json
 #: src/blocks/product-title/block.json
 msgctxt "block description"
 msgid "Display the product title."
 msgstr ""
 
-#: build/blocks/product-variant-pill/block.json
 #: src/blocks/product-variant-pill/block.json
 msgctxt "block title"
 msgid "Pill"
 msgstr ""
 
-#: build/blocks/product-variant-pill/block.json
 #: src/blocks/product-variant-pill/block.json
 msgctxt "block description"
 msgid "Displays a product variant choice as a pill."
 msgstr ""
 
-#: build/blocks/product-variant-pills/block.json
 #: src/blocks/product-variant-pills/block.json
 msgctxt "block title"
 msgid "Variants Selector"
 msgstr ""
 
-#: build/blocks/product-variant-pills/block.json
 #: src/blocks/product-variant-pills/block.json
 msgctxt "block description"
 msgid "Display product variants as pills selector."
@@ -23400,8 +22464,8 @@ msgid "Menu Selection Dropdown closed."
 msgstr ""
 
 #: fetch.js:426
-#: fetch.js:760
-#: fetch.js:794
+#: fetch.js:769
+#: fetch.js:803
 msgid "The response is not a valid JSON response."
 msgstr ""
 
@@ -23420,15 +22484,15 @@ msgid "You are probably offline."
 msgstr ""
 
 #. translators: %s: URL to debug settings page
-#: fetch.js:767
+#: fetch.js:776
 msgid "Please ensure that your site is not in debug mode as this may interfere with API responses. %s"
 msgstr ""
 
-#: fetch.js:767
+#: fetch.js:776
 msgid "More Information"
 msgstr ""
 
-#: fetch.js:778
+#: fetch.js:787
 msgid "We were not able to process this order"
 msgstr ""
 
@@ -23568,12 +22632,12 @@ msgstr ""
 msgid "Something went wrong. Please reload the page and try again."
 msgstr ""
 
-#: sc-charges-list.js:94
+#: sc-charges-list.js:93
 #: sc-subscription-payment.js:129
 msgid "You have no saved payment methods."
 msgstr ""
 
-#: sc-charges-list.js:114
+#: sc-charges-list.js:113
 msgid "#%s"
 msgstr ""
 
@@ -23598,19 +22662,19 @@ msgstr ""
 msgid "Paystack transaction could not be finished. Status: %s"
 msgstr ""
 
-#: sc-checkout-product-price-variant-selector.js:73
+#: sc-checkout-product-price-variant-selector.js:72
 msgid "Please choose an available option."
 msgstr ""
 
-#: sc-checkout-product-price-variant-selector.js:78
+#: sc-checkout-product-price-variant-selector.js:77
 msgid "This selection is not available."
 msgstr ""
 
-#: sc-checkout-product-price-variant-selector.js:178
+#: sc-checkout-product-price-variant-selector.js:177
 msgid "Select %s: %s"
 msgstr ""
 
-#: sc-checkout-product-price-variant-selector.js:178
+#: sc-checkout-product-price-variant-selector.js:177
 #: sc-product-pills-variant-option.js:27
 msgid "(option unavailable)"
 msgstr ""
@@ -23769,16 +22833,16 @@ msgstr ""
 msgid "Go to next product slide."
 msgstr ""
 
-#: sc-invoices-list.js:112
+#: sc-invoices-list.js:111
 msgid "You don't have any invoices."
 msgstr ""
 
-#: sc-invoices-list.js:134
+#: sc-invoices-list.js:133
 msgid "Due %s"
 msgstr ""
 
-#: sc-invoices-list.js:149
-#: sc-orders-list.js:157
+#: sc-invoices-list.js:148
+#: sc-orders-list.js:156
 #: sc-subscriptions-list.js:141
 msgid "View all %s"
 msgstr ""
@@ -23811,12 +22875,20 @@ msgstr ""
 msgid "You don't have any licenses."
 msgstr ""
 
-#: sc-line-item-tax2.js:20
+#: sc-line-item-tax2.js:19
 msgid "Estimated %s"
 msgstr ""
 
-#: sc-line-item-tax2.js:24
+#: sc-line-item-tax2.js:23
 msgid "Tax:"
+msgstr ""
+
+#: sc-line-item-total2.js:52
+msgid "Payment Total"
+msgstr ""
+
+#: sc-line-item-total2.js:53
+msgid "Your payment will be processed in %s."
 msgstr ""
 
 #: sc-login-form.js:96
@@ -23883,51 +22955,51 @@ msgstr ""
 msgid "Another step will appear after submitting your order to add this payment method."
 msgstr ""
 
-#: sc-order-bump2.js:33
+#: sc-order-bump2.js:32
 msgid "Order bump Removed."
 msgstr ""
 
-#: sc-order-bump2.js:41
+#: sc-order-bump2.js:40
 msgid "Order bump applied."
 msgstr ""
 
 #. translators: %s: old price
-#: sc-order-bump2.js:71
+#: sc-order-bump2.js:70
 msgid "Originally priced at %s."
 msgstr ""
 
 #. translators: %1$s: amount off, %2$s: currency
-#: sc-order-bump2.js:81
+#: sc-order-bump2.js:77
 msgid "You save %1$s%2$s."
 msgstr ""
 
-#: sc-order-bump2.js:81
+#: sc-order-bump2.js:77
 msgctxt "Save money"
 msgid "Save"
 msgstr ""
 
 #. translators: %s: amount percent off
-#: sc-order-bump2.js:86
+#: sc-order-bump2.js:83
 msgid "You save %s%%."
 msgstr ""
 
 #. translators: %s: amount percent off
-#: sc-order-bump2.js:88
+#: sc-order-bump2.js:85
 msgctxt "Save money"
 msgid "Save %s%%"
 msgstr ""
 
 #. translators: %s: order bump name
-#: sc-order-bump2.js:106
+#: sc-order-bump2.js:103
 msgid "Product: %s."
 msgstr ""
 
 #. translators: %s: Product description
-#: sc-order-bump2.js:108
+#: sc-order-bump2.js:105
 msgid "Product description: %s."
 msgstr ""
 
-#: sc-order-bumps2.js:29
+#: sc-order-bumps2.js:28
 msgid "Order bump summary"
 msgstr ""
 
@@ -23961,39 +23033,39 @@ msgstr ""
 msgid "Returned"
 msgstr ""
 
-#: sc-order-submit.js:57
-#: sc-order-submit.js:59
+#: sc-order-submit.js:56
+#: sc-order-submit.js:58
 msgid "Press enter to purchase"
 msgstr ""
 
-#: sc-order-summary.js:70
-#: sc-order-summary.js:73
+#: sc-order-summary.js:69
+#: sc-order-summary.js:72
 msgid "Order Summary %s"
 msgstr ""
 
-#: sc-order-summary.js:70
-#: sc-order-summary.js:73
+#: sc-order-summary.js:69
+#: sc-order-summary.js:72
 #: sc-summary2.js:50
 #: sc-summary2.js:53
 msgid "collapsed"
 msgstr ""
 
-#: sc-order-summary.js:70
-#: sc-order-summary.js:73
+#: sc-order-summary.js:69
+#: sc-order-summary.js:72
 #: sc-summary2.js:50
 #: sc-summary2.js:53
 msgid "expanded"
 msgstr ""
 
-#: sc-order-summary.js:103
+#: sc-order-summary.js:102
 msgid "Your cart is empty."
 msgstr ""
 
-#: sc-order.js:189
+#: sc-order.js:186
 msgid "Order Status"
 msgstr ""
 
-#: sc-order.js:189
+#: sc-order.js:186
 msgid "Download Receipt/Invoice"
 msgstr ""
 
@@ -24143,21 +23215,21 @@ msgstr ""
 msgid "Premium"
 msgstr ""
 
-#: sc-price-choice-container2.js:53
+#: sc-price-choice-container2.js:54
 #: sc-price2.js:32
 msgid "This is a repeating price. Payment will happen"
 msgstr ""
 
-#: sc-price-choice-container2.js:71
+#: sc-price-choice-container2.js:72
 #: sc-price2.js:58
 msgid "You have a %d-day trial before payment becomes necessary."
 msgstr ""
 
-#: sc-price-choice-container2.js:71
+#: sc-price-choice-container2.js:72
 msgid "This payment plan has"
 msgstr ""
 
-#: sc-price-choice.js:778
+#: sc-price-choice.js:777
 msgid "This product has been archived."
 msgstr ""
 
@@ -24281,29 +23353,29 @@ msgstr ""
 msgid "No more products to browse."
 msgstr ""
 
-#: sc-product-line-item2.js:41
+#: sc-product-line-item2.js:51
 msgid "%d day free"
 msgid_plural "%d days free"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: 30 days free, Then $99 per month.
-#: sc-product-line-item2.js:43
+#: sc-product-line-item2.js:53
 msgid "Then"
 msgstr ""
 
-#: sc-product-line-item2.js:43
+#: sc-product-line-item2.js:53
 msgid "starting in %d day"
 msgid_plural "starting in %d days"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$s: product name, %2$s: product price name
-#: sc-product-line-item2.js:62
+#: sc-product-line-item2.js:72
 msgid "Change Quantity - %1$s %2$s"
 msgstr ""
 
-#: sc-product-line-item2.js:66
+#: sc-product-line-item2.js:76
 msgid "Remove Item - %1$s %2$s"
 msgstr ""
 
@@ -24541,12 +23613,12 @@ msgstr ""
 msgid "Select a payment method"
 msgstr ""
 
-#: sc-subscription-reactivate2.js:82
+#: sc-subscription-reactivate2.js:81
 #: sc-subscription.js:206
 msgid "Resubscribe"
 msgstr ""
 
-#: sc-subscription-reactivate2.js:82
+#: sc-subscription-reactivate2.js:81
 msgid "You will be charged"
 msgstr ""
 
