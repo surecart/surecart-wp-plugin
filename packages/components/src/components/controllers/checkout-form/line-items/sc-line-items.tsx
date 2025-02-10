@@ -34,7 +34,7 @@ import { getMaxStockQuantity } from '../../../../functions/quantity';
 
 @Component({
   tag: 'sc-line-items',
-  styleUrl: 'sc-line-items.css',
+  styleUrl: 'sc-line-items.scss',
   shadow: true,
 })
 export class ScLineItems {
@@ -77,7 +77,7 @@ export class ScLineItems {
         {(checkoutState?.checkout?.line_items?.data || []).map(item => {
           const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
           return (
-            <div class="line-item">
+            <div class={`line-item ${item?.price?.current_swap || item?.swap ? 'line-item--has-swap' : ''}`}>
               <sc-product-line-item
                 key={item.id}
                 image={item?.image}
