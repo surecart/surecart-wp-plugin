@@ -47,6 +47,7 @@ $current_currency = Currency::getCurrentCurrency();
 	tabindex="-1"
 	data-wp-bind--aria-labelledby="context.activeMenuItemId"
 	aria-description="<?php esc_html_e( 'Press the arrow keys then enter to make a selection.', 'surecart' ); ?>"
+	aria-orientation="vertical"
 >
 	<div
 		class="wp-block-surecart-currency-switcher__trigger"
@@ -80,7 +81,7 @@ $current_currency = Currency::getCurrentCurrency();
 	</div>
 
 	<div
-		class="sc-dropdown__panel sc-dropdown__panel--right"
+		class="sc-dropdown__panel sc-dropdown__panel--<?php echo esc_attr( $attributes['position'] ); ?>"
 		data-wp-bind--hidden="!context.isMenuOpen"
 		data-wp-bind--aria-hidden="!context.isMenuOpen"
 		hidden
@@ -111,8 +112,10 @@ $current_currency = Currency::getCurrentCurrency();
 					<span class="sc-dropdown__menu-item__symbol">(<?php echo esc_html( $currency->currency_symbol ); ?>)</span>
 				</span>
 
-				<?php if ( strtolower( $currency->currency ) === strtolower( $current_currency ) ) : ?>
-					<span class="sc-menu-item__check">
+				<?php
+				if ( strtolower( $currency->currency ) === strtolower( $current_currency ) ) :
+					?>
+					<span class="sc-menu-item__check sc-menu-item__check--right">
 						<?php echo wp_kses( SureCart::svg()->get( 'check' ), sc_allowed_svg_html() ); ?>
 					</span>
 				<?php endif; ?>

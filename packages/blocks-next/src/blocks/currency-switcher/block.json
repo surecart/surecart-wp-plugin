@@ -7,6 +7,12 @@
 	"version": "1.0.0",
 	"category": "surecart",
 	"example": {},
+	"attributes": {
+		"position": {
+			"type": "string",
+			"default": "left"
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"spacing": {

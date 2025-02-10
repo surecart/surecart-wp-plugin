@@ -11,6 +11,8 @@ import {
 	ScSelect,
 	ScSkeleton,
 	ScTag,
+	ScCard,
+	ScDivider,
 } from '@surecart/components-react';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
@@ -39,47 +41,28 @@ export default () => {
 
 	const { createSuccessNotice } = useDispatch(noticeStore);
 
-	const [cartMenuAlignment, setCartMenuAlignment] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_menu_alignment'
-	);
+	const [currencySwitcherAlignment, setCurrencySwitcherAlignment] =
+		useEntityProp('root', 'site', 'surecart_currency_switcher_alignment');
 
-	const [cartMenuAlwaysShown, setCartMenuAlwaysShown] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_menu_always_shown'
-	);
+	const [currencySwitcherSelectedIds, setCurrencySwitcherSelectedIds] =
+		useEntityProp(
+			'root',
+			'site',
+			'surecart_currency_switcher_selected_ids'
+		);
 
-	const [cartMenuSelectedIds, setCartMenuSelectedIds] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_menu_selected_ids'
-	);
-
-	const [cartIconType, setCartIconType] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_icon_type'
-	);
-
-	const [cartIcon, setCartIcon] = useEntityProp(
-		'root',
-		'site',
-		'surecart_cart_icon'
-	);
-
-	const addCartMenu = (menuId) =>
-		setCartMenuSelectedIds([
-			...new Set([...(cartMenuSelectedIds || []), menuId]),
+	const addCurrencySwitcher = (menuId) =>
+		setCurrencySwitcherSelectedIds([
+			...new Set([...(currencySwitcherSelectedIds || []), menuId]),
 		]);
 
-	const removeCartMenu = (menuId) => {
-		const newCartMenuSelectedIds = cartMenuSelectedIds.filter(
-			(item) => item !== menuId
-		);
-		setCartMenuSelectedIds(newCartMenuSelectedIds);
+	const removeCurrencySwitcher = (menuId) => {
+		const newCurrencySwitcherSelectedIds =
+			currencySwitcherSelectedIds.filter((item) => item !== menuId);
+		setCurrencySwitcherSelectedIds(newCurrencySwitcherSelectedIds);
 	};
+
+	console.log(menus?.length);
 
 	// we are loading.
 	if (loading) {
@@ -97,7 +80,6 @@ export default () => {
 				<>Notice on how to add currency switcher to your site.</>
 			) : (
 				<>
-					{' '}
 					<div>
 						<ScFormControl
 							label={__('Add to Menus', 'surecart')}
@@ -114,26 +96,30 @@ export default () => {
 									padding: 0.44em 0;
 								`}
 							>
-								{(cartMenuSelectedIds || []).map((menuId) => {
-									// find the menu by id.
-									const menu = menus?.find(
-										(item) => item?.id === menuId
-									);
-									// bail if it's been deleted or no name.
-									if (!menu?.name) return null;
-									return (
-										<ScTag
-											pill={true}
-											clearable={true}
-											key={menuId}
-											onScClear={() =>
-												removeCartMenu(menuId)
-											}
-										>
-											{menu.name}
-										</ScTag>
-									);
-								})}
+								{(currencySwitcherSelectedIds || []).map(
+									(menuId) => {
+										// find the menu by id.
+										const menu = menus?.find(
+											(item) => item?.id === menuId
+										);
+										// bail if it's been deleted or no name.
+										if (!menu?.name) return null;
+										return (
+											<ScTag
+												pill={true}
+												clearable={true}
+												key={menuId}
+												onScClear={() =>
+													removeCurrencySwitcher(
+														menuId
+													)
+												}
+											>
+												{menu.name}
+											</ScTag>
+										);
+									}
+								)}
 								<ScDropdown position="bottom-right">
 									<ScButton
 										type="default"
@@ -146,7 +132,8 @@ export default () => {
 									<ScMenu>
 										{menus?.map((item) => {
 											const checked = (
-												cartMenuSelectedIds || []
+												currencySwitcherSelectedIds ||
+												[]
 											).includes(item.id);
 											return (
 												<ScMenuItem
@@ -159,10 +146,10 @@ export default () => {
 													key={item.id}
 													onClick={() =>
 														!checked
-															? addCartMenu(
+															? addCurrencySwitcher(
 																	item.id
 															  )
-															: removeCartMenu(
+															: removeCurrencySwitcher(
 																	item.id
 															  )
 													}
@@ -177,31 +164,36 @@ export default () => {
 							</div>
 						</ScFormControl>
 					</div>
-					<div>
-						<ScSelect
-							label={__('Position', 'surecart')}
-							placeholder={__('Select Position', 'surecart')}
-							value={cartMenuAlignment}
-							onScChange={(e) =>
-								setCartMenuAlignment(e.target.value)
-							}
-							unselect={false}
-							help={__(
-								'Select the currency switcher position, i.e. left or right, where it will look best with your website design.',
-								'surecart'
-							)}
-							choices={[
-								{
-									label: __('Right', 'surecart'),
-									value: 'right',
-								},
-								{
-									label: __('Left', 'surecart'),
-									value: 'left',
-								},
-							]}
-						/>
-					</div>
+					{!!currencySwitcherSelectedIds?.length && (
+						<div>
+							<ScSelect
+								label={__('Position', 'surecart')}
+								placeholder={__('Select Position', 'surecart')}
+								value={currencySwitcherAlignment}
+								onScChange={(e) =>
+									setCurrencySwitcherAlignment(e.target.value)
+								}
+								unselect={false}
+								help={__(
+									'Select the currency switcher position, i.e. left or right, where it will look best with your website design.',
+									'surecart'
+								)}
+								choices={[
+									{
+										label: __('Right', 'surecart'),
+										value: 'right',
+									},
+									{
+										label: __('Left', 'surecart'),
+										value: 'left',
+									},
+								]}
+							/>
+						</div>
+					)}
+
+					<ScDivider>{__('Or', 'surecart')}</ScDivider>
+
 					<ScInput
 						label={__('Shortcode', 'surecart')}
 						value={`[surecart_currency_switcher]`}

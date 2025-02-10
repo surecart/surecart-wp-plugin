@@ -24,8 +24,33 @@
 		padding: var(--sc-spacing-x-small) 0;
 		margin-top: 0.5em;
 		position: absolute;
+		min-width: max-content;
+
+		&--center {
+			left: 50%;
+			transform: translateX(-50%);
+			transform-origin: top center;
+		}
 
 		&--right {
+			right: 0;
+			transform-origin: top right;
+		}
+
+		&--bottom {
+			left: 50%;
+			transform: translateX(-50%);
+			transform-origin: top center;
+		}
+
+		&--top-left {
+			bottom: calc(100% + 10px);
+			left: 0;
+			transform-origin: top left;
+		}
+
+		&--top-right {
+			bottom: calc(100% + 10px);
 			right: 0;
 			transform-origin: top right;
 		}
@@ -78,12 +103,18 @@
 			display: flex;
 			position: absolute;
 			left: 0.5em;
-			top: 0.6em;
+			top: 50%;
+			transform: translateY(-50%);
 			align-items: center;
 			font-size: inherit;
 			svg {
 				width: 1em;
 				height: 1em;
+			}
+
+			&--right {
+				left: auto;
+				right: 1em;
 			}
 		}
 	}

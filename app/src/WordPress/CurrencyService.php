@@ -28,7 +28,10 @@ class CurrencyService {
 		add_filter( 'term_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'post_type_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'attachment_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
+		// add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
+
+		// add the currency switcher menu.
+		add_filter( 'wp_nav_menu_items', array( $this, 'addCurrencySwitcherMenu' ), 10, 2 );
 
 		// Remove the currency parameter from the canonical permalink.
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
@@ -48,6 +51,43 @@ class CurrencyService {
 		}
 	}
 
+	/**
+	 * Add the currency switcher menu.
+	 *
+	 * @param string $items The menu items.
+	 * @param object $args The menu arguments.
+	 *
+	 * @return string The menu items.
+	 */
+	public function addCurrencySwitcherMenu( $items, $args ) {
+		$menu = wp_get_nav_menu_object( $args->menu );
+		$id   = $menu ? $menu->term_id : false;
+
+		$currency_switcher_selected_ids = get_option( 'surecart_currency_switcher_selected_ids', [] );
+
+		// if we don't have a menu id, or it's not in the selected ids, bail.
+		if ( empty( $id ) || ! in_array( $id, $currency_switcher_selected_ids, true ) ) {
+			return $items;
+		}
+
+		$cart_menu_alignment = (string) get_option( 'surecart_currency_switcher_alignment', 'right' );
+
+		$menu = '<li class="menu-item">' . do_blocks(
+			'<!-- wp:surecart/currency-switcher ' . wp_json_encode(
+				apply_filters(
+					'surecart/currency/switcher_attributes',
+					[
+						'position' => 'right' === $cart_menu_alignment ? 'right' : 'left',
+					]
+				)
+			) . ' /-->'
+		) . '</li>';
+
+		// left or right.
+		$items = 'right' === $cart_menu_alignment ? $items . $menu : $menu . $items;
+
+		return $items;
+	}
 	/**
 	 * Convert currency.
 	 *
