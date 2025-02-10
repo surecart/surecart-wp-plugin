@@ -32,6 +32,7 @@ import {
 import useSave from '../UseSave';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../components/Error';
+import CurrencySwitcherSettings from './components/CurrencySwitcherSettings';
 
 export default function DisplayCurrencySettings() {
 	const [error, setError] = useState(null);
@@ -261,9 +262,9 @@ export default function DisplayCurrencySettings() {
 			>
 				<Error error={error} setError={setError} margin="80px" />
 				<SettingsBox
-					title={__('Currency DisplaySettings', 'surecart')}
+					title={__('Currency Switcher Settings', 'surecart')}
 					description={__(
-						'Set the currency display settings for your site.',
+						'Set the currency switcher settings for your site.',
 						'surecart'
 					)}
 					noButton
@@ -283,6 +284,8 @@ export default function DisplayCurrencySettings() {
 							)}
 						</span>
 					</ScSwitch>
+
+					<CurrencySwitcherSettings />
 				</SettingsBox>
 
 				<SettingsBox
@@ -418,6 +421,21 @@ export default function DisplayCurrencySettings() {
 						/>
 					</div>
 				</SettingsBox>
+
+				{/* <div
+					css={css`
+						padding: 20px;
+						background: white;
+						border-radius: var(--sc-input-border-radius-medium);
+						border: var(--sc-input-border-width) solid
+							var(--sc-input-border-color);
+					`}
+				>
+					{__(
+						'Currency settings are not yet available. Please check back later.',
+						'surecart'
+					)}
+				</div> */}
 			</SettingsTemplate>
 		</>
 	);
