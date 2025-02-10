@@ -35,6 +35,32 @@ class PostSyncService {
 	protected $post_type = 'sc_product';
 
 	/**
+	 * The excluded meta keys.
+	 *
+	 * @var array
+	 */
+	protected $excluded_meta_keys = [
+		'gallery',
+		'gallery_ids',
+		'meta_description',
+		'page_title',
+		'wp_buy_link_coupon_field_disabled',
+		'wp_buy_link_custom_thankyou_page',
+		'wp_buy_link_custom_thankyou_page_url',
+		'wp_buy_link_enabled',
+		'wp_buy_link_logo_disabled',
+		'wp_buy_link_product_description_disabled',
+		'wp_buy_link_product_image_disabled',
+		'wp_buy_link_success_page_enabled',
+		'wp_buy_link_success_page_url',
+		'wp_buy_link_terms_disabled',
+		'wp_buy_link_test_mode_enabled',
+		'wp_created_by',
+		'wp_template_part_id',
+		'wp_template_id',
+	];
+
+	/**
 	 * Find the post from the model.
 	 *
 	 * @param string $model_id The model id.
@@ -130,28 +156,17 @@ class PostSyncService {
 	 * @return array
 	 */
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
-		$base_amount   = ! empty( $model->prices->data[0]->amount ) ? $model->prices->data[0]->amount : 0;
-		$excluded_keys = [
-			'gallery',
-			'gallery_ids',
-			'meta_description',
-			'page_title',
-			'wp_buy_link_coupon_field_disabled',
-			'wp_buy_link_custom_thankyou_page',
-			'wp_buy_link_custom_thankyou_page_url',
-			'wp_buy_link_enabled',
-			'wp_buy_link_logo_disabled',
-			'wp_buy_link_product_description_disabled',
-			'wp_buy_link_product_image_disabled',
-			'wp_buy_link_success_page_enabled',
-			'wp_buy_link_success_page_url',
-			'wp_buy_link_terms_disabled',
-			'wp_buy_link_test_mode_enabled',
-			'wp_created_by',
-			'wp_template_part_id',
-			'wp_template_id',
-		];
-		$metadata      = array_diff_key( (array) $model->metadata, array_flip( $excluded_keys ) );
+		$base_amount = ! empty( $model->prices->data[0]->amount ) ? $model->prices->data[0]->amount : 0;
+
+		// Filter metadata using array_filter with a callback.
+		$metadata = array_filter(
+			(array) $model->metadata,
+			function ( $key ) {
+				$excluded = apply_filters( 'surecart_excluded_post_meta_keys', $this->excluded_meta_keys );
+				return ! in_array( $key, $excluded, true );
+			},
+			ARRAY_FILTER_USE_KEY // pass just the key to the callback.
+		);
 
 		return array(
 			'post_title'        => $model->name,
