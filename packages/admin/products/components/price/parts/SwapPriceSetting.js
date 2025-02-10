@@ -62,7 +62,7 @@ export default ({
 				)}
 			>
 				<ScInput
-					placeholder={__('Swap and Save', 'surecart')}
+					placeholder={__('i.e. Pay yearly and save 20%', 'surecart')}
 					value={swapPriceDescription}
 					onScInput={(e) =>
 						updateSwap({ description: e.target.value })
