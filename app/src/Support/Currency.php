@@ -384,9 +384,9 @@ class Currency {
 		// maybe convert the amount.
 		$converted_amount = self::maybeConvertAmount( $amount, $currency_code );
 
-		// we only want to change currencies and convert amounts if we are not forcing the default currency.
-		// or if the currency code is not set.
-		if ( ! empty( $args['convert'] ) ) {
+		// Only convert if currency matches account currency and conversion is requested.
+		// this prevents converting currency from previous purchases that may have been in a different currency.
+		if ( \SureCart::account()->currency === $currency_code && ! empty( $args['convert'] ) ) {
 			$currency_code    = self::getCurrentCurrency();
 			$converted_amount = $converted_amount * self::getExchangeRate( $currency_code );
 		}
