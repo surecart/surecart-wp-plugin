@@ -22,22 +22,29 @@ class CurrencyService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		// Filter URLs.
+		// Set the currency cookie.
+		add_action( 'plugins_loaded', array( $this, 'setCurrencyCookie' ) );
+
+		// add the currency switcher menu.
+		add_filter( 'wp_nav_menu_items', array( $this, 'addCurrencySwitcherMenu' ), 10, 2 );
+
+		// set the urls.
+		add_action( 'init', [ $this, 'appendUrls' ] );
+	}
+
+	/**
+	 * Initialize the currency service.
+	 *
+	 * @return void
+	 */
+	public function appendUrls() {
 		add_filter( 'page_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'post_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'term_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'post_type_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'attachment_link', array( $this, 'addCurrencyParam' ), 99 );
-		// add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
-
-		// add the currency switcher menu.
-		add_filter( 'wp_nav_menu_items', array( $this, 'addCurrencySwitcherMenu' ), 10, 2 );
-
-		// Remove the currency parameter from the canonical permalink.
+		add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
-
-		// Set the currency cookie.
-		add_action( 'plugins_loaded', array( $this, 'setCurrencyCookie' ) );
 	}
 
 	/**
