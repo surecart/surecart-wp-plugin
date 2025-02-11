@@ -93,20 +93,33 @@ class PermalinkSettingService {
 
 		$values = array_values(
 			array_map(
-				function( $permalink ) {
-					return $permalink['value'];
+				function ( $permalink ) {
+					return trailingslashit( $permalink['value'] );
 				},
 				$this->options
 			)
+		);
+
+		$options = array_map(
+			function ( $permalink ) {
+				if ( '/shop/%sc_collection%/' === $permalink['value'] ) {
+					$permalink['display'] = home_url() . '/shop/product-collection/' . $this->sample_preview_text . '/';
+				} else {
+					$permalink['display'] = home_url() . '/' . $permalink['value'] . '/' . $this->sample_preview_text . '/';
+				}
+
+				return $permalink;
+			},
+			$this->options
 		);
 		?>
 
 		<table class="form-table sc-<?php echo esc_attr( $this->slug ); ?>-permalink-structure">
 			<tbody>
-				<?php foreach ( $this->options as $permalink ) : ?>
+				<?php foreach ( $options as $permalink ) : ?>
 				<tr>
 					<th><label><input name="sc_<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sc-tog-<?php echo esc_attr( $this->slug ); ?>" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
-					<td><code><?php echo esc_html( home_url() ); ?>/<?php echo esc_attr( $permalink['value'] ); ?>/<?php echo esc_attr( $this->sample_preview_text ); ?>/</code></td>
+					<td><code><?php echo esc_url( $permalink['display'] ); ?></code></td>
 				</tr>
 				<?php endforeach; ?>
 				<tr>
@@ -123,17 +136,17 @@ class PermalinkSettingService {
 										in_array(
 											$this->current_base,
 											array_map(
-												function( $opt ) {
+												function ( $opt ) {
 													return $opt['value'];
 												},
-												$this->options
+												$options
 											),
 											true
 										),
 										false
 									);
 								?>
-							 />
+							/>
 							<?php esc_html_e( 'Custom base', 'surecart' ); ?>
 						</label>
 					</th>
@@ -186,7 +199,27 @@ class PermalinkSettingService {
 			$page = $this->options[0]['value'];
 		}
 
-		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', sanitize_title( $page ) );
+		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', $this->sanitizePermalink( $page ) );
 	}
 
+	/**
+	 * Sanitize the permalink.
+	 *
+	 * @param string $value The value to sanitize.
+	 *
+	 * @return string
+	 */
+	public function sanitizePermalink( $value ): string {
+		global $wpdb;
+
+		$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value ?? '' );
+
+		if ( is_wp_error( $value ) ) {
+			$value = '';
+		}
+
+		$value = esc_url_raw( trim( $value ) );
+		$value = str_replace( 'http://', '', $value );
+		return untrailingslashit( $value );
+	}
 }
