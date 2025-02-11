@@ -1,8 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import Trial from './parts/Trial';
-import Amount from './parts/Amount';
 import AdHoc from './parts/AdHoc';
-import ScratchAmount from './parts/ScratchAmount';
 import SetupFee from './parts/SetupFee';
 import DrawerSection from '../../../ui/DrawerSection';
 
