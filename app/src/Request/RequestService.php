@@ -185,10 +185,11 @@ class RequestService {
 	 * @param array   $args Arguments for request.
 	 * @param boolean $cachable Should this request be cached.
 	 * @param string  $cache_key The cache key to use.
+	 * @param boolean $optimized_caching Should we use optimized caching.
 	 *
 	 * @return mixed
 	 */
-	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '' ) {
+	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '', $optimized_caching = false ) {
 		// use the cache service for this request.
 		$cache = new RequestCacheService( $endpoint, $args, $cache_key );
 
@@ -203,8 +204,16 @@ class RequestService {
 			}
 		}
 
+		if ( $optimized_caching && $cache->getPreviousCacheUpdatingState() === 'updating' ) {
+			$previous_cache = $cache->getPreviousCache();
+			if ( false !== $previous_cache ) {
+				$this->cache_status = 'previous';
+				return $this->respond( $previous_cache, $args, $endpoint );
+			}
+		}
+
 		// make the uncached request.
-		$response_body = $this->makeUncachedRequest( $endpoint, $args );
+		$response_body = $this->makeUncachedRequest( $endpoint, $args, $cache );
 
 		if ( is_wp_error( $response_body ) ) {
 			return $response_body;
@@ -214,6 +223,11 @@ class RequestService {
 		$cache->setCache( $response_body, 'object' );
 		if ( (bool) $cachable && $cache_key ) {
 			$cache->setCache( $response_body, 'transient' );
+		}
+
+		if ( $optimized_caching ) {
+			$cache->setPreviousCache( $response_body );
+			$cache->setPreviousCacheUpdatingState( 'updated' );
 		}
 
 		// return response.
@@ -228,7 +242,9 @@ class RequestService {
 	 *
 	 * @return mixed
 	 */
-	public function makeUncachedRequest( $endpoint, $args = [] ) {
+	public function makeUncachedRequest( $endpoint, $args = [], $cache = null ) {
+		$cache->setPreviousCacheUpdatingState( 'updating' );
+
 		// must have a token for the request.
 		if ( $this->authorized && empty( $this->token ) ) {
 			return new \WP_Error( 'missing_token', __( 'Please connect your site to SureCart.', 'surecart' ) );
@@ -294,7 +310,7 @@ class RequestService {
 
 		// handle handle retries.
 		if ( in_array( $response_code, $this->retry_status_codes ) ) {
-			$this->current_retries++;
+			++$this->current_retries;
 			if ( $this->current_retries <= $this->total_retries ) {
 				call_user_func_array( [ $this, __METHOD__ ], func_get_args() );
 			}
