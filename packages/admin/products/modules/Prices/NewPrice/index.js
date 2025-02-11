@@ -113,7 +113,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 		<ScForm onScFormSubmit={onSubmit}>
 			<ScDrawer
 				label={__('Add A Price', 'surecart')}
-				style={{ '--sc-drawer-size': '32rem' }}
+				style={{ '--sc-drawer-size': '38rem' }}
 				onScAfterHide={onRequestClose}
 				open={isOpen}
 				stickyHeader
@@ -124,6 +124,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 						display: flex;
 						flex-direction: column;
 						height: 100%;
+						background: var(--sc-color-gray-50);
 					`}
 				>
 					<div
@@ -134,76 +135,60 @@ export default ({ isOpen, onRequestClose, product }) => {
 						`}
 					>
 						<Error error={error} setError={setError} />
-						<DrawerSection
-							title={__('Basic', 'surecart')}
-							style={{
-								padding: '0 30px',
-								borderTop: 'none',
-							}}
-						>
-							<PriceName
+
+						<PriceName
+							price={price}
+							updatePrice={updatePrice}
+							ref={ref}
+						/>
+
+						<ScSelect
+							label={__('Payment type', 'surecart')}
+							required
+							unselect={false}
+							value={type}
+							onScChange={(e) => setType(e.target.value)}
+							choices={[
+								{
+									value: 'once',
+									label: __('One Time', 'surecart'),
+								},
+								{
+									value: 'multiple',
+									label: __('Installment', 'surecart'),
+								},
+								{
+									value: 'subscription',
+									label: __('Subscription', 'surecart'),
+								},
+							]}
+						/>
+
+						{type === 'subscription' && (
+							<Subscription
 								price={price}
 								updatePrice={updatePrice}
-								ref={ref}
+								product={product}
 							/>
+						)}
 
-							<ScSelect
-								label={__('Payment type', 'surecart')}
-								required
-								unselect={false}
-								value={type}
-								onScChange={(e) => setType(e.target.value)}
-								choices={[
-									{
-										value: 'once',
-										label: __('One Time', 'surecart'),
-									},
-									{
-										value: 'multiple',
-										label: __('Installment', 'surecart'),
-									},
-									{
-										value: 'subscription',
-										label: __('Subscription', 'surecart'),
-									},
-								]}
-							/>
-
-							{type === 'subscription' && (
-								<Subscription
-									price={price}
-									updatePrice={updatePrice}
-									product={product}
-								/>
-							)}
-
-							{type === 'multiple' && (
-								<Multiple
-									price={price}
-									updatePrice={updatePrice}
-									product={product}
-								/>
-							)}
-
-							{type === 'once' && (
-								<OneTime
-									price={price}
-									updatePrice={updatePrice}
-									product={product}
-								/>
-							)}
-
-							<CanUpgrade
+						{type === 'multiple' && (
+							<Multiple
 								price={price}
 								updatePrice={updatePrice}
+								product={product}
 							/>
-						</DrawerSection>
-						<DrawerSection
-							title={__('Revenue Booster', 'surecart')}
-							style={{
-								padding: '2em 30px 0',
-							}}
-						>
+						)}
+
+						{type === 'once' && (
+							<OneTime
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
+
+						<DrawerSection title={__('Boost Revenue', 'surecart')}>
 							<SwapPrice
 								price={price}
 								updateSwap={editSwap}

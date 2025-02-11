@@ -224,52 +224,42 @@ export default ({ price, product }) => {
 							`}
 						>
 							<Error error={error} setError={setError} />
-							<DrawerSection
-								title={__('Basic', 'surecart')}
-								style={{
-									padding: '0 30px',
-									borderTop: 'none',
-								}}
-							>
-								<PriceName
+
+							<PriceName
+								price={currentPrice}
+								updatePrice={editPrice}
+								ref={ref}
+							/>
+
+							{getPriceType() === 'subscription' && (
+								<Subscription
 									price={currentPrice}
 									updatePrice={editPrice}
-									ref={ref}
+									product={product}
 								/>
+							)}
 
-								{getPriceType() === 'subscription' && (
-									<Subscription
-										price={currentPrice}
-										updatePrice={editPrice}
-										product={product}
-									/>
-								)}
-
-								{getPriceType() === 'multiple' && (
-									<Multiple
-										price={currentPrice}
-										updatePrice={editPrice}
-										product={product}
-									/>
-								)}
-
-								{getPriceType() === 'once' && (
-									<OneTime
-										price={currentPrice}
-										updatePrice={editPrice}
-										product={product}
-									/>
-								)}
-								<CanUpgrade
+							{getPriceType() === 'multiple' && (
+								<Multiple
 									price={currentPrice}
 									updatePrice={editPrice}
+									product={product}
 								/>
-							</DrawerSection>
+							)}
+
+							{getPriceType() === 'once' && (
+								<OneTime
+									price={currentPrice}
+									updatePrice={editPrice}
+									product={product}
+								/>
+							)}
+							<CanUpgrade
+								price={currentPrice}
+								updatePrice={editPrice}
+							/>
 							<DrawerSection
-								title={__('Revenue Booster', 'surecart')}
-								style={{
-									padding: '2em 30px 0',
-								}}
+								title={__('Boost Revenue', 'surecart')}
 							>
 								<SwapPrice
 									price={currentPrice}

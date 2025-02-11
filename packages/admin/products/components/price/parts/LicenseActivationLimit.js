@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSwitch } from '@surecart/components-react';
+import { ScDivider, ScInput, ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
@@ -13,50 +13,54 @@ export default ({ price, updatePrice, className, product }) => {
 	}
 
 	return (
-		<div
-			css={css`
-				display: grid;
-				gap: var(--sc-spacing-medium);
-			`}
-		>
-			<ScSwitch
-				checked={showLicenseActivationLimit}
-				onScChange={(e) => {
-					setShowLicenseActivationLimit(e.target.checked);
-					updatePrice({
-						license_activation_limit: e.target.checked
-							? product?.license_activation_limit
-							: null,
-					});
-				}}
+		<>
+			<ScDivider />
+			<div
+				css={css`
+					display: grid;
+					gap: var(--sc-spacing-medium);
+				`}
 			>
-				{__('Custom license activation limit', 'surecart')}
-				<span slot="description">
-					{__(
-						'The maximum number of unique activations allowed per license key for this price.',
-						'surecart'
-					)}
-				</span>
-			</ScSwitch>
-
-			{showLicenseActivationLimit && (
-				<ScInput
-					className={className}
-					type="number"
-					label={__('License activation limit', 'surecart')}
-					help={__(
-						'Specify the maximum number of unique activations allowed per license key for this pricing option. If left blank, the default limit set for the product will apply.',
-						'surecart'
-					)}
-					placeholder={product?.license_activation_limit || '∞'}
-					value={price?.license_activation_limit}
-					onScInput={(e) => {
+				<ScSwitch
+					checked={showLicenseActivationLimit}
+					onScChange={(e) => {
+						setShowLicenseActivationLimit(e.target.checked);
 						updatePrice({
-							license_activation_limit: e.target.value || null,
+							license_activation_limit: e.target.checked
+								? product?.license_activation_limit
+								: null,
 						});
 					}}
-				/>
-			)}
-		</div>
+				>
+					{__('Custom license activation limit', 'surecart')}
+					<span slot="description">
+						{__(
+							'The maximum number of unique activations allowed per license key for this price.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				{showLicenseActivationLimit && (
+					<ScInput
+						className={className}
+						type="number"
+						label={__('License activation limit', 'surecart')}
+						help={__(
+							'Specify the maximum number of unique activations allowed per license key for this pricing option. If left blank, the default limit set for the product will apply.',
+							'surecart'
+						)}
+						placeholder={product?.license_activation_limit || '∞'}
+						value={price?.license_activation_limit}
+						onScInput={(e) => {
+							updatePrice({
+								license_activation_limit:
+									e.target.value || null,
+							});
+						}}
+					/>
+				)}
+			</div>
+		</>
 	);
 };

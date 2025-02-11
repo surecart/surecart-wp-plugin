@@ -1,22 +1,51 @@
+/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
+import { css, jsx } from '@emotion/react';
+import { ScCard, ScIcon } from '@surecart/components-react';
 export default ({ title, children, style }) => {
 	if (!children) {
 		return null;
 	}
 	return (
 		<div
-			style={{
-				display: 'grid',
-				gap: '2em',
-				borderTop: '1px solid #ccc',
-				marginLeft: '-30px',
-				marginRight: '-30px',
-				padding: '2em 30px',
-				...style,
-			}}
+			style={style}
+			css={css`
+				display: grid;
+				gap: 1em;
+
+				sc-divider {
+					margin: 20px -20px;
+				}
+			`}
 		>
-			{title && <h3 style={{ margin: 0 }}>{__(title)}</h3>}
-			{children}
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+				`}
+			>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: var(--sc-spacing-medium);
+					`}
+				>
+					<h3
+						css={css`
+							margin: 0;
+							font-size: var(--sc-input-label-font-size-medium);
+							color: var(--sc-input-label-color);
+							font-weight: var(--sc-input-label-font-weight);
+						`}
+					>
+						{__(title)}
+					</h3>
+				</div>
+			</div>
+
+			<ScCard>{children}</ScCard>
 		</div>
 	);
 };
