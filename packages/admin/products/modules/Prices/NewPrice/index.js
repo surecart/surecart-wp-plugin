@@ -4,8 +4,8 @@ import {
 	ScButton,
 	ScForm,
 	ScIcon,
-	ScSelect,
 	ScDrawer,
+	ScInput,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -18,9 +18,9 @@ import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 import Error from '../../../../components/Error';
-import CanUpgrade from '../../../components/price/parts/CanUpgrade';
-import SwapPrice from '../../../components/price/parts/SwapPrice';
-import DrawerSection from '../../../../ui/DrawerSection';
+import Swap from '../../../components/price/parts/Swap';
+import Advanced from '../../../components/price/parts/Advanced';
+import PaymentType from '../../../components/price/parts/PaymentType';
 
 export default ({ isOpen, onRequestClose, product }) => {
 	if (!isOpen) return null;
@@ -113,10 +113,14 @@ export default ({ isOpen, onRequestClose, product }) => {
 		<ScForm onScFormSubmit={onSubmit}>
 			<ScDrawer
 				label={__('Add A Price', 'surecart')}
-				style={{ '--sc-drawer-size': '38rem' }}
+				style={{
+					'--sc-drawer-size': '38rem',
+					'--sc-input-label-margin': 'var(--sc-spacing-small)',
+				}}
 				onScAfterHide={onRequestClose}
 				open={isOpen}
 				stickyHeader
+				stickyFooter
 				onScAfterShow={() => ref.current.triggerFocus()}
 			>
 				<div
@@ -142,26 +146,11 @@ export default ({ isOpen, onRequestClose, product }) => {
 							ref={ref}
 						/>
 
-						<ScSelect
-							label={__('Payment type', 'surecart')}
-							required
-							unselect={false}
-							value={type}
-							onScChange={(e) => setType(e.target.value)}
-							choices={[
-								{
-									value: 'once',
-									label: __('One Time', 'surecart'),
-								},
-								{
-									value: 'multiple',
-									label: __('Installment', 'surecart'),
-								},
-								{
-									value: 'subscription',
-									label: __('Subscription', 'surecart'),
-								},
-							]}
+						<PaymentType
+							type={type}
+							setType={setType}
+							price={price}
+							updatePrice={updatePrice}
 						/>
 
 						{type === 'subscription' && (
@@ -188,13 +177,18 @@ export default ({ isOpen, onRequestClose, product }) => {
 							/>
 						)}
 
-						<DrawerSection title={__('Boost Revenue', 'surecart')}>
-							<SwapPrice
-								price={price}
-								updateSwap={editSwap}
-								currentSwap={currentSwap}
-							/>
-						</DrawerSection>
+						<Swap
+							currentPrice={price}
+							updateSwap={editSwap}
+							currentSwap={currentSwap}
+							isSaving={loading}
+						/>
+
+						<Advanced
+							price={price}
+							updatePrice={updatePrice}
+							product={product}
+						/>
 					</div>
 				</div>
 				<div

@@ -1267,6 +1267,10 @@ export namespace Components {
         "placement": 'top' | 'end' | 'bottom' | 'start';
         "requestClose": (source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>;
         /**
+          * Sticky drawer footer
+         */
+        "stickyFooter": boolean;
+        /**
           * Sticky drawer header
          */
         "stickyHeader": boolean;
@@ -8354,6 +8358,10 @@ declare namespace LocalJSX {
           * The direction from which the drawer will open.
          */
         "placement"?: 'top' | 'end' | 'bottom' | 'start';
+        /**
+          * Sticky drawer footer
+         */
+        "stickyFooter"?: boolean;
         /**
           * Sticky drawer header
          */

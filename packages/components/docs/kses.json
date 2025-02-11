@@ -643,6 +643,7 @@
     "no-header": true,
     "open": true,
     "placement": true,
+    "sticky-footer": true,
     "sticky-header": true,
     "style": true,
     "id": true,

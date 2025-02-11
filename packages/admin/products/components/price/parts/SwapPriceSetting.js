@@ -18,7 +18,7 @@ export default ({
 	if (!swapPrice) {
 		return (
 			<ScFormControl
-				label={__('Price Bump', 'surecart')}
+				label={__('Upsells to', 'surecart')}
 				help={__('The associated price to swap to.', 'surecart')}
 			>
 				<PriceSelector

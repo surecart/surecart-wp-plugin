@@ -14,7 +14,6 @@ export default ({ price, updatePrice, className, product }) => {
 
 	return (
 		<>
-			<ScDivider />
 			<div
 				css={css`
 					display: grid;
