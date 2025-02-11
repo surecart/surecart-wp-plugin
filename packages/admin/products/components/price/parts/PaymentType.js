@@ -23,83 +23,80 @@ const PaymentType = ({ type, setType, price, updatePrice }) => {
 					}
 				`}
 			>
-				{price?.recurring_interval && (
-					<ScFormControl
-						required
-						disabled={price?.id}
-						label={__('Repeat payment every', 'surecart')}
+				<ScFormControl
+					required
+					disabled={price?.id}
+					label={__('Repeat payment every', 'surecart')}
+				>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							flex-wrap: wrap;
+							gap: 0.5em;
+						`}
 					>
-						<div
+						<ScInput
+							disabled={price?.id}
+							value={price?.recurring_interval_count}
+							onScChange={(e) =>
+								updatePrice({
+									recurring_interval_count: e.target.value,
+								})
+							}
 							css={css`
-								display: flex;
-								align-items: center;
-								flex-wrap: wrap;
-								gap: 0.5em;
+								width: 100px;
+								flex: 1;
 							`}
-						>
-							<ScInput
-								disabled={price?.id}
-								value={price?.recurring_interval_count}
-								onScChange={(e) =>
-									updatePrice({
-										recurring_interval_count:
-											e.target.value,
-									})
-								}
-								css={css`
-									width: 100px;
-									flex: 1;
-								`}
-								type="number"
-								max={
-									price?.recurring_interval === 'year'
-										? 10
-										: null
-								}
-								required
-							/>
-							<ScSelect
-								value={price?.recurring_interval}
-								disabled={price?.id}
-								unselect={false}
-								css={css`
-									min-width: 95px;
-									max-width: 150px;
-									flex: 1;
-								`}
-								onScChange={(e) =>
-									updatePrice({
-										recurring_interval: e.target.value,
-									})
-								}
-								choices={[
-									{
-										value: 'day',
-										label: __('Day', 'surecart'),
-									},
-									{
-										value: 'week',
-										label: __('Week', 'surecart'),
-									},
-									{
-										value: 'month',
-										label: __('Month', 'surecart'),
-									},
-									{
-										value: 'year',
-										label: __('Year', 'surecart'),
-									},
-								]}
-							/>
-						</div>
-					</ScFormControl>
-				)}
-				{!price?.id && type === 'multiple' && (
+							type="number"
+							max={
+								price?.recurring_interval === 'year' ? 10 : null
+							}
+							required
+						/>
+						<ScSelect
+							value={price?.recurring_interval}
+							disabled={price?.id}
+							unselect={false}
+							css={css`
+								min-width: 95px;
+								max-width: 150px;
+								flex: 1;
+							`}
+							onScChange={(e) =>
+								updatePrice({
+									recurring_interval: e.target.value,
+								})
+							}
+							choices={[
+								{
+									value: 'day',
+									label: __('Day', 'surecart'),
+								},
+								{
+									value: 'week',
+									label: __('Week', 'surecart'),
+								},
+								{
+									value: 'month',
+									label: __('Month', 'surecart'),
+								},
+								{
+									value: 'year',
+									label: __('Year', 'surecart'),
+								},
+							]}
+						/>
+					</div>
+				</ScFormControl>
+
+				{type === 'multiple' && (
 					<ScInput
 						label={__('Number of Payments', 'surecart')}
 						className="sc-payment-number"
 						required
 						type="number"
+						disabled={price?.id}
 						min={1}
 						value={price?.recurring_period_count}
 						onScInput={(e) =>
