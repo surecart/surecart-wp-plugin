@@ -223,11 +223,7 @@ class RequestCacheService {
 	 * @return mixed
 	 */
 	public function setPreviousCacheUpdatingState( $state ) {
-		$updating_key = $this->getPreviousCacheUpdatingKey();
-		if ( $updating_key ) {
-			return update_option( $updating_key, $state, false );
-		}
-		return false;
+		return update_option( $this->getPreviousCacheUpdatingKey(), $state, false );
 	}
 
 	/**
