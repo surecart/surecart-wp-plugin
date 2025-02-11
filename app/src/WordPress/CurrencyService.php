@@ -29,7 +29,7 @@ class CurrencyService {
 		add_filter( 'wp_nav_menu_items', array( $this, 'addCurrencySwitcherMenu' ), 10, 2 );
 
 		// set the urls.
-		add_action( 'init', [ $this, 'appendUrls' ] );
+		add_action( 'wp', [ $this, 'appendUrls' ] );
 	}
 
 	/**
