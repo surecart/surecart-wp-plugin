@@ -167,28 +167,8 @@ class PermalinkService {
 		$terms = get_the_terms( $post->ID, 'sc_collection' );
 
 		if ( ! empty( $terms ) ) {
-			$terms = wp_list_sort(
-				$terms,
-				array(
-					'parent'  => 'DESC',
-					'term_id' => 'ASC',
-				)
-			);
-
-			$category_object = apply_filters( 'sc_product_post_type_link_sc_collection', $terms[0], $terms, $post );
-			$sc_collection   = $category_object->slug;
-
-			if ( $category_object->parent ) {
-				$ancestors = get_ancestors( $category_object->term_id, 'sc_collection' );
-				foreach ( $ancestors as $ancestor ) {
-					$ancestor_object = get_term( $ancestor, 'sc_collection' );
-					if ( apply_filters( 'sc_product_post_type_link_parent_category_only', false ) ) {
-						$sc_collection = $ancestor_object->slug;
-					} else {
-						$sc_collection = $ancestor_object->slug . '/' . $sc_collection;
-					}
-				}
-			}
+			$collection_object = apply_filters( 'sc_product_post_type_link_sc_collection', $terms[0], $terms, $post );
+			$sc_collection     = $collection_object->slug;
 		} else {
 			// If no terms are assigned to this post, use an empty string.
 			$sc_collection = '';
