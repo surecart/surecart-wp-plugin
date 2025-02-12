@@ -109,9 +109,11 @@ class PermalinkService {
 		}
 
 		add_rewrite_rule( $this->url, $this->query, $this->priority );
-		if ( ! isset( $rules[ $this->url ] ) ) {
-			flush_rewrite_rules();
-		}
+
+		// Add rewrite rule for default product route.
+		add_rewrite_rule( '^shop/([a-z0-9-]+)/?$', 'index.php?sc_product=$matches[1]', 'top' );
+
+		flush_rewrite_rules();
 	}
 
 	/**
@@ -188,8 +190,11 @@ class PermalinkService {
 				}
 			}
 		} else {
-			// If no terms are assigned to this post, use a default string.
-			$sc_collection = _x( 'uncategorized', 'slug', 'surecart' );
+			// If no terms are assigned to this post, use an empty string.
+			$sc_collection = '';
+
+			// Remove extra / from the permalink structure.
+			$permalink = str_replace( '/%sc_collection%', '', $permalink );
 		}
 
 		// Replace placeholders in the permalink structure.

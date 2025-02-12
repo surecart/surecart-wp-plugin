@@ -103,9 +103,9 @@ class PermalinkSettingService {
 		$options = array_map(
 			function ( $permalink ) {
 				if ( '/shop/%sc_collection%/' === $permalink['value'] ) {
-					$permalink['display'] = home_url() . '/shop/product-collection/' . $this->sample_preview_text . '/';
+					$permalink['display'] = untrailingslashit( home_url() ) . '/shop/product-collection/' . $this->sample_preview_text . '/';
 				} else {
-					$permalink['display'] = home_url() . '/' . $permalink['value'] . '/' . $this->sample_preview_text . '/';
+					$permalink['display'] = untrailingslashit( home_url() ) . '/' . untrailingslashit( $permalink['value'] ) . '/' . $this->sample_preview_text . '/';
 				}
 
 				return $permalink;
