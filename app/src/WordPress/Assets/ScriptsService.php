@@ -243,6 +243,7 @@ class ScriptsService {
 		$this->enqueuePageTemplateEditor();
 		$this->enqueueProductBlocks();
 		$this->enqueueProductCollectionBlocks();
+		$this->enqueueBlockEditorAssets();
 	}
 
 	/**
@@ -401,5 +402,111 @@ class ScriptsService {
 	 */
 	public function enqueueBlocks() {
 		wp_enqueue_script( 'surecart-blocks' );
+	}
+
+	/**
+	 * Register/enqueue block editor assets.
+	 *
+	 * @return void
+	 */
+	public function enqueueBlockEditorAssets(): void {
+		global $editor_styles;
+		wp_add_inline_script(
+			'wp-blocks',
+			'wp.blocks && wp.blocks.unstable__bootstrapServerSideBlockDefinitions && wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
+		);
+
+		$block_editor_context = new \WP_Block_Editor_Context( array( 'name' => 'surecart/block-editor' ) );
+
+		// Get block editor settings.
+		$editor_settings = get_block_editor_settings( [], $block_editor_context );
+
+		wp_add_inline_script(
+			'surecart-components',
+			sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( $editor_settings['blockCategories'] ) ),
+			'before'
+		);
+
+		wp_localize_script(
+			'surecart-components',
+			'surecartBlockEditorSettings',
+			$editor_settings
+		);
+
+		$active_global_styles_id = \WP_Theme_JSON_Resolver::get_user_global_styles_post_id();
+		$active_theme            = get_stylesheet();
+
+		$navigation_rest_route = rest_get_route_for_post_type_items(
+			'wp_navigation'
+		);
+
+		$preload_paths = array(
+			array( '/wp/v2/media', 'OPTIONS' ),
+			'/wp/v2/types?context=view',
+			'/wp/v2/types/wp_template?context=edit',
+			'/wp/v2/types/wp_template-part?context=edit',
+			'/wp/v2/templates?context=edit&per_page=-1',
+			'/wp/v2/template-parts?context=edit&per_page=-1',
+			'/wp/v2/themes?context=edit&status=active',
+			'/wp/v2/global-styles/' . $active_global_styles_id . '?context=edit',
+			'/wp/v2/global-styles/' . $active_global_styles_id,
+			'/wp/v2/global-styles/themes/' . $active_theme,
+			array( $navigation_rest_route, 'OPTIONS' ),
+			array(
+				add_query_arg(
+					array(
+						'context'   => 'edit',
+						'per_page'  => 100,
+						'order'     => 'desc',
+						'orderby'   => 'date',
+						// array indices are required to avoid query being encoded and not matching in cache .
+						'status[0]' => 'publish',
+						'status[1]' => 'draft',
+					),
+					$navigation_rest_route
+				),
+				'GET',
+			),
+		);
+
+		block_editor_rest_api_preload( $preload_paths, $block_editor_context );
+
+		wp_add_inline_script(
+			'wp-edit-site',
+			sprintf(
+				'wp.domReady( function() { wp.editSite.initializeEditor( "site-editor", %s ); } );',
+				wp_json_encode( $editor_settings )
+			)
+		);
+
+		// Preload server-registered block schemas.
+		wp_add_inline_script(
+			'wp-blocks',
+			'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
+		);
+
+		wp_add_inline_script(
+			'wp-blocks',
+			sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( isset( $editor_settings['blockCategories'] ) ? $editor_settings['blockCategories'] : array() ) ),
+			'after'
+		);
+
+		if (
+			current_theme_supports( 'wp-block-styles' ) &&
+			( ! is_array( $editor_styles ) || count( $editor_styles ) === 0 )
+		) {
+			wp_enqueue_style( 'wp-block-library-theme' );
+		}
+
+		// Editor & media.
+		wp_enqueue_editor();
+		wp_enqueue_media();
+
+		// Block editor styles.
+		wp_enqueue_style( 'wp-edit-blocks' );
+
+		// Format library.
+		wp_enqueue_style( 'wp-format-library' );
+		wp_enqueue_script( 'wp-format-library' );
 	}
 }

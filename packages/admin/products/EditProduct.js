@@ -37,6 +37,7 @@ import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
 import MetaBoxes from './modules/MetaBoxes';
 import Taxonomies from './modules/Taxonomies';
+import Editor from './components/Editor';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -378,6 +379,12 @@ export default ({ id, setBrowserURL }) => {
 					/>
 
 					<Details
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
+					<Editor
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}

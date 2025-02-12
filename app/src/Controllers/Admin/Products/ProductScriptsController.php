@@ -46,6 +46,21 @@ class ProductScriptsController extends AdminModelEditController {
 	}
 
 	/**
+	 * Override the enqueueComponents method to add the product block editor styles.
+	 *
+	 * @return void
+	 */
+	public function enqueueComponents() {
+		parent::enqueueComponents();
+
+		// Set current screen as block editor screen.
+		$current_screen = get_current_screen();
+		$current_screen->is_block_editor( true );
+
+		do_action( 'enqueue_block_editor_assets' );
+	}
+
+	/**
 	 * Get the meta box url.
 	 *
 	 * @return string

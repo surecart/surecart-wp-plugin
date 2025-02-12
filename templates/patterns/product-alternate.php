@@ -89,5 +89,6 @@ return [
 </div>
 <!-- /wp:columns -->
 <!-- /wp:surecart/product-page -->
+<!-- wp:post-content /-->
 ',
 ];
