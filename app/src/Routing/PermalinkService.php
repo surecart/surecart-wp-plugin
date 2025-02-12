@@ -206,17 +206,17 @@ class PermalinkService {
 			return;
 		}
 
-		// Get the specified category slug.
-		$specified_category_slug = get_query_var( 'sc_collection' );
+		// Get the specified collection slug.
+		$specified_collection_slug = get_query_var( 'sc_collection' );
 
-		if ( ! is_string( $specified_category_slug ) || strlen( $specified_category_slug ) < 1 ) {
+		if ( ! is_string( $specified_collection_slug ) || strlen( $specified_collection_slug ) < 1 ) {
 			return;
 		}
 
-		// Determine the expected category slug for the product.
-		$expected_category_slug = $this->surecartProductPostTypeLink( '%sc_collection%', get_post( get_the_ID() ) );
+		// Determine the expected collection slug for the product.
+		$expected_collection_slug = $this->surecartProductPostTypeLink( '%sc_collection%', get_post( get_the_ID() ) );
 
-		if ( $specified_category_slug === $expected_category_slug ) {
+		if ( $specified_collection_slug === $expected_collection_slug ) {
 			return;
 		}
 
