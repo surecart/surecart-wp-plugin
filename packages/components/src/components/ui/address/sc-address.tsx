@@ -165,7 +165,6 @@ export class ScAddress {
   render() {
     const fields = [
       { name: 'name', priority: 10 },
-      { name: 'company', priority: 20 },
       { name: 'address_1', priority: 30 },
       { name: 'address_2', priority: 40 },
       { name: 'city', priority: 50 },
@@ -217,7 +216,7 @@ export class ScAddress {
           />
 
           {visibleFields.map((field: any, index: number) => {
-            let isLast = index === visibleFields.length - 1;
+            const isLast = index === visibleFields.length - 1;
 
             switch (field.name) {
               case 'name':
