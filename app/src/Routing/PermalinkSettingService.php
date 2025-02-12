@@ -100,26 +100,14 @@ class PermalinkSettingService {
 			)
 		);
 
-		$options = array_map(
-			function ( $permalink ) {
-				if ( '/shop/%sc_collection%/' === $permalink['value'] ) {
-					$permalink['display'] = untrailingslashit( home_url() ) . '/shop/product-collection/' . $this->sample_preview_text . '/';
-				} else {
-					$permalink['display'] = untrailingslashit( home_url() ) . '/' . untrailingslashit( $permalink['value'] ) . '/' . $this->sample_preview_text . '/';
-				}
-
-				return $permalink;
-			},
-			$this->options
-		);
 		?>
 
 		<table class="form-table sc-<?php echo esc_attr( $this->slug ); ?>-permalink-structure">
 			<tbody>
-				<?php foreach ( $options as $permalink ) : ?>
+				<?php foreach ( $this->options as $permalink ) : ?>
 				<tr>
 					<th><label><input name="sc_<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sc-tog-<?php echo esc_attr( $this->slug ); ?>" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
-					<td><code><?php echo esc_url( $permalink['display'] ); ?></code></td>
+					<td><code><?php echo esc_url( trailingslashit( home_url() ) . trailingslashit( ! empty( $permalink['display'] ) ? ltrim( $permalink['display'], '/' ) : $permalink['value'] ) . $this->sample_preview_text ); ?></code></td>
 				</tr>
 				<?php endforeach; ?>
 				<tr>
@@ -139,7 +127,7 @@ class PermalinkSettingService {
 												function ( $opt ) {
 													return $opt['value'];
 												},
-												$options
+												$this->options
 											),
 											true
 										),
