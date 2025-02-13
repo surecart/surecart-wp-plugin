@@ -307,6 +307,21 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
+= 3.3.1 - February 13th, 2025 =
+- Improvement: Added Settings, Documentation links to plugins page.
+- Improvement: Added client-side validation for custom amounts that are below minimum threshold on product page.
+- Change: Installment payment plans can now be paused.
+- Fix: Shop page radio button links no longer inherit unintended link colors.
+- Fix: Custom thank you page redirect functionality restored in latest version.
+- Fix: iDeal payment method can now be added in customer dashboard for Mollie.
+- Fix: Fix issue with product collection template showing block recovery in admin.
+- Fix: Product description now shows correctly on upsell pages.
+- Fix: Related Product block now properly excludes current post when no collection is linked.
+- Fix: Subscription payment method updates now work correctly with manual payment methods.
+- Fix: Compare price is now calculated correctly on checkout forms with setup fees and paid trials.
+- Fix: Login redirect URL parameter can be filtered server-side for advanced use cases.
+- Fix: Added missing translation strings for sorting functionality.
+
 = 3.3.0 - January 21st, 2025 =
 - New: Image lightbox for product media on product pages.
 - New: Sidebar layout for shop page with checkbox filters.
