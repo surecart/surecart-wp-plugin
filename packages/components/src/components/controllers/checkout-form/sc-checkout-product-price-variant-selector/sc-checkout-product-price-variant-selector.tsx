@@ -180,7 +180,14 @@ export class ScProductCheckoutSelectVariantOption {
     return this.product?.variants?.data?.length > 0;
   }
 
+  isProductInCheckout() {
+    return (checkoutState.checkout?.line_items?.data || []).some(lineItem => ((lineItem.price as Price)?.product as Product)?.id === this.product?.id);
+  }
+
   render() {
+    if (!this.isProductInCheckout()) {
+      return null;
+    }
     return (
       <sc-form-control class="sc-checkout-product-price-variant-selector" label={this.selectorTitle}>
         {(this.product.variant_options.data || []).map(({ name, values }, index) => (
