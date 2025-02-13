@@ -165,9 +165,6 @@ export class ScAddress {
   filterFields() {
     if (!this.address?.country) return;
     this.sortedFields = sortAddressFields(addressFields, this.address?.country);
-    console.log('this.sortedFields', this.sortedFields);
-    console.log('this.address?.country', this.address?.country);
-    console.log('-----------');
   }
 
   getVisibleFields() {
