@@ -18,7 +18,7 @@ export const getDiscountedAmount = amount => state?.line_item?.total_amount ?? a
 /**
  * Get the scratch amount.
  */
-export const getScratchAmount = amount => (!state?.line_item?.total_savings_amount ? amount : -state?.line_item?.total_savings_amount + state?.line_item?.total_amount);
+export const getScratchAmount = amount => (!state?.line_item?.total_savings_amount ? amount : -state?.line_item?.total_savings_amount);
 
 /**
  * Get upsell remaining time.
