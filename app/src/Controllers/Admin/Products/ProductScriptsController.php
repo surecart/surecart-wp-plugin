@@ -57,7 +57,35 @@ class ProductScriptsController extends AdminModelEditController {
 		$current_screen = get_current_screen();
 		$current_screen->is_block_editor( true );
 
+		add_filter( 'register_block_type_args', array( $this, 'registerMetadataAttribute' ) );
 		do_action( 'enqueue_block_editor_assets' );
+	}
+
+	/**
+	 * Registers the metadata block attribute for all block types.
+	 * This is a fallback/temporary solution until
+	 * the Gutenberg core version registers the metadata attribute.
+	 *
+	 * @see https://github.com/WordPress/gutenberg/blob/6aaa3686ae67adc1a6a6b08096d3312859733e1b/lib/compat/wordpress-6.5/blocks.php#L27-L47
+	 * To do: Remove this method once the Gutenberg core version registers the metadata attribute.
+	 *
+	 * @param array $args Array of arguments for registering a block type.
+	 * @return array $args
+	 */
+	public function registerMetadataAttribute( $args ): array {
+		// Setup attributes if needed.
+		if ( ! isset( $args['attributes'] ) || ! is_array( $args['attributes'] ) ) {
+			$args['attributes'] = array();
+		}
+
+		// Add metadata attribute if it doesn't exist.
+		if ( ! array_key_exists( 'metadata', $args['attributes'] ) ) {
+			$args['attributes']['metadata'] = array(
+				'type' => 'object',
+			);
+		}
+
+		return $args;
 	}
 
 	/**
