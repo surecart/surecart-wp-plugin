@@ -97,10 +97,10 @@ class PermalinkService {
 	public function addRewriteRule() {
 		$rules = get_option( 'rewrite_rules' );
 
-		global $wp_rewrite;
-		$permalinks = get_option( 'surecart_permalinks' );
+		$product_base = \SureCart::settings()->permalinks()->getBase( 'product_page' );
+
 		// Fix the rewrite rules when the product permalink has %sc_collection% flag.
-		if ( preg_match( '`/(.+)(/%sc_collection%)`', $permalinks['product_page'], $matches ) ) {
+		if ( preg_match( '`/(.+)(/%sc_collection%)`', $product_base, $matches ) ) {
 			foreach ( $rules as $rule => $rewrite ) {
 				if ( preg_match( '`^' . preg_quote( $matches[1], '`' ) . '/\(`', $rule ) && preg_match( '/^(index\.php\?sc_collection)(?!(.*product))/', $rewrite ) ) {
 					unset( $rules[ $rule ] );
@@ -113,7 +113,9 @@ class PermalinkService {
 		// Add rewrite rule for default product route.
 		add_rewrite_rule( '^shop/([a-z0-9-]+)/?$', 'index.php?sc_product=$matches[1]', 'top' );
 
-		flush_rewrite_rules();
+		if ( ! isset( $rules[ $this->url ] ) ) {
+			flush_rewrite_rules();
+		}
 	}
 
 	/**
@@ -139,8 +141,8 @@ class PermalinkService {
 		// add the rewrite rule.
 		add_action( 'init', [ $this, 'addRewriteRule' ] );
 
+		// Product permalink support for custom taxonomies.
 		add_filter( 'post_type_link', [ $this, 'surecartProductPostTypeLink' ], 10, 2 );
-
 		add_action( 'template_redirect', [ $this, 'surecartProductCanonicalRedirect' ], 5 );
 	}
 
