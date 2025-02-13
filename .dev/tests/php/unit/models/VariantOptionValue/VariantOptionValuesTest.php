@@ -69,6 +69,7 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 		 // get and paginate.
 		$get = VariantOptionValue::order_by('created_at')->get();
 		$paginate = VariantOptionValue::order_by('created_at')->paginate(['per_page' => 1, 'page' => 1]);
+		var_dump($get);
 		$this->assertCount(2,$get);
 		$this->assertCount(1,$paginate);
 
