@@ -4,10 +4,10 @@
 import { __ } from '@wordpress/i18n';
 
 export const refundReasons = {
-	duplicate: __('Duplicate'),
-	fraudulent: __('Fraudulent'),
-	requested_by_customer: __('Requested By Customer'),
-	unknown: __('Unknown'),
+	duplicate: __('Duplicate', 'surecart'),
+	fraudulent: __('Fraudulent', 'surecart'),
+	requested_by_customer: __('Requested By Customer', 'surecart'),
+	unknown: __('Unknown', 'surecart'),
 };
 
 export const refundResasonOptions = Object.keys(refundReasons).map((key) => ({
