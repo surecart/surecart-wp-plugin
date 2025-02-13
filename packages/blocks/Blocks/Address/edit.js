@@ -1,3 +1,4 @@
+import { css, jsx } from '@emotion/react';
 import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
@@ -131,12 +132,32 @@ export default ({ attributes, setAttributes }) => {
 							/>
 						</PanelRow>
 					)}
+
+					<PanelRow>
+						<h2
+							css={css`
+								padding: 0;
+								margin: 0;
+							`}
+						>
+							{__('Placeholder settings', 'surecart')}
+						</h2>
+					</PanelRow>
+					<p>
+						{__(
+							'Enable the placeholders only if you want to modify, it would be changed according to the selected country.',
+							'surecart'
+						)}
+					</p>
 					{show_name && (
 						<PanelRow>
 							<TextControl
 								label={__('Name Placeholder', 'surecart')}
 								value={name_placeholder}
-								placeholder={__('Name or Company Name', 'surecart')}
+								placeholder={__(
+									'Name or Company Name',
+									'surecart'
+								)}
 								onChange={(name_placeholder) =>
 									setAttributes({ name_placeholder })
 								}
@@ -187,7 +208,10 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('State Placeholder', 'surecart')}
 							value={state_placeholder}
-							placeholder={__('State/Province/Region', 'surecart')}
+							placeholder={__(
+								'State/Province/Region',
+								'surecart'
+							)}
 							onChange={(state_placeholder) =>
 								setAttributes({ state_placeholder })
 							}
