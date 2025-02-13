@@ -205,13 +205,7 @@ export default ({ order, checkout }) => {
 								key={refund.id}
 								order={order}
 								refund={refund}
-								label={
-									index === 0 ? (
-										<>{__('Refunded', 'surecart')}</>
-									) : (
-										''
-									)
-								}
+								label={__('Refund', 'surecart')}
 							/>
 						))}
 

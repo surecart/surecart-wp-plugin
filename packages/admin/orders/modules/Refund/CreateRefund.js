@@ -229,10 +229,6 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 									gap: 0.5em;
 									overflow-x: auto;
 									margin-bottom: var(--sc-spacing-small);
-									& > :not(:first-child) {
-										border-top: 1px solid
-											var(--sc-color-gray-300);
-									}
 								`}
 								title={__('Refund item(s)', 'surecart')}
 							>

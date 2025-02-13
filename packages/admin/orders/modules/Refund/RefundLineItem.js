@@ -37,14 +37,14 @@ export default ({ order, label, refund }) => {
 				>
 					<span
 						css={css`
-							flex: 1;
+							flex: 1 1 175px;
 						`}
 					>
 						{label}
 					</span>
 					<span
 						css={css`
-							flex: 2;
+							flex: 1 1 100%;
 						`}
 					>
 						{totalItems > 0 && (
