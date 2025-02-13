@@ -136,6 +136,7 @@ export default ({ attributes, setAttributes }) => {
 							<TextControl
 								label={__('Name Placeholder', 'surecart')}
 								value={name_placeholder}
+								placeholder={__('Name or Company Name', 'surecart')}
 								onChange={(name_placeholder) =>
 									setAttributes({ name_placeholder })
 								}
@@ -146,6 +147,7 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('Country Placeholder', 'surecart')}
 							value={country_placeholder}
+							placeholder={__('Country', 'surecart')}
 							onChange={(country_placeholder) =>
 								setAttributes({ country_placeholder })
 							}
@@ -155,6 +157,7 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('City Placeholder', 'surecart')}
 							value={city_placeholder}
+							placeholder={__('City', 'surecart')}
 							onChange={(city_placeholder) =>
 								setAttributes({ city_placeholder })
 							}
@@ -164,6 +167,7 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('Address Placeholder', 'surecart')}
 							value={line_1_placeholder}
+							placeholder={__('Address', 'surecart')}
 							onChange={(line_1_placeholder) =>
 								setAttributes({ line_1_placeholder })
 							}
@@ -173,6 +177,7 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('Postal Code Placeholder', 'surecart')}
 							value={postal_code_placeholder}
+							placeholder={__('Postal Code/Zip', 'surecart')}
 							onChange={(postal_code_placeholder) =>
 								setAttributes({ postal_code_placeholder })
 							}
@@ -182,6 +187,7 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('State Placeholder', 'surecart')}
 							value={state_placeholder}
+							placeholder={__('State/Province/Region', 'surecart')}
 							onChange={(state_placeholder) =>
 								setAttributes({ state_placeholder })
 							}

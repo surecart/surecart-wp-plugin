@@ -226,13 +226,13 @@ export class ScAddress {
                       onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
                       onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
                       autocomplete="street-address"
-                      placeholder={this.placeholders.name || __('Name or Company Name', 'surecart')}
+                      placeholder={this.placeholders.name || field.label}
                       name={this.names?.name}
                       squared-top={isLast}
                       squared={!isLast}
                       disabled={this.disabled}
                       required={this.requireName}
-                      aria-label={this.placeholders.name || __('Name or Company Name', 'surecart')}
+                      aria-label={this.placeholders.name || field.label}
                     />
                   )
                 );
@@ -245,13 +245,13 @@ export class ScAddress {
                     onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
                     onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
                     autocomplete="street-address"
-                    placeholder={this.placeholders.line_1 || __('Address', 'surecart')}
+                    placeholder={this.placeholders.line_1 || field.label}
                     name={this.names?.line_1}
                     squared-top={isLast}
                     squared={!isLast}
                     disabled={this.disabled}
                     required={this.required}
-                    aria-label={this.placeholders.line_1 || __('Address', 'surecart')}
+                    aria-label={this.placeholders.line_1 || field.label}
                   />
                 );
 
@@ -264,12 +264,12 @@ export class ScAddress {
                       onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
                       onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
                       autocomplete="street-address"
-                      placeholder={this.placeholders.line_2 || __('Address Line 2', 'surecart')}
+                      placeholder={this.placeholders.line_2 || field.label}
                       name={this.names?.line_2}
                       squared-top={isLast}
                       squared={!isLast}
                       disabled={this.disabled}
-                      aria-label={this.placeholders.line_2 || __('Address Line 2', 'surecart')}
+                      aria-label={this.placeholders.line_2 || field.label}
                     />
                   )
                 );
@@ -279,7 +279,7 @@ export class ScAddress {
                   this.showCity && (
                     <sc-input
                       exportparts="base:input__base, input, form-control, label, help-text"
-                      placeholder={this.placeholders.city || __('City', 'surecart')}
+                      placeholder={this.placeholders.city || field.label}
                       name={this.names?.city}
                       value={this?.address?.city}
                       onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
@@ -288,7 +288,7 @@ export class ScAddress {
                       squared-top={isLast}
                       squared={!isLast}
                       disabled={this.disabled}
-                      aria-label={this.placeholders.city || __('City', 'surecart')}
+                      aria-label={this.placeholders.city || field.label}
                     />
                   )
                 );
@@ -299,7 +299,7 @@ export class ScAddress {
                   !!this?.address?.country && (
                     <sc-select
                       exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
-                      placeholder={this.placeholders.state || __('State/Province/Region', 'surecart')}
+                      placeholder={this.placeholders.state || field.label}
                       name={this.names?.state}
                       autocomplete={'address-level1'}
                       value={this?.address?.state}
@@ -310,7 +310,7 @@ export class ScAddress {
                       search
                       squared-top={isLast}
                       squared={!isLast}
-                      aria-label={this.placeholders.state || __('State/Province/Region', 'surecart')}
+                      aria-label={this.placeholders.state || field.label}
                     />
                   )
                 );
@@ -320,7 +320,7 @@ export class ScAddress {
                   this.showPostal && (
                     <sc-input
                       exportparts="base:input__base, input, form-control, label, help-text"
-                      placeholder={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
+                      placeholder={this.placeholders.postal_code || field.label}
                       name={this.names?.postal_code}
                       onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
                       onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
@@ -331,7 +331,7 @@ export class ScAddress {
                       squared={!isLast}
                       disabled={this.disabled}
                       maxlength={this.address?.country === 'US' ? 5 : null}
-                      aria-label={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
+                      aria-label={this.placeholders.postal_code || field.label}
                     />
                   )
                 );
