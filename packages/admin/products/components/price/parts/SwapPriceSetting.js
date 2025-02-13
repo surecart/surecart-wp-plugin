@@ -37,6 +37,7 @@ export default ({
 						archived: false,
 					}}
 					includeVariants={false}
+					variable={false}
 					placement="top-start"
 					position="top-left"
 					exclude={[price?.id]}
