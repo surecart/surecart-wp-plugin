@@ -10,7 +10,7 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import { ScFormatNumber } from '@surecart/components-react';
+import { ScFormatNumber, ScLineItem } from '@surecart/components-react';
 import { refundReasons } from '../../../util/refunds';
 import RefundHistory from './RefundHistory';
 
@@ -23,7 +23,7 @@ export default ({ order, label, refund }) => {
 
 	return (
 		<>
-			<sc-line-item
+			<ScLineItem
 				style={{
 					'--line-item-grid-template-columns': 'auto 3fr 1fr',
 				}}
@@ -91,7 +91,7 @@ export default ({ order, label, refund }) => {
 					currency={refund?.currency}
 					value={-refund?.amount}
 				></ScFormatNumber>
-			</sc-line-item>
+			</ScLineItem>
 
 			{modal === 'refund_history' && (
 				<RefundHistory
