@@ -72,9 +72,16 @@ export class ScLineItems {
       );
     }
 
+    // Sort items so that items with swaps are at the top.
+    const sortedItems = (checkoutState?.checkout?.line_items?.data || []).sort((a, b) => {
+      const aHasSwap = a?.price?.current_swap || a?.swap ? 1 : 0;
+      const bHasSwap = b?.price?.current_swap || b?.swap ? 1 : 0;
+      return bHasSwap - aHasSwap;
+    });
+
     return (
       <div class="line-items" part="base" tabindex="0">
-        {(checkoutState?.checkout?.line_items?.data || []).map(item => {
+        {sortedItems.map(item => { 
           const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
           return (
             <div class={`line-item ${item?.price?.current_swap || item?.swap ? 'line-item--has-swap' : ''}`}>
