@@ -115,11 +115,22 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.settings.permalinks.product']->bootstrap();
-		// ( new PermalinkService() )
-		// ->params( [ 'sc_product_page_id' ] )
-		// ->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-		// ->query( 'index.php?sc_product_page_id=$matches[1]' )
-		// ->create();
+
+		$product_base = \SureCart::settings()->permalinks()->getBase( 'product_page' );
+		// Handle product page with collection support.
+		$permalink = new PermalinkService();
+		$permalink->url( untrailingslashit( $product_base ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_product=$matches[1]' );
+
+		// We need to make sure WordPress does not try to go to a collection page.
+		if ( preg_match( '`/(.+)(/%sc_collection%)`', $product_base, $matches ) ) {
+			$permalink->removeRules(
+				'`^' . preg_quote( $matches[1], '`' ) . '/\(`',
+				'/^(index\.php\?sc_collection)(?!(.*product))/'
+			);
+		}
+		// Add default product route.
+		$permalink->create();
 
 		$container['surecart.settings.permalinks.buy']->bootstrap();
 		( new PermalinkService() )
