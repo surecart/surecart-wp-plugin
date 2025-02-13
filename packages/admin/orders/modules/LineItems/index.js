@@ -199,21 +199,23 @@ export default ({ order, checkout }) => {
 						/>
 					)}
 
-					{!!checkout?.refunded_amount &&
-						(refunds || []).map((refund, index) => (
-							<RefundLineItem
-								key={refund.id}
-								order={order}
-								refund={refund}
-								label={__('Refund', 'surecart')}
+					{!!checkout?.refunded_amount && (
+						<>
+							{(refunds || []).map((refund) => (
+								<RefundLineItem
+									key={refund.id}
+									order={order}
+									refund={refund}
+									label={__('Refund', 'surecart')}
+								/>
+							))}
+							<LineItem
+								title={__('Net Payment', 'surecart')}
+								currency={checkout?.currency}
+								value={checkout?.net_paid_amount}
 							/>
-						))}
-
-					<LineItem
-						title={__('Net Payment', 'surecart')}
-						currency={checkout?.currency}
-						value={checkout?.net_paid_amount}
-					/>
+						</>
+					)}
 
 					{checkout?.tax_reverse_charged_amount > 0 && (
 						<LineItem
