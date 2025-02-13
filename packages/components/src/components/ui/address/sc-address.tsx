@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address } from '../../../types';
-import { countryLocale, sortAddressFields } from '../../../functions/address-settings';
+import { addressFields, sortAddressFields } from '../../../functions/address-settings';
 
 /**
  * @part base - The elements base wrapper.
@@ -88,8 +88,8 @@ export class ScAddress {
   /** Holds our country choices. */
   @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
 
-  /** Holds the locale settings for the current country. */
-  @State() localeSettings: any = {};
+  /** Sorted fields */
+  @State() sortedFields: any[] = [];
 
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
@@ -104,7 +104,6 @@ export class ScAddress {
     this.setRegions();
     this.showPostal = hasPostal(this.address.country);
     this.showCity = hasCity(this.address.country);
-    this.localeSettings = countryLocale[this.address.country] || {};
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
   }
@@ -162,20 +161,17 @@ export class ScAddress {
     return reportChildrenValidity(this.el);
   }
 
-  render() {
-    const fields = [
-      { name: 'name', priority: 10 },
-      { name: 'address_1', priority: 30 },
-      { name: 'address_2', priority: 40 },
-      { name: 'city', priority: 50 },
-      { name: 'state', priority: 60 },
-      { name: 'postcode', priority: 70 },
-    ];
+  @Watch('address')
+  filterFields() {
+    if (!this.address?.country) return;
+    this.sortedFields = sortAddressFields(addressFields, this.address?.country);
+    console.log('this.sortedFields', this.sortedFields);
+    console.log('this.address?.country', this.address?.country);
+    console.log('-----------');
+  }
 
-    const sortedFields = sortAddressFields(fields, this.localeSettings);
-
-    // Filter out fields that should not be rendered.
-    const visibleFields = sortedFields.filter(field => {
+  getVisibleFields() {
+    return this.sortedFields.filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
@@ -191,7 +187,9 @@ export class ScAddress {
           return true;
       }
     });
+  }
 
+  render() {
     return (
       <div class="sc-address" part="base">
         <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>
@@ -215,8 +213,8 @@ export class ScAddress {
             aria-label={this.placeholders.country || __('Country', 'surecart')}
           />
 
-          {visibleFields.map((field: any, index: number) => {
-            const isLast = index === visibleFields.length - 1;
+          {this.getVisibleFields().map((field: any, index: number) => {
+            const isLast = index === this.getVisibleFields().length - 1;
 
             switch (field.name) {
               case 'name':
