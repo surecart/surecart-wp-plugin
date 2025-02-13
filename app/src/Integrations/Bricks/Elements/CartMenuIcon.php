@@ -107,29 +107,7 @@ class CartMenuIcon extends \Bricks\Element {
 			}
 		}
 
-		$form      = \SureCart::cart()->getForm();
-		$form_mode = \SureCart::cart()->getMode();
-
-		// Stop if no form or mode found as for deletion.
-		if ( empty( $form->ID ) || empty( $form_mode ) ) {
-			return;
-		}
-
 		$cart_menu_always_shown = ! empty( $settings['cart_menu_always_shown'] ) ? true : false;
-
-		// Interactivity context.
-		$this->set_attribute(
-			'_root',
-			'data-wp-context',
-			wp_json_encode(
-				array(
-					'formId'              => intval( $form->ID ),
-					'mode'                => esc_attr( $form_mode ),
-					'cartMenuAlwaysShown' => $cart_menu_always_shown,
-				),
-				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
-			)
-		);
 
 		$this->cart_icon = self::render_icon(
 			$settings['cart_icon'] ?? [
@@ -138,12 +116,7 @@ class CartMenuIcon extends \Bricks\Element {
 		);
 
 		// Filter cart icon.
-		add_filter( 'sc_cart_menu_icon', array( $this, 'render_bricks_icon' ) );
-
-		// Don't render if the cart is disabled.
-		if ( ! \SureCart::cart()->isCartEnabled() ) {
-			return;
-		}
+		add_filter( 'sc_cart_menu_icon', [ $this, 'render_bricks_icon' ] );
 
 		if ( $this->is_admin_editor() ) {
 			$content  = '<div class="sc-cart-icon" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">';
