@@ -101,7 +101,12 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 
 		// If there are no related products, show all products.
 		$fallback_to_all = $this->getQueryAttribute( 'fallback', true );
-		$post_in         = ! empty( $post_ids ) ? array_map( 'absint', $post_ids ) : ( ! $fallback_to_all ? [ 0 ] : [] );
+
+		// Exclude the current post ID.
+		$post_in = array_diff(
+			! empty( $post_ids ) ? array_map( 'absint', $post_ids ) : ( ! $fallback_to_all ? [ 0 ] : [] ),
+			[ get_the_ID() ]
+		);
 
 		// Create WP_Query object with found post IDs.
 		$this->query = new \WP_Query(
@@ -115,7 +120,6 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 					'order'          => esc_sql( $order ),
 					'posts_per_page' => absint( $per_page ),
 					'paged'          => absint( $page ),
-					'post__not_in'   => [ get_the_ID() ],
 				],
 			)
 		);
