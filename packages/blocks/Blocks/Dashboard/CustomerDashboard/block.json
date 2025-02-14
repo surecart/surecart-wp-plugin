@@ -10,8 +10,7 @@
 		"reusable": false,
 		"html": false,
 		"inserter": false,
-		"align": ["wide", "full"],
-		"currencyConversion": false
+		"align": ["wide", "full"]
 	},
 	"attributes": {
 		"currentStep": {

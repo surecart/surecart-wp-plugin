@@ -104,7 +104,6 @@ export class ScProductLineItem {
   }
 
   renderPriceAndInterval() {
-    console.log(this.displayAmount);
     const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
       return (
