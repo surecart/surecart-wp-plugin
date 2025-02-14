@@ -20,6 +20,9 @@ class Currency {
 			return false;
 		}
 		$display_currencies = DisplayCurrency::get();
+		if ( is_wp_error( $display_currencies ) ) {
+			return false;
+		}
 		return in_array( $currency, array_column( $display_currencies, 'currency' ), true );
 	}
 
