@@ -381,6 +381,8 @@ class Currency {
 			]
 		);
 
+		$currency_code = $currency_code ?? \SureCart::account()->currency;
+
 		// maybe convert the amount.
 		$converted_amount = self::maybeConvertAmount( $amount, $currency_code );
 
