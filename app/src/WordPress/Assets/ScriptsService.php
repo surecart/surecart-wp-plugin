@@ -508,5 +508,10 @@ class ScriptsService {
 		// Format library.
 		wp_enqueue_style( 'wp-format-library' );
 		wp_enqueue_script( 'wp-format-library' );
+
+		// Global styles.
+		wp_register_style( 'sc-global-presets', false ); // phpcs:ignore
+		wp_add_inline_style( 'sc-global-presets', wp_get_global_stylesheet( array( 'presets' ) ) );
+		wp_enqueue_style( 'sc-global-presets' );
 	}
 }

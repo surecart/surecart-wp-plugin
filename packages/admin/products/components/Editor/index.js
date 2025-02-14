@@ -136,11 +136,14 @@ export default ({ product, loading }) => {
 						max-height: 400px;
 					`}
 				>
-					<Disabled
+					<div
 						css={css`
 							padding: 10px 20px;
 							display: block;
 						`}
+						role="button"
+						tabIndex={0}
+						onClick={() => setEditorModal(true)}
 					>
 						{blocks.length > 0 ? (
 							<PreviewBlocks blocks={blocks} />
@@ -157,7 +160,7 @@ export default ({ product, loading }) => {
 								)}
 							</ScText>
 						)}
-					</Disabled>
+					</div>
 				</div>
 			</Box>
 
