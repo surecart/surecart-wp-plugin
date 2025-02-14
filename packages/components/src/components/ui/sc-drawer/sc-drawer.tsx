@@ -51,6 +51,9 @@ export class ScDrawer {
   /** Sticky drawer header */
   @Prop() stickyHeader: boolean = false;
 
+  /** Sticky drawer footer */
+  @Prop() stickyFooter: boolean = false;
+
   componentDidLoad() {
     this.drawer.hidden = !this.open;
     if (this.open && !this.contained) {
@@ -237,7 +240,7 @@ export class ScDrawer {
           <div part="body" class="drawer__body">
             <slot></slot>
           </div>
-          <footer part="footer" class="drawer__footer">
+          <footer part="footer" class={this.stickyFooter ? 'drawer__footer is-sticky' : 'drawer__footer'}>
             <slot name="footer"></slot>
           </footer>
         </div>

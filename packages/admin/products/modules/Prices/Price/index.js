@@ -5,6 +5,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useRef, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
 
 import Error from '../../../../components/Error';
 // hocs
@@ -14,10 +15,9 @@ import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
-import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
-import CanUpgrade from '../../../components/price/parts/CanUpgrade';
-import SwapPrice from '../../../components/price/parts/SwapPrice';
-import DrawerSection from '../../../../ui/DrawerSection';
+import Swap from '../../../components/price/parts/Swap';
+import Advanced from '../../../components/price/parts/Advanced';
+import PaymentType from '../../../components/price/parts/PaymentType';
 
 export default ({ price, product }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -203,7 +203,10 @@ export default ({ price, product }) => {
 			<ScForm onScFormSubmit={saveEditedPrice}>
 				<ScDrawer
 					label={__('Edit Price', 'surecart')}
-					style={{ '--sc-drawer-size': '32rem' }}
+					style={{
+						'--sc-drawer-size': '38rem',
+						'--sc-input-label-margin': 'var(--sc-spacing-small)',
+					}}
 					onScRequestClose={() => setIsOpen(false)}
 					open={isOpen}
 					onScAfterShow={() => ref.current.triggerFocus()}
@@ -214,6 +217,7 @@ export default ({ price, product }) => {
 							display: flex;
 							flex-direction: column;
 							height: 100%;
+							background: var(--sc-color-gray-50);
 						`}
 					>
 						<div
@@ -229,6 +233,12 @@ export default ({ price, product }) => {
 								price={currentPrice}
 								updatePrice={editPrice}
 								ref={ref}
+							/>
+
+							<PaymentType
+								type={getPriceType()}
+								price={currentPrice}
+								updatePrice={editPrice}
 							/>
 
 							{getPriceType() === 'subscription' && (
@@ -254,20 +264,19 @@ export default ({ price, product }) => {
 									product={product}
 								/>
 							)}
-							<CanUpgrade
+
+							<Swap
+								currentPrice={currentPrice}
+								updateSwap={editSwap}
+								currentSwap={currentSwap}
+								isSaving={isSaving}
+							/>
+
+							<Advanced
 								price={currentPrice}
 								updatePrice={editPrice}
+								product={product}
 							/>
-							<DrawerSection
-								title={__('Boost Revenue', 'surecart')}
-							>
-								<SwapPrice
-									price={currentPrice}
-									updateSwap={editSwap}
-									currentSwap={currentSwap}
-									isSaving={isSaving}
-								/>
-							</DrawerSection>
 						</div>
 					</div>
 

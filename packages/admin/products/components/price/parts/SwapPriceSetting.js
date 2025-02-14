@@ -18,8 +18,11 @@ export default ({
 	if (!swapPrice) {
 		return (
 			<ScFormControl
-				label={__('Price Bump', 'surecart')}
-				help={__('The associated price to swap to.', 'surecart')}
+				label={__('Swap to', 'surecart')}
+				help={__(
+					'The associated price the customer can swap to on the checkout.',
+					'surecart'
+				)}
 			>
 				<PriceSelector
 					value={swapPrice?.id}
@@ -34,6 +37,7 @@ export default ({
 						archived: false,
 					}}
 					includeVariants={false}
+					variable={false}
 					placement="top-start"
 					position="top-left"
 					exclude={[price?.id]}
@@ -45,8 +49,11 @@ export default ({
 	return (
 		<>
 			<ScFormControl
-				label={__('Price Bump', 'surecart')}
-				help={__('The associated price to swap to.', 'surecart')}
+				label={__('Swap to', 'surecart')}
+				help={__(
+					'The associated price the customer can swap to on the checkout.',
+					'surecart'
+				)}
 			>
 				<SwapPriceDisplay
 					price={swapPrice}
@@ -55,9 +62,9 @@ export default ({
 				/>
 			</ScFormControl>
 			<ScFormControl
-				label={__('Price Bump Description', 'surecart')}
+				label={__('Description', 'surecart')}
 				help={__(
-					'This is shown to the customer on line items along with the swap price.',
+					'This is shown to the customer on line items to help them understand the price boost.',
 					'surecart'
 				)}
 			>

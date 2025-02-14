@@ -1,10 +1,10 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ price, updatePrice }) => {
-	return (
+	return price?.recurring_period_count ? (
 		<div
 			css={css`
 				> *:not(:last-child) {
@@ -13,21 +13,24 @@ export default ({ price, updatePrice }) => {
 			`}
 		>
 			<ScSwitch
-				checked={!price?.portal_subscription_update_enabled}
+				checked={price?.revoke_purchases_on_completed}
 				onScChange={(e) =>
 					updatePrice({
-						portal_subscription_update_enabled: !e.target.checked,
+						revoke_purchases_on_completed: e?.target?.checked,
 					})
 				}
 			>
-				{__('Exclude from upgrade options', 'surecart')}
+				{__(
+					'Revoke access when installments are completed',
+					'surecart'
+				)}
 				<span slot="description">
 					{__(
-						'When turned on, customers cannot choose this price in the update plans section of the customer dashboard.',
+						'Automatically revoke access to integrations and licenses after all payments are completed.',
 						'surecart'
 					)}
 				</span>
 			</ScSwitch>
 		</div>
-	);
+	) : null;
 };

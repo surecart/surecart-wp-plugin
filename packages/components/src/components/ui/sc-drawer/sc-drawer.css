@@ -103,9 +103,12 @@
 .drawer--has-footer .drawer__footer {
   border-top: var(--sc-drawer-border);
   padding: var(--sc-drawer-footer-spacing);
-  position: sticky;
-  bottom: 0;
-  background: #fff;
+
+  &.is-sticky {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+  }
 }
 
 .drawer__overlay {
