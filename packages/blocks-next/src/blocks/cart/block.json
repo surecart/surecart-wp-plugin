@@ -23,7 +23,6 @@
 		"layout": true,
 		"html": false,
 		"multiple": false,
-		"currencyConversion": true,
 		"typography": {
 			"fontSize": true,
 			"lineHeight": false,
