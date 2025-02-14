@@ -273,7 +273,7 @@ export default function ({
 							z-index: 1000;
 						`}
 					>
-						<SecondarySidebar />
+						<SecondarySidebar height={editorHeight + 90} />
 						<div className="editor-styles-wrapper">
 							<BlockTools
 								className="surecart-editor__content"

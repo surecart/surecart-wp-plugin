@@ -51,33 +51,12 @@ export default function () {
 		libraryRef.current?.focusSearch?.();
 	}, []);
 
-	const [height, setHeight] = useState(0);
-	useEffect(() => {
-		const calculateHeight = () => {
-			const calculatedHeight = window.innerHeight - 200;
-			setHeight(calculatedHeight);
-		};
-
-		// Calculate height on mount and on window resize.
-		calculateHeight();
-		window.addEventListener('resize', calculateHeight);
-
-		// Cleanup event listener on unmount.
-		return () => {
-			window.removeEventListener('resize', calculateHeight);
-		};
-	}, []);
-
 	return (
 		<div
 			onKeyDown={(event) => closeOnEscape(event)}
 			css={css`
 				border-right: 1px solid var(--sc-color-gray-400);
 				height: 100%;
-
-				.block-editor-tabbed-sidebar__tabpanel {
-					height: ${height}px;
-				}
 
 				.block-editor-inserter-sidebar__header {
 					border-bottom: 1px solid var(--sc-color-gray-300);

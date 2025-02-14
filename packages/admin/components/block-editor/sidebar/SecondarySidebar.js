@@ -13,7 +13,7 @@ import { EditorContext } from '../context';
 import DocumentOverviewSidebar from './DocumentOverviewSidebar';
 import InserterSidebar from './InserterSidebar';
 
-export default function SecondarySidebar() {
+export default function SecondarySidebar({ height }) {
 	const { isInserterOpened, isDocumentOverviewOpened: isListViewOpened } =
 		useContext(EditorContext);
 
@@ -25,7 +25,7 @@ export default function SecondarySidebar() {
 		<div
 			css={css`
 				overflow-y: auto;
-				height: 100%;
+				height: ${height}px;
 				min-width: 350px;
 			`}
 		>
