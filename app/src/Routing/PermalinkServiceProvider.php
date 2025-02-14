@@ -123,12 +123,20 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->query( 'index.php?sc_product=$matches[1]' );
 
 		// We need to make sure WordPress does not try to go to a collection page.
-		if ( preg_match( '`/(.+)(/%sc_collection%)`', $product_base, $matches ) ) {
+		if ( preg_match( '`/(.+)(/%sc_collection%/)`', $product_base, $matches ) ) {
 			$permalink->removeRules(
-				'`^' . preg_quote( $matches[1], '`' ) . '/\(`',
+				'`^' . preg_quote( $matches[1], '`' ) . '/([^/]+)$`',
 				'/^(index\.php\?sc_collection)(?!(.*product))/'
 			);
 		}
+
+		// Rule for default product base.
+		$permalink->addRule(
+			'^([^/]+)/([^/]+)/?$',
+			'index.php?sc_product=$matches[2]',
+			'top'
+		);
+
 		// Add default product route.
 		$permalink->create();
 
