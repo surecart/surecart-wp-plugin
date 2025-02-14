@@ -73,7 +73,13 @@ export class ScLineItemTotal {
     if (this.total !== 'total') {
       return null;
     }
+
     const checkout = this.checkout || checkoutState?.checkout;
+
+    // the currency is the same as the current currency.
+    if (checkout?.currency === checkoutState?.checkout?.current_currency) {
+      return null;
+    }
 
     return (
       <Fragment>
