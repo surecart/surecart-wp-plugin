@@ -17,6 +17,6 @@ return [
 
 	<!-- wp:surecart/slide-out-cart-bump-line-item /-->
 
-	<!-- wp:surecart/slide-out-cart-submit /-->
+	<!-- wp:surecart/slide-out-cart-items-submit /-->
 	<!-- /wp:surecart/slide-out-cart -->',
 ];

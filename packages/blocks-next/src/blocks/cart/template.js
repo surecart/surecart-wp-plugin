@@ -65,7 +65,7 @@ export const TEMPLATE = [
 		},
 	],
 	[
-		'surecart/slide-out-cart-submit',
+		'surecart/slide-out-cart-items-submit',
 		{
 			border: true,
 			padding: {
