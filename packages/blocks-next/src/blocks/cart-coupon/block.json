@@ -52,8 +52,7 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"multiple": false,
-		"currencyConversion": true
+		"multiple": false
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
