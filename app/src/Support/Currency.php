@@ -63,7 +63,7 @@ class Currency {
 	 *
 	 * @return string|null
 	 */
-	protected static function getCurrencyFromGeolocation() {
+	public static function getCurrencyFromGeolocation() {
 		if ( ! class_exists( 'NumberFormatter' ) || ! \SureCart::settings()->get( 'currency_geolocation_enabled', true ) ) {
 			return null;
 		}
