@@ -26,6 +26,7 @@
 		"alignWide": false,
 		"html": false,
 		"multiple": false,
+		"inserter": false,
 		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
 		"spacing": {
 			"__experimentalSkipSerialization": true,

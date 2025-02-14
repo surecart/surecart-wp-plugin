@@ -38,7 +38,8 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"inserter": false
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
