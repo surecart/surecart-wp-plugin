@@ -178,32 +178,6 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
-			'currency_switcher_alignment',
-			[
-				'type'              => 'string',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'right',
-			]
-		);
-		$this->register(
-			'surecart',
-			'currency_switcher_selected_ids',
-			[
-				'type'         => 'array',
-				'items'        => 'integer',
-				'show_in_rest' => [
-					'schema' => [
-						'type'  => 'array',
-						'items' => [
-							'type' => 'integer',
-						],
-					],
-				],
-			]
-		);
-		$this->register(
-			'surecart',
 			'password_validation_enabled',
 			[
 				'type'              => 'boolean',
@@ -259,6 +233,32 @@ class SettingService {
 				'type'              => 'boolean',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_switcher_alignment',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'right',
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_switcher_selected_ids',
+			[
+				'type'         => 'array',
+				'items'        => 'integer',
+				'show_in_rest' => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'integer',
+						],
+					],
+				],
 			]
 		);
 		$this->register(
