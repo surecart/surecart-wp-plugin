@@ -1,5 +1,11 @@
-import { ScFormControl, ScSkeleton, ScInput } from '@surecart/components-react';
+import {
+	ScFormControl,
+	ScSkeleton,
+	ScInput,
+	ScIcon,
+} from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
+import { Tooltip } from '@wordpress/components';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
 
@@ -24,6 +30,18 @@ export default ({
 					'surecart'
 				)}
 			>
+				<Tooltip
+					text={__(
+						'Only available for products without variants',
+						'surecart'
+					)}
+				>
+					<ScIcon
+						name="info"
+						slot="label-end"
+						style={{ opacity: 0.5 }}
+					/>
+				</Tooltip>
 				<PriceSelector
 					value={swapPrice?.id}
 					onSelect={({ price_id }) =>
@@ -55,6 +73,18 @@ export default ({
 					'surecart'
 				)}
 			>
+				<Tooltip
+					text={__(
+						'Only available for products without variants',
+						'surecart'
+					)}
+				>
+					<ScIcon
+						name="info"
+						slot="label-end"
+						style={{ opacity: 0.5 }}
+					/>
+				</Tooltip>
 				<SwapPriceDisplay
 					price={swapPrice}
 					product={swapPrice?.product}
