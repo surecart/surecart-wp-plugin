@@ -265,12 +265,15 @@ export default ({ price, product }) => {
 								/>
 							)}
 
-							<Swap
-								currentPrice={currentPrice}
-								updateSwap={editSwap}
-								currentSwap={currentSwap}
-								isSaving={isSaving}
-							/>
+							{!product?.variants?.length &&
+								!product?.variants?.data?.length && (
+									<Swap
+										currentPrice={currentPrice}
+										updateSwap={editSwap}
+										currentSwap={currentSwap}
+										isSaving={isSaving}
+									/>
+								)}
 
 							<Advanced
 								price={currentPrice}

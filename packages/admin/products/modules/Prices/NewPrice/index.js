@@ -176,13 +176,15 @@ export default ({ isOpen, onRequestClose, product }) => {
 								product={product}
 							/>
 						)}
-
-						<Swap
-							currentPrice={price}
-							updateSwap={editSwap}
-							currentSwap={currentSwap}
-							isSaving={loading}
-						/>
+						{!product?.variants?.length &&
+							!product?.variants?.data?.length && (
+								<Swap
+									currentPrice={price}
+									updateSwap={editSwap}
+									currentSwap={currentSwap}
+									isSaving={loading}
+								/>
+							)}
 
 						<Advanced
 							price={price}
