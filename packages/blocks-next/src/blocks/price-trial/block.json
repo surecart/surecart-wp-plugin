@@ -11,7 +11,6 @@
 	"ancestor": ["surecart/product-price-choice-template"],
 	"supports": {
 		"interactivity": true,
-		"currencyConversion": true,
 		"anchor": true,
 		"color": {
 			"gradients": true,

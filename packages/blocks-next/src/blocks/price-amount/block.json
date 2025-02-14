@@ -11,7 +11,6 @@
 	"icon": "money-alt",
 	"supports": {
 		"interactivity": true,
-		"currencyConversion": true,
 		"anchor": true,
 		"color": {
 			"gradients": true,

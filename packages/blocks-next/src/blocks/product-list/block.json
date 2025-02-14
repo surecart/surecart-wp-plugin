@@ -383,8 +383,7 @@
 			"padding": true,
 			"margin": true,
 			"blockGap": true
-		},
-		"currencyConversion": true
+		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
