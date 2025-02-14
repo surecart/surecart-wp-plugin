@@ -8,7 +8,8 @@ import ScratchAmount from './ScratchAmount';
 
 const PaymentType = ({ type, setType, price, updatePrice }) => {
 	const renderRecurringOptions = () => {
-		if (type === 'once') {
+		if (type === 'once' || !!price?.id) {
+			// if price.id is set then it means the recurring options are locked.
 			return null;
 		}
 
@@ -152,7 +153,17 @@ const PaymentType = ({ type, setType, price, updatePrice }) => {
 						}
 					`}
 				>
-					<SingleAmount price={price} updatePrice={updatePrice} />
+					<SingleAmount
+						price={price}
+						updatePrice={updatePrice}
+						suffix={
+							<span style={{ opacity: '0.5' }}>
+								{`${price?.short_interval_text || ''} ${
+									price?.short_interval_count_text || ''
+								}`}
+							</span>
+						}
+					/>
 
 					<ScratchAmount price={price} updatePrice={updatePrice} />
 
