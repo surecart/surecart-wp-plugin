@@ -28,6 +28,6 @@ class Fee extends Model {
 	 * @return string
 	 */
 	protected function getDisplayAmountAttribute() {
-		return Currency::format( $this->amount, $this->currency );
+		return Currency::format( $this->amount );
 	}
 }
