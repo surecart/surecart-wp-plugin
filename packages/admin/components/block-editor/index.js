@@ -274,62 +274,69 @@ export default function ({
 						`}
 					>
 						<SecondarySidebar />
-						<BlockTools
-							className="surecart-editor__content"
-							css={css`
-								position: relative;
-								flex-grow: 1;
-								display: flex;
-								background: #2f2f2f;
-								justify-content: center;
-								padding: 40px 48px;
-								height: 100%;
-								border-top: 0px;
-								border-bottom: 0px;
-							`}
-							onClick={(event) => {
-								// Clear selected block when clicking on the gray background.
-								if (event.target === event.currentTarget) {
-									clearSelectedBlock();
-								}
-							}}
-						>
-							<BlockEditorKeyboardShortcuts.Register />
-							{showBackButton && onClose && (
-								<Button
-									icon={arrowLeft}
-									onClick={() => {
-										setTimeout(onClose, 550);
-									}}
-									css={css`
-										align-self: flex-start;
-										margin-top: var(--sc-spacing-small);
-										margin-bottom: var(--sc-spacing-small);
-										color: white;
-									`}
-								>
-									{__('Back', 'surecart')}
-								</Button>
-							)}
+						<div className="editor-styles-wrapper">
+							<BlockTools
+								className="surecart-editor__content"
+								css={css`
+									position: relative;
+									flex-grow: 1;
+									display: flex;
+									background: #2f2f2f;
+									justify-content: center;
+									padding: 40px 48px;
+									height: 100%;
+									border-top: 0px;
+									border-bottom: 0px;
+								`}
+								onClick={(event) => {
+									// Clear selected block when clicking on the gray background.
+									if (event.target === event.currentTarget) {
+										clearSelectedBlock();
+									}
+								}}
+							>
+								<BlockEditorKeyboardShortcuts.Register />
+								{showBackButton && onClose && (
+									<Button
+										icon={arrowLeft}
+										onClick={() => {
+											setTimeout(onClose, 550);
+										}}
+										css={css`
+											align-self: flex-start;
+											margin-top: var(--sc-spacing-small);
+											margin-bottom: var(
+												--sc-spacing-small
+											);
+											color: white;
+										`}
+									>
+										{__('Back', 'surecart')}
+									</Button>
+								)}
 
-							<EditorResizer enableResizing={true} height="100%">
-								<WritingFlow
-									css={css`
-										overflow-y: auto;
-										height: ${editorHeight}px;
-										width: 100%;
-										padding: 5px;
-									`}
+								<EditorResizer
+									enableResizing={true}
+									height="100%"
 								>
-									<ObserveTyping>
-										<BlockList className="edit-site-block-editor__block-list wp-site-blocks" />
-									</ObserveTyping>
-								</WritingFlow>
-							</EditorResizer>
+									<WritingFlow
+										css={css`
+											overflow-y: auto;
+											height: ${editorHeight}px;
+											width: 100%;
+											padding: 5px;
+										`}
+									>
+										<ObserveTyping>
+											<BlockList className="edit-site-block-editor__block-list wp-site-blocks" />
+										</ObserveTyping>
+									</WritingFlow>
+								</EditorResizer>
 
-							<Popover.Slot />
-							<div className="surecart-editor__content-inserter-clipper" />
-						</BlockTools>
+								<Popover.Slot />
+								<div className="surecart-editor__content-inserter-clipper" />
+							</BlockTools>
+						</div>
 						<ComplementaryArea.Slot
 							scope={SIDEBAR_COMPLEMENTARY_AREA_SCOPE}
 						/>
