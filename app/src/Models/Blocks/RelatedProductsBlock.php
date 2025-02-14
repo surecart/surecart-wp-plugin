@@ -108,9 +108,6 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 			[ get_the_ID() ]
 		);
 
-		// Exclude the current post ID if there are no related products.
-		$post_not_in = empty( $post_in ) ? [ get_the_ID() ] : [];
-
 		// Create WP_Query object with found post IDs.
 		$this->query = new \WP_Query(
 			apply_filters(
@@ -118,12 +115,12 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 				[
 					'post_type'      => 'sc_product',
 					'post__in'       => $post_in, // Use 0 to return no results if empty.
-					'post__not_in'   => $post_not_in,
 					'orderby'        => esc_sql( $orderby ),
 					'post_status'    => 'publish',
 					'order'          => esc_sql( $order ),
 					'posts_per_page' => absint( $per_page ),
 					'paged'          => absint( $page ),
+					'post__not_in'   => [ get_the_ID() ],
 				],
 			)
 		);
