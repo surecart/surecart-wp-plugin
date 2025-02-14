@@ -31,7 +31,7 @@
 
 ## Methods
 
-### `requestClose(source?: "close-button" | "keyboard" | "overlay" | "method") => Promise<void>`
+### `requestClose(source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>`
 
 
 
