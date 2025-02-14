@@ -11,7 +11,6 @@ import {
 	ScSelect,
 	ScSkeleton,
 	ScTag,
-	ScCard,
 	ScDivider,
 } from '@surecart/components-react';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
@@ -61,8 +60,6 @@ export default () => {
 			currencySwitcherSelectedIds.filter((item) => item !== menuId);
 		setCurrencySwitcherSelectedIds(newCurrencySwitcherSelectedIds);
 	};
-
-	console.log(menus?.length);
 
 	// we are loading.
 	if (loading) {
