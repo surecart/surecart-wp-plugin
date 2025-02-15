@@ -11,7 +11,12 @@ import { css, jsx } from '@emotion/react';
  * @param {string} [props.position='bottom right'] Position of the popover
  * @return {React.ReactElement} Help tooltip component
  */
-const HelpTooltip = ({ children, content, position = 'bottom right' }) => {
+const HelpTooltip = ({
+	children,
+	content,
+	position = 'bottom right',
+	slot,
+}) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const [anchorRef, setAnchorRef] = useState(null);
 	const closeTimeout = useRef(null);
@@ -41,6 +46,7 @@ const HelpTooltip = ({ children, content, position = 'bottom right' }) => {
 					padding: 10px;
 					margin: -10px;
 				`}
+				slot={slot}
 			>
 				{children}
 			</div>

@@ -8,6 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { Tooltip } from '@wordpress/components';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
+import HelpTooltip from '../../../../components/HelpTooltip';
 
 export default ({
 	price,
@@ -30,18 +31,31 @@ export default ({
 					'surecart'
 				)}
 			>
-				<Tooltip
-					text={__(
-						'Only available for products without variants',
-						'surecart'
-					)}
+				<HelpTooltip
+					content={
+						<div>
+							<strong>{__('Swap to', 'surecart')}</strong>
+							<p>
+								{__(
+									'Only available for products without variants',
+									'surecart'
+								)}
+							</p>
+							<p>
+								<a
+									href="https://docs.surecart.com"
+									target="_blank"
+								>
+									{__('Learn More', 'surecart')}
+								</a>
+							</p>
+						</div>
+					}
+					position="top left"
+					slot="label-end"
 				>
-					<ScIcon
-						name="info"
-						slot="label-end"
-						style={{ opacity: 0.5 }}
-					/>
-				</Tooltip>
+					<ScIcon name="info" style={{ opacity: 0.5 }} />
+				</HelpTooltip>
 				<PriceSelector
 					value={swapPrice?.id}
 					onSelect={({ price_id }) =>
