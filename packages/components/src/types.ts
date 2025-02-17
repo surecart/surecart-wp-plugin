@@ -485,6 +485,7 @@ export interface LineItem extends Object {
   scratch_display_amount: string;
   trial: boolean;
   total_savings_amount: number;
+  total_savings_display_amount: string;
   created_at: number;
   updated_at: number;
   price?: Price;

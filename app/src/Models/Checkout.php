@@ -160,6 +160,15 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display total savings amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalSavingsDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_savings_amount, $this->currency );
+	}
+
+	/**
 	 * Get the display full amount attribute.
 	 *
 	 * @return string
