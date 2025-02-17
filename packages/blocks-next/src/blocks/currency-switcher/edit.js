@@ -1,12 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/react';
-import {
-	useBlockProps,
-	__experimentalBlockAlignmentMatrixControl as BlockAlignmentMatrixControl,
-	BlockControls,
-} from '@wordpress/block-editor';
-import { seen } from '@wordpress/icons';
+import { useBlockProps, BlockControls } from '@wordpress/block-editor';
 import { ScIcon } from '@surecart/components-react';
 import { ToolbarDropdownMenu } from '@wordpress/components';
 import { useEntityRecord } from '@wordpress/core-data';
