@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 import { css, jsx, Global } from '@emotion/react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
-import { ScIcon, ScSwitch } from '@surecart/components-react';
+import { ScAlert, ScIcon, ScSwitch } from '@surecart/components-react';
 import { useEntityProp } from '@wordpress/core-data';
 import { useState } from 'react';
 import useSave from '../UseSave';
@@ -55,15 +55,17 @@ export default function DisplayCurrencySettings() {
 
 				<DisplayCurrenciesSettings />
 
-				<SettingsBox
-					title={__('Currency Switcher', 'surecart')}
-					description={__(
-						'Set the currency switcher settings for your site.',
-						'surecart'
-					)}
-				>
-					<CurrencySwitcherSettings />
-				</SettingsBox>
+				{!scData?.is_block_theme && (
+					<SettingsBox
+						title={__('Currency Switcher', 'surecart')}
+						description={__(
+							'Set the currency switcher settings for your site.',
+							'surecart'
+						)}
+					>
+						<CurrencySwitcherSettings />
+					</SettingsBox>
+				)}
 
 				<SettingsBox
 					title={__('Geolocation', 'surecart')}
@@ -88,6 +90,15 @@ export default function DisplayCurrencySettings() {
 						</span>
 					</ScSwitch>
 				</SettingsBox>
+
+				{!!scData?.is_block_theme && (
+					<ScAlert type="info" open={true}>
+						{__(
+							'To add a currency switcher, add the currency switcher block to your site template.',
+							'surecart'
+						)}
+					</ScAlert>
+				)}
 			</SettingsTemplate>
 		</>
 	);

@@ -73,143 +73,132 @@ export default () => {
 
 	return (
 		<>
-			{!!scData?.is_block_theme ? (
-				<>Notice on how to add currency switcher to your site.</>
-			) : (
-				<>
-					<div>
-						<ScFormControl
-							label={__('Add to Menus', 'surecart')}
-							help={__(
-								'Select the menu(s) where the currency switcher will appear.',
-								'surecart'
-							)}
-						>
-							<div
-								css={css`
-									gap: 1em;
-									display: flex;
-									flex-wrap: wrap;
-									padding: 0.44em 0;
-								`}
-							>
-								{(currencySwitcherSelectedIds || []).map(
-									(menuId) => {
-										// find the menu by id.
-										const menu = menus?.find(
-											(item) => item?.id === menuId
-										);
-										// bail if it's been deleted or no name.
-										if (!menu?.name) return null;
-										return (
-											<ScTag
-												pill={true}
-												clearable={true}
-												key={menuId}
-												onScClear={() =>
-													removeCurrencySwitcher(
-														menuId
-													)
-												}
-											>
-												{menu.name}
-											</ScTag>
-										);
-									}
-								)}
-								<ScDropdown position="bottom-right">
-									<ScButton
-										type="default"
-										size="small"
-										slot="trigger"
-									>
-										<ScIcon name="plus" slot="prefix" />
-										{__('Add Menu', 'surecart')}
-									</ScButton>
-									<ScMenu>
-										{menus?.map((item) => {
-											const checked = (
-												currencySwitcherSelectedIds ||
-												[]
-											).includes(item.id);
-											return (
-												<ScMenuItem
-													style={{
-														'--sc-menu-item-white-space':
-															'wrap',
-														'--sc-menu-item-line-height':
-															'var(--sc-line-height-dense)',
-													}}
-													key={item.id}
-													onClick={() =>
-														!checked
-															? addCurrencySwitcher(
-																	item.id
-															  )
-															: removeCurrencySwitcher(
-																	item.id
-															  )
-													}
-													checked={checked}
-												>
-													{item.name}
-												</ScMenuItem>
-											);
-										})}
-									</ScMenu>
-								</ScDropdown>
-							</div>
-						</ScFormControl>
-					</div>
-					{!!currencySwitcherSelectedIds?.length && (
-						<div>
-							<ScSelect
-								label={__('Position', 'surecart')}
-								placeholder={__('Select Position', 'surecart')}
-								value={currencySwitcherAlignment}
-								onScChange={(e) =>
-									setCurrencySwitcherAlignment(e.target.value)
-								}
-								unselect={false}
-								help={__(
-									'Select the currency switcher position, i.e. left or right, where it will look best with your website design.',
-									'surecart'
-								)}
-								choices={[
-									{
-										label: __('Right', 'surecart'),
-										value: 'right',
-									},
-									{
-										label: __('Left', 'surecart'),
-										value: 'left',
-									},
-								]}
-							/>
-						</div>
+			<div>
+				<ScFormControl
+					label={__('Add to Menus', 'surecart')}
+					help={__(
+						'Select the menu(s) where the currency switcher will appear.',
+						'surecart'
 					)}
-
-					<ScDivider>{__('Or', 'surecart')}</ScDivider>
-
-					<ScInput
-						label={__('Shortcode', 'surecart')}
-						value={`[surecart_currency_switcher]`}
-						readonly
+				>
+					<div
+						css={css`
+							gap: 1em;
+							display: flex;
+							flex-wrap: wrap;
+							padding: 0.44em 0;
+						`}
 					>
-						{window.location.protocol === 'https:' && (
+						{(currencySwitcherSelectedIds || []).map((menuId) => {
+							// find the menu by id.
+							const menu = menus?.find(
+								(item) => item?.id === menuId
+							);
+							// bail if it's been deleted or no name.
+							if (!menu?.name) return null;
+							return (
+								<ScTag
+									pill={true}
+									clearable={true}
+									key={menuId}
+									onScClear={() =>
+										removeCurrencySwitcher(menuId)
+									}
+								>
+									{menu.name}
+								</ScTag>
+							);
+						})}
+						<ScDropdown position="bottom-right">
 							<ScButton
-								ref={ref}
+								type="default"
 								size="small"
-								slot="suffix"
-								aria-label={__('Copy Shortcode', 'surecart')}
+								slot="trigger"
 							>
-								<ScIcon name="clipboard" slot="prefix" />
-								{__('Copy', 'surecart')}
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add Menu', 'surecart')}
 							</ScButton>
+							<ScMenu>
+								{menus?.map((item) => {
+									const checked = (
+										currencySwitcherSelectedIds || []
+									).includes(item.id);
+									return (
+										<ScMenuItem
+											style={{
+												'--sc-menu-item-white-space':
+													'wrap',
+												'--sc-menu-item-line-height':
+													'var(--sc-line-height-dense)',
+											}}
+											key={item.id}
+											onClick={() =>
+												!checked
+													? addCurrencySwitcher(
+															item.id
+													  )
+													: removeCurrencySwitcher(
+															item.id
+													  )
+											}
+											checked={checked}
+										>
+											{item.name}
+										</ScMenuItem>
+									);
+								})}
+							</ScMenu>
+						</ScDropdown>
+					</div>
+				</ScFormControl>
+			</div>
+			{!!currencySwitcherSelectedIds?.length && (
+				<div>
+					<ScSelect
+						label={__('Position', 'surecart')}
+						placeholder={__('Select Position', 'surecart')}
+						value={currencySwitcherAlignment}
+						onScChange={(e) =>
+							setCurrencySwitcherAlignment(e.target.value)
+						}
+						unselect={false}
+						help={__(
+							'Select the currency switcher position, i.e. left or right, where it will look best with your website design.',
+							'surecart'
 						)}
-					</ScInput>
-				</>
+						choices={[
+							{
+								label: __('Right', 'surecart'),
+								value: 'right',
+							},
+							{
+								label: __('Left', 'surecart'),
+								value: 'left',
+							},
+						]}
+					/>
+				</div>
 			)}
+
+			<ScDivider>{__('Or', 'surecart')}</ScDivider>
+
+			<ScInput
+				label={__('Shortcode', 'surecart')}
+				value={`[surecart_currency_switcher]`}
+				readonly
+			>
+				{window.location.protocol === 'https:' && (
+					<ScButton
+						ref={ref}
+						size="small"
+						slot="suffix"
+						aria-label={__('Copy Shortcode', 'surecart')}
+					>
+						<ScIcon name="clipboard" slot="prefix" />
+						{__('Copy', 'surecart')}
+					</ScButton>
+				)}
+			</ScInput>
 		</>
 	);
 };
