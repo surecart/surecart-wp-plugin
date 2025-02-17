@@ -8,8 +8,8 @@ import { __, _n } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { state } from '@store/product';
+import { state as upsellState } from '@store/upsell';
 import { Price, Variant } from '../../../../types';
-import { getDiscountedAmount as getUpsellDiscountAmount, getScratchAmount as getUpsellScratchAmount } from '@store/upsell/getters';
 
 @Component({
   tag: 'sc-product-price',
@@ -32,20 +32,28 @@ export class ScProductPrice {
 
   renderVariantPrice(selectedVariant: Variant) {
     const variant = state[this.productId]?.variants?.find(variant => variant?.id === selectedVariant?.id);
-    return this.renderPrice(state[this.productId].selectedPrice, variant?.amount);
+    return this.renderPrice(state[this.productId].selectedPrice, variant);
   }
 
-  renderPrice(price: Price, variantAmount?: number) {
-    const originalAmount = variantAmount ?? price?.amount ?? 0;
+  renderPrice(price: Price, variant: Variant = null) {
+    const originalAmount = variant?.display_amount ?? price?.display_amount ?? '';
 
-    const amount = getUpsellDiscountAmount(originalAmount);
-    const scratch_amount = getUpsellScratchAmount(price?.scratch_amount);
+    // maybe change for upsells.
+    const amount = upsellState?.line_item?.total_amount || price?.amount;
+    const upsellDisplayAmount = upsellState?.line_item?.total_display_amount;
+    const displayAmount = upsellDisplayAmount ? upsellDisplayAmount : originalAmount;
+
+    const scratchAmount = upsellState?.line_item?.scratch_amount || price?.scratch_amount;
+    const upsellScratchDisplayAmount = upsellState?.line_item?.scratch_display_amount;
+    const scratchDisplayAmount = upsellScratchDisplayAmount ? upsellScratchDisplayAmount : price?.scratch_display_amount;
 
     return (
       <sc-price
         currency={price?.currency}
         amount={amount}
-        scratchAmount={scratch_amount}
+        displayAmount={displayAmount}
+        scratchAmount={scratchAmount}
+        scratchDisplayAmount={scratchDisplayAmount}
         saleText={this.saleText}
         adHoc={price?.ad_hoc}
         trialDurationDays={price?.trial_duration_days}

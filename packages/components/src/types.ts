@@ -478,8 +478,10 @@ export interface LineItem extends Object {
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
+  total_display_amount: string;
   trial_amount: number;
   tax_amount: number;
+  tax_display_amount: string;
   fees_amount: number;
   scratch_amount: number;
   scratch_display_amount: string;

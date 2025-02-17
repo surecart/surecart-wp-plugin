@@ -2676,6 +2676,10 @@ export namespace Components {
          */
         "currency": string;
         /**
+          * The display amount
+         */
+        "displayAmount": string;
+        /**
           * The recurring interval
          */
         "recurringInterval": 'week' | 'month' | 'year' | 'never';
@@ -2695,6 +2699,10 @@ export namespace Components {
           * The scratch amount
          */
         "scratchAmount": number;
+        /**
+          * The scratch display amount
+         */
+        "scratchDisplayAmount": string;
         /**
           * The setup fee amount
          */
@@ -9810,6 +9818,10 @@ declare namespace LocalJSX {
          */
         "currency"?: string;
         /**
+          * The display amount
+         */
+        "displayAmount"?: string;
+        /**
           * The recurring interval
          */
         "recurringInterval"?: 'week' | 'month' | 'year' | 'never';
@@ -9829,6 +9841,10 @@ declare namespace LocalJSX {
           * The scratch amount
          */
         "scratchAmount"?: number;
+        /**
+          * The scratch display amount
+         */
+        "scratchDisplayAmount"?: string;
         /**
           * The setup fee amount
          */
