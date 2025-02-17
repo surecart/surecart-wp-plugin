@@ -104,6 +104,7 @@ export class ScLineItemTotal {
         </sc-line-item>
         <sc-line-item>
           <span slot="description" class="conversion-description">
+            {/* Tranlators: %s is the currency code. */}
             {sprintf(__('Your payment will be processed in %s.', 'surecart'), checkout?.currency?.toUpperCase())}
           </span>
         </sc-line-item>
