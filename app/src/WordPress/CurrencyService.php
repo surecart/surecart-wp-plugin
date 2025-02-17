@@ -43,7 +43,7 @@ class CurrencyService {
 		add_filter( 'term_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'post_type_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'attachment_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
+		// add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
 	}
 
