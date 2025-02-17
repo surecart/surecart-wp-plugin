@@ -668,6 +668,7 @@ export interface Checkout extends Object {
   tax_percent: number;
   tax_enabled: boolean;
   email_exists: boolean;
+  show_converted_total: boolean;
   staged_payment_intents: {
     object: 'list';
     pagination: Pagination;
