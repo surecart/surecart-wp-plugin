@@ -7,6 +7,7 @@ use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasSubscription;
+use SureCart\Support\Currency;
 
 /**
  * Subscription model
@@ -39,6 +40,15 @@ class Charge extends Model {
 	 */
 	protected function refund() {
 		return new Refund( [ 'charge' => $this->id ] );
+	}
+
+	/**
+	 * Get the display amount attribute.
+	 *
+	 * @return string
+	 */
+	protected function getDisplayAmountAttribute() {
+		return Currency::format( $this->amount, $this->currency );
 	}
 
 	/**
