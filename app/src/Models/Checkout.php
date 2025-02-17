@@ -615,7 +615,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getShippingDisplayAmountAttribute() {
-		return Currency::format( $this->shipping_amount, $this->currency );
+		return $this->shipping_amount ? Currency::format( $this->shipping_amount, $this->currency ) : __( 'Free', 'surecart' );
 	}
 
 	/**
