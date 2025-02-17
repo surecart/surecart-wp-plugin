@@ -16,27 +16,39 @@ export default ({ clientId, __unstableLayoutClassNames }) => {
 				blockContexts={[
 					{
 						id: 'date:desc',
-						'surecart/radio/name': __('Latest'),
+						'surecart/radio/name': __('Latest', 'surecart'),
 					},
 					{
 						id: 'date:asc',
-						'surecart/radio/name': __('Oldest'),
+						'surecart/radio/name': __('Oldest', 'surecart'),
 					},
 					{
 						id: 'title:asc',
-						'surecart/radio/name': __('Alphabetical, A-Z'),
+						'surecart/radio/name': __(
+							'Alphabetical, A-Z',
+							'surecart'
+						),
 					},
 					{
 						id: 'title:desc',
-						'surecart/radio/name': __('Alphabetical, Z-A'),
+						'surecart/radio/name': __(
+							'Alphabetical, Z-A',
+							'surecart'
+						),
 					},
 					{
 						id: 'price:desc',
-						'surecart/radio/name': __('Price, low to high'),
+						'surecart/radio/name': __(
+							'Price, low to high',
+							'surecart'
+						),
 					},
 					{
 						id: 'price:asc',
-						'surecart/radio/name': __('Price, high to low'),
+						'surecart/radio/name': __(
+							'Price, high to low',
+							'surecart'
+						),
 					},
 				]}
 				className={__unstableLayoutClassNames}
