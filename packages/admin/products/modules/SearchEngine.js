@@ -45,7 +45,7 @@ export default ({ loading, product, updateProduct }) => {
 								'--line-height': 'var(--sc-line-height-small)',
 							}}
 						>
-							{`https://surecart.test/products`}
+							{product?.permalink}
 						</ScText>
 						<ScText
 							style={{
