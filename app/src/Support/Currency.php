@@ -616,7 +616,7 @@ class Currency {
 			'ang' => __( 'Netherlands Antillean Gulden', 'surecart' ),
 			'twd' => __( 'New Taiwan Dollar', 'surecart' ),
 			'nzd' => __( 'New Zealand Dollar', 'surecart' ),
-			'nio' => __( 'Nicaraguan Cordoba', 'surecart' ),
+			'nio' => __( 'Nicaraguan Córdoba', 'surecart' ),
 			'ngn' => __( 'Nigerian Naira', 'surecart' ),
 			'nok' => __( 'Norwegian Krone', 'surecart' ),
 			'pkr' => __( 'Pakistani Rupee', 'surecart' ),
