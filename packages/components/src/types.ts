@@ -485,7 +485,6 @@ export interface LineItem extends Object {
   scratch_display_amount: string;
   trial: boolean;
   total_savings_amount: number;
-  total_savings_display_amount: string;
   created_at: number;
   updated_at: number;
   price?: Price;
@@ -714,6 +713,7 @@ export interface Checkout extends Object {
   proration_amount?: number;
   proration_display_amount?: string;
   total_savings_amount?: number;
+  total_savings_display_amount?: string;
   applied_balance_amount?: number;
   applied_balance_display_amount?: string;
   scratch_display_amount?: string;
