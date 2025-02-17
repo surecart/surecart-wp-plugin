@@ -17,16 +17,6 @@ class CurrencyService {
 	public $is_converting = false;
 
 	/**
-	 * Constructor.
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		// just convert on the frontend for now.
-		$this->is_converting = ! is_admin();
-	}
-
-	/**
 	 * Bootstrap the currency service.
 	 *
 	 * @return void
