@@ -14,7 +14,6 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { Tooltip } from '@wordpress/components';
-import { getProcessorName } from '../../../util/translations';
 
 export default ({ charge, onRequestClose }) => {
 	const { amount, currency, created_at_date, payment_intent } = charge;
@@ -94,9 +93,7 @@ export default ({ charge, onRequestClose }) => {
 						externalLinkTooltipText={`${__(
 							'View charge on ',
 							'surecart'
-						)} ${getProcessorName(
-							charge?.payment_method?.processor_type || ''
-						)}`}
+						)} ${charge?.payment_method?.processor_name}`}
 					/>
 				</ScLineItem>
 				<ScLineItem>

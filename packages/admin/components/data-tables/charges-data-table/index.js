@@ -10,7 +10,6 @@ import {
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { getProcessorName } from '../../../util/translations';
 
 export default ({
 	data = [],
@@ -129,10 +128,9 @@ export default ({
 									externalLinkTooltipText={`${__(
 										'View charge on ',
 										'surecart'
-									)} ${getProcessorName(
-										charge?.payment_method
-											?.processor_type || ''
-									)}`}
+									)} ${
+										charge?.payment_method?.processor_name
+									}`}
 								/>
 							),
 							status: renderStatusTag(charge),
