@@ -164,6 +164,11 @@ class Currency {
 		// get the currencies.
 		$currencies = DisplayCurrency::get();
 
+		// handle error.
+		if ( is_wp_error( $currencies ) ) {
+			return null;
+		}
+
 		// get the currency.
 		$currency = array_values(
 			array_filter(

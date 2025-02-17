@@ -119,6 +119,8 @@ class CurrencyTest extends SureCartUnitTestCase {
 	}
 
 	public function test_get_current_currency() {
+		\SureCart::currency()->convert( true );
+
 		// Test default currency
 		$this->assertEquals('usd', Currency::getCurrentCurrency());
 
@@ -161,6 +163,8 @@ class CurrencyTest extends SureCartUnitTestCase {
 	}
 
 	public function test_get_default_currency() {
+		\SureCart::currency()->convert( true );
+
 		$this->assertEquals('usd', Currency::getDefaultCurrency());
 
 		// Test with different account currency
@@ -221,6 +225,7 @@ class CurrencyTest extends SureCartUnitTestCase {
 	}
 
 	public function test_get_currency_from_geolocation() {
+		\SureCart::currency()->convert( true );
 		// Mock NumberFormatter
 		if (!class_exists('NumberFormatter')) {
 			$this->markTestSkipped('NumberFormatter class is not available.');
@@ -238,6 +243,7 @@ class CurrencyTest extends SureCartUnitTestCase {
 	 * Test formatting with exchange rates.
 	 */
 	public function test_formats_with_exchange_rate() {
+		\SureCart::currency()->convert( true );
 		$_GET['currency'] = 'eur';
 		// EUR has 1.2 exchange rate from test data
 		$this->assertEquals('€12', Currency::format(1000, 'usd', true));
