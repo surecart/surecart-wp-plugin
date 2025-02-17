@@ -169,6 +169,16 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the converts currency attribute.
+	 * We should convert currency by default.
+	 *
+	 * @return bool
+	 */
+	public function getShowConvertedTotalAttribute() {
+		return apply_filters( 'surecart_checkout_show_converted_total', true, $this );
+	}
+
+	/**
 	 * Get the display full amount attribute.
 	 *
 	 * @return string
