@@ -76,9 +76,18 @@ export class ScLineItemTotal {
 
     const checkout = this.checkout || checkoutState?.checkout;
 
+    if (!checkout?.show_converted_total) {
+      return null;
+    }
+
     // the currency is the same as the current currency.
     if (checkout?.currency === checkoutState?.checkout?.current_currency) {
       return null;
+    }
+
+    // there is no amount due.
+    if (!checkout?.amount_due) {
+      return;
     }
 
     return (
