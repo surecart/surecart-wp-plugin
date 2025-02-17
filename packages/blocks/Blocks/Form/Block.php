@@ -61,11 +61,12 @@ class Block extends BaseBlock {
 						'validateStock'            => ! is_admin(),
 						'persist'                  => $this->getPeristance( $attributes, $attributes['form_id'] ?? $sc_form_id ),
 					],
+					'i18n'       => \SureCart::state()->i18n()->get(),
 					'processors' => [
 						'processors'           => array_values(
 							array_filter(
 								$processors ?? [],
-								function( $processor ) {
+								function ( $processor ) {
 									return $processor->approved && $processor->enabled;
 								}
 							)
@@ -158,7 +159,7 @@ class Block extends BaseBlock {
 	public function convertPricesToLineItems( $prices ) {
 		return array_values(
 			array_map(
-				function( $price ) {
+				function ( $price ) {
 					return array_filter(
 						[
 							'price'    => $price['id'],
