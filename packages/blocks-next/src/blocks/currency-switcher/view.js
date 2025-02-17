@@ -6,7 +6,7 @@ const { callbacks } = store('surecart/currency-switcher', {
 			callbacks.updateCurrencyLinks();
 
 			// Set up mutation observer to watch for DOM changes
-			const observer = new MutationObserver((mutations) => {
+			const observer = new MutationObserver(() => {
 				callbacks.updateCurrencyLinks();
 			});
 
