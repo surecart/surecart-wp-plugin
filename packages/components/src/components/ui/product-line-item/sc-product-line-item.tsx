@@ -124,10 +124,7 @@ export class ScProductLineItem {
             }{' '}
             {!!this.scratchAmount && this.scratchAmount > this.amount && (
               <Fragment>
-                <span class="item__scratch-price">
-                  {this.scratchDisplayAmount}
-                  {/* <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '} */}
-                </span>{' '}
+                <span class="item__scratch-price">{this.scratchDisplayAmount}</span>{' '}
               </Fragment>
             )}
             <span slot="price__amount">{this.renderAmount()}</span> {!!this.interval && this.interval}
@@ -142,10 +139,7 @@ export class ScProductLineItem {
         <div class="price" part="price__amount">
           {!!this.scratchAmount && this.scratchAmount !== this.amount && (
             <Fragment>
-              <span class="item__scratch-price">
-                {this.scratchDisplayAmount}
-                {/* <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '} */}
-              </span>{' '}
+              <span class="item__scratch-price">{this.scratchDisplayAmount}</span>{' '}
             </Fragment>
           )}
           {this.renderAmount()}

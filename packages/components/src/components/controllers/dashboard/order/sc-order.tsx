@@ -136,6 +136,8 @@ export class ScOrder {
               editable={false}
               removable={false}
               quantity={item.quantity}
+              scratchDisplayAmount={item?.scratch_display_amount}
+              displayAmount={item?.subtotal_display_amount}
               amount={item.subtotal_amount}
               currency={item?.price?.currency}
               trialDurationDays={item?.price?.trial_duration_days}

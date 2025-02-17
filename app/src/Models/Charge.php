@@ -50,4 +50,13 @@ class Charge extends Model {
 	public function getAmountDisplayAmountAttribute() {
 		return Currency::format( $this->amount, $this->currency );
 	}
+
+	/**
+	 * Get the refunded display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getRefundedDisplayAmountAttribute() {
+		return Currency::format( $this->refunded_amount, $this->currency );
+	}
 }

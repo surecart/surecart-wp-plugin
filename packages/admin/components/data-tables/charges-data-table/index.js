@@ -99,23 +99,14 @@ export default ({
 											'var(--sc-font-weight-bold)',
 									}}
 								>
-									<sc-format-number
-										type="currency"
-										currency={currency}
-										value={amount}
-									></sc-format-number>
+									{charge?.amount_display_amount}
 									{!!charge?.refunded_amount && (
 										<div
 											style={{
 												color: 'var(--sc-color-danger-500)',
 											}}
 										>
-											-{' '}
-											<sc-format-number
-												type="currency"
-												currency={charge?.currency}
-												value={charge?.refunded_amount}
-											></sc-format-number>{' '}
+											- {charge?.refunded_display_amount}{' '}
 											{__('Refunded', 'surecart')}
 										</div>
 									)}

@@ -926,6 +926,7 @@ export interface Subscription extends Object {
   current_period_start_at: number | false;
   current_period_start_at_date: string;
   remaining_period_count: number | null;
+  remaining_period_text: string;
   ended_at: number;
   ended_at_date: string;
   end_behavior: 'cancel' | 'complete';

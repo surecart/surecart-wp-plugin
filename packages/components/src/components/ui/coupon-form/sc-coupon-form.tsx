@@ -65,6 +65,9 @@ export class ScCouponForm {
   /** The discount amount */
   @Prop() discountAmount: number;
 
+  /** The discounts display amount */
+  @Prop() discountsDisplayAmount: string;
+
   /** Has recurring */
   @Prop() showInterval: boolean;
 
@@ -207,7 +210,13 @@ export class ScCouponForm {
                 </span>
               )}
               <span slot={isFreeTrial ? 'price-description' : 'price'}>
-                {isFreeTrial ? this.renderTrialText() : <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>}
+                {isFreeTrial ? (
+                  this.renderTrialText()
+                ) : this.discountsDisplayAmount ? (
+                  this.discountsDisplayAmount
+                ) : (
+                  <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
+                )}
               </span>
             </Fragment>
           ) : (

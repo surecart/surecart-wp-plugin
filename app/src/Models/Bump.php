@@ -39,19 +39,19 @@ class Bump extends Model {
 	/**
 	 * Get the amount attribute
 	 *
-	 * @return int
+	 * @return string|null
 	 */
 	protected function getSubtotalDisplayAmountAttribute() {
-		return $this->price->display_amount;
+		return $this->price->display_amount ?? null;
 	}
 
 	/**
 	 * Get the amount attribute
 	 *
-	 * @return int
+	 * @return int|null
 	 */
 	protected function getSubtotalAmountAttribute() {
-		return $this->price->amount;
+		return $this->price->amount ?? null;
 	}
 
 	/**
