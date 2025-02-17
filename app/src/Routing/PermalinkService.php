@@ -42,6 +42,20 @@ class PermalinkService {
 	protected $priority = 'top';
 
 	/**
+	 * Additional rewrite rules to add.
+	 *
+	 * @var array
+	 */
+	protected $additional_rules = [];
+
+	/**
+	 * Rules to remove based on pattern matching.
+	 *
+	 * @var array
+	 */
+	protected $remove_rules_patterns = [];
+
+	/**
 	 * Set the url.
 	 *
 	 * @param string $url The url.
@@ -90,6 +104,40 @@ class PermalinkService {
 	}
 
 	/**
+	 * Add an additional rewrite rule.
+	 *
+	 * @param string $regex The regex for the rule.
+	 * @param string $query The query for the rule.
+	 * @param string $priority The priority for the rule.
+	 *
+	 * @return $this
+	 */
+	public function addRule( $regex, $query, $priority = 'top' ) {
+		$this->additional_rules[] = [
+			'regex'    => $regex,
+			'query'    => $query,
+			'priority' => $priority,
+		];
+		return $this;
+	}
+
+	/**
+	 * Remove rules that match specific patterns.
+	 *
+	 * @param string $rule_pattern Pattern to match against the rule.
+	 * @param string $query_pattern Pattern to match against the query.
+	 *
+	 * @return $this
+	 */
+	public function removeRules( $rule_pattern, $query_pattern ) {
+		$this->remove_rules_patterns[] = [
+			'rule'  => $rule_pattern,
+			'query' => $query_pattern,
+		];
+		return $this;
+	}
+
+	/**
 	 * Add the rewrite rule.
 	 *
 	 * @return void
@@ -97,21 +145,22 @@ class PermalinkService {
 	public function addRewriteRule() {
 		$rules = get_option( 'rewrite_rules' );
 
-		$product_base = \SureCart::settings()->permalinks()->getBase( 'product_page' );
-
-		// Fix the rewrite rules when the product permalink has %sc_collection% flag.
-		if ( preg_match( '`/(.+)(/%sc_collection%)`', $product_base, $matches ) ) {
+		// Remove any rules based on patterns.
+		foreach ( $this->remove_rules_patterns as $patterns ) {
 			foreach ( $rules as $rule => $rewrite ) {
-				if ( preg_match( '`^' . preg_quote( $matches[1], '`' ) . '/\(`', $rule ) && preg_match( '/^(index\.php\?sc_collection)(?!(.*product))/', $rewrite ) ) {
+				if ( preg_match( $patterns['rule'], $rule ) && preg_match( $patterns['query'], $rewrite ) ) {
 					unset( $rules[ $rule ] );
 				}
 			}
 		}
 
-		add_rewrite_rule( $this->url, $this->query, $this->priority );
+		// Add any additional rules.
+		foreach ( $this->additional_rules as $rule ) {
+			add_rewrite_rule( $rule['regex'], $rule['query'], $rule['priority'] );
+		}
 
-		// Add rewrite rule for default product route.
-		add_rewrite_rule( '^shop/([a-z0-9-]+)/?$', 'index.php?sc_product=$matches[1]', 'top' );
+		// Add the main rewrite rule.
+		add_rewrite_rule( $this->url, $this->query, $this->priority );
 
 		if ( ! isset( $rules[ $this->url ] ) ) {
 			flush_rewrite_rules();
@@ -140,7 +189,6 @@ class PermalinkService {
 		add_filter( 'query_vars', [ $this, 'addQueryVars' ] );
 		// add the rewrite rule.
 		add_action( 'init', [ $this, 'addRewriteRule' ] );
-
 		// Product permalink support for custom taxonomies.
 		add_filter( 'post_type_link', [ $this, 'surecartProductPostTypeLink' ], 10, 2 );
 		add_action( 'template_redirect', [ $this, 'surecartProductCanonicalRedirect' ], 5 );
