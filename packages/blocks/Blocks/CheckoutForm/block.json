@@ -11,7 +11,8 @@
 		"reusable": false,
 		"html": false,
 		"multiple": false,
-		"align": ["wide", "full"]
+		"align": ["wide", "full"],
+		"currencyConversion": true
 	},
 	"attributes": {
 		"id": {
