@@ -181,7 +181,7 @@ export class ScOrder {
 
         {!!checkout?.discounts && (
           <sc-line-item>
-            <span slot="description">{__('Discount', 'surecart')}</span>
+            <span slot="description">{__('Discounts', 'surecart')}</span>
             <span
               slot="price"
               style={{
