@@ -232,7 +232,7 @@ class ProductListMigrationServiceTest extends SureCartUnitTestCase {
 	public function test_render_filter_tags()
 	{
 		$this->service->renderFilterTags();
-		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} --><div class="wp-block-group" style="margin-bottom:10px"><!-- wp:surecart/product-list-filter-tags --><!-- wp:surecart/product-list-filter-tags-template --><!-- wp:surecart/product-list-filter-tag /--></div><!-- /wp:group --></div><!-- /wp:group -->', $this->service->block_html);
+		$this->assertStringContainsString('<!-- wp:group {"style":{"spacing":{"margin":{"bottom":"10px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} --><div class="wp-block-group" style="margin-bottom:10px"><!-- wp:surecart/product-list-filter-tags {"layout":{"type":"flex","orientation":"vertical"}} --><!-- wp:surecart/product-list-filter-tags-template --><!-- wp:surecart/product-list-filter-tag /--><!-- /wp:surecart/product-list-filter-tags --></div><!-- /wp:group -->', $this->service->block_html);
 	}
 
 	/**

@@ -442,6 +442,19 @@ const { state, actions } = store('surecart/product-page', {
 		},
 
 		/**
+		 * Redirect to the checkout page if the form is valid.
+		 */
+		redirectToCheckout: (e) => {
+			e?.preventDefault();
+			const form = e?.target?.closest('form');
+			if (form && !form.checkValidity()) {
+				form.reportValidity();
+			} else {
+				window.location.assign(state.checkoutUrl);
+			}
+		},
+
+		/**
 		 * Handle the quantity change.
 		 */
 		onQuantityChange: function* (e) {
