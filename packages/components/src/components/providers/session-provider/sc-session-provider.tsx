@@ -123,7 +123,7 @@ export class ScSessionProvider {
         id: checkoutState?.checkout?.id,
         query: {
           ...(selectedProcessor?.method ? { payment_method_type: selectedProcessor?.method } : {}),
-          external_url: addQueryArgs(window.location.href, {
+          return_url: addQueryArgs(window.location.href, {
             ...(checkoutState?.checkout?.id ? { checkout_id: checkoutState?.checkout?.id } : {}),
             is_surecart_payment_redirect: true,
           }),
