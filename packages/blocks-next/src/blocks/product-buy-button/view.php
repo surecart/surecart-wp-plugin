@@ -23,15 +23,15 @@
 	?>
 	>
 	<?php if ( ! $add_to_cart ) { ?>
-		<a
+		<button
 			class="wp-block-button__link wp-element-button sc-button__link <?php echo ! empty( $styles['classnames'] ) ? esc_attr( $styles['classnames'] ) : ''; ?>"
 			data-wp-bind--disabled="state.isUnavailable"
-			data-wp-bind--href="state.checkoutUrl"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
+			data-wp-on--click="callbacks.redirectToCheckout"
 		>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>
-		</a>
+		</button>
 		<?php
 	} else {
 		?>

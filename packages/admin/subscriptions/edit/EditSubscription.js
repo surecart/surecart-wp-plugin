@@ -155,6 +155,8 @@ export default () => {
 			price,
 			variant,
 			payment_method,
+			manual_payment,
+			manual_payment_method,
 		} = subscription;
 
 		return apiFetch({
@@ -183,7 +185,13 @@ export default () => {
 				...(ad_hoc_amount ? { ad_hoc_amount } : {}),
 				...(cancel_at_period_end ? { cancel_at_period_end } : {}),
 				...(discount ? { discount } : {}),
-				...(payment_method ? { payment_method } : {}),
+				...(payment_method
+					? { payment_method }
+					: { payment_method: null }),
+				...(manual_payment_method
+					? { manual_payment_method }
+					: { manual_payment_method: null }),
+				manual_payment,
 				trial_end_at,
 				quantity,
 				purge_pending_update: true,
