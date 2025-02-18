@@ -274,19 +274,23 @@ export default function ({
 						`}
 					>
 						<SecondarySidebar height={editorHeight + 90} />
-						<div className="editor-styles-wrapper">
+						<div
+							className="editor-styles-wrapper"
+							css={css`
+								position: relative;
+								flex-grow: 1;
+								background: rgb(0, 0, 0);
+								padding: 40px 48px;
+								height: 100%;
+								border-top: 0px;
+								border-bottom: 0px;
+							`}
+						>
 							<BlockTools
 								className="surecart-editor__content"
 								css={css`
-									position: relative;
-									flex-grow: 1;
 									display: flex;
-									background: #2f2f2f;
 									justify-content: center;
-									padding: 40px 48px;
-									height: 100%;
-									border-top: 0px;
-									border-bottom: 0px;
 								`}
 								onClick={(event) => {
 									// Clear selected block when clicking on the gray background.
