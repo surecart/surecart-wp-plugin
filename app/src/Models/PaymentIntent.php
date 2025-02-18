@@ -2,12 +2,13 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
-
+use SureCart\Models\Traits\HasPlatformFee;
 /**
  * Payment intent model.
  */
 class PaymentIntent extends Model {
 	use HasCustomer;
+	use HasPlatformFee;
 
 	/**
 	 * Rest API endpoint

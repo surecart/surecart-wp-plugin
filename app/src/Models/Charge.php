@@ -7,6 +7,7 @@ use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasSubscription;
+use SureCart\Models\Traits\HasPaymentIntent;
 use SureCart\Support\Currency;
 
 /**
@@ -18,6 +19,7 @@ class Charge extends Model {
 	use HasSubscription;
 	use HasDates;
 	use HasPaymentMethod;
+	use HasPaymentIntent;
 
 	/**
 	 * Rest API endpoint
