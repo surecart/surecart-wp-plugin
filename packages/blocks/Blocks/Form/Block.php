@@ -104,6 +104,7 @@ class Block extends BaseBlock {
 					'checkout' => [
 						'initialLineItems' => sc_initial_line_items( $line_items ),
 					],
+					'i18n'     => \SureCart::state()->i18n()->get(),
 				]
 			);
 		}

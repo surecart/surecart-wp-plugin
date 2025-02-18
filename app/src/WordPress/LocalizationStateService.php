@@ -17,34 +17,6 @@ class LocalizationStateService {
 	}
 
 	/**
-	 * Sort address fields based on country locale.
-	 *
-	 * @param array  $fields The address fields.
-	 * @param string $country_code The country code.
-	 * @return array
-	 */
-	public function sortAddressFields( $fields, $country_code ) {
-		$country_locale = $this->getCountryLocales();
-		if ( $country_code && isset( $country_locale[ $country_code ] ) ) {
-			foreach ( $fields as &$field ) {
-				if ( isset( $country_locale[ $country_code ][ $field['name'] ] ) ) {
-					$field['priority'] = $country_locale[ $country_code ][ $field['name'] ]['priority'] ?? $field['priority'];
-					$field['label']    = $country_locale[ $country_code ][ $field['name'] ]['label'] ?? $field['label'];
-				}
-			}
-		}
-
-		usort(
-			$fields,
-			function ( $a, $b ) {
-				return $a['priority'] - $b['priority'];
-			}
-		);
-
-		return $fields;
-	}
-
-	/**
 	 * Get default locale.
 	 *
 	 * @return array

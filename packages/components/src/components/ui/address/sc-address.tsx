@@ -2,8 +2,9 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { __ } from '@wordpress/i18n';
 import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
-import { Address } from '../../../types';
-import { addressFields, sortAddressFields } from '../../../functions/address-settings';
+import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
+import { sortAddressFields } from 'src/functions/address-settings';
+import { state as i18nState } from '@store/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -76,6 +77,15 @@ export class ScAddress {
   /** Is the name required */
   @Prop({ reflect: true }) requireName: boolean = false;
 
+  /** Sorted fields */
+  @Prop({ reflect: true, mutable: true }) sortedFields: Array<CountryLocaleFieldValue> = [];
+
+  /** Default country fields */
+  @Prop({ reflect: true, mutable: true }) defaultCountryFields: Array<CountryLocaleFieldValue>;
+
+  /** Country fields by country code */
+  @Prop({ reflect: true, mutable: true }) countryFields: Array<CountryLocaleField>;
+
   /** Should we show the city field? */
   @State() showCity: boolean = true;
 
@@ -87,9 +97,6 @@ export class ScAddress {
 
   /** Holds our country choices. */
   @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
-
-  /** Sorted fields */
-  @State() sortedFields: any[] = [];
 
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
@@ -152,6 +159,11 @@ export class ScAddress {
   componentWillLoad() {
     this.handleAddressChange();
     const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
+
+    this.defaultCountryFields = this.defaultCountryFields?.length ? this.defaultCountryFields : i18nState.defaultCountryFields || [];
+    this.countryFields = this.countryFields?.length ? this.countryFields : i18nState.countryFields || [];
+    this.sortedFields = sortAddressFields(this.address?.country, this.defaultCountryFields, this.countryFields);
+
     this.updateAddress({ country });
     this.handleNameChange();
   }
@@ -162,13 +174,23 @@ export class ScAddress {
   }
 
   @Watch('address')
-  filterFields() {
-    if (!this.address?.country) return;
-    this.sortedFields = sortAddressFields(addressFields, this.address?.country);
+  sortFields() {
+    const selectedCountryFields = this.countryFields?.[this.address?.country] || {};
+    const mergedFields = this.defaultCountryFields.map(field => {
+      if (selectedCountryFields[field.name]) {
+        return {
+          ...field,
+          ...selectedCountryFields[field.name],
+        };
+      }
+      return field;
+    });
+
+    this.sortedFields = sortAddressFields(this.address?.country, mergedFields, this.countryFields);
   }
 
-  getVisibleFields() {
-    return this.sortedFields.filter(field => {
+  render() {
+    const visibleFields = (this.sortedFields ?? []).filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
@@ -184,9 +206,7 @@ export class ScAddress {
           return true;
       }
     });
-  }
 
-  render() {
     return (
       <div class="sc-address" part="base">
         <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>
@@ -210,8 +230,8 @@ export class ScAddress {
             aria-label={this.placeholders.country || __('Country', 'surecart')}
           />
 
-          {this.getVisibleFields().map((field: any, index: number) => {
-            const isLast = index === this.getVisibleFields().length - 1;
+          {visibleFields.map((field: any, index: number) => {
+            const isLast = index === visibleFields.length - 1;
 
             switch (field.name) {
               case 'name':

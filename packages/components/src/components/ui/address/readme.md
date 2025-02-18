@@ -50,7 +50,6 @@ Type: `Promise<boolean>`
 | `"block-ui"`             | The block ui base component.                   |
 | `"block-ui__content"`    | The block ui content (spinner).                |
 | `"caret"`                | The select box caret.                          |
-| `"columns"`              |                                                |
 | `"empty"`                | The select empty message.                      |
 | `"form-control"`         | The form control wrapper.                      |
 | `"help-text"`            | Help text that describes how to use the input. |
@@ -79,19 +78,18 @@ Type: `Promise<boolean>`
 ### Depends on
 
 - [sc-form-control](../form-control)
-- [sc-input](../input)
 - [sc-select](../select)
+- [sc-input](../input)
 - [sc-block-ui](../block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-address --> sc-form-control
-  sc-address --> sc-input
   sc-address --> sc-select
+  sc-address --> sc-input
   sc-address --> sc-block-ui
   sc-form-control --> sc-visually-hidden
-  sc-input --> sc-form-control
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -100,6 +98,7 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
+  sc-input --> sc-form-control
   sc-block-ui --> sc-spinner
   sc-customer-edit --> sc-address
   sc-order-billing-address --> sc-address
