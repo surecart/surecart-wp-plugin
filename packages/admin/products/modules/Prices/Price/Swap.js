@@ -5,6 +5,7 @@ import { ScIcon, ScTag } from '@surecart/components-react';
 import DrawerSection from '../../../../ui/DrawerSection';
 import HelpTooltip from '../../../../components/HelpTooltip';
 import SwapPrice from '../../../components/price/parts/SwapPrice';
+import { ExternalLink } from '@wordpress/components';
 
 const Swap = ({ currentPrice, updateSwap, currentSwap, isSaving }) => {
 	return (
@@ -20,23 +21,19 @@ const Swap = ({ currentPrice, updateSwap, currentSwap, isSaving }) => {
 					<HelpTooltip
 						content={
 							<div>
-								<strong>
-									{__('Price Upsell', 'surecart')}
-								</strong>
+								<strong>{__('Price Boost', 'surecart')}</strong>
 								<p>
 									{__(
-										'Increase your average order value by allowing customers to upgrade a price in their order.',
+										'Increase your average order value by allowing customers to upgrade a price in their order with a single click.',
 										'surecart'
 									)}
 								</p>
-								<p>
-									<a
-										href="https://docs.surecart.com/docs/pricing/price-upsell"
-										target="_blank"
-									>
-										{__('Learn More', 'surecart')}
-									</a>
-								</p>
+								<ExternalLink
+									href="https://docs.surecart.com/docs/pricing/price-upsell"
+									target="_blank"
+								>
+									{__('Learn More', 'surecart')}
+								</ExternalLink>
 							</div>
 						}
 						position="top"

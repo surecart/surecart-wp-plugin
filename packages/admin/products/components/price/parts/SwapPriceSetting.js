@@ -4,6 +4,7 @@ import {
 	ScInput,
 	ScIcon,
 } from '@surecart/components-react';
+import { ExternalLink } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
@@ -39,14 +40,12 @@ export default ({
 									'surecart'
 								)}
 							</p>
-							<p>
-								<a
-									href="https://docs.surecart.com"
-									target="_blank"
-								>
-									{__('Learn More', 'surecart')}
-								</a>
-							</p>
+							<ExternalLink
+								href="https://docs.surecart.com"
+								target="_blank"
+							>
+								{__('Learn More', 'surecart')}
+							</ExternalLink>
 						</div>
 					}
 					position="top left"
@@ -88,21 +87,18 @@ export default ({
 				<HelpTooltip
 					content={
 						<div>
-							<strong>{__('Swap to', 'surecart')}</strong>
-							<p>
+							<p style={{ marginTop: 0 }}>
 								{__(
-									'Only available for products without variants',
+									'Price boost is only available for products without variants.',
 									'surecart'
 								)}
 							</p>
-							<p>
-								<a
-									href="https://docs.surecart.com"
-									target="_blank"
-								>
-									{__('Learn More', 'surecart')}
-								</a>
-							</p>
+							<ExternalLink
+								href="https://docs.surecart.com"
+								target="_blank"
+							>
+								{__('Learn More', 'surecart')}
+							</ExternalLink>
 						</div>
 					}
 					position="top left"

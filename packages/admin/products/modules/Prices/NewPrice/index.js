@@ -1,12 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScForm,
-	ScIcon,
-	ScDrawer,
-	ScInput,
-} from '@surecart/components-react';
+import { ScButton, ScForm, ScIcon, ScDrawer } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { useEffect, useRef, useState } from '@wordpress/element';
