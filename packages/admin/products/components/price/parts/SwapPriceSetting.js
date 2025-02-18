@@ -5,7 +5,6 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { Tooltip } from '@wordpress/components';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
 import HelpTooltip from '../../../../components/HelpTooltip';
@@ -34,10 +33,9 @@ export default ({
 				<HelpTooltip
 					content={
 						<div>
-							<strong>{__('Swap to', 'surecart')}</strong>
-							<p>
+							<p style={{ marginTop: 0 }}>
 								{__(
-									'Only available for products without variants',
+									'Price boost is only available for products without variants.',
 									'surecart'
 								)}
 							</p>
