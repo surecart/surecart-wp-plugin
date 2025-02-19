@@ -189,10 +189,11 @@ class RequestService {
 	 *
 	 * @return mixed
 	 */
-	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '', $optimized_caching = false ) {
-		// use the cache service for this request.
-		$cache = new RequestCacheService( $endpoint, $args, $cache_key );
-
+	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '', $optimized_caching = false, $cache = null ) {
+		if ( ! $cache ) {
+			// use the cache service for this request.
+			$cache = new RequestCacheService( $endpoint, $args, $cache_key );
+		}
 		// check if we should get a cached version of this.
 		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
 			// get from cache.
@@ -213,7 +214,7 @@ class RequestService {
 		}
 
 		// make the uncached request.
-		$response_body = $this->makeUncachedRequest( $endpoint, $args, $cache );
+		$response_body = $this->makeUncachedRequest( $endpoint, $args, $cache, $optimized_caching );
 
 		if ( is_wp_error( $response_body ) ) {
 			return $response_body;
@@ -242,8 +243,10 @@ class RequestService {
 	 *
 	 * @return mixed
 	 */
-	public function makeUncachedRequest( $endpoint, $args = [], $cache = null ) {
-		$cache->setPreviousCacheUpdatingState( 'updating' );
+	public function makeUncachedRequest( $endpoint, $args = [], $cache = null, $optimized_caching = false ) {
+		if ( $optimized_caching ) {
+			$cache->setPreviousCacheUpdatingState( 'updating' );
+		}
 
 		// must have a token for the request.
 		if ( $this->authorized && empty( $this->token ) ) {

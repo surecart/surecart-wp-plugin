@@ -106,16 +106,20 @@ class RequestServiceTest extends SureCartUnitTestCase
 	/**
 	 * @group optimize
 	 */
-	public function test_optimize_caching() {
-
+	public function test_optimize_caching_true_case() {
 		$request_cache = \Mockery::mock(\SureCart\Request\RequestCacheService::class);
 		$request_cache->shouldReceive('getPreviousCacheUpdatingState')
 			->andReturn('updating');
+		$previous_cache_value = array(
+			'cache' => (object) [
+				'value' => 'cache-value'
+			]
+		);
 		$request_cache->shouldReceive('getPreviousCache')
-			->andReturn(['cache' => 'cache-value']);
+			->andReturn($previous_cache_value);
 
 		$request = new RequestService( 'test' );
-		$response = $request->makeRequest('manual_payment_methods', [], true, '', true);
-		
+		$response = $request->makeRequest('manual_payment_methods', [], true, '', true, $request_cache);
+		$this->assertSame($response, $previous_cache_value);
 	}
 }
