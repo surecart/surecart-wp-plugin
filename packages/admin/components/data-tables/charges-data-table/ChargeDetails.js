@@ -6,7 +6,6 @@ import { css, jsx } from '@emotion/react';
 import { __ } from '@wordpress/i18n';
 import {
 	ScDrawer,
-	ScFormatNumber,
 	ScLineItem,
 	ScPaymentMethod,
 	ScTag,
@@ -16,7 +15,8 @@ import {
 import { Tooltip } from '@wordpress/components';
 
 export default ({ charge, onRequestClose }) => {
-	const { amount, currency, created_at_date, payment_intent } = charge;
+	const { display_amount, currency, created_at_date, payment_intent } =
+		charge;
 
 	const renderStatusTag = () => {
 		if (charge?.fully_refunded) {
@@ -41,6 +41,7 @@ export default ({ charge, onRequestClose }) => {
 			</ScTag>
 		);
 	};
+	console.log(payment_intent);
 
 	return (
 		<ScDrawer
@@ -71,12 +72,7 @@ export default ({ charge, onRequestClose }) => {
 			>
 				<ScLineItem>
 					<span slot="description">{__('Amount', 'surecart')}</span>
-					<ScFormatNumber
-						slot="price"
-						type="currency"
-						currency={currency}
-						value={amount}
-					></ScFormatNumber>
+					<span slot="price">{display_amount}</span>
 				</ScLineItem>
 				<ScLineItem>
 					<span slot="description">{__('Date', 'surecart')}</span>
@@ -118,14 +114,12 @@ export default ({ charge, onRequestClose }) => {
 							<span slot="description">
 								{__('Base Amount', 'surecart')}
 							</span>
-							<ScFormatNumber
-								slot="price"
-								type="currency"
-								currency={currency}
-								value={
-									payment_intent?.platform_fee?.base_amount
+							<span slot="price">
+								{
+									payment_intent?.platform_fee
+										?.base_display_amount
 								}
-							/>
+							</span>
 						</ScLineItem>
 						{payment_intent?.platform_fee?.features_breakdown &&
 							Object.entries(
@@ -142,12 +136,9 @@ export default ({ charge, onRequestClose }) => {
 											{key.charAt(0).toUpperCase() +
 												key.slice(1).toLowerCase()}
 										</span>
-										<ScFormatNumber
-											slot="price"
-											type="currency"
-											currency={currency}
-											value={feature?.amount}
-										/>
+										<span slot="price">
+											{feature?.display_amount}
+										</span>
 									</ScLineItem>
 								);
 							})}
@@ -189,12 +180,9 @@ export default ({ charge, onRequestClose }) => {
 								/>
 							</Tooltip>
 						</span>
-						<ScFormatNumber
-							slot="price"
-							type="currency"
-							currency={currency}
-							value={payment_intent?.service_fee?.amount}
-						/>
+						<span slot="price">
+							{payment_intent?.service_fee?.display_amount}
+						</span>
 					</ScLineItem>
 				)}
 				{(payment_intent?.platform_fee ||
@@ -212,21 +200,16 @@ export default ({ charge, onRequestClose }) => {
 							>
 								{__('Total Fees', 'surecart')}
 							</span>
-							<ScFormatNumber
+							<span
 								slot="price"
-								type="currency"
-								currency={currency}
-								value={
-									(payment_intent?.platform_fee?.amount ??
-										0) +
-									(payment_intent?.service_fee?.amount ?? 0)
-								}
 								style={{
 									fontWeight:
 										'var(--sc-font-weight-semibold)',
 									color: 'var(--sc-color-gray-800)',
 								}}
-							/>
+							>
+								{payment_intent?.total_fees_display_amount}
+							</span>
 						</ScLineItem>
 					</>
 				)}
