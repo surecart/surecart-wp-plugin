@@ -110,7 +110,7 @@ export class ScOrderSummary {
           </span>
         ) : (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            {!!checkoutState.checkout?.total_savings_amount && checkoutState?.checkout?.total_savings_display_amount}
+            {!!checkoutState.checkout?.total_savings_amount && <span class="total-price scratch-price">{checkoutState?.checkout?.total_scratch_display_amount}</span>}
             <sc-total class="total-price" total={'total'}></sc-total>
           </span>
         )}

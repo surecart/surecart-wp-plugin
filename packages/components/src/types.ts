@@ -717,6 +717,7 @@ export interface Checkout extends Object {
   proration_display_amount?: string;
   total_savings_amount?: number;
   total_savings_display_amount?: string;
+  total_scratch_display_amount?: string;
   applied_balance_amount?: number;
   applied_balance_display_amount?: string;
   scratch_display_amount?: string;

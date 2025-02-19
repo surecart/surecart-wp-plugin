@@ -169,6 +169,15 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display total scratch price attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalScratchDisplayAmountAttribute() {
+		return Currency::format( - (int) $this->total_savings_amount + (int) $this->total_amount, $this->currency );
+	}
+
+	/**
 	 * Get the converts currency attribute.
 	 * We should convert currency by default.
 	 *
