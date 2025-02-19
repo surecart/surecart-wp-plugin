@@ -71,9 +71,9 @@ class PaymentIntent extends Model {
 	 */
 	public function getTotalFeesDisplayAmountAttribute() {
 		$platform_fee_amount = $this->platform_fee->amount ?? 0;
-        $service_fee_amount = $this->service_fee->amount ?? 0;
-        $total_fees = $platform_fee_amount + $service_fee_amount;
+		$service_fee_amount  = $this->service_fee->amount ?? 0;
+		$total_fees          = $platform_fee_amount + $service_fee_amount;
 
-        return Currency::format($total_fees, $this->currency);
+		return Currency::format( $total_fees, $this->currency );
 	}
 }
