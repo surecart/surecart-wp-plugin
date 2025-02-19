@@ -79,7 +79,7 @@ class CurrencyService {
 
 		$cart_menu_alignment = (string) get_option( 'surecart_currency_switcher_alignment', 'right' );
 
-		$menu = '<li class="menu-item">' . do_blocks(
+		$menu = '<li class="menu-item"><div class="menu-link">' . do_blocks(
 			'<!-- wp:surecart/currency-switcher ' . wp_json_encode(
 				apply_filters(
 					'surecart/currency/switcher_attributes',
@@ -88,7 +88,7 @@ class CurrencyService {
 					]
 				)
 			) . ' /-->'
-		) . '</li>';
+		) . '</div></li>';
 
 		// left or right.
 		$items = 'right' === $cart_menu_alignment ? $items . $menu : $menu . $items;
@@ -136,6 +136,7 @@ class CurrencyService {
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
 		remove_filter( 'home_url', array( $this, __METHOD__ ), 99 );
 		if ( 'rest' !== $scheme ) {
+			error_log( 'addCurrencyParamToHomeUrl' );
 			$url = $this->addCurrencyParam( $url );
 		}
 		add_filter( 'home_url', array( $this, __METHOD__ ), 99, 3 );
