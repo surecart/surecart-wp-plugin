@@ -15,8 +15,7 @@ import {
 import { Tooltip } from '@wordpress/components';
 
 export default ({ charge, onRequestClose }) => {
-	const { display_amount, currency, created_at_date, payment_intent } =
-		charge;
+	const { display_amount, created_at_date, payment_intent } = charge;
 
 	const renderStatusTag = () => {
 		if (charge?.fully_refunded) {
@@ -41,7 +40,6 @@ export default ({ charge, onRequestClose }) => {
 			</ScTag>
 		);
 	};
-	console.log(payment_intent);
 
 	return (
 		<ScDrawer
