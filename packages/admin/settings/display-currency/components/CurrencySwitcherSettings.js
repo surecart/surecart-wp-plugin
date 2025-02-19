@@ -32,7 +32,7 @@ export default () => {
 		};
 	});
 
-	const ref = useCopyToClipboard('[surecart_currency_switcher]', () =>
+	const ref = useCopyToClipboard('[sc_currency_switcher]', () =>
 		createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
 			type: 'snackbar',
 		})
@@ -184,7 +184,7 @@ export default () => {
 
 			<ScInput
 				label={__('Shortcode', 'surecart')}
-				value={`[surecart_currency_switcher]`}
+				value={`[sc_currency_switcher]`}
 				readonly
 			>
 				{window.location.protocol === 'https:' && (
