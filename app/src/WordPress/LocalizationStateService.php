@@ -11,24 +11,29 @@ class LocalizationStateService {
 	 */
 	public function get() {
 		return [
-			'defaultLocale' => $this->getDefaultLocale(),
-			'locales'       => $this->getCountryLocales(),
+			'defaultCountryFields' => $this->getDefaultCountryFields(),
+			'countryFields'        => $this->getCountryFields(),
 		];
 	}
 
 	/**
-	 * Get default locale.
+	 * Get default country fields.
 	 *
 	 * @return array
 	 */
-	public function getDefaultLocale() {
+	public function getDefaultCountryFields(): array {
 		return apply_filters(
-			'surecart_default_locale',
+			'surecart_default_country_fields',
 			[
 				[
 					'name'     => 'name',
 					'priority' => 30,
 					'label'    => __( 'Name or Company Name', 'surecart' ),
+				],
+				[
+					'name'     => 'country',
+					'priority' => 40,
+					'label'    => __( 'Country', 'surecart' ),
 				],
 				[
 					'name'     => 'address_1',
@@ -60,13 +65,13 @@ class LocalizationStateService {
 	}
 
 	/**
-	 * Get country locales.
+	 * Get country fields.
 	 *
 	 * @return array
 	 */
-	public function getCountryLocales() {
+	public function getCountryFields(): array {
 		return apply_filters(
-			'surecart_get_country_locales',
+			'surecart_country_fields',
 			[
 				'AE' => [
 					'postcode' => [
