@@ -19,7 +19,7 @@ class RequestServiceProvider implements ServiceProviderInterface {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$container['requests']          = function () use ( $container ) {
-			return new RequestService( ApiToken::get(), '/v1', true, $container );
+			return new RequestService( $container, ApiToken::get(), '/v1', true );
 		};
 		$container['requests.cache']    = function ( $endpoint, $args, $account_cache_key ) {
 			return new RequestCacheService( $endpoint, $args, $account_cache_key );
@@ -27,8 +27,8 @@ class RequestServiceProvider implements ServiceProviderInterface {
 		$container['requests.errors']   = function () {
 			return new ErrorsService();
 		};
-		$container['requests.unauthed'] = function () {
-			return new RequestService( '', '/v1', false );
+		$container['requests.unauthed'] = function () use ( $container ) {
+			return new RequestService( $container, '', '/v1', false );
 		};
 
 		$app->alias( 'requests', 'requests' );
