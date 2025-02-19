@@ -8,13 +8,6 @@ use SureCart\Support\Currency;
  */
 class PlatformFee extends Model {
 	/**
-	 * Rest API endpoint
-	 *
-	 * @var string
-	 */
-	protected $endpoint = 'platform_fees';
-
-	/**
 	 * Object name
 	 *
 	 * @var string

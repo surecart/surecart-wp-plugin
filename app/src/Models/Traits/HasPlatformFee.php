@@ -24,7 +24,7 @@ trait HasPlatformFee {
 	 *
 	 * @return string
 	 */
-	public function getPlatformFeeAttribute() {
+	public function getPlatformFeeIdAttribute() {
 		return $this->getRelationId( 'platform_fee' );
 	}
 }
