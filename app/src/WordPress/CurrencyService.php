@@ -29,7 +29,7 @@ class CurrencyService {
 		add_filter( 'wp_nav_menu_items', array( $this, 'addCurrencySwitcherMenu' ), 10, 2 );
 
 		// set the urls.
-		add_action( 'wp', [ $this, 'appendUrls' ] );
+		add_action( 'init', [ $this, 'appendUrls' ] );
 	}
 
 	/**
@@ -134,11 +134,9 @@ class CurrencyService {
 	 * @return string
 	 */
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
-		remove_filter( 'home_url', array( $this, __METHOD__ ), 99 );
 		if ( 'rest' !== $scheme ) {
 			$url = $this->addCurrencyParam( $url );
 		}
-		add_filter( 'home_url', array( $this, __METHOD__ ), 99, 3 );
 
 		return $url;
 	}
