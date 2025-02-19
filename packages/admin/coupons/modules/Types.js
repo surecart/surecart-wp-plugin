@@ -21,17 +21,6 @@ export default ({ coupon, loading, updateCoupon }) => {
 		}
 	}, [coupon?.amount_off]);
 
-	const translateDuration = (amount) => {
-		switch (amount) {
-			case 'forever':
-				return __('Forever', 'surecart');
-			case 'repeating':
-				return __('Multiple months', 'surecart');
-			default:
-				return __('Once', 'surecart');
-		}
-	};
-
 	return (
 		<Box title={__('Amount', 'surecart')} loading={loading}>
 			<div
