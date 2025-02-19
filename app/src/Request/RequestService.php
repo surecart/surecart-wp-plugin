@@ -31,13 +31,6 @@ class RequestService {
 	protected $base_path;
 
 	/**
-	 * Errors service container
-	 *
-	 * @var \SureCart\Support\Errors\ErrorsService;
-	 */
-	protected $errors_service;
-
-	/**
 	 * What type of cached request is this.
 	 *
 	 * @var string|null
@@ -73,23 +66,51 @@ class RequestService {
 	protected $retry_status_codes = [ 409 ];
 
 	/**
+	 * Container.
+	 *
+	 * @var \Pimple\Container
+	 */
+	protected $container;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param string                                 $token The rest api base path.
-	 * @param string                                 $base_path The rest api base path.
-	 * @param \SureCart\Support\Errors\ErrorsService $errors_service The error handling service.
-	 * @param boolean                                $authorized Is this request authorized.
+	 * @param \Pimple\Container $container The container.
+	 * @param string            $token The rest api base path.
+	 * @param string            $base_path The rest api base path.
+	 * @param boolean           $authorized Is this request authorized.
 	 *
 	 * @return void
 	 */
-	public function __construct( $token = '', $base_path = '/v1', $errors_service = null, $authorized = true ) {
-		// error handing service.
-		$this->errors_service = $errors_service ? $errors_service : new ErrorsService();
+	public function __construct( $container, $token = '', $base_path = '/v1', $authorized = true ) {
 		// set the token.
 		$this->token = $token;
 		// set the base path and url.
 		$this->base_path  = $base_path;
 		$this->authorized = $authorized;
+		$this->container  = $container;
+	}
+
+	/**
+	 * Get the cache service.
+	 *
+	 * @param string $endpoint The endpoint to cache.
+	 * @param array  $args The args to cache.
+	 * @param string $account_cache_key The account cache key.
+	 *
+	 * @return \SureCart\Request\RequestCacheService
+	 */
+	public function cache( $endpoint, $args, $account_cache_key ) {
+		return $this->container['requests.cache']( $endpoint, $args, $account_cache_key );
+	}
+
+	/**
+	 * Get the errors service.
+	 *
+	 * @return \SureCart\Support\Errors\ErrorsService
+	 */
+	public function errors() {
+		return $this->container['requests.errors'];
 	}
 
 	/**
@@ -192,7 +213,7 @@ class RequestService {
 	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '', $optimized_caching = false, $cache = null ) {
 		if ( ! $cache ) {
 			// use the cache service for this request.
-			$cache = new RequestCacheService( $endpoint, $args, $cache_key );
+			$cache = $this->cache( $endpoint, $args, $cache_key );
 		}
 		// check if we should get a cached version of this.
 		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
@@ -348,7 +369,7 @@ class RequestService {
 			if ( is_string( $body ) ) {
 				return new \WP_Error( 'error', $response_body );
 			}
-			return $this->errors_service->translate( $body, $response_code );
+			return $this->errors()->translate( $body, $response_code );
 		}
 
 		return json_decode( $response_body );
