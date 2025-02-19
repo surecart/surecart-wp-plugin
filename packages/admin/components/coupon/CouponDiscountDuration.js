@@ -116,7 +116,7 @@ export default function ({ coupon, updateCoupon }) {
 					`}
 				>
 					{__(
-						'For subscriptions and customers, this determines how long this coupon will apply once redeemed. One-time invoices accept both "once" and "forever" coupons.',
+						'For subscriptions and customers, this determines how long this coupon will apply once redeemed.',
 						'surecart'
 					)}{' '}
 					<ScButton
