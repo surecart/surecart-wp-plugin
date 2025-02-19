@@ -81,13 +81,13 @@ export class ScLineItemTotal {
     }
 
     // the currency is the same as the current currency.
-    if (checkout?.currency === checkoutState?.checkout?.current_currency) {
+    if (checkout?.currency === checkout?.current_currency) {
       return null;
     }
 
     // there is no amount due.
     if (!checkout?.amount_due) {
-      return;
+      return null;
     }
 
     return (
@@ -190,7 +190,7 @@ export class ScLineItemTotal {
           {this.renderLineItemDescription(checkout)}
           <span slot="price">
             {!!checkout?.total_savings_amount && this.total === 'total' && <span class="scratch-price">{checkout?.total_scratch_display_amount}</span>}
-            <sc-total class="total-price" total={this.total}></sc-total>
+            {this.total === 'total' && <span class="total-price">{checkout?.total_display_amount}</span>}
           </span>
         </sc-line-item>
 
