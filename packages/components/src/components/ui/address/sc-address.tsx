@@ -2,8 +2,9 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { __ } from '@wordpress/i18n';
 import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
-import { Address } from '../../../types';
-import { addressFields, sortAddressFields } from '../../../functions/address-settings';
+import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
+import { sortAddressFields } from 'src/functions/address-settings';
+import { state as i18nState } from '@store/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -76,6 +77,15 @@ export class ScAddress {
   /** Is the name required */
   @Prop({ reflect: true }) requireName: boolean = false;
 
+  /** Sorted fields */
+  @Prop({ reflect: true, mutable: true }) sortedFields: Array<CountryLocaleFieldValue> = [];
+
+  /** Default country fields */
+  @Prop({ reflect: true, mutable: true }) defaultCountryFields: Array<CountryLocaleFieldValue>;
+
+  /** Country fields by country code */
+  @Prop({ reflect: true, mutable: true }) countryFields: Array<CountryLocaleField>;
+
   /** Should we show the city field? */
   @State() showCity: boolean = true;
 
@@ -87,9 +97,6 @@ export class ScAddress {
 
   /** Holds our country choices. */
   @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
-
-  /** Sorted fields */
-  @State() sortedFields: any[] = [];
 
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
@@ -152,6 +159,11 @@ export class ScAddress {
   componentWillLoad() {
     this.handleAddressChange();
     const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
+
+    // Set default country fields.
+    this.defaultCountryFields = this.defaultCountryFields || i18nState.defaultCountryFields || [];
+    this.countryFields = this.countryFields || i18nState.countryFields || [];
+
     this.updateAddress({ country });
     this.handleNameChange();
   }
@@ -162,13 +174,23 @@ export class ScAddress {
   }
 
   @Watch('address')
-  filterFields() {
-    if (!this.address?.country) return;
-    this.sortedFields = sortAddressFields(addressFields, this.address?.country);
+  sortAddressFields() {
+    const countrySpecificFields = this.countryFields?.[this.address?.country] || {};
+    const mergedCountryFields = (this.defaultCountryFields || []).map(field => {
+      if (countrySpecificFields[field.name]) {
+        return {
+          ...field,
+          ...countrySpecificFields[field.name],
+        };
+      }
+      return field;
+    });
+
+    this.sortedFields = sortAddressFields(this.address?.country, mergedCountryFields, this.countryFields);
   }
 
-  getVisibleFields() {
-    return this.sortedFields.filter(field => {
+  render() {
+    const visibleFields = (this.sortedFields ?? []).filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
@@ -184,9 +206,7 @@ export class ScAddress {
           return true;
       }
     });
-  }
 
-  render() {
     return (
       <div class="sc-address" part="base">
         <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>
@@ -210,28 +230,26 @@ export class ScAddress {
             aria-label={this.placeholders.country || __('Country', 'surecart')}
           />
 
-          {this.getVisibleFields().map((field: any, index: number) => {
-            const isLast = index === this.getVisibleFields().length - 1;
+          {visibleFields.map((field: any, index: number) => {
+            const isLast = index === visibleFields.length - 1;
 
             switch (field.name) {
               case 'name':
                 return (
-                  this.showName && (
-                    <sc-input
-                      exportparts="base:input__base, input, form-control, label, help-text"
-                      value={this?.address?.name}
-                      onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
-                      onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
-                      autocomplete="street-address"
-                      placeholder={this.placeholders.name || __('Name or Company Name', 'surecart')}
-                      name={this.names?.name}
-                      squared-top={isLast}
-                      squared={!isLast}
-                      disabled={this.disabled}
-                      required={this.requireName}
-                      aria-label={this.placeholders.name || __('Name or Company Name', 'surecart')}
-                    />
-                  )
+                  <sc-input
+                    exportparts="base:input__base, input, form-control, label, help-text"
+                    value={this?.address?.name}
+                    onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
+                    onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
+                    autocomplete="street-address"
+                    placeholder={this.placeholders.name || field.label}
+                    name={this.names?.name}
+                    squared-top={isLast}
+                    squared={!isLast}
+                    disabled={this.disabled}
+                    required={this.requireName}
+                    aria-label={this.placeholders.name || field.label}
+                  />
                 );
 
               case 'address_1':
@@ -242,95 +260,86 @@ export class ScAddress {
                     onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
                     onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
                     autocomplete="street-address"
-                    placeholder={this.placeholders.line_1 || __('Address', 'surecart')}
+                    placeholder={this.placeholders.line_1 || field.label}
                     name={this.names?.line_1}
                     squared-top={isLast}
                     squared={!isLast}
                     disabled={this.disabled}
                     required={this.required}
-                    aria-label={this.placeholders.line_1 || __('Address', 'surecart')}
+                    aria-label={this.placeholders.line_1 || field.label}
                   />
                 );
 
               case 'address_2':
                 return (
-                  (this.showLine2 || !!this?.address?.line_2?.length) && (
-                    <sc-input
-                      exportparts="base:input__base, input, form-control, label, help-text"
-                      value={this?.address?.line_2}
-                      onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
-                      onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
-                      autocomplete="street-address"
-                      placeholder={this.placeholders.line_2 || __('Address Line 2', 'surecart')}
-                      name={this.names?.line_2}
-                      squared-top={isLast}
-                      squared={!isLast}
-                      disabled={this.disabled}
-                      aria-label={this.placeholders.line_2 || __('Address Line 2', 'surecart')}
-                    />
-                  )
+                  <sc-input
+                    exportparts="base:input__base, input, form-control, label, help-text"
+                    value={this?.address?.line_2}
+                    onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
+                    onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
+                    autocomplete="street-address"
+                    placeholder={this.placeholders.line_2 || field.label}
+                    name={this.names?.line_2}
+                    squared-top={isLast}
+                    squared={!isLast}
+                    disabled={this.disabled}
+                    aria-label={this.placeholders.line_2 || field.label}
+                  />
                 );
 
               case 'city':
                 return (
-                  this.showCity && (
-                    <sc-input
-                      exportparts="base:input__base, input, form-control, label, help-text"
-                      placeholder={this.placeholders.city || __('City', 'surecart')}
-                      name={this.names?.city}
-                      value={this?.address?.city}
-                      onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
-                      onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
-                      required={this.required}
-                      squared-top={isLast}
-                      squared={!isLast}
-                      disabled={this.disabled}
-                      aria-label={this.placeholders.city || __('City', 'surecart')}
-                    />
-                  )
+                  <sc-input
+                    exportparts="base:input__base, input, form-control, label, help-text"
+                    placeholder={this.placeholders.city || field.label}
+                    name={this.names?.city}
+                    value={this?.address?.city}
+                    onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
+                    onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
+                    required={this.required}
+                    squared-top={isLast}
+                    squared={!isLast}
+                    disabled={this.disabled}
+                    aria-label={this.placeholders.city || field.label}
+                  />
                 );
 
               case 'state':
                 return (
-                  !!this?.regions?.length &&
-                  !!this?.address?.country && (
-                    <sc-select
-                      exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
-                      placeholder={this.placeholders.state || __('State/Province/Region', 'surecart')}
-                      name={this.names?.state}
-                      autocomplete={'address-level1'}
-                      value={this?.address?.state}
-                      onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
-                      choices={this.regions}
-                      required={this.required}
-                      disabled={this.disabled}
-                      search
-                      squared-top={isLast}
-                      squared={!isLast}
-                      aria-label={this.placeholders.state || __('State/Province/Region', 'surecart')}
-                    />
-                  )
+                  <sc-select
+                    exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
+                    placeholder={this.placeholders.state || field.label}
+                    name={this.names?.state}
+                    autocomplete={'address-level1'}
+                    value={this?.address?.state}
+                    onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
+                    choices={this.regions}
+                    required={this.required}
+                    disabled={this.disabled}
+                    search
+                    squared-top={isLast}
+                    squared={!isLast}
+                    aria-label={this.placeholders.state || field.label}
+                  />
                 );
 
               case 'postcode':
                 return (
-                  this.showPostal && (
-                    <sc-input
-                      exportparts="base:input__base, input, form-control, label, help-text"
-                      placeholder={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
-                      name={this.names?.postal_code}
-                      onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
-                      onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
-                      autocomplete={'postal-code'}
-                      required={this.required}
-                      value={this?.address?.postal_code}
-                      squared-top={isLast}
-                      squared={!isLast}
-                      disabled={this.disabled}
-                      maxlength={this.address?.country === 'US' ? 5 : null}
-                      aria-label={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
-                    />
-                  )
+                  <sc-input
+                    exportparts="base:input__base, input, form-control, label, help-text"
+                    placeholder={this.placeholders.postal_code || field.label}
+                    name={this.names?.postal_code}
+                    onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
+                    onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
+                    autocomplete={'postal-code'}
+                    required={this.required}
+                    value={this?.address?.postal_code}
+                    squared-top={isLast}
+                    squared={!isLast}
+                    disabled={this.disabled}
+                    maxlength={this.address?.country === 'US' ? 5 : null}
+                    aria-label={this.placeholders.postal_code || field.label}
+                  />
                 );
 
               default:

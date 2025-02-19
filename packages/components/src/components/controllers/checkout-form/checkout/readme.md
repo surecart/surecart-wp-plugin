@@ -140,8 +140,8 @@ graph TD;
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
-  sc-address --> sc-input
   sc-address --> sc-select
+  sc-address --> sc-input
   sc-address --> sc-block-ui
   sc-select --> sc-icon
   sc-select --> sc-menu-label

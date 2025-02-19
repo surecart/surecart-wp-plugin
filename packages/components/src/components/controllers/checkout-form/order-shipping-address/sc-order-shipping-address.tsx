@@ -22,7 +22,7 @@ export class ScOrderShippingAddress {
   /** Is this required (defaults to false) */
   @Prop({ mutable: true, reflect: true }) required: boolean = false;
 
-  /** Show the   address */
+  /** Show the address */
   @Prop({ mutable: true }) full: boolean;
 
   /** Show the name field. */

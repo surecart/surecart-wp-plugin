@@ -41,32 +41,25 @@
 			"type": "string"
 		},
 		"name_placeholder": {
-			"type": "string",
-			"default": "Name or Company Name"
+			"type": "string"
 		},
 		"country_placeholder": {
-			"type": "string",
-			"default": "Country"
+			"type": "string"
 		},
 		"city_placeholder": {
-			"type": "string",
-			"default": "City"
+			"type": "string"
 		},
 		"line_1_placeholder": {
-			"type": "string",
-			"default": "Address"
+			"type": "string"
 		},
 		"line_2_placeholder": {
-			"type": "string",
-			"default": "Address Line 2"
+			"type": "string"
 		},
 		"postal_code_placeholder": {
-			"type": "string",
-			"default": "Postal Code/Zip"
+			"type": "string"
 		},
 		"state_placeholder": {
-			"type": "string",
-			"default": "State/Province/Region"
+			"type": "string"
 		},
 		"collect_billing": {
 			"type": "boolean",
