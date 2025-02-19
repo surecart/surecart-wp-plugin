@@ -194,6 +194,16 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Get the total default currency display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalDefaultCurrencyDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_amount, $this->currency, [ 'convert' => false ] );
+	}
+
+
+	/**
 	 * Purchasable status display
 	 *
 	 * @return string
