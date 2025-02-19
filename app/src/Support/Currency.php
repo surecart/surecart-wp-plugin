@@ -58,7 +58,7 @@ class Currency {
 	 *
 	 * @return string|null
 	 */
-	protected static function getCurrencyFromRequest() {
+	public static function getCurrencyFromRequest() {
 		$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? null ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return self::isSupportedCurrency( $currency ) ? strtolower( sanitize_text_field( $currency ) ) : null;
 	}
