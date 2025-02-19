@@ -217,8 +217,16 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 			// check and filter context.
 			$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
-			// if the endpoint converts currency, and we are not in edit context, convert the currency.
-			\SureCart::currency()->convert( $this->converts_currency && 'edit' !== $context );
+			// should we convert currency?
+			$converts_currency = $this->converts_currency && 'edit' !== $context;
+
+			// allow override of currency conversion in a per-request basis.
+			if ( isset( $request['currency_conversion'] ) ) {
+				$converts_currency = wp_validate_boolean( $request['currency_conversion'] );
+			}
+
+			// convert currency if needed.
+			\SureCart::currency()->convert( $converts_currency );
 
 			// get and call controller with request.
 			$controller = \SureCart::closure()->method( $class, $method );
