@@ -115,7 +115,7 @@ class CurrencyService {
 	 */
 	public function addCurrencyParam( $permalink ) {
 		if ( apply_filters( 'surecart/currency/filter_url', true, $permalink ) ) {
-			$currency = Currency::getCurrentCurrency();
+			$currency = Currency::getCurrencyFromRequest();
 			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
 				$permalink = add_query_arg( compact( 'currency' ), $permalink );
 			}
@@ -136,7 +136,6 @@ class CurrencyService {
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
 		remove_filter( 'home_url', array( $this, __METHOD__ ), 99 );
 		if ( 'rest' !== $scheme ) {
-			error_log( 'addCurrencyParamToHomeUrl' );
 			$url = $this->addCurrencyParam( $url );
 		}
 		add_filter( 'home_url', array( $this, __METHOD__ ), 99, 3 );
