@@ -130,16 +130,15 @@ class CartMenuIcon extends \Bricks\Element {
 				'',
 				'a'
 			);
-			return;
+		} else {
+			echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				[
+					'cart_menu_always_shown' => $cart_menu_always_shown, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				]
+			);
 		}
 
-		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			[
-				'cart_menu_always_shown' => $cart_menu_always_shown, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			]
-		);
-
-		// Remove cart icon filter.
+		// Remove cart icon filter after rendering.
 		remove_filter( 'sc_cart_menu_icon', [ $this, 'render_bricks_icon' ] );
 	}
 
