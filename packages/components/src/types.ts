@@ -463,6 +463,7 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  currency: string;
   checkout: string | Checkout;
   bump: string | Bump;
   image: ImageAttributes;
@@ -478,6 +479,7 @@ export interface LineItem extends Object {
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
+  total_default_currency_display_amount: string;
   total_display_amount: string;
   trial_amount: number;
   tax_amount: number;
