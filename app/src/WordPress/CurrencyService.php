@@ -134,9 +134,11 @@ class CurrencyService {
 	 * @return string
 	 */
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
+		remove_filter( 'home_url', array( $this, __METHOD__ ), 99 );
 		if ( 'rest' !== $scheme ) {
 			$url = $this->addCurrencyParam( $url );
 		}
+		add_filter( 'home_url', array( $this, __METHOD__ ), 99, 3 );
 
 		return $url;
 	}
