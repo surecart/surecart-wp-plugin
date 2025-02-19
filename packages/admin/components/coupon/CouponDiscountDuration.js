@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { ExternalLink } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -13,7 +14,6 @@ import {
 	ScButton,
 	ScDropdown,
 	ScFormControl,
-	ScIcon,
 	ScInput,
 	ScMenu,
 	ScMenuItem,
@@ -38,7 +38,7 @@ export default function ({ coupon, updateCoupon }) {
 				css={css`
 					display: flex;
 					gap: var(--sc-spacing-medium);
-                    margin-bottom: var(--sc-spacing-small);
+					margin-bottom: var(--sc-spacing-small);
 				`}
 			>
 				<ScFormControl label={__('Discount Duration', 'surecart')}>
@@ -116,18 +116,12 @@ export default function ({ coupon, updateCoupon }) {
 					`}
 				>
 					{__(
-						'For subscriptions and customers, this determines how long this coupon will apply once redeemed.',
+						'This determines how long this coupon will continue to apply once redeemed.',
 						'surecart'
 					)}{' '}
-					<ScButton
-						href="https://surecart.com/docs/create-coupons/#discount-duration"
-						target="_blank"
-						rel="noopener noreferrer"
-						type="link"
-					>
+					<ExternalLink href="https://surecart.com/docs/create-coupons/#discount-duration">
 						{__('Learn more', 'surecart')}
-						<ScIcon name="external-link" slot="suffix" />
-					</ScButton>
+					</ExternalLink>
 				</ScText>
 			</div>
 		</div>
