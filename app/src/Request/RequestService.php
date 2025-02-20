@@ -210,11 +210,9 @@ class RequestService {
 	 *
 	 * @return mixed
 	 */
-	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '', $optimized_caching = false, $cache = null ) {
-		if ( ! $cache ) {
-			// use the cache service for this request.
-			$cache = $this->cache( $endpoint, $args, $cache_key );
-		}
+	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '', $optimized_caching = false ) {
+		$cache = $this->cache( $endpoint, $args, $cache_key );
+
 		// check if we should get a cached version of this.
 		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
 			// get from cache.

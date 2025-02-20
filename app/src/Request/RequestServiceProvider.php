@@ -21,9 +21,11 @@ class RequestServiceProvider implements ServiceProviderInterface {
 		$container['requests']          = function () use ( $container ) {
 			return new RequestService( $container, ApiToken::get(), '/v1', true );
 		};
-		$container['requests.cache']    = function ( $endpoint, $args, $account_cache_key ) {
-			return new RequestCacheService( $endpoint, $args, $account_cache_key );
-		};
+		$container['requests.cache']    = $container->protect(
+			function ( $endpoint, $args, $account_cache_key ) {
+				return new RequestCacheService( $endpoint, $args, $account_cache_key );
+			}
+		);
 		$container['requests.errors']   = function () {
 			return new ErrorsService();
 		};
