@@ -1,16 +1,23 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import Box from '../../ui/Box';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from '@wordpress/element';
+
+/**
+ * Internal dependencies
+ */
 import {
 	ScInput,
 	ScPriceInput,
 	ScRadioGroup,
 	ScRadio,
 } from '@surecart/components-react';
+import Box from '../../ui/Box';
 import CouponDiscountDuration from '../../components/coupon/CouponDiscountDuration';
-
-const { __ } = wp.i18n;
-const { useState, useEffect } = wp.element;
 
 export default ({ coupon, loading, updateCoupon }) => {
 	const [type, setType] = useState('percentage');

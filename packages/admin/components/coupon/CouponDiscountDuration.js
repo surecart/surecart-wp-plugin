@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { ExternalLink } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -12,7 +13,6 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScFormControl,
-	ScIcon,
 	ScInput,
 	ScSelect,
 	ScText,
@@ -92,18 +92,12 @@ export default function ({ coupon, updateCoupon }) {
 					`}
 				>
 					{__(
-						'For subscriptions and customers, this determines how long this coupon will apply once redeemed. One-time invoices accept both "once" and "forever" coupons.',
+						'This determines how long this coupon will continue to apply once redeemed.',
 						'surecart'
 					)}{' '}
-					<ScButton
-						href="https://surecart.com/docs/create-coupons/#discount-duration"
-						target="_blank"
-						rel="noopener noreferrer"
-						type="link"
-					>
+					<ExternalLink href="https://surecart.com/docs/create-coupons/#discount-duration">
 						{__('Learn more', 'surecart')}
-						<ScIcon name="external-link" slot="suffix" />
-					</ScButton>
+					</ExternalLink>
 				</ScText>
 			</div>
 		</div>
