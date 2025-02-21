@@ -77,6 +77,8 @@ class AssetsService {
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
+		$this->loader->whenRendered( 'surecart/logout-button', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/customer-dashboard-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
@@ -216,7 +218,7 @@ class AssetsService {
 	 * @return void
 	 */
 	public function addComponentData( $tag, $selector, $data = array() ) {
-		if ( ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) && 'thrive' !== $this->loader->getPageBuilder() ) {
+		if ( ( $this->loader->isUsingPageBuilder() ) && 'thrive' !== $this->loader->getPageBuilder() ) {
 			return $this->outputComponentScript( $tag, $selector, $data );
 		}
 

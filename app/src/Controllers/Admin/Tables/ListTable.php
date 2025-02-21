@@ -38,6 +38,45 @@ abstract class ListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Override the parent columns method. Defines the columns to use in your listing table
+	 *
+	 * @return Array
+	 */
+	public function get_columns() {
+		$current_page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+
+		/**
+		 * Filters the columns displayed in the Coupons list table.
+		 *
+		 * @param string[] $coupon_columns An associative array of column headings.
+		 */
+		return (array) apply_filters( "manage_{$current_page}_columns", array() );
+	}
+	/**
+	 * Handles the default column output.
+	 *
+	 * @param WP_Post $item        The current WP_Post object.
+	 * @param string  $column_name The current column name.
+	 */
+	public function column_default( $item, $column_name ) {
+		$current_page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+		/**
+		 * Fires for each custom column of any SureCart List Table.
+		 *
+		 * The dynamic portion of the hook name, `$current_page`, refers to the page name.
+		 *
+		 * Possible hook names include:
+		 *
+		 *  - `manage_orders_custom_column`
+		 *  - `manage_products_custom_column`
+		 *
+		 * @param string $column_name The name of the column to display.
+		 * @param mixed  $item        The current item's data object.
+		 */
+		do_action( "manage_{$current_page}_custom_column", $column_name, $item );
+	}
+
+	/**
 	 * Get the archive query status.
 	 *
 	 * @return boolean|null

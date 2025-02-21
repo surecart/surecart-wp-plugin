@@ -107,7 +107,7 @@ class UpsellTemplatesService {
 
 		$product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $upsell->price->product ?? '' );
 		set_query_var( 'surecart_current_product', $product );
-		$content = wp_is_block_theme() ? $upsell->template->content : $upsell->template_part->content;
+		$content = wp_is_block_theme() ? get_block_template( $upsell->template_id )->content : get_block_template( $upsell->template_part_id, 'wp_template_part' )->content;
 
 		// create a fake post for the upsell.
 		$post                    = new \stdClass();
@@ -125,7 +125,7 @@ class UpsellTemplatesService {
 		$post->comment_status    = 'closed';
 		$post->ping_status       = 'closed';
 		$post->post_password     = '';
-		$post->post_excerpt      = '';
+		$post->post_excerpt      = $product->description ?? '';
 		$post->post_date         = ( new \DateTime( "@$upsell->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
 		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $upsell->created_at, true );
 		$post->post_modified     = ( new \DateTime( "@$upsell->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );

@@ -126,6 +126,81 @@ add_action(
 );
 
 add_action(
+	'wp_footer',
+	function () {
+		// if lightbox is enqueued, then add the lightbox markup.
+		if ( ! wp_style_is( 'surecart-lightbox', 'enqueued' ) ) {
+			return;
+		}
+
+		$close_button_label = esc_attr__( 'Close' );
+		$dialog_label       = esc_attr__( 'Enlarged images' );
+		$prev_button_label  = esc_attr__( 'Previous' );
+		$next_button_label  = esc_attr__( 'Next' );
+
+		// If the current theme does NOT have a `theme.json`, or the colors are not
+		// defined, it needs to set the background color & close button color to some
+		// default values because it can't get them from the Global Styles.
+		$background_color   = '#fff';
+		$close_button_color = '#000';
+		if ( wp_theme_has_theme_json() ) {
+			$global_styles_color = wp_get_global_styles( array( 'color' ) );
+			if ( ! empty( $global_styles_color['background'] ) ) {
+				$background_color = esc_attr( $global_styles_color['background'] );
+			}
+			if ( ! empty( $global_styles_color['text'] ) ) {
+				$close_button_color = esc_attr( $global_styles_color['text'] );
+			}
+		}
+
+		echo <<<HTML
+		<div
+			class="sc-lightbox-overlay zoom"
+			aria-label="$dialog_label"
+			data-wp-interactive="surecart/lightbox"
+			data-wp-context='{}'
+			data-wp-bind--role="state.roleAttribute"
+			data-wp-bind--aria-modal="state.ariaModal"
+			data-wp-class--active="state.overlayEnabled"
+			data-wp-class--show-closing-animation="state.showClosingAnimation"
+			data-wp-watch="callbacks.setOverlayFocus"
+			data-wp-on--keydown="actions.handleKeydown"
+			data-wp-on-async--touchstart="actions.handleTouchStart"
+			data-wp-on--touchmove="actions.handleTouchMove"
+			data-wp-on-async--touchend="actions.handleTouchEnd"
+			data-wp-on-async--click="actions.hideLightbox"
+			data-wp-on-async-window--resize="callbacks.setOverlayStyles"
+			data-wp-on-async-window--scroll="actions.handleScroll"
+			tabindex="-1"
+			>
+				<button type="button" aria-label="$close_button_label" style="fill: $close_button_color" class="sc-lightbox-close-button">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"></path></svg>
+				</button>
+				<button type="button" aria-label="$prev_button_label" style="fill: $close_button_color" class="sc-lightbox-prev-button" data-wp-bind--hidden="!state.hasNavigation" data-wp-on--click="actions.showPreviousImage" data-wp-bind--aria-disabled="!state.hasPreviousImage">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"></path></svg>
+				</button>
+				<button type="button" aria-label="$next_button_label" style="fill: $close_button_color" class="sc-lightbox-next-button" data-wp-bind--hidden="!state.hasNavigation" data-wp-on--click="actions.showNextImage" data-wp-bind--aria-disabled="!state.hasNextImage">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"></path></svg>
+				</button>
+				<div class="sc-lightbox-image-container">
+					<figure>
+						<img data-wp-bind--alt="state.currentImage.alt" data-wp-bind--class="state.currentImage.imgClassNames" data-wp-bind--style="state.imgStyles" data-wp-bind--src="state.currentImage.currentSrc">
+					</figure>
+				</div>
+				<div class="sc-lightbox-image-container">
+					<figure>
+						<img data-wp-bind--alt="state.currentImage.alt" data-wp-bind--class="state.currentImage.imgClassNames" data-wp-bind--style="state.imgStyles" data-wp-bind--src="state.enlargedSrc">
+					</figure>
+				</div>
+				<div data-wp-watch="callbacks.setScreenReaderText" aria-live="polite" aria-atomic="true" class="lightbox-speak screen-reader-text"></div>
+				<div class="scrim" style="background-color: $background_color" aria-hidden="true"></div>
+				<style data-wp-text="state.overlayStyles"></style>
+		</div>
+	HTML;
+	},
+);
+
+add_action(
 	'init',
 	function () {
 		// instead, use a static loader that injects the script at runtime.
@@ -291,6 +366,20 @@ add_action(
 			$static_assets['version']
 		);
 
+		// instead, use a static loader that injects the script at runtime.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/lightbox/index.asset.php';
+		wp_register_script_module(
+			'surecart/lightbox',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/lightbox/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
 		// Checkout actions.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout-actions/index.asset.php';
 		wp_register_script_module(
@@ -340,6 +429,20 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Cart side drawer.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sidebar/index.asset.php';
+		wp_register_script_module(
+			'@surecart/sidebar',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/sidebar/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+		
 		// SureCart Checkout.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout/index.asset.php';
 		wp_register_script_module(

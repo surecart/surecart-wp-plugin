@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { sprintf, __ } from '@wordpress/i18n';
+import { sprintf, __, _x } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import { getFormattedPrice, intervalString } from '../../../../functions/price';
 import { state as checkoutState } from '@store/checkout';
@@ -113,7 +113,7 @@ export class ScOrderBump {
           }
         >
           <span aria-hidden="true">
-            {__('Save', 'surecart')} <sc-format-number type="currency" value={this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
+            {_x('Save', 'Save money', 'surecart')} <sc-format-number type="currency" value={this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
           </span>
         </div>
       );
@@ -128,7 +128,13 @@ export class ScOrderBump {
             sprintf(__('You save %s%%.', 'surecart'), this.bump?.percent_off)
           }
         >
-          <span aria-hidden="true">{sprintf(__('Save %s%%', 'surecart'), this.bump?.percent_off)}</span>
+          <span aria-hidden="true">
+            {sprintf(
+              /** translators: %s: amount percent off */
+              _x('Save %s%%', 'Save money', 'surecart'), 
+              this.bump?.percent_off
+            )}
+          </span>
         </div>
       );
     }
