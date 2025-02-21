@@ -187,27 +187,6 @@ class PermalinkSettingService {
 			$page = $this->options[0]['value'];
 		}
 
-		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', $this->sanitizePermalink( $page ) );
-	}
-
-	/**
-	 * Sanitize the permalink.
-	 *
-	 * @param string $value The value to sanitize.
-	 *
-	 * @return string
-	 */
-	public function sanitizePermalink( $value ): string {
-		global $wpdb;
-
-		$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value ?? '' );
-
-		if ( is_wp_error( $value ) ) {
-			$value = '';
-		}
-
-		$value = esc_url_raw( trim( $value ) );
-		$value = str_replace( 'http://', '', $value );
-		return untrailingslashit( $value );
+		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', $page );
 	}
 }

@@ -47,9 +47,31 @@ class PermalinksSettingsService {
 	 * @return bool
 	 */
 	public function updatePermalinkSettings( $key, $value ) {
-		$this->permalinks[ $key ] = $value;
+		$this->permalinks[ $key ] = $this->sanitize( $value );
 		return update_option( 'surecart_permalinks', $this->permalinks );
 	}
+
+	/**
+	 * Sanitize the permalink.
+	 *
+	 * @param string $value The value to sanitize.
+	 *
+	 * @return string
+	 */
+	public function sanitize( $value ): string {
+		global $wpdb;
+
+		$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value ?? '' );
+
+		if ( is_wp_error( $value ) ) {
+			$value = '';
+		}
+
+		$value = sanitize_url( trim( $value ) );
+		$value = str_replace( 'http://', '', $value );
+		return untrailingslashit( $value );
+	}
+
 
 	/**
 	 * Get get the base for a slug.
