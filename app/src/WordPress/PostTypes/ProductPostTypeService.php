@@ -1224,8 +1224,8 @@ class ProductPostTypeService {
 		global $wp_rewrite;
 
 		if (
-			! sc_get_product()
-			|| ! is_a( $wp_rewrite, \WP_Rewrite::class )
+			! is_a( $wp_rewrite, \WP_Rewrite::class )
+			|| ! sc_get_product()
 		) {
 			return;
 		}
