@@ -2,8 +2,6 @@
 
 namespace SureCart\Integrations\Elementor\DynamicTags;
 
-use SureCart\Support\Currency;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }

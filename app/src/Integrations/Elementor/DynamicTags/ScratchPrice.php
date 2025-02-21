@@ -104,7 +104,7 @@ class ScratchPrice extends \Elementor\Core\DynamicTags\Tag {
 				echo esc_html( $product ? Currency::maybeConvertAmount( $product->scratch_amount ) : '' );
 				break;
 			default:
-				echo esc_html( Currency::format( $product->scratch_amount ) );
+				echo esc_html( $product->scratch_display_amount );
 				break;
 		}
 	}

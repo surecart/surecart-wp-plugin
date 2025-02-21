@@ -58,7 +58,6 @@ class PriceRange extends \Elementor\Core\DynamicTags\Tag {
 		$product = sc_get_product();
 		if ( ! $product ) {
 			echo esc_html( Currency::format( 1000 ) . ' - ' . Currency::format( 2000 ) );
-
 			return;
 		}
 
