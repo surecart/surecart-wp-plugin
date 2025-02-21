@@ -96,7 +96,7 @@ class ProductPostTypeService {
 
 		// Product permalink support for custom taxonomies.
 		add_filter( 'post_type_link', array( $this, 'filterProductPostTypeLink' ), 10, 2 );
-		add_action( 'template_redirect', array( $this, 'maybeRedirecToProductCanonicalUrl' ), 5 );
+		add_action( 'template_redirect', array( $this, 'maybeRedirectToProductCanonicalUrl' ), 5 );
 
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
@@ -1220,7 +1220,7 @@ class ProductPostTypeService {
 	 *
 	 * @return void
 	 */
-	public function maybeRedirecToProductCanonicalUrl(): void {
+	public function maybeRedirectToProductCanonicalUrl(): void {
 		global $wp_rewrite;
 
 		if (
