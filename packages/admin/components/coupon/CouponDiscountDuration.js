@@ -11,26 +11,24 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	ScButton,
-	ScDropdown,
 	ScFormControl,
 	ScIcon,
 	ScInput,
-	ScMenu,
-	ScMenuItem,
+	ScSelect,
 	ScText,
 } from '@surecart/components-react';
 
 export default function ({ coupon, updateCoupon }) {
-	const translateDuration = (amount) => {
-		switch (amount) {
-			case 'forever':
-				return __('Forever', 'surecart');
-			case 'repeating':
-				return __('Multiple months', 'surecart');
-			default:
-				return __('Once', 'surecart');
-		}
+	const durations = {
+		once: __('Once', 'surecart'),
+		forever: __('Forever', 'surecart'),
+		repeating: __('Multiple months', 'surecart'),
 	};
+
+	const durationChoices = Object.keys(durations).map((key) => ({
+		label: durations[key],
+		value: key,
+	}));
 
 	return (
 		<div>
@@ -38,74 +36,52 @@ export default function ({ coupon, updateCoupon }) {
 				css={css`
 					display: flex;
 					gap: var(--sc-spacing-medium);
-                    margin-bottom: var(--sc-spacing-small);
+					margin-bottom: var(--sc-spacing-small);
 				`}
 			>
-				<ScFormControl label={__('Discount Duration', 'surecart')}>
-					<div>
-						<ScDropdown
-							slot="suffix"
-							class="sc-discount-duration-dropdown"
-							position="bottom-left"
-						>
-							<ScButton
-								slot="trigger"
-								class="sc-discount-duration-trigger"
-								caret
-							>
-								{translateDuration(coupon?.duration)}
-							</ScButton>
-							<ScMenu>
-								<ScMenuItem
-									onClick={() =>
-										updateCoupon({
-											duration: 'forever',
-										})
-									}
-								>
-									{__('Forever', 'surecart')}
-								</ScMenuItem>
-								<ScMenuItem
-									onClick={() =>
-										updateCoupon({
-											duration: 'once',
-										})
-									}
-								>
-									{__('Once', 'surecart')}
-								</ScMenuItem>
-								<ScMenuItem
-									className="sc-discount-menu-repeating"
-									onClick={() =>
-										updateCoupon({
-											duration: 'repeating',
-										})
-									}
-								>
-									{__('Multiple months', 'surecart')}
-								</ScMenuItem>
-							</ScMenu>
-						</ScDropdown>
-					</div>
+				<ScFormControl
+					label={__('Discount Duration', 'surecart')}
+					css={css`
+						flex: 1;
+					`}
+				>
+					<ScSelect
+						choices={durationChoices}
+						onScChange={(e) =>
+							updateCoupon({
+								duration: e.target.value,
+							})
+						}
+					>
+						{durations?.[coupon?.duration]}
+					</ScSelect>
 				</ScFormControl>
 
-				{coupon?.duration === 'repeating' && (
-					<ScInput
-						label={__('Number of months', 'surecart')}
-						className="sc-duration-in-months"
-						value={coupon?.duration_in_months || null}
-						onScInput={(e) => {
-							updateCoupon({
-								duration_in_months: e.target.value,
-							});
-						}}
-						min="1"
-						type="number"
-						required
-					>
-						<span slot="suffix">{__('months', 'surecart')}</span>
-					</ScInput>
-				)}
+				<div
+					css={css`
+						flex: 1;
+					`}
+				>
+					{coupon?.duration === 'repeating' && (
+						<ScInput
+							label={__('Number of months', 'surecart')}
+							className="sc-duration-in-months"
+							value={coupon?.duration_in_months || null}
+							onScInput={(e) => {
+								updateCoupon({
+									duration_in_months: e.target.value,
+								});
+							}}
+							min="1"
+							type="number"
+							required
+						>
+							<span slot="suffix">
+								{__('months', 'surecart')}
+							</span>
+						</ScInput>
+					)}
+				</div>
 			</div>
 
 			<div>
