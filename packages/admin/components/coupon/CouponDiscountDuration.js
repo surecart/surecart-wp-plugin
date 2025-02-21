@@ -52,6 +52,7 @@ export default function ({ coupon, updateCoupon }) {
 								duration: e.target.value,
 							})
 						}
+						value={coupon?.duration}
 					>
 						{durations?.[coupon?.duration]}
 					</ScSelect>
