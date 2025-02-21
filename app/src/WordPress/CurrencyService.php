@@ -43,7 +43,7 @@ class CurrencyService {
 		add_filter( 'term_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'post_type_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'attachment_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
+		// add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
 	}
 
@@ -115,7 +115,8 @@ class CurrencyService {
 	 */
 	public function addCurrencyParam( $permalink ) {
 		if ( apply_filters( 'surecart/currency/filter_url', true, $permalink ) ) {
-			$currency = Currency::getCurrencyFromRequest();
+			// we can't use the Currency::getCurrencyFromRequest here because we don't want to fetch display currencies potentially multiple times per request.
+			$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? null ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
 				$permalink = add_query_arg( compact( 'currency' ), $permalink );
 			}
