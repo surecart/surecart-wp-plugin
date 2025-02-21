@@ -110,7 +110,7 @@ export default ({ charge, onRequestClose }) => {
 							}}
 						>
 							<span slot="description">
-								{__('Base Amount', 'surecart')}
+								{__('Transaction Fee', 'surecart')}
 							</span>
 							<span slot="price">
 								{
