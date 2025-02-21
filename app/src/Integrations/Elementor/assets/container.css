@@ -1,7 +1,7 @@
 /**
  * Container layout flex
  */
- .wp-block-columns {
+.wp-block-columns {
 	width: 100%;
 }
 
@@ -70,11 +70,12 @@
 	container-name: product-price-choice-template;
 }
 
-.wp-block-surecart-product-price-choice-template .wp-block-group.is-vertical.is-content-justification-right {
-    text-align: right;
+.wp-block-surecart-product-price-choice-template
+	.wp-block-group.is-vertical.is-content-justification-right {
+	text-align: right;
 }
 
 .wp-block-surecart-product-price-choice-template.is-layout-flex {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
