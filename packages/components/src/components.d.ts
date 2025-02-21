@@ -40,7 +40,6 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
-        "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is the name required
@@ -1886,14 +1885,6 @@ export namespace Components {
     }
     interface ScOrderBillingAddress {
         /**
-          * City placeholder
-         */
-        "cityPlaceholder": string;
-        /**
-          * Country placeholder
-         */
-        "countryPlaceholder": string;
-        /**
           * Default country for address
          */
         "defaultCountry": string;
@@ -1902,30 +1893,14 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Address placeholder
-         */
-        "line1Placeholder": string;
-        /**
-          * Address Line 2 placeholder
-         */
-        "line2Placeholder": string;
-        /**
           * Name placeholder
          */
         "namePlaceholder": string;
-        /**
-          * Postal Code placeholder
-         */
-        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Show the name field
          */
         "showName": boolean;
-        /**
-          * State placeholder
-         */
-        "statePlaceholder": string;
         /**
           * Toggle label
          */
@@ -2148,8 +2123,6 @@ export namespace Components {
         "status": OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        "cityPlaceholder": string;
-        "countryPlaceholder": string;
         /**
           * Default country for address
          */
@@ -2162,17 +2135,6 @@ export namespace Components {
           * Label for the field.
          */
         "label": string;
-        "line1Placeholder": string;
-        "line2Placeholder": string;
-        /**
-          * Show the placeholder fields.
-         */
-        "namePlaceholder": string;
-        /**
-          * Placeholder values.
-         */
-        "placeholders": Partial<Address>;
-        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Whether to require the name in the address
@@ -2186,7 +2148,6 @@ export namespace Components {
           * Show the name field.
          */
         "showName": boolean;
-        "statePlaceholder": string;
     }
     interface ScOrderStatusBadge {
         /**
@@ -6980,7 +6941,6 @@ declare namespace LocalJSX {
           * Address change event.
          */
         "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
-        "placeholders"?: Partial<Address>;
         /**
           * Is the name required
          */
@@ -9003,14 +8963,6 @@ declare namespace LocalJSX {
     }
     interface ScOrderBillingAddress {
         /**
-          * City placeholder
-         */
-        "cityPlaceholder"?: string;
-        /**
-          * Country placeholder
-         */
-        "countryPlaceholder"?: string;
-        /**
           * Default country for address
          */
         "defaultCountry"?: string;
@@ -9019,29 +8971,13 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Address placeholder
-         */
-        "line1Placeholder"?: string;
-        /**
-          * Address Line 2 placeholder
-         */
-        "line2Placeholder"?: string;
-        /**
           * Name placeholder
          */
         "namePlaceholder"?: string;
         /**
-          * Postal Code placeholder
-         */
-        "postalCodePlaceholder"?: string;
-        /**
           * Show the name field
          */
         "showName"?: boolean;
-        /**
-          * State placeholder
-         */
-        "statePlaceholder"?: string;
         /**
           * Toggle label
          */
@@ -9268,8 +9204,6 @@ declare namespace LocalJSX {
         "status"?: OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        "cityPlaceholder"?: string;
-        "countryPlaceholder"?: string;
         /**
           * Default country for address
          */
@@ -9282,17 +9216,6 @@ declare namespace LocalJSX {
           * Label for the field.
          */
         "label"?: string;
-        "line1Placeholder"?: string;
-        "line2Placeholder"?: string;
-        /**
-          * Show the placeholder fields.
-         */
-        "namePlaceholder"?: string;
-        /**
-          * Placeholder values.
-         */
-        "placeholders"?: Partial<Address>;
-        "postalCodePlaceholder"?: string;
         /**
           * Whether to require the name in the address
          */
@@ -9305,7 +9228,6 @@ declare namespace LocalJSX {
           * Show the name field.
          */
         "showName"?: boolean;
-        "statePlaceholder"?: string;
     }
     interface ScOrderStatusBadge {
         /**

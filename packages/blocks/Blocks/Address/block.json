@@ -40,27 +40,6 @@
 		"default_country": {
 			"type": "string"
 		},
-		"name_placeholder": {
-			"type": "string"
-		},
-		"country_placeholder": {
-			"type": "string"
-		},
-		"city_placeholder": {
-			"type": "string"
-		},
-		"line_1_placeholder": {
-			"type": "string"
-		},
-		"line_2_placeholder": {
-			"type": "string"
-		},
-		"postal_code_placeholder": {
-			"type": "string"
-		},
-		"state_placeholder": {
-			"type": "string"
-		},
 		"collect_billing": {
 			"type": "boolean",
 			"default": true

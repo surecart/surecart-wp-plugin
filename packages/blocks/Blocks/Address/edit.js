@@ -1,4 +1,3 @@
-import { css, jsx } from '@emotion/react';
 import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
@@ -26,12 +25,6 @@ export default ({ attributes, setAttributes }) => {
 		full,
 		show_name,
 		default_country,
-		name_placeholder,
-		country_placeholder,
-		city_placeholder,
-		line_1_placeholder,
-		postal_code_placeholder,
-		state_placeholder,
 		collect_billing,
 	} = attributes;
 	const [sameAsShipping, setSameAsShipping] = useState(false);
@@ -134,90 +127,6 @@ export default ({ attributes, setAttributes }) => {
 					)}
 
 					<PanelRow>
-						<h2
-							css={css`
-								padding: 0;
-								margin: 0;
-							`}
-						>
-							{__('Placeholder settings', 'surecart')}
-						</h2>
-					</PanelRow>
-					<p>
-						{__(
-							'Enable the placeholders only if you want to modify, it would be changed according to the selected country.',
-							'surecart'
-						)}
-					</p>
-					{show_name && (
-						<PanelRow>
-							<TextControl
-								label={__('Name Placeholder', 'surecart')}
-								value={name_placeholder}
-								placeholder={__(
-									'Name or Company Name',
-									'surecart'
-								)}
-								onChange={(name_placeholder) =>
-									setAttributes({ name_placeholder })
-								}
-							/>
-						</PanelRow>
-					)}
-					<PanelRow>
-						<TextControl
-							label={__('Country Placeholder', 'surecart')}
-							value={country_placeholder}
-							placeholder={__('Country', 'surecart')}
-							onChange={(country_placeholder) =>
-								setAttributes({ country_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('City Placeholder', 'surecart')}
-							value={city_placeholder}
-							placeholder={__('City', 'surecart')}
-							onChange={(city_placeholder) =>
-								setAttributes({ city_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Address Placeholder', 'surecart')}
-							value={line_1_placeholder}
-							placeholder={__('Address', 'surecart')}
-							onChange={(line_1_placeholder) =>
-								setAttributes({ line_1_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Postal Code Placeholder', 'surecart')}
-							value={postal_code_placeholder}
-							placeholder={__('Postal Code/Zip', 'surecart')}
-							onChange={(postal_code_placeholder) =>
-								setAttributes({ postal_code_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('State Placeholder', 'surecart')}
-							value={state_placeholder}
-							placeholder={__(
-								'State/Province/Region',
-								'surecart'
-							)}
-							onChange={(state_placeholder) =>
-								setAttributes({ state_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
 						<ScSelect
 							style={{ width: '100%' }}
 							search
@@ -244,14 +153,6 @@ export default ({ attributes, setAttributes }) => {
 						label={label}
 						showName={show_name}
 						required={required}
-						placeholders={{
-							name: name_placeholder,
-							country: country_placeholder,
-							city: city_placeholder,
-							line_1: line_1_placeholder,
-							postal_code: postal_code_placeholder,
-							state: state_placeholder,
-						}}
 						address={{
 							country: default_country,
 						}}
@@ -276,14 +177,6 @@ export default ({ attributes, setAttributes }) => {
 							label={billing_label}
 							showName={show_name}
 							required={true}
-							placeholders={{
-								name: name_placeholder,
-								country: country_placeholder,
-								city: city_placeholder,
-								line_1: line_1_placeholder,
-								postal_code: postal_code_placeholder,
-								state: state_placeholder,
-							}}
 							address={{
 								country: default_country,
 							}}
