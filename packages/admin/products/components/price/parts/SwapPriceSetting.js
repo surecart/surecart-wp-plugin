@@ -70,6 +70,7 @@ export default ({
 					placement="top-start"
 					position="top-left"
 					exclude={[price?.id]}
+					prioritizeProductId={price?.product?.id || price?.product}
 				/>
 			</ScFormControl>
 		);

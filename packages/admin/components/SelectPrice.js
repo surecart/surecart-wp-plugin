@@ -1,6 +1,12 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
+import { useEntityRecord } from '@wordpress/core-data';
+import {
+	ScSelect,
+	ScDivider,
+	ScMenuItem,
+	ScMenuLabel,
+} from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 import { formatNumber } from '../../admin/util';
 import { styles } from '../../admin/styles/admin';
@@ -24,8 +30,15 @@ export default ({
 	onScrollEnd = () => {},
 	includeVariants = true,
 	showOutOfStock = false,
+	prioritizeProductId = false,
 	...props
 }) => {
+	const { record: prioritizeProduct } = useEntityRecord(
+		'surecart',
+		'product',
+		prioritizeProductId
+	);
+
 	const selectRef = useRef();
 	const findProduct = throttle(
 		(value) => {
@@ -41,6 +54,9 @@ export default ({
 				return false;
 			}
 			if (!product?.prices?.data?.length) {
+				return false;
+			}
+			if (prioritizeProduct && product?.id === prioritizeProduct?.id) {
 				return false;
 			}
 			return true;
@@ -126,6 +142,77 @@ export default ({
 			};
 		});
 
+	const renderPriorityProductPrices = (product) => {
+		const priceUnavailable =
+			product?.stock_enabled &&
+			!product?.allow_out_of_stock_purchases &&
+			0 >= product?.available_stock;
+		const disabled = priceUnavailable && !showOutOfStock;
+		return (
+			<span slot="prefix">
+				<ScMenuLabel key={product?.id}>{product?.name}</ScMenuLabel>
+				{(product?.prices?.data || [])
+					.filter((price) => {
+						if (!ad_hoc && price?.ad_hoc) {
+							return false;
+						}
+						return true;
+					})
+					.filter((price) => !price?.archived)
+					.filter((price) => !exclude.includes(price.id))
+					.map((price) => {
+						return (
+							<ScMenuItem
+								key={price?.id}
+								checked={value === price?.id}
+								value={price?.id}
+								onClick={() =>
+									!disabled &&
+									onSelect({
+										price_id: price?.id,
+									})
+								}
+								onKeyDown={(event) => {
+									if (
+										(event.key === 'Enter' ||
+											event.key === ' ') &&
+										!disabled
+									) {
+										event.preventDefault();
+										event.stopImmediatePropagation();
+										onSelect({
+											price_id: price?.id,
+										});
+									}
+								}}
+								aria-label={price?.name}
+								aria-selected={
+									value === price?.id ? 'true' : 'false'
+								}
+								role="option"
+							>
+								{`${formatNumber(
+									price.amount,
+									price.currency
+								)}${price?.archived ? ' (Archived)' : ''}`}
+								<div slot="suffix">
+									{intervalString(price, {
+										showOnce: true,
+									})}{' '}
+									{product?.stock_enabled
+										? sprintf(
+												__('%s available', 'surecart'),
+												product?.available_stock
+										  )
+										: null}
+								</div>
+							</ScMenuItem>
+						);
+					})}
+			</span>
+		);
+	};
+
 	return (
 		<ScSelect
 			style={styles}
@@ -165,6 +252,11 @@ export default ({
 					></ScDivider>
 				</span>
 			)}
+
+			{prioritizeProduct &&
+				prioritizeProduct?.id &&
+				renderPriorityProductPrices(prioritizeProduct)}
+
 			{children}
 		</ScSelect>
 	);
