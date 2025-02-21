@@ -95,7 +95,7 @@ class ProductPostTypeService {
 		add_action( 'wp_head', array( $this, 'addProductSeoMeta' ), 10 );
 
 		// Product permalink support for custom taxonomies.
-		add_filter( 'post_type_link', array( $this, 'filterProductPostTypeLink' ), 10, 2 );
+		add_filter( 'post_type_link', array( $this, 'postTypeLink' ), 10, 2 );
 		add_action( 'template_redirect', array( $this, 'maybeRedirectToProductCanonicalUrl' ), 5 );
 
 		// handle classic themes template.
@@ -1176,14 +1176,14 @@ class ProductPostTypeService {
 	 *
 	 * @return string
 	 */
-	public function filterProductPostTypeLink( string $permalink, \WP_Post $post ): string {
+	public function postTypeLink( string $permalink, \WP_Post $post ): string {
 		// Abort if post is not a product.
 		if ( 'sc_product' !== $post->post_type ) {
 			return $permalink;
 		}
 
-		// Abort early if the placeholder rewrite tag isn't in the generated URL.
-		if ( false === strpos( $permalink, '%' ) ) {
+		// Abort early if the sc_collectionplaceholder rewrite tag isn't in the generated URL.
+		if ( false === strpos( $permalink, '%sc_collection%' ) ) {
 			return $permalink;
 		}
 
@@ -1238,7 +1238,7 @@ class ProductPostTypeService {
 		}
 
 		// Determine the expected collection slug for the product.
-		$expected_collection_slug = $this->filterProductPostTypeLink( '%sc_collection%', get_post( get_the_ID() ) );
+		$expected_collection_slug = $this->postTypeLink( '%sc_collection%', get_post( get_the_ID() ) );
 
 		if ( $specified_collection_slug === $expected_collection_slug ) {
 			return;
