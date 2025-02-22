@@ -58,7 +58,7 @@ class PriceAmount extends \Elementor\Core\DynamicTags\Tag {
 
 		if ( empty( $product ) ) {
 			// translators: %s: Setup Fee amount.
-			echo "<span class='wp-block-surecart-price-amount'>" . sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), Currency::format( 200 ), '/mo' ) . '</span>';
+			echo "<span class='wp-block-surecart-price-amount'>" . sprintf( esc_attr__( '%1$s %2$s', 'surecart' ), esc_html( Currency::format( 200 ) ), '/mo' ) . '</span>';
 		}
 
 		echo '<!-- wp:surecart/price-amount /-->';

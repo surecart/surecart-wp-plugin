@@ -52,7 +52,7 @@ class ElementorDynamicTagsService {
 		$dynamic_tags_manager->register_group(
 			'surecart-product',
 			array(
-				'title' => 'SureCart Product',
+				'title' => esc_html__( 'SureCart Product', 'surecart' ),
 			)
 		);
 	}

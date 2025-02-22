@@ -50,7 +50,7 @@ class BuyButton extends AddToCartButton {
 	 * @return array
 	 */
 	public function get_keywords() {
-		return array( 'surecart', 'buy', 'now', 'button' );
+		return array( 'surecart', 'buy', 'cart', 'button', 'submit' );
 	}
 
 	/**

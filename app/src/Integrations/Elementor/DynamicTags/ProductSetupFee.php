@@ -2,6 +2,8 @@
 
 namespace SureCart\Integrations\Elementor\DynamicTags;
 
+use SureCart\Support\Currency;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -56,7 +58,8 @@ class ProductSetupFee extends \Elementor\Core\DynamicTags\Tag {
 		$product = sc_get_product();
 
 		if ( empty( $product ) ) {
-			printf( esc_html__( '%s setup fee.', 'surecart' ), Currency::format( 100 ) );
+			// translators: %s: Setup fee amount.
+			printf( esc_html__( '%s setup fee.', 'surecart' ), esc_html( Currency::format( 100 ) ) );
 			return;
 		}
 

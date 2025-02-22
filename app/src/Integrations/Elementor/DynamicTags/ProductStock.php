@@ -2,12 +2,9 @@
 
 namespace SureCart\Integrations\Elementor\DynamicTags;
 
-use SureCart\Support\Currency;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
 
 /**
  * Product Stock Dynamic Tag.
@@ -91,13 +88,13 @@ class ProductStock extends \Elementor\Core\DynamicTags\Tag {
 
 		switch ( $stock_type ) {
 			case 'on_hand':
-				echo esc_html( $product->stock );
+				echo (int) $product->stock;
 				break;
 			case 'held_stock':
-				echo esc_html( $product->held_stock );
+				echo (int) $product->held_stock;
 				break;
 			default:
-				echo esc_html( $product->available_stock );
+				echo (int) $product->available_stock;
 				break;
 		}
 	}

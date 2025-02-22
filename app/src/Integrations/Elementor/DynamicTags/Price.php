@@ -92,6 +92,11 @@ class Price extends \Elementor\Core\DynamicTags\Tag {
 			return;
 		}
 
+		// If the product has no initial price, return an empty string.
+		if ( empty( $product->initial_price->id ) ) {
+			return '';
+		}
+
 		switch ( $price_type ) {
 			case 'raw':
 				echo esc_html( $product ? $product->initial_amount : '' );
@@ -100,7 +105,7 @@ class Price extends \Elementor\Core\DynamicTags\Tag {
 				echo esc_html( $product ? Currency::maybeConvertAmount( $product->initial_amount ) : '' );
 				break;
 			default:
-				echo esc_html( Currency::format( $product->initial_amount ) );
+				echo esc_html( $product->initial_price->display_amount );
 				break;
 		}
 	}

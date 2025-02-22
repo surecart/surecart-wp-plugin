@@ -50,7 +50,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_keywords() {
-		return array( 'surecart', 'cart', 'button' );
+		return array( 'surecart', 'cart', 'button', 'buy', 'submit' );
 	}
 
 	/**
