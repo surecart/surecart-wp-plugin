@@ -23,7 +23,9 @@ export default ({
 	manualPayment,
 }) => {
 	const [paymentMethodId, setPaymentMethod] = useState(
-		paymentMethod?.id || paymentMethod
+		manualPayment
+			? manualPaymentMethod?.id || manualPaymentMethod
+			: paymentMethod?.id || paymentMethod
 	);
 
 	const { payment_methods, loading } = useSelect(
@@ -67,6 +69,7 @@ export default ({
 					context: 'edit',
 					customer_ids: [customerId],
 					reusable: true,
+					archived: false,
 					per_page: 100,
 				},
 			];

@@ -2,7 +2,7 @@
 	display: flex;
 	align-items: center;
 	gap: 0.75em;
-
+	color: inherit;
 	label {
 		font-size: var(--sc-input-font-size-medium);
 		font-weight: var(--sc-input-font-weight);
