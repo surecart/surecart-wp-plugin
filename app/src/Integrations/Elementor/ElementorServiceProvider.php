@@ -47,6 +47,8 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
+
+			add_action( 'elementor/frontend/before_render', [ $this, 'disable_interactivity_process_directives_for_surecart_elements' ], 0 );
 			add_action( 'elementor/frontend/builder_content_data', array( $this, 'append_product_widget_wrapper' ), 10, 2 );
 		}
 
@@ -125,8 +127,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url'            => site_url(),
-				'sc_product_template' => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
+				'site_url'                 => site_url(),
+				'sc_product_template'      => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
+				'sc_product_card_template' => $this->get_elementor_template_from_file( 'surecart-product-card.json' ),
 			]
 		);
 	}
@@ -195,6 +198,21 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function product_theme_conditions( $conditions_manager ) {
 		$conditions_manager->register_condition_instance( new Conditions() );
+	}
+
+	/**
+	 * Disable interactivity process directives for surecart elements.
+	 *
+	 * @param \Elementor\Element_Base $element The element.
+	 *
+	 * @return void
+	 */
+	public function disable_interactivity_process_directives_for_surecart_elements( $element ) {
+		if ( false === strpos( $element->get_name(), 'surecart-' ) ) {
+			return;
+		}
+
+		add_filter( 'interactivity_process_directives', '__return_false' );
 	}
 
 	/**

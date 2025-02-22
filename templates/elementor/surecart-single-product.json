@@ -62,6 +62,7 @@
 								},
 								"title": "Add Your Heading Text Here",
 								"header_size": "h1",
+								"typography_typography": "custom",
 								"typography_font_size": {
 									"unit": "px",
 									"size": 32,
