@@ -3,12 +3,17 @@ import {
 	ScSkeleton,
 	ScInput,
 	ScIcon,
+	ScMenuItem,
+	ScMenuLabel,
 } from '@surecart/components-react';
 import { ExternalLink } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
 import HelpTooltip from '../../../../components/HelpTooltip';
+import { useEntityRecord } from '@wordpress/core-data';
+import { intervalString } from '../../../../util/translations';
+import { formatNumber } from '../../../../util';
 
 export default ({
 	price,
@@ -21,6 +26,74 @@ export default ({
 	if (loading) {
 		return <ScSkeleton />;
 	}
+
+	const { record: product } = useEntityRecord(
+		'surecart',
+		'product',
+		price?.product?.id || price?.product
+	);
+
+	const renderPriorityProductPrice = () => {
+		return (
+			<span slot="prefix">
+				<ScMenuLabel key={product?.id}>{product?.name}</ScMenuLabel>
+				{(product?.prices?.data || [])
+					.filter((priceItem) => !priceItem?.archived)
+					.filter((priceItem) => priceItem.id !== price?.id)
+					.map((priceItem) => {
+						return (
+							<ScMenuItem
+								key={priceItem?.id}
+								checked={swapPrice?.id === priceItem?.id}
+								value={priceItem?.id}
+								onClick={() =>
+									updateSwap({
+										price: price?.id,
+										swap_price: priceItem?.id,
+									})
+								}
+								onKeyDown={(event) => {
+									if (
+										event.key === 'Enter' ||
+										event.key === ' '
+									) {
+										event.preventDefault();
+										event.stopImmediatePropagation();
+										updateSwap({
+											price: price?.id,
+											swap_price: priceItem?.id,
+										});
+									}
+								}}
+								aria-label={priceItem?.name}
+								aria-selected={
+									swapPrice?.id === priceItem?.id
+										? 'true'
+										: 'false'
+								}
+								role="option"
+							>
+								{`${formatNumber(
+									priceItem.amount,
+									priceItem.currency
+								)}${priceItem?.archived ? ' (Archived)' : ''}`}
+								<div slot="suffix">
+									{intervalString(priceItem, {
+										showOnce: true,
+									})}{' '}
+									{product?.stock_enabled
+										? sprintf(
+												__('%s available', 'surecart'),
+												product?.available_stock
+										  )
+										: null}
+								</div>
+							</ScMenuItem>
+						);
+					})}
+			</span>
+		);
+	};
 
 	if (!swapPrice) {
 		return (
@@ -70,7 +143,8 @@ export default ({
 					placement="top-start"
 					position="top-left"
 					exclude={[price?.id]}
-					prioritizeProductId={price?.product?.id || price?.product}
+					prefix={renderPriorityProductPrice()}
+					excludeProducts={[price?.product?.id]}
 				/>
 			</ScFormControl>
 		);
