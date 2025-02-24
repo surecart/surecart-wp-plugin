@@ -16,6 +16,8 @@ export default ({
 	open = false,
 	requestQuery,
 	required,
+	prefix,
+	hidePrefixOnSearch = false,
 	...props
 }) => {
 	const [query, setQuery] = useState(null);
@@ -87,6 +89,10 @@ export default ({
 		fetchData(pagination);
 	}, [pagination]);
 
+	if (hidePrefixOnSearch && query) {
+		prefix = null;
+	}
+
 	return (
 		<SelectPrice
 			required={required}
@@ -103,6 +109,7 @@ export default ({
 			loading={isLoading}
 			onSelect={onSelect}
 			onScrollEnd={handleOnScrollEnd}
+			prefix={prefix}
 			{...props}
 		/>
 	);

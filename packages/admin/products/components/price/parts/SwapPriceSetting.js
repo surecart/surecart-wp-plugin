@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
 import {
 	ScFormControl,
 	ScSkeleton,
@@ -12,8 +14,6 @@ import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
 import HelpTooltip from '../../../../components/HelpTooltip';
 import { useEntityRecord } from '@wordpress/core-data';
-import { intervalString } from '../../../../util/translations';
-import { formatNumber } from '../../../../util';
 
 export default ({
 	price,
@@ -36,9 +36,10 @@ export default ({
 	const renderPriorityProductPrice = () => {
 		return (
 			<span slot="prefix">
-				<ScMenuLabel key={product?.id}>{product?.name}</ScMenuLabel>
-				{(product?.prices?.data || [])
-					.filter((priceItem) => !priceItem?.archived)
+				<ScMenuLabel key={product?.id}>
+					{product?.name} {__('(Current Product)', 'surecart')}
+				</ScMenuLabel>
+				{(product?.active_prices || [])
 					.filter((priceItem) => priceItem.id !== price?.id)
 					.map((priceItem) => {
 						return (
@@ -73,20 +74,24 @@ export default ({
 								}
 								role="option"
 							>
-								{`${formatNumber(
-									priceItem.amount,
-									priceItem.currency
-								)}${priceItem?.archived ? ' (Archived)' : ''}`}
+								{priceItem?.display_amount}
 								<div slot="suffix">
-									{intervalString(priceItem, {
-										showOnce: true,
-									})}{' '}
-									{product?.stock_enabled
-										? sprintf(
+									{priceItem?.interval_text}
+									{product?.stock_enabled ? (
+										<div
+											css={css`
+												font-size: var(
+													--sc-input-help-text-font-size-medium
+												);
+												opacity: 0.65;
+											`}
+										>
+											{sprintf(
 												__('%s available', 'surecart'),
 												product?.available_stock
-										  )
-										: null}
+											)}
+										</div>
+									) : null}
 								</div>
 							</ScMenuItem>
 						);
@@ -144,6 +149,7 @@ export default ({
 					position="top-left"
 					exclude={[price?.id]}
 					prefix={renderPriorityProductPrice()}
+					hidePrefixOnSearch={true}
 					excludeProducts={[price?.product?.id]}
 				/>
 			</ScFormControl>
