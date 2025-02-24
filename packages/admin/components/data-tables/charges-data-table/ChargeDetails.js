@@ -12,7 +12,8 @@ import {
 	ScDivider,
 	ScIcon,
 } from '@surecart/components-react';
-import { Tooltip } from '@wordpress/components';
+import { Tooltip, ExternalLink } from '@wordpress/components';
+import HelpTooltip from '../../HelpTooltip';
 
 export default ({ charge, onRequestClose }) => {
 	const { display_amount, created_at_date, payment_intent } = charge;
@@ -96,14 +97,48 @@ export default ({ charge, onRequestClose }) => {
 				</ScLineItem>
 				{payment_intent?.platform_fee && (
 					<>
-						<h3
-							css={css`
-								font-size: 13px;
-								margin: 1em 0 0;
-							`}
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'space-between',
+							}}
 						>
-							{__('Platform Fee', 'surecart')}
-						</h3>
+							<h3
+								css={css`
+									font-size: 13px;
+									margin: 1em 0 0;
+								`}
+							>
+								{__('Platform Fee', 'surecart')}
+							</h3>
+							<div>
+								<HelpTooltip
+									content={
+										<div>
+											<p style={{ marginTop: 0 }}>
+												{__(
+													'This is the overall fee charged by SureCart Platform for this charge.',
+													'surecart'
+												)}
+											</p>
+											<ExternalLink
+												href="https://docs.surecart.com"
+												target="_blank"
+											>
+												{__('Learn More', 'surecart')}
+											</ExternalLink>
+										</div>
+									}
+									position="top left"
+									style={{ marginTop: '0.5em' }}
+								>
+									<ScIcon
+										name="info"
+										style={{ opacity: 0.5 }}
+									/>
+								</HelpTooltip>
+							</div>
+						</div>
 						<ScLineItem
 							style={{
 								marginLeft: '1em',
