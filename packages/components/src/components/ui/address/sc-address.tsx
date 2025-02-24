@@ -75,14 +75,11 @@ export class ScAddress {
   /** Is the name required */
   @Prop({ reflect: true }) requireName: boolean = false;
 
-  /** Sorted fields */
-  @Prop({ reflect: true, mutable: true }) sortedFields: Array<CountryLocaleFieldValue> = [];
-
   /** Default country fields */
-  @Prop({ reflect: true, mutable: true }) defaultCountryFields: Array<CountryLocaleFieldValue>;
+  @Prop({ mutable: true }) defaultCountryFields: Array<CountryLocaleFieldValue>;
 
   /** Country fields by country code */
-  @Prop({ reflect: true, mutable: true }) countryFields: Array<CountryLocaleField>;
+  @Prop({ mutable: true }) countryFields: Array<CountryLocaleField>;
 
   /** Should we show the city field? */
   @State() showCity: boolean = true;
@@ -171,8 +168,11 @@ export class ScAddress {
     return reportChildrenValidity(this.el);
   }
 
-  @Watch('address')
-  sortAddressFields() {
+  /**
+   * Compute and return the sorted fields based on current country, defaultCountryFields and countryFields.
+   * This method can be used as a computed property.
+   */
+  sortedFields(): Array<CountryLocaleFieldValue> {
     const countrySpecificFields = this.countryFields?.[this.address?.country] || {};
     const mergedCountryFields = (this.defaultCountryFields || []).map(field => {
       if (countrySpecificFields[field.name]) {
@@ -184,7 +184,7 @@ export class ScAddress {
       return field;
     });
 
-    this.sortedFields = sortAddressFields(this.address?.country, mergedCountryFields, this.countryFields);
+    return sortAddressFields(this.address?.country, mergedCountryFields, this.countryFields);
   }
 
   getRoundedProps(index: number, length: number) {
@@ -199,7 +199,7 @@ export class ScAddress {
   }
 
   render() {
-    const visibleFields = (this.sortedFields ?? []).filter(field => {
+    const visibleFields = (this.sortedFields() ?? []).filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
