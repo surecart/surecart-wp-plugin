@@ -81,6 +81,10 @@ class MetaboxService {
 
 		/** Set the current screen for metaboxes */
 		$current_screen = convert_to_screen( $post->post_type ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+
+		/** Set the block editor to true. */
+		$current_screen->is_block_editor = true;
+
 		/** Set the typenow. */
 		$typenow = $post->post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 	}
