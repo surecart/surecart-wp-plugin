@@ -176,6 +176,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 									currentPrice={price}
 									updateSwap={editSwap}
 									currentSwap={currentSwap}
+									currentProduct={product}
 									isSaving={loading}
 								/>
 							)}

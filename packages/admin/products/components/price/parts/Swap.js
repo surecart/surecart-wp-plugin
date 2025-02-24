@@ -7,7 +7,13 @@ import HelpTooltip from '../../../../components/HelpTooltip';
 import SwapPrice from './SwapPrice';
 import { ExternalLink } from '@wordpress/components';
 
-const Swap = ({ currentPrice, updateSwap, currentSwap, isSaving }) => {
+const Swap = ({
+	currentPrice,
+	updateSwap,
+	currentSwap,
+	isSaving,
+	currentProduct,
+}) => {
 	return (
 		<DrawerSection
 			title={
@@ -70,6 +76,7 @@ const Swap = ({ currentPrice, updateSwap, currentSwap, isSaving }) => {
 		>
 			<SwapPrice
 				price={currentPrice}
+				currentProduct={currentProduct}
 				updateSwap={updateSwap}
 				currentSwap={currentSwap}
 				isSaving={isSaving}

@@ -272,6 +272,7 @@ export default ({ price, product }) => {
 										updateSwap={editSwap}
 										currentSwap={currentSwap}
 										isSaving={isSaving}
+										currentProduct={product}
 									/>
 								)}
 

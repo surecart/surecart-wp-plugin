@@ -5,7 +5,13 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import SwapPriceSetting from './SwapPriceSetting';
 
-export default ({ price, updateSwap, currentSwap, isSaving }) => {
+export default ({
+	price,
+	updateSwap,
+	currentSwap,
+	isSaving,
+	currentProduct,
+}) => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
@@ -56,6 +62,7 @@ export default ({ price, updateSwap, currentSwap, isSaving }) => {
 	return (
 		<SwapPriceSetting
 			price={price}
+			currentProduct={currentProduct}
 			swapPrice={swapPrice}
 			swapPriceDescription={currentSwap?.description}
 			updateSwap={updateSwap}

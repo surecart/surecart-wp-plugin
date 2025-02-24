@@ -13,7 +13,6 @@ import { __ } from '@wordpress/i18n';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
 import HelpTooltip from '../../../../components/HelpTooltip';
-import { useEntityRecord } from '@wordpress/core-data';
 
 export default ({
 	price,
@@ -22,24 +21,19 @@ export default ({
 	updateSwap,
 	onDelete,
 	loading,
+	currentProduct,
 }) => {
 	if (loading) {
 		return <ScSkeleton />;
 	}
 
-	const { record: product } = useEntityRecord(
-		'surecart',
-		'product',
-		price?.product?.id || price?.product
-	);
-
 	const renderPriorityProductPrice = () => {
 		return (
 			<span slot="prefix">
-				<ScMenuLabel key={product?.id}>
-					{product?.name} {__('(Current Product)', 'surecart')}
+				<ScMenuLabel key={currentProduct?.id}>
+					{currentProduct?.name} {__('(Current Product)', 'surecart')}
 				</ScMenuLabel>
-				{(product?.active_prices || [])
+				{(currentProduct?.active_prices || [])
 					.filter((priceItem) => priceItem.id !== price?.id)
 					.map((priceItem) => {
 						return (
@@ -77,7 +71,7 @@ export default ({
 								{priceItem?.display_amount}
 								<div slot="suffix">
 									{priceItem?.interval_text}
-									{product?.stock_enabled ? (
+									{currentProduct?.stock_enabled ? (
 										<div
 											css={css`
 												font-size: var(
@@ -88,7 +82,7 @@ export default ({
 										>
 											{sprintf(
 												__('%s available', 'surecart'),
-												product?.available_stock
+												currentProduct?.available_stock
 											)}
 										</div>
 									) : null}
