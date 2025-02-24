@@ -117,7 +117,7 @@ export default ({ charge, onRequestClose }) => {
 										<div>
 											<p style={{ marginTop: 0 }}>
 												{__(
-													'This is the overall fee charged by SureCart Platform for this charge.',
+													'This is the total fee charged by the SureCart platform for this transaction.',
 													'surecart'
 												)}
 											</p>
