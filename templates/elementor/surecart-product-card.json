@@ -59,6 +59,11 @@
 						"title": "Add Your Heading Text Here",
 						"header_size": "h2",
 						"typography_typography": "custom",
+						"typography_line_height": {
+							"unit": "em",
+							"size": 1,
+							"sizes": []
+						},
 						"typography_font_size": {
 							"unit": "px",
 							"size": 14,
@@ -79,9 +84,14 @@
 						},
 						"typography_typography": "custom",
 						"typography_font_weight": "600",
+						"typography_line_height": {
+							"unit": "em",
+							"size": 1,
+							"sizes": []
+						},
 						"typography_font_size": {
 							"unit": "px",
-							"size": 14,
+							"size": 16,
 							"sizes": []
 						},
 						"text_color": "#111111"
