@@ -387,7 +387,7 @@ class CollectionTags extends \Elementor\Widget_Base {
 		}
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-collection-tags {"count" : <?php echo esc_attr( $settings['count'] ?? 1 ); ?> } -->
 				<!-- wp:surecart/product-collection-tag /-->
 			<!-- /wp:surecart/product-collection-tags -->

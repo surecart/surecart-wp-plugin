@@ -418,7 +418,7 @@ class VariantPills extends \Elementor\Widget_Base {
 
 		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-surecart-product-variant-pills__wrapper' );
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 		<!-- wp:surecart/product-variant-pills -->
 		<!-- wp:surecart/product-variant-pill <?php echo wp_json_encode( $variant_attributes ); ?> /-->
 		<!-- /wp:surecart/product-variant-pills -->

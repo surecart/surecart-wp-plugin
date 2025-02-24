@@ -226,7 +226,7 @@ class Media extends \Elementor\Widget_Base {
 		);
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-media <?php echo wp_json_encode( $attributes ); ?> /-->
 		</div>
 		<?php
