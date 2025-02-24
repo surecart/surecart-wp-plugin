@@ -33,6 +33,10 @@ export default ({ price, updateSwap, currentSwap, isSaving }) => {
 	const onDelete = async () => {
 		try {
 			setIsDeleting(true);
+			updateSwap({
+				price: price?.id,
+				swap_price: '',
+			});
 			await deleteEntityRecord('surecart', 'swap', currentSwap?.id, {
 				throwOnError: true,
 			});
