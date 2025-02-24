@@ -221,7 +221,7 @@ class Quantity extends \Elementor\Widget_Base {
 					</div>
 					<input
 						class="sc-form-control sc-quantity-selector__control"
-						value={0}
+						value="1"
 						type="number"
 					/>
 					<div class="sc-input-group-text sc-quantity-selector__increase">
