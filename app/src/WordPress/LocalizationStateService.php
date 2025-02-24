@@ -453,11 +453,11 @@ class LocalizationStateService {
 				],
 				'IE' => [
 					'postcode' => [
-						'priority' => 65,
+						'priority' => 70,
 						'label'    => __( 'Eircode', 'surecart' ),
 					],
 					'state'    => [
-						'priority' => 70,
+						'priority' => 80,
 						'label'    => __( 'County', 'surecart' ),
 					],
 				],
@@ -1135,11 +1135,11 @@ class LocalizationStateService {
 				],
 				'US' => [
 					'postcode' => [
-						'priority' => 65,
+						'priority' => 90,
 						'label'    => __( 'ZIP', 'surecart' ),
 					],
 					'state'    => [
-						'priority' => 70,
+						'priority' => 80,
 						'label'    => __( 'State', 'surecart' ),
 					],
 				],
