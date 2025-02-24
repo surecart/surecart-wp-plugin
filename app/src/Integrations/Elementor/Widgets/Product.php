@@ -34,7 +34,7 @@ class Product extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Product Page', 'surecart' );
+		return esc_html__( 'Product Form', 'surecart' );
 	}
 
 	/**
