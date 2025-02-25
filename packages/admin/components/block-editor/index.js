@@ -12,6 +12,7 @@ import {
 	useMemo,
 	useReducer,
 	useState,
+	memo,
 } from '@wordpress/element';
 import { PluginArea } from '@wordpress/plugins';
 import { store as preferencesStore } from '@wordpress/preferences';
@@ -70,6 +71,10 @@ function sidebarReducer(state, action) {
 	}
 	return state;
 }
+
+const MemoizedHeaderToolbar = memo(HeaderToolbar);
+const MemoizedSecondarySidebar = memo(SecondarySidebar);
+const MemoizedSettingsSidebar = memo(SettingsSidebar);
 
 export default function ({
 	blocks,
@@ -159,17 +164,23 @@ export default function ({
 		};
 	}, [canUserCreateMedia, parentEditorSettings]);
 
-	const handleBlockEditorProviderOnChange = (updatedBlocks) => {
-		appendToEditorHistory(updatedBlocks);
-		setTemporalBlocks(updatedBlocks);
-		onChange(updatedBlocks);
-	};
+	const handleBlockEditorProviderOnChange = useCallback(
+		(updatedBlocks) => {
+			appendToEditorHistory(updatedBlocks);
+			setTemporalBlocks(updatedBlocks);
+			onChange(updatedBlocks);
+		},
+		[appendToEditorHistory, onChange]
+	);
 
-	const handleBlockEditorProviderOnInput = (updatedBlocks) => {
-		appendToEditorHistory(updatedBlocks);
-		setTemporalBlocks(updatedBlocks);
-		onInput(updatedBlocks);
-	};
+	const handleBlockEditorProviderOnInput = useCallback(
+		(updatedBlocks) => {
+			appendToEditorHistory(updatedBlocks);
+			setTemporalBlocks(updatedBlocks);
+			onInput(updatedBlocks);
+		},
+		[appendToEditorHistory, onInput]
+	);
 
 	const inlineFixedBlockToolbar = true;
 	const editorSettings =
@@ -248,7 +259,7 @@ export default function ({
 					<KeyboardShortcuts />
 					<RegisterKeyboardShortcuts />
 
-					<HeaderToolbar
+					<MemoizedHeaderToolbar
 						onSave={() => {
 							setBlocks(
 								areBlocksEmpty(temporalBlocks)
@@ -273,7 +284,7 @@ export default function ({
 							z-index: 1000;
 						`}
 					>
-						<SecondarySidebar height={editorHeight + 90} />
+						<MemoizedSecondarySidebar height={editorHeight + 90} />
 						<div
 							className="editor-styles-wrapper"
 							css={css`
@@ -346,7 +357,7 @@ export default function ({
 						/>
 					</div>
 					<PluginArea scope="surecart-block-editor-modal-block-editor" />
-					<SettingsSidebar
+					<MemoizedSettingsSidebar
 						height={editorHeight + 30}
 						smallScreenTitle={name}
 					/>

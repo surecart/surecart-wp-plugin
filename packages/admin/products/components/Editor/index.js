@@ -9,7 +9,7 @@ import {
 	__experimentalConfirmDialog as ConfirmDialog,
 	Modal,
 } from '@wordpress/components';
-import { Suspense, useEffect, useState } from '@wordpress/element';
+import { Suspense, useEffect, useState, memo } from '@wordpress/element';
 import { parse, serialize } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
 import { close, edit } from '@wordpress/icons';
@@ -25,6 +25,8 @@ import initBlocks from '../../../components/block-editor/utils/init-blocks';
 import BlockEditor from '../../../components/block-editor';
 import PreviewBlocks from '../../../components/block-editor/PreviewBlocks';
 import { ScText } from '@surecart/components-react';
+
+const MemoizedBlockEditor = memo(BlockEditor);
 
 export default ({ product, loading }) => {
 	if (!product) {
@@ -212,7 +214,7 @@ export default ({ product, loading }) => {
 							width: 100%;
 						`}
 					>
-						<BlockEditor
+						<MemoizedBlockEditor
 							initialBlocks={initialBlocks}
 							onInput={onChange}
 							onChange={onChange}
