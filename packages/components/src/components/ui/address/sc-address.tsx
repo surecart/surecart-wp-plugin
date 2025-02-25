@@ -202,15 +202,15 @@ export class ScAddress {
     const visibleFields = (this.sortedFields() ?? []).filter(field => {
       switch (field.name) {
         case 'name':
-          return this.showName && !field?.hidden;
+          return this.showName;
         case 'address_2':
-          return (this.showLine2 || !!this?.address?.line_2?.length ) && !field?.hidden;
+          return this.showLine2 || !!this?.address?.line_2?.length;
         case 'city':
-          return this.showCity && !field?.hidden;
+          return this.showCity;
         case 'state':
-          return !!this?.regions?.length && !!this?.address?.country && !field?.hidden;
+          return !!this?.regions?.length && !!this?.address?.country;
         case 'postcode':
-          return this.showPostal && !field?.hidden;
+          return this.showPostal;
         default:
           return true;
       }

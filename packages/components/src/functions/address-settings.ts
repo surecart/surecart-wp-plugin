@@ -13,7 +13,6 @@ export function sortAddressFields(countryCode: string, defaultCountryFields: Arr
         const countryField = fieldsByCountry[countryCode][field.name];
         field.priority = countryField?.priority || field?.priority;
         field.label = countryField?.label || field?.label;
-        field.hidden = countryField?.hidden || field?.hidden;
       }
     });
   }

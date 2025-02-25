@@ -1325,7 +1325,6 @@ export interface CountryLocaleFieldValue {
   name: string;
   priority: number;
   label: boolean;
-  hidden: boolean;
 }
 
 export interface CountryLocaleField {
