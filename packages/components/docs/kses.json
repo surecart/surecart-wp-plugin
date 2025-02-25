@@ -11,7 +11,6 @@
     "required": true,
     "show-line2": true,
     "show-name": true,
-    "sorted-fields": true,
     "style": true,
     "id": true,
     "class": true,

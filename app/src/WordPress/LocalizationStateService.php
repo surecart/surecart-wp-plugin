@@ -24,43 +24,50 @@ class LocalizationStateService {
 	public function getDefaultCountryFields(): array {
 		return apply_filters(
 			'surecart_default_country_fields',
-			[
-				[
+			array(
+				array(
 					'name'     => 'name',
 					'priority' => 30,
 					'label'    => __( 'Name or Company Name', 'surecart' ),
-				],
-				[
+					'hidden'   => false,
+				),
+				array(
 					'name'     => 'country',
 					'priority' => 40,
 					'label'    => __( 'Country', 'surecart' ),
-				],
-				[
+					'hidden'   => false,
+				),
+				array(
 					'name'     => 'address_1',
 					'priority' => 50,
 					'label'    => __( 'Address', 'surecart' ),
-				],
-				[
+					'hidden'   => false,
+				),
+				array(
 					'name'     => 'address_2',
 					'priority' => 60,
 					'label'    => __( 'Address Line 2', 'surecart' ),
-				],
-				[
+					'hidden'   => false,
+				),
+				array(
 					'name'     => 'city',
 					'priority' => 70,
 					'label'    => __( 'City', 'surecart' ),
-				],
-				[
+					'hidden'   => false,
+				),
+				array(
 					'name'     => 'state',
 					'priority' => 80,
-					'label'    => __( 'State/Province/Region', 'surecart' ),
-				],
-				[
+					'label'    => __( 'State/Country', 'surecart' ),
+					'hidden'   => false,
+				),
+				array(
 					'name'     => 'postcode',
 					'priority' => 90,
-					'label'    => __( 'Postal Code/Zip', 'surecart' ),
-				],
-			]
+					'label'    => __( 'Postal Code', 'surecart' ),
+					'hidden'   => false,
+				),
+			),
 		);
 	}
 
@@ -72,1142 +79,669 @@ class LocalizationStateService {
 	public function getCountryFields(): array {
 		return apply_filters(
 			'surecart_country_fields',
-			[
-				'AE' => [
-					'postcode' => [
+			array(
+				'AE' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+				),
+				'AF' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'AL' => array(
+					'state' => array(
+						'label' => __( 'County', 'surecart' ),
+					),
+				),
+				'AO' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+					'state'    => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'AT' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'AF' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'AL' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'County', 'surecart' ),
-					],
-				],
-				'AO' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'AU' => array(
+					'city'     => array(
+						'label' => __( 'Suburb', 'surecart' ),
+					),
+					'postcode' => array(
+						'label' => __( 'Postcode', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'State', 'surecart' ),
+					),
+				),
+				'AX' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'AT' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'BA' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'AU' => [
-					'city'     => [
-						'priority' => 60,
-						'label'    => __( 'Suburb', 'surecart' ),
-					],
-					'postcode' => [
+					),
+					'state'    => array(
+						'label'  => __( 'Canton', 'surecart' ),
+						'hidden' => true,
+					),
+				),
+				'BD' => array(
+					'state' => array(
+						'label' => __( 'District', 'surecart' ),
+					),
+				),
+				'BE' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'AX' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'BH' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'BI' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'BO' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+					'state'    => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'BS' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+				),
+				'BZ' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+				),
+				'CA' => array(
+					'postcode' => array(
+						'label' => __( 'Postal code', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'CH' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'BA' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'label' => __( 'Canton', 'surecart' ),
+					),
+				),
+				'CL' => array(
+					'city'     => array(
+						'required' => true,
+					),
+					'postcode' => array(
+						'hidden' => false,
+					),
+					'state'    => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'CN' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'CO' => array(
+					'state' => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'CR' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'CW' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+				),
+				'CY' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'CZ' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'DE' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Canton', 'surecart' ),
-					],
-				],
-				'BD' => [
-					'postcode' => [
+					),
+				),
+				'DK' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'District', 'surecart' ),
-					],
-				],
-				'BE' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'DO' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'EC' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'EE' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'BG' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'BH' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'ET' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'FI' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'BI' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'BO' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'FR' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'BS' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'GG' => array(
+					'state' => array(
+						'label' => __( 'Parish', 'surecart' ),
+					),
+				),
+				'GH' => array(
+					'state' => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'GP' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'GF' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'GT' => array(
+					'state' => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'HK' => array(
+					'city'  => array(
+						'label' => __( 'Town / District', 'surecart' ),
+					),
+					'state' => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'HN' => array(
+					'state' => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'HU' => array(
+					'postcode'  => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'BZ' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'CA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postal code', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'CH' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Canton', 'surecart' ),
-					],
-				],
-				'CL' => [
-					'city'     => [
-						'priority' => 60,
-						'label'    => __( 'City', 'surecart' ),
-					],
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'CN' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'CO' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'CR' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'CW' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'CY' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'CZ' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'DE' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'DK' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'DO' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'EC' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'EE' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'ET' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'FI' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'FR' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'GG' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Parish', 'surecart' ),
-					],
-				],
-				'GH' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'GP' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'GF' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'GR' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'GT' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'HK' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'city'     => [
-						'priority' => 60,
-						'label'    => __( 'Town / District', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'HN' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'HU' => [
-					'postcode'  => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'address_1' => [
+					),
+					'address_1' => array(
 						'priority' => 71,
-						'label'    => __( 'Address Line 1', 'surecart' ),
-					],
-					'address_2' => [
+					),
+					'address_2' => array(
 						'priority' => 72,
-						'label'    => __( 'Address Line 2', 'surecart' ),
-					],
-					'state'     => [
-						'priority' => 70,
-						'label'    => __( 'County', 'surecart' ),
-					],
-				],
-				'ID' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'IE' => [
-					'postcode' => [
-						'priority' => 70,
-						'label'    => __( 'Eircode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 80,
-						'label'    => __( 'County', 'surecart' ),
-					],
-				],
-				'IS' => [
-					'postcode' => [
+					),
+					'state'     => array(
+						'label' => __( 'County', 'surecart' ),
+					),
+				),
+				'ID' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'IE' => array(
+					'postcode' => array(
+						'label' => __( 'Eircode', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'County', 'surecart' ),
+					),
+				),
+				'IS' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'IL' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'IL' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'IM' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'IN' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'PIN Code', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'IR' => [
-					'state'     => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'IM' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'IN' => array(
+					'postcode' => array(
+						'label' => __( 'PIN Code', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'State', 'surecart' ),
+					),
+				),
+				'IR' => array(
+					'state'     => array(
 						'priority' => 50,
-						'label'    => __( 'State', 'surecart' ),
-					],
-					'city'      => [
+					),
+					'city'      => array(
 						'priority' => 60,
-						'label'    => __( 'City', 'surecart' ),
-					],
-					'address_1' => [
+					),
+					'address_1' => array(
 						'priority' => 70,
-						'label'    => __( 'Address Line 1', 'surecart' ),
-					],
-					'address_2' => [
+					),
+					'address_2' => array(
 						'priority' => 80,
-						'label'    => __( 'Address Line 2', 'surecart' ),
-					],
-				],
-				'IT' => [
-					'postcode' => [
+					),
+				),
+				'IT' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
+					),
+					'state'    => array(
+						'required' => true,
 						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'JM' => [
-					'city'     => [
-						'priority' => 60,
-						'label'    => __( 'Town / City / Post Office', 'surecart' ),
-					],
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postal Code', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
+					),
+				),
+				'JM' => array(
+					'city'     => array(
+						'label' => __( 'Town / City / Post Office', 'surecart' ),
+					),
+					'postcode' => array(
+						'label' => __( 'Postal Code', 'surecart' ),
+					),
+					'state'    => array(
+						'required' => true,
 						'label'    => __( 'Parish', 'surecart' ),
-					],
-				],
-				'JP' => [
-					'postcode'  => [
+					),
+				),
+				'JP' => array(
+					'postcode'  => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'     => [
-						'priority' => 66,
+					),
+					'state'     => array(
 						'label'    => __( 'Prefecture', 'surecart' ),
-					],
-					'city'      => [
+						'priority' => 66,
+					),
+					'city'      => array(
 						'priority' => 67,
-						'label'    => __( 'City', 'surecart' ),
-					],
-					'address_1' => [
+					),
+					'address_1' => array(
 						'priority' => 68,
-						'label'    => __( 'Address Line 1', 'surecart' ),
-					],
-					'address_2' => [
+					),
+					'address_2' => array(
 						'priority' => 69,
-						'label'    => __( 'Address Line 2', 'surecart' ),
-					],
-				],
-				'KE' => [
-					'postcode' => [
+					),
+				),
+				'KN' => array(
+					'postcode' => array(
+						'label' => __( 'Postal code', 'surecart' ),
+					),
+					'state'    => array(
+						'required' => true,
+						'label'    => __( 'Parish', 'surecart' ),
+					),
+				),
+				'KR' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'KW' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'LV' => array(
+					'state' => array(
+						'label' => __( 'Municipality', 'surecart' ),
+					),
+				),
+				'LB' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'MF' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'MQ' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'MT' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'MZ' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+					'state'    => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'NI' => array(
+					'state' => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'NL' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'NG' => array(
+					'postcode' => array(
+						'label'  => __( 'Postcode', 'surecart' ),
+						'hidden' => true,
+					),
+					'state'    => array(
+						'label' => __( 'State', 'surecart' ),
+					),
+				),
+				'NZ' => array(
+					'postcode' => array(
+						'label' => __( 'Postcode', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'NO' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'NP' => array(
+					'state' => array(
+						'label' => __( 'State / Zone', 'surecart' ),
+					),
+				),
+				'PA' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'PL' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'PR' => array(
+					'city'  => array(
+						'label' => __( 'Municipality', 'surecart' ),
+					),
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'PT' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'PY' => array(
+					'state' => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'RE' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'RO' => array(
+					'state' => array(
 						'label'    => __( 'County', 'surecart' ),
-					],
-				],
-				'KR' => [
-					'postcode' => [
+						'required' => true,
+					),
+				),
+				'RS' => array(
+					'city'     => array(
+						'required' => true,
+					),
+					'postcode' => array(
+						'required' => true,
+					),
+					'state'    => array(
+						'label' => __( 'District', 'surecart' ),
+					),
+				),
+				'RW' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'SG' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'SK' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'KW' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'SI' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'LI' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'SR' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+				),
+				'SV' => array(
+					'state' => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'ES' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'LK' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'LI' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'LT' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'LK' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'LU' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'MD' => array(
+					'state' => array(
+						'label' => __( 'Municipality / District', 'surecart' ),
+					),
+				),
+				'SE' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'LU' => [
-					'postcode' => [
+					),
+					'state'    => array(
+						'hidden' => true,
+					),
+				),
+				'TR' => array(
+					'postcode' => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'LV' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'MA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'MC' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'MD' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'ME' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Municipality', 'surecart' ),
-					],
-				],
-				'MK' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Municipality', 'surecart' ),
-					],
-				],
-				'MN' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'MO' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'MT' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'MU' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'MV' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'MW' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'MX' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'MY' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'MZ' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'NA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'NC' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'NE' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'NG' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'NI' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'NL' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'NO' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'NP' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'NZ' => [
-					'city'     => [
-						'priority' => 60,
-						'label'    => __( 'Suburb', 'surecart' ),
-					],
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'OM' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'PA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'PE' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'PF' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'PG' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'PH' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'PK' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'PL' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'PT' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'PY' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'QA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'RE' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'RO' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'County', 'surecart' ),
-					],
-				],
-				'RS' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Municipality', 'surecart' ),
-					],
-				],
-				'RU' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'RW' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'SA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'SC' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'SE' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'County', 'surecart' ),
-					],
-				],
-				'SG' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'SI' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Municipality', 'surecart' ),
-					],
-				],
-				'SK' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'SM' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'SN' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'SV' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'TH' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'TN' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Governorate', 'surecart' ),
-					],
-				],
-				'TR' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'TT' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'TW' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'County', 'surecart' ),
-					],
-				],
-				'TZ' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Region', 'surecart' ),
-					],
-				],
-				'UA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'UG' => [
-					'state' => [
-						'priority' => 70,
+					),
+					'state'    => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'UG' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+					'city'     => array(
+						'label'    => __( 'Town / Village', 'surecart' ),
+						'required' => true,
+					),
+					'state'    => array(
 						'label'    => __( 'District', 'surecart' ),
-					],
-				],
-				'US' => [
-					'postcode' => [
-						'priority' => 90,
-						'label'    => __( 'ZIP', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 80,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'UY' => [
-					'postcode' => [
+						'required' => true,
+					),
+				),
+				'US' => array(
+					'postcode' => array(
+						'label' => __( 'ZIP Code', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'State', 'surecart' ),
+					),
+				),
+				'UY' => array(
+					'state' => array(
+						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'GB' => array(
+					'postcode' => array(
+						'label' => __( 'Postcode', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'County', 'surecart' ),
+					),
+				),
+				'ST' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+					'state'    => array(
+						'label' => __( 'District', 'surecart' ),
+					),
+				),
+				'VN' => array(
+					'state'     => array(
+						'hidden' => true,
+					),
+					'postcode'  => array(
 						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Department', 'surecart' ),
-					],
-				],
-				'VA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-				],
-				'VE' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'VN' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'YT' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'State', 'surecart' ),
-					],
-				],
-				'ZA' => [
-					'postcode' => [
-						'priority' => 65,
-						'label'    => __( 'Postcode', 'surecart' ),
-					],
-					'state'    => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'ZM' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-				'ZW' => [
-					'state' => [
-						'priority' => 70,
-						'label'    => __( 'Province', 'surecart' ),
-					],
-				],
-			]
+						'hidden'   => false,
+					),
+					'address_2' => array(
+						'hidden' => false,
+					),
+				),
+				'WS' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+				),
+				'YT' => array(
+					'state' => array(
+						'hidden' => true,
+					),
+				),
+				'ZA' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'ZW' => array(
+					'postcode' => array(
+						'hidden' => true,
+					),
+				),
+			)
 		);
 	}
 }
