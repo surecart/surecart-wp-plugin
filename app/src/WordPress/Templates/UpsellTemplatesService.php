@@ -125,7 +125,7 @@ class UpsellTemplatesService {
 		$post->comment_status    = 'closed';
 		$post->ping_status       = 'closed';
 		$post->post_password     = '';
-		$post->post_excerpt      = '';
+		$post->post_excerpt      = $product->description ?? '';
 		$post->post_date         = ( new \DateTime( "@$upsell->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
 		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $upsell->created_at, true );
 		$post->post_modified     = ( new \DateTime( "@$upsell->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );

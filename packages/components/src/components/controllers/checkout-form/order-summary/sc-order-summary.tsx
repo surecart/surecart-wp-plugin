@@ -114,7 +114,7 @@ export class ScOrderSummary {
               <sc-format-number
                 class="total-price scratch-price"
                 type="currency"
-                value={-checkoutState.checkout?.total_savings_amount + checkoutState.checkout?.total_amount}
+                value={-checkoutState.checkout?.total_savings_amount}
                 currency={checkoutState.checkout?.currency || 'usd'}
               />
             )}

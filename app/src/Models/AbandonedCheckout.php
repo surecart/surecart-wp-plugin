@@ -12,7 +12,10 @@ use SureCart\Support\TimeDate;
  * Order model
  */
 class AbandonedCheckout extends Model {
-	use HasCustomer, HasCheckout, HasDates, HasPromotion;
+	use HasCustomer;
+	use HasCheckout;
+	use HasDates;
+	use HasPromotion;
 
 	/**
 	 * Rest API endpoint
@@ -56,8 +59,11 @@ class AbandonedCheckout extends Model {
 	 * @return string
 	 */
 	public function getNotificationsScheduledAtDateTimeAttribute() {
-		return array_map( function( $scheduled_at ) {
-			return TimeDate::formatDateAndTime( $scheduled_at );
-		}, $this->notifications_scheduled_at );
+		return array_map(
+			function ( $scheduled_at ) {
+				return TimeDate::formatDateAndTime( $scheduled_at );
+			},
+			$this->notifications_scheduled_at ?? []
+		);
 	}
 }

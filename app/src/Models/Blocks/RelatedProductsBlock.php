@@ -16,9 +16,11 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 	/**
 	 * Build the query.
 	 *
-	 * @return $this
+	 * @param array $include_term_ids The term ids to include in the query.
+	 *
+	 * @return array
 	 */
-	public function parse_query( $include_term_ids = [], $exclude_ids = [] ) {
+	public function parse_query( $include_term_ids = [] ) {
 		global $wpdb;
 
 		$per_page         = $this->getQueryAttribute( 'perPage', 15 );
@@ -49,15 +51,11 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 			$query['join'] .= " INNER JOIN ( SELECT object_id FROM {$wpdb->term_relationships} INNER JOIN {$wpdb->term_taxonomy} using( term_taxonomy_id ) WHERE term_id IN ( " . implode( ',', array_map( 'absint', $include_term_ids ) ) . ' ) ) AS include_join ON include_join.object_id = p.ID';
 		}
 
-		if ( count( $exclude_ids ) ) {
-			$query['where'] .= ' AND p.ID NOT IN ( ' . implode( ',', array_map( 'absint', $exclude_ids ) ) . ' )';
-		}
-
 		return $query;
 	}
 
 	/**
-	 * Run the query
+	 * Run the query.
 	 *
 	 * This first gets post ids based on shared object terms.
 	 * Then it creates a WP_Query object with the post ids.
@@ -88,7 +86,7 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 
 		// If there are term ids, get the post ids.
 		if ( ! empty( $term_ids ) && ! is_wp_error( $term_ids ) ) {
-			$query = $this->parse_query( $term_ids, [ get_the_ID() ] );
+			$query = $this->parse_query( $term_ids );
 			// phpcs:ignore WordPress.VIP.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
 			$post_ids = $wpdb->get_col( implode( ' ', (array) apply_filters( 'surecart_product_related_posts_query', $query, get_the_ID() ) ) );
 
@@ -103,19 +101,28 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 
 		// If there are no related products, show all products.
 		$fallback_to_all = $this->getQueryAttribute( 'fallback', true );
-		$post_in         = ! empty( $post_ids ) ? array_map( 'absint', $post_ids ) : ( ! $fallback_to_all ? [ 0 ] : [] );
+
+		// Exclude the current post ID.
+		$post_in = array_diff(
+			! empty( $post_ids ) ? array_map( 'absint', $post_ids ) : ( ! $fallback_to_all ? [ 0 ] : [] ),
+			[ get_the_ID() ]
+		);
 
 		// Create WP_Query object with found post IDs.
 		$this->query = new \WP_Query(
-			[
-				'post_type'      => 'sc_product',
-				'post__in'       => $post_in, // Use 0 to return no results if empty.
-				'orderby'        => esc_sql( $orderby ),
-				'post_status'    => 'publish',
-				'order'          => esc_sql( $order ),
-				'posts_per_page' => absint( $per_page ),
-				'paged'          => absint( $page ),
-			]
+			apply_filters(
+				'surecart_related_products_query_args',
+				[
+					'post_type'      => 'sc_product',
+					'post__in'       => $post_in, // Use 0 to return no results if empty.
+					'orderby'        => esc_sql( $orderby ),
+					'post_status'    => 'publish',
+					'order'          => esc_sql( $order ),
+					'posts_per_page' => absint( $per_page ),
+					'paged'          => absint( $page ),
+					'post__not_in'   => [ get_the_ID() ],
+				],
+			)
 		);
 
 		// Cache the query result.
