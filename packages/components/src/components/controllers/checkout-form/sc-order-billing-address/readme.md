@@ -7,19 +7,13 @@
 
 ## Properties
 
-| Property                | Attribute                 | Description                 | Type      | Default                                                 |
-| ----------------------- | ------------------------- | --------------------------- | --------- | ------------------------------------------------------- |
-| `cityPlaceholder`       | `city-placeholder`        | City placeholder            | `string`  | `__('City', 'surecart')`                                |
-| `countryPlaceholder`    | `country-placeholder`     | Country placeholder         | `string`  | `__('Country', 'surecart')`                             |
-| `defaultCountry`        | `default-country`         | Default country for address | `string`  | `undefined`                                             |
-| `label`                 | `label`                   | Label for the field         | `string`  | `undefined`                                             |
-| `line1Placeholder`      | `line-1-placeholder`      | Address placeholder         | `string`  | `__('Address', 'surecart')`                             |
-| `line2Placeholder`      | `line-2-placeholder`      | Address Line 2 placeholder  | `string`  | `__('Address Line 2', 'surecart')`                      |
-| `namePlaceholder`       | `name-placeholder`        | Name placeholder            | `string`  | `__('Name or Company Name', 'surecart')`                |
-| `postalCodePlaceholder` | `postal-code-placeholder` | Postal Code placeholder     | `string`  | `__('Postal Code/Zip', 'surecart')`                     |
-| `showName`              | `show-name`               | Show the name field         | `boolean` | `undefined`                                             |
-| `statePlaceholder`      | `state-placeholder`       | State placeholder           | `string`  | `__('State/Province/Region', 'surecart')`               |
-| `toggleLabel`           | `toggle-label`            | Toggle label                | `string`  | `__('Billing address is same as shipping', 'surecart')` |
+| Property          | Attribute          | Description                 | Type      | Default                                                 |
+| ----------------- | ------------------ | --------------------------- | --------- | ------------------------------------------------------- |
+| `defaultCountry`  | `default-country`  | Default country for address | `string`  | `undefined`                                             |
+| `label`           | `label`            | Label for the field         | `string`  | `undefined`                                             |
+| `namePlaceholder` | `name-placeholder` | Name placeholder            | `string`  | `__('Name or Company Name', 'surecart')`                |
+| `showName`        | `show-name`        | Show the name field         | `boolean` | `undefined`                                             |
+| `toggleLabel`     | `toggle-label`     | Toggle label                | `string`  | `__('Billing address is same as shipping', 'surecart')` |
 
 
 ## Methods

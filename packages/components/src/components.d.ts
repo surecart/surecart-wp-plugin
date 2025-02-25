@@ -57,10 +57,6 @@ export namespace Components {
           * Should we show name field?
          */
         "showName": boolean;
-        /**
-          * Sorted fields
-         */
-        "sortedFields": Array<CountryLocaleFieldValue>;
     }
     interface ScAlert {
         /**
@@ -6957,10 +6953,6 @@ declare namespace LocalJSX {
           * Should we show name field?
          */
         "showName"?: boolean;
-        /**
-          * Sorted fields
-         */
-        "sortedFields"?: Array<CountryLocaleFieldValue>;
     }
     interface ScAlert {
         /**
