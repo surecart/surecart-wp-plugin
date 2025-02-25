@@ -407,7 +407,7 @@ class Currency {
 		}
 
 		if ( class_exists( 'NumberFormatter' ) ) {
-			$fmt = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
+			$fmt = new \NumberFormatter( apply_filters( 'surecart/currency/locale', get_locale() ), \NumberFormatter::CURRENCY );
 
 			// Extract the fractional part.
 			$fractional_part = fmod( $converted_amount, 1 );
