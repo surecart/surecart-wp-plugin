@@ -53,8 +53,6 @@ class ProductScriptsController extends AdminModelEditController {
 	public function enqueueScriptDependencies() {
 		parent::enqueueScriptDependencies();
 
-		$current_screen = get_current_screen();
-		$current_screen->is_block_editor( true );
 
 		// Editor & media.
 		wp_enqueue_style( 'wp-edit-blocks' );

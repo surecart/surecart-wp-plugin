@@ -6,7 +6,6 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import {
-	Disabled,
 	__experimentalConfirmDialog as ConfirmDialog,
 	Modal,
 } from '@wordpress/components';
