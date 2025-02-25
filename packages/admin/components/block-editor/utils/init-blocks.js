@@ -15,10 +15,8 @@ export default function () {
 
 	registerCoreBlocks(blocks);
 
-	const registeredBlocks = [...blocks];
-
 	return function unregisterBlocks() {
-		registeredBlocks.forEach(
+		blocks.forEach(
 			(block) => block && unregisterBlockType(block.name)
 		);
 	};

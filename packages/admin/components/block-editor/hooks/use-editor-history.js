@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import { useDebounce } from '@wordpress/compose';
 import { useCallback, useState } from '@wordpress/element';

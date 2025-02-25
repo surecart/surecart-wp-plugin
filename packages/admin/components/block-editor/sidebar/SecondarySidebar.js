@@ -2,12 +2,12 @@
 import { css, jsx } from '@emotion/react';
 
 /**
- * External dependencies
+ * External dependencies.
  */
 import { useContext } from '@wordpress/element';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import { EditorContext } from '../context';
 import DocumentOverviewSidebar from './DocumentOverviewSidebar';
