@@ -7,6 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	__experimentalConfirmDialog as ConfirmDialog,
+	Disabled,
 	Modal,
 } from '@wordpress/components';
 import { Suspense, useEffect, useState, memo } from '@wordpress/element';
@@ -24,7 +25,7 @@ import Box from '../../../ui/Box';
 import initBlocks from '../../../components/block-editor/utils/init-blocks';
 import BlockEditor from '../../../components/block-editor';
 import PreviewBlocks from '../../../components/block-editor/PreviewBlocks';
-import { ScText } from '@surecart/components-react';
+import { ScTextarea } from '@surecart/components-react';
 
 const MemoizedBlockEditor = memo(BlockEditor);
 
@@ -128,18 +129,11 @@ export default ({ product, loading }) => {
 			>
 				<div
 					css={css`
-						border: 1px solid #e5e5e5;
-						border-radius: 5px;
-						min-height: 50px;
 						cursor: pointer;
-						overflow-y: auto;
-						overflow-x: hidden;
-						max-height: 400px;
 					`}
 				>
 					<div
 						css={css`
-							padding: 10px 20px;
 							display: block;
 						`}
 						role="button"
@@ -147,19 +141,30 @@ export default ({ product, loading }) => {
 						onClick={() => setEditorModal(true)}
 					>
 						{blocks.length > 0 ? (
-							<PreviewBlocks blocks={blocks} />
-						) : (
-							<ScText
-								as="p"
+							<div
 								css={css`
-									color: var(--sc-color-gray-500);
+									border: 1px solid #e5e5e5;
+									padding: 10px 20px;
+									min-height: 40px;
+									overflow-y: auto;
+									overflow-x: hidden;
+									max-height: 400px;
+									border-radius: 5px;
 								`}
 							>
-								{__(
-									'Write your product details here.',
-									'surecart'
-								)}
-							</ScText>
+								<PreviewBlocks blocks={blocks} />
+							</div>
+						) : (
+							<Disabled onClick={() => setEditorModal(true)}>
+								<ScTextarea
+									placeholder={__(
+										'Write your product details here.',
+										'surecart'
+									)}
+									rows={2}
+									resize="none"
+								/>
+							</Disabled>
 						)}
 					</div>
 				</div>
