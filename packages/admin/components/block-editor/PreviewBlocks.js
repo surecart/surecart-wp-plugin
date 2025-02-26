@@ -1,6 +1,5 @@
-/**
- * External dependencies.
- */
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { BlockEditorProvider, BlockList } from '@wordpress/block-editor';
 import { Disabled } from '@wordpress/components';
 
@@ -11,7 +10,14 @@ export default function ({ blocks }) {
 				value={blocks}
 				settings={surecartBlockEditorSettings}
 			>
-				<div className="editor-styles-wrapper">
+				<div
+					className="editor-styles-wrapper"
+					css={css`
+						[data-rich-text-placeholder] {
+							display: none;
+						}
+					`}
+				>
 					<BlockList
 						renderAppender={() => null}
 						className="surecart-block-editor__block-list"
