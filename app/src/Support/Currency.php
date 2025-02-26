@@ -133,12 +133,9 @@ class Currency {
 
 		// Validate the locale format (must be in standard locale format).
 		if ( ! preg_match( '/^[a-z]{2,3}(?:_[A-Z][a-z]{3})?(?:_[A-Z]{2})?$/', $best_lang ) ) {
-			error_log( 'SureCart: Invalid locale format - ' . self::getCurrencyLocale() );
 			return self::getCurrencyLocale(); // Invalid format, fallback to default.
 		}
 
-		error_log( 'SureCart: Invalid locale format best - ' . $best_lang );
-		error_log( 'SureCart: Invalid locale format local - ' . self::getCurrencyLocale() );
 		return $best_lang ? $best_lang : self::getCurrencyLocale(); // Fallback.
 	}
 
