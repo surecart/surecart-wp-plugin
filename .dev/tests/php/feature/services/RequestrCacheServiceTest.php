@@ -110,7 +110,7 @@ class RequestCacheServiceTest extends SureCartUnitTestCase
 	/**
 	 * @group cache
 	 */
-	public function test_makes_request_if_cache_is_not_updating() {
+	public function test_makes_request_if_cache_is_not_currently_fetching() {
 		$this->request_cache->shouldReceive('getPreviousCacheUpdatingState')->andReturn('updated');
 		$this->requests->shouldReceive('makeUncachedRequest')->once()->andReturn((object)[
 			'data' => [
