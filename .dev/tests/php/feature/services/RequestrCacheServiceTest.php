@@ -39,6 +39,16 @@ class RequestCacheServiceTest extends SureCartUnitTestCase
 			]
 		], false);
 
+		// mock the account.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'cache_keys' => (object) [
+					'manual_payment_methods' => time(),
+					'processors' => time()
+				]
+			];
+		});
+
 		// mock the request service.
 		$this->requests = \Mockery::mock(\SureCart\Request\RequestService::class, [$this->app->container(), 'test', '/v1', true ])->makePartial();
 		$this->app->container()['requests'] = function () {
@@ -46,8 +56,8 @@ class RequestCacheServiceTest extends SureCartUnitTestCase
 		};
 
 		// mock the request cache service for this test.
-		$this->request_cache = \Mockery::mock(\SureCart\Request\RequestCacheService::class);
-		$this->request_cache->shouldReceive('getTransientCache')->andReturn(false);
+		$this->request_cache = \Mockery::mock(\SureCart\Request\RequestCacheService::class)->makePartial();
+		$this->request_cache->shouldReceive('getTransientCache')->andReturn(false); // make sure no transient cache is used.
 		$this->app->container()['requests.cache'] = $this->app->container()->protect(
 			function () {
 				return $this->request_cache;
@@ -66,8 +76,7 @@ class RequestCacheServiceTest extends SureCartUnitTestCase
 			->andReturn((object)[
 				'data' => [
 					(object)[
-						'id' => 'test',
-						'object' => 'manual_payment_method',
+						'id' => 'test_method',
 					]
 				]
 			]);
@@ -75,7 +84,7 @@ class RequestCacheServiceTest extends SureCartUnitTestCase
 
 		$manual_payment_methods = \SureCart\Models\ManualPaymentMethod::get();
 		$this->assertCount(1, $manual_payment_methods);
-		$this->assertSame('test', $manual_payment_methods[0]->id);
+		$this->assertSame('test_method', $manual_payment_methods[0]->id);
 	}
 
 	/**
@@ -88,7 +97,6 @@ class RequestCacheServiceTest extends SureCartUnitTestCase
 				'data' => [
 					(object)[
 						'id' => 'processor_test',
-						'object' => 'processor',
 					]
 				]
 			]);
@@ -97,5 +105,24 @@ class RequestCacheServiceTest extends SureCartUnitTestCase
 		$processors = \SureCart\Models\Processor::get();
 		$this->assertCount(1, $processors);
 		$this->assertSame('processor_test', $processors[0]->id);
+	}
+
+	/**
+	 * @group cache
+	 */
+	public function test_makes_request_if_cache_is_not_updating() {
+		$this->request_cache->shouldReceive('getPreviousCacheUpdatingState')->andReturn('updated');
+		$this->requests->shouldReceive('makeUncachedRequest')->once()->andReturn((object)[
+			'data' => [
+				(object)[
+					'id' => 'fetched_processor',
+				]
+			]
+		]);
+
+		// should get the uncached data.
+		$processors = \SureCart\Models\Processor::get();
+		$this->assertCount(1, $processors);
+		$this->assertSame('fetched_processor', $processors[0]->id);
 	}
 }
