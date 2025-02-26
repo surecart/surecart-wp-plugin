@@ -94,6 +94,7 @@ export default function DisplayCurrencySettings() {
 					)}
 				>
 					<ScSelect
+						search={true}
 						label={__('Currency Locale', 'surecart')}
 						placeholder={__('Select Currency Locale', 'surecart')}
 						value={selectedLocale || null}
