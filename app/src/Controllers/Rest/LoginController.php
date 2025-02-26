@@ -27,11 +27,11 @@ class LoginController extends RestController {
 		}
 
 		User::find( $user->ID )->login();
-		
+
 		return [
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,
-			'redirect_url' => $request->get_param( 'redirect_url' ),
+			'redirect_url' => apply_filters( 'sc_login_redirect_url', null ),
 		];
 	}
 }

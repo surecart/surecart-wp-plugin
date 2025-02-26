@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-16T21:43:25+00:00\n"
+"POT-Creation-Date: 2025-02-17T17:53:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -52,7 +52,7 @@ msgid "Shop"
 msgstr ""
 
 #: src/BlockLibrary/BlockPatternsService.php:30
-#: src/Controllers/Admin/Products/ProductsListTable.php:150
+#: src/Controllers/Admin/Products/ProductsListTable.php:151
 #: products/components/Status/index.js:25
 #: products/components/Status/index.js:64
 #: products/modules/Tax/Category.js:90
@@ -170,6 +170,7 @@ msgstr ""
 #: products/modules/Prices/index.js:59
 #: subscriptions/edit/modules/Price.js:54
 #: subscriptions/show/modules/CurrentPlan.js:85
+#: src/blocks/product-price-chooser/view.php:3
 msgid "Pricing"
 msgstr ""
 
@@ -181,13 +182,13 @@ msgid "Sale"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:45
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:287
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:316
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:432
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:222
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:342
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:293
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:319
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:435
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:228
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:348
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:53
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:134
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:137
 #: src/Controllers/Admin/Orders/OrdersListTable.php:75
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
 #: src/Controllers/Admin/Products/ProductsListTable.php:101
@@ -198,7 +199,7 @@ msgid "All"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:46
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:178
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:181
 #: subscriptions/show/modules/PendingUpdate.js:70
 #: subscriptions/show/modules/PendingUpdate.js:110
 #: sc-order-fulfillment-badge.js:11
@@ -210,7 +211,7 @@ msgid "Sent"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:48
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:180
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:183
 msgid "Not Scheduled"
 msgstr ""
 
@@ -218,21 +219,21 @@ msgstr ""
 msgid "Search Abanonded Orders"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:102
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:103
 msgid "Placed By"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:103
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:89
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:109
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:115
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:97
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:100
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:100
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:56
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:77
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:104
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:90
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:110
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:116
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:98
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:101
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:101
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:57
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:78
 #: src/Controllers/Admin/Orders/OrdersListTable.php:123
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:95
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:96
 #: affiliations/modules/Clicks.js:63
 #: affiliations/modules/Payouts.js:72
 #: affiliations/modules/Referrals.js:70
@@ -247,16 +248,16 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:104
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:105
 msgid "Email Status"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:105
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:106
 msgid "Recovery Status"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:106
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:56
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:107
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:57
 #: src/Controllers/Admin/Orders/OrdersListTable.php:121
 #: web/buy-template.php:60
 #: web/buy-template.php:80
@@ -283,6 +284,7 @@ msgstr ""
 #: Blocks/Upsell/UpsellTotals/edit.js:7
 #: Blocks/Upsell/UpsellTotals/edit.js:45
 #: components/PriceChoices.js:21
+#: src/blocks/cart-subtotal/view.php:14
 #: sc-order-confirmation-totals2.js:36
 #: sc-order.js:161
 #: sc-stripe-payment-request2.js:98
@@ -291,30 +293,30 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:182
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:185
 msgid "Email Sent"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:197
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:200
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:201
 #: abandoned-checkouts/modules/Details.js:11
 msgid "Abandoned"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:199
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:202
 #: abandoned-checkouts/modules/Details.js:15
 msgid "Recovered"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:201
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:204
 #: abandoned-checkouts/modules/Details.js:20
 msgid "Recovered Before Email Was Sent"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:214
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:189
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:280
-#: src/Controllers/Admin/Tables/ListTable.php:102
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:217
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:192
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:283
+#: src/Controllers/Admin/Tables/ListTable.php:141
 #: src/WordPress/PostTypes/FormPostTypeService.php:339
 #: admin/user-profile.php:10
 #: admin/user-profile.php:18
@@ -328,32 +330,37 @@ msgstr ""
 msgid "Test"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:227
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:230
 #: src/Controllers/Admin/Orders/OrdersListTable.php:334
 #: src/Controllers/Admin/Orders/OrdersListTable.php:338
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:179
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:182
 msgid "Edit Order"
 msgstr ""
 
 #. translators: Customer name.
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:230
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:233
 #: src/Controllers/Admin/Orders/OrdersListTable.php:341
 msgid "By %s"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:234
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:235
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:237
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:238
 msgid "View Checkout"
 msgstr ""
 
-#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:278
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:390
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:262
-#: src/Controllers/Admin/Customers/CustomersListTable.php:212
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:327
+#: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:281
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:393
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:268
+#: src/Controllers/Admin/Customers/CustomersListTable.php:218
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:330
 #: src/Controllers/Admin/Orders/OrdersListTable.php:464
-#: src/Controllers/Admin/Products/ProductsListTable.php:589
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:461
+#: src/Controllers/Admin/Products/ProductsListTable.php:595
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:464
+#: src/blocks/product-list-filter/view.php:42
+#: src/blocks/product-list-sidebar-toggle/view.php:50
+#: src/blocks/product-list-filter-checkboxes/edit.js:51
+#: src/blocks/product-list-filter/edit.js:47
+#: src/blocks/product-list-filter/edit.js:57
 #: sc-product-item-list.js:258
 msgid "Filter"
 msgstr ""
@@ -365,7 +372,7 @@ msgid "Abandoned Checkouts"
 msgstr ""
 
 #: src/Controllers/Admin/AffiliationClicks/AffiliationClicksController.php:21
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:96
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:97
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:231
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
@@ -374,49 +381,49 @@ msgstr ""
 msgid "Clicks"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:90
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:91
 #: affiliation-referrals/modules/Click.js:56
 #: affiliations/modules/Clicks.js:57
 msgid "Landing URL"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:91
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:92
 #: affiliation-referrals/modules/Click.js:53
 #: affiliations/modules/Clicks.js:60
 msgid "Referring URL"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:92
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:111
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:119
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:93
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:112
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:120
 #: affiliation-payouts/CreateAffiliationPayout.js:103
 #: affiliation-referrals/CreateAffiliationReferral.js:89
 #: affiliation-referrals/modules/Affiliation.js:36
 msgid "Affiliate"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:93
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:288
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:94
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:294
 #: affiliation-referrals/modules/Click.js:62
 msgid "Converted"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:115
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:235
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:118
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:238
 #: src/Models/Discount.php:33
 #: price.js:101
 msgid "Expired"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:115
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:118
 msgid "Expires on"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:223
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:226
 msgid "No affiliate clicks found."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:289
+#: src/Controllers/Admin/AffiliationClicks/AffiliationClicksListTable.php:295
 #: affiliation-referrals/modules/Click.js:66
 msgid "Not Converted"
 msgstr ""
@@ -443,16 +450,16 @@ msgstr ""
 msgid "Affiliate payout deleted."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:110
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:116
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:96
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:95
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:53
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:63
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:111
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:117
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:97
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:96
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:54
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:65
 #: src/Controllers/Admin/Orders/OrdersListTable.php:116
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:94
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:106
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:110
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:95
 #: abandoned-checkouts/modules/Coupon.js:38
 #: affiliation-referrals/modules/Click.js:59
 #: affiliation-referrals/modules/Order.js:65
@@ -476,15 +483,15 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:112
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:95
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:113
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:96
 #: affiliation-requests/modules/Details.js:102
 #: affiliations/modules/Details.js:79
 #: affiliations/modules/Payouts.js:57
 msgid "Payout Email"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:113
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:114
 #: affiliation-payouts-groups/CreateAffiliationPayoutGroup.js:126
 #: affiliation-payouts/CreateAffiliationPayout.js:125
 #: affiliation-referrals/modules/Payout.js:49
@@ -492,8 +499,8 @@ msgstr ""
 msgid "Period End"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:114
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:97
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:115
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:98
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:232
 #: affiliation-referrals/EditAffiliationReferral.js:223
 #: affiliations/modules/Referrals.js:55
@@ -501,7 +508,7 @@ msgstr ""
 msgid "Referrals"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:115
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:116
 #: src/Integrations/Bricks/Elements/Product.php:94
 #: src/Support/Errors/Translations/attributes.php:14
 #: checkouts/modules/Price.js:252
@@ -517,19 +524,20 @@ msgstr ""
 #: Blocks/Donation/edit.js:258
 #: Blocks/DonationAmount/edit.js:34
 #: Blocks/ProductDonationAmount/edit.js:49
+#: src/blocks/product-selected-price-ad-hoc-amount/view.php:14
 msgid "Amount"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:133
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:136
 msgid "Complete"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:134
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:137
 msgid "Make Processing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:135
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:149
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:138
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:152
 #: admin/products/confirm-bulk-delete.php:67
 #: affiliation-referrals/EditAffiliationReferral.js:277
 #: affiliation-requests/EditAffiliationRequest.js:274
@@ -570,11 +578,11 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:270
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:273
 msgid "No affiliate payouts found."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:317
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:320
 #: src/Controllers/Admin/Orders/OrdersListTable.php:77
 #: src/Models/Payout.php:126
 #: orders/modules/LineItems/index.js:23
@@ -584,7 +592,7 @@ msgstr ""
 msgid "Processing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:318
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:321
 #: src/Models/Payout.php:126
 #: sc-subscription-status-badge2.js:63
 msgid "Completed"
@@ -613,16 +621,16 @@ msgstr ""
 msgid "Affiliate referral is now in review."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:117
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:118
 msgid "Payout Status"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:118
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:119
 msgid "Payout Date"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:120
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:49
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:121
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:50
 #: affiliation-referrals/CreateAffiliationReferral.js:120
 #: affiliation-referrals/modules/Details.js:46
 #: affiliations/modules/Referrals.js:58
@@ -642,7 +650,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:121
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:122
 #: src/Controllers/Admin/Orders/OrdersListTable.php:115
 #: affiliations/modules/Referrals.js:64
 #: invoices/components/OrderPageLink.js:19
@@ -651,7 +659,7 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:122
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:123
 #: affiliation-referrals/modules/Payout.js:42
 #: affiliation-referrals/modules/ReferralItems.js:88
 #: affiliations/modules/Payouts.js:64
@@ -660,10 +668,10 @@ msgstr ""
 msgid "Commission"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:144
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:125
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:185
-#: src/Controllers/Admin/Products/ProductsListTable.php:509
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:147
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:128
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:188
+#: src/Controllers/Admin/Products/ProductsListTable.php:512
 #: components/data-tables/affiliates/ReferralsDataTable.js:100
 #: components/data-tables/licenses-data-table/license-item.js:74
 #: components/data-tables/OrdersDataTable.js:82
@@ -673,16 +681,16 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:145
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:255
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:261
-#: src/Controllers/Admin/Customers/CustomersListTable.php:149
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:262
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:110
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:124
-#: src/Controllers/Admin/Products/ProductsListTable.php:506
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:417
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:246
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:148
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:258
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:264
+#: src/Controllers/Admin/Customers/CustomersListTable.php:152
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:114
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:127
+#: src/Controllers/Admin/Products/ProductsListTable.php:509
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:420
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:249
 #: src/Integrations/Beaver/BeaverFormModule.php:95
 #: src/Integrations/Elementor/ReusableFormWidget.php:122
 #: checkouts/modules/Address.js:101
@@ -711,25 +719,25 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:146
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:350
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:149
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:353
 #: affiliation-referrals/EditAffiliationReferral.js:253
 #: affiliation-requests/EditAffiliationRequest.js:252
 msgid "Approve"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:147
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:150
 #: affiliation-referrals/EditAffiliationReferral.js:269
 #: affiliation-requests/EditAffiliationRequest.js:264
 msgid "Deny"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:148
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:151
 #: affiliation-referrals/EditAffiliationReferral.js:262
 msgid "Make Reviewing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:289
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:292
 #: abandoned-checkouts/modules/LineItems/index.js:34
 #: components/data-tables/charges-data-table/index.js:149
 #: invoices/components/OrderPageLink.js:37
@@ -740,19 +748,19 @@ msgstr ""
 msgid "View Order"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:347
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:350
 msgid "No affiliate referrals found . "
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:433
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:436
 #: src/Models/Referral.php:166
 #: affiliation-referrals/EditAffiliationReferral.js:48
 #: util.js:96
 msgid "Reviewing"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:434
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:223
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:437
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:229
 #: src/Models/AffiliationRequest.php:122
 #: src/Models/Referral.php:170
 #: affiliation-referrals/EditAffiliationReferral.js:46
@@ -760,8 +768,8 @@ msgstr ""
 msgid "Approved"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:435
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:224
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:438
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:230
 #: src/Models/AffiliationRequest.php:124
 #: src/Models/Referral.php:168
 #: affiliation-referrals/EditAffiliationReferral.js:47
@@ -769,7 +777,7 @@ msgstr ""
 msgid "Denied"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:436
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:439
 #: src/Controllers/Admin/Orders/OrdersListTable.php:80
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:67
 #: orders/modules/LineItems/index.js:26
@@ -781,7 +789,7 @@ msgstr ""
 msgid "Canceled"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:437
+#: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:440
 #: src/Models/Referral.php:167
 msgid "In Payout"
 msgstr ""
@@ -792,15 +800,15 @@ msgstr ""
 msgid "Affiliate Requests"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:93
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:93
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:95
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:73
-#: src/Controllers/Admin/Customers/CustomersListTable.php:51
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:47
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
-#: src/Controllers/Admin/Products/ProductsListTable.php:144
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:92
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:94
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:94
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:96
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:74
+#: src/Controllers/Admin/Customers/CustomersListTable.php:52
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:48
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
+#: src/Controllers/Admin/Products/ProductsListTable.php:145
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:93
 #: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:89
 #: src/Integrations/Bricks/Elements/PriceChooser.php:118
 #: src/Integrations/Bricks/Elements/Product.php:177
@@ -836,9 +844,9 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:94
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:94
-#: src/Controllers/Admin/Customers/CustomersListTable.php:52
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:95
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:95
+#: src/Controllers/Admin/Customers/CustomersListTable.php:53
 #: web/buy-template.php:46
 #: affiliation-payouts/ExportAffiliationPayout.js:84
 #: affiliation-requests/modules/Details.js:84
@@ -852,11 +860,11 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:142
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:145
 msgid "No affiliate requests found."
 msgstr ""
 
-#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:225
+#: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:231
 #: src/Models/AffiliationRequest.php:123
 #: orders/modules/Refunds.js:41
 #: util.js:93
@@ -879,34 +887,34 @@ msgstr ""
 msgid "Affiliation deactivated successfully."
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:98
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:99
 msgid "Total Earnings"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:99
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:100
 msgid "Unpaid Earnings"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:148
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:151
 msgid "No affiliates found."
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:228
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:231
 #: affiliations/ViewAffiliation.js:187
 msgid "View Affiliate"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:228
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:231
 #: settings/connection/IncomingWebhooks.js:206
 msgid "View Details"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:284
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:290
 #: affiliations/ViewAffiliation.js:236
 msgid "Deactivate"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:284
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:290
 #: affiliations/ViewAffiliation.js:225
 #: components/data-tables/subscriptions-data-table/StartPlan.js:73
 #: settings/integrations/PluginActivationButton.js:83
@@ -914,22 +922,22 @@ msgstr ""
 msgid "Activate"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:285
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:291
 msgid "Are you sure you want to deactivate this affilate?"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:285
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:291
 msgid "Are you sure you want to activate this affiliate?"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:293
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:299
 msgid "Toggle Affiliate active status"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:343
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:349
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:51
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:235
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:123
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:238
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
 #: src/Controllers/Admin/Products/ProductsListTable.php:99
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:64
@@ -945,8 +953,8 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:344
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:127
+#: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:350
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:131
 #: src/Models/Affiliation.php:138
 #: affiliations/ViewAffiliation.js:213
 #: licenses/modules/Details/index.js:27
@@ -962,7 +970,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:52
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:173
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:176
 #: src/Controllers/Admin/Products/ProductsListTable.php:100
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:53
 #: coupons/modules/Code.js:118
@@ -975,9 +983,9 @@ msgstr ""
 msgid "Archived"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:97
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:75
-#: src/Controllers/Admin/Products/ProductsListTable.php:145
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:98
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:76
+#: src/Controllers/Admin/Products/ProductsListTable.php:146
 #: src/Integrations/Bricks/Elements/Product.php:103
 #: src/Integrations/Bricks/Elements/ProductCard.php:175
 #: bumps/modules/Price.js:33
@@ -994,42 +1002,42 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:111
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:88
-#: src/Controllers/Admin/Customers/CustomersListTable.php:65
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:114
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:91
+#: src/Controllers/Admin/Customers/CustomersListTable.php:68
 #: src/Controllers/Admin/Orders/OrdersListTable.php:137
-#: src/Controllers/Admin/Products/ProductsListTable.php:165
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:125
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:106
+#: src/Controllers/Admin/Products/ProductsListTable.php:168
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:128
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:109
 msgid "Select comment"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:173
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:176
 msgid "No order bumps found."
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:193
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:196
 #: src/Controllers/Admin/Orders/OrdersListTable.php:258
-#: src/Controllers/Admin/Products/ProductsListTable.php:325
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:189
+#: src/Controllers/Admin/Products/ProductsListTable.php:328
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:192
 #: products/modules/Prices/NewPrice/index.js:142
 #: products/modules/Prices/Price/Header.js:84
 #: store/add-entities.js:425
 #: store/add-entities.js:432
-#: subscriptions/edit/EditSubscription.js:231
+#: subscriptions/edit/EditSubscription.js:239
 #: sc-subscription-details2.js:80
 #: sc-subscription.js:153
 msgid "Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:206
-#: src/Controllers/Admin/Products/ProductsListTable.php:338
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:202
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:209
+#: src/Controllers/Admin/Products/ProductsListTable.php:341
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:205
 msgid "One-Time"
 msgstr ""
 
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:248
-#: src/Controllers/Admin/Bumps/BumpsListTable.php:255
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:251
+#: src/Controllers/Admin/Bumps/BumpsListTable.php:258
 #: bumps/EditBump.js:163
 msgid "Edit Bump"
 msgstr ""
@@ -1038,10 +1046,10 @@ msgstr ""
 msgid "Subscription Saver & Insights"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:51
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:54
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:61
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:108
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:55
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:63
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
 #: admin/user-profile.php:5
 #: abandoned-checkouts/modules/Customer.js:14
 #: checkouts/modules/SelectCustomer/index.js:94
@@ -1054,8 +1062,8 @@ msgstr ""
 msgid "Customer"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:110
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:53
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:111
 #: orders/modules/Subscriptions.js:52
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
 #: Controllers/SubscriptionController.php:177
@@ -1069,45 +1077,45 @@ msgstr ""
 msgid "Plan"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:53
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:54
 #: store/add-entities.js:60
 msgid "Cancellation Reason"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:54
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:55
 msgid "Comment"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:55
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:56
 msgid "Plan Status"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:70
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:73
 msgid "No product"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:90
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:93
 msgid "All Cancellation Attempts"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:130
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:133
 msgid "No cancellation acts."
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:154
-#: src/Controllers/Admin/Customers/CustomersListTable.php:142
-#: src/Controllers/Admin/Customers/CustomersListTable.php:149
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:134
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:157
+#: src/Controllers/Admin/Customers/CustomersListTable.php:145
+#: src/Controllers/Admin/Customers/CustomersListTable.php:152
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:138
 #: customers/EditCustomer.js:160
 msgid "Edit Customer"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:155
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:407
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:158
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:410
 msgid "No name provided"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:161
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:164
 #: abandoned-checkouts/modules/Customer.js:26
 #: checkouts/modules/SelectCustomer/index.js:107
 #: invoices/modules/SelectCustomer/index.js:64
@@ -1117,11 +1125,11 @@ msgid "View Customer"
 msgstr ""
 
 #. translators: Subscription saver feature. This is displayed if the subscription has been "Saved" from cancellation.
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:205
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:209
 msgid "Saved"
 msgstr ""
 
-#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:207
+#: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:213
 msgid "Coupon Applied"
 msgstr ""
 
@@ -1138,37 +1146,37 @@ msgstr ""
 msgid "Search Coupons"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:74
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:75
 #: abandoned-checkouts/modules/Coupon.js:32
 #: affiliations/modules/Promotions.js:58
 #: coupons/modules/EditPromotionCode.js:95
 msgid "Code"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:76
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:77
 #: components/data-tables/licenses-data-table/license-item.js:44
 msgid "Usage"
 msgstr ""
 
 #. translators: coupon expiration date.
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:178
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:336
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:181
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:339
 msgid "Valid until %s"
 msgstr ""
 
 #. translators: Coupon % off.
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:193
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:196
 #: abandoned-checkouts/modules/Coupon.js:20
 msgid "%d%% off"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:201
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:353
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:204
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:356
 msgid "No discount."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:216
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:368
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:219
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:371
 #: components/affiliates/AffiliateFooter.js:50
 #: coupons/modules/Types.js:33
 #: coupons/modules/Types.js:120
@@ -1181,13 +1189,13 @@ msgid "Forever"
 msgstr ""
 
 #. translators: number of months.
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:220
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:372
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:223
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:375
 msgid "For %d months"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:223
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:375
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:226
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:378
 #: coupons/modules/Types.js:37
 #: coupons/modules/Types.js:127
 #: coupons/Sidebar.js:29
@@ -1199,23 +1207,23 @@ msgstr ""
 msgid "Once"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:254
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:261
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:257
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:264
 #: coupons/EditCoupon.js:137
 msgid "Edit Coupon"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:277
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:280
 msgid "No code specified"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:282
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:285
 msgid "+ %d more"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:294
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:165
-#: src/Controllers/Admin/Products/ProductsListTable.php:522
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:297
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:169
+#: src/Controllers/Admin/Products/ProductsListTable.php:525
 #: bumps/EditBump.js:127
 #: coupons/components/coupon/ActionsDropdown.js:29
 #: coupons/components/CouponActionsDropdown.js:96
@@ -1227,9 +1235,9 @@ msgstr ""
 msgid "Un-Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:294
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:165
-#: src/Controllers/Admin/Products/ProductsListTable.php:522
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:297
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:169
+#: src/Controllers/Admin/Products/ProductsListTable.php:525
 #: bumps/EditBump.js:128
 #: coupons/components/coupon/ActionsDropdown.js:30
 #: coupons/components/CouponActionsDropdown.js:97
@@ -1241,28 +1249,28 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:295
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:298
 msgid "Are you sure you want to restore this coupon? This will be be available to purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:295
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:298
 msgid "Are you sure you want to archive this coupon? This will be unavailable for purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:302
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:305
 msgid "Toggle Coupon Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:347
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:350
 msgid "Unapprove"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:353
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:356
 msgctxt "comment"
 msgid "Mark as spam"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:357
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:360
 #: src/Controllers/Admin/Restore/RestoreController.php:26
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:236
 #: admin/restore/index.php:37
@@ -1272,17 +1280,17 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:359
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:362
 msgctxt "comment"
 msgid "Not spam"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:363
-#: src/Controllers/Admin/Products/ProductsListTable.php:610
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:366
+#: src/Controllers/Admin/Products/ProductsListTable.php:616
 msgid "Delete permanently"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:365
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:368
 msgid "Move to Trash"
 msgstr ""
 
@@ -1298,13 +1306,13 @@ msgstr ""
 msgid "Customers"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:53
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:57
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:64
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:50
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:106
-#: src/Controllers/Admin/Products/ProductsListTable.php:153
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
+#: src/Controllers/Admin/Customers/CustomersListTable.php:54
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:58
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:66
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:51
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:107
+#: src/Controllers/Admin/Products/ProductsListTable.php:154
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:114
 #: affiliation-referrals/modules/Click.js:73
 #: affiliation-referrals/modules/Summary.js:31
 #: affiliations/modules/Details.js:92
@@ -1314,11 +1322,11 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:118
+#: src/Controllers/Admin/Customers/CustomersListTable.php:121
 msgid "No customers found."
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:50
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:51
 #: forms/invoice.php:6
 #: orders/modules/InvoiceDetails/index.js:29
 #: orders/modules/InvoiceDetails/InvoicePageLink.js:19
@@ -1326,15 +1334,15 @@ msgstr ""
 msgid "Invoice"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:51
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:52
 msgid "Issued"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:52
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:53
 msgid "Due"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:55
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:56
 #: src/Controllers/Admin/Orders/OrdersListTable.php:119
 #: customers/modules/Charges.js:69
 #: customers/modules/PaymentMethods/index.js:52
@@ -1342,7 +1350,7 @@ msgstr ""
 msgid "Method"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:135
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:138
 #: src/Controllers/Admin/Orders/OrdersListTable.php:76
 #: components/data-tables/charges-data-table/index.js:35
 #: invoices/modules/Payment.js:90
@@ -1358,9 +1366,9 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:136
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:139
 #: src/Controllers/Admin/Orders/OrdersListTable.php:78
-#: src/Controllers/Admin/Products/ProductsListTable.php:431
+#: src/Controllers/Admin/Products/ProductsListTable.php:434
 #: orders/modules/LineItems/index.js:28
 #: products/components/Status/index.js:74
 #: products/components/Status/index.js:95
@@ -1371,14 +1379,14 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:137
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:140
 #: Blocks/Dashboard/CustomerInvoices/edit.js:85
 #: sc-icon2.js:41
 #: sc-invoice-status-badge2.js:32
 msgid "Open"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:238
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:241
 #: src/Controllers/Admin/Orders/OrdersListTable.php:273
 #: components/data-tables/charges-data-table/index.js:24
 #: components/data-tables/charges-data-table/index.js:119
@@ -1391,19 +1399,19 @@ msgstr ""
 msgid "Refunded"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:253
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:262
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:256
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
 #: invoices/Invoice.js:90
 #: invoices/Invoice.js:111
 #: invoices/Invoice.js:118
 msgid "Edit Invoice"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:254
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:257
 msgid "(draft)"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:263
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:266
 #: invoices/components/CheckoutPageLink.js:67
 msgid "View Payment Page"
 msgstr ""
@@ -1431,16 +1439,16 @@ msgstr ""
 msgid "Licenses"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:45
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:46
 #: admin/licenses/index.php:12
 msgid "Search Licenses"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:60
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:62
 msgid "Key"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:62
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:64
 #: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
 #: src/Routing/PermalinkServiceProvider.php:54
 #: web/buy-template.php:91
@@ -1452,16 +1460,16 @@ msgstr ""
 msgid "Purchase"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:90
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:94
 msgid "No licenses found."
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:103
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:110
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:107
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:114
 msgid "Edit License"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:125
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:129
 #: components/data-tables/purchases-data-table/purchase-item.js:37
 #: licenses/modules/Details/index.js:24
 #: licenses/modules/Purchase.js:71
@@ -1470,8 +1478,8 @@ msgstr ""
 msgid "Revoked"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:151
-#: src/Controllers/Admin/Products/ProductsListTable.php:474
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:155
+#: src/Controllers/Admin/Products/ProductsListTable.php:477
 #: src/Controllers/Web/BuyPageController.php:56
 #: src/WordPress/PostTypes/ProductPostTypeService.php:346
 #: src/WordPress/PostTypes/ProductPostTypeService.php:943
@@ -1480,18 +1488,18 @@ msgstr ""
 msgid "Edit Product"
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:523
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:170
+#: src/Controllers/Admin/Products/ProductsListTable.php:526
 msgid "Are you sure you want to restore this product? This will be be available to purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:166
-#: src/Controllers/Admin/Products/ProductsListTable.php:523
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:170
+#: src/Controllers/Admin/Products/ProductsListTable.php:526
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Licenses/LicensesListTable.php:173
-#: src/Controllers/Admin/Products/ProductsListTable.php:530
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:177
+#: src/Controllers/Admin/Products/ProductsListTable.php:533
 msgid "Toggle Product Archive"
 msgstr ""
 
@@ -1539,9 +1547,9 @@ msgid "Shipping"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:120
-#: src/Controllers/Admin/Products/ProductsListTable.php:148
+#: src/Controllers/Admin/Products/ProductsListTable.php:149
 #: src/Controllers/Admin/Settings/BaseSettings.php:56
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:112
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
 #: layouts/partials/admin-settings-sidebar.php:66
 #: products/modules/integrations/Integrations.js:76
 #: settings/integrations/Integration.js:133
@@ -1641,7 +1649,7 @@ msgstr ""
 msgid "View Collection"
 msgstr ""
 
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:48
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:49
 #: src/Controllers/Admin/Products/ProductsController.php:31
 #: src/Integrations/Elementor/Conditions/ProductSingle.php:56
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:203
@@ -1658,11 +1666,13 @@ msgstr ""
 #: upsell-funnels/modules/Conditions.js:132
 #: Blocks/Form/components/SelectPrices.js:111
 #: Blocks/ProductItemList/edit.js:363
+#: src/blocks/product-list/inspector-controls/IncludeControls.js:179
+#: src/blocks/product-list/inspector-controls/index.js:99
 msgid "Products"
 msgstr ""
 
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:117
-#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:124
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:120
+#: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:127
 #: product-collections/EditProductCollection.js:148
 msgid "Edit Product Collection"
 msgstr ""
@@ -1679,14 +1689,14 @@ msgstr ""
 msgid "Search Orders"
 msgstr ""
 
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:173
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:176
 #: src/WordPress/PostTypes/FormPostTypeService.php:343
 #: Blocks/Form/components/Mode.js:19
 #: Blocks/Form/components/Mode.js:38
 msgid "Live"
 msgstr ""
 
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:185
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:188
 msgid "View Product Group"
 msgstr ""
 
@@ -1738,14 +1748,14 @@ msgstr[1] ""
 msgid "View Product"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:146
+#: src/Controllers/Admin/Products/ProductsListTable.php:147
 #: affiliation-referrals/CreateAffiliationReferral.js:107
 #: affiliation-referrals/modules/Details.js:32
 #: affiliations/modules/affiliation-products/index.js:249
 msgid "Commission Amount"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:147
+#: src/Controllers/Admin/Products/ProductsListTable.php:148
 #: src/Integrations/Bricks/Elements/Quantity.php:51
 #: src/Integrations/Bricks/Elements/Quantity.php:72
 #: affiliation-referrals/modules/ReferralItems.js:77
@@ -1756,11 +1766,12 @@ msgstr ""
 #: products/modules/Variations/Variants.js:123
 #: Blocks/CheckoutForm/components/PriceChoices.js:57
 #: components/PriceChoices.js:18
+#: src/blocks/product-quantity/view.php:3
 #: sc-checkout-stock-alert2.js:109
 msgid "Quantity"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:149
+#: src/Controllers/Admin/Products/ProductsListTable.php:150
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:204
 #: src/WordPress/Taxonomies/CollectionTaxonomyService.php:124
 #: product-collections/EditProductCollection.js:144
@@ -1768,43 +1779,47 @@ msgstr ""
 msgid "Collections"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:151
+#: src/Controllers/Admin/Products/ProductsListTable.php:152
 #: products/modules/Image/ImageDisplay.js:44
 #: products/modules/Image/WordPressMedia.js:100
 #: products/modules/Publishing.js:63
 msgid "Featured"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:152
+#: src/Controllers/Admin/Products/ProductsListTable.php:153
 msgid "Sync Status"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:181
+#: src/Controllers/Admin/Products/ProductsListTable.php:184
 msgid "Syncing..."
 msgstr ""
 
 #. translators: %d is the number of available stock.
-#: src/Controllers/Admin/Products/ProductsListTable.php:194
+#: src/Controllers/Admin/Products/ProductsListTable.php:197
 #: products/modules/Variations/VariantItem.js:172
 msgid "%d Available"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:305
-#: components/NewShopTemplate.js:252
+#: src/Controllers/Admin/Products/ProductsListTable.php:308
+#: components/NewShopTemplate.js:257
+#: src/blocks/product-list-no-products/edit.js:16
+#: src/blocks/product-list/list-placeholder.js:43
+#: src/blocks/product-list/template.js:82
+#: src/components/ProductSelector.js:135
 #: sc-product-item-list.js:276
 msgid "No products found."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:355
+#: src/Controllers/Admin/Products/ProductsListTable.php:358
 #: src/Integrations/TutorLMS/TutorLMSService.php:167
 msgid "No price"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:362
+#: src/Controllers/Admin/Products/ProductsListTable.php:365
 msgid "Name your own price"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:365
+#: src/Controllers/Admin/Products/ProductsListTable.php:368
 #: src/Models/Price.php:125
 #: checkouts/modules/SelectShipping.js:130
 #: invoices/modules/SelectShipping.js:95
@@ -1817,13 +1832,13 @@ msgid "Free"
 msgstr ""
 
 #. translators: %d is the number of other prices.
-#: src/Controllers/Admin/Products/ProductsListTable.php:376
+#: src/Controllers/Admin/Products/ProductsListTable.php:379
 msgid " and %d other price."
 msgid_plural " and %d other prices."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:429
+#: src/Controllers/Admin/Products/ProductsListTable.php:432
 #: products/components/Status/index.js:81
 #: products/components/Status/index.js:94
 #: products/modules/BuyLink.js:123
@@ -1831,25 +1846,25 @@ msgstr[1] ""
 msgid "Published"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:496
+#: src/Controllers/Admin/Products/ProductsListTable.php:499
 msgid "Successfully deleted."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:500
+#: src/Controllers/Admin/Products/ProductsListTable.php:503
 msgid "Queued for deletion."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:508
+#: src/Controllers/Admin/Products/ProductsListTable.php:511
 #: settings/advanced/AdvancedSettings.js:449
 #: settings/advanced/components/ProductSyncButton.js:38
 msgid "Sync"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:653
+#: src/Controllers/Admin/Products/ProductsListTable.php:659
 msgid "Filter by Product Collection"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:656
+#: src/Controllers/Admin/Products/ProductsListTable.php:662
 msgid "All Product Collections"
 msgstr ""
 
@@ -1901,7 +1916,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:64
-#: subscriptions/show/ShowSubscription.js:439
+#: subscriptions/show/ShowSubscription.js:437
 #: sc-subscriptions-list.js:140
 msgid "Subscriptions"
 msgstr ""
@@ -1955,23 +1970,23 @@ msgstr ""
 msgid "Past Due"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:111
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:112
 msgid "Remaining Payments"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:220
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:223
 #: src/Integrations/Bricks/Elements/BuyButton.php:96
 #: coupons/modules/SelectAffiliate.js:131
 #: sc-product-item-list.js:258
 msgid "None"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:255
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:258
 msgid "(one time)"
 msgstr ""
 
 #. translators: used as in time period: "for 3 months"
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:260
 #: sc-order-bump2.js:61
 #: sc-price-choice-container2.js:43
 #: sc-price-choice-container2.js:59
@@ -1988,12 +2003,12 @@ msgstr ""
 msgid "for"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:270
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:273
 msgid "No Product"
 msgstr ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:283
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:286
 #: src/Support/Interval.php:29
 #: util/translations.js:14
 #: price.js:35
@@ -2004,7 +2019,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:283
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:286
 #: src/Models/Price.php:247
 #: src/Models/Price.php:286
 #: src/Support/Interval.php:29
@@ -2017,7 +2032,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:289
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:292
 #: src/Support/Interval.php:35
 #: util/translations.js:21
 #: price.js:37
@@ -2027,7 +2042,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:289
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:292
 #: src/Models/Price.php:251
 #: src/Support/Interval.php:35
 #: util/translations.js:22
@@ -2038,7 +2053,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:295
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:298
 #: src/Models/Checkout.php:505
 #: src/Support/Interval.php:41
 #: util/translations.js:28
@@ -2050,7 +2065,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:295
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:298
 #: src/Models/Price.php:255
 #: src/Support/Interval.php:41
 #: util/translations.js:29
@@ -2061,7 +2076,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:304
 #: src/Support/Interval.php:47
 #: util/translations.js:35
 #: price.js:41
@@ -2071,7 +2086,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:304
 #: src/Models/Price.php:259
 #: src/Support/Interval.php:47
 #: util/translations.js:36
@@ -2083,7 +2098,7 @@ msgstr[1] ""
 
 #. translators: Coupon % off.
 #. Translators: Percent off.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:345
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:348
 #: src/Models/Checkout.php:482
 #: src/Models/Coupon.php:54
 #: util.js:49
@@ -2091,9 +2106,9 @@ msgstr[1] ""
 msgid "%1d%% off"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:410
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:417
-#: subscriptions/edit/EditSubscription.js:244
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:413
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:420
+#: subscriptions/edit/EditSubscription.js:252
 msgid "Edit Subscription"
 msgstr ""
 
@@ -2106,7 +2121,7 @@ msgstr ""
 msgid "Live & Test Mode"
 msgstr ""
 
-#: src/Controllers/Admin/Tables/ListTable.php:74
+#: src/Controllers/Admin/Tables/ListTable.php:113
 #: settings/shipping/profile/ShippingProfile.js:114
 #: settings/tax-region/TaxRegionSettings.js:230
 msgid "Updated"
@@ -2130,7 +2145,7 @@ msgstr ""
 msgid "Funnel disabled."
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:93
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:94
 #: affiliations/modules/affiliation-products/index.js:354
 #: affiliations/modules/Commission.js:153
 #: bumps/modules/Priority.js:9
@@ -2141,15 +2156,15 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:169
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:172
 msgid "No upsell funnels found."
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:240
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:243
 msgid "Edit Upsell"
 msgstr ""
 
-#: src/Controllers/Admin/Upsells/UpsellsListTable.php:246
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:249
 #: src/Controllers/Web/UpsellPageController.php:53
 #: upsell-funnels/EditFunnel.js:220
 msgid "Edit Upsell Funnel"
@@ -2380,10 +2395,18 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:60
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:185
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:242
+#: src/WordPress/PluginActionLinksService.php:46
 #: layouts/partials/admin-settings-header.php:83
 #: invoices/modules/Tax/index.js:52
 #: Blocks/CartMenuButton/edit.js:31
 #: Blocks/StoreLogo/edit.js:150
+#: src/blocks/cart-menu-button/edit.js:26
+#: src/blocks/product-image/edit.js:165
+#: src/blocks/product-list-filter-checkboxes/edit.js:34
+#: src/blocks/product-list-filter/edit.js:30
+#: src/blocks/product-list-sidebar/edit.js:154
+#: src/blocks/product-pagination/edit.js:65
+#: src/blocks/product-title/edit.js:42
 msgid "Settings"
 msgstr ""
 
@@ -2548,6 +2571,7 @@ msgstr ""
 
 #. translators: %s: Setup Fee amount.
 #: src/Integrations/Bricks/BricksDynamicDataService.php:334
+#: src/blocks/price-trial/edit.js:9
 msgid "Starting in 15 days"
 msgstr ""
 
@@ -2578,6 +2602,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:65
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:210
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:230
+#: src/blocks/product-buy-buttons/edit.js:49
 #: sc-product-price-modal.js:63
 msgid "Add To Cart"
 msgstr ""
@@ -2589,6 +2614,8 @@ msgstr ""
 #: Blocks/CustomerDashboardButton/edit.js:34
 #: Blocks/Form/edit.js:496
 #: Blocks/Submit/edit.js:44
+#: src/blocks/cart-coupon/edit.js:166
+#: src/blocks/cart-submit/edit.js:85
 msgid "Button Text"
 msgstr ""
 
@@ -2610,6 +2637,7 @@ msgstr ""
 #: components/MediaLibrary/Preview.js:144
 #: Blocks/CustomerDashboardButton/edit.js:57
 #: Blocks/Submit/edit.js:99
+#: src/components/LabelInspectorControls.js:32
 msgid "Size"
 msgstr ""
 
@@ -2638,6 +2666,8 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:118
 #: settings/brand/components/CartSettings.js:219
 #: Blocks/CartMenuButton/edit.js:41
+#: src/blocks/cart-menu-button/edit.js:36
+#: src/blocks/product-list-sidebar-toggle/edit.js:56
 msgid "Icon"
 msgstr ""
 
@@ -2667,6 +2697,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:203
 #: src/Integrations/Bricks/Elements/Product.php:235
 #: src/Models/Blocks/ProductPageBlock.php:228
+#: src/blocks/product-buy-button/view.php:16
 msgid "Add to Cart"
 msgstr ""
 
@@ -2674,6 +2705,8 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/Product.php:247
 #: Blocks/AddToCartButton/Block.php:81
 #: Blocks/BuyButton/Block.php:36
+#: src/blocks/product-buy-button/view.php:16
+#: src/blocks/product-buy-buttons/edit.js:60
 msgid "Buy Now"
 msgstr ""
 
@@ -2681,6 +2714,7 @@ msgstr ""
 #: src/Models/Blocks/ProductPageBlock.php:229
 #: Blocks/Product/BuyButton/Block.php:128
 #: Blocks/Upsell/SubmitButton/Block.php:131
+#: src/blocks/product-buy-button/view.php:17
 msgid "Sold Out"
 msgstr ""
 
@@ -2691,6 +2725,7 @@ msgstr ""
 #: Blocks/Product/BuyButton/Block.php:144
 #: Blocks/Upsell/SubmitButton/Block.php:125
 #: Blocks/Upsell/SubmitButton/Block.php:149
+#: src/blocks/product-buy-button/view.php:18
 msgid "Unavailable For Purchase"
 msgstr ""
 
@@ -2715,25 +2750,32 @@ msgid "Auto height"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:71
+#: src/blocks/product-media/edit.js:137
+msgid "Enlarge on click"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Media.php:80
 #: Blocks/ProductCollectionImage/dimension-controls.js:141
 #: Blocks/ProductCollectionImage/dimension-controls.js:150
+#: src/blocks/product-image/edit.js:144
 msgid "Height"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:84
+#: src/Integrations/Bricks/Elements/Media.php:93
 msgid "Max image width"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:87
+#: src/Integrations/Bricks/Elements/Media.php:96
 #: Blocks/Product/Media/edit.js:68
+#: src/blocks/product-media/edit.js:177
 msgid "Unlimited"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:92
+#: src/Integrations/Bricks/Elements/Media.php:101
 msgid "Thumbs per page"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:112
+#: src/Integrations/Bricks/Elements/Media.php:121
 msgid "The accurate preview for this element is only available on frontend due to compatibility issues."
 msgstr ""
 
@@ -2742,6 +2784,8 @@ msgid "Price Choice"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:75
+#: src/blocks/product-price-choice-template/edit.js:148
+#: src/blocks/product-variant-pill/edit.js:75
 msgid "Highlight Border"
 msgstr ""
 
@@ -2796,6 +2840,11 @@ msgstr ""
 #: Blocks/Switch/components/Inspector.js:23
 #: Blocks/Textarea/edit.js:42
 #: Blocks/TrialLineItem/edit.js:21
+#: src/blocks/cart-bump-line-item/edit.js:38
+#: src/blocks/cart-coupon/edit.js:150
+#: src/blocks/cart-subtotal/edit.js:33
+#: src/blocks/product-quantity/edit.js:37
+#: src/components/LabelInspectorControls.js:24
 msgid "Label"
 msgstr ""
 
@@ -2946,6 +2995,7 @@ msgstr ""
 #: src/WordPress/PostTypes/ProductPostTypeService.php:945
 #: Blocks/ProductItemList/edit.js:388
 #: Blocks/ProductItemList/edit.js:501
+#: src/blocks/product-list/inspector-controls/index.js:106
 msgid "All Products"
 msgstr ""
 
@@ -3043,6 +3093,7 @@ msgstr ""
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:29
 #: products/CreateProduct.js:65
+#: src/blocks/product-title/edit.js:73
 msgid "Product Name"
 msgstr ""
 
@@ -3225,6 +3276,17 @@ msgstr ""
 msgid "Not redeemable"
 msgstr ""
 
+#. translators: %s is the image title.
+#: src/Models/GalleryItemAttachment.php:75
+#: src/Models/GalleryItemProductMedia.php:81
+msgid "Viewing image: %s."
+msgstr ""
+
+#: src/Models/GalleryItemAttachment.php:96
+#: src/Models/GalleryItemProductMedia.php:102
+msgid "Expand image"
+msgstr ""
+
 #: src/Models/Invoice.php:67
 #: src/Models/Invoice.php:108
 msgid "Please create the invoice first."
@@ -3366,6 +3428,7 @@ msgstr ""
 #: src/Models/Price.php:217
 #: products/modules/Prices/Price/Header.js:59
 #: subscriptions/show/modules/CurrentPlan.js:187
+#: src/blocks/product-selected-price-fees/edit.js:16
 #: sc-price-choice-container2.js:70
 #: sc-price-choice.js:814
 #: sc-price2.js:57
@@ -6617,6 +6680,10 @@ msgstr ""
 msgid "Shop Page"
 msgstr ""
 
+#: src/WordPress/PluginActionLinksService.php:47
+msgid "Documentation"
+msgstr ""
+
 #: src/WordPress/PostTypes/CartPostTypeService.php:242
 msgctxt "post type general name"
 msgid "Carts"
@@ -7223,6 +7290,9 @@ msgstr ""
 #: admin/affiliations/index.php:11
 #: Blocks/ProductCollection/edit.js:273
 #: Blocks/ProductItemList/edit.js:325
+#: src/blocks/product-list-search/view.php:28
+#: src/blocks/product-list-search/edit.js:29
+#: src/utilities/pattern-selection-modal.js:77
 #: sc-product-item-list.js:265
 #: sc-product-item-list.js:274
 msgid "Search"
@@ -7518,7 +7588,7 @@ msgstr[1] ""
 #: subscriptions/edit/modules/Modals/UpdateAmount.js:41
 #: subscriptions/edit/modules/Modals/UpdatePrice.js:50
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:335
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:168
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:171
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:66
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:56
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:176
@@ -7645,6 +7715,9 @@ msgstr ""
 #: web/buy-template.php:57
 #: Blocks/CartCoupon/deprecated.js:48
 #: Blocks/Coupon/deprecated.js:25
+#: src/blocks/cart-coupon/view.php:100
+#: src/blocks/cart-coupon/view.php:131
+#: src/blocks/cart-coupon/edit.js:110
 msgid "Enter coupon code"
 msgstr ""
 
@@ -7657,6 +7730,9 @@ msgstr ""
 #: Blocks/CartCoupon/deprecated.js:51
 #: Blocks/Coupon/deprecated.js:28
 #: components/ColorPopup.js:83
+#: src/blocks/cart-coupon/view.php:111
+#: src/blocks/cart-coupon/view.php:141
+#: src/blocks/cart-coupon/edit.js:123
 #: sc-order-coupon-form.js:67
 msgid "Apply"
 msgstr ""
@@ -7677,6 +7753,7 @@ msgstr ""
 #: Blocks/Total/save.js:27
 #: Blocks/Totals/edit.js:55
 #: Blocks/Upsell/UpsellTotals/edit.js:21
+#: src/blocks/cart-subtotal/edit.js:51
 #: sc-line-item-total2.js:35
 #: sc-order-confirmation-totals2.js:36
 #: sc-order.js:139
@@ -7780,6 +7857,10 @@ msgstr ""
 msgid "Simple Product Row"
 msgstr ""
 
+#: patterns/list-sidebar.php:6
+msgid "Product List Sidebar"
+msgstr ""
+
 #: patterns/list-staggered.php:6
 msgid "Staggered Product List"
 msgstr ""
@@ -7839,7 +7920,7 @@ msgstr ""
 #: settings/processors/ManualPaymentMethod.js:52
 #: settings/processors/ManualPaymentMethod.js:83
 #: settings/subscription-preservation/Reason.js:45
-#: subscriptions/edit/EditSubscription.js:198
+#: subscriptions/edit/EditSubscription.js:206
 #: subscriptions/show/modules/CurrentPlan.js:63
 #: subscriptions/show/modules/CurrentPlan.js:68
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:74
@@ -8000,6 +8081,8 @@ msgstr ""
 #: settings/subscription-preservation/Reason.js:69
 #: subscriptions/show/modules/CurrentPlan.js:186
 #: upsell-funnels/modules/Upsell/Discount.js:35
+#: src/blocks/cart-coupon/view.php:28
+#: src/blocks/cart-coupon/edit.js:62
 #: sc-coupon-form2.js:120
 #: sc-order-confirmation-totals2.js:32
 #: sc-order.js:145
@@ -8162,7 +8245,7 @@ msgstr ""
 #: affiliation-requests/EditAffiliationRequest.js:240
 #: invoices/Invoice.js:219
 #: orders/Order.js:276
-#: subscriptions/show/ShowSubscription.js:487
+#: subscriptions/show/ShowSubscription.js:485
 msgid "Actions"
 msgstr ""
 
@@ -8186,7 +8269,7 @@ msgstr ""
 #: settings/subscription-preservation/EditReason.js:145
 #: subscriptions/edit/modules/Modals/UpdateAmount.js:44
 #: subscriptions/edit/modules/Modals/UpdatePrice.js:53
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:165
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:168
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:44
 #: Blocks/Dashboard/WordPressAccount/edit.js:44
 #: sc-customer-details2.js:431
@@ -8949,7 +9032,7 @@ msgstr ""
 #: invoices/modules/PaymentCollection.js:71
 #: invoices/modules/PaymentCollection.js:247
 #: invoices/modules/PaymentMethods.js:126
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:106
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:109
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:78
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
 #: sc-payment-methods-list.js:166
@@ -9006,8 +9089,8 @@ msgid "No payment methods found."
 msgstr ""
 
 #: checkouts/modules/PaymentMethods.js:118
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:117
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:139
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:120
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:142
 msgid "Current"
 msgstr ""
 
@@ -9017,6 +9100,9 @@ msgstr ""
 #: components/MediaLibrary/index.js:365
 #: invoices/modules/PaymentMethods.js:164
 #: Blocks/CheckoutForm/components/Empty.js:140
+#: src/blocks/product-list-related/list-placeholder.js:89
+#: src/blocks/product-list/list-placeholder.js:106
+#: src/blocks/product-page/list-placeholder.js:74
 msgid "Choose"
 msgstr ""
 
@@ -9254,6 +9340,7 @@ msgstr ""
 
 #. translators: Close this modal window.
 #: components/affiliates/commission/GuideModal.js:32
+#: index.php:136
 #: sc-dialog2.js:153
 #: sc-drawer2.js:143
 #: sc-icon2.js:42
@@ -9410,6 +9497,8 @@ msgid "Load More"
 msgstr ""
 
 #: components/data-tables/purchases-data-table/purchase-item.js:33
+#: src/blocks/cart-items/view.php:40
+#: src/blocks/cart-items/edit.js:111
 #: sc-product-line-item2.js:59
 msgid "Qty:"
 msgstr ""
@@ -9552,10 +9641,14 @@ msgid "Max"
 msgstr ""
 
 #: components/MediaLibrary/index.js:264
+#: src/blocks/product-media/slideshow.php:64
+#: src/blocks/product-pagination-previous/view.php:11
 msgid "Previous Page"
 msgstr ""
 
 #: components/MediaLibrary/index.js:272
+#: src/blocks/product-media/slideshow.php:101
+#: src/blocks/product-pagination-next/view.php:11
 msgid "Next Page"
 msgstr ""
 
@@ -11675,6 +11768,7 @@ msgstr ""
 #: product-collections/modules/Image.js:171
 #: products/modules/SingleDownload.js:297
 #: settings/brand/Logo.js:75
+#: src/utilities/patterns-toolbar.js:20
 msgid "Replace"
 msgstr ""
 
@@ -11802,6 +11896,7 @@ msgid "Cataloged at"
 msgstr ""
 
 #: products/components/CatalogedAt/index.js:79
+#: src/blocks/product-selected-price-amount/view.php:3
 msgid "Now"
 msgstr ""
 
@@ -12102,6 +12197,9 @@ msgstr ""
 #: Blocks/ProductCollectionImage/dimension-controls.js:163
 #: Blocks/ProductCollectionImage/dimension-controls.js:172
 #: Blocks/StoreLogo/edit.js:153
+#: src/blocks/cart/edit.js:61
+#: src/blocks/product-image/edit.js:154
+#: src/blocks/product-selected-price-ad-hoc-amount/edit.js:33
 msgid "Width"
 msgstr ""
 
@@ -12434,6 +12532,7 @@ msgstr ""
 #: products/modules/Prices/NewPrice/index.js:134
 #: products/modules/Prices/Price/Header.js:87
 #: Blocks/Product/PriceChoices/edit.js:99
+#: src/blocks/product-price-chooser/edit.js:42
 msgid "One Time"
 msgstr ""
 
@@ -13605,6 +13704,7 @@ msgstr ""
 
 #: settings/brand/components/CartSettings.js:205
 #: Blocks/CartMenuButton/edit.js:71
+#: src/blocks/cart-menu-button/edit.js:88
 msgid "Enable to always show the cart button, even your cart is empty."
 msgstr ""
 
@@ -14550,6 +14650,9 @@ msgstr ""
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:100
 #: Blocks/Form/components/ChooseDesign.js:28
+#: index.php:139
+#: src/blocks/product-pagination-next/view.php:22
+#: src/blocks/product-pagination-next/edit.js:29
 #: sc-icon2.js:43
 #: sc-icon2.js:45
 #: sc-login-form.js:153
@@ -15474,17 +15577,17 @@ msgstr ""
 msgid "Subscription updated."
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:240
-#: subscriptions/show/ShowSubscription.js:443
+#: subscriptions/edit/EditSubscription.js:248
+#: subscriptions/show/ShowSubscription.js:441
 msgid "Subscription Details"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:278
+#: subscriptions/edit/EditSubscription.js:286
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:174
 msgid "Update Immediately"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:286
+#: subscriptions/edit/EditSubscription.js:294
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:331
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:116
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:161
@@ -15492,7 +15595,7 @@ msgstr ""
 msgid "Update Subscription"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:287
+#: subscriptions/edit/EditSubscription.js:295
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:332
 msgid "Schedule Update"
 msgstr ""
@@ -15547,7 +15650,7 @@ msgstr ""
 msgid "Applied to balance"
 msgstr ""
 
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:88
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:91
 #: Controllers/SubscriptionController.php:309
 #: sc-subscription-payment-method.js:171
 #: sc-subscription-payment-method.js:190
@@ -15735,7 +15838,7 @@ msgid "Resume Subscription"
 msgstr ""
 
 #: subscriptions/show/modules/modals/ForceCancelModal.js:51
-#: subscriptions/show/ShowSubscription.js:398
+#: subscriptions/show/ShowSubscription.js:396
 msgid "Subscription canceled."
 msgstr ""
 
@@ -15748,7 +15851,7 @@ msgid "Subscription paused."
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:105
-#: subscriptions/show/ShowSubscription.js:302
+#: subscriptions/show/ShowSubscription.js:300
 msgid "Pause Subscription"
 msgstr ""
 
@@ -15757,12 +15860,12 @@ msgid "This will automatically pause the subscription on %s. Please choose a res
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:148
-#: subscriptions/show/ShowSubscription.js:286
+#: subscriptions/show/ShowSubscription.js:284
 msgid "Don't Pause"
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:157
-#: subscriptions/show/ShowSubscription.js:301
+#: subscriptions/show/ShowSubscription.js:299
 msgid "Pause"
 msgstr ""
 
@@ -15871,39 +15974,39 @@ msgstr ""
 msgid "Restore Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:323
+#: subscriptions/show/ShowSubscription.js:321
 msgid "Pay Off"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:324
+#: subscriptions/show/ShowSubscription.js:322
 msgid "Pay Off Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:342
+#: subscriptions/show/ShowSubscription.js:340
 msgid "Restore At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:360
+#: subscriptions/show/ShowSubscription.js:358
 msgid "Change Renewal Date"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:399
+#: subscriptions/show/ShowSubscription.js:397
 msgid "Subscription scheduled for cancelation."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:465
+#: subscriptions/show/ShowSubscription.js:463
 msgid "Affiliate commissions updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:469
+#: subscriptions/show/ShowSubscription.js:467
 msgid "Commission On This Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:495
+#: subscriptions/show/ShowSubscription.js:493
 msgid "Cancel Pending Update"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:575
+#: subscriptions/show/ShowSubscription.js:573
 msgid "Are you sure? Subscription will be canceled immediately."
 msgstr ""
 
@@ -15921,6 +16024,9 @@ msgid "This is a demo of a premium feature. To get this feature, please upgrade 
 msgstr ""
 
 #: ui/PrevNextButtons.js:28
+#: index.php:138
+#: src/blocks/product-pagination-previous/view.php:36
+#: src/blocks/product-pagination-previous/edit.js:39
 #: sc-icon2.js:44
 #: sc-icon2.js:46
 #: sc-pagination2.js:42
@@ -16117,6 +16223,8 @@ msgstr ""
 
 #: upsell-funnels/modules/Upsell/EditUpsell.js:34
 #: Blocks/BumpLineItem/edit.js:26
+#: src/blocks/cart-bump-line-item/view.php:18
+#: src/blocks/cart-bump-line-item/edit.js:54
 #: sc-line-item-bump.js:22
 #: sc-order-confirmation-totals2.js:36
 msgid "Bundle Discount"
@@ -16399,6 +16507,15 @@ msgstr ""
 #: Blocks/Total/edit.js:18
 #: Blocks/Totals/edit.js:85
 #: Blocks/VariantPriceSelector/edit.js:264
+#: src/blocks/cart-bump-line-item/edit.js:35
+#: src/blocks/cart-coupon/edit.js:138
+#: src/blocks/cart-items/edit.js:61
+#: src/blocks/cart-submit/edit.js:82
+#: src/blocks/cart-subtotal/edit.js:30
+#: src/blocks/product-list-related/inspector-controls/index.js:73
+#: src/blocks/product-list/inspector-controls/index.js:64
+#: src/blocks/product-media/edit.js:135
+#: src/blocks/product-quantity/edit.js:34
 msgid "Attributes"
 msgstr ""
 
@@ -16490,6 +16607,7 @@ msgstr ""
 #: Blocks/AddToCartButton/edit.js:78
 #: Blocks/BuyButton/edit.js:59
 #: components/CartInspectorControls.js:18
+#: src/components/CartInspectorControls.js:18
 msgid "Color Settings"
 msgstr ""
 
@@ -16497,12 +16615,14 @@ msgstr ""
 #: Blocks/BuyButton/edit.js:65
 #: Blocks/CartSubmit/edit.js:57
 #: components/CartInspectorControls.js:24
+#: src/components/CartInspectorControls.js:24
 msgid "Background Color"
 msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:90
 #: Blocks/BuyButton/edit.js:71
 #: components/CartInspectorControls.js:29
+#: src/components/CartInspectorControls.js:29
 msgid "Text Color"
 msgstr ""
 
@@ -16540,6 +16660,8 @@ msgstr ""
 #: Blocks/Submit/edit.js:162
 #: Blocks/Upsell/NoThanksButton/edit.js:95
 #: Blocks/Upsell/SubmitButton/edit.js:147
+#: src/blocks/cart-submit/edit.js:117
+#: src/blocks/product-buy-button/edit.js:94
 msgid "Button text"
 msgstr ""
 
@@ -16554,6 +16676,8 @@ msgstr ""
 #: Blocks/Submit/edit.js:163
 #: Blocks/Upsell/NoThanksButton/edit.js:96
 #: Blocks/Upsell/SubmitButton/edit.js:148
+#: src/blocks/cart-submit/edit.js:118
+#: src/blocks/product-buy-button/edit.js:95
 msgid "Add text…"
 msgstr ""
 
@@ -16601,6 +16725,7 @@ msgstr ""
 
 #: Blocks/CartCoupon/edit.js:41
 #: Blocks/Coupon/edit.js:38
+#: src/blocks/cart-coupon/edit.js:141
 msgid "Collapsed"
 msgstr ""
 
@@ -16619,34 +16744,42 @@ msgstr ""
 #: Blocks/Phone/edit.js:33
 #: Blocks/Switch/components/Inspector.js:30
 #: Blocks/Textarea/edit.js:49
+#: src/blocks/cart-coupon/edit.js:157
 msgid "Placeholder"
 msgstr ""
 
 #: Blocks/CartHeader/edit.js:38
+#: src/blocks/cart-header/edit.js:36
+#: src/blocks/cart-header/edit.js:49
 msgid "Header Text"
 msgstr ""
 
 #: Blocks/CartHeader/edit.js:39
+#: src/blocks/cart-header/edit.js:50
 msgid "Add a title…"
 msgstr ""
 
 #: Blocks/CartItems/edit.js:35
 #: Blocks/LineItems/edit.js:23
+#: src/blocks/cart-items/edit.js:64
 msgid "Removable"
 msgstr ""
 
 #: Blocks/CartItems/edit.js:36
 #: Blocks/LineItems/edit.js:24
+#: src/blocks/cart-items/edit.js:65
 msgid "Allow line items to be removed."
 msgstr ""
 
 #: Blocks/CartItems/edit.js:48
 #: Blocks/LineItems/edit.js:36
+#: src/blocks/cart-items/edit.js:77
 msgid "Editable"
 msgstr ""
 
 #: Blocks/CartItems/edit.js:49
 #: Blocks/LineItems/edit.js:37
+#: src/blocks/cart-items/edit.js:78
 msgid "Allow line item quantities to be editable."
 msgstr ""
 
@@ -16664,38 +16797,50 @@ msgid "every month"
 msgstr ""
 
 #: Blocks/CartMenuButton/edit.js:70
+#: src/blocks/cart-menu-button/edit.js:87
 msgid "Always show cart"
 msgstr ""
 
 #: Blocks/CartMessage/edit.js:57
+#: src/blocks/cart-message/edit.js:37
 msgid "Message Text"
 msgstr ""
 
 #: Blocks/CartMessage/edit.js:58
+#: src/blocks/cart-message/edit.js:38
 msgid "I.E. Free shipping on all orders…"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:51
+#: src/blocks/cart-submit/edit.js:47
 msgid "Section Color"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:61
 #: components/CartInspectorControls.js:33
+#: src/blocks/cart-submit/edit.js:60
+#: src/components/CartInspectorControls.js:33
 msgid "Spacing"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:63
 #: components/CartInspectorControls.js:35
+#: src/blocks/cart-submit/edit.js:62
+#: src/components/CartInspectorControls.js:35
 msgid "Padding"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:74
 #: components/CartInspectorControls.js:46
+#: src/blocks/cart-submit/edit.js:73
+#: src/components/CartInspectorControls.js:46
 msgid "Border"
 msgstr ""
 
 #: Blocks/CartSubmit/edit.js:77
 #: components/CartInspectorControls.js:49
+#: src/blocks/cart-submit/edit.js:76
+#: src/components/CartInspectorControls.js:49
 msgid "Bottom Border"
 msgstr ""
 
@@ -16878,6 +17023,7 @@ msgstr ""
 #: Blocks/ProductDonationAmounts/edit.js:119
 #: Blocks/ProductDonationPrices/edit.js:90
 #: Blocks/ProductItemList/edit.js:236
+#: src/blocks/product-price-chooser/edit.js:99
 msgid "Columns"
 msgstr ""
 
@@ -17604,6 +17750,7 @@ msgstr ""
 #: Blocks/Upsell/CountdownTimer/edit.js:40
 #: Blocks/Upsell/NoThanksButton/edit.js:29
 #: Blocks/Upsell/SubmitButton/edit.js:45
+#: src/components/WidthPanel.js:14
 msgid "Width settings"
 msgstr ""
 
@@ -17611,46 +17758,56 @@ msgstr ""
 #: Blocks/Upsell/CountdownTimer/edit.js:41
 #: Blocks/Upsell/NoThanksButton/edit.js:30
 #: Blocks/Upsell/SubmitButton/edit.js:46
+#: src/blocks/product-buy-button/edit.js:80
 msgid "Button width"
 msgstr ""
 
 #: Blocks/Product/BuyButton/edit.js:145
 #: Blocks/Upsell/CountdownTimer/edit.js:88
 #: Blocks/Upsell/SubmitButton/edit.js:110
+#: src/blocks/product-buy-button/edit.js:56
 msgid "Text settings"
 msgstr ""
 
 #: Blocks/Product/BuyButton/edit.js:148
 #: Blocks/Upsell/SubmitButton/edit.js:113
+#: src/blocks/product-buy-button/edit.js:59
 msgid "Out of stock label"
 msgstr ""
 
 #: Blocks/Product/BuyButton/edit.js:157
 #: Blocks/Upsell/SubmitButton/edit.js:122
+#: src/blocks/product-buy-button/edit.js:68
 msgid "Unavailable label"
 msgstr ""
 
 #: Blocks/Product/CollectionBadges/edit.js:62
+#: src/blocks/product-collection-tags/edit.js:63
 msgid "Number To Display"
 msgstr ""
 
 #: Blocks/Product/Description/edit.js:35
+#: src/blocks/product-description/edit.js:21
 msgid "Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle."
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:46
+#: src/blocks/product-media/edit.js:151
 msgid "Auto Height"
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:57
+#: src/blocks/product-media/edit.js:166
 msgid "Slider Height"
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:67
+#: src/blocks/product-media/edit.js:176
 msgid "Max Image Width"
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:78
+#: src/blocks/product-media/edit.js:187
 msgid "Thumbnails Per Page"
 msgstr ""
 
@@ -17677,6 +17834,7 @@ msgstr ""
 #: Blocks/Product/Title/heading-level-dropdown.js:42
 #: Blocks/ProductCollectionTitle/heading-level-dropdown.js:42
 #: Blocks/Upsell/Title/heading-level-dropdown.js:42
+#: src/components/HeadingLebelDropdown.js:42
 msgid "Change heading level"
 msgstr ""
 
@@ -17684,10 +17842,12 @@ msgstr ""
 #: Blocks/Product/Title/heading-level-dropdown.js:56
 #: Blocks/ProductCollectionTitle/heading-level-dropdown.js:56
 #: Blocks/Upsell/Title/heading-level-dropdown.js:56
+#: src/components/HeadingLebelDropdown.js:56
 msgid "Heading %d"
 msgstr ""
 
 #: Blocks/Product/VariantChoices/edit.js:60
+#: src/blocks/product-variant-pills/edit.js:33
 msgid "Color"
 msgstr ""
 
@@ -17730,6 +17890,9 @@ msgstr ""
 
 #: Blocks/ProductCollection/edit.js:260
 #: Blocks/ProductItemList/edit.js:312
+#: src/blocks/product-list-sort-radio-group/index.js:22
+#: src/blocks/product-list-sort/edit.js:12
+#: src/blocks/product-list-sort/index.js:20
 #: sc-product-item-list.js:231
 msgid "Sort"
 msgstr ""
@@ -17805,45 +17968,55 @@ msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:86
 #: Blocks/ProductCollectionImage/dimension-controls.js:96
+#: src/blocks/product-image/edit.js:91
+#: src/blocks/product-image/edit.js:101
 msgid "Aspect ratio"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:101
+#: src/blocks/product-image/edit.js:106
 msgid "Original"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:105
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:55
+#: src/blocks/product-image/edit.js:110
 msgid "Square"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:109
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:73
+#: src/blocks/product-image/edit.js:114
 msgid "16:9"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:113
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:77
+#: src/blocks/product-image/edit.js:118
 msgid "4:3"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:117
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:81
+#: src/blocks/product-image/edit.js:122
 msgid "3:2"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:121
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:99
+#: src/blocks/product-image/edit.js:126
 msgid "9:16"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:125
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:103
+#: src/blocks/product-image/edit.js:130
 msgid "3:4"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:129
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:107
+#: src/blocks/product-image/edit.js:134
 msgid "2:3"
 msgstr ""
 
@@ -17898,18 +18071,24 @@ msgid "Set Aspect Ratio"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:105
+#: src/blocks/product-image/edit.js:66
+#: src/blocks/product-image/edit.js:75
 msgid "Image Cropping"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:111
+#: src/blocks/product-image/edit.js:81
 msgid "Contain"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:115
+#: src/blocks/product-image/edit.js:85
 msgid "Cover"
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:258
+#: src/blocks/product-list-related/inspector-controls/index.js:104
+#: src/blocks/product-list/inspector-controls/index.js:66
 msgid "Products Per Page"
 msgstr ""
 
@@ -17922,15 +18101,18 @@ msgid "Show collection filtering."
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:371
+#: src/blocks/product-list/inspector-controls/index.js:101
 msgid "Products To Show"
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:392
+#: src/blocks/product-list/inspector-controls/index.js:110
 msgid "Featured Products"
 msgstr ""
 
 #: Blocks/ProductItemList/edit.js:396
 #: Blocks/ProductItemList/edit.js:403
+#: src/blocks/product-list/inspector-controls/index.js:114
 msgid "Hand Pick Products"
 msgstr ""
 
@@ -17947,14 +18129,17 @@ msgid "Setup Store"
 msgstr ""
 
 #: Blocks/ProductItemPrice/edit.js:46
+#: src/blocks/product-price/edit.js:24
 msgid "Options"
 msgstr ""
 
 #: Blocks/ProductItemPrice/edit.js:48
+#: src/blocks/product-price/edit.js:26
 msgid "Price Range"
 msgstr ""
 
 #: Blocks/ProductItemPrice/edit.js:49
+#: src/blocks/product-price/edit.js:27
 msgid "Show a range of prices if multiple prices are available or has variable products."
 msgstr ""
 
@@ -18060,6 +18245,7 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:29
 #: Blocks/Subtotal/edit.js:56
 #: Blocks/Subtotal/save.js:17
+#: src/blocks/cart-subtotal/view.php:39
 #: sc-line-item-total2.js:58
 msgid "Total Installment Payments"
 msgstr ""
@@ -18220,7 +18406,10 @@ msgstr ""
 msgid "Product List (Migrated)"
 msgstr ""
 
-#: components/NewShopTemplate.js:247
+#: components/NewShopTemplate.js:252
+#: src/blocks/product-list-no-products/edit.js:11
+#: src/blocks/product-list/list-placeholder.js:38
+#: src/blocks/product-list/template.js:77
 msgid "Add text or blocks that will display when a query returns no products."
 msgstr ""
 
@@ -18423,6 +18612,7 @@ msgstr ""
 #: Blocks/Switch/block.json
 #: Blocks/Upsell/NoThanksButton/block.json
 #: Blocks/Upsell/SubmitButton/block.json
+#: src/blocks/product-buy-buttons/block.json
 msgctxt "block keyword"
 msgid "button"
 msgstr ""
@@ -18489,6 +18679,7 @@ msgid "confirm"
 msgstr ""
 
 #: Blocks/Cart/block.json
+#: src/blocks/cart/block.json
 msgctxt "block title"
 msgid "Cart"
 msgstr ""
@@ -18500,16 +18691,19 @@ msgid "The cart"
 msgstr ""
 
 #: Blocks/CartBumpLineItem/block.json
+#: src/blocks/cart-bump-line-item/block.json
 msgctxt "block title"
 msgid "Cart Bump Line Item"
 msgstr ""
 
 #: Blocks/CartBumpLineItem/block.json
+#: src/blocks/cart-bump-line-item/block.json
 msgctxt "block description"
 msgid "Display the cart bump line item"
 msgstr ""
 
 #: Blocks/CartCoupon/block.json
+#: src/blocks/cart-coupon/block.json
 msgctxt "block title"
 msgid "Cart Coupon"
 msgstr ""
@@ -18521,27 +18715,32 @@ msgstr ""
 
 #: Blocks/CartCoupon/block.json
 #: Blocks/Coupon/block.json
+#: src/blocks/cart-coupon/block.json
 msgctxt "block keyword"
 msgid "coupon"
 msgstr ""
 
 #: Blocks/CartCoupon/block.json
 #: Blocks/Coupon/block.json
+#: src/blocks/cart-coupon/block.json
 msgctxt "block keyword"
 msgid "promo"
 msgstr ""
 
 #: Blocks/CartHeader/block.json
+#: src/blocks/cart-header/block.json
 msgctxt "block title"
 msgid "Cart Header"
 msgstr ""
 
 #: Blocks/CartHeader/block.json
+#: src/blocks/cart-header/block.json
 msgctxt "block description"
 msgid "Display a cart header"
 msgstr ""
 
 #: Blocks/CartItems/block.json
+#: src/blocks/cart-items/block.json
 msgctxt "block title"
 msgid "Cart Items"
 msgstr ""
@@ -18552,41 +18751,49 @@ msgid "Cart Menu Icon"
 msgstr ""
 
 #: Blocks/CartMenuButton/block.json
+#: src/blocks/cart-menu-button/block.json
 msgctxt "block description"
 msgid "The cart menu icon that shows your cart quantity."
 msgstr ""
 
 #: Blocks/CartMessage/block.json
+#: src/blocks/cart-message/block.json
 msgctxt "block title"
 msgid "Cart Message"
 msgstr ""
 
 #: Blocks/CartMessage/block.json
+#: src/blocks/cart-message/block.json
 msgctxt "block description"
 msgid "Display a custom message in the cart"
 msgstr ""
 
 #: Blocks/CartSubmit/block.json
+#: src/blocks/cart-submit/block.json
 msgctxt "block title"
 msgid "Cart Submit Button"
 msgstr ""
 
 #: Blocks/CartSubmit/block.json
+#: src/blocks/cart-submit/block.json
 msgctxt "block description"
 msgid "The cart submit button"
 msgstr ""
 
 #: Blocks/CartSubtotal/block.json
+#: src/blocks/cart-subtotal/block.json
 msgctxt "block title"
 msgid "Cart Subtotal"
 msgstr ""
 
 #: Blocks/CartSubtotal/block.json
+#: src/blocks/cart-subtotal/block.json
 msgctxt "block description"
 msgid "Display the cart subtotal"
 msgstr ""
 
 #: Blocks/Checkbox/block.json
+#: src/blocks/product-list-filter-checkbox/block.json
 msgctxt "block title"
 msgid "Checkbox"
 msgstr ""
@@ -18641,6 +18848,7 @@ msgstr ""
 #: Blocks/Product/CollectionBadges/block.json
 #: Blocks/Product/Quantity/block.json
 #: Blocks/Product/Title/block.json
+#: src/blocks/product-quantity/block.json
 msgctxt "block keyword"
 msgid "form"
 msgstr ""
@@ -19325,6 +19533,7 @@ msgstr ""
 #: Blocks/LineItemShipping/block.json
 #: Blocks/TaxLineItem/block.json
 #: Blocks/Total/block.json
+#: src/blocks/cart-subtotal/block.json
 msgctxt "block keyword"
 msgid "subtotal"
 msgstr ""
@@ -19486,6 +19695,9 @@ msgstr ""
 #: Blocks/ProductItemPrice/block.json
 #: Blocks/ProductItemTitle/block.json
 #: Blocks/VariantPriceSelector/block.json
+#: src/blocks/product-buy-buttons/block.json
+#: src/blocks/product-quantity/block.json
+#: src/blocks/product-template/block.json
 msgctxt "block keyword"
 msgid "product"
 msgstr ""
@@ -19500,6 +19712,7 @@ msgid "choice"
 msgstr ""
 
 #: Blocks/PriceSelector/block.json
+#: src/blocks/product-price-chooser/block.json
 msgctxt "block title"
 msgid "Price Selector"
 msgstr ""
@@ -19520,27 +19733,32 @@ msgid "Add a buy now or add to cart button."
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
+#: src/blocks/product-buy-buttons/block.json
 msgctxt "block keyword"
 msgid "buy"
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
+#: src/blocks/product-buy-button/block.json
 msgctxt "block variation title"
 msgid "Add To Cart Button"
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 #: Blocks/ProductDonationRecurringPrices/block.json
+#: src/blocks/product-buy-button/block.json
 msgctxt "block variation description"
 msgid "Add a button to add the product to the cart."
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
+#: src/blocks/product-buy-button/block.json
 msgctxt "block variation title"
 msgid "Buy Now Button"
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
+#: src/blocks/product-buy-button/block.json
 msgctxt "block variation description"
 msgid "Add a button to buy the product."
 msgstr ""
@@ -19548,6 +19766,7 @@ msgstr ""
 #: Blocks/Product/BuyButton/block.json
 #: Blocks/Upsell/NoThanksButton/block.json
 #: Blocks/Upsell/SubmitButton/block.json
+#: src/blocks/product-buy-button/block.json
 msgctxt "block style label"
 msgid "Fill"
 msgstr ""
@@ -19555,6 +19774,7 @@ msgstr ""
 #: Blocks/Product/BuyButton/block.json
 #: Blocks/Upsell/NoThanksButton/block.json
 #: Blocks/Upsell/SubmitButton/block.json
+#: src/blocks/product-buy-button/block.json
 msgctxt "block style label"
 msgid "Outline"
 msgstr ""
@@ -19570,6 +19790,7 @@ msgid "Displays product collection selector for a product."
 msgstr ""
 
 #: Blocks/Product/Description/block.json
+#: src/blocks/product-description/block.json
 msgctxt "block title"
 msgid "Product Description"
 msgstr ""
@@ -19587,11 +19808,13 @@ msgid "description"
 msgstr ""
 
 #: Blocks/Product/Media/block.json
+#: src/blocks/product-media/block.json
 msgctxt "block title"
 msgid "Product Media"
 msgstr ""
 
 #: Blocks/Product/Media/block.json
+#: src/blocks/product-media/block.json
 msgctxt "block description"
 msgid "A container to display the product media"
 msgstr ""
@@ -19600,11 +19823,13 @@ msgstr ""
 #: Blocks/ProductCollectionImage/block.json
 #: Blocks/ProductItemImage/block.json
 #: Blocks/StoreLogo/block.json
+#: src/blocks/product-media/block.json
 msgctxt "block keyword"
 msgid "image"
 msgstr ""
 
 #: Blocks/Product/Media/block.json
+#: src/blocks/product-media/block.json
 msgctxt "block keyword"
 msgid "media"
 msgstr ""
@@ -19625,11 +19850,13 @@ msgid "Product Price Choices"
 msgstr ""
 
 #: Blocks/Product/PriceChoices/block.json
+#: src/blocks/product-price-chooser/block.json
 msgctxt "block description"
 msgid "Displays possible choices for product prices."
 msgstr ""
 
 #: Blocks/Product/Quantity/block.json
+#: src/blocks/product-quantity/block.json
 msgctxt "block title"
 msgid "Product Quantity"
 msgstr ""
@@ -19640,12 +19867,14 @@ msgid "Displays quantity selector for a product."
 msgstr ""
 
 #: Blocks/Product/Quantity/block.json
+#: src/blocks/product-quantity/block.json
 msgctxt "block keyword"
 msgid "quantity"
 msgstr ""
 
 #: Blocks/Product/Title/block.json
 #: Blocks/ProductItemTitle/block.json
+#: src/blocks/product-title/block.json
 msgctxt "block title"
 msgid "Product Title"
 msgstr ""
@@ -19696,6 +19925,7 @@ msgstr ""
 #: Blocks/ProductCollection/block.json
 #: Blocks/ProductItemList/block.json
 #: Blocks/ProductItemTitle/block.json
+#: src/blocks/product-template/block.json
 msgctxt "block keyword"
 msgid "list"
 msgstr ""
@@ -19843,6 +20073,7 @@ msgid "thumbnail"
 msgstr ""
 
 #: Blocks/ProductItemList/block.json
+#: src/blocks/product-list/block.json
 msgctxt "block title"
 msgid "Product List"
 msgstr ""
@@ -19863,6 +20094,7 @@ msgid "Displays the price of the product with the scratched price."
 msgstr ""
 
 #: Blocks/Radio/block.json
+#: src/blocks/product-list-sort-radio/block.json
 msgctxt "block title"
 msgid "Radio"
 msgstr ""
@@ -20163,6 +20395,1080 @@ msgstr ""
 #: Blocks/VariantPriceSelector/block.json
 msgctxt "block description"
 msgid "Displays a selector for selecting product prices and/or variants."
+msgstr ""
+
+#: index.php:137
+msgid "Enlarged images"
+msgstr ""
+
+#: src/blocks/cart-coupon/view.php:38
+msgid "Delete discount"
+msgstr ""
+
+#: src/blocks/cart-coupon/view.php:98
+#: src/blocks/cart-coupon/view.php:129
+#: src/blocks/cart-coupon/edit.js:107
+msgid "Coupon code"
+msgstr ""
+
+#: src/blocks/cart-header/view.php:15
+msgid "Close cart"
+msgstr ""
+
+#: src/blocks/cart-icon/view.php:22
+msgid "Cart Button."
+msgstr ""
+
+#: src/blocks/cart-items/view.php:59
+#: src/blocks/product-quantity/view.php:18
+#: sc-quantity-select2.js:63
+msgid "Decrease quantity by one."
+msgstr ""
+
+#: src/blocks/cart-items/view.php:86
+#: src/blocks/product-quantity/view.php:44
+#: sc-quantity-select2.js:63
+msgid "Increase quantity by one."
+msgstr ""
+
+#: src/blocks/cart-items/view.php:99
+msgid "Remove item"
+msgstr ""
+
+#: src/blocks/cart-menu-button/view.php:19
+msgid "Open cart"
+msgstr ""
+
+#. translators: %1$s: amount.
+#: src/blocks/price-amount/controller.php:14
+msgid "Price: %1$s"
+msgstr ""
+
+#. translators: %1$s: scratch amount.
+#: src/blocks/price-scratch-amount/controller.php:16
+msgid "Scratch Price: %1$s"
+msgstr ""
+
+#. translators: You are currently on a %s collection link.
+#: src/blocks/product-collection-tag/view.php:14
+msgid "%s collection"
+msgstr ""
+
+#: src/blocks/product-list-filter-tag/view.php:15
+msgid "Press enter to remove this filter."
+msgstr ""
+
+#: src/blocks/product-list-filter-tag/view.php:24
+#: src/blocks/product-list-filter-tag/edit.js:22
+msgid "Remove tag"
+msgstr ""
+
+#: src/blocks/product-list-filter/view.php:23
+#: src/blocks/product-list-sort/view.php:23
+msgid "Press the arrow keys then enter to make a selection."
+msgstr ""
+
+#. translators: %s is the taxonomy label.
+#: src/blocks/product-list-filter/view.php:35
+msgid "Filter by: %s"
+msgstr ""
+
+#: src/blocks/product-list-search/view.php:54
+msgid "Clear search"
+msgstr ""
+
+#: src/blocks/product-list-sidebar-toggle/view.php:40
+#: src/scripts/sidebar/index.js:35
+#: src/scripts/sidebar/index.js:37
+#: src/scripts/sidebar/index.js:54
+msgid "Open sidebar"
+msgstr ""
+
+#: src/blocks/product-list-sidebar/view.php:45
+#: src/scripts/sidebar/index.js:34
+#: src/scripts/sidebar/index.js:46
+msgid "Close sidebar"
+msgstr ""
+
+#. translators: %d is the current count of posts.
+#: src/blocks/product-list-sidebar/view.php:63
+msgid "View Results (%d)"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-template/controller.php:11
+#: src/blocks/product-list-sort/controller.php:11
+#: src/blocks/product-list-related/inspector-controls/index.js:17
+#: src/blocks/product-list-sort-radio-group-template/edit.js:19
+#: src/blocks/product-list/inspector-controls/index.js:24
+#: sc-product-item-list.js:223
+#: sc-product-item-list.js:258
+msgid "Latest"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-template/controller.php:17
+#: src/blocks/product-list-sort/controller.php:17
+#: src/blocks/product-list-related/inspector-controls/index.js:21
+#: src/blocks/product-list-sort-radio-group-template/edit.js:23
+#: src/blocks/product-list/inspector-controls/index.js:28
+#: sc-product-item-list.js:225
+#: sc-product-item-list.js:258
+msgid "Oldest"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-template/controller.php:23
+#: src/blocks/product-list-sort/controller.php:23
+#: src/blocks/product-list-related/inspector-controls/index.js:25
+#: src/blocks/product-list-sort-radio-group-template/edit.js:27
+#: src/blocks/product-list/inspector-controls/index.js:32
+#: sc-product-item-list.js:227
+#: sc-product-item-list.js:258
+msgid "Alphabetical, A-Z"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-template/controller.php:29
+#: src/blocks/product-list-sort/controller.php:29
+#: src/blocks/product-list-related/inspector-controls/index.js:29
+#: src/blocks/product-list-sort-radio-group-template/edit.js:34
+#: src/blocks/product-list/inspector-controls/index.js:36
+#: sc-product-item-list.js:229
+#: sc-product-item-list.js:258
+msgid "Alphabetical, Z-A"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-template/controller.php:35
+#: src/blocks/product-list-sort/controller.php:35
+#: src/blocks/product-list-related/inspector-controls/index.js:33
+#: src/blocks/product-list-sort-radio-group-template/edit.js:41
+#: src/blocks/product-list/inspector-controls/index.js:40
+msgid "Price, low to high"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-template/controller.php:41
+#: src/blocks/product-list-sort/controller.php:41
+#: src/blocks/product-list-related/inspector-controls/index.js:37
+#: src/blocks/product-list-sort-radio-group-template/edit.js:48
+#: src/blocks/product-list/inspector-controls/index.js:44
+msgid "Price, high to low"
+msgstr ""
+
+#. translators: %s is the current selected option.
+#: src/blocks/product-list-sort/view.php:33
+msgid "Order By: %s"
+msgstr ""
+
+#. translators: %s: page number.
+#: src/blocks/product-pagination-numbers/view.php:14
+msgid "Page %s"
+msgstr ""
+
+#: src/blocks/product-scratch-price/view.php:2
+msgid "Compare to"
+msgstr ""
+
+#: src/blocks/product-selected-price-scratch-amount/view.php:4
+msgid "Was"
+msgstr ""
+
+#. translators: %s is the name of the variant option.
+#: src/blocks/product-variant-pill/view.php:45
+msgid "Select %s"
+msgstr ""
+
+#: src/blocks/price-interval/edit.js:7
+#: src/blocks/product-price-chooser/edit.js:39
+#: src/blocks/product-selected-price-interval/edit.js:7
+msgid "/ mo"
+msgstr ""
+
+#: src/blocks/price-name/edit.js:7
+msgid "Price Name"
+msgstr ""
+
+#: src/blocks/price-setup-fee/edit.js:9
+msgid "12 Signup Fee"
+msgstr ""
+
+#: src/blocks/product-collection-tag/edit.js:22
+msgid "Link to collection page"
+msgstr ""
+
+#: src/blocks/product-image/edit.js:168
+msgid "Make image a link"
+msgstr ""
+
+#: src/blocks/product-image/edit.js:177
+#: src/blocks/product-title/edit.js:54
+msgid "Open in new tab"
+msgstr ""
+
+#: src/blocks/product-image/edit.js:187
+#: src/blocks/product-title/edit.js:64
+msgid "Link rel"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-label/edit.js:27
+msgid "Filter by"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-label/edit.js:37
+#: src/blocks/product-list-filter-tags-clear-all/edit.js:10
+#: src/blocks/product-list-filter-tags-label/edit.js:10
+#: src/blocks/product-list-sidebar-toggle/edit.js:95
+#: src/blocks/product-list-sort-radio-group-label/edit.js:10
+#: src/blocks/product-price-chooser/edit.js:126
+#: src/blocks/product-selected-price-ad-hoc-amount/edit.js:50
+msgid "Label text"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-label/edit.js:38
+#: src/blocks/product-list-filter-tags-clear-all/edit.js:11
+#: src/blocks/product-list-filter-tags-label/edit.js:11
+#: src/blocks/product-list-sidebar-toggle/edit.js:96
+#: src/blocks/product-list-sort-radio-group-label/edit.js:11
+#: src/blocks/product-price-chooser/edit.js:127
+#: src/blocks/product-selected-price-ad-hoc-amount/edit.js:51
+msgid "Add label…"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-template/edit.js:17
+#: src/blocks/product-list-filter-tags-template/edit.js:18
+msgid "Filter 1"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-template/edit.js:21
+#: src/blocks/product-list-filter-tags-template/edit.js:22
+msgid "Filter 2"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-template/edit.js:25
+#: src/blocks/product-list-filter-tags-template/edit.js:26
+msgid "Filter 3"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes/edit.js:39
+#: src/blocks/product-list-filter/edit.js:35
+#: src/blocks/product-list-related/inspector-controls/index.js:93
+msgid "Taxonomy"
+msgstr ""
+
+#: src/blocks/product-list-related/inspector-controls/index.js:41
+msgid "Random (pagination disabled)"
+msgstr ""
+
+#: src/blocks/product-list-related/inspector-controls/index.js:77
+#: src/blocks/product-list/inspector-controls/index.js:86
+msgid "Default Sorting"
+msgstr ""
+
+#: src/blocks/product-list-related/inspector-controls/index.js:114
+msgid "Max pages to show"
+msgstr ""
+
+#: src/blocks/product-list-related/inspector-controls/index.js:120
+msgid "Limit the pages you want to show, even if the query has more results."
+msgstr ""
+
+#: src/blocks/product-list-related/inspector-controls/index.js:128
+msgid "All Products Fallback"
+msgstr ""
+
+#: src/blocks/product-list-related/inspector-controls/index.js:129
+msgid "If there are no related products, show all products."
+msgstr ""
+
+#: src/blocks/product-list-related/list-placeholder.js:80
+#: src/blocks/product-list/list-placeholder.js:97
+msgid "Choose a pattern for the product list or start with a basic layout."
+msgstr ""
+
+#: src/blocks/product-list-related/list-placeholder.js:103
+#: src/blocks/product-list/list-placeholder.js:120
+#: src/blocks/product-page/list-placeholder.js:88
+msgid "Start basic"
+msgstr ""
+
+#: src/blocks/product-list-sidebar-toggle/edit.js:59
+#: src/blocks/product-pagination/query-pagination-arrow-controls.js:17
+msgid "A decorative arrow appended to the next and previous page link."
+msgstr ""
+
+#: src/blocks/product-list-sidebar-toggle/edit.js:66
+msgctxt "Arrow option for Product List Sidebar Toggle blocks"
+msgid "None"
+msgstr ""
+
+#: src/blocks/product-list-sidebar-toggle/edit.js:73
+msgctxt "Arrow option for Product List Sidebar Toggle blocks"
+msgid "Sliders"
+msgstr ""
+
+#: src/blocks/product-list-sidebar-toggle/edit.js:80
+msgctxt "Arrow option for Product List Sidebar Toggle blocks"
+msgid "Menu"
+msgstr ""
+
+#: src/blocks/product-list-sidebar/edit.js:156
+msgid "Open by default"
+msgstr ""
+
+#: src/blocks/product-list-sidebar/edit.js:157
+msgid "Do you want sidebar to be open by default?"
+msgstr ""
+
+#: src/blocks/product-list-sidebar/edit.js:166
+msgid "Mobile Label"
+msgstr ""
+
+#: src/blocks/product-list/inspector-controls/IncludeControls.js:184
+msgid "Search for a product"
+msgstr ""
+
+#: src/blocks/product-list/inspector-controls/index.js:75
+msgid "Offset"
+msgstr ""
+
+#: src/blocks/product-list/inspector-controls/index.js:127
+msgid "Filters"
+msgstr ""
+
+#: src/blocks/product-list/inspector-controls/index.js:149
+msgid "Taxonomies"
+msgstr ""
+
+#: src/blocks/product-list/inspector-controls/index.js:162
+#: src/blocks/product-list/inspector-controls/KeywordControls.js:30
+msgid "Keyword"
+msgstr ""
+
+#: src/blocks/product-media/edit.js:138
+msgid "Scale images with a lightbox effect."
+msgstr ""
+
+#: src/blocks/product-media/edit.js:152
+msgid "Automatically adjust the height of the slider to the image height."
+msgstr ""
+
+#: src/blocks/product-page/list-placeholder.js:65
+msgid "Choose a pattern for the product page or start with a basic layout."
+msgstr ""
+
+#: src/blocks/product-pagination-next/edit.js:28
+msgid "Next page link"
+msgstr ""
+
+#: src/blocks/product-pagination-previous/edit.js:38
+msgid "Previous page link"
+msgstr ""
+
+#: src/blocks/product-pagination/query-pagination-arrow-controls.js:14
+msgid "Arrow"
+msgstr ""
+
+#: src/blocks/product-pagination/query-pagination-arrow-controls.js:24
+msgctxt "Arrow option for Query Pagination Next/Previous blocks"
+msgid "None"
+msgstr ""
+
+#: src/blocks/product-pagination/query-pagination-arrow-controls.js:31
+msgctxt "Arrow option for Query Pagination Next/Previous blocks"
+msgid "Arrow"
+msgstr ""
+
+#: src/blocks/product-pagination/query-pagination-arrow-controls.js:38
+msgctxt "Arrow option for Query Pagination Next/Previous blocks"
+msgid "Chevron"
+msgstr ""
+
+#: src/blocks/product-pagination/query-pagination-label-control.js:11
+msgid "Show label text"
+msgstr ""
+
+#: src/blocks/product-pagination/query-pagination-label-control.js:12
+msgid "Toggle off to hide the label text, e.g. \"Next Page\"."
+msgstr ""
+
+#: src/blocks/product-price-chooser/edit.js:37
+msgid "Subscribe & Save"
+msgstr ""
+
+#: src/blocks/product-price-chooser/edit.js:110
+msgid "This block will only show multiple columns if the width of the container is over 600px."
+msgstr ""
+
+#: src/blocks/product-sale-badge/edit.js:29
+msgid "Sale Label"
+msgstr ""
+
+#: src/blocks/product-sale-badge/edit.js:29
+msgid "Empty Sale label"
+msgstr ""
+
+#: src/blocks/product-sale-badge/edit.js:31
+msgid "Type in sale badge text"
+msgstr ""
+
+#: src/blocks/product-selected-price-ad-hoc-amount/edit.js:31
+msgid "Custom Amount Settings"
+msgstr ""
+
+#: src/blocks/product-selected-price-trial/edit.js:7
+msgid "Starting in 7 days."
+msgstr ""
+
+#: src/blocks/product-template-container/index.js:27
+msgid "Main"
+msgstr ""
+
+#: src/blocks/product-template/edit.js:235
+msgid "List view"
+msgstr ""
+
+#: src/blocks/product-template/edit.js:241
+msgid "Grid view"
+msgstr ""
+
+#: src/blocks/product-title/edit.js:45
+msgid "Make title a link"
+msgstr ""
+
+#: src/blocks/product-variant-pill/edit.js:57
+msgid "Highlight Text"
+msgstr ""
+
+#: src/blocks/product-variant-pill/edit.js:65
+msgid "Highlight Background"
+msgstr ""
+
+#: src/components/LabelInspectorControls.js:27
+msgid "Line Height"
+msgstr ""
+
+#: src/components/ProductSelector.js:59
+msgid "Select specific products"
+msgstr ""
+
+#: src/components/ProductSelector.js:77
+msgid "Search or type a product name"
+msgstr ""
+
+#: src/scripts/cart/index.js:14
+msgid "Review your cart."
+msgstr ""
+
+#: src/scripts/cart/index.js:49
+msgid "Cart opened."
+msgstr ""
+
+#: src/scripts/cart/index.js:65
+msgid "Cart closed."
+msgstr ""
+
+#: src/scripts/checkout-actions/index.js:175
+#: index4.js:185
+msgid "Failed to delete"
+msgstr ""
+
+#. translators: %d: number of items in the cart
+#: src/scripts/checkout/index.js:201
+msgid "Total of %d item in the cart"
+msgid_plural "Total of %d items in the cart"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/scripts/checkout/index.js:359
+msgid "Applying promotion code."
+msgstr ""
+
+#. translators: %s: promotion code
+#: src/scripts/checkout/index.js:372
+msgid "Promotion code %s has been applied."
+msgstr ""
+
+#: src/scripts/checkout/index.js:395
+msgid "Removing promotion code."
+msgstr ""
+
+#: src/scripts/checkout/index.js:408
+msgid "Promotion code has been removed."
+msgstr ""
+
+#. translators: %d: quantity
+#: src/scripts/checkout/index.js:502
+msgid "Quantity increased to %d."
+msgstr ""
+
+#. translators: %d: quantity
+#: src/scripts/checkout/index.js:529
+msgid "Quantity decreased to %d."
+msgstr ""
+
+#. translators: %d: quantity
+#: src/scripts/checkout/index.js:550
+msgid "Quantity changed to %d."
+msgstr ""
+
+#: src/scripts/checkout/index.js:588
+msgid "Removing line item."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:53
+msgid "Go to previous slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:54
+msgid "This is the first slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:55
+msgid "This is the last slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:56
+msgid "Go to next slide."
+msgstr ""
+
+#: src/scripts/image-slider/index.js:57
+msgid "Slide {{index}} of {{slidesLength}}."
+msgstr ""
+
+#. translators: %s: product name
+#: src/scripts/product-page/index.js:328
+msgid "%s has been added to your cart."
+msgstr ""
+
+#: src/utilities/pattern-selection-modal.js:66
+msgid "Choose a pattern"
+msgstr ""
+
+#: src/utilities/pattern-selection-modal.js:76
+msgid "Search for patterns"
+msgstr ""
+
+#: src/blocks/cart-coupon/block.json
+msgctxt "block description"
+msgid "Display a coupon form in the cart"
+msgstr ""
+
+#: src/blocks/cart-icon/block.json
+msgctxt "block title"
+msgid "Floating Cart Icon"
+msgstr ""
+
+#: src/blocks/cart-icon/block.json
+msgctxt "block description"
+msgid "The cart icon that shows your cart quantity."
+msgstr ""
+
+#: src/blocks/cart-items/block.json
+msgctxt "block description"
+msgid "The cart items"
+msgstr ""
+
+#: src/blocks/cart-menu-button/block.json
+msgctxt "block title"
+msgid "Cart Toggle Icon"
+msgstr ""
+
+#: src/blocks/cart-subtotal/block.json
+msgctxt "block keyword"
+msgid "cart"
+msgstr ""
+
+#: src/blocks/cart/block.json
+msgctxt "block description"
+msgid "Display SureCart slide out cart"
+msgstr ""
+
+#: src/blocks/price-amount/block.json
+msgctxt "block title"
+msgid "Price Amount"
+msgstr ""
+
+#: src/blocks/price-amount/block.json
+msgctxt "block description"
+msgid "Displays amount of a price."
+msgstr ""
+
+#: src/blocks/price-interval/block.json
+msgctxt "block title"
+msgid "Price Interval"
+msgstr ""
+
+#: src/blocks/price-interval/block.json
+msgctxt "block description"
+msgid "Displays the price interval."
+msgstr ""
+
+#: src/blocks/price-name/block.json
+msgctxt "block title"
+msgid "Price Name"
+msgstr ""
+
+#: src/blocks/price-name/block.json
+msgctxt "block description"
+msgid "Displays the name of a price."
+msgstr ""
+
+#: src/blocks/price-scratch-amount/block.json
+msgctxt "block title"
+msgid "Price Scratch Amount"
+msgstr ""
+
+#: src/blocks/price-scratch-amount/block.json
+msgctxt "block description"
+msgid "Displays scratch amount of a price."
+msgstr ""
+
+#: src/blocks/price-setup-fee/block.json
+msgctxt "block title"
+msgid "Price Setup Fee"
+msgstr ""
+
+#: src/blocks/price-setup-fee/block.json
+msgctxt "block description"
+msgid "Displays the setup fee of a price."
+msgstr ""
+
+#: src/blocks/price-trial/block.json
+msgctxt "block title"
+msgid "Price Trial"
+msgstr ""
+
+#: src/blocks/price-trial/block.json
+msgctxt "block description"
+msgid "Displays trial of a price."
+msgstr ""
+
+#: src/blocks/product-buy-button/block.json
+msgctxt "block title"
+msgid "Product Buy Button"
+msgstr ""
+
+#: src/blocks/product-buy-button/block.json
+msgctxt "block description"
+msgid "Display the product buy button."
+msgstr ""
+
+#: src/blocks/product-buy-buttons/block.json
+msgctxt "block title"
+msgid "Buy Buttons"
+msgstr ""
+
+#: src/blocks/product-buy-buttons/block.json
+msgctxt "block description"
+msgid "Displays product buy and add to cart buttons"
+msgstr ""
+
+#: src/blocks/product-collection-tag/block.json
+#: src/blocks/product-list-filter-tag/block.json
+msgctxt "block title"
+msgid "Tag"
+msgstr ""
+
+#: src/blocks/product-collection-tag/block.json
+msgctxt "block description"
+msgid "A product collection tag for a product."
+msgstr ""
+
+#: src/blocks/product-collection-tags/block.json
+msgctxt "block title"
+msgid "Collection Tags"
+msgstr ""
+
+#: src/blocks/product-collection-tags/block.json
+msgctxt "block description"
+msgid "Displays collection selectors for a product."
+msgstr ""
+
+#: src/blocks/product-description/block.json
+msgctxt "block description"
+msgid "Display the product description."
+msgstr ""
+
+#: src/blocks/product-image/block.json
+msgctxt "block title"
+msgid "Image"
+msgstr ""
+
+#: src/blocks/product-image/block.json
+msgctxt "block description"
+msgid "Display the product image."
+msgstr ""
+
+#: src/blocks/product-list-content/block.json
+msgctxt "block title"
+msgid "Content"
+msgstr ""
+
+#: src/blocks/product-list-content/block.json
+msgctxt "block description"
+msgid "Display the product list content."
+msgstr ""
+
+#: src/blocks/product-list-filter-checkbox/block.json
+msgctxt "block description"
+msgid "Display the filter checkbox."
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-label/block.json
+#: src/blocks/product-list-filter-tags-label/block.json
+#: src/blocks/product-list-sort-radio-group-label/block.json
+msgctxt "block title"
+msgid "Label"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-label/block.json
+msgctxt "block description"
+msgid "Display the product list filter checkboxes label."
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-template/block.json
+#: src/blocks/product-list-filter-tags-template/block.json
+#: src/blocks/product-list-sort-radio-group-template/block.json
+#: src/blocks/product-template/block.json
+msgctxt "block title"
+msgid "Template"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes-template/block.json
+msgctxt "block description"
+msgid "Display the filter checkboxes."
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes/block.json
+msgctxt "block title"
+msgid "Filter Checkboxes"
+msgstr ""
+
+#: src/blocks/product-list-filter-checkboxes/block.json
+msgctxt "block description"
+msgid "Display the product list filter checkboxes."
+msgstr ""
+
+#: src/blocks/product-list-filter-tag/block.json
+msgctxt "block description"
+msgid "Display the filter tag."
+msgstr ""
+
+#: src/blocks/product-list-filter-tags-clear-all/block.json
+msgctxt "block title"
+msgid "Clear All"
+msgstr ""
+
+#: src/blocks/product-list-filter-tags-clear-all/block.json
+msgctxt "block description"
+msgid "Display the product list filter tags clear all link."
+msgstr ""
+
+#: src/blocks/product-list-filter-tags-label/block.json
+msgctxt "block description"
+msgid "Display the product list filter tags label"
+msgstr ""
+
+#: src/blocks/product-list-filter-tags-template/block.json
+msgctxt "block description"
+msgid "Display the filter tags."
+msgstr ""
+
+#: src/blocks/product-list-filter-tags/block.json
+msgctxt "block title"
+msgid "Applied Filters"
+msgstr ""
+
+#: src/blocks/product-list-filter-tags/block.json
+msgctxt "block description"
+msgid "Display the applied filters."
+msgstr ""
+
+#: src/blocks/product-list-filter/block.json
+msgctxt "block title"
+msgid "Filter (Dropdown)"
+msgstr ""
+
+#: src/blocks/product-list-filter/block.json
+msgctxt "block description"
+msgid "Display the product filter."
+msgstr ""
+
+#: src/blocks/product-list-no-products/block.json
+msgctxt "block title"
+msgid "No products"
+msgstr ""
+
+#: src/blocks/product-list-no-products/block.json
+msgctxt "block description"
+msgid "Contains the block elements used to render content when no products are found."
+msgstr ""
+
+#: src/blocks/product-list-related/block.json
+msgctxt "block title"
+msgid "Related Products"
+msgstr ""
+
+#: src/blocks/product-list-related/block.json
+msgctxt "block description"
+msgid "Display a list of products related to the current product."
+msgstr ""
+
+#: src/blocks/product-list-search/block.json
+msgctxt "block title"
+msgid "Search"
+msgstr ""
+
+#: src/blocks/product-list-search/block.json
+msgctxt "block description"
+msgid "Display the product search."
+msgstr ""
+
+#: src/blocks/product-list-sidebar-toggle/block.json
+msgctxt "block title"
+msgid "Sidebar Toggle Button"
+msgstr ""
+
+#: src/blocks/product-list-sidebar-toggle/block.json
+msgctxt "block description"
+msgid "Display the product list sidebar toggle."
+msgstr ""
+
+#: src/blocks/product-list-sidebar/block.json
+msgctxt "block title"
+msgid "Sidebar"
+msgstr ""
+
+#: src/blocks/product-list-sidebar/block.json
+msgctxt "block description"
+msgid "Display the product list sidebar."
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-label/block.json
+msgctxt "block description"
+msgid "Display the product list sort radio group label"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group-template/block.json
+msgctxt "block description"
+msgid "Display the sort radio group template."
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group/block.json
+msgctxt "block title"
+msgid "Sort (Radio Group)"
+msgstr ""
+
+#: src/blocks/product-list-sort-radio-group/block.json
+msgctxt "block description"
+msgid "Display the Product List Sort Radio Group."
+msgstr ""
+
+#: src/blocks/product-list-sort-radio/block.json
+msgctxt "block description"
+msgid "Display the sort radio."
+msgstr ""
+
+#: src/blocks/product-list-sort/block.json
+msgctxt "block title"
+msgid "Sort (Dropdown)"
+msgstr ""
+
+#: src/blocks/product-list-sort/block.json
+msgctxt "block description"
+msgid "Display the product sort."
+msgstr ""
+
+#: src/blocks/product-list/block.json
+msgctxt "block description"
+msgid "Display a list of products."
+msgstr ""
+
+#: src/blocks/product-page/block.json
+msgctxt "block title"
+msgid "Product Form"
+msgstr ""
+
+#: src/blocks/product-page/block.json
+msgctxt "block description"
+msgid "Display product form."
+msgstr ""
+
+#: src/blocks/product-pagination-next/block.json
+msgctxt "block title"
+msgid "Next"
+msgstr ""
+
+#: src/blocks/product-pagination-next/block.json
+msgctxt "block description"
+msgid "Display the product pagination next."
+msgstr ""
+
+#: src/blocks/product-pagination-numbers/block.json
+msgctxt "block title"
+msgid "Numbers"
+msgstr ""
+
+#: src/blocks/product-pagination-numbers/block.json
+msgctxt "block description"
+msgid "Display the product pagination numbers."
+msgstr ""
+
+#: src/blocks/product-pagination-previous/block.json
+msgctxt "block title"
+msgid "Previous"
+msgstr ""
+
+#: src/blocks/product-pagination-previous/block.json
+msgctxt "block description"
+msgid "Display the product pagination previous."
+msgstr ""
+
+#: src/blocks/product-pagination/block.json
+msgctxt "block title"
+msgid "Pagination"
+msgstr ""
+
+#: src/blocks/product-pagination/block.json
+msgctxt "block description"
+msgid "Display the product pagination."
+msgstr ""
+
+#: src/blocks/product-price-choice-template/block.json
+#: src/blocks/product-price/block.json
+msgctxt "block title"
+msgid "Price"
+msgstr ""
+
+#: src/blocks/product-price-choice-template/block.json
+msgctxt "block description"
+msgid "Displays the price of a product with a choice of options."
+msgstr ""
+
+#: src/blocks/product-price/block.json
+msgctxt "block description"
+msgid "Display the static product price."
+msgstr ""
+
+#: src/blocks/product-quantity/block.json
+msgctxt "block description"
+msgid "Display the product quantity selector"
+msgstr ""
+
+#: src/blocks/product-sale-badge/block.json
+msgctxt "block title"
+msgid "Sale Badge"
+msgstr ""
+
+#: src/blocks/product-sale-badge/block.json
+msgctxt "block description"
+msgid "Display a badge if the product is currently on sale"
+msgstr ""
+
+#: src/blocks/product-scratch-price/block.json
+msgctxt "block title"
+msgid "Scratch Price"
+msgstr ""
+
+#: src/blocks/product-scratch-price/block.json
+msgctxt "block description"
+msgid "Display the product scratch price."
+msgstr ""
+
+#: src/blocks/product-selected-price-ad-hoc-amount/block.json
+msgctxt "block title"
+msgid "Selected Price Custom Amount"
+msgstr ""
+
+#: src/blocks/product-selected-price-ad-hoc-amount/block.json
+msgctxt "block description"
+msgid "Displays the currently selected price custom amount."
+msgstr ""
+
+#: src/blocks/product-selected-price-amount/block.json
+msgctxt "block title"
+msgid "Selected Price Amount"
+msgstr ""
+
+#: src/blocks/product-selected-price-amount/block.json
+msgctxt "block description"
+msgid "Displays the currently selected price or variant amount."
+msgstr ""
+
+#: src/blocks/product-selected-price-fees/block.json
+msgctxt "block title"
+msgid "Selected Price Fees"
+msgstr ""
+
+#: src/blocks/product-selected-price-fees/block.json
+msgctxt "block description"
+msgid "Displays the currently selected price fees."
+msgstr ""
+
+#: src/blocks/product-selected-price-interval/block.json
+msgctxt "block title"
+msgid "Selected Price Interval"
+msgstr ""
+
+#: src/blocks/product-selected-price-interval/block.json
+msgctxt "block description"
+msgid "Displays the currently selected price interval."
+msgstr ""
+
+#: src/blocks/product-selected-price-scratch-amount/block.json
+msgctxt "block title"
+msgid "Selected Price Scratch Amount"
+msgstr ""
+
+#: src/blocks/product-selected-price-scratch-amount/block.json
+msgctxt "block description"
+msgid "Displays the currently selected price scratch amount."
+msgstr ""
+
+#: src/blocks/product-selected-price-trial/block.json
+msgctxt "block title"
+msgid "Selected Price Trial"
+msgstr ""
+
+#: src/blocks/product-selected-price-trial/block.json
+msgctxt "block description"
+msgid "Displays the currently selected price trial."
+msgstr ""
+
+#: src/blocks/product-template-container/block.json
+msgctxt "block title"
+msgid "Product Template Container"
+msgstr ""
+
+#: src/blocks/product-template-container/block.json
+msgctxt "block description"
+msgid "Display the Product Template Container."
+msgstr ""
+
+#: src/blocks/product-template/block.json
+msgctxt "block description"
+msgid "Displays products list."
+msgstr ""
+
+#: src/blocks/product-title/block.json
+msgctxt "block description"
+msgid "Display the product title."
+msgstr ""
+
+#: src/blocks/product-variant-pill/block.json
+msgctxt "block title"
+msgid "Pill"
+msgstr ""
+
+#: src/blocks/product-variant-pill/block.json
+msgctxt "block description"
+msgid "Displays a product variant choice as a pill."
+msgstr ""
+
+#: src/blocks/product-variant-pills/block.json
+msgctxt "block title"
+msgid "Variants Selector"
+msgstr ""
+
+#: src/blocks/product-variant-pills/block.json
+msgctxt "block description"
+msgid "Display product variants as pills selector."
 msgstr ""
 
 #: address.js:14
@@ -21190,10 +22496,6 @@ msgstr ""
 msgid "We were not able to process this order"
 msgstr ""
 
-#: index4.js:185
-msgid "Failed to delete"
-msgstr ""
-
 #: mutations.js:40
 msgid "Apologies, this is currently out of stock."
 msgstr ""
@@ -21979,26 +23281,6 @@ msgstr ""
 msgid "%s products found"
 msgstr ""
 
-#: sc-product-item-list.js:223
-#: sc-product-item-list.js:258
-msgid "Latest"
-msgstr ""
-
-#: sc-product-item-list.js:225
-#: sc-product-item-list.js:258
-msgid "Oldest"
-msgstr ""
-
-#: sc-product-item-list.js:227
-#: sc-product-item-list.js:258
-msgid "Alphabetical, A-Z"
-msgstr ""
-
-#: sc-product-item-list.js:229
-#: sc-product-item-list.js:258
-msgid "Alphabetical, Z-A"
-msgstr ""
-
 #: sc-product-item-list.js:258
 msgid "Dropdown to sort products."
 msgstr ""
@@ -22113,14 +23395,6 @@ msgstr ""
 
 #: sc-purchase-downloads-list2.js:35
 msgid "You don't have any downloads."
-msgstr ""
-
-#: sc-quantity-select2.js:63
-msgid "Decrease quantity by one."
-msgstr ""
-
-#: sc-quantity-select2.js:63
-msgid "Increase quantity by one."
 msgstr ""
 
 #: sc-recurring-price-choice-container2.js:45
