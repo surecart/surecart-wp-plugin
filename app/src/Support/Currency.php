@@ -95,7 +95,13 @@ class Currency {
 	 * @return string
 	 */
 	public static function getCurrencyLocale() {
-		return \SureCart::settings()->get( 'currency_locale', get_locale() );
+		$locale = \SureCart::settings()->get( 'currency_locale', false );
+
+		if ( ! $locale || 'default' === $locale ) {
+			$locale = get_locale();
+		}
+
+		return $locale;
 	}
 
 	/**

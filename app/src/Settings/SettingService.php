@@ -278,7 +278,6 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => get_locale(),
 			]
 		);
 	}

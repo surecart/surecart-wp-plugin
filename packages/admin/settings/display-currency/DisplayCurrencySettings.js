@@ -45,13 +45,11 @@ export default function DisplayCurrencySettings() {
 		}
 	};
 
-	const availableTranslations = scData?.available_translations || {};
-	const translationChoices = Object.keys(availableTranslations).map(
-		(key) => ({
-			label: availableTranslations[key]?.native_name,
-			value: key,
-		})
-	);
+	const locales = scData?.locales || {};
+	const translationChoices = Object.keys(locales).map((key) => ({
+		label: locales[key]?.native_name,
+		value: key,
+	}));
 
 	return (
 		<>
@@ -97,13 +95,9 @@ export default function DisplayCurrencySettings() {
 						search={true}
 						label={__('Currency Locale', 'surecart')}
 						placeholder={__('Select Currency Locale', 'surecart')}
-						value={selectedLocale || null}
+						value={selectedLocale || 'default'}
 						onScChange={(e) => setSelectedLocale(e.target.value)}
 						unselect={false}
-						help={__(
-							'Select the currency locale used to format the currency. By default, the site locale will be used.',
-							'surecart'
-						)}
 						choices={translationChoices}
 					/>
 				</SettingsBox>

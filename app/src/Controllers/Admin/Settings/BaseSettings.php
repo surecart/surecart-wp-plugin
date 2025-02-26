@@ -132,15 +132,12 @@ abstract class BaseSettings {
 
 		wp_set_script_translations( $handle, 'surecart' );
 
-		// Load translations.
-		require_once ABSPATH . 'wp-admin/includes/translation-install.php';
-
 		wp_localize_script(
 			$handle,
 			'scData',
 			[
 				'supported_currencies'   => Currency::list(),
-				'available_translations' => wp_get_available_translations(),
+				'locales'                => $this->getLocales(),
 				'app_url'                => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
 				'account_id'             => \SureCart::account()->id,
 				'account_slug'           => \SureCart::account()->slug,
@@ -156,6 +153,51 @@ abstract class BaseSettings {
 				'is_block_theme'         => (bool) wp_is_block_theme(),
 				'claim_url'              => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 			]
+		);
+	}
+
+	/**
+	 * Get locales.
+	 *
+	 * @return array
+	 */
+	public function getLocales() {
+		// Load translations.
+		require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+		$available_translations = wp_get_available_translations();
+		$locales['en_US']       = array(
+			'language'     => 'en_US',
+			'english_name' => 'English (United States)',
+			'native_name'  => 'English (United States)',
+		);
+
+		// Merge with available translations.
+		$locales = array_merge( $locales, $available_translations );
+
+		// sort by english name.
+		uasort(
+			$locales,
+			function ( $a, $b ) {
+				return strnatcasecmp( $a['english_name'], $b['english_name'] );
+			}
+		);
+
+		$current_locale     = get_locale() ? $locales[ get_locale() ] : $locales['en_US'];
+		$store_default_name = sprintf(
+			/* translators: %s: current name */
+			__( 'Store Default - %s', 'surecart' ),
+			$current_locale['native_name']
+		);
+
+		return array_merge(
+			array(
+				'default' => array(
+					'language'     => 'default',
+					'english_name' => $store_default_name,
+					'native_name'  => $store_default_name,
+				),
+			),
+			$locales
 		);
 	}
 }
