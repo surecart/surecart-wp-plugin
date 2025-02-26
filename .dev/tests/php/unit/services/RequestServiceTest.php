@@ -17,7 +17,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
-				\SureCart\WordPress\PluginServiceProvider::class
+				\SureCart\Request\RequestServiceProvider::class
 			]
 		], false);
 
@@ -117,9 +117,18 @@ class RequestServiceTest extends SureCartUnitTestCase
 		);
 		$request_cache->shouldReceive('getPreviousCache')
 			->andReturn($previous_cache_value);
-
-		$request = new RequestService( 'test' );
-		$response = $request->makeRequest('manual_payment_methods', [], true, '', true, $request_cache);
+	
+		$container['requests.cache'] = function () use ($request_cache) {
+			return $request_cache;
+		};
+	
+		// Initialize the RequestService with the mock container.
+		$service = new RequestService($container);
+	
+		// Make the request.
+		$response = $service->makeRequest('manual_payment_methods', [], true, '', true);
+	
+		// Assert the response.
 		$this->assertSame($response, $previous_cache_value);
 	}
 }
