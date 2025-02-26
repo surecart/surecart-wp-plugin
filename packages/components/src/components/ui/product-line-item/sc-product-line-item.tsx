@@ -93,7 +93,7 @@ export class ScProductLineItem {
     const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
       return (
-        <div class="item__price" part="price">
+        <Fragment>
           <div class="price" part="price__amount">
             {!!setupFee && !this.setupFeeTrialEnabled ? (
               <Fragment>
@@ -116,12 +116,12 @@ export class ScProductLineItem {
             <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
             {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
           </div>
-        </div>
+        </Fragment>
       );
     }
 
     return (
-      <div class="item__price" part="price">
+      <Fragment>
         <div class="price" part="price__amount">
           {!!this.scratchAmount && this.scratchAmount !== this.amount && (
             <Fragment>
@@ -135,7 +135,7 @@ export class ScProductLineItem {
             {this.interval}
           </div>
         )}
-      </div>
+      </Fragment>
     );
   }
 
@@ -143,10 +143,8 @@ export class ScProductLineItem {
     if (!this.purchasableStatusDisplay) return null;
 
     return (
-      <div class="item__price" part="price">
-        <div class="product-line-item__purchasable-status" part="price__amount">
-          {this.purchasableStatusDisplay}
-        </div>
+      <div class="product-line-item__purchasable-status" part="price__amount">
+        {this.purchasableStatusDisplay}
       </div>
     );
   }
@@ -165,63 +163,72 @@ export class ScProductLineItem {
           }}
         >
           {!!this.image?.src && <img {...(this.image as any)} part="image" />}
-          <div class="item__text" part="text">
-            <div class="item__text-details">
-              <div class="item__title" part="title">
-                <slot name="title">{this.name}</slot>
-              </div>
-              <div class="item__description item__price-variant" part="description">
-                <div>{this.variantLabel}</div>
-                <div>{this.priceName}</div>
-                {!!this.sku && (
-                  <div>
-                    {__('SKU:', 'surecart')} {this.sku}
+          <div class="item__text-container">
+            <div class="item__row">
+              <div class="item__text" part="text">
+                <div class="item__text-details">
+                  <div class="item__title" part="title">
+                    <slot name="title">{this.name}</slot>
                   </div>
-                )}
+                  <div class="item__description item__price-variant" part="description">
+                    <div>{this.variantLabel}</div>
+                    <div>{this.priceName}</div>
+                    {!!this.sku && (
+                      <div>
+                        {__('SKU:', 'surecart')} {this.sku}
+                      </div>
+                    )}
+                  </div>
+                  {!this.editable && this.quantity > 1 && (
+                    <span class="item__description" part="static-quantity">
+                      {__('Qty:', 'surecart')} {this.quantity}
+                    </span>
+                  )}
+                </div>
               </div>
-              {!this.editable && this.quantity > 1 && (
-                <span class="item__description" part="static-quantity">
-                  {__('Qty:', 'surecart')} {this.quantity}
-                </span>
-              )}
+              <div class="item__suffix" part="suffix">
+                <div class="item__price" part="price">
+                  {this.renderPriceAndInterval()}
+                  {this.renderPurchasableStatus()}
+                </div>
+              </div>
             </div>
 
-            {this.editable && (
-              <sc-quantity-select
-                max={this.max || Infinity}
-                exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
-                clickEl={this.el}
-                quantity={this.quantity}
-                size="small"
-                onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-                aria-label={
-                  /** translators: %1$s: product name, %2$s: product price name */
-                  sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)
-                }
-              ></sc-quantity-select>
-            )}
-          </div>
-          <div class="item__suffix" part="suffix">
-            {this.removable ? (
-              <sc-icon
-                exportparts="base:remove-icon__base"
-                class="item__remove"
-                name="x"
-                onClick={() => this.scRemove.emit()}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') {
-                    this.scRemove.emit();
+            <div class="item__row">
+              {this.editable && (
+                <sc-quantity-select
+                  max={this.max || Infinity}
+                  exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
+                  clickEl={this.el}
+                  quantity={this.quantity}
+                  size="small"
+                  onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+                  aria-label={
+                    /** translators: %1$s: product name, %2$s: product price name */
+                    sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)
                   }
-                }}
-                tabindex="0"
-                // translators: Remove Item - Product Name Product Price Name
-                aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
-              ></sc-icon>
-            ) : (
-              <div></div>
-            )}
-            {this.renderPriceAndInterval()}
-            {this.renderPurchasableStatus()}
+                ></sc-quantity-select>
+              )}
+              {!!this.removable && (
+                <div class="item__remove-container">
+                  <sc-icon
+                    exportparts="base:remove-icon__base"
+                    class="item__remove"
+                    name="x"
+                    onClick={() => this.scRemove.emit()}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        this.scRemove.emit();
+                      }
+                    }}
+                    tabindex="0"
+                    // translators: Remove Item - Product Name Product Price Name
+                    aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
+                  ></sc-icon>
+                  <span class="item__remove-text">{__('Remove', 'surecart')}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         {(this.fees || []).map(fee => {
