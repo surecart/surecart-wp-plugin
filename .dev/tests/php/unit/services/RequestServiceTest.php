@@ -117,13 +117,18 @@ class RequestServiceTest extends SureCartUnitTestCase
 		);
 		$request_cache->shouldReceive('getPreviousCache')
 			->andReturn($previous_cache_value);
-
-		\SureCart::alias('request.cache', function () use ($request_cache) {
+	
+		$container['requests.cache'] = function () use ($request_cache) {
 			return $request_cache;
-		});
-		$response = \SureCart::request('manual_payment_methods', [], true, '', true);
-		// $response = $request_service->makeRequest('manual_payment_methods', [], true, '', true);
-		var_dump($response);
+		};
+	
+		// Initialize the RequestService with the mock container.
+		$service = new RequestService($container);
+	
+		// Make the request.
+		$response = $service->makeRequest('manual_payment_methods', [], true, '', true);
+	
+		// Assert the response.
 		$this->assertSame($response, $previous_cache_value);
 	}
 }
