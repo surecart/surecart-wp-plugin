@@ -3,7 +3,12 @@ import { __, _n } from '@wordpress/i18n';
 import { css, jsx, Global } from '@emotion/react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
-import { ScAlert, ScIcon, ScSwitch } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScIcon,
+	ScSelect,
+	ScSwitch,
+} from '@surecart/components-react';
 import { useEntityProp } from '@wordpress/core-data';
 import { useState } from 'react';
 import useSave from '../UseSave';
@@ -19,6 +24,12 @@ export default function DisplayCurrencySettings() {
 	const [currencyGeolocationEnabled, setCurrencyGeolocationEnabled] =
 		useEntityProp('root', 'site', 'surecart_currency_geolocation_enabled');
 
+	const [selectedLocale, setSelectedLocale] = useEntityProp(
+		'root',
+		'site',
+		'surecart_currency_locale'
+	);
+
 	/**
 	 * Form is submitted.
 	 */
@@ -33,6 +44,14 @@ export default function DisplayCurrencySettings() {
 			setError(e);
 		}
 	};
+
+	const availableTranslations = scData?.available_translations || {};
+	const translationChoices = Object.keys(availableTranslations).map(
+		(key) => ({
+			label: availableTranslations[key]?.native_name,
+			value: key,
+		})
+	);
 
 	return (
 		<>
@@ -66,6 +85,27 @@ export default function DisplayCurrencySettings() {
 						<CurrencySwitcherSettings />
 					</SettingsBox>
 				)}
+
+				<SettingsBox
+					title={__('Currency Locale', 'surecart')}
+					description={__(
+						'Choose the locale used to format the currency. By default, the site locale will be used.',
+						'surecart'
+					)}
+				>
+					<ScSelect
+						label={__('Currency Locale', 'surecart')}
+						placeholder={__('Select Currency Locale', 'surecart')}
+						value={selectedLocale || null}
+						onScChange={(e) => setSelectedLocale(e.target.value)}
+						unselect={false}
+						help={__(
+							'Select the currency locale used to format the currency. By default, the site locale will be used.',
+							'surecart'
+						)}
+						choices={translationChoices}
+					/>
+				</SettingsBox>
 
 				<SettingsBox
 					title={__('Geolocation', 'surecart')}

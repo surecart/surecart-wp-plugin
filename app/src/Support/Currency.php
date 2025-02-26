@@ -90,6 +90,15 @@ class Currency {
 	}
 
 	/**
+	 * Get the currency locale.
+	 *
+	 * @return string
+	 */
+	public static function getCurrencyLocale() {
+		return \SureCart::settings()->get( 'surecart_currency_locale' ) ?? get_locale();
+	}
+
+	/**
 	 * Get the preferred locale from the header.
 	 *
 	 * @return string
@@ -124,10 +133,10 @@ class Currency {
 
 		// Validate the locale format (must be in standard locale format).
 		if ( ! preg_match( '/^[a-z]{2,3}(?:_[A-Z][a-z]{3})?(?:_[A-Z]{2})?$/', $best_lang ) ) {
-			return get_locale(); // Invalid format, fallback to default.
+			return self::getCurrencyLocale(); // Invalid format, fallback to default.
 		}
 
-		return $best_lang ? $best_lang : get_locale(); // Fallback.
+		return $best_lang ? $best_lang : self::getCurrencyLocale(); // Fallback.
 	}
 
 	/**
@@ -407,7 +416,7 @@ class Currency {
 		}
 
 		if ( class_exists( 'NumberFormatter' ) ) {
-			$fmt = new \NumberFormatter( apply_filters( 'surecart/currency/locale', get_locale() ), \NumberFormatter::CURRENCY );
+			$fmt = new \NumberFormatter( apply_filters( 'surecart/currency/locale', self::getCurrencyLocale() ), \NumberFormatter::CURRENCY );
 
 			// Extract the fractional part.
 			$fractional_part = fmod( $converted_amount, 1 );

@@ -132,11 +132,15 @@ abstract class BaseSettings {
 
 		wp_set_script_translations( $handle, 'surecart' );
 
+		// Load translations.
+		require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+
 		wp_localize_script(
 			$handle,
 			'scData',
 			[
 				'supported_currencies'   => Currency::list(),
+				'available_translations' => wp_get_available_translations(),
 				'app_url'                => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
 				'account_id'             => \SureCart::account()->id,
 				'account_slug'           => \SureCart::account()->slug,
