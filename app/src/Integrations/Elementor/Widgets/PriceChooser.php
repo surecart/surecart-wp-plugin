@@ -27,7 +27,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Price Chooser', 'surecart' );
+		return esc_html__( 'Price Selector', 'surecart' );
 	}
 
 	/**
@@ -54,7 +54,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return array( 'surecart-elementor-product' );
+		return array( 'surecart-elementor-elements' );
 	}
 
 	/**

@@ -10,16 +10,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Selected Price widget.
+ * Product Data widget.
  */
-class SelectedPrice extends \Elementor\Widget_Base {
+class ProductData extends \Elementor\Widget_Base {
 	/**
 	 * Get widget name.
 	 *
 	 * @return string
 	 */
 	public function get_name() {
-		return 'surecart-selected-price';
+		return 'surecart-product-data';
 	}
 
 	/**
@@ -28,7 +28,7 @@ class SelectedPrice extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Selected Price', 'surecart' );
+		return esc_html__( 'Product Data', 'surecart' );
 	}
 
 	/**

@@ -61,6 +61,6 @@ class ProductCard extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-product-loop' ];
+		return [ 'surecart-elementor-layout' ];
 	}
 }

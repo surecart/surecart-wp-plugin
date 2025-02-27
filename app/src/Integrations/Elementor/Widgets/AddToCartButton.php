@@ -25,7 +25,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Add To Cart Button', 'surecart' );
+		return esc_html__( 'Add To Cart', 'surecart' );
 	}
 
 	/**
@@ -52,7 +52,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return array( 'surecart-elementor-product' );
+		return array( 'surecart-elementor-elements' );
 	}
 
 	/**

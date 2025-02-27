@@ -52,7 +52,7 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return array( 'surecart-elementor-product' );
+		return array( 'surecart-elementor-elements' );
 	}
 
 	/**

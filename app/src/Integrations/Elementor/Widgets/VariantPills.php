@@ -25,7 +25,7 @@ class VariantPills extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Variant Pills', 'surecart' );
+		return esc_html__( 'Product Variant Pills', 'surecart' );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class VariantPills extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_keywords() {
-		return array( 'surecart', 'variants', 'variant', 'pills' );
+		return array( 'surecart', 'variants', 'variant', 'pills', 'product' );
 	}
 
 	/**
@@ -52,7 +52,7 @@ class VariantPills extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return array( 'surecart-elementor-product' );
+		return array( 'surecart-elementor-elements' );
 	}
 
 	/**
