@@ -36,6 +36,7 @@ class ProductsSyncService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_notices', [ $this, 'showMigrationNotice' ] );
+		add_action( $this->queue()->getIdentifier() . '_completed', [ $this, 'cleanup' ] );
 	}
 
 	/**
@@ -137,5 +138,32 @@ class ProductsSyncService {
 
 		// save and dispatch the process.
 		return $this->queue()->push_to_queue( $args )->save()->dispatch();
+	}
+
+	/**
+	 * Cleanup the old store posts/taxonomies.
+	 *
+	 * @return void
+	 */
+	public function cleanup() {
+		$query = new \WP_Query(
+			[
+				'post_type'      => 'sc_product',
+				'posts_per_page' => -1,
+				'suppress_filters' => true,
+				'tax_query'      => [
+					[
+						'taxonomy' => 'sc_account',
+						'field'    => 'name',
+						'terms'    => \SureCart::account()->id,
+						'operator' => 'NOT IN',
+					],
+				],
+			]
+		);
+error_log( print_r( $query->posts, true ) );
+		// foreach ( $query->posts as $post ) {
+		// 	wp_delete_post( $post->ID, true );
+		// }
 	}
 }
