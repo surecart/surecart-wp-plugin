@@ -184,8 +184,8 @@ abstract class BaseSettings {
 
 		$current_locale     = get_locale() ? $locales[ get_locale() ] : $locales['en_US'];
 		$store_default_name = sprintf(
-			/* translators: %s: current name */
-			__( 'Store Default - %s', 'surecart' ),
+			/* translators: %s: current language name */
+			__( 'Site Locale - %s', 'surecart' ),
 			$current_locale['native_name']
 		);
 
