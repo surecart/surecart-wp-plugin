@@ -141,29 +141,29 @@ class ProductsSyncService {
 	}
 
 	/**
-	 * Cleanup the old store posts/taxonomies.
+	 * Get the cleanup process.
 	 *
-	 * @return void
+	 * @return ProductsCleanupProcess
+	 */
+	public function queueCleanup() {
+		return $this->app->resolve( 'surecart.process.products.cleanup' );
+	}
+	/**
+	 * Cleanup the old store product posts.
+	 *
+	 * @return array|WP_Error The response or WP_Error on failure.
 	 */
 	public function cleanup() {
-		$query = new \WP_Query(
-			[
-				'post_type'      => 'sc_product',
-				'posts_per_page' => -1,
-				'suppress_filters' => true,
-				'tax_query'      => [
-					[
-						'taxonomy' => 'sc_account',
-						'field'    => 'name',
-						'terms'    => \SureCart::account()->id,
-						'operator' => 'NOT IN',
-					],
-				],
-			]
-		);
-error_log( print_r( $query->posts, true ) );
-		// foreach ( $query->posts as $post ) {
-		// 	wp_delete_post( $post->ID, true );
-		// }
+		$args = [
+			'page'       => 1,
+			'batch_size' => 25,
+		];
+
+		// cancel previous processes.
+		$this->queueCleanup()->cancel();
+		$this->queueCleanup()->delete_all();
+
+		// save and dispatch the process.
+		return $this->queueCleanup()->push_to_queue( $args )->save()->dispatch();
 	}
 }

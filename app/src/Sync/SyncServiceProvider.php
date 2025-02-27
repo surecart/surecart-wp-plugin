@@ -7,6 +7,7 @@ use SureCart\Sync\CustomerSyncService;
 use SureCart\Sync\PostSyncService;
 use SureCart\Sync\ProductSyncService;
 use SureCart\Sync\ProductsSyncProcess;
+use SureCart\Sync\ProductsCleanupProcess;
 use SureCart\Sync\ProductsSyncService;
 use SureCart\Sync\StoreSyncService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
@@ -41,6 +42,8 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		// Queues up the products for syncing and starts sync.
 		$products_queue_process                       = new ProductsSyncProcess();
 		$container['surecart.process.products.queue'] = fn() => $products_queue_process;
+
+		$container['surecart.process.products.cleanup'] = fn() => new ProductsCleanupProcess();
 
 		$app->alias( 'sync', 'surecart.sync' );
 	}
