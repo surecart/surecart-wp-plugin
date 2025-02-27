@@ -11,13 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class AddToCartButton extends \Elementor\Widget_Base {
 	/**
-	 * Is this an add to cart button?
-	 *
-	 * @var boolean
-	 */
-	protected const IS_ADD_TO_CART = true;
-
-	/**
 	 * Get widget name.
 	 *
 	 * @return string
@@ -72,11 +65,32 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Register text settings.
+	 * Register the widget content settings.
 	 *
 	 * @return void
 	 */
-	protected function register_text_settings(): void {
+	protected function register_content_settings() {
+		$this->start_controls_section(
+			'section_content',
+			[
+				'label' => esc_html__( 'Content Settings', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
+			'buy_button_type',
+			[
+				'label'       => esc_html__( 'Go Directly To Checkout', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Yes', 'surecart' ),
+				'label_off'   => esc_html__( 'No', 'surecart' ),
+				'default'     => 'no',
+				'description' => esc_html__( 'Bypass adding to cart and go directly to the checkout.', 'surecart' ),
+			]
+		);
+
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_text_settings',
 			[
@@ -112,15 +126,6 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
-	}
-
-	/**
-	 * Register the widget content settings.
-	 *
-	 * @return void
-	 */
-	protected function register_content_settings() {
-		$this->register_text_settings();
 	}
 
 	/**
@@ -250,7 +255,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+		$settings       = $this->get_settings_for_display();
+		$is_add_to_cart = isset( $settings['buy_button_type'] ) && 'yes' === $settings['buy_button_type'];
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
@@ -264,7 +270,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		}
 
 		$attributes = array(
-			'add_to_cart'       => static::IS_ADD_TO_CART,
+			'add_to_cart'       => $is_add_to_cart,
 			'text'              => esc_attr( $settings['button_text'] ),
 			'out_of_stock_text' => esc_attr( $settings['button_out_of_stock_text'] ),
 			'unavailable_text'  => esc_attr( $settings['button_unavailable_text'] ),
