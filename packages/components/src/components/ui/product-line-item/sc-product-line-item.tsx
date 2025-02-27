@@ -89,53 +89,60 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
-  renderPriceAndInterval() {
+  renderPrice() {
     const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
       return (
-        <Fragment>
-          <div class="price" part="price__amount">
-            {!!setupFee && !this.setupFeeTrialEnabled ? (
-              <Fragment>
-                {setupFee?.description} <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
-              </Fragment>
-            ) : (
-              sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
-            )}
-          </div>
-          <div class="price__description" part="price__description">
-            {
-              /** translators: 30 days free, Then $99 per month. */
-              __('Then', 'surecart')
-            }{' '}
-            {!!this.scratchAmount && this.scratchAmount > this.amount && (
-              <Fragment>
-                <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
-              </Fragment>
-            )}
-            <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
-            {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
-          </div>
-        </Fragment>
+        <div class="price" part="price__amount">
+          {!!setupFee && !this.setupFeeTrialEnabled ? (
+            <Fragment>
+              {setupFee?.description} <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
+            </Fragment>
+          ) : (
+            sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
+          )}
+        </div>
       );
     }
 
     return (
-      <Fragment>
-        <div class="price" part="price__amount">
-          {!!this.scratchAmount && this.scratchAmount !== this.amount && (
+      <div class="price" part="price__amount">
+        {!!this.scratchAmount && this.scratchAmount !== this.amount && (
+          <Fragment>
+            <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+          </Fragment>
+        )}
+        <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>
+      </div>
+    );
+  }
+
+  renderInterval() {
+    const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
+    if (this.trialDurationDays) {
+      return (
+        <div class="price__description" part="price__description">
+          {
+            /** translators: 30 days free, Then $99 per month. */
+            __('Then', 'surecart')
+          }{' '}
+          {!!this.scratchAmount && this.scratchAmount > this.amount && (
             <Fragment>
-              <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+              <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
             </Fragment>
           )}
-          <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>
+          <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
+          {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
         </div>
-        {!!this.interval && (
-          <div class="price__description" part="price__description">
-            {this.interval}
-          </div>
-        )}
-      </Fragment>
+      );
+    }
+
+    return (
+      !!this.interval && (
+        <div class="price__description" part="price__description">
+          {this.interval}
+        </div>
+      )
     );
   }
 
@@ -162,8 +169,64 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src && <img {...(this.image as any)} part="image" />}
+          {!!this.image?.src ? <img {...(this.image as any)} part="image" class="item__image" /> : <div class="item__image-placeholder"></div>}
           <div class="item__text-container">
+            <div class="item__row">
+              <div class="item__title" part="title">
+                <slot name="title">{this.name}</slot>
+              </div>
+              {this.renderPrice()}
+            </div>
+
+            {(this.priceName || this.variantLabel || this.sku || this.interval) && (
+              <div class="item__row">
+                <div class="item__description item__price-variant" part="description">
+                  {(() => {
+                    // Create an array of elements to display
+                    const elements = [];
+
+                    if (this.variantLabel) {
+                      elements.push(<span>{this.variantLabel}</span>);
+                    }
+
+                    if (this.priceName) {
+                      elements.push(<span>{this.priceName}</span>);
+                    }
+
+                    if (this.sku) {
+                      elements.push(
+                        <span>
+                          {__('SKU:', 'surecart')} {this.sku}
+                        </span>,
+                      );
+                    }
+
+                    // Join elements with pipe separator
+                    return elements.map((element, index) => (
+                      <Fragment>
+                        {element}
+                        {index < elements.length - 1 && <span> &bull; </span>}
+                      </Fragment>
+                    ));
+                  })()}
+                </div>
+                {this.renderInterval()}
+              </div>
+            )}
+
+            {(this.fees || []).map(fee => {
+              if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
+              return (
+                <div class="item__row">
+                  <div></div>
+                  <div class="price__description" part="description">
+                    <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} /> {fee?.description}
+                  </div>
+                </div>
+              );
+            })}
+
+            {/*
             <div class="item__row">
               <div class="item__text" part="text">
                 <div class="item__text-details">
@@ -171,8 +234,8 @@ export class ScProductLineItem {
                     <slot name="title">{this.name}</slot>
                   </div>
                   <div class="item__description item__price-variant" part="description">
-                    <div>{this.variantLabel}</div>
-                    <div>{this.priceName}</div>
+                    {!!this.variantLabel && <div>{this.variantLabel}</div>}
+                    {!!this.priceName && <div>{this.priceName}</div>}
                     {!!this.sku && (
                       <div>
                         {__('SKU:', 'surecart')} {this.sku}
@@ -192,10 +255,10 @@ export class ScProductLineItem {
                   {this.renderPurchasableStatus()}
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div class="item__row">
-              {this.editable && (
+            <div class="item__row stick-bottom">
+              {this.editable ? (
                 <sc-quantity-select
                   max={this.max || Infinity}
                   exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
@@ -208,6 +271,12 @@ export class ScProductLineItem {
                     sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)
                   }
                 ></sc-quantity-select>
+              ) : (
+                this.quantity > 1 && (
+                  <span class="item__description" part="static-quantity">
+                    {__('Qty:', 'surecart')} {this.quantity}
+                  </span>
+                )
               )}
               {!!this.removable && (
                 <div class="item__remove-container">
@@ -231,17 +300,6 @@ export class ScProductLineItem {
             </div>
           </div>
         </div>
-        {(this.fees || []).map(fee => {
-          if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
-          return (
-            <sc-line-item exportparts="price-description:line-item__price-description">
-              <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
-              <span slot="price-description" class="fee__description">
-                {fee?.description}
-              </span>
-            </sc-line-item>
-          );
-        })}
       </div>
     );
   }
