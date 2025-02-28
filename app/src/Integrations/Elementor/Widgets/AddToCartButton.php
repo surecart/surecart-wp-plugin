@@ -7,16 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Add to cart button widget.
+ * Add to cart / buy now button widget.
  */
 class AddToCartButton extends \Elementor\Widget_Base {
-	/**
-	 * Is this an add to cart button?
-	 *
-	 * @var boolean
-	 */
-	protected const IS_ADD_TO_CART = true;
-
 	/**
 	 * Get widget name.
 	 *
@@ -91,7 +84,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'type'        => \Elementor\Controls_Manager::SWITCHER,
 				'label_on'    => esc_html__( 'Yes', 'surecart' ),
 				'label_off'   => esc_html__( 'No', 'surecart' ),
-				'default'     => self::IS_ADD_TO_CART ? 'no' : 'yes',
+				'default'     => 'no',
 				'description' => esc_html__( 'Bypass adding to cart and go directly to the checkout.', 'surecart' ),
 			]
 		);

@@ -67,7 +67,8 @@
 									"unit": "px",
 									"size": 32,
 									"sizes": []
-								}
+								},
+								"_title": "Product name"
 							},
 							"elements": [],
 							"isInner": false,
@@ -93,7 +94,7 @@
 									"left": "0",
 									"isLinked": true
 								},
-								"_title": "Product Data"
+								"_title": "Pricing"
 							},
 							"elements": [
 								{
@@ -317,7 +318,8 @@
 							"settings": {
 								"__dynamic__": {
 									"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%7D\"]"
-								}
+								},
+								"_title": "Product short description"
 							},
 							"elements": [],
 							"isInner": false,
@@ -382,9 +384,15 @@
 							"elType": "widget"
 						},
 						{
-							"id": "30eabad0",
+							"id": "9351991c",
 							"settings": {
 								"button_text": "Buy Now",
+								"buy_button_type": "yes",
+								"button_width": {
+									"unit": "%",
+									"size": 100,
+									"sizes": []
+								},
 								"button_border_width": {
 									"unit": "px",
 									"top": "1",
@@ -402,11 +410,14 @@
 									"bottom": "24",
 									"left": "24",
 									"isLinked": true
-								}
+								},
+								"button_text_color": "#000000",
+								"button_background_color": "#FFFFFF",
+								"_title": "Buy Now Button"
 							},
 							"elements": [],
 							"isInner": false,
-							"widgetType": "surecart-buy-button",
+							"widgetType": "surecart-add-to-cart-button",
 							"elType": "widget"
 						}
 					],

@@ -127,10 +127,10 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url'                 => site_url(),
-				'sc_product_template'      => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
-				'sc_product_card_template' => $this->get_elementor_template_from_file( 'surecart-product-card.json' ),
-				'sc_product_data_template' => $this->get_elementor_template_from_file( 'surecart-product-data.json' ),
+				'site_url'                    => site_url(),
+				'sc_product_template'         => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
+				'sc_product_card_template'    => $this->get_elementor_template_from_file( 'surecart-product-card.json' ),
+				'sc_product_pricing_template' => $this->get_elementor_template_from_file( 'surecart-product-pricing.json' ),
 			]
 		);
 	}

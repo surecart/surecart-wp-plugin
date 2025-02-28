@@ -57,15 +57,15 @@ jQuery(window).ready(function () {
 		}
 	);
 
-	// SureCart Product Data Widget.
+	// SureCart Product Pricing Widget.
 	elementor.hooks.addAction(
-		'panel/open_editor/widget/surecart-product-data',
+		'panel/open_editor/widget/surecart-product-pricing',
 		function (panel, model, view) {
 			// Remove the default SureCart block by clearing the model.
 			model.destroy();
 
 			insertSureCartTemplates(
-				window?.scElementorData?.sc_product_data_template
+				window?.scElementorData?.sc_product_pricing_template
 			);
 		}
 	);
