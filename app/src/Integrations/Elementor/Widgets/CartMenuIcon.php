@@ -223,7 +223,7 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 					],
 				],
 				'default'    => [
-					'size' => 16,
+					'size' => 20,
 					'unit' => 'px',
 				],
 				'selectors'  => [
@@ -247,7 +247,7 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 					],
 				],
 				'default'    => [
-					'size' => 16,
+					'size' => 20,
 					'unit' => 'px',
 				],
 				'selectors'  => [
