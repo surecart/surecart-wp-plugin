@@ -107,17 +107,21 @@ class CartMenuIcon extends \Bricks\Element {
 
 		$cart_menu_always_shown = ! empty( $settings['cart_menu_always_shown'] ) ? true : false;
 
-		$this->cart_icon = ! empty( $settings['cart_icon'] ) ? self::render_icon( $settings['cart_icon'] ) : null;
+		$this->cart_icon = ! empty( $settings['cart_icon']['icon'] ) ? self::render_icon( $settings['cart_icon'], [ 'icon' ] ) : self::render_icon(
+			[
+				'icon' => 'ti-bag',
+			],
+			[ 'icon' ]
+		);
 
 		// Filter cart icon.
 		add_filter( 'sc_cart_menu_icon', [ $this, 'render_bricks_icon' ] );
 
 		if ( $this->is_admin_editor() ) {
-			$this->cart_icon = $this->cart_icon ?? \SureCart::svg()->get( 'shopping-bag' );
-			$content         = '<div class="sc-cart-icon" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">';
-			$content        .= $this->cart_icon;
-			$content        .= '<span class="sc-cart-count" style="box-sizing: border-box; position: absolute; inset: -12px -16px auto auto; text-align: center; font-size: 10px; font-weight: bold; border-radius: var(--sc-cart-icon-counter-border-radius, 9999px); color: var(--sc-cart-icon-counter-color, var(--sc-color-primary-text, var(--sc-color-white))); background: var(--sc-cart-icon-counter-background, var(--sc-color-primary-500)); box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large)); padding: 2px 6px; line-height: 14px; min-width: 14px; z-index: 1;">2</span>';
-			$content        .= '</div>';
+			$content  = '<div class="sc-cart-icon" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="' . esc_attr__( 'Open cart', 'surecart' ) . '">';
+			$content .= $this->cart_icon;
+			$content .= '<span class="sc-cart-count" style="box-sizing: border-box; position: absolute; inset: -12px -16px auto auto; text-align: center; font-size: 10px; font-weight: bold; border-radius: var(--sc-cart-icon-counter-border-radius, 9999px); color: var(--sc-cart-icon-counter-color, var(--sc-color-primary-text, var(--sc-color-white))); background: var(--sc-cart-icon-counter-background, var(--sc-color-primary-500)); box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large)); padding: 2px 6px; line-height: 14px; min-width: 14px; z-index: 1;">2</span>';
+			$content .= '</div>';
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$content,
