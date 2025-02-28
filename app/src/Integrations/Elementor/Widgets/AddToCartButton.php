@@ -300,7 +300,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings       = $this->get_settings_for_display();
-		$is_add_to_cart = isset( $settings['buy_button_type'] ) && 'yes' === $settings['buy_button_type'];
+		$is_add_to_cart = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
