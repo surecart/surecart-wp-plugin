@@ -89,14 +89,22 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
+  setupFee() {
+    return (this.fees || []).find(fee => fee.fee_type === 'setup');
+  }
+
+  hasPaidTrial() {
+    return !!this.setupFee() && !this.setupFeeTrialEnabled;
+  }
+
   renderPrice() {
-    const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
       return (
         <div class="price" part="price__amount">
-          {!!setupFee && !this.setupFeeTrialEnabled ? (
+          {this.hasPaidTrial() ? (
             <Fragment>
-              {setupFee?.description} <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
+              <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.setupFee()?.amount}></sc-format-number> {this.setupFee()?.description} (
+              {sprintf(_n('%d day', '%d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)})
             </Fragment>
           ) : (
             sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
@@ -118,21 +126,11 @@ export class ScProductLineItem {
   }
 
   renderInterval() {
-    const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
       return (
         <div class="price__description" part="price__description">
-          {
-            /** translators: 30 days free, Then $99 per month. */
-            __('Then', 'surecart')
-          }{' '}
-          {!!this.scratchAmount && this.scratchAmount > this.amount && (
-            <Fragment>
-              <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
-            </Fragment>
-          )}
           <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
-          {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
+          <Fragment> {!this.hasPaidTrial() && __('after', 'surecart')}</Fragment>
         </div>
       );
     }
@@ -215,7 +213,8 @@ export class ScProductLineItem {
             )}
 
             {(this.fees || []).map(fee => {
-              if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
+              if (fee.fee_type === 'setup' && this.hasPaidTrial()) return null;
+
               return (
                 <div class="item__row">
                   <div></div>
@@ -279,21 +278,19 @@ export class ScProductLineItem {
                 )
               )}
               {!!this.removable && (
-                <div class="item__remove-container">
-                  <sc-icon
-                    exportparts="base:remove-icon__base"
-                    class="item__remove"
-                    name="x"
-                    onClick={() => this.scRemove.emit()}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') {
-                        this.scRemove.emit();
-                      }
-                    }}
-                    tabindex="0"
-                    // translators: Remove Item - Product Name Product Price Name
-                    aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
-                  ></sc-icon>
+                <div
+                  class="item__remove-container"
+                  onClick={() => this.scRemove.emit()}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      this.scRemove.emit();
+                    }
+                  }}
+                  // translators: Remove Item - Product Name Product Price Name
+                  aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
+                  tabIndex={0}
+                >
+                  <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" />
                   <span class="item__remove-text">{__('Remove', 'surecart')}</span>
                 </div>
               )}

@@ -8,7 +8,7 @@
 
 .line-items {
   display: grid;
-  gap: var(--sc-form-row-spacing);
+  gap: 20px;
 }
 
 .line-item {

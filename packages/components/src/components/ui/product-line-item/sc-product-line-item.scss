@@ -44,6 +44,7 @@
   &__scratch-price {
     font-size: 90%;
     text-decoration: line-through;
+    color: var(--sc-input-help-text-color);
   }
 
   &__remove-container {
@@ -138,17 +139,17 @@
 }
 
 .item__image-placeholder {
-  width: var(--sc-product-line-item-image-size, 80px);
-  height: var(--sc-product-line-item-image-size, 80px);
+  width: var(--sc-product-line-item-image-size, 65px);
+  height: var(--sc-product-line-item-image-size, 65px);
   background-color: var(--sc-input-border-color, var(--sc-input-border));
   border-radius: 4px;
-  flex: 0 0 80px;
+  flex: 0 0 var(--sc-product-line-item-image-size, 65px);
 }
 
 .item__image,
 .attachment-thumbnail {
-  width: var(--sc-product-line-item-image-size, 80px);
-  height: var(--sc-product-line-item-image-size, 80px);
+  width: var(--sc-product-line-item-image-size, 65px);
+  height: var(--sc-product-line-item-image-size, 65px);
   object-fit: cover;
   border-radius: 4px;
   border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
@@ -175,7 +176,7 @@
   font-weight: var(--sc-font-weight-semibold);
   color: var(--sc-input-label-color);
   line-height: 1;
-  white-space: nowrap;
+  text-wrap: pretty;
 }
 
 .price__description {
@@ -183,7 +184,7 @@
   line-height: 1;
   color: var(--sc-input-help-text-color);
   text-align: right;
-  white-space: nowrap;
+  text-wrap: pretty;
 }
 
 .item--is-rtl {
@@ -210,6 +211,8 @@ sc-quantity-select::part(base) {
   background-color: transparent;
 }
 
-sc-quantity-select::part(input) {
+sc-quantity-select::part(input),
+sc-quantity-select::part(plus),
+sc-quantity-select::part(minus) {
   background-color: transparent;
 }
