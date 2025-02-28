@@ -9,8 +9,5 @@
 		<div class="sc-product-line-item" role="listitem">
 			<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
-		<?php if ( $attributes['divider_enabled'] ) : ?>
-			<hr class="sc-cart-items-divider" />
-		<?php endif; ?>
 	</template>
 </div>

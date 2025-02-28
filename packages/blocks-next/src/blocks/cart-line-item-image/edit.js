@@ -162,7 +162,6 @@ export default ({
 			<figure {...blockProps}>
 				<Placeholder
 					withIllustration={true}
-					label={__('Line Item Image', 'surecart')}
 					style={{
 						aspectRatio:
 							!(width && height) && aspectRatio

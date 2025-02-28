@@ -1,8 +1,14 @@
 <div
-	class="sc-input-group sc-input-group-sm sc-quantity-selector"
-	data-wp-class--quantity--disabled="state.isQuantityDisabled"
-	data-wp-bind--hidden="!state.isEditable"
-	hidden
+	<?php echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class'                             => 'sc-input-group sc-input-group-sm sc-quantity-selector',
+				'data-wp-class--quantity--disabled' => 'state.isQuantityDisabled',
+				'data-wp-bind--hidden'              => '!state.isEditable',
+				'hidden'                            => true,
+			)
+		)
+	); ?>
 >
 	<div
 		class="sc-input-group-text sc-quantity-selector__decrease"

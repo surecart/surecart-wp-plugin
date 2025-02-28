@@ -328,7 +328,7 @@ export default ({
 	__unstableLayoutClassNames,
 	clientId,
 }) => {
-	const { removable, editable, divider_enabled } = attributes;
+	const { removable, editable } = attributes;
 
 	const placeholderImageUrl =
 		scBlockData?.plugin_url + '/images/placeholder-thumbnail.jpg';
@@ -392,19 +392,6 @@ export default ({
 							onChange={(editable) => setAttributes({ editable })}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Show divider', 'surecart')}
-							help={__(
-								'Show a divider between line items.',
-								'surecart'
-							)}
-							checked={divider_enabled}
-							onChange={(divider_enabled) =>
-								setAttributes({ divider_enabled })
-							}
-						/>
-					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
@@ -413,9 +400,6 @@ export default ({
 				blockContexts={lineItems}
 				clientId={clientId}
 				className={__unstableLayoutClassNames}
-				after={
-					divider_enabled && <hr className="sc-cart-items-divider" />
-				}
 			/>
 		</>
 	);

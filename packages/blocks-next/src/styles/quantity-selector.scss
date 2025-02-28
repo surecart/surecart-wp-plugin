@@ -73,6 +73,7 @@
 		text-align: center;
 		-moz-appearance: textfield; /* Firefox */
 		appearance: textfield;
+		padding: 0;
 
 		&::-webkit-outer-spin-button,
 		&::-webkit-inner-spin-button {

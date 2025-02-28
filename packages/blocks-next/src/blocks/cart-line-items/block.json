@@ -22,10 +22,6 @@
 			"type": "boolean",
 			"default": true
 		},
-		"divider_enabled": {
-			"type": "boolean",
-			"default": true
-		},
 		"border": {
 			"type": "boolean",
 			"default": true
