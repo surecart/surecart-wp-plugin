@@ -155,6 +155,15 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->start_controls_tabs( 'button_colors' );
+
+		$this->start_controls_tab(
+			'button_colors_normal',
+			[
+				'label' => esc_html__( 'Normal', 'surecart' ),
+			]
+		);
+
 		$this->add_control(
 			'button_text_color',
 			[
@@ -176,6 +185,41 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				],
 			]
 		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'button_colors_hover',
+			[
+				'label' => esc_html__( 'Hover', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
+			'button_hover_text_color',
+			[
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					$button_selector . ':hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_hover_background_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					$button_selector . ':hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->add_responsive_control(
 			'button_width',
