@@ -11,6 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class CartMenuIcon extends \Elementor\Widget_Base {
 	/**
+	 * Default cart icon.
+	 */
+	public const DEFAULT_CART_ICON = array(
+		'value'   => 'fas fa-shopping-bag',
+		'library' => 'fa-solid',
+	);
+
+	/**
 	 * Cart icon.
 	 *
 	 * @var string
@@ -92,12 +100,14 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 				'type'        => \Elementor\Controls_Manager::ICONS,
 				'skin'        => 'inline',
 				'label_block' => false,
-				'default'     => null,
+				'default'     => self::DEFAULT_CART_ICON,
 				'recommended' => [
 					'fa-solid' => [
+						'shopping-bag',
 						'cart-arrow-down',
 						'cart-plus',
 						'shopping-cart',
+						'shopping-basket',
 					],
 				],
 			)
@@ -355,21 +365,19 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 	protected function render(): void {
 		$settings               = $this->get_settings_for_display();
 		$cart_menu_always_shown = ! empty( $settings['cart_menu_always_shown'] ) && 'yes' === $settings['cart_menu_always_shown'] ? true : false;
-		$this->cart_icon        = ! empty( $settings['cart_icon']['value'] ) ? \Elementor\Icons_Manager::try_get_icon_html( $settings['cart_icon'], [ 'aria-hidden' => 'true' ] ) : null;
+		$has_icon               = ! empty( $settings['cart_icon']['value'] );
+		$this->cart_icon        = \Elementor\Icons_Manager::try_get_icon_html( $has_icon ? $settings['cart_icon'] : self::DEFAULT_CART_ICON, [ 'aria-hidden' => 'true' ] );
 
 		$attributes = array(
-			'cart_icon'              => $this->cart_icon,
 			'cart_menu_always_shown' => $cart_menu_always_shown,
 		);
 
 		// Filter cart icon.
 		add_filter( 'sc_cart_menu_icon', [ $this, 'render_cart_icon' ] );
 
-		// if editor.
 		if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
-			$this->cart_icon = $this->cart_icon ?? \SureCart::svg()->get( 'shopping-bag' ); // Fall back to default icon for editor.
 			?>
-			<div class="sc-cart-icon elementor-animation-<?php echo esc_attr( $settings['hover_animation'] ); ?>" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="<?php echo esc_attr__( 'Open cart', 'surecart' ); ?>">
+			<div class="sc-cart-icon" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="<?php echo esc_attr__( 'Open cart', 'surecart' ); ?>">
 				<?php echo $this->cart_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<span class="sc-cart-count" style="box-sizing: border-box; position: absolute; inset: -12px -16px auto auto; text-align: center; font-size: 10px; font-weight: bold; border-radius: var(--sc-cart-icon-counter-border-radius, 9999px); color: var(--sc-cart-icon-counter-color, var(--sc-color-primary-text, var(--sc-color-white))); background: var(--sc-cart-icon-counter-background, var(--sc-color-primary-500)); box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large)); padding: 2px 6px; line-height: 14px; min-width: 14px; z-index: 1;">2</span>
 			</div>
