@@ -189,6 +189,17 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 
 		$this->end_controls_tabs();
 
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'icon_typography',
+				'global'   => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'selector' => '{{WRAPPER}} .sc-cart-icon',
+			]
+		);
+
 		$this->add_responsive_control(
 			'size',
 			[
