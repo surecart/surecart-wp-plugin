@@ -43,7 +43,8 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$products_queue_process                       = new ProductsSyncProcess();
 		$container['surecart.process.products.queue'] = fn() => $products_queue_process;
 
-		$container['surecart.process.products.cleanup'] = fn() => new ProductsCleanupProcess();
+		$products_cleanup_process                       = new ProductsCleanupProcess();
+		$container['surecart.process.products.cleanup'] = fn() => $products_cleanup_process;
 
 		$app->alias( 'sync', 'surecart.sync' );
 	}

@@ -60,7 +60,7 @@ class ProductsCleanupProcess extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $query->posts as $product ) {
-			$product->deleteSynced();
+			wp_delete_post( $product->ID, true );
 		}
 
 		if ( $query->max_num_pages > $query->query_vars['page'] ) {
@@ -86,14 +86,5 @@ class ProductsCleanupProcess extends BackgroundProcess {
 
 		// call the parent complete method.
 		parent::complete();
-	}
-
-	/**
-	 * Post sync service
-	 *
-	 * @return ProductsQueueProcess
-	 */
-	public function post() {
-		return $this->app->resolve( 'surecart.process.product_post.sync' );
 	}
 }
