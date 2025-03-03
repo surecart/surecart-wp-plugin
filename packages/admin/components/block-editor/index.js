@@ -24,6 +24,7 @@ import {
 	store as blockEditorStore,
 	WritingFlow,
 	ObserveTyping,
+	__unstableEditorStyles as EditorStyles,
 } from '@wordpress/block-editor';
 import { ComplementaryArea } from '@wordpress/interface';
 import { uploadMedia } from '@wordpress/media-utils';
@@ -334,6 +335,7 @@ export default function ({
 									enableResizing={true}
 									height="100%"
 								>
+									<EditorStyles styles={settings?.styles} />
 									<WritingFlow
 										css={css`
 											overflow-y: auto;

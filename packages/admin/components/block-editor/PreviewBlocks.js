@@ -1,6 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { BlockEditorProvider, BlockList } from '@wordpress/block-editor';
+
+/**
+ * External dependencies.
+ */
+import {
+	BlockEditorProvider,
+	BlockList,
+	__unstableEditorStyles as EditorStyles,
+} from '@wordpress/block-editor';
 import { Disabled } from '@wordpress/components';
 
 export default function ({ blocks }) {
@@ -18,6 +26,9 @@ export default function ({ blocks }) {
 						}
 					`}
 				>
+					<EditorStyles
+						styles={surecartBlockEditorSettings?.styles}
+					/>
 					<BlockList
 						renderAppender={() => null}
 						className="surecart-block-editor__block-list"
