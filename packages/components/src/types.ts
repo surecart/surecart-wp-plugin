@@ -118,6 +118,7 @@ export interface Price {
   name: string;
   description?: string;
   amount: number;
+  display_amount: string;
   full_amount: number;
   currency: string;
   recurring: boolean;

@@ -1,12 +1,14 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { LineItem } from 'src/types';
+import { LineItem, Price } from '../../../../types';
 import { state as checkoutState } from '@store/checkout';
 import { toggleSwap } from '@services/session';
 import { updateFormState } from '@store/form/mutations';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-swap',
+  styleUrl: 'sc-swap.scss',
   shadow: true,
 })
 export class ScSwap {
@@ -20,6 +22,7 @@ export class ScSwap {
       updateFormState('RESOLVE');
     } catch (e) {
       updateFormState('REJECT');
+      createErrorNotice(e.message);
       console.error(e);
     }
   }
@@ -30,11 +33,19 @@ export class ScSwap {
     }
 
     const swap = this?.lineItem?.swap || this?.lineItem?.price?.current_swap;
+    const price = swap?.swap_price as Price;
 
     return (
-      <sc-switch checked={!!this?.lineItem?.swap} onScChange={e => this.onSwapToggleChange(e)}>
-        {swap?.description}
-      </sc-switch>
+      <div class="swap">
+        <sc-switch checked={!!this?.lineItem?.swap} onScChange={e => this.onSwapToggleChange(e)}>
+          {swap?.description}
+        </sc-switch>
+        {!!price?.display_amount && (
+          <div class="sc-swap__price">
+            {(swap?.swap_price as Price)?.display_amount} {price?.short_interval_text} {price?.interval_count_text}
+          </div>
+        )}
+      </div>
     );
   }
 }

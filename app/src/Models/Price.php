@@ -113,6 +113,17 @@ class Price extends Model {
 	}
 
 	/**
+	 * Set the current swap attribute
+	 *
+	 * @param Swap $swap Swap.
+	 *
+	 * @return void
+	 */
+	public function setCurrentSwapAttribute( $swap ) {
+		$this->setRelation( 'current_swap', $swap, Swap::class );
+	}
+
+	/**
 	 * Get the display amount attribute
 	 *
 	 * @return string
