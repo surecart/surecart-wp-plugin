@@ -4,7 +4,6 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, PaymentMethod, Period, Price, Product, ManualPaymentMethod } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
@@ -213,7 +212,8 @@ export class ScUpcomingInvoice {
       <div class="new-plan">
         <div class="new-plan__heading">{this.renderName(this.price)}</div>
         <div>
-          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.subtotal_amount}></sc-format-number> {intervalString(this.price)}
+          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.subtotal_amount}></sc-format-number> {this.price?.interval_text}{' '}
+          {this.price?.interval_count_text}
         </div>
         <div style={{ fontSize: 'var(--sc-font-size-small)' }}>{this.renderRenewalText()}</div>
       </div>
@@ -239,13 +239,13 @@ export class ScUpcomingInvoice {
             image={(item.price?.product as Product)?.line_item_image}
             name={(item.price?.product as Product)?.name}
             price={item?.price?.name}
-            variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+            variant={item?.variant_display_options}
             editable={this.quantityUpdatesEnabled}
             purchasableStatus={item?.purchasable_status_display}
             removable={false}
             quantity={item?.quantity}
             amount={item?.subtotal_display_amount}
-            interval={intervalString(item?.price)}
+            interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
             onScUpdateQuantity={e => this.updateQuantity(e)}
           ></sc-product-line-item>
         ))}

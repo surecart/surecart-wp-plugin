@@ -4,7 +4,6 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
 
@@ -132,13 +131,13 @@ export class ScOrder {
               image={item?.image}
               name={(item?.price?.product as Product)?.name}
               price={item?.price?.name}
-              variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+              variant={item?.variant_display_options}
               editable={false}
               removable={false}
               quantity={item.quantity}
               amount={item.subtotal_display_amount}
               trial={item?.price?.trial_text}
-              interval={intervalString(item?.price)}
+              interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
               scratch={item?.scratch_display_amount}
               purchasableStatus={item?.purchasable_status_display}
               fees={item?.fees?.data}

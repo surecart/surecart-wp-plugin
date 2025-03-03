@@ -120,6 +120,8 @@ export interface Price {
   setup_fee_amount: number;
   short_interval_text: string;
   short_interval_count_text: string;
+  interval_text: string;
+  interval_count_text: string;
   setup_fee_name: string;
   setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
@@ -482,9 +484,11 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+  sku: string;
   purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';
   purchasable_status_display: string;
   variant_options: Array<string>;
+  variant_display_options: string;
   variant?: Variant;
   locked: boolean;
 }

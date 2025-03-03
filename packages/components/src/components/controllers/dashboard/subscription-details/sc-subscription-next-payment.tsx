@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { intervalString, translateRemainingPayments } from '../../../../functions/price';
+import { translateRemainingPayments } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, Period, Product, ResponseError, Subscription, ManualPaymentMethod } from '../../../../types';
 
@@ -115,12 +115,12 @@ export class ScSubscriptionNextPayment {
                 image={(item.price?.product as Product)?.line_item_image}
                 name={(item.price?.product as Product)?.name}
                 price={item?.price?.name}
-                variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                variant={item?.variant_display_options}
                 editable={false}
                 removable={false}
                 quantity={item?.quantity}
                 amount={item?.subtotal_display_amount}
-                interval={intervalString(item?.price)}
+                interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
                 purchasableStatus={item?.purchasable_status_display}
               ></sc-product-line-item>
             ))}

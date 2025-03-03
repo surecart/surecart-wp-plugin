@@ -15,9 +15,7 @@ import { addQueryArgs } from '@wordpress/url';
 /** @jsx jsx */
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
-import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
-import { getSKUText } from '../../../util/products';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -213,21 +211,17 @@ export default ({ order, checkout, loading }) => {
 							key={item.id}
 							image={item?.image}
 							name={item?.price?.product?.name}
-							priceName={item?.price?.name}
-							variantLabel={
-								(item?.variant_options || [])
-									.filter(Boolean)
-									.join(' / ') || null
-							}
+							price={item?.price?.name}
+							variant={item?.variant_display_options}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
 							quantity={item.quantity}
-							amount={item.subtotal_amount}
-							currency={item?.price?.currency}
-							trialDurationDays={item?.price?.trial_duration_days}
-							interval={intervalString(item?.price)}
-							sku={getSKUText(item)}
+							amount={item.subtotal_display_amount}
+							scratch={item.scratch_display_amount}
+							trial={item?.price?.trial_text}
+							sku={item?.sku}
+							interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
 						></ScProductLineItem>
 					);
 				})}

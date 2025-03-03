@@ -1,9 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-
-import { hasSubscription } from '../../../../functions/line-items';
-import { intervalString } from '../../../../functions/price';
 import { Checkout, Product } from '../../../../types';
 
 @Component({
@@ -39,7 +36,7 @@ export class ScOrderConfirmationLineItems {
                   image={(item?.price?.product as Product)?.line_item_image}
                   name={`${(item?.price?.product as Product)?.name}`}
                   price={item?.price?.name}
-                  variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                  variant={item?.variant_display_options}
                   editable={false}
                   removable={false}
                   quantity={item.quantity}
@@ -47,8 +44,9 @@ export class ScOrderConfirmationLineItems {
                   amount={item.ad_hoc_display_amount ? item.ad_hoc_display_amount : item.subtotal_display_amount}
                   scratch={!item.ad_hoc_display_amount && item?.scratch_display_amount}
                   trial={item?.price?.trial_text}
-                  interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
+                  interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
                   purchasableStatus={item?.purchasable_status_display}
+                  sku={item?.sku}
                 ></sc-product-line-item>
               </div>
             );

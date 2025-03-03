@@ -41,6 +41,18 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Get the variant attribute.
+	 *
+	 * @return string
+	 */
+	public function getVariantDisplayOptionsAttribute() {
+		if ( empty( $this->variant_option_names ) ) {
+			return null;
+		}
+		return implode( ' / ', array_filter( $this->variant_option_names ) );
+	}
+
+	/**
 	 * Upsell a line item.
 	 *
 	 * @param array $attributes The attributes to update.
@@ -116,6 +128,18 @@ class LineItem extends Model {
 	 */
 	public function getScratchDisplayAmountAttribute() {
 		return ! empty( $this->scratch_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the SKU text attribute.
+	 *
+	 * @return string
+	 */
+	public function getSkuAttribute() {
+		if ( ! empty( $this->variant ) ) {
+			return $this->variant->sku;
+		}
+		return $this->price->product->sku ?? '';
 	}
 
 	/**

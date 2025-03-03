@@ -83,7 +83,7 @@ export class ScLineItems {
                   image={item?.image}
                   name={(item?.price?.product as Product)?.name}
                   price={item?.price?.name}
-                  variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                  variant={item?.variant_display_options}
                   fees={item?.fees?.data}
                   amount={item.ad_hoc_display_amount ? item.ad_hoc_display_amount : item.subtotal_display_amount}
                   scratch={!item.ad_hoc_display_amount && item?.scratch_display_amount}
