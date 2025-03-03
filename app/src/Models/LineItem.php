@@ -93,6 +93,84 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Swap Line Item
+	 *
+	 * @param string $id LineItem ID.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function swap( $id = null ) {
+		if ( $this->fireModelEvent( 'swaping' ) === false ) {
+			return $this;
+		}
+
+		$this->id = $id ? $id : $this->id;
+
+		if ( empty( $this->id ) ) {
+			return new \WP_Error( 'not_saved', 'No Line Item Id passed.' );
+		}
+
+		$swapped = \SureCart::request(
+			$this->endpoint . '/' . $this->id . '/swap',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( is_wp_error( $swapped ) ) {
+			return $swapped;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $swapped );
+
+		$this->fireModelEvent( 'swapped' );
+
+		return $this;
+	}
+
+	/**
+	 * Swap Line Item
+	 *
+	 * @param string $id LineItem ID.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function unswap( $id = null ) {
+		if ( $this->fireModelEvent( 'unswaping' ) === false ) {
+			return $this;
+		}
+
+		$this->id = $id ? $id : $this->id;
+
+		if ( empty( $this->id ) ) {
+			return new \WP_Error( 'not_saved', 'No Line Item Id passed.' );
+		}
+
+		$unswapped = \SureCart::request(
+			$this->endpoint . '/' . $this->id . '/unswap',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( is_wp_error( $unswapped ) ) {
+			return $unswapped;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $unswapped );
+
+		$this->fireModelEvent( 'unswapped' );
+
+		return $this;
+	}
+
+	/**
 	 * Get the currency attribute.
 	 *
 	 * TODO: Remove this method once currency added on line item.

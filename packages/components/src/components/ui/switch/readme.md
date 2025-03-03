@@ -64,11 +64,13 @@ Type: `Promise<boolean>`
 ### Used by
 
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-swap](../../controllers/checkout-form/sc-swap)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-payment-methods-list --> sc-switch
+  sc-swap --> sc-switch
   style sc-switch fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

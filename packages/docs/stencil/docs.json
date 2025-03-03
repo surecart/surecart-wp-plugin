@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-02-17T17:52:11",
+  "timestamp": "2025-02-18T13:28:38",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -13263,6 +13263,28 @@
           "required": false
         },
         {
+          "name": "stickyFooter",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "sticky-footer",
+          "reflectToAttr": false,
+          "docs": "Sticky drawer footer",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "stickyHeader",
           "type": "boolean",
           "complexType": {
@@ -19770,13 +19792,15 @@
       "dependencies": [
         "sc-line-item",
         "sc-skeleton",
-        "sc-product-line-item"
+        "sc-product-line-item",
+        "sc-swap"
       ],
       "dependencyGraph": {
         "sc-line-items": [
           "sc-line-item",
           "sc-skeleton",
-          "sc-product-line-item"
+          "sc-product-line-item",
+          "sc-swap"
         ],
         "sc-product-line-item": [
           "sc-format-number",
@@ -19786,6 +19810,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-swap": [
+          "sc-switch"
         ]
       }
     },
@@ -31188,7 +31215,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/rajkiranbagal/dev/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -40333,6 +40360,63 @@
       }
     },
     {
+      "filePath": "src/components/controllers/checkout-form/sc-swap/sc-swap.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-swap",
+      "readme": "# sc-swap\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "lineItem",
+          "type": "LineItem",
+          "complexType": {
+            "original": "LineItem",
+            "resolved": "LineItem",
+            "references": {
+              "LineItem": {
+                "location": "import",
+                "path": "src/types",
+                "id": "src/types.ts::LineItem"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The product id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "LineItem"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-line-items"
+      ],
+      "dependencies": [
+        "sc-switch"
+      ],
+      "dependencyGraph": {
+        "sc-swap": [
+          "sc-switch"
+        ],
+        "sc-line-items": [
+          "sc-swap"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/ui/switch/sc-switch.tsx",
       "encapsulation": "shadow",
       "tag": "sc-switch",
@@ -40625,11 +40709,15 @@
         }
       ],
       "dependents": [
-        "sc-payment-methods-list"
+        "sc-payment-methods-list",
+        "sc-swap"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-payment-methods-list": [
+          "sc-switch"
+        ],
+        "sc-swap": [
           "sc-switch"
         ]
       }
@@ -44566,12 +44654,12 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Price": {
-      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n}",
+      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n  current_swap?: Swap;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
     "src/types.ts::LineItem": {
-      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  name: string;\n  object: string;\n  quantity: number;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  discount_amount: number;\n  subtotal_amount: number;\n  total_amount: number;\n  trial_amount: number;\n  tax_amount: number;\n  fees_amount: number;\n  scratch_amount: number;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant?: Variant;\n  locked: boolean;\n}",
+      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  name: string;\n  object: string;\n  quantity: number;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  discount_amount: number;\n  subtotal_amount: number;\n  total_amount: number;\n  trial_amount: number;\n  tax_amount: number;\n  fees_amount: number;\n  scratch_amount: number;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

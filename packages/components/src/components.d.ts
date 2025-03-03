@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
-import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
+import { LineItem as LineItem1, LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
-export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
+export { LineItem as LineItem1, LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -1266,6 +1266,10 @@ export namespace Components {
          */
         "placement": 'top' | 'end' | 'bottom' | 'start';
         "requestClose": (source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>;
+        /**
+          * Sticky drawer footer
+         */
+        "stickyFooter": boolean;
         /**
           * Sticky drawer header
          */
@@ -3759,6 +3763,12 @@ export namespace Components {
         "collapsible": boolean;
         "loading": boolean;
         "openText": string;
+    }
+    interface ScSwap {
+        /**
+          * The product id.
+         */
+        "lineItem": LineItem;
     }
     interface ScSwitch {
         /**
@@ -6445,6 +6455,12 @@ declare global {
         prototype: HTMLScSummaryElement;
         new (): HTMLScSummaryElement;
     };
+    interface HTMLScSwapElement extends Components.ScSwap, HTMLStencilElement {
+    }
+    var HTMLScSwapElement: {
+        prototype: HTMLScSwapElement;
+        new (): HTMLScSwapElement;
+    };
     interface HTMLScSwitchElementEventMap {
         "scBlur": void;
         "scChange": void;
@@ -6896,6 +6912,7 @@ declare global {
         "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
         "sc-summary": HTMLScSummaryElement;
+        "sc-swap": HTMLScSwapElement;
         "sc-switch": HTMLScSwitchElement;
         "sc-tab": HTMLScTabElement;
         "sc-tab-group": HTMLScTabGroupElement;
@@ -8333,6 +8350,10 @@ declare namespace LocalJSX {
           * The direction from which the drawer will open.
          */
         "placement"?: 'top' | 'end' | 'bottom' | 'start';
+        /**
+          * Sticky drawer footer
+         */
+        "stickyFooter"?: boolean;
         /**
           * Sticky drawer header
          */
@@ -11012,6 +11033,12 @@ declare namespace LocalJSX {
         "onScShow"?: (event: ScSummaryCustomEvent<void>) => void;
         "openText"?: string;
     }
+    interface ScSwap {
+        /**
+          * The product id.
+         */
+        "lineItem"?: LineItem;
+    }
     interface ScSwitch {
         /**
           * Draws the switch in a checked state.
@@ -11648,6 +11675,7 @@ declare namespace LocalJSX {
         "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
         "sc-subscriptions-list": ScSubscriptionsList;
         "sc-summary": ScSummary;
+        "sc-swap": ScSwap;
         "sc-switch": ScSwitch;
         "sc-tab": ScTab;
         "sc-tab-group": ScTabGroup;
@@ -11906,6 +11934,7 @@ declare module "@stencil/core" {
             "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
             "sc-summary": LocalJSX.ScSummary & JSXBase.HTMLAttributes<HTMLScSummaryElement>;
+            "sc-swap": LocalJSX.ScSwap & JSXBase.HTMLAttributes<HTMLScSwapElement>;
             "sc-switch": LocalJSX.ScSwitch & JSXBase.HTMLAttributes<HTMLScSwitchElement>;
             "sc-tab": LocalJSX.ScTab & JSXBase.HTMLAttributes<HTMLScTabElement>;
             "sc-tab-group": LocalJSX.ScTabGroup & JSXBase.HTMLAttributes<HTMLScTabGroupElement>;

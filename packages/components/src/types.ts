@@ -100,6 +100,19 @@ export interface ChoiceItem extends Object {
 
 export type ChoiceType = 'all' | 'single' | 'multiple';
 
+export interface Swap {
+  id: string;
+  object: 'swap';
+  archived: boolean;
+  archived_at?: string;
+  description: string;
+  metadata: { [key: string]: string };
+  price: string | Price;
+  swap_price: string | Price;
+  discarded_at?: number;
+  created_at: number;
+  updated_at: number;
+}
 export interface Price {
   id: string;
   name: string;
@@ -134,6 +147,7 @@ export interface Price {
   position: number;
   portal_subscription_update_enabled: boolean;
   metadata: { [key: string]: string };
+  current_swap?: Swap;
 }
 export interface VariantOption {
   id: string;
@@ -491,6 +505,7 @@ export interface LineItem extends Object {
   variant_display_options: string;
   variant?: Variant;
   locked: boolean;
+  swap?: Swap;
 }
 
 export interface DeletedItem {
