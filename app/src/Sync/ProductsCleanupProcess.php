@@ -60,7 +60,7 @@ class ProductsCleanupProcess extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $query->posts as $product ) {
-			$this->post()->delete( $product->ID );
+			$product->deleteSynced();
 		}
 
 		if ( $query->max_num_pages > $query->query_vars['page'] ) {
