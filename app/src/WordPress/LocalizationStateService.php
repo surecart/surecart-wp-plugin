@@ -53,12 +53,12 @@ class LocalizationStateService {
 				array(
 					'name'     => 'state',
 					'priority' => 80,
-					'label'    => __( 'State/County', 'surecart' ),
+					'label'    => __( 'State / County', 'surecart' ),
 				),
 				array(
 					'name'     => 'postcode',
 					'priority' => 90,
-					'label'    => __( 'Postal code', 'surecart' ),
+					'label'    => __( 'Postal Code', 'surecart' ),
 				),
 			),
 		);
@@ -96,10 +96,29 @@ class LocalizationStateService {
 						'label' => __( 'Postcode', 'surecart' ),
 					),
 					'state'    => array(
-						'label' => __( 'State/territory', 'surecart' ),
+						'label' => __( 'State / Territory', 'surecart' ),
+					),
+				),
+				'AR' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'priority' => 90,
+						'label'    => __( 'Province', 'surecart' ),
+					),
+				),
+				'AM' => array(
+					'postcode' => array(
+						'priority' => 65,
 					),
 				),
 				'AX' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'AZ' => array(
 					'postcode' => array(
 						'priority' => 65,
 					),
@@ -122,22 +141,42 @@ class LocalizationStateService {
 						'priority' => 65,
 					),
 				),
+				'BH' => array(
+					'postcode' => array(
+						'priority' => 75,
+					),
+				),
 				'BO' => array(
 					'state' => array(
 						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'BB' => array(
+					'postcode' => array(
+						'priority' => 75,
 					),
 				),
 				'BR' => array(
 					'postcode' => array(
 						'priority' => 45,
 					),
-					'state' => array(
+					'state'    => array(
 						'label' => __( 'State', 'surecart' ),
+					),
+				),
+				'BY' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'BG' => array(
+					'postcode' => array(
+						'priority' => 65,
 					),
 				),
 				'CA' => array(
 					'postcode' => array(
-						'label' => __( 'Postal code', 'surecart' ),
+						'label' => __( 'Postal Code', 'surecart' ),
 					),
 					'state'    => array(
 						'label' => __( 'Province', 'surecart' ),
@@ -152,7 +191,10 @@ class LocalizationStateService {
 					),
 				),
 				'CL' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'Region', 'surecart' ),
 					),
 				),
@@ -163,12 +205,31 @@ class LocalizationStateService {
 				),
 				'CO' => array(
 					'state' => array(
-						'label' => __( 'Department', 'surecart' ),
+						'label' => __( 'Province', 'surecart' ),
 					),
 				),
 				'CR' => array(
 					'state' => array(
-						'label' => __( 'Province', 'surecart' ),
+						'priority' => 70,
+						'label'    => __( 'Province', 'surecart' ),
+					),
+					'city'  => array(
+						'priority' => 80,
+					),
+				),
+				'CY' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'CZ' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'HR' => array(
+					'postcode' => array(
+						'priority' => 65,
 					),
 				),
 				'DE' => array(
@@ -182,12 +243,18 @@ class LocalizationStateService {
 					),
 				),
 				'DO' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'Province', 'surecart' ),
 					),
 				),
 				'EC' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'Province', 'surecart' ),
 					),
 				),
@@ -206,6 +273,37 @@ class LocalizationStateService {
 						'priority' => 65,
 					),
 				),
+
+				'GF' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'PF' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'GE' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'GR' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'GL' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'GP' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
 				'GG' => array(
 					'state' => array(
 						'label' => __( 'Parish', 'surecart' ),
@@ -218,7 +316,12 @@ class LocalizationStateService {
 				),
 				'GT' => array(
 					'state' => array(
-						'label' => __( 'Department', 'surecart' ),
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'HT' => array(
+					'postcode' => array(
+						'priority' => 65,
 					),
 				),
 				'HK' => array(
@@ -230,7 +333,10 @@ class LocalizationStateService {
 					),
 				),
 				'HN' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'Department', 'surecart' ),
 					),
 				),
@@ -332,10 +438,35 @@ class LocalizationStateService {
 				),
 				'KN' => array(
 					'postcode' => array(
-						'label' => __( 'Postal code', 'surecart' ),
+						'label' => __( 'Postal Code', 'surecart' ),
 					),
 					'state'    => array(
 						'label' => __( 'Parish', 'surecart' ),
+					),
+				),
+				'KW' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'label' => __( 'Governorate', 'surecart' ),
+					),
+				),
+				'KG' => array(
+					'postcode'  => array(
+						'priority' => 65,
+					),
+					'city'      => array(
+						'priority' => 70,
+					),
+					'state'     => array(
+						'priority' => 80,
+					),
+					'address_1' => array(
+						'priority' => 85,
+					),
+					'name'      => array(
+						'priority' => 90,
 					),
 				),
 				'LV' => array(
@@ -343,17 +474,47 @@ class LocalizationStateService {
 						'label' => __( 'Municipality', 'surecart' ),
 					),
 				),
+				'LU' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
 				'MZ' => array(
 					'state' => array(
 						'label' => __( 'Province', 'surecart' ),
 					),
 				),
+				'MX' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'label' => __( 'State', 'surecart' ),
+					),
+				),
+				'MY' => array(
+					'postcode' => array(
+						'priority' => 65,
+						'label'    => __( 'Postcode', 'surecart' ),
+					),
+					'state'    => array(
+						'label' => __( 'State / Territory', 'surecart' ),
+					),
+				),
 				'NI' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'Department', 'surecart' ),
 					),
 				),
 				'NL' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'MK' => array(
 					'postcode' => array(
 						'priority' => 65,
 					),
@@ -384,9 +545,22 @@ class LocalizationStateService {
 						'label' => __( 'State / Zone', 'surecart' ),
 					),
 				),
+				'NC' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'OM' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
 				'PA' => array(
-					'state' => array(
-						'label' => __( 'Province', 'surecart' ),
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'label' => __( 'Region', 'surecart' ),
 					),
 				),
 				'PL' => array(
@@ -400,17 +574,48 @@ class LocalizationStateService {
 					),
 				),
 				'PY' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'Department', 'surecart' ),
 					),
 				),
-				'RO' => array(
+				'PH' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'priority' => 90,
+						'label'    => __( 'Region', 'surecart' ),
+					),
+				),
+				'PE' => array(
 					'state' => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'PT' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'RO' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'County', 'surecart' ),
 					),
 				),
 				'RS' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'District', 'surecart' ),
 					),
 				),
@@ -419,16 +624,21 @@ class LocalizationStateService {
 						'label' => __( 'Region', 'surecart' ),
 					),
 				),
-				'KR' => array(
+				'SM' => array(
 					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'KR' => array(
+					'postcode'  => array(
 						'priority' => 50,
 					),
-					'city'    => array(
+					'city'      => array(
 						'priority' => 80,
 					),
-					'state'    => array(
+					'state'     => array(
 						'priority' => 70,
-						'label' => __( 'Province', 'surecart' ),
+						'label'    => __( 'Province', 'surecart' ),
 					),
 					'address_1' => array(
 						'priority' => 90,
@@ -450,13 +660,41 @@ class LocalizationStateService {
 					),
 				),
 				'SV' => array(
-					'state' => array(
-						'label' => __( 'Department', 'surecart' ),
+					'postcode' => array(
+						'priority' => 80,
+					),
+					'state'    => array(
+						'priority' => 90,
+						'label'    => __( 'Region', 'surecart' ),
+					),
+				),
+				'SJ' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'TJ' => array(
+					'postcode' => array(
+						'priority' => 65,
 					),
 				),
 				'TH' => array(
 					'state' => array(
 						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'TM' => array(
+					'postcode'  => array(
+						'priority' => 65,
+					),
+					'city'      => array(
+						'priority' => 70,
+					),
+					'name'      => array(
+						'priority' => 75,
+					),
+					'address_1' => array(
+						'priority' => 80,
 					),
 				),
 				'ES' => array(
@@ -467,14 +705,32 @@ class LocalizationStateService {
 						'label' => __( 'Province', 'surecart' ),
 					),
 				),
+				'FO' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
 				'LI' => array(
 					'postcode' => array(
 						'priority' => 65,
 					),
 				),
 				'MD' => array(
-					'state' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
 						'label' => __( 'Municipality / District', 'surecart' ),
+					),
+				),
+				'MC' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'ME' => array(
+					'postcode' => array(
+						'priority' => 65,
 					),
 				),
 				'SE' => array(
@@ -507,8 +763,16 @@ class LocalizationStateService {
 					),
 				),
 				'UY' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+					'state'    => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'AE' => array(
 					'state' => array(
-						'label' => __( 'Department', 'surecart' ),
+						'label' => __( 'Emirate', 'surecart' ),
 					),
 				),
 				'GB' => array(
@@ -524,7 +788,23 @@ class LocalizationStateService {
 						'label' => __( 'District', 'surecart' ),
 					),
 				),
+				'VE' => array(
+					'postcode' => array(
+						'priority' => 75,
+					),
+					'state'    => array(
+						'label' => __( 'State', 'surecart' ),
+					),
+				),
 				'VN' => array(
+					'postcode' => array(
+						'priority' => 75,
+					),
+					'state'    => array(
+						'label' => __( 'Province', 'surecart' ),
+					),
+				),
+				'WF' => array(
 					'postcode' => array(
 						'priority' => 65,
 					),
