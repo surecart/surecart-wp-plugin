@@ -53,7 +53,7 @@ class LocalizationStateService {
 				array(
 					'name'     => 'state',
 					'priority' => 80,
-					'label'    => __( 'State/Country', 'surecart' ),
+					'label'    => __( 'State/County', 'surecart' ),
 				),
 				array(
 					'name'     => 'postcode',
