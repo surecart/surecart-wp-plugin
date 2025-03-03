@@ -58,7 +58,7 @@ class LocalizationStateService {
 				array(
 					'name'     => 'postcode',
 					'priority' => 90,
-					'label'    => __( 'Postal Code', 'surecart' ),
+					'label'    => __( 'Postal code', 'surecart' ),
 				),
 			),
 		);
@@ -96,7 +96,7 @@ class LocalizationStateService {
 						'label' => __( 'Postcode', 'surecart' ),
 					),
 					'state'    => array(
-						'label' => __( 'State', 'surecart' ),
+						'label' => __( 'State/territory', 'surecart' ),
 					),
 				),
 				'AX' => array(
@@ -125,6 +125,14 @@ class LocalizationStateService {
 				'BO' => array(
 					'state' => array(
 						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'BR' => array(
+					'postcode' => array(
+						'priority' => 45,
+					),
+					'state' => array(
+						'label' => __( 'State', 'surecart' ),
 					),
 				),
 				'CA' => array(
@@ -406,6 +414,31 @@ class LocalizationStateService {
 						'label' => __( 'District', 'surecart' ),
 					),
 				),
+				'RU' => array(
+					'state' => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
+				'KR' => array(
+					'postcode' => array(
+						'priority' => 50,
+					),
+					'city'    => array(
+						'priority' => 80,
+					),
+					'state'    => array(
+						'priority' => 70,
+						'label' => __( 'Province', 'surecart' ),
+					),
+					'address_1' => array(
+						'priority' => 90,
+					),
+				),
+				'SA' => array(
+					'state' => array(
+						'label' => __( 'Region', 'surecart' ),
+					),
+				),
 				'SK' => array(
 					'postcode' => array(
 						'priority' => 65,
@@ -419,6 +452,11 @@ class LocalizationStateService {
 				'SV' => array(
 					'state' => array(
 						'label' => __( 'Department', 'surecart' ),
+					),
+				),
+				'TH' => array(
+					'state' => array(
+						'label' => __( 'Province', 'surecart' ),
 					),
 				),
 				'ES' => array(
