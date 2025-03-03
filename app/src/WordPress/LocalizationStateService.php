@@ -26,14 +26,14 @@ class LocalizationStateService {
 			'surecart_default_country_fields',
 			array(
 				array(
-					'name'     => 'name',
+					'name'     => 'country',
 					'priority' => 30,
-					'label'    => __( 'Name or Company Name', 'surecart' ),
+					'label'    => __( 'Country', 'surecart' ),
 				),
 				array(
-					'name'     => 'country',
+					'name'     => 'name',
 					'priority' => 40,
-					'label'    => __( 'Country', 'surecart' ),
+					'label'    => __( 'Name or Company Name', 'surecart' ),
 				),
 				array(
 					'name'     => 'address_1',
