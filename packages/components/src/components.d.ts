@@ -3065,11 +3065,7 @@ export namespace Components {
         /**
           * Product monetary amount
          */
-        "amount": number;
-        /**
-          * Currency for the product
-         */
-        "currency": string;
+        "amount": string;
         /**
           * Can we select the quantity
          */
@@ -3097,11 +3093,11 @@ export namespace Components {
         /**
           * Price name
          */
-        "priceName"?: string;
+        "price"?: string;
         /**
           * The purchasable status display
          */
-        "purchasableStatusDisplay": string;
+        "purchasableStatus": string;
         /**
           * Quantity
          */
@@ -3113,23 +3109,19 @@ export namespace Components {
         /**
           * The line item scratch amount
          */
-        "scratchAmount": number;
-        /**
-          * Is the setup fee not included in the free trial?
-         */
-        "setupFeeTrialEnabled": boolean;
+        "scratch": string;
         /**
           * The SKU.
          */
         "sku": string;
         /**
-          * Trial duration days
+          * Trial text
          */
-        "trialDurationDays": number;
+        "trial": string;
         /**
           * Product variant label
          */
-        "variantLabel": string;
+        "variant": string;
     }
     interface ScProductPillsVariantOption {
         /**
@@ -10220,11 +10212,7 @@ declare namespace LocalJSX {
         /**
           * Product monetary amount
          */
-        "amount"?: number;
-        /**
-          * Currency for the product
-         */
-        "currency"?: string;
+        "amount"?: string;
         /**
           * Can we select the quantity
          */
@@ -10260,11 +10248,11 @@ declare namespace LocalJSX {
         /**
           * Price name
          */
-        "priceName"?: string;
+        "price"?: string;
         /**
           * The purchasable status display
          */
-        "purchasableStatusDisplay"?: string;
+        "purchasableStatus"?: string;
         /**
           * Quantity
          */
@@ -10276,23 +10264,19 @@ declare namespace LocalJSX {
         /**
           * The line item scratch amount
          */
-        "scratchAmount"?: number;
-        /**
-          * Is the setup fee not included in the free trial?
-         */
-        "setupFeeTrialEnabled"?: boolean;
+        "scratch"?: string;
         /**
           * The SKU.
          */
         "sku"?: string;
         /**
-          * Trial duration days
+          * Trial text
          */
-        "trialDurationDays"?: number;
+        "trial"?: string;
         /**
           * Product variant label
          */
-        "variantLabel"?: string;
+        "variant"?: string;
     }
     interface ScProductPillsVariantOption {
         /**

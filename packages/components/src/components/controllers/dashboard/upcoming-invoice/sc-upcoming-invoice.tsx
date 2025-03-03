@@ -238,14 +238,13 @@ export class ScUpcomingInvoice {
           <sc-product-line-item
             image={(item.price?.product as Product)?.line_item_image}
             name={(item.price?.product as Product)?.name}
-            priceName={item?.price?.name}
-            variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+            price={item?.price?.name}
+            variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
             editable={this.quantityUpdatesEnabled}
-            purchasableStatusDisplay={item?.purchasable_status_display}
+            purchasableStatus={item?.purchasable_status_display}
             removable={false}
             quantity={item?.quantity}
-            amount={item?.subtotal_amount}
-            currency={item?.price?.currency}
+            amount={item?.subtotal_display_amount}
             interval={intervalString(item?.price)}
             onScUpdateQuantity={e => this.updateQuantity(e)}
           ></sc-product-line-item>

@@ -2,8 +2,6 @@ import { Component, Fragment, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { state as checkoutState } from '@store/checkout';
-import { hasSubscription } from '../../../../functions/line-items';
-import { intervalString } from '../../../../functions/price';
 import { LineItem, Product, Variant } from '../../../../types';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
@@ -84,27 +82,18 @@ export class ScLineItems {
                   key={item.id}
                   image={item?.image}
                   name={(item?.price?.product as Product)?.name}
-                  priceName={item?.price?.name}
-                  variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
-                  purchasableStatusDisplay={item?.purchasable_status_display}
+                  price={item?.price?.name}
+                  variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                  fees={item?.fees?.data}
+                  amount={item.ad_hoc_display_amount ? item.ad_hoc_display_amount : item.subtotal_display_amount}
+                  scratch={!item.ad_hoc_display_amount && item?.scratch_display_amount}
+                  trial={item?.price?.trial_text}
+                  interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
+                  quantity={item.quantity}
+                  purchasableStatus={item?.purchasable_status_display}
                   {...(max ? { max } : {})}
                   editable={this.isEditable(item)}
                   removable={!item?.locked && this.removable}
-                  quantity={item.quantity}
-                  fees={item?.fees?.data}
-                  setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
-                  amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
-                  scratchAmount={item.ad_hoc_amount == null && item?.scratch_amount}
-                  currency={checkoutState?.checkout?.currency}
-                  trialDurationDays={item?.price?.trial_duration_days}
-                  interval={
-                    !!item?.price &&
-                    intervalString(item?.price, {
-                      showOnce: hasSubscription(checkoutState?.checkout),
-                      abbreviate: !!item?.price?.trial_duration_days,
-                      labels: { interval: item?.price?.trial_duration_days ? '/' : __('every', 'surecart') },
-                    })
-                  }
                   onScUpdateQuantity={e => updateCheckoutLineItem({ id: item.id, data: { quantity: e.detail } })}
                   onScRemove={() => removeCheckoutLineItem(item?.id)}
                   exportparts="base:line-item, product-line-item, image:line-item__image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input, line-item__price-description:line-item__price-description"

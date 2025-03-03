@@ -38,17 +38,17 @@ export class ScOrderConfirmationLineItems {
                   key={item.id}
                   image={(item?.price?.product as Product)?.line_item_image}
                   name={`${(item?.price?.product as Product)?.name}`}
-                  priceName={item?.price?.name}
-                  variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                  price={item?.price?.name}
+                  variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                   editable={false}
                   removable={false}
                   quantity={item.quantity}
                   fees={item?.fees?.data}
-                  amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
-                  currency={this.order?.currency}
-                  trialDurationDays={item?.price?.trial_duration_days}
+                  amount={item.ad_hoc_display_amount ? item.ad_hoc_display_amount : item.subtotal_display_amount}
+                  scratch={!item.ad_hoc_display_amount && item?.scratch_display_amount}
+                  trial={item?.price?.trial_text}
                   interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
-                  purchasableStatusDisplay={item?.purchasable_status_display}
+                  purchasableStatus={item?.purchasable_status_display}
                 ></sc-product-line-item>
               </div>
             );

@@ -111,12 +111,15 @@ export interface Price {
   recurring_interval?: 'week' | 'month' | 'year' | 'never';
   recurring_interval_count?: number;
   trial_duration_days?: number;
+  trial_text?: string;
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
   scratch_amount: number;
   setup_fee_enabled: boolean;
   setup_fee_amount: number;
+  short_interval_text: string;
+  short_interval_count_text: string;
   setup_fee_name: string;
   setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
@@ -451,6 +454,7 @@ export interface ImageAttributes {
 export interface LineItem extends Object {
   id?: string;
   ad_hoc_amount?: number;
+  ad_hoc_display_amount?: string;
   name: string;
   object: string;
   quantity: number;
@@ -465,11 +469,13 @@ export interface LineItem extends Object {
   bump_amount: number;
   discount_amount: number;
   subtotal_amount: number;
+  subtotal_display_amount?: string;
   total_amount: number;
   trial_amount: number;
   tax_amount: number;
   fees_amount: number;
   scratch_amount: number;
+  scratch_display_amount?: string;
   trial: boolean;
   total_savings_amount: number;
   created_at: number;
@@ -494,6 +500,7 @@ export interface Fee {
   id: string;
   object: 'fee';
   amount: number;
+  display_amount: string;
   description: string;
   fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;

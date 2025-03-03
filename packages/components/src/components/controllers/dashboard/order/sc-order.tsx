@@ -131,17 +131,16 @@ export class ScOrder {
               key={item.id}
               image={item?.image}
               name={(item?.price?.product as Product)?.name}
-              priceName={item?.price?.name}
-              variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+              price={item?.price?.name}
+              variant={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
               editable={false}
               removable={false}
               quantity={item.quantity}
-              amount={item.subtotal_amount}
-              currency={item?.price?.currency}
-              trialDurationDays={item?.price?.trial_duration_days}
+              amount={item.subtotal_display_amount}
+              trial={item?.price?.trial_text}
               interval={intervalString(item?.price)}
-              scratchAmount={item?.scratch_amount}
-              setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
+              scratch={item?.scratch_display_amount}
+              purchasableStatus={item?.purchasable_status_display}
               fees={item?.fees?.data}
             />
           );
@@ -236,10 +235,7 @@ export class ScOrder {
 
         {!!checkout?.tax_amount && (
           <sc-line-item>
-            <span slot="description">{`${formatTaxDisplay(
-							checkout?.tax_label,
-							checkout?.tax_status === 'estimated'
-						)} (${checkout?.tax_percent}%)`}</span>
+            <span slot="description">{`${formatTaxDisplay(checkout?.tax_label, checkout?.tax_status === 'estimated')} (${checkout?.tax_percent}%)`}</span>
             <sc-format-number
               slot="price"
               style={{
@@ -250,11 +246,7 @@ export class ScOrder {
               currency={checkout?.currency}
               value={checkout?.tax_amount}
             ></sc-format-number>
-            {!!checkout?.tax_inclusive_amount && (
-							<span slot="price-description">
-								{`(${__('included', 'surecart')})`}
-							</span>
-						)}
+            {!!checkout?.tax_inclusive_amount && <span slot="price-description">{`(${__('included', 'surecart')})`}</span>}
           </sc-line-item>
         )}
 
@@ -361,34 +353,26 @@ export class ScOrder {
             >
               <span slot="description">{__('Refunded', 'surecart')}</span>
               <span slot="price">
-                <sc-format-number  
-                  type="currency" 
-                  currency={checkout?.currency} 
-                  value={checkout?.refunded_amount}
-                ></sc-format-number>
+                <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.refunded_amount}></sc-format-number>
               </span>
             </sc-line-item>
             <sc-line-item
-            style={{
-              'width': '100%',
-              '--price-size': 'var(--sc-font-size-x-large)',
-            }}
-          >
-            <span slot="title">{__('Net Payment', 'surecart')}</span>
-            <span slot="price">
-              <sc-format-number 
-                type="currency" 
-                currency={checkout?.currency} 
-                value={checkout?.net_paid_amount}
-              ></sc-format-number>
-            </span>
-          </sc-line-item>
-        </Fragment>
+              style={{
+                'width': '100%',
+                '--price-size': 'var(--sc-font-size-x-large)',
+              }}
+            >
+              <span slot="title">{__('Net Payment', 'surecart')}</span>
+              <span slot="price">
+                <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.net_paid_amount}></sc-format-number>
+              </span>
+            </sc-line-item>
+          </Fragment>
         )}
         {checkout?.tax_reverse_charged_amount > 0 && (
-        <sc-line-item>
-          <span slot="description">{__('*Tax to be paid on reverse charge basis', 'surecart')}</span>
-        </sc-line-item>
+          <sc-line-item>
+            <span slot="description">{__('*Tax to be paid on reverse charge basis', 'surecart')}</span>
+          </sc-line-item>
         )}
       </Fragment>
     );

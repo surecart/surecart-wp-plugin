@@ -193,8 +193,8 @@ class Price extends Model {
 		return $this->trial_duration_days ? sprintf(
 			// translators: %s is the number of days.
 			_n(
-				'Starting in %s day.',
-				'Starting in %s days.',
+				'Starting in %s day',
+				'Starting in %s days',
 				$this->trial_duration_days,
 				'surecart'
 			),

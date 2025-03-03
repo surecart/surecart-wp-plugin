@@ -42,9 +42,11 @@
   }
 
   &__scratch-price {
-    font-size: 90%;
     text-decoration: line-through;
+    font-size: var(--sc-font-size-small);
+    line-height: 1;
     color: var(--sc-input-help-text-color);
+    text-wrap: nowrap;
   }
 
   &__remove-container {
@@ -134,8 +136,14 @@
   line-height: 1;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--sc-product-line-item-line-gap);
   text-wrap: pretty;
+
+  &:last-child {
+    align-items: flex-end;
+    text-align: right;
+  }
 }
 
 .item__image-placeholder {
@@ -177,6 +185,9 @@
   color: var(--sc-input-label-color);
   line-height: 1;
   text-wrap: pretty;
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
 }
 
 .price__description {

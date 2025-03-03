@@ -6,7 +6,7 @@ use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Support\Currency;
 use SureCart\Models\Traits\HasProduct;
-
+use SureCart\Models\Traits\HasFees;
 /**
  * Price model
  */
@@ -14,6 +14,7 @@ class LineItem extends Model {
 	use HasPrice;
 	use HasCheckout;
 	use HasProduct;
+	use HasFees;
 
 	/**
 	 * Rest API endpoint
