@@ -35,6 +35,13 @@ class Processor extends Model {
 	protected $cache_key = 'processors';
 
 	/**
+	 * Is this optimized caching?
+	 *
+	 * @var boolean
+	 */
+	protected $optimized_caching = true;
+
+	/**
 	 * Get payment method types.
 	 *
 	 * @return array|\WP_Error
