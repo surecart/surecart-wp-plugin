@@ -195,11 +195,12 @@ class PermalinkSettingService {
 		$values = array_values(
 			array_map(
 				function ( $permalink ) {
-					return $permalink['value'];
+					return trailingslashit( $permalink['value'] );
 				},
 				$this->options
 			)
 		);
+
 		?>
 
 		<table class="form-table sc-<?php echo esc_attr( $this->slug ); ?>-permalink-structure">
@@ -207,7 +208,7 @@ class PermalinkSettingService {
 				<?php foreach ( $this->options as $permalink ) : ?>
 				<tr>
 					<th><label><input name="sc_<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sc-tog-<?php echo esc_attr( $this->slug ); ?>" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
-					<td><code><?php echo esc_html( home_url() ); ?>/<?php echo esc_attr( $permalink['value'] ); ?>/<?php echo esc_attr( $this->sample_preview_text ); ?>/</code></td>
+					<td><code><?php echo esc_url( trailingslashit( home_url() ) . trailingslashit( ! empty( $permalink['display'] ) ? ltrim( $permalink['display'], '/' ) : $permalink['value'] ) . $this->sample_preview_text ); ?></code></td>
 				</tr>
 				<?php endforeach; ?>
 				<tr>
@@ -287,6 +288,6 @@ class PermalinkSettingService {
 			$page = $this->options[0]['value'];
 		}
 
-		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', sanitize_title( $page ) );
+		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', $page );
 	}
 }
