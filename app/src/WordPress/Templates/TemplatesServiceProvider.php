@@ -19,8 +19,8 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			return new TemplatesService(
 				$c,
 				[
-					'pages/template-surecart-blank.php' => esc_html__( 'SureCart', 'surecart' ),
-					'pages/template-surecart-dashboard.php' => esc_html__( 'SureCart Customer Dashboard', 'surecart' ),
+					'pages/template-surecart-blank.php' => 'SureCart',
+					'pages/template-surecart-dashboard.php' => 'SureCart Customer Dashboard',
 				],
 				'page'
 			);
@@ -30,7 +30,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			return new TemplatesService(
 				$c,
 				[
-					'pages/template-surecart-product.php' => esc_html__( 'SureCart Layout', 'surecart' ),
+					'pages/template-surecart-product.php' => 'SureCart Layout',
 				],
 				'sc_product'
 			);
@@ -39,7 +39,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 		$container['surecart.templates.collection'] = function ( $c ) {
 			return new CollectionTemplateService(
 				[
-					'pages/template-surecart-collection.php' => esc_html__( 'SureCart Layout', 'surecart' ),
+					'pages/template-surecart-collection.php' => 'SureCart Layout',
 				]
 			);
 		};
@@ -48,7 +48,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			return new UpsellTemplatesService(
 				$c,
 				[
-					'pages/template-surecart-blank.php' => esc_html__( 'SureCart Layout', 'surecart' ),
+					'pages/template-surecart-blank.php' => 'SureCart Layout',
 				],
 			);
 		};

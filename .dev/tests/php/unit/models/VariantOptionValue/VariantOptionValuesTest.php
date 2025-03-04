@@ -17,6 +17,8 @@ class VariantOptionValuesTest extends SureCartUnitTestCase {
 				\SureCart\Account\AccountServiceProvider::class,
 			]
 		], false);
+
+		VariantOptionValue::deleteAll();
 	}
 
 	/**

@@ -20,17 +20,17 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'product',
-					'label'       => __( 'SureCart Product Permalinks', 'surecart' ),
+					'label'       => 'SureCart Product Permalinks',
 					/* translators: %s: Home URL */
-					'description' => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>products</code> would make your product buy links like <code>%sproducts/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'description' => sprintf( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>products</code> would make your product buy links like <code>%sproducts/sample-product/</code>.', esc_url( home_url( '/' ) ) ),
 					'options'     => [
 						[
 							'value' => 'products',
-							'label' => __( 'Default', 'surecart' ),
+							'label' => 'Default',
 						],
 						[
 							'value' => 'shop',
-							'label' => __( 'Shop', 'surecart' ),
+							'label' => 'Shop',
 						],
 						[
 							'value'   => 'shop/%sc_collection%',
@@ -46,17 +46,17 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'buy',
-					'label'       => __( 'SureCart Instant Checkout Permalinks', 'surecart' ),
+					'label'       => 'SureCart Instant Checkout Permalinks',
 					/* translators: %s: Home URL */
-					'description' => sprintf( __( 'If you like, you may enter custom structures for your instant checkout URLs here. For example, using <code>buy</code> would make your product buy links like <code>%sbuy/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'description' => sprintf( 'If you like, you may enter custom structures for your instant checkout URLs here. For example, using <code>buy</code> would make your product buy links like <code>%sbuy/sample-product/</code>.', esc_url( home_url( '/' ) ) ),
 					'options'     => [
 						[
 							'value' => 'buy',
-							'label' => __( 'Default', 'surecart' ),
+							'label' => 'Default',
 						],
 						[
 							'value' => 'purchase',
-							'label' => __( 'Purchase', 'surecart' ),
+							'label' => 'Purchase',
 						],
 					],
 				]
@@ -67,17 +67,17 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			return new PermalinkSettingService(
 				[
 					'slug'                => 'collection',
-					'label'               => __( 'SureCart Product Collection Permalinks', 'surecart' ),
+					'label'               => 'SureCart Product Collection Permalinks',
 					/* translators: %s: Home URL */
-					'description'         => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>collections</code> would make your product collection links like <code>%scollections/sample-collection/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'description'         => sprintf( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>collections</code> would make your product collection links like <code>%scollections/sample-collection/</code>.', esc_url( home_url( '/' ) ) ),
 					'options'             => [
 						[
 							'value' => 'collections',
-							'label' => __( 'Default', 'surecart' ),
+							'label' => 'Default',
 						],
 						[
 							'value' => 'product-collections',
-							'label' => __( 'Product Collections', 'surecart' ),
+							'label' => 'Product Collections',
 						],
 					],
 					'sample_preview_text' => 'sample-collection',
@@ -89,17 +89,17 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'upsell',
-					'label'       => __( 'SureCart Upsell Permalinks', 'surecart' ),
+					'label'       => 'SureCart Upsell Permalinks',
 					/* translators: %s: Home URL */
-					'description' => sprintf( __( 'If you like, you may enter custom structures for your upsell URLs here. For example, using <code>offers</code> would make your upsell\'s links like <code>%soffers/upsell-id/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'description' => sprintf( 'If you like, you may enter custom structures for your upsell URLs here. For example, using <code>offers</code> would make your upsell\'s links like <code>%soffers/upsell-id/</code>.', esc_url( home_url( '/' ) ) ),
 					'options'     => [
 						[
 							'value' => 'offer',
-							'label' => __( 'Default', 'surecart' ),
+							'label' => 'Default',
 						],
 						[
 							'value' => 'special-offer',
-							'label' => __( 'Special Offer', 'surecart' ),
+							'label' => 'Special Offer',
 						],
 					],
 				]
