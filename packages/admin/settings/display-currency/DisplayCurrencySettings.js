@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { __, _n } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { css, jsx, Global } from '@emotion/react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -85,19 +85,27 @@ export default function DisplayCurrencySettings() {
 				)}
 
 				<SettingsBox
-					title={__('Currency Locale', 'surecart')}
-					description={__(
-						'Choose the locale used to format the currency. By default, the site locale will be used.',
-						'surecart'
+					title={__('Currency Formatting', 'surecart')}
+					description={sprintf(
+						__(
+							'Choose the locale used to format the currency. By default your site locale, %s, will be used.',
+							'surecart'
+						),
+						locales['default']?.native_name
 					)}
 				>
 					<ScSelect
 						search={true}
-						label={__('Currency Locale', 'surecart')}
+						label={__('FormattingLocale', 'surecart')}
 						placeholder={__('Select Currency Locale', 'surecart')}
+						help={__(
+							'The locale used to format the currency. For example, if your site is in Spanish, but you want to display United States Dollars as if you were in the United States (without the USD prefix), you can select "English (United States)".',
+							'surecart'
+						)}
 						value={selectedLocale || 'default'}
 						onScChange={(e) => setSelectedLocale(e.target.value)}
 						unselect={false}
+						required={true}
 						choices={translationChoices}
 					/>
 				</SettingsBox>

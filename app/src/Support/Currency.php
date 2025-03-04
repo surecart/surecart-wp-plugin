@@ -97,11 +97,58 @@ class Currency {
 	public static function getCurrencyLocale() {
 		$locale = \SureCart::settings()->get( 'currency_locale', false );
 
-		if ( ! $locale || 'default' === $locale ) {
+		if ( empty( $locale ) || 'default' === $locale ) {
 			$locale = get_locale();
 		}
 
 		return $locale;
+	}
+
+	/**
+	 * Get the locales.
+	 *
+	 * @return array
+	 */
+	public static function getLocales() {
+		// Load translations.
+		require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+		$available_translations = wp_get_available_translations();
+
+		// english is not in the available translations.
+		$locales['en_US'] = array(
+			'language'     => 'en_US',
+			'english_name' => 'English (United States)',
+			'native_name'  => 'English (United States)',
+		);
+
+		// Merge with available translations.
+		$locales = array_merge( $locales, $available_translations );
+
+		// sort by english name.
+		uasort(
+			$locales,
+			function ( $a, $b ) {
+				return strnatcasecmp( $a['english_name'], $b['english_name'] );
+			}
+		);
+
+		$current_locale     = get_locale() ? $locales[ get_locale() ] : $locales['en_US'];
+		$store_default_name = sprintf(
+			/* translators: %s: current language name */
+			__( 'Site Locale - %s', 'surecart' ),
+			$current_locale['native_name']
+		);
+
+		return array_merge(
+			array(
+				'default' => array(
+					'language'     => 'default',
+					'english_name' => $store_default_name,
+					'native_name'  => $store_default_name,
+				),
+			),
+			$locales
+		);
 	}
 
 	/**
