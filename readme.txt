@@ -314,7 +314,7 @@ IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading
 - Improvement: Add custom fields support to product imports.
 - Improvement: Show fee breakdown on charges.
 - Improvement: Cache allowed html file so it is not loaded multiple times in case of ajax requests.
-- Improvement: Change coupon repeating to "multiple months" to be more accurate as to it's functionality.
+- Improvement: Change coupon repeating to "multiple months" to be more accurate as to its functionality.
 - Fix: Issue with 0% off Coupons not being visible in view order page.
 - Fix: Load core translation functions in hooks only due to WordPress 6.7 deprecation.
 - Fix: Incorrect total strikethrough amount being displayed in some instances on checkout page.
