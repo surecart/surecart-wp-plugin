@@ -19,6 +19,13 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
  */
 class BlockServiceProvider implements ServiceProviderInterface {
 	/**
+	 * Cached components from kses.json
+	 *
+	 * @var array
+	 */
+	private static $components = [];
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 *  @param  \Pimple\Container $container Service Container.
@@ -152,14 +159,16 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function ksesComponents( $tags ) {
-		$components = json_decode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
+		if ( empty( self::$components ) ) {
+			self::$components = json_decode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
+		}
 
 		// add slot to defaults.
 		$tags['span']['slot']         = true;
 		$tags['div']['slot']          = true;
 		$tags['sc-spinner']['data-*'] = true;
 
-		return array_merge( $components, $tags );
+		return array_merge( self::$components, $tags );
 	}
 
 	/**
