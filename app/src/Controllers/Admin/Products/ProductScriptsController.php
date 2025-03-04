@@ -53,7 +53,6 @@ class ProductScriptsController extends AdminModelEditController {
 	public function enqueueScriptDependencies() {
 		parent::enqueueScriptDependencies();
 
-
 		// Editor & media.
 		wp_enqueue_style( 'wp-edit-blocks' );
 		wp_enqueue_editor();
@@ -70,8 +69,35 @@ class ProductScriptsController extends AdminModelEditController {
 
 		$block_editor_context = new \WP_Block_Editor_Context( array( 'name' => 'surecart/block-editor' ) );
 
+		$indexed_template_types = array();
+		foreach ( get_default_block_template_types() as $slug => $template_type ) {
+			$template_type['slug']    = (string) $slug;
+			$indexed_template_types[] = $template_type;
+		}
+
+		$custom_settings = array(
+			'siteUrl'                   => site_url(),
+			'postsPerPage'              => get_option( 'posts_per_page' ),
+			'styles'                    => get_block_editor_theme_styles(),
+			'defaultTemplateTypes'      => $indexed_template_types,
+			'defaultTemplatePartAreas'  => get_allowed_block_template_part_areas(),
+			'supportsLayout'            => wp_theme_has_theme_json(),
+			'supportsTemplatePartsMode' => ! wp_is_block_theme() && current_theme_supports( 'block-template-parts' ),
+		);
+
+		$custom_settings['__experimentalAdditionalBlockPatterns']          = \WP_Block_Patterns_Registry::get_instance()->get_all_registered( true );
+		$custom_settings['__experimentalAdditionalBlockPatternCategories'] = \WP_Block_Pattern_Categories_Registry::get_instance()->get_all_registered( true );
+
 		// Get block editor settings.
-		$editor_settings = get_block_editor_settings( [], $block_editor_context );
+		$editor_settings = get_block_editor_settings( $custom_settings, $block_editor_context );
+
+		// Debug registered patterns before getting them.
+		$patterns           = \WP_Block_Patterns_Registry::get_instance()->get_all_registered();
+		$pattern_categories = \WP_Block_Pattern_Categories_Registry::get_instance()->get_all_registered();
+
+		// Add patterns in both locations to ensure compatibility.
+		$editor_settings['__experimentalBlockPatterns']          = $patterns;
+		$editor_settings['__experimentalBlockPatternCategories'] = $pattern_categories;
 
 		wp_add_inline_script(
 			'surecart-components',
