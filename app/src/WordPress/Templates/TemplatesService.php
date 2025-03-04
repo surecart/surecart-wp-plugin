@@ -151,6 +151,10 @@ class TemplatesService {
 	 * @return array
 	 */
 	public function addTemplates( $posts_templates ) {
+		$translations['pages/template-surecart-blank.php']     = esc_html__( 'SureCart', 'surecart' );
+		$translations['pages/template-surecart-dashboard.php'] = esc_html__( 'SureCart Customer Dashboard', 'surecart' );
+		$translations['pages/template-surecart-product.php']   = esc_html__( 'SureCart Layout', 'surecart' );
+
 		return array_merge( $posts_templates, $this->templates );
 	}
 

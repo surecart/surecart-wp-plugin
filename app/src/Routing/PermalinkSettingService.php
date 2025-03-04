@@ -74,8 +74,109 @@ class PermalinkSettingService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'admin_init', [ $this, 'addSettingsSection' ] );
-		add_action( 'admin_init', [ $this, 'maybeSaveSettings' ] );
+		add_action( 'admin_init', [ $this, 'settingsInit' ] );
+	}
+
+	/**
+	 * Add translations.
+	 *
+	 * @return void
+	 */
+	public function addTranslations() {
+		$translations['surecart.settings.permalinks.product'] = [
+			'slug'        => 'product',
+			'label'       => __( 'SureCart Product Permalinks', 'surecart' ),
+			/* translators: %s: Home URL */
+			'description' => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>products</code> would make your product buy links like <code>%sproducts/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+			'options'     => [
+				[
+					'value' => 'products',
+					'label' => __( 'Default', 'surecart' ),
+				],
+				[
+					'value' => 'shop',
+					'label' => __( 'Shop', 'surecart' ),
+				],
+			],
+		];
+
+		$translations['surecart.settings.permalinks.buy'] = [
+			'slug'        => 'buy',
+			'label'       => __( 'SureCart Instant Checkout Permalinks', 'surecart' ),
+			/* translators: %s: Home URL */
+			'description' => sprintf( __( 'If you like, you may enter custom structures for your instant checkout URLs here. For example, using <code>buy</code> would make your product buy links like <code>%sbuy/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+			'options'     => [
+				[
+					'value' => 'buy',
+					'label' => __( 'Default', 'surecart' ),
+				],
+				[
+					'value' => 'purchase',
+					'label' => __( 'Purchase', 'surecart' ),
+				],
+			],
+		];
+
+		$translations['surecart.settings.permalinks.buy'] = [
+			'slug'        => 'buy',
+			'label'       => __( 'SureCart Instant Checkout Permalinks', 'surecart' ),
+			/* translators: %s: Home URL */
+			'description' => sprintf( __( 'If you like, you may enter custom structures for your instant checkout URLs here. For example, using <code>buy</code> would make your product buy links like <code>%sbuy/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+			'options'     => [
+				[
+					'value' => 'buy',
+					'label' => __( 'Default', 'surecart' ),
+				],
+				[
+					'value' => 'purchase',
+					'label' => __( 'Purchase', 'surecart' ),
+				],
+			],
+		];
+
+		$translations['surecart.settings.permalinks.collection'] = [
+			'slug'                => 'collection',
+			'label'               => __( 'SureCart Product Collection Permalinks', 'surecart' ),
+			/* translators: %s: Home URL */
+			'description'         => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>collections</code> would make your product collection links like <code>%scollections/sample-collection/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+			'options'             => [
+				[
+					'value' => 'collections',
+					'label' => __( 'Default', 'surecart' ),
+				],
+				[
+					'value' => 'product-collections',
+					'label' => __( 'Product Collections', 'surecart' ),
+				],
+			],
+			'sample_preview_text' => 'sample-collection',
+		];
+
+		$translations['surecart.settings.permalinks.upsell'] = [
+			'slug'        => 'upsell',
+			'label'       => __( 'SureCart Upsell Permalinks', 'surecart' ),
+			/* translators: %s: Home URL */
+			'description' => sprintf( __( 'If you like, you may enter custom structures for your upsell URLs here. For example, using <code>offers</code> would make your upsell\'s links like <code>%soffers/upsell-id/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+			'options'     => [
+				[
+					'value' => 'offer',
+					'label' => __( 'Default', 'surecart' ),
+				],
+				[
+					'value' => 'special-offer',
+					'label' => __( 'Special Offer', 'surecart' ),
+				],
+			],
+		];
+	}
+
+	/**
+	 * Initialize settings.
+	 */
+	public function settingsInit() {
+		$this->addTranslations();
+		$this->addSettingsSection();
+		$this->maybeSaveSettings();
 	}
 
 	/**
@@ -93,7 +194,7 @@ class PermalinkSettingService {
 
 		$values = array_values(
 			array_map(
-				function( $permalink ) {
+				function ( $permalink ) {
 					return $permalink['value'];
 				},
 				$this->options
@@ -123,7 +224,7 @@ class PermalinkSettingService {
 										in_array(
 											$this->current_base,
 											array_map(
-												function( $opt ) {
+												function ( $opt ) {
 													return $opt['value'];
 												},
 												$this->options
@@ -133,7 +234,7 @@ class PermalinkSettingService {
 										false
 									);
 								?>
-							 />
+							/>
 							<?php esc_html_e( 'Custom base', 'surecart' ); ?>
 						</label>
 					</th>
@@ -188,5 +289,4 @@ class PermalinkSettingService {
 
 		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', sanitize_title( $page ) );
 	}
-
 }
