@@ -2,7 +2,6 @@
 
 namespace SureCart\WordPress\Shortcodes;
 
-use SureCartBlocks\Blocks\AddToCartButton\Block as AddtoCartBlock;
 use SureCartBlocks\Blocks\BuyButton\Block as BuyButtonBlock;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
@@ -373,8 +372,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_line_item',
 			$content,
 			[
-				'price_id' => null,
-				'quantity' => 1,
+				'price_id'      => null,
+				'quantity'      => 1,
+				'ad_hoc_amount' => null,
 			]
 		);
 
