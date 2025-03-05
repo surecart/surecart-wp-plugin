@@ -83,6 +83,11 @@ class LocalizationStateService {
 						'label' => __( 'Province', 'surecart' ),
 					),
 				),
+				'DZ' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
 				'AT' => array(
 					'postcode' => array(
 						'priority' => 65,
@@ -137,6 +142,11 @@ class LocalizationStateService {
 					),
 				),
 				'BE' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'BF' => array(
 					'postcode' => array(
 						'priority' => 65,
 					),
@@ -217,6 +227,11 @@ class LocalizationStateService {
 						'priority' => 80,
 					),
 				),
+				'CV' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
 				'CY' => array(
 					'postcode' => array(
 						'priority' => 65,
@@ -261,6 +276,11 @@ class LocalizationStateService {
 				'EE' => array(
 					'postcode' => array(
 						'priority' => 65,
+					),
+				),
+				'EG' => array(
+					'state' => array(
+						'label' => __( 'Governorate', 'surecart' ),
 					),
 				),
 				'FI' => array(
@@ -649,6 +669,16 @@ class LocalizationStateService {
 						'label' => __( 'Region', 'surecart' ),
 					),
 				),
+				'SN' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'SD' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
 				'SK' => array(
 					'postcode' => array(
 						'priority' => 65,
@@ -805,6 +835,11 @@ class LocalizationStateService {
 					),
 				),
 				'WF' => array(
+					'postcode' => array(
+						'priority' => 65,
+					),
+				),
+				'ZM' => array(
 					'postcode' => array(
 						'priority' => 65,
 					),
