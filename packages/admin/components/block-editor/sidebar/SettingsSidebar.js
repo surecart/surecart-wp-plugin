@@ -13,6 +13,7 @@ import { isRTL, __ } from '@wordpress/i18n';
  */
 import PluginSidebar from './PluginSidebar';
 import { SETTINGS_SIDEBAR_IDENTIFIER } from '../constants';
+import Notice from './Notice';
 
 export default function ({ smallScreenTitle, height }) {
 	return (
@@ -30,6 +31,7 @@ export default function ({ smallScreenTitle, height }) {
 			`}
 		>
 			<BlockInspector />
+			<Notice />
 		</PluginSidebar>
 	);
 }
