@@ -7,23 +7,34 @@ import { css, jsx } from '@emotion/core';
 import {
 	BlockEditorProvider,
 	BlockList,
+	__unstableIframe as Iframe,
 	__unstableEditorStyles as EditorStyles,
 } from '@wordpress/block-editor';
 import { Disabled } from '@wordpress/components';
 
 export default function ({ blocks }) {
 	return (
-		<Disabled>
-			<BlockEditorProvider
-				value={blocks}
-				settings={surecartBlockEditorSettings}
+		// <Disabled>
+		<BlockEditorProvider
+			value={blocks}
+			settings={surecartBlockEditorSettings}
+		>
+			<div
+				className="editor-styles-wrapper"
+				css={css`
+					[data-rich-text-placeholder] {
+						display: none;
+					}
+				`}
 			>
-				<div
-					className="editor-styles-wrapper"
+				<Iframe
+					name="editor-canvas"
+					className="edit-site-visual-editor__editor-canvas"
 					css={css`
-						[data-rich-text-placeholder] {
-							display: none;
-						}
+						width: 100% !important;
+						height: 100vh !important;
+						max-height: 300px !important;
+						padding: 5px;
 					`}
 				>
 					<EditorStyles
@@ -32,9 +43,13 @@ export default function ({ blocks }) {
 					<BlockList
 						renderAppender={() => null}
 						className="surecart-block-editor__block-list"
+						css={css`
+							padding: 10px 20px;
+						`}
 					/>
-				</div>
-			</BlockEditorProvider>
-		</Disabled>
+				</Iframe>
+			</div>
+		</BlockEditorProvider>
+		// </Disabled>
 	);
 }
