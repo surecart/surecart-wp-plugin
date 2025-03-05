@@ -140,11 +140,6 @@ export default ({ product, updateProduct, loading }) => {
 							<div
 								css={css`
 									border: 1px solid #e5e5e5;
-									padding: 10px 20px;
-									/* min-height: 40px; */
-									/* overflow-y: auto;
-									overflow-x: hidden; */
-									/* max-height: 400px; */
 									border-radius: 5px;
 								`}
 							>
