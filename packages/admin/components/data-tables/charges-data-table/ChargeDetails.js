@@ -122,7 +122,7 @@ export default ({ charge, onRequestClose }) => {
 												)}
 											</p>
 											<ExternalLink
-												href="https://docs.surecart.com"
+												href="https://surecart.com/docs/understanding-ecommerce-fees/"
 												target="_blank"
 											>
 												{__('Learn More', 'surecart')}
