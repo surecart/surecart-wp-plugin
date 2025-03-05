@@ -103,6 +103,7 @@
 										"content_width": "full",
 										"flex_direction": "row",
 										"flex_justify_content": "flex-start",
+										"flex_align_items": "center",
 										"flex_gap": {
 											"column": "8",
 											"row": "0",
@@ -256,7 +257,7 @@
 										"content_width": "full",
 										"flex_direction": "row",
 										"flex_justify_content": "flex-start",
-										"flex_align_items": "flex-start",
+										"flex_align_items": "center",
 										"flex_gap": {
 											"column": "5",
 											"row": "0",
