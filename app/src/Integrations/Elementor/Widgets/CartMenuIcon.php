@@ -375,16 +375,25 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 		// Filter cart icon.
 		add_filter( 'sc_cart_menu_icon', [ $this, 'render_cart_icon' ] );
 
-		if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
-			?>
-			<div class="sc-cart-icon" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="<?php echo esc_attr__( 'Open cart', 'surecart' ); ?>">
+		if ( ! empty( $settings['hover_animation'] ) ) {
+			$this->add_render_attribute( 'icon-wrapper', 'class', 'sc-cart-icon elementor-animation-' . $settings['hover_animation'] );
+		}
+		?>
+
+		<div <?php echo $this->get_render_attribute_string( 'icon-wrapper' ); ?> class="sc-cart-icon" style="font-size: var(--sc-cart-icon-size, 1.1em); cursor: pointer; position: relative;" aria-label="<?php echo esc_attr__( 'Open cart', 'surecart' ); ?>"> <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php
+			if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) :
+				?>
 				<?php echo $this->cart_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<span class="sc-cart-count" style="box-sizing: border-box; position: absolute; inset: -12px -16px auto auto; text-align: center; font-size: 10px; font-weight: bold; border-radius: var(--sc-cart-icon-counter-border-radius, 9999px); color: var(--sc-cart-icon-counter-color, var(--sc-color-primary-text, var(--sc-color-white))); background: var(--sc-cart-icon-counter-background, var(--sc-color-primary-500)); box-shadow: var(--sc-cart-icon-box-shadow, var(--sc-shadow-x-large)); padding: 2px 6px; line-height: 14px; min-width: 14px; z-index: 1;">2</span>
-			</div>
-			<?php
-		} else {
-			echo do_blocks( '<!-- wp:surecart/cart-menu-icon-button ' . wp_json_encode( $attributes ) . ' /-->' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
+			<?php else : ?>
+				<?php
+				echo do_blocks( '<!-- wp:surecart/cart-menu-icon-button ' . wp_json_encode( $attributes ) . ' /-->' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				endif;
+			?>
+		</div>
+
+		<?php
 
 		// Remove filter.
 		remove_filter( 'sc_cart_menu_icon', [ $this, 'render_cart_icon' ] );
