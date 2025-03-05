@@ -14,7 +14,6 @@ import { Disabled } from '@wordpress/components';
 
 export default function ({ blocks }) {
 	return (
-		// <Disabled>
 		<BlockEditorProvider
 			value={blocks}
 			settings={surecartBlockEditorSettings}
@@ -42,7 +41,7 @@ export default function ({ blocks }) {
 					<EditorStyles
 						styles={surecartBlockEditorSettings?.styles}
 					/>
-					<Disabled>
+					<Disabled style={{ cursor: 'pointer' }}>
 						<div style={{ padding: '10px 20px' }}>
 							<BlockList
 								renderAppender={() => null}
@@ -53,6 +52,5 @@ export default function ({ blocks }) {
 				</Iframe>
 			</div>
 		</BlockEditorProvider>
-		// </Disabled>
 	);
 }
