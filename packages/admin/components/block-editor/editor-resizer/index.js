@@ -84,7 +84,6 @@ export default function EditorResizer({
 			css={css`
 				box-sizing: border-box;
 				background-color: #fff;
-				padding: 10px 30px;
 				height: 100%;
 				justify-content: center;
 				display: flex;

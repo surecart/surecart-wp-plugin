@@ -29,12 +29,10 @@ import { ScTextarea } from '@surecart/components-react';
 
 const MemoizedBlockEditor = memo(BlockEditor);
 
-export default ({ product, loading }) => {
+export default ({ product, updateProduct, loading }) => {
 	if (!product) {
 		return null;
 	}
-	const postId = product?.post?.ID;
-	const { editEntityRecord } = useDispatch(coreStore);
 	const [cancelModal, setCancelModal] = useState(false);
 	const [editorModal, setEditorModal] = useState(false);
 	const [blocks, setBlocks] = useState([]);
@@ -55,7 +53,7 @@ export default ({ product, loading }) => {
 	}, [product?.post?.post_content]);
 
 	const debouncedEditEntityRecord = useDebounce((changedBlocks) => {
-		editPostContent(changedBlocks);
+		editProductContent(changedBlocks);
 	}, 50);
 
 	const onChange = (changedBlocks) => {
@@ -82,7 +80,7 @@ export default ({ product, loading }) => {
 	const handleClose = () => {
 		const blocks = debouncedEditEntityRecord.flush();
 		if (blocks) {
-			editPostContent(blocks);
+			editProductContent(blocks);
 		}
 
 		setEditorModal(false);
@@ -94,16 +92,14 @@ export default ({ product, loading }) => {
 			return;
 		}
 
-		editPostContent(blocks);
+		editProductContent(blocks);
 		setInitialBlocks(blocks);
 		setEditorModal(false);
 	};
 
-	const editPostContent = (blocksData) => {
-		editEntityRecord('postType', 'sc_product', postId, {
+	const editProductContent = (blocksData) => {
+		updateProduct({
 			content: serialize(blocksData),
-			blocks: blocksData,
-			selection: undefined,
 		});
 	};
 
