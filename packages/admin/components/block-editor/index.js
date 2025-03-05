@@ -6,6 +6,7 @@ import { css, jsx, Global } from '@emotion/core';
  */
 import { Popover, Button } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { useResizeObserver } from '@wordpress/compose';
 import {
 	useCallback,
 	useEffect,
@@ -22,9 +23,6 @@ import {
 	BlockTools,
 	BlockEditorKeyboardShortcuts,
 	store as blockEditorStore,
-	WritingFlow,
-	ObserveTyping,
-	__unstableEditorStyles as EditorStyles,
 } from '@wordpress/block-editor';
 import { ComplementaryArea } from '@wordpress/interface';
 import { uploadMedia } from '@wordpress/media-utils';
@@ -44,6 +42,7 @@ import SettingsSidebar from './sidebar/SettingsSidebar';
 import RegisterStores from './RegisterStores';
 import KeyboardShortcuts from './keyboard-shortcuts';
 import RegisterKeyboardShortcuts from './keyboard-shortcuts/RegisterKeyboardShortcuts';
+import EditorCanvas from './editor-canvas';
 import EditorResizer from './editor-resizer';
 
 const setIsInserterOpenedAction = 'SET_IS_INSERTER_OPENED';
@@ -89,6 +88,7 @@ export default function ({
 	showBackButton = false,
 	name,
 }) {
+	const [resizeObserver] = useResizeObserver();
 	const [temporalBlocks, setTemporalBlocks] = useState([]);
 	const canUserCreateMedia = useSelect((select) => {
 		const _canUserCreateMedia = select('core').canUser('create', 'media');
@@ -335,23 +335,29 @@ export default function ({
 									enableResizing={true}
 									height="100%"
 								>
-									<EditorStyles styles={settings?.styles} />
-									<WritingFlow
-										css={css`
-											overflow-y: auto;
-											height: ${editorHeight}px;
-											width: 100%;
-											padding: 5px;
-										`}
+									<EditorCanvas
+										enableResizing={true}
+										settings={settings}
+										height={editorHeight}
 									>
-										<ObserveTyping>
-											<BlockList className="edit-site-block-editor__block-list wp-site-blocks" />
-										</ObserveTyping>
-									</WritingFlow>
+										{resizeObserver}
+										<BlockList className="edit-site-block-editor__block-list wp-site-blocks" />
+									</EditorCanvas>
+									<Popover.Slot />
 								</EditorResizer>
 
-								<Popover.Slot />
-								<div className="surecart-editor__content-inserter-clipper" />
+								<div
+									className="surecart-editor__content-inserter-clipper"
+									css={css`
+										position: absolute;
+										bottom: 0;
+										left: 0;
+										right: 0;
+										height: 40px;
+										background-color: inherit;
+										z-index: 100;
+									`}
+								/>
 							</BlockTools>
 						</div>
 						<ComplementaryArea.Slot
