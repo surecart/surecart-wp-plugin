@@ -8,6 +8,7 @@ use SureCart\Sync\PostSyncService;
 use SureCart\Sync\ProductSyncService;
 use SureCart\Sync\ProductsSyncProcess;
 use SureCart\Sync\ProductsCleanupProcess;
+use SureCart\Sync\ProductCollectionsCleanupProcess;
 use SureCart\Sync\ProductsSyncService;
 use SureCart\Sync\StoreSyncService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
@@ -45,6 +46,9 @@ class SyncServiceProvider implements ServiceProviderInterface {
 
 		$products_cleanup_process                       = new ProductsCleanupProcess();
 		$container['surecart.process.products.cleanup'] = fn() => $products_cleanup_process;
+
+		$collections_cleanup_process                       = new ProductCollectionsCleanupProcess();
+		$container['surecart.process.collections.cleanup'] = fn() => $collections_cleanup_process;
 
 		$app->alias( 'sync', 'surecart.sync' );
 	}

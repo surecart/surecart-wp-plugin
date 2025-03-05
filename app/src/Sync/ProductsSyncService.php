@@ -159,9 +159,19 @@ class ProductsSyncService {
 	 *
 	 * @return ProductsCleanupProcess
 	 */
-	public function queueCleanup() {
+	public function queueProductsCleanup() {
 		return $this->app->resolve( 'surecart.process.products.cleanup' );
 	}
+
+	/**
+	 * Get the cleanup process.
+	 *
+	 * @return ProductCollectionsCleanupProcess
+	 */
+	public function queueCollectionsCleanup() {
+		return $this->app->resolve( 'surecart.process.collections.cleanup' );
+	}
+
 	/**
 	 * Cleanup the old store product posts.
 	 *
@@ -174,10 +184,15 @@ class ProductsSyncService {
 		];
 
 		// cancel previous processes.
-		$this->queueCleanup()->cancel();
-		$this->queueCleanup()->delete_all();
+		$this->queueProductsCleanup()->cancel();
+		$this->queueProductsCleanup()->delete_all();
+		$this->queueCollectionsCleanup()->cancel();
+		$this->queueCollectionsCleanup()->delete_all();
 
 		// save and dispatch the process.
-		return $this->queueCleanup()->push_to_queue( $args )->save()->dispatch();
+		$this->queueProductsCleanup()->push_to_queue( $args )->save()->dispatch();
+		$this->queueCollectionsCleanup()->push_to_queue( $args )->save()->dispatch();
+
+		return true;
 	}
 }
