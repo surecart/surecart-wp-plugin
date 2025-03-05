@@ -14,9 +14,7 @@ import { Suspense, useEffect, useState, memo } from '@wordpress/element';
 import { parse, serialize } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
 import { close, edit } from '@wordpress/icons';
-import { useDispatch } from '@wordpress/data';
 import { useDebounce } from '@wordpress/compose';
-import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -178,8 +176,14 @@ export default ({ product, updateProduct, loading }) => {
 
 						.components-modal__header {
 							height: 60px;
-							padding: 8px 32px 8px;
-							border-bottom: 1px solid var(--sc-color-gray-300);
+							border-bottom: 1px solid #ccc;
+							padding-left: 18px;
+							padding-right: 18px;
+
+							.components-modal__header-heading {
+								font-size: 16px;
+								line-height: 24px;
+							}
 						}
 
 						.components-modal__content {
