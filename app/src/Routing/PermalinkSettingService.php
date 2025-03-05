@@ -114,6 +114,10 @@ class PermalinkSettingService {
 					'value' => 'purchase',
 					'label' => __( 'Purchase', 'surecart' ),
 				],
+				[
+					'value' => 'shop/%sc_collection%',
+					'label' => __( 'Shop base with collection', 'surecart' ),
+				],
 			],
 		];
 

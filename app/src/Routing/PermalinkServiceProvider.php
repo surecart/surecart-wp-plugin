@@ -35,7 +35,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 						[
 							'value'   => 'shop/%sc_collection%',
 							'display' => 'shop/product-collection/',
-							'label'   => __( 'Shop base with collection', 'surecart' ),
+							'label'   => 'Shop base with collection',
 						],
 					],
 				]
