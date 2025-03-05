@@ -82,13 +82,4 @@ class ProductsSyncProcess extends BackgroundProcess {
 		// call the parent complete method.
 		parent::complete();
 	}
-
-	/**
-	 * Get the identifier for the process.
-	 *
-	 * @return string
-	 */
-	public function getIdentifier() {
-		return $this->identifier;
-	}
 }

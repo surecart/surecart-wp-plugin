@@ -36,7 +36,21 @@ class ProductsSyncService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_notices', [ $this, 'showMigrationNotice' ] );
-		add_action( $this->queue()->getIdentifier() . '_completed', [ $this, 'cleanup' ] );
+		add_action( 'action_scheduler_completed_action', [ $this, 'onProductsSyncComplete' ] );
+		add_action( 'surecart_sync_product_completed', [ $this, 'cleanup' ] );
+	}
+
+	/**
+	 * On products sync complete.
+	 *
+	 * @param string $action_id The action id.
+	 *
+	 * @return void
+	 */
+	public function onProductsSyncComplete( $action_id ) {
+		if ( ! as_has_scheduled_action( 'surecart/sync/product' ) ) {
+			do_action( 'surecart_sync_product_completed' );
+		}
 	}
 
 	/**
