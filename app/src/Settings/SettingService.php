@@ -15,7 +15,7 @@ class SettingService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'admin_init', [ $this, 'registerSettings' ] );
+		add_action( 'init', [ $this, 'registerSettings' ] );
 	}
 
 	/**
