@@ -88,7 +88,7 @@ export default function DisplayCurrencySettings() {
 					title={__('Currency Formatting', 'surecart')}
 					description={sprintf(
 						__(
-							'Choose the locale used to format the currency. By default your site locale, %s, will be used.',
+							'Choose the locale to format the currency. By default, your site locale (%s) will be used.',
 							'surecart'
 						),
 						locales['default']?.native_name
@@ -96,10 +96,10 @@ export default function DisplayCurrencySettings() {
 				>
 					<ScSelect
 						search={true}
-						label={__('FormattingLocale', 'surecart')}
+						label={__('Formatting Locale', 'surecart')}
 						placeholder={__('Select Currency Locale', 'surecart')}
 						help={__(
-							'The locale used to format the currency. For example, if your site is in Spanish, but you want to display United States Dollars as if you were in the United States (without the USD prefix), you can select "English (United States)".',
+							'The locale determines how the currency is displayed. For instance, if your site is in Spanish but you prefer to display currency in United States Dollars formatted as in the United States (without the "USD" prefix), you can select "English (United States)."',
 							'surecart'
 						)}
 						value={selectedLocale || 'default'}
