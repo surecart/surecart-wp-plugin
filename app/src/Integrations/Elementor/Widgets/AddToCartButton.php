@@ -201,8 +201,12 @@ class AddToCartButton extends \Elementor\Widget_Base {
 						'max' => 5,
 					],
 				],
+				'default'    => [
+					'size' => 10,
+					'unit' => 'px',
+				],
 				'selectors'  => [
-					'{{WRAPPER}} .elementor-button .elementor-button-content-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-button-content-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
 				],
 				'condition'  => [
 					'selected_icon[value]!' => '',
@@ -233,11 +237,20 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name'     => 'button_typography',
-				'global'   => [
+				'name'           => 'button_typography',
+				'global'         => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
-				'selector' => $button_selector,
+				'fields_options' => [
+					'typography'  => [ 'default' => 'yes' ],
+					'line_height' => [
+						'default' => [
+							'unit' => 'px',
+							'size' => 16,
+						],
+					],
+				],
+				'selector'       => $button_selector,
 			]
 		);
 
@@ -269,8 +282,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					$button_selector      => 'background-color: {{VALUE}}',
-					$button_icon_selector => 'background-color: {{VALUE}}',
+					$button_selector => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -303,7 +315,6 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					$button_selector . ':hover' => 'background-color: {{VALUE}}',
-					$button_selector . ':hover ' . $button_icon_selector => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -471,7 +482,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$settings       = $this->get_settings_for_display();
 		$is_add_to_cart = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
 
-		$this->add_render_attribute( 'content-wrapper', 'class', 'wp-block-button__link wp-element-button sc-button__link' );
+		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-button__link wp-element-button sc-button__link elementor-button elementor-button-link elementor-size-sm' );
 		$this->add_render_attribute( 'button', 'class', 'elementor-button' );
 
 		if ( ! empty( $settings['selected_icon']['value'] ) ) {
@@ -479,16 +490,13 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		}
 
 		if ( ! empty( $settings['hover_animation'] ) ) {
-			$this->add_render_attribute( 'content-wrapper', 'class', 'elementor-animation-' . $settings['hover_animation'] );
+			$this->add_render_attribute( 'wrapper', 'class', 'elementor-animation-' . $settings['hover_animation'] );
 		}
 
 		$this->add_render_attribute(
 			[
 				'content-wrapper' => [
 					'class' => 'elementor-button-content-wrapper',
-				],
-				'icon'            => [
-					'class' => 'elementor-button-icon',
 				],
 				'text'            => [
 					'class' => 'elementor-button-text',
@@ -523,7 +531,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 
 		ob_start();
 		?>
-		<button <?php echo $this->get_render_attribute_string( 'content-wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<button <?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
 			if ( ! empty( $settings['icon'] ) || ! empty( $settings['selected_icon']['value'] ) ) :
 				$this->add_render_attribute( 'icon', 'class', 'elementor-button-icon' );
@@ -541,6 +550,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 					<span class="sc-button__link-text" data-wp-text="state.buttonText"></span>
 				<?php endif; ?>
 			<?php endif; ?>
+			</span>
 		</button>
 
 		<?php
