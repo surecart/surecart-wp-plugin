@@ -378,7 +378,27 @@
 									"size": 100,
 									"sizes": []
 								},
-								"button_text_color": "#ffffff"
+								"button_border_width": {
+									"unit": "px",
+									"top": "1",
+									"right": "1",
+									"bottom": "1",
+									"left": "1",
+									"isLinked": true
+								},
+								"button_border_border": "solid",
+								"button_border_radius": {
+									"unit": "px",
+									"top": "24",
+									"right": "24",
+									"bottom": "24",
+									"left": "24",
+									"isLinked": true
+								},
+								"__globals__": {
+									"button_border_color": "globals/colors?id=primary",
+									"button_background_color": "globals/colors?id=primary"
+								}
 							},
 							"elements": [],
 							"isInner": false,
