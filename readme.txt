@@ -308,7 +308,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
 
 = 3.4.2 - March 6th, 2025 =
-- Fix: Issue with some settings not saving on settings panel.
+- Fix: Issue with some settings not saving on settings panel since 3.4.0 update.
 
 = 3.4.1 - March 6th, 2025 =
 - Fix: Issue with new permalink settings incorrectly affecting other post type permalink settings.
