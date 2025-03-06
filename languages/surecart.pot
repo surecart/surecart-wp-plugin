@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-06T13:59:33+00:00\n"
+"POT-Creation-Date: 2025-03-06T20:32:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -7126,29 +7126,29 @@ msgid "Store"
 msgstr ""
 
 #. translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
-#: src/WordPress/Templates/BlockTemplatesService.php:211
+#: src/WordPress/Templates/BlockTemplatesService.php:202
 msgid "Product: %s"
 msgstr ""
 
-#: src/WordPress/Templates/BlockTemplatesService.php:214
+#: src/WordPress/Templates/BlockTemplatesService.php:205
 msgid "Template used for specific single SureCart product pages."
 msgstr ""
 
 #. translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
-#: src/WordPress/Templates/BlockTemplatesService.php:224
+#: src/WordPress/Templates/BlockTemplatesService.php:215
 msgid "Product Collection: %s"
 msgstr ""
 
-#: src/WordPress/Templates/BlockTemplatesService.php:227
+#: src/WordPress/Templates/BlockTemplatesService.php:218
 msgid "Template used for specific single SureCart collection pages."
 msgstr ""
 
 #. translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
-#: src/WordPress/Templates/BlockTemplatesService.php:237
+#: src/WordPress/Templates/BlockTemplatesService.php:228
 msgid "Upsell: %s"
 msgstr ""
 
-#: src/WordPress/Templates/BlockTemplatesService.php:240
+#: src/WordPress/Templates/BlockTemplatesService.php:231
 msgid "Template used for specific single SureCart upsell pages."
 msgstr ""
 
