@@ -94,6 +94,10 @@ class ProductPostTypeService {
 		add_action( 'wp_head', array( $this, 'addProductJsonSchema' ), 10 );
 		add_action( 'wp_head', array( $this, 'addProductSeoMeta' ), 10 );
 
+		// Product permalink support for custom taxonomies.
+		add_filter( 'post_type_link', array( $this, 'postTypeLink' ), 10, 2 );
+		add_action( 'template_redirect', array( $this, 'maybeRedirectToProductCanonicalUrl' ), 5 );
+
 		// handle classic themes template.
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
@@ -1162,5 +1166,87 @@ class ProductPostTypeService {
 		<?php endif; ?>
 
 		<?php
+	}
+
+	/**
+	 * Filter the post type link for products.
+	 *
+	 * @param string   $permalink The post's permalink.
+	 * @param \WP_Post $post The post in question.
+	 *
+	 * @return string
+	 */
+	public function postTypeLink( string $permalink, \WP_Post $post ): string {
+		// Abort if post is not a product.
+		if ( 'sc_product' !== $post->post_type ) {
+			return $permalink;
+		}
+
+		// Abort early if the sc_collectionplaceholder rewrite tag isn't in the generated URL.
+		if ( false === strpos( $permalink, '%sc_collection%' ) ) {
+			return $permalink;
+		}
+
+		// Get the custom taxonomy terms in use by this post (sc_collection).
+		$terms = get_the_terms( $post->ID, 'sc_collection' );
+
+		if ( ! empty( $terms ) ) {
+			$collection_object = apply_filters( 'sc_product_post_type_link_sc_collection', $terms[0], $terms, $post );
+			$sc_collection     = $collection_object->slug;
+		} else {
+			// If no terms are assigned to this post, use an empty string.
+			$sc_collection = '';
+
+			// Remove extra / from the permalink structure.
+			$permalink = str_replace( '/%sc_collection%', '', $permalink );
+		}
+
+		// Replace placeholders in the permalink structure.
+		$find = array(
+			'%sc_collection%',
+			'%post_id%',
+		);
+
+		$replace = array(
+			$sc_collection,
+			$post->ID,
+		);
+
+		return str_replace( $find, $replace, $permalink );
+	}
+
+	/**
+	 * Redirect to the canonical URL for a product.
+	 *
+	 * @return void
+	 */
+	public function maybeRedirectToProductCanonicalUrl(): void {
+		global $wp_rewrite;
+
+		if (
+			! is_a( $wp_rewrite, \WP_Rewrite::class )
+			|| ! sc_get_product()
+		) {
+			return;
+		}
+
+		// Get the specified collection slug.
+		$specified_collection_slug = get_query_var( 'sc_collection' );
+
+		if ( ! is_string( $specified_collection_slug ) || strlen( $specified_collection_slug ) < 1 ) {
+			return;
+		}
+
+		// Determine the expected collection slug for the product.
+		$expected_collection_slug = $this->postTypeLink( '%sc_collection%', get_post( get_the_ID() ) );
+
+		if ( $specified_collection_slug === $expected_collection_slug ) {
+			return;
+		}
+
+		// Redirect to the canonical URL for the product.
+		$query_vars = isset( $_GET ) && is_array( $_GET ) ? $_GET : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		wp_safe_redirect( add_query_arg( $query_vars, get_permalink( get_the_ID() ) ), 301 );
+		exit();
 	}
 }

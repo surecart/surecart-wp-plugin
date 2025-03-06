@@ -64,7 +64,7 @@ class ProductGroupsListTable extends ListTable {
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link = \SureCart::getUrl()->index( 'product_groups' );
+			$link                    = \SureCart::getUrl()->index( 'product_groups' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -100,11 +100,14 @@ class ProductGroupsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'name'    => __( 'Name', 'surecart' ),
-			'status'  => __( 'Status', 'surecart' ),
-			'created' => __( 'Created', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'name'    => __( 'Name', 'surecart' ),
+				'status'  => __( 'Status', 'surecart' ),
+				'created' => __( 'Created', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**

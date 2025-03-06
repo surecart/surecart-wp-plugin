@@ -151,6 +151,10 @@ class TemplatesService {
 	 * @return array
 	 */
 	public function addTemplates( $posts_templates ) {
+		$translations['pages/template-surecart-blank.php']     = esc_html__( 'SureCart', 'surecart' );
+		$translations['pages/template-surecart-dashboard.php'] = esc_html__( 'SureCart Customer Dashboard', 'surecart' );
+		$translations['pages/template-surecart-product.php']   = esc_html__( 'SureCart Layout', 'surecart' );
+
 		return array_merge( $posts_templates, $this->templates );
 	}
 
@@ -174,7 +178,7 @@ class TemplatesService {
 		}
 
 		// check for product and use the template id.
-		$product = get_query_var( 'surecart_current_product' );
+		$product = sc_get_product();
 
 		if ( ! empty( $product->metadata->wp_template_id ) ) {
 			$page_template = $product->metadata->wp_template_id;

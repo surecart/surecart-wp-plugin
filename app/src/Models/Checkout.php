@@ -69,6 +69,16 @@ class Checkout extends Model {
 		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
 	}
 
+
+	/**
+	 * Get the display total scratch price attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalScratchDisplayAmountAttribute() {
+		return Currency::format( - (int) $this->total_savings_amount + (int) $this->total_amount, $this->currency );
+	}
+
 	/**
 	 * Get the display subtotal amount attribute.
 	 *

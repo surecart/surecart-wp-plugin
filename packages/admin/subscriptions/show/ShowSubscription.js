@@ -271,8 +271,6 @@ export default () => {
 
 	/** Render the pause button */
 	const renderPauseButton = () => {
-		if (subscription?.finite) return null;
-
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
 
@@ -605,7 +603,9 @@ export default () => {
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
 				currentPeriodEndAt={subscription?.current_period_end_at}
-				currentPeriodEndAtDate={subscription?.current_period_end_at_date}
+				currentPeriodEndAtDate={
+					subscription?.current_period_end_at_date
+				}
 			/>
 			<RenewSubscriptionAtModal
 				open={modal === 'renew_at'}

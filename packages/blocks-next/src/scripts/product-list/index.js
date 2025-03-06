@@ -38,6 +38,7 @@ const { state } = store('surecart/product-list', {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
 			const { ref } = getElement();
+			const { history } = getContext();
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
 				event.preventDefault();
@@ -47,7 +48,9 @@ const { state } = store('surecart/product-list', {
 				);
 
 				state.loading = true;
-				yield actions.navigate(ref.href);
+				yield actions.navigate(ref.href, {
+					replace: history !== false ? false : true,
+				});
 				state.loading = false;
 
 				const firstAnchor = queryRef.querySelector(

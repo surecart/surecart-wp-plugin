@@ -50,7 +50,7 @@ class AffiliationClicksListTable extends ListTable {
 	 */
 	protected function get_views() {
 		foreach ( $this->getStatuses() as $status => $label ) {
-			$link = admin_url( 'admin.php?page=sc-affiliate-clicks' );
+			$link                    = admin_url( 'admin.php?page=sc-affiliate-clicks' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -85,12 +85,15 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return array(
-			'date'      => __( 'Date', 'surecart' ),
-			'url'       => __( 'Landing URL', 'surecart' ),
-			'referrer'  => __( 'Referring URL', 'surecart' ),
-			'affiliate' => __( 'Affiliate', 'surecart' ),
-			'converted' => __( 'Converted', 'surecart' ),
+		return array_merge(
+			[
+				'date'      => __( 'Date', 'surecart' ),
+				'url'       => __( 'Landing URL', 'surecart' ),
+				'referrer'  => __( 'Referring URL', 'surecart' ),
+				'affiliate' => __( 'Affiliate', 'surecart' ),
+				'converted' => __( 'Converted', 'surecart' ),
+			],
+			parent::get_columns()
 		);
 	}
 
@@ -274,6 +277,9 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $item, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $item, $column_name );
+
 		return $item->$column_name ?? '';
 	}
 

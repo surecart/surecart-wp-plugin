@@ -149,7 +149,7 @@ export default ({
 			}}
 		>
 			<ScDialog
-				label={__('Add Payment Method', 'surecart')}
+				label={__('Select Payment Method', 'surecart')}
 				open={open}
 				onScRequestClose={onRequestClose}
 			>

@@ -124,6 +124,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	protected $cache_key = '';
 
 	/**
+	 * Is this optimized caching?
+	 *
+	 * @var boolean
+	 */
+	protected $optimized_caching = false;
+
+	/**
 	 * Cache status for the request.
 	 *
 	 * @var string|null;
@@ -642,7 +649,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		// add query vars.
 		$args['query'] = $this->query;
 
-		return [ $endpoint, $args, $this->cachable, $this->cache_key ];
+		return [ $endpoint, $args, $this->cachable, $this->cache_key, $this->optimized_caching ];
 	}
 
 	/**
@@ -978,7 +985,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @return $this|false
 	 */
 	protected function delete( $id = '' ) {
-		$id = $id ? $id : $this->id;
+		$this->id = $id ? $id : $this->id;
 
 		if ( $this->fireModelEvent( 'deleting' ) === false ) {
 			return false;
@@ -986,7 +993,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		$deleted = $this->makeRequest(
 			[
-				'id'     => $id,
+				'id'     => $this->id,
 				'method' => 'DELETE',
 			]
 		);
