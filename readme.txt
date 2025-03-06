@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.3.1
+Stable tag: 3.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -306,6 +306,19 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+
+= 3.4.0 - March 6th, 2025 =
+- New: Ability to add collection to product URL.
+- New: Add an amount for name your own prices on buy now blocks and shortcodes.
+- Improvement: Prevent request cascade when fetching cached resources in case of server downtime.
+- Improvement: Add custom fields support to product imports.
+- Improvement: Show fee breakdown on charges.
+- Improvement: Cache allowed html file so it is not loaded multiple times in case of ajax requests.
+- Improvement: Change coupon repeating to "multiple months" to be more accurate as to its functionality.
+- Fix: Issue with 0% off Coupons not being visible in view order page.
+- Fix: Load core translation functions in hooks only due to WordPress 6.7 deprecation.
+- Fix: Incorrect total strikethrough amount being displayed in some instances on checkout page.
+- Fix: Issue where address form was being added to checkout pages when tax was enabled, but no tax was required on the checkout.
 
 = 3.3.1 - February 17th, 2025 =
 - Improvement: Added Settings, Documentation links to plugins page.
