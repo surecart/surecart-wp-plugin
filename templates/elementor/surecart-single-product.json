@@ -377,7 +377,8 @@
 									"unit": "%",
 									"size": 100,
 									"sizes": []
-								}
+								},
+								"button_text_color": "#ffffff"
 							},
 							"elements": [],
 							"isInner": false,
