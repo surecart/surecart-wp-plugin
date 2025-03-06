@@ -6,15 +6,15 @@ namespace SureCart\Sync;
 use SureCart\Models\Product;
 
 /**
- * This delete's an individual product post asynchronously.
+ * This delete's an individual collection term asynchronously.
  */
-class ProductCleanupService {
+class CollectionsCleanupService {
 	/**
 	 * The action name.
 	 *
 	 * @var string
 	 */
-	protected $action_name = 'surecart/cleanup/product';
+	protected $action_name = 'surecart/cleanup/collection';
 
 	/**
 	 * Application instance.
@@ -44,18 +44,18 @@ class ProductCleanupService {
 	/**
 	 * Queue the sync for a later time.
 	 *
-	 * @param $product_post_id The product post id.
+	 * @param $collection_term_id The term id.
 	 *
 	 * @return \SureCart\Queue\Async
 	 */
-	public function queue( $product_post_id ) {
+	public function queue( $collection_term_id ) {
 		return \SureCart::queue()->async(
 			$this->action_name,
 			[
-				'id'          => $product_post_id,
+				'id'          => $collection_term_id,
 				'show_notice' => false,
 			],
-			'product-cleanup-' . $product_post_id, // unique id for the product.
+			'product-cleanup-' . $collection_term_id, // unique id for the term.
 			true // force unique. This will replace any existing jobs.
 		);
 	}
@@ -68,6 +68,6 @@ class ProductCleanupService {
 	 * @return \WP_Post|false|null
 	 */
 	public function handleScheduledSync( $id ) {
-		return wp_delete_post( $id, true );
+		return wp_delete_term( $id, 'sc_collection' );
 	}
 }

@@ -48,8 +48,8 @@ class ProductsSyncService {
 	 * @return void
 	 */
 	public function onProductsSyncComplete( $action_id ) {
-		if ( ! \SureCart::queue()->isScheduled( 'surecart/sync/product' ) && ! \SureCart::queue()->isScheduled( 'surecart/cleanup/product' ) ) {
-			// do_action( 'surecart_sync_product_completed' );
+		if ( ! \SureCart::queue()->isScheduled( 'surecart/sync/product' ) ) {
+			do_action( 'surecart_sync_product_completed' );
 		}
 	}
 
@@ -166,7 +166,7 @@ class ProductsSyncService {
 	/**
 	 * Get the cleanup process.
 	 *
-	 * @return ProductCollectionsCleanupProcess
+	 * @return CollectionsCleanupProcess
 	 */
 	public function queueCollectionsCleanup() {
 		return $this->app->resolve( 'surecart.process.collections.cleanup' );

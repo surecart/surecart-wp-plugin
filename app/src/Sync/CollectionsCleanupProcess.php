@@ -8,7 +8,7 @@ use SureCart\Models\Product;
 /**
  * This process fetches and queues all products collections for syncing.
  */
-class ProductCollectionsCleanupProcess extends BackgroundProcess {
+class CollectionsCleanupProcess extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *
@@ -68,7 +68,9 @@ class ProductCollectionsCleanupProcess extends BackgroundProcess {
 		}
 
 		foreach ( $terms as $term_id ) {
-			wp_delete_term( $term_id, 'sc_collection' );
+			\SureCart::sync()
+			->collectionsCleanup()
+			->queue( $term_id );
 		}
 
 		// If we got fewer terms than batch size, assume there are no more terms left.

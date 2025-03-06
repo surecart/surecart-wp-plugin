@@ -53,6 +53,15 @@ class SyncService {
 	}
 
 	/**
+	 * Get the (single) term cleanup service.
+	 *
+	 * @return CollectionsCleanupService
+	 */
+	public function collectionsCleanup() {
+		return $this->app->resolve( 'surecart.sync.collections.cleanup' );
+	}
+
+	/**
 	 * Get the (single) product sync service.
 	 *
 	 * @return ProductSyncService

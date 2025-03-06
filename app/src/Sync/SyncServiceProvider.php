@@ -7,9 +7,10 @@ use SureCart\Sync\CustomerSyncService;
 use SureCart\Sync\PostSyncService;
 use SureCart\Sync\ProductSyncService;
 use SureCart\Sync\ProductCleanupService;
+use SureCart\Sync\CollectionsCleanupService;
 use SureCart\Sync\ProductsSyncProcess;
 use SureCart\Sync\ProductsCleanupProcess;
-use SureCart\Sync\ProductCollectionsCleanupProcess;
+use SureCart\Sync\CollectionsCleanupProcess;
 use SureCart\Sync\ProductsSyncService;
 use SureCart\Sync\StoreSyncService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
@@ -38,6 +39,9 @@ class SyncServiceProvider implements ServiceProviderInterface {
 
 		$container['surecart.sync.product.cleanup'] = fn ( $container ) =>
 			new ProductCleanupService( $container[ SURECART_APPLICATION_KEY ] );
+		
+		$container['surecart.sync.collections.cleanup'] = fn ( $container ) =>
+			new CollectionsCleanupService( $container[ SURECART_APPLICATION_KEY ] );
 
 		$container['surecart.sync.collection']           = fn() => new CollectionSyncService();
 		$container['surecart.process.product_post.sync'] = fn() => new PostSyncService();
@@ -51,7 +55,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$products_cleanup_process                       = new ProductsCleanupProcess();
 		$container['surecart.process.products.cleanup'] = fn() => $products_cleanup_process;
 
-		$collections_cleanup_process                       = new ProductCollectionsCleanupProcess();
+		$collections_cleanup_process                       = new CollectionsCleanupProcess();
 		$container['surecart.process.collections.cleanup'] = fn() => $collections_cleanup_process;
 
 		$app->alias( 'sync', 'surecart.sync' );
@@ -66,6 +70,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.sync.product']->bootstrap();
 		$container['surecart.sync.product.cleanup']->bootstrap();
+		$container['surecart.sync.collections.cleanup']->bootstrap();
 		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
 		$container['surecart.sync.store']->bootstrap();
