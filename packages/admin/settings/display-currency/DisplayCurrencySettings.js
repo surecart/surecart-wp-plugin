@@ -10,7 +10,10 @@ import {
 	ScSwitch,
 } from '@surecart/components-react';
 import { useEntityProp } from '@wordpress/core-data';
-import { useState } from 'react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+
 import useSave from '../UseSave';
 import Error from '../../components/Error';
 import CurrencySwitcherSettings from './components/CurrencySwitcherSettings';
@@ -19,6 +22,7 @@ import DisplayCurrenciesSettings from './components/DisplayCurrenciesSettings';
 export default function DisplayCurrencySettings() {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
+	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
 	// honeypot.
 	const [currencyGeolocationEnabled, setCurrencyGeolocationEnabled] =
@@ -39,6 +43,9 @@ export default function DisplayCurrencySettings() {
 			await save({
 				successMessage: __('Settings Updated.', 'surecart'),
 			});
+
+			// Refresh the store.
+			invalidateResolutionForStore();
 		} catch (e) {
 			console.error(e);
 			setError(e);
