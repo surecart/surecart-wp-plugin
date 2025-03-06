@@ -6,6 +6,7 @@ use SureCart\Sync\CollectionSyncService;
 use SureCart\Sync\CustomerSyncService;
 use SureCart\Sync\PostSyncService;
 use SureCart\Sync\ProductSyncService;
+use SureCart\Sync\ProductCleanupService;
 use SureCart\Sync\ProductsSyncProcess;
 use SureCart\Sync\ProductsCleanupProcess;
 use SureCart\Sync\ProductCollectionsCleanupProcess;
@@ -35,6 +36,9 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.product'] = fn ( $container ) =>
 			new ProductSyncService( $container[ SURECART_APPLICATION_KEY ] );
 
+		$container['surecart.sync.product.cleanup'] = fn ( $container ) =>
+			new ProductCleanupService( $container[ SURECART_APPLICATION_KEY ] );
+
 		$container['surecart.sync.collection']           = fn() => new CollectionSyncService();
 		$container['surecart.process.product_post.sync'] = fn() => new PostSyncService();
 		$container['surecart.sync.customers']            = fn() => new CustomerSyncService();
@@ -61,6 +65,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.sync.product']->bootstrap();
+		$container['surecart.sync.product.cleanup']->bootstrap();
 		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
 		$container['surecart.sync.store']->bootstrap();

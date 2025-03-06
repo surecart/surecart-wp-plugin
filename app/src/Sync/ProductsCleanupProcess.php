@@ -60,7 +60,9 @@ class ProductsCleanupProcess extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $query->posts as $product ) {
-			wp_delete_post( $product->ID, true );
+			\SureCart::sync()
+			->productCleanup()
+			->queue( $product->ID );
 		}
 
 		if ( $query->max_num_pages > $query->query_vars['page'] ) {

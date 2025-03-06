@@ -48,8 +48,8 @@ class ProductsSyncService {
 	 * @return void
 	 */
 	public function onProductsSyncComplete( $action_id ) {
-		if ( ! as_has_scheduled_action( 'surecart/sync/product' ) ) {
-			do_action( 'surecart_sync_product_completed' );
+		if ( ! \SureCart::queue()->isScheduled( 'surecart/sync/product' ) && ! \SureCart::queue()->isScheduled( 'surecart/cleanup/product' ) ) {
+			// do_action( 'surecart_sync_product_completed' );
 		}
 	}
 
