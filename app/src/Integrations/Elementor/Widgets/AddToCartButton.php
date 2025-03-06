@@ -565,16 +565,42 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 */
 	protected function content_template() {
 		?>
-		<div>
-			<button class="wp-block-button__link wp-element-button sc-button__link">
-				<# if ( settings.selected_icon && settings.selected_icon.value ) { #>
-					<span class="elementor-button-icon">
-						{{{ elementor.helpers.renderIcon( view, settings.selected_icon, { 'aria-hidden': true }, 'i' , 'object' ) }}}
-					</span>
+		<#
+		if ( '' === settings.button_text && '' === settings.selected_icon.value ) {
+			return;
+		}
+
+		view.addRenderAttribute( 'wrapper', 'class', 'wp-block-button__link wp-element-button sc-button__link elementor-button elementor-button-link elementor-size-sm' );
+		view.addRenderAttribute( 'button', 'class', 'elementor-button' );
+
+		if ( '' !== settings.hover_animation ) {
+			view.addRenderAttribute( 'wrapper', 'class', 'elementor-animation-' + settings.hover_animation );
+		}
+
+		if ( settings.icon || settings.selected_icon ) {
+			view.addRenderAttribute( 'icon', 'class', 'elementor-button-icon' );
+		}
+
+		view.addRenderAttribute( 'text', 'class', 'elementor-button-text' );
+		view.addRenderAttribute( 'content-wrapper', 'class', 'elementor-button-content-wrapper' );
+		var iconHTML = elementor.helpers.renderIcon( view, settings.selected_icon, { 'aria-hidden': true }, 'i' , 'object' );
+		#>
+		<button {{{ view.getRenderAttributeString( 'wrapper' ) }}}>
+			<span {{{ view.getRenderAttributeString( 'content-wrapper' ) }}}>
+				<# if ( settings.icon || settings.selected_icon ) { #>
+				<span {{{ view.getRenderAttributeString( 'icon' ) }}}>
+					<# if ( ( ! settings.icon ) && iconHTML.rendered ) { #>
+						{{{ iconHTML.value }}}
+					<# } else { #>
+						<i class="{{ settings.icon }}" aria-hidden="true"></i>
+					<# } #>
+				</span>
 				<# } #>
-				<span class="sc-button__link-text">{{{ settings.button_text }}}</span>
-			</button>
-		</div>
+				<# if ( settings.button_text ) { #>
+				<span {{{ view.getRenderAttributeString( 'text' ) }}}>{{{ settings.button_text }}}</span>
+				<# } #>
+			</span>
+		</button>
 		<?php
 	}
 }
