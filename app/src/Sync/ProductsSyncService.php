@@ -36,21 +36,6 @@ class ProductsSyncService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_notices', [ $this, 'showMigrationNotice' ] );
-		add_action( 'action_scheduler_completed_action', [ $this, 'onProductsSyncComplete' ] );
-		add_action( 'surecart_sync_product_completed', [ $this, 'cleanup' ] );
-	}
-
-	/**
-	 * On products sync complete.
-	 *
-	 * @param string $action_id The action id.
-	 *
-	 * @return void
-	 */
-	public function onProductsSyncComplete( $action_id ) {
-		if ( ! \SureCart::queue()->isScheduled( 'surecart/sync/product' ) ) {
-			do_action( 'surecart_sync_product_completed' );
-		}
 	}
 
 	/**
@@ -82,6 +67,10 @@ class ProductsSyncService {
 	public function cancel() {
 		$this->queue()->cancel();
 		$this->queue()->delete_all();
+		$this->queueProductsCleanup()->cancel();
+		$this->queueProductsCleanup()->delete_all();
+		$this->queueCollectionsCleanup()->cancel();
+		$this->queueCollectionsCleanup()->delete_all();
 	}
 
 	/**
@@ -150,8 +139,11 @@ class ProductsSyncService {
 		// clear account cache.
 		\SureCart::account()->clearCache();
 
+		// save the cleanup queue.
+		$this->cleanup();
+
 		// save and dispatch the process.
-		return $this->queue()->push_to_queue( $args )->save()->dispatch();
+		return $this->queue()->setNext( $this->queueProductsCleanup() )->push_to_queue( $args )->save()->dispatch();
 	}
 
 	/**
@@ -173,25 +165,14 @@ class ProductsSyncService {
 	}
 
 	/**
-	 * Cleanup the old store product posts.
+	 * Cleanup the old store product posts & collection terms.
 	 *
 	 * @return array|WP_Error The response or WP_Error on failure.
 	 */
 	public function cleanup() {
-		$args = [
-			'page'       => 1,
-			'batch_size' => 25,
-		];
-
-		// cancel previous processes.
-		$this->queueProductsCleanup()->cancel();
-		$this->queueProductsCleanup()->delete_all();
-		$this->queueCollectionsCleanup()->cancel();
-		$this->queueCollectionsCleanup()->delete_all();
-
-		// save and dispatch the process.
-		$this->queueProductsCleanup()->push_to_queue( $args )->save()->dispatch();
-		$this->queueCollectionsCleanup()->push_to_queue( $args )->save()->dispatch();
+		// save the process.
+		$this->queueProductsCleanup()->setNext( $this->queueCollectionsCleanup() )->push_to_queue( $args )->save();
+		$this->queueCollectionsCleanup()->push_to_queue( $args )->save();
 
 		return true;
 	}

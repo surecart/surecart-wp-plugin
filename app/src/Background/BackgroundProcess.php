@@ -53,6 +53,13 @@ abstract class BackgroundProcess extends AsyncRequest {
 	protected $allowed_batch_data_classes = true;
 
 	/**
+	 * The next background process in the chain.
+	 *
+	 * @var BackgroundProcess
+	 */
+	protected $next = null;
+
+	/**
 	 * The status set when process is cancelling.
 	 *
 	 * @var int
@@ -636,6 +643,8 @@ abstract class BackgroundProcess extends AsyncRequest {
 		// Remove the cron healthcheck job from the cron schedule.
 		$this->clear_scheduled_event();
 
+		$this->next && $this->next->dispatch();
+
 		$this->completed();
 	}
 
@@ -778,5 +787,17 @@ abstract class BackgroundProcess extends AsyncRequest {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Set the next background process in the chain.
+	 *
+	 * @param BackgroundProcess $next The next background process.
+	 *
+	 * @return $this
+	 */
+	public function setNext( $next ) {
+		$this->next = $next;
+		return $this;
 	}
 }
