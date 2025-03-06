@@ -126,6 +126,91 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_icon_settings',
+			[
+				'label' => esc_html__( 'Icon', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
+			'selected_icon',
+			[
+				'label'            => esc_html__( 'Icon', 'surecart' ),
+				'type'             => \Elementor\Controls_Manager::ICONS,
+				'fa4compatibility' => 'icon',
+				'skin'             => 'inline',
+				'label_block'      => false,
+				'recommended'      => [
+					'fa-solid' => [
+						'shopping-bag',
+						'cart-arrow-down',
+						'cart-plus',
+						'shopping-cart',
+						'shopping-basket',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_align',
+			[
+				'label'                => esc_html__( 'Icon Position', 'surecart' ),
+				'type'                 => \Elementor\Controls_Manager::CHOOSE,
+				'default'              => is_rtl() ? 'row-reverse' : 'row',
+				'options'              => [
+					'row'         => [
+						'title' => esc_html__( 'Start', 'surecart' ),
+						'icon'  => 'eicon-h-align-left',
+					],
+					'row-reverse' => [
+						'title' => esc_html__( 'End', 'surecart' ),
+						'icon'  => 'eicon-h-align-right',
+					],
+				],
+				'selectors_dictionary' => [
+					'left'  => is_rtl() ? 'row-reverse' : 'row',
+					'right' => is_rtl() ? 'row' : 'row-reverse',
+				],
+				'selectors'            => [
+					'{{WRAPPER}} .elementor-button-content-wrapper' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}} .sc-button__link' => 'flex-direction: {{VALUE}};',
+				],
+				'condition'            => [
+					'selected_icon[value]!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_indent',
+			[
+				'label'      => esc_html__( 'Icon Spacing', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem' ],
+				'range'      => [
+					'px'  => [
+						'max' => 50,
+					],
+					'em'  => [
+						'max' => 5,
+					],
+					'rem' => [
+						'max' => 5,
+					],
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .elementor-button .elementor-button-content-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+				],
+				'condition'  => [
+					'selected_icon[value]!' => '',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
 	/**
@@ -134,7 +219,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function register_style_settings() {
-		$button_selector = '{{WRAPPER}} .wp-block-button__link';
+		$button_selector      = '{{WRAPPER}} .wp-block-button__link';
+		$button_icon_selector = '{{WRAPPER}} .elementor-button-icon svg';
 
 		$this->start_controls_section(
 			'section_style',
@@ -170,8 +256,10 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					$button_selector => 'color: {{VALUE}}',
+					$button_selector      => 'color: {{VALUE}}',
+					$button_icon_selector => 'fill: {{VALUE}}',
 				],
+				'default'   => '#ffffff',
 			]
 		);
 
@@ -181,7 +269,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					$button_selector => 'background-color: {{VALUE}}',
+					$button_selector      => 'background-color: {{VALUE}}',
+					$button_icon_selector => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -201,7 +290,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					$button_selector . ':hover' => 'color: {{VALUE}}',
+					$button_selector . ':hover' => 'color: {{VALUE}}!important;',
+					$button_selector . ':hover .elementor-button-icon svg' => 'fill: {{VALUE}}!important; color: {{VALUE}}!important;',
 				],
 			]
 		);
@@ -213,7 +303,16 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					$button_selector . ':hover' => 'background-color: {{VALUE}}',
+					$button_selector . ':hover ' . $button_icon_selector => 'background-color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_control(
+			'hover_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'surecart' ),
+				'type'  => \Elementor\Controls_Manager::HOVER_ANIMATION,
 			]
 		);
 
@@ -260,6 +359,76 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$args = [
+			'section_condition'              => [],
+			'alignment_default'              => '',
+			'alignment_control_prefix_class' => 'elementor%s-align-',
+			'content_alignment_default'      => '',
+		];
+
+		$this->add_responsive_control(
+			'align',
+			[
+				'label'        => esc_html__( 'Position', 'surecart' ),
+				'type'         => \Elementor\Controls_Manager::CHOOSE,
+				'options'      => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'surecart' ),
+						'icon'  => 'eicon-h-align-left',
+					],
+					'center'  => [
+						'title' => esc_html__( 'Center', 'surecart' ),
+						'icon'  => 'eicon-h-align-center',
+					],
+					'right'   => [
+						'title' => esc_html__( 'Right', 'surecart' ),
+						'icon'  => 'eicon-h-align-right',
+					],
+					'justify' => [
+						'title' => esc_html__( 'Stretch', 'surecart' ),
+						'icon'  => 'eicon-h-align-stretch',
+					],
+				],
+				'prefix_class' => $args['alignment_control_prefix_class'],
+				'default'      => $args['alignment_default'],
+				'condition'    => $args['section_condition'],
+			]
+		);
+
+		$start = is_rtl() ? 'right' : 'left';
+		$end   = is_rtl() ? 'left' : 'right';
+
+		$this->add_responsive_control(
+			'content_align',
+			[
+				'label'     => esc_html__( 'Alignment', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::CHOOSE,
+				'options'   => [
+					'start'         => [
+						'title' => esc_html__( 'Start', 'surecart' ),
+						'icon'  => "eicon-text-align-{$start}",
+					],
+					'center'        => [
+						'title' => esc_html__( 'Center', 'surecart' ),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'end'           => [
+						'title' => esc_html__( 'End', 'surecart' ),
+						'icon'  => "eicon-text-align-{$end}",
+					],
+					'space-between' => [
+						'title' => esc_html__( 'Space between', 'surecart' ),
+						'icon'  => 'eicon-text-align-justify',
+					],
+				],
+				'default'   => $args['content_alignment_default'],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-button .elementor-button-content-wrapper' => 'justify-content: {{VALUE}};',
+				],
+				'condition' => array_merge( $args['section_condition'], [ 'align' => 'justify' ] ),
+			]
+		);
+
 		$this->add_group_control(
 			\Elementor\Group_Control_Border::get_type(),
 			[
@@ -302,29 +471,81 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$settings       = $this->get_settings_for_display();
 		$is_add_to_cart = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
 
-		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			?>
-			<div>
-				<button class="wp-block-button__link wp-element-button sc-button__link">
-					<span class="sc-button__link-text"><?php echo esc_html( $settings['button_text'] ); ?></span>
-				</button>
-			</div>
-			<?php
-			return;
+		$this->add_render_attribute( 'content-wrapper', 'class', 'wp-block-button__link wp-element-button sc-button__link' );
+		$this->add_render_attribute( 'button', 'class', 'elementor-button' );
+
+		if ( ! empty( $settings['selected_icon']['value'] ) ) {
+			$this->add_render_attribute( 'icon', 'class', 'elementor-button-icon' );
 		}
 
-		$attributes = array(
-			'add_to_cart'       => $is_add_to_cart,
-			'text'              => esc_attr( $settings['button_text'] ),
-			'out_of_stock_text' => esc_attr( $settings['button_out_of_stock_text'] ),
-			'unavailable_text'  => esc_attr( $settings['button_unavailable_text'] ),
+		if ( ! empty( $settings['hover_animation'] ) ) {
+			$this->add_render_attribute( 'content-wrapper', 'class', 'elementor-animation-' . $settings['hover_animation'] );
+		}
+
+		$this->add_render_attribute(
+			[
+				'content-wrapper' => [
+					'class' => 'elementor-button-content-wrapper',
+				],
+				'icon'            => [
+					'class' => 'elementor-button-icon',
+				],
+				'text'            => [
+					'class' => 'elementor-button-text',
+				],
+			]
 		);
 
+		// Interactivity context.
+		$this->add_render_attribute(
+			'content-wrapper',
+			'data-wp-context',
+			wp_json_encode(
+				array(
+					'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
+					'buttonText'      => $settings['button_text'] ?? ( $is_add_to_cart ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
+					'outOfStockText'  => esc_attr( __( 'Sold Out', 'surecart' ) ),
+					'unavailableText' => esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
+					'addToCart'       => $is_add_to_cart,
+				),
+				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+			)
+		);
+
+		if ( ! $is_add_to_cart ) {
+			$this->add_render_attribute( 'content-wrapper', 'data-wp-bind--disabled', 'state.isUnavailable' );
+			$this->add_render_attribute( 'content-wrapper', 'data-wp-bind--href', 'state.checkoutUrl' );
+			$this->add_render_attribute( 'content-wrapper', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
+		} else {
+			$this->add_render_attribute( 'content-wrapper', 'data-wp-bind--disabled', 'state.isUnavailable' );
+			$this->add_render_attribute( 'content-wrapper', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+		}
+
+		ob_start();
 		?>
-		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-		<!-- wp:surecart/product-buy-button <?php echo wp_json_encode( $attributes ); ?> /-->
-		</div>
+		<button <?php echo $this->get_render_attribute_string( 'content-wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<?php
+			if ( ! empty( $settings['icon'] ) || ! empty( $settings['selected_icon']['value'] ) ) :
+				$this->add_render_attribute( 'icon', 'class', 'elementor-button-icon' );
+				?>
+				<span <?php echo $this->get_render_attribute_string( 'icon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<?php \Elementor\Icons_Manager::render_icon( $settings['selected_icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</span>
+			<?php endif; ?>
+
+			<?php if ( isset( $settings['button_text'] ) ) : ?>
+				<?php if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) : ?>
+					<?php echo trim( $settings['button_text'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php else : ?>
+					<span class="sc-spinner" aria-hidden="false"></span>
+					<span class="sc-button__link-text" data-wp-text="state.buttonText"></span>
+				<?php endif; ?>
+			<?php endif; ?>
+		</button>
+
 		<?php
+		$output = ob_get_clean();
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -336,6 +557,11 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		?>
 		<div>
 			<button class="wp-block-button__link wp-element-button sc-button__link">
+				<# if ( settings.selected_icon && settings.selected_icon.value ) { #>
+					<span class="elementor-button-icon">
+						{{{ elementor.helpers.renderIcon( view, settings.selected_icon, { 'aria-hidden': true }, 'i' , 'object' ) }}}
+					</span>
+				<# } #>
 				<span class="sc-button__link-text">{{{ settings.button_text }}}</span>
 			</button>
 		</div>
