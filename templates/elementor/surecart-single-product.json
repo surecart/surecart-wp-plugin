@@ -80,7 +80,6 @@
 							"id": "28f6fb60",
 							"settings": {
 								"content_width": "full",
-								"custom_css": ".elementor-widget:has(.wp-block-surecart-product-selected-price-scratch-amount[hidden]) {display: none !important;}",
 								"flex_gap": {
 									"column": "0",
 									"row": "0",

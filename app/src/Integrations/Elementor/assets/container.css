@@ -62,3 +62,16 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+/* Hide Elementor widget if the SureCart product selected price scratch amount is hidden */
+.elementor-widget:has(
+		.wp-block-surecart-product-selected-price-scratch-amount[hidden]
+	) {
+	display: none !important;
+}
+
+/* Hide the icon in the busy state of the SureCart button link */
+.sc-button__link--busy .elementor-button-icon {
+	opacity: 0;
+	visibility: hidden;
+}
