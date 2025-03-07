@@ -44,7 +44,7 @@ class ProductCleanupService {
 	/**
 	 * Queue the sync for a later time.
 	 *
-	 * @param $product_post_id The product post id.
+	 * @param int $product_post_id The product post id.
 	 *
 	 * @return \SureCart\Queue\Async
 	 */

@@ -143,7 +143,7 @@ class ProductsSyncService {
 		$this->cleanup();
 
 		// save and dispatch the process.
-		return $this->queue()->setNext( $this->queueProductsCleanup() )->push_to_queue( $args )->save()->dispatch();
+		return $this->queue()->setNext( 'surecart.process.products.cleanup' )->push_to_queue( $args )->save()->dispatch();
 	}
 
 	/**
@@ -170,8 +170,13 @@ class ProductsSyncService {
 	 * @return array|WP_Error The response or WP_Error on failure.
 	 */
 	public function cleanup() {
+		$args = [
+			'page'     => 1,
+			'per_page' => 25,
+		];
+
 		// save the process.
-		$this->queueProductsCleanup()->setNext( $this->queueCollectionsCleanup() )->push_to_queue( $args )->save();
+		$this->queueProductsCleanup()->setNext( 'surecart.process.collections.cleanup' )->push_to_queue( $args )->save();
 		$this->queueCollectionsCleanup()->push_to_queue( $args )->save();
 
 		return true;

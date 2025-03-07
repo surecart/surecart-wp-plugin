@@ -17,11 +17,29 @@ class ProductsSyncProcess extends BackgroundProcess {
 	protected $prefix = 'surecart';
 
 	/**
+	 * The container.
+	 *
+	 * @var mixed
+	 */
+	protected $container;
+
+	/**
 	 * The action.
 	 *
 	 * @var string
 	 */
 	protected $action = 'queue_products';
+
+	/**
+	 * The construct.
+	 *
+	 * @param mixed $container The container.
+	 * @var mixed
+	 */
+	public function __construct( $container = null ) {
+		$this->container = $container;
+		parent::__construct();
+	}
 
 	/**
 	 * Perform task with queued item.

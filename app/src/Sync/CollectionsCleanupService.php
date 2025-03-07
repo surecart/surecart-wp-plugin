@@ -44,7 +44,7 @@ class CollectionsCleanupService {
 	/**
 	 * Queue the sync for a later time.
 	 *
-	 * @param $collection_term_id The term id.
+	 * @param string $collection_term_id The term id.
 	 *
 	 * @return \SureCart\Queue\Async
 	 */
