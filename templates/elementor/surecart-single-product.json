@@ -68,7 +68,8 @@
 									"size": 32,
 									"sizes": []
 								},
-								"_title": "Product name"
+								"_title": "Product name",
+								"title_color": "#000000"
 							},
 							"elements": [],
 							"isInner": false,
@@ -79,9 +80,10 @@
 							"id": "28f6fb60",
 							"settings": {
 								"content_width": "full",
+								"custom_css": ".elementor-widget:has(.wp-block-surecart-product-selected-price-scratch-amount[hidden]) {display: none !important;}",
 								"flex_gap": {
 									"column": "0",
-									"row": "8",
+									"row": "0",
 									"isLinked": false,
 									"unit": "px",
 									"size": 0
@@ -132,6 +134,7 @@
 													"size": 24,
 													"sizes": []
 												},
+												"text_color": "#8A8A8A",
 												"typography_font_weight": "400",
 												"typography_text_decoration": "line-through",
 												"__dynamic__": {
@@ -280,7 +283,7 @@
 											"id": "3b4ec283",
 											"settings": {
 												"editor": "",
-												"text_color": "#000000",
+												"text_color": "#8A8A8A",
 												"__dynamic__": {
 													"editor": "[elementor-tag id=\"\" name=\"surecart-selected-price-trial\" settings=\"%7B%7D\"]"
 												},
@@ -295,7 +298,7 @@
 											"id": "63b6f15",
 											"settings": {
 												"editor": "",
-												"text_color": "#000000",
+												"text_color": "#8A8A8A",
 												"__dynamic__": {
 													"editor": "[elementor-tag id=\"\" name=\"surecart-product-selected-setup-fee\" settings=\"%7B%7D\"]"
 												},
@@ -320,7 +323,8 @@
 								"__dynamic__": {
 									"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%7D\"]"
 								},
-								"_title": "Product short description"
+								"_title": "Product short description",
+								"title_color": "#000000"
 							},
 							"elements": [],
 							"isInner": false,
@@ -329,7 +333,11 @@
 						},
 						{
 							"id": "503b5afa",
-							"settings": { "label": "Pricing" },
+							"settings": {
+								"label": "Pricing",
+								"label_color": "#000000",
+								"price_choice_color": "#000000"
+							},
 							"elements": [],
 							"isInner": false,
 							"widgetType": "surecart-price-chooser",
@@ -346,7 +354,9 @@
 									"isLinked": true,
 									"unit": "px",
 									"size": 15
-								}
+								},
+								"text_color": "#000000",
+								"pill_background_color": "#FFFFFF"
 							},
 							"elements": [],
 							"isInner": false,
@@ -355,7 +365,10 @@
 						},
 						{
 							"id": "62c70def",
-							"settings": { "label": "Quantity" },
+							"settings": {
+								"label": "Quantity",
+								"quantity_text_color": "#000000"
+							},
 							"elements": [],
 							"isInner": false,
 							"widgetType": "surecart-quantity",
@@ -363,7 +376,11 @@
 						},
 						{
 							"id": "79d7190e",
-							"settings": { "label": "Enter an amount" },
+							"settings": {
+								"label": "Enter an amount",
+								"label_text_color": "#000000",
+								"selected_amount_typography_typography": "custom"
+							},
 							"elements": [],
 							"isInner": false,
 							"widgetType": "surecart-selected-price-ad-hoc-amount",

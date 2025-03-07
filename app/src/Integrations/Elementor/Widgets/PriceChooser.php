@@ -113,7 +113,9 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .wp-block-surecart-product-price-chooser' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-form-label' => 'color: {{VALUE}}',
 				),
+				'default'   => '#000000',
 			)
 		);
 

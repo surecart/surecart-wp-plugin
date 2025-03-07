@@ -229,7 +229,8 @@ class VariantPills extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					$pills_selector => 'color: {{VALUE}}',
+					$pills_selector                     => 'color: {{VALUE}}',
+					$pills_selector . ' .sc-form-label' => 'color: {{VALUE}}',
 				],
 			]
 		);

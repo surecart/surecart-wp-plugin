@@ -96,6 +96,10 @@ class Quantity extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	private function register_style_settings() {
+		$selector       = '{{WRAPPER}} .wp-block-surecart-product-quantity';
+		$label_selector = $selector . ' .sc-form-label';
+		$input_selector = $selector . ' .sc-quantity-selector';
+
 		$this->start_controls_section(
 			'section_quantity_label_style',
 			array(
@@ -110,7 +114,8 @@ class Quantity extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .wp-block-surecart-product-quantity' => 'color: {{VALUE}}',
+					$selector       => 'color: {{VALUE}}',
+					$label_selector => 'color: {{VALUE}}',
 				),
 			)
 		);
@@ -120,7 +125,7 @@ class Quantity extends \Elementor\Widget_Base {
 			array(
 				'name'     => 'quantity_typography',
 				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-quantity label',
+				'selector' => $label_selector,
 			)
 		);
 
@@ -151,7 +156,7 @@ class Quantity extends \Elementor\Widget_Base {
 					],
 				],
 				'selectors'  => array(
-					'{{WRAPPER}} .wp-block-surecart-product-quantity .sc-quantity-selector' => 'width: {{SIZE}}{{UNIT}};',
+					$input_selector => 'width: {{SIZE}}{{UNIT}};',
 				),
 			)
 		);
@@ -160,7 +165,7 @@ class Quantity extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Border::get_type(),
 			[
 				'name'     => 'selected_amount_border',
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-quantity .sc-quantity-selector',
+				'selector' => $input_selector,
 			]
 		);
 
@@ -171,7 +176,7 @@ class Quantity extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => array(
-					'{{WRAPPER}} .wp-block-surecart-product-quantity .sc-quantity-selector' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					$input_selector => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
