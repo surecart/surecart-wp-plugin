@@ -69,6 +69,8 @@ class PermalinksSettingsService {
 
 		$value = sanitize_url( trim( $value ) );
 		$value = str_replace( 'http://', '', $value );
+		$value = str_replace( 'https://', '', $value );
+		$value = ltrim( $value, '/' );
 		return untrailingslashit( $value );
 	}
 
