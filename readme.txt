@@ -309,6 +309,7 @@ IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading
 
 = 3.4.3 - March 6th, 2025 =
 - Fix: Issue where collection pages would get redirected to product pages in some cases.
+- Fix: Issue where saving a custom permalink setting could sometimes add an additional slash.
 
 = 3.4.2 - March 6th, 2025 =
 - Fix: Issue with some settings not saving on settings panel since 3.4.0 update.
