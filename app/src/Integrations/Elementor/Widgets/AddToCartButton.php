@@ -65,6 +65,15 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the style dependencies.
+	 *
+	 * @return array
+	 */
+	public function get_style_depends() {
+		return array( 'surecart-spinner' );
+	}
+
+	/**
 	 * Register the widget content settings.
 	 *
 	 * @return void
