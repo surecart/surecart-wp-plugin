@@ -241,21 +241,6 @@ export default () => {
 	};
 
 	const menuItems = getMenuItems(order?.status);
-
-	const [refundCharge, setRefundCharge] = useState(
-		order?.checkout?.charges?.data?.[0]
-	);
-
-	useEffect(() => {
-		setRefundCharge(order?.checkout?.charges?.data?.[0]);
-	}, [order?.checkout?.charges?.data]);
-
-	const onRefunded = () => {
-		// invalidateCharges();
-		setRefundCharge(false);
-		setModal(false);
-	};
-
 	const checkoutId = order?.checkout?.id;
 
 	return (
@@ -392,13 +377,13 @@ export default () => {
 				{modal === 'refund' && (
 					<CreateRefund
 						checkout={order?.checkout}
-						charge={refundCharge}
+						charge={order?.checkout?.charges?.data?.[0]}
 						chargeIds={
 							order?.checkout?.charges?.data?.map(
 								(charge) => charge.id
 							) ?? []
 						}
-						onRefunded={onRefunded}
+						onRefunded={() => setModal(false)}
 						onRequestClose={() => setModal(false)}
 					/>
 				)}
