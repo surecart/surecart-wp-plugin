@@ -82,9 +82,9 @@ export default ({ price_id, variant_id }) => {
 								type="currency"
 								currency={price?.currency || 'usd'}
 								value={
-									!!price?.ad_hoc && ad_hoc_amount
-										? ad_hoc_amount
-										: price?.amount
+									!!price?.ad_hoc
+										? price?.amount
+										: variant?.amount ?? price?.amount
 								}
 							/>
 							{intervalString(price)}

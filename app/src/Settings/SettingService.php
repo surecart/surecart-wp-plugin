@@ -15,6 +15,15 @@ class SettingService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		add_action( 'init', [ $this, 'registerSettings' ] );
+	}
+
+	/**
+	 * Register settings.
+	 *
+	 * @return void
+	 */
+	public function registerSettings() {
 		$this->register(
 			'surecart',
 			'theme',
@@ -272,7 +281,6 @@ class SettingService {
 			]
 		);
 	}
-
 	/**
 	 * Register a setting.
 	 *
