@@ -44,4 +44,20 @@
       }
     }
   }
+
+  &__line-1 {
+    position: relative;
+  }
+
+  &__suggestions {
+    position: absolute;
+    top: 26px;
+    right: 0px;
+  }
+
+  &__suggestions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

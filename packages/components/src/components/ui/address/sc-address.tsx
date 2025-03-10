@@ -93,6 +93,12 @@ export class ScAddress {
   /** Holds our country choices. */
   @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
 
+  /** Address suggestions */
+  @State() addressSuggestions: Array<{ label: string; value: string; details?: any }> = [];
+
+  /** Show address suggestions */
+  @State() showAddressSuggestions: boolean = false;
+
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
 
@@ -108,6 +114,11 @@ export class ScAddress {
     this.showCity = hasCity(this.address.country);
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
+
+    // if address line 1 changes, we want to fetch address suggestions
+    if (!!this.address.line_1 && this.showAddressSuggestions) {
+      this.fetchAddressSuggestions(this.address.line_1);
+    }
   }
 
   @Watch('requireName')
@@ -198,6 +209,123 @@ export class ScAddress {
     };
   }
 
+  // async fetchAddressSuggestions(input: string) {
+  //   console.log('fetchAddressSuggestions::', input);
+  //   const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-Goog-Api-Key': '', // API Key
+  //       'X-Goog-FieldMask': 'places.id,places.displayName,places.types,places.primaryType,places.primaryTypeDisplayName,places.nationalPhoneNumber,places.internationalPhoneNumber,places.formattedAddress,places.shortFormattedAddress,places.addressComponents,places.plusCode,places.location,places.viewport,places.rating,places.googleMapsUri,places.websiteUri,places.reviews,places.regularOpeningHours,places.timeZone,places.photos,places.adrFormatAddress,places.businessStatus,places.priceLevel,places.attributions,places.iconMaskBaseUri,places.iconBackgroundColor,places.currentOpeningHours,places.currentSecondaryOpeningHours,places.regularSecondaryOpeningHours,places.editorialSummary,places.paymentOptions,places.parkingOptions,places.subDestinations,places.fuelOptions,places.evChargeOptions,places.generativeSummary,places.areaSummary,places.containingPlaces,places.addressDescriptor,places.googleMapsLinks,places.priceRange,places.utcOffsetMinutes,places.userRatingCount,places.takeout,places.delivery,places.dineIn,places.curbsidePickup,places.reservable,places.servesBreakfast,places.servesLunch,places.servesDinner,places.servesBeer,places.servesWine,places.servesBrunch,places.servesVegetarianFood,places.outdoorSeating,places.liveMusic,places.menuForChildren,places.servesCocktails,places.servesDessert,places.servesCoffee,places.goodForChildren,places.allowsDogs,places.restroom,places.goodForGroups,places.goodForWatchingSports,places.accessibilityOptions,places.pureServiceAreaBusiness',
+  //     },
+  //     body: JSON.stringify({
+  //       textQuery: input,
+  //     }),
+  //   });
+  //   this.addressSuggestions = await response.json();
+  //   console.log('this.addressSuggestions', this.addressSuggestions);
+  // }
+
+  async fetchAddressSuggestions(input: string) {
+    if (!input) {
+      this.addressSuggestions = [];
+      return;
+    }
+
+    const requestBody = {
+      input,
+    };
+
+    const response = await fetch('https://places.googleapis.com/v1/places:autocomplete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': '', // API key
+        'X-Goog-FieldMask': '*',
+      },
+      body: JSON.stringify(requestBody),
+    });
+    const { suggestions } = await response.json();
+    if (!suggestions?.length) {
+      this.showAddressSuggestions = false;
+      this.addressSuggestions = [];
+      return;
+    }
+
+    this.showAddressSuggestions = true;
+    this.addressSuggestions = suggestions?.map((suggestion: any) => ({
+      label: suggestion.placePrediction?.structuredFormat?.mainText?.text,
+      value: suggestion.placePrediction?.placeId,
+      details: suggestion?.placePrediction?.structuredFormat?.secondaryText,
+    }));
+  }
+
+  async fetchPlaceDetails(placeId: string) {
+    console.log('placeId', placeId);
+    const detailsResponse = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': '', // API key
+        'X-Goog-FieldMask': '*',
+      },
+    });
+    const details = await detailsResponse.json();
+    if (!details?.addressComponents) {
+      return;
+    }
+
+    const addressComponents = details.addressComponents;
+
+    // const generatedline1 = addressComponents
+    //   .filter(component => component.types.includes('street_number') || component.types.includes('route'))
+    //   .map(component => component.longText)
+    //   .join(' ');
+
+    const address = {
+      line_1: details?.displayName?.text || null,
+      city: addressComponents.find(component => component.types.includes('locality'))?.shortText || null,
+      state: addressComponents.find(component => component.types.includes('administrative_area_level_1'))?.shortText || null,
+      postal_code: addressComponents.find(component => component.types.includes('postal_code'))?.shortText || null,
+      country: addressComponents.find(component => component.types.includes('country'))?.shortText || null,
+    };
+
+    this.showAddressSuggestions = false;
+    this.updateAddress(address);
+  }
+
+  renderAddressSuggestions() {
+    if (!this.showAddressSuggestions || !this.addressSuggestions?.length) {
+      return null;
+    }
+
+    return (
+      <div class="sc-address__suggestions" part="suggestions">
+        <sc-dropdown style={{ '--panel-width': '28.1em' }} position="bottom-right" placement="bottom" open={this.addressSuggestions.length > 0}>
+          <sc-menu>
+            <sc-menu-item disabled>
+              <div class="sc-address__suggestions-header">
+                <span>{__('Suggestions powered by Google', 'surecart')}</span>
+                <sc-button
+                  type="text"
+                  onClick={() => {
+                    this.showAddressSuggestions = false;
+                  }}
+                >
+                  <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
+                </sc-button>
+              </div>
+            </sc-menu-item>
+
+            {this.addressSuggestions.map(suggestion => (
+              <sc-menu-item onClick={() => this.fetchPlaceDetails(suggestion?.value)}>{suggestion.label}</sc-menu-item>
+            ))}
+          </sc-menu>
+        </sc-dropdown>
+      </div>
+    );
+  }
+
   render() {
     const visibleFields = (this.sortedFields() ?? []).filter(field => {
       switch (field.name) {
@@ -265,19 +393,28 @@ export class ScAddress {
 
               case 'address_1':
                 return (
-                  <sc-input
-                    exportparts="base:input__base, input, form-control, label, help-text"
-                    value={this?.address?.line_1}
-                    onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
-                    onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
-                    autocomplete="street-address"
-                    placeholder={field.label}
-                    name={this.names?.line_1}
-                    disabled={this.disabled}
-                    required={this.required}
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
+                  <div class="sc-address__line-1">
+                    <sc-input
+                      exportparts="base:input__base, input, form-control, label, help-text"
+                      value={this?.address?.line_1}
+                      onScChange={(e: any) => {
+                        this.showAddressSuggestions = true;
+                        this.updateAddress({ line_1: e.target.value || null });
+                      }}
+                      onScInput={(e: any) => {
+                        this.showAddressSuggestions = true;
+                        this.updateAddress({ line_1: e.target.value || null });
+                      }}
+                      autocomplete="street-address"
+                      placeholder={field.label}
+                      name={this.names?.line_1}
+                      disabled={this.disabled}
+                      required={this.required}
+                      aria-label={field.label}
+                      {...roundedProps}
+                    />
+                    {this.renderAddressSuggestions()}
+                  </div>
                 );
 
               case 'address_2':
