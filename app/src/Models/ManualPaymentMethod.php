@@ -32,4 +32,11 @@ class ManualPaymentMethod extends Model {
 	 * @var string
 	 */
 	protected $cache_key = 'manual_payment_methods';
+
+	/**
+	 * Is this optimized caching?
+	 *
+	 * @var boolean
+	 */
+	protected $optimized_caching = true;
 }

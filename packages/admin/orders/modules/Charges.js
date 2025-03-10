@@ -10,11 +10,13 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
+import ChargeDetails from '../../components/data-tables/charges-data-table/ChargeDetails';
 import CreateRefund from './Refund/CreateRefund';
 
 export default ({ checkout }) => {
 	const checkoutId = checkout?.id;
 	const [refundCharge, setRefundCharge] = useState(false);
+	const [chargeDetails, setChargeDetails] = useState(false);
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { charges, loading, invalidateCharges } = useSelect(
 		(select) => {
@@ -35,6 +37,9 @@ export default ({ checkout }) => {
 						'payment_method.payment_instrument',
 						'payment_method.paypal_account',
 						'payment_method.bank_account',
+						'payment_intent',
+						'payment_intent.platform_fee',
+						'payment_intent.service_fee',
 					],
 				},
 			];
@@ -80,12 +85,13 @@ export default ({ checkout }) => {
 						label: __('Status', 'surecart'),
 						width: '100px',
 					},
-					refund: {
+					more: {
 						width: '100px',
 					},
 				}}
 				showTotal
 				onRefundClick={setRefundCharge}
+				onChargeClick={setChargeDetails}
 				data={charges}
 				isLoading={loading}
 			/>
@@ -96,6 +102,13 @@ export default ({ checkout }) => {
 					charge={refundCharge}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
+				/>
+			)}
+
+			{!!chargeDetails && (
+				<ChargeDetails
+					charge={chargeDetails}
+					onRequestClose={() => setChargeDetails(false)}
 				/>
 			)}
 		</>

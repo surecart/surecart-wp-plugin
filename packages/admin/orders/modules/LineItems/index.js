@@ -272,7 +272,7 @@ export default ({ order, checkout }) => {
 					/>
 				)}
 
-				{!!checkout?.discount_amount && (
+				{!!checkout?.discount && (
 					<LineItem
 						label={
 							<>

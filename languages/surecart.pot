@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-17T17:53:10+00:00\n"
+"POT-Creation-Date: 2025-03-07T18:33:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -45,8 +45,8 @@ msgid "Checkout Form"
 msgstr ""
 
 #: src/BlockLibrary/BlockPatternsService.php:29
-#: src/BlockLibrary/BlockServiceProvider.php:132
-#: src/Routing/PermalinkServiceProvider.php:33
+#: src/BlockLibrary/BlockServiceProvider.php:139
+#: src/Routing/PermalinkSettingService.php:98
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:237
 msgid "Shop"
 msgstr ""
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Related Products"
 msgstr ""
 
-#: src/BlockLibrary/BlockServiceProvider.php:120
+#: src/BlockLibrary/BlockServiceProvider.php:127
 #: src/Controllers/Admin/Orders/OrdersListTable.php:261
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:238
 #: forms/checkout.php:6
@@ -71,21 +71,21 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
-#: src/BlockLibrary/BlockServiceProvider.php:124
+#: src/BlockLibrary/BlockServiceProvider.php:131
 #: src/WordPress/Pages/PageService.php:124
 #: dashboard/customer-dashboard.php:6
 #: Blocks/Confirmation/edit.js:20
 msgid "Customer Dashboard"
 msgstr ""
 
-#: src/BlockLibrary/BlockServiceProvider.php:128
+#: src/BlockLibrary/BlockServiceProvider.php:135
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:239
 #: cart.php:6
 #: settings/brand/BrandSettings.js:216
 msgid "Cart"
 msgstr ""
 
-#: src/BlockLibrary/BlockServiceProvider.php:136
+#: src/BlockLibrary/BlockServiceProvider.php:143
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:37
 #: src/Integrations/Elementor/Conditions/ProductSingle.php:47
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
@@ -108,7 +108,7 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-#: src/BlockLibrary/BlockServiceProvider.php:140
+#: src/BlockLibrary/BlockServiceProvider.php:147
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:223
 #: settings/order/OrderProtocol.js:169
 msgid "Upsells"
@@ -165,7 +165,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/PriceChooser.php:168
 #: src/Integrations/Bricks/Elements/Product.php:87
 #: src/Integrations/Bricks/Elements/ProductCard.php:142
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:184
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:200
 #: web/buy-template.php:25
 #: products/modules/Prices/index.js:59
 #: subscriptions/edit/modules/Price.js:54
@@ -237,10 +237,11 @@ msgstr ""
 #: affiliations/modules/Clicks.js:63
 #: affiliations/modules/Payouts.js:72
 #: affiliations/modules/Referrals.js:70
+#: components/data-tables/charges-data-table/ChargeDetails.js:77
 #: customers/modules/Balance/ViewTransactions.js:114
 #: customers/modules/Charges.js:66
 #: customers/modules/Orders.js:65
-#: orders/modules/Charges.js:93
+#: orders/modules/Charges.js:98
 #: orders/modules/Refunds.js:69
 #: settings/connection/IncomingWebhooks.js:141
 #: sc-license.js:139
@@ -468,11 +469,12 @@ msgstr ""
 #: affiliations/modules/Payouts.js:60
 #: affiliations/modules/Promotions.js:64
 #: affiliations/modules/Referrals.js:61
+#: components/data-tables/charges-data-table/ChargeDetails.js:95
 #: customers/modules/Charges.js:73
 #: customers/modules/Orders.js:61
 #: customers/modules/Subscriptions.js:54
 #: invoices/components/Status.js:18
-#: orders/modules/Charges.js:100
+#: orders/modules/Charges.js:105
 #: orders/modules/InvoiceDetails/InvoiceStatus.js:15
 #: orders/modules/Refunds.js:75
 #: orders/modules/Subscriptions.js:45
@@ -512,11 +514,12 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/Product.php:94
 #: src/Support/Errors/Translations/attributes.php:14
 #: checkouts/modules/Price.js:252
-#: coupons/modules/Types.js:42
+#: components/data-tables/charges-data-table/ChargeDetails.js:73
+#: coupons/modules/Types.js:32
 #: customers/modules/Balance/ViewTransactions.js:108
 #: customers/modules/Charges.js:63
 #: invoices/modules/Price.js:293
-#: orders/modules/Charges.js:90
+#: orders/modules/Charges.js:95
 #: orders/modules/PaymentFailures.js:16
 #: subscriptions/edit/modules/Modals/UpdateAmount.js:33
 #: subscriptions/show/modules/Periods.js:97
@@ -739,7 +742,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:292
 #: abandoned-checkouts/modules/LineItems/index.js:34
-#: components/data-tables/charges-data-table/index.js:149
+#: components/data-tables/charges-data-table/index.js:146
 #: invoices/components/OrderPageLink.js:37
 #: invoices/Invoice.js:145
 #: orders/Order.js:258
@@ -905,6 +908,7 @@ msgid "View Affiliate"
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:231
+#: components/data-tables/charges-data-table/index.js:170
 #: settings/connection/IncomingWebhooks.js:206
 msgid "View Details"
 msgstr ""
@@ -1178,13 +1182,8 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:219
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:371
 #: components/affiliates/AffiliateFooter.js:50
-#: coupons/modules/Types.js:33
-#: coupons/modules/Types.js:120
+#: components/coupon/CouponDiscountDuration.js:24
 #: coupons/Sidebar.js:37
-#: settings/abandoned/Coupon.js:58
-#: settings/abandoned/Coupon.js:137
-#: settings/subscription-preservation/Coupon.js:33
-#: settings/subscription-preservation/Coupon.js:111
 msgid "Forever"
 msgstr ""
 
@@ -1196,13 +1195,8 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:226
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:378
-#: coupons/modules/Types.js:37
-#: coupons/modules/Types.js:127
+#: components/coupon/CouponDiscountDuration.js:23
 #: coupons/Sidebar.js:29
-#: settings/abandoned/Coupon.js:54
-#: settings/abandoned/Coupon.js:144
-#: settings/subscription-preservation/Coupon.js:29
-#: settings/subscription-preservation/Coupon.js:118
 #: sc-product-price-choices.js:29
 msgid "Once"
 msgstr ""
@@ -1346,13 +1340,14 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:119
 #: customers/modules/Charges.js:69
 #: customers/modules/PaymentMethods/index.js:52
-#: orders/modules/Charges.js:96
+#: orders/modules/Charges.js:101
 msgid "Method"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:138
 #: src/Controllers/Admin/Orders/OrdersListTable.php:76
-#: components/data-tables/charges-data-table/index.js:35
+#: components/data-tables/charges-data-table/ChargeDetails.js:40
+#: components/data-tables/charges-data-table/index.js:43
 #: invoices/modules/Payment.js:90
 #: orders/modules/LineItems/index.js:25
 #: orders/modules/LineItems/index.js:176
@@ -1388,8 +1383,9 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:241
 #: src/Controllers/Admin/Orders/OrdersListTable.php:273
-#: components/data-tables/charges-data-table/index.js:24
-#: components/data-tables/charges-data-table/index.js:119
+#: components/data-tables/charges-data-table/ChargeDetails.js:25
+#: components/data-tables/charges-data-table/index.js:32
+#: components/data-tables/charges-data-table/index.js:118
 #: invoices/modules/Payment.js:99
 #: orders/modules/LineItems/index.js:185
 #: Blocks/Dashboard/CustomerOrders/edit.js:121
@@ -1450,7 +1446,8 @@ msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:64
 #: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
-#: src/Routing/PermalinkServiceProvider.php:54
+#: src/Routing/PermalinkSettingService.php:115
+#: src/Routing/PermalinkSettingService.php:136
 #: web/buy-template.php:91
 #: web/buy-template.php:93
 #: licenses/modules/Purchase.js:44
@@ -1481,8 +1478,8 @@ msgstr ""
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:155
 #: src/Controllers/Admin/Products/ProductsListTable.php:477
 #: src/Controllers/Web/BuyPageController.php:56
-#: src/WordPress/PostTypes/ProductPostTypeService.php:346
-#: src/WordPress/PostTypes/ProductPostTypeService.php:943
+#: src/WordPress/PostTypes/ProductPostTypeService.php:350
+#: src/WordPress/PostTypes/ProductPostTypeService.php:947
 #: products/EditProduct.js:274
 #: components/PriceInfo.js:103
 msgid "Edit Product"
@@ -1742,7 +1739,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/Controllers/Admin/Products/ProductsController.php:241
-#: src/WordPress/PostTypes/ProductPostTypeService.php:944
+#: src/WordPress/PostTypes/ProductPostTypeService.php:948
 #: licenses/modules/Purchase.js:56
 #: products/components/Url/form.js:68
 msgid "View Product"
@@ -2054,7 +2051,7 @@ msgstr[1] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:298
-#: src/Models/Checkout.php:505
+#: src/Models/Checkout.php:515
 #: src/Support/Interval.php:41
 #: util/translations.js:28
 #: price.js:39
@@ -2099,7 +2096,7 @@ msgstr[1] ""
 #. translators: Coupon % off.
 #. Translators: Percent off.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:348
-#: src/Models/Checkout.php:482
+#: src/Models/Checkout.php:492
 #: src/Models/Coupon.php:54
 #: util.js:49
 #: price.js:12
@@ -2355,7 +2352,11 @@ msgstr ""
 msgid "Method '%s' not implemented. Must be overridden in subclass."
 msgstr ""
 
-#: src/Integrations/AffiliateWP/AffiliateWPService.php:39
+#: src/Integrations/Beaver/BeaverFormModule.php:18
+#: src/Integrations/Beaver/BeaverFormModule.php:19
+msgid "SureCart Form"
+msgstr ""
+
 #: src/Integrations/Beaver/BeaverFormModule.php:20
 #: src/Integrations/Beaver/BeaverFormModule.php:21
 #: src/Integrations/Elementor/Conditions/Conditions.php:38
@@ -2376,16 +2377,11 @@ msgstr ""
 #: src/WordPress/HealthService.php:172
 #: src/WordPress/HealthService.php:176
 #: src/WordPress/HealthService.php:186
-#: src/WordPress/Templates/TemplatesServiceProvider.php:22
+#: src/WordPress/Templates/TemplatesService.php:154
 #: src/WordPress/ThemeService.php:88
 #: admin/user-profile.php:1
 #: error.php:2
 msgid "SureCart"
-msgstr ""
-
-#: src/Integrations/Beaver/BeaverFormModule.php:18
-#: src/Integrations/Beaver/BeaverFormModule.php:19
-msgid "SureCart Form"
 msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:52
@@ -2600,8 +2596,8 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/BuyButton.php:52
 #: src/Integrations/Bricks/Elements/BuyButton.php:65
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:210
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:230
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:226
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:246
 #: src/blocks/product-buy-buttons/edit.js:49
 #: sc-product-price-modal.js:63
 msgid "Add To Cart"
@@ -2642,10 +2638,11 @@ msgid "Size"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/BuyButton.php:86
-#: src/Routing/PermalinkServiceProvider.php:29
-#: src/Routing/PermalinkServiceProvider.php:50
-#: src/Routing/PermalinkServiceProvider.php:71
-#: src/Routing/PermalinkServiceProvider.php:93
+#: src/Routing/PermalinkSettingService.php:94
+#: src/Routing/PermalinkSettingService.php:111
+#: src/Routing/PermalinkSettingService.php:132
+#: src/Routing/PermalinkSettingService.php:149
+#: src/Routing/PermalinkSettingService.php:167
 #: forms/default.php:6
 #: products/utility.js:8
 #: util/templates.js:8
@@ -2944,7 +2941,7 @@ msgid "Custom Amount"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SelectedPriceAdHocAmount.php:73
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:245
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:261
 msgid "Enter an amount"
 msgstr ""
 
@@ -2992,7 +2989,7 @@ msgstr ""
 
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:46
-#: src/WordPress/PostTypes/ProductPostTypeService.php:945
+#: src/WordPress/PostTypes/ProductPostTypeService.php:949
 #: Blocks/ProductItemList/edit.js:388
 #: Blocks/ProductItemList/edit.js:501
 #: src/blocks/product-list/inspector-controls/index.js:106
@@ -3217,7 +3214,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: src/Models/Checkout.php:503
+#: src/Models/Checkout.php:513
 #: util/translations.js:7
 #: util/translations.js:53
 #: util/translations.js:60
@@ -3412,6 +3409,46 @@ msgstr ""
 msgid "Voucher"
 msgstr ""
 
+#: src/Models/PaymentMethod.php:85
+#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:27
+#: Blocks/Payment/components/Inspector.js:60
+msgid "Stripe"
+msgstr ""
+
+#: src/Models/PaymentMethod.php:87
+#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:38
+#: Blocks/Payment/components/Inspector.js:73
+#: sc-payment.js:44
+msgid "PayPal"
+msgstr ""
+
+#: src/Models/PaymentMethod.php:89
+msgid "Razorpay"
+msgstr ""
+
+#: src/Models/PaymentMethod.php:91
+#: Blocks/Payment/components/Inspector.js:86
+msgid "Paystack"
+msgstr ""
+
+#: src/Models/PaymentMethod.php:93
+#: Blocks/Payment/components/Inspector.js:48
+msgid "Mollie"
+msgstr ""
+
+#: src/Models/PaymentMethod.php:95
+#: Blocks/ProductCollectionImage/dimension-controls.js:105
+#: Blocks/ProductItemImage/aspect-ratio-dropdown.js:55
+#: src/blocks/product-image/edit.js:110
+msgid "Square"
+msgstr ""
+
+#: src/Models/PaymentMethod.php:97
+#: store/add-entities.js:243
+#: Blocks/ConditionalForm/translations.js:7
+msgid "Processor"
+msgstr ""
+
 #. translators: %s is the number of days.
 #: src/Models/Price.php:195
 #: sc-price2.js:57
@@ -3457,6 +3494,7 @@ msgid "weeks"
 msgstr ""
 
 #: src/Models/Price.php:256
+#: components/coupon/CouponDiscountDuration.js:81
 msgid "months"
 msgstr ""
 
@@ -3561,11 +3599,11 @@ msgstr ""
 msgid "SureCart Customer"
 msgstr ""
 
-#: src/Request/RequestService.php:234
+#: src/Request/RequestService.php:272
 msgid "Please connect your site to SureCart."
 msgstr ""
 
-#: src/Request/RequestService.php:323
+#: src/Request/RequestService.php:361
 msgid "Invalid API token."
 msgstr ""
 
@@ -4215,34 +4253,40 @@ msgstr ""
 msgid "Where this upsell falls in position within the upsell funnel – can be one of initial, accepted, or declined."
 msgstr ""
 
-#: src/Routing/PermalinkServiceProvider.php:23
+#: src/Routing/PermalinkSettingService.php:88
 msgid "SureCart Product Permalinks"
 msgstr ""
 
 #. translators: %s: Home URL
-#: src/Routing/PermalinkServiceProvider.php:25
+#: src/Routing/PermalinkSettingService.php:90
 msgid "If you like, you may enter custom structures for your product page URLs here. For example, using <code>products</code> would make your product buy links like <code>%sproducts/sample-product/</code>."
 msgstr ""
 
-#: src/Routing/PermalinkServiceProvider.php:44
+#: src/Routing/PermalinkSettingService.php:105
+#: src/Routing/PermalinkSettingService.php:126
 msgid "SureCart Instant Checkout Permalinks"
 msgstr ""
 
 #. translators: %s: Home URL
-#: src/Routing/PermalinkServiceProvider.php:46
+#: src/Routing/PermalinkSettingService.php:107
+#: src/Routing/PermalinkSettingService.php:128
 msgid "If you like, you may enter custom structures for your instant checkout URLs here. For example, using <code>buy</code> would make your product buy links like <code>%sbuy/sample-product/</code>."
 msgstr ""
 
-#: src/Routing/PermalinkServiceProvider.php:65
+#: src/Routing/PermalinkSettingService.php:119
+msgid "Shop base with collection"
+msgstr ""
+
+#: src/Routing/PermalinkSettingService.php:143
 msgid "SureCart Product Collection Permalinks"
 msgstr ""
 
 #. translators: %s: Home URL
-#: src/Routing/PermalinkServiceProvider.php:67
+#: src/Routing/PermalinkSettingService.php:145
 msgid "If you like, you may enter custom structures for your product page URLs here. For example, using <code>collections</code> would make your product collection links like <code>%scollections/sample-collection/</code>."
 msgstr ""
 
-#: src/Routing/PermalinkServiceProvider.php:75
+#: src/Routing/PermalinkSettingService.php:153
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:204
 #: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:36
 #: admin/product-collections/index.php:6
@@ -4250,24 +4294,24 @@ msgstr ""
 msgid "Product Collections"
 msgstr ""
 
-#: src/Routing/PermalinkServiceProvider.php:87
+#: src/Routing/PermalinkSettingService.php:161
 msgid "SureCart Upsell Permalinks"
 msgstr ""
 
 #. translators: %s: Home URL
-#: src/Routing/PermalinkServiceProvider.php:89
+#: src/Routing/PermalinkSettingService.php:163
 msgid "If you like, you may enter custom structures for your upsell URLs here. For example, using <code>offers</code> would make your upsell's links like <code>%soffers/upsell-id/</code>."
 msgstr ""
 
-#: src/Routing/PermalinkServiceProvider.php:97
+#: src/Routing/PermalinkSettingService.php:171
 msgid "Special Offer"
 msgstr ""
 
-#: src/Routing/PermalinkSettingService.php:137
+#: src/Routing/PermalinkSettingService.php:243
 msgid "Custom base"
 msgstr ""
 
-#: src/Routing/PermalinkSettingService.php:141
+#: src/Routing/PermalinkSettingService.php:247
 msgid "Enter a custom base to use. A base must be set or WordPress will use default instead."
 msgstr ""
 
@@ -4291,7 +4335,7 @@ msgctxt "upsell-page-slug"
 msgid "offer"
 msgstr ""
 
-#: src/Settings/SettingService.php:109
+#: src/Settings/SettingService.php:118
 #: Blocks/Email/Block.php:21
 msgid "Your email and cart are saved so we can send email reminders about this order."
 msgstr ""
@@ -4997,16 +5041,16 @@ msgid "Promotion code"
 msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:12
-#: coupons/modules/Types.js:88
-#: settings/abandoned/Coupon.js:102
-#: settings/subscription-preservation/Coupon.js:77
+#: coupons/modules/Types.js:78
+#: settings/abandoned/Coupon.js:83
+#: settings/subscription-preservation/Coupon.js:67
 msgid "Amount Off"
 msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:13
-#: coupons/modules/Types.js:70
-#: settings/abandoned/Coupon.js:84
-#: settings/subscription-preservation/Coupon.js:60
+#: coupons/modules/Types.js:60
+#: settings/abandoned/Coupon.js:65
+#: settings/subscription-preservation/Coupon.js:50
 msgid "Percent Off"
 msgstr ""
 
@@ -6725,21 +6769,21 @@ msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:251
 #: src/WordPress/PostTypes/FormPostTypeService.php:235
-#: src/WordPress/PostTypes/ProductPostTypeService.php:947
+#: src/WordPress/PostTypes/ProductPostTypeService.php:951
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:44
 msgid "No checkout forms found."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:252
 #: src/WordPress/PostTypes/FormPostTypeService.php:236
-#: src/WordPress/PostTypes/ProductPostTypeService.php:948
+#: src/WordPress/PostTypes/ProductPostTypeService.php:952
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:45
 msgid "No checkout forms found in Trash."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:253
 #: src/WordPress/PostTypes/FormPostTypeService.php:237
-#: src/WordPress/PostTypes/ProductPostTypeService.php:949
+#: src/WordPress/PostTypes/ProductPostTypeService.php:953
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:46
 msgid "Filter checkout forms list"
 msgstr ""
@@ -6855,90 +6899,90 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:268
+#: src/WordPress/PostTypes/ProductPostTypeService.php:272
 #: products/modules/Prices/Price/BuyLink.js:30
 #: products/modules/Variations/Variants.js:116
 #: store/add-entities.js:453
 msgid "Variant"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:272
+#: src/WordPress/PostTypes/ProductPostTypeService.php:276
 msgid "Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green)."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:272
+#: src/WordPress/PostTypes/ProductPostTypeService.php:276
 msgid "Learn More."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:851
+#: src/WordPress/PostTypes/ProductPostTypeService.php:855
 msgid "Product gallery"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:938
+#: src/WordPress/PostTypes/ProductPostTypeService.php:942
 msgctxt "post type general name"
 msgid "SureCart Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:939
+#: src/WordPress/PostTypes/ProductPostTypeService.php:943
 msgctxt "post type singular name"
 msgid "SureCart Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:940
+#: src/WordPress/PostTypes/ProductPostTypeService.php:944
 msgctxt "Product"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:941
+#: src/WordPress/PostTypes/ProductPostTypeService.php:945
 msgid "Add new Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:942
+#: src/WordPress/PostTypes/ProductPostTypeService.php:946
 msgid "New Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:946
+#: src/WordPress/PostTypes/ProductPostTypeService.php:950
 #: admin/products/index.php:77
 msgid "Search Products"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:950
+#: src/WordPress/PostTypes/ProductPostTypeService.php:954
 msgid "Products list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:951
+#: src/WordPress/PostTypes/ProductPostTypeService.php:955
 msgid "Products list"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:952
+#: src/WordPress/PostTypes/ProductPostTypeService.php:956
 msgid "Product published."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:953
+#: src/WordPress/PostTypes/ProductPostTypeService.php:957
 msgid "Product published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:954
+#: src/WordPress/PostTypes/ProductPostTypeService.php:958
 msgid "Product reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:955
+#: src/WordPress/PostTypes/ProductPostTypeService.php:959
 msgid "Product scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:956
+#: src/WordPress/PostTypes/ProductPostTypeService.php:960
 #: products/EditProduct.js:187
 #: products/modules/integrations/Integrations.js:41
 msgid "Product updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:992
+#: src/WordPress/PostTypes/ProductPostTypeService.php:996
 msgctxt "post"
 msgid "Archived"
 msgstr ""
 
 #. translators: %s: number of posts.
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1001
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1005
 msgid "Archived <span class=\"count\">(%s)</span>"
 msgid_plural "Archived <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -7024,7 +7068,7 @@ msgstr ""
 msgid "Please visit the frontend of your page builder to view the %s shortcode contents."
 msgstr ""
 
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:329
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:344
 msgid "This form is not available or has been deleted."
 msgstr ""
 
@@ -7108,14 +7152,14 @@ msgstr ""
 msgid "Template used for specific single SureCart upsell pages."
 msgstr ""
 
-#: src/WordPress/Templates/TemplatesServiceProvider.php:23
-msgid "SureCart Customer Dashboard"
+#: src/WordPress/Templates/CollectionTemplateService.php:47
+#: src/WordPress/Templates/TemplatesService.php:156
+#: src/WordPress/Templates/UpsellTemplatesService.php:159
+msgid "SureCart Layout"
 msgstr ""
 
-#: src/WordPress/Templates/TemplatesServiceProvider.php:33
-#: src/WordPress/Templates/TemplatesServiceProvider.php:42
-#: src/WordPress/Templates/TemplatesServiceProvider.php:51
-msgid "SureCart Layout"
+#: src/WordPress/Templates/TemplatesService.php:155
+msgid "SureCart Customer Dashboard"
 msgstr ""
 
 #: src/WordPress/UpgradeNoticeService.php:97
@@ -7392,6 +7436,7 @@ msgid "Two sites that are telling SureCart they are the same site. Please let us
 msgstr ""
 
 #: admin/notices/webhook-change.php:28
+#: components/data-tables/charges-data-table/ChargeDetails.js:128
 msgid "Learn More"
 msgstr ""
 
@@ -8018,7 +8063,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:71
 #: sc-customer-details2.js:397
 #: sc-customer-edit.js:114
-#: sc-form-components-validator2.js:165
+#: sc-form-components-validator2.js:161
 #: sc-order-billing-address2.js:106
 msgid "Billing Address"
 msgstr ""
@@ -8968,7 +9013,7 @@ msgstr ""
 #: Blocks/CheckoutForm/components/PriceChoices.js:128
 #: Blocks/CheckoutForm/components/SelectProductModal.js:92
 #: Blocks/CheckoutForm/components/SelectProductModal.js:139
-#: components/PriceChoices.js:92
+#: components/PriceChoices.js:91
 msgid "Add Product"
 msgstr ""
 
@@ -9064,7 +9109,7 @@ msgstr ""
 #: subscriptions/edit/modules/Trial.js:38
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
 #: Blocks/ConditionalForm/selectors/SelectProcessors/ProcessorItem.js:26
-#: components/PriceChoice.js:153
+#: components/PriceChoice.js:183
 msgid "Remove"
 msgstr ""
 
@@ -9229,7 +9274,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:60
 #: sc-customer-details2.js:397
 #: sc-customer-edit.js:99
-#: sc-form-components-validator2.js:163
+#: sc-form-components-validator2.js:159
 #: sc-order-shipping-address2.js:117
 msgid "Shipping Address"
 msgstr ""
@@ -9383,6 +9428,26 @@ msgstr[1] ""
 msgid "Search countries and regions to ship to"
 msgstr ""
 
+#: components/coupon/CouponDiscountDuration.js:25
+msgid "Multiple months"
+msgstr ""
+
+#: components/coupon/CouponDiscountDuration.js:43
+msgid "Discount Duration"
+msgstr ""
+
+#: components/coupon/CouponDiscountDuration.js:68
+msgid "Number of months"
+msgstr ""
+
+#: components/coupon/CouponDiscountDuration.js:95
+msgid "This determines how long this coupon will continue to apply once redeemed."
+msgstr ""
+
+#: components/coupon/CouponDiscountDuration.js:100
+msgid "Learn more"
+msgstr ""
+
 #: components/data-tables/affiliates/PromotionsDataTable.js:69
 msgid "View Coupon"
 msgstr ""
@@ -9392,13 +9457,47 @@ msgstr ""
 msgid "Referral Items"
 msgstr ""
 
-#: components/data-tables/charges-data-table/index.js:30
+#: components/data-tables/charges-data-table/ChargeDetails.js:33
+#: components/data-tables/charges-data-table/index.js:38
 #: sc-charges-list.js:88
 #: sc-orders-list.js:117
 msgid "Partially Refunded"
 msgstr ""
 
-#: components/data-tables/charges-data-table/index.js:48
+#: components/data-tables/charges-data-table/ChargeDetails.js:47
+msgid "Charge Details"
+msgstr ""
+
+#: components/data-tables/charges-data-table/ChargeDetails.js:82
+#: store/add-entities.js:201
+#: subscriptions/edit/modules/PaymentMethod/index.js:46
+#: Controllers/SubscriptionController.php:680
+#: sc-order.js:188
+msgid "Payment Method"
+msgstr ""
+
+#: components/data-tables/charges-data-table/ChargeDetails.js:88
+#: components/data-tables/charges-data-table/index.js:128
+msgid "View charge on "
+msgstr ""
+
+#: components/data-tables/charges-data-table/ChargeDetails.js:112
+msgid "Platform Fee"
+msgstr ""
+
+#: components/data-tables/charges-data-table/ChargeDetails.js:119
+msgid "This is the total fee charged by the SureCart platform for this transaction."
+msgstr ""
+
+#: components/data-tables/charges-data-table/ChargeDetails.js:148
+msgid "Transaction Fee"
+msgstr ""
+
+#: components/data-tables/charges-data-table/ChargeDetails.js:234
+msgid "Total Fees"
+msgstr ""
+
+#: components/data-tables/charges-data-table/index.js:56
 #: components/data-tables/charges-data-table/Refund.js:126
 #: components/data-tables/charges-data-table/Refund.js:254
 #: settings/customer/CustomerSettings.js:433
@@ -9406,18 +9505,14 @@ msgstr ""
 msgid "Refund"
 msgstr ""
 
-#: components/data-tables/charges-data-table/index.js:87
+#: components/data-tables/charges-data-table/index.js:86
 #: customers/modules/Charges.js:60
 #: settings/export/ExportSettings.js:15
 msgid "Charges"
 msgstr ""
 
-#: components/data-tables/charges-data-table/index.js:89
+#: components/data-tables/charges-data-table/index.js:88
 msgid "No charges"
-msgstr ""
-
-#: components/data-tables/charges-data-table/index.js:129
-msgid "View charge on "
 msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:61
@@ -10042,12 +10137,12 @@ msgstr ""
 
 #: coupons/modules/Limits.js:34
 #: coupons/modules/Limits.js:48
-#: settings/subscription-preservation/Coupon.js:153
+#: settings/subscription-preservation/Coupon.js:85
 msgid "Unlimited Usage"
 msgstr ""
 
 #: coupons/modules/Limits.js:47
-#: settings/subscription-preservation/Coupon.js:152
+#: settings/subscription-preservation/Coupon.js:84
 msgid "Usage limit per customer"
 msgstr ""
 
@@ -10165,43 +10260,22 @@ msgstr ""
 msgid "Select a customer to limit this promotion to."
 msgstr ""
 
-#: coupons/modules/Types.js:35
-#: coupons/modules/Types.js:137
-#: settings/abandoned/Coupon.js:56
-#: settings/abandoned/Coupon.js:154
-#: settings/subscription-preservation/Coupon.js:31
-#: settings/subscription-preservation/Coupon.js:128
-msgid "Repeating"
-msgstr ""
-
-#: coupons/modules/Types.js:50
-#: settings/abandoned/Coupon.js:65
-#: settings/subscription-preservation/Coupon.js:40
+#: coupons/modules/Types.js:40
+#: settings/abandoned/Coupon.js:46
+#: settings/subscription-preservation/Coupon.js:30
 msgid "Choose a type"
 msgstr ""
 
-#: coupons/modules/Types.js:54
-#: settings/abandoned/Coupon.js:69
-#: settings/subscription-preservation/Coupon.js:44
+#: coupons/modules/Types.js:44
+#: settings/abandoned/Coupon.js:50
+#: settings/subscription-preservation/Coupon.js:34
 msgid "Percentage Discount"
 msgstr ""
 
-#: coupons/modules/Types.js:57
-#: settings/abandoned/Coupon.js:72
-#: settings/subscription-preservation/Coupon.js:47
+#: coupons/modules/Types.js:47
+#: settings/abandoned/Coupon.js:53
+#: settings/subscription-preservation/Coupon.js:37
 msgid "Fixed Discount"
-msgstr ""
-
-#: coupons/modules/Types.js:100
-#: settings/abandoned/Coupon.js:115
-#: settings/subscription-preservation/Coupon.js:89
-msgid "Discount Duration"
-msgstr ""
-
-#: coupons/modules/Types.js:146
-#: settings/abandoned/Coupon.js:163
-#: settings/subscription-preservation/Coupon.js:137
-msgid "Number of months"
 msgstr ""
 
 #: coupons/Sidebar.js:14
@@ -11192,7 +11266,7 @@ msgstr ""
 msgid "View My Products"
 msgstr ""
 
-#: orders/modules/Charges.js:87
+#: orders/modules/Charges.js:92
 #: store/add-entities.js:67
 msgid "Charge"
 msgstr ""
@@ -14704,7 +14778,7 @@ msgstr ""
 msgid "%d more"
 msgstr ""
 
-#: settings/subscription-preservation/Coupon.js:154
+#: settings/subscription-preservation/Coupon.js:86
 msgid "The amount of times a single customer use the renewal discount."
 msgstr ""
 
@@ -15464,13 +15538,6 @@ msgstr ""
 msgid "Payment Intent"
 msgstr ""
 
-#: store/add-entities.js:201
-#: subscriptions/edit/modules/PaymentMethod/index.js:46
-#: Controllers/SubscriptionController.php:680
-#: sc-order.js:188
-msgid "Payment Method"
-msgstr ""
-
 #: store/add-entities.js:208
 msgid "Provisional Accounts"
 msgstr ""
@@ -15485,11 +15552,6 @@ msgstr ""
 
 #: store/add-entities.js:236
 msgid "Product Media"
-msgstr ""
-
-#: store/add-entities.js:243
-#: Blocks/ConditionalForm/translations.js:7
-msgid "Processor"
 msgstr ""
 
 #: store/add-entities.js:250
@@ -16911,7 +16973,6 @@ msgid "Create Product"
 msgstr ""
 
 #: Blocks/CheckoutForm/components/PriceChoice.js:48
-#: components/PriceChoice.js:59
 #: components/SelectProduct.js:52
 msgid "Custom"
 msgstr ""
@@ -17216,17 +17277,6 @@ msgstr ""
 
 #: Blocks/ConditionalForm/selectors/SelectOperator.js:63
 msgid "not exist"
-msgstr ""
-
-#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:27
-#: Blocks/Payment/components/Inspector.js:60
-msgid "Stripe"
-msgstr ""
-
-#: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:38
-#: Blocks/Payment/components/Inspector.js:73
-#: sc-payment.js:44
-msgid "PayPal"
 msgstr ""
 
 #: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:115
@@ -17655,10 +17705,6 @@ msgstr ""
 msgid "Disable or enable specific processors for this form."
 msgstr ""
 
-#: Blocks/Payment/components/Inspector.js:48
-msgid "Mollie"
-msgstr ""
-
 #: Blocks/Payment/components/Inspector.js:49
 msgid "Enable Mollie processor"
 msgstr ""
@@ -17669,10 +17715,6 @@ msgstr ""
 
 #: Blocks/Payment/components/Inspector.js:74
 msgid "Enable PayPal payment"
-msgstr ""
-
-#: Blocks/Payment/components/Inspector.js:86
-msgid "Paystack"
 msgstr ""
 
 #: Blocks/Payment/components/Inspector.js:87
@@ -17976,12 +18018,6 @@ msgstr ""
 #: Blocks/ProductCollectionImage/dimension-controls.js:101
 #: src/blocks/product-image/edit.js:106
 msgid "Original"
-msgstr ""
-
-#: Blocks/ProductCollectionImage/dimension-controls.js:105
-#: Blocks/ProductItemImage/aspect-ratio-dropdown.js:55
-#: src/blocks/product-image/edit.js:110
-msgid "Square"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:109
@@ -18411,6 +18447,10 @@ msgstr ""
 #: src/blocks/product-list/list-placeholder.js:38
 #: src/blocks/product-list/template.js:77
 msgid "Add text or blocks that will display when a query returns no products."
+msgstr ""
+
+#: components/PriceChoice.js:65
+msgid "Enter Custom Amount"
 msgstr ""
 
 #: components/PriceChoices.js:54
