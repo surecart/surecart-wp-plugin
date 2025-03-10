@@ -135,7 +135,7 @@ class CurrencyService {
 	 * @return string
 	 */
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
-		if ( 'rest' !== $scheme ) {
+		if ( 'rest' !== $scheme && ! is_admin() ) {
 			$url = $this->addCurrencyParam( $url );
 		}
 
