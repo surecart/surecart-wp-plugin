@@ -280,6 +280,15 @@ class SettingService {
 				'default'           => true,
 			]
 		);
+		$this->register(
+			'surecart',
+			'currency_locale',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
 	}
 	/**
 	 * Register a setting.

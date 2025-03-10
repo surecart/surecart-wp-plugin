@@ -90,6 +90,68 @@ class Currency {
 	}
 
 	/**
+	 * Get the currency locale.
+	 *
+	 * @return string
+	 */
+	public static function getCurrencyLocale() {
+		$locale = \SureCart::settings()->get( 'currency_locale', false );
+
+		if ( empty( $locale ) || 'default' === $locale ) {
+			$locale = get_locale();
+		}
+
+		return $locale;
+	}
+
+	/**
+	 * Get the locales.
+	 *
+	 * @return array
+	 */
+	public static function getLocales() {
+		// Load translations.
+		require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+		$available_translations = wp_get_available_translations();
+
+		// english is not in the available translations.
+		$locales['en_US'] = array(
+			'language'     => 'en_US',
+			'english_name' => 'English (United States)',
+			'native_name'  => 'English (United States)',
+		);
+
+		// Merge with available translations.
+		$locales = array_merge( $locales, $available_translations );
+
+		// sort by english name.
+		uasort(
+			$locales,
+			function ( $a, $b ) {
+				return strnatcasecmp( $a['english_name'], $b['english_name'] );
+			}
+		);
+
+		$current_locale     = get_locale() ? $locales[ get_locale() ] : $locales['en_US'];
+		$store_default_name = sprintf(
+			/* translators: %s: current language name */
+			__( 'Site Locale - %s', 'surecart' ),
+			$current_locale['native_name']
+		);
+
+		return array_merge(
+			array(
+				'default' => array(
+					'language'     => 'default',
+					'english_name' => $store_default_name,
+					'native_name'  => $store_default_name,
+				),
+			),
+			$locales
+		);
+	}
+
+	/**
 	 * Get the preferred locale from the header.
 	 *
 	 * @return string
@@ -124,10 +186,10 @@ class Currency {
 
 		// Validate the locale format (must be in standard locale format).
 		if ( ! preg_match( '/^[a-z]{2,3}(?:_[A-Z][a-z]{3})?(?:_[A-Z]{2})?$/', $best_lang ) ) {
-			return get_locale(); // Invalid format, fallback to default.
+			return self::getCurrencyLocale(); // Invalid format, fallback to default.
 		}
 
-		return $best_lang ? $best_lang : get_locale(); // Fallback.
+		return $best_lang ? $best_lang : self::getCurrencyLocale(); // Fallback.
 	}
 
 	/**
@@ -407,7 +469,7 @@ class Currency {
 		}
 
 		if ( class_exists( 'NumberFormatter' ) ) {
-			$fmt = new \NumberFormatter( apply_filters( 'surecart/currency/locale', get_locale() ), \NumberFormatter::CURRENCY );
+			$fmt = new \NumberFormatter( apply_filters( 'surecart/currency/locale', self::getCurrencyLocale() ), \NumberFormatter::CURRENCY );
 
 			// Extract the fractional part.
 			$fractional_part = fmod( $converted_amount, 1 );

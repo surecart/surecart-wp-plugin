@@ -1,11 +1,19 @@
 /** @jsx jsx */
-import { __, _n } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { css, jsx, Global } from '@emotion/react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
-import { ScAlert, ScIcon, ScSwitch } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScIcon,
+	ScSelect,
+	ScSwitch,
+} from '@surecart/components-react';
 import { useEntityProp } from '@wordpress/core-data';
-import { useState } from 'react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+
 import useSave from '../UseSave';
 import Error from '../../components/Error';
 import CurrencySwitcherSettings from './components/CurrencySwitcherSettings';
@@ -14,10 +22,17 @@ import DisplayCurrenciesSettings from './components/DisplayCurrenciesSettings';
 export default function DisplayCurrencySettings() {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
+	const { invalidateResolutionForStore } = useDispatch(coreStore);
 
 	// honeypot.
 	const [currencyGeolocationEnabled, setCurrencyGeolocationEnabled] =
 		useEntityProp('root', 'site', 'surecart_currency_geolocation_enabled');
+
+	const [selectedLocale, setSelectedLocale] = useEntityProp(
+		'root',
+		'site',
+		'surecart_currency_locale'
+	);
 
 	/**
 	 * Form is submitted.
@@ -28,11 +43,20 @@ export default function DisplayCurrencySettings() {
 			await save({
 				successMessage: __('Settings Updated.', 'surecart'),
 			});
+
+			// Refresh the store.
+			invalidateResolutionForStore();
 		} catch (e) {
 			console.error(e);
 			setError(e);
 		}
 	};
+
+	const locales = scData?.locales || {};
+	const translationChoices = Object.keys(locales).map((key) => ({
+		label: locales[key]?.native_name,
+		value: key,
+	}));
 
 	return (
 		<>
@@ -66,6 +90,32 @@ export default function DisplayCurrencySettings() {
 						<CurrencySwitcherSettings />
 					</SettingsBox>
 				)}
+
+				<SettingsBox
+					title={__('Currency Formatting', 'surecart')}
+					description={sprintf(
+						__(
+							'Choose the locale to format the currency. By default, your site locale (%s) will be used.',
+							'surecart'
+						),
+						locales['default']?.native_name
+					)}
+				>
+					<ScSelect
+						search={true}
+						label={__('Formatting Locale', 'surecart')}
+						placeholder={__('Select Currency Locale', 'surecart')}
+						help={__(
+							'The locale determines how the currency is displayed. For instance, if your site is in Spanish but you prefer to display currency in United States Dollars formatted as in the United States (without the "USD" prefix), you can select "English (United States)."',
+							'surecart'
+						)}
+						value={selectedLocale || 'default'}
+						onScChange={(e) => setSelectedLocale(e.target.value)}
+						unselect={false}
+						required={true}
+						choices={translationChoices}
+					/>
+				</SettingsBox>
 
 				<SettingsBox
 					title={__('Geolocation', 'surecart')}
