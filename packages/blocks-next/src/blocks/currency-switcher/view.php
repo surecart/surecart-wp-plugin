@@ -63,7 +63,7 @@ $current_currency = Currency::getCurrentCurrency();
 			width="20"
 			height="15"
 		/>
-		<span class="wp-block-surecart-currency-switcher__label"><?php echo esc_html( strtoupper( $current_currency ) ); ?></span>
+		<span class="wp-block-surecart-currency-switcher__label"><?php echo esc_html( apply_filters( 'surecart/currency_switcher/label', strtoupper( $current_currency ) ) ); ?></span>
 		<span class="wp-block-surecart-currency-switcher__caret">
 		<?php
 		echo wp_kses(
