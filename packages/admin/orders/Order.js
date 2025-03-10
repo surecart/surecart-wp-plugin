@@ -393,6 +393,11 @@ export default () => {
 					<CreateRefund
 						checkout={order?.checkout}
 						charge={refundCharge}
+						chargeIds={
+							order?.checkout?.charges?.data?.map(
+								(charge) => charge.id
+							) ?? []
+						}
 						onRefunded={onRefunded}
 						onRequestClose={() => setModal(false)}
 					/>

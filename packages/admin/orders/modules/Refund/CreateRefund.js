@@ -34,7 +34,7 @@ import Box from '../../../ui/Box';
 import { refundResasonOptions } from '../../../util/refunds';
 import RefundItem from './RefundItem';
 
-export default ({ checkout, charge, onRequestClose, onRefunded }) => {
+export default ({ checkout, charge, chargeIds, onRequestClose, onRefunded }) => {
 	if (!checkout.line_items) {
 		return null;
 	}
@@ -236,7 +236,7 @@ export default ({ checkout, charge, onRequestClose, onRefunded }) => {
 									<RefundItem
 										key={refundItem.id}
 										refundItem={refundItem}
-										chargeId={charge?.id}
+										chargeIds={chargeIds}
 										onUpdate={(values) => {
 											updateItem(values, refundItem);
 										}}

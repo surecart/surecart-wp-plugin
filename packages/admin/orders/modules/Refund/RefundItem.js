@@ -21,7 +21,7 @@ import ProductLineItem from '../../../ui/ProductLineItem';
 const RefundItem = ({
 	refundItem = {},
 	onUpdate,
-	chargeId = '',
+	chargeIds = [],
 	className = '',
 }) => {
 	const {
@@ -41,7 +41,7 @@ const RefundItem = ({
 		'refund',
 		{
 			context: 'edit',
-			charge_ids: [chargeId],
+			charge_ids: chargeIds,
 			per_page: 100,
 			expand: ['refund_items', 'refund_item.line_item'],
 		}

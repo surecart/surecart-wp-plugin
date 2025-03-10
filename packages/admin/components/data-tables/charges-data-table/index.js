@@ -1,6 +1,13 @@
 /**
  * External dependencies.
  */
+import { Fragment } from '@wordpress/element';
+import { __, _n } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
 import DataTable from '../../DataTable';
 import {
 	ScButton,
@@ -10,15 +17,6 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
-import { Fragment } from '@wordpress/element';
-import { __, _n } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
-
-/**
- * Internal dependencies.
- */
-import { ScButton, ScPaymentMethod } from '@surecart/components-react';
-import DataTable from '../../DataTable';
 
 export default ({
 	data = [],

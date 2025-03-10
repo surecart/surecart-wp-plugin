@@ -100,6 +100,7 @@ export default ({ checkout }) => {
 				<CreateRefund
 					checkout={checkout}
 					charge={refundCharge}
+					chargeIds={(charges || [])?.map((charge) => charge.id)}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
 				/>
