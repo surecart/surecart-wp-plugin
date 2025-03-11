@@ -788,6 +788,10 @@ export namespace Components {
          */
         "discountAmount": number;
         /**
+          * The discounts display amount
+         */
+        "discountsDisplayAmount": string;
+        /**
           * Is the form editable
          */
         "editable": boolean;
@@ -2672,6 +2676,10 @@ export namespace Components {
          */
         "currency": string;
         /**
+          * The display amount
+         */
+        "displayAmount": string;
+        /**
           * The recurring interval
          */
         "recurringInterval": 'week' | 'month' | 'year' | 'never';
@@ -2691,6 +2699,10 @@ export namespace Components {
           * The scratch amount
          */
         "scratchAmount": number;
+        /**
+          * The scratch display amount
+         */
+        "scratchDisplayAmount": string;
         /**
           * The setup fee amount
          */
@@ -3071,6 +3083,10 @@ export namespace Components {
          */
         "currency": string;
         /**
+          * Product display amount
+         */
+        "displayAmount": string;
+        /**
           * Can we select the quantity
          */
         "editable": boolean;
@@ -3114,6 +3130,10 @@ export namespace Components {
           * The line item scratch amount
          */
         "scratchAmount": number;
+        /**
+          * Product scratch display amount
+         */
+        "scratchDisplayAmount": string;
         /**
           * Is the setup fee not included in the free trial?
          */
@@ -4110,7 +4130,6 @@ export namespace Components {
         "width": string;
     }
     interface ScTotal {
-        "order": Checkout;
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
@@ -7747,6 +7766,10 @@ declare namespace LocalJSX {
          */
         "discountAmount"?: number;
         /**
+          * The discounts display amount
+         */
+        "discountsDisplayAmount"?: string;
+        /**
           * Is the form editable
          */
         "editable"?: boolean;
@@ -9795,6 +9818,10 @@ declare namespace LocalJSX {
          */
         "currency"?: string;
         /**
+          * The display amount
+         */
+        "displayAmount"?: string;
+        /**
           * The recurring interval
          */
         "recurringInterval"?: 'week' | 'month' | 'year' | 'never';
@@ -9814,6 +9841,10 @@ declare namespace LocalJSX {
           * The scratch amount
          */
         "scratchAmount"?: number;
+        /**
+          * The scratch display amount
+         */
+        "scratchDisplayAmount"?: string;
         /**
           * The setup fee amount
          */
@@ -10226,6 +10257,10 @@ declare namespace LocalJSX {
          */
         "currency"?: string;
         /**
+          * Product display amount
+         */
+        "displayAmount"?: string;
+        /**
           * Can we select the quantity
          */
         "editable"?: boolean;
@@ -10277,6 +10312,10 @@ declare namespace LocalJSX {
           * The line item scratch amount
          */
         "scratchAmount"?: number;
+        /**
+          * Product scratch display amount
+         */
+        "scratchDisplayAmount"?: string;
         /**
           * Is the setup fee not included in the free trial?
          */
@@ -11396,7 +11435,6 @@ declare namespace LocalJSX {
         "width"?: string;
     }
     interface ScTotal {
-        "order"?: Checkout;
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {

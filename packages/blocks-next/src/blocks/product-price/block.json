@@ -41,7 +41,8 @@
 			"text": true,
 			"background": false,
 			"enableContrastChecker": true
-		}
+		},
+		"currencyConversion": true
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",

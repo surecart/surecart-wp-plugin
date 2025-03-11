@@ -45,6 +45,7 @@
 			"margin": true,
 			"blockGap": true
 		},
+		"currencyConversion": true,
 		"typography": {
 			"fontSize": true,
 			"lineHeight": false,

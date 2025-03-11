@@ -105,14 +105,9 @@ export class ScFormComponentsValidator {
     this.hasInvoiceMemo = !!this.el.querySelector('sc-invoice-memo');
     this.hasTrialLineItem = !!this.el.querySelector('sc-line-item-trial');
 
-    // automatically add address field if tax is enabled.
-    if (this.taxProtocol?.tax_enabled) {
-      this.addAddressField();
-
-      // if eu vat is required, add the tax id field.
-      if (this.taxProtocol?.eu_vat_required) {
-        this.addTaxIDField();
-      }
+    // if eu vat is required, add the tax id field.
+    if (this.taxProtocol?.tax_enabled && this.taxProtocol?.eu_vat_required) {
+      this.addTaxIDField();
     }
 
     this.handleOrderChange();

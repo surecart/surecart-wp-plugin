@@ -120,7 +120,7 @@ export class ScChargesList {
     }
 
     return this.charges.map(charge => {
-      const { currency, amount, created_at_date } = charge;
+      const { created_at_date, display_amount } = charge;
 
       return (
         <sc-stacked-list-row
@@ -138,9 +138,7 @@ export class ScChargesList {
 
           <div>{this.renderRefundStatus(charge)}</div>
 
-          <strong>
-            <sc-format-number type="currency" value={amount} currency={currency}></sc-format-number>
-          </strong>
+          <strong>{display_amount}</strong>
         </sc-stacked-list-row>
       );
     });

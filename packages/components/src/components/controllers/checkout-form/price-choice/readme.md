@@ -43,7 +43,6 @@
 ### Depends on
 
 - [sc-alert](../../../ui/alert)
-- [sc-format-number](../../../util/format-number)
 - [sc-choice-container](../../../ui/choice-container)
 - [sc-skeleton](../../../ui/skeleton)
 
@@ -51,7 +50,6 @@
 ```mermaid
 graph TD;
   sc-price-choice --> sc-alert
-  sc-price-choice --> sc-format-number
   sc-price-choice --> sc-choice-container
   sc-price-choice --> sc-skeleton
   sc-alert --> sc-icon

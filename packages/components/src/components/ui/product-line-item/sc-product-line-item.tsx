@@ -50,6 +50,12 @@ export class ScProductLineItem {
   /** Product monetary amount */
   @Prop() amount: number;
 
+  /** Product display amount */
+  @Prop() displayAmount: string;
+
+  /** Product scratch display amount */
+  @Prop() scratchDisplayAmount: string;
+
   /** Product line item fees. */
   @Prop() fees: Fee[];
 
@@ -89,6 +95,14 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
+  renderAmount() {
+    if (this.displayAmount) {
+      return this.displayAmount;
+    }
+
+    return <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>;
+  }
+
   renderPriceAndInterval() {
     const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
     if (this.trialDurationDays) {
@@ -97,7 +111,7 @@ export class ScProductLineItem {
           <div class="price" part="price__amount">
             {!!setupFee && !this.setupFeeTrialEnabled ? (
               <Fragment>
-                {setupFee?.description} <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
+                {setupFee?.description} {setupFee?.display_amount}
               </Fragment>
             ) : (
               sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
@@ -110,10 +124,10 @@ export class ScProductLineItem {
             }{' '}
             {!!this.scratchAmount && this.scratchAmount > this.amount && (
               <Fragment>
-                <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+                <span class="item__scratch-price">{this.scratchDisplayAmount}</span>{' '}
               </Fragment>
             )}
-            <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
+            <span slot="price__amount">{this.renderAmount()}</span> {!!this.interval && this.interval}
             {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
           </div>
         </div>
@@ -125,10 +139,10 @@ export class ScProductLineItem {
         <div class="price" part="price__amount">
           {!!this.scratchAmount && this.scratchAmount !== this.amount && (
             <Fragment>
-              <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
+              <span class="item__scratch-price">{this.scratchDisplayAmount}</span>{' '}
             </Fragment>
           )}
-          <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>
+          {this.renderAmount()}
         </div>
         {!!this.interval && (
           <div class="price__description" part="price__description">
@@ -228,7 +242,7 @@ export class ScProductLineItem {
           if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
           return (
             <sc-line-item exportparts="price-description:line-item__price-description">
-              <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
+              <span slot="price-description">{fee?.display_amount}</span>
               <span slot="price-description" class="fee__description">
                 {fee?.description}
               </span>

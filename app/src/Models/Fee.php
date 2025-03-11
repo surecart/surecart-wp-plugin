@@ -5,7 +5,7 @@ namespace SureCart\Models;
 use SureCart\Support\Currency;
 
 /**
- * Fee model.
+ * Price model
  */
 class Fee extends Model {
 	/**
@@ -23,11 +23,11 @@ class Fee extends Model {
 	protected $object_name = 'fee';
 
 	/**
-	 * Set the prices attribute.
+	 * Get the display amount attribute
 	 *
 	 * @return string
 	 */
-	public function getDisplayAmountAttribute() {
-		return Currency::format( $this->attributes['amount'] );
+	protected function getDisplayAmountAttribute() {
+		return Currency::format( $this->amount );
 	}
 }

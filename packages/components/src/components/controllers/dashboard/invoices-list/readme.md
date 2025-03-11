@@ -26,7 +26,6 @@
 - [sc-divider](../../../ui/divider)
 - [sc-empty](../../../ui/empty)
 - [sc-invoice-status-badge](../../../ui/invoice-status-badge)
-- [sc-format-number](../../../util/format-number)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
@@ -43,7 +42,6 @@ graph TD;
   sc-invoices-list --> sc-divider
   sc-invoices-list --> sc-empty
   sc-invoices-list --> sc-invoice-status-badge
-  sc-invoices-list --> sc-format-number
   sc-invoices-list --> sc-dashboard-module
   sc-invoices-list --> sc-button
   sc-invoices-list --> sc-icon

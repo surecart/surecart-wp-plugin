@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.3.0
+Stable tag: 3.5.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,7 +305,52 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-IMPORTANT: SureCart 3.0 is here! [Please read the upgrade guide before upgrading](https://surecart.com/docs/upgrading-to-surecart-v3/)
+= 3.5.1 - March 11th, 2025 =
+- Fix: Issue where currency was not formatted correctly in servers without number formatting library.
+- Fix: Issue where sometimes upsell pages may get skipped if currency was selected.
+
+= 3.5.0 - March 11th, 2025 =
+- New: Multicurrency - display prices in different currencies on your store and let customers view prices in their local currency. [Learn More](https://surecart.com/changelog/surecart-3-5-introducing-multi-currency-for-selling-globally/)
+
+= 3.4.3 - March 6th, 2025 =
+- Fix: Issue where collection pages would get redirected to product pages in some cases.
+- Fix: Issue where saving a custom permalink setting could sometimes add an additional slash.
+
+= 3.4.2 - March 6th, 2025 =
+- Fix: Issue with some settings not saving on settings panel since 3.4.0 update.
+
+= 3.4.1 - March 6th, 2025 =
+- Fix: Issue with new permalink settings incorrectly affecting other post type permalink settings.
+- Fix: Fatal error due to loading order of templates in some themes.
+
+= 3.4.0 - March 6th, 2025 =
+- New: Ability to add collection to product URL.
+- New: Add an amount for name your own prices on buy now blocks and shortcodes.
+- Improvement: Prevent request cascade when fetching cached resources in case of server downtime.
+- Improvement: Add custom fields support to product imports.
+- Improvement: Show fee breakdown on charges.
+- Improvement: Cache allowed html file so it is not loaded multiple times in case of ajax requests.
+- Improvement: Change coupon repeating to "multiple months" to be more accurate as to its functionality.
+- Fix: Issue with 0% off Coupons not being visible in view order page.
+- Fix: Load core translation functions in hooks only due to WordPress 6.7 deprecation.
+- Fix: Incorrect total strikethrough amount being displayed in some instances on checkout page.
+- Fix: Issue where address form was being added to checkout pages when tax was enabled, but no tax was required on the checkout.
+
+= 3.3.1 - February 17th, 2025 =
+- Improvement: Added Settings, Documentation links to plugins page.
+- Improvement: Added client-side validation for custom amounts that are below minimum threshold on product page.
+- Change: Installment payment plans can now be paused.
+- Fix: Shop page radio button links no longer inherit unintended link colors.
+- Fix: Custom thank you page redirect functionality restored in latest version.
+- Fix: iDeal payment method can now be added in customer dashboard for Mollie.
+- Fix: Fix issue with product collection template showing block recovery in admin.
+- Fix: Product description now shows correctly on upsell pages.
+- Fix: Use actual product link for search engine results preview link.
+- Fix: Related Product block now properly excludes current post when no collection is linked.
+- Fix: Subscription payment method updates now work correctly with manual payment methods.
+- Fix: Compare price is now calculated correctly on checkout forms with setup fees and paid trials.
+- Fix: Login redirect URL parameter can be filtered server-side for advanced use cases.
+- Fix: Added missing translation strings for sorting functionality.
 
 = 3.3.0 - January 21st, 2025 =
 - New: Image lightbox for product media on product pages.
