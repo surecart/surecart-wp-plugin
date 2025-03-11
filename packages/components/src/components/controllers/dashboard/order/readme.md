@@ -23,7 +23,6 @@
 - [sc-empty](../../../ui/empty)
 - [sc-product-line-item](../../../ui/product-line-item)
 - [sc-line-item](../../../ui/line-item)
-- [sc-format-number](../../../util/format-number)
 - [sc-tag](../../../ui/tag)
 - [sc-divider](../../../ui/divider)
 - [sc-spacing](../../../ui/spacing)
@@ -46,7 +45,6 @@ graph TD;
   sc-order --> sc-empty
   sc-order --> sc-product-line-item
   sc-order --> sc-line-item
-  sc-order --> sc-format-number
   sc-order --> sc-tag
   sc-order --> sc-divider
   sc-order --> sc-spacing

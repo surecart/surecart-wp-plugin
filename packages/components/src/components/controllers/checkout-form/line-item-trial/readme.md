@@ -21,13 +21,11 @@
 ### Depends on
 
 - [sc-line-item](../../../ui/line-item)
-- [sc-format-number](../../../util/format-number)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-line-item-trial --> sc-line-item
-  sc-line-item-trial --> sc-format-number
   sc-form-components-validator --> sc-line-item-trial
   style sc-line-item-trial fill:#f9f,stroke:#333,stroke-width:4px
 ```

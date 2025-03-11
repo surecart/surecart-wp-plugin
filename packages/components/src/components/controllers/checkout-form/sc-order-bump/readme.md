@@ -29,14 +29,12 @@
 
 ### Depends on
 
-- [sc-format-number](../../../util/format-number)
 - [sc-choice](../../../ui/choice)
 - [sc-divider](../../../ui/divider)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-order-bump --> sc-format-number
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-divider
   sc-order-bumps --> sc-order-bump
