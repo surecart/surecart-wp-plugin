@@ -65,6 +65,18 @@ export default () => {
 		'surecart_password_validation_enabled'
 	);
 
+	const [googleMapApiEnabled, setGoogleMapApiEnabled] = useEntityProp(
+		'root',
+		'site',
+		'surecart_google_map_api_key_enabled'
+	);
+
+	const [googleMapApiKey, setGoogleMapApiKey] = useEntityProp(
+		'root',
+		'site',
+		'surecart_google_map_api_key'
+	);
+
 	const [shopMenu, setShopMenu] = useEntityProp(
 		'root',
 		'site',
@@ -334,6 +346,90 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Advanced Integrations', 'surecart')}
+				description={__(
+					'Add advanced integrations to your store.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={googleMapApiEnabled}
+					onScChange={(e) => {
+						setGoogleMapApiEnabled(e.target.checked);
+						setShowNotice(true);
+					}}
+				>
+					{__('Google Maps API', 'surecart')}
+					<span slot="description">
+						{__(
+							'Enable Google Maps API for the shipping address field autocompletion.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				{showNotice && googleMapApiKey && (
+					<ScAlert open>
+						<span slot="title">{__('Important', 'surecart')}</span>
+						{__(
+							'Please clear checkout page cache after changing this setting.',
+							'surecart'
+						)}
+					</ScAlert>
+				)}
+
+				{googleMapApiEnabled && (
+					<>
+						<div
+							css={css`
+								gap: var(--sc-form-row-spacing);
+								display: grid;
+								grid-template-columns: repeat(
+									2,
+									minmax(0, 1fr)
+								);
+							`}
+						>
+							<ScInput
+								value={googleMapApiKey}
+								label={__('Google Maps API Key', 'surecart')}
+								placeholder={__(
+									'Google Maps API Key',
+									'surecart'
+								)}
+								onScInput={(e) =>
+									setGoogleMapApiKey(e.target.value)
+								}
+								type="password"
+								help={__(
+									'You can find this on your Google Cloud Platform.',
+									'surecart'
+								)}
+							></ScInput>
+						</div>
+						{!googleMapApiKey && (
+							<ScAlert open>
+								{__(
+									'To get your Google Maps API key',
+									'surecart'
+								)}{' '}
+								<a
+									href="https://console.cloud.google.com/apis/credentials"
+									target="_blank"
+								>
+									{__(
+										'create a new project and enable the Places, GeoCoding and Geolocation APIs.',
+										'surecart'
+									)}
+								</a>
+							</ScAlert>
+						)}
+					</>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
