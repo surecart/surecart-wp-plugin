@@ -279,6 +279,37 @@ const { state, actions } = store('surecart/checkout', {
 
 	actions: {
 		/**
+		 * Fetch the checkout.
+		 */
+		fetch: function* () {
+			// get the context.
+			const { mode, formId } = getContext() ?? {};
+
+			if (!state.checkout?.id || !mode || !formId) {
+				return;
+			}
+
+			// fetch the checkout.
+			const { fetchCheckout } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			try {
+				const checkout = yield* fetchCheckout({
+					id: state.checkout?.id,
+				});
+				// set the checkout.
+				actions.setCheckout(checkout, mode, formId);
+			} catch (error) {
+				console.error(error);
+				if (error?.code === 'checkout.not_found') {
+					actions.clearCheckouts();
+				}
+			}
+		},
+
+		/**
 		 * Toggle the discount input.
 		 */
 		toggleDiscountInput(e) {
@@ -426,6 +457,29 @@ const { state, actions } = store('surecart/checkout', {
 			if (!context.discountInputOpen) return;
 
 			context.discountInputOpen = false;
+		},
+
+		/**
+		 * Clear the checkout.
+		 */
+		clearCheckouts() {
+			// Find the checkout by mode and formId.
+			let checkoutStorage = JSON.parse(
+				localStorage.getItem(LOCAL_STORAGE_KEY)
+			);
+
+			// Clear the checkout.
+			checkoutStorage = {
+				live: {},
+				test: {},
+			};
+
+			localStorage.setItem(
+				LOCAL_STORAGE_KEY,
+				JSON.stringify(checkoutStorage)
+			);
+
+			state.checkout = {};
 		},
 
 		/**

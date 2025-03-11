@@ -26,6 +26,13 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $controller = CheckoutsController::class;
 
 	/**
+	 * Whether the rest service provider converts currency.
+	 *
+	 * @var boolean
+	 */
+	protected $converts_currency = true;
+
+	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array

@@ -23,6 +23,7 @@ class LineItemsRestServiceProviderTest extends SureCartUnitTestCase {
 			'providers' => [
 				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Account\AccountServiceProvider::class,
+				\SureCart\Settings\SettingsServiceProvider::class,
 				LineItemsRestServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class

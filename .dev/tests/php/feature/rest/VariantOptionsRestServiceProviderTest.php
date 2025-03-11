@@ -6,7 +6,7 @@ use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\VariantOptionsRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
-
+use SureCart\WordPress\PluginServiceProvider;
 class VariantOptionsRestServiceProviderTest extends SureCartUnitTestCase{
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -21,6 +21,7 @@ class VariantOptionsRestServiceProviderTest extends SureCartUnitTestCase{
 			'providers' => [
 				VariantOptionsRestServiceProvider::class,
 				RequestServiceProvider::class,
+				PluginServiceProvider::class,
 				ErrorsServiceProvider::class
 			]
 		], false);

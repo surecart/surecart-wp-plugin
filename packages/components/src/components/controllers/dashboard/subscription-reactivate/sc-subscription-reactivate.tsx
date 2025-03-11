@@ -96,8 +96,7 @@ export class ScSubscriptionReactivate {
             <Fragment>
               <div slot="description">
                 <sc-alert open type="warning" title={__('Confirm Charge', 'surecart')}>
-                  {__('You will be charged', 'surecart')}{' '}
-                  <sc-format-number type="currency" value={(this.upcomingPeriod?.checkout as Checkout)?.amount_due} currency={this.subscription?.currency}></sc-format-number>{' '}
+                  {__('You will be charged', 'surecart')} {(this.upcomingPeriod?.checkout as Checkout)?.amount_due_display_amount}
                   {__('immediately for your subscription.', 'surecart')}
                 </sc-alert>
                 <sc-text

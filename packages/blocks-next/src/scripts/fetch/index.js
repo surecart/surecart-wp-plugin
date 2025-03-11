@@ -1,5 +1,5 @@
 const apiFetch = wp.apiFetch;
-const { addQueryArgs } = wp.url;
+const { addQueryArgs, getQueryArg } = wp.url;
 
 apiFetch.fetchAllMiddleware = null;
 
@@ -26,6 +26,16 @@ if (window?.scFetchData?.nonce_endpoint) {
 // Add a timestamp so it can bypass cache rest api
 apiFetch.use((options, next) => {
 	options.path = addQueryArgs(options.path, { t: Date.now() });
+	return next(options);
+});
+
+// Add selected currency to the request
+apiFetch.use((options, next) => {
+	options.path = addQueryArgs(options.path, {
+		...(!!getQueryArg(window.location.href, 'currency') && {
+			currency: getQueryArg(window.location.href, 'currency'),
+		}),
+	});
 	return next(options);
 });
 
