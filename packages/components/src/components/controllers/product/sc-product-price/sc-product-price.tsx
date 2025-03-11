@@ -44,7 +44,7 @@ export class ScProductPrice {
     const displayAmount = upsellDisplayAmount ? upsellDisplayAmount : originalAmount;
 
     const scratchAmount = upsellState?.line_item?.scratch_amount || price?.scratch_amount;
-    const upsellScratchDisplayAmount = upsellState?.line_item?.scratch_display_amount;
+    const upsellScratchDisplayAmount = upsellState?.line_item?.subtotal_display_amount;
     const scratchDisplayAmount = upsellScratchDisplayAmount ? upsellScratchDisplayAmount : price?.scratch_display_amount;
 
     return (
