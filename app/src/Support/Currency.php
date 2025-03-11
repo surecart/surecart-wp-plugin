@@ -468,7 +468,7 @@ class Currency {
 			$converted_amount = $converted_amount * self::getExchangeRate( $currency_code );
 		}
 
-		if ( ! class_exists( 'NumberFormatter' ) ) {
+		if ( class_exists( 'NumberFormatter' ) ) {
 			$fmt = new \NumberFormatter( apply_filters( 'surecart/currency/locale', self::getCurrencyLocale() ), \NumberFormatter::CURRENCY );
 
 			// Extract the fractional part.
