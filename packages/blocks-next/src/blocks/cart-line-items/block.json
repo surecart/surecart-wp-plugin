@@ -82,5 +82,6 @@
 		"file:../../styles/quantity-selector.css",
 		"file:./style-index.css"
 	],
+	"editorStyle": ["file:./index.css"],
 	"viewScriptModule": ["@surecart/cart"]
 }
