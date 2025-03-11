@@ -1,10 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
+import { countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
-import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
+import { Address, AddressSuggestion, CountryLocaleField, CountryLocaleFieldValue, GoogleMapPlace } from '../../../types';
 import { sortAddressFields } from 'src/functions/address-settings';
 import { state as i18nState } from '@store/i18n';
+import { createErrorNotice } from '@store/notices/mutations';
 
 /**
  * @part base - The elements base wrapper.
@@ -66,9 +67,6 @@ export class ScAddress {
   /** Should we show name field? */
   @Prop({ reflect: true, mutable: true }) showName: boolean;
 
-  /** Should we show name field? */
-  @Prop() showLine2: boolean;
-
   /** Is this required? */
   @Prop({ reflect: true }) required: boolean = false;
 
@@ -81,11 +79,17 @@ export class ScAddress {
   /** Country fields by country code */
   @Prop({ mutable: true }) countryFields: Array<CountryLocaleField>;
 
+  /** Should we show name field? */
+  @Prop() showLine2: boolean;
+
   /** Should we show the city field? */
-  @State() showCity: boolean = true;
+  @State() showCity: boolean = false;
+
+  /** Should we show the state field? */
+  @State() showState: boolean = false;
 
   /** Should we show the postal field? */
-  @State() showPostal: boolean = true;
+  @State() showPostal: boolean = false;
 
   /** Holds the regions for a given country. */
   @State() regions: Array<{ value: string; label: string }>;
@@ -94,7 +98,7 @@ export class ScAddress {
   @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
 
   /** Address suggestions */
-  @State() addressSuggestions: Array<{ label: string; value: string; details?: any }> = [];
+  @State() addressSuggestions: Array<AddressSuggestion> = [];
 
   /** Show address suggestions */
   @State() showAddressSuggestions: boolean = false;
@@ -102,7 +106,7 @@ export class ScAddress {
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
 
-  /** Address change event. */
+  /** Address input event. */
   @Event() scInputAddress: EventEmitter<Partial<Address>>;
 
   /** When the state changes, we want to update city and postal fields. */
@@ -110,8 +114,9 @@ export class ScAddress {
   handleAddressChange() {
     if (!this.address?.country) return;
     this.setRegions();
-    this.showPostal = hasPostal(this.address.country);
-    this.showCity = hasCity(this.address.country);
+    this.showCity = !!this.address?.city;
+    this.showState = !!this.address?.state;
+    this.showPostal = !!this.address?.postal_code;
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
 
@@ -164,6 +169,7 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
+    this.fetchUserCountry();
     const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
 
     // Set default country fields.
@@ -209,89 +215,134 @@ export class ScAddress {
     };
   }
 
-  // async fetchAddressSuggestions(input: string) {
-  //   console.log('fetchAddressSuggestions::', input);
-  //   const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'X-Goog-Api-Key': '', // API Key
-  //       'X-Goog-FieldMask': 'places.id,places.displayName,places.types,places.primaryType,places.primaryTypeDisplayName,places.nationalPhoneNumber,places.internationalPhoneNumber,places.formattedAddress,places.shortFormattedAddress,places.addressComponents,places.plusCode,places.location,places.viewport,places.rating,places.googleMapsUri,places.websiteUri,places.reviews,places.regularOpeningHours,places.timeZone,places.photos,places.adrFormatAddress,places.businessStatus,places.priceLevel,places.attributions,places.iconMaskBaseUri,places.iconBackgroundColor,places.currentOpeningHours,places.currentSecondaryOpeningHours,places.regularSecondaryOpeningHours,places.editorialSummary,places.paymentOptions,places.parkingOptions,places.subDestinations,places.fuelOptions,places.evChargeOptions,places.generativeSummary,places.areaSummary,places.containingPlaces,places.addressDescriptor,places.googleMapsLinks,places.priceRange,places.utcOffsetMinutes,places.userRatingCount,places.takeout,places.delivery,places.dineIn,places.curbsidePickup,places.reservable,places.servesBreakfast,places.servesLunch,places.servesDinner,places.servesBeer,places.servesWine,places.servesBrunch,places.servesVegetarianFood,places.outdoorSeating,places.liveMusic,places.menuForChildren,places.servesCocktails,places.servesDessert,places.servesCoffee,places.goodForChildren,places.allowsDogs,places.restroom,places.goodForGroups,places.goodForWatchingSports,places.accessibilityOptions,places.pureServiceAreaBusiness',
-  //     },
-  //     body: JSON.stringify({
-  //       textQuery: input,
-  //     }),
-  //   });
-  //   this.addressSuggestions = await response.json();
-  //   console.log('this.addressSuggestions', this.addressSuggestions);
-  // }
-
-  async fetchAddressSuggestions(input: string) {
-    if (!input) {
-      this.addressSuggestions = [];
+  async fetchUserCountry() {
+    // If already set user country or Google Map API key is not set, return.
+    if (this.address?.country || !window?.scData?.google_map_api_key) {
       return;
     }
 
-    const requestBody = {
-      input,
-    };
-
-    const response = await fetch('https://places.googleapis.com/v1/places:autocomplete', {
+    // Search for the user's country - https://www.googleapis.com/geolocation/v1/geolocate
+    const geoLocateResponse = await fetch('https://www.googleapis.com/geolocation/v1/geolocate?key=' + window?.scData?.google_map_api_key, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Goog-Api-Key': '', // API key
-        'X-Goog-FieldMask': '*',
       },
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify({
+        considerIp: true,
+      }),
     });
-    const { suggestions } = await response.json();
-    if (!suggestions?.length) {
+
+    const userCountryResponse = await geoLocateResponse.json();
+    if (!userCountryResponse?.location) {
+      return;
+    }
+
+    // Fetch the country name from the coordinates.
+    const { lat, lng } = userCountryResponse.location;
+
+    const countryResponse = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${window?.scData?.google_map_api_key}`);
+    const countryData = await countryResponse.json();
+
+    // If some error occurred, return.
+    if (countryData?.error_message) {
+      return;
+    }
+
+    // Find the country from the address components.
+    const country = countryData?.results?.[0]?.address_components?.find(component => component.types.includes('country'))?.short_name || null;
+    if (!country) {
+      return;
+    }
+
+    // Update the address with the user's country.
+    this.updateAddress({ country });
+  }
+
+  onChangeAddressLine1(e: any) {
+    this.showAddressFields();
+
+    // If the google map api key is not set, update the address and return.
+    if (!window?.scData?.google_map_api_key || !e.target.value) {
+      this.updateAddress({ line_1: e.target.value || null });
+      return;
+    }
+
+    this.showAddressSuggestions = true;
+    this.fetchAddressSuggestions(e.target.value);
+  }
+
+  async fetchAddressSuggestions(input: string) {
+    const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': window?.scData?.google_map_api_key,
+        'X-Goog-FieldMask': 'places.id,places.displayName,places.types,places.primaryType,places.primaryTypeDisplayName,places.addressComponents',
+      },
+      body: JSON.stringify({
+        textQuery: input,
+      }),
+    });
+
+    const addressResponse = await response.json();
+
+    // If some error occurred, hide the suggestions and show error notice.
+    if (!!addressResponse?.error?.message) {
+      createErrorNotice({
+        message: __('Google Map Error: ', 'surecart') + addressResponse?.error?.message,
+      });
+
       this.showAddressSuggestions = false;
       this.addressSuggestions = [];
       return;
     }
 
-    this.showAddressSuggestions = true;
-    this.addressSuggestions = suggestions?.map((suggestion: any) => ({
-      label: suggestion.placePrediction?.structuredFormat?.mainText?.text,
-      value: suggestion.placePrediction?.placeId,
-      details: suggestion?.placePrediction?.structuredFormat?.secondaryText,
-    }));
-  }
-
-  async fetchPlaceDetails(placeId: string) {
-    console.log('placeId', placeId);
-    const detailsResponse = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': '', // API key
-        'X-Goog-FieldMask': '*',
-      },
-    });
-    const details = await detailsResponse.json();
-    if (!details?.addressComponents) {
+    // If no places found, hide the suggestions.
+    if (!addressResponse?.places?.length) {
+      this.showAddressSuggestions = false;
+      this.addressSuggestions = [];
       return;
     }
 
-    const addressComponents = details.addressComponents;
+    // Map the address suggestions to a more readable format.
+    this.addressSuggestions = addressResponse?.places?.map((place: GoogleMapPlace) => ({
+      displayName: place.displayName?.text ?? input,
+      placeId: place.id,
+      addressComponents: place.addressComponents,
+    }));
+  }
 
-    // const generatedline1 = addressComponents
-    //   .filter(component => component.types.includes('street_number') || component.types.includes('route'))
-    //   .map(component => component.longText)
-    //   .join(' ');
+  showAddressFields() {
+    this.showCity = true;
+    this.showState = true;
+    this.showPostal = true;
+  }
 
-    const address = {
-      line_1: details?.displayName?.text || null,
+  async fetchPlaceDetails(placeId: string) {
+    // Find the places from the suggestions.
+    const place = this.addressSuggestions.find((suggestion: AddressSuggestion) => suggestion.placeId === placeId);
+    if (!place?.addressComponents) {
+      return;
+    }
+
+    const { addressComponents } = place;
+
+    // Get the state value and check its length because for some countries, wrong values are returned.
+    // And it then select the placeholder value.
+    const stateValue = addressComponents.find(component => component.types.includes('administrative_area_level_1'))?.shortText || null;
+    const state = stateValue && stateValue.length <= 3 ? stateValue : null;
+
+    // Update the address with the place details.
+    this.showAddressSuggestions = false;
+    this.updateAddress({
+      line_1: place.displayName || null,
       city: addressComponents.find(component => component.types.includes('locality'))?.shortText || null,
-      state: addressComponents.find(component => component.types.includes('administrative_area_level_1'))?.shortText || null,
+      state,
       postal_code: addressComponents.find(component => component.types.includes('postal_code'))?.shortText || null,
       country: addressComponents.find(component => component.types.includes('country'))?.shortText || null,
-    };
+    });
 
-    this.showAddressSuggestions = false;
-    this.updateAddress(address);
+    this.addressSuggestions = [];
   }
 
   renderAddressSuggestions() {
@@ -301,25 +352,39 @@ export class ScAddress {
 
     return (
       <div class="sc-address__suggestions" part="suggestions">
-        <sc-dropdown style={{ '--panel-width': '28.1em' }} position="bottom-right" placement="bottom" open={this.addressSuggestions.length > 0}>
+        <sc-dropdown
+          style={{ '--panel-width': '28.1em', '--sc-menu-item-white-space': 'wrap', '--sc-dropdown-overflow': 'hidden', '--sc-dropdown-overflow-y': 'auto' }}
+          position="bottom-right"
+          placement="bottom"
+          open={this.addressSuggestions.length > 0}
+        >
           <sc-menu>
-            <sc-menu-item disabled>
-              <div class="sc-address__suggestions-header">
-                <span>{__('Suggestions powered by Google', 'surecart')}</span>
-                <sc-button
-                  type="text"
-                  onClick={() => {
-                    this.showAddressSuggestions = false;
-                  }}
-                >
-                  <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
-                </sc-button>
-              </div>
+            <sc-menu-item noSelect>
+              <span slot="prefix">{__('Suggestions powered by Google', 'surecart')}</span>
+              <sc-button
+                slot="suffix"
+                type="text"
+                onClick={() => {
+                  this.showAddressSuggestions = false;
+                }}
+              >
+                <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
+              </sc-button>
             </sc-menu-item>
 
+            {/* Address suggestions. */}
             {this.addressSuggestions.map(suggestion => (
-              <sc-menu-item onClick={() => this.fetchPlaceDetails(suggestion?.value)}>{suggestion.label}</sc-menu-item>
+              <sc-menu-item onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}>{suggestion.displayName}</sc-menu-item>
             ))}
+
+            {/* Enter address manually. */}
+            <sc-menu-item
+              noSelect
+              style={{ '--sc-font-size-medium': 'var(--sc-font-size-small)', '--sc-menu-item-text-decoration': 'underline' }}
+              onClick={() => this.showAddressFields()}
+            >
+              {__('Enter address manually', 'surecart')}
+            </sc-menu-item>
           </sc-menu>
         </sc-dropdown>
       </div>
@@ -336,7 +401,7 @@ export class ScAddress {
         case 'city':
           return this.showCity;
         case 'state':
-          return !!this?.regions?.length && !!this?.address?.country;
+          return this.showState && !!this?.regions?.length && !!this?.address?.country;
         case 'postcode':
           return this.showPostal;
         default:
@@ -397,14 +462,8 @@ export class ScAddress {
                     <sc-input
                       exportparts="base:input__base, input, form-control, label, help-text"
                       value={this?.address?.line_1}
-                      onScChange={(e: any) => {
-                        this.showAddressSuggestions = true;
-                        this.updateAddress({ line_1: e.target.value || null });
-                      }}
-                      onScInput={(e: any) => {
-                        this.showAddressSuggestions = true;
-                        this.updateAddress({ line_1: e.target.value || null });
-                      }}
+                      onScChange={(e: any) => this.onChangeAddressLine1(e)}
+                      onScInput={(e: any) => this.onChangeAddressLine1(e)}
                       autocomplete="street-address"
                       placeholder={field.label}
                       name={this.names?.line_1}

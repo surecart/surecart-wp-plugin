@@ -51,7 +51,9 @@
   border: solid 1px var(--sc-panel-border-color);
   border-radius: var(--sc-border-radius-medium);
   box-shadow: var(--sc-shadow-large);
-  overflow: auto;
+  overflow: var(--sc-dropdown-overflow, auto);
+  overflow-x: var(--sc-dropdown-overflow-x, auto);
+  overflow-y: var(--sc-dropdown-overflow-y, auto);
   overscroll-behavior: none;
   // pointer-events: none;
   transition: var(--sc-transition-fast) opacity, var(--sc-transition-fast) transform;

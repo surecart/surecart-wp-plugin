@@ -1052,6 +1052,7 @@
     "checked": true,
     "disabled": true,
     "href": true,
+    "no-select": true,
     "target": true,
     "value": true,
     "style": true,

@@ -1848,6 +1848,10 @@ export namespace Components {
          */
         "href": string;
         /**
+          * Disable the ability to select the item.
+         */
+        "noSelect": boolean;
+        /**
           * Removes focus from the button.
          */
         "setBlur": () => Promise<void>;
@@ -6934,7 +6938,7 @@ declare namespace LocalJSX {
          */
         "onScChangeAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         /**
-          * Address change event.
+          * Address input event.
          */
         "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         /**
@@ -8929,6 +8933,10 @@ declare namespace LocalJSX {
           * Optional link to follow.
          */
         "href"?: string;
+        /**
+          * Disable the ability to select the item.
+         */
+        "noSelect"?: boolean;
         /**
           * The target of the link.
          */

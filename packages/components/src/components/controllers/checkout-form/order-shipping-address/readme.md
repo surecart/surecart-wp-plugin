@@ -46,10 +46,16 @@ Type: `Promise<boolean>`
 graph TD;
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
+  sc-address --> sc-dropdown
+  sc-address --> sc-menu
+  sc-address --> sc-menu-item
+  sc-address --> sc-button
+  sc-address --> sc-icon
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
   sc-address --> sc-block-ui
+  sc-button --> sc-spinner
   sc-form-control --> sc-visually-hidden
   sc-select --> sc-icon
   sc-select --> sc-menu-label

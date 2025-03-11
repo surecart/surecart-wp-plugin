@@ -18,9 +18,10 @@
   user-select: none;
   white-space: var(--sc-menu-item-white-space, nowrap);
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: var(--sc-menu-item-text-decoration, none);
 
-  &.menu-item--focused:not(.menu-item--disabled) {
+  &.menu-item--focused:not(.menu-item--disabled)
+  &.menu-item--focused:not(.menu-item--no-select) {
     outline: none;
     background-color: var(--sc-menu-item-background-focused, var(--sc-color-primary-500));
     color: var(--sc-color-white);
@@ -30,6 +31,12 @@
     outline: none;
     color: var(--sc-color-gray-400);
     cursor: not-allowed;
+  }
+
+  &.menu-item--no-select {
+    user-select: none;
+    outline: none;
+    color: var(--sc-color-gray-400);
   }
 
   .menu-item__label {

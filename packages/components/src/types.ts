@@ -70,6 +70,7 @@ declare global {
       user_permissions: {
         manage_sc_shop_settings: boolean;
       };
+      google_map_api_key: string;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -1135,6 +1136,28 @@ export interface Address extends Object {
   state?: string;
   postal_code?: string;
   country?: string;
+}
+
+export interface GoogleMapAddressComponents extends Object {
+  languageCode: string;
+  longText: string;
+  shortText: string;
+  types: string[];
+}
+
+export interface GoogleMapPlace extends Object {
+  id: string;
+  displayName: {
+    languageCode: string;
+    text: string;
+  };
+  addressComponents: Array<GoogleMapAddressComponents>;
+}
+
+export interface AddressSuggestion extends Object {
+  displayName: string;
+  placeId: string;
+  addressComponents?: GoogleMapAddressComponents[];
 }
 
 export interface Fulfillment {

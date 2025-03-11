@@ -65,6 +65,7 @@ Type: `Promise<boolean>`
 | `"search__input"`        | The select search input.                       |
 | `"select__base"`         | The select boxes base element.                 |
 | `"spinner__base"`        | The select spinner base.                       |
+| `"suggestions"`          |                                                |
 | `"trigger"`              | The select box trigger.                        |
 
 
@@ -78,6 +79,11 @@ Type: `Promise<boolean>`
 
 ### Depends on
 
+- [sc-dropdown](../dropdown)
+- [sc-menu](../menu)
+- [sc-menu-item](../menu-item)
+- [sc-button](../button)
+- [sc-icon](../icon)
 - [sc-form-control](../form-control)
 - [sc-select](../select)
 - [sc-input](../input)
@@ -86,10 +92,16 @@ Type: `Promise<boolean>`
 ### Graph
 ```mermaid
 graph TD;
+  sc-address --> sc-dropdown
+  sc-address --> sc-menu
+  sc-address --> sc-menu-item
+  sc-address --> sc-button
+  sc-address --> sc-icon
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
   sc-address --> sc-block-ui
+  sc-button --> sc-spinner
   sc-form-control --> sc-visually-hidden
   sc-select --> sc-icon
   sc-select --> sc-menu-label

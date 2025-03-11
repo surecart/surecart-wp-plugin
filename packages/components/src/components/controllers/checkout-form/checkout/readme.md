@@ -139,6 +139,11 @@ graph TD;
   sc-form-components-validator --> sc-line-item-trial
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
+  sc-address --> sc-dropdown
+  sc-address --> sc-menu
+  sc-address --> sc-menu-item
+  sc-address --> sc-button
+  sc-address --> sc-icon
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input

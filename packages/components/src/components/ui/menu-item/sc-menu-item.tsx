@@ -22,6 +22,9 @@ export class ScMenuItem {
   /** Draws the item in a checked state. */
   @Prop({ reflect: true }) checked: boolean = false;
 
+  /** Disable the ability to select the item. */
+  @Prop({ reflect: true }) noSelect: boolean = false;
+
   /** A unique value to store in the menu item. This can be used as a way to identify menu items when selected. */
   @Prop({ reflect: true }) value: string = '';
 
@@ -59,6 +62,7 @@ export class ScMenuItem {
           'menu-item--checked': this.checked,
           'menu-item--disabled': this.disabled,
           'menu-item--focused': this.hasFocus,
+          'menu-item--no-select': this.noSelect,
           'menu-item--is-rtl': isRtl(),
         }}
         href={this.href}
