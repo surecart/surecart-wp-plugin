@@ -14,7 +14,6 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import { useEntityRecord } from '@wordpress/core-data';
-import { getCurrencySymbol } from '../../util';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -43,17 +42,6 @@ export default () => {
 		edit: brandEditItem,
 		hasResolved: brandHasLoadedItem,
 	} = useEntityRecord('surecart', 'store', 'brand');
-
-	const supportedCurrencyOptions = Object.keys(
-		scData?.supported_currencies || {}
-	).map((value) => {
-		return {
-			label: `${scData?.supported_currencies[value]} (${getCurrencySymbol(
-				value
-			)})`,
-			value,
-		};
-	});
 
 	/**
 	 * Form is submitted.
@@ -133,7 +121,18 @@ export default () => {
 							onScChange={(e) =>
 								editAccountItem({ currency: e.target.value })
 							}
-							choices={supportedCurrencyOptions}
+							choices={(scData?.supported_currencies || []).map(
+								({
+									name,
+									symbol,
+									currency: value,
+									flag: icon,
+								}) => ({
+									label: `${name} (${symbol})`,
+									value,
+									icon,
+								})
+							)}
 							label={__('Store Currency', 'surecart')}
 							required
 							disabled={accountItem?.currency_locked}

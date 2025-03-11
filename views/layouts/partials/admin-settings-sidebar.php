@@ -39,18 +39,27 @@
 			<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="mouse-pointer" slot="prefix"></sc-icon>
 			<?php esc_html_e( 'Affiliates', 'surecart' ); ?>
 		</sc-tab>
+
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'tax_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'tax_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="tag"></sc-icon>
 			<?php esc_html_e( 'Taxes', 'surecart' ); ?>
 		</sc-tab>
+
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'shipping_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'shipping_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="truck"></sc-icon>
 			<?php esc_html_e( 'Shipping', 'surecart' ); ?>
 		</sc-tab>
+
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'processors' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'processors' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="credit-card"></sc-icon>
 			<?php esc_html_e( 'Payment Processors', 'surecart' ); ?>
 		</sc-tab>
+
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'display_currency' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'display_currency' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="dollar-sign"></sc-icon>
+			<?php esc_html_e( 'Currencies', 'surecart' ); ?>
+		</sc-tab>
+
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'export' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'export' === $tab ? 'active' : ''; ?> >
 			<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="layers" slot="prefix"></sc-icon>
 			<?php esc_html_e( 'Data Export', 'surecart' ); ?>

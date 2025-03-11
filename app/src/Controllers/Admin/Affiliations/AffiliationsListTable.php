@@ -195,8 +195,7 @@ class AffiliationsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total_commission_amount( $affiliation ) {
-		$store_currency = \SureCart::account()->currency ?? 'usd';
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $store_currency ) ) . '" value="' . (float) $affiliation->total_commission_amount . '"></sc-format-number>';
+		return $affiliation->total_commission_display_amount;
 	}
 
 	/**
@@ -206,8 +205,7 @@ class AffiliationsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total_not_paid_commission_amount( $affiliation ) {
-		$store_currency = \SureCart::account()->currency ?? 'usd';
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $store_currency ) ) . '" value="' . (float) $affiliation->total_not_paid_commission_amount . '"></sc-format-number>';
+		return $affiliation->total_not_paid_commission_display_amount;
 	}
 
 	/**
@@ -248,7 +246,7 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function column_default( $affiliation, $column_name ) {
 		// Call the parent method to handle custom columns
-        parent::column_default( $affiliation, $column_name );
+		parent::column_default( $affiliation, $column_name );
 
 		switch ( $column_name ) {
 			case 'description':

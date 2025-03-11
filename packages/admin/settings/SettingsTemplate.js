@@ -13,6 +13,7 @@ export default ({
 	onSubmit,
 	children,
 	icon,
+	className,
 	noButton,
 	prefix,
 	suffix,
@@ -20,7 +21,7 @@ export default ({
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	return (
-		<ScForm onScSubmit={onSubmit}>
+		<ScForm onScSubmit={onSubmit} className={className}>
 			<Global
 				styles={css`
 					:root {

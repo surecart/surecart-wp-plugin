@@ -82,10 +82,10 @@ class Upsell extends Model implements PageModel {
 		}
 		// permalinks off.
 		if ( ! get_option( 'permalink_structure' ) ) {
-			return add_query_arg( 'sc_upsell_id', $this->id, get_home_url() );
+			return add_query_arg( 'sc_upsell_id', $this->id, get_home_url( null, '', 'rest' ) );
 		}
 		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'upsell_page' ) ) . trailingslashit( $this->id );
+		return trailingslashit( get_home_url( null, trailingslashit( \SureCart::settings()->permalinks()->getBase( 'upsell_page' ) ) . trailingslashit( $this->id ) ) );
 	}
 
 	/**

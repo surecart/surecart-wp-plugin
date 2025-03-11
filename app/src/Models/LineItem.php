@@ -3,6 +3,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCheckout;
+use SureCart\Models\Traits\HasFees;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Support\Currency;
 use SureCart\Models\Traits\HasProduct;
@@ -14,6 +15,7 @@ class LineItem extends Model {
 	use HasPrice;
 	use HasCheckout;
 	use HasProduct;
+	use HasFees;
 
 	/**
 	 * Rest API endpoint
@@ -190,6 +192,16 @@ class LineItem extends Model {
 		}
 		return $this->discount_amount / 100;
 	}
+
+	/**
+	 * Get the total default currency display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalDefaultCurrencyDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_amount, $this->currency, [ 'convert' => false ] );
+	}
+
 
 	/**
 	 * Purchasable status display

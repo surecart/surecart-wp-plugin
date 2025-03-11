@@ -76,6 +76,7 @@ return array(
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\ProcessorRestServiceProvider::class,
+		\SureCart\Rest\DisplayCurrencyRestServiceProvider::class,
 		\SureCart\Rest\ManualPaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\PaymentIntentsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,

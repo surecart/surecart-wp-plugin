@@ -19,11 +19,8 @@ export class ScLineItemBump {
     return (
       <sc-line-item>
         <span slot="description">{this.label || __('Bundle Discount', 'surecart')}</span>
-        <span slot="price">
-          <sc-format-number type="currency" currency={checkoutState?.checkout?.currency || 'usd'} value={checkoutState?.checkout?.bump_amount}></sc-format-number>
-        </span>
+        <span slot="price">{checkoutState?.checkout?.bump_display_amount}</span>
       </sc-line-item>
     );
   }
 }
-

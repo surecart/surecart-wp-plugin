@@ -10,6 +10,13 @@ use SureCart\Rest\RestServiceInterface;
  */
 abstract class RestServiceProvider extends \WP_REST_Controller implements RestServiceInterface {
 	/**
+	 * Whether the rest service provider converts currency.
+	 *
+	 * @var boolean
+	 */
+	protected $converts_currency = false;
+
+	/**
 	 * Mark specific properties that need additional permissions checks
 	 * before modifying. We don't want customers being able to modify these.
 	 *
@@ -207,12 +214,23 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 		do_action( 'litespeed_control_set_nocache', 'surecart api request' );
 
 		return function ( $request ) use ( $class, $method ) {
+			// check and filter context.
+			$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+
+			// should we convert currency?
+			$converts_currency = $this->converts_currency && 'edit' !== $context;
+
+			// allow override of currency conversion in a per-request basis.
+			if ( isset( $request['currency_conversion'] ) ) {
+				$converts_currency = wp_validate_boolean( $request['currency_conversion'] );
+			}
+
+			// convert currency if needed.
+			\SureCart::currency()->convert( $converts_currency );
+
 			// get and call controller with request.
 			$controller = \SureCart::closure()->method( $class, $method );
 			$model      = $controller( $request );
-
-			// check and filter context.
-			$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
 			if ( is_wp_error( $model ) ) {
 				return $model;

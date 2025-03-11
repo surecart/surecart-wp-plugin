@@ -21,7 +21,6 @@ class BlockTemplatesService {
 		add_theme_support( 'appearance-tools' );
 		add_theme_support( 'custom-spacing' );
 		add_theme_support( 'custom-line-height' );
-		$this->utility = \SureCart::utility()->blockTemplates();
 	}
 
 	/**
@@ -30,6 +29,7 @@ class BlockTemplatesService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		$this->utility = \SureCart::utility()->blockTemplates();
 		// add block templates.
 		add_filter( 'get_block_templates', [ $this, 'addBlockTemplates' ], 10, 3 );
 		add_filter( 'pre_get_block_file_template', [ $this, 'getBlockFileTemplate' ], 10, 3 );

@@ -250,7 +250,7 @@ export default ({ order, checkout, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.discount_amount && (
+				{!!checkout?.discount && (
 					<LineItem
 						label={
 							<>

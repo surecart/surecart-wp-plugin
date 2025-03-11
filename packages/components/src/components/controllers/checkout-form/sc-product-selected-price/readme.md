@@ -33,7 +33,6 @@
 - [sc-form](../../../ui/form)
 - [sc-price-input](../../../ui/price-input)
 - [sc-button](../../../ui/button)
-- [sc-format-number](../../../util/format-number)
 - [sc-icon](../../../ui/icon)
 
 ### Graph
@@ -42,7 +41,6 @@ graph TD;
   sc-product-selected-price --> sc-form
   sc-product-selected-price --> sc-price-input
   sc-product-selected-price --> sc-button
-  sc-product-selected-price --> sc-format-number
   sc-product-selected-price --> sc-icon
   sc-price-input --> sc-input
   sc-input --> sc-form-control
