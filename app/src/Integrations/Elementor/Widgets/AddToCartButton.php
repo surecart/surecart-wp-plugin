@@ -530,12 +530,12 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		);
 
 		if ( ! $is_add_to_cart ) {
-			$this->add_render_attribute( 'content-wrapper', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->add_render_attribute( 'content-wrapper', 'data-wp-bind--href', 'state.checkoutUrl' );
-			$this->add_render_attribute( 'content-wrapper', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
+			$this->add_render_attribute( 'wrapper', 'data-wp-bind--disabled', 'state.isUnavailable' );
+			$this->add_render_attribute( 'wrapper', 'data-wp-bind--href', 'state.checkoutUrl' );
+			$this->add_render_attribute( 'wrapper', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
 		} else {
-			$this->add_render_attribute( 'content-wrapper', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->add_render_attribute( 'content-wrapper', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+			$this->add_render_attribute( 'wrapper', 'data-wp-bind--disabled', 'state.isUnavailable' );
+			$this->add_render_attribute( 'wrapper', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
 
 		ob_start();
