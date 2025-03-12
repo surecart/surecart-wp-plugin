@@ -36,6 +36,11 @@ class ProductScriptsController extends AdminModelEditController {
 		$this->data['api_url'] = \SureCart::requests()->getBaseUrl();
 	}
 
+	/**
+	 * Enqueue the scripts.
+	 *
+	 * @return void
+	 */
 	public function enqueue() {
 		$available_templates              = wp_get_theme()->get_page_templates( null, 'sc_product' );
 		$available_templates['']          = apply_filters( 'default_page_template_title', __( 'Theme Layout', 'surecart' ), 'rest-api' );
