@@ -306,7 +306,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.5.2 - March 12th, 2025 =
-- Fix: Issue where currency selection was not being shown on upsell pages.
+- Fix: Issue where currency selection was not converted on upsell pages.
 - Fix: Deprecation notice on site health page in php 8.2+.
 
 = 3.5.1 - March 11th, 2025 =
