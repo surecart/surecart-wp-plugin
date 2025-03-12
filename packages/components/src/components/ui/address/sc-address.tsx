@@ -114,15 +114,20 @@ export class ScAddress {
   handleAddressChange() {
     if (!this.address?.country) return;
     this.setRegions();
-    this.showCity = !!this.address?.city;
-    this.showState = !!this.address?.state;
-    this.showPostal = !!this.address?.postal_code;
+    this.showCity = !!this.address?.city || !!this.address?.line_1;
+    this.showState = !!this.address?.state || !!this.address?.line_1;
+    this.showPostal = !!this.address?.postal_code || !!this.address?.line_1;
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
 
     // if address line 1 changes, we want to fetch address suggestions
     if (!!this.address.line_1 && this.showAddressSuggestions) {
       this.fetchAddressSuggestions(this.address.line_1);
+    }
+
+    // If no api key set, then show the fields.
+    if (!window?.scData?.google_map_api_key) {
+      this.showAddressFields();
     }
   }
 
@@ -221,7 +226,7 @@ export class ScAddress {
       return;
     }
 
-    // Search for the user's country - https://www.googleapis.com/geolocation/v1/geolocate
+    // Search for the user's country.
     const geoLocateResponse = await fetch('https://www.googleapis.com/geolocation/v1/geolocate?key=' + window?.scData?.google_map_api_key, {
       method: 'POST',
       headers: {
@@ -258,17 +263,17 @@ export class ScAddress {
     this.updateAddress({ country });
   }
 
-  onChangeAddressLine1(e: any) {
-    this.showAddressFields();
-
+  async onChangeAddressLine1(e: any) {
     // If the google map api key is not set, update the address and return.
     if (!window?.scData?.google_map_api_key || !e.target.value) {
       this.updateAddress({ line_1: e.target.value || null });
+      this.showAddressFields();
       return;
     }
 
     this.showAddressSuggestions = true;
-    this.fetchAddressSuggestions(e.target.value);
+    await this.fetchAddressSuggestions(e.target.value);
+    this.showAddressFields();
   }
 
   async fetchAddressSuggestions(input: string) {
