@@ -11,3 +11,32 @@
 		}
 	}
 }
+
+.sc-product-line-item {
+	&--has-swap {
+		border: 1px solid var(--sc-input-border-color);
+		background: #fff;
+		border-radius: var(--sc-border-radius-medium);
+		gap: 0;
+		border-radius: var(--sc-input-border-radius-medium);
+		overflow: hidden;
+		padding: 0;
+
+		.sc-product-line-item__content {
+			padding: var(--sc-spacing-medium);
+			border-bottom: solid var(--sc-input-border-width)
+				var(--sc-input-border-color);
+		}
+
+		.sc-product-line-item__swap {
+			padding: var(--sc-spacing-medium);
+			background: var(--sc-color-gray-50);
+			line-height: 1;
+			font-size: var(--sc-font-size-small);
+			display: flex;
+			align-items: center;
+			gap: var(--sc-spacing-small);
+			color: var(--sc-input-label-color);
+		}
+	}
+}

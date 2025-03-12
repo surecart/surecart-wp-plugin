@@ -160,6 +160,11 @@ const { state, actions } = store('surecart/checkout', {
 			);
 		},
 
+		get swap() {
+			const { line_item } = getContext();
+			return line_item?.swap || line_item?.price?.current_swap;
+		},
+
 		/**
 		 * Get the cart/checkout error title.
 		 */
@@ -345,6 +350,22 @@ const { state, actions } = store('surecart/checkout', {
 			if (input) {
 				setTimeout(() => input.focus(), 0);
 			}
+		},
+
+		toggleSwap: function* () {
+			const { line_item, mode, formId } = getContext();
+			// fetch the checkout.
+			const { toggleSwap } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			const checkout = yield* toggleSwap({
+				id: line_item?.id,
+				action: line_item?.swap ? 'unswap' : 'swap',
+			});
+
+			actions.setCheckout(checkout, mode, formId);
 		},
 
 		/**

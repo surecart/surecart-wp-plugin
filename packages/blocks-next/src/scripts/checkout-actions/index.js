@@ -197,19 +197,27 @@ export function* removeCheckoutLineItem(id) {
  * Toggle a swap
  */
 export function* toggleSwap({ id, action = 'swap' }) {
-	const item = yield apiFetch({
-		path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
-			expand: [
-				...(expand || []).map((item) => {
-					return item.includes('.') ? item : `checkout.${item}`;
-				}),
-				'checkout',
-			],
-		}),
-		method: 'PATCH',
-	});
-
-	return item?.checkout;
+	const context = getContext();
+	try {
+		checkoutState.loading = true;
+		const item = yield apiFetch({
+			path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
+				expand: [
+					...(expand || []).map((item) => {
+						return item.includes('.') ? item : `checkout.${item}`;
+					}),
+					'checkout',
+				],
+			}),
+			method: 'PATCH',
+		});
+		return item?.checkout;
+	} catch (e) {
+		console.error(e);
+		checkoutState.error = e;
+	} finally {
+		checkoutState.loading = false;
+	}
 }
 
 /**
