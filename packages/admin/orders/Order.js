@@ -342,7 +342,11 @@ export default () => {
 					<LineItems
 						order={order}
 						checkout={order?.checkout}
-						charge={order?.checkout?.charge}
+						chargeIds={
+							order?.checkout?.charges?.data?.map(
+								(charge) => charge.id
+							) ?? []
+						}
 						loading={!hasLoadedOrder}
 					/>
 				)}

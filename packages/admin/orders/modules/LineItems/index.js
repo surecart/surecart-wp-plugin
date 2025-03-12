@@ -36,7 +36,7 @@ const status = {
 	draft: __('Draft', 'surecart'),
 };
 
-export default ({ order, checkout }) => {
+export default ({ order, checkout, chargeIds }) => {
 	const line_items = checkout?.line_items?.data;
 
 	// get the refunds.
@@ -45,7 +45,7 @@ export default ({ order, checkout }) => {
 		'refund',
 		{
 			context: 'edit',
-			charge_ids: [order?.checkout?.charge?.id],
+			charge_ids: chargeIds,
 			per_page: 100,
 			expand: ['refund_items', 'refund_item.line_item'],
 		}
