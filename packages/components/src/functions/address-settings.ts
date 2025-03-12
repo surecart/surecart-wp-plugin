@@ -20,19 +20,8 @@ export function sortAddressFields(countryCode: string, defaultCountryFields: Arr
   return fields.sort((a, b) => a.priority - b.priority);
 }
 
-/**
- * Get the user's country code based on Google Geolocation and GeoCode APIs.
- *
- * @returns {Promise<string | null>} The user's country code.
- */
-export async function getCurrentUserCountryCode() {
-  // If already set user country or Google Map API key is not set, return.
-  if (!window?.scData?.google_map_api_key) {
-    return null;
-  }
-
-  // Search for the user's country.
-  const geoLocateResponse = await fetch('https://www.googleapis.com/geolocation/v1/geolocate?key=' + window?.scData?.google_map_api_key, {
+async function fetchGeoLocation() {
+  const response = await fetch(`https://www.googleapis.com/geolocation/v1/geolocate?key=${window?.scData?.google_map_api_key}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -41,23 +30,35 @@ export async function getCurrentUserCountryCode() {
       considerIp: true,
     }),
   });
+  return response.json();
+}
 
-  const userCountryResponse = await geoLocateResponse.json();
-  if (!userCountryResponse?.location) {
+async function fetchCountryFromCoordinates(lat: number, lng: number) {
+  const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${window?.scData?.google_map_api_key}`);
+  return response.json();
+}
+
+/**
+ * Get the user's country code based on Google Geolocation and GeoCode APIs.
+ *
+ * @returns {Promise<string | null>} The user's country code.
+ */
+export async function getCurrentUserCountryCode() {
+  if (!window?.scData?.google_map_api_key) {
     return null;
   }
 
-  // Fetch the country name from the coordinates.
-  const { lat, lng } = userCountryResponse.location;
+  const geoLocateResponse = await fetchGeoLocation();
+  if (!geoLocateResponse?.location) {
+    return null;
+  }
 
-  const countryResponse = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${window?.scData?.google_map_api_key}`);
-  const countryData = await countryResponse.json();
+  const { lat, lng } = geoLocateResponse.location;
+  const countryData = await fetchCountryFromCoordinates(lat, lng);
 
-  // If some error occurred, return.
   if (countryData?.error_message) {
     return null;
   }
 
-  // Find the country from the address components.
   return countryData?.results?.[0]?.address_components?.find(component => component.types.includes('country'))?.short_name || null;
 }
