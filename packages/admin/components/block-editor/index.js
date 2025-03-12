@@ -6,6 +6,7 @@ import { css, jsx, Global } from '@emotion/core';
  */
 import { Popover, Button } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { unregisterBlockType, getBlockTypes } from '@wordpress/blocks';
 import { useResizeObserver } from '@wordpress/compose';
 import {
 	useCallback,
@@ -190,6 +191,21 @@ export default function ({
 	useEffect(() => {
 		// Manually update the settings so that __unstableResolvedAssets gets added to the data store.
 		updateSettings(editorSettings);
+	}, []);
+
+	// Unregister blocks that don't start with 'surecart/' or 'core/'
+	useEffect(() => {
+		const blockTypes = getBlockTypes();
+		blockTypes.forEach((blockType) => {
+			const { name } = blockType;
+			const { surecart_allowed_block_prefixes } = editorSettings;
+			const isAllowed = surecart_allowed_block_prefixes.some((prefix) =>
+				name.startsWith(prefix)
+			);
+			if (!isAllowed) {
+				unregisterBlockType(name);
+			}
+		});
 	}, []);
 
 	const [editorHeight, setEditorHeight] = useState(0);

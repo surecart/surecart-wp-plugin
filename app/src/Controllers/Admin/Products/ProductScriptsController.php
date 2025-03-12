@@ -98,6 +98,7 @@ class ProductScriptsController extends AdminModelEditController {
 		// Add patterns in both locations to ensure compatibility.
 		$editor_settings['__experimentalBlockPatterns']          = $patterns;
 		$editor_settings['__experimentalBlockPatternCategories'] = $pattern_categories;
+		$editor_settings['surecart_allowed_block_prefixes']      = apply_filters( 'surecart/product_page/allowed_block_prefixes', array( 'surecart/', 'core/' ) );
 
 		wp_add_inline_script(
 			'surecart-components',
