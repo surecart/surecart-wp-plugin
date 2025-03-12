@@ -16,6 +16,15 @@
     "class": true,
     "slot": true
   },
+  "sc-address-suggestions": {
+    "address": true,
+    "regions": true,
+    "show-suggestions": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-alert": {
     "closable": true,
     "duration": true,
