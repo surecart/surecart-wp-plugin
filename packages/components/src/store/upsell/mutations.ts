@@ -141,7 +141,7 @@ export const handleCompletion = checkout => {
   // redirect to next upsell.
   state.loading = 'redirecting';
   window.location.assign(
-    addQueryArgs(checkout.current_upsell?.permalink, {
+    addQueryArgs(checkout.current_upsell?.permalink?.replace(/\/$/, ''), {
       sc_checkout_id: state.checkout?.id,
       sc_form_id: state.form_id,
     }),
