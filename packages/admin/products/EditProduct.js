@@ -244,6 +244,32 @@ export default ({ id, setBrowserURL }) => {
 					#screen-meta-links {
 						display: none;
 					}
+					[type='text'],
+					[type='email'],
+					[type='url'],
+					[type='password'],
+					[type='number'],
+					[type='date'],
+					[type='datetime-local'],
+					[type='month'],
+					[type='search'],
+					[type='tel'],
+					[type='time'],
+					[type='week'],
+					[multiple],
+					textarea,
+					select {
+						appearance: none;
+						background-color: inherit;
+						border-color: inherit;
+						border-width: inherit;
+						border-radius: inherit;
+						padding-top: unset;
+						padding-right: unset;
+						padding-bottom: unset;
+						padding-left: unset;
+						font-size: unset;
+					}
 				`}
 			/>
 			<UpdateModel
