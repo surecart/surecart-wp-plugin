@@ -17,6 +17,9 @@ export const expand = [
 	'line_item.variant',
 	'variant.image',
 	'price.product',
+	'price.current_swap',
+	'line_item.swap',
+	'swap.swap_price',
 	'product.featured_product_media',
 	'product.product_collections',
 	'product.product_medias',
@@ -188,6 +191,25 @@ export function* removeCheckoutLineItem(id) {
 	} finally {
 		checkoutState.loading = false;
 	}
+}
+
+/**
+ * Toggle a swap
+ */
+export function* toggleSwap({ id, action = 'swap' }) {
+	const item = yield apiFetch({
+		path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
+			expand: [
+				...(expand || []).map((item) => {
+					return item.includes('.') ? item : `checkout.${item}`;
+				}),
+				'checkout',
+			],
+		}),
+		method: 'PATCH',
+	});
+
+	return item?.checkout;
 }
 
 /**

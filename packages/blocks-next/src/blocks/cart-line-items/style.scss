@@ -10,41 +10,4 @@
 			display: none;
 		}
 	}
-
-	hr.sc-cart-items-divider {
-		border: none;
-		background: none;
-		border-top: 1px solid var(--sc-input-border-color);
-		width: 100%;
-	}
-
-	hr.sc-cart-items-divider:last-of-type {
-		display: none;
-	}
-
-	.sc-product-line-item:last-child .wp-block-separator {
-		display: none;
-	}
-
-	.sc-product-line-item__remove-button {
-		background: none;
-		border: none;
-		box-shadow: none;
-		padding: 0;
-		padding: 12px;
-		margin: -12px;
-		line-height: 1;
-		color: var(--sc-input-label-color);
-
-		svg {
-			margin: 0;
-			display: block;
-		}
-
-		&:focus {
-			outline: none;
-			box-shadow: 0 0 0 var(--sc-focus-ring-width)
-				var(--sc-focus-ring-color-primary);
-		}
-	}
 }

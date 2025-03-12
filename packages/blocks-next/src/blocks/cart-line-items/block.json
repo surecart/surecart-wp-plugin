@@ -76,10 +76,11 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": [
-		"file:../../styles/line-item.css",
-		"file:../../styles/product-line-item.css",
-		"file:../../styles/input-group.css",
-		"file:../../styles/quantity-selector.css",
+		"surecart-line-item",
+		"surecart-product-line-item",
+		"surecart-input-group",
+		"surecart-quantity-selector",
+		"surecart-toggle",
 		"file:./style-index.css"
 	],
 	"editorStyle": ["file:./index.css"],
