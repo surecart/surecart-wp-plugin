@@ -57,6 +57,7 @@ export class ScProductPrice {
         saleText={this.saleText}
         adHoc={price?.ad_hoc}
         trialDurationDays={price?.trial_duration_days}
+        setupFeeText={price?.setup_fee_text}
         setupFeeAmount={price?.setup_fee_enabled ? price?.setup_fee_amount : null}
         setupFeeName={price?.setup_fee_enabled ? price?.setup_fee_name : null}
         recurringPeriodCount={price?.recurring_period_count}
