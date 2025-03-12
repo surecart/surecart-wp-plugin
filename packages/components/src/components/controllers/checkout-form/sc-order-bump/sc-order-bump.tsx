@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { sprintf, __, _x } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
-import { getFormattedPrice, intervalString } from '../../../../functions/price';
+import { intervalString } from '../../../../functions/price';
 import { state as checkoutState } from '@store/checkout';
 
 import { Bump, Price, Product } from '../../../../types';
@@ -73,28 +73,16 @@ export class ScOrderBump {
         <span
           aria-label={
             /** translators: %s: old price */
-            sprintf(
-              __('Originally priced at %s.', 'surecart'),
-              getFormattedPrice({
-                amount: (this.bump?.price as Price)?.amount,
-                currency: (this.bump?.price as Price)?.currency,
-              }),
-            )
+            sprintf(__('Originally priced at %s.', 'surecart'), this.bump?.subtotal_display_amount)
           }
+          class="bump__original-price"
         >
-          <sc-format-number
-            type="currency"
-            class="bump__original-price"
-            value={(this.bump?.price as Price)?.amount}
-            currency={(this.bump?.price as Price)?.currency}
-          ></sc-format-number>{' '}
+          {this.bump?.subtotal_display_amount}
         </span>
         <span>
           <span aria-hidden="true">
-            {this.newPrice() === 0 && __('Free', 'surecart')}
-            {this.newPrice() !== null && this.newPrice() > 0 && (
-              <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
-            )}
+            {this.bump?.total_amount === 0 && __('Free', 'surecart')}
+            {this.bump?.total_amount > 0 && <span class="bump__new-price">{this.bump?.total_display_amount}</span>}
             {this.renderInterval()}
           </span>
         </span>
@@ -113,7 +101,7 @@ export class ScOrderBump {
           }
         >
           <span aria-hidden="true">
-            {_x('Save', 'Save money', 'surecart')} <sc-format-number type="currency" value={this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
+            {_x('Save', 'Save money', 'surecart')} {this.bump?.amount_off_display_amount}
           </span>
         </div>
       );
@@ -131,8 +119,8 @@ export class ScOrderBump {
           <span aria-hidden="true">
             {sprintf(
               /** translators: %s: amount percent off */
-              _x('Save %s%%', 'Save money', 'surecart'), 
-              this.bump?.percent_off
+              _x('Save %s%%', 'Save money', 'surecart'),
+              this.bump?.percent_off,
             )}
           </span>
         </div>
@@ -175,8 +163,8 @@ export class ScOrderBump {
               <span aria-hidden="true">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</span>
             </div>
             <div class="bump__amount">
-              <span>{this.renderPrice()}</span>
-              <span>{this.renderDiscount()}</span>
+              {this.renderPrice()}
+              {this.renderDiscount()}
             </div>
           </div>
         </div>

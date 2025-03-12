@@ -36,8 +36,8 @@ describe('sc-product-line-item', () => {
           currency="CAD"
           fees={
             [
-              { amount: -1000, description: 'Test' },
-              { amount: 9000, description: 'Test 2' },
+              { amount: -1000, display_amount: '$10.00', description: 'Test' },
+              { amount: 9000, display_amount: '$90.00', description: 'Test 2' },
             ] as Fee[]
           }
         ></sc-product-line-item>
@@ -63,6 +63,7 @@ describe('sc-product-line-item', () => {
           fees={[
             {
               amount: 10000,
+              display_amount: '$100.00',
               created_at: 1678302886,
               description: 'Paid Trial',
               fee_type: 'setup',
@@ -89,6 +90,7 @@ describe('sc-product-line-item', () => {
           fees={[
             {
               amount: 10000,
+              display_amount: '$100.00',
               created_at: 1678302886,
               description: 'Paid Trial',
               fee_type: 'setup',

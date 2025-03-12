@@ -6,6 +6,7 @@ use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasPurchase;
+use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
 /**
@@ -617,5 +618,36 @@ class Subscription extends Model {
 	 */
 	public function getAffiliationExpiresAtDateTimeAttribute() {
 		return ! empty( $this->affiliation_expires_at ) ? TimeDate::formatDateAndTime( $this->affiliation_expires_at ) : '';
+	}
+
+	/**
+	 * Get the ad hoc display amount.
+	 *
+	 * @return string|null
+	 */
+	public function getAdHocDisplayAmountAttribute() {
+		return $this->ad_hoc_amount ? Currency::format( $this->ad_hoc_amount, $this->currency ) : null;
+	}
+
+	/**
+	 * Get the remaining period text attribute.
+	 *
+	 * @return string
+	 */
+	public function getRemainingPeriodTextAttribute() {
+		if ( empty( $this->remaining_period_count ) ) {
+			return '';
+		}
+
+		return sprintf(
+			// translators: %d is the number of remaining payments.
+			_n(
+				'%d payment remaining',
+				'%d payments remaining',
+				$this->remaining_period_count,
+				'surecart'
+			),
+			$this->remaining_period_count
+		);
 	}
 }

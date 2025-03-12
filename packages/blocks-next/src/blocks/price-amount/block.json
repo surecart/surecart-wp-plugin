@@ -37,7 +37,8 @@
 				"textTransform": true,
 				"textAlign": true
 			}
-		}
+		},
+		"currencyConversion": true
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",

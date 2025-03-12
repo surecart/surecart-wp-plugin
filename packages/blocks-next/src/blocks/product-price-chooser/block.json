@@ -23,7 +23,8 @@
 		"color": {
 			"text": true,
 			"background": false
-		}
+		},
+		"currencyConversion": true
 	},
 	"attributes": {
 		"label": {

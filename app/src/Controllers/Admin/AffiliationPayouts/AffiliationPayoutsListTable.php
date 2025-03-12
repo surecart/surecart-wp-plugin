@@ -234,7 +234,7 @@ class AffiliationPayoutsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_amount( $payout ) {
-		return '<sc-format-number type="currency" currency="' . $payout->currency . '" value="' . $payout->total_commission_amount . '"></sc-format-number>';
+		return $payout->total_commission_display_amount;
 	}
 
 	/**

@@ -167,11 +167,9 @@ graph TD;
   sc-tax-id-input --> sc-menu-item
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
-  sc-order-bump --> sc-format-number
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
-  sc-line-item-tax --> sc-format-number
   sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group
   sc-shipping-choices --> sc-radio
@@ -179,7 +177,6 @@ graph TD;
   sc-shipping-choices --> sc-block-ui
   sc-line-item-shipping --> sc-line-item
   sc-line-item-shipping --> sc-skeleton
-  sc-line-item-shipping --> sc-format-number
   sc-line-item-invoice-number --> sc-line-item
   sc-line-item-invoice-number --> sc-skeleton
   sc-line-item-invoice-due-date --> sc-line-item
@@ -189,7 +186,6 @@ graph TD;
   sc-line-item-invoice-receipt-download --> sc-icon
   sc-invoice-memo --> sc-skeleton
   sc-line-item-trial --> sc-line-item
-  sc-line-item-trial --> sc-format-number
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module

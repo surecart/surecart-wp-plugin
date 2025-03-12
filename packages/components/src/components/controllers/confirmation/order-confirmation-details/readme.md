@@ -52,14 +52,12 @@ graph TD;
   sc-quantity-select --> sc-icon
   sc-order-confirmation-totals --> sc-line-item
   sc-order-confirmation-totals --> sc-tag
-  sc-order-confirmation-totals --> sc-format-number
-  sc-order-confirmation-totals --> sc-line-item-total
   sc-order-confirmation-totals --> sc-divider
+  sc-order-confirmation-totals --> sc-line-item-total
+  sc-line-item-total --> sc-divider
   sc-line-item-total --> sc-line-item
   sc-line-item-total --> sc-skeleton
   sc-line-item-total --> sc-total
-  sc-line-item-total --> sc-format-number
-  sc-total --> sc-format-number
   style sc-order-confirmation-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

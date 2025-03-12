@@ -27,6 +27,7 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 					`surecart/v1/checkouts/${order?.checkout?.id}/manually_pay`,
 					{
 						expand,
+						context: 'edit',
 					}
 				),
 				data: {
