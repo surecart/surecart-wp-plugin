@@ -75,7 +75,7 @@ export class ScOrderConfirmProvider {
         setTimeout(
           () =>
             window.location.assign(
-              addQueryArgs(checkout?.current_upsell?.permalink?.replace(/\/$/, ''), {
+              addQueryArgs(checkout?.current_upsell?.permalink, {
                 sc_checkout_id: checkout?.id,
                 sc_form_id: formId,
               }),
