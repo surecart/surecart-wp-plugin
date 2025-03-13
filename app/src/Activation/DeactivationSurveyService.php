@@ -12,7 +12,7 @@ class DeactivationSurveyService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'admin_init', [ $this, 'registerDeactivationSurvey' ] );
+		$this->registerDeactivationSurvey();
 	}
 
 	/**
@@ -21,6 +21,10 @@ class DeactivationSurveyService {
 	 * @return void
 	 */
 	public function registerDeactivationSurvey() {
+		if ( ! class_exists( 'Astra_Notices' ) ) { // BSF Analytics is dependent on Astra Notices.
+			require_once SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'astra-notices/class-astra-notices.php';
+		}
+
 		if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
 			require_once SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'brainstormforce/bsf-analytics/class-bsf-analytics-loader.php';
 		}
@@ -30,18 +34,18 @@ class DeactivationSurveyService {
 		$bsf_analytics->set_entity(
 			[
 				'surecart' => [
-					'product_name'        => __( 'SureCart', 'surecart' ),
+					'product_name'        => 'SureCart',
 					'path'                => SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'brainstormforce/bsf-analytics',
-					'author'              => __( 'SureCart', 'surecart' ),
+					'author'              => 'SureCart',
 					'deactivation_survey' => [
 						[
 							'id'                => 'deactivation-survey-surecart',
-							'popup_logo'        => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/logo.svg' ),
+							'popup_logo'        => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/icon.svg' ),
 							'plugin_slug'       => 'surecart',
 							'plugin_version'    => \SureCart::plugin()->version(),
-							'popup_title'       => __( 'Quick Feedback', 'surecart' ),
+							'popup_title'       => 'Quick Feedback',
 							'support_url'       => 'https://surecart.com/support/',
-							'popup_description' => __( 'If you have a moment, please share why you are deactivating SureCart:', 'surecart' ),
+							'popup_description' => 'If you have a moment, please share why you are deactivating SureCart:',
 							'show_on_screens'   => [ 'plugins' ],
 						],
 					],
