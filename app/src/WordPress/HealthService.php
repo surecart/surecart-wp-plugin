@@ -61,6 +61,11 @@ class HealthService {
 					'value'   => defined( 'SURECART_ENCRYPTION_KEY' ) ? __( 'Defined', 'surecart' ) : __( 'Not defined', 'surecart' ),
 					'private' => false,
 				),
+				'number_formatter'    => array(
+					'label'   => __( 'Number Formatter', 'surecart' ),
+					'value'   => class_exists( 'NumberFormatter' ) ? __( 'Defined', 'surecart' ) : __( 'Not defined', 'surecart' ),
+					'private' => false,
+				),
 			),
 		);
 		return $debug_info;

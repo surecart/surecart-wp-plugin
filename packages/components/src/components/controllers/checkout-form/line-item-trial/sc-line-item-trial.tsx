@@ -21,7 +21,7 @@ export class ScLineItemTrial {
     return (
       <sc-line-item>
         <span slot="description">{this.label || __('Trial', 'surecart')}</span>
-        <sc-format-number slot="price" type="currency" currency={checkoutState.checkout.currency} value={checkoutState.checkout.trial_amount}></sc-format-number>
+        <span slot="price-description">{checkoutState?.checkout?.trial_display_amount}</span>
       </sc-line-item>
     );
   }

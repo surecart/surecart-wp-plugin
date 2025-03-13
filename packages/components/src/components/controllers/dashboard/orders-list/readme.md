@@ -29,7 +29,6 @@
 - [sc-empty](../../../ui/empty)
 - [sc-text](../../../ui/text)
 - [sc-order-shipment-badge](../../../ui/order-shipment-badge)
-- [sc-format-number](../../../util/format-number)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
@@ -49,7 +48,6 @@ graph TD;
   sc-orders-list --> sc-empty
   sc-orders-list --> sc-text
   sc-orders-list --> sc-order-shipment-badge
-  sc-orders-list --> sc-format-number
   sc-orders-list --> sc-dashboard-module
   sc-orders-list --> sc-button
   sc-orders-list --> sc-icon
