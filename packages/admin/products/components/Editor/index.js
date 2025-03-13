@@ -9,11 +9,12 @@ import {
 	__experimentalConfirmDialog as ConfirmDialog,
 	Disabled,
 	Modal,
+	ToggleControl,
 } from '@wordpress/components';
 import { Suspense, useEffect, useState, memo } from '@wordpress/element';
 import { parse, serialize } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
-import { close, edit } from '@wordpress/icons';
+import { close, edit, settings } from '@wordpress/icons';
 import { useDebounce } from '@wordpress/compose';
 
 /**
@@ -33,6 +34,7 @@ export default ({ product, updateProduct, loading }) => {
 	}
 	const [cancelModal, setCancelModal] = useState(false);
 	const [editorModal, setEditorModal] = useState(false);
+	const [settingsModal, setSettingsModal] = useState(false);
 	const [blocks, setBlocks] = useState([]);
 	const [initialBlocks, setInitialBlocks] = useState([]);
 
@@ -107,18 +109,32 @@ export default ({ product, updateProduct, loading }) => {
 				title={__('Content', 'surecart')}
 				loading={loading}
 				header_action={
-					<Button
-						icon={edit}
-						label={__('Open Content Designer', 'surecart')}
-						onClick={() => setEditorModal(true)}
-						showTooltip={true}
-						css={css`
-							margin-top: -20px;
-							margin-bottom: -20px;
-						`}
-						disabled={loading}
-						size="compact"
-					/>
+					<>
+						<Button
+							icon={settings}
+							label={__('Editor Settings', 'surecart')}
+							onClick={() => setSettingsModal(true)}
+							showTooltip={true}
+							css={css`
+								margin-top: -20px;
+								margin-bottom: -20px;
+							`}
+							disabled={loading}
+							size="compact"
+						/>
+						<Button
+							icon={edit}
+							label={__('Open Content Designer', 'surecart')}
+							onClick={() => setEditorModal(true)}
+							showTooltip={true}
+							css={css`
+								margin-top: -20px;
+								margin-bottom: -20px;
+							`}
+							disabled={loading}
+							size="compact"
+						/>
+					</>
 				}
 			>
 				<div
@@ -158,6 +174,39 @@ export default ({ product, updateProduct, loading }) => {
 					</div>
 				</div>
 			</Box>
+
+			{settingsModal && (
+				<Modal
+					title={__('Editor Settings', 'surecart')}
+					onRequestClose={() => setSettingsModal(false)}
+				>
+					<fieldset className="preferences-modal__section">
+						<legend className="preferences-modal__section-legend">
+							<h2 className="preferences-modal__section-title">
+								{__('Allowed Blocks', 'surecart')}
+							</h2>
+						</legend>
+						<div className="preferences-modal__section-content">
+							{(
+								surecartBlockEditorSettings[
+									'surecart_all_block_prefixes'
+								] || []
+							).map((prefix) => (
+								<div key={prefix}>
+									<ToggleControl
+										label={
+											prefix.charAt(0).toUpperCase() +
+											prefix.slice(1)
+										}
+										checked={true}
+										onChange={() => {}}
+									/>
+								</div>
+							))}
+						</div>
+					</fieldset>
+				</Modal>
+			)}
 
 			{editorModal && (
 				<Modal
