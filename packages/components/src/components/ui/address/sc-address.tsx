@@ -233,17 +233,6 @@ export class ScAddress {
     }
   }
 
-  async onChangeAddressLine1(e: any) {
-    // If the google map api key is not set, update the address and return.
-    if (!window?.scData?.google_map_api_key || !e.target.value) {
-      this.updateAddress({ line_1: e.target.value || null });
-      this.showAddressFields();
-      return;
-    }
-
-    this.showSuggestions = true;
-  }
-
   showAddressFields() {
     this.showCity = true;
     this.showState = true;
@@ -331,7 +320,11 @@ export class ScAddress {
                       }}
                       onScInput={(e: any) => {
                         this.showSuggestions = true;
-                        this.updateAddress({ line_1: e.target.value || null });
+                        if (!window?.scData?.google_map_api_key) {
+                          this.handleAddressInput({ line_1: e.target.value || null });
+                        } else {
+                          this.updateAddress({ line_1: e.target.value || null });
+                        }
                       }}
                       autocomplete="street-address"
                       placeholder={field.label}
@@ -342,7 +335,7 @@ export class ScAddress {
                       {...roundedProps}
                     />
 
-                    {this.showSuggestions && (
+                    {this.showSuggestions && !!window?.scData?.google_map_api_key && (
                       <sc-address-suggestions
                         address={this.address}
                         regions={this.regions}
