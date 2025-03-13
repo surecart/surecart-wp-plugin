@@ -110,16 +110,24 @@ export class ScAddress {
   handleAddressChange() {
     if (!this.address?.country) return;
     this.setRegions();
-    this.showCity = !!this.address?.city || !!this.address?.line_1;
-    this.showState = !!this.address?.state || !!this.address?.line_1;
-    this.showPostal = !!this.address?.postal_code || !!this.address?.line_1;
-    this.scChangeAddress.emit(this.address);
-    this.scInputAddress.emit(this.address);
 
     // If no api key set, then show the fields.
     if (!window?.scData?.google_map_api_key) {
       this.showAddressFields();
+    } else {
+      // Otherwise, show the fields if any address field is set or if the fields are already shown.
+      this.showCity = this.showCity || this.hasAnyAddressField();
+      this.showState = this.showState || this.hasAnyAddressField();
+      this.showPostal = this.showPostal || this.hasAnyAddressField();
     }
+
+    this.scChangeAddress.emit(this.address);
+    this.scInputAddress.emit(this.address);
+  }
+
+  /** Check if any address field is set. */
+  hasAnyAddressField() {
+    return !!this.address?.line_1 || !!this.address?.line_2 || !!this.address?.city || !!this.address?.state || !!this.address?.postal_code;
   }
 
   @Watch('requireName')
@@ -246,10 +254,6 @@ export class ScAddress {
     this.showSuggestions = event.detail;
   }
 
-  handleShowAddressFields() {
-    this.showAddressFields();
-  }
-
   render() {
     const visibleFields = (this.sortedFields() ?? []).filter(field => {
       switch (field.name) {
@@ -345,7 +349,7 @@ export class ScAddress {
                         showSuggestions={this.showSuggestions}
                         onScPlaceSelect={(e: any) => this.updateAddress(e.detail)}
                         onScShowSuggestionsChange={(e: CustomEvent<boolean>) => this.handleShowSuggestionsChange(e)}
-                        onScShowAddressFields={() => this.handleShowAddressFields()}
+                        onScShowAddressFields={() => this.showAddressFields()}
                       />
                     )}
                   </div>
