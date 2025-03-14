@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.5.2
+Stable tag: 3.5.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,13 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.5.3 - March 14th, 2025 =
+- Change: Change the Bricks Product Data element to Product Pricing for better clarity.
+- Fix: Issue with TutorLMS coming soon page error in most recent version of TutorLMS.
+- Fix: Issue with white gap on side of slide out cart on some browsers.
+- Fix: Issue where two currency symbols could appear in order bumps when there was no discount selected for the bump.
+- Fix: TutorLMS svg missing on integrations dropdown.
 
 = 3.5.2 - March 12th, 2025 =
 - Fix: Issue where currency selection was not converted on upsell pages.
