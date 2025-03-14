@@ -55,7 +55,7 @@ class PriceData extends \Bricks\Element {
 			'tab'           => 'content',
 			'type'          => 'repeater',
 			'titleProperty' => 'dynamicData',
-			'placeholder'   => esc_html__( 'Product data', 'surecart' ),
+			'placeholder'   => esc_html__( 'Product Pricing', 'surecart' ),
 			'fields'        => [
 				'dynamicData' => [
 					'label' => esc_html__( 'Dynamic data', 'surecart' ),
