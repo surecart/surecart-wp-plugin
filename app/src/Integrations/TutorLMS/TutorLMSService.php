@@ -246,7 +246,7 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 	 * @return string
 	 */
 	public function getLogo() {
-		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/tutor.svg' );
+		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/tutorlms.svg' );
 	}
 
 	/**
