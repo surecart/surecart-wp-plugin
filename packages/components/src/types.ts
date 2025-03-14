@@ -107,6 +107,7 @@ export interface Price {
   amount: number;
   display_amount: string;
   setup_fee_display_amount: string;
+  setup_fee_text: string;
   full_amount: number;
   currency: string;
   recurring: boolean;

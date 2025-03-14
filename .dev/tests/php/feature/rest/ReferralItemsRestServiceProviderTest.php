@@ -6,6 +6,7 @@ use SureCart\Account\AccountServiceProvider;
 use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\ReferralItemsRestServiceProvider;
+use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -26,6 +27,7 @@ class ReferralItemsRestServiceProviderTest extends SureCartUnitTestCase
 				\SureCart\WordPress\PluginServiceProvider::class,
 				AccountServiceProvider::class,
 				ReferralItemsRestServiceProvider::class,
+				SettingsServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class,
 			],
