@@ -7,6 +7,13 @@ namespace SureCart\Activation;
 class DeactivationSurveyService {
 
 	/**
+	 * Analytics key.
+	 *
+	 * @var string
+	 */
+	private $analytics_key = 'surecart';
+
+	/**
 	 * Bootstrap.
 	 *
 	 * @return void
@@ -21,6 +28,7 @@ class DeactivationSurveyService {
 	 * @return void
 	 */
 	public function registerDeactivationSurvey() {
+		update_site_option( $this->analytics_key . '_analytics_optin', 'no' ); // We do not want to track the user.
 		if ( ! class_exists( 'Astra_Notices' ) ) { // BSF Analytics is dependent on Astra Notices.
 			require_once SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'astra-notices/class-astra-notices.php';
 		}
@@ -33,7 +41,7 @@ class DeactivationSurveyService {
 
 		$bsf_analytics->set_entity(
 			[
-				'surecart' => [
+				$this->analytics_key => [
 					'product_name'        => 'SureCart',
 					'path'                => SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'brainstormforce/bsf-analytics',
 					'author'              => 'SureCart',
