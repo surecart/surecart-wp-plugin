@@ -311,6 +311,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue with white gap on side of slide out cart on some browsers.
 - Fix: Issue where two currency symbols could appear in order bumps when there was no discount selected for the bump.
 - Fix: TutorLMS svg missing on integrations dropdown.
+- Fix: PHP notice in currency service.
 
 = 3.5.2 - March 12th, 2025 =
 - Fix: Issue where currency selection was not converted on upsell pages.
